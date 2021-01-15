@@ -59,8 +59,8 @@
  * Definitions
  ******************************************************************************/
 /*${macro:start}*/
-#define AUDIO_MAX_INPUT_BUFFER  (113 * 1024)
-#define AUDIO_MAX_OUTPUT_BUFFER (200 * 1024)
+#define AUDIO_MAX_INPUT_BUFFER  (AUDIO_SHARED_BUFFER_1_SIZE)
+#define AUDIO_MAX_OUTPUT_BUFFER (AUDIO_SHARED_BUFFER_2_SIZE)
 
 #define AUDIO_VORBIS_INPUT_OGG 0U
 #define AUDIO_VORBIS_INPUT_RAW 1U
@@ -69,8 +69,8 @@
 #define AUDIO_OUTPUT_RENDERER 1
 
 /* Audio in/out buffers for one-shot DSP handling. */
-SDK_ALIGN(static uint8_t s_audioInput[AUDIO_MAX_INPUT_BUFFER], 4U);
-SDK_ALIGN(static uint8_t s_audioOutput[AUDIO_MAX_OUTPUT_BUFFER], 4U);
+static uint8_t *s_audioInput  = (uint8_t *)AUDIO_SHARED_BUFFER_1;
+static uint8_t *s_audioOutput = (uint8_t *)AUDIO_SHARED_BUFFER_2;
 /*${macro:end}*/
 
 /*******************************************************************************
@@ -112,7 +112,9 @@ static shell_status_t shellSRC(shell_handle_t shellHandle, int32_t argc, char **
 static shell_status_t shellGAIN(shell_handle_t shellHandle, int32_t argc, char **argv);
 static shell_status_t shellRecDMIC(shell_handle_t shellHandle, int32_t argc, char **argv);
 #endif
+#if XA_CLIENT_PROXY
 static shell_status_t shellEAPeffect(shell_handle_t shellHandle, int32_t argc, char **argv);
+#endif
 
 /*${prototype:end}*/
 
@@ -197,13 +199,18 @@ SHELL_COMMAND_DEFINE(src, "\r\n\"src\" Perform sample rate conversion on DSP\r\n
 #endif
 #if XA_PCM_GAIN
 SHELL_COMMAND_DEFINE(gain, "\r\n\"gain\": Perform PCM gain adjustment on DSP\r\n", shellGAIN, 0);
-SHELL_COMMAND_DEFINE(record_dmic,
-                     "\r\n\"record_dmic\": Record DMIC audio and playback on WM8904 codec\r\n"
-                     "  NOTE: this command does not return to the shell\r\n",
-                     shellRecDMIC,
-                     0);
+SHELL_COMMAND_DEFINE(
+    record_dmic,
+    "\r\n\"record_dmic\": Record DMIC audio, perform voice recognition (VIT) and playback on WM8904 codec\r\n"
+    "  For voice recognition say supported WakeWord (Hey NXP) and in 3s frame spported command.\r\n"
+    "  List of supported commands:\r\n"
+    "  MUTE, NEXT, SKIP, PAIR_DEVICE, PAUSE, STOP, POWER_OFF, POWER_ON, PLAY_MUSIC\r\n"
+    "  PLAY_GAME, WATCH_CARTOON, WATCH_MOVIE\r\n"
+    "  NOTE: this command does not return to the shell\r\n",
+    shellRecDMIC,
+    0);
 #endif
-
+#if XA_CLIENT_PROXY
 SHELL_COMMAND_DEFINE(eap,
                      "\r\n\"eap\": Set EAP parameters\r\n"
                      "  USAGE: eap [1|2|3|4|5|6|7|+|-|l|r]\r\n"
@@ -221,6 +228,8 @@ SHELL_COMMAND_DEFINE(eap,
                      "    r:	Balance right\r\n",
                      shellEAPeffect,
                      1);
+#endif
+
 static bool file_playing = false;
 
 SDK_ALIGN(static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE], 4);
@@ -789,6 +798,7 @@ static shell_status_t shellGAIN(shell_handle_t shellHandle, int32_t argc, char *
 
 static shell_status_t shellRecDMIC(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
+    PRINTF("\r\nTo see VIT functionality say wakeword and command.\r\n");
     srtm_message msg = {0};
     initMessage(&msg);
 
@@ -803,7 +813,7 @@ static shell_status_t shellRecDMIC(shell_handle_t shellHandle, int32_t argc, cha
     /* Param 6 return parameter, recording status: 0 un-initialized 1 recording 2 paused */
     /* Param 7 return parameter, error code*/
 
-    msg.param[0] = 2;
+    msg.param[0] = 1;
     msg.param[1] = 16000;
     msg.param[2] = 16;
     g_handleShellMessageCallback(&msg, g_handleShellMessageCallbackData);
@@ -811,6 +821,7 @@ static shell_status_t shellRecDMIC(shell_handle_t shellHandle, int32_t argc, cha
 }
 #endif
 
+#if XA_CLIENT_PROXY
 static shell_status_t shellEAPeffect(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
     srtm_message msg = {0};
@@ -857,6 +868,7 @@ static shell_status_t shellEAPeffect(shell_handle_t shellHandle, int32_t argc, c
         return kStatus_SHELL_Error;
     }
 }
+#endif
 
 void shellCmd(handleShellMessageCallback_t *handleShellMessageCallback, void *arg)
 {
@@ -895,7 +907,9 @@ void shellCmd(handleShellMessageCallback_t *handleShellMessageCallback, void *ar
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(gain));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(record_dmic));
 #endif
+#if XA_CLIENT_PROXY
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(eap));
+#endif
 
     g_handleShellMessageCallback     = handleShellMessageCallback;
     g_handleShellMessageCallbackData = arg;
@@ -1023,9 +1037,6 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                         PRINTF("DSP VORBIS decoder failed, return error = %d\r\n", msg->error);
                     }
 
-                    PRINTF("VORBIS decoder read %d bytes and output %d bytes \r\n", msg->param[5], msg->param[6]);
-                    PRINTF("  Checking decode results...\r\n");
-
                     if (msg->param[4] == AUDIO_OUTPUT_BUFFER)
                     {
                         const unsigned char *ref_buffer;
@@ -1041,6 +1052,9 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                             ref_buffer      = SRTM_VORBIS_REFBUFFER;
                             ref_buffer_size = sizeof(SRTM_VORBIS_REFBUFFER);
                         }
+
+                        PRINTF("VORBIS decoder read %d bytes and output %d bytes \r\n", msg->param[5], msg->param[6]);
+                        PRINTF("  Checking decode results...\r\n");
 
                         for (int i = 0; (i < msg->param[6]) && (i < ref_buffer_size); i++)
                         {
@@ -1195,6 +1209,61 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     }
                     break;
 
+                case SRTM_Command_WWDetected:
+                    PRINTF("\nWakeWord detected!\r\n");
+                    *notify_shell = false;
+                    break;
+
+                case SRTM_Command_VIT_OUT:
+                    PRINTF("Command number %d: ", msg->param[0]);
+                    switch (msg->param[0])
+                    {
+                        case 0:
+                            PRINTF("UNKNOWN\r\n");
+                            break;
+                        case 1:
+                            PRINTF("MUTE\r\n");
+                            break;
+                        case 2:
+                            PRINTF("NEXT\r\n");
+                            break;
+                        case 3:
+                            PRINTF("SKIP\r\n");
+                            break;
+                        case 4:
+                            PRINTF("PAIR_DEVICE\r\n");
+                            break;
+                        case 5:
+                            PRINTF("PAUSE\r\n");
+                            break;
+                        case 6:
+                            PRINTF("STOP\r\n");
+                            break;
+                        case 7:
+                            PRINTF("POWER_OFF\r\n");
+                            break;
+                        case 8:
+                            PRINTF("POWER_ON\r\n");
+                            break;
+                        case 9:
+                            PRINTF("PLAY_MUSIC\r\n");
+                            break;
+                        case 10:
+                            PRINTF("PLAY_GAME\r\n");
+                            break;
+                        case 11:
+                            PRINTF("WATCH_CARTOON\r\n");
+                            break;
+                        case 12:
+                            PRINTF("WATCH_MOVIE\r\n");
+                            break;
+                        default:
+                            PRINTF("Err, unknown command number\r\n");
+                            break;
+                    }
+                    *notify_shell = false;
+                    break;
+
                 case SRTM_Command_FileStart:
                     if (msg->error != SRTM_Status_Success)
                     {
@@ -1270,6 +1339,22 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     *notify_shell = true;
                     break;
                 }
+                case SRTM_Command_FileError:
+                {
+                    if (msg->error != SRTM_Status_Success)
+                    {
+                        PRINTF("DSP requested file stop due to error failed! return error = %d\r\n", msg->error);
+                    }
+                    else
+                    {
+                        PRINTF("DSP file stopped, unsupported format.\r\n");
+                        file_playing = false;
+                        /* File has stopped playing */
+                    }
+                    *notify_shell = true;
+                    break;
+                }
+#if XA_CLIENT_PROXY
                 case SRTM_Command_FilterCfg:
                 {
                     if (msg->error != SRTM_Status_Success)
@@ -1283,7 +1368,7 @@ static void handleDSPMessageInner(app_handle_t *app, srtm_message *msg, bool *no
                     *notify_shell = true;
                     break;
                 }
-
+#endif
                 default:
                     PRINTF("Incoming unknown message category %d \r\n", msg->head.category);
                     break;

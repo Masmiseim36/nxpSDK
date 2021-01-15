@@ -29,10 +29,10 @@ Print the content of the file using 'cat mynewdir/foo.txt'. The expected output 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- MCUXpresso  11.2.0
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -67,6 +67,3 @@ SHELL (build: Feb 28 2018)
 Copyright  2017  NXP
 LFS>>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

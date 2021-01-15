@@ -25,16 +25,6 @@ processor_version: 0.0.0
 #include "fsl_iomuxc.h"
 #include "pin_mux.h"
 
-/* FUNCTION ************************************************************************************************************
- * 
- * Function Name : BOARD_InitBootPins
- * Description   : Calls initialization functions.
- * 
- * END ****************************************************************************************************************/
-void BOARD_InitBootPins(void) {
-    BOARD_InitPins();
-}
-
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
@@ -51,7 +41,6 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {
 }
-
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************

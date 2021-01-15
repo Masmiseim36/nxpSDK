@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -68,9 +68,9 @@ typedef struct _ivt_ {
 #define IMAGE_ENTRY_ADDRESS ((uint32_t)ROM_interrupts_start) 
 #define FLASH_BASE ((uint32_t)m_flash_config_start)   
 #elif defined(__MCUXPRESSO)
-    extern uint32_t ROM_interrupts_start[];
+    extern uint32_t m_intvec_table_start[];
     extern uint32_t __boot_hdr_start__[];
-#define IMAGE_ENTRY_ADDRESS ((uint32_t)ROM_interrupts_start)
+#define IMAGE_ENTRY_ADDRESS ((uint32_t)m_intvec_table_start)
 #define FLASH_BASE          ((uint32_t)__boot_hdr_start__)
 #elif defined(__ICCARM__)
     extern uint32_t __VECTOR_TABLE[];
@@ -81,7 +81,7 @@ typedef struct _ivt_ {
     extern uint32_t __VECTOR_TABLE[];
     extern uint32_t __FLASH_BASE[];
 #define IMAGE_ENTRY_ADDRESS ((uint32_t)__VECTOR_TABLE)     
-#define FLASH_BASE ((uint32_t)__FLASH_BASE)   
+#define FLASH_BASE ((uint32_t)__VECTOR_TABLE)   
 #endif
 
 #define DCD_ADDRESS           dcd_data
@@ -96,7 +96,7 @@ typedef struct _boot_data_ {
   uint32_t start;           /* boot start location */
   uint32_t size;            /* size */
   uint32_t plugin;          /* plugin flag - 1 if downloaded application is plugin */
-  uint32_t placeholder;		/* placehoder to make even 0x10 size */
+  uint32_t placeholder;   /* placehoder to make even 0x10 size */
 }BOOT_DATA_T;
 
 #if defined(BOARD_FLASH_SIZE)

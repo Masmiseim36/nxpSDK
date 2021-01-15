@@ -26,6 +26,8 @@
  * Includes
  ******************************************************************************/
 
+#if (XA_CLIENT_PROXY)
+
 #include <stdint.h>
 #include <string.h>
 
@@ -50,7 +52,7 @@ extern clk_t client_proxy_cycles;
 #include "EAP_Parameter_AutoVolumeLeveler.h"
 #include "EAP_Parameter_ConcertSound.h"
 #include "EAP_Parameter_LoudnessMaximiser.h"
-#include "EAP_Parameter_MusicEnhancer.h"
+#include "EAP_Parameter_MusicEnhancerRMSLimiter.h"
 #include "EAP_Parameter_VoiceEnhancer.h"
 #include "EAP_Parameter_AllEffectOff.h"
 #include "EAP_Parameter_Custom.h"
@@ -121,17 +123,14 @@ typedef struct client_proxy_t
 extern dsp_handle_t dsp;
 
 //EAP Lib
-LVM_Handle_t            EAP_hInstance;                          /* Instance handle */
-LVM_MemTab_t            EAP_MemTab;                             /* Memory allocation table */
-LVM_VersionInfo_st      EAP_VersionInfo;                        /* Version info structure */
-LVM_UINT16              bEventPending = LVM_TRUE;      			/* Event Pending flag  to highlight new EAP configuration is present */
-LVM_ControlParams_t     *pEAP_ControlParams;                    /* control Parameters */
-LVM_InstParams_t        *pEAP_InstParams;                       /* EAP_InstParams */
-LVM_ControlParams_t     EAP_ControlParams;                      /* control Parameters */
-LVM_ReturnStatus_en     LVM_Status;                         	/* Function call status */
+static LVM_Handle_t         EAP_hInstance;      /* Instance handle */
+static LVM_MemTab_t         EAP_MemTab;         /* Memory allocation table */
+static LVM_VersionInfo_st   EAP_VersionInfo;    /* Version info structure */
+static LVM_ControlParams_t  EAP_ControlParams;  /* control Parameters */
+static LVM_InstParams_t     EAP_InstParams;     /* EAP_InstParams */
 
 #ifdef ALGORITHM_EQNB
-    LVM_HeadroomParams_t    	*pEAP_HeadroomParams;               /* Headroom parameters */
+static LVM_HeadroomParams_t EAP_HeadroomParams; /* Headroom parameters */
 #endif
 
 LVM_ReturnStatus_en EAP_Init(client_proxy_t *d);
@@ -139,7 +138,7 @@ LVM_ReturnStatus_en EAP_SetSampleRateAndNumOfChannels(client_proxy_t *d);
 LVM_ReturnStatus_en EAP_SetConfig(LVM_ControlParams_t *pEAP_ControlParamsSet);
 LVM_ReturnStatus_en EAP_UpdateConfig(LVM_ControlParams_t *pEAP_ControlParamsUpdate, LVM_INT8 paramNum);
 LVM_ReturnStatus_en EAP_Execute(void * inputBuffer, void * outputBuffer, int numSamples, int audioTimeMs);
-void EAP_Deinit();
+LVM_ReturnStatus_en EAP_Deinit();
 LVM_UINT32 EAP_AudioTime = 0;
 
 /*******************************************************************************
@@ -166,10 +165,6 @@ static XA_ERRORCODE xa_client_proxy_do_execute_16bit(client_proxy_t *d)
     UWORD32   filled = d->input_avail;
     WORD16    input, output;
 
-    /* Local output buffer is necessary because EAP output is always stereo.
-     * In case of mono input, the output buffer needs to be double size. */
-    WORD16	  outBuf[1920];
-
     nSize = filled >> 1;    //size of each sample is 2 bytes
     k = (WORD32)(d->buffer_size - filled);
 
@@ -182,24 +177,14 @@ static XA_ERRORCODE xa_client_proxy_do_execute_16bit(client_proxy_t *d)
 
     EAP_AudioTime += LVM_FRAME_SIZE_MS;
 
-    EAP_Execute(pIn, &outBuf, nSize/d->channels, EAP_AudioTime);
+    EAP_Execute(pIn, pOut, nSize/d->channels, EAP_AudioTime);
 
     /* ...Processing loop */
-	for (i = 0; i < nSize; i++)
-	{
-		input = *pIn++;
-		if (d->channels == 1) // mono
-		{
-			/* Deinterleave data (stereo to mono), keep only channel one */
-			*pOut = outBuf[2 * i];
-		}
-		else // stereo
-		{
-			/* Copy data from the local buffer */
-			*pOut = outBuf[i];
-		}
-		output = *pOut++;
-	}
+    for (i = 0; i < nSize; i++)
+    {
+        input = *pIn++;
+        output = *pOut++;
+    }
 
     /* ...save total number of consumed bytes */
     d->consumed = (UWORD32)((void *)pIn - d->input);
@@ -259,8 +244,14 @@ static XA_ERRORCODE xa_client_proxy_init(client_proxy_t *d, WORD32 i_idx, pVOID 
 
     case XA_CMD_TYPE_INIT_API_POST_CONFIG_PARAMS:
     {
-        XF_CHK_API(EAP_Init(d));
-        XF_CHK_API(EAP_SetConfig(pEAP_ControlParams));
+        if (LVM_SUCCESS != EAP_Init(d))
+        {
+            return XA_CLIENT_PROXY_EXEC_FATAL_STATE;
+        }
+        if (LVM_SUCCESS != EAP_SetConfig(&EAP_ControlParams))
+        {
+            return XA_CLIENT_PROXY_EXEC_FATAL_STATE;
+        }
 
         /* ...post-configuration initialization (all parameters are set) */
         XF_CHK_ERR(d->state & XA_CLIENT_PROXY_FLAG_PREINIT_DONE, XA_API_FATAL_INVALID_CMD_TYPE);
@@ -306,10 +297,13 @@ static XA_ERRORCODE xa_client_proxy_init(client_proxy_t *d, WORD32 i_idx, pVOID 
     }
 }
 
-/* ...standard codec initialization routine */
+/* ...standard codec deinitialization routine */
 static XA_ERRORCODE xa_client_proxy_deinit()
 {
-	EAP_Deinit();
+    if (LVM_SUCCESS != EAP_Deinit())
+    {
+        return XA_CLIENT_PROXY_EXEC_FATAL_STATE;
+    }
     return XA_NO_ERROR;
 }
 
@@ -375,68 +369,68 @@ static XA_ERRORCODE xa_client_proxy_set_config_param(client_proxy_t *d, WORD32 i
     case XA_MIMO_PROC_CONFIG_PARAM_PORT_RESUME:
     case XA_MIMO_PROC_CONFIG_PARAM_PORT_CONNECT:
     case XA_MIMO_PROC_CONFIG_PARAM_PORT_DISCONNECT:
-    	return XA_NO_ERROR;
+        return XA_NO_ERROR;
 
     case XA_CLIENT_PROXY_CONFIG_PARAM_EAP:
-    	{
-    		LVM_ReturnStatus_en LVM_Status;
-    		switch ((UWORD32)i_value)
-			{
-				case 1:
-					pEAP_ControlParams = &ControlParamSet_allEffectOff;
-					break;
-				case 2:
-					pEAP_ControlParams = &ControlParamSet_voiceEnhancer;
-					break;
-				case 3:
-					pEAP_ControlParams = &ControlParamSet_musicEnhancer;
-					break;
-				case 4:
-					pEAP_ControlParams = &ControlParamSet_autoVolumeLeveler;
-					break;
-				case 5:
-					pEAP_ControlParams = &ControlParamSet_loudnessMaximiser;
-					break;
-				case 6:
-					pEAP_ControlParams = &ControlParamSet_concertSound;
-					break;
-				case 7:
-					pEAP_ControlParams = &ControlParamSet_custom;
-					break;
-				case 8:
-				case 9:
-				case 10:
-				case 11:
-					LVM_Status = EAP_UpdateConfig(pEAP_ControlParams, i_value);
-					break;
-				default:
-					XF_CHK_ERR(0, XA_CLIENT_PROXY_CONFIG_NONFATAL_RANGE);
-			}
-			if (i_value < 8)
-			{
-				LVM_Status = EAP_SetSampleRateAndNumOfChannels(d);
-			    if (LVM_Status == LVM_OUTOFRANGE)
-			    {
-			        return LVM_Status;
-			    }
-				LVM_Status = EAP_SetConfig(pEAP_ControlParams);
-				if (LVM_SUCCESS != LVM_Status)
-				{
-					return LVM_Status;
-				}
-				LVM_Status = LVM_ClearAudioBuffers(EAP_hInstance);
-				if (LVM_SUCCESS != LVM_Status)
-				{
-					return LVM_Status;
-				}
-			}
-			else if (LVM_SUCCESS != LVM_Status)
-			{
-				return LVM_Status;
-			}
+        {
+            LVM_ReturnStatus_en LVM_Status;
+            switch ((UWORD32)i_value)
+            {
+                case 1:
+                    memcpy(&EAP_ControlParams, &ControlParamSet_allEffectOff, sizeof(LVM_ControlParams_t));
+                    break;
+                case 2:
+                    memcpy(&EAP_ControlParams, &ControlParamSet_voiceEnhancer, sizeof(LVM_ControlParams_t));
+                    break;
+                case 3:
+                    memcpy(&EAP_ControlParams, &ControlParamSet_musicEnhancerRmsLimiter, sizeof(LVM_ControlParams_t));
+                    break;
+                case 4:
+                    memcpy(&EAP_ControlParams, &ControlParamSet_autoVolumeLeveler, sizeof(LVM_ControlParams_t));
+                    break;
+                case 5:
+                    memcpy(&EAP_ControlParams, &ControlParamSet_loudnessMaximiser, sizeof(LVM_ControlParams_t));
+                    break;
+                case 6:
+                    memcpy(&EAP_ControlParams, &ControlParamSet_concertSound, sizeof(LVM_ControlParams_t));
+                    break;
+                case 7:
+                    memcpy(&EAP_ControlParams, &ControlParamSet_custom, sizeof(LVM_ControlParams_t));
+                    break;
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                    LVM_Status = EAP_UpdateConfig(&EAP_ControlParams, i_value);
+                    break;
+                default:
+                    XF_CHK_ERR(0, XA_CLIENT_PROXY_CONFIG_NONFATAL_RANGE);
+            }
+            if (i_value < 8)
+            {
+                LVM_Status = EAP_SetSampleRateAndNumOfChannels(d);
+                if (LVM_Status == LVM_OUTOFRANGE)
+                {
+                    return LVM_Status;
+                }
+                LVM_Status = EAP_SetConfig(&EAP_ControlParams);
+                if (LVM_SUCCESS != LVM_Status)
+                {
+                    return LVM_Status;
+                }
+                LVM_Status = LVM_ClearAudioBuffers(EAP_hInstance);
+                if (LVM_SUCCESS != LVM_Status)
+                {
+                    return LVM_Status;
+                }
+            }
+            else if (LVM_SUCCESS != LVM_Status)
+            {
+                return XA_CLIENT_PROXY_EXEC_NONFATAL_STATE;
+            }
 
-    	return XA_NO_ERROR;
-    	}
+        return XA_NO_ERROR;
+        }
     default:
         TRACE(ERROR, _x("Invalid parameter: %X"), i_idx);
         return XA_API_FATAL_INVALID_CMD_TYPE;
@@ -801,19 +795,19 @@ LVM_INT16               MallocAlign = 4;                        /* 4 byte Malloc
 
 LVM_ReturnStatus_en EAP_Init(client_proxy_t *d)
 {
-	LVM_ReturnStatus_en     LVM_Status;                             /* Function call status */
-	LVM_UINT16              i;                                      /* loop index */
-	LVM_INT32               temp32;                                 /* temporary address */
+    LVM_ReturnStatus_en     LVM_Status;                             /* Function call status */
+    LVM_UINT16              i;                                      /* loop index */
+    LVM_INT32               temp32;                                 /* temporary address */
 
-	// scratch
-	LVM_INT16               *pScratchBase = LVM_NULL;
-	LVM_UINT32              ScratchSize = 0;
+    // scratch
+    LVM_INT16               *pScratchBase = LVM_NULL;
+    LVM_UINT32              ScratchSize = 0;
 
     /******************************************************************************
-	GET VERSION INFORMATION
+    GET VERSION INFORMATION
     *******************************************************************************/
     LVM_Status=LVM_GetVersionInfo(&EAP_VersionInfo);
-    if(LVM_Status == LVM_NULLADDRESS)
+    if(LVM_Status != LVM_SUCCESS)
     {
         return LVM_Status;
     }
@@ -826,32 +820,25 @@ LVM_ReturnStatus_en EAP_Init(client_proxy_t *d)
      * Select parameter configuration
      */
 
-    pEAP_ControlParams 	= &ControlParamSet_allEffectOff;            /* Control Parameters */
-    pEAP_InstParams 	= &InstParams_allEffectOff;       	        /* Instance parameters */
+    memcpy(&EAP_ControlParams, &ControlParamSet_allEffectOff, sizeof(LVM_ControlParams_t)); /* Control Parameters */
+    memcpy(&EAP_InstParams, &InstParams_allEffectOff, sizeof(LVM_InstParams_t));            /* Instance parameters */
 #ifdef ALGORITHM_EQNB
-    pEAP_HeadroomParams	= &HeadroomParams_allEffectOff;   		    /* Headroom parameters */
-#endif
-#ifdef EXAMPLE_CUSTOM_TUNING
-	pEAP_TuningParams 		= &CustomTuningParams_set1;		/* custom tuning parameters */
+    memcpy(&EAP_HeadroomParams, &HeadroomParams_allEffectOff, sizeof(LVM_HeadroomParams_t));/* Headroom parameters */
 #endif
 
-	LVM_Status = EAP_SetSampleRateAndNumOfChannels(d);
-    if (LVM_Status == LVM_OUTOFRANGE)
+    LVM_Status = EAP_SetSampleRateAndNumOfChannels(d);
+    if (LVM_Status != LVM_SUCCESS)
     {
         return LVM_Status;
     }
-	/******************************************************************************
+    /******************************************************************************
     Allocate memory
     Force alignment by allocating extra memory
     *******************************************************************************/
-    LVM_Status = LVM_GetMemoryTable(	LVM_NULL,
-    									&EAP_MemTab,
-    									pEAP_InstParams);
-    if (LVM_Status == LVM_NULLADDRESS)
-    {
-        return LVM_Status;
-    }
-    if (LVM_Status == LVM_OUTOFRANGE)
+    LVM_Status = LVM_GetMemoryTable(    LVM_NULL,
+                                        &EAP_MemTab,
+                                        &EAP_InstParams);
+    if (LVM_Status != LVM_SUCCESS)
     {
         return LVM_Status;
     }
@@ -878,23 +865,20 @@ LVM_ReturnStatus_en EAP_Init(client_proxy_t *d)
     /*
     * Get an EAP Instance
     */
-    EAP_hInstance = LVM_NULL;                                       	/* Initialise to NULL */
-    LVM_Status = LVM_GetInstanceHandle( &EAP_hInstance,              	/* Init sets the instance handle */
-    									&EAP_MemTab,
-    									pEAP_InstParams);
-    if (LVM_Status == LVM_NULLADDRESS)
-    {
-        return LVM_Status;
-    }
-    if (LVM_Status == LVM_OUTOFRANGE)
+    EAP_hInstance = LVM_NULL;                                           /* Initialise to NULL */
+    LVM_Status = LVM_GetInstanceHandle( &EAP_hInstance,                 /* Init sets the instance handle */
+                                        &EAP_MemTab,
+                                        &EAP_InstParams);
+    if (LVM_Status != LVM_SUCCESS)
     {
         return LVM_Status;
     }
 
+
 #ifdef ALGORITHM_EQNB
     {
-    	// set headroom param config
-        LVM_Status = LVM_SetHeadroomParams(EAP_hInstance, pEAP_HeadroomParams);
+        // set headroom param config
+        LVM_Status = LVM_SetHeadroomParams(EAP_hInstance, &EAP_HeadroomParams);
     }
 #endif
     return LVM_Status;
@@ -902,166 +886,146 @@ LVM_ReturnStatus_en EAP_Init(client_proxy_t *d)
 
 LVM_ReturnStatus_en EAP_SetConfig(LVM_ControlParams_t *pEAP_ControlParamsSet)
 {
-	/* Function call status */
-	LVM_ReturnStatus_en LVM_Status;
+    /* Function call status */
+    LVM_ReturnStatus_en LVM_Status;
 
-	/******************************************************************************
-	Call set control parameters
-	 - propagate the configuration to EAP
-	*******************************************************************************/
-	LVM_Status = LVM_SetControlParameters(EAP_hInstance, pEAP_ControlParamsSet);
-	if (LVM_Status == LVM_NULLADDRESS)
-	{
-		return LVM_Status;
-	}
-	if (LVM_Status == LVM_OUTOFRANGE)
-	{
-		return LVM_Status;
-	}
+    /******************************************************************************
+    Call set control parameters
+     - propagate the configuration to EAP
+    *******************************************************************************/
+    LVM_Status = LVM_SetControlParameters(EAP_hInstance, pEAP_ControlParamsSet);
 
-	return LVM_Status;
+    return LVM_Status;
 }
 
 LVM_ReturnStatus_en EAP_UpdateConfig(LVM_ControlParams_t *pEAP_ControlParamsUpdate, LVM_INT8 paramNum)
 {
-	LVM_ReturnStatus_en LVM_Status;
-	LVM_Status = LVM_GetControlParameters(EAP_hInstance, pEAP_ControlParamsUpdate);
-	if (LVM_Status != LVM_SUCCESS)
-	{
-		return LVM_Status;
-	}
-	/* Store actual data in case of update failure */
-	LVM_INT8 volume = pEAP_ControlParamsUpdate->VC_EffectLevel;
-	LVM_INT8 balance = pEAP_ControlParamsUpdate->VC_Balance;
-	switch (paramNum)
-	{
-		case 8:
-			pEAP_ControlParamsUpdate->VC_EffectLevel += 2;
-			break;
-		case 9:
-			pEAP_ControlParamsUpdate->VC_EffectLevel -= 2;
-			break;
-		case 10:
-			pEAP_ControlParamsUpdate->VC_Balance -= 2;
-			break;
-		case 11:
-			pEAP_ControlParamsUpdate->VC_Balance += 2;
-			break;
-	}
+    LVM_ReturnStatus_en LVM_Status;
+    LVM_Status = LVM_GetControlParameters(EAP_hInstance, pEAP_ControlParamsUpdate);
+    if (LVM_Status != LVM_SUCCESS)
+    {
+        return LVM_Status;
+    }
+    /* Store actual data in case of update failure */
+    LVM_INT8 volume = pEAP_ControlParamsUpdate->VC_EffectLevel;
+    LVM_INT8 balance = pEAP_ControlParamsUpdate->VC_Balance;
+    switch (paramNum)
+    {
+        case 8:
+            pEAP_ControlParamsUpdate->VC_EffectLevel += 2;
+            break;
+        case 9:
+            pEAP_ControlParamsUpdate->VC_EffectLevel -= 2;
+            break;
+        case 10:
+            pEAP_ControlParamsUpdate->VC_Balance -= 2;
+            break;
+        case 11:
+            pEAP_ControlParamsUpdate->VC_Balance += 2;
+            break;
+    }
 
-	LVM_Status = EAP_SetConfig(pEAP_ControlParamsUpdate);
-	if (LVM_Status == LVM_OUTOFRANGE)
-	{
-		/* Restore saved data */
-		pEAP_ControlParamsUpdate->VC_EffectLevel = volume;
-		pEAP_ControlParamsUpdate->VC_Balance = balance;
-		return LVM_SUCCESS;
-	}
-	else
-	{
-		return LVM_Status;
-	}
+    LVM_Status = EAP_SetConfig(pEAP_ControlParamsUpdate);
+    if (LVM_Status != LVM_SUCCESS)
+    {
+        /* Restore saved data */
+        EAP_ControlParams.VC_EffectLevel = volume;
+        EAP_ControlParams.VC_Balance = balance;
+        return LVM_SUCCESS;
+    }
+    else
+    {
+        return LVM_Status;
+    }
 }
 
 LVM_ReturnStatus_en EAP_SetSampleRateAndNumOfChannels(client_proxy_t *d){
-	LVM_ReturnStatus_en LVM_Status = LVM_SUCCESS;
-	switch (d->sample_rate)
-	{
-		case 4000:
-			LVM_Status = LVM_OUTOFRANGE;
-			break;
-		case 8000:
-			pEAP_ControlParams->SampleRate = LVM_FS_8000;
-			break;
-		case 11025:
-			pEAP_ControlParams->SampleRate = LVM_FS_11025;
-			break;
-		case 12000:
-			pEAP_ControlParams->SampleRate = LVM_FS_12000;
-			break;
-		case 16000:
-			pEAP_ControlParams->SampleRate = LVM_FS_16000;
-			break;
-		case 22050:
-			pEAP_ControlParams->SampleRate = LVM_FS_22050;
-			break;
-		case 24000:
-			pEAP_ControlParams->SampleRate = LVM_FS_24000;
-			break;
-		case 32000:
-			pEAP_ControlParams->SampleRate = LVM_FS_32000;
-			break;
-		case 44100:
-			pEAP_ControlParams->SampleRate = LVM_FS_44100;
-			break;
-		case 48000:
-			pEAP_ControlParams->SampleRate = LVM_FS_48000;
-			break;
-		case 64000:
-		case 88200:
-		case 96000:
-		case 128000:
-		case 176400:
-		case 192000:
-			LVM_Status = LVM_OUTOFRANGE;
-			break;
-	}
-	switch (d->channels)
-	{
-		case 1:
-			pEAP_ControlParams->SourceFormat = LVM_MONO;
-			break;
-		case 2:
-			pEAP_ControlParams->SourceFormat = LVM_STEREO;
-			break;
-	}
-	if (LVM_Status == LVM_OUTOFRANGE)
-	{
-		return LVM_Status;
-	}
-	else
-	{
-		return LVM_SUCCESS;
-	}
+    LVM_ReturnStatus_en LVM_Status = LVM_SUCCESS;
+    switch (d->sample_rate)
+    {
+        case 4000:
+            LVM_Status = LVM_OUTOFRANGE;
+            break;
+        case 8000:
+            EAP_ControlParams.SampleRate = LVM_FS_8000;
+            break;
+        case 11025:
+            EAP_ControlParams.SampleRate = LVM_FS_11025;
+            break;
+        case 12000:
+            EAP_ControlParams.SampleRate = LVM_FS_12000;
+            break;
+        case 16000:
+            EAP_ControlParams.SampleRate = LVM_FS_16000;
+            break;
+        case 22050:
+            EAP_ControlParams.SampleRate = LVM_FS_22050;
+            break;
+        case 24000:
+            EAP_ControlParams.SampleRate = LVM_FS_24000;
+            break;
+        case 32000:
+            EAP_ControlParams.SampleRate = LVM_FS_32000;
+            break;
+        case 44100:
+            EAP_ControlParams.SampleRate = LVM_FS_44100;
+            break;
+        case 48000:
+            EAP_ControlParams.SampleRate = LVM_FS_48000;
+            break;
+        case 64000:
+        case 88200:
+        case 96000:
+        case 128000:
+        case 176400:
+        case 192000:
+            LVM_Status = LVM_OUTOFRANGE;
+            break;
+    }
+    switch (d->channels)
+    {
+        case 1:
+            EAP_ControlParams.SourceFormat = LVM_MONO;
+            break;
+        case 2:
+            EAP_ControlParams.SourceFormat = LVM_STEREO;
+            break;
+    }
+    if (LVM_Status == LVM_OUTOFRANGE)
+    {
+        return LVM_Status;
+    }
+    else
+    {
+        return LVM_SUCCESS;
+    }
 }
 
 LVM_ReturnStatus_en EAP_Execute(void * inputBuffer, void * outputBuffer, int numSamples, int audioTimeMs)
 {
-	/* Function call status */
+    /* Function call status */
     LVM_ReturnStatus_en     LVM_Status;
 
-	LVM_Status = LVM_Process(EAP_hInstance,             /* Instance handle */
-							 inputBuffer,               /* Input buffer */
-							 outputBuffer,              /* Output buffer */
-							 numSamples,     			/* Number of samples to process */
-							 audioTimeMs);              /* Audio Time*/
+    LVM_Status = LVM_Process(EAP_hInstance,             /* Instance handle */
+                             inputBuffer,               /* Input buffer */
+                             outputBuffer,              /* Output buffer */
+                             numSamples,                /* Number of samples to process */
+                             audioTimeMs);              /* Audio Time*/
 
-	/* Check for error and stop if needed */
-	if (LVM_Status == LVM_NULLADDRESS)
-	{
-		return LVM_Status;
-	}
-	if (LVM_Status == LVM_INVALIDNUMSAMPLES)
-	{
-		return LVM_Status;
-	}
-	if (LVM_Status == LVM_ALIGNMENTERROR)
-	{
-		return LVM_Status;
-	}
-	if(LVM_Status != LVM_SUCCESS)
-	{
-		return LVM_Status;
-	}
+    /* Check for error and stop if needed */
+    if(LVM_Status != LVM_SUCCESS)
+    {
+        return LVM_Status;
+    }
 
-	return LVM_Status;
+    return LVM_Status;
 }
 
-void EAP_Deinit()
+LVM_ReturnStatus_en EAP_Deinit()
 {
-	LVM_ReturnStatus_en     LVM_Status;                             /* Function call status */
-	LVM_UINT16              i;                                      /* loop index */
-	LVM_INT32               temp32;                                 /* temporary address */
+    LVM_ReturnStatus_en     LVM_Status;                             /* Function call status */
+    LVM_UINT16              i;                                      /* loop index */
+    LVM_INT32               temp32;                                 /* temporary address */
 
     /*
     * Free memory
@@ -1078,4 +1042,6 @@ void EAP_Deinit()
             free((LVM_INT8 *)temp32);
         }
     }
+    return LVM_Status;
 }
+#endif

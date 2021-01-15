@@ -1,12 +1,8 @@
-/* Copyright 2019,2020 NXP
+/*
+ * Copyright 2019-2020 NXP
+ * All rights reserved.
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /** @file */
@@ -5794,7 +5790,7 @@ smStatus_t Se05x_API_GetRandom(pSe05xSession_t session_ctx, uint16_t size, uint8
  */
 smStatus_t Se05x_API_DeleteAll(pSe05xSession_t session_ctx);
 
-#if SSS_HAVE_SE05X_VER_GTE_04_04
+#if SSS_HAVE_SE05X_VER_GTE_06_00
 #include "se05x_04_xx_APDU_apis.h"
 #endif
 

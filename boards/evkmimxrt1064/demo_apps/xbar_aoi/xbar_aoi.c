@@ -16,9 +16,9 @@
 #include "fsl_aoi.h"
 #include "fsl_xbara.h"
 #include "fsl_xbarb.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

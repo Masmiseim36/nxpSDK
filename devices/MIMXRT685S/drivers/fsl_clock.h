@@ -27,13 +27,17 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.6.2. */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 6, 2))
+/*! @brief CLOCK driver version 2.7.0. */
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 7, 0))
 /*@}*/
 
 /* Definition for delay API in clock driver, users can redefine it to the real application. */
 #ifndef SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY
+#ifdef __XCC__
+#define SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY (600000000UL)
+#else
 #define SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY (300000000UL)
+#endif
 #endif
 
 /*! @brief External XTAL (SYSOSC) clock frequency.
@@ -1119,6 +1123,8 @@ void CLOCK_EnableSfroClk(void);
 /*! @brief  Initialize the System PLL.
  *  @param  config    : Configuration to set to PLL.
  */
+#endif /* __XCC__ */
+
 void CLOCK_InitSysPll(const clock_sys_pll_config_t *config);
 /*! brief  Deinit the System PLL.
  *  param  none.
@@ -1180,12 +1186,14 @@ void CLOCK_EnableUsbhsDeviceClock(void);
  * This function enables USB HS host PLL clock.
  */
 void CLOCK_EnableUsbhsHostClock(void);
-/*! @brief Enable USB HS PHY PLL clock.
+/*! brief Enable USB hs0PhyPll clock.
  *
- * This function enables USB HS PHY PLL clock.
+ * param src  USB HS clock source.
+ * param freq The frequency specified by src.
+ * retval true The clock is set successfully.
+ * retval false The clock source is invalid to get proper USB HS clock.
  */
-void CLOCK_EnableUsbhsPhyClock(void);
-#endif
+bool CLOCK_EnableUsbHs0PhyPllClock(clock_attach_id_t src, uint32_t freq);
 #if defined(__cplusplus)
 }
 #endif /* __cplusplus */

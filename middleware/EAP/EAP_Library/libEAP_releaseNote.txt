@@ -1,0 +1,265 @@
+libEAP_releaseNote
+
+/************************************************************************************/
+  LIB NAME: libEAP_Lib_2_0_3_LPC55S69.a
+  PLATFORM: cortex-M33 / FPv5-SP-D16 (HardABI) (for LPC55S69 and other compatible MCU)
+  RELEASE: 2.0.3 
+  DATE: 2020_09_11
+  COMPILATION SYMBOL: To be replicated when integration
+                      -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 
+  COMPILATION OPTION: Compiled with MCUXPRESSO_11.1  
+                      arm-none-eabi-gcc -D__BUILDENVIRONMENT_PLATFORM=cortexM33_FPv5-SP-D16 -DTOOLCHAIN_GCC -DLVCS_MS_COEFFS_SMALL -DALGORITHM_VC -DALGORITHM_DBE -DALGORITHM_EQNB -DALGORITHM_PR_EQNB -DALGORITHM_LM -DALGORITHM_TE -DALGORITHM_AVL -DALGORITHM_PSA -DALGORITHM_TG -DALGORITHM_LIMP -DALGORITHM_LIMR -D__CODE_RED -D__REDLIB__ -O3 -fno-common -Wall -c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections  -fno-rtti -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -D__REDLIB__ -fstack-usage -specs=redlib.specs -MMD -MP"
+  DESCRIPTION: see EAP 2.0.2 common description bellow + CS not present for LPC55S69 platform
+
+/************************************************************************************/
+
+  LIB NAME: libEAP_Lib_2_0_2_RT1062.a
+  PLATFORM: cortex-M7 / FPv5-SP-D16 (HardABI) (for MIMXRT1062xxxxA and other compatible MCU)
+  RELEASE: 2.0.2 
+  DATE: 2020_08_21
+  COMPILATION SYMBOL: To be replicated when integration
+                      -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 
+  COMPILATION OPTION: Compiled with MCUXPRESSO_11.1
+					  arm-none-eabi-gcc -D__BUILDENVIRONMENT_PLATFORM=cortexM7_FPv5-SP-D16 -DTOOLCHAIN_GCC -DLVCS_MS_COEFFS_SMALL -DALGORITHM_VC -DALGORITHM_CS -DALGORITHM_DBE -DALGORITHM_EQNB -DALGORITHM_PR_EQNB -DALGORITHM_LM -DALGORITHM_TE -DALGORITHM_AVL -DALGORITHM_PSA -DALGORITHM_TG -DALGORITHM_LIMP -DALGORITHM_LIMR -D__CODE_RED -D__REDLIB__ -O3 -fno-common -Wall -c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections  -fno-rtti -mcpu=cortex-m7 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -D__REDLIB__ -fstack-usage -specs=redlib.specs -MMD -MP"
+  DESCRIPTION: see common description bellow
+
+/************************************************************************************/
+
+  LIB NAME: libEAP_Lib_2_0_2_RT500.a
+  PLATFORM: nxp_rt500_RI2019 (for RT500)
+  RELEASE: 2.0.2 
+  DATE: 2020_08_12
+  COMPILATION SYMBOL: -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 
+  COMPILATION OPTION: 	xt-xcc" -c -O3 -fmessage-length=0
+						-DPROC_nxp_rt500_RI2019 -DCONFIG_nxp_rt500_RI2019 -DTOOLCHAIN_XT=1 -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 -D__BUILDENVIRONMENT_PLATFORM=nxp_rt500_RI2019
+						--xtensa-system=C:/usr/xtensa/XtDevTools/install/builds/RI-2019.1-win32/nxp_rt500_RI2019/config --xtensa-core=nxp_rt500_RI2019
+  DESCRIPTION: see common description bellow
+
+/************************************************************************************/
+
+  LIB NAME: libEAP_Lib_2_0_2_RT600.a
+  PLATFORM: nxp_rt600_RI2019_newlib (for RT600)
+  RELEASE: 2.0.2 
+  DATE: 2020_08_21
+  COMPILATION SYMBOL: -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 
+  COMPILATION OPTION: 	xt-xcc" -c -O3 -fmessage-length=0
+						-DPROC_nxp_rt600_RI2019_newlib -DCONFIG_nxp_rt600_RI2019_newlib -DTOOLCHAIN_XT=1 -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 -D__BUILDENVIRONMENT_PLATFORM=nxp_rt600_RI2019_newlib
+						--xtensa-system=C:/usr/xtensa/XtDevTools/install/builds/RI-2019.1-win32/nxp_rt600_RI2019_newlib/config --xtensa-core=nxp_rt600_RI2019_newlib
+  DESCRIPTION: see common description bellow
+               update -D__BUILDENVIRONMENT_PLATFORM to match nxp_rt600_RI2019_newlib
+
+/************************************************************************************/
+                   *** EAP 2_0_x COMMON DESCRIPTION ***
+/************************************************************************************/
+  DO or INCLUDE: DO or INCLUDE:
+
+	- Essential audio library for RT500/RT600/RT1062 platform + LVC_Types.h + LVM.h
+        - Algorithm compiled: 
+            - Volume and balance control (VC)
+            - Concert sound (CS) 
+            - Digital Bass enhancement (DBE)
+            - Treble effect (TE)
+            - User Equalizer (EQNB)
+			- Product Equalizer (PR_EQNB)
+            - Loudness maximizer (LM)
+            - Auto Volume Level (AVL)
+			- Peak Limiter (LIMP)
+			- RMS Limiter (LIMR)			
+            - Power spectrum analyzer (PSA)
+            - Tone generator (TG)
+
+	- Input data type:
+ 	   - 16 bit data input
+	   - mono or stereo
+	   - Sampling rate (Hz): 8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100 or 48000
+
+ DO NOT or NOT INCLUDE:
+        - pure bass (PB) because concurrent with DBE
+		
+ LAST UPDATE:
+		- Add peak limiter
+        - Add RMS limiter
+		- Replace custom tuning by
+			- A 2nd equalizer at start of chain to compensate speaker frequency response
+			- An advanced parameters for ConcertSound processing
+		- Mono input to Mono output is supported
+		- Add CrossOver API only
+		- API input control return an "Out of range" status more detailed
+
+
+/*************************************************************************************/
+
+
+/************************************************************************************/
+NAME: libEAP_Lib_2_0_2_RT500.a
+PLATFORM: nxp_rt500_RI2019 (for RT500)
+RELEASE: 2.0.2 
+DATE: 2020_08_12
+COMPILATION SYMBOL: -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 
+
+DO or INCLUDE: same as 2.0.1 with better scratch memory management
+
+/*************************************************************************************/
+
+/************************************************************************************/
+NAME: libEAP_Lib_2_0_2_RT600.a
+PLATFORM: nxp_rt600_RI2019_newlib (for RT600)
+RELEASE: 2.0.2 
+DATE: 2020_08_12
+COMPILATION SYMBOL: -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 
+
+DO or INCLUDE: same as 2.0.1 with better scratch memory management
+
+/*************************************************************************************/
+
+/************************************************************************************/
+NAME: libEAP_Lib_2_0_1_RT500ReleaseO3_CS_DBE_EQNB_PREQNB_LM_AVL_TE_VC_TG_PSA_LIMP_LIMR.a
+PLATFORM: nxp_rt500_RI2019 (for RT500)
+RELEASE: 2.0.1 
+DATE: 2020_08_10
+COMPILATION SYMBOL: -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 
+
+DO or INCLUDE: same as 2.0.0 with better scratch memory management
+
+/*************************************************************************************/
+
+/************************************************************************************/
+NAME: libEAP_Lib_2_0_1_RT600ReleaseO3_CS_DBE_EQNB_PREQNB_LM_AVL_TE_VC_TG_PSA_LIMP_LIMR.a
+PLATFORM: nxp_rt600_RI2019_newlib (for RT600)
+RELEASE: 2.0.1 
+DATE: 2020_08_10
+COMPILATION SYMBOL: -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 
+
+DO or INCLUDE: same as 2.0.0 with better scratch memory management
+
+/*************************************************************************************/
+
+/************************************************************************************/
+NAME: libEAP_Lib_2_0_0_RT500ReleaseO3_CS_DBE_EQNB_PREQNB_LM_AVL_TE_VC_TG_PSA_LIMP_LIMR.a
+PLATFORM: nxp_rt500_RI2019 (for RT500)
+RELEASE: 2.0.0 
+DATE: 2020_08_05
+COMPILATION SYMBOL: -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 
+
+DO or INCLUDE:
+
+	- Essential audio library for nxp_rt500_RI2019 platform + LVC_Types.h + LVM.h
+        - Algorithm compiled: 
+            - Volume and balance control (VC)
+            - Concert sound (CS) 
+            - Digital Bass enhancement (DBE)
+            - Treble effect (TE)
+            - User Equalizer (EQNB)
+			- Product Equalizer (PR_EQNB)
+            - Loudness maximizer (LM)
+            - Auto Volume Level (AVL)
+			- Peak Limiter (LIMP)
+			- RMS Limiter (LIMR)			
+            - Power spectrum analyzer (PSA)
+            - Tone generator (TG)
+
+	- Compilation option: -O3 -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1
+
+	- Input data type:
+ 	   - 16 bit data input
+	   - mono or stereo
+	   - Sampling rate (Hz): 8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100 or 48000
+
+DO NOT or NOT INCLUDE:
+        - pure bass (PB) because concurrent with DBE
+		
+LAST UPDATE:
+		- Add peak limiter
+        - Add RMS limiter
+		- Replace custom tuning by
+			- A 2nd equalizer at start of chain to compensate speaker frequency response
+			- An advanced parameters for ConcertSound processing
+		- Mono input to Mono output is supported
+		- Add CrossOver API only
+		- API input control return an "Out of range" status more detailed
+
+		
+/************************************************************************************/
+NAME: libEAP_Lib_2_0_0_RT600ReleaseO3_CS_DBE_EQNB_PREQNB_LM_AVL_TE_VC_TG_PSA_LIMP_LIMR.a
+PLATFORM: nxp_rt600_RI2019_newlib (for RT600)
+RELEASE: 2.0.0 
+DATE: 2020_06_17
+COMPILATION SYMBOL: -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1 
+
+DO or INCLUDE:
+
+	- Essential audio library for nxp_rt600_RI2019_newlib platform + LVC_Types.h + LVM.h
+        - Algorithm compiled: 
+            - Volume and balance control (VC)
+            - Concert sound (CS)
+            - Digital Bass enhancement (DBE)
+            - Treble effect (TE)
+            - User Equalizer (EQNB)
+			- Product Equalizer (PR_EQNB)
+            - Loudness maximizer (LM)
+            - Auto Volume Level (AVL)
+			- Peak Limiter (LIMP)
+			- RMS Limiter (LIMR)			
+            - Power spectrum analyzer (PSA)
+            - Tone generator (TG)
+
+	- Compilation option: -O3 -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_PR_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1 -DALGORITHM_LIMP=1 -DALGORITHM_LIMR=1
+
+	- Input data type:
+ 	   - 16 bit data input
+	   - mono or stereo
+	   - Sampling rate (Hz): 8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100 or 48000
+
+DO NOT or NOT INCLUDE:
+        - pure bass (PB) because concurrent with DBE
+
+UPDATE FROM 1.0.1:
+		- Add peak limiter
+        - Add RMS limiter
+		- Replace custom tuning by
+			- A 2nd equalizer at start of chain to compensate speaker frequency response
+			- An advanced parameters for ConcertSound processing
+		- Mono input to Mono output is supported
+		- Add CrossOver API only
+		- API input control return an "Out of range" status more detailed
+	
+/************************************************************************************/
+
+/************************************************************************************/
+RELEASE: 1.0.1 
+DATE: 2020_04_29
+Update from 1.0.0:
+		- Update the dump PSA file to retrieve (center frequency, current peak, history peak)
+        - Move PSA block in the audio chain to match the real output signal
+/************************************************************************************/
+
+/************************************************************************************/
+RELEASE: 1.0.0 
+DATE: 2020_04_07
+COMPILATION SYMBOL: -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1  
+DO or INCLUDE:
+	- essential audio library for nxp_rt600_RI2019_newlib platform + LVC_Types.h + LVM.h
+        - Algorithm compiled: 
+            - Volume and balance control (VC)
+            - Concert sound (CS)
+            - Digital Bass enhancement (DBE)
+            - Treble effect (TE)
+            - Equalizer (EQNB)
+            - Loudness maximizer (LM)
+            - Auto Volume Level (AVL)
+            - Power spectrum analyzer (PSA)
+            - Tone generator (TG)
+	- Compilation option: -O3 -DLVCS_MS_COEFFS_SMALL=1 -DALGORITHM_CS=1 -DALGORITHM_DBE=1 -DALGORITHM_EQNB=1 -DALGORITHM_LM=1 -DALGORITHM_TE=1 -DALGORITHM_TG=1 -DALGORITHM_AVL=1 -DALGORITHM_PSA=1 -DALGORITHM_VC=1
+	- Input data type:
+ 	   - 16 bit data input
+	   - mono or stereo
+	   - Sampling rate (Hz): 8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100 or 48000
+
+DO NOT or NOT INCLUDE:
+        - pure bass (PB) because concurrent with DBE
+        - cinema sound (CI) because concurrent with CS
+        - richsound (RS) because obsolete
+        - gentleMixer (GM) because obsolete
+
+/************************************************************************************/
+

@@ -69,6 +69,8 @@
 #include <string.h>
 #if defined(MBEDTLS_PLATFORM_C)
 #if defined(FREESCALE_KSDK_BM)
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_debug_console.h"
@@ -101,8 +103,6 @@
 #include "mbedtls/memory_buffer_alloc.h"
 #endif
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -407,21 +407,18 @@ static int bench_print_features(void)
 #elif defined(MBEDTLS_FREESCALE_CAU3_PKHA)
     text = "CAU3 HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_CASPER_PKHA)
-    text = "CASPER HW accelerated";
+    text = "CASPER HW accelerated ECC256/384/521 and RSA verify";
 #elif defined(MBEDTLS_FREESCALE_CAAM_PKHA)
     text = "CAAM HW accelerated";
-#else
-    text = "Software implementation";
-#endif
-    mbedtls_printf("  Asymmetric encryption: %s\r\n", text);
-#if defined(MBEDTLS_NXP_SENTINEL200)
+#elif defined(MBEDTLS_NXP_SENTINEL200)
     text = "S200 HW accelerated ECDSA and ECDH";
 #elif defined(MBEDTLS_NXP_SENTINEL300)
     text = "S300 HW accelerated ECDSA and ECDH";
 #else
     text = "Software implementation";
 #endif
-    mbedtls_printf("  ECC: %s\r\n\n", text);
+    mbedtls_printf("  Asymmetric cryptography: %s\r\n", text);
+
     return 0;
 }
 
@@ -447,9 +444,6 @@ int main(int argc, char *argv[])
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-
-    /* Data cache must be temporarily disabled to be able to use sdram */
-    SCB_DisableDCache();
     CRYPTO_InitHardware();
 #endif
     bench_print_features();

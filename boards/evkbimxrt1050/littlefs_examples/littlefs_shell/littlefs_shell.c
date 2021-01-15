@@ -8,13 +8,13 @@
 
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
-#include "serial_manager.h"
+#include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
 #include "lfs_support.h"
 
 #include "pin_mux.h"
-#include "board.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_flexspi.h"
 /*******************************************************************************
  * Definitions
@@ -221,7 +221,6 @@ static shell_status_t lfs_mount_handler(shell_handle_t shellHandle, int32_t argc
     if (res)
     {
         PRINTF("Error mounting LFS\r\n");
-        lfs_unmount(&lfs); /* deinit lfs to release resources */
     }
     else
     {
@@ -467,11 +466,10 @@ int main(void)
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(write));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(cat));
 
-#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
-    SHELL_Task(s_shellHandle);
-#endif
-
     while (1)
     {
+#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
+        SHELL_Task(s_shellHandle);
+#endif
     }
 }

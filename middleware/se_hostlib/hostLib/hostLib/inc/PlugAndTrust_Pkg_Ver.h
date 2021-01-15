@@ -16,18 +16,18 @@
 
 /* clang-format off */
 #define PLUGANDTRUST_PROD_NAME          "PlugAndTrust"
-#define PLUGANDTRUST_VER_STRING_NUM     "v02.15.00_20200522"
-#define PLUGANDTRUST_PROD_NAME_VER_FULL "PlugAndTrust_v02.15.00_20200522"
-#define PLUGANDTRUST_VER_MAJOR          (2u)
-#define PLUGANDTRUST_VER_MINOR          (15u)
-#define PLUGANDTRUST_VER_DEV            (0u)
+#define PLUGANDTRUST_VER_STRING_NUM     "v03.00.03_20200916"
+#define PLUGANDTRUST_PROD_NAME_VER_FULL "PlugAndTrust_v03.00.03_20200916"
+#define PLUGANDTRUST_VER_MAJOR          (3u)
+#define PLUGANDTRUST_VER_MINOR          (0u)
+#define PLUGANDTRUST_VER_DEV            (3u)
 
-/* v02.15 = 20015u */
+/* v03.00 = 30000u */
 #define PLUGANDTRUST_VER_MAJOR_MINOR ( 0 \
     | (PLUGANDTRUST_VER_MAJOR * 10000u)    \
     | (PLUGANDTRUST_VER_MINOR))
 
-/* v02.15.00 = 200150000ULL */
+/* v03.00.03 = 300000003ULL */
 #define PLUGANDTRUST_VER_MAJOR_MINOR_DEV ( 0 \
     | (PLUGANDTRUST_VER_MAJOR * 10000*10000u)    \
     | (PLUGANDTRUST_VER_MINOR * 10000u)    \
@@ -51,11 +51,11 @@
  * 
  * lang_namespace = ""
  * 
- * v_major  = "02"
+ * v_major  = "03"
  * 
- * v_minor  = "15"
+ * v_minor  = "00"
  * 
- * v_dev    = "00"
+ * v_dev    = "03"
  * 
  * # Develop Branch
  * v_meta   = ""

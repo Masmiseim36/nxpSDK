@@ -5,8 +5,8 @@ This example demonstrates how to perform OTA firmware update of the board using 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.5
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================

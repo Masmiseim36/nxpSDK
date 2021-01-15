@@ -24,6 +24,10 @@
 
 #define ARM_ETH_PHY_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 1)
 
+#ifndef PHY_AUTONEGO_DELAY_COUNT
+#define PHY_AUTONEGO_DELAY_COUNT (800000U)
+#endif
+
 typedef const struct _cmsis_enet_phy_resource
 {
     ENET_Type *base;           /*!< ENET peripheral base address. */
@@ -38,14 +42,8 @@ typedef struct _cmsis_enet_phy_state
 } cmsis_enet_phy_state_t;
 
 static const ARM_DRIVER_VERSION s_phyDriverVersion = {ARM_ETH_PHY_API_VERSION, ARM_ETH_PHY_DRV_VERSION};
-#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-/*! @brief Pointers to enet clocks for each instance. */
-extern clock_ip_name_t s_enetClock[FSL_FEATURE_SOC_ENET_COUNT];
-#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
 extern phy_handle_t phyHandle;
-
-extern uint32_t ENET_GetInstance(ENET_Type *base);
 
 static ARM_DRIVER_VERSION PHYx_GetVersion(void)
 {
@@ -76,11 +74,11 @@ static int32_t PHY_SetForcedSpeedDuplexMode(cmsis_enet_phy_state_t *ethPhy, uint
         {
             /* Build the control value. */
             bsctlReg &= ~(PHY_BCTL_DUPLEX_MASK | PHY_BCTL_SPEED0_MASK | PHY_BCTL_AUTONEG_MASK);
-            if (mode == ARM_ETH_PHY_DUPLEX_FULL)
+            if (mode == (uint32_t)ARM_ETH_PHY_DUPLEX_FULL)
             {
                 bsctlReg |= PHY_BCTL_DUPLEX_MASK;
             }
-            if (mode == ARM_ETH_PHY_SPEED_100M)
+            if (mode == (uint32_t)ARM_ETH_PHY_SPEED_100M)
             {
                 bsctlReg |= PHY_BCTL_SPEED0_MASK;
             }
@@ -106,45 +104,54 @@ static void PHY_SetPowerDown(cmsis_enet_phy_resource_t *enet, bool down)
 
     if (down)
     {
-        PHY_Read(&phyHandle, PHY_BASICCONTROL_REG, &data);
-        data |= (1U << 11);
-        PHY_Write(&phyHandle, PHY_BASICCONTROL_REG, data);
+        (void)PHY_Read(&phyHandle, PHY_BASICCONTROL_REG, &data);
+        data |= (1UL << 11);
+        (void)PHY_Write(&phyHandle, PHY_BASICCONTROL_REG, data);
     }
     else
     {
-        PHY_Read(&phyHandle, PHY_BASICCONTROL_REG, &data);
-        data &= ~(1U << 11);
-        PHY_Write(&phyHandle, PHY_BASICCONTROL_REG, data);
-        PHY_Read(&phyHandle, PHY_BASICCONTROL_REG, &data);
+        (void)PHY_Read(&phyHandle, PHY_BASICCONTROL_REG, &data);
+        data &= ~(1UL << 11);
+        (void)PHY_Write(&phyHandle, PHY_BASICCONTROL_REG, data);
+        (void)PHY_Read(&phyHandle, PHY_BASICCONTROL_REG, &data);
     }
 }
 
-#if (defined(ENET) && RTE_ENET) || (defined(ENET0) && RTE_ENET0)
+#if RTE_ENET
 
 /* User needs to provide the implementation for ENET_GetFreq
 in the application for enabling according instance. */
 extern uint32_t ENET0_GetFreq(void);
-#if defined(ENET)
-cmsis_enet_phy_resource_t ENETPHY0_Resource = {ENET, ENET0_GetFreq, RTE_ENET_PHY_ADDRESS};
+
+#if (defined(ENET) && defined(ENET_1G))
+static cmsis_enet_phy_resource_t ENETPHY0_Resource = {ENET_1G, ENET0_GetFreq, RTE_ENET_PHY_ADDRESS};
+#elif defined(ENET)
+static cmsis_enet_phy_resource_t ENETPHY0_Resource = {ENET, ENET0_GetFreq, RTE_ENET_PHY_ADDRESS};
+#elif defined(ENET0)
+static cmsis_enet_phy_resource_t ENETPHY0_Resource = {ENET0, ENET0_GetFreq, RTE_ENET_PHY_ADDRESS};
+#elif defined(ENET1)
+static cmsis_enet_phy_resource_t ENETPHY0_Resource = {ENET1, ENET0_GetFreq, RTE_ENET_PHY_ADDRESS};
 #else
-cmsis_enet_phy_resource_t ENETPHY0_Resource = {ENET0, ENET0_GetFreq, RTE_ENET_PHY_ADDRESS};
+static cmsis_enet_phy_resource_t ENETPHY0_Resource = {CONNECTIVITY__ENET0, ENET0_GetFreq, RTE_ENET_PHY_ADDRESS};
 #endif
-cmsis_enet_phy_state_t ENETPHY0_State = {&ENETPHY0_Resource, ARM_ETH_PHY_AUTO_NEGOTIATE};
+static cmsis_enet_phy_state_t ENETPHY0_State = {&ENETPHY0_Resource, ARM_ETH_PHY_AUTO_NEGOTIATE};
 
-int32_t PHY0_Initialize(ARM_ETH_PHY_Read_t fn_read, ARM_ETH_PHY_Write_t fn_write)
+static int32_t PHY0_Initialize(ARM_ETH_PHY_Read_t fn_read, ARM_ETH_PHY_Write_t fn_write)
 {
     return ARM_DRIVER_OK;
 }
 
-int32_t PHY0_UnInitialize(void)
+static int32_t PHY0_UnInitialize(void)
 {
     return ARM_DRIVER_OK;
 }
 
-int32_t PHY0_PowerControl(ARM_POWER_STATE state)
+static int32_t PHY0_PowerControl(ARM_POWER_STATE state)
 {
     int32_t status;
     phy_config_t phyConfig;
+    bool autonego = false;
+    uint32_t count;
 
     switch (state)
     {
@@ -153,7 +160,19 @@ int32_t PHY0_PowerControl(ARM_POWER_STATE state)
             phyConfig.phyAddr = ENETPHY0_State.resource->phyAddr;
             phyConfig.autoNeg = true;
             status            = PHY_Init(&phyHandle, &phyConfig);
-            if ((status == kStatus_Success) || (status == kStatus_PHY_AutoNegotiateFail))
+            if (status == kStatus_Success)
+            {
+                count = PHY_AUTONEGO_DELAY_COUNT;
+                do
+                {
+                    (void)PHY_GetAutoNegotiationStatus(&phyHandle, &autonego);
+                    if (autonego)
+                    {
+                        break;
+                    }
+                } while (--count != 0U);
+            }
+            if (autonego)
             {
                 status = ARM_DRIVER_OK;
             }
@@ -176,28 +195,28 @@ int32_t PHY0_PowerControl(ARM_POWER_STATE state)
     return status;
 }
 
-int32_t PHY0_SetInterface(uint32_t interface)
+static int32_t PHY0_SetInterface(uint32_t interface)
 {
+    int32_t status = ARM_DRIVER_OK;
     /* The interface for PHY is fixed or controlled by JUMPER setting.
-     * The interface setting for MAC is defined  by "RTE_ENET_RMII/RTE_ENET_MII"
+     * The interface setting for MAC is defined by "RTE_ENET_RMII/RTE_ENET_MII"
      */
-    if (interface == ARM_ETH_INTERFACE_SMII)
+    if (interface == (uint32_t)ARM_ETH_INTERFACE_SMII)
     {
-        return ARM_DRIVER_ERROR_UNSUPPORTED;
+        status = ARM_DRIVER_ERROR_UNSUPPORTED;
     }
-    else
-    {
-        return ARM_DRIVER_OK;
-    }
+    return status;
 }
 
-int32_t PHY0_SetMode(uint32_t mode)
+static int32_t PHY0_SetMode(uint32_t mode)
 {
     int32_t status = ARM_DRIVER_OK;
     phy_config_t phyConfig;
+    uint32_t count;
+    bool autonego = false;
 
     /*!< Check input mode. */
-    if ((mode == ARM_ETH_PHY_SPEED_1G) || (mode == ARM_ETH_PHY_ISOLATE))
+    if ((mode == (uint32_t)ARM_ETH_PHY_SPEED_1G) || (mode == ARM_ETH_PHY_ISOLATE))
     {
         return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
@@ -211,6 +230,22 @@ int32_t PHY0_SetMode(uint32_t mode)
         phyConfig.phyAddr = ENETPHY0_State.resource->phyAddr;
         phyConfig.autoNeg = true;
         status            = PHY_Init(&phyHandle, &phyConfig);
+        if (status == kStatus_Success)
+        {
+            count = PHY_AUTONEGO_DELAY_COUNT;
+            do
+            {
+                (void)PHY_GetAutoNegotiationStatus(&phyHandle, &autonego);
+                if (autonego)
+                {
+                    break;
+                }
+            } while (--count != 0U);
+            if (!autonego)
+            {
+                status = kStatus_Fail;
+            }
+        }
     }
     else
     {
@@ -218,10 +253,20 @@ int32_t PHY0_SetMode(uint32_t mode)
     }
     ENETPHY0_State.cmsis_enet_phy_mode = mode;
 
+    /* Convert to CMSIS status */
+    if (status == kStatus_Success)
+    {
+        status = ARM_DRIVER_OK;
+    }
+    else
+    {
+        status = ARM_DRIVER_ERROR;
+    }
+
     return status;
 }
 
-ARM_ETH_LINK_STATE PHY0_GetLinkState(void)
+static ARM_ETH_LINK_STATE PHY0_GetLinkState(void)
 {
     ARM_ETH_LINK_STATE state;
     bool linkUp = false;
@@ -239,7 +284,7 @@ ARM_ETH_LINK_STATE PHY0_GetLinkState(void)
     return state;
 }
 
-ARM_ETH_LINK_INFO PHY0_GetLinkInfo(void)
+static ARM_ETH_LINK_INFO PHY0_GetLinkInfo(void)
 {
     ARM_ETH_LINK_INFO linkInfo = {0};
     phy_speed_t speed;

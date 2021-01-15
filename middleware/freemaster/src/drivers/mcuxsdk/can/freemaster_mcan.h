@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -23,8 +23,8 @@
 #define __FREEMASTER_MCAN_H
 
 /******************************************************************************
-* Required header files include check
-******************************************************************************/
+ * Required header files include check
+ ******************************************************************************/
 #ifndef __FREEMASTER_H
 #error Please include the freemaster.h master header file before the freemaster_flexcan.h
 #endif
@@ -32,47 +32,27 @@
 /* This low-level driver uses the MCUXpresso SDK peripheral structure types. */
 #include "fsl_device_registers.h"
 
-/******************************************************************************
-* Adapter configuration
-******************************************************************************/
-
-/* MCAN  needs to know offset of the mcan shared memory, offsets of the buffers into shared memory,
-* transmit/receive MB numbers */
-#if FMSTR_USE_MCAN
-    #ifndef FMSTR_MCAN_TXMB_OFFSET
-    #error "MCAN transmit buffers offset into shared memory must be defined"
-    #endif
-    #ifndef FMSTR_MCAN_RXMB_OFFSET
-    #error "MCAN receive buffers offset into shared memory must be defined"
-    #endif
-    #ifndef FMSTR_MCAN_SHAREDMEMORY_OFFSET
-    #error "MCAN shared memory address must be defined"
-    #endif
-#endif
-
-
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
-      
-/******************************************************************************
-* Types definition
-******************************************************************************/
 
 /******************************************************************************
-* inline functions
-******************************************************************************/
+ * Types definition
+ ******************************************************************************/
 
 /******************************************************************************
-* Global API functions
-******************************************************************************/
-      
+ * inline functions
+ ******************************************************************************/
+
+/******************************************************************************
+ * Global API functions
+ ******************************************************************************/
+
 void FMSTR_CanSetBaseAddress(CAN_Type *base);
 void FMSTR_CanIsr(void);
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
 #endif /* __FREEMASTER_MCAN_H */
-

@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,9 +25,6 @@ mcdrv_pwm3ph_pwma_t g_sM1Pwm3ph;
 
 /* Structure for Encoder driver */
 mcdrv_qd_enc_t g_sM1Enc;
-
-/* Structure for Encoder driver slow loop*/
-mcdrv_qd_enc_t g_sM1EncSlow;
 
 /* Clock setup structure */
 clock_setup_t g_sClockSetup;
@@ -86,7 +83,8 @@ void InitClock(void)
 
     /* Calculate clock dependant variables for PMSM control algorithm */
     g_sClockSetup.ui32FastPeripheralClock = CLOCK_GetFreq(kCLOCK_IpgClk);
-    g_sClockSetup.ui32SysPllClock         = CLOCK_GetFreq(kCLOCK_SysPllClk);
+    g_sClockSetup.ui32SysPllClock = CLOCK_GetFreq(kCLOCK_SysPllClk);
+    g_sClockSetup.ui32CpuFrequency = CLOCK_GetFreq(kCLOCK_CpuClk);
 
     /* Parameters for motor M1 */
     g_sClockSetup.ui16M1PwmFreq   = M1_PWM_FREQ; /* 10 kHz */

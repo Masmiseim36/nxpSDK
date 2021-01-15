@@ -22,37 +22,44 @@
 #include "dsp_config.h"
 #include "srtm_utils.h"
 
+#ifdef XA_VIT_PRE_PROC
+#include "vit_pre_proc.h"
+#endif
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define AUDIO_FRMWK_BUF_SIZE (128 * 1024)
-#define AUDIO_COMP_BUF_SIZE  (512 * 1024)
+#define AUDIO_FRMWK_BUF_SIZE (32 * 1024)
+#define AUDIO_COMP_BUF_SIZE  (304 * 1024)
 
 enum
 {
     XA_COMP = -1,
     XA_CAPTURER_0,
     XA_GAIN_0,
+    XA_VIT_PRE_PROC_0,
     XA_RENDERER_0,
     NUM_COMP_IN_GRAPH,
 };
 
-const int comp_create_order[] = {XA_CAPTURER_0, XA_GAIN_0, XA_RENDERER_0};
+const int comp_create_order[] = {XA_CAPTURER_0, XA_GAIN_0, XA_VIT_PRE_PROC_0, XA_RENDERER_0};
 
 #define MAX_INP_STRMS 1
 #define MAX_OUT_STRMS 1
 #define MIN_INP_STRMS 1
 
-#define RENDERER_FRAME_SIZE (4 * 1024)
-#define PCM_GAIN_FRAME_SIZE (4 * 1024)
-#define CAPTURER_FRAME_SIZE (4 * 1024)
+#define XA_VIT_PRE_PROC_FRAME_SIZE_US 10000
+
+#define RENDERER_FRAME_SIZE (1024)
+#define PCM_GAIN_FRAME_SIZE (1024)
+#define CAPTURER_FRAME_SIZE (1024)
 
 /*******************************************************************************
  * Component Setup/ Config
  ******************************************************************************/
 static int renderer_setup(void *p_renderer, xaf_format_t *format, bool i2s)
 {
-    int param[20];
+    int param[22];
 
     param[0]  = XA_RENDERER_CONFIG_PARAM_PCM_WIDTH;
     param[1]  = format->pcm_width;
@@ -74,10 +81,27 @@ static int renderer_setup(void *p_renderer, xaf_format_t *format, bool i2s)
     param[17] = (int)DSP_AUDIO_BUFFER_1_PING;
     param[18] = XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_2;
     param[19] = (int)DSP_AUDIO_BUFFER_1_PONG;
+    param[20] = XA_RENDERER_CONFIG_PARAM_I2S_INTERFACE;
+    param[21] = AUDIO_I2S_RENDERER_DEVICE;
 
-    return xaf_comp_set_config(p_renderer, 10, &param[0]);
+    return xaf_comp_set_config(p_renderer, 11, &param[0]);
 }
 
+static int vit_pre_proc_setup(void *p_comp, xaf_format_t *format, bool i2s)
+{
+    int param[10];
+
+    param[0] = XA_VIT_PRE_PROC_CONFIG_PARAM_CHANNELS;
+    param[1] = format->channels;
+    param[2] = XA_VIT_PRE_PROC_CONFIG_PARAM_SAMPLE_RATE;
+    param[3] = format->sample_rate;
+    param[4] = XA_VIT_PRE_PROC_CONFIG_PARAM_PCM_WIDTH;
+    param[5] = format->pcm_width;
+    param[6] = XA_VIT_PRE_PROC_CONFIG_PARAM_INPUT_FRAME_SIZE_US;
+    param[7] = XA_VIT_PRE_PROC_FRAME_SIZE_US;
+
+    return xaf_comp_set_config(p_comp, 4, &param[0]);
+}
 static int pcm_gain_setup(void *p_comp, xaf_format_t *format, bool i2s)
 {
     int param[10];
@@ -95,10 +119,9 @@ static int pcm_gain_setup(void *p_comp, xaf_format_t *format, bool i2s)
 
     return xaf_comp_set_config(p_comp, 5, &param[0]);
 }
-
 static int capturer_setup(void *p_capturer, xaf_format_t *format, bool i2s)
 {
-    int param[20];
+    int param[22];
     int num_params = 4;
 
     param[0] = XA_CAPTURER_CONFIG_PARAM_PCM_WIDTH;
@@ -112,7 +135,7 @@ static int capturer_setup(void *p_capturer, xaf_format_t *format, bool i2s)
 
     if (i2s)
     {
-        num_params = 10;
+        num_params = 11;
 
         param[8]  = XA_CAPTURER_CONFIG_PARAM_I2S_MASTER_SLAVE;
         param[9]  = 0;
@@ -126,6 +149,8 @@ static int capturer_setup(void *p_capturer, xaf_format_t *format, bool i2s)
         param[17] = (int)DSP_AUDIO_BUFFER_2_PING;
         param[18] = XA_CAPTURER_CONFIG_PARAM_AUDIO_BUFFER_2;
         param[19] = (int)DSP_AUDIO_BUFFER_2_PONG;
+        param[20] = XA_CAPTURER_CONFIG_PARAM_I2S_INTERFACE;
+        param[21] = AUDIO_I2S_CAPTURER_DEVICE;
     }
 
     return xaf_comp_set_config(p_capturer, num_params, &param[0]);
@@ -196,6 +221,14 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
                 }
                 break;
 
+            case XA_VIT_PRE_PROC_0:
+                comp_format[cid].sample_rate = sampling_rate;
+                comp_format[cid].channels    = channels;
+                comp_format[cid].pcm_width   = width;
+                comp_setup[cid]              = vit_pre_proc_setup;
+                comp_type[cid]               = XAF_PRE_PROC;
+                comp_id[cid]                 = "pre-proc/vit_pre_proc";
+                break;
             case XA_GAIN_0:
                 comp_format[cid].sample_rate = sampling_rate;
                 comp_format[cid].channels    = channels;
@@ -204,7 +237,6 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
                 comp_type[cid]               = XAF_POST_PROC;
                 comp_id[cid]                 = "post-proc/pcm_gain";
                 break;
-
             case XA_RENDERER_0:
                 comp_format[cid].sample_rate = sampling_rate;
                 comp_format[cid].channels    = channels;
@@ -300,18 +332,42 @@ int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s)
         return -1;
     }
 
+    ret = xaf_connect(p_comp[XA_GAIN_0], 1, p_comp[XA_VIT_PRE_PROC_0], 0, 4);
+    if (ret != XAF_NO_ERROR)
+    {
+        DSP_PRINTF("xaf_connect CAPTURER_0 -> VIT_PRE_PROC_0 failure: %d\r\n", ret);
+        return -1;
+    }
+
+    DSP_PRINTF("connected CAPTURER -> XA_VIT_PRE_PROC_0\n\r");
+
+    /* Start VIT pre processing */
+    ret = xaf_comp_process(p_adev, p_comp[XA_VIT_PRE_PROC_0], NULL, 0, XAF_START_FLAG);
+    if (ret != XAF_NO_ERROR)
+    {
+        DSP_PRINTF("xaf_comp_process XAF_START_FLAG VIT_PRE_PROC_0 failure: %d\r\n", ret);
+        return -1;
+    }
+
+    ret = xaf_comp_get_status(p_adev, p_comp[XA_VIT_PRE_PROC_0], &comp_status, &info[0]);
+    if (ret != XAF_NO_ERROR)
+    {
+        DSP_PRINTF("xaf_comp_get_status VIT_PRE_PROC_0 failure: %d\r\n", ret);
+        return -1;
+    }
+
     /* Start renderer DMA output.  Will output I2S zeros until valid data is
      * available. */
     renderer_start_operation(p_comp[XA_RENDERER_0]);
 
-    ret = xaf_connect(p_comp[XA_GAIN_0], 1, p_comp[XA_RENDERER_0], 0, 4);
+    ret = xaf_connect(p_comp[XA_VIT_PRE_PROC_0], 1, p_comp[XA_RENDERER_0], 0, 4);
     if (ret != XAF_NO_ERROR)
     {
-        DSP_PRINTF("xaf_connect GAIN_0 -> RENDERER_0 failure: %d\r\n", ret);
+        DSP_PRINTF("xaf_connect VIT_PRE_PROC_0 -> RENDERER_0 failure: %d\r\n", ret);
         return -1;
     }
 
-    DSP_PRINTF("connected XA_GAIN_0 -> XA_RENDERER_0\n\r");
+    DSP_PRINTF("connected XA_VIT_PRE_PROC_0 -> XA_RENDERER_0\n\r");
 
     while (1)
     {

@@ -332,9 +332,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=1, DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>_DEBUG=1, DEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT685S;../../../../../../platform/drivers;../../../../../../platform/drivers/common;../../../..;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT685S/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -352,7 +352,7 @@
               <MiscControls/>
               <Define>DEBUG</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../..;..</IncludePath>
+              <IncludePath>..;../../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -368,7 +368,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -466,7 +466,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-lpcip3511</GroupName>
+          <GroupName>usb/device/source/lpcip3511</GroupName>
           <Files>
             <File>
               <FileName>usb_device_lpcip3511.c</FileName>
@@ -481,7 +481,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -499,14 +499,14 @@
           <GroupName>component/timer</GroupName>
           <Files>
             <File>
-              <FileName>mrt_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer/mrt_adapter.c</FilePath>
+              <FileName>fsl_adapter_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_timer.h</FilePath>
             </File>
             <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer/timer.h</FilePath>
+              <FileName>fsl_adapter_mrt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_mrt.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -519,19 +519,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_pint.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pint.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_inputmux.c</FileName>
+              <FileName>fsl_pint.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.c</FilePath>
             </File>
             <File>
               <FileName>fsl_inputmux.h</FileName>
@@ -539,14 +534,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_i2c.h</FileName>
@@ -554,9 +549,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_mrt.c</FileName>
+              <FileName>fsl_i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_mrt.h</FileName>
@@ -564,9 +559,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_mrt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -574,9 +569,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -584,9 +579,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -594,14 +589,19 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_usart.c</FileName>
+              <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
             </File>
             <File>
               <FileName>fsl_usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_cache.c</FileName>
@@ -624,19 +624,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flexcomm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexcomm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_flexcomm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -644,14 +639,19 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_reset.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_reset.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -659,19 +659,19 @@
           <GroupName>pmic_driver</GroupName>
           <Files>
             <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pca9420.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
@@ -686,17 +686,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
-            <File>
-              <FileName>croutine.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
-            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -726,12 +726,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>FreeRTOS.h</FileName>
+              <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
@@ -744,11 +744,6 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
             </File>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
@@ -757,6 +752,11 @@
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
@@ -826,7 +826,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
@@ -836,22 +836,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_class.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_class.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_class.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ch9.c</FileName>
@@ -881,7 +866,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-hid</GroupName>
+          <GroupName>usb/device/class</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_class.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_class.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_class.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/class/hid</GroupName>
           <Files>
             <File>
               <FileName>usb_device_hid.c</FileName>
@@ -896,8 +896,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>device</GroupName>
+          <GroupName>MIMXRT685S</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT685S_cm33.h</FileName>
               <FileType>5</FileType>
@@ -907,11 +912,6 @@
               <FileName>MIMXRT685S_cm33_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT685S_cm33.c</FileName>
@@ -929,6 +929,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -944,16 +954,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
@@ -961,17 +961,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>uart.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>usart_adapter.c</FileName>
+              <FileName>fsl_adapter_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/usart_adapter.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -991,52 +991,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>MIMXRT685S/arm</GroupName>
           <Files>
             <File>
               <FileName>startup_MIMXRT685S_cm33.S</FileName>
@@ -1046,7 +1046,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM33_NTZ-non_secure</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
@@ -1059,19 +1059,19 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
             </File>
             <File>
-              <FileName>portasm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
-            </File>
-            <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
             </File>
+            <File>
+              <FileName>portasm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -1099,19 +1099,19 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -1139,14 +1139,14 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/tz_context.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -1164,24 +1164,24 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1531,9 +1531,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>DEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT685S;../../../../../../platform/drivers;../../../../../../platform/drivers/common;../../../..;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT685S/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1551,7 +1551,7 @@
               <MiscControls/>
               <Define>DEBUG</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../..;..</IncludePath>
+              <IncludePath>..;../../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1567,7 +1567,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -1665,7 +1665,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-lpcip3511</GroupName>
+          <GroupName>usb/device/source/lpcip3511</GroupName>
           <Files>
             <File>
               <FileName>usb_device_lpcip3511.c</FileName>
@@ -1680,7 +1680,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -1698,14 +1698,14 @@
           <GroupName>component/timer</GroupName>
           <Files>
             <File>
-              <FileName>mrt_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer/mrt_adapter.c</FilePath>
+              <FileName>fsl_adapter_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_timer.h</FilePath>
             </File>
             <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer/timer.h</FilePath>
+              <FileName>fsl_adapter_mrt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_mrt.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1718,19 +1718,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_pint.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pint.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_inputmux.c</FileName>
+              <FileName>fsl_pint.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.c</FilePath>
             </File>
             <File>
               <FileName>fsl_inputmux.h</FileName>
@@ -1738,14 +1733,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_i2c.h</FileName>
@@ -1753,9 +1748,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_mrt.c</FileName>
+              <FileName>fsl_i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_mrt.h</FileName>
@@ -1763,9 +1758,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_mrt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -1773,9 +1768,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1783,9 +1778,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -1793,14 +1788,19 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_usart.c</FileName>
+              <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
             </File>
             <File>
               <FileName>fsl_usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_cache.c</FileName>
@@ -1823,19 +1823,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flexcomm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexcomm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_flexcomm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -1843,14 +1838,19 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_reset.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_reset.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1858,19 +1858,19 @@
           <GroupName>pmic_driver</GroupName>
           <Files>
             <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pca9420.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
@@ -1885,17 +1885,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
-            <File>
-              <FileName>croutine.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
-            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -1925,12 +1925,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>FreeRTOS.h</FileName>
+              <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
@@ -1943,11 +1943,6 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
             </File>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
@@ -1956,6 +1951,11 @@
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
@@ -2025,7 +2025,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
@@ -2035,22 +2035,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_class.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_class.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_class.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ch9.c</FileName>
@@ -2080,7 +2065,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-hid</GroupName>
+          <GroupName>usb/device/class</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_class.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_class.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_class.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/class/hid</GroupName>
           <Files>
             <File>
               <FileName>usb_device_hid.c</FileName>
@@ -2095,8 +2095,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>device</GroupName>
+          <GroupName>MIMXRT685S</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT685S_cm33.h</FileName>
               <FileType>5</FileType>
@@ -2106,11 +2111,6 @@
               <FileName>MIMXRT685S_cm33_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT685S_cm33.c</FileName>
@@ -2128,6 +2128,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -2143,16 +2153,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
@@ -2160,17 +2160,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>uart.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>usart_adapter.c</FileName>
+              <FileName>fsl_adapter_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/usart_adapter.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2190,52 +2190,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>MIMXRT685S/arm</GroupName>
           <Files>
             <File>
               <FileName>startup_MIMXRT685S_cm33.S</FileName>
@@ -2245,7 +2245,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM33_NTZ-non_secure</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
@@ -2258,19 +2258,19 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
             </File>
             <File>
-              <FileName>portasm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
-            </File>
-            <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
             </File>
+            <File>
+              <FileName>portasm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -2298,19 +2298,19 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -2338,14 +2338,14 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/tz_context.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -2363,24 +2363,24 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -2730,9 +2730,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>_DEBUG=0, NDEBUG, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT685S;../../../../../../platform/drivers;../../../../../../platform/drivers/common;../../../..;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT685S/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2750,7 +2750,7 @@
               <MiscControls/>
               <Define>NDEBUG</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../..;..</IncludePath>
+              <IncludePath>..;../../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2766,7 +2766,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_ram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -2864,7 +2864,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-lpcip3511</GroupName>
+          <GroupName>usb/device/source/lpcip3511</GroupName>
           <Files>
             <File>
               <FileName>usb_device_lpcip3511.c</FileName>
@@ -2879,7 +2879,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -2897,14 +2897,14 @@
           <GroupName>component/timer</GroupName>
           <Files>
             <File>
-              <FileName>mrt_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer/mrt_adapter.c</FilePath>
+              <FileName>fsl_adapter_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_timer.h</FilePath>
             </File>
             <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer/timer.h</FilePath>
+              <FileName>fsl_adapter_mrt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_mrt.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2917,19 +2917,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_pint.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pint.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_inputmux.c</FileName>
+              <FileName>fsl_pint.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.c</FilePath>
             </File>
             <File>
               <FileName>fsl_inputmux.h</FileName>
@@ -2937,14 +2932,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_i2c.h</FileName>
@@ -2952,9 +2947,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_mrt.c</FileName>
+              <FileName>fsl_i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_mrt.h</FileName>
@@ -2962,9 +2957,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_mrt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -2972,9 +2967,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -2982,9 +2977,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -2992,14 +2987,19 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_usart.c</FileName>
+              <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
             </File>
             <File>
               <FileName>fsl_usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_cache.c</FileName>
@@ -3022,19 +3022,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flexcomm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexcomm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_flexcomm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -3042,14 +3037,19 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_reset.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_reset.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3057,19 +3057,19 @@
           <GroupName>pmic_driver</GroupName>
           <Files>
             <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pca9420.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
@@ -3084,17 +3084,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
-            <File>
-              <FileName>croutine.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
-            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -3124,12 +3124,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>FreeRTOS.h</FileName>
+              <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
@@ -3142,11 +3142,6 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
             </File>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
@@ -3155,6 +3150,11 @@
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
@@ -3224,7 +3224,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
@@ -3234,22 +3234,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_class.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_class.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_class.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ch9.c</FileName>
@@ -3279,7 +3264,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-hid</GroupName>
+          <GroupName>usb/device/class</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_class.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_class.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_class.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/class/hid</GroupName>
           <Files>
             <File>
               <FileName>usb_device_hid.c</FileName>
@@ -3294,8 +3294,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>device</GroupName>
+          <GroupName>MIMXRT685S</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT685S_cm33.h</FileName>
               <FileType>5</FileType>
@@ -3305,11 +3310,6 @@
               <FileName>MIMXRT685S_cm33_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT685S_cm33.c</FileName>
@@ -3327,6 +3327,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -3342,16 +3352,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
@@ -3359,17 +3359,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>uart.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>usart_adapter.c</FileName>
+              <FileName>fsl_adapter_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/usart_adapter.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3389,52 +3389,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>MIMXRT685S/arm</GroupName>
           <Files>
             <File>
               <FileName>startup_MIMXRT685S_cm33.S</FileName>
@@ -3444,7 +3444,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM33_NTZ-non_secure</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
@@ -3457,19 +3457,19 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
             </File>
             <File>
-              <FileName>portasm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
-            </File>
-            <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
             </File>
+            <File>
+              <FileName>portasm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -3497,19 +3497,19 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -3537,14 +3537,14 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/tz_context.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -3562,24 +3562,24 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -3929,9 +3929,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-mno-unaligned-access  -fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, USB_STACK_FREERTOS, CPU_MIMXRT685SFVKB=1, USB_STACK_FREERTOS_HEAP_SIZE=16384, USB_STACK_USE_DEDICATED_RAM=1, SDK_I2C_BASED_COMPONENT_USED=1, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../devices/MIMXRT685S;../../../../../../platform/drivers;../../../../../../platform/drivers/common;../../../..;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT685S/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../components/timer;../../../../../../devices/MIMXRT685S/drivers;../../../../../../components/pca9420;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../devices/MIMXRT685S;../../../../../../devices/MIMXRT685S/utilities/str;../../../../../../devices/MIMXRT685S/utilities/debug_console;../../../../../../components/uart;../../../../flash_config;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../../../../components/osa;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3949,7 +3949,7 @@
               <MiscControls/>
               <Define>NDEBUG</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure;../../../..;..</IncludePath>
+              <IncludePath>..;../../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3965,7 +3965,7 @@
             <ScatterFile>MIMXRT685Sxxxx_cm33_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(CodeQuickAccess) --keep=*(.flash_conf) --predefine="-D__stack_size__=0x1000"</Misc>
+            <Misc>--remove --keep=*(CodeQuickAccess) --predefine="-D__stack_size__=0x1000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6329</DisabledWarnings>
           </LDads>
@@ -4063,7 +4063,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-lpcip3511</GroupName>
+          <GroupName>usb/device/source/lpcip3511</GroupName>
           <Files>
             <File>
               <FileName>usb_device_lpcip3511.c</FileName>
@@ -4078,7 +4078,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -4096,14 +4096,14 @@
           <GroupName>component/timer</GroupName>
           <Files>
             <File>
-              <FileName>mrt_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer/mrt_adapter.c</FilePath>
+              <FileName>fsl_adapter_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_timer.h</FilePath>
             </File>
             <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer/timer.h</FilePath>
+              <FileName>fsl_adapter_mrt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_mrt.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4116,19 +4116,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_pint.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pint.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_inputmux.c</FileName>
+              <FileName>fsl_pint.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_pint.c</FilePath>
             </File>
             <File>
               <FileName>fsl_inputmux.h</FileName>
@@ -4136,14 +4131,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_inputmux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_inputmux_connections.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_i2c.h</FileName>
@@ -4151,9 +4146,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_mrt.c</FileName>
+              <FileName>fsl_i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_mrt.h</FileName>
@@ -4161,9 +4156,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_mrt.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_mrt.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -4171,9 +4166,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -4181,9 +4176,9 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_power.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_power.h</FileName>
@@ -4191,14 +4186,19 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_usart.c</FileName>
+              <FileName>fsl_power.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</FilePath>
             </File>
             <File>
               <FileName>fsl_usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_cache.c</FileName>
@@ -4221,19 +4221,14 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flexcomm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexcomm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_flexcomm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -4241,14 +4236,19 @@
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_reset.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_reset.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_reset.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4256,19 +4256,19 @@
           <GroupName>pmic_driver</GroupName>
           <Files>
             <File>
-              <FileName>fsl_pca9420.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_pca9420.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/pca9420/fsl_pca9420.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_pca9420.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/pca9420/fsl_pca9420.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
@@ -4283,17 +4283,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
-            <File>
-              <FileName>croutine.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
-            </File>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
@@ -4323,12 +4323,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>FreeRTOS.h</FileName>
+              <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
             </File>
             <File>
               <FileName>StackMacros.h</FileName>
@@ -4341,11 +4341,6 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
             </File>
             <File>
-              <FileName>croutine.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
-            </File>
-            <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
@@ -4354,6 +4349,11 @@
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
@@ -4423,7 +4423,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
@@ -4433,22 +4433,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
-          <Files>
-            <File>
-              <FileName>usb_device_class.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../usb_device_class.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_device_class.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../usb_device_class.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ch9.c</FileName>
@@ -4478,7 +4463,22 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-hid</GroupName>
+          <GroupName>usb/device/class</GroupName>
+          <Files>
+            <File>
+              <FileName>usb_device_class.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../usb_device_class.c</FilePath>
+            </File>
+            <File>
+              <FileName>usb_device_class.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../usb_device_class.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>usb/device/class/hid</GroupName>
           <Files>
             <File>
               <FileName>usb_device_hid.c</FileName>
@@ -4493,8 +4493,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>device</GroupName>
+          <GroupName>MIMXRT685S</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT685S_cm33.h</FileName>
               <FileType>5</FileType>
@@ -4504,11 +4509,6 @@
               <FileName>MIMXRT685S_cm33_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT685S_cm33.c</FileName>
@@ -4526,6 +4526,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -4541,16 +4551,6 @@
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</FilePath>
@@ -4558,17 +4558,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>uart.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>usart_adapter.c</FileName>
+              <FileName>fsl_adapter_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/usart_adapter.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_usart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4588,52 +4588,52 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>startup</GroupName>
+          <GroupName>MIMXRT685S/arm</GroupName>
           <Files>
             <File>
               <FileName>startup_MIMXRT685S_cm33.S</FileName>
@@ -4643,7 +4643,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM33_NTZ-non_secure</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
@@ -4656,19 +4656,19 @@
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c</FilePath>
             </File>
             <File>
-              <FileName>portasm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
-            </File>
-            <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h</FilePath>
             </File>
+            <File>
+              <FileName>portasm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -4696,19 +4696,19 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_free_rtos.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_os_abstraction_free_rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -4736,14 +4736,14 @@
               <FilePath>../../../../../../CMSIS/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/tz_context.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -4761,24 +4761,24 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

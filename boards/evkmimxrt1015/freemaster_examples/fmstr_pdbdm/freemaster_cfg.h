@@ -88,7 +88,7 @@
 #define FMSTR_REC_FLOAT_TRIG    1   // Enable/disable floating point triggering
 
 // Target-side address translation (TSA)
-#define FMSTR_USE_TSA           0   // Enable TSA functionality
+#define FMSTR_USE_TSA           1   // Enable TSA functionality
 #define FMSTR_USE_TSA_INROM     1   // TSA tables declared as const (put to ROM)
 #define FMSTR_USE_TSA_SAFETY    1   // Enable/Disable TSA memory protection
 #define FMSTR_USE_TSA_DYNAMIC   1   // Enable/Disable TSA entries to be added also in runtime

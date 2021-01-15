@@ -190,7 +190,6 @@ SECTIONS
     __DATA_RAM = .;
     __data_start__ = .;      /* create a global symbol at data start */
     *(m_usb_dma_init_data)
-    */fsl_lpspi.c.obj(.text .text* .rodata .rodata*)
     *(.data)                 /* .data sections */
     *(.data*)                /* .data* sections */
     KEEP(*(.jcr*))
@@ -203,6 +202,7 @@ SECTIONS
   {
     . = ALIGN(32);
     __ram_function_start__ = .;
+    */fsl_lpspi.c.obj(.text .text* .rodata .rodata*)
     *(CodeQuickAccess)
     . = ALIGN(128);
     __ram_function_end__ = .;

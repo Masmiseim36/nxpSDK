@@ -7,26 +7,34 @@ Please take look into section "Board settings" if there are some board limitatio
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
 - Micro USB cable
 - evkbimxrt1050 board
 - Personal Computer
-- One of the following wifi modules:
+- One of the following WiFi modules:
   - Panasonic PAN9026 SDIO ADAPTER + SD to uSD adapter
-  - AzurWave AW-NM191MA + Murata uSD M.2 Adapter
-  - AzurWave AW-NM191NF-uSD
-
+  - AzureWave AW-NM191NF-uSD
+  - AzureWave AW-AM457-uSD
 
 Board settings
 ==============
-This example is by default prepared to work with Panasonic PAN9026 SDIO ADAPTER, it is configured by project macro: WIFI_BOARD_PAN9026_SDIO.
-If you want use AzurWave AW-NM191MA or AW-NM191NF change project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_NM191MA.
+This example, by default, is built to work with the Panasonic PAN9026 SDIO ADAPTER. It is configured by the project macro: WIFI_BOARD_PAN9026_SDIO.
+If you want use the AzureWave AW-NM191NF-uSD, please change the project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_NM191.
+If you want use the AzureWave AW-AM457-uSD, please change the project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_AM457.
+
+Jumper settings for AzureWave AW-NM191NF-uSD Module:
+  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
+  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+
+Jumper settings for AzureWave AW-AM457-uSD Module:
+  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
+  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
 
 Prepare the Demo
 ================
@@ -234,6 +242,3 @@ Every mentioned action takes approximately 1-3 seconds.
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

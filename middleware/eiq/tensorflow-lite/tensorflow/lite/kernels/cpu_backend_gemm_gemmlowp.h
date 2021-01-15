@@ -19,8 +19,11 @@ limitations under the License.
 #ifndef TENSORFLOW_LITE_KERNELS_CPU_BACKEND_GEMM_GEMMLOWP_H_
 #define TENSORFLOW_LITE_KERNELS_CPU_BACKEND_GEMM_GEMMLOWP_H_
 
+#include <tuple>
+
+#include "tensorflow/lite/kernels/internal/compatibility.h"
+
 #ifdef TFLITE_WITH_RUY
-#include "tensorflow/lite/experimental/ruy/ruy.h"
 #include "tensorflow/lite/kernels/cpu_backend_gemm_ruy.h"
 #endif
 

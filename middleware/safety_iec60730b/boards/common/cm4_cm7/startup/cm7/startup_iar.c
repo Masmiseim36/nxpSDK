@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,7 +17,7 @@
 * Prototypes
 ******************************************************************************/
 void common_startup(void);
-void write_vtor(int32_t);
+void write_vtor(uint32_t);
 
 /*******************************************************************************
 * Code
@@ -35,9 +35,12 @@ void common_startup(void)
     extern uint32_t __VECTOR_TABLE[];
     write_vtor((uint32_t)__VECTOR_TABLE);
 
-#if (__FPU_PRESENT)
-    SCB->CPACR |= ((3UL << 10*2) | (3UL << 11*2));    /* set CP10, CP11 Full Access */
-#endif
+#if ((__FPU_PRESENT == 1) && (__FPU_USED == 1))
+  SCB->CPACR |= ((3UL << 10*2) | (3UL << 11*2));    /* set CP10, CP11 Full Access in Secure mode */
+  #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+  SCB_NS->CPACR |= ((3UL << 10*2) | (3UL << 11*2));    /* set CP10, CP11 Full Access in Non-secure mode */
+  #endif /* (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U) */
+#endif /* ((__FPU_PRESENT == 1) && (__FPU_USED == 1)) */
 
     /* Declare a counter we'll use in all of the copy loops */
     uint32_t  SectionLen;
@@ -50,6 +53,10 @@ void common_startup(void)
     data_rom = __section_begin(".data_init");
     data_rom_end = __section_end(".data_init");
 
+#if WATCHDOG_ENABLED
+    Watchdog_refresh;
+#endif
+    
     /* Copy initialized data from ROM to RAM */
     SectionLen = data_rom_end - data_rom; /* This case in number of adress*/
     while (SectionLen--)
@@ -92,6 +99,19 @@ void common_startup(void)
 #if WATCHDOG_ENABLED
     Watchdog_refresh;
 #endif
+    
+#if defined(MECC1) || defined(MECC2)    
+    /* When ECC is enabled, SRC->SRSR need to be cleared since only correct SRSR value can trigger ROM ECC preload procedure.
+       Save SRSR to SRC->GPR[10] so that application can still check SRSR value from SRC->GPR[10]. */
+    SRC->GPR[10] = SRC->SRSR;
+    /* clear SRSR */
+    SRC->SRSR = 0xFFFFFFFF;
+
+    /* Enable entry to thread mode when divide by zero */
+    SCB->CCR |= SCB_CCR_DIV_0_TRP_Msk;
+    __DSB();
+    __ISB();    
+#endif
 }
 
 /*!
@@ -101,7 +121,7 @@ void common_startup(void)
 *
 * @return None
 */
-void write_vtor(int32_t vtor)
+void write_vtor(uint32_t vtor)
 {
     uint32_t *pVTOR = (uint32_t *)0xE000ED08;
     *pVTOR = vtor;

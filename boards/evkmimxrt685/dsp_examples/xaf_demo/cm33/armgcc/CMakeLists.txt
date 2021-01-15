@@ -1,8 +1,6 @@
-INCLUDE(CMakeForceCompiler)
-
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -17,680 +15,28 @@ SET(CMAKE_STATIC_LIBRARY_SUFFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
- 
 # CURRENT DIRECTORY
 SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
+SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -DDSP_IMAGE_COPY_TO_RAM=0")
 
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -DDEBUG")
+project(dsp_xaf_demo_cm33)
 
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -D__STARTUP_CLEAR_BSS")
+set(MCUX_SDK_PROJECT_NAME dsp_xaf_demo_cm33.elf)
 
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -g")
+include(${ProjDirPath}/flags.cmake)
 
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -mcpu=cortex-m33")
+include(${ProjDirPath}/config.cmake)
 
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -Wall")
-
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_FLASH_DEBUG "${CMAKE_ASM_FLAGS_FLASH_DEBUG} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -DDSP_IMAGE_COPY_TO_RAM=1")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -DNDEBUG")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -D__STARTUP_CLEAR_BSS")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -mcpu=cortex-m33")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -Wall")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_FLASH_RELEASE "${CMAKE_ASM_FLAGS_FLASH_RELEASE} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DDSP_IMAGE_COPY_TO_RAM=1")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mcpu=cortex-m33")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DDSP_IMAGE_COPY_TO_RAM=0")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DDEBUG")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DCPU_MIMXRT685SFVKB_cm33")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DBOOT_HEADER_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DXA_MP3_DECODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DXA_AAC_DECODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DXA_VORBIS_DECODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DXA_OPUS_ENCODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DXA_OPUS_DECODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DXA_SBC_ENCODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DXA_SBC_DECODER=0")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DXA_PCM_GAIN=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DXA_SRC_PP_FX=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DXA_RENDERER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DXA_CAPTURER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DI2S_SUPPORT_44100_HZ=0")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DDSP_NCACHE")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DBOARD_USE_CODEC=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DCODEC_WM8904_ENABLE")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DDEBUG_CONSOLE_RX_ENABLE=0")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DSD_ENABLED")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -DFSL_RTOS_FREE_RTOS")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -g")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -O0")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -mcpu=cortex-m33")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -Wall")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -mthumb")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -MMD")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -MP")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -fno-common")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -mapcs")
-
-SET(CMAKE_C_FLAGS_FLASH_DEBUG "${CMAKE_C_FLAGS_FLASH_DEBUG} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DDSP_IMAGE_COPY_TO_RAM=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DNDEBUG")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DFSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DCPU_MIMXRT685SFVKB_cm33")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DBOOT_HEADER_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DXA_MP3_DECODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DXA_AAC_DECODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DXA_VORBIS_DECODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DXA_OPUS_ENCODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DXA_OPUS_DECODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DXA_SBC_ENCODER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DXA_SBC_DECODER=0")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DXA_PCM_GAIN=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DXA_SRC_PP_FX=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DXA_RENDERER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DXA_CAPTURER=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DI2S_SUPPORT_44100_HZ=0")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DDSP_NCACHE")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DBOARD_USE_CODEC=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DCODEC_WM8904_ENABLE")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DDEBUG_CONSOLE_RX_ENABLE=0")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DSD_ENABLED")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -DFSL_RTOS_FREE_RTOS")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -Os")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -mcpu=cortex-m33")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -Wall")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -mthumb")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -MMD")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -MP")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -fno-common")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -mapcs")
-
-SET(CMAKE_C_FLAGS_FLASH_RELEASE "${CMAKE_C_FLAGS_FLASH_RELEASE} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDSP_IMAGE_COPY_TO_RAM=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_VORBIS_DECODER=0")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_OPUS_ENCODER=0")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_OPUS_DECODER=0")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_SBC_ENCODER=0")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT685SFVKB_cm33")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOOT_HEADER_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_MP3_DECODER=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_AAC_DECODER=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_SBC_DECODER=0")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_PCM_GAIN=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_SRC_PP_FX=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_RENDERER=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXA_CAPTURER=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DI2S_SUPPORT_44100_HZ=0")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDSP_NCACHE")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOARD_USE_CODEC=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCODEC_WM8904_ENABLE")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DDEBUG_CONSOLE_RX_ENABLE=0")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSD_ENABLED")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_FREE_RTOS")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mcpu=cortex-m33")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MMD")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MP")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -DDEBUG")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -g")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -O0")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -mcpu=cortex-m33")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -Wall")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -MMD")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -MP")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_FLASH_DEBUG "${CMAKE_CXX_FLAGS_FLASH_DEBUG} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -DNDEBUG")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -Os")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -mcpu=cortex-m33")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -Wall")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -MP")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_FLASH_RELEASE "${CMAKE_CXX_FLAGS_FLASH_RELEASE} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mcpu=cortex-m33")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MP")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-exceptions")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -g")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -mcpu=cortex-m33")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -Map=output.map")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -mcpu=cortex-m33")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -Map=output.map")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m33")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
-
-include_directories(${ProjDirPath}/../../../..)
-
-include_directories(${ProjDirPath}/../../dsp/binary)
-
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../..)
-
-include_directories(${ProjDirPath}/../../dsp/binary)
-
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../..)
-
-include_directories(${ProjDirPath}/../../dsp/binary)
-
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure)
-
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../..)
-
-include_directories(${ProjDirPath}/../../..)
-
-include_directories(${ProjDirPath}/../../../../../src/dsp_examples/xaf_demo/resources)
-
-include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
-
-include_directories(${ProjDirPath}/../../../../../../devices)
-
-include_directories(${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers)
-
-include_directories(${ProjDirPath}/../../../../../../components/codec/wm8904)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities)
-
-include_directories(${ProjDirPath}/../../../../../../components/codec)
-
-include_directories(${ProjDirPath}/../../../../../../components/codec/port/wm8904)
-
-include_directories(${ProjDirPath}/../../../../../../components/codec/i2c)
-
-include_directories(${ProjDirPath}/../../../../../../components/i2c)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/sdmmc/sd)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/sdmmc/common)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/sdmmc/host/usdhc)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/fatfs/source)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/fatfs/source/fsl_sd_disk)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33)
-
-include_directories(${ProjDirPath}/../../../../../../components/pca9420)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console)
-
-include_directories(${ProjDirPath}/../../../../../../components/uart)
-
-include_directories(${ProjDirPath}/../../../../flash_config)
-
-include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
-
-include_directories(${ProjDirPath}/../../../../../../components/lists)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/sdmmc/osa)
-
-include_directories(${ProjDirPath}/../../../../../../components/osa)
-
-add_executable(dsp_xaf_demo_cm33.elf 
+add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../main_cm33.c"
 "${ProjDirPath}/../main_cm33.h"
 "${ProjDirPath}/../cmd.c"
 "${ProjDirPath}/../cmd.h"
+"${ProjDirPath}/../dsp_ipc.c"
+"${ProjDirPath}/../dsp_ipc.h"
 "${ProjDirPath}/../ffconf.h"
 "${ProjDirPath}/../dsp_config.h"
 "${ProjDirPath}/../srtm_config.h"
@@ -722,8 +68,6 @@ add_executable(dsp_xaf_demo_cm33.elf
 "${ProjDirPath}/../incbin.S"
 "${ProjDirPath}/../dsp_support.c"
 "${ProjDirPath}/../dsp_support.h"
-"${ProjDirPath}/../dsp_ipc.c"
-"${ProjDirPath}/../dsp_ipc.h"
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../pmic_support.c"
 "${ProjDirPath}/../pmic_support.h"
@@ -736,196 +80,154 @@ add_executable(dsp_xaf_demo_cm33.elf
 "${ProjDirPath}/../../dsp/binary/dsp_text_release.bin"
 "${ProjDirPath}/../../dsp/binary/dsp_data_release.bin"
 "${ProjDirPath}/../../dsp/binary/dsp_ncache_release.bin"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h"
-"${ProjDirPath}/../../../../../../components/codec/wm8904/fsl_wm8904.c"
-"${ProjDirPath}/../../../../../../components/codec/wm8904/fsl_wm8904.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/port.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portasm.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM33_NTZ/non_secure/portmacro.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/fsl_shell.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/fsl_shell.h"
-"${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.c"
-"${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../components/codec/port/wm8904/fsl_codec_adapter.c"
-"${ProjDirPath}/../../../../../../components/codec/port/wm8904/fsl_codec_adapter.h"
-"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.c"
-"${ProjDirPath}/../../../../../../components/codec/i2c/fsl_codec_i2c.h"
-"${ProjDirPath}/../../../../../../components/i2c/i2c.h"
-"${ProjDirPath}/../../../../../../components/i2c/i3c_adapter.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usdhc.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/sd/fsl_sd.c"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/sd/fsl_sd.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/common/fsl_sdmmc_common.c"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/common/fsl_sdmmc_common.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/common/fsl_sdmmc_spec.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c"
-"${ProjDirPath}/../../../../../../middleware/fatfs/source/diskio.c"
-"${ProjDirPath}/../../../../../../middleware/fatfs/source/diskio.h"
-"${ProjDirPath}/../../../../../../middleware/fatfs/source/ff.c"
-"${ProjDirPath}/../../../../../../middleware/fatfs/source/ff.h"
-"${ProjDirPath}/../../../../../../middleware/fatfs/source/ffsystem.c"
-"${ProjDirPath}/../../../../../../middleware/fatfs/source/ffunicode.c"
-"${ProjDirPath}/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c"
-"${ProjDirPath}/../../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_power.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_power.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imxrt600_m33/rpmsg_platform.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imxrt600_m33/rpmsg_platform.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_mu.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_mu.h"
-"${ProjDirPath}/../../../../../../components/pca9420/fsl_pca9420.c"
-"${ProjDirPath}/../../../../../../components/pca9420/fsl_pca9420.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/fsl_device_registers.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../../components/uart/uart.h"
-"${ProjDirPath}/../../../../../../components/uart/usart_adapter.c"
-"${ProjDirPath}/../../../../flash_config/flash_config.c"
-"${ProjDirPath}/../../../../flash_config/flash_config.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.h"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_internal.h"
-"${ProjDirPath}/../../../../../../components/lists/generic_list.c"
-"${ProjDirPath}/../../../../../../components/lists/generic_list.h"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/gcc/startup_MIMXRT685S_cm33.S"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_cm33.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/tz_context.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c"
-"${ProjDirPath}/../../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/croutine.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/event_groups.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/atomic.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/croutine.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/list.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/portable.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/queue.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/semphr.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/task.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/timers.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/list.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/queue.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/tasks.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/timers.c"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c"
-"${ProjDirPath}/../../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h"
-"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction.h"
-"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_config.h"
-"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_free_rtos.c"
-"${ProjDirPath}/../../../../../../components/osa/fsl_os_abstraction_free_rtos.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux_connections.h"
-"${ProjDirPath}/../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/fsl_sbrk.c"
 )
 
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${ProjDirPath}/.. flash_debug
+    ${ProjDirPath}/../../dsp/binary flash_debug
+    ${ProjDirPath}/..
+    ${ProjDirPath}/../../../..
+    ${ProjDirPath}/../../dsp/binary flash_release
+)
 
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -T${ProjDirPath}/MIMXRT685Sxxxx_cm33_ram.ld -static")
+set(CMAKE_MODULE_PATH
+    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers
+    ${ProjDirPath}/../../../../../../components/codec/wm8904
+    ${ProjDirPath}/../../../../../../rtos/freertos
+    ${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities
+    ${ProjDirPath}/../../../../../../components/codec
+    ${ProjDirPath}/../../../../../../components/codec/port/wm8904
+    ${ProjDirPath}/../../../../../../components/codec/i2c
+    ${ProjDirPath}/../../../../../../components/i2c
+    ${ProjDirPath}/../../../../../../middleware/sdmmc
+    ${ProjDirPath}/../../../../../../middleware/fatfs
+    ${ProjDirPath}/../../../../../../middleware/multicore
+    ${ProjDirPath}/../../../../../../components/pca9420
+    ${ProjDirPath}/../../../../../../devices/MIMXRT685S
+    ${ProjDirPath}/../../../../../../components/uart
+    ${ProjDirPath}/../../../../flash_config
+    ${ProjDirPath}/../../../../../../components/serial_manager
+    ${ProjDirPath}/../../../../../../components/lists
+    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../components/osa
+)
 
-set(CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLASH_DEBUG} -T${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld -static")
+# include modules
+include(driver_clock_MIMXRT685S_cm33)
 
-set(CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLASH_RELEASE} -T${ProjDirPath}/MIMXRT685Sxxxx_cm33_flash.ld -static")
+include(driver_flexcomm_i2c_MIMXRT685S_cm33)
 
-TARGET_LINK_LIBRARIES(dsp_xaf_demo_cm33.elf -Wl,--start-group)
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized m)
+include(driver_i3c_MIMXRT685S_cm33)
 
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized c)
+include(driver_wm8904_MIMXRT685S_cm33)
 
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized gcc)
+include(middleware_freertos-kernel_cm33_nonsecure_port_MIMXRT685S_cm33)
 
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized nosys)
+include(utility_shell_MIMXRT685S_cm33)
 
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized m)
+include(driver_codec_MIMXRT685S_cm33)
 
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized c)
+include(driver_common_MIMXRT685S_cm33)
 
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized gcc)
+include(component_wm8904_adapter_MIMXRT685S_cm33)
 
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized nosys)
+include(component_codec_i2c_MIMXRT685S_cm33)
 
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized m)
+include(component_i3c_adapter_MIMXRT685S_cm33)
 
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized c)
+include(driver_lpc_gpio_MIMXRT685S_cm33)
 
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized gcc)
+include(driver_usdhc_MIMXRT685S_cm33)
 
-target_link_libraries(dsp_xaf_demo_cm33.elf optimized nosys)
+include(middleware_sdmmc_sd_MIMXRT685S_cm33)
 
-TARGET_LINK_LIBRARIES(dsp_xaf_demo_cm33.elf -Wl,--end-group)
+include(middleware_sdmmc_common_MIMXRT685S_cm33)
 
-ADD_CUSTOM_COMMAND(TARGET dsp_xaf_demo_cm33.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
--Obinary ${EXECUTABLE_OUTPUT_PATH}/dsp_xaf_demo_cm33.elf ${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin)
+include(middleware_sdmmc_host_usdhc_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_host_usdhc_freertos_MIMXRT685S_cm33)
+
+include(middleware_fatfs_MIMXRT685S_cm33)
+
+include(middleware_fatfs_sd_MIMXRT685S_cm33)
+
+include(driver_power_MIMXRT685S_cm33)
+
+include(driver_reset_MIMXRT685S_cm33)
+
+include(driver_dsp_MIMXRT685S_cm33)
+
+include(driver_inputmux_MIMXRT685S_cm33)
+
+include(middleware_multicore_rpmsg_lite_evkmimxrt685_freertos_MIMXRT685S_cm33)
+
+include(driver_mu_MIMXRT685S_cm33)
+
+include(driver_pca9420_MIMXRT685S_cm33)
+
+include(device_MIMXRT685S_CMSIS_MIMXRT685S_cm33)
+
+include(utility_debug_console_MIMXRT685S_cm33)
+
+include(utility_assert_MIMXRT685S_cm33)
+
+include(component_usart_adapter_MIMXRT685S_cm33)
+
+include(driver_flash_config_MIMXRT685S_cm33)
+
+include(driver_flexspi_MIMXRT685S_cm33)
+
+include(driver_cache_cache64_MIMXRT685S_cm33)
+
+include(component_serial_manager_MIMXRT685S_cm33)
+
+include(component_lists_MIMXRT685S_cm33)
+
+include(component_serial_manager_uart_MIMXRT685S_cm33)
+
+include(driver_flexcomm_usart_MIMXRT685S_cm33)
+
+include(device_MIMXRT685S_startup_MIMXRT685S_cm33)
+
+include(driver_flexcomm_MIMXRT685S_cm33)
+
+include(driver_lpc_iopctl_MIMXRT685S_cm33)
+
+include(CMSIS_Include_core_cm33_MIMXRT685S_cm33)
+
+include(CMSIS_Include_common_MIMXRT685S_cm33)
+
+include(CMSIS_Include_dsp_MIMXRT685S_cm33)
+
+include(middleware_freertos-kernel_MIMXRT685S_cm33)
+
+include(middleware_freertos-kernel_extension_MIMXRT685S_cm33)
+
+include(middleware_sdmmc_osa_freertos_MIMXRT685S_cm33)
+
+include(component_osa_free_rtos_MIMXRT685S_cm33)
+
+include(driver_inputmux_connections_MIMXRT685S_cm33)
+
+include(middleware_multicore_rpmsg_lite_MIMXRT685S_cm33)
+
+include(middleware_freertos-kernel_heap_4_MIMXRT685S_cm33)
+
+include(utilities_misc_utilities_MIMXRT685S_cm33)
+
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
+
+ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/sdk20-app.bin)
 

@@ -270,16 +270,6 @@ void USB_HSDcdIsrFunction(usb_hsdcd_handle handle)
     event  = kUSB_DcdError;
     status = dcdHSState->dcdRegisterBase->STATUS;
 
-#ifndef USBHSDCD_IRQS
-    if(0U == (dcdHSState->dcdRegisterBase->CONTROL & USBHSDCD_CONTROL_IF_MASK))
-    {
-        return;
-    }
-    if(0U != (dcdHSState->dcdRegisterBase->STATUS & USBHSDCD_STATUS_ACTIVE_MASK))
-    {
-        return;
-    }
-#endif
 
     if (0U != (status & USBHSDCD_STATUS_ERR_MASK))
     {

@@ -989,7 +989,13 @@ netif_found:
       /* check payload length is multiple of 8 octets when mbit is set */
       if (IP6_FRAG_MBIT(frag_hdr) && (IP6H_PLEN(ip6hdr) & 0x7)) {
         /* ipv6 payload length is not multiple of 8 octets */
+        #ifdef __IAR_SYSTEMS_ICC__
+        #pragma diag_suppress=Pa039
+        #endif /* __IAR_SYSTEMS_ICC__ */
         icmp6_param_problem(p, ICMP6_PP_FIELD, LWIP_PACKED_CAST(const void *, &ip6hdr->_plen));
+        #ifdef __IAR_SYSTEMS_ICC__
+        #pragma diag_default=Pa039
+        #endif /* __IAR_SYSTEMS_ICC__ */
         LWIP_DEBUGF(IP6_DEBUG, ("ip6_input: packet with invalid payload length dropped\n"));
         pbuf_free(p);
         IP6_STATS_INC(ip6.drop);

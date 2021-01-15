@@ -6,10 +6,10 @@ The SAI Demo application demonstrates complicated digital audio playback and rec
 
 Toolchain supported
 ===================
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.5
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+- IAR embedded Workbench  8.50.9
 
 Hardware requirements
 =====================
@@ -56,6 +56,6 @@ Please choose the option :
 Note:
 To debug in qspiflash, following steps are needed:
 1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Start debugging in IDE.
+2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+3. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.

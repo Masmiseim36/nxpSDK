@@ -175,7 +175,7 @@ static inline FMSTR_U32 FMSTR_GETREG32(FMSTR_U16 offset)
     return *addr;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    FlexCAN communication initialization
 *
@@ -228,7 +228,7 @@ static FMSTR_SIZE8 _FMSTR_56F800E_FlexCAN_GetRxFrameLen(void)
         FMSTR_U32 sr;
         FMSTR_U32 code;
 
-#ifdef FMSTR_POLL_DRIVEN
+#if FMSTR_POLL_DRIVEN > 0
         /* Any data received? */
         FMSTR_U32 iflag = FMSTR_GETREG32(FMSTR_FCANIFLAG_OFFSET);
 
@@ -285,7 +285,7 @@ static void _FMSTR_56F800E_FlexCAN_AckRxFrame(void)
 
 static FMSTR_BOOL _FMSTR_56F800E_FlexCAN_PrepareTxFrame(void)
 {
-#ifdef FMSTR_POLL_DRIVEN
+#if FMSTR_POLL_DRIVEN > 0
     FMSTR_U32 iflag = FMSTR_GETREG32(FMSTR_FCANIFLAG_OFFSET);
 
     /* All data sent? */
@@ -334,7 +334,7 @@ static void _FMSTR_56F800E_FlexCAN_SendTxFrame(FMSTR_SIZE8 len)
     FMSTR_SETREG32(FMSTR_FCANTXFG_OFFSET + FMSTR_FCMBCSR, FMSTR_FCANMB_CTXTRANS_ONCE | cr);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Assigning FreeMASTER communication module base address
 *

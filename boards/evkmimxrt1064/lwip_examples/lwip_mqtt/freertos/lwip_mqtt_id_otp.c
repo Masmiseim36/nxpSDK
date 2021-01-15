@@ -20,6 +20,11 @@ void get_mqtt_id(uint32_t *id)
 {
     id[3] = 0U;
     id[2] = 0U;
+#ifdef OCOTP_CFG0_BITS_MASK
     id[1] = OCOTP->CFG1;
     id[0] = OCOTP->CFG0;
+#else
+    id[1] = OCOTP->FUSE001;
+    id[0] = OCOTP->FUSE000;
+#endif
 }

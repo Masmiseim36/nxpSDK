@@ -130,10 +130,10 @@ sss_status_t sss_mbedtls_session_open(sss_mbedtls_session_t *session,
     }
 #endif
     retval            = kStatus_SSS_Fail;
-    session->ctr_drbg = malloc(sizeof(*session->ctr_drbg));
+    session->ctr_drbg = SSS_MALLOC(sizeof(*session->ctr_drbg));
     ENSURE_OR_GO_EXIT(session->ctr_drbg != NULL);
 
-    session->entropy = malloc(sizeof(*session->entropy));
+    session->entropy = SSS_MALLOC(sizeof(*session->entropy));
     ENSURE_OR_GO_EXIT(session->entropy != NULL);
     retval = kStatus_SSS_InvalidArgument;
 
@@ -169,9 +169,9 @@ sss_status_t sss_mbedtls_session_prop_get_au8(
 void sss_mbedtls_session_close(sss_mbedtls_session_t *session)
 {
     if (session->ctr_drbg != NULL)
-        free(session->ctr_drbg);
+        SSS_FREE(session->ctr_drbg);
     if (session->entropy != NULL)
-        free(session->entropy);
+        SSS_FREE(session->entropy);
     memset(session, 0, sizeof(*session));
 }
 
@@ -368,11 +368,11 @@ void sss_mbedtls_key_object_free(sss_mbedtls_object_t *keyObject)
                 mbedtls_pk_context *pk;
                 pk = (mbedtls_pk_context *)keyObject->contents;
                 mbedtls_pk_free(pk);
-                free(pk);
+                SSS_FREE(pk);
                 break;
             }
             default:
-                free(keyObject->contents);
+                SSS_FREE(keyObject->contents);
             }
         }
         memset(keyObject, 0, sizeof(*keyObject));
@@ -662,7 +662,7 @@ sss_status_t sss_mbedtls_key_store_allocate(sss_mbedtls_key_store_t *keyStore, u
     ENSURE_OR_GO_CLEANUP(keyStore->keystore_shadow == NULL);
 
     keyStore->max_object_count = MAX_KEY_OBJ_COUNT;
-    keyStore->objects          = (sss_mbedtls_object_t **)malloc(MAX_KEY_OBJ_COUNT * sizeof(sss_mbedtls_object_t *));
+    keyStore->objects = (sss_mbedtls_object_t **)SSS_MALLOC(MAX_KEY_OBJ_COUNT * sizeof(sss_mbedtls_object_t *));
     ENSURE_OR_GO_CLEANUP(keyStore->objects != NULL);
     memset(keyStore->objects, 0, (MAX_KEY_OBJ_COUNT * sizeof(sss_mbedtls_object_t *)));
     ks_sw_fat_allocate(&keyStore->keystore_shadow);
@@ -943,7 +943,7 @@ void sss_mbedtls_key_store_context_free(sss_mbedtls_key_store_t *keyStore)
                 keyStore->objects[i] = NULL;
             }
         }
-        free(keyStore->objects);
+        SSS_FREE(keyStore->objects);
         keyStore->objects = NULL;
     }
     if (NULL != keyStore->keystore_shadow) {
@@ -1356,7 +1356,7 @@ sss_status_t sss_mbedtls_cipher_init(sss_mbedtls_symmetric_t *context, uint8_t *
     sss_status_t retval = kStatus_SSS_Fail;
 #if SSS_HAVE_TESTCOUNTERPART
     const mbedtls_cipher_info_t *cipher_info = NULL;
-    context->cipher_ctx                      = (mbedtls_cipher_context_t *)malloc(sizeof(mbedtls_cipher_context_t));
+    context->cipher_ctx                      = (mbedtls_cipher_context_t *)SSS_MALLOC(sizeof(mbedtls_cipher_context_t));
     ENSURE_OR_GO_EXIT(context->cipher_ctx != NULL);
     retval = kStatus_SSS_Success;
 
@@ -1593,7 +1593,7 @@ sss_status_t sss_mbedtls_cipher_finish(
     mbedtls_cipher_finish(context->cipher_ctx, temp, &temp_len);
     mbedtls_cipher_free(context->cipher_ctx);
     memset(context->cipher_ctx, 0, sizeof(*(context->cipher_ctx)));
-    free(context->cipher_ctx);
+    SSS_FREE(context->cipher_ctx);
 
     retval = kStatus_SSS_Success;
 exit:
@@ -1668,11 +1668,11 @@ sss_status_t sss_mbedtls_aead_context_init(sss_mbedtls_aead_t *context,
     context->mode      = mode;
 
     if (algorithm == kAlgorithm_SSS_AES_GCM) {
-        context->gcm_ctx = (mbedtls_gcm_context *)malloc(sizeof(mbedtls_gcm_context));
+        context->gcm_ctx = (mbedtls_gcm_context *)SSS_MALLOC(sizeof(mbedtls_gcm_context));
         ENSURE_OR_GO_CLEANUP(context->gcm_ctx);
     }
     else if (algorithm == kAlgorithm_SSS_AES_CCM) {
-        context->ccm_ctx = (mbedtls_ccm_context *)malloc(sizeof(mbedtls_ccm_context));
+        context->ccm_ctx = (mbedtls_ccm_context *)SSS_MALLOC(sizeof(mbedtls_ccm_context));
         ENSURE_OR_GO_CLEANUP(context->ccm_ctx);
     }
     else {
@@ -1752,7 +1752,7 @@ sss_status_t sss_mbedtls_aead_init(
     context->ccm_dataTotalLen = payloadLen;
     if (context->algorithm == kAlgorithm_SSS_AES_CCM) {
         if (context->ccm_dataTotalLen) {
-            context->pCcm_data = malloc(payloadLen);
+            context->pCcm_data = SSS_MALLOC(payloadLen);
             if (context->pCcm_data) {
                 memset(context->pCcm_data, 0, payloadLen);
                 context->ccm_dataoffset = 0;
@@ -1893,7 +1893,7 @@ static sss_status_t sss_mbedtls_aead_ccm_update(sss_mbedtls_aead_t *context, con
     else {
         /*Free the allocated memory in init*/
         if (context->pCcm_data != NULL) {
-            free(context->pCcm_data);
+            SSS_FREE(context->pCcm_data);
             context->pCcm_data = NULL;
         }
     }
@@ -2010,15 +2010,15 @@ void sss_mbedtls_aead_context_free(sss_mbedtls_aead_t *context)
         if (context->algorithm == kAlgorithm_SSS_AES_GCM) {
             if (context->gcm_ctx != NULL) {
                 mbedtls_gcm_free(context->gcm_ctx);
-                free(context->gcm_ctx);
+                SSS_FREE(context->gcm_ctx);
             }
         }
         else if (context->algorithm == kAlgorithm_SSS_AES_CCM) {
             if (context->ccm_ctx != NULL) {
                 mbedtls_ccm_free(context->ccm_ctx);
-                free(context->ccm_ctx);
+                SSS_FREE(context->ccm_ctx);
                 if (context->pCcm_data != NULL) {
-                    free(context->pCcm_data);
+                    SSS_FREE(context->pCcm_data);
                     context->pCcm_data = NULL;
                 }
             }
@@ -2054,14 +2054,14 @@ sss_status_t sss_mbedtls_mac_context_init(sss_mbedtls_mac_t *context,
     context->cipher_ctx = NULL;
 
     if (context->algorithm == kAlgorithm_SSS_CMAC_AES) {
-        context->cipher_ctx = (mbedtls_cipher_context_t *)malloc(sizeof(mbedtls_cipher_context_t));
+        context->cipher_ctx = (mbedtls_cipher_context_t *)SSS_MALLOC(sizeof(mbedtls_cipher_context_t));
         ENSURE_OR_GO_CLEANUP(context->cipher_ctx);
     }
 #if SSSFTR_SW_TESTCOUNTERPART
     if (algorithm == kAlgorithm_SSS_HMAC_SHA1 || algorithm == kAlgorithm_SSS_HMAC_SHA224 ||
         algorithm == kAlgorithm_SSS_HMAC_SHA256 || algorithm == kAlgorithm_SSS_HMAC_SHA384 ||
         algorithm == kAlgorithm_SSS_HMAC_SHA512) {
-        context->HmacCtx = (mbedtls_md_context_t *)malloc(sizeof(mbedtls_md_context_t));
+        context->HmacCtx = (mbedtls_md_context_t *)SSS_MALLOC(sizeof(mbedtls_md_context_t));
         ENSURE_OR_GO_CLEANUP(context->HmacCtx);
     }
 #endif
@@ -2358,7 +2358,7 @@ void sss_mbedtls_mac_context_free(sss_mbedtls_mac_t *context)
     if (context != NULL) {
         if (context->cipher_ctx != NULL) {
             mbedtls_cipher_free(context->cipher_ctx);
-            free(context->cipher_ctx);
+            SSS_FREE(context->cipher_ctx);
         }
         memset(context, 0, sizeof(*context));
     }
@@ -2557,13 +2557,13 @@ sss_status_t sss_mbedtls_rng_context_init(sss_mbedtls_rng_context_t *context, ss
     context->session = session;
 
     if (session->ctr_drbg == NULL) {
-        session->ctr_drbg = malloc(sizeof(*session->ctr_drbg));
+        session->ctr_drbg = SSS_MALLOC(sizeof(*session->ctr_drbg));
         ENSURE_OR_GO_EXIT(session->ctr_drbg != NULL);
         mbedtls_ctr_drbg_init((session->ctr_drbg));
     }
 
     if (session->entropy == NULL) {
-        session->entropy = malloc(sizeof(*session->entropy));
+        session->entropy = SSS_MALLOC(sizeof(*session->entropy));
         ENSURE_OR_GO_EXIT(session->entropy != NULL);
         mbedtls_entropy_init((session->entropy));
     }
@@ -2712,7 +2712,6 @@ static sss_status_t sss_mbedtls_set_key(
                 ENSURE_OR_GO_EXIT(ret == 0);
 
                 retval = kStatus_SSS_Success;
-
             }
 #else
             ret = mbedtls_mpi_read_binary(&pEcpPrv->d, data, dataLen);
@@ -3105,7 +3104,7 @@ sss_status_t ks_mbedtls_key_object_create(sss_mbedtls_object_t *keyObject,
         break;
     }
     if (size != 0) {
-        keyObject->contents           = malloc(size);
+        keyObject->contents           = SSS_MALLOC(size);
         keyObject->contents_must_free = 1;
         ENSURE_OR_GO_CLEANUP(keyObject->contents);
         memset(keyObject->contents, 0, size);

@@ -6,6 +6,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -14,10 +18,6 @@
 
 #include "usb_device_ch9.h"
 #include "usb_device_descriptor.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include "ieee11073_types.h"
 #include "ieee11073_timer.h"
 #include "ieee11073_agent.h"
@@ -59,7 +59,7 @@ extern usb_shim_agent_struct_t g_shimAgent;
 usb_status_t USB_ShimAgentRecvComplete(void *handle, void *param)
 {
     usb_device_endpoint_callback_message_struct_t *message = (usb_device_endpoint_callback_message_struct_t *)param;
-    if ((!message->length) || (USB_UNINITIALIZED_VAL_32 == message->length))
+    if ((!message->length) || (USB_CANCELLED_TRANSFER_LENGTH == message->length))
     {
         /* Prepare for the next receiving */
         USB_DeviceRecvRequest((void *)g_shimAgent.deviceHandle, g_shimAgent.bulkOutData.epNumber,

@@ -27,35 +27,36 @@
      kCODEC_SupportPlayChannelRight0 | kCODEC_SupportPlayChannelRight1 | kCODEC_SupportPlayChannelRight2)
 
 /*! @brief wm8960 map protocol */
-#define HAL_WM8960_MAP_PROTOCOL(protocol)       \
-    (protocol == kCODEC_BusI2S ?                \
-         kWM8960_BusI2S :                       \
-         protocol == kCODEC_BusLeftJustified ?  \
-         kWM8960_BusLeftJustified :             \
-         protocol == kCODEC_BusRightJustified ? \
-         kWM8960_BusRightJustified :            \
-         protocol == kCODEC_BusPCMA ? kWM8960_BusPCMA : protocol == kCODEC_BusPCMB ? kWM8960_BusPCMB : kWM8960_BusI2S)
+#define HAL_WM8960_MAP_PROTOCOL(protocol)                 \
+    ((protocol) == kCODEC_BusI2S ?                        \
+         kWM8960_BusI2S :                                 \
+         (protocol) == kCODEC_BusLeftJustified ?          \
+         kWM8960_BusLeftJustified :                       \
+         (protocol) == kCODEC_BusRightJustified ?         \
+         kWM8960_BusRightJustified :                      \
+         (protocol) == kCODEC_BusPCMA ? kWM8960_BusPCMA : \
+                                        (protocol) == kCODEC_BusPCMB ? kWM8960_BusPCMB : kWM8960_BusI2S)
 
 /*! @brief wm8960 map module */
-#define HAL_WM8960_MAP_MODULE(module)                        \
-    (module == kCODEC_ModuleADC ?                            \
-         kWM8960_ModuleADC :                                 \
-         module == kCODEC_ModuleDAC ?                        \
-         kWM8960_ModuleDAC :                                 \
-         module == kCODEC_ModuleVref ?                       \
-         kWM8960_ModuleVREF :                                \
-         module == kCODEC_ModuleHeadphone ?                  \
-         kWM8960_ModuleHP :                                  \
-         module == kCODEC_ModuleMicbias ?                    \
-         kWM8960_ModuleMICB :                                \
-         module == kCODEC_ModuleMic ?                        \
-         kWM8960_ModuleMIC :                                 \
-         module == kCODEC_ModuleLinein ?                     \
-         kWM8960_ModuleLineIn :                              \
-         module == kCODEC_ModuleSpeaker ?                    \
-         kWM8960_ModuleSpeaker :                             \
-         module == kCODEC_ModuleMxier ? kWM8960_ModuleOMIX : \
-                                        module == kCODEC_ModuleLineout ? kWM8960_ModuleLineOut : kWM8960_ModuleADC)
+#define HAL_WM8960_MAP_MODULE(module)                                      \
+    ((module) == kCODEC_ModuleADC ?                                        \
+         kWM8960_ModuleADC :                                               \
+         (module) == kCODEC_ModuleDAC ?                                    \
+         kWM8960_ModuleDAC :                                               \
+         (module) == kCODEC_ModuleVref ?                                   \
+         kWM8960_ModuleVREF :                                              \
+         (module) == kCODEC_ModuleHeadphone ?                              \
+         kWM8960_ModuleHP :                                                \
+         (module) == kCODEC_ModuleMicbias ?                                \
+         kWM8960_ModuleMICB :                                              \
+         (module) == kCODEC_ModuleMic ? kWM8960_ModuleMIC :                \
+                                        (module) == kCODEC_ModuleLinein ?  \
+                                        kWM8960_ModuleLineIn :             \
+                                        (module) == kCODEC_ModuleSpeaker ? \
+                                        kWM8960_ModuleSpeaker :            \
+                                        (module) == kCODEC_ModuleMxier ?   \
+                                        kWM8960_ModuleOMIX :               \
+                                        (module) == kCODEC_ModuleLineout ? kWM8960_ModuleLineOut : kWM8960_ModuleADC)
 
 /*******************************************************************************
  * Prototypes
@@ -85,13 +86,13 @@ status_t HAL_CODEC_WM8960_Init(void *handle, void *config)
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
-    wm8960_config_t *wm8960Config = (wm8960_config_t *)(codecConfig->codecDevConfig);
-    wm8960_handle_t *wm8960Handle = (wm8960_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
+    wm8960_config_t *devConfig = (wm8960_config_t *)(codecConfig->codecDevConfig);
+    wm8960_handle_t *devHandle = (wm8960_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
 
     ((codec_handle_t *)handle)->codecCapability = &s_wm8960_capability;
 
     /* codec device initialization */
-    return WM8960_Init(wm8960Handle, wm8960Config);
+    return WM8960_Init(devHandle, devConfig);
 }
 
 /*!

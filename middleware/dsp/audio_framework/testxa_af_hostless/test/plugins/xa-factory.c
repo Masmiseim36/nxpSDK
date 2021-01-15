@@ -1,15 +1,15 @@
 /*******************************************************************************
 * Copyright (c) 2015-2020 Cadence Design Systems, Inc.
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining
 * a copy of this software and associated documentation files (the
-* "Software"), to use this Software with Cadence processor cores only and 
+* "Software"), to use this Software with Cadence processor cores only and
 * not with any other processors and platforms, subject to
 * the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included
 * in all copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -79,6 +79,7 @@ extern XA_ERRORCODE xa_aac_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_mixer(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_pcm_gain(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_client_proxy(xa_codec_handle_t, WORD32, WORD32, pVOID);
+extern XA_ERRORCODE xa_vit_pre_proc(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_mp3_encoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_amr_wb_decoder(xa_codec_handle_t, WORD32, WORD32, pVOID);
 extern XA_ERRORCODE xa_src_pp_fx(xa_codec_handle_t, WORD32, WORD32, pVOID);
@@ -138,6 +139,9 @@ static const xf_component_id_t xf_component_id[] =
 #endif
 #if XA_CLIENT_PROXY
     { "post-proc/client_proxy",      xa_audio_codec_factory,     xa_client_proxy },
+#endif
+#if XA_VIT_PRE_PROC
+    { "pre-proc/vit_pre_proc",      xa_audio_codec_factory,     xa_vit_pre_proc },
 #endif
 #if XA_MP3_ENCODER
     { "audio-encoder/mp3",       xa_audio_codec_factory,     xa_mp3_encoder },

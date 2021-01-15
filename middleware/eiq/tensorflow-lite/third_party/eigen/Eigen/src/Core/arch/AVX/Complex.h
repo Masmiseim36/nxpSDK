@@ -76,7 +76,6 @@ EIGEN_STRONG_INLINE Packet4cf pcmp_eq(const Packet4cf& a, const Packet4cf& b) {
 }
 
 template<> EIGEN_STRONG_INLINE Packet4cf ptrue<Packet4cf>(const Packet4cf& a) { return Packet4cf(ptrue(Packet8f(a.v))); }
-template<> EIGEN_STRONG_INLINE Packet4cf pnot<Packet4cf>(const Packet4cf& a) { return Packet4cf(pnot(Packet8f(a.v))); }
 template<> EIGEN_STRONG_INLINE Packet4cf pand   <Packet4cf>(const Packet4cf& a, const Packet4cf& b) { return Packet4cf(_mm256_and_ps(a.v,b.v)); }
 template<> EIGEN_STRONG_INLINE Packet4cf por    <Packet4cf>(const Packet4cf& a, const Packet4cf& b) { return Packet4cf(_mm256_or_ps(a.v,b.v)); }
 template<> EIGEN_STRONG_INLINE Packet4cf pxor   <Packet4cf>(const Packet4cf& a, const Packet4cf& b) { return Packet4cf(_mm256_xor_ps(a.v,b.v)); }
@@ -150,36 +149,11 @@ template<> EIGEN_STRONG_INLINE std::complex<float> predux<Packet4cf>(const Packe
                      Packet2cf(_mm256_extractf128_ps(a.v,1))));
 }
 
-template<> EIGEN_STRONG_INLINE Packet4cf preduxp<Packet4cf>(const Packet4cf* vecs)
-{
-  Packet8f t0 = _mm256_shuffle_ps(vecs[0].v, vecs[0].v, _MM_SHUFFLE(3, 1, 2 ,0));
-  Packet8f t1 = _mm256_shuffle_ps(vecs[1].v, vecs[1].v, _MM_SHUFFLE(3, 1, 2 ,0));
-  t0 = _mm256_hadd_ps(t0,t1);
-  Packet8f t2 = _mm256_shuffle_ps(vecs[2].v, vecs[2].v, _MM_SHUFFLE(3, 1, 2 ,0));
-  Packet8f t3 = _mm256_shuffle_ps(vecs[3].v, vecs[3].v, _MM_SHUFFLE(3, 1, 2 ,0));
-  t2 = _mm256_hadd_ps(t2,t3);
-  
-  t1 = _mm256_permute2f128_ps(t0,t2, 0 + (2<<4));
-  t3 = _mm256_permute2f128_ps(t0,t2, 1 + (3<<4));
-
-  return Packet4cf(_mm256_add_ps(t1,t3));
-}
-
 template<> EIGEN_STRONG_INLINE std::complex<float> predux_mul<Packet4cf>(const Packet4cf& a)
 {
   return predux_mul(pmul(Packet2cf(_mm256_extractf128_ps(a.v, 0)),
                          Packet2cf(_mm256_extractf128_ps(a.v, 1))));
 }
-
-template<int Offset>
-struct palign_impl<Offset,Packet4cf>
-{
-  static EIGEN_STRONG_INLINE void run(Packet4cf& first, const Packet4cf& second)
-  {
-    if (Offset==0) return;
-    palign_impl<Offset*2,Packet8f>::run(first.v, second.v);
-  }
-};
 
 template<> struct conj_helper<Packet4cf, Packet4cf, false,true>
 {
@@ -291,7 +265,6 @@ EIGEN_STRONG_INLINE Packet2cd pcmp_eq(const Packet2cd& a, const Packet2cd& b) {
 }
 
 template<> EIGEN_STRONG_INLINE Packet2cd ptrue<Packet2cd>(const Packet2cd& a) { return Packet2cd(ptrue(Packet4d(a.v))); }
-template<> EIGEN_STRONG_INLINE Packet2cd pnot<Packet2cd>(const Packet2cd& a) { return Packet2cd(pnot(Packet4d(a.v))); }
 template<> EIGEN_STRONG_INLINE Packet2cd pand   <Packet2cd>(const Packet2cd& a, const Packet2cd& b) { return Packet2cd(_mm256_and_pd(a.v,b.v)); }
 template<> EIGEN_STRONG_INLINE Packet2cd por    <Packet2cd>(const Packet2cd& a, const Packet2cd& b) { return Packet2cd(_mm256_or_pd(a.v,b.v)); }
 template<> EIGEN_STRONG_INLINE Packet2cd pxor   <Packet2cd>(const Packet2cd& a, const Packet2cd& b) { return Packet2cd(_mm256_xor_pd(a.v,b.v)); }
@@ -347,29 +320,11 @@ template<> EIGEN_STRONG_INLINE std::complex<double> predux<Packet2cd>(const Pack
                      Packet1cd(_mm256_extractf128_pd(a.v,1))));
 }
 
-template<> EIGEN_STRONG_INLINE Packet2cd preduxp<Packet2cd>(const Packet2cd* vecs)
-{
-  Packet4d t0 = _mm256_permute2f128_pd(vecs[0].v,vecs[1].v, 0 + (2<<4));
-  Packet4d t1 = _mm256_permute2f128_pd(vecs[0].v,vecs[1].v, 1 + (3<<4));
-
-  return Packet2cd(_mm256_add_pd(t0,t1));
-}
-
 template<> EIGEN_STRONG_INLINE std::complex<double> predux_mul<Packet2cd>(const Packet2cd& a)
 {
   return predux(pmul(Packet1cd(_mm256_extractf128_pd(a.v,0)),
                      Packet1cd(_mm256_extractf128_pd(a.v,1))));
 }
-
-template<int Offset>
-struct palign_impl<Offset,Packet2cd>
-{
-  static EIGEN_STRONG_INLINE void run(Packet2cd& first, const Packet2cd& second)
-  {
-    if (Offset==0) return;
-    palign_impl<Offset*2,Packet4d>::run(first.v, second.v);
-  }
-};
 
 template<> struct conj_helper<Packet2cd, Packet2cd, false,true>
 {
@@ -442,26 +397,6 @@ ptranspose(PacketBlock<Packet2cd,2>& kernel) {
   __m256d tmp = _mm256_permute2f128_pd(kernel.packet[0].v, kernel.packet[1].v, 0+(2<<4));
   kernel.packet[1].v = _mm256_permute2f128_pd(kernel.packet[0].v, kernel.packet[1].v, 1+(3<<4));
  kernel.packet[0].v = tmp;
-}
-
-template<> EIGEN_STRONG_INLINE Packet4cf pinsertfirst(const Packet4cf& a, std::complex<float> b)
-{
-  return Packet4cf(_mm256_blend_ps(a.v,pset1<Packet4cf>(b).v,1|2));
-}
-
-template<> EIGEN_STRONG_INLINE Packet2cd pinsertfirst(const Packet2cd& a, std::complex<double> b)
-{
-  return Packet2cd(_mm256_blend_pd(a.v,pset1<Packet2cd>(b).v,1|2));
-}
-
-template<> EIGEN_STRONG_INLINE Packet4cf pinsertlast(const Packet4cf& a, std::complex<float> b)
-{
-  return Packet4cf(_mm256_blend_ps(a.v,pset1<Packet4cf>(b).v,(1<<7)|(1<<6)));
-}
-
-template<> EIGEN_STRONG_INLINE Packet2cd pinsertlast(const Packet2cd& a, std::complex<double> b)
-{
-  return Packet2cd(_mm256_blend_pd(a.v,pset1<Packet2cd>(b).v,(1<<3)|(1<<2)));
 }
 
 } // end namespace internal

@@ -104,6 +104,14 @@
 #define BOARD_INITSILEX2401SHIELD_IRQ_NAME      "IRQ"              /*!< Identifier name */
 #define BOARD_INITSILEX2401SHIELD_IRQ_DIRECTION kGPIO_DigitalInput /*!< Direction */
 
+/* Serial MWM WIFI */
+#define BOARD_SERIAL_MWM_PORT_CLK_FREQ     BOARD_DebugConsoleSrcFreq()
+#define BOARD_SERIAL_MWM_PORT              LPUART1
+#define BOARD_SERIAL_MWM_PORT_IRQn         LPUART1_IRQn
+#define BOARD_SERIAL_MWM_RST_GPIO          GPIO1
+#define BOARD_SERIAL_MWM_RST_PIN           24
+#define BOARD_SERIAL_MWM_RST_WRITE(output) GPIO_PinWrite(BOARD_SERIAL_MWM_RST_GPIO, BOARD_SERIAL_MWM_RST_PIN, output)
+
 #if defined(__cplusplus)
 extern "C" {
 #endif /* __cplusplus */

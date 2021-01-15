@@ -329,9 +329,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../GeneratedCode;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../devices/MIMXRT1062/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../devices/MIMXRT1062/utilities</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../GeneratedCode;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,7 +365,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -521,19 +521,14 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -541,9 +536,9 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -551,19 +546,24 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -571,19 +571,39 @@
           <GroupName>touchpanel</GroupName>
           <Files>
             <File>
-              <FileName>fsl_ft5406_rt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_ft5406_rt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ft5406_rt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-GeneratedCode</GroupName>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/GeneratedCode</GroupName>
           <Files>
             <File>
               <FileName>Application.c</FileName>
@@ -591,9 +611,9 @@
               <FilePath>../GeneratedCode/Application.c</FilePath>
             </File>
             <File>
-              <FileName>Application.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Application.h</FilePath>
+              <FileName>Templates.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Templates.c</FilePath>
             </File>
             <File>
               <FileName>BezierClock.c</FileName>
@@ -601,39 +621,9 @@
               <FilePath>../GeneratedCode/BezierClock.c</FilePath>
             </File>
             <File>
-              <FileName>BezierClock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/BezierClock.h</FilePath>
-            </File>
-            <File>
-              <FileName>Core.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Core.c</FilePath>
-            </File>
-            <File>
-              <FileName>Core.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Core.h</FilePath>
-            </File>
-            <File>
               <FileName>Effects.c</FileName>
               <FileType>1</FileType>
               <FilePath>../GeneratedCode/Effects.c</FilePath>
-            </File>
-            <File>
-              <FileName>Effects.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Effects.h</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Graphics.h</FilePath>
             </File>
             <File>
               <FileName>Resources.c</FileName>
@@ -641,19 +631,9 @@
               <FilePath>../GeneratedCode/Resources.c</FilePath>
             </File>
             <File>
-              <FileName>Resources.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Resources.h</FilePath>
-            </File>
-            <File>
-              <FileName>Templates.c</FileName>
+              <FileName>Core.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Templates.c</FilePath>
-            </File>
-            <File>
-              <FileName>Templates.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Templates.h</FilePath>
+              <FilePath>../GeneratedCode/Core.c</FilePath>
             </File>
             <File>
               <FileName>Views.c</FileName>
@@ -661,154 +641,24 @@
               <FilePath>../GeneratedCode/Views.c</FilePath>
             </File>
             <File>
-              <FileName>Views.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Views.h</FilePath>
-            </File>
-            <File>
               <FileName>WidgetSet.c</FileName>
               <FileType>1</FileType>
               <FilePath>../GeneratedCode/WidgetSet.c</FilePath>
             </File>
             <File>
-              <FileName>WidgetSet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/WidgetSet.h</FilePath>
+              <FileName>Graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Graphics.c</FilePath>
             </File>
             <File>
-              <FileName>_ApplicationApplication.h</FileName>
+              <FileName>_ViewsRectangle.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
+              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
             </File>
             <File>
-              <FileName>_BezierClockBackground.h</FileName>
+              <FileName>_WidgetSetRadioButtonConfig.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockBackground.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockBackgroundPreview.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockBackgroundPreview.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockBezierClock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockBezierClock.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockBlue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockBlue.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockBubble.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockBubble.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockClockScreen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockClockScreen.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockDark.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockDark.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockDatePicker.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockDatePicker.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockDeviceClass.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockDeviceClass.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockDigit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockDigit.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockFontL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockFontL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockFontXXL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockFontXXL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockOrange.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockOrange.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockSettingsScreen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockSettingsScreen.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockStyleScreen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockStyleScreen.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockTimePicker.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockTimePicker.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockTimerScreen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockTimerScreen.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockTimerWheel.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockTimerWheel.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorGrabEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorHit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDialogContext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDragEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreGroup.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreKeyEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
+              <FilePath>../GeneratedCode/_WidgetSetRadioButtonConfig.h</FilePath>
             </File>
             <File>
               <FileName>_CoreKeyPressHandler.h</FileName>
@@ -816,14 +666,94 @@
               <FilePath>../GeneratedCode/_CoreKeyPressHandler.h</FilePath>
             </File>
             <File>
+              <FileName>_EffectsPointEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsPointEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreSimpleTouchHandler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreSimpleTouchHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WidgetSetPushButtonConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WidgetSetPushButtonConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>Resources.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Resources.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockOrange.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockOrange.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WidgetSetPushButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WidgetSetPushButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsFloatEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsFloatEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsImage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
+            </File>
+            <File>
               <FileName>_CoreLayoutContext.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_CoreLayoutContext.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreLayoutLineContext.h</FileName>
+              <FileName>_ViewsStrokePath.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreLayoutLineContext.h</FilePath>
+              <FilePath>../GeneratedCode/_ViewsStrokePath.h</FilePath>
+            </File>
+            <File>
+              <FileName>_GraphicsArcPath.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_GraphicsArcPath.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockDark.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockDark.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsFillPath.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsFillPath.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockBackground.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockBackground.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockSettingsScreen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockSettingsScreen.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockTimerWheel.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockTimerWheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WidgetSetWidgetConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WidgetSetWidgetConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewlocale.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
             </File>
             <File>
               <FileName>_CoreLayoutQuadContext.h</FileName>
@@ -831,9 +761,154 @@
               <FilePath>../GeneratedCode/_CoreLayoutQuadContext.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreLineView.h</FileName>
+              <FileName>_EffectsTransition.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreLineView.h</FilePath>
+              <FilePath>../GeneratedCode/_EffectsTransition.h</FilePath>
+            </File>
+            <File>
+              <FileName>Templates.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Templates.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_TemplatesPickerControl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_TemplatesPickerControl.h</FilePath>
+            </File>
+            <File>
+              <FileName>Views.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Views.h</FilePath>
+            </File>
+            <File>
+              <FileName>BezierClock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/BezierClock.h</FilePath>
+            </File>
+            <File>
+              <FileName>Core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Core.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockDeviceClass.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockDeviceClass.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockBezierClock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockBezierClock.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsPositionFader.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsPositionFader.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffectTimerClass.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreView.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockBackgroundPreview.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockBackgroundPreview.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTaskQueue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
+            </File>
+            <File>
+              <FileName>WidgetSet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/WidgetSet.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreVerticalList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreVerticalList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockClockScreen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockClockScreen.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsVisibilityFader.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsVisibilityFader.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockBubble.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockBubble.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsFader.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsFader.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsTimingList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsTimingList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsInt32Effect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_TemplatesRotaryKnob.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_TemplatesRotaryKnob.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsText.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsText.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRoot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockTimerScreen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockTimerScreen.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesNavigationIconsMedium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesNavigationIconsMedium.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreOutline.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreOutline.h</FilePath>
             </File>
             <File>
               <FileName>_CoreModalContext.h</FileName>
@@ -841,9 +916,29 @@
               <FilePath>../GeneratedCode/_CoreModalContext.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreOutline.h</FileName>
+              <FileName>Application.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreOutline.h</FilePath>
+              <FilePath>../GeneratedCode/Application.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesWhiteBitmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesWhiteBitmap.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsShowHideTransition.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsShowHideTransition.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ApplicationApplication.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockFontL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockFontL.h</FilePath>
             </File>
             <File>
               <FileName>_CorePropertyObserver.h</FileName>
@@ -856,134 +951,14 @@
               <FilePath>../GeneratedCode/_CoreQuadView.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreRectView.h</FileName>
+              <FileName>_CoreDragEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreResource.h</FileName>
+              <FileName>_CoreCursorGrabEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreRoot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreRotateTouchHandler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRotateTouchHandler.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreSimpleTouchHandler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreSimpleTouchHandler.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreSlideTouchHandler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreSlideTouchHandler.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTask.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTaskQueue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTime.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTime.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTimer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreVerticalList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreVerticalList.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreView.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreView.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffectTimerClass.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsFader.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsFader.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsFaderTask.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsFaderTask.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsFloatEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsFloatEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsInt32Effect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsPointEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsPointEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsPositionFader.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsPositionFader.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsShowHideTransition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsShowHideTransition.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsSlideTransition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsSlideTransition.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsTimingList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsTimingList.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsTransition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsTransition.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsVisibilityFader.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsVisibilityFader.h</FilePath>
-            </File>
-            <File>
-              <FileName>_GraphicsArcPath.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_GraphicsArcPath.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
             </File>
             <File>
               <FileName>_GraphicsCanvas.h</FileName>
@@ -991,59 +966,9 @@
               <FilePath>../GeneratedCode/_GraphicsCanvas.h</FilePath>
             </File>
             <File>
-              <FileName>_GraphicsPath.h</FileName>
+              <FileName>_CoreLineView.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_GraphicsPath.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ResourcesBitmap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ResourcesFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ResourcesNavigationIconsMedium.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesNavigationIconsMedium.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ResourcesWhiteBitmap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesWhiteBitmap.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ResourcesWhiteBitmapStripe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesWhiteBitmapStripe.h</FilePath>
-            </File>
-            <File>
-              <FileName>_TemplatesPickerControl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_TemplatesPickerControl.h</FilePath>
-            </File>
-            <File>
-              <FileName>_TemplatesRotaryKnob.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_TemplatesRotaryKnob.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsFillPath.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsFillPath.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsFrame.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsFrame.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsImage.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreLineView.h</FilePath>
             </File>
             <File>
               <FileName>_ViewsLine.h</FileName>
@@ -1051,29 +976,79 @@
               <FilePath>../GeneratedCode/_ViewsLine.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsRectangle.h</FileName>
+              <FileName>_ResourcesWhiteBitmapStripe.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
+              <FilePath>../GeneratedCode/_ResourcesWhiteBitmapStripe.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsStrokePath.h</FileName>
+              <FileName>Effects.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsStrokePath.h</FilePath>
+              <FilePath>../GeneratedCode/Effects.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsText.h</FileName>
+              <FileName>Graphics.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsText.h</FilePath>
+              <FilePath>../GeneratedCode/Graphics.h</FilePath>
             </File>
             <File>
-              <FileName>_WidgetSetPushButton.h</FileName>
+              <FileName>_BezierClockTimePicker.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WidgetSetPushButton.h</FilePath>
+              <FilePath>../GeneratedCode/_BezierClockTimePicker.h</FilePath>
             </File>
             <File>
-              <FileName>_WidgetSetPushButtonConfig.h</FileName>
+              <FileName>_CoreRotateTouchHandler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WidgetSetPushButtonConfig.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreRotateTouchHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreKeyEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTime.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTime.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockStyleScreen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockStyleScreen.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorHit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockDatePicker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockDatePicker.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreSlideTouchHandler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreSlideTouchHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockFontXXL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockFontXXL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockDigit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockDigit.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
             </File>
             <File>
               <FileName>_WidgetSetRadioButton.h</FileName>
@@ -1081,29 +1056,179 @@
               <FilePath>../GeneratedCode/_WidgetSetRadioButton.h</FilePath>
             </File>
             <File>
-              <FileName>_WidgetSetRadioButtonConfig.h</FileName>
+              <FileName>_CoreLayoutLineContext.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WidgetSetRadioButtonConfig.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreLayoutLineContext.h</FilePath>
             </File>
             <File>
-              <FileName>_WidgetSetWidgetConfig.h</FileName>
+              <FileName>_CoreDialogContext.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WidgetSetWidgetConfig.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
             </File>
             <File>
-              <FileName>ewlocale.h</FileName>
+              <FileName>_CoreTimer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesBitmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
+            </File>
+            <File>
+              <FileName>_GraphicsPath.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_GraphicsPath.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreGroup.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockBlue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockBlue.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsSlideTransition.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsSlideTransition.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsFrame.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsFrame.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreResource.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRectView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsFaderTask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsFaderTask.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RGB565</GroupName>
+          <GroupName>EmbeddedWizard/TargetSpecific/RT</GroupName>
           <Files>
             <File>
-              <FileName>ewextbmp.h</FileName>
+              <FileName>ew_bsp_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RGB565</GroupName>
+          <Files>
+            <File>
+              <FileName>ewextgfx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxres.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewextgfx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdriver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
             </File>
             <File>
               <FileName>ewextfnt.h</FileName>
@@ -1111,14 +1236,24 @@
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextfnt.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+              <FileName>ewgfxcore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.h</FileName>
+              <FileName>ewextbmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxlinks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxtasks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
             </File>
             <File>
               <FileName>ewextpxl_RGB565.h</FileName>
@@ -1130,40 +1265,10 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</FilePath>
             </File>
-            <File>
-              <FileName>ewgfxcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdriver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxlinks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxres.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxtasks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RTE</GroupName>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RTE</GroupName>
           <Files>
             <File>
               <FileName>ewextrte.c</FileName>
@@ -1183,93 +1288,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-TargetSpecific-RT</GroupName>
-          <Files>
-            <File>
-              <FileName>ew_bsp_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT1062.h</FileName>
               <FileType>5</FileType>
@@ -1279,11 +1304,6 @@
               <FileName>MIMXRT1062_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1062.c</FileName>
@@ -1298,97 +1318,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1406,14 +1361,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1060_flexspi_nor_config.c</FileName>
@@ -1456,24 +1411,24 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1820,9 +1775,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../GeneratedCode;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../devices/MIMXRT1062/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../devices/MIMXRT1062/utilities</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../GeneratedCode;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1856,7 +1811,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -2012,19 +1967,14 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -2032,9 +1982,9 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2042,19 +1992,24 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2062,19 +2017,39 @@
           <GroupName>touchpanel</GroupName>
           <Files>
             <File>
-              <FileName>fsl_ft5406_rt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_ft5406_rt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ft5406_rt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-GeneratedCode</GroupName>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/GeneratedCode</GroupName>
           <Files>
             <File>
               <FileName>Application.c</FileName>
@@ -2082,9 +2057,9 @@
               <FilePath>../GeneratedCode/Application.c</FilePath>
             </File>
             <File>
-              <FileName>Application.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Application.h</FilePath>
+              <FileName>Templates.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Templates.c</FilePath>
             </File>
             <File>
               <FileName>BezierClock.c</FileName>
@@ -2092,39 +2067,9 @@
               <FilePath>../GeneratedCode/BezierClock.c</FilePath>
             </File>
             <File>
-              <FileName>BezierClock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/BezierClock.h</FilePath>
-            </File>
-            <File>
-              <FileName>Core.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Core.c</FilePath>
-            </File>
-            <File>
-              <FileName>Core.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Core.h</FilePath>
-            </File>
-            <File>
               <FileName>Effects.c</FileName>
               <FileType>1</FileType>
               <FilePath>../GeneratedCode/Effects.c</FilePath>
-            </File>
-            <File>
-              <FileName>Effects.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Effects.h</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Graphics.h</FilePath>
             </File>
             <File>
               <FileName>Resources.c</FileName>
@@ -2132,19 +2077,9 @@
               <FilePath>../GeneratedCode/Resources.c</FilePath>
             </File>
             <File>
-              <FileName>Resources.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Resources.h</FilePath>
-            </File>
-            <File>
-              <FileName>Templates.c</FileName>
+              <FileName>Core.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Templates.c</FilePath>
-            </File>
-            <File>
-              <FileName>Templates.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Templates.h</FilePath>
+              <FilePath>../GeneratedCode/Core.c</FilePath>
             </File>
             <File>
               <FileName>Views.c</FileName>
@@ -2152,154 +2087,24 @@
               <FilePath>../GeneratedCode/Views.c</FilePath>
             </File>
             <File>
-              <FileName>Views.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Views.h</FilePath>
-            </File>
-            <File>
               <FileName>WidgetSet.c</FileName>
               <FileType>1</FileType>
               <FilePath>../GeneratedCode/WidgetSet.c</FilePath>
             </File>
             <File>
-              <FileName>WidgetSet.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/WidgetSet.h</FilePath>
+              <FileName>Graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Graphics.c</FilePath>
             </File>
             <File>
-              <FileName>_ApplicationApplication.h</FileName>
+              <FileName>_ViewsRectangle.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
+              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
             </File>
             <File>
-              <FileName>_BezierClockBackground.h</FileName>
+              <FileName>_WidgetSetRadioButtonConfig.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockBackground.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockBackgroundPreview.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockBackgroundPreview.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockBezierClock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockBezierClock.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockBlue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockBlue.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockBubble.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockBubble.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockClockScreen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockClockScreen.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockDark.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockDark.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockDatePicker.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockDatePicker.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockDeviceClass.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockDeviceClass.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockDigit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockDigit.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockFontL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockFontL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockFontXXL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockFontXXL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockOrange.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockOrange.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockSettingsScreen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockSettingsScreen.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockStyleScreen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockStyleScreen.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockTimePicker.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockTimePicker.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockTimerScreen.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockTimerScreen.h</FilePath>
-            </File>
-            <File>
-              <FileName>_BezierClockTimerWheel.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_BezierClockTimerWheel.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorGrabEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorHit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDialogContext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDragEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreGroup.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreKeyEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
+              <FilePath>../GeneratedCode/_WidgetSetRadioButtonConfig.h</FilePath>
             </File>
             <File>
               <FileName>_CoreKeyPressHandler.h</FileName>
@@ -2307,14 +2112,94 @@
               <FilePath>../GeneratedCode/_CoreKeyPressHandler.h</FilePath>
             </File>
             <File>
+              <FileName>_EffectsPointEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsPointEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreSimpleTouchHandler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreSimpleTouchHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WidgetSetPushButtonConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WidgetSetPushButtonConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>Resources.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Resources.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockOrange.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockOrange.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WidgetSetPushButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WidgetSetPushButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsFloatEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsFloatEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsImage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
+            </File>
+            <File>
               <FileName>_CoreLayoutContext.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_CoreLayoutContext.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreLayoutLineContext.h</FileName>
+              <FileName>_ViewsStrokePath.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreLayoutLineContext.h</FilePath>
+              <FilePath>../GeneratedCode/_ViewsStrokePath.h</FilePath>
+            </File>
+            <File>
+              <FileName>_GraphicsArcPath.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_GraphicsArcPath.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockDark.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockDark.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsFillPath.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsFillPath.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockBackground.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockBackground.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockSettingsScreen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockSettingsScreen.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockTimerWheel.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockTimerWheel.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WidgetSetWidgetConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WidgetSetWidgetConfig.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewlocale.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
             </File>
             <File>
               <FileName>_CoreLayoutQuadContext.h</FileName>
@@ -2322,9 +2207,154 @@
               <FilePath>../GeneratedCode/_CoreLayoutQuadContext.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreLineView.h</FileName>
+              <FileName>_EffectsTransition.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreLineView.h</FilePath>
+              <FilePath>../GeneratedCode/_EffectsTransition.h</FilePath>
+            </File>
+            <File>
+              <FileName>Templates.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Templates.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_TemplatesPickerControl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_TemplatesPickerControl.h</FilePath>
+            </File>
+            <File>
+              <FileName>Views.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Views.h</FilePath>
+            </File>
+            <File>
+              <FileName>BezierClock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/BezierClock.h</FilePath>
+            </File>
+            <File>
+              <FileName>Core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Core.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockDeviceClass.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockDeviceClass.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockBezierClock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockBezierClock.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsPositionFader.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsPositionFader.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffectTimerClass.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreView.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockBackgroundPreview.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockBackgroundPreview.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTaskQueue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
+            </File>
+            <File>
+              <FileName>WidgetSet.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/WidgetSet.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreVerticalList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreVerticalList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockClockScreen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockClockScreen.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsVisibilityFader.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsVisibilityFader.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockBubble.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockBubble.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsFader.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsFader.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsTimingList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsTimingList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsInt32Effect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_TemplatesRotaryKnob.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_TemplatesRotaryKnob.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsText.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsText.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRoot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockTimerScreen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockTimerScreen.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesNavigationIconsMedium.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesNavigationIconsMedium.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreOutline.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreOutline.h</FilePath>
             </File>
             <File>
               <FileName>_CoreModalContext.h</FileName>
@@ -2332,9 +2362,29 @@
               <FilePath>../GeneratedCode/_CoreModalContext.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreOutline.h</FileName>
+              <FileName>Application.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreOutline.h</FilePath>
+              <FilePath>../GeneratedCode/Application.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesWhiteBitmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesWhiteBitmap.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsShowHideTransition.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsShowHideTransition.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ApplicationApplication.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockFontL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockFontL.h</FilePath>
             </File>
             <File>
               <FileName>_CorePropertyObserver.h</FileName>
@@ -2347,134 +2397,14 @@
               <FilePath>../GeneratedCode/_CoreQuadView.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreRectView.h</FileName>
+              <FileName>_CoreDragEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreResource.h</FileName>
+              <FileName>_CoreCursorGrabEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreRoot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreRotateTouchHandler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRotateTouchHandler.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreSimpleTouchHandler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreSimpleTouchHandler.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreSlideTouchHandler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreSlideTouchHandler.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTask.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTaskQueue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTime.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTime.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTimer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreVerticalList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreVerticalList.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreView.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreView.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffectTimerClass.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsFader.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsFader.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsFaderTask.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsFaderTask.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsFloatEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsFloatEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsInt32Effect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsPointEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsPointEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsPositionFader.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsPositionFader.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsShowHideTransition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsShowHideTransition.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsSlideTransition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsSlideTransition.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsTimingList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsTimingList.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsTransition.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsTransition.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsVisibilityFader.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsVisibilityFader.h</FilePath>
-            </File>
-            <File>
-              <FileName>_GraphicsArcPath.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_GraphicsArcPath.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
             </File>
             <File>
               <FileName>_GraphicsCanvas.h</FileName>
@@ -2482,59 +2412,9 @@
               <FilePath>../GeneratedCode/_GraphicsCanvas.h</FilePath>
             </File>
             <File>
-              <FileName>_GraphicsPath.h</FileName>
+              <FileName>_CoreLineView.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_GraphicsPath.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ResourcesBitmap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ResourcesFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ResourcesNavigationIconsMedium.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesNavigationIconsMedium.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ResourcesWhiteBitmap.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesWhiteBitmap.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ResourcesWhiteBitmapStripe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesWhiteBitmapStripe.h</FilePath>
-            </File>
-            <File>
-              <FileName>_TemplatesPickerControl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_TemplatesPickerControl.h</FilePath>
-            </File>
-            <File>
-              <FileName>_TemplatesRotaryKnob.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_TemplatesRotaryKnob.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsFillPath.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsFillPath.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsFrame.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsFrame.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsImage.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreLineView.h</FilePath>
             </File>
             <File>
               <FileName>_ViewsLine.h</FileName>
@@ -2542,29 +2422,79 @@
               <FilePath>../GeneratedCode/_ViewsLine.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsRectangle.h</FileName>
+              <FileName>_ResourcesWhiteBitmapStripe.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
+              <FilePath>../GeneratedCode/_ResourcesWhiteBitmapStripe.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsStrokePath.h</FileName>
+              <FileName>Effects.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsStrokePath.h</FilePath>
+              <FilePath>../GeneratedCode/Effects.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsText.h</FileName>
+              <FileName>Graphics.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsText.h</FilePath>
+              <FilePath>../GeneratedCode/Graphics.h</FilePath>
             </File>
             <File>
-              <FileName>_WidgetSetPushButton.h</FileName>
+              <FileName>_BezierClockTimePicker.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WidgetSetPushButton.h</FilePath>
+              <FilePath>../GeneratedCode/_BezierClockTimePicker.h</FilePath>
             </File>
             <File>
-              <FileName>_WidgetSetPushButtonConfig.h</FileName>
+              <FileName>_CoreRotateTouchHandler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WidgetSetPushButtonConfig.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreRotateTouchHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreKeyEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTime.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTime.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockStyleScreen.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockStyleScreen.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorHit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockDatePicker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockDatePicker.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreSlideTouchHandler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreSlideTouchHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockFontXXL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockFontXXL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockDigit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockDigit.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
             </File>
             <File>
               <FileName>_WidgetSetRadioButton.h</FileName>
@@ -2572,29 +2502,179 @@
               <FilePath>../GeneratedCode/_WidgetSetRadioButton.h</FilePath>
             </File>
             <File>
-              <FileName>_WidgetSetRadioButtonConfig.h</FileName>
+              <FileName>_CoreLayoutLineContext.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WidgetSetRadioButtonConfig.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreLayoutLineContext.h</FilePath>
             </File>
             <File>
-              <FileName>_WidgetSetWidgetConfig.h</FileName>
+              <FileName>_CoreDialogContext.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WidgetSetWidgetConfig.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
             </File>
             <File>
-              <FileName>ewlocale.h</FileName>
+              <FileName>_CoreTimer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesBitmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
+            </File>
+            <File>
+              <FileName>_GraphicsPath.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_GraphicsPath.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreGroup.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
+            </File>
+            <File>
+              <FileName>_BezierClockBlue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_BezierClockBlue.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsSlideTransition.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsSlideTransition.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsFrame.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsFrame.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreResource.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRectView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsFaderTask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsFaderTask.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RGB565</GroupName>
+          <GroupName>EmbeddedWizard/TargetSpecific/RT</GroupName>
           <Files>
             <File>
-              <FileName>ewextbmp.h</FileName>
+              <FileName>ew_bsp_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RGB565</GroupName>
+          <Files>
+            <File>
+              <FileName>ewextgfx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxres.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewextgfx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdriver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
             </File>
             <File>
               <FileName>ewextfnt.h</FileName>
@@ -2602,14 +2682,24 @@
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextfnt.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+              <FileName>ewgfxcore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.h</FileName>
+              <FileName>ewextbmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxlinks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxtasks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
             </File>
             <File>
               <FileName>ewextpxl_RGB565.h</FileName>
@@ -2621,40 +2711,10 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</FilePath>
             </File>
-            <File>
-              <FileName>ewgfxcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdriver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxlinks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxres.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxtasks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RTE</GroupName>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RTE</GroupName>
           <Files>
             <File>
               <FileName>ewextrte.c</FileName>
@@ -2674,93 +2734,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-TargetSpecific-RT</GroupName>
-          <Files>
-            <File>
-              <FileName>ew_bsp_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT1062.h</FileName>
               <FileType>5</FileType>
@@ -2770,11 +2750,6 @@
               <FileName>MIMXRT1062_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1062.c</FileName>
@@ -2789,97 +2764,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2897,14 +2807,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1060_flexspi_nor_config.c</FileName>
@@ -2947,24 +2857,24 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

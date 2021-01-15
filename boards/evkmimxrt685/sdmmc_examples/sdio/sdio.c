@@ -9,10 +9,10 @@
 #include <stdio.h>
 #include "fsl_sdio.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-#include "sdmmc_config.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+#include "sdmmc_config.h"
 #include "fsl_common.h"
 #include "fsl_gpio.h"
 #include "fsl_power.h"
@@ -76,6 +76,16 @@ int main(void)
     CLOCK_AttachClk(kAUX0_PLL_to_SDIO0_CLK);
     CLOCK_SetClkDiv(kCLOCK_DivSdio0Clk, 1);
     BOARD_SDIO_Config(card, NULL, BOARD_SDMMC_SDIO_HOST_IRQ_PRIORITY, NULL);
+    /*
+     * Sdio case workaround to cover more wifi module,
+     * Some wifi module may not support 1V8 voltage that SDIO3.0 required, but the wifi chip supports SDIO3.0, then the
+     * the case will run failed, so the sdio case will specify the high speed timing mode here to avoid SDIO driver
+     * perform SDIO3.0 timing probe.
+     *
+     * Note: If you are sure about the voltage configuration and the wifi module capability, you can comment out below
+     * line.
+     */
+    card->currentTiming = kSD_TimingSDR25HighSpeedMode;
 
     PRINTF("SDIO card simple example.\r\n");
 
@@ -87,14 +97,14 @@ int main(void)
     }
 
     PRINTF("\r\nPlease insert a card into board.\r\n");
-    /* power off card */
-    SDIO_SetCardPower(card, false);
 
     if (SDIO_PollingCardInsert(card, kSD_Inserted) == kStatus_Success)
     {
         PRINTF("\r\nCard inserted.\r\n");
         /* reset host once card re-plug in */
         SDIO_HostDoReset(card);
+        /* power off card */
+        SDIO_SetCardPower(card, false);
         /* power on the card */
         SDIO_SetCardPower(card, true);
     }

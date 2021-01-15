@@ -1,0 +1,10 @@
+Please create your own audio input file in this folder.
+
+To be compliant with simulation batch test located here W32_Simulation\TalArgsTest\RunAllTest.bat:
+
+Create EAP_demo_8000_2ch.pcm      => sampling rate =  8000Hz / stereo
+Create EAP_demo_48000_1ch.pcm     => sampling rate = 48000Hz / mono
+Create EAP_demo_48000_2ch.pcm     => sampling rate = 48000Hz / stereo
+Create EAP_MJackson_44100_2ch.pcm => sampling rate = 44100Hz / stereo
+
+Then run W32_Simulation\TalArgsTest\RunAllTest.bat

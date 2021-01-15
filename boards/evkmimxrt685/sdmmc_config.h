@@ -32,7 +32,12 @@
 #define BOARD_SDMMC_SDIO_HOST_BASEADDR USDHC0
 #define BOARD_SDMMC_SDIO_HOST_IRQ      USDHC0_IRQn
 
-/* @brief card detect configuration */
+/* @brief card detect type
+ *
+ * Note: Please pay attention, DAT3 card detection cannot works during the card access,
+ * since the DAT3 will be used for data transfer, thus the functionality of card detect will be disabled. Using card
+ * detect pin for card detection is recommended.
+ */
 #define BOARD_SDMMC_SD_CD_TYPE                       kSD_DetectCardByHostCD
 #define BOARD_SDMMC_SD_CARD_DETECT_DEBOUNCE_DELAY_MS (100U)
 /*! @brief SD power reset */

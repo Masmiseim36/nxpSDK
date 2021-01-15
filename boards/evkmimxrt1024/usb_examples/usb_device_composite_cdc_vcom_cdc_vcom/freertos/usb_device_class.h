@@ -413,6 +413,23 @@ usb_status_t USB_DeviceClassCallback(usb_device_handle handle, uint32_t event, v
  */
 usb_status_t USB_DeviceClassGetDeviceHandle(uint8_t controllerId, usb_device_handle *handle);
 
+#if defined(USB_DEVICE_CONFIG_GET_SOF_COUNT) && (USB_DEVICE_CONFIG_GET_SOF_COUNT > 0U)
+/*!
+ * @brief Get the USB SOF count.
+ *
+ * This function is used to get the USB SOF count.
+ *
+ * @param controllerId   The controller id of the USB IP. Please refer to the enumeration usb_controller_index_t.
+ * @param currentFrameCount           It is an OUT parameter, return current sof count of the controller.
+ *                                    HS: micro frame count, FS: frame count
+ *
+ * @return A USB error code or kStatus_USB_Success.
+ */
+usb_status_t USB_DeviceClassGetCurrentFrameCount(uint8_t controllerId,       /*!< [IN] Controller ID */
+                                                 uint32_t *currentFrameCount /*!< [OUT] Current frame count */
+);
+#endif
+
 #if defined(__cplusplus)
 }
 #endif

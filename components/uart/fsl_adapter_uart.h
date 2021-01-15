@@ -58,12 +58,16 @@
 #define HAL_UART_ADAPTER_LOWPOWER (0U)
 #endif /* HAL_UART_ADAPTER_LOWPOWER */
 
+#ifndef HAL_UART_ADAPTER_FIFO
+#define HAL_UART_ADAPTER_FIFO (0U)
+#endif /* HAL_UART_ADAPTER_FIFO */
+
 /*! @brief Definition of uart adapter handle size. */
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
-#define HAL_UART_HANDLE_SIZE       (90U + HAL_UART_ADAPTER_LOWPOWER * 16U)
-#define HAL_UART_BLOCK_HANDLE_SIZE (4U + HAL_UART_ADAPTER_LOWPOWER * 16U)
+#define HAL_UART_HANDLE_SIZE       (92U + HAL_UART_ADAPTER_LOWPOWER * 16U)
+#define HAL_UART_BLOCK_HANDLE_SIZE (8U + HAL_UART_ADAPTER_LOWPOWER * 16U)
 #else
-#define HAL_UART_HANDLE_SIZE (4U + HAL_UART_ADAPTER_LOWPOWER * 16U)
+#define HAL_UART_HANDLE_SIZE (8U + HAL_UART_ADAPTER_LOWPOWER * 16U)
 #endif
 
 /*!
@@ -141,12 +145,18 @@ typedef struct _hal_uart_config
     hal_uart_stop_bit_count_t stopBitCount; /*!< Number of stop bits, 1 stop bit (default) or 2 stop bits  */
     uint8_t enableRx;                       /*!< Enable RX */
     uint8_t enableTx;                       /*!< Enable TX */
+    uint8_t enableRxRTS;                    /*!< Enable RX RTS */
+    uint8_t enableTxCTS;                    /*!< Enable TX CTS */
     uint8_t instance; /*!< Instance (0 - UART0, 1 - UART1, ...), detail information please refer to the
                            SOC corresponding RM.
                            Invalid instance value will cause initialization failure. */
 #if (defined(UART_ADAPTER_NON_BLOCKING_MODE) && (UART_ADAPTER_NON_BLOCKING_MODE > 0U))
     hal_uart_block_mode_t mode; /*!< Uart  block mode */
 #endif                          /* UART_ADAPTER_NON_BLOCKING_MODE */
+#if (defined(HAL_UART_ADAPTER_FIFO) && (HAL_UART_ADAPTER_FIFO > 0u))
+    uint8_t txFifoWatermark;
+    uint8_t rxFifoWatermark;
+#endif
 } hal_uart_config_t;
 
 /*! @brief UART transfer callback function. */
@@ -187,6 +197,8 @@ extern "C" {
  *   config.stopBitCount = kHAL_UartOneStopBit;
  *   config.enableRx = 1;
  *   config.enableTx = 1;
+ *   config.enableRxRTS = 0;
+ *   config.enableTxCTS = 0;
  *   config.instance = 0;
  *   HAL_UartInit((hal_uart_handle_t)g_UartHandle, &config);
  *  @endcode

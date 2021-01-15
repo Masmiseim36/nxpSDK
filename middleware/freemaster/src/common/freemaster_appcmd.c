@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -23,74 +23,76 @@
 #include "freemaster_private.h"
 #include "freemaster_protocol.h"
 
-#if (FMSTR_USE_APPCMD) && (!(FMSTR_DISABLE))
+#if FMSTR_USE_APPCMD > 0 && FMSTR_DISABLE == 0
 
 /***********************************
-*  local variables
-***********************************/
+ *  local variables
+ ***********************************/
 
-static FMSTR_APPCMD_CODE fmstr_appCmd;                               /* app.cmd code (to application) */
-static FMSTR_APPCMD_DATA fmstr_appCmdBuff[FMSTR_APPCMD_BUFF_SIZE];   /* app.cmd data buffer  */
-static FMSTR_SIZE        fmstr_appCmdLen;                            /* app.cmd data length */
+static FMSTR_APPCMD_CODE fmstr_appCmd;                             /* app.cmd code (to application) */
+static FMSTR_APPCMD_DATA fmstr_appCmdBuff[FMSTR_APPCMD_BUFF_SIZE]; /* app.cmd data buffer  */
+static FMSTR_SIZE fmstr_appCmdLen;                                 /* app.cmd data length */
 
-static FMSTR_APPCMD_RESULT  fmstr_appCmdResult;                      /* app.cmd result code (from application) */
+static FMSTR_APPCMD_RESULT fmstr_appCmdResult; /* app.cmd result code (from application) */
 static FMSTR_SIZE8 fmstr_appCmdResultDataLen;
 
 #if FMSTR_MAX_APPCMD_CALLS > 0
-static FMSTR_APPCMD_CODE fmstr_appCmdCallId[FMSTR_MAX_APPCMD_CALLS]; /* registered callback commands */
-static FMSTR_PAPPCMDFUNC fmstr_appCmdCallFunc[FMSTR_MAX_APPCMD_CALLS];  /* registered callback handlers */
+static FMSTR_APPCMD_CODE fmstr_appCmdCallId[FMSTR_MAX_APPCMD_CALLS];   /* registered callback commands */
+static FMSTR_PAPPCMDFUNC fmstr_appCmdCallFunc[FMSTR_MAX_APPCMD_CALLS]; /* registered callback handlers */
 #endif
 
 /***********************************
-*  local functions
-***********************************/
+ *  local functions
+ ***********************************/
 
 static FMSTR_INDEX FMSTR_FindAppCmdCallIndex(FMSTR_APPCMD_CODE appCmdCode);
 
-/**************************************************************************//*!
-*
-* @brief    Initialize app.cmds interface
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Initialize app.cmds interface
+ *
+ ******************************************************************************/
 
-void FMSTR_InitAppCmds(void)
+FMSTR_BOOL FMSTR_InitAppCmds(void)
 {
-#if FMSTR_MAX_APPCMD_CALLS
+#if FMSTR_MAX_APPCMD_CALLS > 0
     FMSTR_INDEX i;
 
-    for(i=0; i<FMSTR_MAX_APPCMD_CALLS; i++)
+    for (i = 0; i < FMSTR_MAX_APPCMD_CALLS; i++)
     {
-        fmstr_appCmdCallId[i] = FMSTR_APPCMDRESULT_NOCMD;
+        fmstr_appCmdCallId[i]   = FMSTR_APPCMDRESULT_NOCMD;
         fmstr_appCmdCallFunc[i] = NULL;
     }
 #endif
 
-    fmstr_appCmd = (FMSTR_APPCMD_CODE) FMSTR_APPCMDRESULT_NOCMD;
-    fmstr_appCmdResult = (FMSTR_APPCMD_RESULT) FMSTR_APPCMDRESULT_NOCMD;
+    fmstr_appCmd       = (FMSTR_APPCMD_CODE)FMSTR_APPCMDRESULT_NOCMD;
+    fmstr_appCmdResult = (FMSTR_APPCMD_RESULT)FMSTR_APPCMDRESULT_NOCMD;
+
+    return FMSTR_TRUE;
 }
 
-/**************************************************************************//*!
-*
-* @brief    Handling SANDAPPCMD command
-*
-* @param    msgBuffIO - original command (in) and response buffer (out)
-*
-* @return   As all command handlers, the return value should be the buffer
-*           pointer where the response output finished (except checksum)
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Handling SANDAPPCMD command
+ *
+ * @param    msgBuffIO - original command (in) and response buffer (out)
+ *
+ * @return   As all command handlers, the return value should be the buffer
+ *           pointer where the response output finished (except checksum)
+ *
+ ******************************************************************************/
 
 FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus)
 {
     FMSTR_BPTR response = msgBuffIO;
-    FMSTR_SIZE argsLen = msgSize-1; /* args len is datalen minus one */
+    FMSTR_SIZE argsLen  = msgSize - 1U; /* args len is datalen minus one */
     FMSTR_U8 code;
 
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
 
     /* the previous command not yet processed */
-    if(fmstr_appCmd != ((FMSTR_APPCMD_CODE) FMSTR_APPCMDRESULT_NOCMD))
+    if (fmstr_appCmd != ((FMSTR_APPCMD_CODE)FMSTR_APPCMDRESULT_NOCMD))
     {
         *retStatus = FMSTR_STC_SERVBUSY;
         return response;
@@ -99,27 +101,28 @@ FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 
     msgBuffIO = FMSTR_ValueFromBuffer8(&code, msgBuffIO);
 
     /* does the application command fit to buffer ? */
-    if (argsLen > (FMSTR_SIZE) FMSTR_APPCMD_BUFF_SIZE)
+    if (argsLen > (FMSTR_SIZE)FMSTR_APPCMD_BUFF_SIZE)
     {
         *retStatus = FMSTR_STC_INVBUFF;
         return response;
     }
 
     /* store command data into dedicated buffer */
-    fmstr_appCmd = code;
+    fmstr_appCmd    = code;
     fmstr_appCmdLen = argsLen;
 
     /* data copy */
-    if(argsLen)
+    if (argsLen != 0U)
     {
         FMSTR_ADDR appCmdBuffAddr = (FMSTR_ADDR)fmstr_appCmdBuff;
 
         /*lint -e{534} ignoring return value */
-        FMSTR_CopyFromBuffer(appCmdBuffAddr, msgBuffIO, (FMSTR_SIZE8) argsLen);
+        msgBuffIO = FMSTR_CopyFromBuffer(appCmdBuffAddr, msgBuffIO, (FMSTR_SIZE8)argsLen);
+        FMSTR_UNUSED(msgBuffIO);
     }
 
     /* mark command as "running" (without any response data) */
-    fmstr_appCmdResult = (FMSTR_APPCMD_RESULT) FMSTR_APPCMDRESULT_RUNNING;
+    fmstr_appCmdResult        = (FMSTR_APPCMD_RESULT)FMSTR_APPCMDRESULT_RUNNING;
     fmstr_appCmdResultDataLen = 0U;
 
     /* success  */
@@ -127,24 +130,24 @@ FMSTR_BPTR FMSTR_StoreAppCmd(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 
     return response;
 }
 
-/**************************************************************************//*!
-*
-* @brief    Handling GETAPPCMDSTS command
-*
-* @param    msgBuffIO - original command (in) and response buffer (out)
-*
-* @return   As all command handlers, the return value should be the buffer
-*           pointer where the response output finished (except checksum)
-*
-* @note The callback-registered commands are processed at the moment the PC
-*       tries to get the result for the first time. At this moment, we are
-*       sure the PC already got the command delivery packet acknowledged.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Handling GETAPPCMDSTS command
+ *
+ * @param    msgBuffIO - original command (in) and response buffer (out)
+ *
+ * @return   As all command handlers, the return value should be the buffer
+ *           pointer where the response output finished (except checksum)
+ *
+ * @note The callback-registered commands are processed at the moment the PC
+ *       tries to get the result for the first time. At this moment, we are
+ *       sure the PC already got the command delivery packet acknowledged.
+ *
+ ******************************************************************************/
 
 FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 {
-#if FMSTR_MAX_APPCMD_CALLS
+#if FMSTR_MAX_APPCMD_CALLS > 0
     FMSTR_PAPPCMDFUNC func = NULL;
     FMSTR_INDEX index;
 
@@ -152,13 +155,13 @@ FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     FMSTR_ASSERT(retStatus != NULL);
 
     /* time to execute the command's callback */
-    if((index = FMSTR_FindAppCmdCallIndex(fmstr_appCmd)) >= 0)
+    if ((index = FMSTR_FindAppCmdCallIndex(fmstr_appCmd)) >= 0)
     {
         func = fmstr_appCmdCallFunc[index];
     }
 
     /* valid callback function found? */
-    if(func)
+    if (func != NULL)
     {
         /* do execute callback, return value is app.cmd result code */
         fmstr_appCmdResult = func(fmstr_appCmd, fmstr_appCmdBuff, fmstr_appCmdLen);
@@ -170,19 +173,19 @@ FMSTR_BPTR FMSTR_GetAppCmdStatus(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 
     /* success  */
     *retStatus = FMSTR_STS_OK;
-    return FMSTR_ValueToBuffer8(msgBuffIO, (FMSTR_U8) fmstr_appCmdResult);
+    return FMSTR_ValueToBuffer8(msgBuffIO, (FMSTR_U8)fmstr_appCmdResult);
 }
 
-/**************************************************************************//*!
-*
-* @brief    Handling GETAPPCMDDATA command
-*
-* @param    msgBuffIO - original command (in) and response buffer (out)
-*
-* @return   As all command handlers, the return value should be the buffer
-*           pointer where the response output finished (except checksum)
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Handling GETAPPCMDDATA command
+ *
+ * @param    msgBuffIO - original command (in) and response buffer (out)
+ *
+ * @return   As all command handlers, the return value should be the buffer
+ *           pointer where the response output finished (except checksum)
+ *
+ ******************************************************************************/
 
 FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 {
@@ -194,7 +197,7 @@ FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     FMSTR_ASSERT(retStatus != NULL);
 
     /* the previous command not yet processed */
-    if(fmstr_appCmd != ((FMSTR_APPCMD_CODE)FMSTR_APPCMDRESULT_NOCMD))
+    if (fmstr_appCmd != ((FMSTR_APPCMD_CODE)FMSTR_APPCMDRESULT_NOCMD))
     {
         *retStatus = FMSTR_STC_SERVBUSY;
         return response;
@@ -207,14 +210,14 @@ FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     msgBuffIO = FMSTR_SizeFromBuffer(&dataOffset, msgBuffIO);
 
     /* the response would not fit into comm buffer */
-    if(dataLen > (FMSTR_U16)FMSTR_COMM_BUFFER_SIZE)
+    if (dataLen > (FMSTR_U16)FMSTR_COMM_BUFFER_SIZE)
     {
         *retStatus = FMSTR_STC_RSPBUFFOVF;
         return response;
     }
 
     /* the data would be fetched outside the app.cmd response data */
-    if((((FMSTR_U16)dataOffset) + dataLen) > (FMSTR_SIZE8)fmstr_appCmdResultDataLen)
+    if ((((FMSTR_U16)dataOffset) + dataLen) > (FMSTR_SIZE8)fmstr_appCmdResultDataLen)
     {
         *retStatus = FMSTR_STC_INVSIZE;
         return response;
@@ -223,7 +226,7 @@ FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     /* copy to buffer */
     {
         FMSTR_ADDR appCmdBuffAddr = (FMSTR_ADDR)fmstr_appCmdBuff;
-        response = FMSTR_CopyToBuffer(response, appCmdBuffAddr, (FMSTR_SIZE8)dataLen);
+        response                  = FMSTR_CopyToBuffer(response, appCmdBuffAddr, (FMSTR_SIZE8)dataLen);
     }
 
     /* success  */
@@ -231,24 +234,24 @@ FMSTR_BPTR FMSTR_GetAppCmdRespData(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     return response;
 }
 
-/**************************************************************************//*!
-*
-* @brief    Find index of registered app.cmd callback
-*
-* @param    appCmdCode - App. command ID
-*
-* @return   Index of function pointer in our local tables
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Find index of registered app.cmd callback
+ *
+ * @param    appCmdCode - App. command ID
+ *
+ * @return   Index of function pointer in our local tables
+ *
+ ******************************************************************************/
 
 static FMSTR_INDEX FMSTR_FindAppCmdCallIndex(FMSTR_APPCMD_CODE appCmdCode)
 {
 #if FMSTR_MAX_APPCMD_CALLS > 0
     FMSTR_INDEX i;
 
-    for(i=0; i<FMSTR_MAX_APPCMD_CALLS; i++)
+    for (i = 0; i < FMSTR_MAX_APPCMD_CALLS; i++)
     {
-        if(fmstr_appCmdCallId[i] == appCmdCode)
+        if (fmstr_appCmdCallId[i] == appCmdCode)
         {
             return i;
         }
@@ -262,47 +265,47 @@ static FMSTR_INDEX FMSTR_FindAppCmdCallIndex(FMSTR_APPCMD_CODE appCmdCode)
     return -1;
 }
 
-/**************************************************************************//*!
-*
-* @brief    API: Mark the application command is processed by the application
-*
-* @param    resultCode - the result code which is returned to a host
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    API: Mark the application command is processed by the application
+ *
+ * @param    resultCode - the result code which is returned to a host
+ *
+ ******************************************************************************/
 
 void FMSTR_AppCmdAck(FMSTR_APPCMD_RESULT resultCode)
 {
-    fmstr_appCmdResult = resultCode;
+    fmstr_appCmdResult        = resultCode;
     fmstr_appCmdResultDataLen = 0U;
 
     /* waiting for a new command to come */
     fmstr_appCmd = (FMSTR_APPCMD_CODE)FMSTR_APPCMDRESULT_NOCMD;
 }
 
-/**************************************************************************//*!
-*
-* @brief    API: Mark the application command is processed by the application
-*
-* @param    pResultDataAddr - address of data we want to return to the PC
-* @param    resultDataLen - length of return data
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    API: Mark the application command is processed by the application
+ *
+ * @param    pResultDataAddr - address of data we want to return to the PC
+ * @param    resultDataLen - length of return data
+ *
+ ******************************************************************************/
 
 void FMSTR_AppCmdSetResponseData(FMSTR_ADDR resultDataAddr, FMSTR_SIZE resultDataLen)
 {
     /* any data supplied by user? */
-    if(resultDataAddr)
+    if (FMSTR_ADDR_VALID(resultDataAddr) != FMSTR_FALSE)
     {
         /* response data length is trimmed if response data would not fit into buffer */
-        fmstr_appCmdResultDataLen = (FMSTR_SIZE8) resultDataLen;
-        if(fmstr_appCmdResultDataLen > (FMSTR_SIZE8) FMSTR_APPCMD_BUFF_SIZE)
+        fmstr_appCmdResultDataLen = (FMSTR_SIZE8)resultDataLen;
+        if (fmstr_appCmdResultDataLen > (FMSTR_SIZE8)FMSTR_APPCMD_BUFF_SIZE)
         {
-            fmstr_appCmdResultDataLen = (FMSTR_SIZE8) FMSTR_APPCMD_BUFF_SIZE;
+            fmstr_appCmdResultDataLen = (FMSTR_SIZE8)FMSTR_APPCMD_BUFF_SIZE;
         }
 
-        if(fmstr_appCmdResultDataLen > 0U)
+        if (fmstr_appCmdResultDataLen > 0U)
         {
-            FMSTR_ADDR appCmdBuffAddr = (FMSTR_ADDR) fmstr_appCmdBuff;
+            FMSTR_ADDR appCmdBuffAddr = (FMSTR_ADDR)fmstr_appCmdBuff;
             FMSTR_MemCpyFrom(appCmdBuffAddr, resultDataAddr, fmstr_appCmdResultDataLen);
         }
     }
@@ -313,21 +316,21 @@ void FMSTR_AppCmdSetResponseData(FMSTR_ADDR resultDataAddr, FMSTR_SIZE resultDat
     }
 }
 
-/**************************************************************************//*!
-*
-* @brief    API: Fetch the application command code if one is ready for processing
-*
-* @return   A command code stored in the application cmd buffer.
-*           The return value is FMSTR_APPCMDRESULT_NOCMD if there is no
-*           new command since the last call to FMSTR_AppCmdAck
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    API: Fetch the application command code if one is ready for processing
+ *
+ * @return   A command code stored in the application cmd buffer.
+ *           The return value is FMSTR_APPCMDRESULT_NOCMD if there is no
+ *           new command since the last call to FMSTR_AppCmdAck
+ *
+ ******************************************************************************/
 
 FMSTR_APPCMD_CODE FMSTR_GetAppCmd(void)
 {
-#if FMSTR_MAX_APPCMD_CALLS
+#if FMSTR_MAX_APPCMD_CALLS > 0
     /* the user can never see the callback-registered commands */
-    if(FMSTR_FindAppCmdCallIndex(fmstr_appCmd) >= 0)
+    if (FMSTR_FindAppCmdCallIndex(fmstr_appCmd) >= 0)
     {
         return FMSTR_APPCMDRESULT_NOCMD;
     }
@@ -337,52 +340,52 @@ FMSTR_APPCMD_CODE FMSTR_GetAppCmd(void)
     return fmstr_appCmd;
 }
 
-/**************************************************************************//*!
-*
-* @brief    API: Get a pointer to application command data
-*
-* @param    dataLen - A pointer to variable which receives the data length
-*
-* @return   Pointer to the "application command" data
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    API: Get a pointer to application command data
+ *
+ * @param    dataLen - A pointer to variable which receives the data length
+ *
+ * @return   Pointer to the "application command" data
+ *
+ ******************************************************************************/
 
-FMSTR_APPCMD_PDATA FMSTR_GetAppCmdData(FMSTR_SIZE* dataLen)
+FMSTR_APPCMD_PDATA FMSTR_GetAppCmdData(FMSTR_SIZE *dataLen)
 {
     /* no command, no data */
-    if(fmstr_appCmd == ((FMSTR_APPCMD_CODE)FMSTR_APPCMDRESULT_NOCMD))
+    if (fmstr_appCmd == ((FMSTR_APPCMD_CODE)FMSTR_APPCMDRESULT_NOCMD))
     {
         return NULL;
     }
 
-#if FMSTR_MAX_APPCMD_CALLS
+#if FMSTR_MAX_APPCMD_CALLS > 0
     /* the user never sees the callback-registered commands */
-    if(FMSTR_FindAppCmdCallIndex(fmstr_appCmd) >= 0)
+    if (FMSTR_FindAppCmdCallIndex(fmstr_appCmd) >= 0)
     {
         return NULL;
     }
 #endif
 
     /* caller want to know the data length */
-    if(dataLen)
+    if (dataLen != NULL)
     {
         *dataLen = fmstr_appCmdLen;
     }
 
     /* data are saved in out buffer */
-    return fmstr_appCmdLen ? fmstr_appCmdBuff : (FMSTR_APPCMD_PDATA) NULL;
+    return fmstr_appCmdLen > 0U ? fmstr_appCmdBuff : (FMSTR_APPCMD_PDATA)NULL;
 }
 
-/**************************************************************************//*!
-*
-* @brief    API: Register or unregister app.cmd callback handler
-*
-* @param    appCmdCode   - App.command ID
-* @param    callbackFunc - Pointer to handler function (NULL to unregister)
-*
-* @return   Non-zero if successfull, zero if maximum callbacks already set
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    API: Register or unregister app.cmd callback handler
+ *
+ * @param    appCmdCode   - App.command ID
+ * @param    callbackFunc - Pointer to handler function (NULL to unregister)
+ *
+ * @return   Non-zero if successfull, zero if maximum callbacks already set
+ *
+ ******************************************************************************/
 
 FMSTR_BOOL FMSTR_RegisterAppCmdCall(FMSTR_APPCMD_CODE appCmdCode, FMSTR_PAPPCMDFUNC callbackFunc)
 {
@@ -391,7 +394,7 @@ FMSTR_BOOL FMSTR_RegisterAppCmdCall(FMSTR_APPCMD_CODE appCmdCode, FMSTR_PAPPCMDF
     FMSTR_INDEX index;
 
     /* keep "void" ID as reserved */
-    if(appCmdCode == FMSTR_APPCMDRESULT_NOCMD)
+    if (appCmdCode == FMSTR_APPCMDRESULT_NOCMD)
     {
         return FMSTR_FALSE;
     }
@@ -400,21 +403,20 @@ FMSTR_BOOL FMSTR_RegisterAppCmdCall(FMSTR_APPCMD_CODE appCmdCode, FMSTR_PAPPCMDF
     index = FMSTR_FindAppCmdCallIndex(appCmdCode);
 
     /* when not found, get a free slot (only if registering new callback) */
-    if((index < 0) && (callbackFunc != NULL))
+    if ((index < 0) && (callbackFunc != NULL))
     {
         index = FMSTR_FindAppCmdCallIndex(FMSTR_APPCMDRESULT_NOCMD);
     }
 
     /* failed? */
-    if(index < 0)
+    if (index < 0)
     {
         return FMSTR_FALSE;
     }
 
     /* register handler */
     fmstr_appCmdCallFunc[index] = callbackFunc;
-    fmstr_appCmdCallId[index] = (FMSTR_APPCMD_CODE) (callbackFunc ?
-        appCmdCode : FMSTR_APPCMDRESULT_NOCMD);
+    fmstr_appCmdCallId[index]   = (FMSTR_APPCMD_CODE)(callbackFunc != NULL ? appCmdCode : FMSTR_APPCMDRESULT_NOCMD);
 
     return FMSTR_TRUE;
 
@@ -437,18 +439,18 @@ void FMSTR_AppCmdAck(FMSTR_APPCMD_RESULT resultCode)
     FMSTR_UNUSED(resultCode);
 }
 
-void FMSTR_AppCmdSetResponseData(FMSTR_ADDR resultData, FMSTR_SIZE resultDataLen)
+void FMSTR_AppCmdSetResponseData(FMSTR_ADDR resultDataAddr, FMSTR_SIZE resultDataLen)
 {
-    FMSTR_UNUSED(resultData);
+    FMSTR_UNUSED(resultDataAddr);
     FMSTR_UNUSED(resultDataLen);
 }
 
 FMSTR_APPCMD_CODE FMSTR_GetAppCmd(void)
 {
-    return (FMSTR_APPCMD_CODE) FMSTR_APPCMDRESULT_NOCMD;
+    return (FMSTR_APPCMD_CODE)FMSTR_APPCMDRESULT_NOCMD;
 }
 
-FMSTR_APPCMD_PDATA FMSTR_GetAppCmdData(FMSTR_SIZE* dataLen)
+FMSTR_APPCMD_PDATA FMSTR_GetAppCmdData(FMSTR_SIZE *dataLen)
 {
     FMSTR_UNUSED(dataLen);
     return NULL;

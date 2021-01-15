@@ -27,8 +27,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief I2C driver version 2.0.8. */
-#define FSL_I2C_DRIVER_VERSION (MAKE_VERSION(2, 0, 8))
+/*! @brief I2C driver version. */
+#define FSL_I2C_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
 /*@}*/
 
 /*! @brief Retry times for waiting flag. */
@@ -36,12 +36,18 @@
 #define I2C_RETRY_TIMES 0U /* Define to zero means keep waiting until the flag is assert/deassert. */
 #endif
 
+/*! @brief Whether to ignore the nack signal of the last byte during master transmit. */
+#ifndef I2C_MASTER_TRANSMIT_IGNORE_LAST_NACK
+#define I2C_MASTER_TRANSMIT_IGNORE_LAST_NACK \
+    1U /* Define to one means master ignores the last byte's nack and considers the transfer successful. */
+#endif
+
 /* definitions for MSTCODE bits in I2C Status register STAT */
-#define I2C_STAT_MSTCODE_IDLE    (0) /*!< Master Idle State Code */
-#define I2C_STAT_MSTCODE_RXREADY (1) /*!< Master Receive Ready State Code */
-#define I2C_STAT_MSTCODE_TXREADY (2) /*!< Master Transmit Ready State Code */
-#define I2C_STAT_MSTCODE_NACKADR (3) /*!< Master NACK by slave on address State Code */
-#define I2C_STAT_MSTCODE_NACKDAT (4) /*!< Master NACK by slave on data State Code */
+#define I2C_STAT_MSTCODE_IDLE    (0U) /*!< Master Idle State Code */
+#define I2C_STAT_MSTCODE_RXREADY (1U) /*!< Master Receive Ready State Code */
+#define I2C_STAT_MSTCODE_TXREADY (2U) /*!< Master Transmit Ready State Code */
+#define I2C_STAT_MSTCODE_NACKADR (3U) /*!< Master NACK by slave on address State Code */
+#define I2C_STAT_MSTCODE_NACKDAT (4U) /*!< Master NACK by slave on data State Code */
 
 /* definitions for SLVSTATE bits in I2C Status register STAT */
 #define I2C_STAT_SLVST_ADDR (0)
@@ -191,7 +197,8 @@ struct _i2c_master_handle
     uint8_t *buf;            /*!< Buffer pointer for current state. */
     uint32_t remainingSubaddr;
     uint8_t subaddrBuf[4];
-    i2c_master_transfer_t transfer;                    /*!< Copy of the current transfer info. */
+    bool checkAddrNack;             /*!< Whether to check the nack signal is detected during addressing. */
+    i2c_master_transfer_t transfer; /*!< Copy of the current transfer info. */
     i2c_master_transfer_callback_t completionCallback; /*!< Callback function pointer. */
     void *userData;                                    /*!< Application data passed to callback. */
 };
@@ -664,6 +671,7 @@ status_t I2C_MasterReadBlocking(I2C_Type *base, void *rxBuff, size_t rxSize, uin
  * @retval kStatus_I2C_Timeout Transfer error, wait signal timeout.
  * @retval kStatus_I2C_ArbitrationLost Transfer error, arbitration lost.
  * @retval kStataus_I2C_Nak Transfer error, receive NAK during transfer.
+ * @retval kStataus_I2C_Addr_Nak Transfer error, receive NAK during addressing.
  */
 status_t I2C_MasterTransferBlocking(I2C_Type *base, i2c_master_transfer_t *xfer);
 

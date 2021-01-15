@@ -312,7 +312,7 @@ static void _FMSTR_S12zCan_SendTxFrame(FMSTR_SIZE8 len)
     FMSTR_SETREG(fmstr_canBaseAddr, FMSTR_MSCANTFLG_OFFSET, fmstr_canTxBufSel);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Assigning FreeMASTER communication module base address
 *
@@ -323,7 +323,7 @@ void FMSTR_CanSetBaseAddress(FMSTR_ADDR base)
     fmstr_canBaseAddr = base;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Process FreeMASTER CAN interrupt (call this function from msCAN ISR)
 *

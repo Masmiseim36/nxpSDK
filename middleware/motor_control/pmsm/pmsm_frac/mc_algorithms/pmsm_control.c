@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -38,9 +38,13 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
     /* pass electrical position from outside function if enabled else estimated
      * electrical position is selected */
     if (psFocPMSM->bPosExtOn)
+    {
         psFocPMSM->f16PosEl = psFocPMSM->f16PosElExt;
+    }
     else
+    {
         psFocPMSM->f16PosEl = psFocPMSM->f16PosElEst;
+    }
 
     /* Position angle of the last PWM update */
     psFocPMSM->sAnglePosEl.f16Sin = GFLIB_Sin_F16(psFocPMSM->f16PosElEst);
@@ -123,7 +127,7 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
 void MCS_PMSMFocCtrlSpeed(mcs_pmsm_foc_t *psFocPMSM, mcs_speed_t *psSpeed)
 {
     /* Speed saturation flag given by the Q current controller saturation flag and speed controller saturation flag */
-    psSpeed->bSpeedPiStopInteg = (psSpeed->sSpeedPiParams.bLimFlag | psFocPMSM->sIqPiParams.bLimFlag) &
+    psSpeed->bSpeedPiStopInteg = (psSpeed->sSpeedPiParams.bLimFlag || psFocPMSM->sIqPiParams.bLimFlag) &&
                                  (MLIB_AbsSat_F16(psSpeed->f16SpeedCmd) >= MLIB_AbsSat_F16(psSpeed->f16SpeedFilt));
 
     /* Speed ramp generation */
@@ -151,7 +155,7 @@ void MCS_PMSMFocCtrlSpeed(mcs_pmsm_foc_t *psFocPMSM, mcs_speed_t *psSpeed)
 void MCS_PMSMAlignment(mcs_pmsm_foc_t *psFocPMSM, mcs_alignment_t *psAlignment)
 {
     /* first half duration time is position set to 120 degree */
-    if (psAlignment->ui16TimeHalf > 0)
+    if (psAlignment->ui16TimeHalf > 0U)
     {
         psFocPMSM->f16PosElExt = FRAC16(120.0 / 180.0);
         psAlignment->ui16TimeHalf--;
@@ -201,7 +205,9 @@ void MCS_PMSMOpenLoopStartUp(mcs_pmsm_startup_t *psStartUp)
 
     /* clear open loop flag */
     if (psStartUp->f16RatioMerging == FRAC16(1.0))
+    {
         psStartUp->bOpenLoop = FALSE;
+    }
 }
 
 /*!
@@ -222,12 +228,18 @@ void MCS_PMSMScalarCtrl(mcs_pmsm_foc_t *psFocPMSM, mcs_pmsm_scalar_ctrl_t *psSca
         MLIB_Conv_F16l(GFLIB_Ramp_F32(MLIB_Conv_F32s(psScalarPMSM->f16FreqCmd), &psScalarPMSM->sFreqRampParams));
 
     /* voltage calculation */
-    psScalarPMSM->sUDQReq.f16Q = (frac16_t)(
-        GFLIB_LowerLimit_F16(MLIB_ShLSat_F16(MLIB_Mul_F16(psScalarPMSM->f16VHzGain, psScalarPMSM->f16FreqRamp),
-                                             psScalarPMSM->i16VHzGainShift),
-                             psScalarPMSM->f16UqMin));
+    psScalarPMSM->sUDQReq.f16Q = (frac16_t)(MLIB_ShLSat_F16(
+        MLIB_Mul_F16(psScalarPMSM->f16VHzGain, psScalarPMSM->f16FreqRamp), psScalarPMSM->i16VHzGainShift));
     psScalarPMSM->sUDQReq.f16D = 0;
-
+    
+    /* voltage limitation to f16UqMin */
+    if (psScalarPMSM->sUDQReq.f16Q >= FRAC16(0.0))
+        psScalarPMSM->sUDQReq.f16Q = (frac16_t)(GFLIB_LowerLimit_F16(psScalarPMSM->sUDQReq.f16Q,
+                                                                     psScalarPMSM->f16UqMin));
+    else                                                
+        psScalarPMSM->sUDQReq.f16Q = (frac16_t)(GFLIB_UpperLimit_F16(psScalarPMSM->sUDQReq.f16Q,
+                                                                     MLIB_Neg_F16(psScalarPMSM->f16UqMin)));
+                                                
     /* stator voltage angle , used the same integrator as for the open-loop start up*/
     psScalarPMSM->f16PosElScalar = GFLIB_Integrator_F16(psScalarPMSM->f16FreqRamp, &psScalarPMSM->sFreqIntegrator);
 

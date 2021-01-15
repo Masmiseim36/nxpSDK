@@ -9,12 +9,12 @@
  * Includes
  ******************************************************************************/
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_qtmr.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -108,7 +108,7 @@ int main(void)
         PRINTF("\r\n Timer interrupt has occurred !");
         qtmrIsrFlag = false;
     }
-    QTMR_Deinit(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL);
+    QTMR_StopTimer(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL);
 
     PRINTF("\r\n****Chain Timer use-case, 10 second tick.****\n");
 
@@ -146,8 +146,8 @@ int main(void)
         qtmrIsrFlag = false;
     }
 
-    QTMR_Deinit(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL);
-    QTMR_Deinit(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL);
+    QTMR_StopTimer(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL);
+    QTMR_StopTimer(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL);
 
     /* ERRATA050194: Overflow flag and related interrupt cannot be generated successfully in upward count mode.
      * Workaround: using compare interrupt instead of overflow interrupt by setting compare value to 0xFFFF.
@@ -186,7 +186,7 @@ int main(void)
     PRINTF("\r\n Timer Overflow has occurred !");
     qtmrIsrFlag = false;
 
-    QTMR_Deinit(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL);
+    QTMR_StopTimer(BOARD_QTMR_BASEADDR, BOARD_FIRST_QTMR_CHANNEL);
     QTMR_Deinit(BOARD_QTMR_BASEADDR, BOARD_SECOND_QTMR_CHANNEL);
 
     PRINTF("\r\n*********QUADTIMER EXAMPLE END.*********");

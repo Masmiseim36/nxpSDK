@@ -13,12 +13,12 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "arm_cmse.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "veneer_table.h"
 #include "tzm_config.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

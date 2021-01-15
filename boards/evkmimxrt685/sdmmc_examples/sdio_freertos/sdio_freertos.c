@@ -12,9 +12,9 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "task.h"
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 #include "sdmmc_config.h"
 #include "fsl_power.h"
 /*******************************************************************************
@@ -228,7 +228,16 @@ static void CardDetectTask(void *pvParameters)
     s_CardInterruptSemaphore = xSemaphoreCreateBinary();
 
     BOARD_SDIO_Config(&g_sdio, SDIO_DetectCallBack, BOARD_SDMMC_SDIO_HOST_IRQ_PRIORITY, SDIO_CardInterruptCallBack);
-
+    /*
+     * Sdio case workaround to cover more wifi module,
+     * Some wifi module may not support 1V8 voltage that SDIO3.0 required, but the wifi chip supports SDIO3.0, then the
+     * the case will run failed, so the sdio case will specify the high speed timing mode here to avoid SDIO driver
+     * perform SDIO3.0 timing probe.
+     *
+     * Note: If you are sure about the voltage configuration and the wifi module capability, you can comment out below
+     * line.
+     */
+    g_sdio.currentTiming = kSD_TimingSDR25HighSpeedMode;
     /* SD host init function */
     if (SDIO_HostInit(&g_sdio) == kStatus_Success)
     {
@@ -244,11 +253,12 @@ static void CardDetectTask(void *pvParameters)
             if (s_cardInserted != s_cardInsertStatus)
             {
                 s_cardInserted = s_cardInsertStatus;
-                /* power off card */
-                SDIO_SetCardPower(&g_sdio, false);
+
                 if (s_cardInserted)
                 {
                     PRINTF("\r\nCard inserted.\r\n");
+                    /* power off card */
+                    SDIO_SetCardPower(&g_sdio, false);
                     /* power on the card */
                     SDIO_SetCardPower(&g_sdio, true);
                     /* Init card. */

@@ -21,7 +21,7 @@
  *
  */
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 #include <wm_net.h>
 #include <wmlog.h>
 #include <wifi-sdio.h>

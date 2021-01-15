@@ -1,6 +1,7 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
+ * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -55,7 +56,7 @@
 #define M1_FAULT_DURATION (6000)
 #define M1_FREEWHEEL_DURATION (1500)
 // Miscellaneous
-#define M1_E_BLOCK_TRH (1.4F)
+#define M1_E_BLOCK_TRH (0.8F)
 #define M1_E_BLOCK_PER (2000)
 
 // Current Loop Control

@@ -100,22 +100,6 @@ static status_t FLEXSPI_WriteDataDMA(FLEXSPI_Type *base, flexspi_dma_handle_t *h
  * @param dataSize size for receive data buffer .
  */
 static status_t FLEXSPI_ReadDataDMA(FLEXSPI_Type *base, flexspi_dma_handle_t *handle, uint32_t *data, size_t dataSize);
-
-/*!
- * @brief Get the FLEXSPI instance from peripheral base address.
- *
- * @param base FLEXSPI peripheral base address.
- * @return FLEXSPI instance.
- */
-extern uint32_t FLEXSPI_GetInstance(FLEXSPI_Type *base);
-
-/*!
- * @brief Check and clear IP command execution errors.
- *
- * @param base FLEXSPI base pointer.
- * @param status interrupt status.
- */
-extern status_t FLEXSPI_CheckAndClearError(FLEXSPI_Type *base, uint32_t status);
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -165,7 +149,6 @@ static status_t FLEXSPI_WriteDataDMA(FLEXSPI_Type *base, flexspi_dma_handle_t *h
     dma_channel_trigger_t dmaTxTriggerConfig;
     dma_channel_config_t txChannelConfig;
     uint32_t bytesPerDes;
-    uint32_t dmaTriggerBurst;
     uint8_t desCount;
     uint8_t remains;
     uint32_t srcInc;
@@ -225,7 +208,7 @@ static status_t FLEXSPI_WriteDataDMA(FLEXSPI_Type *base, flexspi_dma_handle_t *h
 
     remains = bytesPerDes;
 #else
-
+    uint32_t dmaTriggerBurst;
     dmaTxTriggerConfig.type = kDMA_RisingEdgeTrigger;
     bytesPerDes             = dataSize;
 
@@ -325,7 +308,6 @@ static status_t FLEXSPI_ReadDataDMA(FLEXSPI_Type *base, flexspi_dma_handle_t *ha
     void *nextDesc   = NULL;
     dma_channel_config_t rxChannelConfig;
     uint32_t bytesPerDes;
-    uint32_t dmaTriggerBurst;
     uint8_t remains;
     uint8_t desCount;
     uint32_t srcInc;
@@ -379,7 +361,7 @@ static status_t FLEXSPI_ReadDataDMA(FLEXSPI_Type *base, flexspi_dma_handle_t *ha
     remains = bytesPerDes;
 
 #else
-
+    uint32_t dmaTriggerBurst;
     dmaRxTriggerConfig.type = kDMA_RisingEdgeTrigger;
     bytesPerDes             = dataSize;
 
@@ -541,7 +523,6 @@ status_t FLEXSPI_TransferDMA(FLEXSPI_Type *base, flexspi_dma_handle_t *handle, f
     else
     {
         handle->transferSize = xfer->dataSize;
-        handle->state        = kFLEXSPI_Busy;
 
         /* Clear sequence pointer before sending data to external devices. */
         base->FLSHCR2[xfer->port] |= FLEXSPI_FLSHCR2_CLRINSTRPTR_MASK;
@@ -569,11 +550,13 @@ status_t FLEXSPI_TransferDMA(FLEXSPI_Type *base, flexspi_dma_handle_t *handle, f
 
         if ((xfer->cmdType == kFLEXSPI_Write) || (xfer->cmdType == kFLEXSPI_Config))
         {
-            result = FLEXSPI_WriteDataDMA(base, handle, xfer->data, xfer->dataSize);
+            handle->state = kFLEXSPI_Busy;
+            result        = FLEXSPI_WriteDataDMA(base, handle, xfer->data, xfer->dataSize);
         }
         else if (xfer->cmdType == kFLEXSPI_Read)
         {
-            result = FLEXSPI_ReadDataDMA(base, handle, xfer->data, xfer->dataSize);
+            handle->state = kFLEXSPI_Busy;
+            result        = FLEXSPI_ReadDataDMA(base, handle, xfer->data, xfer->dataSize);
         }
         else
         {

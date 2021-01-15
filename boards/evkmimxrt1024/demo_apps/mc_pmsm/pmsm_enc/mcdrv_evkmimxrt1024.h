@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,6 +32,7 @@ typedef struct _app_ver
 typedef struct _clock_setup
 {
     uint32_t ui32FastPeripheralClock;
+    uint32_t ui32CpuFrequency;
     uint32_t ui32BusClock;
     uint32_t ui32SysPllClock;
     uint16_t ui16M1SpeedLoopFreq;

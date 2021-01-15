@@ -9,13 +9,10 @@ a the high temperature interrupt is set.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
-
-Hardware requirements
-=====================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Board settings
 ==============
@@ -36,17 +33,13 @@ Running the demo
 ================
 When the example runs successfully, the following message is displayed in the terminal:
 ~~~~~~~~~~~~~~~~~~~~~~~~
-TEMPMON driver example. 
-The chip initial temperature is 40.8 ℃. 
-The chip temperature has reached high temperature that is 42.7 ℃. 
-The chip throttling back core frequency to waiting a desired cool down temperature . 
-The chip core frequency is 62500000 Hz. 
-The chip temperature has reached low temperature that is 39.5 ℃. 
-The chip will return to the normal process . 
-The chip core frequency is 500000000 Hz. 
-......
+TEMPMON driver example.
+The chip initial temperature is 40.8 ℃.
+The chip temperature has reached high temperature that is 42.7 ℃.
+The chip throttling back core frequency to waiting a desired cool down temperature .
+The chip core frequency is 62500000 Hz.
+The chip temperature has reached low temperature that is 39.5 ℃.
+The chip will return to the normal process .
+The chip core frequency is 500000000 Hz.
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-Customization options
-=====================
 

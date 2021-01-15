@@ -7,6 +7,8 @@
  */
 
 #include <stdlib.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_enet.h"
@@ -14,8 +16,6 @@
 #if defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
 #include "fsl_memory.h"
 #endif
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_enet_mdio.h"
@@ -44,8 +44,12 @@
 #define APP_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
 #endif
 #ifndef PHY_AUTONEGO_TIMEOUT_COUNT
-#define PHY_AUTONEGO_TIMEOUT_COUNT (100000)
+#define PHY_AUTONEGO_TIMEOUT_COUNT (300000)
 #endif
+#ifndef PHY_STABILITY_DELAY_US
+#define PHY_STABILITY_DELAY_US (0U)
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -76,9 +80,8 @@ enet_frame_info_t txFrameInfoArray[ENET_TXBD_NUM];
 /* The MAC address for ENET device. */
 uint8_t g_macAddr[6] = {0xd4, 0xbe, 0xd9, 0x45, 0x22, 0x60};
 
-volatile bool tx_frame_over   = false;
-enet_frame_info_t txFrameInfo = {0};
-enet_ptp_time_t txPtpTime;
+static volatile bool tx_frame_over   = false;
+static enet_frame_info_t txFrameInfo = {0};
 
 /*! @brief Enet PHY and MDIO interface handler. */
 static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
@@ -127,7 +130,6 @@ static void enetCallback(ENET_Type *base,
                          enet_event_t event,
                          enet_frame_info_t *frameInfo,
                          void *userData)
-
 {
     /* Get frame info after whole frame transmits out */
     if ((event == kENET_TxEvent) && (frameInfo != NULL))
@@ -143,7 +145,8 @@ static void enetCallback(ENET_Type *base,
 int main(void)
 {
     enet_config_t config;
-    uint32_t length = 0;
+    phy_config_t phyConfig = {0};
+    uint32_t length        = 0;
     uint32_t ptpClock;
     uint32_t count = 0;
     bool link      = false;
@@ -153,7 +156,6 @@ int main(void)
     status_t result;
     uint32_t txnumber = 0;
     enet_ptp_time_t ptpTime;
-    volatile uint32_t totalDelay;
     status_t status;
     uint8_t mGAddr[6] = {0x01, 0x00, 0x5e, 0x01, 0x01, 0x1};
 
@@ -214,8 +216,6 @@ int main(void)
 #else
     config.miiMode = kENET_RmiiMode;
 #endif
-
-    phy_config_t phyConfig;
     phyConfig.phyAddr               = EXAMPLE_PHY_ADDRESS;
     phyConfig.autoNeg               = true;
     mdioHandle.resource.base        = EXAMPLE_ENET;
@@ -247,6 +247,11 @@ int main(void)
         }
     } while (!(link && autonego));
 
+#if PHY_STABILITY_DELAY_US
+    /* Wait a moment for PHY status to be stable. */
+    SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+#endif
+
     /* Change the MII speed and duplex for actual link status. */
     PHY_GetLinkSpeedDuplex(&phyHandle, &speed, &duplex);
     config.miiSpeed  = (enet_mii_speed_t)speed;
@@ -267,15 +272,14 @@ int main(void)
     ENET_SetTxReclaim(&g_handle, true, 0);
     ENET_SetCallback(&g_handle, enetCallback, NULL);
 
+    /* Check if the timestamp is running */
     for (count = 1; count <= 10; count++)
     {
         ENET_Ptp1588GetTimer(EXAMPLE_ENET, &g_handle, &ptpTime);
         PRINTF(" Get the %d-th time", count);
         PRINTF(" %d second,", (uint32_t)ptpTime.second);
         PRINTF(" %d nanosecond  \r\n", ptpTime.nanosecond);
-        for (totalDelay = 0; totalDelay < 0x7fffffU; totalDelay++)
-        {
-        }
+        SDK_DelayAtLeastUs(200000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     }
 
     while (1)

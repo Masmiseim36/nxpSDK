@@ -11,7 +11,7 @@
 #ifndef EIGEN_CORE_H
 #define EIGEN_CORE_H
 
-// first thing Eigen does: stop the compiler from committing suicide
+// first thing Eigen does: stop the compiler from reporting useless warnings.
 #include "src/Core/util/DisableStupidWarnings.h"
 
 // then include this file where all our macros are defined. It's really important to do it first because
@@ -36,7 +36,7 @@
 
 // Disable the ipa-cp-clone optimization flag with MinGW 6.x or newer (enabled by default with -O3)
 // See http://eigen.tuxfamily.org/bz/show_bug.cgi?id=556 for details.
-#if EIGEN_COMP_MINGW && EIGEN_GNUC_AT_LEAST(4,6)
+#if EIGEN_COMP_MINGW && EIGEN_GNUC_AT_LEAST(4,6) && EIGEN_GNUC_AT_MOST(5,5)
   #pragma GCC optimize ("-fno-ipa-cp-clone")
 #endif
 
@@ -49,6 +49,10 @@
 
 #if defined(EIGEN_HAS_CUDA_FP16) || defined(EIGEN_HAS_HIP_FP16)
   #define EIGEN_HAS_GPU_FP16
+#endif
+
+#if defined(EIGEN_HAS_CUDA_BF16) || defined(EIGEN_HAS_HIP_BF16)
+  #define EIGEN_HAS_GPU_BF16
 #endif
 
 #if (defined _OPENMP) && (!defined EIGEN_DONT_PARALLELIZE)
@@ -72,6 +76,7 @@
 #include <cmath>
 #include <cassert>
 #include <functional>
+#include <sstream>
 #ifndef EIGEN_NO_IO
   #include <iosfwd>
 #endif
@@ -107,7 +112,7 @@
   #undef isnan
   #undef isinf
   #undef isfinite
-  #include <SYCL/sycl.hpp>
+  #include <CL/sycl.hpp>
   #include <map>
   #include <memory>
   #include <utility>
@@ -162,6 +167,7 @@ using std::ptrdiff_t;
 #include "src/Core/arch/Default/ConjHelper.h"
 // Generic half float support
 #include "src/Core/arch/Default/Half.h"
+#include "src/Core/arch/Default/BFloat16.h"
 #include "src/Core/arch/Default/TypeCasting.h"
 #include "src/Core/arch/Default/GenericPacketMathFunctionsFwd.h"
 
@@ -328,6 +334,10 @@ using std::ptrdiff_t;
 #include "src/Core/BandMatrix.h"
 #include "src/Core/CoreIterators.h"
 #include "src/Core/ConditionEstimator.h"
+
+#if EIGEN_ARCH_PPC
+#include "src/Core/arch/AltiVec/MatrixProduct.h"
+#endif
 
 #include "src/Core/BooleanRedux.h"
 #include "src/Core/Select.h"

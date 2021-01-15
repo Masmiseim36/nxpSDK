@@ -8,10 +8,10 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
 #include "fsl_intmux.h"
 #endif
@@ -143,7 +143,7 @@ int main(void)
     uint32_t srcClock_Hz;
     uint32_t errorCount;
     uint32_t i;
-    uint32_t whichPcs;
+    lpspi_which_pcs_t whichPcs;
     uint8_t txWatermark;
     lpspi_master_config_t masterConfig;
 
@@ -216,6 +216,8 @@ int main(void)
 
         if (masterTxCount == TRANSFER_SIZE)
         {
+            /* Set the PCS back to uncontinuous to finish the transfer if all tx data are pushed to FIFO. */
+            LPSPI_SetPCSContinous(EXAMPLE_LPSPI_MASTER_BASEADDR, false);
             break;
         }
     }

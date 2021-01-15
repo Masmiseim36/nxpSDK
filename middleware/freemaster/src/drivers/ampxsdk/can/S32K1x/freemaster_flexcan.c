@@ -237,7 +237,7 @@ static void _FMSTR_FlexCAN_SendTxFrame(FMSTR_SIZE8 len)
 #endif
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Assigning FreeMASTER communication module base address
 *
@@ -250,7 +250,7 @@ void FMSTR_CanSetBaseAddress(CAN_Type *base)
     fmstr_canBaseAddr = base;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Assigning FreeMASTER communication module instance
 *

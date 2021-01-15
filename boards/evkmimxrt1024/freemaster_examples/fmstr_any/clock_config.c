@@ -1,4 +1,11 @@
 /*
+ * Copyright 2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+/*
  * How to setup clock using clock driver functions:
  *
  * 1. Call CLOCK_InitXXXPLL() to configure corresponding PLL clock.

@@ -4,13 +4,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_device_registers.h"
 #include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 #include "fsl_semc.h"
 
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -58,7 +58,7 @@ status_t BOARD_InitSEMC(void)
     sdramconfig.address             = 0x80000000;
     sdramconfig.memsize_kbytes      = 32 * 1024; /* 32MB = 32*1024*1KBytes*/
     sdramconfig.portSize            = kSEMC_PortSize16Bit;
-    sdramconfig.burstLen            = kSEMC_Sdram_BurstLen8;
+    sdramconfig.burstLen            = kSEMC_Sdram_BurstLen1;
     sdramconfig.columnAddrBitNum    = kSEMC_SdramColunm_9bit;
     sdramconfig.casLatency          = kSEMC_LatencyThree;
     sdramconfig.tPrecharge2Act_Ns   = 18; /* Trp 18ns */

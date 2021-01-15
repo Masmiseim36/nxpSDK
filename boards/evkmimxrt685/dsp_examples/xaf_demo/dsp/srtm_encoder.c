@@ -15,8 +15,12 @@
 
 #include "xaf-api.h"
 #include "srtm_config_audio.h"
+#if XA_OPUS_ENCODER
 #include "audio/xa-opus-encoder-api.h"
-#include "audio/xa_sbc_enc_api.h"
+#endif
+#if XA_SBC_ENCODER
+#include "xa_sbc_enc_api.h"
+#endif
 
 #include "fsl_common.h"
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
@@ -89,6 +93,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
 
     switch (enc_name)
     {
+#if XA_OPUS_ENCODER
         case SRTM_Command_OPUS_ENC:
             param[0]  = XA_OPUS_ENC_CONFIG_PARAM_PCM_WIDTH;
             param[1]  = OPUS_ENC_PCM_WIDTH;
@@ -109,6 +114,8 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
             param_num = 8;
             enc_id    = "audio-encoder/opus";
             break;
+#endif
+#if XA_SBC_ENCODER
         case SRTM_Command_SBC_ENC:
             param[0]  = XA_SBC_ENC_CONFIG_PARAM_SAMP_FREQ;
             param[1]  = SBC_ENC_SAMP_FREQ;
@@ -119,6 +126,7 @@ int srtm_encoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int enc_n
             param_num = 3;
             enc_id    = "audio-encoder/sbc";
             break;
+#endif
         /* Unknown encoder. */
         default:
             DSP_PRINTF("Encoder failure: unknown codec!\r\n");

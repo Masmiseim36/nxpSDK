@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2018-2019, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2018-2020, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -63,18 +63,6 @@ val_status_t val_print(print_verbosity_t verbosity, const char *string, int32_t 
        return VAL_STATUS_SUCCESS;
     }
     return pal_print_ns(string, data);
-}
-
-/**
-    @brief    - This API will read from slave address via SPI
-    @param    - addr : Slave address
-                data : value read from Slave address
-                len  : length of data to be read in bytes
-    @return   - error status
-**/
-val_status_t val_spi_read(addr_t addr, uint8_t *data, uint32_t len)
-{
-        return pal_spi_read(addr, data, len);
 }
 
 /* Watchdog APIs */
@@ -228,7 +216,7 @@ val_status_t val_nvmem_read(uint32_t offset, void *buffer, int size)
                - size      : Number of bytes
     @return    - val_status_t
 */
-val_status_t val_nvmem_write(uint32_t offset, const void *buffer, int size)
+val_status_t val_nvmem_write(uint32_t offset, const void *buffer, int size) //NXP
 {
    memory_desc_t   *memory_desc;
    val_status_t    status = VAL_STATUS_SUCCESS;

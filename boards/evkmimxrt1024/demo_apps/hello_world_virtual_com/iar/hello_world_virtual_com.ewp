@@ -322,15 +322,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -338,10 +335,10 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1316,15 +1313,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -1332,10 +1326,10 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2310,15 +2304,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -2326,10 +2317,10 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3302,15 +3293,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -3318,10 +3306,10 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4296,15 +4284,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -4312,10 +4297,10 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5290,15 +5275,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager/usb_cdc_adapter</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -5306,10 +5288,10 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device/class</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/output/source/device</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>

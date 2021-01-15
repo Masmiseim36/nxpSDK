@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,22 +9,20 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
-#include "board.h"
 #include "mcdrv.h"
 #include "freemaster.h"
 #include "pin_mux.h"
+#include "peripherals.h"
 #include "fsl_gpio.h"
 #include "fsl_lpuart.h"
 #include "m1_sm_snsless.h"
 
 #include "freemaster_serial_lpuart.h"
+#include "board.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/*! @brief The UART to use for FreeMASTER communication */
-#define BOARD_FMSTR_UART_PORT LPUART1
-#define BOARD_FMSTR_UART_BAUDRATE 19200U
 
 #define BOARD_USER_BUTTON_PRIORITY 4
 
@@ -63,7 +61,6 @@ void DemoSpeedStimulator(void);
 /* Demo Position Stimulator */
 void DemoPositionStimulator(void);
 
-void BOARD_InitUART(uint32_t u32BaudRate);
 void BOARD_InitSysTick(void);
 void BOARD_InitGPIO(void);
 

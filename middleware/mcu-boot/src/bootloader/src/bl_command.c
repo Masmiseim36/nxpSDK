@@ -479,19 +479,7 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
 {
     flash_erase_all_packet_t *commandPacket = (flash_erase_all_packet_t *)packet;
     status_t status = kStatus_Success;
-
-// Call flash erase all implementation.
-// For target without QSPI module, ignore the memory identifier
-#if ((!BL_FEATURE_QSPI_MODULE) && (!BL_FEATURE_FAC_ERASE) && (!BL_FEATURE_EXPAND_MEMORY) && \
-     (!BL_FEATURE_HAS_NO_INTERNAL_FLASH))
-    status = flash_mem_erase_all();
-#if BL_FEATURE_SUPPORT_DFLASH
-    if (g_bootloaderContext.dflashDriverInterface != NULL)
-    {
-        status += flexNVM_mem_erase_all();
-    }
-#endif // BL_FEATURE_SUPPORT_DFLASH
-#else
+   
     switch (commandPacket->memoryId)
     {
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
@@ -569,8 +557,6 @@ void handle_flash_erase_all(uint8_t *packet, uint32_t packetLength)
             status = kStatus_InvalidArgument;
             break;
     }
-#endif // #if ((!BL_FEATURE_QSPI_MODULE) && (!BL_FEATURE_FAC_ERASE) && (!BL_FEATURE_EXPAND_MEMORY) &&
-       // (!BL_FEATURE_HAS_NO_INTERNAL_FLASH))
 
     send_generic_response(status, commandPacket->commandPacket.commandTag);
 }

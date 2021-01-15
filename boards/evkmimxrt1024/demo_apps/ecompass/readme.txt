@@ -5,10 +5,10 @@ all three angles (pitch, roll, and yaw or compass heading).
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.6
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================

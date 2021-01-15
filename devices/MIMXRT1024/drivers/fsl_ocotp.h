@@ -19,8 +19,8 @@
  *******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief OCOTP driver version 2.1.2 */
-#define FSL_OCOTP_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
+/*! @brief OCOTP driver version. */
+#define FSL_OCOTP_DRIVER_VERSION (MAKE_VERSION(2, 1, 3))
 /*@}*/
 
 #ifndef OCOTP_READ_FUSE_DATA_COUNT
@@ -181,6 +181,7 @@ status_t OCOTP_WriteFuseShadowRegister(OCOTP_Type *base, uint32_t address, uint3
  * @param base     OCOTP peripheral base address.
  * @param address  The fuse address to be written.
  * @param data     The value will be writen to fuse address.
+ * @param lock     Lock or unlock write fuse shadow register operation.
  * @retval kStatus_Success Program and reload success.
  * @retval kStatus_OCOTP_Locked The eFuse word is locked and cannot be programmed.
  * @retval kStatus_OCOTP_ProgramFail eFuse word programming failed.

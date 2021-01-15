@@ -1,7 +1,7 @@
 //*****************************************************************************
 // MIMXRT1021 startup code for use with MCUXpresso IDE
 //
-// Version : 310320
+// Version : 231120
 //*****************************************************************************
 //
 // Copyright 2016-2020 NXP
@@ -44,6 +44,7 @@ extern "C" {
 // by the linker when "Enable Code Read Protect" selected.
 // See crp.h header for more information
 //*****************************************************************************
+
 //*****************************************************************************
 // Declaration of external SystemInit function
 //*****************************************************************************
@@ -125,7 +126,7 @@ WEAK void Reserved60_IRQHandler(void);
 WEAK void WDOG2_IRQHandler(void);
 WEAK void SNVS_HP_WRAPPER_IRQHandler(void);
 WEAK void SNVS_HP_WRAPPER_TZ_IRQHandler(void);
-WEAK void SNVS_LP_WRAPPER_IRQHandler(void);
+WEAK void SNVS_LP_HP_WRAPPER_IRQHandler(void);
 WEAK void CSU_IRQHandler(void);
 WEAK void DCP_IRQHandler(void);
 WEAK void DCP_VMI_IRQHandler(void);
@@ -274,7 +275,7 @@ void Reserved60_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void WDOG2_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void SNVS_HP_WRAPPER_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void SNVS_HP_WRAPPER_TZ_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void SNVS_LP_WRAPPER_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void SNVS_LP_HP_WRAPPER_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void CSU_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void DCP_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void DCP_VMI_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
@@ -466,7 +467,7 @@ void (* const g_pfnVectors[])(void) = {
     WDOG2_IRQHandler,                 // 61 : WDOG2 interrupt
     SNVS_HP_WRAPPER_IRQHandler,       // 62 : SNVS Functional Interrupt
     SNVS_HP_WRAPPER_TZ_IRQHandler,    // 63 : SNVS Security Interrupt
-    SNVS_LP_WRAPPER_IRQHandler,       // 64 : ON-OFF button press shorter than 5 secs (pulse event)
+    SNVS_LP_HP_WRAPPER_IRQHandler,    // 64 : ON-OFF button press shorter than 5 secs (pulse event)
     CSU_IRQHandler,                   // 65 : CSU interrupt
     DCP_IRQHandler,                   // 66 : Combined DCP channel interrupts(except channel 0) and CRC interrupt
     DCP_VMI_IRQHandler,               // 67 : IRQ of DCP channel 0
@@ -609,6 +610,9 @@ void ResetISR(void) {
 
     // Disable interrupts
     __asm volatile ("cpsid i");
+
+    __asm volatile ("MSR MSP, %0" : : "r" (&_vStackTop) : );
+
 
 
 #if defined (__USE_CMSIS)
@@ -940,8 +944,8 @@ WEAK void SNVS_HP_WRAPPER_TZ_IRQHandler(void)
 {   SNVS_HP_WRAPPER_TZ_DriverIRQHandler();
 }
 
-WEAK void SNVS_LP_WRAPPER_IRQHandler(void)
-{   SNVS_LP_WRAPPER_DriverIRQHandler();
+WEAK void SNVS_LP_HP_WRAPPER_IRQHandler(void)
+{   SNVS_LP_HP_WRAPPER_DriverIRQHandler();
 }
 
 WEAK void CSU_IRQHandler(void)

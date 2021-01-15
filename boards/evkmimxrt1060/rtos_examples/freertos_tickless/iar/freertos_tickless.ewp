@@ -312,13 +312,8 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../low_power_tickless</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -328,7 +323,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -592,7 +589,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1295,13 +1291,8 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../low_power_tickless</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -1311,7 +1302,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1575,7 +1568,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2278,13 +2270,8 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../low_power_tickless</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -2294,7 +2281,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2558,7 +2547,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3259,13 +3247,8 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../low_power_tickless</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -3275,7 +3258,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3539,7 +3524,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4242,13 +4226,8 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../low_power_tickless</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -4258,7 +4237,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4522,7 +4503,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -5225,13 +5205,8 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../low_power_tickless</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -5241,7 +5216,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5505,7 +5482,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -5955,28 +5931,28 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpt.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</name>
@@ -6017,15 +5993,15 @@
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
       </file>
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
@@ -6034,13 +6010,13 @@
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/list.h</name>
@@ -6102,13 +6078,13 @@
   <group>
     <name>device</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/fsl_device_registers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/MIMXRT1062.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/system_MIMXRT1062.c</name>
@@ -6120,6 +6096,12 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6127,12 +6109,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
@@ -6143,37 +6119,37 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -6186,10 +6162,10 @@
   <group>
     <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../xip/evkmimxrt1060_flexspi_nor_config.c</name>
@@ -6216,16 +6192,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

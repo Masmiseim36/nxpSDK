@@ -30,8 +30,9 @@
 #include <wifi.h>
 #include <wm_os.h>
 #include <wm_net.h>
+#include <wifi-debug.h>
 #include <stdint.h>
-#include <mdev_sdio.h>
+#include <mlan_sdio_api.h>
 
 #include <fsl_common.h>
 
@@ -43,6 +44,7 @@
 #define WL_ID_WIFI_RSSI    "wifi_rssi"
 
 bool g_req_sl_confirm;
+static bool wlan_uap_scan_chan_list_set;
 
 int wlan_set_wwsm_txpwrlimit();
 static bool wlan_is_ieeeps_active();
@@ -157,7 +159,7 @@ static struct wifi_scan_params_t g_wifi_scan_params = {NULL,
                                                        153};
 
 static os_queue_pool_define(g_wlan_event_queue_data, sizeof(struct wifi_message) * MAX_EVENTS);
-static os_thread_stack_define(g_cm_stack, 2048);
+static os_thread_stack_define(g_cm_stack, 4096);
 
 typedef enum
 {
@@ -243,6 +245,9 @@ static struct
     unsigned int reassoc_count;
     wifi_scan_chan_list_t scan_chan_list;
     bool hidden_scan_on : 1;
+#ifdef CONFIG_WIFI_FW_DEBUG
+    void (*wlan_usb_init_cb)(void);
+#endif
 } wlan;
 
 void wlan_wake_up_card();
@@ -872,13 +877,12 @@ int load_wep_key(const uint8_t *input, uint8_t *output, uint8_t *output_len, con
  * WPA and required for WPA2, however a WPA2 AP may still have it disabled. */
 static int configure_security(struct wlan_network *network, struct wifi_scan_result *res)
 {
-    int ret;
+    int ret = WM_SUCCESS;
     switch (network->security.type)
     {
         case WLAN_SECURITY_WPA:
         case WLAN_SECURITY_WPA2:
         case WLAN_SECURITY_WPA_WPA2_MIXED:
-        case WLAN_SECURITY_WPA3_SAE:
             if (network->security.type == WLAN_SECURITY_WPA)
             {
                 wlcm_d("configuring WPA security");
@@ -886,10 +890,6 @@ static int configure_security(struct wlan_network *network, struct wifi_scan_res
             else if (network->security.type == WLAN_SECURITY_WPA2)
             {
                 wlcm_d("configuring WPA2 security");
-            }
-            else if (network->security.type == WLAN_SECURITY_WPA3_SAE)
-            {
-                wlcm_d("configuring WPA3 security");
             }
             else
             {
@@ -919,7 +919,7 @@ static int configure_security(struct wlan_network *network, struct wifi_scan_res
             }
             else
             {
-                wlcm_d("adding SSID and PSK/PASSWORD to supplicant cache");
+                wlcm_d("adding SSID and PSK to supplicant cache");
                 ret = wifi_send_add_wpa_psk(network->role, network->ssid, network->security.psk,
                                             network->security.psk_len);
             }
@@ -927,7 +927,24 @@ static int configure_security(struct wlan_network *network, struct wifi_scan_res
             if (ret != WM_SUCCESS)
                 return -WM_FAIL;
             break;
-
+        case WLAN_SECURITY_WPA3_SAE:
+            if (res->WPA_WPA2_WEP.wpa3_sae)
+            {
+                wlcm_d("configuring WPA3 SAE security");
+                wlcm_d("adding SSID and WPA3 SAE PASSWORD to supplicant cache");
+                ret = wifi_send_add_wpa3_password(network->role, network->ssid, network->security.password,
+                                                  network->security.password_len);
+            }
+            else if (res->WPA_WPA2_WEP.wpa2)
+            {
+                wlcm_d("configuring WPA2 security");
+                wlcm_d("adding SSID and PSK to supplicant cache");
+                ret = wifi_send_add_wpa_psk(network->role, network->ssid, network->security.password,
+                                            network->security.password_len);
+            }
+            if (ret != WM_SUCCESS)
+                return -WM_FAIL;
+            break;
         case WLAN_SECURITY_WEP_OPEN:
         case WLAN_SECURITY_WEP_SHARED:
             ret = load_wep_key((const uint8_t *)network->security.psk, (uint8_t *)network->security.psk,
@@ -1104,20 +1121,24 @@ static int do_start(struct wlan_network *network)
                 network->channel = wlan.networks[wlan.cur_network_idx].channel;
             else
             {
-                wifi_get_active_channel_list(active_chan_list, &active_num_chans);
-
-                if (active_num_chans)
+                if (!wlan_uap_scan_chan_list_set)
                 {
-                    scan_chan_list.num_of_chan = active_num_chans;
-                    memcpy(scan_chan_list.chan_number, active_chan_list, active_num_chans);
-                    wlan_uap_set_scan_chan_list(scan_chan_list);
+                    wifi_get_active_channel_list(active_chan_list, &active_num_chans);
+
+                    if (active_num_chans)
+                    {
+                        scan_chan_list.num_of_chan = active_num_chans;
+                        memcpy(scan_chan_list.chan_number, active_chan_list, active_num_chans);
+                        wlan_uap_set_scan_chan_list(scan_chan_list);
+                    }
                 }
             }
         }
 
         wlcm_d("starting our own network");
         ret = wifi_uap_start(network->type, network->ssid, wlan.mac, network->security.type, &network->security.psk[0],
-                             network->channel, wlan.scan_chan_list, network->security.mfpc, network->security.mfpr);
+                             &network->security.password[0], network->channel, wlan.scan_chan_list,
+                             network->security.mfpc, network->security.mfpr);
         if (ret)
         {
             wlcm_e("uAP start failed, giving up");
@@ -1269,7 +1290,7 @@ static int start_association(struct wlan_network *network, struct wifi_scan_resu
         do_connect_failed(WLAN_REASON_NETWORK_NOT_FOUND);
         return -WM_FAIL;
     }
-    ret = wrapper_wifi_assoc(res->bssid, network->security.type, network->security.ucstCipher.tkip, res->trans_mode);
+    ret = wrapper_wifi_assoc(res->bssid, network->security.type, network->security.ucstCipher.tkip, 0);
     if (ret)
     {
         wlcm_d("association failed");
@@ -1356,7 +1377,6 @@ static void handle_scan_results(void)
     if (matching_ap_found)
     {
         update_network_params(network, best_ap);
-
         ret = start_association(network, best_ap);
         if (ret == WM_SUCCESS)
         {
@@ -1869,7 +1889,6 @@ static void wlcm_process_link_loss_event(struct wifi_message *msg,
     {
         wlan.sta_state      = CM_STA_IDLE;
         wlan.sta_ipv4_state = CM_STA_IDLE;
-
         if (wlan.cm_ieeeps_configured)
         {
             /* on link loss disable ieeeps mode*/
@@ -1973,6 +1992,8 @@ static void wlcm_process_net_dhcp_config(struct wifi_message *msg,
                 wlan_ieeeps_sm(IEEEPS_EVENT_DISABLE);
             }
 
+            // wlan_disconnect();
+
             do_connect_failed(WLAN_REASON_ADDRESS_FAILED);
 
             if (wlan.reassoc_control)
@@ -2018,6 +2039,8 @@ static void wlcm_process_net_dhcp_config(struct wifi_message *msg,
                 wlan_ieeeps_sm(IEEEPS_EVENT_DISABLE);
             }
 
+            // wlan_disconnect();
+
             do_connect_failed(WLAN_REASON_ADDRESS_FAILED);
 
             if (wlan.reassoc_control)
@@ -2061,7 +2084,13 @@ static void wlcm_process_net_if_config_event(struct wifi_message *msg, enum cm_s
     /* If WIFI is in deepsleep on  exit from PM4 disable dee-psleep */
 
     *next = CM_STA_IDLE;
-    // wifi_get_uap_max_clients(&wlan.uap_supported_max_sta_num);
+
+#ifdef OTP_CHANINFO
+    wifi_get_fw_region_and_cfp_tables();
+#endif
+
+    wifi_get_uap_max_clients(&wlan.uap_supported_max_sta_num);
+
     wrapper_wlan_cmd_get_hw_spec();
 
     wlan_ed_mac_ctrl_t wlan_ed_mac_ctrl;
@@ -2069,7 +2098,7 @@ static void wlcm_process_net_if_config_event(struct wifi_message *msg, enum cm_s
 #ifdef SD8801
     wlan_ed_mac_ctrl.ed_ctrl_2g   = 0x1;
     wlan_ed_mac_ctrl.ed_offset_2g = 0x1b;
-#elif defined(SD8977)
+#elif defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098)
     wlan_ed_mac_ctrl.ed_ctrl_2g   = 0x1;
     wlan_ed_mac_ctrl.ed_offset_2g = 0x9;
 #ifdef CONFIG_5GHz_SUPPORT
@@ -2341,7 +2370,7 @@ static void wlcm_request_disconnect(enum cm_sta_state *next, struct wlan_network
     if (wlan.reassoc_control && wlan.reassoc_request)
     {
         wlan.scan_count      = WLAN_RESCAN_LIMIT;
-        wlan.reassoc_count   = 0;
+        wlan.reassoc_count   = WLAN_RECONNECT_LIMIT;
         wlan.reassoc_request = false;
     }
 
@@ -2362,6 +2391,8 @@ static void wlcm_request_connect(struct wifi_message *msg, enum cm_sta_state *ne
 
     // wakelock_get(WL_ID_CONNECT);
     wlan.connect_wakelock_taken = true;
+
+    wlan_set_pmfcfg(new_network->security.mfpc, new_network->security.mfpr);
 
     if (is_state(CM_STA_DEEP_SLEEP))
     {
@@ -2436,6 +2467,14 @@ static void wlcm_request_reconnect(enum cm_sta_state *next, struct wlan_network 
         wlan_disconnect();
     }
 }
+
+#ifdef CONFIG_WIFI_FW_DEBUG
+static void wlcm_process_fw_debug_info(struct wifi_message *msg)
+{
+    PRINTF("EVENT: FW Debug Info %s\r\n", msg->data);
+    os_mem_free(msg->data);
+}
+#endif
 
 /*
  * Event Handlers
@@ -2602,6 +2641,12 @@ static enum cm_sta_state handle_message(struct wifi_message *msg)
                 os_mem_free(msg->data);
             }
             break;
+#ifdef CONFIG_WIFI_FW_DEBUG
+        case WIFI_EVENT_FW_DEBUG_INFO:
+            wlcm_d("got event: fw debug info");
+            wlcm_process_fw_debug_info(msg);
+            break;
+#endif
         default:
             wlcm_w("got unknown message: %d", msg->event);
             break;
@@ -2786,6 +2831,12 @@ int wlan_init(const uint8_t *fw_ram_start_addr, const size_t size)
     }
     wlcm_d("WLAN FW ext_version: %s", wlan.fw_ver_ext.version_str);
 
+#ifdef CONFIG_WIFI_FW_DEBUG
+    if (wlan.wlan_usb_init_cb != NULL)
+        wlan.wlan_usb_init_cb();
+    else
+        wifi_e("USB init callback is not registered");
+#endif
     return ret;
 }
 
@@ -3049,12 +3100,18 @@ int wlan_add_network(struct wlan_network *network)
     if (network->ssid[0] == '\0' && is_bssid_any(network->bssid))
         return -WM_E_INVAL;
 
-    if (((network->role == WLAN_BSS_ROLE_UAP) || (network->role == WLAN_BSS_ROLE_STA)) &&
-        ((network->security.type == WLAN_SECURITY_WPA3_SAE)) && (!network->security.mfpc))
+    if ((network->role == WLAN_BSS_ROLE_STA) && (network->security.type == WLAN_SECURITY_WPA3_SAE) &&
+        (!network->security.mfpc))
         return -WM_E_INVAL;
 
-    if ((network->role == WLAN_BSS_ROLE_STA) && (network->security.type == WLAN_SECURITY_WPA3_SAE))
-        wlan_set_pmfcfg(network->security.mfpc, network->security.mfpr);
+    if ((network->role == WLAN_BSS_ROLE_UAP) &&
+        ((network->security.type == WLAN_SECURITY_WPA3_SAE) ||
+         (network->security.type == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED)) &&
+        (!network->security.mfpc))
+        return -WM_E_INVAL;
+
+    if ((network->role == WLAN_BSS_ROLE_STA) && (network->security.type == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED))
+        return -WM_E_INVAL;
 
     /* Make sure network type is set correctly if not
      * set correct values as per role*/
@@ -3697,7 +3754,7 @@ void wlan_wake_up_card()
 {
     uint32_t resp;
 
-    sdio_drv_creg_write(NULL, 0x0, 1, 0x02, &resp);
+    wifi_wake_up_card(&resp);
 }
 
 void wlan_configure_listen_interval(int listen_interval)
@@ -3982,6 +4039,14 @@ int wlan_set_chanlist(wifi_chanlist_t *chanlist)
     return -WM_FAIL;
 }
 
+int wlan_get_chanlist(wifi_chanlist_t *chanlist)
+{
+    if (chanlist)
+        return wifi_get_chanlist(chanlist);
+
+    return -WM_FAIL;
+}
+
 int wlan_set_txpwrlimit(wifi_txpwrlimit_t *txpwrlimit)
 {
     if (txpwrlimit)
@@ -4001,6 +4066,19 @@ int wlan_get_txpwrlimit(wifi_SubBand_t subband, wifi_txpwrlimit_t *txpwrlimit)
     return -WM_FAIL;
 }
 
+#ifdef WLAN_LOW_POWER_ENABLE
+int wlan_enable_low_pwr_mode()
+{
+    if (wlan.status == WLCMGR_INACTIVE)
+    {
+        wifi_enable_low_pwr_mode();
+        return WM_SUCCESS;
+    }
+    else
+        return -WM_FAIL;
+}
+#endif
+
 void wlan_set_reassoc_control(bool reassoc_control)
 {
     wlan.reassoc_control = reassoc_control;
@@ -4015,26 +4093,6 @@ int wlan_set_ed_mac_mode(wlan_ed_mac_ctrl_t wlan_ed_mac_ctrl)
 int wlan_get_ed_mac_mode(wlan_ed_mac_ctrl_t *wlan_ed_mac_ctrl)
 {
     return wifi_get_ed_mac_mode(wlan_ed_mac_ctrl);
-}
-
-int wlan_set_bandcfg(wlan_bandcfg_t wlan_bandcfg)
-{
-    return wifi_set_bandcfg(&wlan_bandcfg);
-}
-
-int wlan_get_bandcfg(wlan_bandcfg_t *wlan_bandcfg)
-{
-    return wifi_get_bandcfg(wlan_bandcfg);
-}
-
-int wlan_set_cwmode(wlan_cw_mode_ctrl_t wlan_cw_mode_ctrl)
-{
-    return wifi_set_cwmode(&wlan_cw_mode_ctrl);
-}
-
-int wlan_get_cwmode(wlan_cw_mode_ctrl_t *wlan_cw_mode_ctrl)
-{
-    return wifi_get_cwmode(wlan_cw_mode_ctrl);
 }
 
 bool wlan_get_11d_enable_status()
@@ -4099,50 +4157,9 @@ bool wlan_get_smart_mode_status()
     return wlan.smart_mode_active;
 }
 
-int wlan_auto_reconnect_enable(wlan_auto_reconnect_config_t auto_reconnect_config)
-{
-    return wifi_auto_reconnect_enable(auto_reconnect_config);
-}
-
-int wlan_auto_reconnect_disable()
-{
-    return wifi_auto_reconnect_disable();
-}
-
 int wlan_get_tsf(uint32_t *tsf_high, uint32_t *tsf_low)
 {
     return wifi_get_tsf(tsf_high, tsf_low);
-}
-
-int wlan_tcp_keep_alive(wlan_tcp_keep_alive_t *tcp_keep_alive)
-{
-    int ret;
-    unsigned int ipv4_addr;
-
-    ret = wlan_get_ipv4_addr(&ipv4_addr);
-    if (ret != WM_SUCCESS)
-    {
-        wlcm_e("Cannot get IP");
-        return -WM_FAIL;
-    }
-
-    return wifi_tcp_keep_alive(tcp_keep_alive, wlan.mac, ipv4_addr);
-}
-
-int wlan_nat_keep_alive(wlan_nat_keep_alive_t *nat_keep_alive)
-{
-    int ret;
-    unsigned int ipv4_addr;
-    t_u16 src_port = 4500;
-
-    ret = wlan_get_ipv4_addr(&ipv4_addr);
-    if (ret != WM_SUCCESS)
-    {
-        wlcm_e("Cannot get IP");
-        return -WM_FAIL;
-    }
-
-    return wifi_nat_keep_alive(nat_keep_alive, wlan.mac, ipv4_addr, src_port);
 }
 
 uint16_t wlan_get_beacon_period()
@@ -4240,84 +4257,6 @@ int wlan_get_pmfcfg(uint8_t *mfpc, uint8_t *mfpr)
     return wifi_get_pmfcfg(mfpc, mfpr);
 }
 
-int wlan_get_tbtt_offset(wlan_tbtt_offset_t *tbtt_offset)
-{
-    return wifi_get_tbtt_offset(tbtt_offset);
-}
-
-int wlan_set_packet_filters(wlan_flt_cfg_t *flt_cfg)
-{
-    return wifi_set_packet_filters(flt_cfg);
-}
-
-int wlan_set_auto_arp()
-{
-    int ret;
-    unsigned int ipv4_addr;
-    wlan_flt_cfg_t flt_cfg;
-
-    ret = wlan_get_ipv4_addr(&ipv4_addr);
-    if (ret != WM_SUCCESS)
-    {
-        wlcm_e("Cannot get IP");
-        return -WM_FAIL;
-    }
-
-    memset(&flt_cfg, 0, sizeof(wlan_flt_cfg_t));
-
-    flt_cfg.criteria = (MBIT(0) | MBIT(1));
-    flt_cfg.nentries = 1;
-
-    flt_cfg.mef_entry.mode   = MBIT(0);
-    flt_cfg.mef_entry.action = 0x10;
-
-    flt_cfg.mef_entry.filter_num = 2;
-
-    flt_cfg.mef_entry.filter_item[0].type         = TYPE_BYTE_EQ;
-    flt_cfg.mef_entry.filter_item[0].repeat       = 1;
-    flt_cfg.mef_entry.filter_item[0].offset       = 20;
-    flt_cfg.mef_entry.filter_item[0].num_byte_seq = 2;
-    memcpy(flt_cfg.mef_entry.filter_item[0].byte_seq, "\x08\x06", 2);
-    flt_cfg.mef_entry.rpn[1] = RPN_TYPE_AND;
-
-    flt_cfg.mef_entry.filter_item[1].type         = TYPE_BYTE_EQ;
-    flt_cfg.mef_entry.filter_item[1].repeat       = 1;
-    flt_cfg.mef_entry.filter_item[1].offset       = 46;
-    flt_cfg.mef_entry.filter_item[1].num_byte_seq = 4;
-    memcpy(flt_cfg.mef_entry.filter_item[1].byte_seq, &ipv4_addr, 4);
-
-    return wifi_set_packet_filters(&flt_cfg);
-}
-
-int wlan_set_auto_ping()
-{
-    wlan_flt_cfg_t flt_cfg;
-
-    memset(&flt_cfg, 0, sizeof(wlan_flt_cfg_t));
-
-    flt_cfg.criteria = (MBIT(0) | MBIT(1));
-    flt_cfg.nentries = 1;
-
-    flt_cfg.mef_entry.mode   = MBIT(0);
-    flt_cfg.mef_entry.action = 0x20;
-
-    flt_cfg.mef_entry.filter_num = 2;
-
-    flt_cfg.mef_entry.filter_item[0].type         = TYPE_BYTE_EQ;
-    flt_cfg.mef_entry.filter_item[0].repeat       = 1;
-    flt_cfg.mef_entry.filter_item[0].offset       = IPV4_PKT_OFFSET;
-    flt_cfg.mef_entry.filter_item[0].num_byte_seq = 2;
-    memcpy(flt_cfg.mef_entry.filter_item[0].byte_seq, "\x08\x00", 2);
-    flt_cfg.mef_entry.rpn[1] = RPN_TYPE_AND;
-
-    flt_cfg.mef_entry.filter_item[1].type      = TYPE_DNUM_EQ;
-    flt_cfg.mef_entry.filter_item[1].pattern   = ICMP_OF_IP_PROTOCOL;
-    flt_cfg.mef_entry.filter_item[1].offset    = IP_PROTOCOL_OFFSET;
-    flt_cfg.mef_entry.filter_item[1].num_bytes = 1;
-
-    return wifi_set_packet_filters(&flt_cfg);
-}
-
 int wlan_get_current_bssid(uint8_t *bssid)
 {
     struct wlan_network network;
@@ -4353,14 +4292,6 @@ uint8_t wlan_get_current_channel()
     return network.channel;
 }
 
-int wlan_get_auto_reconnect_config(wlan_auto_reconnect_config_t *auto_reconnect_config)
-{
-    if (!auto_reconnect_config)
-        return -WM_E_INVAL;
-
-    return wifi_get_auto_reconnect_config(auto_reconnect_config);
-}
-
 void wlan_sta_ampdu_tx_enable(void)
 {
     wifi_sta_ampdu_tx_enable();
@@ -4383,6 +4314,7 @@ void wlan_sta_ampdu_rx_disable(void)
 
 void wlan_uap_set_scan_chan_list(wifi_scan_chan_list_t scan_chan_list)
 {
+    wlan_uap_scan_chan_list_set = true;
     memcpy(&wlan.scan_chan_list, &scan_chan_list, sizeof(wifi_scan_chan_list_t));
 }
 
@@ -4401,9 +4333,14 @@ void wlan_uap_ctrl_deauth(const bool enable)
     wifi_uap_ctrl_deauth(enable);
 }
 
-void wlan_uap_set_ecsa(const uint8_t chan_sw_count)
+void wlan_uap_set_ecsa(void)
 {
-    wifi_uap_set_ecsa(chan_sw_count);
+    wifi_uap_set_ecsa();
+}
+
+void wlan_uap_set_htcapinfo(const uint16_t ht_cap_info)
+{
+    wifi_uap_set_htcapinfo(ht_cap_info);
 }
 
 uint32_t wlan_get_value1()
@@ -4425,3 +4362,129 @@ void wlan_version_extended()
     PRINTF("WLAN Driver Version   : %s\r\n", WLAN_DRV_VERSION);
     PRINTF("WLAN Firmware Version : %s\r\n", version_str);
 }
+
+#ifdef CONFIG_RF_TEST_MODE
+
+int wlan_set_rf_test_mode()
+{
+    return wifi_set_rf_test_mode();
+}
+
+int wlan_set_rf_channel(const uint8_t channel)
+{
+    return wifi_set_rf_channel(channel);
+}
+
+int wlan_get_rf_channel(uint8_t *channel)
+{
+    if (channel)
+        return wifi_get_rf_channel(channel);
+
+    return -WM_FAIL;
+}
+
+int wlan_set_rf_bandwidth(const uint8_t bandwidth)
+{
+    return wifi_set_rf_bandwidth(bandwidth);
+}
+
+int wlan_set_rf_band(const uint8_t band)
+{
+    return wifi_set_rf_band(band);
+}
+
+int wlan_get_rf_band(uint8_t *band)
+{
+    if (band)
+        return wifi_get_rf_band(band);
+
+    return -WM_FAIL;
+}
+
+int wlan_get_rf_bandwidth(uint8_t *bandwidth)
+{
+    if (bandwidth)
+        return wifi_get_rf_bandwidth(bandwidth);
+
+    return -WM_FAIL;
+}
+
+int wlan_get_rf_per(uint32_t *rx_tot_pkt_count, uint32_t *rx_mcast_bcast_count, uint32_t *rx_pkt_fcs_error)
+{
+    if ((rx_tot_pkt_count != NULL) && (rx_mcast_bcast_count != NULL) && (rx_pkt_fcs_error != NULL))
+        return wifi_get_rf_per(rx_tot_pkt_count, rx_mcast_bcast_count, rx_pkt_fcs_error);
+
+    return -WM_FAIL;
+}
+
+int wlan_set_rf_tx_cont_mode(const uint32_t enable_tx,
+                             const uint32_t cw_mode,
+                             const uint32_t payload_pattern,
+                             const uint32_t cs_mode,
+                             const uint32_t act_sub_ch,
+                             const uint32_t tx_rate)
+{
+    return wifi_set_rf_tx_cont_mode(enable_tx, cw_mode, payload_pattern, cs_mode, act_sub_ch, tx_rate);
+}
+
+int wlan_set_rf_tx_antenna(const uint8_t antenna)
+{
+    return wifi_set_rf_tx_antenna(antenna);
+}
+
+int wlan_get_rf_tx_antenna(uint8_t *antenna)
+{
+    if (antenna)
+        return wifi_get_rf_tx_antenna(antenna);
+
+    return -WM_FAIL;
+}
+
+int wlan_set_rf_rx_antenna(const uint8_t antenna)
+{
+    return wifi_set_rf_rx_antenna(antenna);
+}
+
+int wlan_get_rf_rx_antenna(uint8_t *antenna)
+{
+    if (antenna)
+        return wifi_get_rf_rx_antenna(antenna);
+
+    return -WM_FAIL;
+}
+
+int wlan_set_rf_tx_power(const uint8_t power, const uint8_t mod, const uint8_t path_id)
+{
+    return wifi_set_rf_tx_power(power, mod, path_id);
+}
+
+int wlan_set_rf_tx_frame(const uint32_t enable,
+                         const uint32_t data_rate,
+                         const uint32_t frame_pattern,
+                         const uint32_t frame_length,
+                         const uint32_t adjust_burst_sifs,
+                         const uint32_t burst_sifs_in_us,
+                         const uint32_t short_preamble,
+                         const uint32_t act_sub_ch,
+                         const uint32_t short_gi,
+                         const uint32_t adv_coding,
+                         const uint32_t tx_bf,
+                         const uint32_t gf_mode,
+                         const uint32_t stbc,
+                         const uint32_t *bssid)
+{
+    return wifi_set_rf_tx_frame(enable, data_rate, frame_pattern, frame_length, adjust_burst_sifs, burst_sifs_in_us,
+                                short_preamble, act_sub_ch, short_gi, adv_coding, tx_bf, gf_mode, stbc, bssid);
+}
+#endif
+#ifdef CONFIG_WIFI_FW_DEBUG
+void wlan_register_fw_dump_cb(void (*wlan_usb_init_cb)(void),
+                              int (*wlan_usb_mount_cb)(),
+                              int (*wlan_usb_file_open_cb)(char *test_file_name),
+                              int (*wlan_usb_file_write_cb)(uint8_t *data, size_t data_len),
+                              int (*wlan_usb_file_close_cb)())
+{
+    wlan.wlan_usb_init_cb = wlan_usb_init_cb;
+    wifi_register_fw_dump_cb(wlan_usb_mount_cb, wlan_usb_file_open_cb, wlan_usb_file_write_cb, wlan_usb_file_close_cb);
+}
+#endif

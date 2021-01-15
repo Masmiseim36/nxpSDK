@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief USART driver version 2.2.0. */
-#define FSL_USART_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+/*! @brief USART driver version. */
+#define FSL_USART_DRIVER_VERSION (MAKE_VERSION(2, 4, 0))
 /*@}*/
 
 #define USART_FIFOTRIG_TXLVL_GET(base) (((base)->FIFOTRIG & USART_FIFOTRIG_TXLVL_MASK) >> USART_FIFOTRIG_TXLVL_SHIFT)
@@ -152,6 +152,7 @@ typedef struct _usart_config
     bool enableTx;                        /*!< Enable TX */
     bool enableContinuousSCLK;            /*!< USART continuous Clock generation enable in synchronous master mode. */
     bool enableMode32k;                   /*!< USART uses 32 kHz clock from the RTC oscillator as the clock source. */
+    bool enableHardwareFlowControl;       /*!< Enable hardware control RTS/CTS */
     usart_txfifo_watermark_t txWatermark; /*!< txFIFO watermark */
     usart_rxfifo_watermark_t rxWatermark; /*!< rxFIFO watermark */
     usart_sync_mode_t syncMode; /*!< Transfer mode select - asynchronous, synchronous master, synchronous slave. */
@@ -300,6 +301,58 @@ status_t USART_SetBaudRate(USART_Type *base, uint32_t baudrate_Bps, uint32_t src
  * @retval kStatus_InvalidArgument One or more arguments are invalid.
  */
 status_t USART_Enable32kMode(USART_Type *base, uint32_t baudRate_Bps, bool enableMode32k, uint32_t srcClock_Hz);
+
+/*!
+ * @brief Enable 9-bit data mode for USART.
+ *
+ * This function set the 9-bit mode for USART module. The 9th bit is not used for parity thus can be modified by user.
+ *
+ * @param base USART peripheral base address.
+ * @param enable true to enable, false to disable.
+ */
+void USART_Enable9bitMode(USART_Type *base, bool enable);
+
+/*!
+ * @brief Set the USART slave address.
+ *
+ * This function configures the address for USART module that works as slave in 9-bit data mode. When the address
+ * detection is enabled, the frame it receices with MSB being 1 is considered as an address frame, otherwise it is
+ * considered as data frame. Once the address frame matches slave's own addresses, this slave is addressed. This
+ * address frame and its following data frames are stored in the receive buffer, otherwise the frames will be discarded.
+ * To un-address a slave, just send an address frame with unmatched address.
+ *
+ * @note Any USART instance joined in the multi-slave system can work as slave. The position of the address mark is the
+ * same as the parity bit when parity is enabled for 8 bit and 9 bit data formats.
+ *
+ * @param base USART peripheral base address.
+ * @param address USART slave address.
+ */
+static inline void USART_SetMatchAddress(USART_Type *base, uint8_t address)
+{
+    /* Configure match address. */
+    base->ADDR = (uint32_t)address;
+}
+
+/*!
+ * @brief Enable the USART match address feature.
+ *
+ * @param base USART peripheral base address.
+ * @param match true to enable match address, false to disable.
+ */
+static inline void USART_EnableMatchAddress(USART_Type *base, bool match)
+{
+    /* Configure match address enable bit. */
+    if (match)
+    {
+        base->CFG |= (uint32_t)USART_CFG_AUTOADDR_MASK;
+        base->CTL |= (uint32_t)USART_CTL_ADDRDET_MASK;
+    }
+    else
+    {
+        base->CFG &= ~(uint32_t)USART_CFG_AUTOADDR_MASK;
+        base->CTL &= ~(uint32_t)USART_CTL_ADDRDET_MASK;
+    }
+}
 
 /* @} */
 
@@ -529,6 +582,14 @@ static inline uint8_t USART_ReadByte(USART_Type *base)
 {
     return (uint8_t)base->FIFORD;
 }
+
+/*!
+ * @brief Transmit an address frame in 9-bit data mode.
+ *
+ * @param base USART peripheral base address.
+ * @param address USART slave address.
+ */
+void USART_SendAddress(USART_Type *base, uint8_t address);
 
 /*!
  * @brief Writes to the TX register using a blocking method.

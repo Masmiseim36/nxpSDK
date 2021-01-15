@@ -23,8 +23,8 @@ limitations under the License.
 #include "tensorflow/lite/kernels/internal/compatibility.h"
 
 #ifdef TFLITE_WITH_RUY
-#include "tensorflow/lite/experimental/ruy/context.h"
-#include "tensorflow/lite/experimental/ruy/thread_pool.h"
+#include "ruy/context.h"  // from @ruy
+#include "ruy/thread_pool.h"  // from @ruy
 #else
 #include "public/gemmlowp.h"
 #endif
@@ -40,7 +40,8 @@ template <typename TaskType>
 void Execute(int tasks_count, TaskType* tasks,
              CpuBackendContext* cpu_backend_context) {
   TFLITE_DCHECK_LE(tasks_count, cpu_backend_context->max_num_threads());
-  cpu_backend_context->ruy_context()->workers_pool.Execute(tasks_count, tasks);
+  cpu_backend_context->ruy_context()->mutable_thread_pool()->Execute(
+      tasks_count, tasks);
 }
 
 // not TFLITE_WITH_RUY
@@ -52,6 +53,13 @@ struct Task {
   virtual ~Task() {}
   virtual void Run() = 0;
 };
+
+template <typename TaskType>
+void Execute(int task_count, TaskType* tasks,
+             CpuBackendContext* cpu_backend_context) {
+  // Run the single task on the current thread.
+  (tasks + 0)->Run();
+}
 
 #else //TFLITE_MCU
 

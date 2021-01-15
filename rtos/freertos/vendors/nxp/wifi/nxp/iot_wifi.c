@@ -456,7 +456,11 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
     int ret = 0;
     int i = 0;
 
+    if (os_mutex_get(&wlan_mtx, OS_WAIT_FOREVER) != WM_SUCCESS)
+           return eWiFiFailure;
+
     if (pxBuffer == NULL) {
+           os_mutex_put(&wlan_mtx);
            return eWiFiFailure;
     }
 
@@ -464,6 +468,7 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
 
     ret = os_semaphore_create(&scan_protection_sem, "scanprotsem");
     if (ret != WM_SUCCESS) {
+        os_mutex_put(&wlan_mtx);
         return eWiFiFailure;
     }
 
@@ -471,6 +476,7 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
 			OS_MUTEX_INHERIT);
     if (ret != WM_SUCCESS) {
         os_semaphore_delete(&scan_protection_sem);
+        os_mutex_put(&wlan_mtx);
         return eWiFiFailure;
     }
 
@@ -483,10 +489,18 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
                    " semaphore", ret);
         os_mutex_delete(&survey.lock);
         os_semaphore_delete(&scan_protection_sem);
+        os_mutex_put(&wlan_mtx);
         return eWiFiFailure;
     }
 
-    wlan_scan(prov_handle_scan_results);
+    ret = wlan_scan(prov_handle_scan_results);
+    if (ret != WM_SUCCESS)
+    {
+        os_mutex_delete(&survey.lock);
+        os_semaphore_delete(&scan_protection_sem);
+        os_mutex_put(&wlan_mtx);
+        return eWiFiFailure;
+    }
 
     ret = os_semaphore_get(&scan_protection_sem, os_msec_to_ticks(
             DEFAULT_SCAN_PROTECTION_TIMEOUT * 1000));
@@ -496,6 +510,7 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
                    " semaphore", ret);
         os_mutex_delete(&survey.lock);
         os_semaphore_delete(&scan_protection_sem);
+        os_mutex_put(&wlan_mtx);
         return eWiFiFailure;
     }
 
@@ -537,6 +552,9 @@ WIFIReturnCode_t WIFI_Scan( WIFIScanResult_t * pxBuffer,
 
     os_mutex_delete(&survey.lock);
     os_semaphore_delete(&scan_protection_sem);
+
+    if (os_mutex_put(&wlan_mtx) != WM_SUCCESS)
+        return eWiFiFailure;
 
     return eWiFiSuccess;
 }

@@ -33,6 +33,8 @@
 #define wfd_e(...) wmlog_e("p2p", ##__VA_ARGS__)
 #define wfd_w(...) wmlog_w("p2p", ##__VA_ARGS__)
 
+#define wfd_d(...)
+
 /** Success */
 #define SUCCESS 1
 /** Failure */

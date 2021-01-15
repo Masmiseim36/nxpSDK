@@ -102,6 +102,10 @@ enum wifi_event
     WIFI_EVENT_CHAN_SWITCH_ANN,
     /** Channel Switch */
     WIFI_EVENT_CHAN_SWITCH,
+#ifdef CONFIG_WIFI_FW_DEBUG
+    /* WiFi FW Debug Info */
+    WIFI_EVENT_FW_DEBUG_INFO,
+#endif
     /** Event to indicate end of Wi-Fi events */
     WIFI_EVENT_LAST,
     /* other events can be added after this, however this must

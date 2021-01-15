@@ -313,16 +313,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/mmc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console</state>
@@ -331,9 +328,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -597,7 +594,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1301,16 +1297,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/mmc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console</state>
@@ -1319,9 +1312,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1585,7 +1578,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2290,16 +2282,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/mmc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console</state>
@@ -2308,9 +2297,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2574,7 +2563,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3276,16 +3264,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/mmc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console</state>
@@ -3294,9 +3279,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3560,7 +3545,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4264,16 +4248,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/mmc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console</state>
@@ -4282,9 +4263,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4548,7 +4529,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -5253,16 +5233,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/mmc</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console</state>
@@ -5271,9 +5248,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5537,7 +5514,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -6040,9 +6016,12 @@
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_common.h</name>
       </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/sdmmc/mmc/ChangeLogKSDK.txt</name>
-    </file>
+    <group>
+      <name>mmc</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/mmc/ChangeLogKSDK.txt</name>
+      </file>
+    </group>
     <group>
       <name>host</name>
       <file>

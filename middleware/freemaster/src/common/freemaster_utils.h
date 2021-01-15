@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -23,62 +23,62 @@
 #define __FREEMASTER_UTILS_H
 
 /******************************************************************************
-* Required header files include check
-******************************************************************************/
+ * Required header files include check
+ ******************************************************************************/
 #ifndef __FREEMASTER_H
 #error Please include the freemaster.h master header file before the freemaster_serial_uart.h
 #endif
 
 /******************************************************************************
-* Macro definitions
-******************************************************************************/
-#define FMSTR_CRC16_CCITT_SEED  0xFFFF
-#define FMSTR_CRC8_CCITT_SEED   0x00
+ * Macro definitions
+ ******************************************************************************/
+#define FMSTR_CRC16_CCITT_SEED 0xFFFFU
+#define FMSTR_CRC8_CCITT_SEED  0x00U
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 /******************************************************************************
-* Types definitions
-******************************************************************************/
+ * Types definitions
+ ******************************************************************************/
 /* Context struct for decoding unsigned LEB format byte by byte. */
 typedef struct
 {
-    FMSTR_SIZE      result;
-    FMSTR_SIZE      shift;
+    FMSTR_SIZE result;
+    FMSTR_SIZE shift;
 } FMSTR_ULEB_CTX;
 
 /* Context structure for ring buffer */
 typedef struct
 {
-    FMSTR_BPTR  buffer;        /* Ring buffer pointer */
-    FMSTR_U32   size;           /* Size of ring buffer */
-    FMSTR_BPTR  rp;             /* Read pointer */
-    FMSTR_BPTR  wp;             /* Write pointer */
+    FMSTR_BPTR buffer; /* Ring buffer pointer */
+    FMSTR_U32 size;    /* Size of ring buffer */
+    FMSTR_BPTR rp;     /* Read pointer */
+    FMSTR_BPTR wp;     /* Write pointer */
 } FMSTR_RING_BUFFER;
 
 /******************************************************************************
-* Inline functions
-******************************************************************************/
+ * Inline functions
+ ******************************************************************************/
 
 /******************************************************************************
-* Global API functions
-******************************************************************************/
+ * Global API functions
+ ******************************************************************************/
 
 /* Decode unsigned LEB field. */
-FMSTR_BPTR FMSTR_UlebDecode(FMSTR_BPTR in, void* result, FMSTR_SIZE size);
+FMSTR_BPTR FMSTR_UlebDecode(FMSTR_BPTR in, void *result, FMSTR_SIZE size);
 /* Encode unsigned LEB field. */
-FMSTR_BPTR FMSTR_UlebEncode(FMSTR_BPTR out, void* source, FMSTR_SIZE size);
+FMSTR_BPTR FMSTR_UlebEncode(FMSTR_BPTR out, void *source, FMSTR_SIZE size);
 /* Decode signed LEB field. */
-FMSTR_BPTR FMSTR_SlebDecode(FMSTR_BPTR in, void* result, FMSTR_SIZE size);
+FMSTR_BPTR FMSTR_SlebDecode(FMSTR_BPTR in, void *result, FMSTR_SIZE size);
 /* Skip one LEB/SLEB field in buffer. */
 FMSTR_BPTR FMSTR_SkipInBufferLeb(FMSTR_BPTR dest);
 
 /* Copy string from buffer to memory. */
-FMSTR_BPTR FMSTR_StringFromBuffer(FMSTR_BPTR in, FMSTR_CHAR* pStr, FMSTR_SIZE maxSize);
+FMSTR_BPTR FMSTR_StringFromBuffer(FMSTR_BPTR in, FMSTR_CHAR *pStr, FMSTR_SIZE maxSize);
 /* Copy string from memory to buffer. */
-FMSTR_BPTR FMSTR_StringCopyToBuffer(FMSTR_BPTR out, const FMSTR_CHAR* pStr);
+FMSTR_BPTR FMSTR_StringCopyToBuffer(FMSTR_BPTR out, const FMSTR_CHAR *pStr);
 
 /* Initialize CRC16 calculation. */
 void FMSTR_Crc16Init(FMSTR_U16 *crc);
@@ -90,29 +90,27 @@ void FMSTR_Crc8Init(FMSTR_U8 *crc);
 void FMSTR_Crc8AddByte(FMSTR_U8 *crc, FMSTR_U8 data);
 
 /* Get array of random numbers */
-FMSTR_BPTR FMSTR_RandomNumbersToBuffer(FMSTR_U8 *out, FMSTR_SIZE length);
+FMSTR_BPTR FMSTR_RandomNumbersToBuffer(FMSTR_BPTR out, FMSTR_SIZE length);
 /* Increase entropy of random number generator */
 void FMSTR_Randomize(FMSTR_U32 entropy);
 
 /* Prepare ring buffer */
-void _FMSTR_RingBuffCreate(FMSTR_RING_BUFFER * ringBuff, FMSTR_BPTR buffer, FMSTR_U32 size);
+void _FMSTR_RingBuffCreate(FMSTR_RING_BUFFER *ringBuff, FMSTR_BPTR buffer, FMSTR_U32 size);
 /* Add character into ring buffer */
-void _FMSTR_RingBuffPut(FMSTR_RING_BUFFER * ringBuff, FMSTR_BCHR nRxChar);
+void _FMSTR_RingBuffPut(FMSTR_RING_BUFFER *ringBuff, FMSTR_BCHR nRxChar);
 /* Get character from ring buffer */
-FMSTR_BCHR _FMSTR_RingBuffGet(FMSTR_RING_BUFFER * ringBuff);
+FMSTR_BCHR _FMSTR_RingBuffGet(FMSTR_RING_BUFFER *ringBuff);
 /* Returns true, when is space in ring buffer */
-FMSTR_BOOL _FMSTR_RingBuffIsSpace(FMSTR_RING_BUFFER * ringBuff);
+FMSTR_BOOL _FMSTR_RingBuffIsSpace(FMSTR_RING_BUFFER *ringBuff);
 /* Returns true, when any data in ring buffer */
-FMSTR_BOOL _FMSTR_RingBuffHasData(FMSTR_RING_BUFFER * ringBuff);
-
+FMSTR_BOOL _FMSTR_RingBuffHasData(FMSTR_RING_BUFFER *ringBuff);
 
 /******************************************************************************
-* Global variable declaration
-******************************************************************************/
+ * Global variable declaration
+ ******************************************************************************/
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
 #endif /* __FREEMASTER_UTILS_H */
-

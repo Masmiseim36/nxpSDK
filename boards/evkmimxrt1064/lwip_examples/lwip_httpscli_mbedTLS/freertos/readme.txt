@@ -9,9 +9,9 @@ Demo requires DHCP and DNS servers. The address of the DNS server is obtained fr
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- Keil MDK  5.29
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -177,7 +177,4 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains
 
 
 Hello world!
-
-Customization options
-=====================
 

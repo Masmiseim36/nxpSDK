@@ -359,6 +359,15 @@ template<> struct numeric_limits<unsigned long long>
   EIGEN_DEVICE_FUNC
   static unsigned long long (min)() { return 0; }
 };
+template<> struct numeric_limits<bool>
+{
+  EIGEN_DEVICE_FUNC
+  static bool epsilon() { return false; }
+  EIGEN_DEVICE_FUNC
+  static bool (max)() { return true; }
+  EIGEN_DEVICE_FUNC
+  static bool (min)() { return false; }
+};
 
 }
 
@@ -688,6 +697,10 @@ inline unsigned int as_uint(float x)
 #include <cstdint>
 namespace Eigen {
 namespace numext {
+typedef std::uint8_t  uint8_t;
+typedef std::int8_t   int8_t;
+typedef std::uint16_t uint16_t;
+typedef std::int16_t  int16_t;
 typedef std::uint32_t uint32_t;
 typedef std::int32_t  int32_t;
 typedef std::uint64_t uint64_t;
@@ -700,6 +713,10 @@ typedef std::int64_t  int64_t;
 #include <stdint.h>
 namespace Eigen {
 namespace numext {
+typedef ::uint8_t  uint8_t;
+typedef ::int8_t   int8_t;
+typedef ::uint16_t uint16_t;
+typedef ::int16_t  int16_t;
 typedef ::uint32_t uint32_t;
 typedef ::int32_t  int32_t;
 typedef ::uint64_t uint64_t;

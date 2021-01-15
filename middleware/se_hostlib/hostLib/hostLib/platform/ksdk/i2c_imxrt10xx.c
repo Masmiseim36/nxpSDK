@@ -35,15 +35,20 @@
 #endif
 
 
+#if defined(__GNUC__)
+#pragma GCC push_options
+#pragma GCC optimize("O0")
+#endif
+
 #define DELAY_LPI2C_US            (0)
 
 #define LPI2C_LOG_PRINTF(...) do { printf("\r\n[%04d] ",__LINE__); printf(__VA_ARGS__); } while (0)
 
-#ifdef CPU_MIMXRT1052DVL6B /* TODO: Should be board specific */
+#ifdef CPU_MIMXRT1062DVL6A /* TODO: Should be board specific */
 /* Select USB1 PLL (480 MHz) as master lpi2c clock source */
 #   define LPI2C_CLOCK_SOURCE_SELECT (0U)
 /* Clock divider for master lpi2c clock source */
-#   define LPI2C_CLOCK_SOURCE_DIVIDER (0U)
+#   define LPI2C_CLOCK_SOURCE_DIVIDER (5U)
 /* Get frequency of lpi2c clock */
 #   define LPI2C_CLOCK_FREQUENCY ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (LPI2C_CLOCK_SOURCE_DIVIDER + 1U))
 
@@ -101,7 +106,7 @@ uint32_t LPI2C1_GetFreq(void)
 #endif
 
 /* Handle NAK from the A71CH */
-static int gBackoffDelay;
+static volatile int gBackoffDelay;
 
 static int address_nack = 0;
 
@@ -172,11 +177,11 @@ i2c_error_t axI2CInit(void **conn_ctx, const char *pDevName)
 {
     lpi2c_master_config_t masterConfig;
     LPI2C_MasterGetDefaultConfig(&masterConfig);
-    masterConfig.enableDoze = false;
+/*    masterConfig.enableDoze = false;
     masterConfig.debugEnable = true;
     masterConfig.baudRate_Hz = I2C_BAUDRATE;
     masterConfig.sdaGlitchFilterWidth_ns = 150;
-    masterConfig.sclGlitchFilterWidth_ns = 150;
+    masterConfig.sclGlitchFilterWidth_ns = 150;*/
     uint32_t sourceClock = LPI2C_CLOCK_FREQUENCY;//CLOCK_GetFreq(AX_LPI2C_CLK_SRC);
 #if defined(SDK_OS_FREE_RTOS) && (SDK_OS_FREE_RTOS == 1)
     NVIC_SetPriority(AX_I2CM_IRQN, 3);
@@ -203,6 +208,9 @@ void axI2CTerm(
         result = LPI2C_MasterTransferBlocking(AX_I2CM, &masterXfer)
 #endif
 
+#if defined (__ICCARM__) || (__CC_ARM__)
+_Pragma ("optimize=none")
+#endif
 unsigned int axI2CWrite(
     void* conn_ctx, unsigned char bus_unused_param, unsigned char addr, unsigned char * pTx, unsigned short txLen)
 {
@@ -244,6 +252,9 @@ unsigned int axI2CWrite(
     return I2C_OK;
 }
 
+#if defined (__ICCARM__) || (__CC_ARM__)
+_Pragma ("optimize=none")
+#endif
 unsigned int axI2CWriteRead(
     void* conn_ctx, unsigned char bus_unused_param, unsigned char addr, unsigned char * pTx, unsigned short txLen, unsigned char * pRx,
     unsigned short * pRxLen)
@@ -272,7 +283,9 @@ unsigned int axI2CWriteRead(
     return I2C_OK;
 }
 
-
+#if defined (__ICCARM__) || (__CC_ARM__)
+_Pragma ("optimize=none")
+#endif
 unsigned int axI2CRead(void* conn_ctx, unsigned char bus, unsigned char addr, unsigned char * pRx, unsigned short rxLen)
 {
 	lpi2c_master_transfer_t masterXfer;
@@ -307,7 +320,7 @@ static status_t LPI2C_MasterTransferBlocking_Send_MODIFIED(LPI2C_Type *base, uin
     lpi2c_master_transfer_t masterXfer = {0};
     status_t result = kStatus_Success;
     size_t txCount;
-    uint32_t status;
+    volatile uint32_t status;
 
     masterXfer.slaveAddress = slaveAddress; // the address of the A70CM
     masterXfer.direction = kLPI2C_Write;
@@ -415,7 +428,7 @@ static status_t LPI2C_MasterReceive_MODIFIED(LPI2C_Type *base, void *rxBuff)
     status_t result;
     uint8_t *buf;
     buf = (uint8_t *)rxBuff;
-    size_t rxSize;
+    volatile size_t rxSize;
     uint16_t kRxDataCmd = LPI2C_MTDR_CMD(0X1U);
 
     if (rxBuff == NULL) {
@@ -439,7 +452,7 @@ static status_t LPI2C_MasterReceive_MODIFIED(LPI2C_Type *base, void *rxBuff)
     base->MTDR = kRxDataCmd; // read second byte
     result = LPI2C_MasterWaitForTxReady(base);
 #if LPI2C_WAIT_TIMEOUT
-    uint32_t waitTimes = LPI2C_WAIT_TIMEOUT;
+    volatile uint32_t waitTimes = LPI2C_WAIT_TIMEOUT;
 #endif
 
     /* Receive count byte */
@@ -492,7 +505,7 @@ value = base->MRDR;
         /* Read LPI2C receive fifo register. The register includes a flag to indicate whether */
         /* the FIFO is empty, so we can both get the data and check if we need to keep reading */
         /* using a single register read. */
-        uint32_t value;
+        volatile uint32_t value;
         do
         {
             /* Check for errors. */
@@ -531,12 +544,12 @@ value = base->MRDR;
  */
 static status_t LPI2C_MasterWaitForTxReady(LPI2C_Type *base)
 {
-    uint32_t status;
+    volatile uint32_t status;
     size_t txCount;
     size_t txFifoSize = FSL_FEATURE_LPI2C_FIFO_SIZEn(base);
 
 #if LPI2C_WAIT_TIMEOUT
-    uint32_t waitTimes = LPI2C_WAIT_TIMEOUT;
+    volatile uint32_t waitTimes = LPI2C_WAIT_TIMEOUT;
 #endif
     do
     {
@@ -566,5 +579,9 @@ static status_t LPI2C_MasterWaitForTxReady(LPI2C_Type *base)
 
     return kStatus_Success;
 }
+
+#if defined(__GNUC__)
+#pragma GCC pop_options
+#endif
 
 #endif /* FSL_FEATURE_SOC_LPI2C_COUNT */

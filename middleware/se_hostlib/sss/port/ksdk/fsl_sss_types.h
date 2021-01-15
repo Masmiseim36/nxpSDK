@@ -32,4 +32,16 @@
 
 #define STRNICMP strncasecmp
 
+#ifndef SSS_MALLOC
+#define SSS_MALLOC malloc
+#endif // SSS_MALLOC
+
+#ifndef SSS_FREE
+#define SSS_FREE free
+#endif // SSS_FREE
+
+#ifndef SSS_CALLOC
+#define SSS_CALLOC calloc
+#endif // SSS_CALLOC
+
 #endif /* FSL_SSS_TYPES_H */

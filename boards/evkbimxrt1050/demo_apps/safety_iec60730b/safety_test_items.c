@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,23 +21,31 @@
 *                           STRUCTURE FOR DIO Initialization and TEST          *
 *                                                                              *
 *******************************************************************************/
-dio_test_rt_t dio_safety_test_item_0 =
+fs_dio_test_imx_t dio_safety_test_item_0 =
 {
   .gpio   = GPIO1_BASE,
   .pinNum = 20,
   .pinDir = PIN_DIRECTION_IN,
   .muxAddr = MUX_ADDR(IOMUXC_GPIO_AD_B1_04_GPIO1_IO20),
   .padAddr = PAD_ADDR(IOMUXC_GPIO_AD_B1_04_GPIO1_IO20),
+  .pullUpMask =    (IOMUXC_SW_PAD_CTL_PAD_PKE(0x1) | IOMUXC_SW_PAD_CTL_PAD_PUS(0x3) | IOMUXC_SW_PAD_CTL_PAD_PUE(0x1)), /* Mask for enabling pull-up. */
+  .pullDownMask =  (IOMUXC_SW_PAD_CTL_PAD_PKE(0x1) | IOMUXC_SW_PAD_CTL_PAD_PUE(0x1)),                                  /* Mask for enabling pull-down. */
+  .pullResetMask = (IOMUXC_SW_PAD_CTL_PAD_PKE(0x1) | IOMUXC_SW_PAD_CTL_PAD_PUS(0x3) | IOMUXC_SW_PAD_CTL_PAD_PUE(0x1))  /* Mask for reset pull/keeper settings.
+                                                                                                                        * Will be negated and used to clear selected bits. */
 };
 
-dio_test_rt_t dio_safety_test_item_1 =
+fs_dio_test_imx_t dio_safety_test_item_1 =
 {
   .gpio   = GPIO1_BASE,
   .pinNum = 21,
   .pinDir = PIN_DIRECTION_IN,
   .muxAddr = MUX_ADDR(IOMUXC_GPIO_AD_B1_05_GPIO1_IO21),
   .padAddr = PAD_ADDR(IOMUXC_GPIO_AD_B1_05_GPIO1_IO21),
+  .pullUpMask =    (IOMUXC_SW_PAD_CTL_PAD_PKE(0x1) | IOMUXC_SW_PAD_CTL_PAD_PUS(0x3) | IOMUXC_SW_PAD_CTL_PAD_PUE(0x1)), /* Mask for enabling pull-up. */
+  .pullDownMask =  (IOMUXC_SW_PAD_CTL_PAD_PKE(0x1) | IOMUXC_SW_PAD_CTL_PAD_PUE(0x1)),                                  /* Mask for enabling pull-down. */
+  .pullResetMask = (IOMUXC_SW_PAD_CTL_PAD_PKE(0x1) | IOMUXC_SW_PAD_CTL_PAD_PUS(0x3) | IOMUXC_SW_PAD_CTL_PAD_PUE(0x1))  /* Mask for reset pull/keeper settings.
+                                                                                                                        * Will be negated and used to clear selected bits. */
 };
  
 /* NULL terminated array of pointers to dio_test_t items for safety DIO test */
-dio_test_rt_t *dio_safety_test_items[] = { &dio_safety_test_item_0, &dio_safety_test_item_1, NULL };
+fs_dio_test_imx_t *dio_safety_test_items[] = { &dio_safety_test_item_0, &dio_safety_test_item_1, NULL };

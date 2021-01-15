@@ -17,10 +17,10 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
 #include "fsl_intmux.h"
 #endif

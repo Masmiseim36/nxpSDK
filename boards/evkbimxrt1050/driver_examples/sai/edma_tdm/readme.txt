@@ -6,10 +6,10 @@ In this example, one sai instance playbacks the audio data stored in the sdcard 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -19,6 +19,7 @@ Hardware requirements
 - Headphone(OMTP standard) or speaker
 - RCA jack
 - cs42888 audio board
+- sdcard(formatted with FAT32 format).
 
 Board settings
 ==============
@@ -47,7 +48,7 @@ Prepare the Demo
 3. Download the program to the target board.
 4. connect CS42888 audio board to evk board.
 5. Decompression the 8_TDM.zip and put 8_TDM.wav into the sdcard(formatted with FAT32 format).
-5. Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
+6. Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
 Running the demo
 ================
@@ -76,6 +77,3 @@ Start play 8_TDM.wav file.
 
 SAI TDM EDMA example finished.
  ~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

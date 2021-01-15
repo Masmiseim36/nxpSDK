@@ -34,7 +34,7 @@
 extern "C" {
 #endif /* __cplusplus */
 
-extern int DbgConsole_Printf(const char *formatString, ...);
+extern int DbgConsole_Printf(const char *fmt_s, ...);
 
 #if defined(__cplusplus)
 }

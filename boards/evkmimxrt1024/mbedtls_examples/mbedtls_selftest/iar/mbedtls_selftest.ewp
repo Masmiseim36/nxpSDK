@@ -316,21 +316,19 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1299,21 +1297,19 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mbedtls/library</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2021,6 +2017,12 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers/fsl_trng.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</name>
     </file>
     <file>
@@ -2050,6 +2052,51 @@
   </group>
   <group>
     <name>mbedtls</name>
+    <group>
+      <name>port</name>
+      <group>
+        <name>ksdk</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/des_alt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/des_alt.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</name>
+        </file>
+      </group>
+    </group>
     <group>
       <name>include</name>
       <group>
@@ -2530,69 +2577,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/mbedtls/library/xtea.c</name>
       </file>
     </group>
-    <group>
-      <name>port</name>
-      <group>
-        <name>ksdk</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/des_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/des_alt.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</name>
-        </file>
-      </group>
-    </group>
-  </group>
-  <group>
-    <name>device</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/fsl_device_registers.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/MIMXRT1024.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/MIMXRT1024_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/system_MIMXRT1024.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/system_MIMXRT1024.h</name>
-    </file>
   </group>
   <group>
     <name>utilities</name>
@@ -2613,6 +2597,24 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/fsl_assert.c</name>
+    </file>
+  </group>
+  <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/MIMXRT1024.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/MIMXRT1024_features.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/system_MIMXRT1024.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1024/system_MIMXRT1024.h</name>
     </file>
   </group>
   <group>

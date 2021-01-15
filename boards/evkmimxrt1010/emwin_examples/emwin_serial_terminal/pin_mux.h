@@ -65,6 +65,18 @@ void LPSPI1_InitPins(void);
  */
 void LPI2C1_InitPins(void);
 
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void LPSPI1_DeinitPins(void);
+
+/*!
+ * @brief Configures pin routing and optionally pin electrical features.
+ *
+ */
+void LPI2C1_DeinitPins(void);
+
 #if defined(__cplusplus)
 }
 #endif

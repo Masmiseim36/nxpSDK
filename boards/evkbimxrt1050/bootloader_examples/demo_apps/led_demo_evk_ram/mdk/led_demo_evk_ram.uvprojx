@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-null-dereference  -Wno-unknown-attributes  -Wno-expansion-to-defined  -Wno-invalid-noreturn</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1052DVL6B, CPU_IS_ARM_CORTEX_M7=1, MIMXRT1052</Define>
               <Undefine/>
-              <IncludePath>../../../../../../CMSIS/Include;../../../../../../devices/MIMXRT1052;../../../../../../middleware/mcu-boot/targets/MIMXRT1052/src;../../../../../../middleware/mcu-boot/src/startup;../../../../../../middleware/mcu-boot/src/include;../../../../../../middleware/mcu-boot/apps/led_demo/src;..;../../../../../../devices/MIMXRT1052/drivers</IncludePath>
+              <IncludePath>..;../../../../../../devices/MIMXRT1052;../../../../../../devices/MIMXRT1052/drivers;../../../../../../middleware/mcu-boot/src/include;../../../../../../middleware/mcu-boot/src/startup;../../../../../../middleware/mcu-boot/apps/led_demo/src;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -361,7 +361,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>MIMXRT1052_application_0xa000.scf</ScatterFile>
+            <ScatterFile>../../../../../../middleware/mcu-boot/targets/common/linker/arm/MIMXRT1052/MIMXRT1052_application_0xa000.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>--remove --datacompressor off</Misc>
@@ -411,6 +411,11 @@
           <GroupName>device</GroupName>
           <Files>
             <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
               <FileName>MIMXRT1052.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/MIMXRT1052.h</FilePath>
@@ -419,11 +424,6 @@
               <FileName>MIMXRT1052_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1052.h</FileName>
@@ -441,14 +441,14 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_iomuxc.h</FileName>
@@ -456,24 +456,24 @@
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MIMXRT1052/drivers/fsl_clock.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -493,7 +493,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-include</GroupName>
+          <GroupName>source/include</GroupName>
           <Files>
             <File>
               <FileName>bootloader_core.h</FileName>
@@ -506,14 +506,14 @@
           <GroupName>source</GroupName>
           <Files>
             <File>
-              <FileName>milliseconds_delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.c</FilePath>
-            </File>
-            <File>
               <FileName>milliseconds_delay.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.h</FilePath>
+            </File>
+            <File>
+              <FileName>milliseconds_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -546,24 +546,24 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

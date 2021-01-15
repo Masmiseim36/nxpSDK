@@ -8,10 +8,10 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
 #include "fsl_intmux.h"
 #endif
@@ -132,7 +132,7 @@ int main(void)
     uint32_t errorCount;
     uint32_t i;
     lpspi_slave_config_t slaveConfig;
-    uint32_t whichPcs;
+    lpspi_which_pcs_t whichPcs;
     uint8_t txWatermark;
 
     /*Slave config*/
@@ -203,8 +203,15 @@ int main(void)
             break;
         }
     }
-
-    LPSPI_EnableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable | kLPSPI_TxInterruptEnable);
+    if (slaveTxCount == TRANSFER_SIZE)
+    {
+        /* Only enable rx interrupt if tx data are all pushed to FIFO */
+        LPSPI_EnableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable);
+    }
+    else
+    {
+        LPSPI_EnableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable | kLPSPI_TxInterruptEnable);
+    }
 
     /******************Wait for master and slave transfer completed.******************/
     while (!isSlaveTransferCompleted)

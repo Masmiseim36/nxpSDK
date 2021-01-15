@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MIMXRT1064xxxxA" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="8be5c43c-0557-4be1-8389-2e99f09b5fcc" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MIMXRT1064xxxxA" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8.xsd" uuid="8be5c43c-0557-4be1-8389-2e99f09b5fcc" version="1.8" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MIMXRT1064xxxxA</processor>
       <package>MIMXRT1064DVL6A</package>
@@ -16,9 +16,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="8.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>7.0.1</processor_version>
             <power_domains/>
             <pin_labels>
                <pin_label pin_num="F14" pin_signal="GPIO_AD_B0_09" label="JTAG_TDI/J21[5]/ENET_RST/J22[5]/USER_LED" identifier="USER_LED"/>
@@ -171,7 +171,7 @@
       </pins>
       <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>7.0.1</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -320,9 +320,9 @@
             </clock_configuration>
          </clock_configurations>
       </clocks>
-      <dcdx name="DCDx" version="2.0" enabled="true" update_project_code="true">
+      <dcdx name="DCDx" version="3.0" enabled="true" update_project_code="true">
          <dcdx_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>7.0.1</processor_version>
             <output_format>c_array</output_format>
          </dcdx_profile>
          <dcdx_configurations>
@@ -382,8 +382,6 @@
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_37" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_38" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_39" value="0x10" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_40" value="0x00" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_41" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_00" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_01" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_02" value="0x110F9" value_width="4"/>
@@ -424,11 +422,9 @@
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_37" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_38" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_39" value="0x110F9" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_40" value="0x110F9" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_41" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="SEMC_MCR" value="0x10000004" value_width="4"/>
-                        <command type="write_value" address="SEMC_BMCR0" value="0x30524" value_width="4"/>
-                        <command type="write_value" address="SEMC_BMCR1" value="0x6030524" value_width="4"/>
+                        <command type="write_value" address="SEMC_BMCR0" value="0x81" value_width="4"/>
+                        <command type="write_value" address="SEMC_BMCR1" value="0x81" value_width="4"/>
                         <command type="write_value" address="SEMC_BR0" value="0x8000001B" value_width="4"/>
                         <command type="write_value" address="SEMC_BR1" value="0x8200001B" value_width="4"/>
                         <command type="write_value" address="SEMC_BR2" value="0x8400001B" value_width="4"/>
@@ -467,7 +463,7 @@
             </dcdx_configuration>
          </dcdx_configurations>
       </dcdx>
-      <periphs name="Peripherals" version="7.0" enabled="true" update_project_code="true">
+      <periphs name="Peripherals" version="8.0" enabled="true" update_project_code="true">
          <dependencies>
             <dependency resourceType="SWComponent" resourceId="platform.drivers.lpi2c" description="LPI2C Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
@@ -491,39 +487,39 @@
             </dependency>
          </dependencies>
          <peripherals_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>7.0.1</processor_version>
          </peripherals_profile>
          <functional_groups>
             <functional_group name="BOARD_InitPeripherals" uuid="5582c9b9-7dc6-49d8-8681-8a1cca6d7265" called_from_default_init="true" id_prefix="" core="core0">
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="ClockOutput" resourceId="LPI2C_CLK_ROOT" description="LPI2C_CLK_ROOT is inactive. Problem must be resolved in another tool." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="ClockOutput" resourceId="LPI2C_CLK_ROOT" description="LPI2C_CLK_ROOT is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="frequency" evaluation="greaterThan">
                         <data type="Frequency" unit="Hz">0</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LPI2C1.lpi2c_scl" description="Signal serial clock of the peripheral LPI2C1 is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LPI2C1.lpi2c_scl" description="Signal serial clock of the peripheral LPI2C1 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LPI2C1.lpi2c_sda" description="Signal serial data of the peripheral LPI2C1 is not routed. Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="LPI2C1.lpi2c_sda" description="Signal serial data of the peripheral LPI2C1 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="ClockOutput" resourceId="IPG_CLK_ROOT" description="IPG_CLK_ROOT is inactive. Problem must be resolved in another tool." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="ClockOutput" resourceId="IPG_CLK_ROOT" description="IPG_CLK_ROOT is inactive." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="frequency" evaluation="greaterThan">
                         <data type="Frequency" unit="Hz">0</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="TMR3.tmr_sec_in.0" description="Timer input 0 of peripheral TMR3 is not routed Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="TMR3.tmr_sec_in.0" description="Timer input 0 of peripheral TMR3 is not routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="TMR3.tmr_out.0" description="Timer output 0 of peripheral TMR3 is not routed Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="TMR3.tmr_out.0" description="Timer output 0 of peripheral TMR3 is not routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
@@ -630,9 +626,15 @@
             <component name="msg" uuid="a37e3892-4137-495c-8c8a-44dc5ed129a2" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
                <config_set_global name="global_messages"/>
             </component>
+            <component name="generic_uart" uuid="ff80f104-37c7-49df-9fc9-fabbaaf762fd" type_id="generic_uart_8cae00565451cf2346eb1b8c624e73a6">
+               <config_set_global name="global_uart"/>
+            </component>
+            <component name="generic_can" uuid="7c9ce4da-1226-4ea1-b876-2bc610df2e7d" type_id="generic_can_1bfdd78b1af214566c1f23cf6a582d80">
+               <config_set_global name="global_can"/>
+            </component>
          </components>
       </periphs>
-      <tee name="TEE" version="1.0" enabled="false" update_project_code="true">
+      <tee name="TEE" version="2.0" enabled="false" update_project_code="true">
          <tee_profile>
             <processor_version>N/A</processor_version>
          </tee_profile>

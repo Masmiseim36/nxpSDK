@@ -107,9 +107,12 @@ _handle_lr
  * Variables
  ******************************************************************************/
 
+#ifndef __ARMCC_VERSION
+static
+#endif
 exception_stack_data_t *g_exceptionStackStruct = NULL;
 
-const scb_data_text_t scb_data_text[] = {{32, 0x000, "CPUID   - CPUID Base Register"},
+static const scb_data_text_t scb_data_text[] = {{32, 0x000, "CPUID   - CPUID Base Register"},
                                          {32, 0x004, "ICSR    - Interrupt Control and State Register"},
                                          {32, 0x008, "VTOR    - Vector Table Offset Register"},
                                          {32, 0x00C, "AIRCR   - Application Interrupt and Reset Control Register"},
@@ -176,96 +179,96 @@ static void EXCEPTION_ConfigurableFaultStatusRegisterPrint(void)
     uint32_t cfsr = SCB->CFSR;
 
     /* Configurable Fault Status Register */
-    EXCEPTION_PRINTF("0x%08X - CFSR     - Configurable Fault Status Register\n\r", cfsr);
+    (void)EXCEPTION_PRINTF("0x%08X - CFSR     - Configurable Fault Status Register\n\r", cfsr);
     /* MemManage Fault Status Register (part of SCB Configurable Fault Status Register) */
-    if (cfsr & SCB_CFSR_IACCVIOL_Msk) /* SCB CFSR (MMFSR): IACCVIOL Mask */
+    if (0U != (cfsr & SCB_CFSR_IACCVIOL_Msk)) /* SCB CFSR (MMFSR): IACCVIOL Mask */
     {
-        EXCEPTION_PRINTF(
+        (void)EXCEPTION_PRINTF(
             " > The processor attempted an instruction fetch from a location that does not permit execution\n\r");
     }
-    if (cfsr & SCB_CFSR_DACCVIOL_Msk) /* SCB CFSR (MMFSR): DACCVIOL Mask */
+    if (0U != (cfsr & SCB_CFSR_DACCVIOL_Msk)) /* SCB CFSR (MMFSR): DACCVIOL Mask */
     {
-        EXCEPTION_PRINTF(
+        (void)EXCEPTION_PRINTF(
             " > The processor attempted a load or store at a location that does not permit the operation\n\r");
     }
-    if (cfsr & SCB_CFSR_MSTKERR_Msk) /* SCB CFSR (MMFSR): MSTKERR Mask */
+    if (0U != (cfsr & SCB_CFSR_MSTKERR_Msk)) /* SCB CFSR (MMFSR): MSTKERR Mask */
     {
-        EXCEPTION_PRINTF(" > Unstack for an exception return has caused one or more access violations\n\r");
+        (void)EXCEPTION_PRINTF(" > Unstack for an exception return has caused one or more access violations\n\r");
     }
-    if (cfsr & SCB_CFSR_MUNSTKERR_Msk) /* SCB CFSR (MMFSR): MUNSTKERR Mask */
+    if (0U != (cfsr & SCB_CFSR_MUNSTKERR_Msk)) /* SCB CFSR (MMFSR): MUNSTKERR Mask */
     {
-        EXCEPTION_PRINTF(" > Stacking for an exception entry has caused one or more access violations\n\r");
+        (void)EXCEPTION_PRINTF(" > Stacking for an exception entry has caused one or more access violations\n\r");
     }
-    if (cfsr & SCB_CFSR_MLSPERR_Msk) /* SCB CFSR (MMFSR): MLSPERR Mask */
+    if (0U != (cfsr & SCB_CFSR_MLSPERR_Msk)) /* SCB CFSR (MMFSR): MLSPERR Mask */
     {
-        EXCEPTION_PRINTF(" > A MemManage fault occurred during floating-point lazy state preservation\n\r");
+        (void)EXCEPTION_PRINTF(" > A MemManage fault occurred during floating-point lazy state preservation\n\r");
     }
-    if (cfsr & SCB_CFSR_MMARVALID_Msk) /* SCB CFSR (MMFSR): MMARVALID Mask */
+    if (0U != (cfsr & SCB_CFSR_MMARVALID_Msk)) /* SCB CFSR (MMFSR): MMARVALID Mask */
     {
-        EXCEPTION_PRINTF(" > MMAR holds a valid fault address: ");
-        EXCEPTION_PRINTF("0x%08X - MMFAR    - MemManage Fault Address Register\n\r", SCB->MMFAR);
+        (void)EXCEPTION_PRINTF(" > MMAR holds a valid fault address: ");
+        (void)EXCEPTION_PRINTF("0x%08X - MMFAR    - MemManage Fault Address Register\n\r", SCB->MMFAR);
     }
 
     /* BusFault Status Register (part of SCB Configurable Fault Status Register) */
-    if (cfsr & SCB_CFSR_IBUSERR_Msk) /* SCB CFSR (BFSR): IBUSERR Mask */
+    if (0U != (cfsr & SCB_CFSR_IBUSERR_Msk)) /* SCB CFSR (BFSR): IBUSERR Mask */
     {
-        EXCEPTION_PRINTF(" > Instruction bus error\n\r");
+        (void)EXCEPTION_PRINTF(" > Instruction bus error\n\r");
     }
-    if (cfsr & SCB_CFSR_PRECISERR_Msk) /* SCB CFSR (BFSR): PRECISERR Mask */
+    if (0U != (cfsr & SCB_CFSR_PRECISERR_Msk)) /* SCB CFSR (BFSR): PRECISERR Mask */
     {
-        EXCEPTION_PRINTF(
+        (void)EXCEPTION_PRINTF(
             " > A data bus error has occurred, PC value stacked for the exception return points to the instruction "
             "that caused the fault\n\r");
     }
-    if (cfsr & SCB_CFSR_IMPRECISERR_Msk) /* SCB CFSR (BFSR): IMPRECISERR Mask */
+    if (0U != (cfsr & SCB_CFSR_IMPRECISERR_Msk)) /* SCB CFSR (BFSR): IMPRECISERR Mask */
     {
-        EXCEPTION_PRINTF(
+        (void)EXCEPTION_PRINTF(
             " > A data bus error has occurred, return address in the stack frame is not related to the instruction "
             "that caused the error\n\r");
     }
-    if (cfsr & SCB_CFSR_UNSTKERR_Msk) /* SCB CFSR (BFSR): UNSTKERR Mask */
+    if (0U != (cfsr & SCB_CFSR_UNSTKERR_Msk)) /* SCB CFSR (BFSR): UNSTKERR Mask */
     {
-        EXCEPTION_PRINTF(" > Unstack for an exception return has caused one or more BusFaults\n\r");
+        (void)EXCEPTION_PRINTF(" > Unstack for an exception return has caused one or more BusFaults\n\r");
     }
-    if (cfsr & SCB_CFSR_STKERR_Msk) /* SCB CFSR (BFSR): STKERR Mask */
+    if (0U != (cfsr & SCB_CFSR_STKERR_Msk)) /* SCB CFSR (BFSR): STKERR Mask */
     {
-        EXCEPTION_PRINTF(" > Stacking for an exception entry has caused one or more BusFaults\n\r");
+        (void)EXCEPTION_PRINTF(" > Stacking for an exception entry has caused one or more BusFaults\n\r");
     }
-    if (cfsr & SCB_CFSR_LSPERR_Msk) /* SCB CFSR (BFSR): LSPERR Mask */
+    if (0U != (cfsr & SCB_CFSR_LSPERR_Msk)) /* SCB CFSR (BFSR): LSPERR Mask */
     {
-        EXCEPTION_PRINTF(" > A bus fault occurred during floating-point lazy state preservation\n\r");
+        (void)EXCEPTION_PRINTF(" > A bus fault occurred during floating-point lazy state preservation\n\r");
     }
-    if (cfsr & SCB_CFSR_BFARVALID_Msk) /* SCB CFSR (BFSR): BFARVALID Mask */
+    if (0U != (cfsr & SCB_CFSR_BFARVALID_Msk)) /* SCB CFSR (BFSR): BFARVALID Mask */
     {
-        EXCEPTION_PRINTF(" > BFAR holds a valid fault address: ");
-        EXCEPTION_PRINTF("0x%08X - BFAR     - BusFault Address Register\n\r", SCB->BFAR);
+        (void)EXCEPTION_PRINTF(" > BFAR holds a valid fault address: ");
+        (void)EXCEPTION_PRINTF("0x%08X - BFAR     - BusFault Address Register\n\r", SCB->BFAR);
     }
 
     /* UsageFault Status Register (part of SCB Configurable Fault Status Register) */
-    if (cfsr & SCB_CFSR_UNDEFINSTR_Msk) /* SCB CFSR (UFSR): UNDEFINSTR Mask */
+    if (0U != (cfsr & SCB_CFSR_UNDEFINSTR_Msk)) /* SCB CFSR (UFSR): UNDEFINSTR Mask */
     {
-        EXCEPTION_PRINTF(" > The processor has attempted to execute an undefined instruction\n\r");
+        (void)EXCEPTION_PRINTF(" > The processor has attempted to execute an undefined instruction\n\r");
     }
-    if (cfsr & SCB_CFSR_INVSTATE_Msk) /* SCB CFSR (UFSR): INVSTATE Mask */
+    if (0U != (cfsr & SCB_CFSR_INVSTATE_Msk)) /* SCB CFSR (UFSR): INVSTATE Mask */
     {
-        EXCEPTION_PRINTF(
+        (void)EXCEPTION_PRINTF(
             " > The processor has attempted to execute an instruction that makes illegal use of the EPSR\n\r");
     }
-    if (cfsr & SCB_CFSR_INVPC_Msk) /* SCB CFSR (UFSR): INVPC Mask */
+    if (0U != (cfsr & SCB_CFSR_INVPC_Msk)) /* SCB CFSR (UFSR): INVPC Mask */
     {
-        EXCEPTION_PRINTF(" > The processor has attempted an illegal load of EXC_RETURN to the PC\n\r");
+        (void)EXCEPTION_PRINTF(" > The processor has attempted an illegal load of EXC_RETURN to the PC\n\r");
     }
-    if (cfsr & SCB_CFSR_NOCP_Msk) /* SCB CFSR (UFSR): NOCP Mask */
+    if (0U != (cfsr & SCB_CFSR_NOCP_Msk)) /* SCB CFSR (UFSR): NOCP Mask */
     {
-        EXCEPTION_PRINTF(" > The processor has attempted to access a coprocessor\n\r");
+        (void)EXCEPTION_PRINTF(" > The processor has attempted to access a coprocessor\n\r");
     }
-    if (cfsr & SCB_CFSR_UNALIGNED_Msk) /* SCB CFSR (UFSR): UNALIGNED Mask */
+    if (0U != (cfsr & SCB_CFSR_UNALIGNED_Msk)) /* SCB CFSR (UFSR): UNALIGNED Mask */
     {
-        EXCEPTION_PRINTF(" > The processor has made an unaligned memory access\n\r");
+        (void)EXCEPTION_PRINTF(" > The processor has made an unaligned memory access\n\r");
     }
-    if (cfsr & SCB_CFSR_DIVBYZERO_Msk) /* SCB CFSR (UFSR): DIVBYZERO Mask */
+    if (0U != (cfsr & SCB_CFSR_DIVBYZERO_Msk)) /* SCB CFSR (UFSR): DIVBYZERO Mask */
     {
-        EXCEPTION_PRINTF(" > The processor has executed an SDIV or UDIV instruction with a divisor of 0\n\r");
+        (void)EXCEPTION_PRINTF(" > The processor has executed an SDIV or UDIV instruction with a divisor of 0\n\r");
     }
 }
 
@@ -273,20 +276,20 @@ static void EXCEPTION_HardFaultStatusRegisterPrint(void)
 {
     uint32_t hfsr = SCB->HFSR;
     /* HardFault Status Register */
-    EXCEPTION_PRINTF("0x%08X - HFSR     - HardFault Status Register\n\r", hfsr);
+    (void)EXCEPTION_PRINTF("0x%08X - HFSR     - HardFault Status Register\n\r", hfsr);
 
     /* SCB Hard Fault Status Register Definitions (part of SCB Configurable Fault Status Register) */
-    if (hfsr & SCB_HFSR_VECTTBL_Msk) /* SCB HFSR: VECTTBL Mask */
+    if (0U != (hfsr & SCB_HFSR_VECTTBL_Msk)) /* SCB HFSR: VECTTBL Mask */
     {
-        EXCEPTION_PRINTF(" > BusFault on vector table read\n\r");
+        (void)EXCEPTION_PRINTF(" > BusFault on vector table read\n\r");
     }
-    if (hfsr & SCB_HFSR_FORCED_Msk) /* SCB HFSR: FORCED Mask */
+    if (0U != (hfsr & SCB_HFSR_FORCED_Msk)) /* SCB HFSR: FORCED Mask */
     {
-        EXCEPTION_PRINTF(" > Forced HardFault\n\r");
+        (void)EXCEPTION_PRINTF(" > Forced HardFault\n\r");
     }
-    if (hfsr & SCB_HFSR_DEBUGEVT_Msk) /* SCB HFSR: DEBUGEVT Mask */
+    if (0U != (hfsr & SCB_HFSR_DEBUGEVT_Msk)) /* SCB HFSR: DEBUGEVT Mask */
     {
-        EXCEPTION_PRINTF(
+        (void)EXCEPTION_PRINTF(
             " > Reserved for Debug use. When writing to the register you must write 1 to this bit, otherwise behavior "
             "is unpredictable\n\r");
     }
@@ -298,14 +301,18 @@ static void EXCEPTION_HardFaultRegisterPrint(void)
     (void)EXCEPTION_HardFaultStatusRegisterPrint();
     for (uint32_t i = 0; i < ARRAY_SIZE(scb_data_text); i++)
     {
-        if (32 == scb_data_text[i].type)
+        if (32U == scb_data_text[i].type)
         {
-            EXCEPTION_PRINTF("0x%08X - %s\n\r", *(uint32_t *)(SCB_BASE + scb_data_text[i].offset),
+            (void)EXCEPTION_PRINTF("0x%08X - %s\n\r", *(uint32_t *)(SCB_BASE + scb_data_text[i].offset),
                              scb_data_text[i].str);
         }
-        else if (8 == scb_data_text[i].type)
+        else if (8U == scb_data_text[i].type)
         {
-            EXCEPTION_PRINTF("0x%08X - %s\n\r", *(uint8_t *)(SCB_BASE + scb_data_text[i].offset), scb_data_text[i].str);
+            (void)EXCEPTION_PRINTF("0x%08X - %s\n\r", *(uint8_t *)(SCB_BASE + scb_data_text[i].offset), scb_data_text[i].str);
+        }
+        else
+        {
+            /* MISRA C-2012 Rule 15.7 */
         }
     }
 }
@@ -314,82 +321,90 @@ static void EXCEPTION_HardFaultRegisterPrint(void)
 static void EXCEPTION_StackFramePrint(void)
 {
 #if (defined(EXCEPTION_HANDLING_LOG_ENABLE) && (EXCEPTION_HANDLING_LOG_ENABLE == 1U))
-    EXCEPTION_PRINTF("\n\r--- Stack frame -------------------------------------------------------\n\r");
-    EXCEPTION_PRINTF(" IPSR= 0x%08X >>>>> ", g_exceptionStackStruct->IPSR);
-    switch (g_exceptionStackStruct->IPSR & 0xFF)
+    (void)EXCEPTION_PRINTF("\n\r--- Stack frame -------------------------------------------------------\n\r");
+    (void)EXCEPTION_PRINTF(" IPSR= 0x%08X >>>>> ", g_exceptionStackStruct->IPSR);
+    switch (g_exceptionStackStruct->IPSR & 0xFFU)
     {
         case 0:
-            EXCEPTION_PRINTF("Thread mode");
+            (void)EXCEPTION_PRINTF("Thread mode");
             break;
         case 1:
-            EXCEPTION_PRINTF("Reserved 1");
+            (void)EXCEPTION_PRINTF("Reserved 1");
             break;
         case 2:
-            EXCEPTION_PRINTF("NMI");
+            (void)EXCEPTION_PRINTF("NMI");
             break;
         case 3:
-            EXCEPTION_PRINTF("HardFault");
+            (void)EXCEPTION_PRINTF("HardFault");
             break;
         case 4:
-            EXCEPTION_PRINTF("MemManage");
+            (void)EXCEPTION_PRINTF("MemManage");
             break;
         case 5:
-            EXCEPTION_PRINTF("BusFault");
+            (void)EXCEPTION_PRINTF("BusFault");
             break;
         case 6:
-            EXCEPTION_PRINTF("UsageFault");
+            (void)EXCEPTION_PRINTF("UsageFault");
             break;
         case 7:
-            EXCEPTION_PRINTF("Reserved 7");
+            (void)EXCEPTION_PRINTF("Reserved 7");
             break;
         case 8:
-            EXCEPTION_PRINTF("Reserved 8");
+            (void)EXCEPTION_PRINTF("Reserved 8");
             break;
         case 9:
-            EXCEPTION_PRINTF("Reserved 9");
+            (void)EXCEPTION_PRINTF("Reserved 9");
             break;
         case 10:
-            EXCEPTION_PRINTF("Reserved 10");
+            (void)EXCEPTION_PRINTF("Reserved 10");
             break;
         case 11:
-            EXCEPTION_PRINTF("SVCall");
+            (void)EXCEPTION_PRINTF("SVCall");
             break;
         case 12:
-            EXCEPTION_PRINTF("Reserved for Debug");
+            (void)EXCEPTION_PRINTF("Reserved for Debug");
             break;
         case 13:
-            EXCEPTION_PRINTF("Reserved 13");
+            (void)EXCEPTION_PRINTF("Reserved 13");
             break;
         case 14:
-            EXCEPTION_PRINTF("PendSV");
+            (void)EXCEPTION_PRINTF("PendSV");
             break;
         case 15:
-            EXCEPTION_PRINTF("SysTick");
+            (void)EXCEPTION_PRINTF("SysTick");
             break;
         default:
-            EXCEPTION_PRINTF("IRQ%d", (g_exceptionStackStruct->IPSR & 0xFF) - 16);
+            (void)EXCEPTION_PRINTF("IRQ%d", (g_exceptionStackStruct->IPSR & 0xFFU) - 16U);
             break;
     }
-    EXCEPTION_PRINTF(" <<<<<\n\r");
+    (void)EXCEPTION_PRINTF(" <<<<<\n\r");
 
-    EXCEPTION_PRINTF(" R0  = 0x%08X   ", g_exceptionStackStruct->R0);
-    EXCEPTION_PRINTF(" R1  = 0x%08X   ", g_exceptionStackStruct->R1);
-    EXCEPTION_PRINTF(" R2  = 0x%08X   ", g_exceptionStackStruct->R2);
-    EXCEPTION_PRINTF(" R3  = 0x%08X\n\r", g_exceptionStackStruct->R3);
-    EXCEPTION_PRINTF(" R12 = 0x%08X   ", g_exceptionStackStruct->R12);
-    EXCEPTION_PRINTF(" LR  = 0x%08X   ", g_exceptionStackStruct->LR);
-    EXCEPTION_PRINTF(" PC  = 0x%08X   ", g_exceptionStackStruct->PC);
-    EXCEPTION_PRINTF(" PSR = 0x%08X\n\r", g_exceptionStackStruct->xPSR);
-    EXCEPTION_PRINTF(" SP (when faulted)  = 0x%08X\n\r", g_exceptionStackStruct->SP);
-    EXCEPTION_PRINTF("\n--- System Control Block (SCB) ----------------------------------------\n\r");
+    (void)EXCEPTION_PRINTF(" R0  = 0x%08X   ", g_exceptionStackStruct->R0);
+    (void)EXCEPTION_PRINTF(" R1  = 0x%08X   ", g_exceptionStackStruct->R1);
+    (void)EXCEPTION_PRINTF(" R2  = 0x%08X   ", g_exceptionStackStruct->R2);
+    (void)EXCEPTION_PRINTF(" R3  = 0x%08X\n\r", g_exceptionStackStruct->R3);
+    (void)EXCEPTION_PRINTF(" R12 = 0x%08X   ", g_exceptionStackStruct->R12);
+    (void)EXCEPTION_PRINTF(" LR  = 0x%08X   ", g_exceptionStackStruct->LR);
+    (void)EXCEPTION_PRINTF(" PC  = 0x%08X   ", g_exceptionStackStruct->PC);
+    (void)EXCEPTION_PRINTF(" PSR = 0x%08X\n\r", g_exceptionStackStruct->xPSR);
+    (void)EXCEPTION_PRINTF(" SP (when faulted)  = 0x%08X\n\r", g_exceptionStackStruct->SP);
+    (void)EXCEPTION_PRINTF("\n--- System Control Block (SCB) ----------------------------------------\n\r");
     (void)EXCEPTION_HardFaultRegisterPrint();
-    while (g_exceptionStackStruct->IPSR & 0xFF)
+    while (0U != (g_exceptionStackStruct->IPSR & 0xFFU))
     {
     }
 
 #endif
 }
 
+static void EXCEPTION_CopyToStack(void)
+{
+    /* Push SP (when faulted) and IPSR to MSP and save MSP contain the exception Stack Struct to
+     * g_exceptionStackStruct*/
+    COPY_TO_STACK();
+}
+
+void NMI_Handler(void);
 void NMI_Handler(void)
 #if (defined(EXCEPTION_HANDLING_LOG_ENABLE) && (EXCEPTION_HANDLING_LOG_ENABLE == 1U))
 {
@@ -404,6 +419,7 @@ void NMI_Handler(void)
 #endif
 
 #if (defined(__MCUXPRESSO) && defined(__SEMIHOST_HARDFAULT_DISABLE)) || (!defined(__MCUXPRESSO))
+void HardFault_Handler(void);
 void HardFault_Handler(void)
 #if (defined(EXCEPTION_HANDLING_LOG_ENABLE) && (EXCEPTION_HANDLING_LOG_ENABLE == 1U))
 {
@@ -417,7 +433,7 @@ void HardFault_Handler(void)
 }
 #endif
 #endif
-
+void MemManage_Handler(void);
 void MemManage_Handler(void)
 #if (defined(EXCEPTION_HANDLING_LOG_ENABLE) && (EXCEPTION_HANDLING_LOG_ENABLE == 1U))
 {
@@ -430,7 +446,7 @@ void MemManage_Handler(void)
     }
 }
 #endif
-
+void BusFault_Handler(void);
 void BusFault_Handler(void)
 #if (defined(EXCEPTION_HANDLING_LOG_ENABLE) && (EXCEPTION_HANDLING_LOG_ENABLE == 1U))
 {
@@ -443,7 +459,7 @@ void BusFault_Handler(void)
     }
 }
 #endif
-
+void UsageFault_Handler(void);
 void UsageFault_Handler(void)
 #if (defined(EXCEPTION_HANDLING_LOG_ENABLE) && (EXCEPTION_HANDLING_LOG_ENABLE == 1U))
 {
@@ -456,13 +472,6 @@ void UsageFault_Handler(void)
     }
 }
 #endif
-
-void EXCEPTION_CopyToStack(void)
-{
-    /* Push SP (when faulted) and IPSR to MSP and save MSP contain the exception Stack Struct to
-     * g_exceptionStackStruct*/
-    COPY_TO_STACK();
-}
 
 /*!
  * @brief Exception data print function.

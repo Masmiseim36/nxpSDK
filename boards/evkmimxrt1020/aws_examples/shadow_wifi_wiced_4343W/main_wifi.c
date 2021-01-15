@@ -30,11 +30,12 @@
  * Includes
  ******************************************************************************/
 /* SDK Included Files */
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "ksdk_mbedtls.h"
-#include "pin_mux.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 /* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -45,7 +46,6 @@
 #include "types/iot_network_types.h"
 #include "aws_demo.h"
 
-#include "clock_config.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
@@ -206,7 +206,6 @@ void SystemInitHook(void)
     IOMUXC_GPR->GPR16 |= 1 << IOMUXC_GPR_GPR16_FLEXRAM_BANK_CFG_SEL_SHIFT;
 }
 
-
 void print_string(const char *string)
 {
     PRINTF(string);
@@ -236,8 +235,6 @@ int main(void)
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-
-    SCB_DisableDCache();
     CRYPTO_InitHardware();
 
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);

@@ -18,7 +18,7 @@
 // in case they might be useful some day.
 
 // Copyright 2017 The TensorFlow Authors. All Rights Reserved.
-//   Copyright 2018 NXP. All Rights Reserved.
+// Copyright 2018 NXP
 //
 //Licensed under the Apache License, Version 2.0 (the "License");
 //you may not use this file except in compliance with the License.

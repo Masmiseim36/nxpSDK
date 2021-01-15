@@ -8,11 +8,11 @@
 
 #include <stdio.h>
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_sd.h"
 #include "sdmmc_config.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_pca9420.h"
 #include "fsl_power.h"
 /*******************************************************************************
@@ -222,10 +222,10 @@ int main(void)
     while (ch != 'q')
     {
         PRINTF("\r\nPlease insert a card into board.\r\n");
-        /* power off card */
-        SD_SetCardPower(card, false);
         /* wait card insert */
         SD_PollingCardInsert(card, kSD_Inserted);
+        /* power off card */
+        SD_SetCardPower(card, false);
         /* power on the card */
         SD_SetCardPower(card, true);
 

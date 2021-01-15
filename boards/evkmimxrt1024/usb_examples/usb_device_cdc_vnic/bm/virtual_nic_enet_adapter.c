@@ -10,8 +10,8 @@
 /*${standard_header_anchor}*/
 #include "fsl_device_registers.h"
 #include "clock_config.h"
-#include "board.h"
 #include "fsl_debug_console.h"
+#include "board.h"
 
 #include "usb_device_config.h"
 #include "usb.h"

@@ -32,7 +32,7 @@
 #if (defined(__stack_size__))
   #define Stack_Size                   __stack_size__
 #else
-  #define Stack_Size                   0x200
+  #define Stack_Size                   0x400
 #endif
 
 #if (defined(__heap_size__))
@@ -41,8 +41,9 @@
   #define Heap_Size                    0x200
 #endif
 
-/* The SRAM region [0x0-0x20000] is reserved for ROM code and app-specific use cases. */
-/* The SRAM region [0x20000-0x80000] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
+/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] is reserved for app-specific use cases. */
+/* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
 /* NOTE: Flash in range 0x08200000 - 0x083FFFFF is reserved for application "filesystem" */
 
 #if (defined(__ram_vector_table__))
@@ -68,7 +69,7 @@
 
 #define  m_boot_flash_conf_start       0x08000400
 
-LR_m_interrupts m_boot_flash_conf_start m_interrupts_size+m_text_size {
+LR_m_interrupts m_boot_flash_conf_start m_text_start+m_text_size-m_boot_flash_conf_start {
   FLASH_CONFIG m_boot_flash_conf_start m_interrupts_start-m_boot_flash_conf_start { ; load address = execution address
     * (.flash_conf)
   }

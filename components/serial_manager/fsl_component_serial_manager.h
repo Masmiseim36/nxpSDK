@@ -61,8 +61,8 @@
 #endif
 
 /*! @brief Enable or disable USB CDC virtual port (1 - enable, 0 - disable) */
-#ifndef SERIAL_PORT_TYPE_USBCDC_VIRTUAL
-#define SERIAL_PORT_TYPE_USBCDC_VIRTUAL (0U)
+#ifndef SERIAL_PORT_TYPE_VIRTUAL
+#define SERIAL_PORT_TYPE_VIRTUAL (0U)
 #endif
 
 /*! @brief Enable or disable rPMSG port (1 - enable, 0 - disable) */
@@ -72,7 +72,27 @@
 
 /*! @brief Enable or disable SerialManager_Task() handle TX to prevent recursive calling */
 #ifndef SERIAL_MANAGER_TASK_HANDLE_TX
-#define SERIAL_MANAGER_TASK_HANDLE_TX (1U)
+#define SERIAL_MANAGER_TASK_HANDLE_TX (0U)
+#endif
+#if (defined(SERIAL_MANAGER_TASK_HANDLE_TX) && (SERIAL_MANAGER_TASK_HANDLE_TX > 0U))
+#ifndef OSA_USED
+#error When SERIAL_MANAGER_TASK_HANDLE_TX=1, OSA_USED must be set.
+#endif
+#endif
+
+/*! @brief Set the default delay time in ms used by SerialManager_TimeDelay(). */
+#ifndef SERIAL_MANAGER_TIME_DELAY_DEFAULT_VALUE
+#define SERIAL_MANAGER_TIME_DELAY_DEFAULT_VALUE (1U)
+#endif
+
+/*! @brief Enable or disable SerialManager_Task() handle RX data available notify */
+#ifndef SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY
+#define SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY (0U)
+#endif
+#if (defined(SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY) && (SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY > 0U))
+#ifndef OSA_USED
+#error When SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY=1, OSA_USED must be set.
+#endif
 #endif
 
 /*! @brief Set serial manager write handle size */
@@ -109,13 +129,13 @@
 #include "fsl_component_serial_port_swo.h"
 #endif
 
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
 
 #if !(defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
 #error The serial manager blocking mode cannot be supported for USB CDC.
 #endif
 
-#include "fsl_component_serial_port_usb_virtual.h"
+#include "fsl_component_serial_port_virtual.h"
 #endif
 
 #define SERIAL_MANAGER_HANDLE_SIZE_TEMP 0U
@@ -146,11 +166,11 @@
 
 #endif
 
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
 
-#if (SERIAL_PORT_USB_VIRTUAL_HANDLE_SIZE > SERIAL_MANAGER_HANDLE_SIZE_TEMP)
+#if (SERIAL_PORT_VIRTUAL_HANDLE_SIZE > SERIAL_MANAGER_HANDLE_SIZE_TEMP)
 #undef SERIAL_MANAGER_HANDLE_SIZE_TEMP
-#define SERIAL_MANAGER_HANDLE_SIZE_TEMP SERIAL_PORT_USB_VIRTUAL_HANDLE_SIZE
+#define SERIAL_MANAGER_HANDLE_SIZE_TEMP SERIAL_PORT_VIRTUAL_HANDLE_SIZE
 #endif
 
 #endif
@@ -168,7 +188,7 @@
 /*! @brief SERIAL_PORT_UART_HANDLE_SIZE/SERIAL_PORT_USB_CDC_HANDLE_SIZE + serial manager dedicated size */
 #if ((defined(SERIAL_MANAGER_HANDLE_SIZE_TEMP) && (SERIAL_MANAGER_HANDLE_SIZE_TEMP > 0U)))
 #else
-#error SERIAL_PORT_TYPE_UART, SERIAL_PORT_TYPE_USBCDC, SERIAL_PORT_TYPE_SWO and SERIAL_PORT_TYPE_USBCDC_VIRTUAL should not be cleared at same time.
+#error SERIAL_PORT_TYPE_UART, SERIAL_PORT_TYPE_USBCDC, SERIAL_PORT_TYPE_SWO and SERIAL_PORT_TYPE_VIRTUAL should not be cleared at same time.
 #endif
 
 /*! @brief Definition of serial manager handle size. */
@@ -271,11 +291,11 @@ typedef void *serial_read_handle_t;
 /*! @brief serial port type*/
 typedef enum _serial_port_type
 {
-    kSerialPort_Uart = 1U,     /*!< Serial port UART */
-    kSerialPort_UsbCdc,        /*!< Serial port USB CDC */
-    kSerialPort_Swo,           /*!< Serial port SWO */
-    kSerialPort_UsbCdcVirtual, /*!< Serial port USB CDC Virtual */
-    kSerialPort_Rpmsg,         /*!< Serial port RPMSG */
+    kSerialPort_Uart = 1U, /*!< Serial port UART */
+    kSerialPort_UsbCdc,    /*!< Serial port USB CDC */
+    kSerialPort_Swo,       /*!< Serial port SWO */
+    kSerialPort_Virtual,   /*!< Serial port Virtual */
+    kSerialPort_Rpmsg,     /*!< Serial port RPMSG */
 } serial_port_type_t;
 
 /*! @brief serial manager type*/
@@ -364,6 +384,8 @@ extern "C" {
  *   uartConfig.stopBitCount = kSerialManager_UartOneStopBit;
  *   uartConfig.enableRx = 1;
  *   uartConfig.enableTx = 1;
+ *   uartConfig.enableRxRTS = 0;
+ *   uartConfig.enableTxCTS = 0;
  *   config.portConfig = &uartConfig;
  *   SerialManager_Init((serial_handle_t)s_serialHandle, &config);
  *  @endcode

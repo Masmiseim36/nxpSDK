@@ -6,7 +6,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -20,15 +22,15 @@
 #include "usb_flash.h"
 #include "fsl_device_registers.h"
 #include "clock_config.h"
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "dfu_app.h"
-#include <stdio.h>
-#include <stdlib.h>
+#include "board.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define USB_DFU_CRC_INITIALIZED_VAULE (0xFFFFFFFFU)
+
 typedef usb_status_t (*dfu_state_func)(usb_dfu_struct_t *dfu_dev, usb_device_dfu_event_struct_t *event);
 
 /*******************************************************************************
@@ -512,8 +514,7 @@ static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data)
         s_UsbDeviceDfuDemo.dfuFirmwareAddress = (uint32_t)&updateLoadData[0];
         /* get firmware size from USB_DFU_APP_ADDRESS + 4 address */
         s_UsbDeviceDfuDemo.dfuFirmwareSize = UPLOAD_SIZE;
-        if ((0xFFFFFFFFU == s_UsbDeviceDfuDemo.dfuFirmwareSize) ||
-            (0xFFFFFFFFU == s_UsbDeviceDfuDemo.dfuFirmwareAddress))
+        if ((0U == s_UsbDeviceDfuDemo.dfuFirmwareSize) || (NULL == s_UsbDeviceDfuDemo.dfuFirmwareAddress))
         {
             USB_DeviceDfuSetState(kState_DfuError);
             USB_DeviceDfuSetStatus(USB_DFU_STATUS_ERR_STALLEDPKT);
@@ -937,7 +938,7 @@ void USB_DeviceDfuDemoInit(void)
     s_UsbDeviceDfuDemo.dfuFirmwareAddress          = USB_DFU_APP_ADDRESS;
     s_UsbDeviceDfuDemo.dfuFirmwareSize             = 0U;
     s_UsbDeviceDfuDemo.dfuIsTheFirstBlock          = 0U;
-    s_UsbDeviceDfuDemo.dfuCRC                      = 0XFFFFFFFF;
+    s_UsbDeviceDfuDemo.dfuCRC                      = USB_DFU_CRC_INITIALIZED_VAULE;
     s_UsbDeviceDfuDemo.dfuFirmwareBlock            = &dfuFirmwareBlock[0];
 
     g_detachRequest = 0U;
@@ -985,7 +986,7 @@ void USB_DeviceDfuManifest(void)
         uint32_t remainingLen = s_UsbDeviceDfuDemo.dfuFirmwareSize - 4;
         uint8_t *startAddress = (uint8_t *)USB_DFU_APP_ADDRESS;
 
-        s_UsbDeviceDfuDemo.dfuCRC = 0xffffffff;
+        s_UsbDeviceDfuDemo.dfuCRC = USB_DFU_CRC_INITIALIZED_VAULE;
         uint32_t wLength          = MAX_TRANSFER_SIZE;
         uint32_t readLen          = 0;
         if (remainingLen < MAX_TRANSFER_SIZE)

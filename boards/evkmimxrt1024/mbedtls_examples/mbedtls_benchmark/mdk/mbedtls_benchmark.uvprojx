@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1024/drivers;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../devices/MIMXRT1024;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -461,6 +461,16 @@
               <FilePath>../../../../../devices/MIMXRT1024/drivers/fsl_trng.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
@@ -508,7 +518,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-include-mbedtls</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
+          <Files>
+            <File>
+              <FileName>ksdk_mbedtls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ksdk_mbedtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
+            </File>
+            <File>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mbedtls/include/mbedtls</GroupName>
           <Files>
             <File>
               <FileName>aes.h</FileName>
@@ -903,7 +983,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-library</GroupName>
+          <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
               <FileName>aes.c</FileName>
@@ -1303,106 +1383,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-port-ksdk</GroupName>
-          <Files>
-            <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT1024.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/MIMXRT1024.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT1024_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/MIMXRT1024_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1024.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/system_MIMXRT1024.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1024.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/system_MIMXRT1024.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -1438,7 +1418,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1024.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/MIMXRT1024.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1024_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/MIMXRT1024_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1024.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/system_MIMXRT1024.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1024.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/system_MIMXRT1024.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -1453,7 +1463,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -1483,7 +1493,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -1926,7 +1936,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1024DAG5A, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1024/drivers;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../devices/MIMXRT1024;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2057,6 +2067,16 @@
               <FilePath>../../../../../devices/MIMXRT1024/drivers/fsl_trng.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/drivers/fsl_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/drivers/fsl_cache.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</FilePath>
@@ -2104,7 +2124,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-include-mbedtls</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
+          <Files>
+            <File>
+              <FileName>ksdk_mbedtls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ksdk_mbedtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
+            </File>
+            <File>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mbedtls/include/mbedtls</GroupName>
           <Files>
             <File>
               <FileName>aes.h</FileName>
@@ -2499,7 +2589,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-library</GroupName>
+          <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
               <FileName>aes.c</FileName>
@@ -2899,106 +2989,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-port-ksdk</GroupName>
-          <Files>
-            <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT1024.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/MIMXRT1024.h</FilePath>
-            </File>
-            <File>
-              <FileName>MIMXRT1024_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/MIMXRT1024_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1024.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/system_MIMXRT1024.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MIMXRT1024.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1024/system_MIMXRT1024.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
             <File>
@@ -3034,7 +3024,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1024.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/MIMXRT1024.h</FilePath>
+            </File>
+            <File>
+              <FileName>MIMXRT1024_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/MIMXRT1024_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1024.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/system_MIMXRT1024.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT1024.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1024/system_MIMXRT1024.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -3049,7 +3069,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -3079,7 +3099,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -794,11 +794,7 @@ extern unsigned long __BOOT_STACK_ADDRESS[];
   #define CONFIG_1  (unsigned long)0xFFFFFFFF 
   #define CONFIG_2  (unsigned long)0xFFFFFFFF 
   #define CONFIG_3  (unsigned long)0xFFFFFFFF
-  #ifdef    _MKE18F16_H_
-   #define CONFIG_4 (unsigned long)0xFFFF7DFE
-  #else       /* Others MCU */
-   #define CONFIG_4 (unsigned long)0xFFFFFFFE
-  #endif  
+  #define CONFIG_4 (unsigned long)0xFFFFFFFE
 #endif
 
 #endif /* _VECTORS_H_ */

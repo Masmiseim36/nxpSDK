@@ -6,16 +6,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <string.h>
 #include "usb_device_config.h"
 #include "usb.h"
 #include "fsl_device_registers.h"
-#include "board.h"
 #include "dfu_timer.h"
-#if ((defined DFU_MAX_TIMER_OBJECTS) && (DFU_MAX_TIMER_OBJECTS > 0))
-#include "stdio.h"
-#include "string.h"
-
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -109,6 +106,8 @@ uint8_t DFU_AddTimerQueue(dfu_timer_object_t *timerObject)
  */
 void DFU_RemoveTimerQueue(uint8_t timerId)
 {
+    uint8_t i;
+
     if (timerId < DFU_MAX_TIMER_OBJECTS)
     {
         /* Disable the  timer */
@@ -120,7 +119,7 @@ void DFU_RemoveTimerQueue(uint8_t timerId)
             s_dfuTimerObjectArray[timerId].timerCallback = NULL;
         }
         /* Queue empty checking */
-        for (uint8_t i = 0U; i < DFU_MAX_TIMER_OBJECTS; i++)
+        for (i = 0U; i < DFU_MAX_TIMER_OBJECTS; i++)
         {
             if (NULL != s_dfuTimerObjectArray[i].timerCallback)
             {
@@ -158,4 +157,3 @@ void DFU_TimerISR(void)
         }
     }
 }
-#endif

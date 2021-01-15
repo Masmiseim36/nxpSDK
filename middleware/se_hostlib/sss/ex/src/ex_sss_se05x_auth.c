@@ -1,14 +1,9 @@
 /*
-* Copyright 2019,2020 NXP
-*
-* This software is owned or controlled by NXP and may only be used
-* strictly in accordance with the applicable license terms.  By expressly
-* accepting such terms or by downloading, installing, activating and/or
-* otherwise using the software, you are agreeing that you have read, and
-* that you agree to comply with and are bound by, such license terms.  If
-* you do not agree to be bound by the applicable license terms, then you
-* may not retain, install, activate or otherwise use the software.
-*/
+ * Copyright 2019-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
 /** @file
 *
@@ -426,8 +421,12 @@ static sss_status_t Alloc_Scp03key_toSE05xAuthctx(sss_object_t *keyObject, sss_k
         return status;
     }
 
-    status = sss_host_key_object_allocate_handle(
-        keyObject, keyId, kSSS_KeyPart_Default, kSSS_CipherType_AES, SCP03_MAX_AUTH_KEY_SIZE, kKeyObject_Mode_Transient);
+    status = sss_host_key_object_allocate_handle(keyObject,
+        keyId,
+        kSSS_KeyPart_Default,
+        kSSS_CipherType_AES,
+        SCP03_MAX_AUTH_KEY_SIZE,
+        kKeyObject_Mode_Transient);
     return status;
 }
 
@@ -520,7 +519,8 @@ static sss_status_t ex_sss_se05x_prepare_host_AppletScp03Keys(
         return status;
     }
     /* Set ENC Static Key */
-    status = sss_host_key_store_set_key(host_k, &pStatic_ctx->Enc, APPLET_KEY, AUTH_KEY_SIZE, AUTH_KEY_SIZE * 8, NULL, 0);
+    status =
+        sss_host_key_store_set_key(host_k, &pStatic_ctx->Enc, APPLET_KEY, AUTH_KEY_SIZE, AUTH_KEY_SIZE * 8, NULL, 0);
     if (status != kStatus_SSS_Success) {
         return status;
     }
@@ -531,7 +531,8 @@ static sss_status_t ex_sss_se05x_prepare_host_AppletScp03Keys(
         return status;
     }
     /* Set MAC Static Key */
-    status = sss_host_key_store_set_key(host_k, &pStatic_ctx->Mac, APPLET_KEY, AUTH_KEY_SIZE, AUTH_KEY_SIZE * 8, NULL, 0);
+    status =
+        sss_host_key_store_set_key(host_k, &pStatic_ctx->Mac, APPLET_KEY, AUTH_KEY_SIZE, AUTH_KEY_SIZE * 8, NULL, 0);
     if (status != kStatus_SSS_Success) {
         return status;
     }
@@ -542,7 +543,8 @@ static sss_status_t ex_sss_se05x_prepare_host_AppletScp03Keys(
         return status;
     }
     /* Set DEK Static Key */
-    status = sss_host_key_store_set_key(host_k, &pStatic_ctx->Dek, APPLET_KEY, AUTH_KEY_SIZE, AUTH_KEY_SIZE * 8, NULL, 0);
+    status =
+        sss_host_key_store_set_key(host_k, &pStatic_ctx->Dek, APPLET_KEY, AUTH_KEY_SIZE, AUTH_KEY_SIZE * 8, NULL, 0);
     if (status != kStatus_SSS_Success) {
         return status;
     }

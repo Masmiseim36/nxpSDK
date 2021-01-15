@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -63,10 +63,14 @@ Purpose     : SWITCH public header file (API)
 */
 /*********************************************************************
 *
-*       Modes
+*       SWITCH modes
+*
+*  Description
+*    Modes a SWITCH widget can be set to. See SWITCH_SetMode() for more
+*    information.
 */
-#define SWITCH_MODE_FADE     (1 << 0)
-#define SWITCH_MODE_DISCLOSE (1 << 1)
+#define SWITCH_MODE_FADE     (1 << 0)  // Fade mode. Both state bitmaps are faded into each other.
+#define SWITCH_MODE_DISCLOSE (1 << 1)  // Disclose mode. Bitmap of the new state is disclosed.
 
 /************************************************************
 *
@@ -74,34 +78,50 @@ Purpose     : SWITCH public header file (API)
 */
 #define SWITCH_STATE_PRESSED WIDGET_STATE_USER0
 
-#define SWITCH_STATE_LEFT    0
-#define SWITCH_STATE_RIGHT   1
+/************************************************************
+*
+*       SWITCH states
+*
+*  Description
+*    List of defines of the possible states a SWITCH widget can be in.
+*/
+#define SWITCH_STATE_LEFT    0         // Left state, the thumb is on the left side of the widget.
+#define SWITCH_STATE_RIGHT   1         // Right state, the thumb is on the right side of the widget.
 
 /*********************************************************************
 *
-*       Color indices
+*       SWITCH color indexes
+*
+*  Description
+*    Color indexes used by the SWITCH widget.
 */
-#define SWITCH_CI_LEFT     0
-#define SWITCH_CI_RIGHT    1
-#define SWITCH_CI_DISABLED 2
+#define SWITCH_CI_LEFT     0           // Color for left state.
+#define SWITCH_CI_RIGHT    1           // Color for right state.
+#define SWITCH_CI_DISABLED 2           // Color for disabled state.
 
 /*********************************************************************
 *
-*       Bitmap indices
+*       SWITCH bitmap indexes
+*
+*  Description
+*    Bitmap indexes used by the SWITCH widget for handling bitmaps.
 */
-#define SWITCH_BI_BK_LEFT        0
-#define SWITCH_BI_BK_RIGHT       1
-#define SWITCH_BI_BK_DISABLED    2
-#define SWITCH_BI_THUMB_LEFT     3
-#define SWITCH_BI_THUMB_RIGHT    4
-#define SWITCH_BI_THUMB_DISABLED 5
+#define SWITCH_BI_BK_LEFT        0     // Background bitmap for left state.
+#define SWITCH_BI_BK_RIGHT       1     // Background bitmap for right state.
+#define SWITCH_BI_BK_DISABLED    2     // Background bitmap for disabled state.
+#define SWITCH_BI_THUMB_LEFT     3     // Thumb bitmap for left state.
+#define SWITCH_BI_THUMB_RIGHT    4     // Thumb bitmap for right state.
+#define SWITCH_BI_THUMB_DISABLED 5     // Thumb bitmap for disabled state.
 
 /*********************************************************************
 *
-*       Text indices
+*       SWITCH text indexes
+*
+*  Description
+*    Text indexes used by the SWITCH widget.
 */
-#define SWITCH_TI_LEFT  0
-#define SWITCH_TI_RIGHT 1
+#define SWITCH_TI_LEFT  0              // Text shown for the left state.
+#define SWITCH_TI_RIGHT 1              // Text shown for the right state.
 
 /*********************************************************************
 *

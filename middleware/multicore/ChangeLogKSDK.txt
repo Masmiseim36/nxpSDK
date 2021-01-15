@@ -2,7 +2,41 @@
 @page middleware_log Middleware Change Log
 
 @section multicore Multicore SDK
-  The current version of Multicore SDK is 2.8.0.
+  The current version of Multicore SDK is 2.9.0.
+  - 2.9.0
+    - Multicore SDK component versions:
+      - embedded Remote Procedure Call (eRPC) v1.8.0
+      - eRPC generator (erpcgen) v.1.8.0
+      - Multicore Manager (MCMgr) v4.1.1
+      - RPMsg-Lite v3.1.1
+    - New features:
+      - eRPC: Support win32 thread, GitHub PR #108.
+      - eRPC: Add mbed support for malloc() and free(), GitHub PR #92.
+      - eRPC: Update makefile.
+      - eRPC: Fixed warnings and error with using MessageLoggers, GitHub PR #127.
+      - eRPC: Extend error msg for python server service handle function, GitHub PR #132.
+      - eRPC: Update CMSIS UART transport layer to avoid busy loops in rtos environments, introduce semaphores.  
+      - eRPC: Introduced pre and post callbacks for eRPC call, GitHub PR #131.
+      - eRPC: Introduced new USB CDC transport.
+      - eRPC: Introduced new Linux spidev-based transport.
+      - eRPC: SPI transport update to allow usage without handshaking GPIO. 
+      - eRPC: Native _WIN32 erpc serial transport and threading. 
+      - eRPC: Arbitrator deadlock fix, TCP transport updated, TCP setup functions introduced, GitHub PR #121.
+      - eRPC: Update of matrix_multiply.py example: Add --serial and --baud argument, GitHub PR #137.
+      - eRPC: Added formatting extension for VSC, GitHub PR #134.
+      - eRPC: Update of .clang-format, GitHub PR #140.
+      - eRPC: Update of erpc_framed_transport.cpp: return error if received message has zero length, GitHub PR #141.
+      - eRPC, erpcgen: Fixed error messages produced by -Wall -Wextra -Wshadow -pedantic-errors compiler flags, GitHub PR #136, #139.
+      - eRPC, erpcgen: Core re-formatted using Clang version 10.
+      - erpcgen: Enable deallocation in server shim code when callback/function pointer used as out parameter in IDL.
+      - erpcgen: Removed '$' character from generated symbol name in '_$union' suffix, GitHub PR #103.
+      - erpcgen: Resolved mismatch between C++ and Python for callback index type, GitHub PR #111.
+      - erpcgen: Python generator improvements, GitHub PR #100, #118.
+      - erpcgen: Fixed error messages produced by -Wall -Wextra -Wshadow -pedantic-errors compiler flags, GitHub PR #136.
+      - erpcgen: Introduce ustring type for unsigned char and force cast to char*, GitHub PR #125. 
+      - RPMsg-Lite: Introduced RL_ALLOW_CONSUMED_BUFFERS_NOTIFICATION config option to allow opposite side notification sending 
+        each time received buffers are consumed and put into the queue of available buffers.
+      - RPMsg-Lite: Added environment layers for Threadx.
   - 2.8.0
     - Multicore SDK component versions:
       - embedded Remote Procedure Call (eRPC) v1.7.4

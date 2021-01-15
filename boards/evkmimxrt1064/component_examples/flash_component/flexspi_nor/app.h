@@ -16,7 +16,7 @@
 #define FLASH_SIZE                0x2000 /* 64Mb/KByte */
 #define EXAMPLE_FLEXSPI_AMBA_BASE FlexSPI_AMBA_BASE
 #define FLASH_PAGE_SIZE           256
-#define NOR_FLASH_START_ADDRESS   0U
+#define NOR_FLASH_START_ADDRESS   (20U * 0x1000U)
 #define EXAMPLE_FLEXSPI_CLOCK     kCLOCK_FlexSpi
 #define CACHE_MAINTAIN            0x01U
 

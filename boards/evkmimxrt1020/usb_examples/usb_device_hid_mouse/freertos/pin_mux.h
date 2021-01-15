@@ -44,6 +44,10 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
+/* GPIO_AD_B0_06 (number 105), UART1_TXD/J17[6] */
+
+/* GPIO_AD_B0_07 (number 101), UART1_RXD/J17[4] */
+
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

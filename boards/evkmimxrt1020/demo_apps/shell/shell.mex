@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MIMXRT1021xxxxx" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="ee636d40-754f-405f-8881-d9398c987c8a" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MIMXRT1021xxxxx" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8.xsd" uuid="ee636d40-754f-405f-8881-d9398c987c8a" version="1.8" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MIMXRT1021xxxxx</processor>
       <package>MIMXRT1021DAG5A</package>
@@ -16,9 +16,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="8.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>0.7.10</processor_version>
+            <processor_version>0.8.9</processor_version>
             <power_domains>
                <power_domain name="NVCC_GPIO" value="3.3"/>
             </power_domains>
@@ -84,7 +84,7 @@
       </pins>
       <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>0.7.10</processor_version>
+            <processor_version>0.8.9</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -223,9 +223,9 @@
             </clock_configuration>
          </clock_configurations>
       </clocks>
-      <dcdx name="DCDx" version="2.0" enabled="true" update_project_code="true">
+      <dcdx name="DCDx" version="3.0" enabled="true" update_project_code="true">
          <dcdx_profile>
-            <processor_version>0.7.10</processor_version>
+            <processor_version>0.8.9</processor_version>
             <output_format>c_array</output_format>
          </dcdx_profile>
          <dcdx_configurations>
@@ -285,8 +285,37 @@
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_37" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_38" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_39" value="0x00" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_40" value="0x00" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_41" value="0x00" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_00" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_01" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_02" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_03" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_04" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_05" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_06" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_07" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_08" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_09" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_10" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_11" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_12" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_13" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_14" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_15" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_16" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_17" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_18" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_19" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_20" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_21" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_22" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_23" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_24" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_25" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_26" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_27" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_28" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_29" value="0xE1" value_width="4"/>
+                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_30" value="0xE1" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_31" value="0xE1" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_32" value="0xE1" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_33" value="0xE1" value_width="4"/>
@@ -296,42 +325,9 @@
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_37" value="0xE1" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_38" value="0xE1" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_39" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_40" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_41" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_00" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_01" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_02" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_03" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_04" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_05" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_06" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_07" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_08" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_09" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_10" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_11" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_12" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_13" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_14" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B0_15" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_00" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_01" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_02" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_03" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_04" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_05" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_06" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_07" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_08" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_09" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_10" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_11" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_12" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_13" value="0xE1" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_AD_B1_14" value="0xE1" value_width="4"/>
                         <command type="write_value" address="SEMC_MCR" value="0x10000004" value_width="4"/>
-                        <command type="write_value" address="SEMC_BMCR0" value="0x30524" value_width="4"/>
-                        <command type="write_value" address="SEMC_BMCR1" value="0x6030524" value_width="4"/>
+                        <command type="write_value" address="SEMC_BMCR0" value="0x81" value_width="4"/>
+                        <command type="write_value" address="SEMC_BMCR1" value="0x81" value_width="4"/>
                         <command type="write_value" address="SEMC_BR0" value="0x8000001B" value_width="4"/>
                         <command type="write_value" address="SEMC_BR1" value="0x8200001B" value_width="4"/>
                         <command type="write_value" address="SEMC_BR2" value="0x8400001B" value_width="4"/>
@@ -371,7 +367,7 @@
          <functional_groups/>
          <components/>
       </periphs>
-      <tee name="TEE" version="1.0" enabled="false" update_project_code="true">
+      <tee name="TEE" version="2.0" enabled="false" update_project_code="true">
          <tee_profile>
             <processor_version>N/A</processor_version>
          </tee_profile>

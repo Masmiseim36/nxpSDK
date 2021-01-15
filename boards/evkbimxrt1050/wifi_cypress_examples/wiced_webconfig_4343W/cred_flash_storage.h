@@ -11,7 +11,7 @@
 #ifndef CRED_FLASH_STORAGE_H
 #define CRED_FLASH_STORAGE_H
 
-uint32_t init_flash_storage();
+uint32_t init_flash_storage(char *filename);
 
 uint32_t save_wifi_credentials(char *filename, char *ssid, char *passphrase);
 

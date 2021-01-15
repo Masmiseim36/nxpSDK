@@ -5,9 +5,9 @@ The simple Shadow lightbulb example to illustrate how client application and thi
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.6
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -21,7 +21,6 @@ Hardware requirements
 Board settings
 ==============
 Make sure C28 is welded.
-Make sure J12 on uSD-M.2 adapter is open and there is no blue light on the adapter board. This indicates the board is operating on 1.8v.
 
 The following pins between the MIMXRT1024-EVK board and Murata uSD M.2 Adapter are connected using the plug to receptable cables:
 - MIMXRT1024-EVK board's connector J17, pin 6 to Murata uSD M.2 Adapter's connector J9, pin 3

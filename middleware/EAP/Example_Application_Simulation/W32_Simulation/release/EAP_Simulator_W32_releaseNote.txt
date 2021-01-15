@@ -1,0 +1,103 @@
+EAP_simulatorW32_releaseNote
+/************************************************************************************/
+NAME: EAP_Simulator_W32_3_0_0_CS_DBE_EQNB_PREQND_LM_AVL_TE_VC_TG_PSA_LIMP_LIMR.exe
+PLATFORM: windows
+RELEASE: 3.0.0 
+DATE: 2020_11_06
+COMPILATION SYMBOL: -d ALGORITHM_CS -d ALGORITHM_DBE -d ALGORITHM_TE -d ALGORITHM_EQNB -d ALGORITHM_PR_EQNB -d ALGORITHM_LM -d ALGORITHM_AVL -d ALGORITHM_PSA -d ALGORITHM_TG -d ALGORITHM_LIMP -d ALGORITHM_LIMR
+
+DO or INCLUDE: Include new config file (Tal_args.txt) API support.
+               Simulator 3.0.0 can simulate EAP library 2.0.2 or 2.0.3 when CS is turn Off
+
+/************************************************************************************/
+NAME: EAP_Simulator_W32_2_0_2_CS_DBE_EQNB_PREQND_LM_AVL_TE_VC_TG_PSA_LIMP_LIMR.exe
+PLATFORM: windows
+RELEASE: 2.0.2 
+DATE: 2020_08_12
+COMPILATION SYMBOL: -d ALGORITHM_CS -d ALGORITHM_DBE -d ALGORITHM_TE -d ALGORITHM_EQNB -d ALGORITHM_PR_EQNB -d ALGORITHM_LM -d ALGORITHM_AVL -d ALGORITHM_PSA -d ALGORITHM_TG -d ALGORITHM_LIMP -d ALGORITHM_LIMR
+
+DO or INCLUDE: Same as 2.0.1 with better scratch memory management.
+               Simulator 2.0.2 can simulate EAP library 2.0.3 when CS is turn Off
+
+/************************************************************************************/
+NAME: EAP_Simulator_W32_2_0_1_CS_DBE_EQNB_PREQND_LM_AVL_TE_VC_TG_PSA_LIMP_LIMR.exe
+PLATFORM: windows
+RELEASE: 2.0.1 
+DATE: 2020_08_10
+COMPILATION SYMBOL: -d ALGORITHM_CS -d ALGORITHM_DBE -d ALGORITHM_TE -d ALGORITHM_EQNB -d ALGORITHM_PR_EQNB -d ALGORITHM_LM -d ALGORITHM_AVL -d ALGORITHM_RS -d ALGORITHM_PSA -d ALGORITHM_TG -d ALGORITHM_LIMP -d ALGORITHM_LIMR
+
+DO or INCLUDE: Same as 2.0.0 with better scratch memory management
+
+/************************************************************************************/
+NAME: EAP_Simulator_W32_2_0_0_CS_DBE_EQNB_PREQND_LM_AVL_TE_VC_TG_PSA_LIMP_LIMR.exe
+PLATFORM: windows
+RELEASE: 2.0.0 
+DATE: 2020_08_05
+COMPILATION SYMBOL: -d ALGORITHM_CS -d ALGORITHM_DBE -d ALGORITHM_TE -d ALGORITHM_EQNB -d ALGORITHM_PR_EQNB -d ALGORITHM_LM -d ALGORITHM_AVL -d ALGORITHM_RS -d ALGORITHM_PSA -d ALGORITHM_TG -d ALGORITHM_LIMP -d ALGORITHM_LIMR
+
+DO or INCLUDE:
+    - Algorithm compiled: 
+		- Volume and balance control (VC)
+		- Concert sound (CS)
+		- Digital Bass enhancement (DBE)
+		- Treble effect (TE)
+		- User Equalizer (EQNB)
+		- Product Equalizer (PR_EQNB)
+		- Loudness maximizer (LM)
+		- Auto Volume Level (AVL)
+		- Peak Limiter (LIMP)
+		- RMS Limiter (LIMR)			
+		- Power spectrum analyzer (PSA)
+		- Tone generator (TG)
+
+	- Input data type:
+ 	   - 16 bit data input
+	   - mono or stereo
+	   - Sampling rate (Hz): 8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100 or 48000
+
+DO NOT or NOT INCLUDE:
+        - pure bass (PB) because concurrent with DBE
+
+UPDATE FROM 1.0.1:
+		- Add peak limiter
+                - Add RMS limiter
+		- Replace custom tuning by
+			- A 2nd equalizer at start of chain to compensate speaker frequency response
+			- An advanced parameters for ConcertSound processing
+		- Mono input to Mono output is supported
+		- Add CrossOver API only
+		- API input control return an "Out of range" status more detailed
+	
+/************************************************************************************/
+
+/************************************************************************************/
+RELEASE: 1.0.1 
+DATE: 2020_05_04
+Update: - Update the dump PSA file to retrieve (center frequency, current peak, history peak)
+        - Move PSA block in the audio chain to match the real output signal
+        - Add API test to avoid PSA usage if PSA memory is not reserved
+/************************************************************************************/
+
+/************************************************************************************/
+RELEASE: 1.0.0 
+DATE: 2020_04_07
+DO or INCLUDE:
+	- 16 bit data input
+	- mono or stereo
+	- Sampling rate (Hz): 8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100 or 48000
+	- module availlable:
+               - Concert sound (CS)
+               - Digital Bass enhancement (DBE)
+               - Treble effect (TE)
+               - Equalizer (EQNB)
+               - Loudness maximizer (LM)
+               - Auto Volume Level (AVL)
+               - Power spectrum analyzer (PSA)
+               - Tone generator (TG)
+
+DO NOT or NOT INCLUDE:
+	       - Cinema sound (CI)
+               - Pure bass enhancement (PB)
+               - Rich sound (RS)
+               - Gentle Mixer (GM)
+/************************************************************************************/

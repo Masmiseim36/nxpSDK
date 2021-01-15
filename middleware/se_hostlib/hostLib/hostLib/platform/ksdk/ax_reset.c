@@ -25,7 +25,7 @@
  */
 void axReset_HostConfigure()
 {
-#if defined(CPU_MIMXRT1052DVL6B)
+#if defined(CPU_MIMXRT1062DVL6A)
     gpio_pin_config_t reset_pin_cfg = {kGPIO_DigitalOutput, 0, SE_RESET_LOGIC};
 #else
     gpio_pin_config_t reset_pin_cfg = {kGPIO_DigitalOutput, SE_RESET_LOGIC};

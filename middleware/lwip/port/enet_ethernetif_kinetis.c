@@ -74,6 +74,43 @@
  * Definitions
  ******************************************************************************/
 
+#ifndef ENET_RXBD_NUM
+    #define ENET_RXBD_NUM (5)
+#endif
+
+#ifndef ENET_TXBD_NUM
+    #define ENET_TXBD_NUM (3)
+#endif
+
+#ifndef ENET_RXBUFF_SIZE
+    #define ENET_RXBUFF_SIZE ENET_FRAME_MAX_FRAMELEN
+#endif
+   
+#ifndef ENET_TXBUFF_SIZE
+    #define ENET_TXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
+#endif
+
+#if defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL
+    #if defined(FSL_FEATURE_L2CACHE_LINESIZE_BYTE) \
+        && ((!defined(FSL_SDK_DISBLE_L2CACHE_PRESENT)) || (FSL_SDK_DISBLE_L2CACHE_PRESENT == 0))
+        #if defined(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE)
+            #define FSL_CACHE_LINESIZE_MAX MAX(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE, FSL_FEATURE_L2CACHE_LINESIZE_BYTE)
+            #define FSL_ENET_BUFF_ALIGNMENT MAX(ENET_BUFF_ALIGNMENT, FSL_CACHE_LINESIZE_MAX)
+        #else
+            #define FSL_ENET_BUFF_ALIGNMENT MAX(ENET_BUFF_ALIGNMENT, FSL_FEATURE_L2CACHE_LINESIZE_BYTE)
+        #endif
+    #elif defined(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE)
+        #define FSL_ENET_BUFF_ALIGNMENT MAX(ENET_BUFF_ALIGNMENT, FSL_FEATURE_L1DCACHE_LINESIZE_BYTE)
+    #else
+        #define FSL_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
+    #endif
+#else
+    #define FSL_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
+#endif    
+
+typedef uint8_t rx_buffer_t[SDK_SIZEALIGN(ENET_RXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
+typedef uint8_t tx_buffer_t[SDK_SIZEALIGN(ENET_TXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
+
 /*!
  * @brief Used to wrap received data in a pbuf to be passed into lwIP
  *        without copying.
@@ -253,6 +290,8 @@ void ethernetif_enet_init(struct netif *netif, struct ethernetif *ethernetif,
     enet_config_t config;
     uint32_t sysClock;
     enet_buffer_config_t buffCfg[ENET_RING_NUM];
+    phy_speed_t speed;
+    phy_duplex_t duplex;
     int i;
 
     /* prepare the buffer configuration. */
@@ -271,12 +310,15 @@ void ethernetif_enet_init(struct netif *netif, struct ethernetif *ethernetif,
     sysClock = ethernetifConfig->phyHandle->mdioHandle->resource.csrClock_Hz;
 
     ENET_GetDefaultConfig(&config);
-#ifdef LWIP_PORT_PHY_RMII
-    config.miiMode = kENET_RmiiMode;
-#endif
     config.ringNum = ENET_RING_NUM;
+#ifdef LWIP_ENET_FLEXIBLE_CONFIGURATION
+    extern void BOARD_ENETFlexibleConfigure(enet_config_t *config);
+    BOARD_ENETFlexibleConfigure(&config);
+#endif
 
-    ethernetif_phy_init(ethernetif, ethernetifConfig, &config);
+    ethernetif_phy_init(ethernetif, ethernetifConfig, &speed, &duplex);
+    config.miiSpeed = (enet_mii_speed_t)speed;
+    config.miiDuplex = (enet_mii_duplex_t)duplex;
 
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
     uint32_t instance;
@@ -336,9 +378,9 @@ void ethernetif_enet_init(struct netif *netif, struct ethernetif *ethernetif,
     ENET_ActiveRead(ethernetif->base);
 }
 
-ENET_Type **ethernetif_enet_ptr(struct ethernetif *ethernetif)
+void **ethernetif_enet_ptr(struct ethernetif *ethernetif)
 {
-    return &(ethernetif->base);
+    return (void **)&(ethernetif->base);
 }
 
 /**
@@ -630,7 +672,7 @@ err_t ethernetif0_init(struct netif *netif)
     ethernetif_0.RxDataBuff = &(rxDataBuff_0[0]);
     ethernetif_0.TxDataBuff = &(txDataBuff_0[0]);
 
-    return ethernetif_init(netif, &ethernetif_0, 0U, (ethernetif_config_t *)netif->state);
+    return ethernetif_init(netif, &ethernetif_0, ethernetif_get_enet_base(0U), (ethernetif_config_t *)netif->state);
 }
 
 #if defined(FSL_FEATURE_SOC_ENET_COUNT) && (FSL_FEATURE_SOC_ENET_COUNT > 1)
@@ -659,6 +701,6 @@ err_t ethernetif1_init(struct netif *netif)
     ethernetif_1.RxDataBuff = &(rxDataBuff_1[0]);
     ethernetif_1.TxDataBuff = &(txDataBuff_1[0]);
 
-    return ethernetif_init(netif, &ethernetif_1, 1U, (ethernetif_config_t *)netif->state);
+    return ethernetif_init(netif, &ethernetif_1, ethernetif_get_enet_base(1U), (ethernetif_config_t *)netif->state);
 }
 #endif /* FSL_FEATURE_SOC_*_ENET_COUNT */

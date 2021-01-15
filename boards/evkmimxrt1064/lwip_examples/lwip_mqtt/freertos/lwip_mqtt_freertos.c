@@ -14,6 +14,8 @@
 
 #if LWIP_IPV4 && LWIP_RAW && LWIP_NETCONN && LWIP_DHCP && LWIP_DNS
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_phy.h"
 
@@ -32,8 +34,6 @@
 #include "ctype.h"
 #include "stdio.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"

@@ -498,7 +498,7 @@ U16 SCP_GP_ExternalAuthenticate(ChannelId_t channelId, U8* hostCryptogram)
     U16 rv = 0;
     U8 sessionMacKey[AES_KEY_LEN_nBYTE];
     U8 mcv[AES_KEY_LEN_nBYTE];
-    U8 macToAdd[AES_KEY_LEN_nBYTE];
+    U8 macToAdd[AES_KEY_LEN_nBYTE] = {0};
     int stateIdx = ADMIN_CHANNEL_STATE_IDX;
     //axHcCmacCtx_t *cmacCtx;
     HLSE_CONTEXT_HANDLE hContext;

@@ -15,6 +15,11 @@
 
 #include "board.h"
 
+#if defined(__GNUC__)
+#pragma GCC push_options
+#pragma GCC optimize("O0")
+#endif
+
 volatile uint32_t gtimer_kinetis_msticks; // counter for 1ms SysTicks
 
 volatile int gusleep_delay;
@@ -23,9 +28,9 @@ volatile int gusleep_delay;
 #define CORR_FRDM_K64F_ICCARM  (1000/108)
 #define CORR_FRDM_K64F_GCC     (1000/100)
 
-#define CORR_MIMXRT1050_EVK_ARMCC   (1000/125)
-#define CORR_MIMXRT1050_EVK_ICCARM  (1000/125)
-#define CORR_MIMXRT1050_EVK_GCC     (1000/125)
+#define CORR_MIMXRT1060_EVK_ARMCC   (1000/125)
+#define CORR_MIMXRT1060_EVK_ICCARM  (1000/125)
+#define CORR_MIMXRT1060_EVK_GCC     (1000/125)
 
 #define CORR_FRDM_K82F_ARMCC   (1000/76)
 #define CORR_FRDM_K82F_ICCARM  (1000/83)
@@ -59,11 +64,11 @@ volatile int gusleep_delay;
 
 #elif defined(IMX_RT)
 #    if defined(__ARMCC_VERSION)
-#       define CORRECTION_TOLERENCE CORR_MIMXRT1050_EVK_ARMCC
+#       define CORRECTION_TOLERENCE CORR_MIMXRT1060_EVK_ARMCC
 #    elif defined(__ICCARM__)
-#       define CORRECTION_TOLERENCE CORR_MIMXRT1050_EVK_ICCARM
+#       define CORRECTION_TOLERENCE CORR_MIMXRT1060_EVK_ICCARM
 #    else
-#       define CORRECTION_TOLERENCE CORR_MIMXRT1050_EVK_GCC
+#       define CORRECTION_TOLERENCE CORR_MIMXRT1060_EVK_GCC
 #    endif
 #elif defined(CPU_LPC54018)
 #    if defined(__ARMCC_VERSION)
@@ -89,16 +94,13 @@ volatile int gusleep_delay;
 // #pragma O0
 // #endif
 
-#ifdef __ICCARM__
-#pragma optimize=none
-#endif
-#if defined(__GNUC__) && !defined(__ARMCC_VERSION)
-__attribute__((optimize("O0")))
-#endif
-
 void sm_usleep(uint32_t microsec) {
     gusleep_delay = microsec * CORRECTION_TOLERENCE;
     while (gusleep_delay-- ) {
         __NOP();
     }
 }
+
+#if defined(__GNUC__)
+#pragma GCC pop_options
+#endif

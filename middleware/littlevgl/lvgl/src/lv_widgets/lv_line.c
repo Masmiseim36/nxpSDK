@@ -9,7 +9,7 @@
 #include "lv_line.h"
 
 #if LV_USE_LINE != 0
-#include "../lv_core/lv_debug.h"
+#include "../lv_misc/lv_debug.h"
 #include "../lv_draw/lv_draw.h"
 #include "../lv_misc/lv_math.h"
 #include "../lv_themes/lv_theme.h"
@@ -95,7 +95,7 @@ lv_obj_t * lv_line_create(lv_obj_t * par, const lv_obj_t * copy)
         lv_line_set_points(line, copy_ext->point_array, copy_ext->point_num);
 
         /*Refresh the style with new signal function*/
-        lv_obj_refresh_style(line, LV_STYLE_PROP_ALL);
+        lv_obj_refresh_style(line, LV_OBJ_PART_ALL, LV_STYLE_PROP_ALL);
     }
 
     LV_LOG_INFO("line created");

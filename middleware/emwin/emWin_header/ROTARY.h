@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -104,7 +104,7 @@ void ROTARY_SetMarkerObj (ROTARY_Handle hObj, GUI_DRAW_HANDLE hDrawObjMarker, GU
 void ROTARY_SetOffset    (ROTARY_Handle hObj, int Offset);
 void ROTARY_SetPeriod    (ROTARY_Handle hObj, I32 Period);
 void ROTARY_SetRadius    (ROTARY_Handle hObj, int Radius);
-void ROTARY_SetRange     (ROTARY_Handle hObj, U32 AngPositiv, U32 AngNegativ);
+void ROTARY_SetRange     (ROTARY_Handle hObj, U32 AngPositive, U32 AngNegative);
 void ROTARY_SetSnap      (ROTARY_Handle hObj, I32 Snap);
 void ROTARY_SetTickSize  (ROTARY_Handle hObj, I32 TickSize);
 int  ROTARY_SetUserData  (ROTARY_Handle hObj, const void * pSrc, int NumBytes);

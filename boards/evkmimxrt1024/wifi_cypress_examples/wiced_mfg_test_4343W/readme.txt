@@ -17,9 +17,9 @@ More details about this Test Application can be found in WICED Studio from Cypre
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.6
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -33,7 +33,6 @@ Hardware requirements
 Board settings
 ==============
 Make sure C28 is welded.
-Make sure J12 on uSD-M.2 adapter is open and there is no blue light on the adapter board. This indicates the board is operating on 1.8v.
 
 It is recommended to provide power directly to Murata uSD M.2 Adapter board using secondary Micro USB cable.
 Jumper J1 on the adapter board has to be set up accordingly to utilize external power.

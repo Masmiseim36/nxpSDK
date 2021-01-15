@@ -29,12 +29,11 @@ Change log:
     10/21/2008: initial version
 ******************************************************/
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
 #include <wm_os.h>
-//#include <wmtime.h>
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
@@ -810,7 +809,7 @@ static mlan_status wlan_sec_ioctl_encrypt_key(IN pmlan_adapter pmadapter, IN pml
 }
 
 /**
- *  @brief Set/Get WPA passphrase for esupplicant
+ *  @brief Set/Get WPA passphrase from embedded supplicant
  *
  *  @param pmadapter	A pointer to mlan_adapter structure
  *  @param pioctl_req	A pointer to ioctl request buffer
@@ -818,6 +817,57 @@ static mlan_status wlan_sec_ioctl_encrypt_key(IN pmlan_adapter pmadapter, IN pml
  *  @return		MLAN_STATUS_PENDING --success, otherwise fail
  */
 static mlan_status wlan_sec_ioctl_passphrase(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req)
+{
+    mlan_status ret      = MLAN_STATUS_SUCCESS;
+    mlan_private *pmpriv = pmadapter->priv[pioctl_req->bss_index];
+    mlan_ds_sec_cfg *sec = MNULL;
+    t_u16 cmd_action     = 0;
+    /* BSSDescriptor_t *pbss_desc; */
+    /* int i = 0; */
+
+    ENTER();
+
+    sec = (mlan_ds_sec_cfg *)pioctl_req->pbuf;
+    if (pioctl_req->action == MLAN_ACT_SET)
+    {
+        if (sec->param.passphrase.psk_type == MLAN_PSK_CLEAR)
+            cmd_action = HostCmd_ACT_GEN_REMOVE;
+        else
+            cmd_action = HostCmd_ACT_GEN_SET;
+    }
+    else
+    {
+        if (sec->param.passphrase.psk_type == MLAN_PSK_QUERY)
+        {
+            if (sec->param.passphrase.ssid.ssid_len == 0)
+            {
+                /* fixme: We do not need this functionality right now. */
+            }
+            else
+                memset(pmadapter, &sec->param.passphrase.bssid, 0, MLAN_MAC_ADDR_LENGTH);
+        }
+        cmd_action = HostCmd_ACT_GEN_GET;
+    }
+
+    /* Send request to firmware */
+    ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_SUPPLICANT_PMK, cmd_action, 0, (t_void *)pioctl_req,
+                           &sec->param.passphrase);
+    if (ret == MLAN_STATUS_SUCCESS)
+        ret = MLAN_STATUS_PENDING;
+
+    LEAVE();
+    return ret;
+}
+
+/**
+ *  @brief Set/Get WPA3 SAE password from embedded supplicant
+ *
+ *  @param pmadapter	A pointer to mlan_adapter structure
+ *  @param pioctl_req	A pointer to ioctl request buffer
+ *
+ *  @return		MLAN_STATUS_PENDING --success, otherwise fail
+ */
+static mlan_status wlan_sec_ioctl_password(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req)
 {
     mlan_status ret      = MLAN_STATUS_SUCCESS;
     mlan_private *pmpriv = pmadapter->priv[pioctl_req->bss_index];
@@ -892,6 +942,9 @@ static mlan_status wlan_sec_cfg_ioctl(IN pmlan_adapter pmadapter, IN pmlan_ioctl
             break;
         case MLAN_OID_SEC_CFG_PASSPHRASE:
             status = wlan_sec_ioctl_passphrase(pmadapter, pioctl_req);
+            break;
+        case MLAN_OID_SEC_CFG_PASSWORD:
+            status = wlan_sec_ioctl_password(pmadapter, pioctl_req);
             break;
         default:
             pioctl_req->status_code = MLAN_ERROR_IOCTL_INVALID;
@@ -970,6 +1023,16 @@ exit:
     }
     else
     {
+#ifdef OTP_CHANINFO
+        if (pmadapter->otp_region && pmadapter->otp_region->force_reg)
+        {
+            PRINTF(
+                "ForceRegionRule is set in the on-chip OTP"
+                " memory\r\n");
+            LEAVE();
+            return MLAN_STATUS_FAILURE;
+        }
+#endif
         for (i = 0; i < MRVDRV_MAX_REGION_CODE; i++)
         {
             /* Use the region code to search for the index */
@@ -1035,6 +1098,11 @@ static mlan_status wlan_misc_cfg_ioctl(IN pmlan_adapter pmadapter, IN pmlan_ioct
     misc = (mlan_ds_misc_cfg *)pioctl_req->pbuf;
     switch (misc->sub_command)
     {
+#ifdef WLAN_LOW_POWER_ENABLE
+        case MLAN_OID_MISC_LOW_PWR_MODE:
+            status = wlan_misc_ioctl_low_pwr_mode(pmadapter, pioctl_req);
+            break;
+#endif // WLAN_LOW_POWER_ENABLE
         default:
             if (pioctl_req)
                 pioctl_req->status_code = MLAN_ERROR_IOCTL_INVALID;

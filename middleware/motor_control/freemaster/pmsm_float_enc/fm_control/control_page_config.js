@@ -1,7 +1,7 @@
 /*******************************************************************************
 *
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause* 
@@ -20,12 +20,16 @@
 var boardID = new String();
 var motorType = new String();
 var appVersion;
+var CpuFreq;
+var SlowLoopFreq;
+var MaxCycleNumber;
 
 /* Default ranges and texts in case communication between MCU nad FM is not established */
 var heel            = "NXP Semiconductors, Inc. 2019. Designed by Motor Control Team / Microcontroller Product Group";
-var voltageSpan     = "DC-Bus Voltage";
-var currentLimSpan  = "Current Limitation";
-var sliderSpeedSpan = "Speed Required";
+var voltageSpan     = "DC-Bus Voltage [Volts]";
+var CPUloadSpan     = "MC CPU Load [%]";
+var currentLimSpan  = "Current Limitation [Amps]";
+var sliderSpeedSpan = "Speed Required [rpm]";
 var currentScale    = 8;
 var currentInterMaj = 1;
 var speedScale      = 4500/100;
@@ -124,6 +128,10 @@ var pmsm_evk_imxrt1010 = {
     title   :   "PMSM  Control using evk-imxrt1010",
 }
 
+var pmsm_evk_imxrt1170 = {
+    title   :   "PMSM  Control using evk-imxrt1170",
+}
+
 var pmsm_evk_lpc55s69 = {
     title   :   "PMSM  Control using evk-lpc55s69",
 }
@@ -155,7 +163,21 @@ function AppIdenInit()
     succ = pcm.ReadVariable("App Version", vValue0, tValue0, retMsg)
     if (succ)
         appVersion = Math.round(pcm.LastVariable_vValue*100)/100;
-
+	
+	succ = pcm.ReadVariable("M1 CPU Frequency", vValue0, tValue0, retMsg)
+    if (succ)
+        CpuFreq = Math.round(pcm.LastVariable_vValue*100)/100;
+	else
+		CpuFreq = 600000000;
+	
+	succ = pcm.ReadVariable("M1 Fast Control Loop Frequency", vValue0, tValue0, retMsg)
+    if (succ)
+        SlowLoopFreq = Math.round(pcm.LastVariable_vValue*100)/100;
+	else
+		SlowLoopFreq = 10000;
+		
+	MaxCycleNumber = (10000*CpuFreq/SlowLoopFreq);
+	
     /* put together motor type and board */
     appId = motorType + '_' + boardID;
 
@@ -214,6 +236,9 @@ function AppIdenInit()
 	case "pmsm_evk-imxrt1010":
         document.getElementById("title").innerHTML = pmsm_evk_imxrt1010.title;
         break;
+	case "pmsm_evk-imxrt1170":
+        document.getElementById("title").innerHTML = pmsm_evk_imxrt1170.title;
+        break;
 	case "pmsm_evk-imxrt1060":
         document.getElementById("title").innerHTML = pmsm_evk_imxrt1060.title;
         break;
@@ -238,6 +263,10 @@ function AppIdenInit()
 
     document.getElementById("DCVoltage").innerHTML = voltageSpan;
     var voltSpan = document.getElementById("DCVoltage");
+    voltSpan.style.fontSize = "15px";voltSpan.style.fontWeight = 'bold';
+	
+	document.getElementById("CPULoad").innerHTML = CPUloadSpan;
+    var voltSpan = document.getElementById("CPULoad");
     voltSpan.style.fontSize = "15px";voltSpan.style.fontWeight = 'bold';
 
     document.getElementById("CurrentLimit").innerHTML = currentLimSpan;

@@ -2,7 +2,7 @@
 MODULE:    MAIN
 CONTAINS:  Example application using MicroCANopen
            NXP i.MX RT 10xx derivatives with CAN interface.
-COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2019
+COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2020
            All rights reserved. www.em-sa.com/nxp
 DISCLAIM:  Read and understand our disclaimer before using this code!
            www.esacademy.com/disclaim.htm
@@ -11,30 +11,34 @@ DISCLAIM:  Read and understand our disclaimer before using this code!
 LICENSE:   THIS IS THE NXP SDK VERSION OF MICROCANOPEN PLUS
            Licensed under a modified BSD License. See LICENSE.INFO
            file in the project root for full license information.
-VERSION:   7.01, EmSA 02-APR-20
-           $LastChangedDate: 2020-04-02 17:30:41 +0200 (Thu, 02 Apr 2020) $
-           $LastChangedRevision: 4909 $
+VERSION:   7.10, ESA 20-SEP-02
+           $LastChangedDate: 2020-09-03 22:04:52 +0200 (Thu, 03 Sep 2020) $
+           $LastChangedRevision: 5038 $
 ***************************************************************************/
 
 #include "mcop_inc.h"
 
-#if USE_REMOTE_ACCESS
-#include "mcop_xod_inc.h"
-#endif
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
 
-/**************************************************************************
-LOCAL FUNCTIONS
-**************************************************************************/
-void USER_Process(void);
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+void Init_HW(void);
 
-/**************************************************************************
-GLOBAL VARIABLES
-**************************************************************************/
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
 
-/**************************************************************************
-DOES:    USER Process, here simple I/O example
-RETURNS: nothing
-**************************************************************************/
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+
+/*******************************************************************************
+ * DOES:    USER Process, here simple I/O example
+ * RETURNS: nothing
+ ******************************************************************************/
 void USER_Process(void)
 {
     // buffers to hold CANopen in and out data
@@ -158,27 +162,18 @@ RETURNS: nothing
 **************************************************************************/
 int main(void)
 {
-    /* Board pin, clock, debug console init */
-    BOARD_ConfigMPU();
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
-    BOARD_InitDebugConsole();
-    /* Update the core clock */
-    SystemCoreClockUpdate();
+    // Initialize hardware components needed for this example
+    Init_HW();
 
-#if USE_LEDS
-    // Initialize status LEDs
-    LIBCB_InitLeds();
-#endif
-
+#if USE_CANOPEN_FD
+    PRINTF("\r\nStarting CANopen FD Library slave example\r\n");
+#else
     PRINTF("\r\nStarting CANopen Library slave example\r\n");
+#endif
     PRINTF("Provided by EmSA - www.em-sa.com/nxp\r\n");
 
     // Reset/Initialize CANopen communication
     MCOUSER_ResetCommunication();
-
-    // initialize timer interrupt - 1ms period
-    SysTick_Config(SystemCoreClock / 1000U);
 
     // foreground loop
     while (1)
@@ -205,6 +200,43 @@ int main(void)
     } // end of while(1)
 } // end of main
 
+/*******************************************************************************
+ * DOES:    Initialize hardware components needed for this example
+ * RETURNS: nothing
+ ******************************************************************************/
+void Init_HW()
+{
+    /* Board pin, clock, debug console init */
+    BOARD_ConfigMPU();
+    BOARD_InitPins();
+    BOARD_BootClockRUN();
+    BOARD_InitDebugConsole();
+    /* Update the core clock */
+    SystemCoreClockUpdate();
+
+    /* Set PERCLK_CLK source to OSC_CLK*/
+    CLOCK_SetMux(kCLOCK_PerclkMux, 1U);
+    /* Set PERCLK_CLK divider to 2 */
+    CLOCK_SetDiv(kCLOCK_PerclkDiv, 1U);
+
+    /* Avoiding CAN_CLOCK_CHECK_NO_AFFECTS error in case semihosting console is used */
+    CLOCK_EnableClock(kCLOCK_Lpuart1);
+
+#if USE_LEDS
+    // Initialize status LEDs
+    LIBCB_InitLeds();
+#endif
+
+    // initialize timer interrupt - 1ms period
+    SysTick_Config(SystemCoreClock / 1000U);
+
+    return;
+}
+
+/*******************************************************************************
+ * DOES:    System Tick handler, execute every 1 ms
+ * RETURNS: nothing
+ ******************************************************************************/
 void SysTick_Handler(void)
 {
     MCOHW_Tick(); // Call CANopen stack tick function

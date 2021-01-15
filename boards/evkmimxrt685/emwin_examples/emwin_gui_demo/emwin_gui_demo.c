@@ -8,6 +8,7 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "emwin_support.h"
 
@@ -19,7 +20,6 @@
 #include "RADIO.h"
 #include "MULTIPAGE.h"
 
-#include "pin_mux.h"
 #include <stdbool.h>
 /*******************************************************************************
  * Definitions

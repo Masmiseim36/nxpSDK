@@ -6,10 +6,10 @@ In this example, a flexio simulated i2c master connect to a LPI2C slave
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -69,6 +69,3 @@ So the settings for baudrate of transmission do not more than 150k in this case.
 
 Note
 - The target of SDRAM debug on Keil(5.24) and ARMGCC(2017 q2) can not run successfully. 
-Customization options
-=====================
-

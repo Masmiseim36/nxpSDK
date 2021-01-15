@@ -26,6 +26,7 @@
  * Variables
  ******************************************************************************/
 /* msc endpoint information */
+/* The msc class driver only supports one bulk OUT endpoint and one bulk IN endpoint */
 usb_device_endpoint_struct_t g_UsbDeviceMscEndpoints[USB_MSC_ENDPOINT_COUNT] = {
     /* msc bulk in endpoint */
     {

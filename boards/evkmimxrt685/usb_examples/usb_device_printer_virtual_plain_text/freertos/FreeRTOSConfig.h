@@ -141,7 +141,7 @@
 
 
 #ifndef configENABLE_FPU
-  #define configENABLE_FPU                        0
+  #define configENABLE_FPU                        1
 #endif
 #ifndef configENABLE_MPU
   #define configENABLE_MPU                        0

@@ -1,13 +1,8 @@
 /*
- * Copyright 2019,2020 NXP
+ * Copyright 2019-2020 NXP
+ * All rights reserved.
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /** @file
@@ -121,7 +116,7 @@ sss_status_t ex_sss_boot_factory_reset(ex_sss_boot_ctx_t *pCtx)
     return status;
 }
 
-sss_status_t ex_sss_kestore_and_object_init(ex_sss_boot_ctx_t *pCtx)
+sss_status_t ex_sss_key_store_and_object_init(ex_sss_boot_ctx_t *pCtx)
 {
     sss_status_t status;
     status = sss_key_store_context_init(&pCtx->ks, &pCtx->session);
@@ -140,8 +135,9 @@ cleanup:
     return status;
 }
 
-#if SSS_HAVE_HOSTCRYPTO_ANY && defined(EXFL_SE050_AUTH_UserID_PlatfSCP03) || \
-    defined(EXFL_SE050_AUTH_AESKey_PlatfSCP03) || defined(EXFL_SE050_AUTH_ECKey_PlatfSCP03)
+#if ((SSS_HAVE_HOSTCRYPTO_ANY) &&                                                           \
+     ((SSS_HAVE_SE05X_AUTH_USERID_PLATFSCP03) || (SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03) || \
+         (SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03)))
 static void free_auth_objects(SE_Connect_Ctx_t *pConnectCtx)
 {
     if (pConnectCtx->auth.authType == kSSS_AuthType_ID) {
@@ -180,8 +176,9 @@ void ex_sss_session_close(ex_sss_boot_ctx_t *pCtx)
     }
 
 #if SSS_HAVE_APPLET_SE05X_IOT
-#if SSS_HAVE_HOSTCRYPTO_ANY && defined(EXFL_SE050_AUTH_UserID_PlatfSCP03) || \
-    defined(EXFL_SE050_AUTH_AESKey_PlatfSCP03) || defined(EXFL_SE050_AUTH_ECKey_PlatfSCP03)
+#if ((SSS_HAVE_HOSTCRYPTO_ANY) &&                                                           \
+     ((SSS_HAVE_SE05X_AUTH_USERID_PLATFSCP03) || (SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03) || \
+         (SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03)))
     SE_Connect_Ctx_t *pConnectCtx = &pCtx->se05x_open_ctx;
     free_auth_objects(pConnectCtx);
 #endif /* SSS_HAVE_HOSTCRYPTO_ANY */
@@ -192,9 +189,8 @@ void ex_sss_session_close(ex_sss_boot_ctx_t *pCtx)
         }
     }
 
-#if defined(EXFL_SE050_AUTH_UserID_PlatfSCP03) || defined(EXFL_SE050_AUTH_AESKey_PlatfSCP03) || \
-    defined(EXFL_SE050_AUTH_ECKey_PlatfSCP03) || defined(EXFL_SE050_AUTH_PlatfSCP03) ||         \
-    defined(EXFL_SE050_AUTH_AESKey)
+#if ((SSS_HAVE_SE05X_AUTH_USERID_PLATFSCP03) || (SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03) || \
+     (SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03) || (SSS_HAVE_SE05X_AUTH_PLATFSCP03) || (SSS_HAVE_SE05X_AUTH_AESKEY))
     {
         ex_SE05x_authCtx_t *pauth = &pCtx->ex_se05x_auth;
         sss_host_key_object_free(&pauth->scp03.ex_static.Enc);
@@ -204,9 +200,9 @@ void ex_sss_session_close(ex_sss_boot_ctx_t *pCtx)
         sss_host_key_object_free(&pauth->scp03.ex_dyn.Mac);
         sss_host_key_object_free(&pauth->scp03.ex_dyn.Rmac);
     }
-#elif defined(EXFL_SE050_AUTH_UserID)
+#elif (SSS_HAVE_SE05X_AUTH_USERID)
     sss_host_key_object_free(pCtx->se05x_open_ctx.auth.ctx.idobj.pObj);
-#elif defined(EXFL_SE050_AUTH_ECKey)
+#elif (SSS_HAVE_SE05X_AUTH_ECKEY)
     {
         ex_SE05x_authCtx_t *pauth = &pCtx->ex_se05x_auth;
         sss_host_key_object_free(&pauth->eckey.ex_static.HostEcdsaObj);

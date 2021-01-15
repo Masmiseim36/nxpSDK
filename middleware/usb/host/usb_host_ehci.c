@@ -3097,7 +3097,7 @@ static uint32_t USB_HostEhciItdArrayRelease(usb_host_ehci_instance_t *ehciInstan
         /* USB_HostEhciLock(); */
         /*set next link pointer to invalid in case hardware access invalid itd structure in special case*/
         itdPointer->nextLinkPointer = EHCI_HOST_T_INVALID_VALUE;
-        USB_HostEhciZeroMem((uint32_t *)(void *)itdPointer + 1, ((sizeof(usb_host_ehci_itd_t) >> 2) - 4));
+        USB_HostEhciZeroMem((uint32_t *)(void *)itdPointer + 1, ((sizeof(usb_host_ehci_itd_t) >> 2) - 4U));
         itdPointer->nextItdPointer = (usb_host_ehci_itd_t *)ehciInstance->ehciItdList;
         ehciInstance->ehciItdList  = itdPointer;
         ehciInstance->ehciItdNumber++;
@@ -3417,10 +3417,10 @@ static usb_status_t USB_HostEhciStartIP(usb_host_ehci_instance_t *ehciInstance)
 #endif
 #endif
     }
-
+    /* no interrupt threshold */
+    ehciInstance->ehciIpBase->USBCMD &= ~USBHS_USBCMD_ITC_MASK;
     /* start the controller */
     ehciInstance->ehciIpBase->USBCMD |= USBHS_USBCMD_RS_MASK;
-
     /* set timer0 */
     ehciInstance->ehciIpBase->GPTIMER0LD = (100U * 1000U - 1U); /* 100ms */
 
@@ -3731,11 +3731,22 @@ void USB_HostEhciTransactionDone(usb_host_ehci_instance_t *ehciInstance)
                         else
                         {
                             /* remove qtd from qh */
-                            while ((vltQtdPointer != NULL) &&
-                                   (0U == (transferResults & EHCI_HOST_QTD_IOC_MASK))) /* find the IOC qtd */
+                            do
                             {
+                                if (vltQtdPointer == NULL)
+                                {
+                                    break;
+                                }
+                                else if (0U != (vltQtdPointer->transferResults[0] & EHCI_HOST_QTD_IOC_MASK))
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    /* no action */
+                                }
                                 vltQtdPointer = (volatile usb_host_ehci_qtd_t *)vltQtdPointer->nextQtdPointer;
-                            }
+                            } while (true);
 
                             vltQhPointer->nextQtdPointer    = EHCI_HOST_T_INVALID_VALUE;
                             vltQhPointer->currentQtdPointer = EHCI_HOST_T_INVALID_VALUE;
@@ -4109,8 +4120,9 @@ static void USB_HostEhciTimer1(usb_host_ehci_instance_t *ehciInstance)
                                                       ;
 #endif
 #endif
-#if (defined(FSL_FEATURE_USBPHY_28FDSOI) && (FSL_FEATURE_USBPHY_28FDSOI > 0U)) 
-                    ehciInstance->registerPhyBase->USB1_VBUS_DETECT_SET |= USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
+#if (defined(FSL_FEATURE_USBPHY_28FDSOI) && (FSL_FEATURE_USBPHY_28FDSOI > 0U))
+                    ehciInstance->registerPhyBase->USB1_VBUS_DETECT_SET |=
+                        USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
 #endif
                     ehciInstance->ehciIpBase->PORTSC1 |= USBHS_PORTSC1_PHCD_MASK;
 
@@ -4427,7 +4439,6 @@ usb_status_t USB_HostEhciOpenPipe(usb_host_controller_handle controllerHandle,
     usb_status_t status;
     uint32_t speed                         = 0;
     usb_host_ehci_instance_t *ehciInstance = (usb_host_ehci_instance_t *)controllerHandle;
-    uint32_t val32;
     void *temp;
     /* get one pipe */
     USB_HostEhciLock();
@@ -4485,14 +4496,6 @@ usb_status_t USB_HostEhciOpenPipe(usb_host_controller_handle controllerHandle,
                     (uint8_t)ehciPipePointer->pipeCommon.interval); /* FS/LS interrupt interval should be the power of
                                                               2, it is used for ehci bandwidth */
             }
-        }
-
-        if ((speed == USB_SPEED_HIGH) && (ehciPipePointer->pipeCommon.interval < 8U))
-        {
-            val32 = ehciInstance->ehciIpBase->USBCMD;
-            val32 &= (~USBHS_USBCMD_ITC_MASK);
-            val32 |= USBHS_USBCMD_ITC((ehciPipePointer->pipeCommon.interval));
-            ehciInstance->ehciIpBase->USBCMD = val32;
         }
     }
 

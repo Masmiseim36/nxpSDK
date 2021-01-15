@@ -329,9 +329,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/eiq/cmsis-nn/Examples/cifar10;../../..;../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/evkmimxrt1060;..;../../../../../middleware/eiq/cmsis-nn/Examples/common/source;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov7725;../../../../../components/video/camera/device/mt9m114;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1062/drivers;../../../../../components/video;../../../../../components/video/i2c;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../middleware/eiq/cmsis-nn/Include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../devices/MIMXRT1062/utilities</IncludePath>
+              <IncludePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/image;..;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov7725;../../../../../components/video/camera/device/mt9m114;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1062/drivers;../../../../../components/video;../../../../../components/video/i2c;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/cmsis-nn/Include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -362,7 +362,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>MIMXRT1062xxxxx_flexspi_nor_sdram.scf</ScatterFile>
+            <ScatterFile>../../../../../devices/MIMXRT1062/arm/MIMXRT1062xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>../../../../../CMSIS/DSP/Lib/ARM/arm_cortexM7lfdp_math.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000"</Misc>
@@ -373,17 +373,67 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
+          <GroupName>source/image</GroupName>
           <Files>
             <File>
-              <FileName>ship.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/ship.h</FilePath>
+              <FileName>image_conv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_conv.c</FilePath>
             </File>
+            <File>
+              <FileName>demo_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/demo_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>image_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/image_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>image.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image.h</FilePath>
+            </File>
+            <File>
+              <FileName>image_capture.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_capture.c</FilePath>
+            </File>
+            <File>
+              <FileName>image_decode_raw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_decode_raw.c</FilePath>
+            </File>
+            <File>
+              <FileName>image_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>image_resize_nearest.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_resize_nearest.c</FilePath>
+            </File>
+            <File>
+              <FileName>image_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
             <File>
               <FileName>cifar10.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/cifar10.c</FilePath>
+            </File>
+            <File>
+              <FileName>labels.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/labels.h</FilePath>
             </File>
             <File>
               <FileName>parameter.h</FileName>
@@ -391,29 +441,34 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/parameter.h</FilePath>
             </File>
             <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/common/source/timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/common/source/timer.c</FilePath>
-            </File>
-            <File>
               <FileName>weights.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/weights.h</FilePath>
             </File>
             <File>
-              <FileName>image.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/image.c</FilePath>
+              <FileName>timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/timer.h</FilePath>
             </File>
             <File>
-              <FileName>image.h</FileName>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/image.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/eiq_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_iui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/eiq_iui.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_iworker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/eiq_iworker.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -436,24 +491,9 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>display_support.h</FileName>
+              <FileName>board_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../display_support.h</FilePath>
-            </File>
-            <File>
-              <FileName>display_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../display_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>camera_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../camera_support.h</FilePath>
-            </File>
-            <File>
-              <FileName>camera_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../camera_support.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/board_init.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -474,6 +514,11 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>board_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board_init.c</FilePath>
             </File>
             <File>
               <FileName>clock_config.c</FileName>
@@ -516,19 +561,14 @@
               <FilePath>../../../../../components/video/camera/receiver/fsl_camera_receiver.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_sccb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_sccb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ov7725.c</FileName>
+              <FileName>fsl_sccb.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/device/ov7725/fsl_ov7725.c</FilePath>
+              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.c</FilePath>
             </File>
             <File>
               <FileName>fsl_ov7725.h</FileName>
@@ -536,9 +576,9 @@
               <FilePath>../../../../../components/video/camera/device/ov7725/fsl_ov7725.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_mt9m114.c</FileName>
+              <FileName>fsl_ov7725.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/device/mt9m114/fsl_mt9m114.c</FilePath>
+              <FilePath>../../../../../components/video/camera/device/ov7725/fsl_ov7725.c</FilePath>
             </File>
             <File>
               <FileName>fsl_mt9m114.h</FileName>
@@ -546,14 +586,14 @@
               <FilePath>../../../../../components/video/camera/device/mt9m114/fsl_mt9m114.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_mt9m114.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/camera/device/mt9m114/fsl_mt9m114.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_camera.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/video/camera/fsl_camera.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_csi_camera_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.c</FilePath>
             </File>
             <File>
               <FileName>fsl_csi_camera_adapter.h</FileName>
@@ -561,9 +601,9 @@
               <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_video_common.c</FileName>
+              <FileName>fsl_csi_camera_adapter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
+              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.c</FilePath>
             </File>
             <File>
               <FileName>fsl_video_common.h</FileName>
@@ -571,9 +611,9 @@
               <FilePath>../../../../../components/video/fsl_video_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_video_i2c.c</FileName>
+              <FileName>fsl_video_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.c</FilePath>
+              <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_video_i2c.h</FileName>
@@ -581,19 +621,24 @@
               <FilePath>../../../../../components/video/i2c/fsl_video_i2c.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_video_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_dc_fb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dc_fb_elcdif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_dc_fb_elcdif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_elcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -631,19 +676,14 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_pxp.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -651,9 +691,9 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -661,14 +701,19 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_iomuxc.h</FileName>
@@ -688,23 +733,93 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>eiq-cmsis-nn</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/ChangeLogKSDK.txt</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-Include</GroupName>
+          <GroupName>source/video</GroupName>
           <Files>
             <File>
-              <FileName>arm_nn_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nn_tables.h</FilePath>
+              <FileName>eiq_camera_conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/camera/MT9M114_OV7725/eiq_camera_conf.c</FilePath>
             </File>
+            <File>
+              <FileName>eiq_display_conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/display/RK043FN02HC/eiq_display_conf.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_video_worker.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_video_worker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_display_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/cmsis-nn/Include</GroupName>
+          <Files>
             <File>
               <FileName>arm_nnfunctions.h</FileName>
               <FileType>5</FileType>
@@ -715,35 +830,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nnsupportfunctions.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS-NN</GroupName>
-          <Files>
             <File>
-              <FileName>LICENSE.txt</FileName>
+              <FileName>arm_nn_tables.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/LICENSE.txt</FilePath>
-            </File>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/readme.txt</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nn_tables.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-ActivationFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/ActivationFunctions</GroupName>
           <Files>
+            <File>
+              <FileName>arm_relu_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q7.c</FilePath>
+            </File>
             <File>
               <FileName>arm_nn_activations_q15.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_activations_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_relu_q15.c</FileName>
@@ -751,24 +856,24 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q15.c</FilePath>
             </File>
             <File>
-              <FileName>arm_relu_q7.c</FileName>
+              <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q7.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q7.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-ConvolutionFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/ConvolutionFunctions</GroupName>
           <Files>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c</FilePath>
+            </File>
             <File>
               <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</FilePath>
             </File>
             <File>
               <FileName>arm_convolve_HWC_q15_fast.c</FileName>
@@ -776,19 +881,34 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c</FilePath>
             </File>
             <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
+              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
+              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
             </File>
             <File>
               <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
@@ -801,19 +921,9 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_depthwise_conv_u8_basic_ver1.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
@@ -821,25 +931,15 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-FullyConnectedFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/FullyConnectedFunctions</GroupName>
           <Files>
-            <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c</FilePath>
-            </File>
             <File>
               <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
               <FileType>1</FileType>
@@ -849,6 +949,11 @@
               <FileName>arm_fully_connected_q15.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</FilePath>
             </File>
             <File>
               <FileName>arm_fully_connected_q15_opt.c</FileName>
@@ -861,24 +966,24 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7.c</FilePath>
             </File>
             <File>
-              <FileName>arm_fully_connected_q7_opt.c</FileName>
+              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-NNSupportFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/NNSupportFunctions</GroupName>
           <Files>
-            <File>
-              <FileName>arm_nn_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q15.c</FilePath>
-            </File>
             <File>
               <FileName>arm_nn_mult_q7.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c</FilePath>
             </File>
             <File>
               <FileName>arm_nntables.c</FileName>
@@ -891,14 +996,14 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c</FilePath>
             </File>
             <File>
-              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
+              <FileName>arm_nn_mult_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q15.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-PoolingFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/PoolingFunctions</GroupName>
           <Files>
             <File>
               <FileName>arm_pool_q7_HWC.c</FileName>
@@ -908,83 +1013,78 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-SoftmaxFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/SoftmaxFunctions</GroupName>
           <Files>
-            <File>
-              <FileName>arm_softmax_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/SoftmaxFunctions/arm_softmax_q15.c</FilePath>
-            </File>
             <File>
               <FileName>arm_softmax_q7.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/SoftmaxFunctions/arm_softmax_q7.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
             <File>
-              <FileName>generic_list.c</FileName>
+              <FileName>arm_softmax_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/SoftmaxFunctions/arm_softmax_q15.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>eiq/cmsis-nn</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/readme.txt</FilePath>
             </File>
             <File>
-              <FileName>uart.h</FileName>
+              <FileName>LICENSE.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/LICENSE.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT1062.h</FileName>
               <FileType>5</FileType>
@@ -994,11 +1094,6 @@
               <FileName>MIMXRT1062_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1062.c</FileName>
@@ -1026,14 +1121,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1060_flexspi_nor_config.c</FileName>
@@ -1044,41 +1139,6 @@
               <FileName>evkmimxrt1060_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../xip/evkmimxrt1060_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1111,24 +1171,24 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1475,9 +1535,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, SDK_DEBUGCONSOLE_UART, ARM_MATH_CM7, __FPU_PRESENT=1, SDK_I2C_BASED_COMPONENT_USED=1, SDK_I2C_BASED_COMPONENT_USED=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/eiq/cmsis-nn/Examples/cifar10;../../..;../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/evkmimxrt1060;..;../../../../../middleware/eiq/cmsis-nn/Examples/common/source;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov7725;../../../../../components/video/camera/device/mt9m114;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1062/drivers;../../../../../components/video;../../../../../components/video/i2c;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../middleware/eiq/cmsis-nn/Include;../../../../../components/lists;../../../../../components/uart;../../../../../components/serial_manager;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../devices/MIMXRT1062/utilities</IncludePath>
+              <IncludePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10;../../../../../middleware/eiq/common;../../../../../middleware/eiq/common/image;..;../../../../../components/video/camera/device;../../../../../components/video/camera/receiver;../../../../../components/video/camera/device/sccb;../../../../../components/video/camera/device/ov7725;../../../../../components/video/camera/device/mt9m114;../../../../../components/video/camera;../../../../../components/video/camera/receiver/csi;../../../../../devices/MIMXRT1062/drivers;../../../../../components/video;../../../../../components/video/i2c;../../../../../components/video/display/dc;../../../../../components/video/display/dc/elcdif;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../../../../../middleware/eiq/common/video;../../../../../middleware/eiq/cmsis-nn/Include;../../../../../components/lists;../../../../../components/uart;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1508,7 +1568,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>MIMXRT1062xxxxx_flexspi_nor_sdram.scf</ScatterFile>
+            <ScatterFile>../../../../../devices/MIMXRT1062/arm/MIMXRT1062xxxxx_flexspi_nor_sdram.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>../../../../../CMSIS/DSP/Lib/ARM/arm_cortexM7lfdp_math.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1" --predefine="-D__stack_size__=0x10000" --predefine="-D__heap_size__=0x800000"</Misc>
@@ -1519,17 +1579,67 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>source</GroupName>
+          <GroupName>source/image</GroupName>
           <Files>
             <File>
-              <FileName>ship.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/ship.h</FilePath>
+              <FileName>image_conv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_conv.c</FilePath>
             </File>
+            <File>
+              <FileName>demo_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/demo_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>image_data.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/image_data.h</FilePath>
+            </File>
+            <File>
+              <FileName>image.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image.h</FilePath>
+            </File>
+            <File>
+              <FileName>image_capture.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_capture.c</FilePath>
+            </File>
+            <File>
+              <FileName>image_decode_raw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_decode_raw.c</FilePath>
+            </File>
+            <File>
+              <FileName>image_draw.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_draw.c</FilePath>
+            </File>
+            <File>
+              <FileName>image_resize_nearest.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_resize_nearest.c</FilePath>
+            </File>
+            <File>
+              <FileName>image_utils.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/image/image_utils.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source</GroupName>
+          <Files>
             <File>
               <FileName>cifar10.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/cifar10.c</FilePath>
+            </File>
+            <File>
+              <FileName>labels.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/labels.h</FilePath>
             </File>
             <File>
               <FileName>parameter.h</FileName>
@@ -1537,29 +1647,34 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/parameter.h</FilePath>
             </File>
             <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/common/source/timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/common/source/timer.c</FilePath>
-            </File>
-            <File>
               <FileName>weights.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/weights.h</FilePath>
             </File>
             <File>
-              <FileName>image.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/image.c</FilePath>
+              <FileName>timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/timer.h</FilePath>
             </File>
             <File>
-              <FileName>image.h</FileName>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Examples/cifar10/image.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/eiq_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_iui.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/eiq_iui.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_iworker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/eiq_iworker.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1582,24 +1697,9 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
-              <FileName>display_support.h</FileName>
+              <FileName>board_init.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../display_support.h</FilePath>
-            </File>
-            <File>
-              <FileName>display_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../display_support.c</FilePath>
-            </File>
-            <File>
-              <FileName>camera_support.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../camera_support.h</FilePath>
-            </File>
-            <File>
-              <FileName>camera_support.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../camera_support.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/board_init.h</FilePath>
             </File>
             <File>
               <FileName>pin_mux.c</FileName>
@@ -1620,6 +1720,11 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
+            </File>
+            <File>
+              <FileName>board_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../board_init.c</FilePath>
             </File>
             <File>
               <FileName>clock_config.c</FileName>
@@ -1662,19 +1767,14 @@
               <FilePath>../../../../../components/video/camera/receiver/fsl_camera_receiver.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_sccb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_sccb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ov7725.c</FileName>
+              <FileName>fsl_sccb.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/device/ov7725/fsl_ov7725.c</FilePath>
+              <FilePath>../../../../../components/video/camera/device/sccb/fsl_sccb.c</FilePath>
             </File>
             <File>
               <FileName>fsl_ov7725.h</FileName>
@@ -1682,9 +1782,9 @@
               <FilePath>../../../../../components/video/camera/device/ov7725/fsl_ov7725.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_mt9m114.c</FileName>
+              <FileName>fsl_ov7725.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/device/mt9m114/fsl_mt9m114.c</FilePath>
+              <FilePath>../../../../../components/video/camera/device/ov7725/fsl_ov7725.c</FilePath>
             </File>
             <File>
               <FileName>fsl_mt9m114.h</FileName>
@@ -1692,14 +1792,14 @@
               <FilePath>../../../../../components/video/camera/device/mt9m114/fsl_mt9m114.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_mt9m114.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/camera/device/mt9m114/fsl_mt9m114.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_camera.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/video/camera/fsl_camera.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_csi_camera_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.c</FilePath>
             </File>
             <File>
               <FileName>fsl_csi_camera_adapter.h</FileName>
@@ -1707,9 +1807,9 @@
               <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_video_common.c</FileName>
+              <FileName>fsl_csi_camera_adapter.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
+              <FilePath>../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.c</FilePath>
             </File>
             <File>
               <FileName>fsl_video_common.h</FileName>
@@ -1717,9 +1817,9 @@
               <FilePath>../../../../../components/video/fsl_video_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_video_i2c.c</FileName>
+              <FileName>fsl_video_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.c</FilePath>
+              <FilePath>../../../../../components/video/fsl_video_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_video_i2c.h</FileName>
@@ -1727,19 +1827,24 @@
               <FilePath>../../../../../components/video/i2c/fsl_video_i2c.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_video_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/i2c/fsl_video_i2c.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_dc_fb.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/video/display/dc/fsl_dc_fb.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dc_fb_elcdif.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_dc_fb_elcdif.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_dc_fb_elcdif.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1777,19 +1882,14 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_pxp.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1797,9 +1897,9 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1807,14 +1907,19 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_iomuxc.h</FileName>
@@ -1834,23 +1939,93 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>eiq-cmsis-nn</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/ChangeLogKSDK.txt</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-Include</GroupName>
+          <GroupName>source/video</GroupName>
           <Files>
             <File>
-              <FileName>arm_nn_tables.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nn_tables.h</FilePath>
+              <FileName>eiq_camera_conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/camera/MT9M114_OV7725/eiq_camera_conf.c</FilePath>
             </File>
+            <File>
+              <FileName>eiq_display_conf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/display/RK043FN02HC/eiq_display_conf.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_pxp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_video_worker.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_video_worker.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_display_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_display_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_pxp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>eiq/cmsis-nn/Include</GroupName>
+          <Files>
             <File>
               <FileName>arm_nnfunctions.h</FileName>
               <FileType>5</FileType>
@@ -1861,35 +2036,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nnsupportfunctions.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>CMSIS-NN</GroupName>
-          <Files>
             <File>
-              <FileName>LICENSE.txt</FileName>
+              <FileName>arm_nn_tables.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/LICENSE.txt</FilePath>
-            </File>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/readme.txt</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nn_tables.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-ActivationFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/ActivationFunctions</GroupName>
           <Files>
+            <File>
+              <FileName>arm_relu_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q7.c</FilePath>
+            </File>
             <File>
               <FileName>arm_nn_activations_q15.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_activations_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_relu_q15.c</FileName>
@@ -1897,24 +2062,24 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q15.c</FilePath>
             </File>
             <File>
-              <FileName>arm_relu_q7.c</FileName>
+              <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q7.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q7.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-ConvolutionFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/ConvolutionFunctions</GroupName>
           <Files>
+            <File>
+              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c</FilePath>
+            </File>
             <File>
               <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</FilePath>
             </File>
             <File>
               <FileName>arm_convolve_HWC_q15_fast.c</FileName>
@@ -1922,19 +2087,34 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c</FilePath>
             </File>
             <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
+              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q7_basic.c</FileName>
+              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
             </File>
             <File>
               <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
@@ -1947,19 +2127,9 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q7_fast_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_depthwise_conv_u8_basic_ver1.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
@@ -1967,25 +2137,15 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-FullyConnectedFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/FullyConnectedFunctions</GroupName>
           <Files>
-            <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c</FilePath>
-            </File>
             <File>
               <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
               <FileType>1</FileType>
@@ -1995,6 +2155,11 @@
               <FileName>arm_fully_connected_q15.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</FilePath>
             </File>
             <File>
               <FileName>arm_fully_connected_q15_opt.c</FileName>
@@ -2007,24 +2172,24 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7.c</FilePath>
             </File>
             <File>
-              <FileName>arm_fully_connected_q7_opt.c</FileName>
+              <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-NNSupportFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/NNSupportFunctions</GroupName>
           <Files>
-            <File>
-              <FileName>arm_nn_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q15.c</FilePath>
-            </File>
             <File>
               <FileName>arm_nn_mult_q7.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c</FilePath>
             </File>
             <File>
               <FileName>arm_nntables.c</FileName>
@@ -2037,14 +2202,14 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c</FilePath>
             </File>
             <File>
-              <FileName>arm_q7_to_q15_reordered_no_shift.c</FileName>
+              <FileName>arm_nn_mult_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q15.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-PoolingFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/PoolingFunctions</GroupName>
           <Files>
             <File>
               <FileName>arm_pool_q7_HWC.c</FileName>
@@ -2054,83 +2219,78 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>CMSIS-NN-SoftmaxFunctions</GroupName>
+          <GroupName>eiq/cmsis-nn/Source/SoftmaxFunctions</GroupName>
           <Files>
-            <File>
-              <FileName>arm_softmax_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/SoftmaxFunctions/arm_softmax_q15.c</FilePath>
-            </File>
             <File>
               <FileName>arm_softmax_q7.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/SoftmaxFunctions/arm_softmax_q7.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
             <File>
-              <FileName>generic_list.c</FileName>
+              <FileName>arm_softmax_q15.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/SoftmaxFunctions/arm_softmax_q15.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>eiq/cmsis-nn</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/readme.txt</FilePath>
             </File>
             <File>
-              <FileName>uart.h</FileName>
+              <FileName>LICENSE.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/LICENSE.txt</FilePath>
+            </File>
+            <File>
+              <FileName>ChangeLogKSDK.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/ChangeLogKSDK.txt</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT1062.h</FileName>
               <FileType>5</FileType>
@@ -2140,11 +2300,6 @@
               <FileName>MIMXRT1062_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1062.c</FileName>
@@ -2172,14 +2327,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1060_flexspi_nor_config.c</FileName>
@@ -2190,41 +2345,6 @@
               <FileName>evkmimxrt1060_flexspi_nor_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../xip/evkmimxrt1060_flexspi_nor_config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2257,24 +2377,24 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

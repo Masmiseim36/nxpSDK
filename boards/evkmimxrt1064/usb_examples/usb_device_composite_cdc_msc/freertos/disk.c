@@ -5,7 +5,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -18,20 +20,17 @@
 
 #include "fsl_device_registers.h"
 #include "clock_config.h"
-#include "board.h"
 #include "fsl_debug_console.h"
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "board.h"
 
 #include "composite.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_StorageDisk[DISK_SIZE_NORMAL];
 static usb_device_composite_struct_t *g_deviceComposite;
 
@@ -56,8 +55,8 @@ usb_device_mode_parameters_header_struct_t g_ModeParametersHeader = {
     {0x00, 0x00, 0x00, 0x00} /*!<This bit should be set to zero*/
 };
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 /*!
  * @brief device msc callback function.
  *
@@ -73,6 +72,7 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
     usb_device_lba_information_struct_t *lbaInformationStructure;
     usb_device_lba_app_struct_t *lbaData;
     usb_device_ufi_app_struct_t *ufi;
+    usb_device_capacity_information_struct_t *capacityInformation;
 
     switch (event)
     {
@@ -93,12 +93,13 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
             lbaData->buffer = g_deviceComposite->mscDisk.storageDisk + lbaData->offset * LENGTH_OF_EACH_LBA;
             break;
         case kUSB_DeviceMscEventGetLbaInformation:
-            lbaInformationStructure = (usb_device_lba_information_struct_t *)param;
+            lbaInformationStructure                             = (usb_device_lba_information_struct_t *)param;
             lbaInformationStructure->logicalUnitNumberSupported = LOGICAL_UNIT_SUPPORTED;
 
             lbaInformationStructure->logicalUnitInformations[0].lengthOfEachLba = LENGTH_OF_EACH_LBA;
-            lbaInformationStructure->logicalUnitInformations[0].totalLbaNumberSupports = TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
-            lbaInformationStructure->logicalUnitInformations[0].bulkInBufferSize = DISK_SIZE_NORMAL;
+            lbaInformationStructure->logicalUnitInformations[0].totalLbaNumberSupports =
+                TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
+            lbaInformationStructure->logicalUnitInformations[0].bulkInBufferSize  = DISK_SIZE_NORMAL;
             lbaInformationStructure->logicalUnitInformations[0].bulkOutBufferSize = DISK_SIZE_NORMAL;
             break;
         case kUSB_DeviceMscEventTestUnitReady:
@@ -106,13 +107,13 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
             ufi = (usb_device_ufi_app_struct_t *)param;
             break;
         case kUSB_DeviceMscEventInquiry:
-            ufi = (usb_device_ufi_app_struct_t *)param;
-            ufi->size = sizeof(usb_device_inquiry_data_fromat_struct_t);
+            ufi         = (usb_device_ufi_app_struct_t *)param;
+            ufi->size   = sizeof(usb_device_inquiry_data_fromat_struct_t);
             ufi->buffer = (uint8_t *)&g_InquiryInfo;
             break;
         case kUSB_DeviceMscEventModeSense:
-            ufi = (usb_device_ufi_app_struct_t *)param;
-            ufi->size = sizeof(usb_device_mode_parameters_header_struct_t);
+            ufi         = (usb_device_ufi_app_struct_t *)param;
+            ufi->size   = sizeof(usb_device_mode_parameters_header_struct_t);
             ufi->buffer = (uint8_t *)&g_ModeParametersHeader;
             break;
         case kUSB_DeviceMscEventModeSelect:
@@ -123,7 +124,18 @@ usb_status_t USB_DeviceMscCallback(class_handle_t handle, uint32_t event, void *
         case kUSB_DeviceMscEventFormatComplete:
             break;
         case kUSB_DeviceMscEventRemovalRequest:
-
+            break;
+        case kUSB_DeviceMscEventRequestSense:
+            break;
+        case kUSB_DeviceMscEventReadCapacity:
+            capacityInformation                         = (usb_device_capacity_information_struct_t *)param;
+            capacityInformation->lengthOfEachLba        = LENGTH_OF_EACH_LBA;
+            capacityInformation->totalLbaNumberSupports = TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
+            break;
+        case kUSB_DeviceMscEventReadFormatCapacity:
+            capacityInformation                         = (usb_device_capacity_information_struct_t *)param;
+            capacityInformation->lengthOfEachLba        = LENGTH_OF_EACH_LBA;
+            capacityInformation->totalLbaNumberSupports = TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
             break;
         default:
             break;
@@ -154,8 +166,8 @@ usb_status_t USB_DeviceMscDiskSetConfigure(class_handle_t handle, uint8_t config
  */
 usb_status_t USB_DeviceMscDiskInit(usb_device_composite_struct_t *deviceComposite)
 {
-    g_deviceComposite = deviceComposite;
-    g_deviceComposite->mscDisk.storageDisk = s_StorageDisk;
+    g_deviceComposite                         = deviceComposite;
+    g_deviceComposite->mscDisk.storageDisk    = s_StorageDisk;
     g_deviceComposite->mscDisk.storageDisk[0] = 0x01;
     return kStatus_USB_Success;
 }

@@ -9,21 +9,23 @@ User can use MMC plus card or emmc(on board IC, but not recommand use emmc socke
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
 - Mini/micro USB cable
 - EVK-MIMXRT1060 board
 - Personal Computer
+- SD to Micro SD coverter
 - MMC card
+
 
 Board settings
 ==============
-Please insert the MMCCARD into card slot(J39)
+Please insert the MMCCARD into card slot(J34)
 
 Prepare the Demo
 ================
@@ -34,7 +36,7 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-3.  Insert MMC card to card slot 
+3.  Insert MMC card to card slot
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
@@ -58,6 +60,3 @@ Erase multiple data blocks......
 Input 'q' to quit read/write/erase process.
 Input other char to read/write/erase data blocks again.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

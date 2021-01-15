@@ -28,10 +28,10 @@ if (wakenUp)
 
 Toolchain supported
 ===================
-- MCUXpresso  11.2.0
-- GCC ARM Embedded  9.2.1
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
 
 Hardware requirements
 =====================
@@ -135,6 +135,3 @@ Wait Node A to trigger the next transmission!
 
 Note:
 This case will be blocked when transferring data on armgcc debug/sdram_debug target. This issue has been fixed in later release by open ERR005829 feature.
-Customization options
-=====================
-

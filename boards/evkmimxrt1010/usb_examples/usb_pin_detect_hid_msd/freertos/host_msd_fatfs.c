@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <stdio.h>
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "usb_host_msd.h"
@@ -13,7 +14,6 @@
 #include "host_app.h"
 #include "ff.h"
 #include "diskio.h"
-#include "stdio.h"
 #include "fsl_device_registers.h"
 
 /*******************************************************************************
@@ -23,7 +23,7 @@
 #if MSD_FATFS_THROUGHPUT_TEST_ENABLE
 #include "fsl_device_registers.h"
 #define THROUGHPUT_BUFFER_SIZE (64 * 1024) /* throughput test buffer */
-#define MCU_CORE_CLOCK (120000000)         /* mcu core clock, user need to configure it. */
+#define MCU_CORE_CLOCK         (120000000) /* mcu core clock, user need to configure it. */
 #endif                                     /* MSD_FATFS_THROUGHPUT_TEST_ENABLE */
 
 /*******************************************************************************

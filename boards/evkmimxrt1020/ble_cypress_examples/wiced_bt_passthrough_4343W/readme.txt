@@ -5,7 +5,7 @@ The demo sends the data received from the board's UART to the Bluetooth HCI inte
 Therefore it is possible to control the Bluetooth functionality from a personal computer using a tool capable of sending
 HCI commands, such as CyBluetool, test the functionality, device throughput and so on.
 
-Note that the HCI commands are sent over serial port, which is used for debugging messages and logs in most of the examples.
+Note that the HCI commands are sent over serial port, which is used for debugging messages and logs in most of the board's other examples.
 In this example, the logs are displayed on another port instead and a USB to serial device is needed to observe those messages.
 
 CyBluetool software and its user guide is available for download on Cypress developer community web (registration required):
@@ -15,9 +15,9 @@ https://community.cypress.com/docs/DOC-15586 (Linux)
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.5
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================

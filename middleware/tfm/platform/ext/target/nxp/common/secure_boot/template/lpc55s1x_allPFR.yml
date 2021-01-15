@@ -1,0 +1,58 @@
+FFR:
+#CFPA
+    Header: "0x0"                     # Not used.
+    Version: "0x01"                   # CFPA version.
+    Secure_FW_Version: "0x00"         # Secure firmware version (Monotonic counter)
+    NS_FW_Version: "0x00"             # Non Secure firmware version (Monotonic counter)
+    IMAGE_KEY_REVOKE: "0x00"          # Image key revocation ID (Monotonic counter)
+    DBG_KEY_REVOKE: "0x0"             # Not used.
+    ROTKH_REVOKE: "0x55"              # 0x55 = Enable All RoTK keys
+    VENDOR_USAGE: "0x0"               # Vendor specific
+    DCFG_CC_SOCU_NS_PIN: "0x0"        # Not set. Defined by CMPA.
+    DCFG_CC_SOCU_NS_DFLT: "0x0"       # Not set. Defined by CMPA.
+    ENABLE_FA_MODE: "0x0"             # FA mode not set.
+    ZEROED1: "0x0"                    # Not used.
+    SHA256_1: "0x0"                   # Not used. Calculated by ROM.
+
+#CMPA
+    BOOT_CFG: "0x20"                  # Default ISP mode = b010 (The UART is used to download the image).
+    SPI_FLASH_CFG: "0x0"              # 0 = SPI Recovery mode is disabled.
+    USB_ID: "0x0"                     # USB is not used
+    SDIO_CFG: "0x0"                   # Not Used
+    DCFG_CC_SOCU_PIN: "0x03FF"        # All b1 = Lock DCFG_CC_SOCU_DFLT domains.
+    DCFG_CC_SOCU_DFLT: "0x0"          # All b0 = Access to the sub-domain is permanently disabled and can’t be reversed. This setting offers the highest level of restriction.
+    DAP_VENDOR_USAGE_FIXED: "0x0"     # Vendor-specific
+    SECURE_BOOT_CFG: "0x40541241"     # SEC_BOOT_EN = b01 (Boot signed images. (internal flash, RSA signed))
+                                      # BOOT_SEED_INC_EPOCH = b01 (Include security epoch area in BOOT_SEED computation)
+                                      # BOOT_SEED_CUST_CFG = b01 (Include CMPA area in BOOT SEED computation)
+                                      # BOOT_SEED_INC_NXP_CFG = b01 (Include NXP area in BOOT SEED computation).
+                                      # SKIP_BOOT_SEED = b00 (enable BOOT_SEED)
+                                      # DICE_INC_SEC_EPOCH = b00 (DICE computation is not included)
+                                      # BLOCK_ENROLL = b01 (Disable PUF enroll operation)
+                                      # BLOCK_SET_KEY = b00 (Allow PUF Key Code generation)
+                                      # TZM_IMAGE_TYPE = b10 (TZ-M enabled image, boots to secure mode)
+                                      # SKIP_DICE = b01 (Disable DICE)
+                                      # DICE_CUST_CFG = b00 (Not included CFPA page and key store area in DICE computation)
+                                      # DICE_INC_NXP_CFG = b00 (Not included NXP area in DICE computation)
+                                      # RSA4K = b01 (RSA4096 only)
+    PRINCE_BASE_ADDR: "0x0"           # ADDR0_PRG = 0x0 (Programmable portion of the base address of region 0)
+    PRINCE_SR_0: "0x0FFFFFFF"         # SRn_EN = 224KB (Each bit in this field enables a sub-region of crypto region x at offset 8kB*n)
+    PRINCE_SR_1: "0x0"                # Not used
+    PRINCE_SR_2: "0x0"                # Not Used
+    ZEROED4: "0x0"                    # Not Used
+    ROTK: "0x0"                       # RKTH is a 32 byte SHA-256 hash of SHA-256 hashes of up to four root public keys. Added by script from ROTKH_FILES.
+    ZEROED5: "0x0"                    # Not Used
+    HUK: "0x000102030405060708090A0B0C0D0E0F"    # TFM/PSA HUK 
+    ATTESTATION_KEY: "0xA9B454B26D6F90A4EA31193564CBA91FEC6F9A002A7DC0504B92A1937134585F" # TFM/PSA Attestation key
+    ZEROED6: "0x0"                    # Not Used
+    SHA256_2: "0x0"                   # Calculated by script.
+
+###### OTHER PARAMETERS ######
+ROTKH_FILES:                          #Keys used for RKTH calculation
+    - '../template/rotk1.pem'
+    - '../template/rotk2.pem'
+    - '../template/rotk3.pem'
+    - '../template/rotk4.pem'
+PROTOCOL_VERSION: 1                   # 0 for 2048, 1 for 4096
+CMPA_INCLUDED: 1                      # CMPA 0 is not included (only CFPA), 1 included
+SEAL: 0                               # 0 do not seal CMPA, 1 seal

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -66,19 +66,25 @@ Purpose     : BUTTON public header file (API)
 
 /*********************************************************************
 *
-*       Color indices
+*       BUTTON color indexes
+*
+*  Description
+*    Color indexes for BUTTON widget.
 */
-#define BUTTON_CI_UNPRESSED 0
-#define BUTTON_CI_PRESSED   1
-#define BUTTON_CI_DISABLED  2
+#define BUTTON_CI_UNPRESSED 0    // Color for disabled state.
+#define BUTTON_CI_PRESSED   1    // Color for pressed state.
+#define BUTTON_CI_DISABLED  2    // Color for unpressed state.
 
 /*********************************************************************
 *
-*       Bitmap indices
+*       BUTTON bitmap indexes
+*
+*  Description
+*    Bitmap indexes for BUTTON widget.
 */
-#define BUTTON_BI_UNPRESSED 0
-#define BUTTON_BI_PRESSED   1
-#define BUTTON_BI_DISABLED  2
+#define BUTTON_BI_UNPRESSED 0    // Bitmap for disabled state.
+#define BUTTON_BI_PRESSED   1    // Bitmap for pressed state.
+#define BUTTON_BI_DISABLED  2    // Bitmap for unpressed state.
 
 /*********************************************************************
 *

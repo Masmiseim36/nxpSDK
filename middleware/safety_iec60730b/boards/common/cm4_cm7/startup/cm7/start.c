@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,9 +12,9 @@
 ******************************************************************************/
 void start(void);
 extern void common_startup(void);
-extern int main(void);
-extern void WatchdogEnable(void);  
-extern void WatchdogDisable(void); 
+extern int32_t main(void);
+extern void WatchdogEnable(void);
+extern void WatchdogDisable(void);
 
 /*******************************************************************************
 * Code
@@ -30,7 +30,7 @@ extern void WatchdogDisable(void);
 * branches to the main process.
 */
 void start(void)
-{
+{  
     /* Update of watchdog configuration */
 #if WATCHDOG_ENABLED
     WatchdogEnable();

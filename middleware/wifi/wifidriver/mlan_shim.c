@@ -37,7 +37,7 @@
 Change log:
     10/13/2008: initial version
 ********************************************************/
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -63,7 +63,7 @@ mlan_operations mlan_sta_ops = {
 mlan_operations mlan_uap_ops = {
     /* cmd handler */
     wlan_ops_uap_prepare_cmd,
-       /* rx handler */
+    /* rx handler */
     /* wlan_ops_uap_process_rx_packet, */ NULL,
     /* BSS role: uAP */
     MLAN_BSS_ROLE_UAP,
@@ -240,7 +240,6 @@ exit_register:
     return ret;
 }
 
-
 /**
  *  @brief This function initializes the firmware
  *
@@ -271,4 +270,3 @@ mlan_status mlan_init_fw(IN t_void *pmlan_adapter)
     LEAVE();
     return ret;
 }
-

@@ -29,26 +29,34 @@ By default the example connects to network SSID "nxp_wifi_demo" with Open Securi
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
 - Micro USB cable
 - evkbimxrt1050 board
 - Personal Computer
-- One of the following wifi modules:
+- One of the following WiFi modules:
   - Panasonic PAN9026 SDIO ADAPTER + SD to uSD adapter
-  - AzurWave AW-NM191MA + Murata uSD M.2 Adapter
-  - AzurWave AW-NM191NF-uSD
-
+  - AzureWave AW-NM191NF-uSD
+  - AzureWave AW-AM457-uSD
 
 Board settings
 ==============
-This example is by default prepared to work with Panasonic PAN9026 SDIO ADAPTER, it is configured by project macro: WIFI_BOARD_PAN9026_SDIO.
-If you want use AzurWave AW-NM191MA or AW-NM191NF change project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_NM191MA.
+This example, by default, is built to work with the Panasonic PAN9026 SDIO ADAPTER. It is configured by the project macro: WIFI_BOARD_PAN9026_SDIO.
+If you want use the AzureWave AW-NM191NF-uSD, please change the project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_NM191.
+If you want use the AzureWave AW-AM457-uSD, please change the project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_AM457.
+
+Jumper settings for AzureWave AW-NM191NF-uSD Module:
+  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
+  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+
+Jumper settings for AzureWave AW-AM457-uSD Module:
+  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
+  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
 
 Prepare the Demo
 ================
@@ -71,7 +79,7 @@ Running the demo
 
     wifi iperf demo
     Initialize WLAN Driver
-    MAC Address: 00:13:43:91:8D:B7
+    MAC Address: C0:E4:34:5A:98:E9
     For Soft AP demonstration
     Start a Soft AP using option "A" in WPA2 security mode from menu
     This also starts DHCP Server with IP 192.168.10.1, NETMASK 255.255.255.0
@@ -91,6 +99,7 @@ Running the demo
       d  Enable Deep sleep on Station
       e  Disable Deep sleep on Station
       p  Print All Network info
+      P  Print DHCP Server info
       1  TCP server mode (RX only test)
       2  TCP client mode (TX only test)
       3  TCP client dual mode (TX and RX in parallel)
@@ -102,25 +111,24 @@ Running the demo
       h  Help (print this menu)
       H  Print extended help
     [net] Initialized TCP/IP networking stack
-    TSF: 0.1201525
-    WLAN is Initialized
-    WLAN Driver Version   : v1.3.r16.p1
-    WLAN Firmware Version : w8977o-V2, RF87XX, FP91, 16.91.10.p83, WPA2_CVE_FIX 1, PVE1
+    WLAN Driver Version   : v1.3.r21.p1
+    WLAN Firmware Version : w8977o-V2, RF87XX, FP91, 16.91.10.p89, WPA2_CVE_FIX 1, PVE_FIX 1
+
 
 3. Select the desired mode of operation for WiFi, A - Start Soft AP, c - Connect to External AP (SSID='nxp_mrvl')
 4. Start the JPerf application, using the jperf-2.0.0/jperf.bat batch file.
     It can be downloaded here: https://sourceforge.net/projects/iperf/files/jperf/jperf%202.0.0/jperf-2.0.0.zip/download.
     When using Windows, replace the content of the jperf-2.0.0/bin folder with the files from the following zip: https://iperf.fr/download/windows/iperf-2.0.5b-win32.zip.
-    When using Linux, iperf binary version 2.0.5 must be installed separately (possibly using package manager) and present on the system path.
+    When using Linux, iperf binary version 2.0.5 must be installed separately (possibly using package manager) and present on the     system path.
 5. To run lwIP IPERF in client mode, select "Server" radio button in JPerf and press the [Run iperf!] button.
 6. To run lwIP IPERF in server mode, select "Client radio button and enter the IP address assigned to the board by DHCP
-    as IPv4 address to the "server address" parameter in JPerf.
+   as IPv4 address to the "server address" parameter in JPerf.
 7. Enter the desired mode number into the terminal.
 8. If server mode has been selected in the terminal (and client mode in JPerf), press the [Run iperf!] button now.
 9. When the test is finished, the output log of JPerf would be seen like below,
-	where occurrences of the symbol "N" would be replaced by actual measured values.
-    The log will vary depending on the selected mode:
-		bin/iperf.exe -s -P 0 -i 1 -p 5001 -f k
+	 where occurrences of the symbol "N" would be replaced by actual measured values.
+   The log will vary depending on the selected mode:
+	 bin/iperf.exe -s -P 0 -i 1 -p 5001 -f k
         ------------------------------------------------------------
         Server listening on TCP port 5001
         TCP window size: 85.3 KByte (default)
@@ -178,6 +186,3 @@ Running the demo
     If it is pressed when test is in progress, the running test will be aborted
     and the main menu will appear. If the test is already finished, the main menu
     will appear directly. From the main menu, new test can be run.
-Customization options
-=====================
-

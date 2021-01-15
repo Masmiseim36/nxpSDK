@@ -28,7 +28,7 @@
 Change Log:
     05/11/2009: initial version
 ************************************************************/
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -140,7 +140,11 @@ static mlan_status wlan_rate_ioctl_get_rate_index(IN pmlan_adapter pmadapter, IN
     ENTER();
 
     /* Send request to firmware */
-    ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_GET, 0, (t_void *)pioctl_req, MNULL);
+    if (is_sta_connected())
+        ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_GET, 0, (t_void *)pioctl_req, MNULL);
+    else
+        ret = (mlan_status)wifi_uap_prepare_and_send_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_GET, 0,
+                                                         (t_void *)pioctl_req, NULL, MLAN_BSS_TYPE_UAP, NULL);
     if (ret == MLAN_STATUS_SUCCESS)
         ret = MLAN_STATUS_PENDING;
 
@@ -237,8 +241,13 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
            pmpriv->is_data_rate_auto, pmpriv->data_rate);
 
     /* Send request to firmware */
-    ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_SET, 0, (t_void *)pioctl_req,
-                           (t_void *)bitmap_rates);
+    if (is_sta_connected())
+        ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_SET, 0, (t_void *)pioctl_req,
+                               (t_void *)bitmap_rates);
+    else
+        ret = (mlan_status)wifi_uap_prepare_and_send_cmd(pmpriv, HostCmd_CMD_TX_RATE_CFG, HostCmd_ACT_GEN_SET, 0,
+                                                         (t_void *)pioctl_req, (t_void *)bitmap_rates,
+                                                         MLAN_BSS_TYPE_UAP, NULL);
     if (ret == MLAN_STATUS_SUCCESS)
         ret = MLAN_STATUS_PENDING;
 
@@ -305,3 +314,34 @@ mlan_status wlan_cmd_802_11_rf_antenna(IN pmlan_private pmpriv,
     LEAVE();
     return MLAN_STATUS_SUCCESS;
 }
+
+#ifdef WLAN_LOW_POWER_ENABLE
+/**
+ *  @brief Set/Get Low Power Mode
+ *
+ *  @param pmadapter    A pointer to mlan_adapter structure
+ *  @param pioctl_req   A pointer to ioctl request buffer
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+mlan_status wlan_misc_ioctl_low_pwr_mode(IN pmlan_adapter pmadapter, IN pmlan_ioctl_req pioctl_req)
+{
+    mlan_status ret        = MLAN_STATUS_SUCCESS;
+    mlan_ds_misc_cfg *misc = MNULL;
+    mlan_private *pmpriv   = pmadapter->priv[pioctl_req->bss_index];
+
+    ENTER();
+
+    misc = (mlan_ds_misc_cfg *)pioctl_req->pbuf;
+
+    /* Send request to firmware */
+    ret = wlan_prepare_cmd(pmpriv, HostCmd_CMD_LOW_POWER_MODE, HostCmd_ACT_GEN_SET, 0, (t_void *)pioctl_req,
+                           &misc->param.low_pwr_mode);
+
+    if (ret == MLAN_STATUS_SUCCESS)
+        ret = MLAN_STATUS_PENDING;
+
+    LEAVE();
+    return ret;
+}
+#endif // WLAN_LOW_POWER_ENABLE

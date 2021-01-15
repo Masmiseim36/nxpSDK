@@ -43,6 +43,13 @@
 #define FLASH_BUSY_STATUS_POL    1
 #define FLASH_BUSY_STATUS_OFFSET 0
 #define FLASH_ERROR_STATUS_MASK  0x0e
+
+/*
+ * If cache is enabled, this example should maintain the cache to make sure
+ * CPU core accesses the memory, not cache only.
+ */
+#define APP_USING_CACHE 1
+
 /*${macro:end}*/
 
 /*******************************************************************************

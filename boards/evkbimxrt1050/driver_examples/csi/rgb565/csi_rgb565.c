@@ -9,10 +9,10 @@
 #include "display_support.h"
 #include "camera_support.h"
 
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

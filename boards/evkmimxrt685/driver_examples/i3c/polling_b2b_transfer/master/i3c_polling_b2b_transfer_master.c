@@ -8,12 +8,12 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i3c.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -180,6 +180,12 @@ int main(void)
     if (result != kStatus_Success)
     {
         return -1;
+    }
+
+    /* Wait until the slave is ready for transmit, wait time depend on user's case.*/
+    for (uint32_t i = 0U; i < WAIT_TIME; i++)
+    {
+        __NOP();
     }
 
     memset(g_master_rxBuff, 0, I3C_DATA_LENGTH);

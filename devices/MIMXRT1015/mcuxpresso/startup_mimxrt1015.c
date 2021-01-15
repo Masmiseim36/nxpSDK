@@ -1,7 +1,7 @@
 //*****************************************************************************
 // MIMXRT1015 startup code for use with MCUXpresso IDE
 //
-// Version : 310320
+// Version : 101020
 //*****************************************************************************
 //
 // Copyright 2016-2020 NXP
@@ -586,6 +586,7 @@ void ResetISR(void) {
     // Disable interrupts
     __asm volatile ("cpsid i");
 
+    __asm volatile ("MSR MSP, %0" : : "r" (&_vStackTop) : );
 
 #if defined (__USE_CMSIS)
 // If __USE_CMSIS defined, then call CMSIS SystemInit code

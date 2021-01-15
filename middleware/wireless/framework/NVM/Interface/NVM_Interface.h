@@ -244,7 +244,14 @@
 #endif
 
 /* Define section for keeping NVM table datasets */
-#if defined(__GNUC__)
+#if (defined(__CC_ARM) || defined(__ARMCC_VERSION))
+
+  extern uint32_t Image$$RW_NVM_TABLE$$Base[];
+  extern uint32_t Image$$RW_NVM_TABLE$$Limit[];
+
+  #define gNVM_TABLE_startAddr_c    ((NVM_DataEntry_t*)Image$$RW_NVM_TABLE$$Base)
+  #define gNVM_TABLE_endAddr_c      ((NVM_DataEntry_t*)Image$$RW_NVM_TABLE$$Limit)
+#elif defined(__GNUC__)
   extern uint32_t __start_NVM_TABLE[];
   extern uint32_t __stop_NVM_TABLE[];
   #define gNVM_TABLE_startAddr_c    ((NVM_DataEntry_t*)__start_NVM_TABLE)
@@ -252,14 +259,6 @@
 #elif (defined(__IAR_SYSTEMS_ICC__))
   #define gNVM_TABLE_startAddr_c    ((NVM_DataEntry_t*)__section_begin("NVM_TABLE"))
   #define gNVM_TABLE_endAddr_c      ((NVM_DataEntry_t*)__section_end("NVM_TABLE"))
-#elif (defined(__CC_ARM))
-
-  extern uint32_t Image$$ER_NVM_TABLE$$Base[];
-  extern uint32_t Image$$ER_NVM_TABLE$$Limit[];
-
-  #define gNVM_TABLE_startAddr_c    ((NVM_DataEntry_t*)Image$$ER_NVM_TABLE$$Base)
-  #define gNVM_TABLE_endAddr_c      ((NVM_DataEntry_t*)Image$$ER_NVM_TABLE$$Limit)
-
 #else
   #define gNVM_TABLE_startAddr_c    ((NVM_DataEntry_t*)0)
   #define gNVM_TABLE_endAddr_c      ((NVM_DataEntry_t*)0)
@@ -282,17 +281,17 @@
       NVM_DataEntry_t \
       SET_DATASET_STRUCT_NAME(dataEntryID) \
       = { pData, elementsCount, elementSize, dataEntryID, dataEntryType }
+  #elif (defined(__CC_ARM) || defined(__ARMCC_VERSION))
+  #define NVM_RegisterDataSet(pData, elementsCount, elementSize, dataEntryID, dataEntryType) \
+      NVM_DataEntry_t \
+      SET_DATASET_STRUCT_NAME(dataEntryID) \
+      __attribute__((section("NVM_TABLE"), used)) \
+      = { pData, elementsCount, elementSize, dataEntryID, dataEntryType }
   #elif defined(__GNUC__)
   #define NVM_RegisterDataSet(pData, elementsCount, elementSize, dataEntryID, dataEntryType) \
       NVM_DataEntry_t \
       SET_DATASET_STRUCT_NAME(dataEntryID) \
       __attribute__((section (".NVM_TABLE"), used)) \
-      = { pData, elementsCount, elementSize, dataEntryID, dataEntryType }
-  #elif defined(__CC_ARM)
-  #define NVM_RegisterDataSet(pData, elementsCount, elementSize, dataEntryID, dataEntryType) \
-      NVM_DataEntry_t \
-      SET_DATASET_STRUCT_NAME(dataEntryID) \
-      __attribute__((section("NVM_TABLE"))) \
       = { pData, elementsCount, elementSize, dataEntryID, dataEntryType }
   #else
   #define NVM_RegisterDataSet(pData, elementsCount, elementSize, dataEntryID, dataEntryType) \
@@ -309,7 +308,7 @@
       const NVM_DataEntry_t \
       SET_DATASET_STRUCT_NAME(dataEntryID) \
       = { pData, elementsCount, elementSize, dataEntryID, dataEntryType }
-  #elif defined(__CC_ARM)
+  #elif (defined(__CC_ARM) || defined(__ARMCC_VERSION))
   #define NVM_RegisterDataSet(pData, elementsCount, elementSize, dataEntryID, dataEntryType) \
       const NVM_DataEntry_t \
       SET_DATASET_STRUCT_NAME(dataEntryID) \

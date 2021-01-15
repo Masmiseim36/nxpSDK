@@ -5,7 +5,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -17,11 +19,9 @@
 
 #include "fsl_device_registers.h"
 #include "clock_config.h"
-#include "board.h"
 #include "fsl_debug_console.h"
+#include "board.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "app.h"
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"

@@ -9,10 +9,10 @@ The file 'cmsis_lpspi_edma_b2b_transfer_master.c' includes the LPSPI master code
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -26,13 +26,13 @@ Remove the resistor R334 and weld 0Ω resistor to R278,R279,R280,R281.
 
 LPSPI:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-       MASTER           connect to           SLAVE
-Pin Name   Board Location     Pin Name    Board Location
-SOUT       J24-9                SIN       J24-2
-SIN        J24-2                SOUT      J24-9
-SCK        J24-10               SCK       J24-10
-PCS0       J24-1                PCS0      J24-1
-GND        J24-7                GND       J24-7
+INSTANCE1(LPSPI1)     CONNECTS TO         INSTANCE1(LPSPI1)
+Pin Name   Board Location     Pin Name  Board Location
+SOUT        J24 pin 4           SIN       J24 pin 5
+SIN         J24 pin 5           SOUT      J24 pin 4
+SCK         J24 pin 6           SCK       J24 pin 6
+PCS0        J24 pin 3           PCS0      J24 pin 3 
+GND         J24 pin 7           GND       J24 pin 7
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Prepare the Demo
@@ -76,6 +76,3 @@ This is SlaveSignalEvent.
 
 LPSPI transfer all data matched!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

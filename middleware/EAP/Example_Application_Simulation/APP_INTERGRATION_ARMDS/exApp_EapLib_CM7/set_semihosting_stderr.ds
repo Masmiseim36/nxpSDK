@@ -1,0 +1,3 @@
+set semihosting enabled off
+set semihosting stdout "C:\\awork\\workspaces\\NXP\\LX\\startup_Cortex-M7_AC6\\EAP_TEST.dat2"
+set semihosting enabled on

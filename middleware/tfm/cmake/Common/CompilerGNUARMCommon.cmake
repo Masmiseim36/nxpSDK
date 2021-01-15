@@ -32,13 +32,13 @@ message(STATUS "Using gcc compiler package v${GNUARM_VER} from ${GNUARM_PATH}")
 
 #Tell cmake which compiler we use
 if (EXISTS "c:/")
-	set (CMAKE_C_COMPILER "${GNUARM_PATH}/bin/arm-none-eabi-gcc.exe")
-	set (CMAKE_CXX_COMPILER "${GNUARM_PATH}/bin/arm-none-eabi-g++.exe")
-	set (CMAKE_ASM_COMPILER "${GNUARM_PATH}/bin/arm-none-eabi-gcc.exe")
+	set (CMAKE_C_COMPILER "${GNUARM_PATH}/bin/${GNUARM_PREFIX}-gcc.exe")
+	set (CMAKE_CXX_COMPILER "${GNUARM_PATH}/bin/${GNUARM_PREFIX}-g++.exe")
+	set (CMAKE_ASM_COMPILER "${GNUARM_PATH}/bin/${GNUARM_PREFIX}-gcc.exe")
 else()
-	set (CMAKE_C_COMPILER "${GNUARM_PATH}/bin/arm-none-eabi-gcc")
-	set (CMAKE_CXX_COMPILER "${GNUARM_PATH}/bin/arm-none-eabi-g++")
-	set (CMAKE_ASM_COMPILER "${GNUARM_PATH}/bin/arm-none-eabi-gcc")
+	set (CMAKE_C_COMPILER "${GNUARM_PATH}/bin/${GNUARM_PREFIX}-gcc")
+	set (CMAKE_CXX_COMPILER "${GNUARM_PATH}/bin/${GNUARM_PREFIX}-g++")
+	set (CMAKE_ASM_COMPILER "${GNUARM_PATH}/bin/${GNUARM_PREFIX}-gcc")
 endif()
 
 if("CXX" IN_LIST languages)
@@ -146,6 +146,7 @@ function(compiler_set_cmse_output TARGET FILE_PATH)
 	set_property(TARGET ${TARGET} APPEND_STRING PROPERTY LINK_FLAGS " -Wl,--cmse-implib,--out-implib=${FILE_PATH}")
 	#Tell cmake cmse output is a generated object file.
 	SET_SOURCE_FILES_PROPERTIES("${FILE_PATH}" PROPERTIES EXTERNAL_OBJECT true GENERATED true)
+	add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND ${CMAKE_COMMAND} -E echo "" BYPRODUCTS ${FILE_PATH})
 	#Tell cmake cmse output shall be removed by clean target.
 	get_directory_property(_ADDITIONAL_MAKE_CLEAN_FILES DIRECTORY "./" ADDITIONAL_MAKE_CLEAN_FILES)
 	set_directory_properties(PROPERTY ADDITIONAL_MAKE_CLEAN_FILES "${_ADDITIONAL_MAKE_CLEAN_FILES} ${FILE_PATH}")
@@ -188,6 +189,14 @@ endfunction()
 
 function(compiler_generate_binary_output TARGET)
 	add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND ${CMAKE_GNUARM_OBJCOPY} ARGS -O binary $<TARGET_FILE:${TARGET}> $<TARGET_FILE_DIR:${TARGET}>/${TARGET}.bin)
+endfunction()
+
+function(compiler_generate_hex_output TARGET)
+	add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND ${CMAKE_GNUARM_OBJCOPY} ARGS -O ihex $<TARGET_FILE:${TARGET}> $<TARGET_FILE_DIR:${TARGET}>/${TARGET}.hex)
+endfunction()
+
+function(compiler_generate_elf_output TARGET)
+	add_custom_command(TARGET ${TARGET} POST_BUILD COMMAND ${CMAKE_GNUARM_OBJCOPY} ARGS -O elf32-little $<TARGET_FILE:${TARGET}> $<TARGET_FILE_DIR:${TARGET}>/${TARGET}.elf)
 endfunction()
 
 # Function for creating a new target that preprocesses a .c file

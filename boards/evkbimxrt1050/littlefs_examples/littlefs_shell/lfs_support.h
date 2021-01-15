@@ -20,7 +20,6 @@
 #define FLASH_SECTOR_SIZE 0x40000
 
 #define LFS_FIRST_SECTOR 128 /* use second half of the flash */
-#define LFS_SECTORS      128
 
 #define HYPERFLASH_CMD_LUT_SEQ_IDX_READDATA    0
 #define HYPERFLASH_CMD_LUT_SEQ_IDX_WRITEDATA   1

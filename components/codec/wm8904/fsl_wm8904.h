@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,8 +21,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief WM8904 driver version 2.4.2. */
-#define FSL_WM8904_DRIVER_VERSION (MAKE_VERSION(2, 4, 2))
+/*! @brief WM8904 driver version 2.4.3. */
+#define FSL_WM8904_DRIVER_VERSION (MAKE_VERSION(2, 4, 3))
 /*@}*/
 
 /*! @brief wm8904 handle size */
@@ -95,15 +95,19 @@
 /*!@brief WM8904 maximum headphone/lineout volume */
 #define WM8904_MAP_HEADPHONE_LINEOUT_MAX_VOLUME 0x3FU
 
-/*! @brief WM8904 status return codes. */
-enum _wm8904_status
+/*! @brief WM8904 status return codes.
+ * @anchor _wm8904_status
+ */
+enum
 {
     kStatus_WM8904_Success = 0x0, /*!< Success */
     kStatus_WM8904_Fail    = 0x1  /*!< Failure */
 };
 
-/*! @brief WM8904  lrc polarity. */
-enum _wm8904_lrc_polarity
+/*! @brief WM8904  lrc polarity.
+ * @anchor _wm8904_lrc_polarity
+ */
+enum
 {
     kWM8904_LRCPolarityNormal   = 0U,       /*!< LRC polarity  normal */
     kWM8904_LRCPolarityInverted = 1U << 4U, /*!< LRC polarity inverted */
@@ -119,8 +123,10 @@ typedef enum _wm8904_module
     kWM8904_ModuleLineout   = 4, /*!< module line out */
 } wm8904_module_t;
 
-/*! @brief wm8904 play channel  */
-enum _wm8904_play_channel
+/*! @brief wm8904 play channel
+ * @anchor _wm8904_play_channel
+ */
+enum
 {
     kWM8904_HeadphoneLeft  = 1U,
     kWM8904_HeadphoneRight = 2U,
@@ -180,8 +186,10 @@ typedef enum _wm8904_bit_width
     kWM8904_BitWidth32 = 0x3  /*!< 32 bits */
 } wm8904_bit_width_t;
 
-/*! @brief wm8904 record source */
-enum _wm8904_record_source
+/*! @brief wm8904 record source
+ * @anchor _wm8904_record_source
+ */
+enum
 {
     kWM8904_RecordSourceDifferentialLine = 1U, /*!< record source from differential line */
     kWM8904_RecordSourceLineInput        = 2U, /*!< record source from line input */
@@ -189,8 +197,10 @@ enum _wm8904_record_source
     kWM8904_RecordSourceDigitalMic       = 8U, /*!< record source from digital microphone */
 };
 
-/*! @brief wm8904 record channel*/
-enum _wm8904_record_channel
+/*! @brief wm8904 record channel
+ * @anchor _wm8904_record_channel
+ */
+enum
 {
     kWM8904_RecordChannelLeft1                 = 1U,  /*!< left record channel 1 */
     kWM8904_RecordChannelLeft2                 = 2U,  /*!< left record channel 2 */
@@ -206,8 +216,10 @@ enum _wm8904_record_channel
     kWM8904_RecordChannelDifferentialNegative3 = 32U, /*!< differential negative record channel 3 */
 };
 
-/*! @brief wm8904 play source*/
-enum _wm8904_play_source
+/*! @brief wm8904 play source
+ * @anchor _wm8904_play_source
+ */
+enum
 {
     kWM8904_PlaySourcePGA = 1U, /*!< play source PGA, bypass ADC */
     kWM8904_PlaySourceDAC = 4U, /*!< play source Input3 */
@@ -311,9 +323,9 @@ status_t WM8904_ModifyRegister(wm8904_handle_t *handle, uint8_t reg, uint16_t ma
  * @brief Initializes WM8904.
  *
  * @param handle WM8904 handle structure.
- * @param wm8904_config WM8904 configuration structure.
+ * @param wm8904Config WM8904 configuration structure.
  */
-status_t WM8904_Init(wm8904_handle_t *handle, wm8904_config_t *wm8904_config);
+status_t WM8904_Init(wm8904_handle_t *handle, wm8904_config_t *wm8904Config);
 
 /*!
  * @brief Deinitializes the WM8904 codec.

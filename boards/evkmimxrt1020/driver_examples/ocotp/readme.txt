@@ -6,10 +6,10 @@ Consider of the feature of One-Time programable, this example will just print th
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.5
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -46,14 +46,14 @@ OCOTP controller version: 0x06000000
 Note:
 To download binary into qspiflash and boot from qspiflash directly, following steps are needed:
 1. Compile flash target of the project, and get the binaray file "ocotp_example.bin".
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Drop the binaray into disk "RT1020-EVK" on PC.
-5. Wait for the disk disappear and appear again which will take couple of seconds.
-7. Reset the board by pressing SW3 or power off and on the board. 
+2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+3. Drop the binaray into disk "RT1020-EVK" on PC.
+4. Wait for the disk disappear and appear again which will take couple of seconds.
+5. Reset the board by pressing SW3 or power off and on the board. 
 
 Note:
 To debug in qspiflash, following steps are needed:
 1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Start debugging in IDE.
+2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+3. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.

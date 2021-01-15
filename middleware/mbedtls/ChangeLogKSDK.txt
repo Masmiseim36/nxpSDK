@@ -7,6 +7,7 @@
   - 2.16.6_rev1
     - New features:
       - Added support for NIST P-521 elliptic curve with CASPER driver.
+      - Added support for using multiple elliptic curves at once with CASPER driver.
 
   - 2.16.6
     - New features:

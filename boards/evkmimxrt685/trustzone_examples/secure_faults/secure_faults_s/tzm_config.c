@@ -16,7 +16,7 @@
 !!GlobalInfo
 product: TEE v2.0
 processor: MIMXRT685S
-package_id: MIMXRT685SFFOB
+package_id: MIMXRT685SFVKB
 mcu_data: ksdk2_0
 processor_version: 0.8.7
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/

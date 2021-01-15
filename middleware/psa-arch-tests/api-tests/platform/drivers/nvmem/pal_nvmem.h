@@ -20,7 +20,7 @@
 
 #include "pal_common.h"
 
-int nvmem_write(addr_t base, uint32_t offset, const void *buffer, int size);
+int nvmem_write(addr_t base, uint32_t offset, void *buffer, int size);
 int nvmem_read(addr_t base, uint32_t offset, void *buffer, int size);
 
 #endif /* PAL_NVMEM_H */

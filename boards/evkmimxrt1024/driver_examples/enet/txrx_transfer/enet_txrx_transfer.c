@@ -7,6 +7,8 @@
  */
 
 #include <stdlib.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_enet.h"
@@ -14,8 +16,6 @@
 #if defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
 #include "fsl_memory.h"
 #endif
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_enet_mdio.h"
@@ -44,6 +44,9 @@
 #ifndef PHY_AUTONEGO_TIMEOUT_COUNT
 #define PHY_AUTONEGO_TIMEOUT_COUNT (100000)
 #endif
+#ifndef PHY_STABILITY_DELAY_US
+#define PHY_STABILITY_DELAY_US (0U)
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -69,7 +72,6 @@ SDK_ALIGN(uint8_t g_txDataBuff[ENET_TXBD_NUM][SDK_SIZEALIGN(ENET_TXBUFF_SIZE, AP
 
 enet_handle_t g_handle;
 uint8_t g_frame[ENET_DATA_LENGTH + 14];
-uint32_t g_testTxNum = 0;
 
 /*! @brief The MAC address for ENET device. */
 uint8_t g_macAddr[6] = {0xd4, 0xbe, 0xd9, 0x45, 0x22, 0x60};
@@ -115,12 +117,13 @@ static void ENET_BuildBroadCastFrame(void)
 int main(void)
 {
     enet_config_t config;
-    uint32_t length = 0;
-    bool link       = false;
-    bool autonego   = false;
+    phy_config_t phyConfig = {0};
+    uint32_t length        = 0;
+    bool link              = false;
+    bool autonego          = false;
     phy_speed_t speed;
     phy_duplex_t duplex;
-    uint32_t txnumber = 0;
+    uint32_t testTxNum = 0;
     status_t status;
     enet_data_error_stats_t eErrStatic;
     volatile uint32_t count = 0;
@@ -176,8 +179,6 @@ int main(void)
 #else
     config.miiMode = kENET_RmiiMode;
 #endif
-
-    phy_config_t phyConfig;
     phyConfig.phyAddr               = EXAMPLE_PHY_ADDRESS;
     phyConfig.autoNeg               = true;
     mdioHandle.resource.base        = EXAMPLE_ENET;
@@ -208,6 +209,11 @@ int main(void)
             }
         }
     } while (!(link && autonego));
+
+#if PHY_STABILITY_DELAY_US
+    /* Wait a moment for PHY status to be stable. */
+    SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+#endif
 
     /* Get the actual PHY link speed. */
     PHY_GetLinkSpeedDuplex(&phyHandle, &speed, &duplex);
@@ -249,19 +255,18 @@ int main(void)
             ENET_ReadFrame(EXAMPLE_ENET, &g_handle, NULL, 0, 0, NULL);
         }
 
-        if (g_testTxNum < ENET_TRANSMIT_DATA_NUM)
+        if (testTxNum < ENET_TRANSMIT_DATA_NUM)
         {
             /* Send a multicast frame when the PHY is link up. */
             if (kStatus_Success == PHY_GetLinkStatus(&phyHandle, &link))
             {
                 if (link)
                 {
-                    g_testTxNum++;
-                    txnumber++;
+                    testTxNum++;
                     if (kStatus_Success ==
                         ENET_SendFrame(EXAMPLE_ENET, &g_handle, &g_frame[0], ENET_DATA_LENGTH, 0, false, NULL))
                     {
-                        PRINTF("The %d frame transmitted success!\r\n", txnumber);
+                        PRINTF("The %d frame transmitted success!\r\n", testTxNum);
                     }
                     else
                     {

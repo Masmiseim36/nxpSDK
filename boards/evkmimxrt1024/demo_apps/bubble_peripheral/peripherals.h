@@ -17,9 +17,9 @@
  * Included files
  **********************************************************************************************************************/
 #include "fsl_common.h"
-#include "fsl_qtmr.h"
 #include "fsl_clock.h"
 #include "fsl_lpi2c.h"
+#include "fsl_qtmr.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -29,6 +29,15 @@ extern "C" {
  * Definitions
  **********************************************************************************************************************/
 /* Definitions for BOARD_InitPeripherals functional group */
+/* BOARD_InitPeripherals defines for LPI2C4 */
+/* Definition of peripheral ID */
+#define ACCEL_I2C_PERIPHERAL LPI2C4
+/* Definition of clock source */
+#define ACCEL_I2C_CLOCK_FREQ 60000000UL
+/* Transfer buffer size */
+#define ACCEL_I2C_MASTER_BUFFER_SIZE 1
+/* Definition of slave address */
+#define ACCEL_I2C_MASTER_SLAVE_ADDRESS 0
 /* Definition of peripheral ID */
 #define TIMER_PERIPHERAL TMR1
 /* Definition of the timer channel Channel_0. */
@@ -39,26 +48,20 @@ extern "C" {
 #define TIMER_IRQN TMR1_IRQn
 /* TIMER interrupt handler identifier. */
 #define TIMER_IRQ_HANDLER TMR1_IRQHandler
-/* BOARD_InitPeripherals defines for LPI2C4 */
-/* Definition of peripheral ID */
-#define ACCEL_I2C_PERIPHERAL LPI2C4
-/* Definition of clock source */
-#define ACCEL_I2C_CLOCK_FREQ 60000000UL
-/* Transfer buffer size */
-#define ACCEL_I2C_MASTER_BUFFER_SIZE 1
 
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
-extern const qtmr_config_t TIMER_Channel_0_config;
 extern const lpi2c_master_config_t ACCEL_I2C_masterConfig;
 extern lpi2c_master_transfer_t ACCEL_I2C_masterTransfer;
 extern uint8_t ACCEL_I2C_masterBuffer[ACCEL_I2C_MASTER_BUFFER_SIZE];
 extern lpi2c_master_handle_t ACCEL_I2C_masterHandle;
+extern const qtmr_config_t TIMER_Channel_0_config;
 
 /***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
+
 void BOARD_InitPeripherals(void);
 
 /***********************************************************************************************************************

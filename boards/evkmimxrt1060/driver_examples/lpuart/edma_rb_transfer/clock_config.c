@@ -247,7 +247,7 @@ void BOARD_BootClockRUN(void)
     /* Set Semc alt clock source. */
     CLOCK_SetMux(kCLOCK_SemcAltMux, 0);
     /* Set Semc clock source. */
-    CLOCK_SetMux(kCLOCK_SemcMux, 0);
+    CLOCK_SetMux(kCLOCK_SemcMux, 3);
 #endif
     /* In SDK projects, external flash (configured by FLEXSPI) will be initialized by dcd.
      * With this macro XIP_EXTERNAL_FLASH, usb1 pll (selected to be FLEXSPI clock source in SDK projects) will be left unchanged.

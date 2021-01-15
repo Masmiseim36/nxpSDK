@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018, 2020 NXP
  * All rights reserved.
  *
  *
@@ -12,22 +12,23 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_casper.h"
 
-#if CASPER_ECC_P256
 #include "test_ecmul256.h"
 #include "test_ecdoublemul256.h"
-#elif CASPER_ECC_P384
+
 #include "test_ecmul384.h"
 #include "test_ecdoublemul384.h"
-#endif
+
+#include "test_ecmul521.h"
+#include "test_ecdoublemul521.h"
 
 #include <string.h>
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_power.h"
 /*******************************************************************************
  * Definitions
@@ -87,6 +88,11 @@ static uint8_t plaintext[2048 / 8];
  * Code
  ******************************************************************************/
 
+/* Example curve selector  */
+#define CASPER_ECC_P256 1
+#define CASPER_ECC_P384 1
+#define CASPER_ECC_P521 1
+
 /*!
  * @brief Main function.
  */
@@ -110,9 +116,10 @@ int main(void)
     PRINTF("ModExp Test pass.\r\n");
 
     /* ECC tests */
-    CASPER_ecc_init();
 
 #if CASPER_ECC_P256
+
+    CASPER_ecc_init(kCASPER_ECC_P256);
 
     PRINTF("Casper ECC Demo P256\r\n\r\n");
 
@@ -128,10 +135,11 @@ int main(void)
             PRINTF("Round: %d\r\n", i);
 
             uint32_t X1[8], Y1[8];
-            uint32_t *X3 = &test_ecmulans[i][0];
-            uint32_t *Y3 = &test_ecmulans[i][8];
+            uint32_t *X3 = &test_ecmulans256[i][0];
+            uint32_t *Y3 = &test_ecmulans256[i][8];
 
-            CASPER_ECC_SECP256R1_Mul(CASPER, X1, Y1, &test_ecmulans[0][0], &test_ecmulans[0][8], test_ecmulscalar[i]);
+            CASPER_ECC_SECP256R1_Mul(CASPER, X1, Y1, &test_ecmulans256[0][0], &test_ecmulans256[0][8],
+                                     test_ecmulscalar256[i]);
             CASPER_ECC_equal(&m1, X1, X3);
             CASPER_ECC_equal(&m2, Y1, Y3);
             if (m1 != 0 || m2 != 0)
@@ -141,12 +149,12 @@ int main(void)
         }
         if (errors != 0)
         {
-            PRINTF("Not all EC scalar multipication tests were successful.\r\n");
+            PRINTF("Not all EC scalar multipication tests were successful.\r\n\r\n");
             PRINTF("%d / 8 tests failed.\n", errors);
         }
         else
         {
-            PRINTF("All EC scalar multiplication tests were successful.\r\n");
+            PRINTF("All EC scalar multiplication tests were successful.\r\n\r\n");
         }
     }
     /* End code to test elliptic curve scalar multiplication. */
@@ -157,16 +165,16 @@ int main(void)
         int m1, m2;
 
         int errors = 0;
-        uint32_t c3[NUM_LIMBS], c4[NUM_LIMBS];
+        uint32_t c3[256U / 32U], c4[256U / 32U];
         for (i = 0; i < 8; i++)
         {
             PRINTF("Round: %d\r\n", i);
-            uint32_t *c1 = &test_ecddoublemul_result[i][0];
-            uint32_t *c2 = &test_ecddoublemul_result[i][NUM_LIMBS];
-            CASPER_ECC_SECP256R1_MulAdd(CASPER, c3, c4, &test_ecddoublemul_base[0][0],
-                                        &test_ecddoublemul_base[0][NUM_LIMBS], &test_ecddoublemul_scalars[i][0],
-                                        &test_ecddoublemul_base[1][0], &test_ecddoublemul_base[1][NUM_LIMBS],
-                                        &test_ecddoublemul_scalars[i][NUM_LIMBS]);
+            uint32_t *c1 = &test_ecddoublemul_result256[i][0];
+            uint32_t *c2 = &test_ecddoublemul_result256[i][256U / 32U];
+            CASPER_ECC_SECP256R1_MulAdd(CASPER, c3, c4, &test_ecddoublemul_base256[0][0],
+                                        &test_ecddoublemul_base256[0][256U / 32U], &test_ecddoublemul_scalars256[i][0],
+                                        &test_ecddoublemul_base256[1][0], &test_ecddoublemul_base256[1][256U / 32U],
+                                        &test_ecddoublemul_scalars256[i][256U / 32U]);
 
             CASPER_ECC_equal(&m1, c1, c3);
             CASPER_ECC_equal(&m2, c2, c4);
@@ -177,19 +185,23 @@ int main(void)
         }
         if (errors != 0)
         {
-            PRINTF("Not all EC double scalar multipication tests were successful.\r\n");
+            PRINTF("Not all EC double scalar multipication tests were successful.\r\n\r\n");
             PRINTF("%d / 8 tests failed.\n", errors);
         }
         else
         {
-            PRINTF("All EC double scalar multiplication tests were successful.\r\n");
+            PRINTF("All EC double scalar multiplication tests were successful.\r\n\r\n");
         }
     }
     /* End code to test elliptic curve double scalar multiplication. */
 
-#elif CASPER_ECC_P384
+#endif /* CASPER_ECC_P256 */
+
+#if CASPER_ECC_P384
 
     PRINTF("Casper ECC Demo P384\r\n\r\n");
+
+    CASPER_ecc_init(kCASPER_ECC_P384);
 
     /* Begin code to test elliptic curve scalar multiplication. */
     {
@@ -203,10 +215,11 @@ int main(void)
             PRINTF("Round: %d\r\n", i);
 
             uint32_t X1[12], Y1[12];
-            uint32_t *X3 = &test_ecmulans[i][0];
-            uint32_t *Y3 = &test_ecmulans[i][12];
+            uint32_t *X3 = &test_ecmulans384[i][0];
+            uint32_t *Y3 = &test_ecmulans384[i][12];
 
-            CASPER_ECC_SECP384R1_Mul(CASPER, X1, Y1, &test_ecmulans[0][0], &test_ecmulans[0][12], test_ecmulscalar[i]);
+            CASPER_ECC_SECP384R1_Mul(CASPER, X1, Y1, &test_ecmulans384[0][0], &test_ecmulans384[0][12],
+                                     test_ecmulscalar384[i]);
             CASPER_ECC_equal(&m1, X1, X3);
             CASPER_ECC_equal(&m2, Y1, Y3);
             if (m1 != 0 || m2 != 0)
@@ -232,16 +245,16 @@ int main(void)
         int m1, m2;
 
         int errors = 0;
-        uint32_t c3[NUM_LIMBS], c4[NUM_LIMBS];
+        uint32_t c3[384U / 32U], c4[384U / 32U];
         for (i = 0; i < 8; i++)
         {
             PRINTF("Round: %d\r\n", i);
-            uint32_t *c1 = &test_ecddoublemul_result[i][0];
-            uint32_t *c2 = &test_ecddoublemul_result[i][NUM_LIMBS];
-            CASPER_ECC_SECP384R1_MulAdd(CASPER, c3, c4, &test_ecddoublemul_base[0][0],
-                                        &test_ecddoublemul_base[0][NUM_LIMBS], &test_ecddoublemul_scalars[i][0],
-                                        &test_ecddoublemul_base[1][0], &test_ecddoublemul_base[1][NUM_LIMBS],
-                                        &test_ecddoublemul_scalars[i][NUM_LIMBS]);
+            uint32_t *c1 = &test_ecddoublemul_result384[i][0];
+            uint32_t *c2 = &test_ecddoublemul_result384[i][384U / 32U];
+            CASPER_ECC_SECP384R1_MulAdd(CASPER, c3, c4, &test_ecddoublemul_base384[0][0],
+                                        &test_ecddoublemul_base384[0][384U / 32U], &test_ecddoublemul_scalars384[i][0],
+                                        &test_ecddoublemul_base384[1][0], &test_ecddoublemul_base384[1][384U / 32U],
+                                        &test_ecddoublemul_scalars384[i][384U / 32U]);
             CASPER_ECC_equal(&m1, c3, c1);
             CASPER_ECC_equal(&m2, c4, c2);
             if (m1 != 0 || m2 != 0)
@@ -251,16 +264,98 @@ int main(void)
         }
         if (errors != 0)
         {
+            PRINTF("Not all EC double scalar multipication tests were successful.\r\n\r\n");
+            PRINTF("%d / 8 tests failed.\r\n", errors);
+        }
+        else
+        {
+            PRINTF("All EC double scalar multiplication tests were successful.\r\n\r\n");
+        }
+    }
+    /* End code to test elliptic curve scalar multiplication. */
+
+#endif /* CASPER_ECC_P384 */
+
+#if CASPER_ECC_P521
+
+    PRINTF("Casper ECC Demo P521\r\n\r\n");
+
+    CASPER_ecc_init(kCASPER_ECC_P521);
+
+    /* Begin code to test elliptic curve scalar multiplication. */
+
+    {
+        int i;
+        int m1, m2;
+
+        int errors = 0;
+
+        for (i = 0; i < 8; i++)
+        {
+            PRINTF("Round: %d\r\n", i);
+
+            uint32_t X1[18], Y1[18];
+            uint32_t *X3 = &test_ecmulans521[i][0];
+            uint32_t *Y3 = &test_ecmulans521[i][18];
+
+            CASPER_ECC_SECP521R1_Mul(CASPER, X1, Y1, &test_ecmulans521[0][0], &test_ecmulans521[0][18],
+                                     test_ecmulscalar521[i]);
+            CASPER_ECC_equal(&m1, X1, X3);
+            CASPER_ECC_equal(&m2, Y1, Y3);
+            if (m1 != 0 || m2 != 0)
+            {
+                errors++;
+            }
+        }
+        if (errors != 0)
+        {
+            PRINTF("Not all EC scalar multipication tests were successful.\r\n");
+            PRINTF("%d / 8 tests failed.\n", errors);
+        }
+        else
+        {
+            PRINTF("All EC scalar multiplication tests were successful.\r\n");
+        }
+    }
+
+    /* End code to test elliptic curve scalar multiplication. */
+
+    /* Begin code to test elliptic curve double scalar multiplication. */
+    {
+        int i;
+        int m1, m2;
+
+        int errors = 0;
+        uint32_t c3[18], c4[18];
+        for (i = 0; i < 8; i++)
+        {
+            PRINTF("Round: %d\r\n", i);
+            uint32_t *c1 = &test_ecddoublemul_result521[i][0];
+            uint32_t *c2 = &test_ecddoublemul_result521[i][18];
+            CASPER_ECC_SECP521R1_MulAdd(CASPER, c3, c4, &test_ecddoublemul_base521[0][0],
+                                        &test_ecddoublemul_base521[0][18], &test_ecddoublemul_scalars521[i][0],
+                                        &test_ecddoublemul_base521[1][0], &test_ecddoublemul_base521[1][18],
+                                        &test_ecddoublemul_scalars521[i][18]);
+
+            CASPER_ECC_equal(&m1, c1, c3);
+            CASPER_ECC_equal(&m2, c2, c4);
+            if (m1 != 0 || m2 != 0)
+            {
+                errors++;
+            }
+        }
+        if (errors != 0)
+        {
             PRINTF("Not all EC double scalar multipication tests were successful.\r\n");
-            PRINTF("%d / 128 tests failed.\r\n", errors);
+            PRINTF("%d / 8 tests failed.\n", errors);
         }
         else
         {
             PRINTF("All EC double scalar multiplication tests were successful.\r\n");
         }
     }
-/* End code to test elliptic curve scalar multiplication. */
-#endif
+    /* End code to test elliptic curve double scalar multiplication. */
+#endif /* CASPER_ECC_P521 */
 
     /* Deinitialize CASPER */
     CASPER_Deinit(CASPER);

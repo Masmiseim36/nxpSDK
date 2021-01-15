@@ -1,0 +1,18 @@
+FFR:
+#CFPA
+    Header: "0x0"                    # Not used.
+    Version: "0x04"                  # CFPA version (previous version + 3)
+    Secure_FW_Version: "0x01"        # Secure firmware version (Monotonic counter)
+    NS_FW_Version: "0x01"            # Non Secure firmware version (Monotonic counter)
+    IMAGE_KEY_REVOKE: "0x00"         # Image key revocation ID (Monotonic counter)
+    DBG_KEY_REVOKE: "0x0"            # Not used.
+    ROTKH_REVOKE: "0x55"             # 0x55 = Enable All RoTK keys
+    VENDOR_USAGE: "0x0"              # Vendor specific
+    DCFG_CC_SOCU_NS_PIN: "0x03FF"    # Set to restriction level 0. Higher restriction is defined by CMPA.
+    DCFG_CC_SOCU_NS_DFLT: "0x03FF"   # Set to restriction level 0. Higher restriction is defined by CMPA.
+    ENABLE_FA_MODE: "0x0"            # FA mode not set.
+    ZEROED1: "0x0"                   # Not used.
+    SHA256_1: "0x0"                  # Not used. Calculated by ROM.
+
+###### OTHER PARAMETERS ######
+CMPA_INCLUDED: 0 # CMPA 0 is not included (only CFPA), 1 included

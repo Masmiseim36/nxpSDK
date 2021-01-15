@@ -21,7 +21,8 @@
 /* Default values for user configuration structure.*/
 #if (defined(KW40Z4_SERIES) || defined(KW41Z4_SERIES) || defined(KW31Z4_SERIES) || defined(KW21Z4_SERIES) ||      \
      defined(MCIMX7U5_M4_SERIES) || defined(KW36Z4_SERIES) || defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || \
-     defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES) || defined(KW35Z4_SERIES))
+     defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES) || defined(KW35Z4_SERIES) ||      \
+     defined(KW36A4_SERIES) || defined(KW35A4_SERIES) || defined(KW34A4_SERIES))
 #define TRNG_USER_CONFIG_DEFAULT_OSC_DIV kTRNG_RingOscDiv8
 #elif (defined(KV56F24_SERIES) || defined(KV58F24_SERIES) || defined(KL28Z7_SERIES) || defined(KL81Z7_SERIES) || \
        defined(KL82Z7_SERIES) || defined(K32L2A41A_SERIES))
@@ -1781,11 +1782,10 @@ status_t TRNG_Init(TRNG_Type *base, const trng_config_t *userConfig)
         CLOCK_EnableClock(s_trngClock[trng_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
-        /* Reset the registers of TRNG module to reset state. */
-        /* Must be in program mode.*/
-        TRNG_WR_MCTL_PRGM(base, kTRNG_WorkModeProgram);
-        /* Reset Defaults.*/
-        TRNG_WR_MCTL_RST_DEF(base, 1);
+        /* Clear pending errors, set program mode and reset the registers to default values.*/
+        /* MCTL[PRGM] = 1 (kTRNG_WorkModeProgram); MCTL[ERR] = 1; MCTL[RST_DEF] = 1 */
+        TRNG_RMW_MCTL(base, (TRNG_MCTL_PRGM_MASK | TRNG_MCTL_ERR_MASK | TRNG_MCTL_RST_DEF_MASK),
+                      TRNG_MCTL_PRGM(kTRNG_WorkModeProgram) | TRNG_MCTL_ERR(1) | TRNG_MCTL_RST_DEF(1));
 
         /* Set configuration.*/
         if ((result = trng_ApplyUserConfig(base, userConfig)) == kStatus_Success)

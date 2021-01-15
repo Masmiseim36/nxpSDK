@@ -358,11 +358,16 @@ static inline void os_thread_self_complete(os_thread_t *thandle)
         os_thread_sleep(os_msec_to_ticks(60000));
 }
 
-#define OS_PRIO_0 4 /** High **/
-#define OS_PRIO_1 3
-#define OS_PRIO_2 2
-#define OS_PRIO_3 1
-#define OS_PRIO_4 0 /** Low **/
+#ifndef CONFIG_WIFI_MAX_PRIO
+#error Define CONFIG_WIFI_MAX_PRIO in wifi_config.h
+#elif CONFIG_WIFI_MAX_PRIO < 4
+#error CONFIG_WIFI_MAX_PRIO must be defined to be greater than or equal to 4
+#endif
+#define OS_PRIO_0 CONFIG_WIFI_MAX_PRIO /** High **/
+#define OS_PRIO_1 (CONFIG_WIFI_MAX_PRIO - 1)
+#define OS_PRIO_2 (CONFIG_WIFI_MAX_PRIO - 2)
+#define OS_PRIO_3 (CONFIG_WIFI_MAX_PRIO - 3)
+#define OS_PRIO_4 (CONFIG_WIFI_MAX_PRIO - 4) /** Low **/
 
 /** Structure used for queue definition */
 typedef struct os_queue_pool

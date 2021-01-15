@@ -58,34 +58,50 @@ static int wlan_event_callback(enum wlan_event_reason reason, void *data)
             WPL_GetIP(ip, 1);
             PRINTF("Connected to following BSS:");
             PRINTF("SSID = [%s], IP = [%s]\r\n", sta_network.ssid, ip);
-            xTaskNotify(xJoinTaskNotify, WPL_SUCCESS, eSetValueWithOverwrite);
+            if (xJoinTaskNotify != NULL)
+            {
+                xTaskNotify(xJoinTaskNotify, WPL_SUCCESS, eSetValueWithOverwrite);
+                xJoinTaskNotify = NULL;
+            }
             break;
         case WLAN_REASON_CONNECT_FAILED:
             PRINTF("[!] WLAN: connect failed\r\n");
-            wlan_disconnect();
-            wlan_remove_network(sta_network.name);
-            xTaskNotify(xJoinTaskNotify, WPL_ERROR, eSetValueWithOverwrite);
+
+            if (xJoinTaskNotify != NULL)
+            {
+                xTaskNotify(xJoinTaskNotify, WPL_ERROR, eSetValueWithOverwrite);
+                xJoinTaskNotify = NULL;
+            }
             break;
         case WLAN_REASON_NETWORK_NOT_FOUND:
             PRINTF("[!] WLAN: network not found\r\n");
-            wlan_disconnect();
-            wlan_remove_network(sta_network.name);
-            xTaskNotify(xJoinTaskNotify, WPL_ERROR, eSetValueWithOverwrite);
+
+            if (xJoinTaskNotify != NULL)
+            {
+                xTaskNotify(xJoinTaskNotify, WPL_ERROR, eSetValueWithOverwrite);
+                xJoinTaskNotify = NULL;
+            }
             break;
         case WLAN_REASON_NETWORK_AUTH_FAILED:
             PRINTF("[!] Network Auth failed\r\n");
-            wlan_disconnect();
-            wlan_remove_network(sta_network.name);
-            xTaskNotify(xJoinTaskNotify, WPL_ERROR, eSetValueWithOverwrite);
+
+            if (xJoinTaskNotify != NULL)
+            {
+                xTaskNotify(xJoinTaskNotify, WPL_ERROR, eSetValueWithOverwrite);
+                xJoinTaskNotify = NULL;
+            }
             break;
         case WLAN_REASON_ADDRESS_SUCCESS:
             // PRINTF("network mgr: DHCP new lease\r\n");
             break;
         case WLAN_REASON_ADDRESS_FAILED:
             PRINTF("[!] failed to obtain an IP address\r\n");
-            wlan_disconnect();
-            wlan_remove_network(sta_network.name);
-            xTaskNotify(xJoinTaskNotify, WPL_ERROR, eSetValueWithOverwrite);
+
+            if (xJoinTaskNotify != NULL)
+            {
+                xTaskNotify(xJoinTaskNotify, WPL_ERROR, eSetValueWithOverwrite);
+                xJoinTaskNotify = NULL;
+            }
             break;
 
         case WLAN_REASON_LINK_LOST:
@@ -97,8 +113,16 @@ static int wlan_event_callback(enum wlan_event_reason reason, void *data)
             break;
         case WLAN_REASON_USER_DISCONNECT:
             PRINTF("Dis-connected from: %s\r\n", sta_network.ssid);
+
+            // Remove the network and return
             wlan_remove_network(sta_network.name);
-            xTaskNotifyGive(xLeaveTaskNotify);
+            // Notify the WPL_Leave task only if this has been called from a WPL_Leave task
+            if (xLeaveTaskNotify != NULL)
+            {
+                xTaskNotifyGive(xLeaveTaskNotify);
+                // Retset the task notification handle back to NULL
+                xLeaveTaskNotify = NULL;
+            }
             break;
 
         case WLAN_REASON_INITIALIZED:
@@ -106,7 +130,10 @@ static int wlan_event_callback(enum wlan_event_reason reason, void *data)
             /* Print WLAN FW Version */
             wifi_get_device_firmware_version_ext(&ver);
             PRINTF("WLAN FW Version: %s\r\n", ver.version_str);
-            xTaskNotifyGive(xInitTaskNotify);
+            if (xInitTaskNotify != NULL)
+            {
+                xTaskNotifyGive(xInitTaskNotify);
+            }
             break;
         case WLAN_REASON_INITIALIZATION_FAILED:
             PRINTF("app_cb: WLAN: initialization failed\r\n");
@@ -119,7 +146,12 @@ static int wlan_event_callback(enum wlan_event_reason reason, void *data)
 
         case WLAN_REASON_UAP_SUCCESS:
             PRINTF("Soft AP started successfully\r\n");
-            xTaskNotifyGive(xUapTaskNotify);
+            if (xUapTaskNotify != NULL)
+            {
+                xTaskNotifyGive(xUapTaskNotify);
+                xUapTaskNotify = NULL;
+            }
+
             break;
 
         case WLAN_REASON_UAP_CLIENT_ASSOC:
@@ -142,7 +174,12 @@ static int wlan_event_callback(enum wlan_event_reason reason, void *data)
         case WLAN_REASON_UAP_STOPPED:
             wlan_remove_network(uap_network.name);
             PRINTF("Soft AP stopped successfully\r\n");
-            xTaskNotifyGive(xUapTaskNotify);
+            if (xUapTaskNotify != NULL)
+            {
+                xTaskNotifyGive(xUapTaskNotify);
+                xUapTaskNotify = NULL;
+            }
+
             break;
         default:
             PRINTF("Unknown Wifi CB Reason %d\r\n", reason);
@@ -351,6 +388,7 @@ int WPL_Join(char *ssid, char *password)
 {
     int ret;
     uint32_t pwd_len = 0;
+    // Note down the Join task so that
     xJoinTaskNotify  = xTaskGetCurrentTaskHandle();
 
     if (strlen(ssid) > WPL_WIFI_SSID_LENGTH)
@@ -405,20 +443,14 @@ int WPL_Join(char *ssid, char *password)
     }
     else
     {
-        // Wrong password or other error. Remove the network and return
-        wlan_remove_network(sta_network.name);
-        PRINTF("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\r\n");
-        PRINTF("! Wrong password entered! Please restart the board to try again. !\r\n");
-        PRINTF("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\r\n");
-        while (1)
-        {
-        }
-        // return WPL_ERROR;
+        WPL_Leave();
+        return WPL_ERROR;
     }
 }
 
 int WPL_Leave()
 {
+    // Note down the current task handle so that it can be notified after Leave is done
     xLeaveTaskNotify = xTaskGetCurrentTaskHandle();
     int ret          = wlan_disconnect();
 
@@ -428,6 +460,7 @@ int WPL_Leave()
     }
 
     ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+
     return WPL_SUCCESS;
 }
 

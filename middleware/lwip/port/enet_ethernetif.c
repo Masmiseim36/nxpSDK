@@ -58,9 +58,6 @@
 #include "enet_ethernetif.h"
 #include "enet_ethernetif_priv.h"
 
-#include "fsl_enet.h"
-#include "fsl_phy.h"
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -71,7 +68,8 @@
 
 void ethernetif_phy_init(struct ethernetif *ethernetif,
                          const ethernetif_config_t *ethernetifConfig,
-                         enet_config_t *config)
+                         phy_speed_t *speed,
+                         phy_duplex_t *duplex)
 {
     phy_config_t phyConfig;
     status_t status;
@@ -79,8 +77,6 @@ void ethernetif_phy_init(struct ethernetif *ethernetif,
     bool autonego = false;
     uint32_t initWaitCount = 0;
     uint32_t autoWaitCount = 0;
-    phy_speed_t speed;
-    phy_duplex_t duplex;
 
     phyConfig.phyAddr = ethernetifConfig->phyHandle->phyAddr;
     phyConfig.autoNeg = true;
@@ -120,10 +116,7 @@ void ethernetif_phy_init(struct ethernetif *ethernetif,
     if (autonego && link)
     {
         /* Get the actual PHY link speed. */
-        PHY_GetLinkSpeedDuplex(ethernetifConfig->phyHandle, &speed, &duplex);
-        /* Change the MII speed and duplex for actual link status. */
-        config->miiSpeed = (enet_mii_speed_t)speed;
-        config->miiDuplex = (enet_mii_duplex_t)duplex;
+        PHY_GetLinkSpeedDuplex(ethernetifConfig->phyHandle, speed, duplex);
     }
 #if 0 /* Disable assert. If initial auto-negation is timeout, \ \
          the ENET is set to default (100Mbs and full-duplex). */
@@ -162,7 +155,7 @@ void ethernetif_input(struct netif *netif)
     }
 }
 
-static ENET_Type *ethernetif_get_enet_base(const uint8_t enetIdx)
+void *ethernetif_get_enet_base(const uint8_t enetIdx)
 {
     ENET_Type* enets[] = ENET_BASE_PTRS;
     int arrayIdx;
@@ -174,7 +167,7 @@ static ENET_Type *ethernetif_get_enet_base(const uint8_t enetIdx)
         {                             /* (some SOC headers count ENETs from 1 instead of 0) */
             if (enetCount == enetIdx)
             {
-                return enets[arrayIdx];
+                return (void *)enets[arrayIdx];
             }
             enetCount++;
         }
@@ -183,8 +176,31 @@ static ENET_Type *ethernetif_get_enet_base(const uint8_t enetIdx)
     return NULL;
 }
 
+#if defined(FSL_FEATURE_SOC_ENET_QOS_COUNT) && (FSL_FEATURE_SOC_ENET_QOS_COUNT > 0)
+void *ethernetif_get_enet_qos_base(const uint8_t enetIdx)
+{
+    ENET_QOS_Type* enets[] = ENET_QOS_BASE_PTRS;
+    int arrayIdx;
+    int enetCount;
+
+    for (arrayIdx = 0, enetCount = 0; arrayIdx < ARRAY_SIZE(enets); arrayIdx++)
+    {
+        if (enets[arrayIdx] != 0U)    /* process only defined positions */
+        {                             /* (some SOC headers count ENETs from 1 instead of 0) */
+            if (enetCount == enetIdx)
+            {
+                return (void *)enets[arrayIdx];
+            }
+            enetCount++;
+        }
+    }
+
+    return NULL;
+}
+#endif
+
 err_t ethernetif_init(struct netif *netif, struct ethernetif *ethernetif,
-                      const uint8_t enetIdx,
+                      void *enetBase,
                       const ethernetif_config_t *ethernetifConfig)
 {
     LWIP_ASSERT("netif != NULL", (netif != NULL));
@@ -227,7 +243,7 @@ err_t ethernetif_init(struct netif *netif, struct ethernetif *ethernetif,
 #endif
 
     /* Init ethernetif parameters.*/
-    *ethernetif_enet_ptr(ethernetif) = ethernetif_get_enet_base(enetIdx);
+    *ethernetif_enet_ptr(ethernetif) = enetBase;
     LWIP_ASSERT("*ethernetif_enet_ptr(ethernetif) != NULL", (*ethernetif_enet_ptr(ethernetif) != NULL));
 
     /* set MAC hardware address length */

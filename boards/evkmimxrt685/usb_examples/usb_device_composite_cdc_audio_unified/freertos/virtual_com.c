@@ -5,12 +5,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "fsl_device_registers.h"
-#include "clock_config.h"
-#include "board.h"
-
 #include <stdio.h>
 #include <stdlib.h>
+/*${standard_header_anchor}*/
+#include "fsl_device_registers.h"
+#include "clock_config.h"
+#include "fsl_debug_console.h"
+#include "board.h"
 
 #include "usb_device_config.h"
 #include "usb.h"
@@ -19,7 +20,6 @@
 #include "usb_device_class.h"
 #include "usb_device_cdc_acm.h"
 #include "usb_device_ch9.h"
-#include "fsl_debug_console.h"
 
 #include "usb_device_descriptor.h"
 #include "composite.h"
@@ -303,7 +303,8 @@ void USB_DeviceCdcVcomTask(void)
     if ((1 == g_deviceComposite->cdcVcom.attach) && (1 == g_deviceComposite->cdcVcom.startTransactions))
     {
         /* User Code */
-        if ((0 != s_recvSize) && (0xFFFFFFFFU != s_recvSize))
+        /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+        if ((0 != s_recvSize) && (USB_CANCELLED_TRANSFER_LENGTH != s_recvSize))
         {
             int32_t i;
 

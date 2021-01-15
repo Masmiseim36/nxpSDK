@@ -13,6 +13,7 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_dma.h"
 #include "fsl_i2c.h"
@@ -22,7 +23,6 @@
 #include "fsl_codec_common.h"
 #include "music.h"
 
-#include "pin_mux.h"
 #include <stdbool.h>
 #include "fsl_codec_adapter.h"
 #include "tfa_config_TFA9894N2.h"
@@ -147,18 +147,28 @@ int main(void)
     if (CODEC_Init(&codecHandleLeft, &boardCodecConfigLeft) != kStatus_Success)
     {
         PRINTF("TFA9XXX_Init left failed!\r\n");
+        assert(false);
     }
     else
     {
-        CODEC_SetVolume(&codecHandleLeft, kCODEC_PlayChannelLeft0 | kCODEC_PlayChannelRight0, 50);
+        if (CODEC_SetVolume(&codecHandleLeft, kCODEC_PlayChannelLeft0 | kCODEC_PlayChannelRight0, 50) !=
+            kStatus_Success)
+        {
+            assert(false);
+        }
     }
     if (CODEC_Init(&codecHandleRight, &boardCodecConfigRight) != kStatus_Success)
     {
         PRINTF("TFA9XXX_Init right failed!\r\n");
+        assert(false);
     }
     else
     {
-        CODEC_SetVolume(&codecHandleRight, kCODEC_PlayChannelLeft0 | kCODEC_PlayChannelRight0, 100);
+        if (CODEC_SetVolume(&codecHandleRight, kCODEC_PlayChannelLeft0 | kCODEC_PlayChannelRight0, 100) !=
+            kStatus_Success)
+        {
+            assert(false);
+        }
     }
 
     PRINTF("Configure I2S\r\n");

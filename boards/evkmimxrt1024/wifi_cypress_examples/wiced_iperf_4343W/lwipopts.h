@@ -14,6 +14,13 @@
 #define __LWIPOPTS_H__
 
 /**
+ * MEMP_NUM_TCPIP_MSG_API: the number of struct tcpip_msg, which are used
+ * for callback/timeout API communication.
+ * (only needed if you use tcpip.c)
+ */
+#define MEMP_NUM_TCPIP_MSG_API 30
+
+/**
  * SYS_LIGHTWEIGHT_PROT==1: if you want inter-task protection for certain
  * critical regions during buffer allocation, deallocation and memory
  * allocation and deallocation.

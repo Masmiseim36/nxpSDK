@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../GeneratedCode;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../devices/MIMXRT1064/utilities</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../GeneratedCode;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -364,7 +364,7 @@
             <ScatterFile>MIMXRT1064xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -521,19 +521,14 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -541,9 +536,9 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -551,19 +546,24 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -571,19 +571,39 @@
           <GroupName>touchpanel</GroupName>
           <Files>
             <File>
-              <FileName>fsl_ft5406_rt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_ft5406_rt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ft5406_rt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-GeneratedCode</GroupName>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/GeneratedCode</GroupName>
           <Files>
             <File>
               <FileName>Application.c</FileName>
@@ -591,39 +611,9 @@
               <FilePath>../GeneratedCode/Application.c</FilePath>
             </File>
             <File>
-              <FileName>Application.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Application.h</FilePath>
-            </File>
-            <File>
-              <FileName>Core.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Core.c</FilePath>
-            </File>
-            <File>
-              <FileName>Core.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Core.h</FilePath>
-            </File>
-            <File>
               <FileName>Effects.c</FileName>
               <FileType>1</FileType>
               <FilePath>../GeneratedCode/Effects.c</FilePath>
-            </File>
-            <File>
-              <FileName>Effects.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Effects.h</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Graphics.h</FilePath>
             </File>
             <File>
               <FileName>Resources.c</FileName>
@@ -631,19 +621,9 @@
               <FilePath>../GeneratedCode/Resources.c</FilePath>
             </File>
             <File>
-              <FileName>Resources.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Resources.h</FilePath>
-            </File>
-            <File>
-              <FileName>Views.c</FileName>
+              <FileName>Core.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Views.c</FilePath>
-            </File>
-            <File>
-              <FileName>Views.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Views.h</FilePath>
+              <FilePath>../GeneratedCode/Core.c</FilePath>
             </File>
             <File>
               <FileName>Washer.c</FileName>
@@ -651,54 +631,24 @@
               <FilePath>../GeneratedCode/Washer.c</FilePath>
             </File>
             <File>
-              <FileName>Washer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Washer.h</FilePath>
+              <FileName>Views.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Views.c</FilePath>
             </File>
             <File>
-              <FileName>_ApplicationApplication.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
+              <FileName>Graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Graphics.c</FilePath>
             </File>
             <File>
-              <FileName>_CoreCursorEvent.h</FileName>
+              <FileName>_ViewsRectangle.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
+              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreCursorGrabEvent.h</FileName>
+              <FileName>_WasherBgHot.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorHit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDialogContext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDragEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreGroup.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreKeyEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherBgHot.h</FilePath>
             </File>
             <File>
               <FileName>_CoreKeyPressHandler.h</FileName>
@@ -706,9 +656,69 @@
               <FilePath>../GeneratedCode/_CoreKeyPressHandler.h</FilePath>
             </File>
             <File>
+              <FileName>_WasherTimeList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherTimeList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherTempItemL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherTempItemL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherProgList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherProgList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreSimpleTouchHandler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreSimpleTouchHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>Resources.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Resources.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherSpinItemS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherSpinItemS.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherStartButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherStartButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsImage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
+            </File>
+            <File>
               <FileName>_CoreLayoutContext.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_CoreLayoutContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherOptList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherOptList.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewlocale.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherListFontS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherListFontS.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherBgSpin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherBgSpin.h</FilePath>
             </File>
             <File>
               <FileName>_CoreLayoutQuadContext.h</FileName>
@@ -716,14 +726,164 @@
               <FilePath>../GeneratedCode/_CoreLayoutQuadContext.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreModalContext.h</FileName>
+              <FileName>_CoreEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreModalContext.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>Views.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Views.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherBgDelicates.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherBgDelicates.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherBgEco.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherBgEco.h</FilePath>
+            </File>
+            <File>
+              <FileName>Core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Core.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherListFontL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherListFontL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffectTimerClass.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreView.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTaskQueue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreVerticalList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreVerticalList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherMinItemS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherMinItemS.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherMinItemL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherMinItemL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsTimingList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsTimingList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherOptItemL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherOptItemL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherTempItemS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherTempItemS.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherBgDrain.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherBgDrain.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherBgSportswear.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherBgSportswear.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherProgItemL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherProgItemL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsRectEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsRectEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsInt32Effect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherListFontXL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherListFontXL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherShadow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherShadow.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsText.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsText.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRoot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsBorder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsBorder.h</FilePath>
             </File>
             <File>
               <FileName>_CoreOutline.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_CoreOutline.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreModalContext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreModalContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherTempList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherTempList.h</FilePath>
+            </File>
+            <File>
+              <FileName>Application.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Application.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ApplicationApplication.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
             </File>
             <File>
               <FileName>_CorePropertyObserver.h</FileName>
@@ -736,79 +896,19 @@
               <FilePath>../GeneratedCode/_CoreQuadView.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreRectView.h</FileName>
+              <FileName>_WasherProgItemS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherProgItemS.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreResource.h</FileName>
+              <FileName>_CoreDragEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreRoot.h</FileName>
+              <FileName>_CoreCursorGrabEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreSimpleTouchHandler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreSimpleTouchHandler.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreSlideTouchHandler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreSlideTouchHandler.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTask.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTaskQueue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTimer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreVerticalList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreVerticalList.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreView.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreView.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffectTimerClass.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsInt32Effect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsRectEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsRectEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsTimingList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsTimingList.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
             </File>
             <File>
               <FileName>_GraphicsCanvas.h</FileName>
@@ -816,74 +916,14 @@
               <FilePath>../GeneratedCode/_GraphicsCanvas.h</FilePath>
             </File>
             <File>
-              <FileName>_ResourcesBitmap.h</FileName>
+              <FileName>Effects.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
+              <FilePath>../GeneratedCode/Effects.h</FilePath>
             </File>
             <File>
-              <FileName>_ResourcesFont.h</FileName>
+              <FileName>Graphics.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsBorder.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsBorder.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsFrame.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsFrame.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsImage.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsRectangle.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsText.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsText.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgDelicates.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgDelicates.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgDrain.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgDrain.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgEasyCare.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgEasyCare.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgEco.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgEco.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgHot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgHot.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgSpin.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgSpin.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgSportswear.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgSportswear.h</FilePath>
+              <FilePath>../GeneratedCode/Graphics.h</FilePath>
             </File>
             <File>
               <FileName>_WasherBgWool.h</FileName>
@@ -891,89 +931,34 @@
               <FilePath>../GeneratedCode/_WasherBgWool.h</FilePath>
             </File>
             <File>
+              <FileName>_WasherWasher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherWasher.h</FilePath>
+            </File>
+            <File>
               <FileName>_WasherDescrFont.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_WasherDescrFont.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherDeviceClass.h</FileName>
+              <FileName>_CoreKeyEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherDeviceClass.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherHourItemL.h</FileName>
+              <FileName>_CoreCursorHit.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherHourItemL.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherHourItemS.h</FileName>
+              <FileName>_CoreSlideTouchHandler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherHourItemS.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreSlideTouchHandler.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherListFontL.h</FileName>
+              <FileName>_WasherBgEasyCare.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherListFontL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherListFontM.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherListFontM.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherListFontS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherListFontS.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherListFontXL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherListFontXL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherMinItemL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherMinItemL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherMinItemS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherMinItemS.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherOptItemL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherOptItemL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherOptItemS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherOptItemS.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherOptList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherOptList.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherProgItemL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherProgItemL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherProgItemS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherProgItemS.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherProgList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherProgList.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherShadow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherShadow.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherBgEasyCare.h</FilePath>
             </File>
             <File>
               <FileName>_WasherSpinItemL.h</FileName>
@@ -981,9 +966,14 @@
               <FilePath>../GeneratedCode/_WasherSpinItemL.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherSpinItemS.h</FileName>
+              <FileName>_WasherOptItemS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherSpinItemS.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherOptItemS.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
             </File>
             <File>
               <FileName>_WasherSpinList.h</FileName>
@@ -991,49 +981,184 @@
               <FilePath>../GeneratedCode/_WasherSpinList.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherStartButton.h</FileName>
+              <FileName>_CoreTask.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherStartButton.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherTempItemL.h</FileName>
+              <FileName>_WasherDeviceClass.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherTempItemL.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherDeviceClass.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherTempItemS.h</FileName>
+              <FileName>_CoreDialogContext.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherTempItemS.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherTempList.h</FileName>
+              <FileName>_CoreTimer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherTempList.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherTimeList.h</FileName>
+              <FileName>_ResourcesBitmap.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherTimeList.h</FilePath>
+              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherWasher.h</FileName>
+              <FileName>_WasherHourItemS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherWasher.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherHourItemS.h</FilePath>
             </File>
             <File>
-              <FileName>ewlocale.h</FileName>
+              <FileName>_CoreGroup.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherListFontM.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherListFontM.h</FilePath>
+            </File>
+            <File>
+              <FileName>Washer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Washer.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherHourItemL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherHourItemL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsFrame.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsFrame.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreResource.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRectView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RGB565</GroupName>
+          <GroupName>EmbeddedWizard/TargetSpecific/RT</GroupName>
           <Files>
             <File>
-              <FileName>ewextbmp.h</FileName>
+              <FileName>ew_bsp_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RGB565</GroupName>
+          <Files>
+            <File>
+              <FileName>ewextgfx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxres.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewextgfx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdriver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
             </File>
             <File>
               <FileName>ewextfnt.h</FileName>
@@ -1041,14 +1166,24 @@
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextfnt.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+              <FileName>ewgfxcore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.h</FileName>
+              <FileName>ewextbmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxlinks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxtasks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
             </File>
             <File>
               <FileName>ewextpxl_RGB565.h</FileName>
@@ -1060,40 +1195,10 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</FilePath>
             </File>
-            <File>
-              <FileName>ewgfxcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdriver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxlinks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxres.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxtasks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RTE</GroupName>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RTE</GroupName>
           <Files>
             <File>
               <FileName>ewextrte.c</FileName>
@@ -1113,93 +1218,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-TargetSpecific-RT</GroupName>
-          <Files>
-            <File>
-              <FileName>ew_bsp_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT1064.h</FileName>
               <FileType>5</FileType>
@@ -1209,11 +1234,6 @@
               <FileName>MIMXRT1064_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1064.c</FileName>
@@ -1228,97 +1248,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1336,14 +1291,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
@@ -1386,24 +1341,24 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1749,9 +1704,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1064DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../GeneratedCode;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1064;../../../../../devices/MIMXRT1064/utilities/str;../../../../../devices/MIMXRT1064/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../devices/MIMXRT1064/utilities</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1064/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1064/utilities/debug_console_lite;../GeneratedCode;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../devices/MIMXRT1064;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1064/xip;../../../xip;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1785,7 +1740,7 @@
             <ScatterFile>MIMXRT1064xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1942,19 +1897,14 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -1962,9 +1912,9 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1972,19 +1922,24 @@
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1992,19 +1947,39 @@
           <GroupName>touchpanel</GroupName>
           <Files>
             <File>
-              <FileName>fsl_ft5406_rt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_ft5406_rt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ft5406_rt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-GeneratedCode</GroupName>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/GeneratedCode</GroupName>
           <Files>
             <File>
               <FileName>Application.c</FileName>
@@ -2012,39 +1987,9 @@
               <FilePath>../GeneratedCode/Application.c</FilePath>
             </File>
             <File>
-              <FileName>Application.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Application.h</FilePath>
-            </File>
-            <File>
-              <FileName>Core.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Core.c</FilePath>
-            </File>
-            <File>
-              <FileName>Core.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Core.h</FilePath>
-            </File>
-            <File>
               <FileName>Effects.c</FileName>
               <FileType>1</FileType>
               <FilePath>../GeneratedCode/Effects.c</FilePath>
-            </File>
-            <File>
-              <FileName>Effects.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Effects.h</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Graphics.h</FilePath>
             </File>
             <File>
               <FileName>Resources.c</FileName>
@@ -2052,19 +1997,9 @@
               <FilePath>../GeneratedCode/Resources.c</FilePath>
             </File>
             <File>
-              <FileName>Resources.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Resources.h</FilePath>
-            </File>
-            <File>
-              <FileName>Views.c</FileName>
+              <FileName>Core.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Views.c</FilePath>
-            </File>
-            <File>
-              <FileName>Views.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Views.h</FilePath>
+              <FilePath>../GeneratedCode/Core.c</FilePath>
             </File>
             <File>
               <FileName>Washer.c</FileName>
@@ -2072,54 +2007,24 @@
               <FilePath>../GeneratedCode/Washer.c</FilePath>
             </File>
             <File>
-              <FileName>Washer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Washer.h</FilePath>
+              <FileName>Views.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Views.c</FilePath>
             </File>
             <File>
-              <FileName>_ApplicationApplication.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
+              <FileName>Graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Graphics.c</FilePath>
             </File>
             <File>
-              <FileName>_CoreCursorEvent.h</FileName>
+              <FileName>_ViewsRectangle.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
+              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreCursorGrabEvent.h</FileName>
+              <FileName>_WasherBgHot.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorHit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDialogContext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDragEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreGroup.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreKeyEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherBgHot.h</FilePath>
             </File>
             <File>
               <FileName>_CoreKeyPressHandler.h</FileName>
@@ -2127,9 +2032,69 @@
               <FilePath>../GeneratedCode/_CoreKeyPressHandler.h</FilePath>
             </File>
             <File>
+              <FileName>_WasherTimeList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherTimeList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherTempItemL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherTempItemL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherProgList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherProgList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreSimpleTouchHandler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreSimpleTouchHandler.h</FilePath>
+            </File>
+            <File>
+              <FileName>Resources.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Resources.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherSpinItemS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherSpinItemS.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherStartButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherStartButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsImage.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
+            </File>
+            <File>
               <FileName>_CoreLayoutContext.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_CoreLayoutContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherOptList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherOptList.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewlocale.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherListFontS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherListFontS.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherBgSpin.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherBgSpin.h</FilePath>
             </File>
             <File>
               <FileName>_CoreLayoutQuadContext.h</FileName>
@@ -2137,14 +2102,164 @@
               <FilePath>../GeneratedCode/_CoreLayoutQuadContext.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreModalContext.h</FileName>
+              <FileName>_CoreEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreModalContext.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>Views.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Views.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherBgDelicates.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherBgDelicates.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherBgEco.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherBgEco.h</FilePath>
+            </File>
+            <File>
+              <FileName>Core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Core.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherListFontL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherListFontL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffectTimerClass.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreView.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTaskQueue.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreVerticalList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreVerticalList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherMinItemS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherMinItemS.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherMinItemL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherMinItemL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsTimingList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsTimingList.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherOptItemL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherOptItemL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherTempItemS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherTempItemS.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherBgDrain.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherBgDrain.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherBgSportswear.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherBgSportswear.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherProgItemL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherProgItemL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsRectEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsRectEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsInt32Effect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherListFontXL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherListFontXL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherShadow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherShadow.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsText.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsText.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRoot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsBorder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsBorder.h</FilePath>
             </File>
             <File>
               <FileName>_CoreOutline.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_CoreOutline.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreModalContext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreModalContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherTempList.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherTempList.h</FilePath>
+            </File>
+            <File>
+              <FileName>Application.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Application.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ApplicationApplication.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
             </File>
             <File>
               <FileName>_CorePropertyObserver.h</FileName>
@@ -2157,79 +2272,19 @@
               <FilePath>../GeneratedCode/_CoreQuadView.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreRectView.h</FileName>
+              <FileName>_WasherProgItemS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherProgItemS.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreResource.h</FileName>
+              <FileName>_CoreDragEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreRoot.h</FileName>
+              <FileName>_CoreCursorGrabEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreSimpleTouchHandler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreSimpleTouchHandler.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreSlideTouchHandler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreSlideTouchHandler.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTask.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTaskQueue.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreTimer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreVerticalList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreVerticalList.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreView.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreView.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffectTimerClass.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsInt32Effect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsRectEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsRectEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsTimingList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsTimingList.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
             </File>
             <File>
               <FileName>_GraphicsCanvas.h</FileName>
@@ -2237,74 +2292,14 @@
               <FilePath>../GeneratedCode/_GraphicsCanvas.h</FilePath>
             </File>
             <File>
-              <FileName>_ResourcesBitmap.h</FileName>
+              <FileName>Effects.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
+              <FilePath>../GeneratedCode/Effects.h</FilePath>
             </File>
             <File>
-              <FileName>_ResourcesFont.h</FileName>
+              <FileName>Graphics.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsBorder.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsBorder.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsFrame.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsFrame.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsImage.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsRectangle.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
-            </File>
-            <File>
-              <FileName>_ViewsText.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsText.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgDelicates.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgDelicates.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgDrain.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgDrain.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgEasyCare.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgEasyCare.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgEco.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgEco.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgHot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgHot.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgSpin.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgSpin.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherBgSportswear.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherBgSportswear.h</FilePath>
+              <FilePath>../GeneratedCode/Graphics.h</FilePath>
             </File>
             <File>
               <FileName>_WasherBgWool.h</FileName>
@@ -2312,89 +2307,34 @@
               <FilePath>../GeneratedCode/_WasherBgWool.h</FilePath>
             </File>
             <File>
+              <FileName>_WasherWasher.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherWasher.h</FilePath>
+            </File>
+            <File>
               <FileName>_WasherDescrFont.h</FileName>
               <FileType>5</FileType>
               <FilePath>../GeneratedCode/_WasherDescrFont.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherDeviceClass.h</FileName>
+              <FileName>_CoreKeyEvent.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherDeviceClass.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherHourItemL.h</FileName>
+              <FileName>_CoreCursorHit.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherHourItemL.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherHourItemS.h</FileName>
+              <FileName>_CoreSlideTouchHandler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherHourItemS.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreSlideTouchHandler.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherListFontL.h</FileName>
+              <FileName>_WasherBgEasyCare.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherListFontL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherListFontM.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherListFontM.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherListFontS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherListFontS.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherListFontXL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherListFontXL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherMinItemL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherMinItemL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherMinItemS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherMinItemS.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherOptItemL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherOptItemL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherOptItemS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherOptItemS.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherOptList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherOptList.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherProgItemL.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherProgItemL.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherProgItemS.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherProgItemS.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherProgList.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherProgList.h</FilePath>
-            </File>
-            <File>
-              <FileName>_WasherShadow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherShadow.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherBgEasyCare.h</FilePath>
             </File>
             <File>
               <FileName>_WasherSpinItemL.h</FileName>
@@ -2402,9 +2342,14 @@
               <FilePath>../GeneratedCode/_WasherSpinItemL.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherSpinItemS.h</FileName>
+              <FileName>_WasherOptItemS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherSpinItemS.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherOptItemS.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
             </File>
             <File>
               <FileName>_WasherSpinList.h</FileName>
@@ -2412,49 +2357,184 @@
               <FilePath>../GeneratedCode/_WasherSpinList.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherStartButton.h</FileName>
+              <FileName>_CoreTask.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherStartButton.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherTempItemL.h</FileName>
+              <FileName>_WasherDeviceClass.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherTempItemL.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherDeviceClass.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherTempItemS.h</FileName>
+              <FileName>_CoreDialogContext.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherTempItemS.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherTempList.h</FileName>
+              <FileName>_CoreTimer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherTempList.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherTimeList.h</FileName>
+              <FileName>_ResourcesBitmap.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherTimeList.h</FilePath>
+              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
             </File>
             <File>
-              <FileName>_WasherWasher.h</FileName>
+              <FileName>_WasherHourItemS.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_WasherWasher.h</FilePath>
+              <FilePath>../GeneratedCode/_WasherHourItemS.h</FilePath>
             </File>
             <File>
-              <FileName>ewlocale.h</FileName>
+              <FileName>_CoreGroup.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherListFontM.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherListFontM.h</FilePath>
+            </File>
+            <File>
+              <FileName>Washer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Washer.h</FilePath>
+            </File>
+            <File>
+              <FileName>_WasherHourItemL.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_WasherHourItemL.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsFrame.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsFrame.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreResource.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRectView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RGB565</GroupName>
+          <GroupName>EmbeddedWizard/TargetSpecific/RT</GroupName>
           <Files>
             <File>
-              <FileName>ewextbmp.h</FileName>
+              <FileName>ew_bsp_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RGB565</GroupName>
+          <Files>
+            <File>
+              <FileName>ewextgfx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxres.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewextgfx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdriver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
             </File>
             <File>
               <FileName>ewextfnt.h</FileName>
@@ -2462,14 +2542,24 @@
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextfnt.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+              <FileName>ewgfxcore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.h</FileName>
+              <FileName>ewextbmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxlinks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxtasks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
             </File>
             <File>
               <FileName>ewextpxl_RGB565.h</FileName>
@@ -2481,40 +2571,10 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</FilePath>
             </File>
-            <File>
-              <FileName>ewgfxcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdriver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxlinks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxres.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxtasks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RTE</GroupName>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RTE</GroupName>
           <Files>
             <File>
               <FileName>ewextrte.c</FileName>
@@ -2534,93 +2594,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-TargetSpecific-RT</GroupName>
-          <Files>
-            <File>
-              <FileName>ew_bsp_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT1064.h</FileName>
               <FileType>5</FileType>
@@ -2630,11 +2610,6 @@
               <FileName>MIMXRT1064_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1064.c</FileName>
@@ -2649,97 +2624,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2757,14 +2667,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1064_flexspi_nor_config.c</FileName>
@@ -2807,24 +2717,24 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

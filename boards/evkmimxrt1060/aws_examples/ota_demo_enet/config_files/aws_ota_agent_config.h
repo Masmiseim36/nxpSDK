@@ -103,8 +103,18 @@
 #define otaconfigMAX_NUM_OTA_DATA_BUFFERS       8U
 
 /**
- * @brief The protocol selected for OTA control operations.
+ * @brief Allow update to same or lower version.
+ *
+ * Set this to 1 to allow downgrade or same version update.This configurations parameter
+ * disables version check and allows update to a same or lower version.This is provided for
+ * testing purpose and it is recommended to always update to higher version and keep this
+ * configuration disabled.
+ */
+#define otaconfigAllowDowngrade              0U
 
+/**
+ * @brief The protocol selected for OTA control operations.
+ *
  * This configurations parameter sets the default protocol for all the OTA control
  * operations like requesting OTA job, updating the job status etc.
  *
@@ -114,7 +124,7 @@
 
 /**
  * @brief The protocol selected for OTA data operations.
-
+ *
  * This configurations parameter sets the protocols selected for the data operations
  * like requesting file blocks from the service.
  *
@@ -126,16 +136,17 @@
  */
 #define configENABLED_DATA_PROTOCOLS         ( OTA_DATA_OVER_MQTT | OTA_DATA_OVER_HTTP )
 
- /**
-  * @brief The preferred protocol selected for OTA data operations.
-  *
-  * Primary data protocol will be the protocol used for downloading file if more than
-  * one protocol is selected while creating OTA job. Default primary data protocol is MQTT
-  * and following update here to switch to HTTP as primary.
-  *
-  * Note - use OTA_DATA_OVER_HTTP for HTTP as primary data protocol.
-  */
+/**
+ * @brief The preferred protocol selected for OTA data operations.
+ *
+ * Primary data protocol will be the protocol used for downloading file if more than
+ * one protocol is selected while creating OTA job. Default primary data protocol is MQTT
+ * and following update here to switch to HTTP as primary.
+ *
+ * Note - use OTA_DATA_OVER_HTTP for HTTP as primary data protocol.
+ */
 
-#define configOTA_PRIMARY_DATA_PROTOCOL     ( OTA_DATA_OVER_MQTT )
+#define configOTA_PRIMARY_DATA_PROTOCOL    ( OTA_DATA_OVER_MQTT )
+
 
 #endif /* _AWS_OTA_AGENT_CONFIG_H_ */

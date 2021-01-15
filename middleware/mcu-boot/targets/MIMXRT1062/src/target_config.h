@@ -57,6 +57,9 @@ extern uint32_t get_flexspinor_amba_base(void);
 #define __ROM_START BL_FEATURE_FLASH_START
 #endif
 
+//!@brief IMXRT SOC System ID
+#define IMXRT_SOC_SYSTEM_ID (0x1060UL)
+
 #endif // __TARGET_CONFIG_H__
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

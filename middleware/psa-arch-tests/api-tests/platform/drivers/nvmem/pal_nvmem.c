@@ -25,7 +25,7 @@
                 size    : Number of bytes
     @return   - 1/0
 **/
-int nvmem_write(addr_t base, uint32_t offset, const void *buffer, int size)
+int nvmem_write(addr_t base, uint32_t offset, void *buffer, int size)
 {
     int b_cnt;
 

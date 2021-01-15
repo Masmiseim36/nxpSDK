@@ -1,19 +1,19 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "isr.h"
 #include "vectors_mcux.h"
 
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
 typedef void (*vector_entry)(void);
+extern void SYSTICK_Isr(void);
 
-__attribute__ ((used, section(".isr_vector")))
+__attribute__ ((used, section(".intvec")))
 const vector_entry  __vector_table[] =
 {
     VECTOR_000,           /* Initial SP           */
@@ -31,7 +31,7 @@ const vector_entry  __vector_table[] =
     VECTOR_012,
     VECTOR_013,
     VECTOR_014,
-    VECTOR_015,
+	SYSTICK_Isr,
     VECTOR_016,
     VECTOR_017,
     VECTOR_018,
@@ -275,7 +275,7 @@ const vector_entry  __vector_table[] =
 };
 
 #if (!defined(_IMX_))
-const unsigned long __memcfg_table[] __attribute__((section(".memcfg"))) =
+const uint32_t __memcfg_table[] __attribute__((used,section(".flshcfg"))) = 
 {
    CONFIG_1,
    CONFIG_2,
@@ -325,6 +325,6 @@ void NMI_isr(void)
 * hard fault handler in C,
 * with stack frame location as input parameter
 */
-void hard_fault_handler_c(unsigned int * hardfault_args)
+void hard_fault_handler_c(uint32_t * hardfault_args)
 {
 }

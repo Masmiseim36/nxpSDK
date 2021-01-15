@@ -19,28 +19,21 @@ limitations under the License.
 #ifndef TENSORFLOW_LITE_KERNELS_INTERNAL_OPTIMIZED_INTEGER_OPS_POOLING_H_
 #define TENSORFLOW_LITE_KERNELS_INTERNAL_OPTIMIZED_INTEGER_OPS_POOLING_H_
 
-#include <assert.h>
-#include <stdint.h>
+#include <string.h>
 #if !defined(__ICCARM__) && !defined(__ARMCC_VERSION)
-#include <sys/types.h>
 #endif
 
 #include <algorithm>
-#include <cmath>
-#include <cstdint>
-#include <limits>
-#include <memory>
-#include <tuple>
-#include <type_traits>
 
-#include "fixedpoint/fixedpoint.h"
-#include "profiling/instrumentation.h"
+#include "ruy/profiler/instrumentation.h"  // from @ruy
+#include "tensorflow/lite/kernels/internal/compatibility.h"
+#include "tensorflow/lite/kernels/internal/cppmath.h"
 #include "tensorflow/lite/kernels/internal/optimized/cpu_check.h"
 #include "tensorflow/lite/kernels/internal/optimized/im2col_utils.h"
+#include "tensorflow/lite/kernels/internal/optimized/neon_check.h"
 #include "tensorflow/lite/kernels/internal/quantization_util.h"
 #include "tensorflow/lite/kernels/internal/reference/integer_ops/pooling.h"
 #include "tensorflow/lite/kernels/internal/reference/reference_ops.h"
-#include "tensorflow/lite/kernels/internal/round.h"
 #include "tensorflow/lite/kernels/internal/strided_slice_logic.h"
 #include "tensorflow/lite/kernels/internal/tensor_utils.h"
 #include "tensorflow/lite/kernels/internal/types.h"
@@ -51,7 +44,7 @@ namespace optimized_integer_ops {
 inline void MaxPool(const PoolParams& params, const RuntimeShape& input_shape,
                     const int8* input_data, const RuntimeShape& output_shape,
                     int8* output_data) {
-  gemmlowp::ScopedProfilingLabel label("MaxPool/8bit");
+  ruy::profiler::ScopeLabel label("MaxPool/8bit");
 
   // Here, and in other pooling ops, in order to maintain locality of reference,
   // to minimize some recalculations, and to load into NEON vector registers, we
@@ -162,7 +155,7 @@ inline void AveragePool16(const PoolParams& params,
                           const RuntimeShape& input_shape,
                           const int8* input_data,
                           const RuntimeShape& output_shape, int8* output_data) {
-  gemmlowp::ScopedProfilingLabel label("AveragePool/8bitWith16bitAccumulator");
+  ruy::profiler::ScopeLabel label("AveragePool/8bitWith16bitAccumulator");
 
   // Here, and in other pooling ops, in order to maintain locality of reference,
   // to minimize some recalculations, and to load into NEON vector registers, we

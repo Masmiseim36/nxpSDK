@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -34,7 +34,7 @@ void GPT1_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler);
 void GPT2_Init(uint32_t clkSource, uint32_t compare, uint32_t prescaler);
 void QTMR1_Init(uint32_t compare);
 void SystickInitialisation(uint32_t compare);
-void SerialInit(LPUART_Type *Uart_X, uint32_t baudRate, uint32_t clockFreq);
+void SerialInit(void);
 void ClockInit(void);
 void PortSetup(uint32_t gpio, uint8_t pinNum, uint8_t pinDir);
 void AdcInit(void);

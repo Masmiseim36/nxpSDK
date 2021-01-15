@@ -29,7 +29,7 @@ Change log:
     10/21/2008: initial version
 ********************************************************/
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -815,7 +815,6 @@ t_void wlan_11d_init(mlan_adapter *pmadapter)
     return;
 }
 
-
 /**
  *  @brief This function implements command CMD_802_11D_DOMAIN_INFO
  *
@@ -873,7 +872,6 @@ mlan_status wlan_cmd_802_11d_domain_info(mlan_private *pmpriv, HostCmd_DS_COMMAN
     LEAVE();
     return MLAN_STATUS_SUCCESS;
 }
-
 
 /**
  *  @brief This function parses country information for region channel
@@ -1367,6 +1365,15 @@ mlan_status wlan_11d_cfg_domain_info(IN pmlan_adapter pmadapter, IN mlan_ioctl_r
 
     cfg_11d     = (mlan_ds_11d_cfg *)pioctl_req->pbuf;
     domain_info = &cfg_11d->param.domain_info;
+
+#ifdef OTP_CHANINFO
+    if (pmadapter->otp_region && pmadapter->otp_region->force_reg)
+    {
+        PRINTF("ForceRegionRule is set in the on-chip OTP memory\r\n");
+        ret = MLAN_STATUS_FAILURE;
+        goto done;
+    }
+#endif
 
     /* Update region code and table based on country code */
     if (wlan_11d_region_2_code(pmadapter, domain_info->country_code, &region_code) == MLAN_STATUS_SUCCESS)

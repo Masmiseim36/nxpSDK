@@ -6,10 +6,10 @@ Note: Please make sure the card you are using is FAT32 format.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -42,6 +42,3 @@ Prepare the Demo
 Running the demo
 ================
 If this example runs correctly, pictures are shown in the lcd panel one by one.
-Customization options
-=====================
-

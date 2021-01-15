@@ -344,9 +344,14 @@ static eSci2c_Error_t sci2c_ReadAnswerToReset(void* conn_ctx, U8 * pAtrResponse,
    }
 
    /* strip the 1st (=length) and 2nd (=PCB) byte */
-   memmove(pAtrResponse, pAtrResponse + 2, nrRead - 2);
-   memset(&pAtrResponse[nrRead - 1], 0x00, 2); // clear the data in memory after copying
    nrRead -= 2;
+   if (nrRead > 0)
+   {
+      memmove(pAtrResponse, pAtrResponse + 2, nrRead);
+      memset(&pAtrResponse[nrRead + 1], 0x00, 2); // clear the data in memory after copying
+   }
+
+
 
    *pRxLen = nrRead;
 
@@ -564,8 +569,11 @@ static U16 sci2c_SlaveToMasterDataTx(void* conn_ctx, tSCI2C_Data_t * pSCI2C)
                    /* The slave is not busy, check the more bit */
                   nack_count = 0;
                   moreBitSet = (pRx[1] & (0x1 << 7)) >> 7;
-                  memcpy(&pSCI2C->pBuf[alreadyParsed], &pRx[2], nrRead - 2);
-                  alreadyParsed += (nrRead - 2);
+                  if (nrRead -2  > 0)
+                  {
+                    memcpy(&pSCI2C->pBuf[alreadyParsed], &pRx[2], nrRead-2 );
+                    alreadyParsed += (nrRead -2);
+                  }
               }
               // The last data transmission command shall always have the More bit set to 0.
               pSci2cData->pcb &= 0x7F;

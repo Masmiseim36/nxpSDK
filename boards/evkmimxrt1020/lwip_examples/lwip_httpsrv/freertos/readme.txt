@@ -8,10 +8,10 @@ page back to the PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.5
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -28,8 +28,8 @@ No special settings are required.
 Note:
 To debug in qspiflash, following steps are needed:
 1. Select the flash target and compile.
-3. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
-4. Start debugging in IDE.
+2. Set the SW8: 1 off 2 off 3 on 4 off, then power on the board and connect USB cable to J23.
+3. Start debugging in IDE.
    - Keil: Click "Download (F8)" to program the image to qspiflash first then clicking "Start/Stop Debug Session (Ctrl+F5)" to start debugging.
 Prepare the Demo
 ================
@@ -65,10 +65,10 @@ Running the demo
 
 Modifying content of static web pages
 To modify content available through the web server you must complete following steps:
-  1. Modify, add or delete files in folder "middleware\lwip\src\apps\httpsrv\mkfs\web_pages".
+  1. Modify, add or delete files in folder "boards\<board_name>\lwip_examples\lwip_httpsrv_freertos\webpage".
   2. Run the script file "middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl <directory name>" to generate new "httpsrv_fs_data.c".
-	 For example:
-		C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs> mkfs.pl webpage
+     Make sure to execute it from a folder where the file "httpsrv_fs_data.c" is. For example:
+        C:\sdk\boards\<board_name>\lwip_examples\lwip_httpsrv_freertos> C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl webpage
 		Processing file webpage/auth.html
 		Processing file webpage/cgi.html
 		Processing file webpage/favicon.ico
@@ -81,5 +81,5 @@ To modify content available through the web server you must complete following s
 		Processing file webpage/ssi.shtml
 		Processing file webpage/welcome.html
 		Done.
-  3. Overwrite the middleware\lwip\src\apps\httpsrv\httpsrv_fs_data.c file by the new generated middleware\lwip\src\apps\httpsrv\mkfs\httpsrv_fs_data.c file.
-  4. Re-compile the HTTP server application example and download it to your board. 
+  3. Make sure the "httpsrv_fs_data.c" file has been overwritten with the newly generated content.
+  4. Re-compile the HTTP server application example and download it to your board.

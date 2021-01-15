@@ -316,19 +316,17 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/littlevgl</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets</state>
+          <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lv_examples</state>
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl</state>
+          <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/littlevgl</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console</state>
@@ -337,8 +335,10 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -602,7 +602,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1307,19 +1306,17 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/littlevgl</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets</state>
+          <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lv_examples</state>
           <state>$PROJ_DIR$/../../../../../components/ili9341</state>
           <state>$PROJ_DIR$/../../../../../components/ft6x06</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl</state>
+          <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/littlevgl</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities/debug_console</state>
@@ -1328,8 +1325,10 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/utilities</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1593,7 +1592,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2070,12 +2068,6 @@
         <group>
           <name>lv_core</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_debug.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_debug.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_disp.c</name>
           </file>
           <file>
@@ -2203,6 +2195,12 @@
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_fmt_txt.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_loader.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_loader.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_montserrat_12.c</name>
@@ -2352,6 +2350,12 @@
             <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_color.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_debug.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_debug.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_fs.c</name>
           </file>
           <file>
@@ -2462,6 +2466,12 @@
         </group>
         <group>
           <name>lv_widgets</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_widgets/lv_anim_img.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_widgets/lv_anim_img.h</name>
+          </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_widgets/lv_arc.c</name>
           </file>

@@ -11,9 +11,9 @@
 #include "usb_host_cdc.h"
 #include "host_cdc.h"
 #include "fsl_debug_console.h"
-#include "board.h"
 #include "fsl_component_serial_manager.h"
 #include "app.h"
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

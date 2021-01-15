@@ -334,7 +334,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-null-dereference  -Wno-unknown-attributes  -Wno-expansion-to-defined  -Wno-invalid-noreturn</MiscControls>
               <Define>CPU_MIMXRT685SFVKB_cm33, BOOT_HEADER_ENABLE=1, NDEBUG, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1, BL_TARGET_FLASH, MIMXRT685S</Define>
               <Undefine/>
-              <IncludePath>../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/targets/MIMXRT685S/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc;..;../../../../../middleware/mcu-boot/src/bootloader;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/drivers;../../../../../middleware/mcu-boot/src/crc;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/memory;../../../../../middleware/mcu-boot/src/memory/src;../../../../../middleware/mcu-boot/src/property;../../../../../middleware/mcu-boot/src/packet;../../../../../components/osa;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../components/lists;../../../../../middleware/mcu-boot/src/drivers/flexspi;../../../../../middleware/mcu-boot/src/drivers/flexspi_nor</IncludePath>
+              <IncludePath>../../../../../middleware/mcu-boot/src/bootloader;../../../../../devices/MIMXRT685S;../../../../../devices/MIMXRT685S/drivers;../../../../../middleware/mcu-boot/targets/MIMXRT685S/src;../../../../../middleware/mcu-boot/components/osa;../../../../../middleware/mcu-boot/src/crc;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/memory;../../../../../middleware/mcu-boot/src/memory/src;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/packet;../../../../../middleware/mcu-boot/src/property;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../components/lists;../../../../../components/osa;../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src/drivers/flexspi;../../../../../middleware/mcu-boot/src/drivers/flexspi_nor</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,7 +365,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20040000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>MIMXRT685S_flash_bootloader.scf</ScatterFile>
+            <ScatterFile>../../../../../middleware/mcu-boot/targets/common/linker/arm/MIMXRT685S/MIMXRT685S_flash_bootloader.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>--remove --datacompressor off --entry=Reset_Handler</Misc>
@@ -386,47 +386,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-bootloader</GroupName>
+          <GroupName>source/bootloader</GroupName>
           <Files>
             <File>
               <FileName>bl_reliable_update.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_reliable_update.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_app_crc_check.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_command.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_command.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_context.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_context.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_peripheral.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_peripheral_interface.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral_interface.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_shutdown_cleanup.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_user_entry.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_user_entry.h</FilePath>
             </File>
             <File>
               <FileName>bl_version.h</FileName>
@@ -438,10 +403,45 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bootloader.h</FilePath>
             </File>
+            <File>
+              <FileName>bl_context.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_context.h</FilePath>
+            </File>
+            <File>
+              <FileName>bl_peripheral_interface.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral_interface.h</FilePath>
+            </File>
+            <File>
+              <FileName>bl_user_entry.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_user_entry.h</FilePath>
+            </File>
+            <File>
+              <FileName>bl_command.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_command.h</FilePath>
+            </File>
+            <File>
+              <FileName>bl_peripheral.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral.h</FilePath>
+            </File>
+            <File>
+              <FileName>bl_shutdown_cleanup.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</FilePath>
+            </File>
+            <File>
+              <FileName>bl_app_crc_check.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>source-bootloader-src</GroupName>
+          <GroupName>source/bootloader/src</GroupName>
           <Files>
             <File>
               <FileName>bl_reliable_update_common.c</FileName>
@@ -449,9 +449,9 @@
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_reliable_update_common.c</FilePath>
             </File>
             <File>
-              <FileName>bl_app_crc_check.c</FileName>
+              <FileName>bl_main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_main.c</FilePath>
             </File>
             <File>
               <FileName>bl_context.c</FileName>
@@ -469,15 +469,20 @@
               <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_tree_root.c</FilePath>
             </File>
             <File>
-              <FileName>bl_main.c</FileName>
+              <FileName>bl_app_crc_check.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_main.c</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>device</GroupName>
+          <GroupName>MIMXRT685S</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT685S_cm33.h</FileName>
               <FileType>5</FileType>
@@ -489,19 +494,44 @@
               <FilePath>../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_device_registers.h</FileName>
+              <FileName>bootloader_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/fsl_device_registers.h</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bootloader_config.h</FilePath>
             </File>
             <File>
-              <FileName>system_MIMXRT685S_cm33.c</FileName>
+              <FileName>bl_clock_config_MIMXRT685S.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_clock_config_MIMXRT685S.c</FilePath>
             </File>
             <File>
-              <FileName>system_MIMXRT685S_cm33.h</FileName>
+              <FileName>hardware_init_MIMXRT685S.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/hardware_init_MIMXRT685S.c</FilePath>
+            </File>
+            <File>
+              <FileName>memory_map_MIMXRT685S.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/memory_map_MIMXRT685S.c</FilePath>
+            </File>
+            <File>
+              <FileName>external_memory_property_map_MIMXRT685S.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/external_memory_property_map_MIMXRT685S.c</FilePath>
+            </File>
+            <File>
+              <FileName>target_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/target_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>bl_api.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_api.h</FilePath>
+            </File>
+            <File>
+              <FileName>bl_api.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_api.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -509,19 +539,14 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_crc.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_crc.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_crc.h</FileName>
@@ -529,9 +554,9 @@
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_crc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_usart.c</FileName>
+              <FileName>fsl_crc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_crc.c</FilePath>
             </File>
             <File>
               <FileName>fsl_usart.h</FileName>
@@ -539,9 +564,9 @@
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_usart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -549,9 +574,9 @@
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_reset.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_reset.h</FileName>
@@ -559,14 +584,34 @@
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flexcomm.c</FileName>
+              <FileName>fsl_reset.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</FilePath>
             </File>
             <File>
               <FileName>fsl_flexcomm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexcomm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>system_MIMXRT685S_cm33.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MIMXRT685S_cm33.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -583,25 +628,10 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/startup/ar_asm_macros.h</FilePath>
             </File>
-            <File>
-              <FileName>startup.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/startup/startup.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>source/utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_os_abstraction.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-crc</GroupName>
+          <GroupName>source/crc</GroupName>
           <Files>
             <File>
               <FileName>crc16.h</FileName>
@@ -626,7 +656,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-include</GroupName>
+          <GroupName>source/include</GroupName>
           <Files>
             <File>
               <FileName>bootloader_common.h</FileName>
@@ -641,7 +671,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-memory</GroupName>
+          <GroupName>source/memory</GroupName>
           <Files>
             <File>
               <FileName>memory.h</FileName>
@@ -651,17 +681,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-memory-src</GroupName>
+          <GroupName>source/memory/src</GroupName>
           <Files>
+            <File>
+              <FileName>sram_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</FilePath>
+            </File>
             <File>
               <FileName>memory.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/memory/src/memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>normal_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</FilePath>
             </File>
             <File>
               <FileName>normal_memory.h</FileName>
@@ -669,9 +699,9 @@
               <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</FilePath>
             </File>
             <File>
-              <FileName>pattern_fill.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</FilePath>
+              <FileName>normal_memory.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</FilePath>
             </File>
             <File>
               <FileName>pattern_fill_mdk.s</FileName>
@@ -679,9 +709,9 @@
               <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill_mdk.s</FilePath>
             </File>
             <File>
-              <FileName>sram_init.h</FileName>
+              <FileName>pattern_fill.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</FilePath>
             </File>
             <File>
               <FileName>flexspi_nor_memory.c</FileName>
@@ -696,7 +726,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-packet</GroupName>
+          <GroupName>source/packet</GroupName>
           <Files>
             <File>
               <FileName>command_packet.h</FileName>
@@ -711,7 +741,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-property</GroupName>
+          <GroupName>source/property</GroupName>
           <Files>
             <File>
               <FileName>property.h</FileName>
@@ -721,27 +751,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-property-src</GroupName>
+          <GroupName>source/utilities</GroupName>
           <Files>
-            <File>
-              <FileName>property_rt685s.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/property/src/property_rt685s.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>source-utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_assert.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h</FilePath>
-            </File>
             <File>
               <FileName>fsl_rtos_abstraction.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/utilities/fsl_rtos_abstraction.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h</FilePath>
             </File>
             <File>
               <FileName>vector_table_info.h</FileName>
@@ -751,13 +771,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-utilities-src</GroupName>
+          <GroupName>source/utilities/src</GroupName>
           <Files>
-            <File>
-              <FileName>debug_util.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/utilities/src/debug_util.c</FilePath>
-            </File>
             <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
@@ -768,55 +783,35 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/utilities/src/fsl_rtos_abstraction.c</FilePath>
             </File>
+            <File>
+              <FileName>debug_util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/utilities/src/debug_util.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>MIMXRT685S</GroupName>
+          <GroupName>source/property/src</GroupName>
           <Files>
             <File>
-              <FileName>bl_api.c</FileName>
+              <FileName>property_rt685s.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_api.c</FilePath>
-            </File>
-            <File>
-              <FileName>bl_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>bl_clock_config_MIMXRT685S.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_clock_config_MIMXRT685S.c</FilePath>
-            </File>
-            <File>
-              <FileName>bootloader_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bootloader_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>external_memory_property_map_MIMXRT685S.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/external_memory_property_map_MIMXRT685S.c</FilePath>
-            </File>
-            <File>
-              <FileName>hardware_init_MIMXRT685S.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/hardware_init_MIMXRT685S.c</FilePath>
-            </File>
-            <File>
-              <FileName>memory_map_MIMXRT685S.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/memory_map_MIMXRT685S.c</FilePath>
-            </File>
-            <File>
-              <FileName>target_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/target_config.h</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/property/src/property_rt685s.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-microseconds</GroupName>
+          <GroupName>source/startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/src/startup/startup.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>source/drivers/microseconds</GroupName>
           <Files>
             <File>
               <FileName>microseconds.h</FileName>
@@ -831,17 +826,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -854,11 +849,6 @@
               <FilePath>../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -867,6 +857,11 @@
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -879,14 +874,14 @@
               <FilePath>../../../../../CMSIS/Include/core_cm33.h</FilePath>
             </File>
             <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
-            <File>
               <FileName>tz_context.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/tz_context.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv8.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -904,24 +899,24 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -941,7 +936,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-flexspi</GroupName>
+          <GroupName>source/drivers/flexspi</GroupName>
           <Files>
             <File>
               <FileName>bl_flexspi.c</FileName>
@@ -956,7 +951,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-flexspi_nor</GroupName>
+          <GroupName>source/drivers/flexspi_nor</GroupName>
           <Files>
             <File>
               <FileName>flexspi_nor_flash.c</FileName>

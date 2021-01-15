@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -44,9 +44,9 @@ void MID_getRs(mid_get_rs_a1_t *sRsMeasFcn)
     frac16_t f16Id_rescaled;
 
     /* Initialization */
-    if (sRsMeasFcn->ui16Active == 0)
+    if (sRsMeasFcn->ui16Active == 0U)
     {
-        sRsMeasFcn->ui16Active             = TRUE;
+        sRsMeasFcn->ui16Active             = 1U;
         sRsMeasFcn->ui16LoopCounter        = 0;
         sRsMeasFcn->f16Rs                  = FRAC16(0.0);
         sRsMeasFcn->sUdReqMA32Filter.u16Sh = 6;
@@ -111,21 +111,27 @@ void MID_getRs(mid_get_rs_a1_t *sRsMeasFcn)
         /* Check Faults */
         /* Check if motor is connected */
         if (MLIB_Abs_F16(*(sRsMeasFcn->pf16Idfbck)) < M1_K_I_50MA)
+        {
             ui16FaultMID |= MID_FAULT_NO_MOTOR;
+        }
 
         /* Check if Rs is negative or saturated*/
         if (sRsMeasFcn->f16Rs < FRAC16(0.0) || sRsMeasFcn->f16Rs == FRAC16(1.0))
+        {
             ui16FaultMID |= MID_FAULT_RS_OUT_OF_RANGE;
+        }
 
         /* Check if measuring current was reached */
         if (*(sRsMeasFcn->pf16Idfbck) < MLIB_Sub_F16(sRsMeasFcn->f16IdMeas, M1_K_I_50MA))
+        {
             ui16FaultMID |= MID_FAULT_DC_CUR_NOT_REACHED;
+        }
     }
 
     /* Wait additional 600ms to stabilize Id at 0A */
     /* Exit the function after 1200ms */
     if (sRsMeasFcn->ui16LoopCounter > M1_TIME_2400MS)
     {
-        sRsMeasFcn->ui16Active = FALSE;
+        sRsMeasFcn->ui16Active = 0U;
     }
 }

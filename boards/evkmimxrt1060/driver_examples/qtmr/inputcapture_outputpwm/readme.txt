@@ -9,10 +9,10 @@ The example also sets up one QTMR channel to output pwm. The user should probe a
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -56,7 +56,4 @@ Captured Period time = 1000 us (±5%)
 ****A 50 duty cycle PWM wave is observed on an oscilloscope.****
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Customization options
-=====================
 

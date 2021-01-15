@@ -53,32 +53,20 @@ void GPT0_IRQHandler(void);
 void GPT0_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(0);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-    exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 void GPT1_IRQHandler(void);
 void GPT1_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(1);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-    exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 void GPT2_IRQHandler(void);
 void GPT2_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(2);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-    exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 /************************************************************************************
 *************************************************************************************
@@ -179,7 +167,7 @@ hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uin
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
     halTimerState->timeout                   = timeout;
-    tickCount                                = (uint32_t)USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
+    tickCount = (uint32_t)USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
     if ((tickCount < 1U) || (tickCount > 0xfff0U))
     {
         return kStatus_HAL_TimerOutOfRanger;

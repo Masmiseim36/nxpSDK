@@ -40,51 +40,51 @@ const uint8_t se050Authkey[] = EX_SSS_AUTH_SE05X_UserID_VALUE;
 /* ************************************************************************** */
 #if SSS_HAVE_APPLET_SE05X_IOT
 
-#if defined(EXFL_SE050_AUTH_UserID)
+#if (SSS_HAVE_SE05X_AUTH_USERID)
 #define SSS_EX_SE05x_AUTH_MECH kSSS_AuthType_ID
 #define SSS_EX_SE05x_AUTH_ID kEX_SSS_ObjID_UserID_Auth
 #define SSS_EX_CONNECTION_TYPE kSSS_ConnectionType_Password
 #endif
 
-#if defined(EXFL_SE050_AUTH_PlatfSCP03)
+#if (SSS_HAVE_SE05X_AUTH_PLATFSCP03)
 #define SSS_EX_SE05x_AUTH_MECH kSSS_AuthType_SCP03
 #define SSS_EX_CONNECTION_TYPE kSSS_ConnectionType_Encrypted
 #endif
 
-#if defined(EXFL_SE050_AUTH_UserID_PlatfSCP03)
+#if (SSS_HAVE_SE05X_AUTH_USERID_PLATFSCP03)
 #define SSS_EX_SE05x_AUTH_MECH kSSS_AuthType_SCP03
 #define SSS_EX_SE05x_TUNN_AUTH_MECH kSSS_AuthType_ID
 #define SSS_EX_SE05x_AUTH_ID kEX_SSS_ObjID_UserID_Auth
 #define SSS_EX_CONNECTION_TYPE kSSS_ConnectionType_Encrypted
 #endif
 
-#if defined(EXFL_SE050_AUTH_AESKey_PlatfSCP03)
+#if (SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03)
 #define SSS_EX_SE05x_AUTH_MECH kSSS_AuthType_SCP03
 #define SSS_EX_SE05x_TUNN_AUTH_MECH kSSS_AuthType_AESKey
 #define SSS_EX_SE05x_AUTH_ID kEX_SSS_ObjID_APPLETSCP03_Auth
 #define SSS_EX_CONNECTION_TYPE kSSS_ConnectionType_Encrypted
 #endif
 
-#if defined(EXFL_SE050_AUTH_ECKey_PlatfSCP03)
+#if (SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03)
 #define SSS_EX_SE05x_AUTH_MECH kSSS_AuthType_SCP03
 #define SSS_EX_SE05x_TUNN_AUTH_MECH kSSS_AuthType_ECKey
 #define SSS_EX_SE05x_AUTH_ID kEX_SSS_objID_ECKEY_Auth
 #define SSS_EX_CONNECTION_TYPE kSSS_ConnectionType_Encrypted
 #endif
 
-#if defined(EXFL_SE050_AUTH_AESKey)
+#if (SSS_HAVE_SE05X_AUTH_AESKEY)
 #define SSS_EX_SE05x_AUTH_MECH kSSS_AuthType_AESKey
 #define SSS_EX_SE05x_AUTH_ID kEX_SSS_ObjID_APPLETSCP03_Auth
 #define SSS_EX_CONNECTION_TYPE kSSS_ConnectionType_Encrypted
 #endif
 
-#if defined(EXFL_SE050_AUTH_ECKey)
+#if (SSS_HAVE_SE05X_AUTH_ECKEY)
 #define SSS_EX_SE05x_AUTH_MECH kSSS_AuthType_ECKey
 #define SSS_EX_SE05x_AUTH_ID kEX_SSS_objID_ECKEY_Auth
 #define SSS_EX_CONNECTION_TYPE kSSS_ConnectionType_Encrypted
 #endif
 
-#if defined(EXFL_SE050_AUTH_NONE)
+#if (SSS_HAVE_SE05X_AUTH_NONE)
 #define SSS_EX_SE05x_AUTH_MECH kSSS_AuthType_None
 #define SSS_EX_CONNECTION_TYPE kSSS_ConnectionType_Plain
 #endif
@@ -122,8 +122,8 @@ sss_status_t ex_sss_boot_se05x_open(ex_sss_boot_ctx_t *pCtx, const char *portNam
     sss_status_t status           = kStatus_SSS_Fail;
     SE_Connect_Ctx_t *pConnectCtx = NULL;
     sss_session_t *pPfSession     = NULL;
-#if defined(EXFL_SE050_AUTH_UserID_PlatfSCP03) || defined(EXFL_SE050_AUTH_AESKey_PlatfSCP03) || \
-    defined(EXFL_SE050_AUTH_ECKey_PlatfSCP03)
+#if (SSS_HAVE_SE05X_AUTH_USERID_PLATFSCP03) || (SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03) || \
+    (SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03)
     sss_connection_type_t connectType = kSSS_ConnectionType_Plain;
 #endif
 
@@ -131,8 +131,8 @@ sss_status_t ex_sss_boot_se05x_open(ex_sss_boot_ctx_t *pCtx, const char *portNam
     const uint32_t auth_id = SSS_EX_SE05x_AUTH_ID;
 #endif
 
-#if defined(EXFL_SE050_AUTH_UserID_PlatfSCP03) || defined(EXFL_SE050_AUTH_AESKey_PlatfSCP03) || \
-    defined(EXFL_SE050_AUTH_ECKey_PlatfSCP03)
+#if (SSS_HAVE_SE05X_AUTH_USERID_PLATFSCP03) || (SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03) || \
+    (SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03)
     ex_sss_platf_ctx_t *pPlatfCtx = &gPlatfCtx;
 
     pCtx->pTunnel_ctx                       = &gTunnel_ctx;
@@ -228,8 +228,8 @@ sss_status_t ex_sss_boot_se05x_open(ex_sss_boot_ctx_t *pCtx, const char *portNam
     }
 #endif /* SSS_EX_SE05x_AUTH_ID */
 
-#if defined(EXFL_SE050_AUTH_UserID_PlatfSCP03) || defined(EXFL_SE050_AUTH_AESKey_PlatfSCP03) || \
-    defined(EXFL_SE050_AUTH_ECKey_PlatfSCP03)
+#if (SSS_HAVE_SE05X_AUTH_USERID_PLATFSCP03) || (SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03) || \
+    (SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03)
     SE05x_Connect_Ctx_t *pchannlCtxt = &pCtx->se05x_open_ctx;
     pchannlCtxt->auth.authType       = SSS_EX_SE05x_TUNN_AUTH_MECH;
 

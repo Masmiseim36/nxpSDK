@@ -304,7 +304,8 @@ static usb_status_t USB_DeviceMscBulkIn(usb_device_handle handle,
     usb_device_msc_csw_t *csw;
     void *temp;
     usb_status_t error = kStatus_USB_Error;
-    if (message->length == USB_UNINITIALIZED_VAL_32)
+    /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+    if (message->length == USB_CANCELLED_TRANSFER_LENGTH)
     {
         /*this code is called when stack cancel the transfer, app should release the buffer it use */
         if ((0U != mscHandle->dataInFlag) && (mscHandle->configurationStruct->classCallback != NULL) &&
@@ -425,7 +426,9 @@ static usb_status_t USB_DeviceMscBulkOut(usb_device_handle handle,
 {
     usb_device_msc_struct_t *mscHandle = (usb_device_msc_struct_t *)callbackParam;
     usb_status_t error                 = kStatus_USB_Success;
-    if (message->length == USB_UNINITIALIZED_VAL_32)
+
+    /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+    if (message->length == USB_CANCELLED_TRANSFER_LENGTH)
     {
         /*this code is called when stack cancel the transfer, app should release the buffer it use*/
         if ((0U != mscHandle->dataOutFlag) && (mscHandle->configurationStruct->classCallback != NULL) &&

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -90,10 +90,13 @@ Purpose     : SPINBOX header file
 
 /*********************************************************************
 *
-*       Timer indices
+*       SPINBOX timer indexes
+*
+*  Description
+*    Timer indexes used by the routine SPINBOX_SetTimerPeriod().
 */
-#define SPINBOX_TI_TIMERSTART       0  // Timer for starting auto increment
-#define SPINBOX_TI_TIMERINC         1  // Timer for period between two increments
+#define SPINBOX_TI_TIMERSTART       0      // Time it takes to start auto increase/decrease of its value.
+#define SPINBOX_TI_TIMERINC         1      // Time between two increments/decrements.
 
 /*********************************************************************
 *
@@ -154,6 +157,7 @@ GUI_COLOR        SPINBOX_GetBkColor      (SPINBOX_Handle hObj, unsigned int Inde
 GUI_COLOR        SPINBOX_GetButtonBkColor(SPINBOX_Handle hObj, unsigned int Index);
 EDIT_Handle      SPINBOX_GetEditHandle   (SPINBOX_Handle hObj);
 const GUI_FONT * SPINBOX_GetFont         (SPINBOX_Handle hObj);
+void             SPINBOX_GetRange        (SPINBOX_Handle hObj, I32 * pMin, I32 * pMax);
 GUI_COLOR        SPINBOX_GetTextColor    (SPINBOX_Handle hObj, unsigned int Index);
 U32              SPINBOX_GetTimerPeriod  (SPINBOX_Handle hObj, U32 Index);
 int              SPINBOX_GetUserData     (SPINBOX_Handle hObj, void * pDest, int NumBytes);

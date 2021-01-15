@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_pint.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_inputmux.h"
 /*******************************************************************************
  * Definitions
@@ -19,6 +19,7 @@
 #define DEMO_PINT_PIN_INT0_SRC kINPUTMUX_GpioPort1Pin1ToPintsel  /* SW1 */
 #define DEMO_PINT_PIN_INT1_SRC kINPUTMUX_GpioPort0Pin10ToPintsel /* SW2 */
 #define DEMO_PINT_PIN_INT2_SRC kINPUTMUX_GpioPort0Pin3ToPintsel  /* J1-3 */
+#define DEMO_PIN_NUM           3
 
 /*******************************************************************************
  * Prototypes
@@ -72,14 +73,14 @@ int main(void)
     /* Enable callbacks for PINT0 by Index */
     PINT_EnableCallbackByIndex(PINT, kPINT_PinInt0);
 
-#if (FSL_FEATURE_PINT_NUMBER_OF_CONNECTED_OUTPUTS > 1U)
+#if (DEMO_PIN_NUM > 1U)
     /* Setup Pin Interrupt 1 for falling edge */
     PINT_PinInterruptConfig(PINT, kPINT_PinInt1, kPINT_PinIntEnableFallEdge, pint_intr_callback);
     /* Enable callbacks for PINT1 by Index */
     PINT_EnableCallbackByIndex(PINT, kPINT_PinInt1);
 #endif
 
-#if (FSL_FEATURE_PINT_NUMBER_OF_CONNECTED_OUTPUTS > 2U)
+#if (DEMO_PIN_NUM > 2U)
     /* Setup Pin Interrupt 2 for falling edge */
     PINT_PinInterruptConfig(PINT, kPINT_PinInt2, kPINT_PinIntEnableFallEdge, pint_intr_callback);
     /* Enable callbacks for PINT2 by Index */

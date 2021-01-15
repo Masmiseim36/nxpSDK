@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2017 - 2018 NXP
+ * Copyright 2017 - 2018,2020 NXP
  * All rights reserved.
  *
  *
@@ -452,8 +452,9 @@ usb_status_t USB_DeviceGetConfigurationDescriptor(
         /*g_detachRequest = 0U;*/
         configurationDescriptor->buffer = g_UsbDeviceConfigurationDescriptor;
         configurationDescriptor->length = USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL;
+        return kStatus_USB_Success;
     }
-    return kStatus_USB_Success;
+    return kStatus_USB_InvalidRequest;
 }
 
 /* Get device string descriptor request */

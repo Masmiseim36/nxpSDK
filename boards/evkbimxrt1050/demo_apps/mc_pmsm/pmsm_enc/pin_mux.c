@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v7.0
+product: Pins v8.0
 processor: MIMXRT1052xxxxB
 package_id: MIMXRT1052DVL6B
 mcu_data: ksdk2_0
-processor_version: 6.0.1
+processor_version: 0.9.0
 board: IMXRT1050-EVKB
 pin_labels:
 - {pin_num: F14, pin_signal: GPIO_AD_B0_09, label: USER_LED}
@@ -38,32 +38,13 @@ pin_labels:
  * 
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void) {
-    BOARD_InitPins();
     BOARD_InitADC();
-    BOARD_InitENC();
     BOARD_InitLPUART();
     BOARD_InitPWM();
     BOARD_Misc();
     BOARD_InitCMP();
+    BOARD_InitENC();
 }
-
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
-- pin_list: []
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitPins
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitPins(void) {
-}
-
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
@@ -84,53 +65,12 @@ BOARD_InitADC:
  *
  * END ****************************************************************************************************************/
 void BOARD_InitADC(void) {
-  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           
 
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B1_00_GPIO1_IO16,        /* GPIO_AD_B1_00 is configured as GPIO1_IO16 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B1_01_GPIO1_IO17,        /* GPIO_AD_B1_01 is configured as GPIO1_IO17 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B1_02_GPIO1_IO18,        /* GPIO_AD_B1_02 is configured as GPIO1_IO18 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B1_11_GPIO1_IO27,        /* GPIO_AD_B1_11 is configured as GPIO1_IO27 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-}
-
-
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitENC:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
-- pin_list:
-  - {pin_num: M14, peripheral: XBARA1, signal: 'IN, 14', pin_signal: GPIO_AD_B0_00}
-  - {pin_num: H10, peripheral: XBARA1, signal: 'IN, 15', pin_signal: GPIO_AD_B0_01}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitENC
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitENC(void) {
-  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
-
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_00_XBAR1_INOUT14,     /* GPIO_AD_B0_00 is configured as XBAR1_INOUT14 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_01_XBAR1_INOUT15,     /* GPIO_AD_B0_01 is configured as XBAR1_INOUT15 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_GPR->GPR6 = ((IOMUXC_GPR->GPR6 &
-    (~(IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_14_MASK | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_15_MASK))) /* Mask bits to zero which are setting */
-      | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_14(0x00U) /* IOMUXC XBAR_INOUT14 function direction select: XBAR_INOUT as input */
-      | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_15(0x00U) /* IOMUXC XBAR_INOUT15 function direction select: XBAR_INOUT as input */
-    );
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_00_GPIO1_IO16, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_01_GPIO1_IO17, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_02_GPIO1_IO18, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_11_GPIO1_IO27, 0U); 
 }
 
 
@@ -151,14 +91,10 @@ BOARD_InitLPUART:
  *
  * END ****************************************************************************************************************/
 void BOARD_InitLPUART(void) {
-  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           
 
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_12_LPUART1_TX,        /* GPIO_AD_B0_12 is configured as LPUART1_TX */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_13_LPUART1_RX,        /* GPIO_AD_B0_13 is configured as LPUART1_RX */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_12_LPUART1_TX, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_13_LPUART1_RX, 0U); 
 }
 
 
@@ -184,28 +120,16 @@ BOARD_InitPWM:
  *
  * END ****************************************************************************************************************/
 void BOARD_InitPWM(void) {
-  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
-  CLOCK_EnableClock(kCLOCK_Xbar1);            /* xbar1 clock (xbar1_clk_enable): 0x03u */
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           
+  CLOCK_EnableClock(kCLOCK_Xbar1);            
 
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_10_FLEXPWM1_PWMA03,   /* GPIO_AD_B0_10 is configured as FLEXPWM1_PWMA03 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_11_FLEXPWM1_PWMB03,   /* GPIO_AD_B0_11 is configured as FLEXPWM1_PWMB03 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_SD_B0_00_FLEXPWM1_PWMA00,   /* GPIO_SD_B0_00 is configured as FLEXPWM1_PWMA00 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_SD_B0_01_FLEXPWM1_PWMB00,   /* GPIO_SD_B0_01 is configured as FLEXPWM1_PWMB00 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_SD_B0_02_FLEXPWM1_PWMA01,   /* GPIO_SD_B0_02 is configured as FLEXPWM1_PWMA01 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_SD_B0_03_FLEXPWM1_PWMB01,   /* GPIO_SD_B0_03 is configured as FLEXPWM1_PWMB01 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputAcmp2Out, kXBARA1_OutputFlexpwm1Fault0); /* ACMP2_OUT output assigned to XBARA1_IN27 input is connected to XBARA1_OUT35 output assigned to FLEXPWM1_FAULT0 */
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_10_FLEXPWM1_PWMA03, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_11_FLEXPWM1_PWMB03, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_00_FLEXPWM1_PWMA00, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_01_FLEXPWM1_PWMB00, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_02_FLEXPWM1_PWMA01, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_03_FLEXPWM1_PWMB01, 0U); 
+  XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputAcmp2Out, kXBARA1_OutputFlexpwm1Fault0); 
 }
 
 
@@ -226,15 +150,11 @@ BOARD_Misc:
  *
  * END ****************************************************************************************************************/
 void BOARD_Misc(void) {
-  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
-  CLOCK_EnableClock(kCLOCK_IomuxcSnvs);       /* iomuxc_snvs clock (iomuxc_snvs_clk_enable): 0x03U */
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           
+  CLOCK_EnableClock(kCLOCK_IomuxcSnvs);       
 
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_09_GPIO1_IO09,        /* GPIO_AD_B0_09 is configured as GPIO1_IO09 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_SNVS_WAKEUP_GPIO5_IO00,          /* WAKEUP is configured as GPIO5_IO00 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_09_GPIO1_IO09, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_SNVS_WAKEUP_GPIO5_IO00, 0U); 
 }
 
 
@@ -254,11 +174,41 @@ BOARD_InitCMP:
  *
  * END ****************************************************************************************************************/
 void BOARD_InitCMP(void) {
-  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           
 
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B1_03_GPIO1_IO19,        /* GPIO_AD_B1_03 is configured as GPIO1_IO19 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B1_03_GPIO1_IO19, 0U); 
+}
+
+
+/*
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+BOARD_InitENC:
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
+- pin_list:
+  - {pin_num: M14, peripheral: ENC1, signal: 'PHASE, A', pin_signal: GPIO_AD_B0_00}
+  - {pin_num: H10, peripheral: ENC1, signal: 'PHASE, B', pin_signal: GPIO_AD_B0_01}
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
+ */
+
+/* FUNCTION ************************************************************************************************************
+ *
+ * Function Name : BOARD_InitENC
+ * Description   : Configures pin routing and optionally pin electrical features.
+ *
+ * END ****************************************************************************************************************/
+void BOARD_InitENC(void) {
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           
+  CLOCK_EnableClock(kCLOCK_Xbar1);            
+
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_00_XBAR1_INOUT14, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_01_XBAR1_INOUT15, 0U); 
+  IOMUXC_GPR->GPR6 = ((IOMUXC_GPR->GPR6 &
+    (~(IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_14_MASK | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_15_MASK))) 
+      | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_14(0x00U) 
+      | IOMUXC_GPR_GPR6_IOMUXC_XBAR_DIR_SEL_15(0x00U) 
+    );
+  XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarInout14, kXBARA1_OutputEnc1PhaseAInput); 
+  XBARA_SetSignalsConnection(XBARA1, kXBARA1_InputIomuxXbarInout15, kXBARA1_OutputEnc1PhaseBInput); 
 }
 
 /***********************************************************************************************************************

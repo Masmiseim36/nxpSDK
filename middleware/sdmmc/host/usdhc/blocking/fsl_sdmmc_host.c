@@ -8,7 +8,7 @@
 
 #include "fsl_sdmmc_host.h"
 #include "fsl_sdmmc_common.h"
-#if (defined __DCACHE_PRESENT) && __DCACHE_PRESENT
+#if ((defined __DCACHE_PRESENT) && __DCACHE_PRESENT) || (defined FSL_FEATURE_HAS_L1CACHE && FSL_FEATURE_HAS_L1CACHE)
 #if !(defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL)
 #include "fsl_cache.h"
 #endif
@@ -82,7 +82,7 @@ uint32_t SDMMCHOST_CardDetectStatus(sdmmchost_t *host)
         SDMMC_OSADelay(1U);
     }
 
-    if ((USDHC_GetPresentStatusFlags(host->hostController.base) & kUSDHC_CardInsertedFlag) != 0U)
+    if ((USDHC_GetPresentStatusFlags(host->hostController.base) & (uint32_t)kUSDHC_CardInsertedFlag) != 0U)
     {
         insertStatus = kSD_Inserted;
         if (sdCD->dat3PullFunc != NULL)
@@ -105,17 +105,17 @@ status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardS
     /* Wait card inserted. */
     do
     {
-        isCardInserted = (SDMMCHOST_CardDetectStatus(host) == kSD_Inserted);
-        if ((waitCardStatus == kSD_Inserted) && isCardInserted)
+        isCardInserted = (SDMMCHOST_CardDetectStatus(host) == (uint32_t)kSD_Inserted);
+        if ((waitCardStatus == (uint32_t)kSD_Inserted) && isCardInserted)
         {
             SDMMC_OSADelay(cd->cdDebounce_ms);
-            if (SDMMCHOST_CardDetectStatus(host) == kSD_Inserted)
+            if (SDMMCHOST_CardDetectStatus(host) == (uint32_t)kSD_Inserted)
             {
                 break;
             }
         }
 
-        if ((isCardInserted == false) && (waitCardStatus == kSD_Removed))
+        if ((isCardInserted == false) && (waitCardStatus == (uint32_t)kSD_Removed))
         {
             break;
         }
@@ -137,6 +137,15 @@ status_t SDMMCHOST_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase,
     return kStatus_Success;
 }
 
+#if SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+
+void SDMMCHOST_InstallCacheAlignBuffer(sdmmchost_t *host, void *cacheAlignBuffer, uint32_t cacheAlignBufferSize)
+{
+    /* blocking adapter not support the cache line align transfer */
+    assert(false);
+}
+#endif
+
 status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *content)
 {
     status_t error = kStatus_Success;
@@ -145,7 +154,7 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
 
     if (content->data != NULL)
     {
-        memset(&dmaConfig, 0, sizeof(usdhc_adma_config_t));
+        (void)memset(&dmaConfig, 0, sizeof(usdhc_adma_config_t));
         /* config adma */
         dmaConfig.dmaMode = kUSDHC_DmaModeAdma2;
 #if !(defined(FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN) && FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN)
@@ -154,9 +163,9 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
         dmaConfig.admaTable      = host->dmaDesBuffer;
         dmaConfig.admaTableWords = host->dmaDesBufferWordsNum;
 
-#if (defined __DCACHE_PRESENT) && __DCACHE_PRESENT
+#if ((defined __DCACHE_PRESENT) && __DCACHE_PRESENT) || (defined FSL_FEATURE_HAS_L1CACHE && FSL_FEATURE_HAS_L1CACHE)
 #if !(defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL)
-        if (host->enableCacheControl == kSDMMCHOST_CacheControlRWBuffer)
+        if (host->enableCacheControl == (uint32_t)kSDMMCHOST_CacheControlRWBuffer)
         {
             /* no matter read or write transfer, clean the cache line anyway to avoid data miss */
             DCACHE_CleanByRange(
@@ -174,12 +183,12 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
         /* host error recovery */
         SDMMCHOST_ErrorRecovery(host->hostController.base);
     }
-#if (defined __DCACHE_PRESENT) && __DCACHE_PRESENT
+#if ((defined __DCACHE_PRESENT) && __DCACHE_PRESENT) || (defined FSL_FEATURE_HAS_L1CACHE && FSL_FEATURE_HAS_L1CACHE)
 #if !(defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL)
     else
     {
         if ((content->data != NULL) && (content->data->rxData != NULL) &&
-            (host->enableCacheControl == kSDMMCHOST_CacheControlRWBuffer))
+            (host->enableCacheControl == (uint32_t)kSDMMCHOST_CacheControlRWBuffer))
         {
             /* no matter read or write transfer, clean the cache line anyway to avoid data miss */
             DCACHE_InvalidateByRange((uint32_t)content->data->rxData,
@@ -198,22 +207,34 @@ static void SDMMCHOST_ErrorRecovery(USDHC_Type *base)
     /* get host present status */
     status = USDHC_GetPresentStatusFlags(base);
     /* check command inhibit status flag */
-    if ((status & kUSDHC_CommandInhibitFlag) != 0U)
+    if ((status & (uint32_t)kUSDHC_CommandInhibitFlag) != 0U)
     {
         /* reset command line */
-        USDHC_Reset(base, kUSDHC_ResetCommand, 100U);
+        (void)USDHC_Reset(base, kUSDHC_ResetCommand, 100U);
     }
     /* check data inhibit status flag */
-    if ((status & kUSDHC_DataInhibitFlag) != 0U)
+    if ((status & (uint32_t)kUSDHC_DataInhibitFlag) != 0U)
     {
         /* reset data line */
-        USDHC_Reset(base, kUSDHC_ResetData, 100U);
+        (void)USDHC_Reset(base, kUSDHC_ResetData, 100U);
     }
 }
 
 void SDMMCHOST_SetCardPower(sdmmchost_t *host, bool enable)
 {
     /* host not support */
+}
+
+void SDMMCHOST_SetCardBusWidth(sdmmchost_t *host, uint32_t dataBusWidth)
+{
+    assert((dataBusWidth != (uint32_t)kUSDHC_DataBusWidth8Bit) ||
+           ((dataBusWidth == (uint32_t)kUSDHC_DataBusWidth8Bit) && SDMMCHOST_INSTANCE_SUPPORT_8_BIT_WIDTH(host) != 0U));
+
+    USDHC_SetDataBusWidth(host->hostController.base, dataBusWidth == (uint32_t)kSDMMC_BusWdith1Bit ?
+                                                         kUSDHC_DataBusWidth1Bit :
+                                                         dataBusWidth == (uint32_t)kSDMMC_BusWdith4Bit ?
+                                                         kUSDHC_DataBusWidth4Bit :
+                                                         kUSDHC_DataBusWidth8Bit);
 }
 
 void SDMMCHOST_PowerOffCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr)
@@ -278,15 +299,7 @@ void SDMMCHOST_Reset(sdmmchost_t *host)
 #endif
 
     /* reset data/command/tuning circuit */
-    USDHC_Reset(base, kUSDHC_ResetAll, 100U);
-}
-
-void SDMMCHOST_SetCardBusWidth(sdmmchost_t *host, uint32_t dataBusWidth)
-{
-    USDHC_SetDataBusWidth(host->hostController.base,
-                          dataBusWidth == kSDMMC_BusWdith1Bit ?
-                              kUSDHC_DataBusWidth1Bit :
-                              dataBusWidth == kSDMMC_BusWdith4Bit ? kUSDHC_DataBusWidth4Bit : kUSDHC_DataBusWidth8Bit);
+    (void)USDHC_Reset(base, kUSDHC_ResetAll, 100U);
 }
 
 void SDMMCHOST_Deinit(sdmmchost_t *host)
@@ -298,7 +311,7 @@ void SDMMCHOST_Deinit(sdmmchost_t *host)
 
 void SDMMCHOST_SwitchToVoltage(sdmmchost_t *host, uint32_t voltage)
 {
-    if (voltage == kSDMMC_OperationVoltage180V)
+    if (voltage == (uint32_t)kSDMMC_OperationVoltage180V)
     {
         UDSHC_SelectVoltage(host->hostController.base, true);
     }
@@ -310,12 +323,13 @@ void SDMMCHOST_SwitchToVoltage(sdmmchost_t *host, uint32_t voltage)
 
 #if SDMMCHOST_SUPPORT_SDR104 || SDMMCHOST_SUPPORT_SDR50 || SDMMCHOST_SUPPORT_HS200 || SDMMCHOST_SUPPORT_HS400
 
-status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t blockSize)
+static status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t blockSize)
 {
     sdmmchost_transfer_t content = {0U};
     sdmmchost_cmd_t command      = {0U};
     sdmmchost_data_t data        = {0U};
     bool tuningError             = true;
+    status_t error               = kStatus_Success;
 
     command.index        = tuningCmd;
     command.argument     = 0U;
@@ -329,7 +343,7 @@ status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd, uint3
     content.command = &command;
     content.data    = &data;
 
-    USDHC_Reset(host->hostController.base, kUSDHC_ResetTuning, 100U);
+    (void)USDHC_Reset(host->hostController.base, kUSDHC_ResetTuning, 100U);
 
     /* disable standard tuning */
     USDHC_EnableStandardTuning(host->hostController.base, SDMMCHOST_STANDARD_TUNING_START, SDMMCHOST_TUINIG_STEP,
@@ -344,8 +358,9 @@ status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd, uint3
 
     while (true)
     {
+        error = SDMMCHOST_TransferFunction(host, &content);
         /* send tuning block */
-        if ((kStatus_Success != SDMMCHOST_TransferFunction(host, &content)))
+        if (kStatus_Success != error)
         {
             return kStatus_SDMMC_TransferFailed;
         }
@@ -364,7 +379,7 @@ status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd, uint3
             /* enable the standard tuning */
             USDHC_EnableStandardTuning(host->hostController.base, SDMMCHOST_STANDARD_TUNING_START,
                                        SDMMCHOST_TUINIG_STEP, true);
-            USDHC_AdjustDelayForManualTuning(host->hostController.base, SDMMCHOST_STANDARD_TUNING_START);
+            (void)USDHC_AdjustDelayForManualTuning(host->hostController.base, SDMMCHOST_STANDARD_TUNING_START);
         }
         else
         {
@@ -386,7 +401,7 @@ status_t SDMMCHOST_ExecuteStdTuning(sdmmchost_t *host, uint32_t tuningCmd, uint3
     return kStatus_Success;
 }
 
-status_t SDMMCHOST_ReceiveTuningBlock(sdmmchost_t *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t size)
+static status_t SDMMCHOST_ReceiveTuningBlock(sdmmchost_t *host, uint32_t tuningCmd, uint32_t *revBuf, uint32_t size)
 {
     assert(revBuf != NULL);
 
@@ -406,24 +421,24 @@ status_t SDMMCHOST_ReceiveTuningBlock(sdmmchost_t *host, uint32_t tuningCmd, uin
     /* set data configurations */
     USDHC_SetDataConfig(base, kUSDHC_TransferDirectionReceive, 1U, size);
     /* enable status */
-    USDHC_EnableInterruptStatus(base,
-                                kUSDHC_CommandCompleteFlag | kUSDHC_CommandErrorFlag | kUSDHC_BufferReadReadyFlag);
+    USDHC_EnableInterruptStatus(base, (uint32_t)kUSDHC_CommandCompleteFlag | (uint32_t)kUSDHC_CommandErrorFlag |
+                                          (uint32_t)kUSDHC_BufferReadReadyFlag);
     /* polling cmd done */
     USDHC_SendCommand(base, &command);
-    while (!(interruptStatus & (kUSDHC_CommandCompleteFlag | kUSDHC_CommandErrorFlag)))
+    while (0U == (interruptStatus & ((uint32_t)kUSDHC_CommandCompleteFlag | (uint32_t)kUSDHC_CommandErrorFlag)))
     {
         interruptStatus = USDHC_GetInterruptStatusFlags(base);
     }
     /* clear interrupt status */
     USDHC_ClearInterruptStatusFlags(base, interruptStatus);
     /* check command inhibit status flag */
-    if ((USDHC_GetPresentStatusFlags(base) & kUSDHC_CommandInhibitFlag) != 0U)
+    if ((USDHC_GetPresentStatusFlags(base) & (uint32_t)kUSDHC_CommandInhibitFlag) != 0U)
     {
         /* reset command line */
-        USDHC_Reset(base, kUSDHC_ResetCommand, 100U);
+        (void)USDHC_Reset(base, kUSDHC_ResetCommand, 100U);
     }
 
-    while (!(interruptStatus & kUSDHC_BufferReadReadyFlag))
+    while (0U == (interruptStatus & (uint32_t)kUSDHC_BufferReadReadyFlag))
     {
         interruptStatus = USDHC_GetInterruptStatusFlags(base);
     }
@@ -433,12 +448,13 @@ status_t SDMMCHOST_ReceiveTuningBlock(sdmmchost_t *host, uint32_t tuningCmd, uin
         revBuf[transferredWords++] = USDHC_ReadData(base);
     }
 
-    USDHC_ClearInterruptStatusFlags(base, interruptStatus | kUSDHC_DataCompleteFlag | kUSDHC_DataErrorFlag);
+    USDHC_ClearInterruptStatusFlags(
+        base, interruptStatus | (uint32_t)kUSDHC_DataCompleteFlag | (uint32_t)kUSDHC_DataErrorFlag);
 
     return kStatus_Success;
 }
 
-status_t SDMMC_CheckTuningResult(uint32_t *buffer, uint32_t size)
+static status_t SDMMC_CheckTuningResult(uint32_t *buffer, uint32_t size)
 {
     uint32_t i = 0U;
 
@@ -446,7 +462,7 @@ status_t SDMMC_CheckTuningResult(uint32_t *buffer, uint32_t size)
     {
         if (SDMMC_TuningBlockPattern4Bit[i] != SWAP_WORD_BYTE_SEQUENCE(buffer[i]))
         {
-#if SDMMC_ENABLE_LOG_PRINT
+#if defined SDMMC_ENABLE_LOG_PRINT
             SDMMC_LOG("tuning unmatch target: %x, read :%x\r\n", SDMMC_TuningBlockPattern4Bit[i],
                       SWAP_WORD_BYTE_SEQUENCE(buffer[i]));
 #endif
@@ -467,14 +483,14 @@ status_t SDMMCHOST_ExecuteManualTuning(sdmmchost_t *host, uint32_t tuningCmd, ui
     status_t ret                 = kStatus_Success;
     USDHC_Type *base             = host->hostController.base;
 
-    USDHC_Reset(base, kUSDHC_ResetTuning, 100U);
+    (void)USDHC_Reset(base, kUSDHC_ResetTuning, 100U);
     USDHC_EnableManualTuning(base, true);
 
     while (true)
     {
-        USDHC_AdjustDelayForManualTuning(base, tuningDelayCell);
+        (void)USDHC_AdjustDelayForManualTuning(base, tuningDelayCell);
 
-        SDMMCHOST_ReceiveTuningBlock(host, tuningCmd, buffer, blockSize);
+        (void)SDMMCHOST_ReceiveTuningBlock(host, tuningCmd, buffer, blockSize);
 
         if (kStatus_Success == SDMMC_CheckTuningResult(buffer, blockSize))
         {
@@ -492,7 +508,7 @@ status_t SDMMCHOST_ExecuteManualTuning(sdmmchost_t *host, uint32_t tuningCmd, ui
 
             validWindowCounter++;
 
-#if SDMMC_ENABLE_LOG_PRINT
+#if defined SDMMC_ENABLE_LOG_PRINT
             SDMMC_LOG("tuning pass point: %d\r\n", tuningDelayCell);
 #endif
         }
@@ -509,18 +525,18 @@ status_t SDMMCHOST_ExecuteManualTuning(sdmmchost_t *host, uint32_t tuningCmd, ui
             break;
         }
 
-        memset(buffer, 0U, blockSize);
+        (void)memset(buffer, 0, blockSize);
 
         SDMMC_OSADelay(2U);
     }
-    memset(buffer, 0U, blockSize);
+    (void)memset(buffer, 0, blockSize);
 
     SDMMC_OSADelay(2U);
 
     /* select middle position of the window */
-    USDHC_AdjustDelayForManualTuning(base, validDelayCellStart + validWindowCounter / 2U);
+    (void)USDHC_AdjustDelayForManualTuning(base, validDelayCellStart + validWindowCounter / 2U);
     /* send tuning block with the average delay cell */
-    SDMMCHOST_ReceiveTuningBlock(host, tuningCmd, buffer, blockSize);
+    (void)SDMMCHOST_ReceiveTuningBlock(host, tuningCmd, buffer, blockSize);
     ret = SDMMC_CheckTuningResult(buffer, blockSize);
     /* abort tuning */
     USDHC_EnableManualTuning(base, false);
@@ -552,19 +568,21 @@ status_t SDMMCHOST_StartBoot(sdmmchost_t *host,
 {
     sdmmchost_transfer_t content = {0};
     sdmmchost_data_t data        = {0};
+    status_t error               = kStatus_Success;
 
     USDHC_SetMmcBootConfig(host->hostController.base, hostConfig);
 
     data.blockSize  = hostConfig->blockSize;
     data.blockCount = hostConfig->blockCount;
-    data.rxData     = (uint32_t *)buffer;
+    data.rxData     = (uint32_t *)(uint32_t)buffer;
     data.dataType   = kUSDHC_TransferDataBoot;
 
     content.data    = &data;
     content.command = cmd;
 
+    error = SDMMCHOST_TransferFunction(host, &content);
     /* should check tuning error during every transfer*/
-    if (kStatus_Success != SDMMCHOST_TransferFunction(host, &content))
+    if (kStatus_Success != error)
     {
         return kStatus_SDMMC_TransferFailed;
     }
@@ -577,13 +595,14 @@ status_t SDMMCHOST_ReadBootData(sdmmchost_t *host, sdmmchost_boot_config_t *host
     sdmmchost_cmd_t command      = {0};
     sdmmchost_transfer_t content = {0};
     sdmmchost_data_t data        = {0};
+    status_t error               = kStatus_Success;
 
     USDHC_SetMmcBootConfig(host->hostController.base, hostConfig);
     USDHC_EnableMmcBoot(host->hostController.base, true);
 
     data.blockSize  = hostConfig->blockSize;
     data.blockCount = hostConfig->blockCount;
-    data.rxData     = (uint32_t *)buffer;
+    data.rxData     = (uint32_t *)(uint32_t)buffer;
     data.dataType   = kUSDHC_TransferDataBootcontinous;
     /* no command should be send out  */
     command.type = kCARD_CommandTypeEmpty;
@@ -591,7 +610,8 @@ status_t SDMMCHOST_ReadBootData(sdmmchost_t *host, sdmmchost_boot_config_t *host
     content.data    = &data;
     content.command = &command;
 
-    if (kStatus_Success != SDMMCHOST_TransferFunction(host, &content))
+    error = SDMMCHOST_TransferFunction(host, &content);
+    if (kStatus_Success != error)
     {
         return kStatus_SDMMC_TransferFailed;
     }

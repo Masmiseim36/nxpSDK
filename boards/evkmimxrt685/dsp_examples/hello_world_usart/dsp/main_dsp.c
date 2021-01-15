@@ -29,8 +29,6 @@
  */
 int main(void)
 {
-    char ch;
-
     /* Init board hardware. */
     BOARD_InitBootPins();
     BOARD_InitDebugConsole();

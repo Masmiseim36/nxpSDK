@@ -115,6 +115,10 @@ to initialize out and in sample rate respectively*/
 #define AUDIO_IN_FORMAT_CHANNELS  (0x02U)
 #define AUDIO_IN_FORMAT_BITS      (16)
 #define AUDIO_IN_FORMAT_SIZE      (0x02)
+/* transfer length during 1 ms */
+#define AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME \
+    (AUDIO_OUT_SAMPLING_RATE_KHZ * AUDIO_OUT_FORMAT_CHANNELS * AUDIO_OUT_FORMAT_SIZE)
+
 #if (AUDIO_IN_FORMAT_BITS != AUDIO_OUT_FORMAT_BITS)
 /*defalut in sample rate and out sample rate are same, if the sample setting is different,please remove this error
  manually, then check the AUDIO_FORMAT_BITS .*/
@@ -127,17 +131,57 @@ to initialize out and in sample rate respectively*/
 #error This application default configuration requires AUDIO_IN_FORMAT_CHANNELS equal to AUDIO_OUT_FORMAT_CHANNELS.
 #endif
 #define AUDIO_FORMAT_CHANNELS (AUDIO_OUT_FORMAT_CHANNELS)
-/* Packet size and interval. */
+
+/* Packet size and interval.
+ * note: if ISO out endpoint interval is changed, please change AUDIO_UPDATE_FEEDBACK_DATA accordingly.
+ */
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+#if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#define HS_ISO_OUT_ENDP_INTERVAL (0x01)
+#else
+#define HS_ISO_OUT_ENDP_INTERVAL (0x02) /* consider the capbility of CPU for some Socs, use 2 microframes interval */
+#endif
+#elif (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U))
+#if (defined(USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL) && (USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL > 0U))
+#define HS_ISO_OUT_ENDP_INTERVAL (0x02)
+#else
+#define HS_ISO_OUT_ENDP_INTERVAL (0x01)
+#endif
+#else
+#define HS_ISO_OUT_ENDP_INTERVAL (0x04)
+#endif
+#else
+#define HS_ISO_OUT_ENDP_INTERVAL (0x04) /*interval must be 1ms for usb audio 1.0 */
+#endif
+#define HS_ISO_IN_ENDP_INTERVAL (0x04)
+#if ((!USB_DEVICE_CONFIG_AUDIO_CLASS_2_0) && ((HS_ISO_OUT_ENDP_INTERVAL != 4) || (HS_ISO_IN_ENDP_INTERVAL != 4)))
+#error "iso data and sync endpoint interval must be 1 ms for usb audio 1.0"
+#endif
+#define FS_ISO_OUT_ENDP_INTERVAL          (0x01) /* one frame, 1ms*/
+#define FS_ISO_IN_ENDP_INTERVAL           (0x01)
+#define ISO_OUT_ENDP_INTERVAL             (0x01)
 #define HS_AUDIO_INTERRUPT_IN_PACKET_SIZE (8)
 #define FS_AUDIO_INTERRUPT_IN_PACKET_SIZE (8)
 #define HS_AUDIO_INTERRUPT_IN_INTERVAL    (0x07U) /* 2^(7-1) = 8ms */
 #define FS_AUDIO_INTERRUPT_IN_INTERVAL    (0x08U)
-#define HS_ISO_OUT_ENDP_PACKET_SIZE                            \
-    (AUDIO_OUT_SAMPLING_RATE_KHZ * AUDIO_OUT_FORMAT_CHANNELS * \
-     AUDIO_OUT_FORMAT_SIZE) /* This should be changed to 192 if sampling rate is 48k */
-#define FS_ISO_OUT_ENDP_PACKET_SIZE (AUDIO_OUT_SAMPLING_RATE_KHZ * AUDIO_OUT_FORMAT_CHANNELS * AUDIO_OUT_FORMAT_SIZE)
-#define HS_ISO_IN_ENDP_PACKET_SIZE  (AUDIO_IN_SAMPLING_RATE_KHZ * AUDIO_IN_FORMAT_CHANNELS * AUDIO_IN_FORMAT_SIZE)
+#if ((!USB_DEVICE_CONFIG_AUDIO_CLASS_2_0) && (HS_ISO_OUT_ENDP_INTERVAL != 4))
+#error "iso feedback endpoint interval must be 1 ms for usb audio 1.0"
+#endif
+#if (HS_ISO_OUT_ENDP_INTERVAL < 4)
+#if (HS_ISO_OUT_ENDP_INTERVAL == 1U)
+#define HS_ISO_OUT_ENDP_PACKET_SIZE ((AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME) / 8U)
+#elif (HS_ISO_OUT_ENDP_INTERVAL == 2U)
+#define HS_ISO_OUT_ENDP_PACKET_SIZE ((AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME) / 4U)
+#elif (HS_ISO_OUT_ENDP_INTERVAL == 3U)
+#define HS_ISO_OUT_ENDP_PACKET_SIZE ((AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME) / 2U)
+#endif
+#else
+#define HS_ISO_OUT_ENDP_PACKET_SIZE (AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME)
+#endif
+#define FS_ISO_OUT_ENDP_PACKET_SIZE (AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME)
 #define FS_ISO_IN_ENDP_PACKET_SIZE  (AUDIO_IN_SAMPLING_RATE_KHZ * AUDIO_IN_FORMAT_CHANNELS * AUDIO_IN_FORMAT_SIZE)
+#define HS_ISO_IN_ENDP_PACKET_SIZE  (AUDIO_IN_SAMPLING_RATE_KHZ * AUDIO_IN_FORMAT_CHANNELS * AUDIO_IN_FORMAT_SIZE)
 #if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
 #else
 #if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
@@ -152,15 +196,13 @@ to initialize out and in sample rate respectively*/
 #define FS_ISO_FEEDBACK_ENDP_PACKET_SIZE (3)
 #endif
 #endif
-#define HS_ISO_OUT_ENDP_INTERVAL                 (0x04)
-#define HS_ISO_IN_ENDP_INTERVAL                  (0x04)
-#define FS_ISO_OUT_ENDP_INTERVAL                 (0x01)
-#define FS_ISO_IN_ENDP_INTERVAL                  (0x01)
-#define ISO_OUT_ENDP_INTERVAL                    (0x01)
 #define HS_HID_KEYBOARD_INTERRUPT_IN_PACKET_SIZE (8U)
 #define FS_HID_KEYBOARD_INTERRUPT_IN_PACKET_SIZE (8U)
 #define HS_HID_KEYBOARD_INTERRUPT_IN_INTERVAL    (0x10U) /* 2^(6-1) = 4ms */
 #define FS_HID_KEYBOARD_INTERRUPT_IN_INTERVAL    (0x10U)
+
+#define HS_ISO_FEEDBACK_ENDP_INTERVAL (0x04U)
+#define FS_ISO_FEEDBACK_ENDP_INTERVAL (0x01U)
 
 /* String descriptor length. */
 #define USB_DESCRIPTOR_LENGTH_STRING0 (sizeof(g_UsbDeviceString0))
@@ -184,11 +226,12 @@ to initialize out and in sample rate respectively*/
 #define USB_HID_KEYBOARD_SUBCLASS (0x00)
 #define USB_HID_KEYBOARD_PROTOCOL (0x00)
 
-#define USB_AUDIO_FORMAT_TYPE_I                 (0x01)
 #define USB_AUDIO_STREAM_ENDPOINT_DESCRIPTOR    (0x25)
 #define USB_AUDIO_EP_GENERAL_DESCRIPTOR_SUBTYPE (0x01)
 
-#define USB_AUDIO_CONTROL_CLOCK_SOURCE_ID (0x10)
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+#define USB_AUDIO_CONTROL_CLOCK_SOURCE_ENTITY_ID (0x10)
+#endif
 
 #define USB_AUDIO_RECORDER_CONTROL_INPUT_TERMINAL_ID  (0x01)
 #define USB_AUDIO_RECORDER_CONTROL_FEATURE_UNIT_ID    (0x02)

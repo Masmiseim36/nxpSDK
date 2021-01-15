@@ -1,5 +1,5 @@
 [FileInfo]
-FileName=e:\ESA_new\MicroCANopenPlus\trunk\MCO_CiA401_IMXRT_MCUX_SDK\Example-Config\EDS\CANopen_NXP_SDK_CiA401.eds
+FileName=E:\ESA_new\MicroCANopenPlus\trunk\MCO_CiA401_IMXRT_MCUX_SDK\Example-Config\EDS\CANopen_NXP_SDK_CiA401.eds
 FileVersion=1
 FileRevision=2
 EDSVersion=4.0
@@ -8,8 +8,8 @@ CreatedBy=Pf
 CreationTime=07:06PM
 CreationDate=09-25-2019
 ModifiedBy=Pf
-ModificationTime=10:18AM
-ModificationDate=05-05-2020
+ModificationTime=01:02AM
+ModificationDate=10-16-2020
 
 [Comments]
 Lines=2
@@ -22,7 +22,7 @@ ProductName=CANopen NXP CiA 401
 OrderCode=C0DE0010
 VendorNumber=0xAF0002DC
 ProductNumber=0xC0DE0010
-RevisionNumber=0x20200420
+RevisionNumber=0x20201014
 BaudRate_10=0
 BaudRate_20=0
 BaudRate_50=0
@@ -57,7 +57,7 @@ SupportedObjects=3
 3=0x1018
 
 [OptionalObjects]
-SupportedObjects=24
+SupportedObjects=25
 1=0x1002
 2=0x1003
 3=0x1005
@@ -70,18 +70,19 @@ SupportedObjects=24
 10=0x1015
 11=0x1016
 12=0x1017
-13=0x1400
-14=0x1401
-15=0x1600
-16=0x1601
-17=0x1800
-18=0x1801
-19=0x1A00
-20=0x1A01
-21=0x6000
-22=0x6200
-23=0x6401
-24=0x6411
+13=0x1019
+14=0x1400
+15=0x1401
+16=0x1600
+17=0x1601
+18=0x1800
+19=0x1801
+20=0x1A00
+21=0x1A01
+22=0x6000
+23=0x6200
+24=0x6401
+25=0x6411
 
 [ManufacturerObjects]
 SupportedObjects=1
@@ -219,7 +220,7 @@ DataType=0x0009
 LowLimit=
 HighLimit=
 AccessType=ro
-DefaultValue=EmSA MCOP 7.0 2019-09-25
+DefaultValue=EmSA MCOP 7.10 2020-10-14
 PDOMapping=0
 ObjFlags=0x00
 
@@ -236,7 +237,7 @@ AccessType=const
 DefaultValue=0x04
 PDOMapping=0
 ObjFlags=0x01
-ParameterName=Number of Entries
+ParameterName=Highest Subindex
 
 [1010sub1]
 DataType=0x0007
@@ -295,7 +296,7 @@ AccessType=const
 DefaultValue=0x04
 PDOMapping=0
 ObjFlags=0x01
-ParameterName=Number of Entries
+ParameterName=Highest Subindex
 
 [1011sub1]
 DataType=0x0007
@@ -373,10 +374,10 @@ DataType=0x0005
 LowLimit=
 HighLimit=
 AccessType=const
-DefaultValue=3
+DefaultValue=0x03
 PDOMapping=0
 ObjFlags=0x00
-ParameterName=Number of Entries
+ParameterName=Highest Subindex
 
 [1016sub1]
 DataType=0x0007
@@ -394,7 +395,7 @@ DataType=0x0007
 LowLimit=
 HighLimit=
 AccessType=rw
-DefaultValue=0x00020000
+DefaultValue=0x000203E8
 PDOMapping=0
 ObjFlags=0x00
 ParameterName=Consumer Heartbeat Time 2
@@ -405,7 +406,7 @@ DataType=0x0007
 LowLimit=
 HighLimit=
 AccessType=rw
-DefaultValue=0x00030000
+DefaultValue=0x000303E8
 PDOMapping=0
 ObjFlags=0x00
 ParameterName=Consumer Heartbeat Time 3
@@ -435,7 +436,7 @@ AccessType=const
 DefaultValue=4
 PDOMapping=0
 ObjFlags=0x00
-ParameterName=number of entries
+ParameterName=Highest Subindex
 
 [1018sub1]
 DataType=0x0007
@@ -464,7 +465,7 @@ DataType=0x0007
 LowLimit=
 HighLimit=
 AccessType=const
-DefaultValue=0x20200420
+DefaultValue=0x20201014
 PDOMapping=0
 ObjFlags=0x00
 ParameterName=Revision number
@@ -481,6 +482,17 @@ ObjFlags=0x00
 ParameterName=Serial number
 ObjectType=0x07
 
+[1019]
+ParameterName=SYNC counter overflow value
+ObjectType=0x07
+DataType=0x0005
+LowLimit=
+HighLimit=
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+ObjFlags=0x00
+
 [1400]
 ParameterName=Receive PDO Communication Parameter
 SubNumber=3
@@ -488,13 +500,13 @@ ObjectType=0x09
 
 [1400sub0]
 DataType=0x0005
-LowLimit=0x02
-HighLimit=0x05
+LowLimit=
+HighLimit=
 AccessType=const
 DefaultValue=2
 PDOMapping=0
 ObjFlags=0x00
-ParameterName=Number of Entries
+ParameterName=Highest Subindex
 
 [1400sub1]
 DataType=0x0007
@@ -525,13 +537,13 @@ ObjectType=0x09
 
 [1401sub0]
 DataType=0x0005
-LowLimit=0x02
-HighLimit=0x05
+LowLimit=
+HighLimit=
 AccessType=const
 DefaultValue=2
 PDOMapping=0
 ObjFlags=0x00
-ParameterName=Number of Entries
+ParameterName=Highest Subindex
 
 [1401sub1]
 DataType=0x0007
@@ -568,7 +580,7 @@ AccessType=const
 DefaultValue=4
 PDOMapping=0
 ObjFlags=0x00
-ParameterName=Number of Entries
+ParameterName=Highest Subindex
 
 [1600sub1]
 DataType=0x0007
@@ -627,7 +639,7 @@ AccessType=const
 DefaultValue=2
 PDOMapping=0
 ObjFlags=0x00
-ParameterName=Number of Entries
+ParameterName=Highest Subindex
 
 [1601sub1]
 DataType=0x0007
@@ -653,18 +665,18 @@ ObjectType=0x07
 
 [1800]
 ParameterName=Transmit PDO Communication Parameter
-SubNumber=5
+SubNumber=6
 ObjectType=0x09
 
 [1800sub0]
 DataType=0x0005
-LowLimit=0x02
-HighLimit=0x05
+LowLimit=
+HighLimit=
 AccessType=const
-DefaultValue=5
+DefaultValue=6
 PDOMapping=0
 ObjFlags=0x00
-ParameterName=Number of Entries
+ParameterName=Highest Subindex
 
 [1800sub1]
 DataType=0x0007
@@ -710,20 +722,31 @@ ObjFlags=0x00
 ParameterName=Event Timer
 ObjectType=0x07
 
+[1800sub6]
+DataType=0x0005
+LowLimit=
+HighLimit=
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+ObjFlags=0x00
+ParameterName=Sync Start Value
+ObjectType=0x07
+
 [1801]
 ParameterName=Transmit PDO Communication Parameter
-SubNumber=5
+SubNumber=6
 ObjectType=0x09
 
 [1801sub0]
 DataType=0x0005
-LowLimit=0x02
-HighLimit=0x05
+LowLimit=
+HighLimit=
 AccessType=const
-DefaultValue=5
+DefaultValue=6
 PDOMapping=0
 ObjFlags=0x00
-ParameterName=Number of Entries
+ParameterName=Highest Subindex
 
 [1801sub1]
 DataType=0x0007
@@ -769,6 +792,17 @@ ObjFlags=0x00
 ParameterName=Event Timer
 ObjectType=0x07
 
+[1801sub6]
+DataType=0x0005
+LowLimit=
+HighLimit=
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+ObjFlags=0x00
+ParameterName=Sync Start Value
+ObjectType=0x07
+
 [1A00]
 ParameterName=Transmit PDO Mapping Parameter
 SubNumber=5
@@ -782,7 +816,7 @@ AccessType=const
 DefaultValue=4
 PDOMapping=0
 ObjFlags=0x00
-ParameterName=Number of Entries
+ParameterName=Highest Subindex
 
 [1A00sub1]
 DataType=0x0007
@@ -841,7 +875,7 @@ AccessType=const
 DefaultValue=2
 PDOMapping=0
 ObjFlags=0x00
-ParameterName=Number of Entries
+ParameterName=Highest Subindex
 
 [1A01sub1]
 DataType=0x0007

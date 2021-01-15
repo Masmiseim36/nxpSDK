@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v7.0
+product: Pins v8.0
 processor: MIMXRT1062xxxxA
 package_id: MIMXRT1062DVL6A
 mcu_data: ksdk2_0
-processor_version: 0.7.3
+processor_version: 8.0.3
 board: MIMXRT1060-EVK
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -71,11 +71,11 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_SD_B0_01_GPIO3_IO13,        /* GPIO_SD_B0_01 is configured as GPIO3_IO13 */
       1U);                                    /* Software Input On Field: Force input path of pad GPIO_SD_B0_01 */
   IOMUXC_GPR->GPR26 = ((IOMUXC_GPR->GPR26 &
-    (~(IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK))) /* Mask bits to zero which are setting */
+    (~(BOARD_INITPINS_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK))) /* Mask bits to zero which are setting */
       | IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL(0x00U) /* GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: 0x00U */
     );
   IOMUXC_GPR->GPR28 = ((IOMUXC_GPR->GPR28 &
-    (~(IOMUXC_GPR_GPR28_GPIO_MUX3_GPIO_SEL_MASK))) /* Mask bits to zero which are setting */
+    (~(BOARD_INITPINS_IOMUXC_GPR_GPR28_GPIO_MUX3_GPIO_SEL_MASK))) /* Mask bits to zero which are setting */
       | IOMUXC_GPR_GPR28_GPIO_MUX3_GPIO_SEL(0x00U) /* GPIO3 and GPIO8 share same IO MUX function, GPIO_MUX3 selects one GPIO function: 0x00U */
     );
   IOMUXC_SetPinConfig(

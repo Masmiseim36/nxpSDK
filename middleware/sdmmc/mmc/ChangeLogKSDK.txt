@@ -2,7 +2,16 @@
 @page middleware_log Middleware Change Log
 
 @section mmc MMC Card driver for MCUXpresso SDK
-  The current driver version is 2.4.0.
+  The current driver version is 2.4.1.
+
+  - 2.4.1
+    - Improvements
+      - Improved the voltage window argument of CMD1 according to host capabilty instead of use card ocr directly.
+      - Added host HS200/HS400/8bit bus width capability validation during card initialization.
+      - Used cache line size align buffer for MMC relate api.
+      - Increased the CMD13 timeout count to avoid polling CMD13 time out issue.
+    - Bug Fixes
+      - Fixed violations of MISRA C-2012 rule 11.9, 15.7, 4.7, 16.4, 10.1, 10.3, 10.4, 11.3, 14.4, 10.6, 17.7, 16.1, 16.3.
 
   - 2.4.0
     - Improvements

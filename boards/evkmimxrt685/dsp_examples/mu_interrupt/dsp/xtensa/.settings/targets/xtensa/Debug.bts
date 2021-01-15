@@ -8,17 +8,12 @@
             <key>Includes</key>
             <value flag="-I" inheritance="donotinherit">
               <ListEntry>${xt_project_loc}/..</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../..</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Include</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../devices</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/drivers</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/uart</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../components/serial_manager</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite</ListEntry>
               <ListEntry>${xt_project_loc}/../../../../../../components/lists</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/str</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities/debug_console</ListEntry>
-              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S/utilities</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../devices/MIMXRT685S</ListEntry>
+              <ListEntry>${xt_project_loc}/../../../../../../CMSIS/Include</ListEntry>
             </value>
           </StringListMapEntry>
         </StringListMapOptions>
@@ -29,7 +24,6 @@
               <ListEntry key="DEBUG" value=""/>
               <ListEntry key="XOS_CLOCK_FREQ" value="594000000"/>
               <ListEntry key="SDK_DEBUGCONSOLE" value="1"/>
-              <ListEntry key="SERIAL_PORT_TYPE_UART" value="1"/>
               <ListEntry key="CPU_MIMXRT685SFVKB_dsp" value=""/>
             </value>
           </KeyValueListMapEntry>

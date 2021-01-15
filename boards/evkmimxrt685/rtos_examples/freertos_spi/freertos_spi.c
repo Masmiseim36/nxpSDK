@@ -17,9 +17,9 @@
 #include "fsl_debug_console.h"
 #include "fsl_spi.h"
 #include "fsl_spi_freertos.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 #include <stdbool.h>
 /*******************************************************************************
  * Definitions

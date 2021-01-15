@@ -1,0 +1,14 @@
+What: How to run EAP simulation on windows?
+
+Goal: Be able to process input audio file on your PC without any hardware
+
+How:
+ 1- Create your own audio input file, read W32_Simulation\In\WhereAreInputFiles.txt.
+ 2- Run W32_Simulation\TalArgsTest\RunAllTest.bat
+    => It copy W32_Simulation\release\EAP_Simulator_X.exe to W32_Simulation\EAP_TestParam.exe
+    => It run all the pre-configured configuration located in W32_Simulation\TalArgsTest
+ 3- Modify W32_Simulation\Tal_args.txt to update EAP configuration
+ 4- Re-launch W32_Simulation\EAP_TestParam.exe
+ 5- Listen the output
+
+Note: W32 output audio simulation file is bit exact with EAP embeded library audio output

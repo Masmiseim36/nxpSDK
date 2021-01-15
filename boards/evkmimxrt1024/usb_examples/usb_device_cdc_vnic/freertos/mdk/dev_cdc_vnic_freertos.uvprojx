@@ -328,9 +328,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1024DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1024DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -348,7 +348,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>../../../..;..</IncludePath>
+              <IncludePath>..;../../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -493,7 +493,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-ehci</GroupName>
+          <GroupName>usb/device/source/ehci</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ehci.c</FileName>
@@ -508,7 +508,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -593,7 +593,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
@@ -608,7 +608,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
               <FileName>event_groups.c</FileName>
@@ -648,7 +648,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
               <FileName>croutine.h</FileName>
@@ -748,7 +748,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
@@ -763,7 +763,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
@@ -773,7 +773,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ch9.c</FileName>
@@ -803,7 +803,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
+          <GroupName>usb/device/class</GroupName>
           <Files>
             <File>
               <FileName>usb_device_class.c</FileName>
@@ -818,7 +818,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc</GroupName>
+          <GroupName>usb/device/class/cdc</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_acm.c</FileName>
@@ -833,7 +833,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc_rndis</GroupName>
+          <GroupName>usb/device/class/cdc_rndis</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_rndis.c</FileName>
@@ -948,7 +948,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -963,7 +963,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -993,7 +993,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -1008,7 +1008,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -1048,7 +1048,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -1459,9 +1459,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1024DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, DEBUG, CPU_MIMXRT1024DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1479,7 +1479,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>../../../..;..</IncludePath>
+              <IncludePath>..;../../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -1624,7 +1624,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-ehci</GroupName>
+          <GroupName>usb/device/source/ehci</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ehci.c</FileName>
@@ -1639,7 +1639,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -1724,7 +1724,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
@@ -1739,7 +1739,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
               <FileName>event_groups.c</FileName>
@@ -1779,7 +1779,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
               <FileName>croutine.h</FileName>
@@ -1879,7 +1879,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
@@ -1894,7 +1894,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
@@ -1904,7 +1904,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ch9.c</FileName>
@@ -1934,7 +1934,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
+          <GroupName>usb/device/class</GroupName>
           <Files>
             <File>
               <FileName>usb_device_class.c</FileName>
@@ -1949,7 +1949,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc</GroupName>
+          <GroupName>usb/device/class/cdc</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_acm.c</FileName>
@@ -1964,7 +1964,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc_rndis</GroupName>
+          <GroupName>usb/device/class/cdc_rndis</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_rndis.c</FileName>
@@ -2079,7 +2079,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -2094,7 +2094,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -2124,7 +2124,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -2139,7 +2139,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -2179,7 +2179,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -2590,9 +2590,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1024DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1024DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2610,7 +2610,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>../../../..;..</IncludePath>
+              <IncludePath>..;../../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2755,7 +2755,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-ehci</GroupName>
+          <GroupName>usb/device/source/ehci</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ehci.c</FileName>
@@ -2770,7 +2770,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -2855,7 +2855,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
@@ -2870,7 +2870,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
               <FileName>event_groups.c</FileName>
@@ -2910,7 +2910,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
               <FileName>croutine.h</FileName>
@@ -3010,7 +3010,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
@@ -3025,7 +3025,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
@@ -3035,7 +3035,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ch9.c</FileName>
@@ -3065,7 +3065,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
+          <GroupName>usb/device/class</GroupName>
           <Files>
             <File>
               <FileName>usb_device_class.c</FileName>
@@ -3080,7 +3080,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc</GroupName>
+          <GroupName>usb/device/class/cdc</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_acm.c</FileName>
@@ -3095,7 +3095,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc_rndis</GroupName>
+          <GroupName>usb/device/class/cdc_rndis</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_rndis.c</FileName>
@@ -3210,7 +3210,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -3225,7 +3225,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -3255,7 +3255,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -3270,7 +3270,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -3310,7 +3310,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -3721,9 +3721,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1024DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1, DATA_SECTION_IS_CACHEABLE=1, SKIP_SYSCLK_INIT, NDEBUG, CPU_MIMXRT1024DAG5A, FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE, USB_STACK_FREERTOS, USB_STACK_FREERTOS_HEAP_SIZE=32768, FSL_RTOS_FREE_RTOS, FSL_OSA_BM_TASK_ENABLE=0, FSL_OSA_BM_TIMER_CONFIG=0, SERIAL_PORT_TYPE_UART=1, SDK_DEBUGCONSOLE=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../middleware/usb;../../../../../../middleware/usb/include;../../../../../../middleware/usb/device;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/phyksz8081;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../..;../../../../../../middleware/usb/device;../../../../../../middleware/usb/include;../../../../../../middleware/usb/phy;../../../../../../devices/MIMXRT1024/drivers;../../../../../../components/phyksz8081;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;../../../../../../devices/MIMXRT1024;../../../../../../devices/MIMXRT1024/xip;../../../../xip;../../../../../../devices/MIMXRT1024/utilities/str;../../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../components/lists;../../../../../../components/osa;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3741,7 +3741,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>../../../..;..</IncludePath>
+              <IncludePath>..;../../../..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -3886,7 +3886,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-ehci</GroupName>
+          <GroupName>usb/device/source/ehci</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ehci.c</FileName>
@@ -3901,7 +3901,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -3986,7 +3986,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
@@ -4001,7 +4001,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
               <FileName>event_groups.c</FileName>
@@ -4041,7 +4041,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
               <FileName>croutine.h</FileName>
@@ -4141,7 +4141,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
@@ -4156,7 +4156,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
@@ -4166,7 +4166,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ch9.c</FileName>
@@ -4196,7 +4196,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
+          <GroupName>usb/device/class</GroupName>
           <Files>
             <File>
               <FileName>usb_device_class.c</FileName>
@@ -4211,7 +4211,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc</GroupName>
+          <GroupName>usb/device/class/cdc</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_acm.c</FileName>
@@ -4226,7 +4226,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc_rndis</GroupName>
+          <GroupName>usb/device/class/cdc_rndis</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_rndis.c</FileName>
@@ -4341,7 +4341,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -4356,7 +4356,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -4386,7 +4386,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -4401,7 +4401,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -4441,7 +4441,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>

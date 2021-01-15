@@ -85,10 +85,11 @@
  */
 #ifndef PoolsDetails_c
 #define PoolsDetails_c _block_set_(64, 8, 0) _eol_ _block_set_(128, 2, 1) _eol_ _block_set_(256, 6, 1) _eol_
-#endif
+#endif /* PoolsDetails_c */
+
 #define MEM_BLOCK_DATA_BUFFER_NONAME_DEFINE(blockSize, numberOfBlocks, id)                                        \
-    uint32_t g_poolBuffer##blockSize##_##numberOfBlocks##_##id[(MEM_POOL_SIZE + (numberOfBlocks) * MEM_BLOCK_SIZE + \
-                                                                ((numberOfBlocks) * (blockSize)) + 3U) >>               \
+    uint32_t g_poolBuffer##blockSize##_##numberOfBlocks##_##id[(MEM_POOL_SIZE + (numberOfBlocks)*MEM_BLOCK_SIZE + \
+                                                                ((numberOfBlocks) * (blockSize)) + 3U) >>         \
                                                                2U];
 
 #define MEM_BLOCK_BUFFER_NONAME_DEFINE(blockSize, numberOfBlocks, id)                   \
@@ -97,7 +98,7 @@
         (blockSize), (numberOfBlocks), (id), (0), (uint8_t *)&g_poolBuffer####blockSize##_##numberOfBlocks##_##id[0]}
 #define MEM_BLOCK_NONAME_BUFFER(blockSize, numberOfBlocks, id) \
     (uint8_t *)&g_poolHeadBuffer##blockSize##_##numberOfBlocks##_##id
-#endif /*MEM_MANAGER_PRE_CONFIGURE*/
+#endif /* MEM_MANAGER_PRE_CONFIGURE */
 
 /*!
  * @brief Defines the memory buffer
@@ -207,7 +208,7 @@ mem_status_t MEM_Init(void);
  * @retval kStatus_MemSuccess        Memory manager add buffer succeed.
  * @retval kStatus_MemUnknownError   Memory manager add buffer error occurred.
  */
-mem_status_t MEM_AddBuffer(uint8_t *buffer);
+mem_status_t MEM_AddBuffer(const uint8_t *buffer);
 #endif /* gMemManagerLight */
 
 #if !defined(gMemManagerLight) || (gMemManagerLight == 0)

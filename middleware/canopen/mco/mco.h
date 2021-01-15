@@ -1,7 +1,7 @@
 /**************************************************************************
 MODULE:    MCO
 CONTAINS:  Main MicroCANopen implementation
-COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2019
+COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2020
            All rights reserved. www.em-sa.com/nxp
 DISCLAIM:  Read and understand our disclaimer before using this code!
            www.esacademy.com/disclaim.htm
@@ -10,9 +10,9 @@ DISCLAIM:  Read and understand our disclaimer before using this code!
 LICENSE:   THIS IS THE NXP SDK VERSION OF MICROCANOPEN PLUS
            Licensed under a modified BSD License. See LICENSE.INFO
            file in the project root for full license information.
-VERSION:   7.01, EmSA 02-APR-20
-           $LastChangedDate: 2020-04-02 17:30:41 +0200 (Thu, 02 Apr 2020) $
-           $LastChangedRevision: 4909 $
+VERSION:   7.10, ESA 20-SEP-02
+           $LastChangedDate: 2020-09-14 15:26:54 +0200 (Mon, 14 Sep 2020) $
+           $LastChangedRevision: 5045 $
 ***************************************************************************/
 
 #ifndef _MCO_H
@@ -23,10 +23,16 @@ extern "C" {
 #endif
 
 /**************************************************************************
-Version Information, here V7.00
+Version Information, here V7.10
 **************************************************************************/
 #define _MCOPVERSION_    7
-#define _MCOSUBPVERSION_ 0
+#define _MCOSUBPVERSION_ 10
+
+/**************************************************************************
+CANopen FD Base Specification Information, here
+CiA 1301 Part 0, Sub-part 0, Version 1, Sub-version 0, Class 0
+**************************************************************************/
+#define COFD_BASE_SPEC 0x51500100ul
 
 // The following configuration files need to be supplied by the application
 #include "nodecfg.h"
@@ -95,6 +101,28 @@ CANopen NMT (Network Management) Master Msg and Slave States
 #define NMTSTATE_STOP  4
 #define NMTSTATE_OP    5
 #define NMTSTATE_PREOP 127
+
+/**************************************************************************
+EMCY error codes used when calling MCOP_PushEMCY
+**************************************************************************/
+#define EMCY_NO_ERROR  0x0000 // No Error / Reset
+#define EMCY_INTERN_SW 0x6100 // Internal software - generic (fatal error)
+#define EMCY_DATA_SET  0x6300 // Data set - generic (fatal error)
+#define EMCY_HB_ERR    0x8130 // Life guard error or heartbeat error
+#define EMCY_PROT_ERR  0x8200 // Protocol error - generic
+#define EMCY_PDO_LEN   0x8210 // PDO not processed due to length error
+#define EMCY_SYNC_LEN  0x8240 // SYNC not processed due to length error
+// EMCY active system bits
+#define EMCYSBIT_PROT    (1 << 1) // Protocol
+#define EMCYSBIT_SYNCLEN (1 << 2) // SYNC received has wrong lenth
+
+/**************************************************************************
+CANopen FD error status bits
+**************************************************************************/
+#define ERST_PRIO(prio) (prio & 0x07) // Priority, 0=highest, 7=lowest
+#define ERST_CLASS_NREC 0x08          // Error class, 0=recoverable, 1=non-recoverable
+#define ERST_STATE_OCC  0x10          // Error state, 0=removed, 1=occurred
+#define ERST_STATE_MOCC 0x20          // Error occurred multiple times
 
 /**************************************************************************
 Error codes used when calling MCOUSER_FatalError
@@ -174,12 +202,12 @@ MACROS FOR PLATFORM-ENDIANNESS-INDEPENDENT LITTLE-ENDIAN MEMORY ACCESS
 /**************************************************************************
 MACROS FOR OBJECT DICTIONARY ENTRIES
 **************************************************************************/
-#define GETBYTE(val, pos) ((val >> pos) & 0xFF)
+#define GETBYTE(val, pos) (((val) >> (pos)) & 0xFF)
 #define GETBYTES16(val)   GETBYTE(val, 0), GETBYTE(val, 8)
 #define GETBYTES32(val)   GETBYTE(val, 0), GETBYTE(val, 8), GETBYTE(val, 16), GETBYTE(val, 24)
 
-#define SDOREPLY(index, sub, len, val)             0x43 | ((4 - len) << 2), GETBYTES16(index), sub, GETBYTES32(val)
-#define SDOREPLY4(index, sub, len, d1, d2, d3, d4) 0x43 | ((4 - len) << 2), GETBYTES16(index), sub, d1, d2, d3, d4
+#define SDOREPLY(index, sub, len, val)             0x43 | ((4 - (len)) << 2), GETBYTES16(index), sub, GETBYTES32(val)
+#define SDOREPLY4(index, sub, len, d1, d2, d3, d4) 0x43 | ((4 - (len)) << 2), GETBYTES16(index), sub, d1, d2, d3, d4
 
 #define ODENTRY(index, sub, len, offset)                \
     {                                                   \
@@ -225,8 +253,10 @@ CAN SETTINGS DEPENDING ON THE VERSION OF CAN USED
 // With CAN FD, there are up to 64 bytes per message, otherwise 8
 #if defined(USE_CANOPEN_FD) && (USE_CANOPEN_FD == 1)
 #define CAN_MAX_DATA_SIZE 64
+#define EMCY_DATA_SIZE    20
 #else
 #define CAN_MAX_DATA_SIZE 8
+#define EMCY_DATA_SIZE    8
 #endif
 
 /**************************************************************************
@@ -279,84 +309,86 @@ typedef uint32_t COBID_TYPE;
 /**************************************************************************
 MACROS FOR CAN-ID USAGE
 **************************************************************************/
-#define IS_CANID_LSS_REQUEST(canid) (canid == LSS_MASTER_ID)
+#define IS_CANID_LSS_REQUEST(canid) ((canid) == LSS_MASTER_ID)
 
-#define IS_CANID_LSS_RESPONSE(canid) ((canid == LSS_SLAVE_ID) || ((canid >= 0x07D0) && (canid < 0x07E0)))
+#define IS_CANID_LSS_RESPONSE(canid) (((canid) == LSS_SLAVE_ID) || (((canid) >= 0x07D0) && ((canid) < 0x07E0)))
 
-#define IS_CAN_ID_MY_HB(canid) (canid == 0x700 + MY_NODE_ID)
+#define IS_CAN_ID_MY_HB(canid) ((canid) == 0x700 + MY_NODE_ID)
 
-#define IS_CANID_RESTRICTED(canid)                                                                            \
-    ((canid < 0x0080) || ((canid > 0x0100) && (canid <= 0x0180)) || ((canid > 0x0580) && (canid < 0x0600)) || \
-     ((canid > 0x0600) && (canid < 0x0680)) || ((canid >= 0x06E0) && (canid < 0x0700)) ||                     \
-     ((canid > 0x0700) && (canid < 0x0800)))
+#define IS_CANID_RESTRICTED(canid)                                                               \
+    (((canid) < 0x0080) || (((canid) > 0x0100) && ((canid) <= 0x0180)) ||                        \
+     (((canid) > 0x0580) && ((canid) < 0x0600)) || (((canid) > 0x0600) && ((canid) < 0x0680)) || \
+     (((canid) >= 0x06E0) && ((canid) < 0x0700)) || (((canid) > 0x0700) && ((canid) < 0x0800)))
 
 #if (USE_CiA447 == 1)
 
 #define IS_NODE_ID_VALID(nodeid) ((nodeid >= 2) && (nodeid <= 16))
 
-#define IS_CAN_ID_GWHB(canid) (canid == 0x701)
+#define IS_CAN_ID_GWHB(canid) ((canid) == 0x701)
 
 // SDO Transfers: Server = j, Client = i
 // Request from client node i to server node j
 // (0x240 + ((i-1) & 0xC) << 6) + (((i-1) & 0x03) << 4) + j-1)
 // Response from server node j to client node i
 // (0x1C0 + ((i-1) & 0xC) << 6) + (((i-1) & 0x03) << 4) + j-1)
-#define IS_CAN_ID_EMERGENCY(canid) ((canid >= 0x081) && (canid <= 0x090))
-#define IS_CAN_ID_HEARTBEAT(canid) ((canid >= 0x701) && (canid <= 0x710))
-#define IS_CAN_ID_ISO_TP(canid)                                                                          \
-    ((canid == 0x251) || (canid == 0x262) || (canid == 0x273) || (canid == 0x344) || (canid == 0x355) || \
-     (canid == 0x366) || (canid == 0x377) || (canid == 0x448) || (canid == 0x459) || (canid == 0x46A) || \
-     (canid == 0x47B) || (canid == 0x54C) || (canid == 0x55D) || (canid == 0x56D) || (canid == 0x56E) || \
-     (canid == 0x57F))
+#define IS_CAN_ID_EMERGENCY(canid) (((canid) >= 0x081) && ((canid) <= 0x090))
+#define IS_CAN_ID_HEARTBEAT(canid) (((canid) >= 0x701) && ((canid) <= 0x710))
+#define IS_CAN_ID_ISO_TP(canid)                                                                                    \
+    (((canid) == 0x251) || ((canid) == 0x262) || ((canid) == 0x273) || ((canid) == 0x344) || ((canid) == 0x355) || \
+     ((canid) == 0x366) || ((canid) == 0x377) || ((canid) == 0x448) || ((canid) == 0x459) || ((canid) == 0x46A) || \
+     ((canid) == 0x47B) || ((canid) == 0x54C) || ((canid) == 0x55D) || ((canid) == 0x56D) || ((canid) == 0x56E) || \
+     ((canid) == 0x57F))
 
-#define IS_CAN_ID_SDOREQUEST(canid)   \
-    ((canid == 0x600 + MY_NODE_ID) || \
-     ((canid > 0x0240) && (canid < 0x0580) && ((canid & 0x00CF) == (0x0040 + MY_NODE_ID - 1))))
+#define IS_CAN_ID_SDOREQUEST(canid)     \
+    (((canid) == 0x600 + MY_NODE_ID) || \
+     (((canid) > 0x0240) && ((canid) < 0x0580) && (((canid)&0x00CF) == (0x0040 + MY_NODE_ID - 1))))
 
-#define IS_CAN_ID_SDOREQUEST_TX(canid)        \
-    ((canid >= 0x0240) && (canid < 0x0580) && \
-     ((canid & 0x0730) == (((MY_NODE_ID - 1) & 0x0C) << 6) + (((MY_NODE_ID - 1) & 0x03) << 4)))
+#define IS_CAN_ID_SDOREQUEST_TX(canid)            \
+    (((canid) >= 0x0240) && ((canid) < 0x0580) && \
+     (((canid)&0x0730) == (((MY_NODE_ID - 1) & 0x0C) << 6) + (((MY_NODE_ID - 1) & 0x03) << 4)))
 
-#define IS_CAN_ID_SDORESPONSE(canid)         \
-    ((canid > 0x01C0) && (canid < 0x04FF) && \
-     ((canid & 0x07F0) == 0x1C0 + (((MY_NODE_ID - 1) & 0x0C) << 6) + (((MY_NODE_ID - 1) & 0x03) << 4)))
+#define IS_CAN_ID_SDORESPONSE(canid)             \
+    (((canid) > 0x01C0) && ((canid) < 0x04FF) && \
+     (((canid)&0x07F0) == 0x1C0 + (((MY_NODE_ID - 1) & 0x0C) << 6) + (((MY_NODE_ID - 1) & 0x03) << 4)))
 
-#define IS_CAN_ID_SDORESPONSE_TX(canid) \
-    ((canid == 0x580 + MY_NODE_ID) ||   \
-     ((canid > 0x01C0) && (canid < 0x04FF) && ((canid & 0x00C0) == 0x0C0) && ((canid & 0x000F) == (MY_NODE_ID - 1))))
+#define IS_CAN_ID_SDORESPONSE_TX(canid)                                                                             \
+    (((canid) == 0x580 + MY_NODE_ID) || (((canid) > 0x01C0) && ((canid) < 0x04FF) && (((canid)&0x00C0) == 0x0C0) && \
+                                         (((canid)&0x000F) == (MY_NODE_ID - 1))))
 
-#define CAN_ID_SDORESPONSE_FROM_RXID(canid) (canid - 0x80)
+#define CAN_ID_SDORESPONSE_FROM_RXID(canid) ((canid)-0x80)
 #define CAN_ID_SDOREQUEST(client_nodeid, server_nodeid) \
     (0x240 + (((client_nodeid - 1) & 0x0C) << 6) + (((client_nodeid - 1) & 0x03) << 4) + server_nodeid - 1)
 #define CAN_ID_SDORESPONSE(client_nodeid, server_nodeid) \
     (0x1C0 + (((client_nodeid - 1) & 0x0C) << 6) + (((client_nodeid - 1) & 0x03) << 4) + server_nodeid - 1)
-#define SDOSERVER(tx_canid)                                \
-    ((tx_canid == 0x580 + MY_NODE_ID) ? (MY_NODE_ID - 1) : \
-                                        ((((tx_canid - 0x100) >> 6) & 0x0C) + ((tx_canid >> 4) & 0x03)))
+#define SDOSERVER(tx_canid) ( \
+      ((tx_canid) == 0x580 + MY_NODE_ID) \
+        ? (MY_NODE_ID-1) \
+        : ((((tx_canid)-0x100) >> 6) & 0x0C) + (((tx_canid) >> 4) & 0x03)) \
+    )
 
 #define CAN_ID_PDO_CiA447(node) \
     (0x40000180ul + (((uint16_t)((node - 1) & 7) << 7)) + (((uint16_t)((node - 1) & 8)) << 2))
 
 #define IS_NODE_CiA301_CLIENT() (MY_NODE_ID == 1)
 
-#define IS_CAN_ID_MINE(canid)                                                                              \
-    ((canid == 0x080 + MY_NODE_ID) || (canid == 0x580 + MY_NODE_ID) || (IS_CAN_ID_SDOREQUEST_TX(canid)) || \
-     (IS_CAN_ID_SDORESPONSE_TX(canid)) || (canid == CAN_ID_PDO_CiA447(MY_NODE_ID)))
+#define IS_CAN_ID_MINE(canid)                                                                                    \
+    (((canid) == 0x080 + MY_NODE_ID) || ((canid) == 0x580 + MY_NODE_ID) || (IS_CAN_ID_SDOREQUEST_TX((canid))) || \
+     (IS_CAN_ID_SDORESPONSE_TX((canid))) || ((canid) == CAN_ID_PDO_CiA447(MY_NODE_ID)))
 
 #elif (USE_SDOMESH == 1)
 
 #define IS_NODE_ID_VALID(nodeid) ((nodeid >= 1) && (nodeid <= 16))
 
-#define IS_CAN_ID_EMERGENCY(canid) ((canid >= 0x081) && (canid <= 0x0FF))
-#define IS_CAN_ID_HEARTBEAT(canid) ((canid >= 0x701) && (canid <= 0x77F))
+#define IS_CAN_ID_EMERGENCY(canid) (((canid) >= 0x081) && ((canid) <= 0x0FF))
+#define IS_CAN_ID_HEARTBEAT(canid) (((canid) >= 0x701) && ((canid) <= 0x77F))
 
-#define IS_CAN_ID_SDOREQUEST(canid) (((canid & 0x700) == 0x600) && ((canid & 0x00F) == (MY_NODE_ID - 1)))
+#define IS_CAN_ID_SDOREQUEST(canid) ((((canid)&0x700) == 0x600) && (((canid)&0x00F) == (MY_NODE_ID - 1)))
 #define IS_CAN_ID_SDORESPONSE(canid)                                                                     \
-    (((MY_NODE_ID < 9) && ((canid & 0x700) == 0x500) && ((canid & 0x0F0) == ((MY_NODE_ID + 7) << 4))) || \
-     ((MY_NODE_ID > 8) && ((canid & 0x700) == 0x100) && ((canid & 0x0F0) == ((MY_NODE_ID - 9) << 4))))
+    (((MY_NODE_ID < 9) && (((canid)&0x700) == 0x500) && (((canid)&0x0F0) == ((MY_NODE_ID + 7) << 4))) || \
+     ((MY_NODE_ID > 8) && (((canid)&0x700) == 0x100) && (((canid)&0x0F0) == ((MY_NODE_ID - 9) << 4))))
 #define CAN_ID_SDORESPONSE_FROM_RXID(canid)                                                         \
-    ((((canid & 0x0F0) >> 4) < 8) ? (0x500 + ((((canid & 0x0F0) >> 4) + 8) << 4) + (canid & 0xF)) : \
-                                    (0x100 + ((((canid & 0x0F0) >> 4) - 8) << 4) + (canid & 0xF)))
+    (((((canid)&0x0F0) >> 4) < 8) ? (0x500 + (((((canid)&0x0F0) >> 4) + 8) << 4) + ((canid)&0xF)) : \
+                                    (0x100 + (((((canid)&0x0F0) >> 4) - 8) << 4) + ((canid)&0xF)))
 #define CAN_ID_SDOREQUEST(client_nodeid, server_nodeid) \
     (0x600 + (((client_nodeid - 1) & 0xF) << 4) + ((server_nodeid - 1) & 0xF))
 #define CAN_ID_SDORESPONSE(client_nodeid, server_nodeid)                                                    \
@@ -370,20 +402,20 @@ MACROS FOR CAN-ID USAGE
 #else // standard CANopen
 
 #define IS_NODE_ID_VALID(node_id)  ((node_id >= NODE_ID_MIN) && (node_id <= NODE_ID_MAX))
-#define IS_CAN_ID_EMERGENCY(canid) ((canid >= 0x081) && (canid <= 0x0FF))
-#define IS_CAN_ID_HEARTBEAT(canid) ((canid >= 0x701) && (canid <= 0x77F))
+#define IS_CAN_ID_EMERGENCY(canid) (((canid) >= 0x081) && ((canid) <= 0x0FF))
+#define IS_CAN_ID_HEARTBEAT(canid) (((canid) >= 0x701) && ((canid) <= 0x77F))
 
 #if defined(USE_CANOPEN_FD) && (USE_CANOPEN_FD == 1)
-#define IS_CAN_ID_SDOREQUEST(canid)                      ((canid >= 0x601) && (canid <= 0x67F))
-#define IS_CAN_ID_SDORESPONSE(canid)                     ((canid >= 0x581) && (canid <= 0x5FF))
+#define IS_CAN_ID_SDOREQUEST(canid)                      (((canid) >= 0x601) && ((canid) <= 0x67F))
+#define IS_CAN_ID_SDORESPONSE(canid)                     (((canid) >= 0x581) && ((canid) <= 0x5FF))
 #define CAN_ID_SDORESPONSE_FROM_RXID(canid)              (0x580 + MY_NODE_ID)
 #define CAN_ID_SDOREQUEST(client_nodeid, server_nodeid)  (0x600 + client_nodeid)
 #define CAN_ID_SDORESPONSE(client_nodeid, server_nodeid) (0x580 + server_nodeid)
 #define SDOSERVER(tx_canid)                              0
 #else
-#define IS_CAN_ID_SDOREQUEST(canid)                      (canid == 0x600 + MY_NODE_ID)
-#define IS_CAN_ID_SDORESPONSE(canid)                     ((canid >= 0x581) && (canid <= 0x5FF))
-#define CAN_ID_SDORESPONSE_FROM_RXID(canid)              (canid - 0x80)
+#define IS_CAN_ID_SDOREQUEST(canid)                      ((canid) == 0x600 + MY_NODE_ID)
+#define IS_CAN_ID_SDORESPONSE(canid)                     (((canid) >= 0x581) && ((canid) <= 0x5FF))
+#define CAN_ID_SDORESPONSE_FROM_RXID(canid)              ((canid)-0x80)
 #define CAN_ID_SDOREQUEST(client_nodeid, server_nodeid)  (0x600 + server_nodeid)
 #define CAN_ID_SDORESPONSE(client_nodeid, server_nodeid) (0x580 + server_nodeid)
 #define SDOSERVER(tx_canid)                              0
@@ -496,20 +528,24 @@ typedef struct
     uint16_t last_fatal;          // Last Fatal Error code
     uint16_t last_rxtime;         // Timestamp of last CAN receive
 #if USE_SYNC
-    uint16_t SYNCid; // CAN ID used for SYNC
+#if USE_SYNC_PRODUCER
+    uint32_t SYNC_cycle; // SYNC producer cycle time (OD 1006h)
+#endif
+    COBID_TYPE SYNC_id;  // CAN ID used for SYNC (OD 1005h)
+    uint8_t SYNC_cntovr; // Synchronous counter overflow (OD 1019h) 0=off
 #endif
 #if NR_OF_TPDOS > 255
     uint16_t nrTPDOs;
 #else
 #if NR_OF_TPDOS > 0
-    uint8_t nrTPDOs;
+    uint16_t nrTPDOs;
 #endif
 #endif
 #if NR_OF_RPDOS > 255
     uint16_t nrRPDOs;
 #else
 #if NR_OF_RPDOS > 0
-    uint8_t nrRPDOs;
+    uint16_t nrRPDOs;
 #endif
 #endif
 #if USE_LEDS
@@ -555,7 +591,8 @@ typedef struct
     INHITIM_TYPE inhibit_status; // Status of inhibit timer
 #endif
 #if USE_SYNC
-    uint8_t SYNCcnt; // SYNC counter for counting SYNC signals
+    uint8_t SYNCcnt;   // SYNC counter for counting SYNC signals
+    uint8_t SYNCmatch; // If SYNC with counter is used, trigger on this match
 #endif
     uint8_t TType; // Transmission Type
 } TPDO_CONFIG;
@@ -717,7 +754,7 @@ GLOBAL FUNCTIONS
 
 /**************************************************************************
 DOES:    Initializes the MicroCANopen stack
-         It must be called from within MCOUSER_ResetApplication
+         It must be called from within MCOUSER_ResetCommunication
 RETURNS: TRUE, if init OK, else FALSE (also when unconfigured and in LSS)
 **************************************************************************/
 uint8_t MCO_Init(uint16_t Baudrate, // CAN baudrate in kbit(1000,800,500,250,125,50,25 or 10)
@@ -727,6 +764,15 @@ uint8_t MCO_Init(uint16_t Baudrate, // CAN baudrate in kbit(1000,800,500,250,125
                  uint8_t Node_ID,   // CANopen node ID (1-126)
                  uint16_t Heartbeat // Heartbeat time in ms (0 for none)
 );
+
+/**************************************************************************
+DOES:    (Re-)Initializes CANopen system entries by reading them from the
+         Object Dictionary currently in use. Call after MCO_Init() or
+         whenever loading/activating a new Object Dictionary.
+         Uses globals gSDOResponseTable, gODProcTable, gProcImg
+RETURNS: nothing
+**************************************************************************/
+void MCO_UpdateSystemFromOD(void);
 
 /**************************************************************************
 DOES:    This function initializes a transmit PDO. Once initialized, the
@@ -933,11 +979,20 @@ uint8_t MCOUSER_TPDOReady(uint16_t TPDONr,    // TPDO Number
 /**************************************************************************
 DOES:    This function is called with every SYNC message received.
          It allows the application to now apply all sync-triggered TPDO
-         data to be applied to the application
+         data to be applied to the application.
 RETURNS: nothing
 **************************************************************************/
 void MCOUSER_SYNCReceived(void);
-#endif // USECB_SYNCRECEIVE
+
+/**************************************************************************
+DOES:    This function is called with every SYNC message received.
+         VERSION for SYNC messages WITH counter value.
+         It allows the application to now apply all sync-triggered TPDO
+         data to be applied to the application.
+RETURNS: nothing
+**************************************************************************/
+void MCOUSER_SYNCCNTReceived(uint8_t counter_value);
+#endif
 
 #if USECB_SDO_RD_PI
 /**************************************************************************
@@ -1134,9 +1189,35 @@ uint8_t XPDO_ResetPDOMapEntry(uint8_t TxRx,  // Set to 0 for TPDO, 1 for RPDO
 );
 #endif
 
+#if defined(USECB_EMCY) && USECB_EMCY
+/**************************************************************************
+DOES:    Process pending or clearing Emergency events (set or release).
+USE:     Use this to implement an active error list and to keep track
+         of application specific error codes.
+RETURNS: 0 - No objection from application to transmit EMCY message
+         !=0  - Application requests, that EMCY message is NOT generated
+**************************************************************************/
+uint8_t MCOUSER_EMCY(uint8_t ev_clr,     // set to TRUE if this is to clear a previous EMCY event
+                     uint16_t emcy_code, // 16 bit error code
+                     uint8_t em_1,       // 5 byte manufacturer specific error code
+                     uint8_t em_2,
+                     uint8_t em_3,
+                     uint8_t em_4,
+                     uint8_t em_5
+#if defined(USE_CANOPEN_FD) && (USE_CANOPEN_FD == 1)
+                     ,
+                     uint8_t dev_num,   // logical device number
+                     uint16_t spec_num, // CiA specification number
+                     uint8_t status,    // status
+                     uint32_t time_lo,  // timestamp bits 0-31
+                     uint16_t time_hi   // timestamp bits 32-47
+#endif                                  // USE_CANOPEN_FD
+);
+#endif // USECB_EMCY
+
 /*******************************************************************************
 DOES:    Internal functions of MCOP that get used in multiple modules
-         Seartch tables with OD definitions for a specific index/subindex
+         Search tables with OD definitions for a specific index/subindex
 RETURNS: 0xFFFF if not found, else offset in tabel
 *******************************************************************************/
 uint16_t MCO_SearchOD(uint16_t index,  // Index of OD entry searched
@@ -1152,6 +1233,13 @@ uint8_t XSDO_SearchODGenTable(uint16_t index,   // Index of OD entry searched
                               uint8_t *access,
                               uint32_t *len,
                               uint8_t **pDat);
+
+/**************************************************************************
+DOES:    Internal function, checks if this OD entry is a system entry and
+         if it is applies the data to the system variable(s)
+RETURNS: 0xFFFFFFFF if access success, else SDO abort code
+**************************************************************************/
+uint32_t MCO_ApplySystemEntry(uint16_t index, uint8_t subindex, uint32_t dat);
 
 #if USE_CiA447
 /**************************************************************************

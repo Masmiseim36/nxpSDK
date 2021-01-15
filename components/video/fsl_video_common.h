@@ -1,5 +1,5 @@
 /*
- * Copyright  2017 NXP
+ * Copyright 2017, 2020 NXP
  * All rights reserved.
  *
  *
@@ -10,6 +10,19 @@
 #define _FSL_VIDEO_COMMON_H_
 
 #include "fsl_common.h"
+
+/*
+ * Change log:
+ *
+ *   1.0.2
+ *     - Fixed MISRA-C 2012 issues.
+ *
+ *   1.0.1
+ *     - Update the VIDEO_DelayMs for bare metal.
+ *
+ *   1.0.0
+ *     - Initial version
+ */
 
 /*******************************************************************************
  * Definitions

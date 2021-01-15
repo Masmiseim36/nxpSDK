@@ -27,9 +27,9 @@
 *
 *******************************************************************************/
 
-#include "board.h"
 #include "pin_mux.h"
 
+#include "board.h"
 #include "ewconfig.h"
 #include "ew_bsp_system.h"
 #include "ew_bsp_clock.h"

@@ -100,11 +100,6 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_WL_REG_ON_PORT                                      GPIO1   /*!< PORT device name: GPIO1 */
 #define BOARD_INITPINS_WL_REG_ON_PIN                                         11U   /*!< GPIO1 pin index: 11 */
 
-/* GPIO_AD_B0_09 (coord F14), USER_LED */
-#define BOARD_INITPINS_USER_LED_GPIO                                       GPIO1   /*!< GPIO device name: GPIO1 */
-#define BOARD_INITPINS_USER_LED_PORT                                       GPIO1   /*!< PORT device name: GPIO1 */
-#define BOARD_INITPINS_USER_LED_PIN                                           9U   /*!< GPIO1 pin index: 9 */
-
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

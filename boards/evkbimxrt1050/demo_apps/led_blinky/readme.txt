@@ -7,10 +7,10 @@ The code of this demo has been prepared and updated for use with the MCUXpresso 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -31,6 +31,3 @@ Prepare the Demo
 Running the demo
 ================
 When the demo runs successfully, you will find the LED is blinking.
-Customization options
-=====================
-

@@ -8,10 +8,10 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi_cmsis.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
 #include "fsl_intmux.h"
 #endif
@@ -24,7 +24,7 @@
 #define EXAMPLE_LPSPI_SLAVE_DMA_MUX_BASEADDR DMAMUX
 #define EXAMPLE_LPSPI_SLAVE_DMA_BASEADDR     DMA0
 
-/* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
+/* Select USB1 PLL PFD0 (392.72 MHz) as lpspi clock source */
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT (1U)
 /* Clock divider for master lpspi clock source */
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)

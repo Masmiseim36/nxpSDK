@@ -180,7 +180,7 @@ static char s_paramBuffer[SHELL_BUFFER_SIZE];
 /*
  * \brief Defines the serial manager task's stack
  */
-OSA_TASK_DEFINE(SHELL_Task, SHELL_TASK_PRIORITY, 1, SHELL_TASK_STACK_SIZE, false);
+static OSA_TASK_DEFINE(SHELL_Task, SHELL_TASK_PRIORITY, 1, SHELL_TASK_STACK_SIZE, false);
 #endif
 #endif /* OSA_USED */
 #endif /* SHELL_NON_BLOCKING_MODE */
@@ -459,15 +459,19 @@ void SHELL_Task(shell_handle_t shellHandle)
                     else
                     {
                         endoflinechar = (char)ch;
+                        /* Print new line. */
+                        SHELL_WriteWithCopy(shellContextHandle, "\r\n", 2U); /* MISRA C-2012 Rule 7.4 */
                         /* If command line is not NULL, will start process it. */
                         if (0U != strlen(shellContextHandle->line))
                         {
                             SHELL_ProcessCommand(shellContextHandle, shellContextHandle->line);
                         }
+                        /* Print prompt. */
+                        (void)SHELL_Write(shellContextHandle, shellContextHandle->prompt,
+                                          strlen(shellContextHandle->prompt));
                         /* Reset all params */
                         shellContextHandle->c_pos = shellContextHandle->l_pos = 0;
                         shellContextHandle->hist_current                      = 0;
-                        SHELL_PrintPrompt(shellContextHandle);
                         (void)memset(shellContextHandle->line, 0, sizeof(shellContextHandle->line));
                         continue;
                     }

@@ -29,7 +29,7 @@ Change Log:
     03/26/2009: initial version
 ************************************************************/
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -79,7 +79,6 @@ Change Log:
 
 /** Value for undetermined priv_curr_idx on first entry to new RDH stage */
 #define RDH_STAGE_FIRST_ENTRY_PRIV_IDX (0xff)
-
 
 /** Internally passed structure used to send a CMD_802_11_TPC_INFO command */
 typedef struct
@@ -148,7 +147,6 @@ t_void wlan_11h_init(mlan_adapter *adapter)
     LEAVE();
 }
 
-
 /**
  *  @brief Initialize the 11h parameters and enable 11h when starting an IBSS
  *
@@ -169,7 +167,6 @@ t_void wlan_11h_priv_init(mlan_private *pmpriv)
 
     LEAVE();
 }
-
 
 /**
  *  @brief Check if the current region's regulations require the input channel
@@ -225,4 +222,3 @@ t_bool wlan_11h_radar_detect_required(mlan_private *priv, t_u8 channel)
     LEAVE();
     return required;
 }
-

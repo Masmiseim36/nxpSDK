@@ -52,8 +52,9 @@
  *
  */
 
-#define ARR_SIZE        10
-#define ARR_SIZE_FLT    10
+#define ARR_SIZE     10
+#define ARR_SIZE_FLT 10
+#define ARR_SIZE_DBL 10
 
 volatile unsigned char var8;
 volatile unsigned char var8rw;
@@ -97,15 +98,15 @@ volatile float varFLT;
 volatile float varFLTrw;
 volatile float varFLTinc = 1.0;
 volatile float arrFLT[ARR_SIZE_FLT];
-volatile unsigned int arrFLT_size =  ARR_SIZE_FLT;
+volatile unsigned int arrFLT_size = ARR_SIZE_FLT;
 #endif
 
 #if FMSTR_DEMO_SUPPORT_DBL
 volatile double varDBL;
 volatile double varDBLrw;
 volatile double varDBLinc = 1.0;
-volatile double arrDBL[ARR_SIZE_FLT];
-volatile unsigned int arrDBL_size =  ARR_SIZE_FLT;
+volatile double arrDBL[ARR_SIZE_DBL];
+volatile unsigned int arrDBL_size = ARR_SIZE_DBL;
 #endif
 
 /* count received application commands, just for test purposes */
@@ -123,8 +124,16 @@ typedef enum
 {
     EXAMPLE_ENUM_FIRST_ENTRY,
     EXAMPLE_ENUM_SECOND_ENTRY,
-    EXAMPLE_ENUM_THIRD_ENTRY
+    EXAMPLE_ENUM_THIRD_ENTRY,
 } EXAMPLE_ENUM;
+
+typedef enum
+{
+    SPEED_ZERO   = 0,
+    SPEED_FAST   = 1,
+    SPEED_NORMAL = 20,
+    SPEED_SLOW   = 200,
+} INCREMENT_SPEED;
 
 typedef struct
 {
@@ -144,15 +153,24 @@ typedef struct
     INNER_STRUCT inB;
 } OUTER_STRUCT;
 
-/* Structure type information will be available in the FreeMASTER application
-  (TSA demonstration) */
+/****************************************************************************
+ *
+ * Test variables which make use of the user-defined data types. You are able
+ * to display the variables including the member items in FreeMASTER.
+ *
+ */
+
 volatile OUTER_STRUCT so1, so2;
 volatile INNER_STRUCT si1, si2;
+volatile EXAMPLE_ENUM varENUM;
+volatile INCREMENT_SPEED varIncSpeed;
 
-#if FMSTR_USE_TSA
-/* Example handler of TSA "file" interface handler */
-static FMSTR_BOOL TestFileHandler(FMSTR_URES_OP_CODE opCode, FMSTR_RWI_BUFF *buffer, void *param);
-#endif
+/****************************************************************************
+ * Local prototypes
+ */
+FMSTR_APPCMD_RESULT my_appcmd_handler(FMSTR_APPCMD_CODE nAppcmd, FMSTR_APPCMD_PDATA pData, FMSTR_SIZE nDataLen);
+void my_pipe_handler(FMSTR_HPIPE hpipe);
+void my_pipe_math(FMSTR_HPIPE hpipe);
 
 // clang-format off
 
@@ -227,6 +245,8 @@ FMSTR_TSA_TABLE_BEGIN(first_table)
 
     FMSTR_TSA_RW_VAR(so1, FMSTR_TSA_USERTYPE(OUTER_STRUCT))
     FMSTR_TSA_RW_VAR(si1, FMSTR_TSA_USERTYPE(INNER_STRUCT))
+    FMSTR_TSA_RW_VAR(varENUM, FMSTR_TSA_USERTYPE(EXAMPLE_ENUM))
+    FMSTR_TSA_RW_VAR(varIncSpeed, FMSTR_TSA_USERTYPE(INCREMENT_SPEED))
 
     FMSTR_TSA_STRUCT(OUTER_STRUCT)
     FMSTR_TSA_MEMBER(OUTER_STRUCT, a, FMSTR_TSA_UINT16)
@@ -247,11 +267,16 @@ FMSTR_TSA_TABLE_BEGIN(first_table)
     FMSTR_TSA_CONST(EXAMPLE_ENUM_SECOND_ENTRY)
     FMSTR_TSA_CONST(EXAMPLE_ENUM_THIRD_ENTRY)
 
-    FMSTR_TSA_USER_FILE("testfile.txt", TestFileHandler, NULL)
+    FMSTR_TSA_ENUM(INCREMENT_SPEED)
+    FMSTR_TSA_CONST(SPEED_ZERO)
+    FMSTR_TSA_CONST(SPEED_FAST)
+    FMSTR_TSA_CONST(SPEED_NORMAL)
+    FMSTR_TSA_CONST(SPEED_SLOW)
 
 FMSTR_TSA_TABLE_END()
 
-/*
+/****************************************************************************
+ *
  * This is an example of another TSA table. Typically, you put one table
  * to each .c file where your global or static variables are instantiated.
  */
@@ -320,9 +345,9 @@ FMSTR_TSA_TABLE_BEGIN(files_and_links)
     FMSTR_TSA_MEMFILE("logo.png", logo_png, sizeof(logo_png))
     FMSTR_TSA_MEMFILE("fmstrlogo.png", fmstrlogo_png, sizeof(fmstrlogo_png))
     /* project files in root */
-    FMSTR_TSA_MEMFILE("/demo.pmp", demo_pmp, sizeof(demo_pmp))
+    FMSTR_TSA_MEMFILE("/demo.pmp.zip", demo_pmp, sizeof(demo_pmp))
     /* projects to be made available in FreeMASTER */
-    FMSTR_TSA_PROJECT("FreeMASTER Demonstration Project (embedded in device)", "/demo.pmp")
+    FMSTR_TSA_PROJECT("FreeMASTER Demonstration Project (embedded in device)", "/demo.pmp.zip")
 #endif /* FMSTR_DEMO_ENOUGH_ROM */
 
 /* project file stored online */
@@ -363,7 +388,7 @@ FMSTR_TSA_TABLE_LIST_END()
  *
  */
 
-static FMSTR_APPCMD_RESULT my_appcmd_handler(FMSTR_APPCMD_CODE nAppcmd, FMSTR_APPCMD_PDATA pData, FMSTR_SIZE nDataLen)
+FMSTR_APPCMD_RESULT my_appcmd_handler(FMSTR_APPCMD_CODE nAppcmd, FMSTR_APPCMD_PDATA pData, FMSTR_SIZE nDataLen)
 {
     // the return value is used as the application command result code
     return 0x10;
@@ -379,7 +404,7 @@ static FMSTR_APPCMD_RESULT my_appcmd_handler(FMSTR_APPCMD_CODE nAppcmd, FMSTR_AP
  *
  */
 
-static void my_pipe_handler(FMSTR_HPIPE hpipe)
+void my_pipe_handler(FMSTR_HPIPE hpipe)
 {
     static const char *names[10] = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
 
@@ -407,9 +432,14 @@ static void my_pipe_handler(FMSTR_HPIPE hpipe)
     }
 }
 
-/*
+/****************************************************************************
+ *
+ * Example of more useful pipe handler function which performs multiplication
+ * operation on two input long integers, returning one long integer.
+ *
  */
-static void my_pipe_math(FMSTR_HPIPE hpipe)
+
+void my_pipe_math(FMSTR_HPIPE hpipe)
 {
     unsigned long result;
     unsigned long buff[2];
@@ -419,9 +449,10 @@ static void my_pipe_math(FMSTR_HPIPE hpipe)
     while (FMSTR_PipeRead(hpipe, (FMSTR_ADDR)&buff, 8, 8) == 8)
     {
         result = buff[0] * buff[1];
-        /* to be sure the result was sent, we should check also
-         * the return value of the PipeWrite.  In this simple case
-         * we just ignore the error. */
+
+        /* Note: Thanks to granularity argument, we can be sure that the
+         * data are sent as a whole (if there is a space in the transmit buffer)
+         * or not sent at all. */
         FMSTR_PipeWrite(hpipe, (FMSTR_ADDR)&result, 4, 4);
     }
 }
@@ -434,10 +465,10 @@ static unsigned char pipe2_txb[128];
 static unsigned char pipe3_rxb[8];
 static unsigned char pipe3_txb[4];
 
-/* Pipe welcome strings put to pipe as soon as they are created */
-static char *sz_pipe1_hello = "Hello from embedded application! Pipe 1. ";
-static char *sz_pipe2_hello = "Kind regards from from embedded application! Pipe 2. ";
-static char *sz_pipe_other  = "Send me numbers 0-9 and will echo it back to you on the same pipe ";
+/* Pipe welcome strings put to pipe as soon as application starts. */
+static char *sz_pipe1_hello = "Hello from embedded application! Pipe 1.\n";
+static char *sz_pipe2_hello = "Kind regards from from embedded application! Pipe 2.\n";
+static char *sz_pipe_other  = "Send me numbers 0-9 and I will echo it back to you on the same pipe.\n";
 
 /****************************************************************************
  * General initialization of FreeMASTER example */
@@ -466,6 +497,8 @@ void FMSTR_Example_Init(void)
     ufrac16 = 0;
     ufrac32 = 0;
 
+    arr_size = ARR_SIZE;
+    
 #if FMSTR_DEMO_SUPPORT_I64
     var64    = 0;
     var64rw  = 0;
@@ -478,15 +511,18 @@ void FMSTR_Example_Init(void)
     varFLT    = 0;
     varFLTrw  = 0;
     varFLTinc = 1.0;
+    arrFLT_size = ARR_SIZE_FLT;	
 #endif
 
 #if FMSTR_DEMO_SUPPORT_DBL
     varDBL    = 0;
     varDBLrw  = 0;
     varDBLinc = 1.0;
+    arrDBL_size = ARR_SIZE_DBL;
 #endif
 
-    arr_size = ARR_SIZE;
+    varENUM     = EXAMPLE_ENUM_SECOND_ENTRY;
+    varIncSpeed = SPEED_NORMAL;
 
     for (i = 0; i < ARR_SIZE; i++)
     {
@@ -496,13 +532,17 @@ void FMSTR_Example_Init(void)
 #if FMSTR_DEMO_SUPPORT_I64
         arr64[i] = (unsigned long long)i * 1000;
 #endif
+    }
+
 #if FMSTR_DEMO_SUPPORT_FLT
+    for (i = 0; i < ARR_SIZE_FLT; i++)
         arrFLT[i] = ((float)i) / 10;
 #endif
+
 #if FMSTR_DEMO_SUPPORT_DBL
+    for (i = 0; i < ARR_SIZE_DBL; i++)
         arrDBL[i] = ((double)i) / 10;
 #endif
-    }
 
     /* FreeMASTER driver initialization */
     FMSTR_Init();
@@ -556,7 +596,8 @@ void FMSTR_Example_Init(void)
 /****************************************************************************
  *
  * Poll function of the FreeMASTER example, called periodically from the
- * main application
+ * main application. We increment the variables so the change can be monitored
+ * in Variable Watch or graphs displayed in the FreeMASTER tool.
  *
  */
 
@@ -567,7 +608,7 @@ void FMSTR_Example_Poll(void)
     int i;
 
     /* scope variables, increment once a while */
-    if (++div > 20)
+    if (varIncSpeed && ++div > varIncSpeed)
     {
         var8 += var8inc;
         var16 += var16inc;
@@ -578,12 +619,12 @@ void FMSTR_Example_Poll(void)
 #endif
 #if FMSTR_DEMO_SUPPORT_FLT
         varFLT = varFLT + varFLTinc;
-        for(i=0; i<arrFLT_size; i++)
+        for (i = 0; i < arrFLT_size; i++)
             arrFLT[i]++;
 #endif
 #if FMSTR_DEMO_SUPPORT_DBL
         varDBL = varDBL + varDBLinc;
-        for(i=0; i<arrDBL_size; i++)
+        for (i = 0; i < arrDBL_size; i++)
             arrDBL[i]++;
 #endif
 
@@ -631,31 +672,3 @@ void FMSTR_Example_Poll(void)
        to handle the communication interface and protocol. */
     FMSTR_Poll();
 }
-
-/****************************************************************************
- *
- * This is a virtual file handler which is registerred using a TSA entry
- * above. FreeMASTER 3.0 UI does not enable to access or use the file, it is
- * here for test purposes only. Future versions of FreeMASTER UI will support
- * file access for both read and write.
- */
-
-#if FMSTR_USE_TSA
-static FMSTR_BOOL TestFileHandler(FMSTR_URES_OP_CODE opCode, FMSTR_RWI_BUFF *buffer, void *param)
-{
-	FMSTR_BPTR b = buffer->buff;
-    FMSTR_INDEX i;
-
-    FMSTR_ASSERT_RETURN(buffer != NULL, FMSTR_FALSE);
-
-    /* Read file */
-    if (opCode == FMSTR_URES_OP_READ)
-    {
-    	/* print alphabet */
-    	for(i=0; i<buffer->sizeOutMax; i++)
-            *b = (FMSTR_BCHR)('A' + i%26);
-    }
-
-    return FMSTR_TRUE;
-}
-#endif

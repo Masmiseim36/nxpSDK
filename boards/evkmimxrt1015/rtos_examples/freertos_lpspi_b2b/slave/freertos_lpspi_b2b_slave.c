@@ -17,10 +17,10 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
 #include "fsl_intmux.h"
 #endif
@@ -39,6 +39,8 @@
 /* Clock divider for master lpspi clock source */
 #define EXAMPLE_LPSPI_CLOCK_SOURCE_DIVIDER (7U)
 
+#define VECTOR_TABLE_SIZE (0x400u)
+
 #define TRANSFER_SIZE (512U) /*! Transfer dataSize.*/
 
 /*******************************************************************************
@@ -51,6 +53,12 @@ extern uint32_t LPSPI_GetInstance(LPSPI_Type *base);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+
+#if defined(RELOCATE_VECTOR_TABLE)
+/* RAM Vector Table */
+SDK_ALIGN(static uint32_t s_ivt_ram[VECTOR_TABLE_SIZE / sizeof(uint32_t)], 256);
+#endif
+
 lpspi_slave_handle_t g_s_handle;
 
 uint8_t masterSendBuffer[TRANSFER_SIZE]   = {0};
@@ -73,6 +81,36 @@ static void slave_task(void *pvParameters);
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+/* Relocate Vector Table to RAM */
+void BOARD_RelocateVectorTable(void)
+{
+#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
+    extern uint32_t __Vectors[];
+#elif defined(__MCUXPRESSO)
+    extern uint32_t __Vectors[];
+#elif defined(__ICCARM__)
+    extern uint32_t __Vectors[];
+#elif defined(__GNUC__)
+    extern uint32_t __Vectors[];
+#endif
+
+    uint32_t n;
+    uint32_t irqMaskValue;
+    irqMaskValue = DisableGlobalIRQ();
+
+    /* Copy the vector table from ROM to RAM */
+    for (n = 0; n < (VECTOR_TABLE_SIZE / sizeof(uint32_t)); n++)
+    {
+        s_ivt_ram[n] = __Vectors[n];
+    }
+    /* Point the VTOR to the position of vector table */
+    SCB->VTOR = (uint32_t)s_ivt_ram;
+
+    EnableGlobalIRQ(irqMaskValue);
+    SDK_ISR_EXIT_BARRIER;
+}
+
 /*!
  * @brief Application entry point.
  */
@@ -85,6 +123,10 @@ int main(void)
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
+
+#if defined(RELOCATE_VECTOR_TABLE)
+    BOARD_RelocateVectorTable();
+#endif
 
     /*Set clock source for LPSPI*/
     CLOCK_SetMux(kCLOCK_LpspiMux, EXAMPLE_LPSPI_CLOCK_SOURCE_SELECT);

@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,9 +25,6 @@ mcdrv_pwm3ph_pwma_t g_sM1Pwm3ph;
 
 /* Structure for Encoder driver */
 mcdrv_qd_enc_t g_sM1Enc;
-
-/* Structure for Encoder driver slow loop*/
-mcdrv_qd_enc_t g_sM1EncSlow;
 
 /* Clock setup structure */
 clock_setup_t g_sClockSetup;
@@ -86,7 +83,8 @@ void InitClock(void)
 
     /* Calculate clock dependant variables for PMSM control algorithm */
     g_sClockSetup.ui32FastPeripheralClock = CLOCK_GetFreq(kCLOCK_IpgClk);
-    g_sClockSetup.ui32SysPllClock         = CLOCK_GetFreq(kCLOCK_SysPllClk);
+    g_sClockSetup.ui32SysPllClock = CLOCK_GetFreq(kCLOCK_SysPllClk);
+    g_sClockSetup.ui32CpuFrequency = CLOCK_GetFreq(kCLOCK_CpuClk);
 
     /* Parameters for motor M1 */
     g_sClockSetup.ui16M1PwmFreq   = M1_PWM_FREQ; /* 10 kHz */
@@ -424,7 +422,6 @@ void InitXBARA(void)
     XBARA_Init(XBARA);
 
     /* Configure the XBARA signal connections. (set for sync mode in ADC_ETC) */
-    // XBARA_SetSignalsConnection(XBARA, kXBARA1_InputFlexpwm1Pwm1OutTrig01, kXBARA1_OutputAdcEtcTrig00);
     XBARA_SetSignalsConnection(XBARA, kXBARA1_InputFlexpwm2Pwm1OutTrig01, kXBARA1_OutputAdcEtcTrig00);
 
     /* M1 Enc phase A */
@@ -554,7 +551,7 @@ void InitCMP2(void)
     /* Enable DAC */
     CMP2->DACCR = CMP_DACCR_VOSEL(60) | CMP_DACCR_VRSEL_MASK | CMP_DACCR_DACEN_MASK;
 
-    /* Plus is CMP2_IN3 ~ overcurrent pin */
+    /* Plus is CMP2_IN4 ~ overcurrent pin */
     /* Minus is CMP2_IN7 ~ 6bit reference */
     CMP2->MUXCR = CMP_MUXCR_PSEL(4) | CMP_MUXCR_MSEL(7);
 

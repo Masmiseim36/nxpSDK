@@ -16,10 +16,10 @@ in TWR-SERIAL board for the external PHY.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -76,6 +76,3 @@ The 3 frame transmitted success!
 
 The 20 frame transmitted success!
  A frame received. the length 1000  Dest Address ff:ff:ff:ff:ff:ff Src Address d4:be:d9:45:22:60
-Customization options
-=====================
-

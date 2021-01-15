@@ -9,6 +9,8 @@
 #include "fsl_power.h"
 #include "fsl_pca9420.h"
 #include "board.h"
+#include "fsl_iopctl.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -19,6 +21,8 @@
 #if defined(SDIO_ENABLED) || defined(SD_ENABLED)
 void BOARD_SDCardIoVoltageControl(sdmmc_operation_voltage_t voltage);
 #endif
+void BOARD_SDCardPowerControl(bool enable);
+
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -33,7 +37,7 @@ static sd_io_voltage_t s_ioVoltage = {
 };
 #endif
 static sdmmchost_t s_host;
-OSA_EVENT_HANDLE_DEFINE(s_event);
+
 static pca9420_handle_t pca9420Handle;
 #ifdef SDIO_ENABLED
 static sdio_card_int_t s_sdioInt;
@@ -58,6 +62,18 @@ uint32_t BOARD_USDHC0ClockConfiguration(void)
 }
 
 #if defined(SDIO_ENABLED) || defined(SD_ENABLED)
+void BOARD_SDCardDAT3PullFunction(uint32_t status)
+{
+    if (status == kSD_DAT3PullDown)
+    {
+        IOPCTL_PinMuxSet(IOPCTL, 2U, 3U, 0x51);
+    }
+    else
+    {
+        IOPCTL_PinMuxSet(IOPCTL, 2U, 3U, 0x71);
+    }
+}
+
 void BOARD_SDCardDetectInit(sd_cd_t cd, void *userData)
 {
     /* install card detect callback */
@@ -65,6 +81,14 @@ void BOARD_SDCardDetectInit(sd_cd_t cd, void *userData)
     s_cd.type          = BOARD_SDMMC_SD_CD_TYPE;
     s_cd.callback      = cd;
     s_cd.userData      = userData;
+
+    /* register DAT3 pull function switch function pointer */
+    if (BOARD_SDMMC_SD_CD_TYPE == kSD_DetectCardByHostDATA3)
+    {
+        s_cd.dat3PullFunc = BOARD_SDCardDAT3PullFunction;
+        /* make sure the card is power on for DAT3 pull up */
+        BOARD_SDCardPowerControl(true);
+    }
 }
 
 void BOARD_SDCardIoVoltageControlInit(void)
@@ -145,7 +169,6 @@ void BOARD_SD_Config(void *card, sd_cd_t cd, uint32_t hostIRQPriority, void *use
     ((sd_card_t *)card)->host->hostController.base           = BOARD_SDMMC_SD_HOST_BASEADDR;
     ((sd_card_t *)card)->host->hostController.sourceClock_Hz = BOARD_USDHC0ClockConfiguration();
 
-    ((sd_card_t *)card)->host->hostEvent    = &s_event;
     ((sd_card_t *)card)->usrParam.cd        = &s_cd;
     ((sd_card_t *)card)->usrParam.pwr       = BOARD_SDCardPowerControl;
     ((sd_card_t *)card)->usrParam.ioVoltage = &s_ioVoltage;
@@ -169,8 +192,7 @@ void BOARD_SDIO_Config(void *card, sd_cd_t cd, uint32_t hostIRQPriority, sdio_in
     ((sdio_card_t *)card)->host->hostController.base           = BOARD_SDMMC_SDIO_HOST_BASEADDR;
     ((sdio_card_t *)card)->host->hostController.sourceClock_Hz = BOARD_USDHC0ClockConfiguration();
 
-    ((sdio_card_t *)card)->host->hostEvent = &s_event;
-    ((sdio_card_t *)card)->usrParam.cd     = &s_cd;
+    ((sdio_card_t *)card)->usrParam.cd = &s_cd;
     if (cardInt != NULL)
     {
         s_sdioInt.cardInterrupt                 = cardInt;
@@ -202,8 +224,6 @@ void BOARD_MMC_Config(void *card, uint32_t hostIRQPriority)
 
     ((mmc_card_t *)card)->hostVoltageWindowVCC  = BOARD_SDMMC_MMC_VCC_SUPPLY;
     ((mmc_card_t *)card)->hostVoltageWindowVCCQ = BOARD_SDMMC_MMC_VCCQ_SUPPLY;
-
-    ((mmc_card_t *)card)->host->hostEvent = &s_event;
 
     NVIC_SetPriority(BOARD_SDMMC_MMC_HOST_IRQ, hostIRQPriority);
 }

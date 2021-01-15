@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -163,6 +163,8 @@ GUI_EXTERN WM_CRITICAL_HANDLE * WM__pFirstCriticalHandle;
 
 GUI_EXTERN WM_HWIN   WM__ahDesktopWin[GUI_NUM_LAYERS];
 GUI_EXTERN GUI_COLOR WM__aBkColor[GUI_NUM_LAYERS];
+
+GUI_EXTERN U32 WM__DrawSprite;  // Required when using sprites in combination with the WM.
 
 #undef GUI_EXTERN
 

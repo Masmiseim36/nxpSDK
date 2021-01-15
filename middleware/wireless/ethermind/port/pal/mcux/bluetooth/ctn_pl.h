@@ -1,0 +1,355 @@
+
+/**
+ *  \file ctn_pl.h
+ *
+ *
+ */
+
+/*
+ *  Copyright (C) 2013. Mindtree Ltd.
+ *  All rights reserved.
+ */
+
+#ifndef _H_CTN_PL_
+#define _H_CTN_PL_
+
+/* --------------------------------------------- Header File Inclusion */
+#include "BT_ctn_api.h"
+#include "BT_fops.h"
+
+/* --------------------------------------------- Global Definitions */
+/* Max Folder Name length */
+#define     MAX_CTN_FOLDER_NAME_LEN                     128
+
+/* Max CTN object name including path */
+#define     MAX_CTN_OBJECT_NAME_LEN                     256
+
+
+/* Max CTN handle length */
+#define     MAX_CTN_OBJ_HANDLE_LEN                      34
+
+/* Max. CTN object name length */
+#define     MAX_CTN_OBJ_NAME_LEN                        40
+
+/* Max. no. of objects in given folder */
+#define     MAX_CTN_OBJ_COUNT                           10
+
+/* Reference folder for CTN objects */
+#define     APPL_CTN_ROOT_FOLDER_REFERENCE \
+    BT_FOPS_PATH_JOIN(BT_FOPS_BASE,"data" BT_FOPS_PATH_SEP "ctn")
+
+/* Folder path for ctn objects */
+#define     APPL_CTN_CALENDAR_FOLDER_PATH \
+    BT_FOPS_PATH_SEP "root" BT_FOPS_PATH_SEP "telecom" BT_FOPS_PATH_SEP "CTN" BT_FOPS_PATH_SEP "calendar"
+#define     APPL_CTN_NOTES_FOLDER_PATH \
+    BT_FOPS_PATH_SEP "root" BT_FOPS_PATH_SEP "telecom" BT_FOPS_PATH_SEP "CTN" BT_FOPS_PATH_SEP "notes"
+#define     APPL_CTN_TASKS_FOLDER_PATH \
+    BT_FOPS_PATH_SEP "root" BT_FOPS_PATH_SEP "telecom" BT_FOPS_PATH_SEP "CTN" BT_FOPS_PATH_SEP "tasks"
+
+/* CTN-listing file name */
+#define     APPL_LISTING_FILE                           "CTN-listing.xml"
+
+/* CTN-get file */
+#define     APPL_GET_FILE_NAME                          "CTN-pull-object.ics"
+
+/* CTN update time */
+#define     APPL_CTN_UPDATE_TIME                        "20160531T195810"
+
+/**
+ * CTN Put file name
+ */
+#define     APPL_PUSH_FILE_NAME                         "CTN-push.ics"
+
+/* CTN Event file name */
+#define     APPL_CTN_EVENT_FILE_NAME                    "CTN-event.ics"
+
+/* CTN Account info file */
+#define     APPL_CTN_ACCOUNT_INFO_FILE                  "CTN-account-info.ics"
+
+#define     APPL_CTN_CSE_EMAIL_URL_NAME                 "mindtree.com"
+
+/* CTN object type constants */
+#define     APPL_CTN_OBJ_TYPE_VEVENT                    0x00
+#define     APPL_CTN_OBJ_TYPE_VTODO                     0x01
+#define     APPL_CTN_OBJ_TYPE_VNOTE                     0x02
+
+#define     APPL_CTN_OBJ_TYPE_INVALIDE                  0xFF
+
+/* Bit mask for parameters for filtering */
+#define     CTN_OBJ_PROP_MASK_ATTACHMENT                0x00000001
+#define     CTN_OBJ_PROP_MASK_SUMMARY                   0x00000002
+#define     CTN_OBJ_PROP_MASK_ENDTIME                   0x00000004
+#define     CTN_OBJ_PROP_MASK_ORIGINATOR_NAME           0x00000008
+#define     CTN_OBJ_PROP_MASK_ORIGINATOR_ADDRS          0x00000010
+#define     CTN_OBJ_PROP_MASK_PRIORITY                  0x00000020
+#define     CTN_OBJ_PROP_MASK_PSTATUS                   0x00000040
+#define     CTN_OBJ_PROP_MASK_ALARMSTATUS               0x00000080
+#define     CTN_OBJ_PROP_MASK_SENDSTATUS                0x00000100
+#define     CTN_OBJ_PROP_MASK_RECURRENT                 0x00000200
+
+#define     CTN_OBJ_PROP_MASK_UPDATE                    0x00000400
+#define     CTN_OBJ_PROP_MASK_CALTYPE                   0x00000800
+#define     CTN_OBJ_PROP_MASK_STARTTIME                 0x00001000
+#define     CTN_OBJ_PROP_MASK_SIZE                      0x00002000
+#define     CTN_OBJ_PROP_MASK_HANDLE                    0x00004000
+
+#define     MAX_CTN_ATTR_SIZE                           1024
+
+/* --------------------------------------------- Structures/Data Types */
+typedef struct _CTN_OBJ_ATTR_PL
+{
+    /* objec type */
+    UCHAR   obj_type;
+
+    /**
+     * object handle
+     */
+    CHAR    handle[34];
+
+    /**
+     * latest update timestamp
+     */
+    CHAR    update[32];
+
+    /**
+     * calendar type
+     */
+    CHAR    cal_type[10];
+
+    /**
+     * Summary
+     */
+    CHAR    summary[1024];
+
+    /* start time */
+    CHAR    start_time[32];
+
+    /* end time */
+    CHAR    end_time[32];
+
+    /* originator name */
+    CHAR    org_name[64];
+
+    /* originator address */
+    CHAR    org_addr[64];
+
+    /* priority */
+    CHAR   priority[8];
+
+    /* pstatus property */
+    CHAR   pstaus[32];
+
+    /* alarm property */
+    CHAR   alarm_status[8];
+
+    /* recurrent property */
+    CHAR   recurrent[4];
+
+    /* send status property */
+    CHAR   sentstatus[4];
+
+    /* object size in bytes */
+    UINT16  size;
+
+    /*  object parameter mask */
+    UINT32   obj_param_mask;
+} CTN_OBJ_ATTR_PL;
+
+/**
+ * Structure to hold ctn_get_listing response info.
+ */
+typedef struct _CTN_OBJ_LISTING_INFO_
+{
+    /* No. of objects in listing object */
+    UINT16 listing_count;
+
+    /* CSE time */
+    UCHAR   cse_time_offset[20];
+}CTN_OBJ_LISTING_INFO;
+
+typedef struct _CTN_OBJ_INFO_
+{
+    /* name */
+    CHAR       name[MAX_CTN_OBJ_NAME_LEN];
+
+    /* name len */
+    UCHAR       name_len;
+
+    /* handle */
+    CHAR       handle[MAX_CTN_OBJ_HANDLE_LEN];
+
+    /* hanlde len */
+    UCHAR       handle_len;
+}CTN_OBJ_INFO;
+
+/**
+ * Structure to hold ctn object name, handle in calendar, notes, tasks
+ */
+typedef struct _CTN_OBJ_LIST_INFO_
+{
+    /* object name */
+    CTN_OBJ_INFO   obj_details[MAX_CTN_OBJ_COUNT];
+
+    /* num of objects */
+    UCHAR   num_objects;
+}CTN_OBJ_LIST_INFO;
+
+/* --------------------------------------------- Macros */
+#ifndef CTN_PL_NO_DEBUG
+#define CTN_PL_ERR(...)         BT_debug_error(BT_MODULE_ID_CTN_PL, __VA_ARGS__)
+#else  /* CTN_PL_NO_DEBUG */
+#define CTN_PL_ERR              BT_debug_null
+#endif /* CTN_PL_NO_DEBUG */
+
+#ifdef CTN_PL_DEBUG
+
+#define CTN_PL_TRC(...)         BT_debug_trace(BT_MODULE_ID_CTN_PL, __VA_ARGS__)
+#define CTN_PL_INF(...)         BT_debug_info(BT_MODULE_ID_CTN_PL, __VA_ARGS__)
+
+#define CTN_PL_debug_dump_bytes(data, datalen) BT_debug_dump_bytes(BT_MODULE_ID_CTN_PL, (data), (datalen))
+
+#else /* CTN_PL_DEBUG */
+
+#define CTN_PL_TRC              BT_debug_null
+#define CTN_PL_INF              BT_debug_null
+
+#define CTN_PL_debug_dump_bytes(data, datalen)
+
+#endif /* CTN_PL_DEBUG */
+
+/* --------------------------------------------- Internal Functions */
+/* This function read attribues of an CTN object */
+API_RESULT ctn_get_object_attributes_pl
+           (
+               /* IN */  UCHAR * idir,
+               /* IN */  CHAR * filename,
+               /* OUT */ CTN_OBJ_ATTR_PL * attr
+           );
+
+/* compares timestamp values */
+INT16 ctn_compare_timestamp_pl
+      (
+          /* IN */  UCHAR *t1,
+          /* IN */  UCHAR  t1_len,
+          /* IN */  UCHAR *t2,
+          /* IN */  UCHAR  t2_len
+      );
+
+CHAR  ctn_nibble_to_char(UCHAR nibble);
+
+/* --------------------------------------------- API Declarations */
+
+/**
+ *  \fn BT_ctn_build_object_listing_pl
+ *
+ *  \brief To build CTN object listing object with filters
+ *
+ *  \Description
+ *
+ *
+ *  \param [in] dir_entry
+ *  \param [in] listingfile
+ *  \param [in] appl_param
+ *  \param [out] listing_obj_info
+ *
+ *  \return None
+ */
+API_RESULT BT_ctn_build_object_listing_pl
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* IN */  UCHAR   *listingfile,
+               /* IN */  CTN_APPL_PARAMS      *appl_param,
+               /* OUT */ CTN_OBJ_LISTING_INFO *listing_obj_info
+           );
+
+/**
+ *  \fn BT_ctn_get_object_list
+ *
+ *  \brief To get ctn objects details in given directory
+ *
+ *  \Description
+ *
+ *  \param [in] dir_entry
+ *  \param [in] obj_list_info
+ *
+ *  \return None
+ */
+API_RESULT BT_ctn_get_object_list
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* OUT */ CTN_OBJ_LIST_INFO    *obj_list_info
+           );
+
+/**
+ *  \fn BT_ctn_convert_bytes_to_chars
+ *
+ *  \brief To convert byte stream to character format
+ *
+ *  \Description
+ *
+ *
+ *  \param [in] byte_stream
+ *  \param [in] byte_stream_len
+ *  \param [out] chars
+ *  \param [out] chars_len
+ *
+ *  \return None
+ */
+API_RESULT BT_ctn_convert_bytes_to_chars
+           (
+               /* IN */  UCHAR    *byte_stream,
+               /* IN */  UCHAR     byte_stream__len,
+               /* OUT */ UCHAR    *chrs,
+               /* OUT */ UCHAR    *chrs_len
+           );
+
+/**
+ *  \fn BT_ctn_update_object_handle_pl
+ *
+ *  \brief To add CTN handle property to the object
+ *
+ *  \Description
+ *
+ *
+ *  \param dir_entry
+ *  \param src_file_name
+ *  \param ctn_handle
+ *  \param ctn_handle_len
+ *
+ *  \return None
+ */
+API_RESULT BT_ctn_update_object_handle_pl
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* IN */  UCHAR   *src_file_name,
+               /* IN */  UCHAR   *ctn_handle,
+               /* IN */  UCHAR    ctn_handle_len
+           );
+
+/**
+ *  \fn BT_ctn_build_event_file_pl
+ *
+ *  \brief
+ *      This is function will build CTN event object
+ *
+ *  \Description
+ *
+ *
+ *  \param [in] dir_entry
+ *  \param [in] event_file
+ *  \param [in] event_type
+ *  \param [in] handle
+ *  \param [in] cal_type
+ *
+ *  \return None
+ */
+API_RESULT BT_ctn_build_event_file_pl
+           (
+               /* IN */  UCHAR   *dir_entry,
+               /* IN */  UCHAR   *event_file,
+               /* IN */  UCHAR   *event_type,
+               /* IN */  UCHAR   *handle,
+               /* IN */  UCHAR   *cal_type
+           );
+
+#endif /* _H_CTN_PL_ */

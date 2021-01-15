@@ -124,6 +124,8 @@ static void TimerManagerTask(void *param);
 
 static void TimerEnable(timer_handle_t timerHandle);
 
+static timer_status_t TimerStop(timer_handle_t timerHandle);
+
 /*****************************************************************************
  *****************************************************************************
  * Private memory definitions
@@ -155,7 +157,7 @@ static timermanager_state_t s_timermanager = {0};
 /*
  * \brief Defines the timer thread's stack
  */
-OSA_TASK_DEFINE(TimerManagerTask, TM_TASK_PRIORITY, 1, TM_TASK_STACK_SIZE, false);
+static OSA_TASK_DEFINE(TimerManagerTask, TM_TASK_PRIORITY, 1, TM_TASK_STACK_SIZE, false);
 #endif
 #endif
 
@@ -342,7 +344,7 @@ static void TimerManagerTask(void *param)
                     if (0U != (timerType & (uint32_t)(kTimerModeSingleShot)))
                     {
                         th->remainingUs = 0;
-                        (void)TM_Stop(th);
+                        (void)TimerStop(th);
                         state = (timer_state_t)TimerGetTimerStatus(th);
                     }
                     else
@@ -405,6 +407,44 @@ static void TimerManagerTask(void *param)
 #endif
 #endif
 }
+
+/*! -------------------------------------------------------------------------
+ * \brief     stop a specified timer.
+ * \param[in] timerHandle - the handle of the timer
+ * \return    see definition of timer_status_t
+ *---------------------------------------------------------------------------*/
+static timer_status_t TimerStop(timer_handle_t timerHandle)
+{
+    timer_status_t status = kStatus_TimerInvalidId;
+    timer_state_t state;
+    uint8_t activeLPTimerNum, activeTimerNum;
+    uint32_t regPrimask = DisableGlobalIRQ();
+    if (NULL != timerHandle)
+    {
+        state  = (timer_state_t)TimerGetTimerStatus(timerHandle);
+        status = kStatus_TimerSuccess;
+        if ((state == kTimerStateActive_c) || (state == kTimerStateReady_c))
+        {
+            TimerSetTimerStatus(timerHandle, (uint8_t)kTimerStateInactive_c);
+            DecrementActiveTimerNumber(TimerGetTimerType(timerHandle));
+            /* if no sw active timers are enabled, */
+            /* call the TimerManagerTask() to countdown the ticks and stop the hw timer*/
+            activeLPTimerNum = s_timermanager.numberOfLowPowerActiveTimers;
+            activeTimerNum   = s_timermanager.numberOfActiveTimers;
+            if ((0U == activeTimerNum) && (0U == activeLPTimerNum))
+            {
+                if (0U != s_timermanager.timerHardwareIsRunning)
+                {
+                    HAL_TimerDisable((hal_timer_handle_t)s_timermanager.halTimerHandle);
+                    s_timermanager.timerHardwareIsRunning = 0U;
+                }
+            }
+        }
+    }
+    EnableGlobalIRQ(regPrimask);
+    return status;
+}
+
 /*! -------------------------------------------------------------------------
  * \brief     Enable the specified timer
  * \param[in] timerHandle - the handle of the timer
@@ -726,33 +766,10 @@ timer_status_t TM_Start(timer_handle_t timerHandle, uint8_t timerType, uint32_t 
  */
 timer_status_t TM_Stop(timer_handle_t timerHandle)
 {
-    timer_status_t status = kStatus_TimerInvalidId;
-    timer_state_t state;
-    uint8_t activeLPTimerNum, activeTimerNum;
-
+    timer_status_t status;
     uint32_t regPrimask = DisableGlobalIRQ();
-    if (NULL != timerHandle)
-    {
-        state  = (timer_state_t)TimerGetTimerStatus(timerHandle);
-        status = kStatus_TimerSuccess;
-        if ((state == kTimerStateActive_c) || (state == kTimerStateReady_c))
-        {
-            TimerSetTimerStatus(timerHandle, (uint8_t)kTimerStateInactive_c);
-            DecrementActiveTimerNumber(TimerGetTimerType(timerHandle));
-            /* if no sw active timers are enabled, */
-            /* call the TimerManagerTask() to countdown the ticks and stop the hw timer*/
-            activeLPTimerNum = s_timermanager.numberOfLowPowerActiveTimers;
-            activeTimerNum   = s_timermanager.numberOfActiveTimers;
-            if ((0U == activeTimerNum) && (0U == activeLPTimerNum))
-            {
-                if (0U != s_timermanager.timerHardwareIsRunning)
-                {
-                    HAL_TimerDisable((hal_timer_handle_t)s_timermanager.halTimerHandle);
-                    s_timermanager.timerHardwareIsRunning = 0U;
-                }
-            }
-        }
-    }
+
+    status = TimerStop(timerHandle);
     TimersUpdateSyncTask(HAL_TimerGetCurrentTimerCount((hal_timer_handle_t)s_timermanager.halTimerHandle));
     EnableGlobalIRQ(regPrimask);
     return status;

@@ -231,18 +231,15 @@ struct TensorEvaluator<const TensorImagePatchOp<Rows, Cols, ArgType>, Device>
   enum {
     IsAligned         = false,
     PacketAccess      = TensorEvaluator<ArgType, Device>::PacketAccess,
-    BlockAccessV2     = false,
+    BlockAccess       = false,
     PreferBlockAccess = true,
     Layout            = TensorEvaluator<ArgType, Device>::Layout,
     CoordAccess       = false,
     RawAccess         = false
   };
 
-  typedef internal::TensorBlock<Scalar, Index, NumDims, Layout>
-      OutputTensorBlock;
-
   //===- Tensor block evaluation strategy (see TensorBlock.h) -------------===//
-  typedef internal::TensorBlockNotImplemented TensorBlockV2;
+  typedef internal::TensorBlockNotImplemented TensorBlock;
   //===--------------------------------------------------------------------===//
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE TensorEvaluator( const XprType& op, const Device& device)
@@ -538,14 +535,6 @@ struct TensorEvaluator<const TensorImagePatchOp<Rows, Cols, ArgType>, Device>
                                 8 * TensorOpCost::MulCost<Index>();
     return m_impl.costPerCoeff(vectorized) +
            TensorOpCost(0, 0, compute_cost, vectorized, PacketSize);
-  }
-
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void getResourceRequirements(
-      std::vector<internal::TensorOpResourceRequirements>* resources) const {
-    Eigen::Index block_total_size_max = numext::maxi<Eigen::Index>(
-        1, m_device.lastLevelCacheSize() / sizeof(Scalar));
-    resources->push_back(internal::TensorOpResourceRequirements(
-        internal::kSkewedInnerDims, block_total_size_max));
   }
 
  protected:

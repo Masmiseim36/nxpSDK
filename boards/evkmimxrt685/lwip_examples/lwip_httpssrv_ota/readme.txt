@@ -7,8 +7,8 @@ FreeRTOS. The user uses an Internet browser to upload new version of firmware an
 
 Toolchain supported
 ===================
-- MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.5
+- MCUXpresso  11.3.0
+- IAR embedded Workbench  8.50.9
 
 Hardware requirements
 =====================
@@ -54,17 +54,24 @@ Running the demo
    Your PC should acquire IP configuration automatically via DHCP.
 5. Open web browser and type https://192.168.1.1 (IP address of the board) on the browser address bar.
    The browser should show the main web page of the example.
+   Note: Be sure to include "https" protocol specifier in the address bar, so that your browser attempts to establish secure connection to TCP port 443,
+   as browsers generally tend to use non-secure connection to port 80 by default.
 6. Go to OTA page, select file with udpated firmware and upload it.
 7. After the file is uploaded, click "Reboot" button to start newly uploaded firmware in test mode.
 8. Once the updated firmware executes, the "Accept update" button becomes active. Click it to make the update permanent.
+   Note: Make sure your computer is connected to the AP provided by the board at this point as it might automatically connect to another AP during the reboot. 
+
+Known issue:
+Browser may not display progress of the upload. This is an issue of the browser rather than OTA demo.
+It is possible to watch upload progress in the attached serial console.
 
 Modifying content of static web pages
 To modify content available through the web server you must complete following steps:
-  1. Modify, add or delete files in folder "middleware\lwip\src\apps\httpsrv\mkfs\web_pages".
+  1. Modify, add or delete files in folder "boards\<board_name>\lwip_examples\lwip_httpsrv_ota\webpage".
   2. Run the script file "middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl <directory name>" to generate new "httpsrv_fs_data.c".
-	 For example:
-        $ ./mkfs.pl webpage
-        Processing file webpage/favicon.ico
+     Make sure to execute it from a folder where the file "httpsrv_fs_data.c" is. For example:
+        C:\sdk\boards\<board_name>\lwip_examples\lwip_httpssrv_ota> C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl webpage
+		Processing file webpage/favicon.ico
         Processing file webpage/httpsrv.css
         Processing file webpage/index.html
         Processing file webpage/NXP_logo.png
@@ -72,6 +79,6 @@ To modify content available through the web server you must complete following s
         Processing file webpage/ota_reboot.html
         Processing file webpage/request.js
         Processing file webpage/welcome.html
-        Done.
-  3. Overwrite the middleware\lwip\src\apps\httpsrv\httpsrv_fs_data.c file by the new generated httpsrv_fs_data.c file.
+		Done.
+  3. Make sure the "httpsrv_fs_data.c" file has been overwritten with the newly generated content.
   4. Re-compile the HTTP server application example and download it to your board. 

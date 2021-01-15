@@ -313,14 +313,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1024</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -330,8 +327,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1024/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1297,14 +1294,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1024</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -1314,8 +1308,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1024/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2281,14 +2275,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1024</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -2298,8 +2289,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1024/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3263,14 +3254,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1024</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -3280,8 +3268,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1024/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4247,14 +4235,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1024</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -4264,8 +4249,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1024/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5231,14 +5216,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1024</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities/str</state>
@@ -5248,8 +5230,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1024/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5959,6 +5941,21 @@
     </file>
   </group>
   <group>
+    <name>gpio_driver</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver_irq.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</name>
+    </file>
+  </group>
+  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/drivers/fsl_clock.h</name>
@@ -6073,21 +6070,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1024/utilities/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
-    <name>gpio_driver</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver_irq.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</name>
     </file>
   </group>
   <group>

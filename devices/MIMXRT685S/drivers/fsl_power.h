@@ -20,7 +20,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief power driver version 2.3.0. */
-#define FSL_POWER_DRIVER_VERSION (MAKE_VERSION(2, 3, 0))
+#define FSL_POWER_DRIVER_VERSION (MAKE_VERSION(2UL, 3UL, 0UL))
 /*@}*/
 
 #define MAKE_PD_BITS(reg, slot)  (((reg) << 8) | (slot))

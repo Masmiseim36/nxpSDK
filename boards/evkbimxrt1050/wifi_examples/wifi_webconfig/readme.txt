@@ -12,34 +12,41 @@ A simple LED visualization is implemented. The board LED will be on if the devic
 
 The site allows the user to clear the credentials from the flash memory and reset the board to AP mode. If connection fails, user can also set device to AP mode through serial connection.
 
-The source files for the web interface are located in the webui directory. Use the `./mkfs.pl webui` Perl script in order to convert the webui files into the httpsrv_fs_data.c which is used in order to flash the static files onto the board.
+The source files for the web interface are located in the webui directory. Use the `<path_to_sdk>/middleware/lwip/src/apps/httpsrv/mkfs/mkfs.pl webui` Perl script in order to convert the webui files into the httpsrv_fs_data.c which is used in order to flash the static files onto the board. Make sure the mkfsl.pl script is executed from the same directory where the file httpsrv_fs_data.c and the directory webui are.
 
 Note that Microsoft Internet Explorer is not supported by this webconfig example.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
 - Micro USB cable
 - evkbimxrt1050 board
 - Personal Computer
-- One of the following wifi modules:
+- One of the following WiFi modules:
   - Panasonic PAN9026 SDIO ADAPTER + SD to uSD adapter
-  - AzurWave AW-NM191MA + Murata uSD M.2 Adapter
-  - AzurWave AW-NM191NF-uSD
-
+  - AzureWave AW-NM191NF-uSD
+  - AzureWave AW-AM457-uSD
 
 Board settings
 ==============
-This example is by default prepared to work with Panasonic PAN9026 SDIO ADAPTER, it is configured by project macro: WIFI_BOARD_PAN9026_SDIO.
-If you want use AzurWave AW-NM191MA or AW-NM191NF change project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_NM191MA.
+This example, by default, is built to work with the Panasonic PAN9026 SDIO ADAPTER. It is configured by the project macro: WIFI_BOARD_PAN9026_SDIO.
+If you want use the AzureWave AW-NM191NF-uSD, please change the project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_NM191.
+If you want use the AzureWave AW-AM457-uSD, please change the project macro WIFI_BOARD_PAN9026_SDIO to WIFI_BOARD_AW_AM457.
 
+Jumper settings for AzureWave AW-NM191NF-uSD Module:
+  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
+  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
+
+Jumper settings for AzureWave AW-AM457-uSD Module:
+  - J11 1-2: VIO_SD 1.8V (Voltage level of SDIO pins is 1.8V)
+  - J2  1-2: 3.3V VIO_uSD (Power Supply from uSD connector)
 Prepare the Demo
 ================
 1.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port on the board
@@ -111,11 +118,4 @@ IPv4 Address got from DHCP  : 192.168.14.5
 [i] Waiting....
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-Known Issues
-Using this example with NXP WiFi (wifi_webconfig):
-After entering the wrong password, the board has to be manually reset.
-
-Customization options
-=====================
 

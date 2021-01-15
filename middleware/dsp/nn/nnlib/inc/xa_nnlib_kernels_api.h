@@ -1,16 +1,24 @@
-/*
- * Copyright (c) 2018-2019 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
- * These coded instructions, statements, and computer programs are the
- * copyrighted works and confidential proprietary information of
- * Cadence Design Systems Inc.  They may be adapted and modified by bona fide
- * purchasers for internal use, but neither the original nor any adapted
- * or modified version may be disclosed or distributed to third parties
- * in any manner, medium, or form, in whole or in part, without the prior
- * written consent of Cadence Design Systems Inc.  This software and its
- * derivatives are to be executed solely on products incorporating a Cadence
- * Design Systems processor.
- */
+/*******************************************************************************
+* Copyright (c) 2018-2020 Cadence Design Systems, Inc.
+* 
+* Permission is hereby granted, free of charge, to any person obtaining
+* a copy of this software and associated documentation files (the
+* "Software"), to use this Software with Cadence processor cores only and 
+* not with any other processors and platforms, subject to
+* the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included
+* in all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+******************************************************************************/
 #ifndef __XA_NNLIB_KERNELS_API_H__
 #define __XA_NNLIB_KERNELS_API_H__
 
@@ -55,7 +63,7 @@
  * Output 8b, 16b, 32b of fixed point apis (only for bypass variants) is
  * extracted from 64b accumulator with symmetric rounding. Output 64b of fixed
  * point apis (only for bypass variants) is extracted from 64b accumulator.
- * Output 8b, 16b of fixed point apis (only for activation variants) is 
+ * Output 8b, 16b of fixed point apis (only for activation variants) is
  * symmetrically rounded.
  *
  * matXvec 16x16 Kernels,
@@ -203,7 +211,7 @@ WORD32 xa_nn_matXvec_16x16_16_sigmoid(
          WORD32 bias_precision,                      /*!< [in] bias precision */
          VOID   * __restrict__ p_scratch             /*!< [in,out] scratch: rows x 4 bytes */
   );
-         
+
 WORD32 xa_nn_matXvec_batch_16x16_64(
          WORD64 ** __restrict__ p_out,               /*!< [out] array of result: rows x 1 pointers */
          WORD16 *  __restrict__ p_mat1,              /*!< [in] 16b mat1: rows x cols1 */
@@ -212,10 +220,25 @@ WORD32 xa_nn_matXvec_batch_16x16_64(
          WORD32 rows,                                /*!< [in] number of rows */
          WORD32 cols1,                               /*!< [in] number of columns of mat1 */
          WORD32 row_stride1,                         /*!< [in] row stride for mat1 */
-         WORD32 acc_shift,                             /*!< [in] out accumulator left shift amount */
-         WORD32 bias_shift,                            /*!< [in] bias left shift amount */
+         WORD32 acc_shift,                           /*!< [in] out accumulator left shift amount */
+         WORD32 bias_shift,                          /*!< [in] bias left shift amount */
          WORD32 vec_count                            /*!< [in] number of vectors: 2, 4, 2n */
   );
+
+WORD32 xa_nn_matmul_16x16_16(
+         WORD16 * __restrict__ p_out,                /*!< [out] 16b result: rows x vec count */
+         const WORD16 * __restrict__ p_mat1,         /*!< [in] 16b mat1: rows x cols */
+         const WORD16 * __restrict__ p_mat2,         /*!< [in] 16b mat2: cols x vec_vount */
+         const WORD16 * __restrict__ p_bias,         /*!< [in] 16b bias values */
+         WORD32 rows,                                /*!< [in] number of rows of mat1 */
+         WORD32 cols,                                /*!< [in] number of columns of mat1 */
+         WORD32 row_stride,                          /*!< [in] row stride for mat1 */
+         WORD32 acc_shift,                           /*!< [in] out accumulator left shift amount */
+         WORD32 bias_shift,                          /*!< [in] bias left shift amount */
+         WORD32 vec_count,                           /*!< [in] number of vectors: number of columns in mat2 */
+         WORD32 vec_offset,                          /*!< [in] column stride for mat2 */
+         WORD32 out_offset,                          /*!< [in] column stride for output matrix */
+         WORD32 out_stride);                         /*!< [in] row stride for output matrix */
 
 WORD32 xa_nn_matXvec_8x16_16(
          WORD16 * __restrict__ p_out,                /*!< [out] 16b result: rows x 1 */
@@ -282,7 +305,7 @@ WORD32 xa_nn_matXvec_8x16_16_tanh(
          WORD32 bias_precision,                      /*!< [in] bias precision */
          VOID   * __restrict__ p_scratch             /*!< [in,out] scratch: rows x 4 bytes */
   );
-         
+
 WORD32 xa_nn_matXvec_8x16_16_sigmoid(
          WORD16 * __restrict__ p_out,                /*!< [out] 16b result: rows x 1 */
          WORD8  * __restrict__ p_mat1,               /*!< [in] 8b mat1: rows x cols1 */
@@ -300,7 +323,7 @@ WORD32 xa_nn_matXvec_8x16_16_sigmoid(
          WORD32 bias_precision,                      /*!< [in] bias precision */
          VOID   * __restrict__ p_scratch             /*!< [in,out] scratch: rows x 4 bytes */
   );
-         
+
 WORD32 xa_nn_matXvec_batch_8x16_64(
          WORD64 ** __restrict__ p_out,               /*!< [out] array of result: rows x 1 pointers */
          WORD8  *  __restrict__ p_mat1,              /*!< [in] 8b mat1: rows x cols1 */
@@ -313,7 +336,22 @@ WORD32 xa_nn_matXvec_batch_8x16_64(
          WORD32 bias_shift,                            /*!< [in] bias left shift amount */
          WORD32 vec_count                            /*!< [in] number of vectors: 2, 4, 2n */
   );
- 
+WORD32 xa_nn_matmul_8x16_16(
+         WORD16 * __restrict__ p_out,                /*!< [out] 16b result: rows x vec count */               
+         const WORD8  * __restrict__ p_mat1,         /*!< [in] 8b mat1: rows x cols */
+         const WORD16 * __restrict__ p_mat2,         /*!< [in] 16b mat2: cols x vec_vount */
+         const WORD16 * __restrict__ p_bias,         /*!< [in] 16b bias values */
+         WORD32 rows,                                /*!< [in] number of rows of mat1 */
+         WORD32 cols,                                /*!< [in] number of columns of mat1 */
+         WORD32 row_stride,                          /*!< [in] row stride for mat1 */
+         WORD32 acc_shift,                           /*!< [in] out accumulator left shift amount */
+         WORD32 bias_shift,                          /*!< [in] bias left shift amount */
+         WORD32 vec_count,                           /*!< [in] number of vectors: number of columns in mat2 */
+         WORD32 vec_offset,                          /*!< [in] column stride for mat2 */    
+         WORD32 out_offset,                          /*!< [in] column stride for output matrix */
+         WORD32 out_stride                           /*!< [in] row stride for output matrix */                
+  );
+
 WORD32 xa_nn_matXvec_8x8_8(
          WORD8  * __restrict__ p_out,                /*!< [out] 8b result: rows x 1 */
          WORD8  * __restrict__ p_mat1,               /*!< [in] 8b mat1: rows x cols1 */
@@ -329,7 +367,7 @@ WORD32 xa_nn_matXvec_8x8_8(
          WORD32 acc_shift,                             /*!< [in] out accumulator left shift amount */
          WORD32 bias_shift                             /*!< [in] bias left shift amount */
   );
-         
+
 WORD32 xa_nn_matXvec_8x8_16(
          WORD16 * __restrict__ p_out,                /*!< [out] 16b result: rows x 1 */
          WORD8  * __restrict__ p_mat1,               /*!< [in] 8b mat1: rows x cols1 */
@@ -397,7 +435,7 @@ WORD32 xa_nn_matXvec_8x8_8_sigmoid(
          WORD32 bias_precision,                      /*!< [in] bias precision */
          VOID   * __restrict__ p_scratch             /*!< [in,out] scratch: rows x 4 bytes */
   );
-         
+
 WORD32 xa_nn_matXvec_batch_8x8_32(
          WORD32 ** __restrict__ p_out,               /*!< [out] array of result: rows x 1 pointers */
          WORD8  *  __restrict__ p_mat1,              /*!< [in] 8b mat1: rows x cols1 */
@@ -410,7 +448,23 @@ WORD32 xa_nn_matXvec_batch_8x8_32(
          WORD32 bias_shift,                            /*!< [in] bias left shift amount */
          WORD32 vec_count                            /*!< [in] number of vectors: 2, 4, 2n */
   );
-         
+
+WORD32 xa_nn_matmul_8x8_8(
+         WORD8  * __restrict__ p_out,                /*!< [out] 8b result: rows x vec count */
+         const WORD8  * __restrict__ p_mat1,         /*!< [in] 8b mat1: rows x cols */
+         const WORD8  * __restrict__ p_mat2,         /*!< [in] 8b mat2: cols x vec_vount */
+         const WORD8  * __restrict__ p_bias,         /*!< [in] 8b bias values */
+         WORD32 rows,                                /*!< [in] number of rows of mat1 */
+         WORD32 cols,                                /*!< [in] number of columns of mat1 */
+         WORD32 row_stride,                          /*!< [in] row stride for mat1 */
+         WORD32 acc_shift,                           /*!< [in] out accumulator left shift amount */
+         WORD32 bias_shift,                          /*!< [in] bias left shift amount */
+         WORD32 vec_count,                           /*!< [in] number of vectors: number of columns in mat2 */
+         WORD32 vec_offset,                          /*!< [in] column stride for mat2 */
+         WORD32 out_offset,                          /*!< [in] column stride for output matrix */
+         WORD32 out_stride                           /*!< [in] row stride for output matrix */
+  );
+
 WORD32 xa_nn_matXvec_f32xf32_f32_sigmoid(
        FLOAT32  * __restrict__ p_out,                /*!< [out] f32b result: rows x 1 */
        FLOAT32  * __restrict__ p_mat1,               /*!< [in] f32b mat1: rows x cols1 */
@@ -465,104 +519,151 @@ WORD32 xa_nn_matXvec_batch_f32xf32_f32(
        WORD32 row_stride1,                           /*!< [in] row stride for mat1 */
        WORD32 vec_count                              /*!< [in] number of vectors: 2, 4, 2n */
   );
- 
-WORD32 xa_nn_vec_sigmoid_32_32(               
+
+WORD32 xa_nn_matmul_f32xf32_f32(
+       FLOAT32  * __restrict__ p_out,                /*!< [out] f32 result: rows x vec count */                
+       const FLOAT32  * __restrict__ p_mat1,         /*!< [in] f32 mat1: rows x cols */                        
+       const FLOAT32  * __restrict__ p_mat2,         /*!< [in] f32 mat2: cols x vec_vount */                   
+       const FLOAT32  * __restrict__ p_bias,         /*!< [in] f32 bias values */                              
+       WORD32 rows,                                  /*!< [in] number of rows of mat1 */                      
+       WORD32 cols,                                  /*!< [in] number of columns of mat1 */                   
+       WORD32 row_stride,                            /*!< [in] row stride for mat1 */                         
+       WORD32 vec_count,                             /*!< [in] out accumulator left shift amount */           
+       WORD32 vec_offset,                            /*!< [in] bias left shift amount */
+       WORD32 out_offset,                            /*!< [in] number of vectors: number of columns in mat2 */
+       WORD32 out_stride                             /*!< [in] column stride for mat2 */
+  );                                                 /*!< [in] column stride for output matrix */
+                                                     /*!< [in] row stride for output matrix */
+WORD32 xa_nn_vec_sigmoid_32_32(
     WORD32       * __restrict__ p_out,         /*!< [out] result: vec_length x 1, Q16.15 */
     const WORD32 * __restrict__ p_vec,         /*!< [in] input data: vec_length x 1, Q6.25 */
     WORD32       vec_length                    /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_tanh_32_32(               
+WORD32 xa_nn_vec_tanh_32_32(
     WORD32       * __restrict__ p_out,         /*!< [out] result: vec_length x 1, Q16.15 */
     const WORD32 * __restrict__ p_vec,         /*!< [in] input data: vec_length x 1, Q6.25 */
     WORD32       vec_length                    /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_relu_32_32(               
+WORD32 xa_nn_vec_relu_std_32_32(
+    WORD32       * __restrict__ p_out,         /*!< [out] result: vec_length x 1, Q16.15 */
+    const WORD32 * __restrict__ p_vec,         /*!< [in] input data: vec_length x 1, Q6.25 */
+    WORD32       vec_length                    /*!< [in] length of vectors */
+  );
+
+WORD32 xa_nn_vec_relu_32_32(
     WORD32       * __restrict__ p_out,         /*!< [out] result: vec_length x 1, Q16.15 */
     const WORD32 * __restrict__ p_vec,         /*!< [in] input data: vec_length x 1, Q6.25 */
     WORD32       threshold,                    /*!< [in] threshold, Q16.15 */
     WORD32       vec_length                    /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_relu1_32_32(               
+WORD32 xa_nn_vec_relu1_32_32(
     WORD32       * __restrict__ p_out,         /*!< [out] result: vec_length x 1, Q16.15 */
     const WORD32 * __restrict__ p_vec,         /*!< [in] input data: vec_length x 1, Q6.25 */
     WORD32       vec_length                    /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_relu6_32_32(               
+WORD32 xa_nn_vec_relu6_32_32(
     WORD32       * __restrict__ p_out,         /*!< [out] result: vec_length x 1, Q16.15 */
     const WORD32 * __restrict__ p_vec,         /*!< [in] input data: vec_length x 1, Q6.25 */
     WORD32       vec_length                    /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_softmax_32_32(               
+WORD32 xa_nn_vec_softmax_32_32(
     WORD32       * __restrict__ p_out,         /*!< [out] result: vec_length x 1, Q16.15 */
     const WORD32 * __restrict__ p_vec,         /*!< [in] input data: vec_length x 1, Q6.25 */
     WORD32       vec_length                    /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_sigmoid_f32_f32(               
+WORD32 xa_nn_vec_sigmoid_f32_f32(
     FLOAT32       * __restrict__ p_out,        /*!< [out] result: vec_length x 1, floating point */
     const FLOAT32 * __restrict__ p_vec,        /*!< [in] input data: vec_length x 1, floating point */
     WORD32        vec_length                   /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_tanh_f32_f32(               
+WORD32 xa_nn_vec_tanh_f32_f32(
     FLOAT32       * __restrict__ p_out,        /*!< [out] result: vec_length x 1, floating point */
     const FLOAT32 * __restrict__ p_vec,        /*!< [in] input data: vec_length x 1, floating point */
     WORD32        vec_length                   /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_relu_f32_f32(               
+WORD32 xa_nn_vec_relu_f32_f32(
     FLOAT32       * __restrict__ p_out,        /*!< [out] result: vec_length x 1, floating point */
     const FLOAT32 * __restrict__ p_vec,        /*!< [in] input data: vec_length x 1, floating point */
     FLOAT32       threshold,                   /*!< [in] threshold, floating point */
     WORD32        vec_length                   /*!< [in] length of vectors */
   );
-
-WORD32 xa_nn_vec_relu1_f32_f32(               
+WORD32 xa_nn_vec_relu_std_f32_f32(
     FLOAT32       * __restrict__ p_out,        /*!< [out] result: vec_length x 1, floating point */
     const FLOAT32 * __restrict__ p_vec,        /*!< [in] input data: vec_length x 1, floating point */
     WORD32        vec_length                   /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_relu6_f32_f32(               
+WORD32 xa_nn_vec_relu1_f32_f32(
     FLOAT32       * __restrict__ p_out,        /*!< [out] result: vec_length x 1, floating point */
     const FLOAT32 * __restrict__ p_vec,        /*!< [in] input data: vec_length x 1, floating point */
     WORD32        vec_length                   /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_softmax_f32_f32(               
+WORD32 xa_nn_vec_relu6_f32_f32(
     FLOAT32       * __restrict__ p_out,        /*!< [out] result: vec_length x 1, floating point */
     const FLOAT32 * __restrict__ p_vec,        /*!< [in] input data: vec_length x 1, floating point */
     WORD32        vec_length                   /*!< [in] length of vectors */
   );
- 
-WORD32 xa_nn_vec_sigmoid_32_16(               
+
+WORD32 xa_nn_vec_softmax_f32_f32(
+    FLOAT32       * __restrict__ p_out,        /*!< [out] result: vec_length x 1, floating point */
+    const FLOAT32 * __restrict__ p_vec,        /*!< [in] input data: vec_length x 1, floating point */
+    WORD32        vec_length                   /*!< [in] length of vectors */
+  );
+
+WORD32 xa_nn_vec_sigmoid_32_16(
     WORD16       * __restrict__ p_out,         /*!< [out] result: vec_length x 1, Q0.15 */
     const WORD32 * __restrict__ p_vec,         /*!< [in] input data: vec_length x 1, Q6.25 */
     WORD32       vec_length                    /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_tanh_32_16(               
+WORD32 xa_nn_vec_tanh_32_16(
     WORD16       * __restrict__ p_out,         /*!< [out] result: vec_length x 1, Q0.15 */
     const WORD32 * __restrict__ p_vec,         /*!< [in] input data: vec_length x 1, Q6.25 */
     WORD32       vec_length                    /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_sigmoid_32_8(               
+WORD32 xa_nn_vec_sigmoid_32_8(
     WORD8        * __restrict__ p_out,         /*!< [out] result: vec_length x 1, Q0.7 */
     const WORD32 * __restrict__ p_vec,         /*!< [in] input data: vec_length x 1, Q6.25 */
     WORD32       vec_length                    /*!< [in] length of vectors */
   );
 
-WORD32 xa_nn_vec_tanh_32_8(               
+WORD32 xa_nn_vec_tanh_32_8(
     WORD8        * __restrict__ p_out,         /*!< [out] result: vec_length x 1, Q0.7 */
     const WORD32 * __restrict__ p_vec,         /*!< [in] input data: vec_length x 1, Q6.25 */
     WORD32       vec_length                    /*!< [in] length of vectors */
   );
+
+WORD32 xa_nn_vec_relu_16_16(
+    WORD16       * __restrict__ p_out,
+    const WORD16 * __restrict__ p_vec,
+    WORD16       threshold,
+    WORD32       vec_length);
+
+WORD32 xa_nn_vec_relu_std_16_16(
+    WORD16       * __restrict__ p_out,
+    const WORD16 * __restrict__ p_vec,
+    WORD32       vec_length);
+
+WORD32 xa_nn_vec_relu_8_8(
+    WORD8        * __restrict__ p_out,
+    const WORD8  * __restrict__ p_vec,
+    WORD8       threshold,
+    WORD32       vec_length);
+
+WORD32 xa_nn_vec_relu_std_8_8(
+    WORD8        * __restrict__ p_out,
+    const WORD8  * __restrict__ p_vec,
+    WORD32       vec_length);
 
 WORD32 xa_nn_vec_interpolation_q15(
     WORD16       * __restrict__ p_out,           /*!< [out] result: num_elements x 1 */
@@ -843,7 +944,7 @@ WORD32 xa_nn_conv2d_depthwise_8x16
 WORD32 xa_nn_conv2d_depthwise_8x8
     (pWORD8 __restrict__ p_out
      ,pWORD8 __restrict__ p_kernel
-     ,pWORD8 __restrict__ p_inp 
+     ,pWORD8 __restrict__ p_inp
      ,pWORD8 __restrict__ p_bias
      ,WORD32  input_height
      ,WORD32  input_width
@@ -866,7 +967,7 @@ WORD32 xa_nn_conv2d_depthwise_8x8
 WORD32 xa_nn_conv2d_depthwise_16x16
     (pWORD16 __restrict__ p_out
      ,pWORD16 __restrict__ p_kernel
-     ,pWORD16 __restrict__ p_inp 
+     ,pWORD16 __restrict__ p_inp
      ,pWORD16 __restrict__ p_bias
      ,WORD32  input_height
      ,WORD32  input_width
@@ -926,9 +1027,9 @@ WORD32 xa_nn_conv2d_depthwise_f32(
 
 WORD32 xa_nn_conv2d_depthwise_8x16
     (pWORD16 __restrict__ p_out
-     ,const pWORD8 __restrict__ p_kernel
-     ,const pWORD16 __restrict__ p_inp
-     ,const pWORD16 __restrict__ p_bias
+     ,const WORD8  *__restrict__ p_kernel
+     ,const WORD16 *__restrict__ p_inp
+     ,const WORD16 *__restrict__ p_bias
      ,WORD32  input_height
      ,WORD32  input_width
      ,WORD32  input_channels
@@ -950,9 +1051,9 @@ WORD32 xa_nn_conv2d_depthwise_8x16
 
 WORD32 xa_nn_conv2d_depthwise_8x8
     (pWORD8 __restrict__ p_out
-     ,const pWORD8 __restrict__ p_kernel
-     ,const pWORD8 __restrict__ p_inp 
-     ,const pWORD8 __restrict__ p_bias
+     ,const WORD8 *__restrict__ p_kernel
+     ,const WORD8 *__restrict__ p_inp
+     ,const WORD8 *__restrict__ p_bias
      ,WORD32  input_height
      ,WORD32  input_width
      ,WORD32  input_channels
@@ -974,9 +1075,9 @@ WORD32 xa_nn_conv2d_depthwise_8x8
 
 WORD32 xa_nn_conv2d_depthwise_16x16
     (pWORD16 __restrict__ p_out
-     ,const pWORD16 __restrict__ p_kernel
-     ,const pWORD16 __restrict__ p_inp 
-     ,const pWORD16 __restrict__ p_bias
+     ,const WORD16 *__restrict__ p_kernel
+     ,const WORD16 *__restrict__ p_inp
+     ,const WORD16 *__restrict__ p_bias
      ,WORD32  input_height
      ,WORD32  input_width
      ,WORD32  input_channels
@@ -1328,8 +1429,8 @@ WORD32 xa_nn_fully_connected_8x8_8
 #ifdef NNLIB_V2
 
 WORD32 xa_nn_vec_activation_min_max_asym8_asym8(
-    UWORD8 * __restrict__ p_out, 
-    const  UWORD8 * __restrict__ p_vec, 
+    UWORD8 * __restrict__ p_out,
+    const  UWORD8 * __restrict__ p_vec,
     int    activation_min,
     int    activation_max,
     WORD32 vec_length);
@@ -1416,6 +1517,24 @@ WORD32 xa_nn_matXvec_batch_asym8xasym8_asym8(
     WORD32 out_shift,
     WORD32 out_zero_bias);
 
+WORD32 xa_nn_matmul_asym8xasym8_asym8(
+    UWORD8 * __restrict__ p_out,                     
+    const UWORD8 * __restrict__ p_mat1,
+    const UWORD8 * __restrict__ p_mat2,
+    const WORD32 * __restrict__ p_bias,
+    WORD32 rows,
+    WORD32 cols,
+    WORD32 row_stride,
+    WORD32 vec_count,
+    WORD32 vec_offset,
+    WORD32 out_offset,
+    WORD32 out_stride,                      
+    WORD32 mat1_zero_bias,
+    WORD32 vec1_zero_bias,
+    WORD32 out_multiplier,
+    WORD32 out_shift,
+    WORD32 out_zero_bias);
+
 WORD32 xa_nn_conv2d_depthwise_asym8xasym8(
     pUWORD8 __restrict__ p_out,
     const UWORD8 *__restrict__ p_kernel,
@@ -1458,8 +1577,8 @@ WORD32 xa_nn_conv2d_pointwise_asym8xasym8
    ,WORD32  out_zero_bias
    ,WORD32  out_data_format);
 
-WORD32 xa_nn_vec_activation_min_max_f32_f32(FLOAT32 * __restrict__ p_out, 
-           const  FLOAT32 * __restrict__ p_vec, 
+WORD32 xa_nn_vec_activation_min_max_f32_f32(FLOAT32 * __restrict__ p_out,
+           const  FLOAT32 * __restrict__ p_vec,
                   FLOAT32 activation_min,
                   FLOAT32 activation_max,
                   WORD32  vec_length);
@@ -1514,69 +1633,69 @@ WORD32 xa_nn_fully_connected_asym8xasym8_asym8
    ,WORD32  out_zero_bias
   );
 
-WORD32 xa_nn_elm_mul_f32xf32_f32(FLOAT32 * __restrict__ p_out, 
-                               const FLOAT32 * __restrict__ p_inp1, 
-                               const FLOAT32 * __restrict__ p_inp2, 
+WORD32 xa_nn_elm_mul_f32xf32_f32(FLOAT32 * __restrict__ p_out,
+                               const FLOAT32 * __restrict__ p_inp1,
+                               const FLOAT32 * __restrict__ p_inp2,
                                WORD32 num_elm);
 
-WORD32 xa_nn_elm_add_f32xf32_f32(FLOAT32 * __restrict__ p_out, 
-                               const FLOAT32 * __restrict__ p_inp1, 
-                               const FLOAT32 * __restrict__ p_inp2, 
+WORD32 xa_nn_elm_add_f32xf32_f32(FLOAT32 * __restrict__ p_out,
+                               const FLOAT32 * __restrict__ p_inp1,
+                               const FLOAT32 * __restrict__ p_inp2,
                                WORD32 num_elm);
 
-WORD32 xa_nn_elm_mul_acc_f32xf32_f32(FLOAT32 * __restrict__ p_out, 
-                               const FLOAT32 * __restrict__ p_inp1, 
-                               const FLOAT32 * __restrict__ p_inp2, 
+WORD32 xa_nn_elm_mul_acc_f32xf32_f32(FLOAT32 * __restrict__ p_out,
+                               const FLOAT32 * __restrict__ p_inp1,
+                               const FLOAT32 * __restrict__ p_inp2,
                                WORD32 num_elm);
 
-WORD32 xa_nn_elm_sub_f32xf32_f32(FLOAT32 * __restrict__ p_out, 
-                               const FLOAT32 * __restrict__ p_inp1, 
-                               const FLOAT32 * __restrict__ p_inp2, 
+WORD32 xa_nn_elm_sub_f32xf32_f32(FLOAT32 * __restrict__ p_out,
+                               const FLOAT32 * __restrict__ p_inp1,
+                               const FLOAT32 * __restrict__ p_inp2,
                                WORD32 num_elm);
 
-WORD32 xa_nn_elm_div_f32xf32_f32(FLOAT32 * __restrict__ p_out, 
-                               const FLOAT32 * __restrict__ p_inp1, 
-                               const FLOAT32 * __restrict__ p_inp2, 
+WORD32 xa_nn_elm_div_f32xf32_f32(FLOAT32 * __restrict__ p_out,
+                               const FLOAT32 * __restrict__ p_inp1,
+                               const FLOAT32 * __restrict__ p_inp2,
                                WORD32 num_elm);
 
-WORD32 xa_nn_elm_floor_f32_f32(FLOAT32 * __restrict__ p_out, 
-                           const FLOAT32 * __restrict__ p_inp, 
+WORD32 xa_nn_elm_floor_f32_f32(FLOAT32 * __restrict__ p_out,
+                           const FLOAT32 * __restrict__ p_inp,
                            WORD32 num_elm);
 
-WORD32 xa_nn_elm_add_asym8xasym8_asym8(UWORD8 * __restrict__ p_out, 
+WORD32 xa_nn_elm_add_asym8xasym8_asym8(UWORD8 * __restrict__ p_out,
                             WORD32  out_zero_bias,
                             WORD32  out_left_shift,
-                            WORD32  out_multiplier,                
+                            WORD32  out_multiplier,
                             WORD32  out_activation_min,
                             WORD32  out_activation_max,
-                    const   UWORD8 * __restrict__ p_inp1, 
+                    const   UWORD8 * __restrict__ p_inp1,
                             WORD32  inp1_zero_bias,
                             WORD32  inp1_left_shift,
-                            WORD32  inp1_multiplier,                
-                    const   UWORD8 * __restrict__ p_inp2, 
+                            WORD32  inp1_multiplier,
+                    const   UWORD8 * __restrict__ p_inp2,
                             WORD32  inp2_zero_bias,
                             WORD32  inp2_left_shift,
-                            WORD32  inp2_multiplier,                
+                            WORD32  inp2_multiplier,
                             WORD32  left_shift,
                             WORD32  num_elm);
 
-WORD32 xa_nn_elm_mul_asym8xasym8_asym8(UWORD8 * __restrict__ p_out, 
+WORD32 xa_nn_elm_mul_asym8xasym8_asym8(UWORD8 * __restrict__ p_out,
                             WORD32  out_zero_bias,
                             WORD32  out_shift,
-                            WORD32  out_multiplier,                
+                            WORD32  out_multiplier,
                             WORD32  out_activation_min,
                             WORD32  out_activation_max,
-                    const   UWORD8 * __restrict__ p_inp1, 
+                    const   UWORD8 * __restrict__ p_inp1,
                             WORD32  inp1_zero_bias,
-                    const   UWORD8 * __restrict__ p_inp2, 
+                    const   UWORD8 * __restrict__ p_inp2,
                             WORD32  inp2_zero_bias,
                             WORD32  num_elm);
 
-WORD32 xa_nn_vec_softmax_asym8_asym8( UWORD8 * __restrict__ p_out, 
-                    const   UWORD8 * __restrict__ p_vec, 
+WORD32 xa_nn_vec_softmax_asym8_asym8( UWORD8 * __restrict__ p_out,
+                    const   UWORD8 * __restrict__ p_vec,
                             WORD32   diffmin,
                             WORD32  input_left_shift,
-                            WORD32  input_multiplier,                
+                            WORD32  input_multiplier,
                             WORD32  vec_length,
                             pVOID   p_scratch);
 
@@ -1595,6 +1714,26 @@ WORD32 xa_nn_l2_norm_f32(
     const FLOAT32 * __restrict__ p_inp,
     WORD32 num_elm);
 
+
+WORD32 xa_nn_dot_prod_f32xf32_f32(
+    FLOAT32 * __restrict__ p_out,          /* pointer to output */
+    const FLOAT32 * __restrict__ p_inp1,   /* pointer to input1 */
+    const FLOAT32 * __restrict__ p_inp2,   /* pointer to input2 */
+    WORD32 vec_length,
+    WORD32 num_vecs);
+
+
+WORD32 xa_nn_vec_activation_min_max_8_8(WORD8 * __restrict__ p_out,
+                                      const  WORD8 * __restrict__ p_vec,
+                                      int    activation_min,
+                                      int    activation_max,
+                                      WORD32 vec_length);
+
+WORD32 xa_nn_vec_activation_min_max_16_16(WORD16 * __restrict__ p_out,
+                                      const  WORD16 * __restrict__ p_vec,
+                                      int    activation_min,
+                                      int    activation_max,
+                                      WORD32 vec_length);
 #endif /* NNLIB_V2 */
 
 #if defined(__cplusplus)

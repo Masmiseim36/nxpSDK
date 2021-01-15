@@ -129,7 +129,7 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_56F800E_QSCI =
 #define FMSTR_SCISR_PF        0x0100U
 #define FMSTR_SCISR_RAF       0x0001U
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    SCI communication initialization
 *
@@ -149,7 +149,7 @@ static FMSTR_BOOL _FMSTR_56F800E_Sci_Init(void)
         return FMSTR_FALSE;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable SCI transmitter
 *
@@ -169,7 +169,7 @@ static void _FMSTR_56F800E_Sci_EnableTransmit(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable SCI receiver
 *
@@ -189,7 +189,7 @@ static void _FMSTR_56F800E_Sci_EnableReceive(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from transmit register empty event
 *
@@ -209,7 +209,7 @@ static void _FMSTR_56F800E_Sci_EnableTransmitInterrupt(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt when transmission is complete (=idle)
 *
@@ -229,7 +229,7 @@ static void _FMSTR_56F800E_Sci_EnableTransmitCompleteInterrupt(FMSTR_BOOL enable
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from receive register full event
 *
@@ -249,7 +249,7 @@ static void _FMSTR_56F800E_Sci_EnableReceiveInterrupt(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the transmit register is empty, and it's possible to put next char
 *
@@ -260,7 +260,7 @@ static FMSTR_BOOL _FMSTR_56F800E_Sci_IsTransmitRegEmpty(void)
     return (FMSTR_BOOL) FMSTR_TSTBIT(fmstr_sciBaseAddr, FMSTR_SCISR_OFFSET, FMSTR_SCISR_TDRE);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the receive register is full, and it's possible to get received char
 *
@@ -271,7 +271,7 @@ static FMSTR_BOOL _FMSTR_56F800E_Sci_IsReceiveRegFull(void)
     return (FMSTR_BOOL) FMSTR_TSTBIT(fmstr_sciBaseAddr, FMSTR_SCISR_OFFSET, FMSTR_SCISR_RDRF);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the transmitter is still active
 *
@@ -282,7 +282,7 @@ static FMSTR_BOOL _FMSTR_56F800E_Sci_IsTransmitterActive(void)
     return !(FMSTR_TSTBIT(fmstr_sciBaseAddr, FMSTR_SCISR_OFFSET, FMSTR_SCISR_TIDLE));
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function puts the char for transmit
 *
@@ -293,7 +293,7 @@ static void _FMSTR_56F800E_Sci_PutChar(FMSTR_BCHR  ch)
     FMSTR_SETREG(fmstr_sciBaseAddr, FMSTR_SCIDR_OFFSET, ch);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function gets the received char
 *
@@ -309,7 +309,7 @@ static FMSTR_BCHR _FMSTR_56F800E_Sci_GetChar(void)
     return ch;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function sends buffered data
 *
@@ -319,7 +319,7 @@ static void _FMSTR_56F800E_Sci_Flush(void)
 {
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Assign FreeMASTER communication module base address
 *
@@ -330,7 +330,7 @@ void FMSTR_SerialSetBaseAddress(FMSTR_U16 base)
     fmstr_sciBaseAddr = base;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Process FreeMASTER serial interrupt (call this function from SCI ISR)
 *

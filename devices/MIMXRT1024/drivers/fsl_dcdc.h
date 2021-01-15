@@ -20,10 +20,11 @@
  * Definitions
  ******************************************************************************/
 /*! @brief DCDC driver version. */
-#define FSL_DCDC_DRIVER_VERSION (MAKE_VERSION(2, 2, 0)) /*!< Version 2.2.0. */
-                                                        /*!
-                                                         * @brief DCDC status flags.
-                                                         */
+#define FSL_DCDC_DRIVER_VERSION (MAKE_VERSION(2, 2, 1)) /*!< Version 2.2.1. */
+
+/*!
+ * @brief DCDC status flags.
+ */
 enum _dcdc_status_flags_t
 {
     kDCDC_LockedOKStatus = (1U << 0U), /*!< Indicate DCDC status. 1'b1: DCDC already settled 1'b0: DCDC is settling. */
@@ -301,18 +302,22 @@ extern "C" {
  * @{
  */
 
+#if defined(FSL_FEATURE_DCDC_HAS_CTRL_REG) && FSL_FEATURE_DCDC_HAS_CTRL_REG
 /*!
  * @brief Enable the access to DCDC registers.
  *
  * @param base DCDC peripheral base address.
  * @param config Pointer to the configuration structure.
  */
-void DCDC_Init(DCDC_Type *base
-#if defined(FSL_FEATURE_DCDC_HAS_CTRL_REG) && FSL_FEATURE_DCDC_HAS_CTRL_REG
-               ,
-               dcdc_config_t *config
-#endif /* FSL_FEATURE_DCDC_HAS_CTRL_REGp */
-);
+void DCDC_Init(DCDC_Type *base, dcdc_config_t *config);
+#else
+/*!
+ * @brief Enable the access to DCDC registers.
+ *
+ * @param base DCDC peripheral base address.
+ */
+void DCDC_Init(DCDC_Type *base);
+#endif /* FSL_FEATURE_DCDC_HAS_CTRL_REG */
 
 /*!
  * @brief Disable the access to DCDC registers.
@@ -356,7 +361,7 @@ uint32_t DCDC_GetstatusFlags(DCDC_Type *base);
 /* @} */
 
 /*!
- * @name Misc control.
+ * @name Misc control
  * @{
  */
 
@@ -519,21 +524,25 @@ static inline void DCDC_SetLPComparatorBiasValue(DCDC_Type *base, dcdc_comparato
 }
 
 #if (defined(FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT) && (FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT == 2))
+/*!
+ * @brief Lock VDD 1P0 target voltage.
+ *
+ * @param base DCDC peripheral base address.
+ */
 static inline void DCDC_LockVdd1p0TargetVoltage(DCDC_Type *base)
 {
     base->REG3 |= DCDC_REG3_VDD1P0CTRL_DISABLE_STEP_MASK;
 }
 
+/*!
+ * @brief Lock VDD 1P8 target voltage.
+ *
+ * @param base DCDC peripheral base address.
+ */
 static inline void DCDC_LockVdd1p8TargetVoltage(DCDC_Type *base)
 {
     base->REG3 |= DCDC_REG3_VDD1P8CTRL_DISABLE_STEP_MASK;
 }
-#else
-static inline void DCDC_LockTargetVoltage(DCDC_Type *base)
-{
-    base->REG3 |= DCDC_REG3_DISABLE_STEP_MASK;
-}
-#endif /* FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT */
 
 /*!
  * @brief Adjust the target voltage of VDD_SOC in run mode and low power mode.
@@ -550,14 +559,7 @@ static inline void DCDC_LockTargetVoltage(DCDC_Type *base)
  * @param VDDStandby Target value in low power mode. 25 mV each step from 0x00 to 0x4. 00 is for 0.9V, 0x4 is for 1.0V.
  * @param sel sel DCDC target voltage output selection. See to "_dcdc_voltage_output_sel".
  */
-void DCDC_AdjustTargetVoltage(DCDC_Type *base,
-                              uint32_t VDDRun,
-                              uint32_t VDDStandby
-#if (defined(FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT) && (FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT == 2))
-                              ,
-                              dcdc_voltage_output_sel_t sel
-#endif /* FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT */
-);
+void DCDC_AdjustTargetVoltage(DCDC_Type *base, uint32_t VDDRun, uint32_t VDDStandby, dcdc_voltage_output_sel_t sel);
 
 /*!
  * @brief Adjust the target voltage of VDD_SOC in run mode.
@@ -571,13 +573,7 @@ void DCDC_AdjustTargetVoltage(DCDC_Type *base,
  * @param VDDRun Target value in run mode. 25 mV each step from 0x00 to 0x1F. 00 is for 0.8V, 0x1F is for 1.575V.
  * @param sel sel DCDC target voltage output selection. See to "_dcdc_voltage_output_sel".
  */
-void DCDC_AdjustRunTargetVoltage(DCDC_Type *base,
-                                 uint32_t VDDRun
-#if (defined(FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT) && (FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT == 2))
-                                 ,
-                                 dcdc_voltage_output_sel_t sel
-#endif /* FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT */
-);
+void DCDC_AdjustRunTargetVoltage(DCDC_Type *base, uint32_t VDDRun, dcdc_voltage_output_sel_t sel);
 
 /*!
  * @brief Adjust the target voltage of VDD_SOC in low power mode.
@@ -591,13 +587,61 @@ void DCDC_AdjustRunTargetVoltage(DCDC_Type *base,
  * @param VDDStandby Target value in low power mode. 25 mV each step from 0x00 to 0x4. 00 is for 0.9V, 0x4 is for 1.0V.
  * @param sel sel DCDC target voltage output selection. See to "_dcdc_voltage_output_sel".
  */
-void DCDC_AdjustLowPowerTargetVoltage(DCDC_Type *base,
-                                      uint32_t VDDStandby
-#if (defined(FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT) && (FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT == 2))
-                                      ,
-                                      dcdc_voltage_output_sel_t sel
+void DCDC_AdjustLowPowerTargetVoltage(DCDC_Type *base, uint32_t VDDStandby, dcdc_voltage_output_sel_t sel);
+#else
+
+/*!
+ * @brief Lock target voltage.
+ *
+ * @param base DCDC peripheral base address.
+ */
+static inline void DCDC_LockTargetVoltage(DCDC_Type *base)
+{
+    base->REG3 |= DCDC_REG3_DISABLE_STEP_MASK;
+}
+
+/*!
+ * @brief Adjust the target voltage of VDD_SOC in run mode and low power mode.
+ * @deprecated Do not use this function. It has been superceded by @ref DCDC_AdjustRunTargetVoltage
+ * and @ref DCDC_AdjustLowPowerTargetVoltage
+ *
+ * This function is to adjust the target voltage of DCDC output. Change them and finally wait until the output is
+ * stabled.
+ * Set the target value of run mode the same as low power mode before entering power save mode, because DCDC will switch
+ * back to run mode if it detects the current loading is larger than about 50 mA(typical value).
+ *
+ * @param base DCDC peripheral base address.
+ * @param VDDRun Target value in run mode. 25 mV each step from 0x00 to 0x1F. 00 is for 0.8V, 0x1F is for 1.575V.
+ * @param VDDStandby Target value in low power mode. 25 mV each step from 0x00 to 0x4. 00 is for 0.9V, 0x4 is for 1.0V.
+ */
+void DCDC_AdjustTargetVoltage(DCDC_Type *base, uint32_t VDDRun, uint32_t VDDStandby);
+
+/*!
+ * @brief Adjust the target voltage of VDD_SOC in run mode.
+ *
+ * This function is to adjust the target voltage of DCDC output. Change them and finally wait until the output is
+ * stabled.
+ * Set the target value of run mode the same as low power mode before entering power save mode, because DCDC will switch
+ * back to run mode if it detects the current loading is larger than about 50 mA(typical value).
+ *
+ * @param base DCDC peripheral base address.
+ * @param VDDRun Target value in run mode. 25 mV each step from 0x00 to 0x1F. 00 is for 0.8V, 0x1F is for 1.575V.
+ */
+void DCDC_AdjustRunTargetVoltage(DCDC_Type *base, uint32_t VDDRun);
+
+/*!
+ * @brief Adjust the target voltage of VDD_SOC in low power mode.
+ *
+ * This function is to adjust the target voltage of DCDC output. Change them and finally wait until the output is
+ * stabled.
+ * Set the target value of run mode the same as low power mode before entering power save mode, because DCDC will switch
+ * back to run mode if it detects the current loading is larger than about 50 mA(typical value).
+ *
+ * @param base DCDC peripheral base address.
+ * @param VDDStandby Target value in low power mode. 25 mV each step from 0x00 to 0x4. 00 is for 0.9V, 0x4 is for 1.0V.
+ */
+void DCDC_AdjustLowPowerTargetVoltage(DCDC_Type *base, uint32_t VDDStandby);
 #endif /* FSL_FEATURE_DCDC_VDD_OUTPUT_COUNT */
-);
 
 /*!
  * @brief Configure the DCDC internal regulator.
@@ -648,7 +692,7 @@ static inline void DCDC_EnableImproveTransition(DCDC_Type *base, bool enable)
 
 #if defined(DCDC_REG4_ENABLE_SP_MASK) && DCDC_REG4_ENABLE_SP_MASK
 /*!
- * @name Setpoint mode APIs.
+ * @name Setpoint mode APIs
  */
 
 /*!
@@ -678,7 +722,7 @@ static inline void DCDC_SetPointDeinit(DCDC_Type *base, uint32_t setpointMap)
 #endif /* DCDC_REG4_ENABLE_SP_MASK */
 
 /*!
- * @name Application guideline.
+ * @name Application guideline
  * @{
  */
 
@@ -687,7 +731,7 @@ static inline void DCDC_SetPointDeinit(DCDC_Type *base, uint32_t setpointMap)
  *
  *  pwd_zcd=0x0;
  *  pwd_cmp_offset=0x0;
- *  dcdc_loopctrl_en_rcscale=0x3 or 0x5;
+ *  dcdc_loopctrl_en_rcscale= 0x5;
  *  DCM_set_ctrl=1'b1;
  *
  * @param base DCDC peripheral base address.

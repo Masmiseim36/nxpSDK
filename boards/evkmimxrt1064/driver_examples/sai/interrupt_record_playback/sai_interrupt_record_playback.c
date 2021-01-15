@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_sai.h"
 #include "fsl_codec_common.h"
 
 #include "fsl_wm8960.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
@@ -140,7 +140,7 @@ static void tx_callback(I2S_Type *base, sai_handle_t *handle, status_t status, v
 int main(void)
 {
     sai_transfer_t xfer;
-    sai_transceiver_t config;
+    sai_transceiver_t saiConfig;
 
     BOARD_ConfigMPU();
     BOARD_InitPins();
@@ -160,7 +160,7 @@ int main(void)
     /*Enable MCLK clock*/
     BOARD_EnableSaiMclkOutput(true);
 
-    PRINTF("SAI example started!\n\r");
+    PRINTF("SAI interrupt record playback example started!\n\r");
 
     /* SAI init */
     SAI_Init(DEMO_SAI);
@@ -168,12 +168,12 @@ int main(void)
     SAI_TransferRxCreateHandle(DEMO_SAI, &rxHandle, rx_callback, NULL);
 
     /* I2S mode configurations */
-    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
-    config.syncMode    = DEMO_SAI_TX_SYNC_MODE;
-    config.masterSlave = DEMO_SAI_MASTER_SLAVE;
-    SAI_TransferTxSetConfig(DEMO_SAI, &txHandle, &config);
-    config.syncMode = DEMO_SAI_RX_SYNC_MODE;
-    SAI_TransferRxSetConfig(DEMO_SAI, &rxHandle, &config);
+    SAI_GetClassicI2SConfig(&saiConfig, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
+    saiConfig.syncMode    = DEMO_SAI_TX_SYNC_MODE;
+    saiConfig.masterSlave = DEMO_SAI_MASTER_SLAVE;
+    SAI_TransferTxSetConfig(DEMO_SAI, &txHandle, &saiConfig);
+    saiConfig.syncMode = DEMO_SAI_RX_SYNC_MODE;
+    SAI_TransferRxSetConfig(DEMO_SAI, &rxHandle, &saiConfig);
 
     /* set bit clock divider */
     SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
@@ -185,7 +185,10 @@ int main(void)
     BOARD_MASTER_CLOCK_CONFIG();
 
     /* Use default setting to init codec */
-    CODEC_Init(&codecHandle, &boardCodecConfig);
+    if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
+    {
+        assert(false);
+    }
 
     while (1)
     {

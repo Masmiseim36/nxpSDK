@@ -53,9 +53,19 @@
 #endif
 #endif
 
+/* Weak function. */
+#if defined(__GNUC__)
+#define __WEAK_FUNC __attribute__((weak))
+#elif defined(__ICCARM__)
+#define __WEAK_FUNC __weak
+#elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
+#define __WEAK_FUNC __attribute__((weak))
+#endif
+
 #define SERIAL_EVENT_DATA_RECEIVED   (1U << 0)
 #define SERIAL_EVENT_DATA_SENT       (1U << 1)
 #define SERIAL_EVENT_DATA_START_SEND (1U << 2)
+#define SERIAL_EVENT_DATA_RX_NOTIFY  (1U << 3)
 
 #define SERIAL_MANAGER_WRITE_TAG 0xAABB5754U
 #define SERIAL_MANAGER_READ_TAG  0xBBAA5244U
@@ -150,8 +160,8 @@ typedef struct _serial_manager_handle
 #if (defined(SERIAL_PORT_TYPE_SWO) && (SERIAL_PORT_TYPE_SWO > 0U))
         uint8_t swoHandleBuffer[SERIAL_PORT_SWO_HANDLE_SIZE];
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-        uint8_t usbcdcVirtualHandleBuffer[SERIAL_PORT_USB_VIRTUAL_HANDLE_SIZE];
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+        uint8_t usbcdcVirtualHandleBuffer[SERIAL_PORT_VIRTUAL_HANDLE_SIZE];
 #endif
 #if (defined(SERIAL_PORT_TYPE_RPMSG) && (SERIAL_PORT_TYPE_RPMSG > 0U))
         uint8_t rpmsgHandleBuffer[SERIAL_PORT_RPMSG_HANDLE_SIZE];
@@ -204,7 +214,7 @@ static void SerialManager_Task(void *param);
                                     /*
                                      * \brief Defines the serial manager task's stack
                                      */
-OSA_TASK_DEFINE(SerialManager_Task, SERIAL_MANAGER_TASK_PRIORITY, 1, SERIAL_MANAGER_TASK_STACK_SIZE, false);
+static OSA_TASK_DEFINE(SerialManager_Task, SERIAL_MANAGER_TASK_PRIORITY, 1, SERIAL_MANAGER_TASK_STACK_SIZE, false);
 #endif
 
 #endif
@@ -258,10 +268,10 @@ static serial_manager_status_t SerialManager_StartWriting(serial_manager_handle_
                                          writeHandle->transfer.buffer, writeHandle->transfer.length);
                 break;
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-            case kSerialPort_UsbCdcVirtual:
-                status = Serial_UsbCdcVirtualWrite(((serial_handle_t)&handle->lowLevelhandleBuffer[0]),
-                                                   writeHandle->transfer.buffer, writeHandle->transfer.length);
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+            case kSerialPort_Virtual:
+                status = Serial_PortVirtualWrite(((serial_handle_t)&handle->lowLevelhandleBuffer[0]),
+                                                 writeHandle->transfer.buffer, writeHandle->transfer.length);
                 break;
 #endif
 #if (defined(SERIAL_PORT_TYPE_RPMSG) && (SERIAL_PORT_TYPE_RPMSG > 0U))
@@ -306,10 +316,10 @@ static serial_manager_status_t SerialManager_StartBlockWriting(serial_manager_ha
     }
     else
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-        if (kSerialPort_UsbCdcVirtual == handle->type) /* Serial port UsbCdcVirtual */
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+        if (kSerialPort_Virtual == handle->type) /* Serial port UsbCdcVirtual */
     {
-        status = Serial_UsbCdcVirtualWrite(((serial_handle_t)&handle->lowLevelhandleBuffer[0]), buffer, length);
+        status = Serial_PortVirtualWrite(((serial_handle_t)&handle->lowLevelhandleBuffer[0]), buffer, length);
     }
     else
 #endif
@@ -351,10 +361,10 @@ static serial_manager_status_t SerialManager_StartReading(serial_manager_handle_
             status = Serial_UsbCdcRead(((serial_handle_t)&handle->lowLevelhandleBuffer[0]), buffer, length);
         }
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-        if (handle->type == kSerialPort_UsbCdcVirtual)
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+        if (handle->type == kSerialPort_Virtual)
         {
-            status = Serial_UsbCdcVirtualRead(((serial_handle_t)&handle->lowLevelhandleBuffer[0]), buffer, length);
+            status = Serial_PortVirtualRead(((serial_handle_t)&handle->lowLevelhandleBuffer[0]), buffer, length);
         }
 #endif
 #if 0
@@ -399,10 +409,10 @@ static serial_manager_status_t SerialManager_StartWriting(serial_manager_handle_
     }
     else
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-        if (kSerialPort_UsbCdcVirtual == handle->type) /* Serial port UsbCdcVirtual */
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+        if (kSerialPort_Virtual == handle->type) /* Serial port UsbCdcVirtual */
     {
-        status = Serial_UsbCdcVirtualWrite(((serial_handle_t)&handle->lowLevelhandleBuffer[0]), buffer, length);
+        status = Serial_PortVirtualWrite(((serial_handle_t)&handle->lowLevelhandleBuffer[0]), buffer, length);
     }
     else
 #endif
@@ -447,10 +457,10 @@ static serial_manager_status_t SerialManager_StartReading(serial_manager_handle_
     }
     else
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-        if (kSerialPort_UsbCdcVirtual == handle->type) /* Serial port UsbCdcVirtual */
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+        if (kSerialPort_Virtual == handle->type) /* Serial port UsbCdcVirtual */
     {
-        status = Serial_UsbCdcVirtualRead(((serial_handle_t)&handle->lowLevelhandleBuffer[0]), buffer, length);
+        status = Serial_PortVirtualRead(((serial_handle_t)&handle->lowLevelhandleBuffer[0]), buffer, length);
     }
     else
 #endif
@@ -489,9 +499,9 @@ static void SerialManager_IsrFunction(serial_manager_handle_t *handle)
             Serial_SwoIsrFunction(((serial_handle_t)&handle->lowLevelhandleBuffer[0]));
             break;
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-        case kSerialPort_UsbCdcVirtual:
-            Serial_UsbCdcVirtualIsrFunction(((serial_handle_t)&handle->lowLevelhandleBuffer[0]));
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+        case kSerialPort_Virtual:
+            Serial_PortVirtualIsrFunction(((serial_handle_t)&handle->lowLevelhandleBuffer[0]));
             break;
 #endif
         default:
@@ -508,6 +518,9 @@ static void SerialManager_Task(void *param)
     serial_manager_read_handle_t *serialReadHandle;
     uint32_t primask;
     serial_manager_callback_message_t msg;
+#if (defined(SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY) && (SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY > 0U))
+    uint32_t ringBufferLength;
+#endif /* SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY */
 
     if (NULL != handle)
     {
@@ -593,6 +606,30 @@ static void SerialManager_Task(void *param)
                 }
             }
         }
+
+#if (defined(SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY) && (SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY > 0U))
+#if (defined(SERIAL_MANAGER_USE_COMMON_TASK) && (SERIAL_MANAGER_USE_COMMON_TASK > 0U))
+#else
+                if (0U != (ev & SERIAL_EVENT_DATA_RX_NOTIFY))
+#endif
+        {
+            ringBufferLength =
+                handle->ringBuffer.ringHead + handle->ringBuffer.ringBufferSize - handle->ringBuffer.ringTail;
+            ringBufferLength = ringBufferLength % handle->ringBuffer.ringBufferSize;
+            /* Notify there are data in ringbuffer */
+            if (0U != ringBufferLength)
+            {
+                msg.buffer = NULL;
+                msg.length = ringBufferLength;
+                if ((NULL != handle->openedReadHandleHead) && (NULL != handle->openedReadHandleHead->callback))
+                {
+                    handle->openedReadHandleHead->callback(handle->openedReadHandleHead->callbackParam, &msg,
+                                                           kStatus_SerialManager_Notify);
+                }
+            }
+        }
+#endif /* SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY */
+
 #if defined(OSA_USED)
 
 #if (defined(SERIAL_MANAGER_USE_COMMON_TASK) && (SERIAL_MANAGER_USE_COMMON_TASK > 0U))
@@ -754,12 +791,17 @@ void SerialManager_RxCallback(void *callbackParam,
 
     if (0U != ringBufferLength)
     {
+#if (defined(SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY) && (SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY > 0U))
+        (void)OSA_EventSet((osa_event_handle_t)handle->event, SERIAL_EVENT_DATA_RX_NOTIFY);
+        (void)status; /* Fix "set but never used" warning. */
+#else                 /* !SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY */
         message->buffer = NULL;
         message->length = ringBufferLength;
         if ((NULL != handle->openedReadHandleHead) && (NULL != handle->openedReadHandleHead->callback))
         {
             handle->openedReadHandleHead->callback(handle->openedReadHandleHead->callbackParam, message, status);
         }
+#endif                /* SERIAL_MANAGER_TASK_HANDLE_RX_AVAILABLE_NOTIFY */
     }
 
     ringBufferLength = handle->ringBuffer.ringBufferSize - 1U - ringBufferLength;
@@ -769,6 +811,19 @@ void SerialManager_RxCallback(void *callbackParam,
         (void)SerialManager_StartReading(handle, handle->openedReadHandleHead, NULL, ringBufferLength);
     }
     EnableGlobalIRQ(primask);
+}
+
+/*
+ * This function is used for perdiodic check if the transfer is complete, and will be called in blocking transfer at
+ * non-blocking mode. The predic unit is ms and default value is define by SERIAL_MANAGER_TIME_DELAY_DEFAULT_VALUE. The
+ * function SerialManager_TimeDelay() is a weak function, so it could be re-implemented by upper layer.
+ */
+__WEAK_FUNC void SerialManager_TimeDelay(uint32_t ms);
+__WEAK_FUNC void SerialManager_TimeDelay(uint32_t ms)
+{
+#if defined(OSA_USED)
+    OSA_TimeDelay(ms);
+#endif
 }
 
 static serial_manager_status_t SerialManager_Write(serial_write_handle_t writeHandle,
@@ -863,6 +918,10 @@ static serial_manager_status_t SerialManager_Write(serial_write_handle_t writeHa
             {
                 SerialManager_IsrFunction(handle);
             }
+            else
+            {
+                SerialManager_TimeDelay(SERIAL_MANAGER_TIME_DELAY_DEFAULT_VALUE);
+            }
         }
     }
     return kStatus_SerialManager_Success;
@@ -889,7 +948,7 @@ static serial_manager_status_t SerialManager_Read(serial_read_handle_t readHandl
     assert(handle);
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_DUAL_MODE) && (SERIAL_MANAGER_NON_BLOCKING_DUAL_MODE > 0U))
     if (handle->handleType == kSerialManager_Blocking)
-    //   if ((handle->handleType == kSerialManager_Blocking) || (kSerialManager_TransmissionBlocking == mode))
+    /* if ((handle->handleType == kSerialManager_Blocking) || (kSerialManager_TransmissionBlocking == mode)) */
     {
         return SerialManager_StartReading(handle, serialReadHandle, buffer, length);
     }
@@ -1087,18 +1146,18 @@ serial_manager_status_t SerialManager_Init(serial_handle_t serialHandle, const s
 #endif
             break;
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-        case kSerialPort_UsbCdcVirtual:
-            status = Serial_UsbCdcVirtualInit(((serial_handle_t)&handle->lowLevelhandleBuffer[0]), config->portConfig);
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+        case kSerialPort_Virtual:
+            status = Serial_PortVirtualInit(((serial_handle_t)&handle->lowLevelhandleBuffer[0]), config->portConfig);
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
             if (kStatus_SerialManager_Success == status)
             {
-                status = Serial_UsbCdcVirtualInstallTxCallback(((serial_handle_t)&handle->lowLevelhandleBuffer[0]),
-                                                               SerialManager_TxCallback, handle);
+                status = Serial_PortVirtualInstallTxCallback(((serial_handle_t)&handle->lowLevelhandleBuffer[0]),
+                                                             SerialManager_TxCallback, handle);
                 if (kStatus_SerialManager_Success == status)
                 {
-                    status = Serial_UsbCdcVirtualInstallRxCallback(((serial_handle_t)&handle->lowLevelhandleBuffer[0]),
-                                                                   SerialManager_RxCallback, handle);
+                    status = Serial_PortVirtualInstallRxCallback(((serial_handle_t)&handle->lowLevelhandleBuffer[0]),
+                                                                 SerialManager_RxCallback, handle);
                 }
             }
 #endif
@@ -1189,9 +1248,9 @@ serial_manager_status_t SerialManager_Deinit(serial_handle_t serialHandle)
                 (void)Serial_SwoDeinit(((serial_handle_t)&handle->lowLevelhandleBuffer[0]));
                 break;
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-            case kSerialPort_UsbCdcVirtual:
-                (void)Serial_UsbCdcVirtualDeinit(((serial_handle_t)&handle->lowLevelhandleBuffer[0]));
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+            case kSerialPort_Virtual:
+                (void)Serial_PortVirtualDeinit(((serial_handle_t)&handle->lowLevelhandleBuffer[0]));
                 break;
 #endif
 #if (defined(SERIAL_PORT_TYPE_RPMSG) && (SERIAL_PORT_TYPE_RPMSG > 0U))
@@ -1473,9 +1532,9 @@ serial_manager_status_t SerialManager_CancelWriting(serial_write_handle_t writeH
                         ((serial_handle_t)&serialWriteHandle->serialManagerHandle->lowLevelhandleBuffer[0]));
                     break;
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-                case kSerialPort_UsbCdcVirtual:
-                    (void)Serial_UsbCdcVirtualCancelWrite(
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+                case kSerialPort_Virtual:
+                    (void)Serial_PortVirtualCancelWrite(
                         ((serial_handle_t)&serialWriteHandle->serialManagerHandle->lowLevelhandleBuffer[0]));
                     break;
 #endif
@@ -1608,11 +1667,11 @@ serial_manager_status_t SerialManager_EnterLowpower(serial_handle_t serialHandle
         case kSerialPort_Swo:
             break;
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-        case kSerialPort_UsbCdcVirtual:
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+        case kSerialPort_Virtual:
             break;
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
         case kSerialPort_Rpmsg:
             break;
 #endif
@@ -1647,11 +1706,11 @@ serial_manager_status_t SerialManager_ExitLowpower(serial_handle_t serialHandle)
         case kSerialPort_Swo:
             break;
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-        case kSerialPort_UsbCdcVirtual:
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+        case kSerialPort_Virtual:
             break;
 #endif
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
         case kSerialPort_Rpmsg:
             break;
 #endif

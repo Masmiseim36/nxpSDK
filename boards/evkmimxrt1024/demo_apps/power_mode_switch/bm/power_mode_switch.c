@@ -8,16 +8,16 @@
 
 #include "fsl_common.h"
 #include "power_mode_switch.h"
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "lpm.h"
 #include "fsl_gpt.h"
 #include "fsl_lpuart.h"
 #include "specific.h"
-#include "peripherals.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "peripherals.h"
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -303,30 +303,18 @@ void APP_PowerModeSwitch(lpm_power_mode_t targetPowerMode)
             LPM_LowPowerRun(curRunMode);
             break;
         case LPM_PowerModeSysIdle:
-            LPM_PreEnterWaitMode();
             LPM_EnterSystemIdle(curRunMode);
-            __DSB();
-            __WFI();
-            __ISB();
+            LPM_EnterSleepMode(kCLOCK_ModeWait);
             LPM_ExitSystemIdle(curRunMode);
-            LPM_PostExitWaitMode();
             break;
         case LPM_PowerModeLPIdle:
-            LPM_PreEnterWaitMode();
             LPM_EnterLowPowerIdle(curRunMode);
-            __DSB();
-            __WFI();
-            __ISB();
+            LPM_EnterSleepMode(kCLOCK_ModeWait);
             LPM_ExitLowPowerIdle(curRunMode);
-            LPM_PostExitWaitMode();
             break;
         case LPM_PowerModeSuspend:
-            LPM_PreEnterStopMode();
             LPM_EnterSuspend();
-            __DSB();
-            __WFI();
-            __ISB();
-            LPM_PostExitStopMode();
+            LPM_EnterSleepMode(kCLOCK_ModeStop);
             break;
 #if (HAS_WAKEUP_PIN)
         case LPM_PowerModeSNVS:

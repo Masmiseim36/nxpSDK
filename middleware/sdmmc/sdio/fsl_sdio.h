@@ -19,7 +19,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware version. */
-#define FSL_SDIO_DRIVER_VERSION (MAKE_VERSION(2U, 3U, 1U)) /*2.3.1*/
+#define FSL_SDIO_DRIVER_VERSION (MAKE_VERSION(2U, 3U, 2U)) /*2.3.2*/
 
 /*!@brief sdio device support maximum IO number */
 #ifndef FSL_SDIO_MAX_IO_NUMS

@@ -179,7 +179,7 @@ static void MEM_BufferAllocates_memStatis(void *buffer, uint32_t time, uint32_t 
     s_memStatis.ram_lost += (uint16_t)(block_size - requestedSize);
     UPDATE_PEAK(s_memStatis.ram_lost, s_memStatis.peak_ram_lost);
 
-    // UPDATE_PEAK(((uint32_t)FreeBlockHdrList.tail + BLOCK_HDR_SIZE), s_memStatis.peak_upper_addr);
+    /* UPDATE_PEAK(((uint32_t)FreeBlockHdrList.tail + BLOCK_HDR_SIZE), s_memStatis.peak_upper_addr); */
 
 #ifdef MEM_MANAGER_BENCH
     if (time != 0U)
@@ -283,7 +283,7 @@ mem_status_t MEM_Init(void)
 #if (defined(MEM_MANAGER_PRE_CONFIGURE) && (MEM_MANAGER_PRE_CONFIGURE > 0U))
         for (uint8_t i = 0; i < (sizeof(s_PoolList) / sizeof(s_PoolList[0])); i++)
         {
-            (void)MEM_AddBuffer((uint8_t *)s_PoolList[i]);
+            (void)MEM_AddBuffer(s_PoolList[i]);
         }
 #endif /*MEM_MANAGER_PRE_CONFIGURE*/
         initialized = true;
@@ -312,7 +312,7 @@ mem_status_t MEM_Init(void)
  * @retval kStatus_MemSuccess        Memory manager add Buffer succeed.
  * @retval kStatus_MemInitError      Memory manager add Buffer error occurred.
  */
-mem_status_t MEM_AddBuffer(uint8_t *buffer)
+mem_status_t MEM_AddBuffer(const uint8_t *buffer)
 {
     mem_config_t *memConfig     = (mem_config_t *)(void *)buffer;
     mem_pool_structure_t *pPool = (mem_pool_structure_t *)(void *)memConfig->pbuffer;
@@ -430,7 +430,7 @@ mem_status_t MEM_RemoveBuffer(uint8_t *buffer)
     MEM_EXIT_CRITICAL();
     return kStatus_MemUnknownError;
 }
-#endif // MEM_MANAGER_BUFFER_REMOVE
+#endif /* MEM_MANAGER_BUFFER_REMOVE */
 
 /*!
  * @brief Allocate a block from the memory pools. The function uses the
@@ -610,7 +610,8 @@ mem_status_t MEM_BufferFreeAllWithId(uint8_t poolId)
     {
         if (pPool->poolId == poolId)
         {
-            (void)memset(pPool->pHeap, 0x0, ((sizeof(block_list_header_t) + (uint32_t)pPool->blockSize) * pPool->numBlocks));
+            (void)memset(pPool->pHeap, 0x0,
+                         ((sizeof(block_list_header_t) + (uint32_t)pPool->blockSize) * pPool->numBlocks));
 #if (defined(MEM_MANAGER_ENABLE_TRACE) && (MEM_MANAGER_ENABLE_TRACE > 0U))
             pPool->allocatedBlocksPeak    = 0;
             pPool->poolTotalFragmentWaste = 0;
@@ -715,7 +716,8 @@ void MEM_Trace(void)
         (void)PRINTF("Currently pool meory block allocate status: \r\n");
         for (uint32_t i = 0; i < pPool->numBlocks; i++)
         {
-            pBlock = (block_list_header_t *)(void *)(pPool->pHeap + i * ((uint32_t)pPool->blockSize + sizeof(block_list_header_t)));
+            pBlock = (block_list_header_t *)(void *)(pPool->pHeap +
+                                                     i * ((uint32_t)pPool->blockSize + sizeof(block_list_header_t)));
 
             (void)PRINTF("Block %d caller : 0x%x Allocated %d bytes: %d  \r\n", i, pBlock->caller, pBlock->allocated,
                          pBlock->allocatedBytes);

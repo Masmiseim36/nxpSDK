@@ -27,7 +27,7 @@
 #ifndef __WIFI_DEBUG_H__
 #define __WIFI_DEBUG_H__
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 #include <wmlog.h>
 
 #define wscan_e(...) wmlog_e("wscan", ##__VA_ARGS__)
@@ -41,7 +41,7 @@
 #define wifi_e(...) wmlog_e("wifi", ##__VA_ARGS__)
 #define wifi_w(...) wmlog_w("wifi", ##__VA_ARGS__)
 
-#ifdef CONFIG_WIFI_DEBUG
+#ifdef CONFIG_WIFI_FW_DEBUG
 #define wifi_d(...) wmlog("wifi", ##__VA_ARGS__)
 #else
 #define wifi_d(...)
@@ -117,5 +117,4 @@ void dump_packet_header(const HostCmd_DS_COMMAND *cmd);
 void dump_addba_req_rsp_packet(const HostCmd_DS_COMMAND *cmd);
 void dump_htcap_info(const MrvlIETypes_HTCap_t *htcap);
 void dump_ht_info(const MrvlIETypes_HTInfo_t *htinfo);
-
 #endif /* __WIFI_DEBUG_H__ */

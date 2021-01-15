@@ -46,14 +46,23 @@ extern "C" {
    https://sourceforge.net/p/predef/wiki/Compilers/ */
 #  include <stdint.h>
 #else /* !defined(_MSC_VER) || (_MSC_VER >= 1800) */
+#if defined(__REDLIB__)
+#  include <stdint.h>
+#else /* !defined(__REDLIB__) */
 #  include <inttypes.h>
+#endif /* !defined(__REDLIB__) */
 #endif /* !defined(_MSC_VER) || (_MSC_VER >= 1800) */
 #if !defined(FREERTOS)
+#if defined(__REDLIB__)
+typedef int ssize_t;
+#define SSIZE_MAX INT_MAX
+#else /* !defined(__REDLIB__) */
 #  include <sys/types.h>
+#endif /* !defined(__REDLIB__) */
 #endif
 #include <stdarg.h>
 
-#include <nghttp2/nghttp2ver.h>
+#include "nghttp2ver.h"
 
 #ifdef NGHTTP2_STATICLIB
 #  define NGHTTP2_EXTERN

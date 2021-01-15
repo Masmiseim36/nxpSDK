@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,16 +16,17 @@
 void default_isr(void); /* function prototype for default_isr in vectors.c */
 void ResetISR(void);
 void NMI_isr(void); /* included in vector.c */
-void hard_fault_handler_c(unsigned int * hardfault_args);
-typedef void pointer(void); /* Interrupt Vector Table Function Pointers */
+void hard_fault_handler_c(uint32_t * hardfault_args);
+
+typedef void (*vector_entry_t)(void); /* Interrupt Vector Table Function Pointers */
+extern uint32_t __BOOT_STACK_ADDRESS;
 extern void start(void);
-extern unsigned long __BOOT_STACK_ADDRESS[];
 
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
 //        Address     Vector IRQ   Source module   Source description
-#define VECTOR_000      (pointer*)__BOOT_STACK_ADDRESS  //          ARM core        Initial Supervisor SP
+#define VECTOR_000      (vector_entry_t)(uint32_t)&__BOOT_STACK_ADDRESS//          ARM core        Initial Supervisor SP
 #define VECTOR_001      ResetISR      // 0x0000_0004 1 -          ARM core        Initial Program Counter
 #ifndef VECTOR_002
   #define VECTOR_002      NMI_isr        // 2 - ARM core   Non-maskable Interrupt (NMI)
@@ -790,11 +791,11 @@ extern unsigned long __BOOT_STACK_ADDRESS[];
   #define VECTOR_255      default_isr     
 #endif
 
-#if (!defined(_IMXRT_))
-  #define CONFIG_1    (pointer*)0xffffffff
-  #define CONFIG_2    (pointer*)0xffffffff
-  #define CONFIG_3    (pointer*)0xffffffff
-  #define CONFIG_4    (pointer*)0xfffffffe
+#if (!defined(_IMX_))
+  #define CONFIG_1  (unsigned long)0xFFFFFFFF 
+  #define CONFIG_2  (unsigned long)0xFFFFFFFF 
+  #define CONFIG_3  (unsigned long)0xFFFFFFFF
+  #define CONFIG_4  (unsigned long)0xFFFFFFFE
 #endif
 
 #endif /* _VECTORS_H_ */

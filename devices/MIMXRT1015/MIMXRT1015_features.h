@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.1, 2019-02-20
-**     Build:               b200211
+**     Build:               b201019
 **
 **     Abstract:
 **         Chip specific module features.
@@ -119,6 +119,8 @@
 #define FSL_FEATURE_SOC_XBARB_COUNT (1)
 /* @brief XTALOSC24M availability on the SoC. */
 #define FSL_FEATURE_SOC_XTALOSC24M_COUNT (1)
+/* @brief ROM API Availability */
+#define FSL_FEATURE_BOOT_ROM_HAS_ROMAPI (1)
 
 /* ADC module features */
 
@@ -183,17 +185,21 @@
 #define FSL_FEATURE_EDMA_SUPPORT_8_BYTES_TRANSFER (1)
 /* @brief If 16 bytes transfer supported. */
 #define FSL_FEATURE_EDMA_SUPPORT_16_BYTES_TRANSFER (0)
+/* @brief If 32 bytes transfer supported. */
+#define FSL_FEATURE_EDMA_SUPPORT_32_BYTES_TRANSFER (1)
 
 /* DMAMUX module features */
 
 /* @brief Number of DMA channels (related to number of register CHCFGn). */
 #define FSL_FEATURE_DMAMUX_MODULE_CHANNEL (32)
 /* @brief Total number of DMA channels on all modules. */
-#define FSL_FEATURE_DMAMUX_DMAMUX_CHANNELS (FSL_FEATURE_SOC_DMAMUX_COUNT * 32)
+#define FSL_FEATURE_DMAMUX_DMAMUX_CHANNELS (32)
 /* @brief Has the periodic trigger capability for the triggered DMA channel (register bit CHCFG0[TRIG]). */
 #define FSL_FEATURE_DMAMUX_HAS_TRIG (1)
 /* @brief Has DMA Channel Always ON function (register bit CHCFG0[A_ON]). */
 #define FSL_FEATURE_DMAMUX_HAS_A_ON (1)
+/* @brief Register CHCFGn width. */
+#define FSL_FEATURE_DMAMUX_CHCFG_REGISTER_WIDTH (32)
 
 /* EWM module features */
 
@@ -321,10 +327,6 @@
 #define FSL_FEATURE_LPUART_IS_SCI (1)
 /* @brief Capacity (number of entries) of the transmit/receive FIFO (or zero if no FIFO is available). */
 #define FSL_FEATURE_LPUART_FIFO_SIZEn(x) (4)
-/* @brief Maximal data width without parity bit. */
-#define FSL_FEATURE_LPUART_MAX_DATA_WIDTH_WITH_NO_PARITY (10)
-/* @brief Maximal data width with parity bit. */
-#define FSL_FEATURE_LPUART_MAX_DATA_WIDTH_WITH_PARITY (9)
 /* @brief Supports two match addresses to filter incoming frames. */
 #define FSL_FEATURE_LPUART_HAS_ADDRESS_MATCHING (1)
 /* @brief Has transmitter/receiver DMA enable bits C5[TDMAE]/C5[RDMAE] (or BAUD[TDMAE]/BAUD[RDMAE] if the registers are 32-bit wide). */
@@ -389,14 +391,20 @@
 
 /* PWM module features */
 
-/* @brief If EflexPWM has module A channels (outputs). */
+/* @brief If (e)FlexPWM has module A channels (outputs). */
 #define FSL_FEATURE_PWM_HAS_CHANNELA (1)
-/* @brief If EflexPWM has module B channels (outputs). */
+/* @brief If (e)FlexPWM has module B channels (outputs). */
 #define FSL_FEATURE_PWM_HAS_CHANNELB (1)
-/* @brief If EflexPWM has module X channels (outputs). */
+/* @brief If (e)FlexPWM has module X channels (outputs). */
 #define FSL_FEATURE_PWM_HAS_CHANNELX (1)
-/* @brief Number of submodules in each EflexPWM module. */
+/* @brief If (e)FlexPWM has fractional feature. */
+#define FSL_FEATURE_PWM_HAS_FRACTIONAL (1)
+/* @brief If (e)FlexPWM has mux trigger source select bit field. */
+#define FSL_FEATURE_PWM_HAS_MUX_TRIGGER_SOURCE_SEL (1)
+/* @brief Number of submodules in each (e)FlexPWM module. */
 #define FSL_FEATURE_PWM_SUBMODULE_COUNT (4U)
+/* @brief Number of fault channel in each (e)FlexPWM module. */
+#define FSL_FEATURE_PWM_FAULT_CH_COUNT (1)
 
 /* RTWDOG module features */
 
@@ -530,6 +538,8 @@
 #define FSL_FEATURE_USBPHY_HAS_DCD_ANALOG (0)
 /* @brief USBPHY has register TRIM_OVERRIDE_EN */
 #define FSL_FEATURE_USBPHY_HAS_TRIM_OVERRIDE_EN (0)
+/* @brief USBPHY is 28FDSOI */
+#define FSL_FEATURE_USBPHY_28FDSOI (0)
 
 /* XBARA module features */
 

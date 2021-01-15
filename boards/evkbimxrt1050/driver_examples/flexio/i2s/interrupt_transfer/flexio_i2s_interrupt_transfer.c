@@ -6,6 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_flexio_i2s.h"
 #include "fsl_debug_console.h"
@@ -13,8 +15,6 @@
 
 #include "fsl_wm8960.h"
 #include "fsl_sai.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
@@ -258,7 +258,10 @@ int main(void)
     format.sampleRate_Hz = DEMO_AUDIO_SAMPLE_RATE;
 
     /* Use default setting to init codec */
-    CODEC_Init(&codecHandle, &boardCodecConfig);
+    if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
+    {
+        assert(false);
+    }
 
     FLEXIO_I2S_TransferTxCreateHandle(&base, &txHandle, txCallback, NULL);
     FLEXIO_I2S_TransferRxCreateHandle(&base, &rxHandle, rxCallback, NULL);

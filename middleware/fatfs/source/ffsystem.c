@@ -9,6 +9,10 @@
 
 #if FF_USE_LFN == 3	/* Dynamic memory allocation */
 
+#ifdef FSL_RTOS_FREE_RTOS
+#include "FreeRTOS.h"
+#endif
+
 /*------------------------------------------------------------------------*/
 /* Allocate a memory block                                                */
 /*------------------------------------------------------------------------*/
@@ -17,7 +21,11 @@ void* ff_memalloc (	/* Returns pointer to the allocated memory block (null if no
 	UINT msize		/* Number of bytes to allocate */
 )
 {
+#ifdef FSL_RTOS_FREE_RTOS
+    return pvPortMalloc(msize);
+#else
 	return malloc(msize);	/* Allocate a new memory block with POSIX API */
+#endif
 }
 
 
@@ -29,7 +37,11 @@ void ff_memfree (
 	void* mblock	/* Pointer to the memory block to free (nothing to do if null) */
 )
 {
+#ifdef FSL_RTOS_FREE_RTOS
+    vPortFree(mblock);
+#else
 	free(mblock);	/* Free the memory block with POSIX API */
+#endif
 }
 
 #endif
@@ -55,8 +67,8 @@ int ff_cre_syncobj (	/* 1:Function succeeded, 0:Could not create the sync object
 )
 {
 	/* Win32 */
-	*sobj = CreateMutex(NULL, FALSE, NULL);
-	return (int)(*sobj != INVALID_HANDLE_VALUE);
+//	*sobj = CreateMutex(NULL, FALSE, NULL);
+//	return (int)(*sobj != INVALID_HANDLE_VALUE);
 
 	/* uITRON */
 //	T_CSEM csem = {TA_TPRI,1,1};
@@ -91,7 +103,7 @@ int ff_del_syncobj (	/* 1:Function succeeded, 0:Could not delete due to an error
 )
 {
 	/* Win32 */
-	return (int)CloseHandle(sobj);
+//	return (int)CloseHandle(sobj);
 
 	/* uITRON */
 //	return (int)(del_sem(sobj) == E_OK);
@@ -122,7 +134,7 @@ int ff_req_grant (	/* 1:Got a grant to access the volume, 0:Could not get a gran
 )
 {
 	/* Win32 */
-	return (int)(WaitForSingleObject(sobj, FF_FS_TIMEOUT) == WAIT_OBJECT_0);
+//	return (int)(WaitForSingleObject(sobj, FF_FS_TIMEOUT) == WAIT_OBJECT_0);
 
 	/* uITRON */
 //	return (int)(wai_sem(sobj) == E_OK);
@@ -151,7 +163,7 @@ void ff_rel_grant (
 )
 {
 	/* Win32 */
-	ReleaseMutex(sobj);
+//	ReleaseMutex(sobj);
 
 	/* uITRON */
 //	sig_sem(sobj);

@@ -62,13 +62,19 @@ typedef struct _serial_port_uart_config
     serial_port_uart_parity_mode_t parityMode;      /*!< Parity mode, disabled (default), even, odd */
     serial_port_uart_stop_bit_count_t stopBitCount; /*!< Number of stop bits, 1 stop bit (default) or 2 stop bits  */
 
-    uint8_t enableRx; /*!< Enable RX */
-    uint8_t enableTx; /*!< Enable TX */
-    uint8_t instance; /*!< Instance (0 - UART0, 1 - UART1, ...), detail information
-                           please refer to the SOC corresponding RM. */
+    uint8_t enableRx;    /*!< Enable RX */
+    uint8_t enableTx;    /*!< Enable TX */
+    uint8_t enableRxRTS; /*!< Enable RX RTS */
+    uint8_t enableTxCTS; /*!< Enable TX CTS */
+    uint8_t instance;    /*!< Instance (0 - UART0, 1 - UART1, ...), detail information
+                              please refer to the SOC corresponding RM. */
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
     serial_port_uart_block_mode_t mode; /*!< serial port uart block mode */
 #endif                                  /* SERIAL_MANAGER_NON_BLOCKING_MODE */
+#if (defined(HAL_UART_ADAPTER_FIFO) && (HAL_UART_ADAPTER_FIFO > 0u))
+    uint8_t txFifoWatermark;
+    uint8_t rxFifoWatermark;
+#endif
 } serial_port_uart_config_t;
 /*! @} */
 #endif /* __SERIAL_PORT_UART_H__ */

@@ -12,16 +12,16 @@ A simple LED visualization is implemented. The board LED will be on if the devic
 
 The site allows the user to clear the credentials from the flash memory and reset the board to AP mode. If connection fails, user can also set device to AP mode through serial connection.
 
-The source files for the web interface are located in the webui directory. Use the `./mkfs.pl webui` Perl script in order to convert the webui files into the httpsrv_fs_data.c which is used in order to flash the static files onto the board.
+The source files for the web interface are located in the webui directory. Use the `<path_to_sdk>/middleware/lwip/src/apps/httpsrv/mkfs/mkfs.pl webui` Perl script in order to convert the webui files into the httpsrv_fs_data.c which is used in order to flash the static files onto the board. Make sure the mkfsl.pl script is executed from the same directory where the file httpsrv_fs_data.c and the directory webui are.
 
 Note that Microsoft Internet Explorer is not supported by this webconfig example.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -107,11 +107,4 @@ IPv4 Address got from DHCP  : 192.168.14.5
 [i] Waiting....
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-Known Issues
-Using this example with NXP WiFi (wifi_webconfig):
-After entering the wrong password, the board has to be manually reset.
-
-Customization options
-=====================
 

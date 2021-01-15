@@ -1,12 +1,12 @@
 /*
  * Copyright 2013 - 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef _MCDRV_ADC_IMXRT1052_H_
-#define _MCDRV_ADC_IMXRT1052_H_
+#ifndef _MCDRV_ADC_IMXRT_H_
+#define _MCDRV_ADC_IMXRT_H_
 
 #include "gdflib.h"
 #include "mlib_types.h"
@@ -192,4 +192,4 @@ bool_t MCDRV_AuxValGet(mcdrv_adc_t *this);
 }
 #endif
 
-#endif /* _MCDRV_ADC_IMXRT1052_H_ */
+#endif /* _MCDRV_ADC_IMXRT_H_ */

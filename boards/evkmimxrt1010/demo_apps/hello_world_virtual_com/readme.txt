@@ -1,18 +1,16 @@
 Overview
 ========
-The Hello World demo application provides a sanity check for the new SDK build environments and board bring up. The Hello
-World demo prints the "Hello World" string to the terminal using the SDK UART drivers. The purpose of this demo is to
-show how to use the UART, and to provide a simple project for debugging and further development.
-Note: Please input one character at a time. If you input too many characters each time, the receiver may overflow
-because the low level UART uses simple polling way for receiving. If you want to try inputting many characters each time,
-just define DEBUG_CONSOLE_TRANSFER_NON_BLOCKING in your project to use the advanced debug console utility.
+Hello World Virtual Com demonstrates the use of virtual com to print the "Hello World" string to the terminal.
+Different with Hello World demo (a HW UART peripheral is used to transmit data), the demo transmits data based on
+a serial port simulated by the USB device stack on target board side via USB peripheral.
+The purpose of this demo is to demonstrate how to use virtual com and provide a simple project for debugging and further development. 
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  9.2.1
-- Keil MDK  5.31
-- IAR embedded Workbench  8.50.5
-- MCUXpresso  11.2.0
+- GCC ARM Embedded  9.3.1
+- Keil MDK  5.33
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================

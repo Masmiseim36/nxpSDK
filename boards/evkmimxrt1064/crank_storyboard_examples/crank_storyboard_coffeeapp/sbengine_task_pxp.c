@@ -27,14 +27,14 @@
 #include <fsl_pxp.h>
 #include <gre/iodefs.h>
 #include <gre/sdk/greal.h>
-#include "board.h"
 #include "lcd.h"
 #include "touch.h"
 #include <fsl_cache.h>
 #include "fsl_debug_console.h"
-#include "board.h"
 #include "peripherals.h"
 
+#include "board.h"
+#include "board.h"
 #if (configGENERATE_RUN_TIME_STATS == 1U)
 /*******************************************************************************
  * Support for FreeRTOS runtime stats using hi-res PIT timer

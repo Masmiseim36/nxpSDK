@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,7 +9,8 @@
 #define _SAFETY_CONFIG_H_
    
 #include "MIMXRT1052.h"
-#include "IEC60730_B_CM4_CM7.h"
+#include "iec60730b.h" 
+#include "iec60730b_core.h"
 #include "project_setup_evkbimxrt1050.h"
 #include "safety_cm7_imxrt.h"
   
@@ -23,14 +24,16 @@
  ******************************************************************************/
 /* This macro enables infinity while loop in SafetyErrorHandling() function */
 #define SAFETY_ERROR_ACTION 1
-   
+
 /* TEST SWITCHES - for debugging it is better to turn the flash test and watchdog OFF */
-#define ADC_TEST_ENABLED   0
-#define CLOCK_TEST_ENABLED 1
-#define DIO_TEST_ENABLED   1
-#define FLASH_TEST_ENABLED 0
-#define PC_TEST_ENABLED    1
+#define ADC_TEST_ENABLED    0
+#define CLOCK_TEST_ENABLED  1
+#define DIO_TEST_ENABLED    1
+#define FLASH_TEST_ENABLED  1
+#define RAM_TEST_ENABLED    1 
+#define PC_TEST_ENABLED     1
 #define WATCHDOG_ENABLED   0   
+#define FMSTR_SERIAL_ENABLE 1
 
 /********* Clock *********/
 #define GPT_SRC_32K 4U /* Value from ref. manual */
@@ -87,26 +90,30 @@
 /* Hyper flash size */
 #define BOARD_FLASH_SIZE    (0x4000000U)
 
+#define FLASH_USED_DCP DCP
+#define FLASH_DCP_TAG  0U
+
 #define FLASH_TEST_BLOCK_SIZE     0x10
 #define FLASH_TEST_CONDITION_SEED 0xFFFFFFFF
-#define FLASH_TEST_START_ADDRESS  0x60002410
-#define FLASH_TEST_END_ADDRESS    0x60005000
 
-#if defined(__GNUC__) || (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* MCUXpresso + KEIL */
-	#define CRC_VALUE_ADDR   0x60002400 /* must fit with the setup from linker configuration file */
+#if defined(__GNUC__) || defined(__ARMCC_VERSION)
+    /*! @note The following flash test settings must be in consistence with
+              "User AFTER BUILD = srec_cat!*/
+    /* The CRC32 of safety-related FLASH memory. */
+    #define FS_CFG_FLASH_TST_CRC        (0xFFFFFFFFUL)
 #endif
 /********* Flashtest END *********/
 
 /********* RAM *********/
 #define RAM_TEST_BLOCK_SIZE       0x4        /* size of block for runtime testing */
 
-#if defined(__IAR_SYSTEMS_ICC__) || (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* IAR + KEIL */
+#if defined(__IAR_SYSTEMS_ICC__) || (defined(__GNUC__) && (__ARMCC_VERSION >= 6010050)) /* IAR + KEIL */
     #define RAM_TEST_BACKUP_SIZE      0x20       /* must fit with the setup from linker configuration file */
     #define STACK_TEST_BLOCK_SIZE     0x10       /* must fit with the setup from linker configuration file */
 #endif
 
 /* Time range in which safety_ram_crc should be tested */
-#define RAM_CHECK_TIME_THRESHOLD 100 /* 1ms Systick period * 100 = 100ms threshold */
+#define RAM_CRC_CHECK_TIME_THRESHOLD 100 /* 1ms Systick period * 100 = 100ms threshold */
 /********* RAM END *********/
 
 #define STACK_TEST_PATTERN        0x77777777
@@ -132,8 +139,8 @@
    
 /********* UART *********/
 #define APPLICATION_SERIAL_BASE LPUART1      
-#define SERIAL_BAUD_RATE  19200
-#define SERIAL_CLOCK      80e6
+#define UART_BAUD_RATE          19200
+#define SERIAL_CLOCK            80e6
 /********* UART END *********/
 
 /********* ADC *********/
@@ -149,10 +156,11 @@
 #define FS_CFG_AIO_CHANNELS_CNT    3
 #define FS_CFG_AIO_CHANNELS_LIMITS_INIT \
 {\
-  {ADC_MIN_LIMIT(0), ADC_MAX_LIMIT(60)}, \
-  {ADC_MIN_LIMIT(ADC_MAX), ADC_MAX_LIMIT(ADC_MAX)}, \
-  {ADC_MIN_LIMIT(ADC_BANDGAP_LEVEL_RAW), ADC_MAX_LIMIT(ADC_BANDGAP_LEVEL_RAW)} \
+  {(uint32_t)ADC_MIN_LIMIT(0), (uint32_t)ADC_MAX_LIMIT(60)}, \
+  {(uint32_t)ADC_MIN_LIMIT(ADC_MAX), (uint32_t)ADC_MAX_LIMIT(ADC_MAX)},\
+  {(uint32_t)ADC_MIN_LIMIT(ADC_BANDGAP_LEVEL_RAW), (uint32_t)ADC_MAX_LIMIT(ADC_BANDGAP_LEVEL_RAW)}\
 }
+
 
 #define FS_CFG_AIO_CHANNELS_INIT {0xFU, 0x19U, 0}  /* ADC Channels for V_refl, V_refh, bandgap */
 /********* ADC END *********/

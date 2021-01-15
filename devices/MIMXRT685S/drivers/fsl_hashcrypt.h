@@ -26,9 +26,9 @@ enum _hashcrypt_status
  */
 /*! @name Driver version */
 /*@{*/
-/*! @brief HASHCRYPT driver version. Version 2.1.3.
+/*! @brief HASHCRYPT driver version. Version 2.1.4.
  *
- * Current version: 2.1.3
+ * Current version: 2.1.4
  *
  * Change log:
  * - Version 2.0.0
@@ -49,8 +49,10 @@ enum _hashcrypt_status
  *   - Support loading AES input data from unaligned address.
  * - Version 2.1.3
  *   - Fix MISRA C-2012.
+ * - Version 2.1.4
+ *   - Fix context switch cannot work when switching from AES.
  */
-#define FSL_HASHCRYPT_DRIVER_VERSION (MAKE_VERSION(2, 1, 3))
+#define FSL_HASHCRYPT_DRIVER_VERSION (MAKE_VERSION(2, 1, 4))
 /*@}*/
 
 /*! @brief Algorithm definitions correspond with the values for Mode field in Control register !*/

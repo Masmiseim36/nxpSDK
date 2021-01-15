@@ -1,0 +1,20 @@
+For this application seed for random numbers will be 1604936495
+Application Started
+Working with EAP library release 2.0.3 built for platform WIN32_X86_MSVC_T2008
+
+ Memory region 0, size 16975 in Bytes
+
+ Memory region address 009E9FE9
+
+ Memory region 1, size 9391 in Bytes
+
+ Memory region address 009F0049
+
+ Memory region 2, size 11471 in Bytes
+
+ Memory region address 009F2501
+
+ Memory region 3, size 11279 in Bytes
+
+ Memory region address 009F51D9
+

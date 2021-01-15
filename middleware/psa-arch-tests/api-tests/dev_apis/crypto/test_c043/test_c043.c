@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2020, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,16 +27,17 @@ const client_test_t test_c043_crypto_list[] = {
     NULL,
 };
 
-static int         g_test_count = 1;
+static uint32_t    g_test_count = 1;
 //NXP static uint8_t     output[SIZE_50B];
 
-int32_t psa_raw_key_agreement_test(caller_security_t caller)
+int32_t psa_raw_key_agreement_test(caller_security_t caller __UNUSED)
 {
     uint8_t     output[SIZE_50B];
     int                     num_checks = sizeof(check1)/sizeof(check1[0]);
     int32_t                 i, status;
     size_t                  output_length;
     psa_key_attributes_t    attributes = PSA_KEY_ATTRIBUTES_INIT;
+    psa_key_handle_t        key_handle;
 
     if (num_checks == 0)
     {
@@ -50,8 +51,6 @@ int32_t psa_raw_key_agreement_test(caller_security_t caller)
 
     for (i = 0; i < num_checks; i++)
     {
-        psa_key_handle_t            key_handle = check1[i].key_handle; //NXP
-        
         val->print(PRINT_TEST, "[Check %d] ", g_test_count++);
         val->print(PRINT_TEST, check1[i].test_desc, 0);
 
@@ -95,12 +94,16 @@ int32_t psa_raw_key_agreement_test(caller_security_t caller)
     return VAL_STATUS_SUCCESS;
 }
 
-int32_t psa_raw_key_agreement_negative_test(caller_security_t caller)
+int32_t psa_raw_key_agreement_negative_test(caller_security_t caller __UNUSED)
 {
+#ifdef ARCH_TEST_ECDH //NXP
+#ifdef ARCH_TEST_ECC_CURVE_SECP256R1 //NXP
+
     uint8_t     output[SIZE_50B];
     int                     num_checks = sizeof(check2)/sizeof(check2[0]);
     int32_t                 i, status;
     size_t                  output_length;
+    psa_key_handle_t        key_handle = 8;
 
     /* Initialize the PSA crypto library*/
     status = val->crypto_function(VAL_CRYPTO_INIT);
@@ -117,7 +120,7 @@ int32_t psa_raw_key_agreement_negative_test(caller_security_t caller)
                                                                                  g_test_count++);
         /* Set up a key agreement operation */
         status = val->crypto_function(VAL_CRYPTO_RAW_KEY_AGREEMENT, check2[i].key_alg,
-                    check2[i].key_handle, check2[i].peer_key, check2[i].peer_key_length,
+                    key_handle, check2[i].peer_key, check2[i].peer_key_length,
                     output, check2[i].output_size, &output_length);
         TEST_ASSERT_EQUAL(status, PSA_ERROR_INVALID_HANDLE, TEST_CHECKPOINT_NUM(3));
 
@@ -130,6 +133,8 @@ int32_t psa_raw_key_agreement_negative_test(caller_security_t caller)
                     output, check2[i].output_size, &output_length);
         TEST_ASSERT_EQUAL(status, PSA_ERROR_INVALID_HANDLE, TEST_CHECKPOINT_NUM(4));
     }
+#endif //NXP
+#endif //NXP
 
     return VAL_STATUS_SUCCESS;
 }

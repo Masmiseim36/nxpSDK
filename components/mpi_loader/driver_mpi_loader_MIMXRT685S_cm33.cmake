@@ -1,0 +1,17 @@
+if(NOT DRIVER_MPI_LOADER_MIMXRT685S_cm33_INCLUDED)
+    
+    set(DRIVER_MPI_LOADER_MIMXRT685S_cm33_INCLUDED true CACHE BOOL "driver_mpi_loader component is included.")
+
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/fsl_mpi_loader.c
+    )
+
+
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/.
+    )
+
+
+    include(driver_common_MIMXRT685S_cm33)
+
+endif()

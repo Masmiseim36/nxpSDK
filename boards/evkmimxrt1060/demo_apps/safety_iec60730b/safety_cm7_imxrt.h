@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,133 +20,111 @@
 #define CLOCK_TEST_ERROR                  0x10  /* Clock test fault flag */
 #define PC_TEST_ERROR                     0x20  /* Program counter test fault flag */
 #define CPU_PRIMASK_ERROR                 0x40  /* PRIMASK test fault flag */
-#define CPU_SP_MAIN_ERROR                 0x80  /* main SP test fault flag */
-#define CPU_REGISTERS_ERROR              0x100  /* CPU registers test fault flag */
-#define CPU_NONSTACKED_ERROR             0x200  /* non-stacked CPU test fault flag */
-#define CPU_FLOAT_1_ERROR                0x400  /* floating point registers test fault flag */
-#define CPU_FLOAT_2_ERROR                0x800  /* floating point registers test fault flag */
-#define CPU_CONTROL_ERROR               0x1000  /* CONTROL register test fault flag */
-#define CPU_SP_PROCESS_ERROR            0x2000  /* process SP test fault flag */
-#define CPU_SPECIAL_ERROR               0x4000  /* special CPU registers test fault flag */
-#define DIO_TEST_ERROR                  0x8000  /* DIO test fault flag */
-#define AIO_TEST_ERROR                 0x10000  /* AIO test fault flag */
+#define CPU_REGISTERS_ERROR               0x80  /* CPU registers test fault flag */
+#define CPU_NONSTACKED_ERROR             0x100  /* non-stacked CPU test fault flag */
+#define CPU_FLOAT_1_ERROR                0x200  /* floating point registers test fault flag */
+#define CPU_FLOAT_2_ERROR                0x400  /* floating point registers test fault flag */
+#define CPU_CONTROL_ERROR                0x800  /* CONTROL register test fault flag */
+#define CPU_SPECIAL_ERROR               0x1000  /* special CPU registers test fault flag */
+#define DIO_TEST_ERROR                  0x2000  /* DIO test fault flag */
+#define AIO_TEST_ERROR                  0x4000  /* AIO test fault flag */
+#define WDOG_TEST_ERROR                 0x8000  /* WDOG test fault flag */
+#define FLASH_TEST_RAM_CRC_ERROR       0x10000  /* DCP-related part of RAM wasn't tested in time limit fault flag */
 
-#define IEC60730B_ST_FLASH_PASS         0x0        /* Flash test pass return */
-#define IEC60730B_ST_FLASH_FAIL         0x00000301 /* Flash test fail return */
-#define IEC60730B_ST_FLASH_PROGRESS     0x00000302 /* Flash test inprogress  */
-
-#define IEC60730B_CFG_PC_ADDR0 	        0x1FFFFFF8 /* #1 test address for Program counter test */
-#define IEC60730B_CFG_PC_ADDR1 	        0x20000006 /* #2 test address for Program counter test */
+#define FS_FLASH_PASS         0x0        /* Flash test pass return */
+#define FS_FLASH_FAIL         0x00000301 /* Flash test fail return */
+#define FS_FLASH_PROGRESS     0x00000302 /* Flash test inprogress  */
 
 /*! @brief Safety tests */
 typedef struct _safety_common
 {
-    uint32_t ui32FastIsrSafetySwitch;
-    uint32_t ui32SafetyErrors;
-    uint32_t IEC60730B_clock_test_result;
-    uint32_t IEC60730B_flash_test_result;
-    uint32_t IEC60730B_ram_test_result;
-    uint32_t IEC60730B_pc_test_result;
-    uint32_t IEC60730B_cpu_primask_test_result;
-    uint32_t IEC60730B_cpu_sp_main_test_result;
-    uint32_t IEC60730B_cpu_reg_test_result;
-    uint32_t IEC60730B_cpu_non_stacked_test_result;
-    uint32_t IEC60730B_cpu_float_test_1_result;
-    uint32_t IEC60730B_cpu_float_test_2_result;
-    uint32_t IEC60730B_cpu_control_test_result;
-    uint32_t IEC60730B_cpu_sp_process_test_result;
-    uint32_t IEC60730B_cpu_special_test_result;
-    uint32_t IEC60730B_stack_test_result;
-    uint32_t IEC60730B_dio_input_test_result;
-    uint32_t IEC60730B_dio_output_test_result;
-    uint32_t IEC60730B_dio_short_test_result;
-    uint32_t IEC60730B_aio_test_result;
-    uint32_t ui32CpuClkFreq;
-    uint32_t ui32McgirclkFreq;
-    uint32_t ui32LpoFreq;
+    uint32_t fastIsrSafetySwitch;
+    uint32_t safetyErrors;
+    uint32_t AIO_test_result;
+    uint32_t CLOCK_test_result;
+    uint32_t FLASH_test_result;
+    uint32_t RAM_test_result;
+    uint32_t PC_test_result;
+    uint32_t CPU_primask_test_result;
+    uint32_t CPU_reg_test_result;
+    uint32_t CPU_non_stacked_test_result;
+    uint32_t CPU_control_test_result;
+    uint32_t CPU_special_test_result;
+    uint32_t CPU_float_test_1_result;
+    uint32_t CPU_float_test_2_result;
+    uint32_t STACK_test_result;
+    uint32_t DIO_input_test_result;
+    uint32_t DIO_output_test_result;
+    uint32_t DIO_short_test_result;
+    uint32_t WDOG_test_result;
+    uint32_t refClkFreq;
 } safety_common_t;
 
 /*! @brief Safety Watchdog test */
 typedef struct _wd_test
 {
-    uint64_t ui64WdTestTemp1;
-    uint32_t ui32WdTestExpected;
-    uint32_t ui32WdTestTolerance;
-    uint32_t ui32WdTestLptmrCnt;
-    uint32_t ui32WdTestLimitHigh;
-    uint32_t ui32WdTestLimitLow;
-    uint32_t ui32WatchdogResets;
-    uint32_t ui32WatchdogTimeoutCheck;
-    uint16_t ui16WatchdogRefreshRatio;
+    uint64_t wdTestTemp1;
+    uint32_t wdTestExpected;
+    uint32_t wdTestTolerance;
+    uint32_t wdTestLptmrCnt;
+    uint32_t wdTestLimitHigh;
+    uint32_t wdTestLimitLow;
+    uint32_t watchdogResets;
+    uint32_t watchdogTimeoutCheck;
+    uint16_t watchdogRefreshRatio;
 } wd_test_t;
 
 /*! @brief Safety Clock test */
 typedef struct _clock_test
 {
-    uint32_t ui32ClockTestContext;
-    uint32_t ui32ClockTestTolerance;
-    uint32_t ui32ClockTestExpected;
-    uint32_t ui32ClockTestLimitHigh;
-    uint32_t ui32ClockTestLimitLow;
-    uint32_t ui32SystickReloadValue;
-    uint16_t ui16ClockTestStart;
+    uint32_t clockTestContext;
+    uint32_t clockTestTolerance;
+    uint32_t clockTestExpected;
+    uint32_t clockTestLimitHigh;
+    uint32_t clockTestLimitLow;
+    uint32_t systickReloadValue;
+    uint16_t clockTestStart;
 } clock_test_t;
 
 /*! @brief Safety RAM test */
 typedef struct _ram_test
 {
-    uint32_t ui32RamTestStartAddress;
-    uint32_t ui32RamTestEndAddress;
-    uint32_t ui32BlockSize;
-    uint32_t ui32ActualAddress;
-    uint32_t ui32DefaultBlockSize;
-    uint32_t ui32BackupAddress;
+    uint32_t ramTestStartAddress;
+    uint32_t ramTestEndAddress;
+    uint32_t blockSize;
+    uint32_t actualAddress;
+    uint32_t defaultBlockSize;
+    uint32_t backupAddress;
 } ram_test_t;
 
 /*! @brief Safety Flash test runtime */
 typedef struct _flash_runtime_test_parameters
 {
-    uint32_t ui32BlockSize;         /* size of tested block */
-    uint32_t ui32ActualAddress;     /* actual start address for crc module */
-    uint32_t ui32PartCrc;           /* seed in begin, particular crc result in process, crc result in final*/
+    uint32_t blockSize;         /* size of tested block */
+    uint32_t actualAddress;     /* actual start address for crc module */
+    uint32_t partCrc;           /* seed in begin, particular crc result in process, crc result in final*/
 } flash_runtime_test_parameters_t;
 
 /*! @brief Safety Flash test parameters */
 typedef struct _flash_configuration_parameters
 {
-    uint32_t ui32Iec60730bStartConditionSeed;
-    uint32_t ui32Iec60730bStartAddress;
-    uint32_t ui32Iec60730bEndAddress;
-    uint32_t ui32Iec60730bSize;
-    uint32_t ui32Iec60730bBlockSize;
-    uint32_t ui32Iec60730bChecksum;
+    uint32_t startConditionSeed;
+    uint32_t startAddress;
+    uint32_t endAddress;
+    uint32_t size;
+    uint32_t blockSize;
+    uint32_t checksum;
 } flash_configuration_parameters_t;
 
-/*! @brief Safety Program Counter test */
-typedef struct _pc_test
+/* CRC structure containing information for the offline CRC calculation. */
+typedef struct _fs_crc
 {
-    uint32_t ui32AddrVal0;
-    uint32_t ui32AddrVal1;
-    uint32_t ui32AddrVal2;
-    uint32_t ui32AddrVal3;
-    uint32_t ui32AddrVal4;
-    uint32_t ui32AddrVal5;
-    uint32_t ui32AddrVal6;
-    uint32_t ui32AddrVal7;
-} pc_test_t;
-
-/*! @brief Safety memory for Program Counter test */
-typedef struct _pc_test_memory
-{
-    uint32_t ui32Address0; /* 0x1FFFFFF8*/
-    uint32_t ui32Address1; /* 0x1FFFFFFC*/
-    uint32_t ui32Address2; /* 0x20000000*/
-    uint32_t ui32Address3; /* 0x20000004*/
-    uint32_t ui32Address4; /* 0x20000008*/
-    uint32_t ui32Address5; /* 0x2000000C*/
-    uint32_t ui32Address6; /* 0x20000010*/
-    uint32_t ui32Address7; /* 0x20000014*/
-} pc_test_memory_t;
+    uint16_t ui16Start;
+    uint32_t ui32FlashStart __attribute__((packed));
+    uint32_t ui32FlashEnd   __attribute__((packed));
+    uint32_t ui32CRC        __attribute__((packed));
+    uint16_t ui16End        __attribute__((packed));
+} fs_crc_t;
 
 #ifdef __cplusplus
 extern "C" {
@@ -160,14 +138,17 @@ extern "C" {
 /*******************************************************************************
 * API
 ******************************************************************************/
-void SafetyWatchdogTest(wd_test_t *psSafetyWdTest);
+void SafetyWatchdogTest(safety_common_t *psSafetyCommon, wd_test_t *psSafetyWdTest);
 void SafetyWatchdogRuntimeRefresh(wd_test_t *psSafetyWdTest);
 void SafetyClockTestInit(safety_common_t *psSafetyCommon, clock_test_t *psSafetyClockTest);
 void SafetyClockTestIsr(clock_test_t *psSafetyClockTest);
 void SafetyClockTestCheck(safety_common_t *psSafetyCommon, clock_test_t *psSafetyClockTest);
-void SafetyFlashTestInit(flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig, flash_dcp_state_t *psFlashDCPState);
-void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, flash_configuration_parameters_t *psFlashConfig, flash_dcp_state_t *psFlashDCPState);
-void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon, flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig, flash_dcp_state_t *psFlashDCPState);
+void SafetyFlashTestInit(flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig, fs_flash_dcp_state_t *psFlashDCPState);
+void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, flash_configuration_parameters_t *psFlashConfig);
+void SafetyFlashAfterResetTest_DCP(safety_common_t *psSafetyCommon, flash_configuration_parameters_t *psFlashConfig, fs_flash_dcp_state_t *psFlashDCPState);
+void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon, flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig);
+void SafetyFlashRuntimeTest_DCP(safety_common_t *psSafetyCommon, flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig, fs_flash_dcp_state_t *psFlashDCPState);
+
 uint32_t SafetyFlashTestHandling( flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig);
 void SafetyRamTestInit(ram_test_t *psSafetyRamTest, uint32_t *pui32SafetyRamStart, uint32_t *pui32SafetyRamEnd);
 void SafetyRamAfterResetTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest);
@@ -179,13 +160,18 @@ void SafetyCpuBackgroundTest(safety_common_t *psSafetyCommon);
 void SafetyStackTestInit(void);
 void SafetyStackTest(safety_common_t *psSafetyCommon);
 
-void SafetyDigitalOutputTestRT(safety_common_t *psSafetyCommon, dio_test_rt_t *pTestedPin);
-void SafetyDigitalInputOutput_ShortSupplyTestRT(safety_common_t *psSafetyCommon, dio_test_rt_t* pTestedPin, uint8_t polarity);
-void SafetyDigitalInputOutput_ShortAdjTestRT(safety_common_t *psSafetyCommon, dio_test_rt_t* pTestedPin, dio_test_rt_t* pAdjPin, unsigned long PinValue);
+void SafetyDigitalOutputTest(safety_common_t *psSafetyCommon, fs_dio_test_imx_t *pTestedPin);
+void SafetyDigitalInputOutput_ShortSupplyTest(safety_common_t *psSafetyCommon, fs_dio_test_imx_t *pTestedPin, uint8_t polarity);
+void SafetyDigitalInputOutput_ShortAdjTest(safety_common_t *psSafetyCommon, fs_dio_test_imx_t *pTestedPin, fs_dio_test_imx_t *pAdjPin, uint32_t PinValue);
+
+void SafetyAnalogTestInitialization(void);
+void SafetyAnalogTest(safety_common_t *psSafetyCommon);
 
 void SafetyIsrFunction(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest, ram_test_t *psSafetyRamStackTest);
+
+void development_test_terminate(void);
 void SafetyErrorHandling(safety_common_t *psSafetyCommon);
-void InitPackets(flash_dcp_state_t *psFlashDCPState);
+void InitPackets(fs_flash_dcp_state_t *psFlashDCPState);
 
 #ifdef __cplusplus
 }

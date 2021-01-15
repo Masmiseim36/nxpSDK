@@ -5,7 +5,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -18,11 +20,8 @@
 
 #include "fsl_device_registers.h"
 #include "clock_config.h"
-#include "board.h"
 #include "fsl_debug_console.h"
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "board.h"
 
 #if ((defined FSL_FEATURE_SOC_USBPHY_COUNT) && (FSL_FEATURE_SOC_USBPHY_COUNT > 0U))
 #include "usb_phy.h"
@@ -171,7 +170,8 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         case kUSB_DeviceEventAttach:
         {
             usb_echo("USB device attached.\r\n");
-            /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+            /*Add one delay here to make the DP pull down long enough to allow host to detect the previous
+             * disconnection.*/
             SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
             USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
         }

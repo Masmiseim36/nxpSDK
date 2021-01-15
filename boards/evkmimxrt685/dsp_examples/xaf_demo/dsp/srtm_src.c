@@ -15,7 +15,7 @@
 #include "xaf-api.h"
 
 #include "xa_error_standards.h"
-#include "audio/xa_src_pp_api.h"
+#include "xa_src_pp_api.h"
 #include "srtm_utils.h"
 
 #include "fsl_common.h"

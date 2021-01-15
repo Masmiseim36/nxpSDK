@@ -9,6 +9,7 @@
  * Description: This file implements the ISSDK FXAS21002 and FXOS8700 sensor 
  * drivers. It is used for reading data from FXAS21002 and FXOS8700 sensors.
  */
+#include <stdio.h>
 
 /*  SDK Includes */
 #include "pin_mux.h"
@@ -96,7 +97,7 @@ status_t init_sensors(void)
     status = I2Cdrv->Initialize(I2C_S_SIGNAL_EVENT);
     if (ARM_DRIVER_OK != status)
     {
-        PRINTF("\r\n I2C Initialization Failed\r\n");
+        printf("\r\n I2C Initialization Failed\r\n");
         return status;
     }
 
@@ -104,7 +105,7 @@ status_t init_sensors(void)
     status = I2Cdrv->PowerControl(ARM_POWER_FULL);
     if (ARM_DRIVER_OK != status)
     {
-        PRINTF("\r\n I2C Power Mode setting Failed\r\n");
+        printf("\r\n I2C Power Mode setting Failed\r\n");
         return status;
     }
 
@@ -112,19 +113,21 @@ status_t init_sensors(void)
     status = I2Cdrv->Control(ARM_I2C_BUS_SPEED, ARM_I2C_BUS_SPEED_FAST);
     if (ARM_DRIVER_OK != status)
     {
-        PRINTF("\r\n I2C Control Mode setting Failed\r\n");
+        printf("\r\n I2C Control Mode setting Failed\r\n");
         return status;
     }
 
+#if defined(CPU_MIMXRT1052DVL6B) || defined(CPU_MIMXRT1062DVL6A)
     /* Init output RST GPIO. This is quick fix for FRDM_STBC_AG01 REV B board*/
     GPIO_PinWrite(GPIO1, 21, 1);
+#endif
 
     /*! Initialize the FXAS21002 sensor driver. */
     status = FXAS21002_I2C_Initialize(&FXAS21002drv, &I2C_S_DRIVER, I2C_S_DEVICE_INDEX, FXAS21002_I2C_ADDR,
                                       FXAS21002_WHO_AM_I_WHOAMI_PROD_VALUE);
     if (SENSOR_ERROR_NONE != status)
     {
-        PRINTF("\r\n FXAS21002 Sensor Initialization Failed\r\n");
+        printf("\r\n FXAS21002 Sensor Initialization Failed\r\n");
         return status;
     }
 
@@ -135,7 +138,7 @@ status_t init_sensors(void)
     status = FXAS21002_I2C_Configure(&FXAS21002drv, fxas21002_Config_Normal);
     if (SENSOR_ERROR_NONE != status)
     {
-        PRINTF("\r\n FXAS21002 Sensor Configuration Failed, Err = %d\r\n", (int)status);
+        printf("\r\n FXAS21002 Sensor Configuration Failed, Err = %d\r\n", (int)status);
         return status;
     }
 
@@ -144,7 +147,7 @@ status_t init_sensors(void)
                                      FXOS8700_WHO_AM_I_PROD_VALUE);
     if (SENSOR_ERROR_NONE != status)
     {
-        PRINTF("\r\n FXOS8700 Sensor Initialization Failed\r\n");
+        printf("\r\n FXOS8700 Sensor Initialization Failed\r\n");
         return status;
     }
 
@@ -155,7 +158,7 @@ status_t init_sensors(void)
     status = FXOS8700_I2C_Configure(&FXOS8700drv, fxos8700_Config_Hybrid);
     if (SENSOR_ERROR_NONE != status)
     {
-        PRINTF("\r\n FXOS8700 Sensor Configuration Failed, Err = %d\r\n", (int)status);
+        printf("\r\n FXOS8700 Sensor Configuration Failed, Err = %d\r\n", (int)status);
         return status;
     }
 
@@ -182,7 +185,7 @@ status_t run_sensors(fxas21002_gyrodata_t *rawDataGyro,
   status = FXAS21002_I2C_ReadData(&FXAS21002drv, fxas21002_Output_Values, dataGyro);
   if (ARM_DRIVER_OK != status)
   {
-      PRINTF("\r\n FXOS8700 Read Failed. \r\n");
+      printf("\r\n FXOS8700 Read Failed. \r\n");
       return status;
   }
 
@@ -190,7 +193,7 @@ status_t run_sensors(fxas21002_gyrodata_t *rawDataGyro,
   status = FXOS8700_I2C_ReadData(&FXOS8700drv, FXOS8700_ACCELMAG_READ, dataAccel);
   if (ARM_DRIVER_OK != status)
   {
-      PRINTF("\r\n FXOS8700 Read Failed. \r\n");
+      printf("\r\n FXOS8700 Read Failed. \r\n");
       return status;
   }
 
@@ -200,7 +203,7 @@ status_t run_sensors(fxas21002_gyrodata_t *rawDataGyro,
   status = FXOS8700_I2C_ReadData(&FXOS8700drv, FXOS8700_ACCELMAG_INIT_READ, dataAccelInit);
   if (ARM_DRIVER_OK != status)
   {
-      PRINTF("\r\n FXOS8700 Init Read Failed. \r\n");
+      printf("\r\n FXOS8700 Init Read Failed. \r\n");
       return -1;
   }
 
@@ -222,9 +225,9 @@ status_t run_sensors(fxas21002_gyrodata_t *rawDataGyro,
 
   /* NOTE: PRINTF is relatively expensive in terms of CPU time, specially when used with-in execution loop. */
   /*
-  PRINTF("\r\n Gyro X = %d  Y = %d  Z = %d\r\n", rawDataGyro->gyro[0], rawDataGyro->gyro[1], rawDataGyro->gyro[2]);
-  PRINTF("\r\n Accel X = %d  Y = %d  Z = %d\r\n", rawDataAccel->accel[0], rawDataAccel->accel[1], rawDataAccel->accel[2]);
-  PRINTF("\r\n Mag   X = %d  Y = %d  Z = %d\r\n", rawDataAccel->mag[0], rawDataAccel->mag[1], rawDataAccel->mag[2]);
+  printf("\r\n Gyro X = %d  Y = %d  Z = %d\r\n", rawDataGyro->gyro[0], rawDataGyro->gyro[1], rawDataGyro->gyro[2]);
+  printf("\r\n Accel X = %d  Y = %d  Z = %d\r\n", rawDataAccel->accel[0], rawDataAccel->accel[1], rawDataAccel->accel[2]);
+  printf("\r\n Mag   X = %d  Y = %d  Z = %d\r\n", rawDataAccel->mag[0], rawDataAccel->mag[1], rawDataAccel->mag[2]);
   ASK_USER_TO_RESUME(100); Ask for user input after processing 100 samples.
   */
 

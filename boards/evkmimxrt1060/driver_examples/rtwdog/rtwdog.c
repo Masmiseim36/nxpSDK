@@ -7,6 +7,8 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_rtwdog.h"
 #if defined(FSL_FEATURE_SOC_RCM_COUNT) && (FSL_FEATURE_SOC_RCM_COUNT)
@@ -18,8 +20,6 @@
 #if defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT)
 #include "fsl_asmc.h"
 #endif
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -33,8 +33,6 @@
 #define EXAMPLE_WDOG_BASE      RTWDOG
 #define DELAY_TIME             100000U
 #define WDOG_IRQHandler        RTWDOG_IRQHandler
-
-#define WDOG_WCT_INSTRUCITON_COUNT (128U)
 
 /*******************************************************************************
  * Prototypes
@@ -52,22 +50,6 @@ static rtwdog_config_t config;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-/*!
- * @brief Wait until the WCT is closed.
- *
- * This function is used to wait until the WCT window is closed, WCT time is 128 bus cycles
- *
- * @param base RTWDOG peripheral base address
- */
-static void WaitWctClose(RTWDOG_Type *base)
-{
-    /* Accessing register by bus clock */
-    for (uint32_t i = 0; i < WDOG_WCT_INSTRUCITON_COUNT; i++)
-    {
-        (void)base->CNT;
-    }
-}
 
 /*!
  * @brief Get current test mode.
@@ -227,7 +209,6 @@ void RTWdogFastTesting(void)
 
         PRINTF("----- The end of RTWDOG fast test -----\r\n");
         RTWDOG_Init(EXAMPLE_WDOG_BASE, &config);
-        WaitWctClose(EXAMPLE_WDOG_BASE);
         RESET_CHECK_FLAG = RESET_CHECK_INIT_VALUE;
     }
     else
@@ -327,7 +308,6 @@ void RTWdogRefreshTest(void)
         config.testMode     = kRTWDOG_TestModeDisabled;
 
         RTWDOG_Init(EXAMPLE_WDOG_BASE, &config);
-        WaitWctClose(EXAMPLE_WDOG_BASE);
 
         PRINTF("Window mode reset succeeded\r\n");
     }

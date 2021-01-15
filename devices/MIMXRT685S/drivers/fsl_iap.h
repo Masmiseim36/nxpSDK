@@ -21,8 +21,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief IAP driver version 2.1.0. */
-#define FSL_IAP_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*! @brief IAP driver version 2.1.1. */
+#define FSL_IAP_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 /*!
@@ -112,11 +112,11 @@ enum
     kSerialNorCfgOption_DeviceType_HyperFLASH1V8    = 2,
     kSerialNorCfgOption_DeviceType_HyperFLASH3V0    = 3,
     kSerialNorCfgOption_DeviceType_MacronixOctalDDR = 4,
-    kSerialNorCfgOption_DeviceType_MacronixOctalSDR = 5,
+    kSerialNorCfgOption_DeviceType_MacronixOctalSDR = 5, /* For RT600 devcies only. */
     kSerialNorCfgOption_DeviceType_MicronOctalDDR   = 6,
-    kSerialNorCfgOption_DeviceType_MicronOctalSDR   = 7,
+    kSerialNorCfgOption_DeviceType_MicronOctalSDR   = 7, /* For RT600 devcies only. */
     kSerialNorCfgOption_DeviceType_AdestoOctalDDR   = 8,
-    kSerialNorCfgOption_DeviceType_AdestoOctalSDR   = 9,
+    kSerialNorCfgOption_DeviceType_AdestoOctalSDR   = 9, /* For RT600 devcies only. */
 };
 
 /*! @brief Flash Configuration Option0 quad_mode_setting. */
@@ -227,7 +227,7 @@ enum
     kFlashInstMode_0_4_4_DDR   = 0x02,
     kFlashInstMode_QPI_SDR     = 0x41,
     kFlashInstMode_QPI_DDR     = 0x42,
-    kFlashInstMode_OPI_SDR     = 0x81,
+    kFlashInstMode_OPI_SDR     = 0x81, /* For RT600 devices only. */
     kFlashInstMode_OPI_DDR     = 0x82,
 };
 
@@ -420,13 +420,13 @@ typedef struct _iap_boot_option
     {
         struct
         {
-            uint32_t reserved : 8; /*! reserved field. */
+            uint32_t reserved : 8;       /*! reserved field. */
             uint32_t bootImageIndex : 4; /*! FlexSPI boot image index for FlexSPI NOR flash. */
-            uint32_t instance : 4; /*! Only used when boot interface is FlexSPI/SD/MMC. */
-            uint32_t bootInterface : 4; /*! RT500: 0: USART 2: SPI 3: USB HID 4:FlexSPI 6:SD 7:MMC.
-                                            RT600: 0: USART 1: I2C 2: SPI 3: USB HID 4:FlexSPI 7:SD 8:MMC*/
-            uint32_t mode : 4; /* boot mode, 0: Master boot mode; 1: ISP boot */
-            uint32_t tag : 8; /*! tag, should always be "0xEB". */
+            uint32_t instance : 4;       /*! Only used when boot interface is FlexSPI/SD/MMC. */
+            uint32_t bootInterface : 4;  /*! RT500: 0: USART 2: SPI 3: USB HID 4:FlexSPI 6:SD 7:MMC.
+                                             RT600: 0: USART 1: I2C 2: SPI 3: USB HID 4:FlexSPI 7:SD 8:MMC*/
+            uint32_t mode : 4;           /* boot mode, 0: Master boot mode; 1: ISP boot */
+            uint32_t tag : 8;            /*! tag, should always be "0xEB". */
         } B;
         uint32_t U;
     } option;
@@ -436,7 +436,7 @@ typedef struct _iap_boot_option
 #define IAP_BOOT_OPTION_TAG (0xEBU)
 /*! IAP boot option mode */
 #define IAP_BOOT_OPTION_MODE_MASTER (0U)
-#define IAP_BOOT_OPTION_MODE_ISP (1U)
+#define IAP_BOOT_OPTION_MODE_ISP    (1U)
 
 /*! @} */
 

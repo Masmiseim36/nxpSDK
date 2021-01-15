@@ -8,16 +8,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_sd.h"
 #include "ff.h"
 #include "diskio.h"
 #include "fsl_sd_disk.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 #include "main_cm33.h"
 #include "dsp_support.h"
 #include "dsp_ipc.h"
@@ -32,7 +32,6 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define RPMSG_LITE_LINK_ID (0)
 #define SDCARD_SWITCH_VOLTAGE_FUNCTION_EXIST
 #define APP_TASK_STACK_SIZE (6 * 1024)
 
@@ -76,19 +75,6 @@ static app_handle_t app;
  * Code
  ******************************************************************************/
 
-int updateAudio_PLL()
-{
-    /* Configure Audio PLL clock source */
-    CLOCK_InitAudioPll(&g_audioPllConfig_44100_Hz);
-    CLOCK_InitAudioPfd(kCLOCK_Pfd0, 18); /* Enable Audio PLL clock */
-
-    /* Set up dividers */
-    CLOCK_SetClkDiv(kCLOCK_DivAudioPllClk, 24U); /* Set AUDIOPLLCLKDIV divider to value 24 */
-
-    return 0;
-}
-
-
 int BOARD_CODEC_Init(void)
 {
     PRINTF("Configure WM8904 codec\r\n");
@@ -101,7 +87,11 @@ int BOARD_CODEC_Init(void)
 
     /* Initial volume kept low for hearing safety. */
     /* Adjust it to your needs, 0x0006 for -51 dB, 0x0039 for 0 dB etc. */
-    CODEC_SetVolume(&g_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 0x0025);
+    if (CODEC_SetVolume(&g_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 0x0025) !=
+        kStatus_Success)
+    {
+        return -1;
+    }
 
     return 0;
 }
@@ -136,7 +126,10 @@ void APP_SDCARD_Task(void *param)
     while (1)
     {
         /* Block waiting for SDcard detect interrupt */
-        xSemaphoreTake(app->sdcardSem, portMAX_DELAY);
+        if (xSemaphoreTake(app->sdcardSem, portMAX_DELAY) != pdTRUE)
+        {
+            PRINTF("Failed to take semaphore.\r\n");
+        }
 
         if (app->sdcardInserted != app->sdcardInsertedPrev)
         {
@@ -234,10 +227,6 @@ int main(void)
     /* attach main clock to I3C (500MHz / 20 = 25MHz). */
     CLOCK_AttachClk(kMAIN_CLK_to_I3C_CLK);
     CLOCK_SetClkDiv(kCLOCK_DivI3cClk, 20);
-
-#if I2S_SUPPORT_44100_HZ
-    updateAudio_PLL(); /* Reconfigure Audio_PLL to be able to divide evenly to 44100 Hz */
-#endif
 
     /* attach AUDIO PLL clock to MCLK */
     CLOCK_AttachClk(kAUDIO_PLL_to_MCLK_CLK);

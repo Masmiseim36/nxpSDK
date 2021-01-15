@@ -1,18 +1,11 @@
+/*
+ * Copyright 2016-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 /**
- * @file smCom.h
- * @author NXP Semiconductors
- * @version 1.0
- * @par License
- * Copyright 2016,2020 NXP
- *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
- *
  * @par Description
  * Interface of installable communication layer to exchange APDU's between Host and Secure Module.
  */
@@ -35,13 +28,14 @@ extern "C" {
 #define SMCOM_NO_ATR          0x7014  //!< No ATR can be retrieved
 #define SMCOM_NO_PRIOR_INIT   0x7015  //!< The callbacks doing the actual transfer have not been installed
 #define SMCOM_COM_ALREADY_OPEN      0x7016  //!< Communication link is already open with device
+#define SMCOM_COM_INIT_FAILED       0x7017  //!< Communication init failed
 
 
 /* ------------------------------------------------------------------------- */
 typedef U32 (*ApduTransceiveFunction_t) (void* conn_ctx, apdu_t * pAdpu);
 typedef U32 (*ApduTransceiveRawFunction_t) (void* conn_ctx, U8 * pTx, U16 txLen, U8 * pRx, U32 * pRxLen);
 
-void smCom_Init(ApduTransceiveFunction_t pTransceive, ApduTransceiveRawFunction_t pTransceiveRaw);
+U16 smCom_Init(ApduTransceiveFunction_t pTransceive, ApduTransceiveRawFunction_t pTransceiveRaw);
 void smCom_DeInit(void);
 U32 smCom_Transceive(void *conn_ctx, apdu_t *pApdu);
 U32 smCom_TransceiveRaw(void *conn_ctx, U8 *pTx, U16 txLen, U8 *pRx, U32 *pRxLen);

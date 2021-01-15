@@ -10,8 +10,8 @@
 
 #include "fsl_wm8960.h"
 #include "pin_mux.h"
-#include "board.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_codec_common.h"
 #include "fsl_codec_adapter.h"
 #include "fsl_dmamux.h"
@@ -114,7 +114,7 @@ extern sd_card_t g_sd; /* sd card descriptor */
 
 #endif
 
-sai_transceiver_t config;
+sai_transceiver_t saiConfig;
 codec_handle_t codecHandle;
 
 /*******************************************************************************
@@ -326,12 +326,12 @@ int main(void)
     SAI_TransferRxCreateHandleEDMA(DEMO_SAI, &rxHandle, rxCallback, NULL, &dmaRxHandle);
 
     /* I2S mode configurations */
-    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
-    config.syncMode    = DEMO_SAI_TX_SYNC_MODE;
-    config.masterSlave = DEMO_SAI_MASTER_SLAVE;
-    SAI_TransferTxSetConfigEDMA(DEMO_SAI, &txHandle, &config);
-    config.syncMode = DEMO_SAI_RX_SYNC_MODE;
-    SAI_TransferRxSetConfigEDMA(DEMO_SAI, &rxHandle, &config);
+    SAI_GetClassicI2SConfig(&saiConfig, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
+    saiConfig.syncMode    = DEMO_SAI_TX_SYNC_MODE;
+    saiConfig.masterSlave = DEMO_SAI_MASTER_SLAVE;
+    SAI_TransferTxSetConfigEDMA(DEMO_SAI, &txHandle, &saiConfig);
+    saiConfig.syncMode = DEMO_SAI_RX_SYNC_MODE;
+    SAI_TransferRxSetConfigEDMA(DEMO_SAI, &rxHandle, &saiConfig);
 
     /* set bit clock divider */
     SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
@@ -343,7 +343,10 @@ int main(void)
     BOARD_MASTER_CLOCK_CONFIG();
 
     /* Use default setting to init codec */
-    CODEC_Init(&codecHandle, &boardCodecConfig);
+    if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
+    {
+        assert(false);
+    }
     CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
                     DEMO_CODEC_VOLUME);
 
@@ -391,12 +394,18 @@ int main(void)
                 DA7212_ChangeInput((da7212_handle_t *)((uint32_t)(codecHandle.codecDevHandle)), kDA7212_Input_AUX);
 #endif
                 BOARD_CONFIGCODEC_FOR_RECORD_PLAYBACK();
-                CODEC_Init(&codecHandle, &boardCodecConfig);
+                if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
+                {
+                    assert(false);
+                }
                 RecordPlayback(DEMO_SAI, 30);
                 break;
             case '2':
                 BOARD_CONFIGCODEC_FOR_PLAYBACK();
-                CODEC_Init(&codecHandle, &boardCodecConfig);
+                if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
+                {
+                    assert(false);
+                }
                 PlaybackSine(DEMO_SAI, 250, 5);
                 break;
 #if defined DEMO_SDCARD
@@ -418,7 +427,10 @@ int main(void)
         userItem = 1U;
     }
 
-    CODEC_Deinit(&codecHandle);
+    if (CODEC_Deinit(&codecHandle) != kStatus_Success)
+    {
+        assert(false);
+    }
     PRINTF("\n\r SAI demo finished!\n\r ");
     while (1)
     {

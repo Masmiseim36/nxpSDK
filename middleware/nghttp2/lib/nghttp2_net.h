@@ -37,7 +37,7 @@
 #  include <netinet/in.h>
 #endif /* HAVE_NETINET_IN_H */
 
-#include <nghttp2/nghttp2.h>
+#include "nghttp2.h"
 
 #if defined(WIN32)
 /* Windows requires ws2_32 library for ntonl family functions.  We

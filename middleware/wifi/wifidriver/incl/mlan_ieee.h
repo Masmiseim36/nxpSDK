@@ -54,17 +54,10 @@ typedef enum _WLAN_802_11_NETWORK_TYPE
 /** Maximum size of IEEE Information Elements */
 #define IEEE_MAX_IE_SIZE 256
 
-#ifdef BIG_ENDIAN_SUPPORT
 /** Frame control: Type Mgmt frame */
-#define IEEE80211_FC_MGMT_FRAME_TYPE_MASK 0x3000
-/** Frame control: SubType Mgmt frame */
-#define IEEE80211_GET_FC_MGMT_FRAME_SUBTYPE(fc) (((fc)&0xF000) >> 12)
-#else
-/** Frame control: Type Mgmt frame */
-#define IEEE80211_FC_MGMT_FRAME_TYPE_MASK       0x000C
+#define IEEE80211_FC_MGMT_FRAME_TYPE_MASK 0x000C
 /** Frame control: SubType Mgmt frame */
 #define IEEE80211_GET_FC_MGMT_FRAME_SUBTYPE(fc) (((fc)&0x00F0) >> 4)
-#endif
 
 #ifdef PRAGMA_PACK
 #pragma pack(push, 1)
@@ -170,25 +163,6 @@ typedef MLAN_PACK_START struct _IEEEtypes_Generic_t
 #define CAPINFO_MASK (~(MBIT(15) | MBIT(14) | MBIT(12) | MBIT(11) | MBIT(9)))
 
 /** Capability Bit Map*/
-#ifdef BIG_ENDIAN_SUPPORT
-typedef MLAN_PACK_START struct _IEEEtypes_CapInfo_t
-{
-    t_u8 rsrvd1 : 2;
-    t_u8 dsss_ofdm : 1;
-    t_u8 rsvrd2 : 2;
-    t_u8 short_slot_time : 1;
-    t_u8 rsrvd3 : 1;
-    t_u8 spectrum_mgmt : 1;
-    t_u8 chan_agility : 1;
-    t_u8 pbcc : 1;
-    t_u8 short_preamble : 1;
-    t_u8 privacy : 1;
-    t_u8 cf_poll_rqst : 1;
-    t_u8 cf_pollable : 1;
-    t_u8 ibss : 1;
-    t_u8 ess : 1;
-} MLAN_PACK_END IEEEtypes_CapInfo_t, *pIEEEtypes_CapInfo_t;
-#else
 typedef MLAN_PACK_START struct _IEEEtypes_CapInfo_t
 {
     /** Capability Bit Map : ESS */
@@ -222,7 +196,6 @@ typedef MLAN_PACK_START struct _IEEEtypes_CapInfo_t
     /** Capability Bit Map : Reserved */
     t_u8 rsrvd1 : 2;
 } MLAN_PACK_END IEEEtypes_CapInfo_t, *pIEEEtypes_CapInfo_t;
-#endif /* BIG_ENDIAN_SUPPORT */
 
 /** IEEEtypes_CfParamSet_t */
 typedef MLAN_PACK_START struct _IEEEtypes_CfParamSet_t
@@ -417,36 +390,17 @@ typedef MLAN_PACK_START struct _IEEEtypes_Wpa_t
 /** Data structure of WMM QoS information */
 typedef MLAN_PACK_START struct _IEEEtypes_WmmQosInfo_t
 {
-#ifdef BIG_ENDIAN_SUPPORT
-    /** QoS UAPSD */
-    t_u8 qos_uapsd : 1;
-    /** Reserved */
-    t_u8 reserved : 3;
-    /** Parameter set count */
-    t_u8 para_set_count : 4;
-#else
     /** Parameter set count */
     t_u8 para_set_count : 4;
     /** Reserved */
     t_u8 reserved : 3;
     /** QoS UAPSD */
     t_u8 qos_uapsd : 1;
-#endif /* BIG_ENDIAN_SUPPORT */
 } MLAN_PACK_END IEEEtypes_WmmQosInfo_t, *pIEEEtypes_WmmQosInfo_t;
 
 /** Data structure of WMM Aci/Aifsn */
 typedef MLAN_PACK_START struct _IEEEtypes_WmmAciAifsn_t
 {
-#ifdef BIG_ENDIAN_SUPPORT
-    /** Reserved */
-    t_u8 reserved : 1;
-    /** Aci */
-    t_u8 aci : 2;
-    /** Acm */
-    t_u8 acm : 1;
-    /** Aifsn */
-    t_u8 aifsn : 4;
-#else
     /** Aifsn */
     t_u8 aifsn : 4;
     /** Acm */
@@ -455,23 +409,15 @@ typedef MLAN_PACK_START struct _IEEEtypes_WmmAciAifsn_t
     t_u8 aci : 2;
     /** Reserved */
     t_u8 reserved : 1;
-#endif /* BIG_ENDIAN_SUPPORT */
 } MLAN_PACK_END IEEEtypes_WmmAciAifsn_t, *pIEEEtypes_WmmAciAifsn_t;
 
 /** Data structure of WMM ECW */
 typedef MLAN_PACK_START struct _IEEEtypes_WmmEcw_t
 {
-#ifdef BIG_ENDIAN_SUPPORT
-    /** Maximum Ecw */
-    t_u8 ecw_max : 4;
-    /** Minimum Ecw */
-    t_u8 ecw_min : 4;
-#else
     /** Minimum Ecw */
     t_u8 ecw_min : 4;
     /** Maximum Ecw */
     t_u8 ecw_max : 4;
-#endif /* BIG_ENDIAN_SUPPORT */
 } MLAN_PACK_END IEEEtypes_WmmEcw_t, *pIEEEtypes_WmmEcw_t;
 
 /** Data structure of WMM AC parameters  */
@@ -563,20 +509,6 @@ typedef MLAN_PACK_START enum _IEEEtypes_WMM_TSPEC_TS_TRAFFIC_TYPE_e {
 /** Data structure of WMM TSPEC information */
 typedef MLAN_PACK_START struct
 {
-#ifdef BIG_ENDIAN_SUPPORT
-    t_u8 Reserved17_23 : 7; // ! Reserved
-    t_u8 Schedule : 1;
-    IEEEtypes_WMM_TSPEC_TS_Info_AckPolicy_e AckPolicy : 2;
-    t_u8 UserPri : 3;                                        // ! 802.1d User Priority
-    IEEEtypes_WMM_TSPEC_TS_Info_PSB_e PowerSaveBehavior : 1; // !
-                                                             // Legacy/Trigg
-    t_u8 Aggregation : 1;                                    // ! Reserved
-    t_u8 AccessPolicy2 : 1;                                  // !
-    t_u8 AccessPolicy1 : 1;                                  // !
-    IEEEtypes_WMM_TSPEC_TS_Info_Direction_e Direction : 2;
-    t_u8 TID : 4; // ! Unique identifier
-    IEEEtypes_WMM_TSPEC_TS_TRAFFIC_TYPE_e TrafficType : 1;
-#else
     IEEEtypes_WMM_TSPEC_TS_TRAFFIC_TYPE_e TrafficType : 1;
     t_u8 TID : 4; // ! Unique identifier
     IEEEtypes_WMM_TSPEC_TS_Info_Direction_e Direction : 2;
@@ -589,33 +521,21 @@ typedef MLAN_PACK_START struct
     IEEEtypes_WMM_TSPEC_TS_Info_AckPolicy_e AckPolicy : 2;
     t_u8 Schedule : 1;
     t_u8 Reserved17_23 : 7; // ! Reserved
-#endif
 } MLAN_PACK_END IEEEtypes_WMM_TSPEC_TS_Info_t;
 
 /** Data structure of WMM TSPEC Nominal Size */
 typedef MLAN_PACK_START struct
 {
-#ifdef BIG_ENDIAN_SUPPORT
+    t_u16 Size : 15; // ! Nominal size in octets
     t_u16 Fixed : 1; // ! 1: Fixed size given in Size, 0: Var, size
                      // is nominal
-    t_u16 Size : 15; // ! Nominal size in octets
-#else
-    t_u16 Size : 15;        // ! Nominal size in octets
-    t_u16 Fixed : 1;        // ! 1: Fixed size given in Size, 0: Var, size
-                            // is nominal
-#endif
 } MLAN_PACK_END IEEEtypes_WMM_TSPEC_NomMSDUSize_t;
 
 /** Data structure of WMM TSPEC SBWA */
 typedef MLAN_PACK_START struct
 {
-#ifdef BIG_ENDIAN_SUPPORT
-    t_u16 Whole : 3;       // ! Whole portion
     t_u16 Fractional : 13; // ! Fractional portion
-#else
-    t_u16 Fractional : 13;  // ! Fractional portion
-    t_u16 Whole : 3;        // ! Whole portion
-#endif
+    t_u16 Whole : 3;       // ! Whole portion
 } MLAN_PACK_END IEEEtypes_WMM_TSPEC_SBWA;
 
 /** Data structure of WMM TSPEC Body */
@@ -778,7 +698,6 @@ typedef MLAN_PACK_START struct _IEEEtypes_CountryInfoFullSet_t
     IEEEtypes_SubbandSet_t sub_band[MRVDRV_MAX_SUBBAND_802_11D];
 } MLAN_PACK_END IEEEtypes_CountryInfoFullSet_t, *pIEEEtypes_CountryInfoFullSet_t;
 
-
 /** HT Capabilities Data */
 typedef MLAN_PACK_START struct _HTCap_t
 {
@@ -818,52 +737,6 @@ typedef MLAN_PACK_START struct _BSSCo2040_t
     t_u8 bss_co_2040_value;
 } MLAN_PACK_END BSSCo2040_t, *pBSSCo2040_t;
 
-#ifdef BIG_ENDIAN_SUPPORT
-/** Extended Capabilities Data */
-typedef MLAN_PACK_START struct _ExtCap_t
-{
-    t_u8 Qos_Map : 1;              /* bit 0 */
-    t_u8 EBR : 1;                  /* bit 1 */
-    t_u8 SSPN_Interface : 1;       /* bit 2 */
-    t_u8 Reserved35 : 1;           /* bit 3 */
-    t_u8 MSGCF_Capa : 1;           /* bit 4 */
-    t_u8 TDLSSupport : 1;          /* bit 5 */
-    t_u8 TDLSProhibited : 1;       /* bit 6 */
-    t_u8 TDLSChlSwitchProhib : 1;  /* bit 7 */
-    t_u8 ChannelUsage : 1;         /* bit 8 */
-    t_u8 SSID_List : 1;            /* bit 9 */
-    t_u8 DMS : 1;                  /* bit 10 */
-    t_u8 UTC : 1;                  /* bit 11 */
-    t_u8 TDLSPeerUAPSDSupport : 1; /* bit 12 */
-    t_u8 TDLSPeerPSMSupport : 1;   /* bit 13 */
-    t_u8 TDLSChannelSwitching : 1; /* bit 14 */
-    t_u8 Interworking : 1;         /* bit 15 */
-    t_u8 TFS : 1;                  /* bit 16 */
-    t_u8 WNM_Sleep : 1;            /* bit 17 */
-    t_u8 TIM_Broadcast : 1;        /* bit 18 */
-    t_u8 BSS_Transition : 1;       /* bit 19 */
-    t_u8 QoSTrafficCap : 1;        /* bit 20 */
-    t_u8 AC_StationCount : 1;      /* bit 21 */
-    t_u8 MultipleBSSID : 1;        /* bit 22 */
-    t_u8 TimingMeasurement : 1;    /* bit 23 */
-    t_u8 Diagnostics : 1;          /* bit 24 */
-    t_u8 MulticastDiagnostics : 1; /* bit 25 */
-    t_u8 LocationTracking : 1;     /* bit 26 */
-    t_u8 FMS : 1;                  /* bit 27 */
-    t_u8 ProxyARPService : 1;      /* bit 28 */
-    t_u8 CollocatedIntf : 1;       /* bit 29 */
-    t_u8 CivicLocation : 1;        /* bit 30 */
-    t_u8 GeospatialLocation : 1;   /* bit 31 */
-    t_u8 BSS_CoexistSupport : 1;   /* bit 32 */
-    t_u8 Reserved1 : 1;            /* bit 33 */
-    t_u8 ExtChanSwitching : 1;     /* bit 34 */
-    t_u8 RejectUnadmFrame : 1;     /* bit 35 */
-    t_u8 PSMP_Capable : 1;         /* bit 36 */
-    t_u8 Reserved5 : 1;            /* bit 37 */
-    t_u8 SPSMP_Support : 1;        /* bit 38 */
-    t_u8 Event : 1;                /* bit 39 */
-} MLAN_PACK_END ExtCap_t, *pExtCap_t;
-#else
 /** Extended Capabilities Data */
 typedef MLAN_PACK_START struct _ExtCap_t
 {
@@ -909,7 +782,6 @@ typedef MLAN_PACK_START struct _ExtCap_t
     t_u8 TDLSProhibited : 1;       /* bit 38 */
     t_u8 TDLSChlSwitchProhib : 1;  /* bit 39 */
 } MLAN_PACK_END ExtCap_t, *pExtCap_t;
-#endif
 
 /** Overlapping BSS Scan Parameters Data */
 typedef MLAN_PACK_START struct _OverlapBSSScanParam_t
@@ -988,26 +860,6 @@ typedef MLAN_PACK_START struct _VHT_MCS_set
 typedef MLAN_PACK_START struct _VHT_capa
 {
 #if 0
-#ifdef BIG_ENDIAN_SUPPORT
-    t_u8 mpdu_max_len:2;
-    t_u8 chan_width:2;
-    t_u8 rx_LDPC:1;
-    t_u8 sgi_80:1;
-    t_u8 sgi_160:1;
-    t_u8 tx_STBC:1;
-    t_u8 rx_STBC:3;
-    t_u8 SU_beamformer_capa:1;
-    t_u8 SU_beamformee_capa:1;
-    t_u8 beamformer_ante_num:3;
-    t_u8 sounding_dim_num:3;
-    t_u8 MU_beamformer_capa:1;
-    t_u8 MU_beamformee_capa:1;
-    t_u8 VHT_TXOP_ps:1;
-    t_u8 HTC_VHT_capa:1;
-    t_u8 max_ampdu_len:3;
-    t_u8 link_apapt_capa:2;
-    t_u8 reserved_1:4;
-#else
     t_u8 reserved_1:4;
     t_u8 link_apapt_capa:2;
     t_u8 max_ampdu_len:3;
@@ -1026,7 +878,6 @@ typedef MLAN_PACK_START struct _VHT_capa
     t_u8 rx_LDPC:1;
     t_u8 chan_width:2;
     t_u8 mpdu_max_len:2;
-#endif /* BIG_ENDIAN_SUPPORT */
 #endif
     t_u32 vht_cap_info;
     VHT_MCS_set_t mcs_sets;
@@ -1249,21 +1100,12 @@ typedef MLAN_PACK_START struct
 **/
 typedef MLAN_PACK_START struct
 {
-#ifdef BIG_ENDIAN_SUPPORT
-    t_u8 rsvd5_7 : 3;          /**< Reserved */
-    t_u8 unmeasured : 1;       /**< Channel is unmeasured */
-    t_u8 radar : 1;            /**< Radar detected on channel */
-    t_u8 unidentified_sig : 1; /**< Unidentified signal found on channel */
-    t_u8 ofdm_preamble : 1;    /**< OFDM preamble detected on channel */
-    t_u8 bss : 1;              /**< At least one valid MPDU received on channel */
-#else
     t_u8 bss : 1;              /**< At least one valid MPDU received on channel */
     t_u8 ofdm_preamble : 1;    /**< OFDM preamble detected on channel */
     t_u8 unidentified_sig : 1; /**< Unidentified signal found on channel */
     t_u8 radar : 1;            /**< Radar detected on channel */
     t_u8 unmeasured : 1;       /**< Channel is unmeasured */
     t_u8 rsvd5_7 : 3;          /**< Reserved */
-#endif /* BIG_ENDIAN_SUPPORT */
 
 } MLAN_PACK_END MeasRptBasicMap_t;
 
@@ -1320,7 +1162,7 @@ typedef struct
 #define MAX_SCAN_RSP_BUF (16 * 1024)
 
 /** Maximum number of channels that can be sent in user scan config */
-#define WLAN_USER_SCAN_CHAN_MAX 40
+#define WLAN_USER_SCAN_CHAN_MAX 50
 
 /** Maximum length of SSID list */
 #define MRVDRV_MAX_SSID_LIST_LENGTH 2
@@ -1494,9 +1336,6 @@ typedef struct _BSSDescriptor_t
 
     /** Transition SSID */
     mlan_802_11_ssid trans_ssid;
-
-    /** OWE Transition mode */
-    t_u8 owe_transition_mode;
 
     /** WEP encryption requirement */
     t_u32 privacy;

@@ -82,18 +82,14 @@ void GPIO1_Combined_0_15_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(1);
 
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 void GPIO1_Combined_16_31_IRQHandler(void);
 void GPIO1_Combined_16_31_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(1);
 
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 /* IRQHandler for GPIO2 */
@@ -103,18 +99,14 @@ void GPIO2_Combined_0_15_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(2);
 
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 void GPIO2_Combined_16_31_IRQHandler(void);
 void GPIO2_Combined_16_31_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(2);
 
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 /* IRQHandler for GPIO3 */
@@ -124,18 +116,14 @@ void GPIO3_Combined_0_15_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(3);
 
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 void GPIO3_Combined_16_31_IRQHandler(void);
 void GPIO3_Combined_16_31_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(3);
 
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 /* IRQHandler for GPIO4 */
@@ -145,18 +133,14 @@ void GPIO4_Combined_0_15_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(4);
 
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 void GPIO4_Combined_16_31_IRQHandler(void);
 void GPIO4_Combined_16_31_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(4);
 
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 /* IRQHandler for GPIO5 */
@@ -166,18 +150,14 @@ void GPIO5_Combined_0_15_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(5);
 
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 void GPIO5_Combined_16_31_IRQHandler(void);
 void GPIO5_Combined_16_31_IRQHandler(void)
 {
     HAL_GpioInterruptHandle(5);
 
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 /* IRQHandler for GPIO6 GPIO7 GPIO8 GPIO9 */
@@ -190,9 +170,7 @@ void GPIO6_7_8_9_IRQHandler(void)
     HAL_GpioInterruptHandle(8);
     HAL_GpioInterruptHandle(9);
 
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 

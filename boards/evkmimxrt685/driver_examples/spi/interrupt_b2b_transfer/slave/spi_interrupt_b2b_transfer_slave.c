@@ -1,17 +1,17 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_spi.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -28,10 +28,10 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-#define BUFFER_SIZE (64)
+#define TRANSFER_SIZE (64)
 spi_slave_handle_t handle;
-static uint8_t buff[BUFFER_SIZE];
-static uint8_t sendBuff[BUFFER_SIZE];
+static uint8_t receiveBuff[TRANSFER_SIZE];
+static uint8_t sendBuff[TRANSFER_SIZE];
 static volatile bool slaveFinished = false;
 /*******************************************************************************
  * Code
@@ -72,7 +72,7 @@ int main(void)
 
     /* receive data from master*/
     xfer.txData   = sendBuff;
-    xfer.rxData   = buff;
+    xfer.rxData   = receiveBuff;
     xfer.dataSize = sizeof(sendBuff);
     SPI_SlaveTransferNonBlocking(EXAMPLE_SPI_SLAVE, &handle, &xfer);
 
@@ -80,11 +80,11 @@ int main(void)
     {
     }
 
-    for (i = 0; i < BUFFER_SIZE; i++)
+    for (i = 0; i < TRANSFER_SIZE; i++)
     {
-        if (buff[i] != i)
+        if (receiveBuff[i] != sendBuff[i])
         {
-            PRINTF("\n\rThe %d number is wrong! It is %d\n\r", i, buff[i]);
+            PRINTF("\n\rThe %d number is wrong! It is %d\n\r", i, receiveBuff[i]);
             err++;
         }
     }

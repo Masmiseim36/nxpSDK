@@ -7,10 +7,10 @@
 
 #include <stdio.h>
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_power.h"
 #include "fsl_gpio.h"
 #include "fsl_pint.h"
@@ -207,6 +207,8 @@ int main(void)
     /* Init wakeup pin. */
     EXAMPLE_InitWakeupPin();
 
+    PRINTF("Press any key to enter low power mode\r\n");
+    GETCHAR();
     PRINTF("Enter deep sleep, tap the board to wake it up.\r\n");
     EXAMPLE_EnterDeepSleep();
     PRINTF("Woken up!\r\n");

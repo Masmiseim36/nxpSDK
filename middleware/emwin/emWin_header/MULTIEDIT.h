@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -54,13 +54,21 @@ Purpose     : MULTIEDIT include
   extern "C" {     /* Make sure we have C-declarations in C++ programs */
 #endif
 
-#define MULTIEDIT_CF_READONLY        (1 << 0)
-#define MULTIEDIT_CF_INSERT          (1 << 2)
-#define MULTIEDIT_CF_AUTOSCROLLBAR_V (1 << 3)
-#define MULTIEDIT_CF_AUTOSCROLLBAR_H (1 << 4)
-#define MULTIEDIT_CF_PASSWORD        (1 << 5)
-#define MULTIEDIT_CF_SHOWCURSOR      (1 << 6)
-
+/*********************************************************************
+*
+*       MULTIEDIT create flags
+*
+*  Description
+*    Create flags that define the behavior of the FRAMEWIN widget. These flags are OR-combinable
+*    and can be specified upon creation of the widget via the \a{ExFlags} parameter of MULTIEDIT_CreateEx().
+*/
+#define MULTIEDIT_CF_READONLY        (1 << 0)     // Enables read only mode.
+#define MULTIEDIT_CF_INSERT          (1 << 2)     // Enables insert mode.
+#define MULTIEDIT_CF_AUTOSCROLLBAR_V (1 << 3)     // Automatic use of a vertical scroll bar.
+#define MULTIEDIT_CF_AUTOSCROLLBAR_H (1 << 4)     // Automatic use of a horizontal scroll bar.
+#define MULTIEDIT_CF_PASSWORD        (1 << 5)     // Enables password mode.
+#define MULTIEDIT_CF_SHOWCURSOR      (1 << 6)     // Shows the cursor.
+/* status flags */
 #define MULTIEDIT_SF_READONLY        MULTIEDIT_CF_READONLY
 #define MULTIEDIT_SF_INSERT          MULTIEDIT_CF_INSERT
 #define MULTIEDIT_SF_AUTOSCROLLBAR_V MULTIEDIT_CF_AUTOSCROLLBAR_V
@@ -69,10 +77,13 @@ Purpose     : MULTIEDIT include
 
 /*********************************************************************
 *
-*       Color indices
+*       MULTIEDIT color indexes
+*
+*  Description
+*    Color indexes used by the MULTIEDIT widget.
 */
-#define MULTIEDIT_CI_EDIT     0
-#define MULTIEDIT_CI_READONLY 1
+#define MULTIEDIT_CI_EDIT     0                   // Color in edit mode.
+#define MULTIEDIT_CI_READONLY 1                   // Color in read-only mode.
 
 /*********************************************************************
 *

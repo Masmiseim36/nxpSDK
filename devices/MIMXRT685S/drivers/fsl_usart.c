@@ -64,7 +64,7 @@ uint32_t USART_GetInstance(USART_Type *base)
         }
     }
 
-    assert(i < FSL_FEATURE_SOC_USART_COUNT);
+    assert(i < (uint32_t)FSL_FEATURE_SOC_USART_COUNT);
     return i;
 }
 
@@ -234,7 +234,7 @@ status_t USART_Init(USART_Type *base, const usart_config_t *config, uint32_t src
                 USART_CFG_DATALEN(config->bitCountPerChar) | USART_CFG_LOOP(config->loopback) |
                 USART_CFG_SYNCEN((uint32_t)config->syncMode >> 1) | USART_CFG_SYNCMST((uint8_t)config->syncMode) |
                 USART_CFG_CLKPOL(config->clockPolarity) | USART_CFG_MODE32K(config->enableMode32k) |
-                USART_CFG_ENABLE_MASK;
+                USART_CFG_CTSEN(config->enableHardwareFlowControl) | USART_CFG_ENABLE_MASK;
 
     /* Setup baudrate */
     if (config->enableMode32k)
@@ -307,19 +307,20 @@ void USART_GetDefaultConfig(usart_config_t *config)
     (void)memset(config, 0, sizeof(*config));
 
     /* Set always all members ! */
-    config->baudRate_Bps         = 115200U;
-    config->parityMode           = kUSART_ParityDisabled;
-    config->stopBitCount         = kUSART_OneStopBit;
-    config->bitCountPerChar      = kUSART_8BitsPerChar;
-    config->loopback             = false;
-    config->enableRx             = false;
-    config->enableTx             = false;
-    config->enableMode32k        = false;
-    config->txWatermark          = kUSART_TxFifo0;
-    config->rxWatermark          = kUSART_RxFifo1;
-    config->syncMode             = kUSART_SyncModeDisabled;
-    config->enableContinuousSCLK = false;
-    config->clockPolarity        = kUSART_RxSampleOnFallingEdge;
+    config->baudRate_Bps              = 115200U;
+    config->parityMode                = kUSART_ParityDisabled;
+    config->stopBitCount              = kUSART_OneStopBit;
+    config->bitCountPerChar           = kUSART_8BitsPerChar;
+    config->loopback                  = false;
+    config->enableRx                  = false;
+    config->enableTx                  = false;
+    config->enableMode32k             = false;
+    config->txWatermark               = kUSART_TxFifo0;
+    config->rxWatermark               = kUSART_RxFifo1;
+    config->syncMode                  = kUSART_SyncModeDisabled;
+    config->enableContinuousSCLK      = false;
+    config->clockPolarity             = kUSART_RxSampleOnFallingEdge;
+    config->enableHardwareFlowControl = false;
 }
 
 /*!
@@ -373,13 +374,22 @@ status_t USART_SetBaudRate(USART_Type *base, uint32_t baudrate_Bps, uint32_t src
                 continue;
             }
             baudrate = srcClock_Hz / ((osrval + 1U) * (brgval + 1U));
-            diff     = baudrate_Bps < baudrate ? baudrate - baudrate_Bps : baudrate_Bps - baudrate;
+            diff     = (baudrate_Bps < baudrate) ? (baudrate - baudrate_Bps) : (baudrate_Bps - baudrate);
             if (diff < best_diff)
             {
                 best_diff   = diff;
                 best_osrval = osrval;
                 best_brgval = brgval;
             }
+        }
+
+        /* Check to see if actual baud rate is within 3% of desired baud rate
+         * based on the best calculated OSR and BRG value */
+        baudrate = srcClock_Hz / ((best_osrval + 1U) * (best_brgval + 1U));
+        diff     = (baudrate_Bps < baudrate) ? (baudrate - baudrate_Bps) : (baudrate_Bps - baudrate);
+        if (diff > ((baudrate_Bps / 100U) * 3U))
+        {
+            return kStatus_USART_BaudrateNotSupport;
         }
 
         /* value over range */
@@ -439,6 +449,47 @@ status_t USART_Enable32kMode(USART_Type *base, uint32_t baudRate_Bps, bool enabl
     }
     base->CFG |= USART_CFG_ENABLE_MASK;
     return result;
+}
+
+/*!
+ * brief Enable 9-bit data mode for USART.
+ *
+ * This function set the 9-bit mode for USART module. The 9th bit is not used for parity thus can be modified by user.
+ *
+ * param base USART peripheral base address.
+ * param enable true to enable, false to disable.
+ */
+void USART_Enable9bitMode(USART_Type *base, bool enable)
+{
+    assert(base != NULL);
+
+    uint32_t temp = 0U;
+
+    if (enable)
+    {
+        /* Set USART 9-bit mode, disable parity. */
+        temp = base->CFG & ~((uint32_t)USART_CFG_DATALEN_MASK | (uint32_t)USART_CFG_PARITYSEL_MASK);
+        temp |= (uint32_t)USART_CFG_DATALEN(0x2U);
+        base->CFG = temp;
+    }
+    else
+    {
+        /* Set USART to 8-bit mode. */
+        base->CFG &= ~((uint32_t)USART_CFG_DATALEN_MASK);
+        base->CFG |= (uint32_t)USART_CFG_DATALEN(0x1U);
+    }
+}
+
+/*!
+ * brief Transmit an address frame in 9-bit data mode.
+ *
+ * param base USART peripheral base address.
+ * param address USART slave address.
+ */
+void USART_SendAddress(USART_Type *base, uint8_t address)
+{
+    assert(base != NULL);
+    base->FIFOWR = ((uint32_t)address | 0x100UL);
 }
 
 /*!
@@ -692,15 +743,14 @@ status_t USART_TransferSendNonBlocking(USART_Type *base, usart_handle_t *handle,
     {
         /* Disable IRQ when configuring transfer handle, in case interrupt occurs during the process and messes up the
          * handle value. */
-        uint32_t regPrimask   = DisableGlobalIRQ();
+        uint32_t interruptMask = USART_GetEnabledInterrupts(base);
+        USART_DisableInterrupts(base, interruptMask);
         handle->txData        = xfer->data;
         handle->txDataSize    = xfer->dataSize;
         handle->txDataSizeAll = xfer->dataSize;
         handle->txState       = (uint8_t)kUSART_TxBusy;
-        /* Enable transmiter interrupt. */
-        base->FIFOINTENSET = USART_FIFOINTENSET_TXLVL_MASK;
-        /* Re-enable IRQ. */
-        EnableGlobalIRQ(regPrimask);
+        /* Enable transmiter interrupt and the previously disabled interrupt. */
+        USART_EnableInterrupts(base, interruptMask | (uint32_t)kUSART_TxLevelInterruptEnable);
     }
     return kStatus_Success;
 }
@@ -793,7 +843,7 @@ status_t USART_TransferReceiveNonBlocking(USART_Type *base,
     size_t bytesToReceive;
     /* How many bytes currently have received. */
     size_t bytesCurrentReceived;
-    uint32_t regPrimask = 0U;
+    uint32_t interruptMask = 0U;
 
     /* Check arguments */
     assert(!((NULL == base) || (NULL == handle) || (NULL == xfer)));
@@ -806,6 +856,12 @@ status_t USART_TransferReceiveNonBlocking(USART_Type *base,
     if ((0U == xfer->dataSize) || (NULL == xfer->data))
     {
         return kStatus_InvalidArgument;
+    }
+
+    /* Enable address detect when address match is enabled. */
+    if ((base->CFG & (uint32_t)USART_CFG_AUTOADDR_MASK) != 0U)
+    {
+        base->CTL |= (uint32_t)USART_CTL_ADDRDET_MASK;
     }
 
     /* How to get data:
@@ -829,7 +885,9 @@ status_t USART_TransferReceiveNonBlocking(USART_Type *base,
         if (handle->rxRingBuffer != NULL)
         {
             /* Disable IRQ, protect ring buffer. */
-            regPrimask = DisableGlobalIRQ();
+            interruptMask = USART_GetEnabledInterrupts(base);
+            USART_DisableInterrupts(base, interruptMask);
+
             /* How many bytes in RX ring buffer currently. */
             bytesToCopy = USART_TransferGetRxRingBufferLength(handle);
             if (bytesToCopy != 0U)
@@ -860,8 +918,8 @@ status_t USART_TransferReceiveNonBlocking(USART_Type *base,
                 handle->rxDataSizeAll = bytesToReceive;
                 handle->rxState       = (uint8_t)kUSART_RxBusy;
             }
-            /* Enable IRQ if previously enabled. */
-            EnableGlobalIRQ(regPrimask);
+            /* Re-enable IRQ. */
+            USART_EnableInterrupts(base, interruptMask);
             /* Call user callback since all data are received. */
             if (0U == bytesToReceive)
             {
@@ -876,7 +934,8 @@ status_t USART_TransferReceiveNonBlocking(USART_Type *base,
         {
             /* Disable IRQ when configuring transfer handle, in case interrupt occurs during the process and messes up
              * the handle value. */
-            regPrimask            = DisableGlobalIRQ();
+            interruptMask = USART_GetEnabledInterrupts(base);
+            USART_DisableInterrupts(base, interruptMask);
             handle->rxData        = xfer->data + bytesCurrentReceived;
             handle->rxDataSize    = bytesToReceive;
             handle->rxDataSizeAll = bytesToReceive;
@@ -885,7 +944,7 @@ status_t USART_TransferReceiveNonBlocking(USART_Type *base,
             /* Enable RX interrupt. */
             base->FIFOINTENSET = USART_FIFOINTENSET_RXLVL_MASK;
             /* Re-enable IRQ. */
-            EnableGlobalIRQ(regPrimask);
+            USART_EnableInterrupts(base, interruptMask);
         }
         /* Return the how many bytes have read. */
         if (receivedBytes != NULL)
@@ -986,6 +1045,8 @@ void USART_TransferHandleIRQ(USART_Type *base, usart_handle_t *handle)
         /* Receive data */
         if (receiveEnabled && ((base->FIFOSTAT & USART_FIFOSTAT_RXNOTEMPTY_MASK) != 0U))
         {
+            /* Clear address detect when RXFIFO has data. */
+            base->CTL &= ~(uint32_t)USART_CTL_ADDRDET_MASK;
             /* Receive to app bufffer if app buffer is present */
             if (handle->rxDataSize != 0U)
             {

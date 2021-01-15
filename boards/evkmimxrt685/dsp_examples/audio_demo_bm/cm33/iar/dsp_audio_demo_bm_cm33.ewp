@@ -354,12 +354,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
@@ -375,6 +370,7 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -550,6 +546,7 @@
           <name>ADefines</name>
           <state>DSP_IMAGE_COPY_TO_RAM=0</state>
           <state>DEBUG</state>
+          <state>DSP_NCACHE</state>
         </option>
         <option>
           <name>AList</name>
@@ -641,7 +638,6 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../dsp/binary</state>
         </option>
         <option>
@@ -1405,12 +1401,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
@@ -1426,6 +1417,7 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1601,6 +1593,7 @@
           <name>ADefines</name>
           <state>DSP_IMAGE_COPY_TO_RAM=0</state>
           <state>DEBUG</state>
+          <state>DSP_NCACHE</state>
         </option>
         <option>
           <name>AList</name>
@@ -1692,7 +1685,6 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../dsp/binary</state>
         </option>
         <option>
@@ -2455,12 +2447,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
@@ -2476,6 +2463,7 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2651,6 +2639,7 @@
           <name>ADefines</name>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
           <state>NDEBUG</state>
+          <state>DSP_NCACHE</state>
         </option>
         <option>
           <name>AList</name>
@@ -2742,7 +2731,6 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../dsp/binary</state>
         </option>
         <option>
@@ -3512,12 +3500,7 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8904</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities</state>
@@ -3533,6 +3516,7 @@
           <state>$PROJ_DIR$/../../../../flash_config</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3707,6 +3691,7 @@
         <option>
           <name>ADefines</name>
           <state>DSP_IMAGE_COPY_TO_RAM=1</state>
+          <state>DSP_NCACHE</state>
         </option>
         <option>
           <name>AList</name>
@@ -3798,7 +3783,6 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../dsp/binary</state>
         </option>
         <option>
@@ -4263,7 +4247,7 @@
     </file>
   </group>
   <group>
-    <name>.</name>
+    <name>dsp_binary</name>
     <file>
       <name>$PROJ_DIR$/../../dsp/binary/dsp_text_release.bin</name>
     </file>
@@ -4277,58 +4261,58 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i2c.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_i3c.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_power.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_dsp.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexspi.c</name>
@@ -4343,16 +4327,16 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_cache.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h</name>
@@ -4364,16 +4348,16 @@
   <group>
     <name>codec</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/codec/wm8904/fsl_wm8904.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_adapter.c</name>
@@ -4382,10 +4366,10 @@
       <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8904/fsl_codec_adapter.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
     </file>
   </group>
   <group>
@@ -4397,6 +4381,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_shell.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4404,12 +4394,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/utilities/fsl_assert.c</name>
@@ -4420,60 +4404,63 @@
     <group>
       <name>i2c</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/i2c/i2c.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i2c.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/i2c/i3c_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i3c.c</name>
       </file>
     </group>
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/usart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_usart.c</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
   <group>
     <name>pmic_driver</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.h</name>
+      <name>$PROJ_DIR$/../../../../../../components/pca9420/fsl_pca9420.c</name>
     </file>
   </group>
   <group>
-    <name>device</name>
+    <name>MIMXRT685S</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/fsl_device_registers.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</name>
     </file>
@@ -4481,14 +4468,17 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/fsl_device_registers.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</name>
     </file>
+    <group>
+      <name>iar</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/startup_MIMXRT685S_cm33.s</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>flash_config</name>
@@ -4500,21 +4490,15 @@
     </file>
   </group>
   <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT685S/iar/startup_MIMXRT685S_cm33.s</name>
-    </file>
-  </group>
-  <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm33.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/tz_context.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/tz_context.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -4526,16 +4510,16 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

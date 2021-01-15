@@ -22,19 +22,20 @@
 #define HAL_SGTL_RECORD_CAPABILITY kCODEC_SupportRecordSourceLineInput | kCODEC_SupportRecordSourceSingleEndMic
 
 /*! @brief sgtl map module */
-#define HAL_SGTL_MAP_MODULE(module)                           \
-    (module == kCODEC_ModuleADC ?                             \
-         kSGTL_ModuleADC :                                    \
-         module == kCODEC_ModuleDAC ?                         \
-         kSGTL_ModuleDAC :                                    \
-         module == kCODEC_ModuleHeadphone ?                   \
-         kSGTL_ModuleHP :                                     \
-         module == kCODEC_ModuleI2SIn ?                       \
-         kSGTL_ModuleI2SIN :                                  \
-         module == kCODEC_ModuleI2SOut ?                      \
-         kSGTL_ModuleI2SOUT :                                 \
-         module == kCODEC_ModuleLinein ? kSGTL_ModuleLineIn : \
-                                         module == kCODEC_ModuleLineout ? kSGTL_ModuleLineOut : kSGTL_ModuleMicin)
+#define HAL_SGTL_MAP_MODULE(module)                     \
+    ((module) == (uint32_t)kCODEC_ModuleADC ?           \
+         kSGTL_ModuleADC :                              \
+         (module) == (uint32_t)kCODEC_ModuleDAC ?       \
+         kSGTL_ModuleDAC :                              \
+         (module) == (uint32_t)kCODEC_ModuleHeadphone ? \
+         kSGTL_ModuleHP :                               \
+         (module) == (uint32_t)kCODEC_ModuleI2SIn ?     \
+         kSGTL_ModuleI2SIN :                            \
+         (module) == (uint32_t)kCODEC_ModuleI2SOut ?    \
+         kSGTL_ModuleI2SOUT :                           \
+         (module) == (uint32_t)kCODEC_ModuleLinein ?    \
+         kSGTL_ModuleLineIn :                           \
+         (module) == (uint32_t)kCODEC_ModuleLineout ? kSGTL_ModuleLineOut : kSGTL_ModuleMicin)
 
 /*******************************************************************************
  * Prototypes
@@ -64,13 +65,13 @@ status_t HAL_CODEC_Init(void *handle, void *config)
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
-    sgtl_config_t *sgtlConfig = (sgtl_config_t *)(codecConfig->codecDevConfig);
-    sgtl_handle_t *sgtlHandle = (sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
+    sgtl_config_t *devConfig = (sgtl_config_t *)(codecConfig->codecDevConfig);
+    sgtl_handle_t *devHandle = (sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
 
     ((codec_handle_t *)handle)->codecCapability = &s_sgtl5000_capability;
 
     /* codec device initialization */
-    return SGTL_Init(sgtlHandle, sgtlConfig);
+    return SGTL_Init(devHandle, devConfig);
 }
 
 /*!
@@ -118,7 +119,7 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
     uint32_t mappedVolume = 0;
     status_t ret          = kStatus_Success;
 
-    if (playChannel & (kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight))
+    if ((playChannel & ((uint32_t)kCODEC_PlayChannelHeadphoneLeft | (uint32_t)kCODEC_PlayChannelHeadphoneRight)) != 0U)
     {
         if (volume == 0U)
         {
@@ -141,7 +142,7 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
         }
     }
 
-    if (playChannel & (kCODEC_PlayChannelLineOutLeft | kCODEC_PlayChannelLineOutRight))
+    if ((playChannel & ((uint32_t)kCODEC_PlayChannelLineOutLeft | (uint32_t)kCODEC_PlayChannelLineOutRight)) != 0U)
     {
         if (volume == 0U)
         {
@@ -180,13 +181,14 @@ status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
 
     status_t retVal = kStatus_Success;
 
-    if (playChannel & (kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight))
+    if ((playChannel & ((uint32_t)kCODEC_PlayChannelHeadphoneLeft | (uint32_t)kCODEC_PlayChannelHeadphoneRight)) != 0U)
     {
         retVal = SGTL_SetMute((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), kSGTL_ModuleHP,
                               isMute);
     }
 
-    if ((playChannel & (kCODEC_PlayChannelLineOutLeft | kCODEC_PlayChannelLineOutRight)) && (retVal == kStatus_Success))
+    if (((playChannel & ((uint32_t)kCODEC_PlayChannelLineOutLeft | (uint32_t)kCODEC_PlayChannelLineOutRight)) != 0U) &&
+        (retVal == kStatus_Success))
     {
         retVal = SGTL_SetMute((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
                               kSGTL_ModuleLineOut, isMute);
@@ -231,13 +233,13 @@ status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
 {
     assert(handle != NULL);
 
-    if (recordSource == kCODEC_RecordSourceLineInput)
+    if (recordSource == (uint32_t)kCODEC_RecordSourceLineInput)
     {
         return SGTL_SetRecord((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
                               kSGTL_RecordSourceLineIn);
     }
 
-    if (recordSource == kCODEC_RecordSourceSingleEndMic)
+    if (recordSource == (uint32_t)kCODEC_RecordSourceSingleEndMic)
     {
         return SGTL_SetRecord((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
                               kSGTL_RecordSourceMic);
@@ -274,13 +276,13 @@ status_t HAL_CODEC_SetPlay(void *handle, uint32_t playSource)
 {
     assert(handle != NULL);
 
-    if (playSource == kCODEC_PlaySourceInput)
+    if (playSource == (uint32_t)kCODEC_PlaySourceInput)
     {
         return SGTL_SetPlay((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
                             kSGTL_PlaySourceLineIn);
     }
 
-    if (playSource == kCODEC_PlaySourceDAC)
+    if (playSource == (uint32_t)kCODEC_PlaySourceDAC)
     {
         return SGTL_SetPlay((sgtl_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
                             kSGTL_PlaySourceDAC);

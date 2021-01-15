@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -209,7 +209,7 @@ void BOARD_BootClockRUN(void)
     /* Set FLEXSPI_PODF. */
     CLOCK_SetDiv(kCLOCK_FlexspiDiv, 1);
     /* Set Flexspi clock source. */
-    CLOCK_SetMux(kCLOCK_FlexspiMux, 0);
+    CLOCK_SetMux(kCLOCK_FlexspiMux, 3);
 #endif
     /* Disable LPSPI clock gate. */
     CLOCK_DisableClock(kCLOCK_Lpspi1);

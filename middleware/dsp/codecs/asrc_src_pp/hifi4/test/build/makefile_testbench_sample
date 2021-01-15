@@ -1,0 +1,126 @@
+#
+# Copyright (c) 2011-2020 Cadence Design Systems, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+ROOTDIR?=../..
+OSNAME := $(shell uname)
+
+TESTDIR?=test
+DEV_SUFFIX?=_hifi3
+
+
+#all: 	   build_src_pp	  build_src384k_pp
+all: 	   build_src_pp
+clean: 	   clean_src_pp
+install: install_src_pp
+runall:      run_src_pp
+
+#required for Packing script?
+src_pp: build_src_pp
+
+SRCS+= \
+    xa_src_pp_sample_testbench$(DEV_SUFFIX).c \
+    xa_src_pp_error_handler.c \
+    xa_src_pp_waveio.c
+
+ifeq ("$(APP_NAME)", "srcplus_pp")
+CFLAGS+=-DUSE_SRCPLUS_LIBRARY
+endif
+
+ifeq ("$(APP_NAME)", "src384k_pp")
+CFLAGS+=-DUSE_SRC384KHZ_TRIMMED_LIBRARY
+else
+ifneq ($(DISABLE_ASRC),1)
+CFLAGS+=-DASRC_ENABLE
+endif
+endif
+
+ifneq ($(DISABLE_CUBIC),1)
+CFLAGS += -DPOLYPHASE_CUBIC_INTERPOLATION
+endif
+
+# Add this for test-wrapper to check if the num of io samples ratio is contant.
+#    This check should be enabled only for SRC_FRIO lib build
+#    This check should be disabled for base SRC lib build
+#CFLAGS += -DNUM_IOSAMPLES_INSYNC
+
+
+SRCDIRS = \
+    $(TESTDIR)/src \
+
+INCLUDE_DIRS = \
+    $(TESTDIR)/include \
+    include 
+
+ifdef STD_FILES
+
+SRCDIRS += \
+    $(STD_FILES)/test/src\
+
+INCLUDE_DIRS += \
+    $(STD_FILES)/include \
+    $(STD_FILES)/test/include\
+
+endif
+
+THIS_MAKEFILE := $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
+
+build_src_pp:
+	make -f $(THIS_MAKEFILE) app_build APP_NAME=asrc_src_pp
+asrc_src_pp:
+	make -f $(THIS_MAKEFILE) app_build APP_NAME=asrc_src_pp
+
+build_srcplus_pp:
+	make -f $(THIS_MAKEFILE) app_build APP_NAME=srcplus_pp
+
+build_src384k_pp:
+	make -f $(THIS_MAKEFILE) app_build APP_NAME=src384k_pp
+	
+clean_src_pp:
+	make -f $(THIS_MAKEFILE) app_clean APP_NAME=asrc_src_pp
+
+clean_srcplus_pp:
+	make -f $(THIS_MAKEFILE) app_clean APP_NAME=srcplus_pp
+
+clean_src384k_pp:
+	make -f $(THIS_MAKEFILE) app_clean APP_NAME=src384k_pp
+	
+install_src_pp:
+	make -f $(THIS_MAKEFILE) app_install APP_NAME=asrc_src_pp
+
+install_srcplus_pp:
+	make -f $(THIS_MAKEFILE) app_install APP_NAME=srcplus_pp
+
+install_src384k_pp:
+	make -f $(THIS_MAKEFILE) app_install APP_NAME=src384k_pp
+
+run_src_pp:
+	make -f $(THIS_MAKEFILE) run APP_NAME=asrc_src_pp
+run_srcplus_pp:
+	make -f $(THIS_MAKEFILE) run APP_NAME=srcplus_pp
+run_src384k_pp:
+	make -f $(THIS_MAKEFILE) run APP_NAME=src384k_pp
+	
+ifeq "$(OSNAME)" "Linux"
+include test_common.mk
+else
+include test_common_win.mk
+endif

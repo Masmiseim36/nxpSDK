@@ -114,7 +114,7 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_S32R45_LINFLEXD =
 #define FMSTR_LINFLEXD_UARTSR_DRFRFE       0x00000004      /*DRF*/
 #define FMSTR_LINFLEXD_UARTSR_DTFTFF       0x00000002      /*DTF*/
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    SCI communication initialization
 *
@@ -135,7 +135,7 @@ static FMSTR_BOOL _FMSTR_S32R45_Init(void)
 }
 
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable LINFLEXD transmitter
 *
@@ -155,7 +155,7 @@ static void _FMSTR_S32R45_EnableTransmit(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable LINFLEXD receiver
 *
@@ -175,7 +175,7 @@ static void _FMSTR_S32R45_EnableReceive(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from transmit register empty event
 *
@@ -195,7 +195,7 @@ static void _FMSTR_S32R45_EnableTransmitInterrupt(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt when transmission is complete
 *
@@ -215,7 +215,7 @@ static void _FMSTR_S32R45_EnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
 	}
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from receive register full event
 *
@@ -235,7 +235,7 @@ static void _FMSTR_S32R45_EnableReceiveInterrupt(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the transmit register is empty, and it's possible to put next char
 *
@@ -246,7 +246,7 @@ static FMSTR_BOOL _FMSTR_S32R45_IsTransmitRegEmpty(void)
     return (FMSTR_BOOL) FMSTR_TSTBIT(fmstr_LINFLEXDBaseAddr, FMSTR_LINFLEXD_UARTSR_OFFSET, FMSTR_LINFLEXD_UARTSR_DTFTFF);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the receive register is full, and it's possible to get received char
 *
@@ -257,7 +257,7 @@ static FMSTR_BOOL _FMSTR_S32R45_IsReceiveRegFull(void)
     return (FMSTR_BOOL) FMSTR_TSTBIT(fmstr_LINFLEXDBaseAddr, FMSTR_LINFLEXD_UARTSR_OFFSET, FMSTR_LINFLEXD_UARTSR_DRFRFE);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the transmitter is still active
 *
@@ -269,7 +269,7 @@ static FMSTR_BOOL _FMSTR_S32R45_IsTransmitterActive(void)
     return (!(FMSTR_TSTBIT(fmstr_LINFLEXDBaseAddr, FMSTR_LINFLEXD_UARTSR_OFFSET, FMSTR_LINFLEXD_UARTSR_DTFTFF)));
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function puts the char for transmit
 *
@@ -281,7 +281,7 @@ static void _FMSTR_S32R45_PutChar(FMSTR_BCHR  ch)
     FMSTR_SETBIT(fmstr_LINFLEXDBaseAddr, FMSTR_LINFLEXD_UARTSR_OFFSET, FMSTR_LINFLEXD_UARTSR_DTFTFF);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function gets the received char
 *
@@ -294,7 +294,7 @@ static FMSTR_BCHR _FMSTR_S32R45_GetChar(void)
     return c;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function sends buffered data
 *
@@ -304,7 +304,7 @@ static void _FMSTR_S32R45_Flush(void)
 {
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Assign FreeMASTER communication module base address
 *
@@ -315,13 +315,13 @@ void FMSTR_SerialSetBaseAddress(FMSTR_ADDR base)
     fmstr_LINFLEXDBaseAddr = base;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Process FreeMASTER serial interrupt (call this function from SCI ISR)
 *
 ******************************************************************************/
 
-void FMSTR_SerialIsr()
+void FMSTR_SerialIsr(void)
 {
     /* process incoming or just transmitted byte */
     #if (FMSTR_LONG_INTR) || (FMSTR_SHORT_INTR)
@@ -337,7 +337,7 @@ void FMSTR_SerialSetBaseAddress(FMSTR_ADDR base)
     FMSTR_UNUSED(base);
 }
 
-void FMSTR_SerialIsr()
+void FMSTR_SerialIsr(void)
 {
 }
 

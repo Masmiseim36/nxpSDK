@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -29,7 +29,7 @@
 
 #include "freemaster_serial_miniusart.h"
 
-#if (!(FMSTR_DISABLE))
+#if FMSTR_DISABLE == 0
 
 #include "fsl_common.h"
 #include "fsl_usart.h"
@@ -38,26 +38,26 @@
 #include "freemaster_serial.h"
 
 /******************************************************************************
-* Adapter configuration
-******************************************************************************/
-#if FMSTR_SERIAL_SINGLEWIRE
-    #error The MINISUART driver does not support single wire configuration of UART communication.
+ * Adapter configuration
+ ******************************************************************************/
+#if FMSTR_SERIAL_SINGLEWIRE > 0
+#error The MINISUART driver does not support single wire configuration of UART communication.
 #endif
 
 /***********************************
-*  local variables
-***********************************/
+ *  local variables
+ ***********************************/
 
 /* Serial base address */
 #ifdef FMSTR_SERIAL_BASE
-    static USART_Type *fmstr_serialBaseAddr = FMSTR_SERIAL_BASE;
+static USART_Type *fmstr_serialBaseAddr = FMSTR_SERIAL_BASE;
 #else
-    static USART_Type *fmstr_serialBaseAddr = NULL;
+static USART_Type *fmstr_serialBaseAddr = NULL;
 #endif
 
 /***********************************
-*  local function prototypes
-***********************************/
+ *  local function prototypes
+ ***********************************/
 
 /* Interface function - Initialization of serial UART driver adapter */
 static FMSTR_BOOL _FMSTR_SerialMiniUsartInit(void);
@@ -69,210 +69,222 @@ static void _FMSTR_SerialMiniUsartEnableReceiveInterrupt(FMSTR_BOOL enable);
 static FMSTR_BOOL _FMSTR_SerialMiniUsartIsTransmitRegEmpty(void);
 static FMSTR_BOOL _FMSTR_SerialMiniUsartIsReceiveRegFull(void);
 static FMSTR_BOOL _FMSTR_SerialMiniUsartIsTransmitterActive(void);
-static void _FMSTR_SerialMiniUsartPutChar(FMSTR_BCHR  ch);
+static void _FMSTR_SerialMiniUsartPutChar(FMSTR_BCHR ch);
 static FMSTR_BCHR _FMSTR_SerialMiniUsartGetChar(void);
 static void _FMSTR_SerialMiniUsartFlush(void);
 
 /***********************************
-*  global variables
-***********************************/
+ *  global variables
+ ***********************************/
 /* Interface of this serial UART driver */
-const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_MCUX_MINIUSART =
-{
-    .Init                           = _FMSTR_SerialMiniUsartInit,
-    .EnableTransmit                 = _FMSTR_SerialMiniUsartEnableTransmit,
-    .EnableReceive                  = _FMSTR_SerialMiniUsartEnableReceive,
-    .EnableTransmitInterrupt        = _FMSTR_SerialMiniUsartEnableTransmitInterrupt,
-    .EnableTransmitCompleteInterrupt= _FMSTR_SerialMiniUsartEnableTransmitCompleteInterrupt,
-    .EnableReceiveInterrupt         = _FMSTR_SerialMiniUsartEnableReceiveInterrupt,
-    .IsTransmitRegEmpty             = _FMSTR_SerialMiniUsartIsTransmitRegEmpty,
-    .IsReceiveRegFull               = _FMSTR_SerialMiniUsartIsReceiveRegFull,
-    .IsTransmitterActive            = _FMSTR_SerialMiniUsartIsTransmitterActive,
-    .PutChar                        = _FMSTR_SerialMiniUsartPutChar,
-    .GetChar                        = _FMSTR_SerialMiniUsartGetChar,
-    .Flush                          = _FMSTR_SerialMiniUsartFlush,
+const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_MCUX_MINIUSART = {
+    .Init                            = _FMSTR_SerialMiniUsartInit,
+    .EnableTransmit                  = _FMSTR_SerialMiniUsartEnableTransmit,
+    .EnableReceive                   = _FMSTR_SerialMiniUsartEnableReceive,
+    .EnableTransmitInterrupt         = _FMSTR_SerialMiniUsartEnableTransmitInterrupt,
+    .EnableTransmitCompleteInterrupt = _FMSTR_SerialMiniUsartEnableTransmitCompleteInterrupt,
+    .EnableReceiveInterrupt          = _FMSTR_SerialMiniUsartEnableReceiveInterrupt,
+    .IsTransmitRegEmpty              = _FMSTR_SerialMiniUsartIsTransmitRegEmpty,
+    .IsReceiveRegFull                = _FMSTR_SerialMiniUsartIsReceiveRegFull,
+    .IsTransmitterActive             = _FMSTR_SerialMiniUsartIsTransmitterActive,
+    .PutChar                         = _FMSTR_SerialMiniUsartPutChar,
+    .GetChar                         = _FMSTR_SerialMiniUsartGetChar,
+    .Flush                           = _FMSTR_SerialMiniUsartFlush,
 
 };
 
-/**************************************************************************//*!
-*
-* @brief    Serial communication initialization
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Serial communication initialization
+ *
+ ******************************************************************************/
 static FMSTR_BOOL _FMSTR_SerialMiniUsartInit(void)
 {
     /* valid runtime module address must be assigned */
-    if(!fmstr_serialBaseAddr)
+    if (fmstr_serialBaseAddr == NULL)
+    {
         return FMSTR_FALSE;
+    }
 
     return FMSTR_TRUE;
 }
 
-/**************************************************************************//*!
-*
-* @brief    Enable/Disable Serial transmitter
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Enable/Disable Serial transmitter
+ *
+ ******************************************************************************/
 
 static void _FMSTR_SerialMiniUsartEnableTransmit(FMSTR_BOOL enable)
 {
-    USART_EnableTx(fmstr_serialBaseAddr, enable);
+    USART_EnableTx(fmstr_serialBaseAddr, enable != FMSTR_FALSE);
 }
 
-/**************************************************************************//*!
-*
-* @brief    Enable/Disable Serial receiver
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Enable/Disable Serial receiver
+ *
+ ******************************************************************************/
 
 static void _FMSTR_SerialMiniUsartEnableReceive(FMSTR_BOOL enable)
 {
-    USART_EnableRx(fmstr_serialBaseAddr, enable);
+    USART_EnableRx(fmstr_serialBaseAddr, enable != FMSTR_FALSE);
 }
 
-/**************************************************************************//*!
-*
-* @brief    Enable/Disable interrupt from transmit register empty event
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Enable/Disable interrupt from transmit register empty event
+ *
+ ******************************************************************************/
 
 static void _FMSTR_SerialMiniUsartEnableTransmitInterrupt(FMSTR_BOOL enable)
 {
-    if(enable)
-        USART_EnableInterrupts(fmstr_serialBaseAddr, kUSART_TxReadyInterruptEnable);
+    if (enable != FMSTR_FALSE)
+    {
+        USART_EnableInterrupts(fmstr_serialBaseAddr, (uint32_t)kUSART_TxReadyInterruptEnable);
+    }
     else
-        USART_DisableInterrupts(fmstr_serialBaseAddr, kUSART_TxReadyInterruptEnable);
+    {
+        USART_DisableInterrupts(fmstr_serialBaseAddr, (uint32_t)kUSART_TxReadyInterruptEnable);
+    }
 }
 
-/**************************************************************************//*!
-*
-* @brief    Enable/Disable interrupt from transmit complete event
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Enable/Disable interrupt from transmit complete event
+ *
+ ******************************************************************************/
 
 static void _FMSTR_SerialMiniUsartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
 {
 #if defined(FSL_FEATURE_USART_HAS_INTENSET_TXIDLEEN) && FSL_FEATURE_USART_HAS_INTENSET_TXIDLEEN
-    if(enable)
-        USART_EnableInterrupts(fmstr_serialBaseAddr, kUSART_TxIdleInterruptEnable);
+    if (enable != FMSTR_FALSE)
+    {
+        USART_EnableInterrupts(fmstr_serialBaseAddr, (uint32_t)kUSART_TxIdleInterruptEnable);
+    }
     else
-        USART_DisableInterrupts(fmstr_serialBaseAddr, kUSART_TxIdleInterruptEnable);
+    {
+        USART_DisableInterrupts(fmstr_serialBaseAddr, (uint32_t)kUSART_TxIdleInterruptEnable);
+    }
 #endif
 }
 
-/**************************************************************************//*!
-*
-* @brief    Enable/Disable interrupt from receive register full event
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Enable/Disable interrupt from receive register full event
+ *
+ ******************************************************************************/
 
 static void _FMSTR_SerialMiniUsartEnableReceiveInterrupt(FMSTR_BOOL enable)
 {
-     if(enable)
-        USART_EnableInterrupts(fmstr_serialBaseAddr, kUSART_RxReadyInterruptEnable);
+    if (enable != FMSTR_FALSE)
+    {
+        USART_EnableInterrupts(fmstr_serialBaseAddr, (uint32_t)kUSART_RxReadyInterruptEnable);
+    }
     else
-        USART_DisableInterrupts(fmstr_serialBaseAddr, kUSART_RxReadyInterruptEnable);
+    {
+        USART_DisableInterrupts(fmstr_serialBaseAddr, (uint32_t)kUSART_RxReadyInterruptEnable);
+    }
 }
 
-/**************************************************************************//*!
-*
-* @brief    Returns TRUE if the transmit register is empty, and it's possible to put next char
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Returns TRUE if the transmit register is empty, and it's possible to put next char
+ *
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_SerialMiniUsartIsTransmitRegEmpty(void)
 {
     uint32_t sr = USART_GetStatusFlags(fmstr_serialBaseAddr);
 
-    return (sr & kUSART_TxReady);
+    return (FMSTR_BOOL)((sr & (uint32_t)kUSART_TxReady) != 0U);
 }
 
-/**************************************************************************//*!
-*
-* @brief    Returns TRUE if the receive register is full, and it's possible to get received char
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Returns TRUE if the receive register is full, and it's possible to get received char
+ *
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_SerialMiniUsartIsReceiveRegFull(void)
 {
     uint32_t sr = USART_GetStatusFlags(fmstr_serialBaseAddr);
 
-    return (sr & kUSART_RxReady);
+    return (FMSTR_BOOL)((sr & (uint32_t)kUSART_RxReady) != 0U);
 }
 
-/**************************************************************************//*!
-*
-* @brief    Returns TRUE if the transmitter is still active
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Returns TRUE if the transmitter is still active
+ *
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_SerialMiniUsartIsTransmitterActive(void)
 {
     uint32_t sr = USART_GetStatusFlags(fmstr_serialBaseAddr);
 
-    return !(sr & kUSART_TxIdleFlag);
+    return (FMSTR_BOOL)((sr & (uint32_t)kUSART_TxIdleFlag) == 0U);
 }
 
-/**************************************************************************//*!
-*
-* @brief    The function puts the char for transmit
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    The function puts the char for transmit
+ *
+ ******************************************************************************/
 
-static void _FMSTR_SerialMiniUsartPutChar(FMSTR_BCHR  ch)
+static void _FMSTR_SerialMiniUsartPutChar(FMSTR_BCHR ch)
 {
     USART_WriteByte(fmstr_serialBaseAddr, ch);
 }
 
-/**************************************************************************//*!
-*
-* @brief    The function gets the received char
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    The function gets the received char
+ *
+ ******************************************************************************/
 static FMSTR_BCHR _FMSTR_SerialMiniUsartGetChar(void)
 {
     return USART_ReadByte(fmstr_serialBaseAddr);
 }
 
-/**************************************************************************//*!
-*
-* @brief    The function sends buffered data
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    The function sends buffered data
+ *
+ ******************************************************************************/
 static void _FMSTR_SerialMiniUsartFlush(void)
 {
-
 }
 
-/**************************************************************************//*!
-*
-* @brief    Assigning FreeMASTER communication module base address
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Assigning FreeMASTER communication module base address
+ *
+ ******************************************************************************/
 void FMSTR_SerialSetBaseAddress(USART_Type *base)
 {
     fmstr_serialBaseAddr = base;
 }
 
-/**************************************************************************//*!
-*
-* @brief    API: Interrupt handler call
-*
-* This Interrupt Service Routine handles the UART  interrupts for the FreeMASTER
-* driver. In case you want to handle the interrupt in the application yourselves,
-* call the FMSTR_ProcessSerial function which
-* does the same job but is not compiled as an Interrupt Service Routine.
-*
-* In poll-driven mode (FMSTR_POLL_DRIVEN) this function does nothing.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    API: Interrupt handler call
+ *
+ * This Interrupt Service Routine handles the UART  interrupts for the FreeMASTER
+ * driver. In case you want to handle the interrupt in the application yourselves,
+ * call the FMSTR_ProcessSerial function which
+ * does the same job but is not compiled as an Interrupt Service Routine.
+ *
+ * In poll-driven mode (FMSTR_POLL_DRIVEN) this function does nothing.
+ *
+ ******************************************************************************/
 
-void FMSTR_SerialIsr()
+void FMSTR_SerialIsr(void)
 {
-    /* process incomming or just transmitted byte */
-    #if (FMSTR_LONG_INTR) || (FMSTR_SHORT_INTR)
-        FMSTR_ProcessSerial();
-    #endif
+#if FMSTR_LONG_INTR > 0 || FMSTR_SHORT_INTR > 0
+    /* Process received or just-transmitted byte. */
+    FMSTR_ProcessSerial();
+#endif
 }
 
 #else /* (!(FMSTR_DISABLE)) */

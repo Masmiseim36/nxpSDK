@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,10 +8,10 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
 #include "fsl_intmux.h"
 #endif
@@ -49,7 +49,7 @@ uint8_t slaveTxData[TRANSFER_SIZE] = {0U};
 
 volatile uint32_t slaveTxCount;
 volatile uint32_t slaveRxCount;
-uint8_t g_slaveRxWatermark;
+volatile uint8_t g_slaveRxWatermark;
 uint8_t g_slaveFifoSize;
 
 volatile bool isSlaveTransferCompleted = false;
@@ -61,11 +61,9 @@ void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
 {
     if (slaveRxCount < TRANSFER_SIZE)
     {
-        /* First, disable the interrupt to avoid potentially triggering another interrupt
-         * while reading out the RX FIFO as more data may be coming into the RX FIFO. We'll
+        /* While reading out the RX FIFO as more data may be coming into the RX FIFO. We'll
          * re-enable the interrupts after reading out the FIFO.
          */
-        LPSPI_DisableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable);
         while (LPSPI_GetRxFifoCount(EXAMPLE_LPSPI_SLAVE_BASEADDR))
         {
             slaveRxData[slaveRxCount] = LPSPI_ReadData(EXAMPLE_LPSPI_SLAVE_BASEADDR);
@@ -73,14 +71,9 @@ void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
 
             if (slaveRxCount == TRANSFER_SIZE)
             {
+                LPSPI_DisableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable);
                 break;
             }
-        }
-        /* Re-enable the interrupts only if rxCount indicates there is more data to receive,
-         * otherwise we may get a spurious interrupt. */
-        if (slaveRxCount < TRANSFER_SIZE)
-        {
-            LPSPI_EnableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable);
         }
     }
 
@@ -95,8 +88,7 @@ void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
 
     if (slaveTxCount < TRANSFER_SIZE)
     {
-        while ((LPSPI_GetTxFifoCount(EXAMPLE_LPSPI_SLAVE_BASEADDR) < g_slaveFifoSize) &&
-               (slaveTxCount - slaveRxCount < g_slaveFifoSize))
+        while (LPSPI_GetTxFifoCount(EXAMPLE_LPSPI_SLAVE_BASEADDR) < g_slaveFifoSize)
         {
             /*Write the word to TX register*/
             LPSPI_WriteData(EXAMPLE_LPSPI_SLAVE_BASEADDR, slaveTxData[slaveTxCount]);
@@ -104,6 +96,8 @@ void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
 
             if (slaveTxCount == TRANSFER_SIZE)
             {
+                /* Disable interrupt requests */
+                LPSPI_DisableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_TxInterruptEnable);
                 break;
             }
         }
@@ -112,9 +106,8 @@ void EXAMPLE_LPSPI_SLAVE_IRQHandler(void)
     /* Check if we're done with this transfer.*/
     if ((slaveRxCount == TRANSFER_SIZE) && (slaveTxCount == TRANSFER_SIZE))
     {
+        /* Complete the transfer. */
         isSlaveTransferCompleted = true;
-        /* Disable interrupt requests */
-        LPSPI_DisableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_AllInterruptEnable);
     }
     SDK_ISR_EXIT_BARRIER;
 }
@@ -139,7 +132,7 @@ int main(void)
     uint32_t errorCount;
     uint32_t i;
     lpspi_slave_config_t slaveConfig;
-    uint32_t whichPcs;
+    lpspi_which_pcs_t whichPcs;
     uint8_t txWatermark;
 
     /*Slave config*/
@@ -186,10 +179,7 @@ int main(void)
     LPSPI_ClearStatusFlags(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_AllStatusFlag);
     LPSPI_DisableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_AllInterruptEnable);
 
-    EXAMPLE_LPSPI_SLAVE_BASEADDR->TCR =
-        (EXAMPLE_LPSPI_SLAVE_BASEADDR->TCR & ~(LPSPI_TCR_CONT_MASK | LPSPI_TCR_CONTC_MASK | LPSPI_TCR_RXMSK_MASK |
-                                               LPSPI_TCR_TXMSK_MASK | LPSPI_TCR_PCS_MASK)) |
-        LPSPI_TCR_CONT(0) | LPSPI_TCR_CONTC(0) | LPSPI_TCR_RXMSK(0) | LPSPI_TCR_TXMSK(0) | LPSPI_TCR_PCS(whichPcs);
+    LPSPI_SelectTransferPCS(EXAMPLE_LPSPI_SLAVE_BASEADDR, whichPcs);
 
     /* Enable the NVIC for LPSPI peripheral. Note that below code is useless if the LPSPI interrupt is in INTMUX ,
      * and you should also enable the INTMUX interrupt in your application.
@@ -213,8 +203,15 @@ int main(void)
             break;
         }
     }
-
-    LPSPI_EnableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable);
+    if (slaveTxCount == TRANSFER_SIZE)
+    {
+        /* Only enable rx interrupt if tx data are all pushed to FIFO */
+        LPSPI_EnableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable);
+    }
+    else
+    {
+        LPSPI_EnableInterrupts(EXAMPLE_LPSPI_SLAVE_BASEADDR, kLPSPI_RxInterruptEnable | kLPSPI_TxInterruptEnable);
+    }
 
     /******************Wait for master and slave transfer completed.******************/
     while (!isSlaveTransferCompleted)

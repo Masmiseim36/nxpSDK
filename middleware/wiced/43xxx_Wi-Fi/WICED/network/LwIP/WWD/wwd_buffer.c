@@ -39,7 +39,7 @@
 #include "wwd_assert.h"
 #include "wwd_wifi.h"
 #include "wwd_network_constants.h"
-#include "pbuf.h"
+#include "lwip/pbuf.h"
 #include "wwd_buffer.h"
 #include "wwd_wiced.h"
 

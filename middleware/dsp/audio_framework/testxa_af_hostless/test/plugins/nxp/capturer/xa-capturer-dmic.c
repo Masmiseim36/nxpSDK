@@ -157,18 +157,18 @@ typedef struct XACapturer
 * Variables
 ******************************************************************************/
 /* Receive ping pong buffer and descriptor */
-#ifdef CPU_MIMXRT595SFFOA_dsp
-SDK_ALIGN(
-#else
+#if (XCHAL_DCACHE_SIZE > 0)
 AT_NONCACHEABLE_SECTION_ALIGN(
+#else
+SDK_ALIGN(
 #endif
     static uint16_t g_rxBuffer[DMIC_CH_COUNT * BUFFER_COUNT][BUFFER_LENGTH], 4
 );
 
-#ifdef CPU_MIMXRT595SFFOA_dsp
-SDK_ALIGN(
-#else
+#if (XCHAL_DCACHE_SIZE > 0)
 AT_NONCACHEABLE_SECTION_ALIGN(
+#else
+SDK_ALIGN(
 #endif
     static dma_descriptor_t s_dmaDescriptorPingpong[FSL_FEATURE_DMIC_CHANNEL_NUM * 2], 16
 );
@@ -333,13 +333,18 @@ int DMIC_CaptureCallback(void *arg, int wake_value)
 #endif
 {
     XACapturer *d = (XACapturer*) arg;
+    int32_t err = XOS_OK;
 
     while (1)
     {
 #ifdef HAVE_FREERTOS
         xTaskNotifyWait(pdFALSE, 0xffffff, NULL, portMAX_DELAY);
 #else
-        xos_sem_get(&d->irq_sem);
+        err = xos_sem_get(&d->irq_sem);
+        if(err == XOS_ERR_INVALID_PARAMETER)
+        {
+            return -1;
+        }
 #endif
         d->cdata->cb(d->cdata, 0);
     }

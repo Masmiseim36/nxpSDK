@@ -11,6 +11,8 @@
  * Includes
  ******************************************************************************/
 #include "lwip/tcpip.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "wpl.h"
 #include "timers.h"
@@ -23,8 +25,6 @@
 
 #include <stdio.h>
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 /*******************************************************************************
  * Prototypes
@@ -33,8 +33,7 @@
 static int CGI_HandleGet(HTTPSRV_CGI_REQ_STRUCT *param);
 static int CGI_HandlePost(HTTPSRV_CGI_REQ_STRUCT *param);
 static int CGI_HandleReset(HTTPSRV_CGI_REQ_STRUCT *param);
-
-static void BOARD_ToggleLED(bool state);
+static int CGI_HandleStatus(HTTPSRV_CGI_REQ_STRUCT *param);
 
 static uint32_t SetBoardToClient();
 static uint32_t SetBoardToAP();
@@ -44,7 +43,10 @@ static uint32_t CleanUpClient();
 typedef enum board_wifi_states
 {
     WIFI_STATE_CLIENT,
-    WIFI_STATE_AP
+    WIFI_STATE_CONNECTING,
+    WIFI_STATE_CLIENT_SCAN,
+    WIFI_STATE_AP,
+    WIFI_STATE_AP_SCAN,
 } board_wifi_states;
 
 struct board_state_variables
@@ -65,6 +67,7 @@ const HTTPSRV_CGI_LINK_STRUCT cgi_lnk_tbl[] = {
     {"reset", CGI_HandleReset},
     {"get", CGI_HandleGet},
     {"post", CGI_HandlePost},
+    {"status", CGI_HandleStatus},
     {0, 0} // DO NOT REMOVE - last item - end of table
 };
 
@@ -73,21 +76,6 @@ struct board_state_variables g_BoardState;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-/* Function for toggling LED pin for indicating board state */
-static void BOARD_ToggleLED(bool state)
-{
-#ifdef EXAMPLE_LED_GPIO_PIN
-    if (state)
-    {
-        GPIO_PinWrite(EXAMPLE_LED_GPIO, EXAMPLE_LED_GPIO_PIN, 0U);
-    }
-    else
-    {
-        GPIO_PinWrite(EXAMPLE_LED_GPIO, EXAMPLE_LED_GPIO_PIN, 1U);
-    }
-#endif
-}
 
 /*CGI*/
 /* Example Common Gateway Interface callback. */
@@ -103,36 +91,30 @@ static int CGI_HandleGet(HTTPSRV_CGI_REQ_STRUCT *param)
     /* Buffer for hodling response JSON data */
     char buffer[CGI_BUFFER_LENGTH] = {0};
     char *ssids;
-    char ip[16];
 
-    /* Initiate Scan */
-    int result = WPL_Scan();
-    if (result != WPL_SUCCESS)
+    if (g_BoardState.wifiState == WIFI_STATE_CLIENT || g_BoardState.wifiState == WIFI_STATE_AP)
     {
-        PRINTF("[!] Scan Error\r\n");
-        ssids = "null"; // Interpreted as error by the website
+        /* Initiate Scan */
+        int result = WPL_Scan();
+        if (result != WPL_SUCCESS)
+        {
+            PRINTF("[!] Scan Error\r\n");
+            ssids = "null"; // Interpreted as error by the website
+        }
+        else
+        {
+            /* Get JSON with scanned SSIDs */
+            ssids = WPL_getSSIDs();
+        }
+
+        // Build the response JSON
+        snprintf(buffer, sizeof(buffer), "{\"networks\":%s}", ssids);
     }
     else
     {
-        /* Get JSON with scanned SSIDs */
-        ssids = WPL_getSSIDs();
+        // We can not start a scan if a previous scan is running or if we are connecting
+        snprintf(buffer, sizeof(buffer), "{\"networks\":false}");
     }
-
-    // Get the Board IP address
-    switch (g_BoardState.wifiState)
-    {
-        case WIFI_STATE_CLIENT:
-            WPL_GetIP(ip, 1);
-            break;
-        case WIFI_STATE_AP:
-        default:
-            WPL_GetIP(ip, 0);
-    }
-
-    // Build the response JSON
-    snprintf(buffer, sizeof(buffer),
-             "{\"networks\":%s,\"info\":{\"name\":\"%s\",\"ip\":\"%s\",\"ap\":\"%s\",\"con\":%s}}", ssids, BOARD_NAME,
-             ip, g_BoardState.ssid, (g_BoardState.wifiState == WIFI_STATE_CLIENT) ? "true" : "false");
 
     // Send the response back to browser
     response.content_type   = HTTPSRV_CONTENT_TYPE_PLAIN;
@@ -214,7 +196,6 @@ static int CGI_HandlePost(HTTPSRV_CGI_REQ_STRUCT *param)
         WPL_GetIP(ip, 1);
         PRINTF(" Now join that network on your device and connect to this IP: %s\r\n", ip);
 
-        BOARD_ToggleLED(false);
         snprintf(buffer, sizeof(buffer), "{\"status\":\"success\",\"new_ip\":\"%s\"}", ip);
 
         response.data           = buffer;
@@ -283,14 +264,63 @@ static int CGI_HandleReset(HTTPSRV_CGI_REQ_STRUCT *param)
     return 0;
 }
 
+/*CGI*/
+/* Example Common Gateway Interface callback. */
+/* These callbacks are called from the session tasks according to the Link struct above */
+/* The status  status.cgi request returns status */
+static int CGI_HandleStatus(HTTPSRV_CGI_REQ_STRUCT *param)
+{
+    HTTPSRV_CGI_RES_STRUCT response = {0};
+
+    response.ses_handle  = param->ses_handle;
+    response.status_code = HTTPSRV_CODE_OK;
+
+    /* Buffer for hodling response JSON data */
+    char buffer[CGI_BUFFER_LENGTH] = {0};
+    char ip[16];
+    char status_str[32] = {'\0'};
+
+    // Get the Board IP address
+    switch (g_BoardState.wifiState)
+    {
+        case WIFI_STATE_CONNECTING:
+            strcpy(status_str, "connecting");
+            WPL_GetIP(ip, 0);
+            break;
+        case WIFI_STATE_CLIENT_SCAN:
+            strcpy(status_str, "scan_");
+        case WIFI_STATE_CLIENT:
+            strcat(status_str, "client");
+            WPL_GetIP(ip, 1);
+            break;
+        case WIFI_STATE_AP_SCAN:
+            strcpy(status_str, "scan_");
+        case WIFI_STATE_AP:
+        default:
+            strcat(status_str, "ap");
+            WPL_GetIP(ip, 0);
+    }
+
+    // Build the response JSON
+    snprintf(buffer, sizeof(buffer), "{\"info\":{\"name\":\"%s\",\"ip\":\"%s\",\"ap\":\"%s\",\"status\":\"%s\"}}",
+             BOARD_NAME, ip, g_BoardState.ssid, status_str);
+
+    // Send the response back to browser
+    response.content_type   = HTTPSRV_CONTENT_TYPE_PLAIN;
+    response.data           = buffer;
+    response.data_length    = strlen(buffer);
+    response.content_length = response.data_length;
+    HTTPSRV_cgi_write(&response);
+
+    return (response.content_length);
+}
+
 /*!
  * @brief The main task function
  */
 static void main_task(void *arg)
 {
     uint32_t result = 1;
-
-    BOARD_ToggleLED(false);
 
     PRINTF(
         "\r\n"
@@ -389,9 +419,6 @@ static uint32_t SetBoardToAP()
     strcpy(g_BoardState.ssid, WIFI_SSID);
     strcpy(g_BoardState.password, WIFI_PASSWORD);
 
-    /* AP mode */
-    BOARD_ToggleLED(true);
-
     /* Start the access point */
     PRINTF("Starting Access Point: SSID: %s, Chnl: %d\r\n", g_BoardState.ssid, WIFI_AP_CHANNEL);
     result = WPL_Start_AP(g_BoardState.ssid, g_BoardState.password, WIFI_AP_CHANNEL);
@@ -439,9 +466,6 @@ static uint32_t SetBoardToClient()
     if (!g_BoardState.connected)
     {
         PRINTF("Connecting as client to ssid: %s with password %s\r\n\t", g_BoardState.ssid, g_BoardState.password);
-
-        /* Client mode */
-        BOARD_ToggleLED(false);
 
         result = WPL_Join(g_BoardState.ssid, g_BoardState.password);
         if (result != WPL_SUCCESS)

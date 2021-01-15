@@ -31,43 +31,111 @@
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
 
 #define AUDIO_SAMPLING_RATE_TO_10_14 (AUDIO_OUT_SAMPLING_RATE_KHZ << 10)
-#define AUDIO_SAMPLING_RATE_TO_16_16 (AUDIO_OUT_SAMPLING_RATE_KHZ << 13)
+#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
+#define AUDIO_SAMPLING_RATE_TO_16_16_SPECIFIC \
+    ((AUDIO_OUT_SAMPLING_RATE_KHZ / (AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME / HS_ISO_OUT_ENDP_PACKET_SIZE)) << 12)
+#elif defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#define AUDIO_SAMPLING_RATE_TO_16_16 \
+    ((AUDIO_OUT_SAMPLING_RATE_KHZ / (AUDIO_OUT_TRANSFER_LENGTH_ONE_FRAME / HS_ISO_OUT_ENDP_PACKET_SIZE)) << 13)
+#endif
+
+#if defined(USB_DEVICE_AUDIO_USE_SYNC_MODE) && (USB_DEVICE_AUDIO_USE_SYNC_MODE > 0U)
+#else
+extern volatile uint8_t feedbackValueUpdating;
+#endif
+
 #if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
 #if defined(USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS) && (USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS > 0)
-/* change 10.10 data to 10.14 or 16.16 (12.13) */
-#define AUDIO_UPDATE_FEEDBACK_DATA(m, n)                  \
-    {                                                     \
-        m[0] = (((n & 0x000003FFu) << 3) & 0xFFu);        \
-        m[1] = ((((n & 0x000003FFu) << 3) >> 8) & 0xFFu); \
-        m[2] = (((n & 0x000FFC00u) >> 10) & 0xFFu);       \
-        m[3] = (((n & 0x000FFC00u) >> 18) & 0xFFu);       \
+/* change 10.10 data to 16.16 */
+#define AUDIO_UPDATE_FEEDBACK_DATA(m, n)              \
+    {                                                 \
+        feedbackValueUpdating = 1;                    \
+        m[0]                  = ((n << 6U) & 0xFFu);  \
+        m[1]                  = ((n >> 2U) & 0xFFu);  \
+        m[2]                  = ((n >> 10U) & 0xFFu); \
+        m[3]                  = ((n >> 18U) & 0xFFu); \
+        feedbackValueUpdating = 0;                    \
     }
 #else
-/* change 10.10 data to 10.14 or 16.16 (12.13) */
+#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
+/* change 10.10 data to 10.14, 10.12 to 16.16 */
 #define AUDIO_UPDATE_FEEDBACK_DATA(m, n)                  \
+    feedbackValueUpdating = 1;                            \
     if (USB_SPEED_HIGH == g_composite.speed)              \
     {                                                     \
-        m[0] = (((n & 0x000003FFu) << 3) & 0xFFu);        \
-        m[1] = ((((n & 0x000003FFu) << 3) >> 8) & 0xFFu); \
-        m[2] = (((n & 0x000FFC00u) >> 10) & 0xFFu);       \
-        m[3] = (((n & 0x000FFC00u) >> 18) & 0xFFu);       \
+        m[0] = ((n << 4) & 0xFFU);                        \
+        m[1] = (((n << 4) >> 8U) & 0xFFU);                \
+        m[2] = (((n << 4) >> 16U) & 0xFFU);               \
+        m[3] = (((n << 4) >> 24U) & 0xFFU);               \
     }                                                     \
     else                                                  \
     {                                                     \
         m[0] = ((n << 4) & 0xFFU);                        \
         m[1] = (((n << 4) >> 8U) & 0xFFU);                \
         m[2] = (((n << 4) >> 16U) & 0xFFU);               \
-    }
-#endif
+    }                                                     \
+    feedbackValueUpdating = 0;
+#elif defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
+#if defined(USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL) && (USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL > 0U)
+/* change 10.10 data to 10.14, 10.12 to 16.16 */
+#define AUDIO_UPDATE_FEEDBACK_DATA(m, n)                  \
+    feedbackValueUpdating = 1;                            \
+    if (USB_SPEED_HIGH == g_composite.speed)              \
+    {                                                     \
+        m[0] = ((n << 4) & 0xFFU);                        \
+        m[1] = (((n << 4) >> 8U) & 0xFFU);                \
+        m[2] = (((n << 4) >> 16U) & 0xFFU);               \
+        m[3] = (((n << 4) >> 24U) & 0xFFU);               \
+    }                                                     \
+    else                                                  \
+    {                                                     \
+        m[0] = ((n << 4) & 0xFFU);                        \
+        m[1] = (((n << 4) >> 8U) & 0xFFU);                \
+        m[2] = (((n << 4) >> 16U) & 0xFFU);               \
+    }                                                     \
+    feedbackValueUpdating = 0;
+#else
+/* change 10.10 data to 10.14, 12.13 to 16.16 */
+#define AUDIO_UPDATE_FEEDBACK_DATA(m, n)                  \
+    feedbackValueUpdating = 1;                            \
+    if (USB_SPEED_HIGH == g_composite.speed)              \
+    {                                                     \
+        m[0] = (((n & 0x00001FFFu) << 3) & 0xFFu);        \
+        m[1] = ((((n & 0x00001FFFu) << 3) >> 8) & 0xFFu); \
+        m[2] = (((n & 0x01FFE000u) >> 13) & 0xFFu);       \
+        m[3] = (((n & 0x01FFE000u) >> 21) & 0xFFu);       \
+    }                                                     \
+    else                                                  \
+    {                                                     \
+        m[0] = ((n << 4) & 0xFFU);                        \
+        m[1] = (((n << 4) >> 8U) & 0xFFU);                \
+        m[2] = (((n << 4) >> 16U) & 0xFFU);               \
+    }                                                     \
+    feedbackValueUpdating = 0;
+#endif /* USB_DEVICE_AUDIO_SPEAKER_DEDICATED_INTERVAL */
 #else
 /* change 10.10 data to 10.14 */
-#define AUDIO_UPDATE_FEEDBACK_DATA(m, n)    \
-    {                                       \
-        m[0] = ((n << 4) & 0xFFU);          \
-        m[1] = (((n << 4) >> 8U) & 0xFFU);  \
-        m[2] = (((n << 4) >> 16U) & 0xFFU); \
+#define AUDIO_UPDATE_FEEDBACK_DATA(m, n)                     \
+    {                                                        \
+        feedbackValueUpdating = 1;                           \
+        m[0]                  = ((n << 4) & 0xFFU);          \
+        m[1]                  = (((n << 4) >> 8U) & 0xFFU);  \
+        m[2]                  = (((n << 4) >> 16U) & 0xFFU); \
+        feedbackValueUpdating = 0;                           \
     }
-#endif
+#endif /* USB_DEVICE_CONFIG_LPCIP3511HS */
+#endif /* USB_DEVICE_WORKAROUND_AUDIO_20_WINDOWS */
+#else
+/* change 10.10 data to 10.14 */
+#define AUDIO_UPDATE_FEEDBACK_DATA(m, n)                     \
+    {                                                        \
+        feedbackValueUpdating = 1;                           \
+        m[0]                  = ((n << 4) & 0xFFU);          \
+        m[1]                  = (((n << 4) >> 8U) & 0xFFU);  \
+        m[2]                  = (((n << 4) >> 16U) & 0xFFU); \
+        feedbackValueUpdating = 0;                           \
+    }
+#endif /* USB_DEVICE_CONFIG_AUDIO_CLASS_2_0 */
 
 typedef struct _usb_device_composite_struct
 {
@@ -96,9 +164,9 @@ typedef struct _usb_device_composite_struct
  * @return A USB error code or kStatus_USB_Success.
  */
 extern usb_status_t USB_DeviceAudioUnifiedClassRequest(usb_device_handle handle,
-                                                                    usb_setup_struct_t *setup,
-                                                                    uint32_t *length,
-                                                                    uint8_t **buffer);
+                                                       usb_setup_struct_t *setup,
+                                                       uint32_t *length,
+                                                       uint8_t **buffer);
 
 /*!
  * @brief USB configure endpoint function.

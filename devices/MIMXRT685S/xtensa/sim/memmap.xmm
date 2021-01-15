@@ -73,7 +73,6 @@ BEGIN iram0
  iram0_8 : F : 0x2402063c - 0x2402ffff : .DoubleExceptionVector.text .iram0.text;
 END iram0
 BEGIN sram_uncached
-0x20000000: sysrom : sram_uncached : 0x480000 : writable ;
- rpmsg : C : 0x20020000 - 0x2003ffff : ;
- dsp_uncached : C : 0x20040000 - 0x2007ffff : NonCacheable.init NonCacheable;
+0x20000000: sysram : sram_uncached : 0x480000 : writable ;
+ dsp_uncached : C : 0x20060000 - 0x2006ffff : NonCacheable.init NonCacheable;
 END sram_uncached

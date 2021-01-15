@@ -60,7 +60,9 @@ extern "C"
 {
 #endif
 
+#ifndef WWD_THREAD_PRIORITY
 #define WWD_THREAD_PRIORITY   RTOS_HIGHEST_PRIORITY
+#endif
 
 /** Initialises the Wiced Thread
  *

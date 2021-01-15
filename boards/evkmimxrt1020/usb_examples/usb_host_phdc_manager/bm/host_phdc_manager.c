@@ -6,6 +6,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "usb.h"
@@ -16,9 +19,6 @@
 
 #include "usb_host_phdc.h"
 #include "fsl_debug_console.h"
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
 
 /*******************************************************************************
  * Definitions
@@ -822,7 +822,9 @@ static void PHDC_ManagerRecvMdcNotiConfig(void *param, event_report_argument_sim
  */
 static void PHDC_ManagerRecvMdcNotiScanReportFixed(void *param, event_report_argument_simple_t *eventReport)
 {
-    scan_report_info_fixed_t *scanReportInfoFixed = (scan_report_info_fixed_t *)&eventReport->eventInfo.value[0];
+    uint8_t *addr                                 = (uint8_t *)&eventReport->eventInfo.value[0];
+    scan_report_info_fixed_t *scanReportInfoFixed = (scan_report_info_fixed_t *)addr;
+
     observation_scan_fixed_list_t *obsScanFixedList =
         (observation_scan_fixed_list_t *)&scanReportInfoFixed->obsScanFixed;
     event_report_result_simple_t *eventResponse = NULL;
@@ -939,7 +941,8 @@ static void PHDC_ManagerRecvMdcNotiScanReportFixedMetricNU(config_object_t *conf
                     /* The Unit code of observation value */
                     if (NULL != mdcAttributeUnitCode)
                     {
-                        oid_type_t *temp = (oid_type_t *)&(mdcAttributeUnitCode->attributeValue.value[0U]);
+                        uint8_t *addr    = (uint8_t *)&mdcAttributeUnitCode->attributeValue.value[0];
+                        oid_type_t *temp = (oid_type_t *)addr;
                         usb_echo(" ");
                         PHDC_ManagerPrintNomenclature(*temp);
                     }
@@ -951,7 +954,8 @@ static void PHDC_ManagerRecvMdcNotiScanReportFixedMetricNU(config_object_t *conf
                     /* The Unit code of observation value */
                     if (NULL != mdcAttributeUnitCode)
                     {
-                        oid_type_t *temp = (oid_type_t *)&(mdcAttributeUnitCode->attributeValue.value[0U]);
+                        uint8_t *addr    = (uint8_t *)&mdcAttributeUnitCode->attributeValue.value[0];
+                        oid_type_t *temp = (oid_type_t *)addr;
                         usb_echo(" ");
                         PHDC_ManagerPrintNomenclature(*temp);
                     }

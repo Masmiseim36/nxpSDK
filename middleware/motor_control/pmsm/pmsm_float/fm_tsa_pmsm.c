@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -64,6 +64,10 @@ FMSTR_TSA_RW_VAR(g_sM1Drive.sFaultIdPending, FMSTR_TSA_UINT16)      /* M1 Pendin
 FMSTR_TSA_RW_VAR(g_sM1Drive.eControl, FMSTR_TSA_UINT16)             /* M1 MCAT Control */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui16SlowCtrlLoopFreq, FMSTR_TSA_UINT16) /* M1 Slow Control Loop Frequency */
 FMSTR_TSA_RW_VAR(g_sM1Drive.ui16FastCtrlLoopFreq, FMSTR_TSA_UINT16) /* M1 Fast Control Loop Frequency */
+
+#ifdef PMSM_SNSLESS_ENC
+FMSTR_TSA_RW_VAR(g_sM1Drive.ui32CpuFrequency, FMSTR_TSA_UINT32) /* M1 Speed from encoder */
+#endif
 
 /* gsM1Drive.sSpeed structure definition */
 FMSTR_TSA_RW_VAR(g_sM1Drive.sSpeed.fltSpeedFilt, FMSTR_TSA_FLOAT) /* M1 Speed filtered */

@@ -28,10 +28,10 @@
 #include "fsl_enet.h"
 
 /* ENET Driver state flags */
-#define ENET_FLAG_UNINIT     (0)
-#define ENET_FLAG_INIT       (1 << 0)
-#define ENET_FLAG_POWER      (1 << 1)
-#define ETH_MAC_EVENT_OTHERS (ARM_ETH_MAC_EVENT_TIMER_ALARM + 1)
+#define ENET_FLAG_UNINIT     (0U)
+#define ENET_FLAG_INIT       (1U << 0)
+#define ENET_FLAG_POWER      (1U << 1)
+#define ETH_MAC_EVENT_OTHERS (ARM_ETH_MAC_EVENT_TIMER_ALARM + 1U)
 
 extern ARM_DRIVER_ETH_MAC Driver_ETH_MAC0;
 

@@ -64,7 +64,7 @@ void test_entry_c061(val_api_t *val_api, psa_api_t *psa_api);
 #ifdef INITIAL_ATTESTATION
 void test_entry_a001(val_api_t *val_api, psa_api_t *psa_api);
 #endif
-#ifdef INTERNAL_TRUSTED_STORAGE
+#if defined(INTERNAL_TRUSTED_STORAGE) || defined(PROTECTED_STORAGE)
 void test_entry_s001(val_api_t *val_api, psa_api_t *psa_api);
 void test_entry_s002(val_api_t *val_api, psa_api_t *psa_api);
 void test_entry_s003(val_api_t *val_api, psa_api_t *psa_api);
@@ -75,24 +75,13 @@ void test_entry_s007(val_api_t *val_api, psa_api_t *psa_api);
 void test_entry_s008(val_api_t *val_api, psa_api_t *psa_api);
 void test_entry_s009(val_api_t *val_api, psa_api_t *psa_api);
 void test_entry_s010(val_api_t *val_api, psa_api_t *psa_api);
-#elif PROTECTED_STORAGE
-void test_entry_p001(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p002(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p003(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p004(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p005(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p006(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p007(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p008(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p009(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p010(val_api_t *val_api, psa_api_t *psa_api);
-#endif    
+#endif
 #ifdef PROTECTED_STORAGE
-void test_entry_p011(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p012(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p013(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p014(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p015(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p016(val_api_t *val_api, psa_api_t *psa_api);
-void test_entry_p017(val_api_t *val_api, psa_api_t *psa_api);
+void test_entry_s011(val_api_t *val_api, psa_api_t *psa_api);
+void test_entry_s012(val_api_t *val_api, psa_api_t *psa_api);
+void test_entry_s013(val_api_t *val_api, psa_api_t *psa_api);
+void test_entry_s014(val_api_t *val_api, psa_api_t *psa_api);
+void test_entry_s015(val_api_t *val_api, psa_api_t *psa_api);
+void test_entry_s016(val_api_t *val_api, psa_api_t *psa_api);
+void test_entry_s017(val_api_t *val_api, psa_api_t *psa_api);
 #endif

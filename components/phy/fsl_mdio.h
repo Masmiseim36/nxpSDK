@@ -21,7 +21,7 @@
 /*! @brief Defines the PHY status. */
 enum _mdio_status
 {
-    kStatus_PHY_SMIVisitTimeout = MAKE_STATUS(kStatusGroup_PHY, 1), /*!< ENET PHY SMI visit timeout. */
+    kStatus_PHY_SMIVisitTimeout = MAKE_STATUS(kStatusGroup_PHY, 0), /*!< ENET PHY SMI visit timeout. */
 };
 
 typedef struct _mdio_operations mdio_operations_t;

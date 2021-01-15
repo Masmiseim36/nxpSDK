@@ -8,12 +8,12 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_dmic.h"
 #include <stdlib.h>
 #include <string.h>
 
-#include "pin_mux.h"
 #include <stdbool.h>
 #include "fsl_power.h"
 /*******************************************************************************

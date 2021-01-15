@@ -242,14 +242,26 @@ struct InnerMostDimReducer<Self, Op, true, true> {
       }
       return reducer.finalize(accum);
     } else {
+      const typename Self::Index UnrollSize =
+          (numValuesToReduce / (2*packetSize)) * 2*packetSize;
       const typename Self::Index VectorizedSize =
           (numValuesToReduce / packetSize) * packetSize;
       typename Self::PacketReturnType paccum =
           reducer.template initializePacket<typename Self::PacketReturnType>();
-      for (typename Self::Index j = 0; j < VectorizedSize; j += packetSize) {
+      typename Self::PacketReturnType paccum2 =
+          reducer.template initializePacket<typename Self::PacketReturnType>();
+      for (typename Self::Index j = 0; j < UnrollSize; j += packetSize * 2) {
         reducer.reducePacket(
             self.m_impl.template packet<Unaligned>(firstIndex + j), &paccum);
+        reducer.reducePacket(
+            self.m_impl.template packet<Unaligned>(firstIndex + j + packetSize),
+            &paccum2);
       }
+      for (typename Self::Index j = UnrollSize; j < VectorizedSize; j+= packetSize) {
+        reducer.reducePacket(self.m_impl.template packet<Unaligned>(
+                                 firstIndex + j), &paccum);
+      }
+      reducer.reducePacket(paccum2, &paccum);
       for (typename Self::Index j = VectorizedSize; j < numValuesToReduce;
            ++j) {
         reducer.reduce(self.m_impl.coeff(firstIndex + j), &accum);
@@ -420,9 +432,9 @@ __global__ void FullReductionKernel(R, const S, I_, typename S::CoeffReturnType*
 
 #if defined(EIGEN_HAS_GPU_FP16)
 template <typename S, typename R, typename I_>
-__global__ void ReductionInitFullReduxKernelHalfFloat(R, const S, I_, half2*);
+__global__ void ReductionInitFullReduxKernelHalfFloat(R, const S, I_, internal::packet_traits<half>::type*);
 template <int B, int N, typename S, typename R, typename I_>
-__global__ void FullReductionKernelHalfFloat(R, const S, I_, half*, half2*);
+__global__ void FullReductionKernelHalfFloat(R, const S, I_, half*, internal::packet_traits<half>::type*);
 template <int NPT, typename S, typename R, typename I_>
 __global__ void InnerReductionKernelHalfFloat(R, const S, I_, I_, half*);
 
@@ -450,70 +462,6 @@ struct ReductionReturnType {
 #else
   typedef typename remove_const<CoeffReturnType>::type type;
 #endif
-};
-
-template <typename Self, typename Op,
-          bool Vectorizable =
-              (Self::InputPacketAccess & Self::ReducerTraits::PacketAccess)>
-class BlockReducer {
- public:
-  typedef typename Self::Index Index;
-  typedef typename Self::Scalar Scalar;
-  typedef typename Self::CoeffReturnType CoeffReturnType;
-  typedef typename Self::PacketReturnType PacketReturnType;
-  explicit BlockReducer(const Op& reducer) : op_(reducer) {
-    accum_ = op_.initialize();
-  }
-  void Reduce(Index index, Index num_values_to_reduce, Scalar* data) {
-    for (Index i = 0; i < num_values_to_reduce; ++i) {
-      op_.reduce(data[index + i], &accum_);
-    }
-  }
-  CoeffReturnType Finalize() { return op_.finalize(accum_); }
-  PacketReturnType FinalizePacket() {
-    // TODO(andydavis) This function should not be called for Scalar
-    // reductions: clean this up or add an assert here.
-    return PacketReturnType();
-  }
-
- private:
-  CoeffReturnType accum_;
-  Op op_;
-};
-
-template <typename Self, typename Op>
-class BlockReducer<Self, Op, true> {
- public:
-  typedef typename Self::Index Index;
-  typedef typename Self::Scalar Scalar;
-  typedef typename Self::CoeffReturnType CoeffReturnType;
-  typedef typename Self::PacketReturnType PacketReturnType;
-  static const Index PacketSize =
-      internal::unpacket_traits<PacketReturnType>::size;
-
-  explicit BlockReducer(const Op& reducer) : op_(reducer) {
-    vaccum_ = op_.template initializePacket<PacketReturnType>();
-    accum_ = op_.initialize();
-  }
-  void Reduce(Index index, Index num_values_to_reduce, Scalar* data) {
-    const Index vectorized_size =
-        (num_values_to_reduce / PacketSize) * PacketSize;
-    for (Index i = 0; i < vectorized_size; i += PacketSize) {
-      op_.reducePacket(
-          internal::ploadt<PacketReturnType, Unaligned>(&data[index + i]),
-          &vaccum_);
-    }
-    for (Index i = vectorized_size; i < num_values_to_reduce; ++i) {
-      op_.reduce(data[index + i], &accum_);
-    }
-  }
-  CoeffReturnType Finalize() { return op_.finalizeBoth(accum_, vaccum_); }
-  PacketReturnType FinalizePacket() { return op_.finalizePacket(vaccum_); }
-
- private:
-  PacketReturnType vaccum_;
-  CoeffReturnType accum_;
-  Op op_;
 };
 
 }  // end namespace internal
@@ -584,7 +532,7 @@ struct TensorReductionEvaluatorBase<const TensorReductionOp<Op, Dims, ArgType, M
   enum {
     IsAligned = false,
     PacketAccess = Self::InputPacketAccess && ReducerTraits::PacketAccess,
-    BlockAccessV2 = false,
+    BlockAccess = false,
     PreferBlockAccess = true,
     Layout = TensorEvaluator<ArgType, Device>::Layout,
     CoordAccess = false,  // to be implemented
@@ -594,7 +542,7 @@ struct TensorReductionEvaluatorBase<const TensorReductionOp<Op, Dims, ArgType, M
   typedef typename internal::remove_const<Scalar>::type ScalarNoConst;
 
   //===- Tensor block evaluation strategy (see TensorBlock.h) -------------===//
-  typedef internal::TensorBlockNotImplemented TensorBlockV2;
+  typedef internal::TensorBlockNotImplemented TensorBlock;
   //===--------------------------------------------------------------------===//
 
   static const bool ReducingInnerMostDims = internal::are_inner_most_dims<Dims, NumInputDims, Layout>::value;
@@ -905,15 +853,6 @@ struct TensorReductionEvaluatorBase<const TensorReductionOp<Op, Dims, ArgType, M
     }
   }
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void getResourceRequirements(
-      std::vector<internal::TensorOpResourceRequirements>* resources) const {
-    Eigen::Index block_total_size_max = numext::maxi<Eigen::Index>(
-        1, m_device.lastLevelCacheSize() / sizeof(Scalar));
-    resources->push_back(internal::TensorOpResourceRequirements(
-        internal::kSkewedInnerDims, block_total_size_max));
-    m_impl.getResourceRequirements(resources);
-  }
-
   EIGEN_DEVICE_FUNC EvaluatorPointerType data() const { return m_result; }
   EIGEN_DEVICE_FUNC const TensorEvaluator<ArgType, Device>& impl() const { return m_impl; }
   EIGEN_DEVICE_FUNC const Device& device() const { return m_device; }
@@ -936,8 +875,8 @@ struct TensorReductionEvaluatorBase<const TensorReductionOp<Op, Dims, ArgType, M
 #if defined(EIGEN_USE_GPU) && (defined(EIGEN_GPUCC))
   template <int B, int N, typename S, typename R, typename I_> KERNEL_FRIEND void internal::FullReductionKernel(R, const S, I_, typename S::CoeffReturnType*, unsigned int*);
 #if defined(EIGEN_HAS_GPU_FP16)
-  template <typename S, typename R, typename I_> KERNEL_FRIEND void internal::ReductionInitFullReduxKernelHalfFloat(R, const S, I_, half2*);
-  template <int B, int N, typename S, typename R, typename I_> KERNEL_FRIEND void internal::FullReductionKernelHalfFloat(R, const S, I_, half*, half2*);
+  template <typename S, typename R, typename I_> KERNEL_FRIEND void internal::ReductionInitFullReduxKernelHalfFloat(R, const S, I_, internal::packet_traits<Eigen::half>::type*);
+  template <int B, int N, typename S, typename R, typename I_> KERNEL_FRIEND void internal::FullReductionKernelHalfFloat(R, const S, I_, half*, internal::packet_traits<Eigen::half>::type*);
   template <int NPT, typename S, typename R, typename I_> KERNEL_FRIEND void internal::InnerReductionKernelHalfFloat(R, const S, I_, I_, half*);
 #endif
   template <int NPT, typename S, typename R, typename I_> KERNEL_FRIEND void internal::InnerReductionKernel(R, const S, I_, I_, typename S::CoeffReturnType*);
@@ -1000,73 +939,6 @@ struct TensorReductionEvaluatorBase<const TensorReductionOp<Op, Dims, ArgType, M
       }
     }
     return startInput;
-  }
-
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void GetInputCoordsForOutputIndex(
-      Index index,
-      DSizes<Index, NumInputDims>* coords) const {
-    for (int i = 0; i < NumInputDims; ++i) {
-      (*coords)[i] = 0;
-    }
-    if (static_cast<int>(Layout) == static_cast<int>(ColMajor)) {
-      for (int i = NumOutputDims - 1; i > 0; --i) {
-        const Index idx = index / m_fastOutputStrides[i];
-        (*coords)[m_output_to_input_dim_map[i]] = idx;
-        index -= idx * m_outputStrides[i];
-      }
-      (*coords)[m_output_to_input_dim_map[0]] = index;
-    } else {
-      for (int i = 0; i < NumOutputDims - 1; ++i) {
-        const Index idx = index / m_fastOutputStrides[i];
-        (*coords)[m_output_to_input_dim_map[i]] = idx;
-        index -= idx * m_outputStrides[i];
-      }
-      (*coords)[m_output_to_input_dim_map[NumOutputDims-1]] = index;
-    }
-  }
-
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void CalculateTargetInputBlockShape(
-      const Index max_coeff_count,
-      const DSizes<Index, NumInputDims>& input_slice_sizes,
-      DSizes<Index, NumInputDims>* target_input_block_sizes) const {
-    typedef internal::BlockReducer<Self, Op> BlockReducer;
-    // TODO(andydavis) Compute reducer overhead correctly for the case where
-    // we are preserving the inner most dimension, and a single reducer
-    // reduces a packet's worth of output coefficients.
-    const Index reducer_overhead = sizeof(BlockReducer) / sizeof(Scalar);
-
-    Index coeff_to_allocate = max_coeff_count;
-    bool first_preserved_dim_allocated = false;
-    bool first_reduced_dim_allocated = false;
-    for (int i = 0; i < NumInputDims; ++i) {
-      const int dim = static_cast<int>(Layout) == static_cast<int>(ColMajor)
-                          ? i
-                          : NumInputDims - i - 1;
-      (*target_input_block_sizes)[dim] = 1;
-      if (m_reduced[dim]) {
-        // TODO(andydavis) Consider allocating to multiple reduced dimensions.
-        // Watch out for cases where reduced dimensions are not contiguous,
-        // which induces scattered reads.
-        if (!first_reduced_dim_allocated) {
-          (*target_input_block_sizes)[dim] =
-              numext::mini(input_slice_sizes[dim], coeff_to_allocate);
-          coeff_to_allocate /= (*target_input_block_sizes)[dim];
-          first_reduced_dim_allocated = true;
-        }
-      } else if (!first_preserved_dim_allocated) {
-        // TODO(andydavis) Include output block size in this L1 working set
-        // calculation.
-        const Index alloc_size = numext::maxi(
-            static_cast<Index>(1), coeff_to_allocate / reducer_overhead);
-        (*target_input_block_sizes)[dim] =
-            numext::mini(input_slice_sizes[dim], alloc_size);
-        coeff_to_allocate = numext::maxi(
-            static_cast<Index>(1),
-            coeff_to_allocate /
-                ((*target_input_block_sizes)[dim] * reducer_overhead));
-        first_preserved_dim_allocated = true;
-      }
-    }
   }
 
   // Bitmap indicating if an input dimension is reduced or not.

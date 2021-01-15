@@ -271,7 +271,7 @@ static usb_status_t USB_DevicePhdcEndpointsInit(usb_device_phdc_struct_t *phdcHa
         {
             epCallback.callbackFn      = USB_DevicePhdcInterruptInCallback;
             phdcHandle->interruptIn.ep = (epInitStruct.endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            phdcHandle->interruptIn.pipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+            phdcHandle->interruptIn.pipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
             phdcHandle->interruptIn.pipeStall      = 0U;
             phdcHandle->interruptIn.pipeDataLen    = 0U;
         }
@@ -280,7 +280,7 @@ static usb_status_t USB_DevicePhdcEndpointsInit(usb_device_phdc_struct_t *phdcHa
         {
             epCallback.callbackFn = USB_DevicePhdcBulkInCallback;
             phdcHandle->bulkIn.ep = (epInitStruct.endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            phdcHandle->bulkIn.pipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+            phdcHandle->bulkIn.pipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
             phdcHandle->bulkIn.pipeStall      = 0U;
             phdcHandle->bulkIn.pipeDataLen    = 0U;
         }
@@ -288,7 +288,7 @@ static usb_status_t USB_DevicePhdcEndpointsInit(usb_device_phdc_struct_t *phdcHa
         {
             epCallback.callbackFn  = USB_DevicePhdcBulkOutCallback;
             phdcHandle->bulkOut.ep = (epInitStruct.endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK);
-            phdcHandle->bulkOut.pipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+            phdcHandle->bulkOut.pipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
             phdcHandle->bulkOut.pipeStall      = 0U;
             phdcHandle->bulkOut.pipeDataLen    = 0U;
         }
@@ -449,7 +449,7 @@ usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *param)
                         if (0U != phdcHandle->interruptIn.pipeStall)
                         {
                             phdcHandle->interruptIn.pipeStall = 0U;
-                            if ((uint8_t *)USB_UNINITIALIZED_VAL_32 != phdcHandle->interruptIn.pipeDataBuffer)
+                            if ((uint8_t *)USB_INVALID_TRANSFER_BUFFER != phdcHandle->interruptIn.pipeDataBuffer)
                             {
                                 error = USB_DeviceSendRequest(phdcHandle->handle, (phdcHandle->interruptIn.ep),
                                                               phdcHandle->interruptIn.pipeDataBuffer,
@@ -463,7 +463,7 @@ usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *param)
                                     (void)USB_DevicePhdcInterruptInCallback(phdcHandle->handle,
                                                                             (void *)&endpointCallbackMessage, handle);
                                 }
-                                phdcHandle->interruptIn.pipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+                                phdcHandle->interruptIn.pipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
                                 phdcHandle->interruptIn.pipeDataLen    = 0U;
                             }
                         }
@@ -475,7 +475,7 @@ usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *param)
                         if (0U != phdcHandle->bulkIn.pipeStall)
                         {
                             phdcHandle->bulkIn.pipeStall = 0U;
-                            if ((uint8_t *)USB_UNINITIALIZED_VAL_32 != phdcHandle->bulkIn.pipeDataBuffer)
+                            if ((uint8_t *)USB_INVALID_TRANSFER_BUFFER != phdcHandle->bulkIn.pipeDataBuffer)
                             {
                                 error = USB_DeviceSendRequest(phdcHandle->handle, (phdcHandle->bulkIn.ep),
                                                               phdcHandle->bulkIn.pipeDataBuffer,
@@ -489,7 +489,7 @@ usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *param)
                                     (void)USB_DevicePhdcBulkInCallback(phdcHandle->handle,
                                                                        (void *)&endpointCallbackMessage, handle);
                                 }
-                                phdcHandle->bulkIn.pipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+                                phdcHandle->bulkIn.pipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
                                 phdcHandle->bulkIn.pipeDataLen    = 0U;
                             }
                         }
@@ -499,7 +499,7 @@ usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *param)
                         if (0U != phdcHandle->bulkOut.pipeStall)
                         {
                             phdcHandle->bulkOut.pipeStall = 0U;
-                            if ((uint8_t *)USB_UNINITIALIZED_VAL_32 != phdcHandle->bulkOut.pipeDataBuffer)
+                            if ((uint8_t *)USB_INVALID_TRANSFER_BUFFER != phdcHandle->bulkOut.pipeDataBuffer)
                             {
                                 error = USB_DeviceRecvRequest(phdcHandle->handle, (phdcHandle->bulkOut.ep),
                                                               phdcHandle->bulkOut.pipeDataBuffer,
@@ -513,7 +513,7 @@ usb_status_t USB_DevicePhdcEvent(void *handle, uint32_t event, void *param)
                                     (void)USB_DevicePhdcBulkOutCallback(phdcHandle->handle,
                                                                         (void *)&endpointCallbackMessage, handle);
                                 }
-                                phdcHandle->bulkOut.pipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+                                phdcHandle->bulkOut.pipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
                                 phdcHandle->bulkOut.pipeDataLen    = 0U;
                             }
                         }

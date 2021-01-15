@@ -11,6 +11,8 @@
  * Includes
  ******************************************************************************/
 #include "httpsclient.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "lwip/netifapi.h"
 #include "lwip/opt.h"
@@ -24,8 +26,6 @@
 
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"
@@ -164,9 +164,6 @@ int main(void)
     BOARD_InitModuleClock();
 
     IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    /* Data cache must be temporarily disabled to be able to use sdram */
-    SCB_DisableDCache();
 
     GPIO_PinInit(GPIO1, 4, &gpio_config);
     GPIO_PinInit(GPIO1, 22, &gpio_config);

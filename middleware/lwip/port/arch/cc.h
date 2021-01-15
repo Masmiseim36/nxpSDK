@@ -33,7 +33,7 @@
 
 /*
  * Copyright (c) 2013-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2018, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -75,7 +75,7 @@ typedef u32_t          mem_ptr_t;
 #define PACK_STRUCT_END
 #define PACK_STRUCT_FIELD(x) __attribute__((packed, aligned(1))) x
 
-#elif __GNUC__
+#elif defined(__GNUC__) && (__GNUC__ != 0)
 
 #define PACK_STRUCT_BEGIN
 #define PACK_STRUCT_STRUCT __attribute__ ((__packed__))

@@ -23,7 +23,7 @@
  *  express and approved by NXP in writing.
  *
  */
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 #include <string.h>
 #include <wm_os.h>
 
@@ -70,10 +70,6 @@ void wifi_free_eventbuf(void *buffer)
 mlan_status wrapper_moal_malloc(IN t_void *pmoal_handle, IN t_u32 size, IN t_u32 flag, OUT t_u8 **ppbuf)
 {
     *ppbuf = os_mem_alloc(size);
-
-#ifdef DEBUG_11N_ALLOC
-
-#endif /* DEBUG_11N_ALLOC */
 
     if (*ppbuf)
     {

@@ -24,7 +24,7 @@
  *
  */
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 #include <wmerrno.h>
 #include <wm_os.h>
@@ -38,11 +38,7 @@
 #define pwr_e(...) wmlog_e("pwr", ##__VA_ARGS__)
 #define pwr_w(...) wmlog_w("pwr", ##__VA_ARGS__)
 
-#ifdef CONFIG_PWR_DEBUG
-#define pwr_d(...) wmlog("pwr", ##__VA_ARGS__)
-#else
 #define pwr_d(...)
-#endif /* ! CONFIG_PWR_DEBUG */
 
 #define MAX_LISTEN_INTERVAL_IN_BCON     49
 #define MIN_LISTEN_INTERVAL_IN_TU       50
@@ -267,11 +263,8 @@ void wifi_process_hs_cfg_resp(t_u8 *cmd_res_buffer)
 
 enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 *ps_event, t_u16 *action)
 {
-    enum wifi_event_reason result = WIFI_EVENT_REASON_FAILURE;
-    MrvlIEtypesHeader_t *mrvl_tlv = NULL;
-#ifdef CONFIG_PWR_DEBUG
-    MrvlIEtypes_ps_param_t *ps_tlv = NULL;
-#endif /*  CONFIG_PWR_DEBUG*/
+    enum wifi_event_reason result          = WIFI_EVENT_REASON_FAILURE;
+    MrvlIEtypesHeader_t *mrvl_tlv          = NULL;
     HostCmd_DS_802_11_PS_MODE_ENH *ps_mode = (HostCmd_DS_802_11_PS_MODE_ENH *)(cmd_res_buffer + S_DS_GEN);
 
     *ps_event = WIFI_EVENT_PS_INVALID;
@@ -300,9 +293,6 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
             {
                 mrvl_tlv = (MrvlIEtypesHeader_t *)((uint8_t *)mrvl_tlv + mrvl_tlv->len + sizeof(MrvlIEtypesHeader_t));
             }
-#ifdef CONFIG_PWR_DEBUG
-            ps_tlv = (MrvlIEtypes_ps_param_t *)mrvl_tlv;
-#endif /*  CONFIG_PWR_DEBUG*/
             pwr_d(
                 "pscfg: %u %u %u %u "
                 "%u %u",
@@ -350,9 +340,6 @@ enum wifi_event_reason wifi_process_ps_enh_response(t_u8 *cmd_res_buffer, t_u16 
             {
                 mrvl_tlv = (MrvlIEtypesHeader_t *)((uint8_t *)mrvl_tlv + mrvl_tlv->len + sizeof(MrvlIEtypesHeader_t));
             }
-#ifdef CONFIG_PWR_DEBUG
-            ps_tlv = (MrvlIEtypes_ps_param_t *)mrvl_tlv;
-#endif /*  CONFIG_PWR_DEBUG*/
             pwr_d(
                 "pscfg: %u %u %u %u "
                 "%u %u\r\n",

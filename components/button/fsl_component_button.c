@@ -109,7 +109,7 @@ static button_list_t s_buttonList;
 /*
  * \brief Defines the button task's stack
  */
-OSA_TASK_DEFINE(BUTTON_Task, BUTTON_TASK_PRIORITY, 1, BUTTON_TASK_STACK_SIZE, false);
+static OSA_TASK_DEFINE(BUTTON_Task, BUTTON_TASK_PRIORITY, 1, BUTTON_TASK_STACK_SIZE, false);
 #endif
 #endif
 
@@ -377,6 +377,10 @@ button_status_t BUTTON_Init(button_handle_t buttonHandle, button_config_t *butto
         buttonState->next = s_buttonList.button;
     }
     s_buttonList.button = buttonState;
+    /* Timer only works when button have activities, so s_buttonList.periodCount would be 0 for the first press and
+       double click check case will be triggered. So we need set a start time for prevent this situation, a start time
+       bigger than BUTTON_DOUBLE_CLICK_THRESHOLD is works. */
+    s_buttonList.periodCount = BUTTON_DOUBLE_CLICK_THRESHOLD + BUTTON_TIMER_INTERVAL;
     BUTTON_EXIT_CRITICAL();
 
     (void)memcpy(&buttonState->pinStateDefault, &buttonConfig->gpio.pinStateDefault, 3U);

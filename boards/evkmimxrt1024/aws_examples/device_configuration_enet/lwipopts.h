@@ -126,7 +126,7 @@ void sys_mark_tcpip_thread(void);
 /* MEMP_NUM_SYS_TIMEOUT: the number of simulateously active
    timeouts. */
 #ifndef MEMP_NUM_SYS_TIMEOUT
-#define MEMP_NUM_SYS_TIMEOUT 11 //increased by 1 because of mDNS
+#define MEMP_NUM_SYS_TIMEOUT 12 //increased by 1 because of mDNS
 #endif
 
 /* ---------- Pbuf options ---------- */

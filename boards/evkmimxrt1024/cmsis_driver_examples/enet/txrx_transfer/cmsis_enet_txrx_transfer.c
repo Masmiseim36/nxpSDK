@@ -9,6 +9,8 @@
 #include <string.h>
 /*  SDK Included Files */
 #include "Driver_ETH_MAC.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_enet.h"
@@ -17,8 +19,6 @@
 #include "fsl_phy.h"
 #include "stdlib.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"
@@ -175,13 +175,9 @@ int main(void)
         }
     } while (1);
 
-#if defined(PHY_STABILITY_DELAY_COUNT) && PHY_STABILITY_DELAY_COUNT
-    volatile uint32_t count = 0;
+#if defined(PHY_STABILITY_DELAY_US) && PHY_STABILITY_DELAY_US
     /* Wait a moment for PHY status to be stable. */
-    for (count = 0; count < PHY_STABILITY_DELAY_COUNT; count++)
-    {
-        __ASM("nop");
-    }
+    SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 #endif
 
     /* Build broadcast for sending. */
@@ -198,7 +194,7 @@ int main(void)
         if (g_rxCheckIdx != g_rxIndex)
         {
             g_rxCheckIdx = g_rxIndex;
-            PRINTF("The %d frame has been successfully received!\r\n", g_rxCheckIdx);
+            PRINTF("A total of %d frame(s) has been successfully received!\r\n", g_rxCheckIdx);
         }
         /* Get the Frame size */
         if (txnumber < ENET_EXAMPLE_LOOP_COUNT)

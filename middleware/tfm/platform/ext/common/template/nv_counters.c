@@ -1,13 +1,13 @@
 /*
- * Copyright (c) 2018-2019, Arm Limited. All rights reserved.
+ * Copyright (c) 2018-2020, Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
 
 /* NOTE: This API should be implemented by platform vendor. For the security of
- * the secure storage system's and the bootloader's rollback protection etc. it
- * is CRITICAL to use a internal (in-die) persistent memory for multiple time
+ * the protected storage system's and the bootloader's rollback protection etc.
+ * it is CRITICAL to use a internal (in-die) persistent memory for multiple time
  * programmable (MTP) non-volatile counters or use a One-time Programmable (OTP)
  * non-volatile counters solution.
  *
@@ -20,7 +20,82 @@
  * for testing purposes.
  */
 
-#include "platform/include/tfm_plat_nv_counters.h"
+#include "tfm_plat_nv_counters.h"
+
+#ifdef PS_RAM_FS  //NXP. Emulate NV Counters in RAM 
+
+#define NV_COUNTER_SIZE  sizeof(uint32_t)
+
+#define INIT_NV_COUNTERS_VALUE (0x0)
+
+static uint32_t test_nv_counters[PLAT_NV_COUNTER_MAX] = {INIT_NV_COUNTERS_VALUE, INIT_NV_COUNTERS_VALUE, INIT_NV_COUNTERS_VALUE};
+
+static uint32_t get_nv_counter_position(enum tfm_nv_counter_t counter_id)
+{
+    switch (counter_id) {
+    case PLAT_NV_COUNTER_0:
+        return 0;
+    case PLAT_NV_COUNTER_1:
+        return 1;
+    case PLAT_NV_COUNTER_2:
+        return 2;
+    default:
+        return PLAT_NV_COUNTER_MAX;
+    }
+}
+
+enum tfm_plat_err_t tfm_plat_init_nv_counter(void)
+{
+    int i;
+    
+    /* Initialize all counters to 0 */
+    for (i = 0; i < PLAT_NV_COUNTER_MAX; i++) {
+        test_nv_counters[i] = INIT_NV_COUNTERS_VALUE;
+    }
+    return TFM_PLAT_ERR_SUCCESS;
+}
+
+enum tfm_plat_err_t tfm_plat_read_nv_counter(enum tfm_nv_counter_t counter_id,
+                                             uint32_t size, uint8_t *val)
+{
+    uint32_t nv_pos;
+
+    if (size != NV_COUNTER_SIZE) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+        
+    nv_pos = get_nv_counter_position(counter_id);
+    if (nv_pos >= PLAT_NV_COUNTER_MAX) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    /* Reads counter value */
+    *val = test_nv_counters[nv_pos];
+
+    return TFM_PLAT_ERR_SUCCESS;
+}
+
+enum tfm_plat_err_t tfm_plat_increment_nv_counter(
+                                           enum tfm_nv_counter_t counter_id)
+{
+    uint32_t nv_pos;
+
+    nv_pos = get_nv_counter_position(counter_id);
+    if (nv_pos >= PLAT_NV_COUNTER_MAX) {
+        return TFM_PLAT_ERR_SYSTEM_ERR;
+    }
+
+    if (test_nv_counters[nv_pos] == UINT32_MAX) {
+        return TFM_PLAT_ERR_MAX_VALUE;
+    }
+
+    /* Increments counter value */
+    test_nv_counters[nv_pos]++;
+
+    return TFM_PLAT_ERR_SUCCESS;
+}
+
+#else //NXP
 
 #include <limits.h>
 #include "Driver_Flash.h"
@@ -198,3 +273,4 @@ enum tfm_plat_err_t tfm_plat_increment_nv_counter(
 
     return tfm_plat_set_nv_counter(counter_id, security_cnt + 1u);
 }
+#endif //NXP

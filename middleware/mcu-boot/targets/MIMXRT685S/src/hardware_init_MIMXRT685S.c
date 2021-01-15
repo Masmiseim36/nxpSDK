@@ -58,6 +58,11 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+//!@brief Perfrom Cache disable operation and return the CCR register value
+uint32_t cache_disable(void);
+
+//!@brief Restore the Cache state by the argument ccr
+void cache_restore(uint32_t ccr);
 
 /*******************************************************************************
  * Variables
@@ -190,6 +195,35 @@ void sw_delay_us(uint32_t us)
 
 void init_hardware_api(void) {}
 
+uint32_t cache_disable(void)
+{
+    uint32_t ccr = CACHE64->CCR;
+
+    // Disable FLEXSPI Cache
+    /* Enable the to push all modified lines. */
+    CACHE64->CCR |= CACHE64_CTRL_CCR_PUSHW0_MASK | CACHE64_CTRL_CCR_PUSHW1_MASK | CACHE64_CTRL_CCR_GO_MASK;
+
+    /* Wait until the cache command completes. */
+    while ((CACHE64->CCR & CACHE64_CTRL_CCR_GO_MASK) != 0x00U)
+    {
+    }
+
+    /* As a precaution clear the bits to avoid inadvertently re-running this command. */
+    CACHE64->CCR &= ~(CACHE64_CTRL_CCR_PUSHW0_MASK | CACHE64_CTRL_CCR_PUSHW1_MASK);
+    CACHE64->CCR &= ~CACHE64_CTRL_CCR_ENCACHE_MASK;
+
+    return ccr;
+}
+void cache_restore(uint32_t ccr)
+{
+    CACHE64->CCR = ccr;
+
+    /* Wait until the cache command completes. */
+    while ((CACHE64->CCR & CACHE64_CTRL_CCR_GO_MASK) != 0x00U)
+    {
+    }
+}
+
 void init_hardware(void)
 {
     // Disable FLEXSPI Cache
@@ -280,7 +314,7 @@ status_t api_update_swap_meta(swap_meta_t *swap_meta)
     for (uint32_t i = 0; i < 2; i++)
     {
         uint32_t meta_addr = BL_FEATURE_SWAP_META_START + i * BL_FEATURE_FLASH_SECTOR_SIZE;
-        memcpy((uint8_t *)&swap_metas[i], (void *)meta_addr, sizeof(swap_meta_t));
+        (void)memcpy((uint8_t *)&swap_metas[i], (void *)meta_addr, sizeof(swap_meta_t));
     }
 
     uint32_t update_idx = 0;
@@ -310,11 +344,12 @@ status_t api_update_swap_meta(swap_meta_t *swap_meta)
 
     // Copy the FLASH configuration data from FLASH to RAM
     flexspi_nor_config_t flashNorConfig;
-    memcpy(&flashNorConfig, (void *)(BL_FLEXSPI_AMBA_BASE + BL_FLEXSPI_NOR_CFG_BLOCK_OFFSET), sizeof(flashNorConfig));
+    (void)memcpy(&flashNorConfig, (void *)(BL_FLEXSPI_AMBA_BASE + BL_FLEXSPI_NOR_CFG_BLOCK_OFFSET),
+                 sizeof(flashNorConfig));
     if (flashNorConfig.memConfig.lookupTable[4 * NOR_CMD_LUT_SEQ_IDX_WRITEENABLE_XPI])
     {
-        memcpy(&flashNorConfig.memConfig.lookupTable[4 * NOR_CMD_LUT_SEQ_IDX_WRITEENABLE],
-               &flashNorConfig.memConfig.lookupTable[4 * NOR_CMD_LUT_SEQ_IDX_WRITEENABLE_XPI], 16);
+        (void)memcpy(&flashNorConfig.memConfig.lookupTable[4 * NOR_CMD_LUT_SEQ_IDX_WRITEENABLE],
+                     &flashNorConfig.memConfig.lookupTable[4 * NOR_CMD_LUT_SEQ_IDX_WRITEENABLE_XPI], 16);
     }
     flashNorConfig.memConfig.serialClkFreq = 0;
     flashNorConfig.ipcmdSerialClkFreq = 0;
@@ -323,7 +358,7 @@ status_t api_update_swap_meta(swap_meta_t *swap_meta)
     uint32_t priMask = DisableGlobalIRQ();
     EnableGlobalIRQ(priMask);
     uint32_t programBuffer[128];
-    memset(programBuffer, 0xff, sizeof(programBuffer));
+    (void)memset(programBuffer, 0xff, sizeof(programBuffer));
 
     do
     {
@@ -336,7 +371,7 @@ status_t api_update_swap_meta(swap_meta_t *swap_meta)
             break;
         }
 
-        memcpy(programBuffer, swap_meta, sizeof(*swap_meta));
+        (void)memcpy(programBuffer, swap_meta, sizeof(*swap_meta));
         priMask = DisableGlobalIRQ();
         status = flexspi_nor_flash_page_program(instance, &flashNorConfig, erase_addr, programBuffer);
         EnableGlobalIRQ(priMask);
@@ -357,7 +392,7 @@ status_t app_api_update_swap_meta(swap_meta_t *swap_meta, flash_driver_interface
     for (uint32_t i = 0; i < 2; i++)
     {
         uint32_t meta_addr = BL_FEATURE_SWAP_META_START + i * BL_FEATURE_FLASH_SECTOR_SIZE;
-        memcpy((uint8_t *)&swap_metas[i], (void *)meta_addr, sizeof(swap_meta_t));
+        (void)memcpy((uint8_t *)&swap_metas[i], (void *)meta_addr, sizeof(swap_meta_t));
     }
 
     uint32_t update_idx = 0;
@@ -399,7 +434,7 @@ status_t app_api_update_swap_meta(swap_meta_t *swap_meta, flash_driver_interface
 
         priMask = DisableGlobalIRQ();
         status = flashIf->program(erase_addr, (uint8_t *)swap_meta, sizeof(*swap_meta));
-
+        EnableGlobalIRQ(priMask);
         if (status != kStatus_Success)
         {
             break;
@@ -413,11 +448,14 @@ status_t app_api_update_swap_meta(swap_meta_t *swap_meta, flash_driver_interface
 status_t app_api_update_boot_meta(bootloader_meta_t *boot_meta, flash_driver_interface_t *flashIf)
 {
     status_t status = kStatus_Fail;
+
+    uint32_t ccr = cache_disable();
+
     bootloader_meta_t boot_metas[2];
     for (uint32_t i = 0; i < 2; i++)
     {
         uint32_t meta_addr = BL_FEATURE_BOOT_META_START + i * BL_FEATURE_FLASH_SECTOR_SIZE;
-        memcpy((uint8_t *)&boot_metas[i], (void *)meta_addr, sizeof(boot_metas[i]));
+        (void)memcpy((uint8_t *)&boot_metas[i], (void *)meta_addr, sizeof(boot_metas[i]));
     }
 
     uint32_t update_idx = 0;
@@ -466,18 +504,24 @@ status_t app_api_update_boot_meta(bootloader_meta_t *boot_meta, flash_driver_int
 
     } while (0);
 
+    cache_restore(ccr);
+
     return status;
 }
 
 status_t get_update_partition_info(partition_t *partition)
 {
+    uint32_t ccr = cache_disable();
+
     bootloader_meta_t boot_meta;
     status_t status = load_boot_meta(&boot_meta);
     if (status != kStatus_Success)
     {
         return status;
     }
-    memcpy(partition, &boot_meta.partition[kPartition_Secondary], sizeof(*partition));
+    (void)memcpy(partition, &boot_meta.partition[kPartition_Secondary], sizeof(*partition));
+
+    cache_restore(ccr);
 
     return kStatus_Success;
 }
@@ -492,6 +536,7 @@ status_t update_partition_table_user_api(partition_t *partition, uint32_t entrie
         return kStatus_InvalidArgument;
     }
 
+    uint32_t ccr = cache_disable();
     status_t status = load_boot_meta(&boot_meta);
     if (status == kStatus_Success)
     {
@@ -500,7 +545,7 @@ status_t update_partition_table_user_api(partition_t *partition, uint32_t entrie
 
     if (!has_boot_meta)
     {
-        memset(&boot_meta, 0, sizeof(boot_meta));
+        (void)memset(&boot_meta, 0, sizeof(boot_meta));
         boot_meta.tag = BOOTLOADER_META_TAG;
         boot_meta.features.enabledPeripherals = 0xffffffffu;
         boot_meta.features.periphDetectTimeout = 0xffffffffu;
@@ -508,8 +553,10 @@ status_t update_partition_table_user_api(partition_t *partition, uint32_t entrie
     }
 
     boot_meta.patition_entries = entries;
-    memcpy(&boot_meta.partition, partition, entries * sizeof(*partition));
+    (void)memcpy(&boot_meta.partition, partition, entries * sizeof(*partition));
     status = app_api_update_boot_meta(&boot_meta, flashIf);
+
+    cache_restore(ccr);
 
     return status;
 }
@@ -517,122 +564,143 @@ status_t update_partition_table_user_api(partition_t *partition, uint32_t entrie
 status_t update_image_state(uint32_t state)
 {
     swap_meta_t swap_meta;
-    status_t status = load_swap_meta(&swap_meta);
-    if (status != kStatus_Success)
-    {
-        return status;
-    }
+    uint32_t ccr = cache_disable();
 
-    if (state == kSwapType_ReadyForTest)
+    status_t status;
+
+    do
     {
-        image_header_t boot_header;
-        get_image_header(kPartition_Secondary, &boot_header);
-        if (boot_image_check(&boot_header, kPartition_Secondary) == kStatus_Success)
+        status = load_swap_meta(&swap_meta);
+        if (status != kStatus_Success)
         {
-            swap_meta.swap_type = kSwapType_ReadyForTest;
+            break;
+        }
+
+        if (state == kSwapType_ReadyForTest)
+        {
+            image_header_t boot_header;
+
+            get_image_header(kPartition_Secondary, &boot_header);
+            if (boot_image_check(&boot_header, kPartition_Secondary) == kStatus_Success)
+            {
+                swap_meta.swap_type = kSwapType_ReadyForTest;
+                swap_meta.copy_status = 0;
+                swap_meta.swap_progress.swap_offset = 0;
+                swap_meta.swap_progress.swap_status = kSwapStage_NotStarted;
+                swap_meta.image_info[1].size = boot_header.image_size + boot_header.header_size;
+                swap_meta.confirm_info = 0;
+                api_update_swap_meta(&swap_meta);
+                status = kStatus_Success;
+            }
+            else
+            {
+                status = kStatus_Fail;
+            }
+        }
+        else if (state == kSwapType_Permanent)
+        {
             swap_meta.copy_status = 0;
             swap_meta.swap_progress.swap_offset = 0;
             swap_meta.swap_progress.swap_status = kSwapStage_NotStarted;
-            swap_meta.image_info[1].size = boot_header.image_size + boot_header.header_size;
-            swap_meta.confirm_info = 0;
+            swap_meta.confirm_info = kImageConfirm_Okay;
+            swap_meta.swap_type = kSwapType_Permanent;
             api_update_swap_meta(&swap_meta);
-            return kStatus_Success;
+            status = kStatus_Success;
+        }
+        else if (state == kSwapType_Rollback)
+        {
+            swap_meta.copy_status = kCopyStatus_Done;
+            swap_meta.swap_type = kSwapType_Test;
+            swap_meta.confirm_info = 0;
+            swap_meta.swap_progress.swap_offset = 0;
+            swap_meta.swap_progress.swap_status = kSwapStage_Done;
+            status = api_update_swap_meta(&swap_meta);
+            status = status;
         }
         else
         {
-            return kStatus_Fail;
+            status = kStatus_InvalidArgument;
         }
-    }
-    else if (state == kSwapType_Permanent)
-    {
-        swap_meta.copy_status = 0;
-        swap_meta.swap_progress.swap_offset = 0;
-        swap_meta.swap_progress.swap_status = kSwapStage_NotStarted;
-        swap_meta.confirm_info = kImageConfirm_Okay;
-        swap_meta.swap_type = kSwapType_Permanent;
-        api_update_swap_meta(&swap_meta);
-        return kStatus_Success;
-    }
-    else if (state == kSwapType_Rollback)
-    {
-        swap_meta.copy_status = kCopyStatus_Done;
-        swap_meta.swap_type = kSwapType_Test;
-        swap_meta.confirm_info = 0;
-        swap_meta.swap_progress.swap_offset = 0;
-        swap_meta.swap_progress.swap_status = kSwapStage_Done;
-        status = api_update_swap_meta(&swap_meta);
-        return status;
-    }
-    else
-    {
-        return kStatus_InvalidArgument;
-    }
+    } while (0);
+
+    cache_restore(ccr);
+
+    return status;
 }
 
 status_t update_image_state_user_api(uint32_t state, flash_driver_interface_t *flashIf)
 {
     swap_meta_t swap_meta;
-    status_t status = load_swap_meta(&swap_meta);
-    if (status != kStatus_Success)
-    {
-        return status;
-    }
 
-    if (state == kSwapType_ReadyForTest)
+    uint32_t ccr = cache_disable();
+    status_t status;
+    do
     {
-        image_header_t boot_header;
-        get_image_header(kPartition_Secondary, &boot_header);
-        if (boot_image_check(&boot_header, kPartition_Secondary) == kStatus_Success)
+        status = load_swap_meta(&swap_meta);
+        if (status != kStatus_Success)
         {
-            swap_meta.swap_type = kSwapType_ReadyForTest;
+            break;
+        }
+
+        if (state == kSwapType_ReadyForTest)
+        {
+            image_header_t boot_header;
+            get_image_header(kPartition_Secondary, &boot_header);
+            if (boot_image_check(&boot_header, kPartition_Secondary) == kStatus_Success)
+            {
+                swap_meta.swap_type = kSwapType_ReadyForTest;
+                swap_meta.copy_status = 0;
+                swap_meta.swap_progress.swap_offset = 0;
+                swap_meta.swap_progress.swap_status = kSwapStage_NotStarted;
+                swap_meta.image_info[1].size = boot_header.image_size + boot_header.header_size;
+                swap_meta.confirm_info = 0;
+                status = app_api_update_swap_meta(&swap_meta, flashIf);
+            }
+            else
+            {
+                status = kStatus_Fail;
+            }
+        }
+        else if (state == kSwapType_Permanent)
+        {
             swap_meta.copy_status = 0;
             swap_meta.swap_progress.swap_offset = 0;
             swap_meta.swap_progress.swap_status = kSwapStage_NotStarted;
-            swap_meta.image_info[1].size = boot_header.image_size + boot_header.header_size;
-            swap_meta.confirm_info = 0;
+            swap_meta.confirm_info = kImageConfirm_Okay;
+            swap_meta.swap_type = kSwapType_Permanent;
             status = app_api_update_swap_meta(&swap_meta, flashIf);
-            return status;
+        }
+        else if (state == kSwapType_Rollback)
+        {
+            swap_meta.copy_status = kCopyStatus_Done;
+            swap_meta.swap_type = kSwapType_Test;
+            swap_meta.confirm_info = 0;
+            swap_meta.swap_progress.swap_offset = 0;
+            swap_meta.swap_progress.swap_status = kSwapStage_Done;
+            status = app_api_update_swap_meta(&swap_meta, flashIf);
         }
         else
         {
-            return kStatus_Fail;
+            status = kStatus_InvalidArgument;
         }
-    }
-    else if (state == kSwapType_Permanent)
-    {
-        swap_meta.copy_status = 0;
-        swap_meta.swap_progress.swap_offset = 0;
-        swap_meta.swap_progress.swap_status = kSwapStage_NotStarted;
-        swap_meta.confirm_info = kImageConfirm_Okay;
-        swap_meta.swap_type = kSwapType_Permanent;
-        status = app_api_update_swap_meta(&swap_meta, flashIf);
-        return status;
-    }
-    else if (state == kSwapType_Rollback)
-    {
-        swap_meta.copy_status = kCopyStatus_Done;
-        swap_meta.swap_type = kSwapType_Test;
-        swap_meta.confirm_info = 0;
-        swap_meta.swap_progress.swap_offset = 0;
-        swap_meta.swap_progress.swap_status = kSwapStage_Done;
-        status = app_api_update_swap_meta(&swap_meta, flashIf);
-        return status;
-    }
-    else
-    {
-        return kStatus_InvalidArgument;
-    }
+    } while (0);
+
+    cache_restore(ccr);
+
+    return status;
 }
 
 status_t get_image_state(uint32_t *state)
 {
     swap_meta_t swap_meta;
+    uint32_t ccr = cache_disable();
     status_t status = load_swap_meta(&swap_meta);
-    if (status != kStatus_Success)
+    if (status == kStatus_Success)
     {
-        return status;
+        *state = swap_meta.swap_type;
     }
-    *state = swap_meta.swap_type;
+
+    cache_restore(ccr);
 
     return status;
 }
@@ -658,10 +726,10 @@ status_t flash_read(uint32_t address, uint8_t *buffer, size_t length)
 {
     flexspi_nor_config_t flashNorConfig;
     uint32_t flashCfgAddr = BL_FLEXSPI_NOR_CFG_BLOCK_OFFSET + BL_FLEXSPI_AMBA_BASE;
-    memcpy(&flashNorConfig, (void *)flashCfgAddr, sizeof(flashNorConfig));
+    (void)memcpy(&flashNorConfig, (void *)flashCfgAddr, sizeof(flashNorConfig));
     uint32_t flashAddr = address - BL_FLEXSPI_AMBA_BASE;
-    return flexspi_nor_flash_read(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE, &flashNorConfig,
-                                  (uint32_t *)buffer, flashAddr, length);
+    uint32_t instance = BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE;
+    return flexspi_nor_flash_read(instance, &flashNorConfig, (uint32_t *)buffer, flashAddr, length);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

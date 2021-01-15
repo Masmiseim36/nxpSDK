@@ -1,5 +1,5 @@
 /*
- * Copyright  2019 NXP
+ * Copyright  2019-2020 NXP
  * All rights reserved.
  *
  *
@@ -25,38 +25,38 @@
         kCODEC_SupportRecordChannelRight1 | kCODEC_SupportRecordChannelRight2 | kCODEC_SupportRecordChannelRight3
 
 /*! @brief wm8904 map protocol */
-#define HAL_WM8904_MAP_PROTOCOL(protocol)                    \
-    (protocol == kCODEC_BusI2S ?                             \
-         kWM8904_ProtocolI2S :                               \
-         protocol == kCODEC_BusLeftJustified ?               \
-         kWM8904_ProtocolLeftJustified :                     \
-         protocol == kCODEC_BusRightJustified ?              \
-         kWM8904_ProtocolRightJustified :                    \
-         protocol == kCODEC_BusPCMA ? kWM8904_ProtocolPCMA : \
-                                      protocol == kCODEC_BusPCMB ? kWM8904_ProtocolPCMB : kWM8904_ProtocolI2S)
+#define HAL_WM8904_MAP_PROTOCOL(protocol)                      \
+    ((protocol) == kCODEC_BusI2S ?                             \
+         kWM8904_ProtocolI2S :                                 \
+         (protocol) == kCODEC_BusLeftJustified ?               \
+         kWM8904_ProtocolLeftJustified :                       \
+         (protocol) == kCODEC_BusRightJustified ?              \
+         kWM8904_ProtocolRightJustified :                      \
+         (protocol) == kCODEC_BusPCMA ? kWM8904_ProtocolPCMA : \
+                                        (protocol) == kCODEC_BusPCMB ? kWM8904_ProtocolPCMB : kWM8904_ProtocolI2S)
 
 /*! @brief wm8904 map module */
-#define HAL_WM8904_MAP_MODULE(module)                                    \
-    (module == kCODEC_ModuleADC ?                                        \
-         kWM8904_ModuleADC :                                             \
-         module == kCODEC_ModuleDAC ?                                    \
-         kWM8904_ModuleDAC :                                             \
-         module == kCODEC_ModulePGA ? kWM8904_ModulePGA :                \
-                                      module == kCODEC_ModuleHeadphone ? \
-                                      kWM8904_ModuleHeadphone :          \
-                                      module == kCODEC_ModuleLineout ? kWM8904_ModuleLineout : kWM8904_ModuleADC)
+#define HAL_WM8904_MAP_MODULE(module)                                        \
+    ((module) == kCODEC_ModuleADC ?                                          \
+         kWM8904_ModuleADC :                                                 \
+         (module) == kCODEC_ModuleDAC ?                                      \
+         kWM8904_ModuleDAC :                                                 \
+         (module) == kCODEC_ModulePGA ? kWM8904_ModulePGA :                  \
+                                        (module) == kCODEC_ModuleHeadphone ? \
+                                        kWM8904_ModuleHeadphone :            \
+                                        (module) == kCODEC_ModuleLineout ? kWM8904_ModuleLineout : kWM8904_ModuleADC)
 
 /*! @brief wm8904 map protocol */
-#define HAL_WM8904_MAP_SAMPLERATE(sampleRATE)        \
-    (sampleRATE == kCODEC_AudioSampleRate8KHz ?      \
-         kWM8904_SampleRate8kHz :                    \
-         sampleRATE == kCODEC_AudioSampleRate12KHz ? \
-         kWM8904_SampleRate12kHz :                   \
-         sampleRATE == kCODEC_AudioSampleRate16KHz ? \
-         kWM8904_SampleRate16kHz :                   \
-         sampleRATE == kCODEC_AudioSampleRate24KHz ? \
-         kWM8904_SampleRate24kHz :                   \
-         sampleRATE == kCODEC_AudioSampleRate32KHz ? kWM8904_SampleRate32kHz : kWM8904_SampleRate48kHz)
+#define HAL_WM8904_MAP_SAMPLERATE(sampleRATE)          \
+    ((sampleRATE) == kCODEC_AudioSampleRate8KHz ?      \
+         kWM8904_SampleRate8kHz :                      \
+         (sampleRATE) == kCODEC_AudioSampleRate12KHz ? \
+         kWM8904_SampleRate12kHz :                     \
+         (sampleRATE) == kCODEC_AudioSampleRate16KHz ? \
+         kWM8904_SampleRate16kHz :                     \
+         (sampleRATE) == kCODEC_AudioSampleRate24KHz ? \
+         kWM8904_SampleRate24kHz :                     \
+         (sampleRATE) == kCODEC_AudioSampleRate32KHz ? kWM8904_SampleRate32kHz : kWM8904_SampleRate48kHz)
 
 /*******************************************************************************
  * Prototypes
@@ -86,13 +86,13 @@ status_t HAL_CODEC_Init(void *handle, void *config)
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
-    wm8904_config_t *wm8904Config = (wm8904_config_t *)((codec_config_t *)codecConfig->codecDevConfig);
-    wm8904_handle_t *wm8904Handle = (wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
+    wm8904_config_t *devConfig = (wm8904_config_t *)(codecConfig->codecDevConfig);
+    wm8904_handle_t *devHandle = (wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
 
     ((codec_handle_t *)handle)->codecCapability = &s_wm8904_capability;
 
     /* codec device initialization */
-    return WM8904_Init(wm8904Handle, wm8904Config);
+    return WM8904_Init(devHandle, devConfig);
 }
 
 /*!
@@ -120,9 +120,12 @@ status_t HAL_CODEC_Deinit(void *handle)
 status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
 {
     assert(handle != NULL);
+    status_t ret = kStatus_Success;
 
-    return WM8904_SetAudioFormat((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), mclk,
-                                 HAL_WM8904_MAP_SAMPLERATE(sampleRate), bitWidth);
+    ret = WM8904_SetAudioFormat((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), mclk,
+                                sampleRate, bitWidth);
+
+    return ret;
 }
 
 /*!
@@ -191,9 +194,12 @@ status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
 status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
 {
     assert(handle != NULL);
+    status_t ret = kStatus_Success;
 
-    return WM8904_SetModulePower((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
-                                 HAL_WM8904_MAP_MODULE(module), powerOn);
+    ret = WM8904_SetModulePower((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+                                HAL_WM8904_MAP_MODULE((codec_module_t)module), powerOn);
+
+    return ret;
 }
 
 /*!
@@ -207,8 +213,11 @@ status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
 status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
 {
     assert(handle != NULL);
+    status_t ret = kStatus_Success;
 
-    return WM8904_SetRecord((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), recordSource);
+    ret = WM8904_SetRecord((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), recordSource);
+
+    return ret;
 }
 
 /*!

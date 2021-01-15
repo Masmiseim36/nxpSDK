@@ -1,7 +1,7 @@
 /**************************************************************************
 MODULE:    MCOP
 CONTAINS:  MicroCANopen Plus implementation
-COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2019
+COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2020
            All rights reserved. www.em-sa.com/nxp
 DISCLAIM:  Read and understand our disclaimer before using this code!
            www.esacademy.com/disclaim.htm
@@ -10,9 +10,9 @@ DISCLAIM:  Read and understand our disclaimer before using this code!
 LICENSE:   THIS IS THE NXP SDK VERSION OF MICROCANOPEN PLUS
            Licensed under a modified BSD License. See LICENSE.INFO
            file in the project root for full license information.
-VERSION:   7.01, EmSA 02-APR-20
-           $LastChangedDate: 2020-04-02 17:30:41 +0200 (Thu, 02 Apr 2020) $
-           $LastChangedRevision: 4909 $
+VERSION:   7.10, ESA 20-SEP-02
+           $LastChangedDate: 2020-09-17 16:12:10 +0200 (Thu, 17 Sep 2020) $
+           $LastChangedRevision: 5047 $
 ***************************************************************************/
 
 #ifndef _MCOP_H
@@ -47,12 +47,36 @@ typedef struct
     CAN_MSG emcy_msg;
     uint16_t emcy_inhibit;   // Emergency inhibit time in ms
     uint16_t emcy_timestamp; // Timestamp of next allowed emergency
+    uint16_t active_sys;     // active system EMCYs
+#if NR_OF_RPDOS > 0
+                         // active RDO len EMCY
+    uint16_t active_rpdo[(NR_OF_RPDOS + 15) / 16];
+#endif
+#if MGR_MONITOR_ALL_NODES
+    uint16_t active_hbcons[(MAX_NR_OF_NODES + 15) / 16];
+#elif NR_OF_HB_CONSUMER > 0
+                         // active HB loss EMCY
+    uint16_t active_hbcons[(NR_OF_HB_CONSUMER + 15) / 16];
+#endif
+
 #if ERROR_FIELD_SIZE > 0
     uint32_t Field[ERROR_FIELD_SIZE];
     uint8_t InPtr;
     uint8_t NrOfRec;
+#if defined(USE_CANOPEN_FD) && USE_CANOPEN_FD // CANopen FD
+    uint8_t status[ERROR_FIELD_SIZE];         // status esp. recoverable/non-recoverable
+#endif                                        // CANopen FD
 #endif
 } EMCY_CONFIG; // emergency handling data record
+
+// Macros that set, clr or check a bit in 16 bit array active_hbcons and active_rpdo
+#define ARRAY16_SETBIT(array, bit) (array[(bit) / 16] |= (0x0001 << ((bit) % 16)))
+#define ARRAY16_CLRBIT(array, bit) (array[(bit) / 16] &= ~(0x0001 << ((bit) % 16)))
+#define ARRAY16_GETBIT(array, bit) ((array[(bit) / 16] >> ((bit) % 16)) & 0x0001)
+
+// Macro to generate the 32bit err codes used in error field
+#define MAKE_ERRCODE32(code, em1, em2) ((uint32_t)(code) | ((uint32_t)(em1) << 16) | ((uint32_t)(em2) << 24))
+
 #endif
 
 #if (NR_OF_HB_CONSUMER > 0)
@@ -62,7 +86,7 @@ typedef struct
     uint16_t time;       // Heartbeat Consumer time in ms
     uint16_t timestamp;  // Timestamp of last heartbeat consumed
     uint16_t can_id;     // CAN ID to monitor 0x700 + node ID
-    HBCONS_STATE status; // satte of this consumer: off, init, active, lost
+    HBCONS_STATE status; // state of this consumer: off, init, active, lost
 } HBCONS_CONFIG;
 #endif // (NR_OF_HB_CONSUMER > 0)
 
@@ -86,41 +110,151 @@ uint8_t MCO_WriteProcessData(uint16_t offset,       // Offset of destination dat
                              uint8_t MEM_PROC *pSrc // Source pointer
 );
 
+/**************************************************************************
+DOES:    Obtain PI offset and length for short (1-4 bytes) OD entries by
+         index/subindex.
+RETURNS: 0: Entry exists, results valid
+         1: Error - entry not found in PI, or is no short entry
+**************************************************************************/
+uint8_t MCO_GetODProcPIOffsLenByIndex(uint16_t index,   // OD index of entry in PI
+                                      uint8_t subindex, // OD subindex of entry in PI
+                                      uint16_t *offset, // out: offset of OD entry in PI
+                                      uint8_t *len      // out: length of OD entry in PI
+);
+
+/**************************************************************************
+DOES:    Obtain PI offset and length for any PI-based OD entries by
+         index/subindex.
+RETURNS: 0: Entry exists, results valid
+         1: Error - entry not found in PI, or is no short entry
+**************************************************************************/
+uint8_t MCO_GetPIOffsLenByIndex(uint16_t index,   // OD index of entry in PI
+                                uint8_t subindex, // OD subindex of entry in PI
+                                uint16_t *offset, // out: offset of OD entry in PI
+                                uint16_t *len     // out: length of OD entry in PI
+);
+
+/**************************************************************************
+DOES:    Read OD entries by index/subindex.
+         Short entries up to 4 bytes read into variables and obey byte order,
+         (potentially) longer entries we read into a byte array.
+NOTE:    This function executes a search for the index/subindex selected.
+         For better performance data access, use MCO_ReadProcessData()
+RETURNS: 0: Entry read ok
+         1: Error - entry not found in PI
+         2: Error - data length mismatch
+         3: Error - data length exceeded maximum
+         4: Error - parameter error
+**************************************************************************/
+uint8_t MCO_ReadValByIndex(uint16_t index,     // OD index of entry in PI
+                           uint8_t subindex,   // OD subindex of entry in PI
+                           uint8_t len_type,   // 1-4: read into uint8_t..uint32_t, 0: read into byte array
+                           uint16_t *len_read, // in: if len_type==0 give max. read length
+                                               // out: must be !=NULL to return read length for larger entries
+                           void *data          // pointer to write data (variable or byte array)
+);
+
+/**************************************************************************
+DOES:    Write OD entries to PI by index/subindex.
+         Short entries up to 4 bytes write from variables and obey byte order,
+         longer entries we write from a byte array.
+NOTE:    This function executes a search for the index/subindex selected.
+         For better performance data access, use MCO_WriteProcessData()
+RETURNS: 0: Entry write ok
+         1: Error - entry not found in PI
+         2: Error - data length mismatch
+         3: Error - data length exceeded maximum
+         4: Error - parameter error
+**************************************************************************/
+uint8_t MCO_WriteValByIndex(uint16_t index,     // OD index of entry in PI
+                            uint8_t subindex,   // OD subindex of entry in PI
+                            uint8_t len_type,   // 1-4: write from uint8_t..uint32_t, 0: write from byte array
+                            uint16_t len_write, // if len_type==0 give write length, otherwise 0
+                            void *data          // pointer to write data (variable or byte array)
+);
+
 #if USE_EMCY
 /**************************************************************************
 DOES:    Transmits an Emergency Message
-RETURNS: 1 if message was transmitted, 0 if transmit queue is full
+RETURNS: TRUE - If msg was considered for transmit
+         FALSE - If message was not sent due to duplicate
 **************************************************************************/
 uint8_t MCOP_PushEMCY(uint16_t emcy_code, // 16 bit error code
                       uint8_t em_1,       // 5 byte manufacturer specific error code
                       uint8_t em_2,
                       uint8_t em_3,
                       uint8_t em_4,
-                      uint8_t em_5);
+                      uint8_t em_5
+#if defined(USE_CANOPEN_FD) && USE_CANOPEN_FD // CANopen FD
+                      ,
+                      uint8_t dev_num,   // logical device number
+                      uint16_t spec_num, // CiA specification number
+                      uint8_t status,    // status
+                      uint32_t time_lo,  // timestamp bits 0-31
+                      uint16_t time_hi   // timestamp bits 32-47
+#endif                                   // CANopen FD
+);
 
 #if ERROR_FIELD_SIZE > 0
-#endif
 /**************************************************************************
-DOES:    This function clears all entries of the error history [1003h]
+DOES:    This function clears all entries of the error history [1003h] for
+         CANopen or the active error list [1032h] for CANopen FD.
 RETURNS: Nothing
 **************************************************************************/
 void MCOP_ErrField_Flush(void);
 
 /**************************************************************************
-DOES:    This function adds an entry to the error history [1003h]
+DOES:    This function adds or updates an entry to/in the error history
+         [1003h] for CANopen or the active error list [1032h] for
+         CANopen FD.
 RETURNS: Nothing
 **************************************************************************/
-void MCOP_ErrField_Add(uint32_t err_value // the 32bit error code used in the last EMCY
+void MCOP_ErrField_AddUpdate(uint32_t err_value // the 32bit error code used in the last EMCY
+#if defined(USE_CANOPEN_FD) && USE_CANOPEN_FD
+                             ,
+                             uint8_t status // status esp. recoverable/non-recoverable
+#endif                                      // CANopen FD
+);
+
+/**************************************************************************
+DOES:    This function removes an entry from the error history [1003h]
+         for CANopen or the active error list [1032h] for CANopen FD.
+RETURNS: The subindex value that was removed, 0 if there was no matching
+         error found.
+**************************************************************************/
+uint8_t MCOP_ErrField_Remove(uint32_t err_value // the 32-bit error code used in the last EMCY
 );
 
 /**************************************************************************
 DOES:    This function retrieves an entry from the error history [1003h]
-         based on the subindex of [1003h]
-RETURNS: 32bit error code stored at a subindex
+         for CANopen or the active error list [1032h] for CANopen FD, based
+         on the subindex
+RETURNS: 32-bit error code for OD at subindex, or raw stored value
 **************************************************************************/
-uint32_t MCOP_ErrField_Get(uint8_t subindex // Subindex number of [1003h]
+uint32_t MCOP_ErrField_Get(uint8_t subindex, // Subindex number of [1003h]/[1032h]
+                           uint8_t od_val,   // TRUE: Value for OD, FALSE: raw stored value
+                           uint8_t *ef_index // if !=NULL, return internal index to entry
 );
-#endif
+
+/**************************************************************************
+DOES:    This function finds an entry in the error history [1003h]
+         for CANopen or the active error list [1032h] for CANopen FD, based
+         on the 32-bit error code used in the EMCY.
+RETURNS: The subindex value for the entry or 0 if none found.
+**************************************************************************/
+uint8_t MCOP_ErrField_Find(uint32_t err_value, // the 32bit error code used in the last EMCY
+                           uint8_t *ef_index   // if !=NULL, return internal index to entry
+);
+#endif // ERROR_FIELD_SIZE > 0
+
+/**************************************************************************
+DOES:    Checks if all EMCY active bits are cleared.
+         Used to determine if now an EMCY no error / reset can be sent.
+RETURNS: TRUE - No more EMCY pending
+         FALSE - Still some EMCY pending
+**************************************************************************/
+uint8_t MCOP_IsNoEMCYactive(void);
+#endif // USE_EMCY
 
 #if (MGR_MONITOR_ALL_NODES == 0)
 /* Device version, for SELECTED heartbeats, Manager uses comgr.h*/
@@ -255,7 +389,9 @@ RETURNS: 0: No messages processed
          Bit 0 set: SYNC TPDOs transmitted
          Bit 1 set: SYNC RPDOs received
 **************************************************************************/
-uint8_t MCOP_HandleSYNC(void);
+uint8_t MCOP_HandleSYNC(uint8_t len, // length of SYNC (0 or 1)
+                        uint8_t scnt // counter value, if len = 1
+);
 #endif
 
 /**************************************************************************

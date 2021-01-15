@@ -6,22 +6,22 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_tempmon.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TEMPMON                  TEMPMON
+#define DEMO_TEMP_MONITOR             TEMPMON
 #define DEMO_TEMP_LOW_HIGH_IRQn       TEMP_LOW_HIGH_IRQn
 #define DEMO_TEMP_PANIC_IRQn          TEMP_PANIC_IRQn
 #define DEMO_TEMP_LOW_HIGH_IRQHandler TEMP_LOW_HIGH_IRQHandler
 #define DEMO_TEMP_PANIC_IRQHandler    TEMP_PANIC_IRQHandler
 
-#define DEMO_HIGHALARMTEMP 42U
-#define DEMO_LOWALARMTEMP  40U
+#define DEMO_HIGH_ALARM_TEMP 42U
+#define DEMO_LOW_ALARM_TEMP  40U
 
 #define DEMO_CLOCK_SOURCE kCLOCK_AhbClk
 #define DEMO_CLOCK_DIV    kCLOCK_AhbDiv
@@ -69,23 +69,23 @@ int main(void)
 
     TEMPMON_GetDefaultConfig(&config);
     config.frequency     = 0x03U;
-    config.highAlarmTemp = DEMO_HIGHALARMTEMP;
-    config.lowAlarmTemp  = DEMO_LOWALARMTEMP;
+    config.highAlarmTemp = DEMO_HIGH_ALARM_TEMP;
+    config.lowAlarmTemp  = DEMO_LOW_ALARM_TEMP;
 
-    TEMPMON_Init(DEMO_TEMPMON, &config);
-    TEMPMON_StartMeasure(DEMO_TEMPMON);
+    TEMPMON_Init(DEMO_TEMP_MONITOR, &config);
+    TEMPMON_StartMeasure(DEMO_TEMP_MONITOR);
 
     /* Get temperature */
-    temperature = TEMPMON_GetCurrentTemperature(DEMO_TEMPMON);
+    temperature = TEMPMON_GetCurrentTemperature(DEMO_TEMP_MONITOR);
 
     PRINTF("The chip initial temperature is %.1f degrees celsius. \r\n", temperature);
 
     while (1)
     {
         /* Get current temperature */
-        temperature = TEMPMON_GetCurrentTemperature(DEMO_TEMPMON);
+        temperature = TEMPMON_GetCurrentTemperature(DEMO_TEMP_MONITOR);
 
-        if (temperatureReach && (temperature - DEMO_HIGHALARMTEMP > 0))
+        if (temperatureReach && (temperature - DEMO_HIGH_ALARM_TEMP > 0))
         {
             temperatureReach = false;
 
@@ -102,13 +102,13 @@ int main(void)
                 PRINTF("The chip core frequency is %d Hz. \r\n", coreFrequency);
 
                 /* Set low alarm temperature */
-                TEMPMON_SetTempAlarm(DEMO_TEMPMON, DEMO_LOWALARMTEMP, kTEMPMON_LowAlarmMode);
+                TEMPMON_SetTempAlarm(DEMO_TEMP_MONITOR, DEMO_LOW_ALARM_TEMP, kTEMPMON_LowAlarmMode);
 
                 temperatureReachHighCount++;
             }
         }
 
-        if (temperatureReach && (temperature - DEMO_LOWALARMTEMP < 0))
+        if (temperatureReach && (temperature - DEMO_LOW_ALARM_TEMP < 0))
         {
             temperatureReach = false;
 

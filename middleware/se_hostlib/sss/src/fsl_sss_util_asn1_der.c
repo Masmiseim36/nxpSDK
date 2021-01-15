@@ -296,7 +296,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
         else
             *modlen = taglen;
-        *modulus = malloc(*modlen);
+        *modulus = SSS_MALLOC(*modlen);
         if ((*modulus != NULL) && ((*modlen) > 0)) {
             ENSURE_OR_GO_EXIT(bufIndex < keylen);
             memcpy(*modulus, pBuf + bufIndex, *modlen);
@@ -316,7 +316,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         goto exit;
     if (pubExplen != NULL) {
         *pubExplen = taglen;
-        *pubExp    = malloc(*pubExplen);
+        *pubExp    = SSS_MALLOC(*pubExplen);
         if ((*pubExp != NULL) && ((*pubExplen) > 0)) {
             ENSURE_OR_GO_EXIT(bufIndex < keylen);
             memcpy(*pubExp, pBuf + bufIndex, *pubExplen);
@@ -347,7 +347,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
         else
             *priExplen = taglen;
-        *priExp = malloc(*priExplen);
+        *priExp = SSS_MALLOC(*priExplen);
         if ((*priExp != NULL) && ((*priExplen) > 0)) {
             ENSURE_OR_GO_EXIT(bufIndex < keylen);
             memcpy(*priExp, pBuf + bufIndex, *priExplen);
@@ -377,7 +377,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
         else
             *prime1len = taglen;
-        *prime1 = malloc(*prime1len);
+        *prime1 = SSS_MALLOC(*prime1len);
         if ((*prime1 != NULL) && ((*prime1len) > 0)) {
             ENSURE_OR_GO_EXIT(bufIndex < keylen);
             memcpy(*prime1, pBuf + bufIndex, *prime1len);
@@ -408,7 +408,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
         else
             *prime2len = taglen;
-        *prime2 = malloc(*prime2len);
+        *prime2 = SSS_MALLOC(*prime2len);
         if (*prime2 == NULL) {
             LOG_E("malloc failed");
             goto exit;
@@ -443,7 +443,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
         else
             *exponent1len = taglen;
-        *exponent1 = malloc(*exponent1len);
+        *exponent1 = SSS_MALLOC(*exponent1len);
         if ((*exponent1 != NULL) && ((*exponent1len) > 0)) {
             ENSURE_OR_GO_EXIT(bufIndex < keylen);
             memcpy(*exponent1, pBuf + bufIndex, *exponent1len);
@@ -474,7 +474,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
         else
             *exponent2len = taglen;
-        *exponent2 = malloc(*exponent2len);
+        *exponent2 = SSS_MALLOC(*exponent2len);
         if (*exponent2 == NULL) {
             LOG_E("malloc failed");
             goto exit;
@@ -509,7 +509,7 @@ sss_status_t sss_util_asn1_rsa_parse_private(const uint8_t *key,
         }
         else
             *coefficientlen = taglen;
-        *coefficient = malloc(*coefficientlen);
+        *coefficient = SSS_MALLOC(*coefficientlen);
         if ((*coefficient != NULL) && ((*coefficientlen) > 0)) {
             ENSURE_OR_GO_EXIT(bufIndex < keylen);
             memcpy(*coefficient, pBuf + bufIndex, *coefficientlen);
@@ -615,7 +615,7 @@ sss_status_t sss_util_asn1_rsa_parse_private_allow_invalid_key(const uint8_t *ke
         }
         else
             *modlen = taglen;
-        *modulus = malloc(*modlen);
+        *modulus = SSS_MALLOC(*modlen);
         if ((*modulus != NULL) && ((*modlen) > 0)) {
             ENSURE_OR_GO_EXIT(bufIndex < keylen);
             memcpy(*modulus, pBuf + bufIndex, *modlen);
@@ -635,7 +635,7 @@ sss_status_t sss_util_asn1_rsa_parse_private_allow_invalid_key(const uint8_t *ke
 
     if (pubExplen != NULL) {
         *pubExplen = taglen;
-        *pubExp    = malloc(*pubExplen);
+        *pubExp    = SSS_MALLOC(*pubExplen);
         ENSURE_OR_GO_EXIT(bufIndex < keylen);
         if ((*pubExp != NULL) && ((*pubExplen) > 0)) {
             memcpy(*pubExp, pBuf + bufIndex, *pubExplen);
@@ -666,7 +666,7 @@ sss_status_t sss_util_asn1_rsa_parse_private_allow_invalid_key(const uint8_t *ke
         }
         else
             *priExplen = taglen;
-        *priExp = malloc(*priExplen);
+        *priExp = SSS_MALLOC(*priExplen);
         if ((*priExp != NULL) && ((*priExplen) > 0)) {
             ENSURE_OR_GO_EXIT(bufIndex < keylen);
             memcpy(*priExp, pBuf + bufIndex, *priExplen);
@@ -697,7 +697,7 @@ sss_status_t sss_util_asn1_rsa_parse_private_allow_invalid_key(const uint8_t *ke
         }
         else
             *prime1len = taglen;
-        *prime1 = malloc(*prime1len);
+        *prime1 = SSS_MALLOC(*prime1len);
         if ((*prime1 != NULL) && ((*prime1len) > 0)) {
             ENSURE_OR_GO_EXIT(bufIndex < keylen);
             memcpy(*prime1, pBuf + bufIndex, *prime1len);
@@ -728,7 +728,7 @@ sss_status_t sss_util_asn1_rsa_parse_private_allow_invalid_key(const uint8_t *ke
         }
         else
             *prime2len = taglen;
-        *prime2 = malloc(*prime2len);
+        *prime2 = SSS_MALLOC(*prime2len);
         if (*prime2 == NULL) {
             LOG_E("malloc failed");
             goto exit;
@@ -763,7 +763,7 @@ sss_status_t sss_util_asn1_rsa_parse_private_allow_invalid_key(const uint8_t *ke
         }
         else
             *exponent1len = taglen;
-        *exponent1 = malloc(*exponent1len);
+        *exponent1 = SSS_MALLOC(*exponent1len);
         if ((*exponent1 != NULL) && ((*exponent1len) > 0)) {
             ENSURE_OR_GO_EXIT(bufIndex < keylen);
             memcpy(*exponent1, pBuf + bufIndex, *exponent1len);
@@ -794,7 +794,7 @@ sss_status_t sss_util_asn1_rsa_parse_private_allow_invalid_key(const uint8_t *ke
         }
         else
             *exponent2len = taglen;
-        *exponent2 = malloc(*exponent2len);
+        *exponent2 = SSS_MALLOC(*exponent2len);
         if (*exponent2 == NULL) {
             LOG_E("malloc failed");
             goto exit;
@@ -829,7 +829,7 @@ sss_status_t sss_util_asn1_rsa_parse_private_allow_invalid_key(const uint8_t *ke
         }
         else
             *coefficientlen = taglen;
-        *coefficient = malloc(*coefficientlen);
+        *coefficient = SSS_MALLOC(*coefficientlen);
         if ((*coefficient != NULL) && ((*coefficientlen) > 0)) {
             ENSURE_OR_GO_EXIT(bufIndex < keylen);
             memcpy(*coefficient, pBuf + bufIndex, *coefficientlen);
@@ -1055,7 +1055,7 @@ sss_status_t sss_util_asn1_rsa_parse_public(
     }
     else
         *modlen = taglen;
-    *modulus = malloc(*modlen);
+    *modulus = SSS_MALLOC(*modlen);
     if ((*modulus != NULL) && ((*modlen) > 0)) {
         ENSURE_OR_GO_EXIT(bufIndex < keylen);
         memcpy(*modulus, pBuf + bufIndex, *modlen);
@@ -1069,7 +1069,7 @@ sss_status_t sss_util_asn1_rsa_parse_public(
     /* Get Public Exponent */
     ret        = asn_1_parse_tlv(pBuf, &taglen, &bufIndex);
     *pubExplen = taglen;
-    *pubExp    = malloc(*pubExplen);
+    *pubExp    = SSS_MALLOC(*pubExplen);
     if (*pubExp == NULL) {
         LOG_E("malloc failed");
         goto exit;

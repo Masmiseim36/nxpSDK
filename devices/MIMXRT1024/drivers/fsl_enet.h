@@ -24,7 +24,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief Defines the driver version. */
-#define FSL_ENET_DRIVER_VERSION (MAKE_VERSION(2, 3, 2)) /*!< Version 2.3.2. */
+#define FSL_ENET_DRIVER_VERSION (MAKE_VERSION(2, 3, 4))
 /*@}*/
 
 /*! @name ENET DESCRIPTOR QUEUE */
@@ -672,6 +672,11 @@ typedef void (*enet_isr_ring_t)(ENET_Type *base, enet_handle_t *handle, uint32_t
 #endif /* FSL_FEATURE_ENET_QUEUE > 1 */
 typedef void (*enet_isr_t)(ENET_Type *base, enet_handle_t *handle);
 
+/*! @brief Pointers to enet clocks for each instance. */
+#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+extern const clock_ip_name_t s_enetClock[];
+#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
+
 /*******************************************************************************
  * API
  ******************************************************************************/
@@ -982,7 +987,8 @@ void ENET_StartExtC45SMIWriteData(ENET_Type *base, uint32_t phyAddr, uint32_t ph
 void ENET_StartExtC45SMIReadData(ENET_Type *base, uint32_t phyAddr, uint32_t phyReg);
 #endif /* FSL_FEATURE_ENET_HAS_EXTEND_MDIO */
 
-#if defined(FSL_FEATURE_ENET_HAS_AVB) && FSL_FEATURE_ENET_HAS_AVB
+#if ((defined(FSL_FEATURE_ENET_HAS_RGMII_TXC_DELAY) && FSL_FEATURE_ENET_HAS_RGMII_TXC_DELAY) || \
+     (defined(FSL_FEATURE_ENET_HAS_RGMII_RXC_DELAY) && FSL_FEATURE_ENET_HAS_RGMII_RXC_DELAY))
 /*!
  * @brief Control the usage of the delayed tx/rx RGMII clock.
  *
@@ -990,11 +996,11 @@ void ENET_StartExtC45SMIReadData(ENET_Type *base, uint32_t phyAddr, uint32_t phy
  * @param txEnabled  Enable or disable to generate the delayed version of RGMII_TXC.
  * @param rxEnabled  Enable or disable to use the delayed version of RGMII_RXC.
  */
-
 static inline void ENET_SetRGMIIClockDelay(ENET_Type *base, bool txEnabled, bool rxEnabled)
 {
     uint32_t ecrReg = base->ECR;
 
+#if defined(FSL_FEATURE_ENET_HAS_RGMII_TXC_DELAY) && FSL_FEATURE_ENET_HAS_RGMII_TXC_DELAY
     /* Set for transmit clock delay. */
     if (txEnabled)
     {
@@ -1004,7 +1010,9 @@ static inline void ENET_SetRGMIIClockDelay(ENET_Type *base, bool txEnabled, bool
     {
         ecrReg &= ~ENET_ECR_TXC_DLY_MASK;
     }
+#endif /* FSL_FEATURE_ENET_HAS_RGMII_TXC_DELAY */
 
+#if defined(FSL_FEATURE_ENET_HAS_RGMII_RXC_DELAY) && FSL_FEATURE_ENET_HAS_RGMII_RXC_DELAY
     /* Set for receive clock delay. */
     if (rxEnabled)
     {
@@ -1014,9 +1022,10 @@ static inline void ENET_SetRGMIIClockDelay(ENET_Type *base, bool txEnabled, bool
     {
         ecrReg &= ~ENET_ECR_RXC_DLY_MASK;
     }
+#endif /* FSL_FEATURE_ENET_HAS_RGMII_RXC_DELAY */
     base->ECR = ecrReg;
 }
-#endif /* FSL_FEATURE_ENET_HAS_AVB */
+#endif
 
 /* @} */
 

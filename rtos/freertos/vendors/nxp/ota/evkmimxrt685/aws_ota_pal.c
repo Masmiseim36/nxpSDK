@@ -101,7 +101,7 @@ static OTA_Err_t prvPAL_CheckFileSignature(OTA_FileContext_t *const C)
         return kOTA_Err_SignatureCheckFailed;
     }
 
-    FileData = mflash_drv_mmap(FileContext->Addr, FileContext->Size);
+    FileData = mflash_drv_phys2log(FileContext->Addr, FileContext->Size);
     if (FileData == NULL)
     {
         return kOTA_Err_SignatureCheckFailed;
@@ -194,7 +194,7 @@ OTA_Err_t prvPAL_CloseFile(OTA_FileContext_t *const C)
         return result;
     }
 
-    FileData = mflash_drv_mmap(FileContext->Addr, FileContext->Size);
+    FileData = mflash_drv_phys2log(FileContext->Addr, FileContext->Size);
     if (FileData == NULL)
     {
         return kOTA_Err_BootInfoCreateFailed;

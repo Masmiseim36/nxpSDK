@@ -189,8 +189,8 @@ _sdr_Init()
   
   // Config SDR Controller Registers/
   __writeMemory32(0x10000004, 0x402F0000, "Memory"); // MCR
-  __writeMemory32(0x00030524, 0x402F0008, "Memory"); // BMCR0
-  __writeMemory32(0x06030524, 0x402F000C, "Memory"); // BMCR1
+  __writeMemory32(0x00000081, 0x402F0008, "Memory"); // BMCR0
+  __writeMemory32(0x00000081, 0x402F000C, "Memory"); // BMCR1
   __writeMemory32(0x8000001B, 0x402F0010, "Memory"); // BR0, 32MB
  
   __writeMemory32(0x00000F31, 0x402F0040, "Memory"); // SDRAMCR0

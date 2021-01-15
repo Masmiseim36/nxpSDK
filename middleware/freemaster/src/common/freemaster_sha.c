@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -35,158 +35,183 @@
 #include "freemaster.h"
 #include "freemaster_private.h"
 
-#if !(FMSTR_DISABLE)
+#if FMSTR_DISABLE == 0
 
 /*****************************************************************************
-* Local Functions
-******************************************************************************/
+ * Local Functions
+ ******************************************************************************/
 
-#define ROTLEFT(a, b) ((a << b) | (a >> (32 - b)))
+#define ROTLEFT(a, b) (((a) << (b)) | ((a) >> (32 - (b))))
 
-static void FMSTR_Sha1Transform(FMSTR_SHA1_CTX *ctx, const FMSTR_U8* data)
+static void FMSTR_Sha1Transform(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data)
 {
-	// save 352 bytes on stack by making these static, we never run more instances than one anyway
-	static FMSTR_U32 a, b, c, d, e, i, j, t, m[80];
+    // save 352 bytes on stack by making these static, we never run more instances than one anyway
+    static FMSTR_U32 a, b, c, d, e, i, j, t, m[80];
 
-	for (i = 0, j = 0; i < 16; ++i, j += 4) {
-		a = ((FMSTR_U32)data[j]) << 24;
-		a += ((FMSTR_U32)data[j + 1]) << 16;
-		a += ((FMSTR_U32)data[j + 2]) << 8;
-		a += data[j + 3];
-		m[i] = a;
-	}
-	for ( ; i < 80; ++i) {
-		m[i] = (m[i - 3] ^ m[i - 8] ^ m[i - 14] ^ m[i - 16]);
-		m[i] = (m[i] << 1) | (m[i] >> 31);
-	}
+    for (i = 0; i < 16U; i++)
+    {
+        j = i * 4U;
 
-	a = ctx->state[0];
-	b = ctx->state[1];
-	c = ctx->state[2];
-	d = ctx->state[3];
-	e = ctx->state[4];
+        a = ((FMSTR_U32)data[j]) << 24;
+        a += ((FMSTR_U32)data[j + 1U]) << 16;
+        a += ((FMSTR_U32)data[j + 2U]) << 8;
+        a += data[j + 3U];
+        m[i] = a;
+    }
 
-	for (i = 0; i < 20; ++i) {
-		t = ROTLEFT(a, 5) + ((b & c) ^ (~b & d)) + e + ctx->k[0] + m[i];
-		e = d;
-		d = c;
-		c = ROTLEFT(b, 30);
-		b = a;
-		a = t;
-	}
-	for ( ; i < 40; ++i) {
-		t = ROTLEFT(a, 5) + (b ^ c ^ d) + e + ctx->k[1] + m[i];
-		e = d;
-		d = c;
-		c = ROTLEFT(b, 30);
-		b = a;
-		a = t;
-	}
-	for ( ; i < 60; ++i) {
-		t = ROTLEFT(a, 5) + ((b & c) ^ (b & d) ^ (c & d))  + e + ctx->k[2] + m[i];
-		e = d;
-		d = c;
-		c = ROTLEFT(b, 30);
-		b = a;
-		a = t;
-	}
-	for ( ; i < 80; ++i) {
-		t = ROTLEFT(a, 5) + (b ^ c ^ d) + e + ctx->k[3] + m[i];
-		e = d;
-		d = c;
-		c = ROTLEFT(b, 30);
-		b = a;
-		a = t;
-	}
+    for (; i < 80U; i++)
+    {
+        m[i] = (m[i - 3U] ^ m[i - 8U] ^ m[i - 14U] ^ m[i - 16U]);
+        m[i] = (m[i] << 1) | (m[i] >> 31);
+    }
 
-	ctx->state[0] += a;
-	ctx->state[1] += b;
-	ctx->state[2] += c;
-	ctx->state[3] += d;
-	ctx->state[4] += e;
+    a = ctx->state[0];
+    b = ctx->state[1];
+    c = ctx->state[2];
+    d = ctx->state[3];
+    e = ctx->state[4];
+
+    for (i = 0; i < 20U; i++)
+    {
+        t = ROTLEFT(a, 5) + ((b & c) ^ (~b & d)) + e + ctx->k[0] + m[i];
+        e = d;
+        d = c;
+        c = ROTLEFT(b, 30);
+        b = a;
+        a = t;
+    }
+
+    for (; i < 40U; i++)
+    {
+        t = ROTLEFT(a, 5) + (b ^ c ^ d) + e + ctx->k[1] + m[i];
+        e = d;
+        d = c;
+        c = ROTLEFT(b, 30);
+        b = a;
+        a = t;
+    }
+
+    for (; i < 60U; i++)
+    {
+        t = ROTLEFT(a, 5) + ((b & c) ^ (b & d) ^ (c & d)) + e + ctx->k[2] + m[i];
+        e = d;
+        d = c;
+        c = ROTLEFT(b, 30);
+        b = a;
+        a = t;
+    }
+
+    for (; i < 80U; i++)
+    {
+        t = ROTLEFT(a, 5) + (b ^ c ^ d) + e + ctx->k[3] + m[i];
+        e = d;
+        d = c;
+        c = ROTLEFT(b, 30);
+        b = a;
+        a = t;
+    }
+
+    ctx->state[0] += a;
+    ctx->state[1] += b;
+    ctx->state[2] += c;
+    ctx->state[3] += d;
+    ctx->state[4] += e;
 }
 
 /*****************************************************************************
-* API Functions
-******************************************************************************/
+ * API Functions
+ ******************************************************************************/
 
 void FMSTR_Sha1Init(FMSTR_SHA1_CTX *ctx)
 {
-	ctx->datalen = 0;
-	ctx->bitlen = 0;
-	ctx->state[0] = 0x67452301;
-	ctx->state[1] = 0xEFCDAB89;
-	ctx->state[2] = 0x98BADCFE;
-	ctx->state[3] = 0x10325476;
-	ctx->state[4] = 0xc3d2e1f0;
-	ctx->k[0] = 0x5a827999;
-	ctx->k[1] = 0x6ed9eba1;
-	ctx->k[2] = 0x8f1bbcdc;
-	ctx->k[3] = 0xca62c1d6;
+    ctx->datalen = 0U;
+    ctx->bitlen  = 0U;
+
+    ctx->state[0] = 0x67452301UL;
+    ctx->state[1] = 0xEFCDAB89UL;
+    ctx->state[2] = 0x98BADCFEUL;
+    ctx->state[3] = 0x10325476UL;
+    ctx->state[4] = 0xc3d2e1f0UL;
+
+    ctx->k[0] = 0x5a827999UL;
+    ctx->k[1] = 0x6ed9eba1UL;
+    ctx->k[2] = 0x8f1bbcdcUL;
+    ctx->k[3] = 0xca62c1d6UL;
 }
 
-void FMSTR_Sha1Update(FMSTR_SHA1_CTX *ctx, const FMSTR_U8* data, size_t len)
+void FMSTR_Sha1Update(FMSTR_SHA1_CTX *ctx, const FMSTR_U8 *data, FMSTR_SIZE len)
 {
-	size_t i;
+    FMSTR_SIZE i;
 
-	for (i = 0; i < len; ++i) {
-		ctx->data[ctx->datalen] = data[i];
-		ctx->datalen++;
-		if (ctx->datalen == 64) {
-			FMSTR_Sha1Transform(ctx, ctx->data);
-			ctx->bitlen += 512;
-			ctx->datalen = 0;
-		}
-	}
+    for (i = 0U; i < len; i++)
+    {
+        ctx->data[ctx->datalen] = data[i];
+        ctx->datalen++;
+        if (ctx->datalen == 64U)
+        {
+            FMSTR_Sha1Transform(ctx, ctx->data);
+            ctx->bitlen += 512U;
+            ctx->datalen = 0U;
+        }
+    }
 }
 
-void FMSTR_Sha1Final(FMSTR_SHA1_CTX *ctx, FMSTR_U8* hash)
+void FMSTR_Sha1Final(FMSTR_SHA1_CTX *ctx, FMSTR_U8 *hash)
 {
-	FMSTR_U32 i;
+    FMSTR_U32 i;
 
-	i = ctx->datalen;
+    i = ctx->datalen;
 
-	// Pad whatever data is left in the buffer.
-	if (ctx->datalen < 56) {
-		ctx->data[i++] = 0x80;
-		while (i < 56)
-			ctx->data[i++] = 0x00;
-	}
-	else {
-		ctx->data[i++] = 0x80;
-		while (i < 64)
-			ctx->data[i++] = 0x00;
-		FMSTR_Sha1Transform(ctx, ctx->data);
-		memset(ctx->data, 0, 56);
-	}
+    // Pad whatever data is left in the buffer.
+    if (ctx->datalen < 56U)
+    {
+        ctx->data[i++] = 0x80U;
+        while (i < 56U)
+        {
+            ctx->data[i++] = 0x00U;
+        }
+    }
+    else
+    {
+        ctx->data[i++] = 0x80U;
+        while (i < 64U)
+        {
+            ctx->data[i++] = 0x00U;
+        }
+        FMSTR_Sha1Transform(ctx, ctx->data);
+        FMSTR_MemSet(ctx->data, 0U, 56U);
+    }
 
-	// Append to the padding the total message's length in bits and transform.
-	ctx->bitlen += ctx->datalen * 8;
-	ctx->data[63] = (FMSTR_U8)(ctx->bitlen);
-	ctx->data[62] = (FMSTR_U8)(ctx->bitlen >> 8);
-	ctx->data[61] = (FMSTR_U8)(ctx->bitlen >> 16);
-	ctx->data[60] = (FMSTR_U8)(ctx->bitlen >> 24);
-	ctx->data[59] = (FMSTR_U8)(ctx->bitlen >> 32);
-	ctx->data[58] = (FMSTR_U8)(ctx->bitlen >> 40);
-	ctx->data[57] = (FMSTR_U8)(ctx->bitlen >> 48);
-	ctx->data[56] = (FMSTR_U8)(ctx->bitlen >> 56);
-	FMSTR_Sha1Transform(ctx, ctx->data);
+    // Append to the padding the total message's length in bits and transform.
+    i = ctx->datalen * 8U;
+    ctx->bitlen += (FMSTR_U64)i;
+    ctx->data[63] = (FMSTR_U8)(ctx->bitlen);
+    ctx->data[62] = (FMSTR_U8)(ctx->bitlen >> 8);
+    ctx->data[61] = (FMSTR_U8)(ctx->bitlen >> 16);
+    ctx->data[60] = (FMSTR_U8)(ctx->bitlen >> 24);
+    ctx->data[59] = (FMSTR_U8)(ctx->bitlen >> 32);
+    ctx->data[58] = (FMSTR_U8)(ctx->bitlen >> 40);
+    ctx->data[57] = (FMSTR_U8)(ctx->bitlen >> 48);
+    ctx->data[56] = (FMSTR_U8)(ctx->bitlen >> 56);
+    FMSTR_Sha1Transform(ctx, ctx->data);
 
-#if FMSTR_PLATFORM_BIG_ENDIAN
-	// copy state to output buffer
-	for (i = 0; i < 5; ++i) {
-		*(FMSTR_U32*)(hash+i*4) = ctx->state[i];
-	}
+#if FMSTR_PLATFORM_BIG_ENDIAN > 0
+    /* copy state to output buffer */
+    for (i = 0U; i < 5U; i++)
+    {
+        *(FMSTR_U32 *)(hash + i * 4U) = ctx->state[i];
+    }
 #else
-	// copy while reversing byte order
-	for (i = 0; i < 4; ++i) {
-		int shift = 24 - i * 8;
-		hash[i]      = (FMSTR_U8)((ctx->state[0] >> shift) & 0xff);
-		hash[i + 4]  = (FMSTR_U8)((ctx->state[1] >> shift) & 0xff);
-		hash[i + 8]  = (FMSTR_U8)((ctx->state[2] >> shift) & 0xff);
-		hash[i + 12] = (FMSTR_U8)((ctx->state[3] >> shift) & 0xff);
-		hash[i + 16] = (FMSTR_U8)((ctx->state[4] >> shift) & 0xff);
-	}
+    /* copy while reversing byte order */
+    for (i = 0U; i < 4U; i++)
+    {
+        FMSTR_SIZE shift = 24U - i * 8U;
+        hash[i]          = (FMSTR_U8)((ctx->state[0] >> shift) & 0xffU);
+        hash[i + 4U]     = (FMSTR_U8)((ctx->state[1] >> shift) & 0xffU);
+        hash[i + 8U]     = (FMSTR_U8)((ctx->state[2] >> shift) & 0xffU);
+        hash[i + 12U]    = (FMSTR_U8)((ctx->state[3] >> shift) & 0xffU);
+        hash[i + 16U]    = (FMSTR_U8)((ctx->state[4] >> shift) & 0xffU);
+    }
 #endif
 }
 

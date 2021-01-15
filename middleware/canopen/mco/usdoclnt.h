@@ -1,17 +1,18 @@
 /**************************************************************************
 MODULE:    USDOCLNT
 CONTAINS:  MicroCANopen Plus implementation, CANopen USDO Clients
-COPYRIGHT: Embedded Systems Academy (EmSA) 2002-2020
-           All rights reserved. esacademy.com
+COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2020.
+           All rights reserved. www.em-sa.com/nxp
 DISCLAIM:  Read and understand our disclaimer before using this code!
            www.esacademy.com/disclaim.htm
            This software was written in accordance to the guidelines at
            www.esacademy.com/software/softwarestyleguide.pdf
-LICENSE:   THIS FILE IS PART OF THE MICROCANOPEN PLUS CANOPEN MANAGER
-           ONLY USERS WHO PURCHASED A LICENSE MAY USE THIS SOFTWARE
-VERSION:   7.01, EmSA 02-APR-20
-           $LastChangedDate: 2019-10-16 20:49:22 +0200 (Wed, 16 Oct 2019) $
-           $LastChangedRevision: 4790 $
+LICENSE:   THIS IS THE NXP SDK VERSION OF MICROCANOPEN PLUS
+           Licensed under a modified BSD License. See LICENSE.INFO
+           file in the project root for full license information.
+VERSION:   7.10, ESA 20-SEP-02
+           $LastChangedDate: 2020-09-03 22:04:52 +0200 (Thu, 03 Sep 2020) $
+           $LastChangedRevision: 5038 $
 ***************************************************************************/
 
 #ifndef _UUSDOCLNT_H

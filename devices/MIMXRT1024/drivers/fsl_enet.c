@@ -255,6 +255,7 @@ void ENET_Up(ENET_Type *base,
     assert(config != NULL);
     assert(bufferConfig != NULL);
     assert(macAddr != NULL);
+    assert(FSL_FEATURE_ENET_INSTANCE_QUEUEn(base) != -1);
     assert(config->ringNum <= (uint8_t)FSL_FEATURE_ENET_INSTANCE_QUEUEn(base));
 
     /* Initializes the ENET transmit buffer descriptors. */
@@ -440,10 +441,7 @@ static void ENET_SetHandler(ENET_Type *base,
     /* Store transfer parameters in handle pointer. */
     (void)memset(handle, 0, sizeof(enet_handle_t));
 
-    handle->ringNum = (config->ringNum > (uint8_t)FSL_FEATURE_ENET_INSTANCE_QUEUEn(base)) ?
-                          (uint8_t)FSL_FEATURE_ENET_INSTANCE_QUEUEn(base) :
-                          config->ringNum;
-    for (count = 0; count < handle->ringNum; count++)
+    for (count = 0; count < config->ringNum; count++)
     {
         assert(buffCfg->rxBuffSizeAlign * buffCfg->rxBdNumber > config->rxMaxFrameLen);
 
@@ -459,6 +457,8 @@ static void ENET_SetHandler(ENET_Type *base,
         handle->txDirtyRing[count].txRingLen   = buffCfg->txBdNumber;
         buffCfg++;
     }
+
+    handle->ringNum = config->ringNum;
 
     /* Save the handle pointer in the global variables. */
     s_ENETHandle[instance] = handle;
@@ -1538,6 +1538,7 @@ status_t ENET_ReadFrame(
     ENET_Type *base, enet_handle_t *handle, uint8_t *data, uint32_t length, uint8_t ringId, uint32_t *ts)
 {
     assert(handle != NULL);
+    assert(FSL_FEATURE_ENET_INSTANCE_QUEUEn(base) != -1);
     assert(ringId < (uint8_t)FSL_FEATURE_ENET_INSTANCE_QUEUEn(base));
 
     uint32_t len    = 0;
@@ -1598,7 +1599,7 @@ status_t ENET_ReadFrame(
                 {
                     /* Copy the frame to user's buffer without FCS. */
                     len = curBuffDescrip->length - offset;
-                    (void)memcpy((uint32_t *)dest, (uint32_t *)address, len);
+                    (void)memcpy((void *)(uint32_t *)dest, (void *)(uint32_t *)address, len);
 #ifdef ENET_ENHANCEDBUFFERDESCRIPTOR_MODE
                     /* Get the timestamp if the ts isn't NULL. */
                     if (ts != NULL)
@@ -1627,7 +1628,7 @@ status_t ENET_ReadFrame(
                     result = kStatus_ENET_RxFrameFail;
                     break;
                 }
-                (void)memcpy((uint32_t *)dest, (uint32_t *)address, handle->rxBuffSizeAlign[ringId]);
+                (void)memcpy((void *)(uint32_t *)dest, (void *)(uint32_t *)address, handle->rxBuffSizeAlign[ringId]);
                 offset += handle->rxBuffSizeAlign[ringId];
 
                 /* Updates the receive buffer descriptors. */
@@ -1645,6 +1646,7 @@ status_t ENET_ReadFrame(
 static void ENET_UpdateReadBuffers(ENET_Type *base, enet_handle_t *handle, uint8_t ringId)
 {
     assert(handle != NULL);
+    assert(FSL_FEATURE_ENET_INSTANCE_QUEUEn(base) != -1);
     assert(ringId < (uint8_t)FSL_FEATURE_ENET_INSTANCE_QUEUEn(base));
 
     volatile enet_rx_bd_struct_t *curBuffDescrip =
@@ -1712,6 +1714,7 @@ status_t ENET_SendFrame(ENET_Type *base,
 {
     assert(handle != NULL);
     assert(data != NULL);
+    assert(FSL_FEATURE_ENET_INSTANCE_QUEUEn(base) != -1);
     assert(ringId < (uint8_t)FSL_FEATURE_ENET_INSTANCE_QUEUEn(base));
 
     volatile enet_tx_bd_struct_t *curBuffDescrip;
@@ -1825,7 +1828,8 @@ status_t ENET_SendFrame(ENET_Type *base,
                     if (sizeleft > handle->txBuffSizeAlign[ringId])
                     {
                         /* Data copy. */
-                        (void)memcpy((uint32_t *)address, (uint32_t *)src, handle->txBuffSizeAlign[ringId]);
+                        (void)memcpy((void *)(uint32_t *)address, (void *)(uint32_t *)src,
+                                     handle->txBuffSizeAlign[ringId]);
 #if defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL
                         if (handle->txMaintainEnable[ringId])
                         {
@@ -1851,7 +1855,7 @@ status_t ENET_SendFrame(ENET_Type *base,
                     }
                     else
                     {
-                        (void)memcpy((uint32_t *)address, (uint32_t *)src, sizeleft);
+                        (void)memcpy((void *)(uint32_t *)address, (void *)(uint32_t *)src, sizeleft);
 #if defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL
                         if (handle->txMaintainEnable[ringId])
                         {
@@ -1950,6 +1954,7 @@ status_t ENET_SetTxReclaim(enet_handle_t *handle, bool isEnable, uint8_t ringId)
  */
 static void ENET_ReclaimTxDescriptor(ENET_Type *base, enet_handle_t *handle, uint8_t ringId)
 {
+    assert(FSL_FEATURE_ENET_INSTANCE_QUEUEn(base) != -1);
     assert(ringId < (uint8_t)FSL_FEATURE_ENET_INSTANCE_QUEUEn(base));
 
     enet_tx_bd_ring_t *txBdRing                  = &handle->txBdRing[ringId];
@@ -2128,6 +2133,10 @@ void ENET_ReleaseRxBuffer(ENET_Type *base, enet_handle_t *handle, void *buffer, 
     enet_rx_bd_struct_t tempBuffDescrip;
     uint16_t index   = rxBdRing->rxGenIdx;
     bool isReleaseBd = false;
+
+#if defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+    buffer = (void *)(uint32_t *)MEMORY_ConvertMemoryMapAddress((uint32_t)(uint32_t *)buffer, kMEMORY_Local2DMA);
+#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
 
     do
     {
@@ -2941,6 +2950,7 @@ void ENET_Ptp1588AdjustTimer(ENET_Type *base, uint32_t corrIncrease, uint32_t co
 void ENET_AVBConfigure(ENET_Type *base, enet_handle_t *handle, const enet_avb_config_t *config)
 {
     assert(config != NULL);
+    assert(FSL_FEATURE_ENET_INSTANCE_QUEUEn(base) != -1);
 
     uint8_t count = 0;
 
@@ -3190,6 +3200,7 @@ void ENET_CommonFrame0IRQHandler(ENET_Type *base)
     uint32_t event    = base->EIR;
     uint32_t instance = ENET_GetInstance(base);
 
+    event &= base->EIMR;
     if (0U != (event & ((uint32_t)kENET_TxBufferInterrupt | (uint32_t)kENET_TxFrameInterrupt)))
     {
         if (s_enetTxIsr[instance] != NULL)
@@ -3237,6 +3248,7 @@ void ENET_CommonFrame1IRQHandler(ENET_Type *base)
     uint32_t event    = base->EIR;
     uint32_t instance = ENET_GetInstance(base);
 
+    event &= base->EIMR;
     if (0U != (event & ((uint32_t)kENET_TxBuffer1Interrupt | (uint32_t)kENET_TxFrame1Interrupt)))
     {
         if (s_enetTxIsr[instance] != NULL)
@@ -3266,6 +3278,7 @@ void ENET_CommonFrame2IRQHandler(ENET_Type *base)
     uint32_t event    = base->EIR;
     uint32_t instance = ENET_GetInstance(base);
 
+    event &= base->EIMR;
     if (0U != (event & ((uint32_t)kENET_TxBuffer2Interrupt | (uint32_t)kENET_TxFrame2Interrupt)))
     {
         if (s_enetTxIsr[instance] != NULL)
@@ -3292,6 +3305,7 @@ void ENET_Ptp1588IRQHandler(ENET_Type *base)
 
 #if defined(ENET)
 #if FSL_FEATURE_ENET_QUEUE < 2
+void ENET_Transmit_IRQHandler(void);
 void ENET_Transmit_IRQHandler(void)
 {
     if (s_enetTxIsr[0] != NULL)
@@ -3301,6 +3315,7 @@ void ENET_Transmit_IRQHandler(void)
     SDK_ISR_EXIT_BARRIER;
 }
 
+void ENET_Receive_IRQHandler(void);
 void ENET_Receive_IRQHandler(void)
 {
     if (s_enetRxIsr[0] != NULL)
@@ -3310,6 +3325,7 @@ void ENET_Receive_IRQHandler(void)
     SDK_ISR_EXIT_BARRIER;
 }
 
+void ENET_Error_IRQHandler(void);
 void ENET_Error_IRQHandler(void)
 {
     if (s_enetErrIsr[0] != NULL)
@@ -3320,6 +3336,7 @@ void ENET_Error_IRQHandler(void)
 }
 #endif /* FSL_FEATURE_ENET_QUEUE < 2 */
 
+void ENET_1588_Timer_IRQHandler(void);
 void ENET_1588_Timer_IRQHandler(void)
 {
     if (s_enetTsIsr[0] != NULL)
@@ -3329,6 +3346,7 @@ void ENET_1588_Timer_IRQHandler(void)
     SDK_ISR_EXIT_BARRIER;
 }
 
+void ENET_DriverIRQHandler(void);
 void ENET_DriverIRQHandler(void)
 {
     ENET_CommonFrame0IRQHandler(ENET);
@@ -3336,6 +3354,7 @@ void ENET_DriverIRQHandler(void)
 }
 
 #if FSL_FEATURE_ENET_QUEUE > 1
+void ENET_1588_Timer_DriverIRQHandler(void);
 void ENET_1588_Timer_DriverIRQHandler(void)
 {
     ENET_Ptp1588IRQHandler(ENET);
@@ -3345,6 +3364,7 @@ void ENET_1588_Timer_DriverIRQHandler(void)
 #endif /* ENET */
 
 #if defined(ENET1)
+void ENET1_DriverIRQHandler(void);
 void ENET1_DriverIRQHandler(void)
 {
     ENET_CommonFrame0IRQHandler(ENET1);
@@ -3353,6 +3373,7 @@ void ENET1_DriverIRQHandler(void)
 #endif /* ENET1 */
 
 #if defined(ENET2)
+void ENET2_DriverIRQHandler(void);
 void ENET2_DriverIRQHandler(void)
 {
     ENET_CommonFrame0IRQHandler(ENET2);
@@ -3361,17 +3382,20 @@ void ENET2_DriverIRQHandler(void)
 #endif /* ENET2 */
 
 #if defined(CONNECTIVITY__ENET0)
+void CONNECTIVITY_ENET0_FRAME0_EVENT_INT_DriverIRQHandler(void);
 void CONNECTIVITY_ENET0_FRAME0_EVENT_INT_DriverIRQHandler(void)
 {
     ENET_CommonFrame0IRQHandler(CONNECTIVITY__ENET0);
     SDK_ISR_EXIT_BARRIER;
 }
 #if FSL_FEATURE_ENET_QUEUE > 1
+void CONNECTIVITY_ENET0_FRAME1_INT_DriverIRQHandler(void);
 void CONNECTIVITY_ENET0_FRAME1_INT_DriverIRQHandler(void)
 {
     ENET_CommonFrame1IRQHandler(CONNECTIVITY__ENET0);
     SDK_ISR_EXIT_BARRIER;
 }
+void CONNECTIVITY_ENET0_FRAME2_INT_DriverIRQHandler(void);
 void CONNECTIVITY_ENET0_FRAME2_INT_DriverIRQHandler(void)
 {
     ENET_CommonFrame2IRQHandler(CONNECTIVITY__ENET0);
@@ -3380,17 +3404,20 @@ void CONNECTIVITY_ENET0_FRAME2_INT_DriverIRQHandler(void)
 #endif /* FSL_FEATURE_ENET_QUEUE > 1 */
 #endif /* CONNECTIVITY__ENET0 */
 #if defined(CONNECTIVITY__ENET1)
+void CONNECTIVITY_ENET1_FRAME0_EVENT_INT_DriverIRQHandler(void);
 void CONNECTIVITY_ENET1_FRAME0_EVENT_INT_DriverIRQHandler(void)
 {
     ENET_CommonFrame0IRQHandler(CONNECTIVITY__ENET1);
     SDK_ISR_EXIT_BARRIER;
 }
 #if FSL_FEATURE_ENET_QUEUE > 1
+void CONNECTIVITY_ENET1_FRAME1_INT_DriverIRQHandler(void);
 void CONNECTIVITY_ENET1_FRAME1_INT_DriverIRQHandler(void)
 {
     ENET_CommonFrame1IRQHandler(CONNECTIVITY__ENET1);
     SDK_ISR_EXIT_BARRIER;
 }
+void CONNECTIVITY_ENET1_FRAME2_INT_DriverIRQHandler(void);
 void CONNECTIVITY_ENET1_FRAME2_INT_DriverIRQHandler(void)
 {
     ENET_CommonFrame2IRQHandler(CONNECTIVITY__ENET1);
@@ -3400,21 +3427,25 @@ void CONNECTIVITY_ENET1_FRAME2_INT_DriverIRQHandler(void)
 #endif /* CONNECTIVITY__ENET1 */
 #if FSL_FEATURE_ENET_QUEUE > 1
 #if defined(ENET_1G)
+void ENET_1G_DriverIRQHandler(void);
 void ENET_1G_DriverIRQHandler(void)
 {
     ENET_CommonFrame0IRQHandler(ENET_1G);
     SDK_ISR_EXIT_BARRIER;
 }
+void ENET_MAC0_Tx_Rx_Done_0_DriverIRQHandler(void);
 void ENET_MAC0_Tx_Rx_Done_0_DriverIRQHandler(void)
 {
     ENET_CommonFrame1IRQHandler(ENET_1G);
     SDK_ISR_EXIT_BARRIER;
 }
+void ENET_MAC0_Tx_Rx_Done_1_DriverIRQHandler(void);
 void ENET_MAC0_Tx_Rx_Done_1_DriverIRQHandler(void)
 {
     ENET_CommonFrame2IRQHandler(ENET_1G);
     SDK_ISR_EXIT_BARRIER;
 }
+void ENET_1G_1588_Timer_DriverIRQHandler(void);
 void ENET_1G_1588_Timer_DriverIRQHandler(void)
 {
     ENET_Ptp1588IRQHandler(ENET_1G);
@@ -3423,16 +3454,19 @@ void ENET_1G_1588_Timer_DriverIRQHandler(void)
 #endif /* ENET_1G */
 
 #if defined(ENET1)
+void ENET1_MAC0_Rx_Tx_Done0_DriverIRQHandler(void);
 void ENET1_MAC0_Rx_Tx_Done0_DriverIRQHandler(void)
 {
     ENET_CommonFrame1IRQHandler(ENET1);
     SDK_ISR_EXIT_BARRIER;
 }
+void ENET1_MAC0_Rx_Tx_Done1_DriverIRQHandler(void);
 void ENET1_MAC0_Rx_Tx_Done1_DriverIRQHandler(void)
 {
     ENET_CommonFrame2IRQHandler(ENET1);
     SDK_ISR_EXIT_BARRIER;
 }
+void ENET1_1588_Timer_DriverIRQHandler(void);
 void ENET1_1588_Timer_DriverIRQHandler(void)
 {
     ENET_Ptp1588IRQHandler(ENET1);

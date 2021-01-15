@@ -12,6 +12,7 @@
 #include "fsl_lpi2c.h"
 #endif /* SDK_I2C_BASED_COMPONENT_USED */
 #include "fsl_iomuxc.h"
+#include "eiq_micro_conf.h"
 
 /*******************************************************************************
  * Variables
@@ -452,4 +453,37 @@ void BOARD_ConfigMPU(void)
     /* Enable I cache and D cache */
     SCB_EnableDCache();
     SCB_EnableICache();
+}
+
+/*!
+ * @brief Enables Sai output Mclk output
+ *
+ * @param Enables Sai Mclk output flag. Set tru for output otherwise input is used
+ */
+void BOARD_EnableSaiMclkOutput(bool enable)
+{
+  if (enable)
+  {
+    IOMUXC_GPR->GPR1 |= IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK;
+  }
+  else
+  {
+    IOMUXC_GPR->GPR1 &= (~IOMUXC_GPR_GPR1_SAI1_MCLK_DIR_MASK);
+  }
+}
+
+/*!
+ * @brief Initialize Sai
+ *
+ */
+void BOARD_Microphone_Init(void)
+{
+  /* Clock setting for LPI2C */
+  CLOCK_SetMux(kCLOCK_Lpi2cMux, DEMO_LPI2C_CLOCK_SOURCE_SELECT);
+  CLOCK_SetDiv(kCLOCK_Lpi2cDiv, DEMO_LPI2C_CLOCK_SOURCE_DIVIDER);
+
+  /* Clock setting for SAI1 */
+  CLOCK_SetMux(kCLOCK_Sai1Mux, DEMO_SAI1_CLOCK_SOURCE_SELECT);
+  CLOCK_SetDiv(kCLOCK_Sai1PreDiv, DEMO_SAI1_CLOCK_SOURCE_PRE_DIVIDER);
+  CLOCK_SetDiv(kCLOCK_Sai1Div, DEMO_SAI1_CLOCK_SOURCE_DIVIDER);
 }

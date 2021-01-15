@@ -70,9 +70,9 @@ int CreateAndRunDemoTask()
     status = ex_sss_boot_factory_reset((PCONTEXT));
 #endif
 
-    status = ex_sss_kestore_and_object_init((PCONTEXT));
+    status = ex_sss_key_store_and_object_init((PCONTEXT));
     if (kStatus_SSS_Success != status) {
-        LOG_E("ex_sss_kestore_and_object_init Failed");
+        LOG_E("ex_sss_key_store_and_object_init Failed");
         goto cleanup;
     }
 

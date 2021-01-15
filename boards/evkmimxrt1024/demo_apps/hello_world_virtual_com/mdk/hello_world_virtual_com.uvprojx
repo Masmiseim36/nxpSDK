@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, DEBUG_CONSOLE_IO_USBCDC=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_DEVICE_CONFIG_CDC_ACM=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Include;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -428,7 +428,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -528,7 +528,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -543,7 +543,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager-usb_cdc_adapter</GroupName>
+          <GroupName>component/serial_manager/usb_cdc_adapter</GroupName>
           <Files>
             <File>
               <FileName>usb_device_descriptor.h</FileName>
@@ -563,7 +563,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -578,7 +578,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_dci.c</FileName>
@@ -633,7 +633,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-ehci</GroupName>
+          <GroupName>usb/device/source/ehci</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ehci.c</FileName>
@@ -713,7 +713,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -828,7 +828,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc</GroupName>
+          <GroupName>usb/device/class/cdc</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_acm.c</FileName>
@@ -843,7 +843,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
+          <GroupName>usb/device/class</GroupName>
           <Files>
             <File>
               <FileName>usb_device_class.c</FileName>
@@ -858,7 +858,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -873,7 +873,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -1221,7 +1221,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, DEBUG_CONSOLE_IO_USBCDC=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_DEVICE_CONFIG_CDC_ACM=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Include;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1319,7 +1319,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -1419,7 +1419,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -1434,7 +1434,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager-usb_cdc_adapter</GroupName>
+          <GroupName>component/serial_manager/usb_cdc_adapter</GroupName>
           <Files>
             <File>
               <FileName>usb_device_descriptor.h</FileName>
@@ -1454,7 +1454,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -1469,7 +1469,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_dci.c</FileName>
@@ -1524,7 +1524,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-ehci</GroupName>
+          <GroupName>usb/device/source/ehci</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ehci.c</FileName>
@@ -1604,7 +1604,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -1719,7 +1719,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc</GroupName>
+          <GroupName>usb/device/class/cdc</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_acm.c</FileName>
@@ -1734,7 +1734,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
+          <GroupName>usb/device/class</GroupName>
           <Files>
             <File>
               <FileName>usb_device_class.c</FileName>
@@ -1749,7 +1749,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -1764,7 +1764,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -2112,7 +2112,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, DEBUG_CONSOLE_IO_USBCDC=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_DEVICE_CONFIG_CDC_ACM=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Include;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2210,7 +2210,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -2310,7 +2310,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -2325,7 +2325,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager-usb_cdc_adapter</GroupName>
+          <GroupName>component/serial_manager/usb_cdc_adapter</GroupName>
           <Files>
             <File>
               <FileName>usb_device_descriptor.h</FileName>
@@ -2345,7 +2345,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -2360,7 +2360,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_dci.c</FileName>
@@ -2415,7 +2415,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-ehci</GroupName>
+          <GroupName>usb/device/source/ehci</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ehci.c</FileName>
@@ -2495,7 +2495,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -2610,7 +2610,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc</GroupName>
+          <GroupName>usb/device/class/cdc</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_acm.c</FileName>
@@ -2625,7 +2625,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
+          <GroupName>usb/device/class</GroupName>
           <Files>
             <File>
               <FileName>usb_device_class.c</FileName>
@@ -2640,7 +2640,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -2655,7 +2655,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -3003,7 +3003,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, DEBUG_CONSOLE_IO_USBCDC=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_DEVICE_CONFIG_CDC_ACM=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Include;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3101,7 +3101,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -3201,7 +3201,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -3216,7 +3216,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager-usb_cdc_adapter</GroupName>
+          <GroupName>component/serial_manager/usb_cdc_adapter</GroupName>
           <Files>
             <File>
               <FileName>usb_device_descriptor.h</FileName>
@@ -3236,7 +3236,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -3251,7 +3251,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_dci.c</FileName>
@@ -3306,7 +3306,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-ehci</GroupName>
+          <GroupName>usb/device/source/ehci</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ehci.c</FileName>
@@ -3386,7 +3386,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -3501,7 +3501,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc</GroupName>
+          <GroupName>usb/device/class/cdc</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_acm.c</FileName>
@@ -3516,7 +3516,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
+          <GroupName>usb/device/class</GroupName>
           <Files>
             <File>
               <FileName>usb_device_class.c</FileName>
@@ -3531,7 +3531,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -3546,7 +3546,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -3894,7 +3894,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, DEBUG_CONSOLE_IO_USBCDC=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_DEVICE_CONFIG_CDC_ACM=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Include;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -3992,7 +3992,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -4092,7 +4092,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -4107,7 +4107,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager-usb_cdc_adapter</GroupName>
+          <GroupName>component/serial_manager/usb_cdc_adapter</GroupName>
           <Files>
             <File>
               <FileName>usb_device_descriptor.h</FileName>
@@ -4127,7 +4127,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -4142,7 +4142,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_dci.c</FileName>
@@ -4197,7 +4197,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-ehci</GroupName>
+          <GroupName>usb/device/source/ehci</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ehci.c</FileName>
@@ -4277,7 +4277,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -4392,7 +4392,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc</GroupName>
+          <GroupName>usb/device/class/cdc</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_acm.c</FileName>
@@ -4407,7 +4407,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
+          <GroupName>usb/device/class</GroupName>
           <Files>
             <File>
               <FileName>usb_device_class.c</FileName>
@@ -4422,7 +4422,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -4437,7 +4437,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -4785,7 +4785,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>SKIP_SYSCLK_INIT, DATA_SECTION_IS_CACHEABLE=1, NDEBUG, CPU_MIMXRT1024DAG5A, USB_STACK_BM, BOARD_USE_VIRTUALCOM=1, DEBUG_CONSOLE_IO_USBCDC=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, SERIAL_PORT_TYPE_USBCDC=1, PRINTF_FLOAT_ENABLE=0, SCANF_FLOAT_ENABLE=0, PRINTF_ADVANCED_ENABLE=0, SCANF_ADVANCED_ENABLE=0, USB_DEVICE_CONFIG_CDC_ACM=1, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy;../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>..;../../../../../components/serial_manager;../../../../../devices/MIMXRT1024/drivers;../../../../../components/lists;../../../../../components/serial_manager/usb_cdc_adapter;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Include;../../../../../middleware/usb/output/source/device/class;../../../../../middleware/usb/output/source/device;../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4883,7 +4883,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -4983,7 +4983,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -4998,7 +4998,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager-usb_cdc_adapter</GroupName>
+          <GroupName>component/serial_manager/usb_cdc_adapter</GroupName>
           <Files>
             <File>
               <FileName>usb_device_descriptor.h</FileName>
@@ -5018,7 +5018,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -5033,7 +5033,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_dci.c</FileName>
@@ -5088,7 +5088,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-ehci</GroupName>
+          <GroupName>usb/device/source/ehci</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ehci.c</FileName>
@@ -5168,7 +5168,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -5283,7 +5283,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-cdc</GroupName>
+          <GroupName>usb/device/class/cdc</GroupName>
           <Files>
             <File>
               <FileName>usb_device_cdc_acm.c</FileName>
@@ -5298,7 +5298,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
+          <GroupName>usb/device/class</GroupName>
           <Files>
             <File>
               <FileName>usb_device_class.c</FileName>
@@ -5313,7 +5313,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -5328,7 +5328,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>

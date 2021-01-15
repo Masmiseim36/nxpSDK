@@ -391,6 +391,7 @@ int mbedtls_ssl_set_curve_list(mbedtls_ssl_config *conf, uint32_t keyIndex)
     };
     uint8_t objectIdLen = sizeof(objectId);
     int i               = 0;
+    size_t compareLen = 0;
     // uint32_t keyIndex = 0;
     // LabelToKeyId((unsigned char*)pcLabelName, strlen(pcLabelName), &keyIndex);
 
@@ -427,7 +428,13 @@ int mbedtls_ssl_set_curve_list(mbedtls_ssl_config *conf, uint32_t keyIndex)
             continue;
         }
 
-        if (0 == memcmp(object_identifiers[i].identifier, objectId, (objectIdLen * sizeof(uint32_t)))) {
+        if (objectIdLen * sizeof(uint32_t) > 64){
+            compareLen = 64;
+        }
+        else {
+            compareLen = objectIdLen * sizeof(uint32_t);
+        }
+        if (0 == memcmp(object_identifiers[i].identifier, objectId, compareLen)) {
             curve_list[0] = object_identifiers[i].groupId;
             curve_list[1] = MBEDTLS_ECP_DP_NONE;
             mbedtls_ssl_conf_curves(conf, curve_list);
@@ -930,7 +937,12 @@ CK_RV SymmetricDecrypt(P11SessionPtr_t pxSessionObj,
                     xResult = CKR_BUFFER_TOO_SMALL;
                 }
                 else {
-                    memcpy(pData, &encData[0], encDataLen);
+                    if (encDataLen > 0) {
+                        memcpy(pData, &encData[0], encDataLen);
+                    }
+                    else {
+                        LOG_E("memcpy failed");
+                    }
                     pxSessionObj->xOperationInProgress = pkcs11NO_OPERATION;
                 }
             }
@@ -2965,7 +2977,7 @@ static sss_status_t sss_create_token(sss_key_store_t *keystore,
 static smStatus_t read_id_list(uint32_t *idlist, size_t *idlistlen)
 {
     uint8_t pmore = kSE05x_MoreIndicator_NA;
-    uint8_t list[1024];
+    uint8_t list[1024] = {0};
     size_t listlen = sizeof(list);
     size_t i, k = 0;
     smStatus_t retStatus          = SM_NOT_OK;
@@ -3977,7 +3989,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
                 case kSSS_CipherType_EC_NIST_P:
                     if (sss_object.objectType == kSSS_KeyPart_Pair || sss_object.objectType == kSSS_KeyPart_Private) {
                         ulAttrLength = 0;
-                        xResult      = CKR_FUNCTION_FAILED;
+                        xResult      = CKR_ATTRIBUTE_SENSITIVE;
                         break;
                     }
                     if (kStatus_SSS_Success !=
@@ -4480,10 +4492,10 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetAttributeValue)
             }
             pxTemplate[iAttrib].ulValueLen = ulAttrLength;
             if (rsaN) {
-                free(rsaN);
+                SSS_FREE(rsaN);
             }
             if (rsaE) {
-                free(rsaE);
+                SSS_FREE(rsaE);
             }
         }
 
@@ -4681,7 +4693,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_FindObjects)
 
     else if ((pdFALSE == xDone)) {
 #if SSS_HAVE_ALT_SSS && SSS_HAVE_APPLET_SE05X_IOT
-        uint32_t object_list[40];
+        uint32_t object_list[40] = {0};
         size_t object_list_size = sizeof(object_list) / sizeof(object_list[0]);
         smStatus_t sm_status    = read_id_list(object_list, &object_list_size);
         if (sm_status != SM_OK) {
@@ -4692,7 +4704,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_FindObjects)
 
         size_t i                       = 0;
         uint32_t skipped               = 0;
-        CK_OBJECT_HANDLE_PTR ckObjects = (CK_OBJECT_HANDLE_PTR)malloc(sizeof(CK_OBJECT_HANDLE) * ulMaxObjectCount);
+        CK_OBJECT_HANDLE_PTR ckObjects = (CK_OBJECT_HANDLE_PTR)SSS_MALLOC(sizeof(CK_OBJECT_HANDLE) * ulMaxObjectCount);
         *pulObjectCount                = 0;
 
         LOCK_MUTEX_FOR_RTOS
@@ -4781,7 +4793,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_FindObjects)
             pxSession->xFindObjectTotalFound = pxSession->xFindObjectTotalFound + *pulObjectCount;
         }
         if (ckObjects) {
-            free(ckObjects);
+            SSS_FREE(ckObjects);
         }
 #endif
         xDone = pdTRUE;
@@ -4866,7 +4878,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
         xResult = CKR_HOST_MEMORY;
     }
 #else
-    if (NULL == (pxSessionObj = (P11SessionPtr_t)malloc(
+    if (NULL == (pxSessionObj = (P11SessionPtr_t)SSS_MALLOC(
                      sizeof(P11Session_t)))) /*lint !e9087 Allow casting void* to other types. */
     {
         xResult = CKR_HOST_MEMORY;
@@ -4908,7 +4920,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
     }
 
     if ((NULL != pxSessionObj) && (CKR_OK != xResult)) {
-        free(pxSessionObj);
+        SSS_FREE(pxSessionObj);
         return CKR_FUNCTION_FAILED;
     }
 
@@ -4945,7 +4957,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
                 }
 #endif
 
-                sss_status = ex_sss_kestore_and_object_init(pex_sss_demo_boot_ctx);
+                sss_status = ex_sss_key_store_and_object_init(pex_sss_demo_boot_ctx);
                 if (sss_status != kStatus_SSS_Success) {
                     LOG_E("Keystore Init Failed");
                     xResult = CKR_FUNCTION_FAILED;
@@ -4972,7 +4984,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_OpenSession)
                 goto exit;
             error:
                 if (pxSessionObj) {
-                    free(pxSessionObj);
+                    SSS_FREE(pxSessionObj);
                 }
                 if (pex_sss_demo_boot_ctx->session.subsystem != kType_SSS_SubSystem_NONE) {
                     ex_sss_session_close(pex_sss_demo_boot_ctx);
@@ -5018,7 +5030,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CloseSession)(CK_SESSION_HANDLE xSession)
 #if defined(USE_RTOS) && USE_RTOS == 1
             vPortFree(pxSession->pxCurrentKey->certificate_buf);
 #else
-            free(pxSession->pxCurrentKey->certificate_buf);
+            SSS_FREE(pxSession->pxCurrentKey->certificate_buf);
 #endif
         }
 #endif
@@ -5026,7 +5038,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_CloseSession)(CK_SESSION_HANDLE xSession)
 #if defined(USE_RTOS) && USE_RTOS == 1
         vPortFree(pxSession);
 #else
-        free(pxSession);
+        SSS_FREE(pxSession);
 #endif
 
 /*Lock for session open - required because multiple session_open will be attempted*/
@@ -5931,7 +5943,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Digest)
         return xResult;
     }
 #if SSS_HAVE_ALT_SSS
-    uint8_t *input = (uint8_t *)malloc(ulDataLen * sizeof(uint8_t));
+    uint8_t *input = (uint8_t *)SSS_MALLOC(ulDataLen * sizeof(uint8_t));
     memset(input, 0, (ulDataLen * sizeof(uint8_t)));
     sss_status_t status = kStatus_SSS_Fail;
     uint8_t output[64]  = {0};
@@ -6003,7 +6015,7 @@ CK_DEFINE_FUNCTION(CK_RV, C_Digest)
 
 cleanup:
     if (input) {
-        free(input);
+        SSS_FREE(input);
     }
 #endif
 
@@ -6289,10 +6301,14 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateKeyPair)
             return xResult;
         }
 
-        if (memcmp(&oid[oidLen], &ec_params[0], sizeof(oid) - oidLen) == 0) {
-            KeyBitLen = 192;
-            goto cont;
+        if (sizeof(oid) > oidLen)
+        {
+            if (memcmp(&oid[oidLen], &ec_params[0], sizeof(oid) - oidLen) == 0) {
+                KeyBitLen = 192;
+                goto cont;
+            }
         }
+
         oidLen = sizeof(oid);
 
         xResult = SetASNTLV(
@@ -6313,10 +6329,13 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateKeyPair)
             return xResult;
         }
 
-        if (memcmp(&oid[oidLen], &ec_params[0], sizeof(oid) - oidLen) == 0) {
-            KeyBitLen = 256;
-            goto cont;
+        if (sizeof(oid) > oidLen) {
+            if (memcmp(&oid[oidLen], &ec_params[0], sizeof(oid) - oidLen) == 0) {
+                KeyBitLen = 256;
+                goto cont;
+            }
         }
+
         oidLen = sizeof(oid);
 
         xResult = SetASNTLV(
@@ -6325,9 +6344,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateKeyPair)
             return xResult;
         }
 
-        if (memcmp(&oid[oidLen], &ec_params[0], sizeof(oid) - oidLen) == 0) {
-            KeyBitLen = 384;
-            goto cont;
+        if (sizeof(oid) > oidLen) {
+            if (memcmp(&oid[oidLen], &ec_params[0], sizeof(oid) - oidLen) == 0) {
+                KeyBitLen = 384;
+                goto cont;
+            }
         }
         oidLen = sizeof(oid);
 
@@ -6337,9 +6358,11 @@ CK_DEFINE_FUNCTION(CK_RV, C_GenerateKeyPair)
             return xResult;
         }
 
-        if (memcmp(&oid[oidLen], &ec_params[0], sizeof(oid) - oidLen) == 0) {
-            KeyBitLen = 521;
-            goto cont;
+        if (sizeof(oid) > oidLen) {
+            if (memcmp(&oid[oidLen], &ec_params[0], sizeof(oid) - oidLen) == 0) {
+                KeyBitLen = 521;
+                goto cont;
+            }
         }
 
         return CKR_ARGUMENTS_BAD;
@@ -6703,6 +6726,12 @@ CK_DEFINE_FUNCTION(CK_RV, C_GetMechanismInfo)
         mech_info.ulMinKeySize = 128;
         mech_info.ulMaxKeySize = 256;
         mech_info.flags        = mech_info.flags | CKF_DERIVE;
+        xResult                = CKR_OK;
+    }
+    else if (type == CKM_RSA_X_509) {
+        mech_info.ulMinKeySize = 1024;
+        mech_info.ulMaxKeySize = 4096;
+        mech_info.flags        = mech_info.flags | CKF_VERIFY;
         xResult                = CKR_OK;
     }
 
@@ -7165,5 +7194,105 @@ CK_DEFINE_FUNCTION(CK_RV, C_WaitForSlotEvent)
 
     return CKR_FUNCTION_NOT_SUPPORTED;
 }
+
+
+
+/**
+ * @brief Writes a file to local storage.
+ *
+ * Port-specific file write for crytographic information.
+ *
+ * @param[in] pxLabel       Label of the object to be saved.
+ * @param[in] pucData       Data buffer to be written to file
+ * @param[in] ulDataSize    Size (in bytes) of data to be saved.
+ *
+ * @return The file handle of the object that was stored.
+ */
+CK_OBJECT_HANDLE PKCS11_PAL_SaveObject( CK_ATTRIBUTE_PTR pxLabel,
+                                        CK_BYTE_PTR pucData,
+                                        CK_ULONG ulDataSize )
+{
+/*Function to be implemented if required*/
+    return 0;
+}
+
+/*-----------------------------------------------------------*/
+
+/**
+ * @brief Translates a PKCS #11 label into an object handle.
+ *
+ * Port-specific object handle retrieval.
+ *
+ *
+ * @param[in] pxLabel         Pointer to the label of the object
+ *                           who's handle should be found.
+ * @param[in] usLength       The length of the label, in bytes.
+ *
+ * @return The object handle if operation was successful.
+ * Returns eInvalidHandle if unsuccessful.
+ */
+CK_OBJECT_HANDLE PKCS11_PAL_FindObject( CK_BYTE_PTR pxLabel,
+                                        CK_ULONG usLength )
+{
+/*Function to be implemented if required*/
+    return 0;
+}
+
+
+CK_RV PKCS11_PAL_Initialize( void )
+{
+
+/*Function to be implemented if required*/
+    return 0;
+}
+
+/**
+* @brief Cleanup after PKCS11_GetObjectValue().
+*
+* @param[in] pucData       The buffer to free.
+*                          (*ppucData from PKCS11_PAL_GetObjectValue())
+* @param[in] ulDataSize    The length of the buffer to free.
+*                          (*pulDataSize from PKCS11_PAL_GetObjectValue())
+*/
+void PKCS11_PAL_GetObjectValueCleanup( uint8_t * pucData,
+    uint32_t ulDataSize )
+{
+
+}
+
+/**
+* @brief Gets the value of an object in storage, by handle.
+*
+* Port-specific file access for cryptographic information.
+*
+* This call dynamically allocates the buffer which object value
+* data is copied into.  PKCS11_PAL_GetObjectValueCleanup()
+* should be called after each use to free the dynamically allocated
+* buffer.
+*
+* @sa PKCS11_PAL_GetObjectValueCleanup
+*
+* @param[in] pcFileName    The name of the file to be read.
+* @param[out] ppucData     Pointer to buffer for file data.
+* @param[out] pulDataSize  Size (in bytes) of data located in file.
+* @param[out] pIsPrivate   Boolean indicating if value is private (CK_TRUE)
+*                          or exportable (CK_FALSE)
+*
+* @return CKR_OK if operation was successful.  CKR_KEY_HANDLE_INVALID if
+* no such object handle was found, CKR_DEVICE_MEMORY if memory for
+* buffer could not be allocated, CKR_FUNCTION_FAILED for device driver
+* error.
+*/
+CK_RV PKCS11_PAL_GetObjectValue( CK_OBJECT_HANDLE xHandle,
+    uint8_t ** ppucData,
+    uint32_t * pulDataSize,
+    CK_BBOOL * pIsPrivate )
+{
+    /*Function to be implemented if required*/
+    CK_RV xReturn = CKR_OK;
+    return xReturn;
+}
+
+
 
 #endif /* TGT_A71CH */

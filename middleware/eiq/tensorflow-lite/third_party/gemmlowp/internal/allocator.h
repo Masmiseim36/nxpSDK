@@ -39,6 +39,7 @@
 #ifndef GEMMLOWP_INTERNAL_ALLOCATOR_H_
 #define GEMMLOWP_INTERNAL_ALLOCATOR_H_
 
+#include "../public/config.h"
 #include "common.h"
 
 namespace gemmlowp {
@@ -86,19 +87,22 @@ class Allocator {
   }
 
   // Alignment of allocated blocks.
-  static const std::size_t kAlignment = kDefaultCacheLineSize;
+  static constexpr std::size_t kAlignment = kDefaultCacheLineSize;
 
   // This is all we need so far, and since the usage pattern is fixed,
   // there is no point in allowing more until we need to.
-  static const std::size_t kMaxBlocks = 5;
+  static constexpr std::size_t kMaxBlocks = 5;
 
   void Commit() {
     assert(!committed_);
 
     if (reserved_bytes_ > storage_size_) {
       DeallocateStorage();
-      storage_size_ = RoundUpToPowerOfTwo(reserved_bytes_);
+      storage_size_ = std::max(min_storage_size, reserved_bytes_);
       storage_ = aligned_alloc(kAlignment, storage_size_);
+#ifdef DEBUG
+      printf("INFO: Gemmlowp storage size: %d bytes\n", storage_size_);
+#endif
     }
 
     ReleaseBuildAssertion(!storage_size_ || storage_, "allocation failure");

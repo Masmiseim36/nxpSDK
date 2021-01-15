@@ -10,8 +10,8 @@
 #include "fsl_cache.h"
 
 #include "pin_mux.h"
-#include "board.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
@@ -31,7 +31,7 @@
 void FLEXSPI_NorFlash_GetConfig(flexspi_nor_config_t *config);
 void error_trap(void);
 void app_finalize(void);
-
+status_t FLEXSPI_NorFlash_GetVendorID(uint32_t instance, uint32_t *vendorID);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -127,10 +127,38 @@ void app_finalize(void)
     }
 }
 
+status_t FLEXSPI_NorFlash_GetVendorID(uint32_t instance, uint32_t *vendorID)
+{
+    uint32_t lut_seq[4];
+    memset(lut_seq, 0, sizeof(lut_seq));
+    // Read manufacturer ID
+    lut_seq[0] = FSL_ROM_FLEXSPI_LUT_SEQ(CMD_SDR, FLEXSPI_1PAD, 0x9F, READ_SDR, FLEXSPI_1PAD, 4);
+    ROM_FLEXSPI_NorFlash_UpdateLut(instance, NOR_CMD_LUT_SEQ_IDX_READID, (const uint32_t *)lut_seq, 1U);
+
+    flexspi_xfer_t xfer;
+    xfer.operation            = kFLEXSPIOperation_Read;
+    xfer.seqId                = NOR_CMD_LUT_SEQ_IDX_READID;
+    xfer.seqNum               = 1U;
+    xfer.baseAddress          = 0U;
+    xfer.isParallelModeEnable = false;
+    xfer.rxBuffer             = vendorID;
+    xfer.rxSize               = 1U;
+
+    uint32_t status = ROM_FLEXSPI_NorFlash_CommandXfer(instance, &xfer);
+    if (*vendorID != kSerialFlash_Winbond_ManufacturerID)
+    {
+        status = kStatus_ROM_FLEXSPINOR_Flash_NotFound;
+        return status;
+    }
+
+    return status;
+}
+
 int main(void)
 {
     status_t status;
-    uint32_t i = 0U;
+    uint32_t i        = 0U;
+    uint32_t vendorID = 0U;
     uint32_t serialNorAddress;        /* Address of the serial nor device location */
     uint32_t FlexSPISerialNorAddress; /* Address of the serial nor device in FLEXSPI memory */
     uint32_t serialNorTotalSize;
@@ -139,7 +167,7 @@ int main(void)
 
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
-    BOARD_InitBootClocks();
+    BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
     PRINTF("\r\n FLEXSPI NOR example started!\r\n");
@@ -158,6 +186,22 @@ int main(void)
     else
     {
         PRINTF("\r\n Erase sector failure !\r\n");
+        error_trap();
+    }
+
+    /* Perform software reset after initializing flexspi module */
+    ROM_FLEXSPI_NorFlash_ClearCache(FlexSpiInstance);
+
+    /*  Probe device presence by verifying Manufacturer ID */
+    status = FLEXSPI_NorFlash_GetVendorID(FlexSpiInstance, &vendorID);
+    if (status == kStatus_Success)
+    {
+        PRINTF("\r\n Serial flash has been found successfully\r\n ");
+        PRINTF("Vendor ID: 0x%x\r\n", vendorID);
+    }
+    else
+    {
+        PRINTF("\r\n Serial flash can not be found!\r\n");
         error_trap();
     }
 

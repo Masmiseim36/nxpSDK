@@ -12,6 +12,11 @@
 #include "srtm_config.h"
 #include "srtm_utils.h"
 
+#include "fsl_common.h"
+#if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
+#include "fsl_memory.h"
+#endif
+
 #include <xtensa/config/core.h>
 #include <xtensa/xos.h>
 #include "xaf-api.h"
@@ -19,7 +24,6 @@
 #include "fsl_gpio.h"
 
 #include "board_hifi4.h"
-#include "fsl_common.h"
 #include "fsl_inputmux.h"
 #include "fsl_dma.h"
 #include "pin_mux.h"
@@ -51,7 +55,9 @@ int srtm_src(dsp_handle_t *dsp, unsigned int *pCmdParams);
 int srtm_pcm_gain(dsp_handle_t *dsp, unsigned int *pCmdParams);
 int srtm_file_dec_create(dsp_handle_t *dsp, srtm_audio_component_t type);
 int srtm_capturer_gain_renderer_init(unsigned int *pCmdParams, bool i2s);
+#if XA_CLIENT_PROXY
 int client_proxy_filter(dsp_handle_t *dsp, int filterOn);
+#endif
 
 /*******************************************************************************
  * Variables
@@ -61,10 +67,6 @@ extern int NonCacheable_init_start, NonCacheable_init_end;
 
 dsp_handle_t dsp;
 static uint8_t dsp_thread_stack[DSP_THREAD_STACK_SIZE];
-
-int readBufferSize, writeBufferSize;
-int readBufferPtr, writeBufferPtr;
-int num_bytes_write, num_bytes_read;
 
 /*******************************************************************************
  * Code
@@ -155,9 +157,9 @@ static int handleMSG_GENERAL(dsp_handle_t *dsp, srtm_message *msg)
             // 3 NatureDSP Lib API version high 16 bits major, lower 16 bits minor
             msg->param[3] = ((4) << 16 | (10));
             // 4 MP3 Decoder version high 16 bits major, lower 16 bits minor
-            msg->param[4] = ((3) << 16 | (17));
+            msg->param[4] = ((3) << 16 | (18));
             // 5 AAC Decoder version high 16 bits major, lower 16 bits minor
-            msg->param[5] = ((3) << 16 | (6));
+            msg->param[5] = ((3) << 16 | (7));
             // 6 VORBIS Decoder version high 16 bits major, lower 16 bits minor
             msg->param[6] = ((1) << 16 | (12));
             // 7 OPUS Codec version high 16 bits major, lower 16 bits minor
@@ -180,6 +182,8 @@ static int handleMSG_GENERAL(dsp_handle_t *dsp, srtm_message *msg)
 
 static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
 {
+    char *remote_addr;
+
     switch (msg->head.command)
     {
         case SRTM_Command_MP3:
@@ -418,8 +422,15 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
                 DSP_PRINTF("File playback start, initial buffer size: %d\r\n", msg->param[1]);
                 /* Clear ringbuffer from previous playback */
                 ringbuf_clear(dsp->audioBuffer);
+
+#if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
+                remote_addr = (char *)MEMORY_ConvertMemoryMapAddress(msg->param[0], kMEMORY_Local2DMA);
+#else
+                remote_addr = (char *)msg->param[0];
+#endif
+
                 /* Write initial data chunk to the ringbuffer */
-                DSP_AudioWriteRing(dsp, (char *)msg->param[0], msg->param[1]);
+                DSP_AudioWriteRing(dsp, remote_addr, msg->param[1]);
                 /* Initialize pipeline */
                 dsp->eof         = msg->param[2];
                 dsp->ipc_waiting = false;
@@ -438,7 +449,13 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
             }
             else
             {
-                DSP_AudioWriteRing(dsp, (char *)msg->param[0], msg->param[1]);
+#if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
+                remote_addr = (char *)MEMORY_ConvertMemoryMapAddress(msg->param[0], kMEMORY_Local2DMA);
+#else
+                remote_addr = (char *)msg->param[0];
+#endif
+
+                DSP_AudioWriteRing(dsp, remote_addr, msg->param[1]);
                 /* Signal EOF to processing thread if set by remote */
                 if (msg->param[2])
                 {
@@ -462,9 +479,11 @@ static int handleMSG_AUDIO(dsp_handle_t *dsp, srtm_message *msg)
             }
             break;
 
+#if XA_CLIENT_PROXY
         case SRTM_Command_FilterCfg:
             msg->error = client_proxy_filter(dsp, msg->param[0]);
             break;
+#endif
 
         /* Unknown message. */
         default:
@@ -523,6 +542,7 @@ int DSP_Main(void *arg, int wake_value)
     dsp_handle_t *dsp = (dsp_handle_t *)arg;
     struct rpmsg_lite_ept_static_context ept_ctx;
     struct rpmsg_lite_instance rpmsg_ctx;
+    void *rpmsg_shmem_base;
     srtm_message msg;
     int status;
 
@@ -533,8 +553,13 @@ int DSP_Main(void *arg, int wake_value)
     dsp->rpmsg_queue = malloc(XOS_MSGQ_SIZE(10, sizeof(srtm_message)));
     xos_msgq_create(dsp->rpmsg_queue, 10, sizeof(srtm_message), XOS_MSGQ_WAIT_PRIORITY);
 
-    /* Initialize standard SDK demo application pins */
-    dsp->rpmsg = rpmsg_lite_remote_init((void *)RPMSG_LITE_SHMEM_BASE, RPMSG_LITE_LINK_ID, RL_NO_FLAGS, &rpmsg_ctx);
+#if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
+    rpmsg_shmem_base = (void *)MEMORY_ConvertMemoryMapAddress((uint32_t) RPMSG_LITE_SHMEM_BASE, kMEMORY_Local2DMA);
+#else
+    rpmsg_shmem_base = RPMSG_LITE_SHMEM_BASE;
+#endif
+
+    dsp->rpmsg = rpmsg_lite_remote_init(rpmsg_shmem_base, RPMSG_LITE_LINK_ID, RL_NO_FLAGS, &rpmsg_ctx);
 
     while (!rpmsg_lite_is_link_up(dsp->rpmsg))
     {

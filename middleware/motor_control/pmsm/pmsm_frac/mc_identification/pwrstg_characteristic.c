@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,9 +32,9 @@ void MID_GetTransferCharacteristic(mid_get_char_a1_t *sTransferCharFcn)
     frac32_t f32IdfbckFilt, f32Rs;
 
     /* Initialisation */
-    if (sTransferCharFcn->ui16Active == 0)
+    if (sTransferCharFcn->ui16Active == 0U)
     {
-        sTransferCharFcn->ui16Active             = TRUE;
+        sTransferCharFcn->ui16Active             = 1U;
         sTransferCharFcn->ui16LoopCounter        = 0;
         sTransferCharFcn->f16IdReqActual         = MLIB_Neg_F16(sTransferCharFcn->f16IdCalib);
         *(sTransferCharFcn->pf16IdReq)           = sTransferCharFcn->f16IdReqActual;
@@ -58,17 +58,17 @@ void MID_GetTransferCharacteristic(mid_get_char_a1_t *sTransferCharFcn)
         /* Faults */
         /* Check if Rs is low enough to reach 2A */
         if ((MLIB_Abs_F16(*(sTransferCharFcn->pf16Idfbck)) < (sTransferCharFcn->f16IdCalib - M1_K_I_50MA)) &&
-            (sTransferCharFcn->ui16LUTIndex == 0))
+            (sTransferCharFcn->ui16LUTIndex == 0U))
         {
             ui16FaultMID |= MID_FAULT_TOO_HIGH_RS;
-            sTransferCharFcn->ui16Active   = FALSE;
+            sTransferCharFcn->ui16Active   = 0U;
             *(sTransferCharFcn->pf16IdReq) = FRAC16(0.0);
         }
         /* Check if motor is connected */
-        if ((MLIB_Abs_F16(*(sTransferCharFcn->pf16Idfbck)) < M1_K_I_50MA) && (sTransferCharFcn->ui16LUTIndex == 0))
+        if ((MLIB_Abs_F16(*(sTransferCharFcn->pf16Idfbck)) < M1_K_I_50MA) && (sTransferCharFcn->ui16LUTIndex == 0U))
         {
             ui16FaultMID |= MID_FAULT_NO_MOTOR;
-            sTransferCharFcn->ui16Active   = FALSE;
+            sTransferCharFcn->ui16Active   = 0U;
             *(sTransferCharFcn->pf16IdReq) = FRAC16(0.0);
         }
 
@@ -95,7 +95,7 @@ void MID_GetTransferCharacteristic(mid_get_char_a1_t *sTransferCharFcn)
         /* End after last current was measured */
         if (sTransferCharFcn->ui16LUTIndex >= M1_CHAR_CURRENT_POINT_NUMBERS)
         {
-            sTransferCharFcn->ui16Active   = FALSE;
+            sTransferCharFcn->ui16Active   = 0U;
             *(sTransferCharFcn->pf16IdReq) = FRAC16(0.0);
         }
     }

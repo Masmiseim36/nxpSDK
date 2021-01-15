@@ -20,25 +20,26 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief SEMC driver version 2.2.0. */
-#define FSL_SEMC_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+/*! @brief SEMC driver version 2.3.1. */
+#define FSL_SEMC_DRIVER_VERSION (MAKE_VERSION(2, 3, 1))
 /*@}*/
 
 /*! @brief SEMC status, _semc_status. */
 enum
 {
-    kStatus_SEMC_InvalidDeviceType            = MAKE_STATUS(kStatusGroup_SEMC, 0),
-    kStatus_SEMC_IpCommandExecutionError      = MAKE_STATUS(kStatusGroup_SEMC, 1),
-    kStatus_SEMC_AxiCommandExecutionError     = MAKE_STATUS(kStatusGroup_SEMC, 2),
-    kStatus_SEMC_InvalidMemorySize            = MAKE_STATUS(kStatusGroup_SEMC, 3),
-    kStatus_SEMC_InvalidIpcmdDataSize         = MAKE_STATUS(kStatusGroup_SEMC, 4),
-    kStatus_SEMC_InvalidAddressPortWidth      = MAKE_STATUS(kStatusGroup_SEMC, 5),
-    kStatus_SEMC_InvalidDataPortWidth         = MAKE_STATUS(kStatusGroup_SEMC, 6),
-    kStatus_SEMC_InvalidSwPinmuxSelection     = MAKE_STATUS(kStatusGroup_SEMC, 7),
-    kStatus_SEMC_InvalidBurstLength           = MAKE_STATUS(kStatusGroup_SEMC, 8),
+    kStatus_SEMC_InvalidDeviceType        = MAKE_STATUS(kStatusGroup_SEMC, 0), /*!< Invalid device type. */
+    kStatus_SEMC_IpCommandExecutionError  = MAKE_STATUS(kStatusGroup_SEMC, 1), /*!< IP command execution error. */
+    kStatus_SEMC_AxiCommandExecutionError = MAKE_STATUS(kStatusGroup_SEMC, 2), /*!< AXI command execution error. */
+    kStatus_SEMC_InvalidMemorySize        = MAKE_STATUS(kStatusGroup_SEMC, 3), /*!< Invalid memory sie. */
+    kStatus_SEMC_InvalidIpcmdDataSize     = MAKE_STATUS(kStatusGroup_SEMC, 4), /*!< Invalid IP command data size. */
+    kStatus_SEMC_InvalidAddressPortWidth  = MAKE_STATUS(kStatusGroup_SEMC, 5), /*!< Invalid address port width. */
+    kStatus_SEMC_InvalidDataPortWidth     = MAKE_STATUS(kStatusGroup_SEMC, 6), /*!< Invalid data port width. */
+    kStatus_SEMC_InvalidSwPinmuxSelection = MAKE_STATUS(kStatusGroup_SEMC, 7), /*!< Invalid SW pinmux selection. */
+    kStatus_SEMC_InvalidBurstLength       = MAKE_STATUS(kStatusGroup_SEMC, 8), /*!< Invalid burst length */
+    /*! Invalid column address bit width. */
     kStatus_SEMC_InvalidColumnAddressBitWidth = MAKE_STATUS(kStatusGroup_SEMC, 9),
-    kStatus_SEMC_InvalidBaseAddress           = MAKE_STATUS(kStatusGroup_SEMC, 10),
-    kStatus_SEMC_InvalidTimerSetting          = MAKE_STATUS(kStatusGroup_SEMC, 11),
+    kStatus_SEMC_InvalidBaseAddress           = MAKE_STATUS(kStatusGroup_SEMC, 10), /*!< Invalid base address. */
+    kStatus_SEMC_InvalidTimerSetting          = MAKE_STATUS(kStatusGroup_SEMC, 11), /*!< Invalid timer setting. */
 };
 
 /*! @brief SEMC memory device type. */
@@ -76,15 +77,15 @@ typedef enum _semc_sram_cs
     kSEMC_SRAM_CS2,     /*!< SEMC SRAM CS2. */
     kSEMC_SRAM_CS3      /*!< SEMC SRAM CS3. */
 #else
-    kSEMC_SRAM_CS0 = 0, /*!< SEMC SRAM CS0. */
+    kSEMC_SRAM_CS0        = 0, /*!< SEMC SRAM CS0. */
 #endif /* FSL_FEATURE_SEMC_SUPPORT_SRAM_COUNT */
 } semc_sram_cs_t;
 
 /*! @brief SEMC NAND device type. */
 typedef enum _semc_nand_access_type
 {
-    kSEMC_NAND_ACCESS_BY_AXI = 0,
-    kSEMC_NAND_ACCESS_BY_IPCMD,
+    kSEMC_NAND_ACCESS_BY_AXI = 0, /*!< Access to NAND flash by AXI bus. */
+    kSEMC_NAND_ACCESS_BY_IPCMD,   /*!< Access to NAND flash by IP bus. */
 } semc_nand_access_type_t;
 
 /*! @brief SEMC interrupts . */
@@ -128,15 +129,24 @@ typedef enum _semc_sdram_column_bit_num
     kSEMC_SdramColunm_11bit,        /*!< 11 bit. */
     kSEMC_SdramColunm_10bit,        /*!< 10 bit. */
     kSEMC_SdramColunm_9bit,         /*!< 9 bit. */
+#if defined(FSL_FEATURE_SEMC_SDRAM_SUPPORT_COLUMN_ADDRESS_8BIT) && (FSL_FEATURE_SEMC_SDRAM_SUPPORT_COLUMN_ADDRESS_8BIT)
+    kSEMC_SdramColunm_8bit, /*!< 8 bit. */
+#endif                      /* FSL_FEATURE_SEMC_SDRAM_SUPPORT_COLUMN_ADDRESS_8BIT */
 } semc_sdram_column_bit_num_t;
 
 /*! @brief SEMC sdram burst length. */
 typedef enum _semc_sdram_burst_len
 {
+/*! According to ERR050577, Auto-refresh command may possibly fail to be triggered during
+    long time back-to-back write (or read) when SDRAM controller's burst length is greater than 1. */
+#if defined(FSL_FEATURE_SEMC_ERRATA_050577) && (FSL_FEATURE_SEMC_ERRATA_050577 == 0x01U)
+    kSEMC_Sdram_BurstLen1 = 0, /*!< Burst length 1*/
+#else
     kSEMC_Sdram_BurstLen1 = 0, /*!< Burst length 1*/
     kSEMC_Sdram_BurstLen2,     /*!< Burst length 2*/
     kSEMC_Sdram_BurstLen4,     /*!< Burst length 4*/
     kSEMC_Sdram_BurstLen8      /*!< Burst length 8*/
+#endif /* FSL_FEATURE_SEMC_ERRATA_050577 */
 } sem_sdram_burst_len_t;
 
 /*! @brief SEMC nand column address bit number. */
@@ -244,7 +254,7 @@ typedef enum _semc_port_size
 {
     kSEMC_PortSize8Bit = 0, /*!< 8-Bit port size. */
     kSEMC_PortSize16Bit,    /*!< 16-Bit port size. */
-#if defined(FSL_FEATURE_SEMC_SUPPORT_SDRAM_PS_BITWIDTH) && (FSL_FEATURE_SEMC_SUPPORT_SDRAM_PS_BITWIDTH == 0X02U)
+#if defined(FSL_FEATURE_SEMC_SUPPORT_SDRAM_PS_BITWIDTH) && (FSL_FEATURE_SEMC_SUPPORT_SDRAM_PS_BITWIDTH == 0x02U)
     kSEMC_PortSize32Bit /*!< 32-Bit port size. */
 #endif                  /* FSL_FEATURE_SEMC_SUPPORT_SDRAM_PS_BITWIDTH */
 } smec_port_size_t;
@@ -575,7 +585,9 @@ typedef union _semc_queueb_weight
 /*! @brief SEMC AXI queue weight setting. */
 typedef struct _semc_axi_queueweight
 {
+    bool queueaEnable;                 /*!< Enable queue a. */
     semc_queuea_weight_t queueaWeight; /*!< Weight settings for queue a. */
+    bool queuebEnable;                 /*!< Enable queue b. */
     semc_queueb_weight_t queuebWeight; /*!< Weight settings for queue b. */
 } semc_axi_queueweight_t;
 

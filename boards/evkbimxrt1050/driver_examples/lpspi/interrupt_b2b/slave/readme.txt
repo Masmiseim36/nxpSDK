@@ -10,10 +10,10 @@ This example does not use the transactional API in LPSPI driver. It's a demonstr
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -29,12 +29,12 @@ SPI one board:
 Transfer data from one board instance to another board's instance.
 SPI0 pins are connected with SPI0 pins of another board
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-INSTANCE0(SPI0)     CONNECTS TO         INSTANCE0(SPI0)
+INSTANCE1(LPSPI1)     CONNECTS TO         INSTANCE1(LPSPI1)
 Pin Name   Board Location     Pin Name  Board Location
-SOUT        J24 pin 9           SIN       J24 pin 2
-SIN         J24 pin 2           SOUT      J24 pin 9
-SCK         J24 pin 10          SCK       J24 pin 10
-PCS0        J24 pin 1           PCS0      J24 pin 1 
+SOUT        J24 pin 4           SIN       J24 pin 5
+SIN         J24 pin 5           SOUT      J24 pin 4
+SCK         J24 pin 6           SCK       J24 pin 6
+PCS0        J24 pin 3           PCS0      J24 pin 3
 GND         J24 pin 7           GND       J24 pin 7
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -68,6 +68,3 @@ LPSPI transfer all data matched!
  30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F
 End of slave example! 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

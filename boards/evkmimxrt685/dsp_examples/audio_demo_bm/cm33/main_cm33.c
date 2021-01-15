@@ -8,10 +8,10 @@
 #include "dsp_support.h"
 #include "fsl_debug_console.h"
 
-#include "board.h"
-#include "clock_config.h"
 #include "fsl_wm8904.h"
 #include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 #include "fsl_codec_common.h"
 #include "fsl_codec_adapter.h"
 #include "fsl_power.h"
@@ -60,7 +60,11 @@ int BOARD_CODEC_Init(void)
 
     /* Initial volume kept low for hearing safety. */
     /* Adjust it to your needs, 0x0006 for -51 dB, 0x0039 for 0 dB etc. */
-    CODEC_SetVolume(&g_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 0x0020);
+    if (CODEC_SetVolume(&g_codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 0x0020) !=
+        kStatus_Success)
+    {
+        return -1;
+    }
 
     return 0;
 }
@@ -69,8 +73,6 @@ int BOARD_CODEC_Init(void)
  */
 int main(void)
 {
-    PRINTF("\r\nAudio demo started. Initialize pins and codec on core 'Cortex-M33'\r\n");
-
     /* Initialize standard SDK demo application pins */
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
@@ -105,6 +107,8 @@ int main(void)
     SYSCTL1->SHAREDCTRLSET[0] = SYSCTL1_SHAREDCTRLSET_SHAREDSCKSEL(1) | SYSCTL1_SHAREDCTRLSET_SHAREDWSSEL(1);
     /* Set flexcomm3 SCK, WS from shared signal set 0 */
     SYSCTL1->FCCTRLSEL[3] = SYSCTL1_FCCTRLSEL_SCKINSEL(1) | SYSCTL1_FCCTRLSEL_WSINSEL(1);
+
+    PRINTF("\r\nAudio demo started. Initialize pins and codec on core 'Cortex-M33'\r\n");
 
     BOARD_CODEC_Init();
 

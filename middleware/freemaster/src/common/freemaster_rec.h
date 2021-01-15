@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -30,17 +30,17 @@
 *  global recorder types
 ***********************************/
 /* Recorder variable trigger mode settings */
-#define FMSTR_REC_TRG_TYPE_MASK         0x03        /* Recorder trigger type - bit mask */
-#define FMSTR_REC_TRG_TYPE_NO_TRIGGER   0x00        /* Not used as trigger */
-#define FMSTR_REC_TRG_TYPE_UINT         0x01        /* Recorder trigger type - unsigned integer */
-#define FMSTR_REC_TRG_TYPE_SINT         0x02        /* Recorder trigger type - signed integer */
-#define FMSTR_REC_TRG_TYPE_FLOAT        0x03        /* Recorder trigger type - float */
+#define FMSTR_REC_TRG_TYPE_MASK         0x03U        /* Recorder trigger type - bit mask */
+#define FMSTR_REC_TRG_TYPE_NO_TRIGGER   0x00U        /* Not used as trigger */
+#define FMSTR_REC_TRG_TYPE_UINT         0x01U        /* Recorder trigger type - unsigned integer */
+#define FMSTR_REC_TRG_TYPE_SINT         0x02U        /* Recorder trigger type - signed integer */
+#define FMSTR_REC_TRG_TYPE_FLOAT        0x03U        /* Recorder trigger type - float */
 
-#define FMSTR_REC_TRG_F_TRGONLY         0x04    /* Recorder trigger configuration - variable is used just for triggering */
-#define FMSTR_REC_TRG_F_ABOVE           0x10    /* Recorder trigger configuration - trigger is active for threshold above results */
-#define FMSTR_REC_TRG_F_BELOW           0x20    /* Recorder trigger configuration - trigger is active for threshold below results */
-#define FMSTR_REC_TRG_F_LEVEL           0x40    /* Recorder trigger configuration - trigger is level active, otherwise edge */
-#define FMSTR_REC_TRG_F_VARTHR          0x80    /* Recorder trigger configuration - trigger has fixed threshold value */
+#define FMSTR_REC_TRG_F_TRGONLY         0x04U    /* Recorder trigger configuration - variable is used just for triggering */
+#define FMSTR_REC_TRG_F_ABOVE           0x10U    /* Recorder trigger configuration - trigger is active for threshold above results */
+#define FMSTR_REC_TRG_F_BELOW           0x20U    /* Recorder trigger configuration - trigger is active for threshold below results */
+#define FMSTR_REC_TRG_F_LEVEL           0x40U    /* Recorder trigger configuration - trigger is level active, otherwise edge */
+#define FMSTR_REC_TRG_F_VARTHR          0x80U    /* Recorder trigger configuration - trigger has fixed threshold value */
 
 #ifdef __cplusplus
   extern "C" {

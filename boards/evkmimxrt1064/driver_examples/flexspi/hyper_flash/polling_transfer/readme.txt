@@ -10,10 +10,10 @@ the sector data. At last check if the data read back is correct.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -28,7 +28,7 @@ Mount R356,R361,R362,R363,R364,R365,R366 and DNP R153,R154,R155,R156,R157,R158.
 
 Prepare the Demo
 ================
-1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
+1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
 2.  Open a serial terminal with the following settings:
     - 115200 baud rate
     - 8 data bits
@@ -44,13 +44,30 @@ When the example runs successfully, you can see the similar information from the
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 FLEXSPI hyperflash example started!
-Entering the ASO mode
 Found the HyperFlash by CFI
-Erasing Serial NOR over FlexSPI...
-Erase data - successfully.
-Program data - successfully.
+loop nummber: 0
+loop nummber: 1
+loop nummber: 2
+loop nummber: 3
+loop nummber: 4
+loop nummber: 5
+FLEXSPI hyperflash example successfully.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
 
+
+For ram/sdram targets, the result is:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FLEXSPI hyperflash example started!
+Found the HyperFlash by CFI
+Erasing whole chip over FlexSPI...
+Erase finished !
+loop nummber: 0
+loop nummber: 1
+loop nummber: 2
+loop nummber: 3
+loop nummber: 4
+loop nummber: 5
+FLEXSPI hyperflash example successfully.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -19,9 +19,11 @@
  * Definitions
  ******************************************************************************/
 /*!@brief codec handler size */
-#define HAL_CODEC_HANDLER_SIZE (WM8960_I2C_HANDLER_SIZE + 4)
-/*! @brief codec type */
-enum _codec_type
+#define HAL_CODEC_HANDLER_SIZE (WM8960_I2C_HANDLER_SIZE + 4U)
+/*! @brief codec type
+ * @anchor _codec_type
+ */
+enum
 {
     kCODEC_WM8960, /*!< wm8960 */
 };

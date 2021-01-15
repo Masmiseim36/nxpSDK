@@ -17,6 +17,7 @@
 #include "fsl_nand_disk.h"
 #include "fsl_nand_flash.h"
 #include "map.h"
+#include "dhara_nand_config.h"
 
 /*******************************************************************************
  * Definitons

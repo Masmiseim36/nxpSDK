@@ -19,14 +19,15 @@
  * Definitions
  ******************************************************************************/
 /*!@brief transfer event */
-#define SDMMC_OSA_EVENT_TRANSFER_CMD_SUCCESS  (1U << 0U)
-#define SDMMC_OSA_EVENT_TRANSFER_CMD_FAIL     (1U << 1U)
-#define SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS (1U << 2U)
-#define SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL    (1U << 3U)
+#define SDMMC_OSA_EVENT_TRANSFER_CMD_SUCCESS  (1UL << 0U)
+#define SDMMC_OSA_EVENT_TRANSFER_CMD_FAIL     (1UL << 1U)
+#define SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS (1UL << 2U)
+#define SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL    (1UL << 3U)
+#define SDMMC_OSA_EVENT_TRANSFER_DMA_COMPLETE (1UL << 4U)
 
 /*!@brief card detect event, start from index 8 */
-#define SDMMC_OSA_EVENT_CARD_INSERTED (1U << 8U)
-#define SDMMC_OSA_EVENT_CARD_REMOVED  (1U << 9U)
+#define SDMMC_OSA_EVENT_CARD_INSERTED (1UL << 8U)
+#define SDMMC_OSA_EVENT_CARD_REMOVED  (1UL << 9U)
 
 /*!@brief enable semphore by default */
 #ifndef SDMMC_OSA_POLLING_EVENT_BY_SEMPHORE
@@ -89,11 +90,11 @@ status_t SDMMC_OSAEventSet(void *eventHandle, uint32_t eventType);
 /*!
  * @brief Get event flag.
  * @param eventHandle event handle.
- * @param mask event mask.
+ * @param eventType event type.
  * @param flag pointer to store event value.
  * @retval kStatus_Fail or kStatus_Success.
  */
-status_t SDMMC_OSAEventGet(void *eventHandle, uint32_t mask, uint32_t *flag);
+status_t SDMMC_OSAEventGet(void *eventHandle, uint32_t eventType, uint32_t *flag);
 
 /*!
  * @brief clear event flag.

@@ -501,16 +501,24 @@ lowpan6_decompress_hdr(u8_t *lowpan6_buffer, size_t lowpan6_bufsize,
     if ((lowpan6_buffer[1] & 0x30) == 0x00) {
       LWIP_DEBUGF(LWIP_LOWPAN6_DECOMPRESSION_DEBUG, ("SAM == 00, no src compression, fetching 128bits inline\n"));
       /* copy full address, increase offset by 16 Bytes */
-      MEMCPY(&ip6hdr->src.addr[0], lowpan6_buffer + lowpan6_offset, 16);
-      lowpan6_offset += 16;
+      ip6hdr->src.addr[0] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->src.addr[1] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->src.addr[2] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->src.addr[3] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
     } else if ((lowpan6_buffer[1] & 0x30) == 0x10) {
       LWIP_DEBUGF(LWIP_LOWPAN6_DECOMPRESSION_DEBUG, ("SAM == 01, src compression, 64bits inline\n"));
       /* set 64 bits to link local */
       ip6hdr->src.addr[0] = PP_HTONL(0xfe800000UL);
       ip6hdr->src.addr[1] = 0;
       /* copy 8 Bytes, increase offset */
-      MEMCPY(&ip6hdr->src.addr[2], lowpan6_buffer + lowpan6_offset, 8);
-      lowpan6_offset += 8;
+      ip6hdr->src.addr[2] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->src.addr[3] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
     } else if ((lowpan6_buffer[1] & 0x30) == 0x20) {
       LWIP_DEBUGF(LWIP_LOWPAN6_DECOMPRESSION_DEBUG, ("SAM == 10, src compression, 16bits inline\n"));
       /* set 96 bits to link local */
@@ -573,9 +581,11 @@ lowpan6_decompress_hdr(u8_t *lowpan6_buffer, size_t lowpan6_bufsize,
     /* determine further address bits */
     if ((lowpan6_buffer[1] & 0x30) == 0x10) {
       /* SAM=01, load additional 64bits */
-      MEMCPY(&ip6hdr->src.addr[2], lowpan6_buffer + lowpan6_offset, 8);
+      ip6hdr->src.addr[2] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->src.addr[3] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
       LWIP_DEBUGF(LWIP_LOWPAN6_DECOMPRESSION_DEBUG, ("SAM == 01, context compression, 64bits inline\n"));
-      lowpan6_offset += 8;
     } else if ((lowpan6_buffer[1] & 0x30) == 0x20) {
       /* SAM=01, load additional 16bits */
       ip6hdr->src.addr[2] = PP_HTONL(0x000000ffUL);
@@ -612,8 +622,14 @@ lowpan6_decompress_hdr(u8_t *lowpan6_buffer, size_t lowpan6_bufsize,
     if ((lowpan6_buffer[1] & 0x03) == 0x00) {
       /* DAM = 00, copy full address (128bits) */
       LWIP_DEBUGF(LWIP_LOWPAN6_DECOMPRESSION_DEBUG, ("DAM == 00, no dst compression, fetching 128bits inline\n"));
-      MEMCPY(&ip6hdr->dest.addr[0], lowpan6_buffer + lowpan6_offset, 16);
-      lowpan6_offset += 16;
+      ip6hdr->dest.addr[0] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->dest.addr[1] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->dest.addr[2] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->dest.addr[3] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
     } else if ((lowpan6_buffer[1] & 0x03) == 0x01) {
       /* DAM = 01, copy 4 bytes (32bits) */
       LWIP_DEBUGF(LWIP_LOWPAN6_DECOMPRESSION_DEBUG, ("DAM == 01, dst address form (48bits): ffXX::00XX:XXXX:XXXX\n"));
@@ -669,13 +685,21 @@ lowpan6_decompress_hdr(u8_t *lowpan6_buffer, size_t lowpan6_bufsize,
     if ((lowpan6_buffer[1] & 0x03) == 0x00) {
       LWIP_DEBUGF(LWIP_LOWPAN6_DECOMPRESSION_DEBUG, ("DAM == 00, no dst compression, fetching 128bits inline"));
       /* DAM=00, copy full address */
-      MEMCPY(&ip6hdr->dest.addr[0], lowpan6_buffer + lowpan6_offset, 16);
-      lowpan6_offset += 16;
+      ip6hdr->dest.addr[0] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->dest.addr[1] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->dest.addr[2] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->dest.addr[3] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
     } else if ((lowpan6_buffer[1] & 0x03) == 0x01) {
       LWIP_DEBUGF(LWIP_LOWPAN6_DECOMPRESSION_DEBUG, ("DAM == 01, dst compression, 64bits inline\n"));
       /* DAM=01, copy 64 inline bits, increase offset */
-      MEMCPY(&ip6hdr->dest.addr[2], lowpan6_buffer + lowpan6_offset, 8);
-      lowpan6_offset += 8;
+      ip6hdr->dest.addr[2] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
+      ip6hdr->dest.addr[3] = *((u32_t *)(lowpan6_buffer + lowpan6_offset));
+      lowpan6_offset += 4;
     } else if ((lowpan6_buffer[1] & 0x03) == 0x02) {
       LWIP_DEBUGF(LWIP_LOWPAN6_DECOMPRESSION_DEBUG, ("DAM == 01, dst compression, 16bits inline\n"));
       /* DAM=10, copy 16 inline bits, increase offset */

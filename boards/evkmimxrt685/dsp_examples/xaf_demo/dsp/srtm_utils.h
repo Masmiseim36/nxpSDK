@@ -39,6 +39,7 @@ typedef struct _dsp_handle_t
 
     void *audio_device;
     void *comp_codec;
+    void *comp_src;
     void *comp_renderer;
     void *comp_client_proxy;
     void *comp;
@@ -81,5 +82,6 @@ uint32_t DSP_AudioWriteRing(dsp_handle_t *dsp, char *data, uint32_t size);
 int DSP_ProcessThread(void *arg, int wake_value);
 int DSP_BufferThread(void *arg, int wake_value);
 void DSP_SendFileEnd(dsp_handle_t *dsp);
+void DSP_SendFileError(dsp_handle_t *dsp);
 
 #endif /* __SRTM_UTILS_H__ */

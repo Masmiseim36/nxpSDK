@@ -180,10 +180,10 @@ typedef struct XARenderer
  ******************************************************************************/
 
 /* DMA descriptors for data tranfers */
-#ifdef CPU_MIMXRT595SFFOA_dsp
-SDK_ALIGN(
-#else
+#if (XCHAL_DCACHE_SIZE > 0)
 AT_NONCACHEABLE_SECTION_ALIGN(
+#else
+SDK_ALIGN(
 #endif
     static dma_descriptor_t s_dmaDescriptorPingpongI2S[MAX_DMA_TRANSFER_PER_FRAME * 2 * MAX_RENDERERS], 16
 );
@@ -309,13 +309,18 @@ int TxRenderCallback(void *arg, int wake_value)
 #endif
 {
     XARenderer *d = (XARenderer*) arg;
+    int32_t err = XOS_OK;
 
     while (1)
     {
 #ifdef HAVE_FREERTOS
         xTaskNotifyWait(pdFALSE, 0xffffff, NULL, portMAX_DELAY);
 #else
-        xos_sem_get(&d->irq_sem);
+        err = xos_sem_get(&d->irq_sem);
+        if(err == XOS_ERR_INVALID_PARAMETER)
+        {
+            return -1;
+        }
 #endif
 
         /* ...zero out buffer just completed */
@@ -783,9 +788,14 @@ static XA_ERRORCODE xa_renderer_set_config_param(XARenderer *d, WORD32 i_idx, pV
         XF_CHK_ERR((d->state & XA_RENDERER_FLAG_POSTINIT_DONE) == 0, XA_RENDERER_CONFIG_FATAL_STATE);
         /* ...get requested sampling rate */
         i_value = (UWORD32) *(WORD32 *)pv_value;
-        /* ...allow 8, 16, 24, 32, 48, 11,025, 22,05, 44,1 kHz */
-        XF_CHK_ERR(i_value == 48000 || i_value == 44100 || i_value == 32000 || i_value == 24000 || i_value == 22050 || i_value == 16000 || i_value == 11025 || i_value == 8000,
+#ifdef I2S_SUPPORT_44100_HZ
+        /* ...allow 11,025, 22,05, 44,1 kHz */
+        XF_CHK_ERR(i_value == 44100 || i_value == 22050 || i_value == 11025, XA_RENDERER_CONFIG_NONFATAL_RANGE);
+#else
+        /* ...allow 8, 16, 24, 32, 48 kHz */
+        XF_CHK_ERR(i_value == 48000 || i_value == 32000 || i_value == 24000 || i_value == 16000 || i_value == 8000,
                    XA_RENDERER_CONFIG_NONFATAL_RANGE);
+#endif
         /* ...apply setting */
         d->rate = (UWORD32)i_value;
 

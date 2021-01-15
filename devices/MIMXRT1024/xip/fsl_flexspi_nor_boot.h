@@ -10,11 +10,12 @@
 
 #include <stdint.h>
 #include "board.h"
+#include "fsl_common.h"
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief XIP_DEVICE driver version 2.0.1. */
-#define FSL_XIP_DEVICE_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief XIP_DEVICE driver version 2.0.2. */
+#define FSL_XIP_DEVICE_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*************************************

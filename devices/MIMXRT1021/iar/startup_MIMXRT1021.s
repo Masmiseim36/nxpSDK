@@ -4,7 +4,7 @@
 ;            MIMXRT1021
 ;  @version: 1.1
 ;  @date:    2019-4-29
-;  @build:   b200319
+;  @build:   b201123
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
@@ -117,7 +117,7 @@ __vector_table_0x1c
         DCD     WDOG2_IRQHandler                              ;WDOG2 interrupt
         DCD     SNVS_HP_WRAPPER_IRQHandler                    ;SNVS Functional Interrupt
         DCD     SNVS_HP_WRAPPER_TZ_IRQHandler                 ;SNVS Security Interrupt
-        DCD     SNVS_LP_WRAPPER_IRQHandler                    ;ON-OFF button press shorter than 5 secs (pulse event)
+        DCD     SNVS_LP_HP_WRAPPER_IRQHandler                 ;ON-OFF button press shorter than 5 secs (pulse event)
         DCD     CSU_IRQHandler                                ;CSU interrupt
         DCD     DCP_IRQHandler                                ;Combined DCP channel interrupts(except channel 0) and CRC interrupt
         DCD     DCP_VMI_IRQHandler                            ;IRQ of DCP channel 0
@@ -639,7 +639,7 @@ CAN2_IRQHandler
         PUBWEAK WDOG2_IRQHandler
         PUBWEAK SNVS_HP_WRAPPER_IRQHandler
         PUBWEAK SNVS_HP_WRAPPER_TZ_IRQHandler
-        PUBWEAK SNVS_LP_WRAPPER_IRQHandler
+        PUBWEAK SNVS_LP_HP_WRAPPER_IRQHandler
         PUBWEAK CSU_IRQHandler
         PUBWEAK DCP_IRQHandler
         PUBWEAK DCP_VMI_IRQHandler
@@ -849,7 +849,7 @@ Reserved60_IRQHandler
 WDOG2_IRQHandler
 SNVS_HP_WRAPPER_IRQHandler
 SNVS_HP_WRAPPER_TZ_IRQHandler
-SNVS_LP_WRAPPER_IRQHandler
+SNVS_LP_HP_WRAPPER_IRQHandler
 CSU_IRQHandler
 DCP_IRQHandler
 DCP_VMI_IRQHandler

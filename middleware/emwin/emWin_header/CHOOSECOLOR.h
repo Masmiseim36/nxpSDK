@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -61,8 +61,15 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 */
 #define CHOOSECOLOR_CF_MOVEABLE FRAMEWIN_CF_MOVEABLE
 
-#define CHOOSECOLOR_CI_FRAME 0
-#define CHOOSECOLOR_CI_FOCUS 1
+/*********************************************************************
+*
+*       CHOOSECOLOR color indexes
+*
+*  Description
+*    Color indexes used by the CHOOSECOLOR dialog.
+*/
+#define CHOOSECOLOR_CI_FRAME 0    // Color to be used to draw the frame surrounding each color. Default is GUI_GRAY.
+#define CHOOSECOLOR_CI_FOCUS 1    // Color to be used to draw the focus rectangle. Default is GUI_BLACK.
 
 /*********************************************************************
 *

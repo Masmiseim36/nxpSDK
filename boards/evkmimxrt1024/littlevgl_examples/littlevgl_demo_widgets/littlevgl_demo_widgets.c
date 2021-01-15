@@ -10,12 +10,12 @@
 
 #include "fsl_debug_console.h"
 #include "littlevgl_support.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "lvgl.h"
 #include "lv_examples/src/lv_demo_widgets/lv_demo_widgets.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_edma.h"
 #include "fsl_dmamux.h"
 /*******************************************************************************

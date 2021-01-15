@@ -2,26 +2,10 @@
  *
  *  @brief main file
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2020 NXP
+ *  All rights reserved.
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
- *
+ *  SPDX-License-Identifier: BSD-3-Clause
  */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -29,6 +13,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // SDK Included Files
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
@@ -54,8 +40,6 @@
 #include <wm_os.h>
 #include "dhcp-server.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_sdmmc_host.h"
 #include "lwiperf.h"
 #include "lwip/tcpip.h"
@@ -81,8 +65,6 @@ const int TASK_MAIN_STACK_SIZE = 800;
 portSTACK_TYPE *task_main_stack = NULL;
 TaskHandle_t task_main_task_handler;
 TimerHandle_t timer;
-
-#define LINK_LOSS_DISCONNECT_TIMEOUT 120000 /* 2 minutes */
 
 static void timer_poll_udp_client(TimerHandle_t timer);
 
@@ -384,6 +366,11 @@ static void menuPrintInfo(void)
     }
 }
 
+static void menuPrintDHCPServerInfo()
+{
+    dhcp_stat();
+}
+
 static void menuSeparator(void)
 {
     printSeparator();
@@ -599,6 +586,7 @@ menu_item_t menuItems[] = {
     {'d', menuDEEPSLEEPON, "Enable Deep sleep on Station"},
     {'e', menuDEEPSLEEPOFF, "Disable Deep sleep on Station"},
     {'p', menuPrintInfo, "Print All Network info"},
+    {'P', menuPrintDHCPServerInfo, "Print DHCP Server info"},
     {'1', menuTCPServer, "TCP server mode (RX only test)"},
     {'2', menuTCPClient, "TCP client mode (TX only test)"},
     {'3', menuTCPClientDualMode, "TCP client dual mode (TX and RX in parallel)"},
@@ -680,10 +668,6 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
     struct wlan_ip_config addr;
     char ip[16];
     static int auth_fail = 0;
-    int ret;
-    uint8_t network_name_len = 0;
-    uint8_t ssid_len         = 0;
-    uint8_t psk_len          = 0;
 
     printSeparator();
     PRINTF("app_cb: WLAN: received event %d\r\n", reason);
@@ -693,6 +677,8 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
     {
         case WLAN_REASON_INITIALIZED:
             PRINTF("app_cb: WLAN initialized\r\n");
+            int ret;
+
             printSeparator();
 
             /* Print WLAN FW Version */
@@ -701,6 +687,9 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
 
             if (!network_added)
             {
+                uint8_t network_name_len = 0;
+                uint8_t ssid_len         = 0;
+                uint8_t psk_len          = 0;
                 memset(&sta_network, 0, sizeof(struct wlan_network));
 
                 network_name_len = (strlen("sta_network") < WLAN_NETWORK_NAME_MAX_LENGTH) ?
@@ -708,7 +697,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
                                        WLAN_NETWORK_NAME_MAX_LENGTH;
                 strncpy(sta_network.name, "sta_network", network_name_len);
 
-                ssid_len = (strlen(EXT_AP_SSID) <= MAX_SSID_LEN) ? strlen(EXT_AP_SSID) : MAX_SSID_LEN;
+                ssid_len = (strlen(EXT_AP_SSID) <= IEEEtypes_SSID_SIZE) ? strlen(EXT_AP_SSID) : IEEEtypes_SSID_SIZE;
                 memcpy(sta_network.ssid, (const char *)EXT_AP_SSID, ssid_len);
                 sta_network.ip.ipv4.addr_type = ADDR_TYPE_DHCP;
                 sta_network.ssid_specific     = 1;
@@ -744,7 +733,7 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
                 wlan_initialize_uap_network(&uap_network);
 
                 /* Set SSID as passed by the user */
-                ssid_len = (strlen(AP_SSID) <= MAX_SSID_LEN) ? strlen(AP_SSID) : MAX_SSID_LEN;
+                ssid_len = (strlen(AP_SSID) <= IEEEtypes_SSID_SIZE) ? strlen(AP_SSID) : IEEEtypes_SSID_SIZE;
                 memcpy(uap_network.ssid, (const char *)AP_SSID, ssid_len);
                 /* Channel 0 sets channel selection to auto */
                 uap_network.channel       = 0;

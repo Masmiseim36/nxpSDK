@@ -6,8 +6,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#ifndef __FSL_FLEXSPI_NOR_FLASH_H__
+#define __FSL_FLEXSPI_NOR_FLASH_H__
+
 #include "fsl_flexspi.h"
-#include "fsl_common.h"
 
 /*******************************************************************************
  * Definitions
@@ -173,3 +175,5 @@ typedef struct _flexspi_mem_nor_handle
                                    when flash device is busy, only need for check option kNORReadyCheckOption_RB */
     uint32_t configuredFlashSize; /*!< Flash size configured by user through device configuration. */
 } flexspi_mem_nor_handle_t;
+
+#endif /* __FSL_FLEXSPI_NOR_FLASH_H__ */

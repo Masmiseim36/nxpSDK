@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -249,9 +249,16 @@ void MCS_PMSMScalarCtrl(mcs_pmsm_scalar_ctrl_t *psScalarPMSM)
     psScalarPMSM->fltFreqRamp = GFLIB_Ramp_FLT(psScalarPMSM->fltFreqCmd, &psScalarPMSM->sFreqRampParams);
 
     /* voltage calculation */
-    psScalarPMSM->sUDQReq.fltQ =
-        GFLIB_LowerLimit_FLT((psScalarPMSM->fltVHzGain * psScalarPMSM->fltFreqRamp), psScalarPMSM->fltUqMin);
+    psScalarPMSM->sUDQReq.fltQ = psScalarPMSM->fltVHzGain * psScalarPMSM->fltFreqRamp;
     psScalarPMSM->sUDQReq.fltD = 0.0F;
+
+    /* voltage limitation to f16UqMin */
+    if (psScalarPMSM->sUDQReq.fltQ >= 0.0F)
+        psScalarPMSM->sUDQReq.fltQ = GFLIB_LowerLimit_FLT(psScalarPMSM->sUDQReq.fltQ,
+                                                                     psScalarPMSM->fltUqMin);
+    else
+        psScalarPMSM->sUDQReq.fltQ = GFLIB_UpperLimit_FLT(psScalarPMSM->sUDQReq.fltQ,
+                                                                     MLIB_Neg_FLT(psScalarPMSM->fltUqMin));
 
     /* stator voltage angle , used the same integrator as for the open-loop start up*/
     psScalarPMSM->f16PosElScalar = GFLIB_Integrator_F16(

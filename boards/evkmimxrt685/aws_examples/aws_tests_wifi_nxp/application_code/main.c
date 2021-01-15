@@ -30,10 +30,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ///////////////////////////////////////////////////////////////////////////////
 
 /* SDK Included Files */
-#include "board.h"
 #include "fsl_debug_console.h"
 
 #include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 #include <stdbool.h>
 
 /* FreeRTOS Includes */
@@ -46,7 +47,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "aws_test_runner.h"
 #include "aws_dev_mode_key_provisioning.h"
 
-#include "clock_config.h"
 #include "fsl_common.h"
 #include "fsl_gpio.h"
 #include "fsl_power.h"

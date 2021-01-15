@@ -5,10 +5,10 @@ This example demonstrates how to perform OTA firmware update of the board using 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -86,6 +86,3 @@ Plese refer to https://docs.aws.amazon.com/freertos/latest/userguide/ota-manager
 After the OTA agent (that is part the the demo) gets notification about the update it starts downloading the image and storing it into update partition of the FLASH memory.
 Once the image is downloaded bootloader is notified about it and reboot in test-mode takes place.
 If the updated firmware is able to run without issues the update is made permanent.
-Customization options
-=====================
-

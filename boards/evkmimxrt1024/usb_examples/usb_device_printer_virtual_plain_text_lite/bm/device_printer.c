@@ -14,8 +14,9 @@
 #include "usb_device_descriptor.h"
 #include "device_printer.h"
 #include "fsl_device_registers.h"
-#include "clock_config.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
@@ -25,7 +26,6 @@
 #include "usb_phy.h"
 #endif
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

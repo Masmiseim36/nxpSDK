@@ -93,7 +93,7 @@ struct TensorEvaluator<const TensorGeneratorOp<Generator, ArgType>, Device>
   enum {
     IsAligned         = false,
     PacketAccess      = (PacketType<CoeffReturnType, Device>::size > 1),
-    BlockAccessV2     = true,
+    BlockAccess       = true,
     PreferBlockAccess = true,
     Layout            = TensorEvaluator<ArgType, Device>::Layout,
     CoordAccess       = false,  // to be implemented
@@ -102,16 +102,13 @@ struct TensorEvaluator<const TensorGeneratorOp<Generator, ArgType>, Device>
 
   typedef internal::TensorIntDivisor<Index> IndexDivisor;
 
-  typedef internal::TensorBlock<CoeffReturnType, Index, NumDims, Layout>
-      TensorBlock;
-
   //===- Tensor block evaluation strategy (see TensorBlock.h) -------------===//
   typedef internal::TensorBlockDescriptor<NumDims, Index> TensorBlockDesc;
   typedef internal::TensorBlockScratchAllocator<Device> TensorBlockScratch;
 
   typedef typename internal::TensorMaterializedBlock<CoeffReturnType, NumDims,
                                                      Layout, Index>
-      TensorBlockV2;
+      TensorBlock;
   //===--------------------------------------------------------------------===//
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE TensorEvaluator(const XprType& op, const Device& device)
@@ -167,12 +164,12 @@ struct TensorEvaluator<const TensorGeneratorOp<Generator, ArgType>, Device>
     return rslt;
   }
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void getResourceRequirements(
-      std::vector<internal::TensorOpResourceRequirements>* resources) const {
-    Eigen::Index block_total_size_max = numext::maxi<Eigen::Index>(
-        1, m_device.firstLevelCacheSize() / sizeof(Scalar));
-    resources->push_back(internal::TensorOpResourceRequirements(
-        internal::kSkewedInnerDims, block_total_size_max));
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
+  internal::TensorBlockResourceRequirements getResourceRequirements() const {
+    const size_t target_size = m_device.firstLevelCacheSize();
+    // TODO(ezhulenev): Generator should have a cost.
+    return internal::TensorBlockResourceRequirements::skewed<Scalar>(
+        target_size);
   }
 
   struct BlockIteratorState {
@@ -182,8 +179,8 @@ struct TensorEvaluator<const TensorGeneratorOp<Generator, ArgType>, Device>
     Index count;
   };
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE TensorBlockV2
-  blockV2(TensorBlockDesc& desc, TensorBlockScratch& scratch,
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE TensorBlock
+  block(TensorBlockDesc& desc, TensorBlockScratch& scratch,
           bool /*root_of_expr_ast*/ = false) const {
     static const bool is_col_major =
         static_cast<int>(Layout) == static_cast<int>(ColMajor);
@@ -209,8 +206,8 @@ struct TensorEvaluator<const TensorGeneratorOp<Generator, ArgType>, Device>
     eigen_assert(it[0].stride == 1);
 
     // Prepare storage for the materialized generator result.
-    const typename TensorBlockV2::Storage block_storage =
-        TensorBlockV2::prepareStorage(desc, scratch);
+    const typename TensorBlock::Storage block_storage =
+        TensorBlock::prepareStorage(desc, scratch);
 
     CoeffReturnType* block_buffer = block_storage.data();
 

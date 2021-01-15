@@ -335,13 +335,13 @@ static void USB_HostMsdControlCallback(void *param, usb_host_transfer_t *transfe
 
 static void USB_HostMsdCommandDone(usb_host_msd_instance_t *msdInstance, usb_status_t status)
 {
+    msdInstance->commandStatus = (uint8_t)kMSD_CommandIdle;
     if (msdInstance->commandCallbackFn != NULL)
     {
         /* callback to application, the callback function is initialized in USB_HostMsdCommand */
         msdInstance->commandCallbackFn(msdInstance->commandCallbackParam, msdInstance->msdCommand.dataBuffer,
                                        msdInstance->msdCommand.dataSofar, status);
     }
-    msdInstance->commandStatus = (uint8_t)kMSD_CommandIdle;
 }
 
 static void USB_HostMsdCswCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)

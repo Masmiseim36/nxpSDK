@@ -12,16 +12,16 @@
 
 #include "fsl_common.h"
 #include "power_mode_switch.h"
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "lpm.h"
 #include "fsl_gpt.h"
 #include "fsl_lpuart.h"
 #include "specific.h"
-#include "peripherals.h"
 
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "peripherals.h"
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -409,6 +409,11 @@ static void PowerModeSwitchTask(void *pvParameters)
                     if (xSemaphoreTake(s_wakeupSig, portMAX_DELAY) == pdFALSE)
                     {
                         assert(0);
+                    }
+                    /* Invalidate I-Cache in case instruction fetch incorrectly after wake up. */
+                    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
+                    {
+                        SCB_InvalidateICache();
                     }
                 }
                 LPM_SetPowerMode(s_curRunMode);

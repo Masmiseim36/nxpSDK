@@ -12,6 +12,7 @@
 #include "host_mouse.h"
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "app.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -519,7 +520,7 @@ void Host_AppInit(void)
 {
     usb_status_t status = kStatus_USB_Success;
     USB_HostClockInit();
-    status = USB_HostInit(kUSB_ControllerEhci0, &g_hostHandle, USB_HostEvent);
+    status = USB_HostInit(CONTROLLER_ID, &g_hostHandle, USB_HostEvent);
     if (status != kStatus_USB_Success)
     {
         usb_echo("host init error\r\n");

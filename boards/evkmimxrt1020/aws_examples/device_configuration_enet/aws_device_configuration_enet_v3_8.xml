@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="driver.mdio-enet.MIMXRT1021"/>
+    <definition extID="driver.phy-device-ksz8081.MIMXRT1021"/>
+    <definition extID="platform.drivers.trng.MIMXRT1021"/>
+    <definition extID="platform.drivers.dcp.MIMXRT1021"/>
+    <definition extID="platform.drivers.cache_armv7_m7.MIMXRT1021"/>
+    <definition extID="middleware.mbedtls.port.ksdk.MIMXRT1021"/>
+    <definition extID="middleware.mbedtls.rt.MIMXRT1021"/>
+    <definition extID="platform.drivers.flexspi.MIMXRT1021"/>
+    <definition extID="middleware.lwip.enet_ethernetif.MIMXRT1021"/>
+    <definition extID="middleware.lwip.MIMXRT1021"/>
+    <definition extID="driver.phy-common.MIMXRT1021"/>
+    <definition extID="platform.drivers.enet.MIMXRT1021"/>
+    <definition extID="utility.debug_console.MIMXRT1021"/>
+    <definition extID="component.mflash_file.MIMXRT1021"/>
+    <definition extID="component.mflash.rt1020.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.demos.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1021"/>
+    <definition extID="middleware.lwip.apps.mdns.MIMXRT1021"/>
+    <definition extID="middleware.freertos-kernel.MIMXRT1021"/>
+    <definition extID="middleware.freertos-kernel.heap_4.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.shadow.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.c_sdk.standard.serializer.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1021"/>
+    <definition extID="middleware.mbedtls.MIMXRT1021"/>
+    <definition extID="platform.drivers.clock.MIMXRT1021"/>
+    <definition extID="platform.drivers.common.MIMXRT1021"/>
+    <definition extID="device.MIMXRT1021_CMSIS.MIMXRT1021"/>
+    <definition extID="component.lpuart_adapter.MIMXRT1021"/>
+    <definition extID="component.serial_manager.MIMXRT1021"/>
+    <definition extID="component.lists.MIMXRT1021"/>
+    <definition extID="component.serial_manager_uart.MIMXRT1021"/>
+    <definition extID="platform.drivers.lpuart.MIMXRT1021"/>
+    <definition extID="device.MIMXRT1021_startup.MIMXRT1021"/>
+    <definition extID="platform.drivers.iomuxc.MIMXRT1021"/>
+    <definition extID="platform.utilities.assert.MIMXRT1021"/>
+    <definition extID="platform.drivers.igpio.MIMXRT1021"/>
+    <definition extID="platform.drivers.xip_device.MIMXRT1021"/>
+    <definition extID="platform.drivers.xip_board.MIMXRT1021"/>
+    <definition extID="driver.mdio-common.MIMXRT1021"/>
+    <definition extID="platform.Include_core_cm7.MIMXRT1021"/>
+    <definition extID="platform.Include_common.MIMXRT1021"/>
+    <definition extID="platform.Include_dsp.MIMXRT1021"/>
+    <definition extID="component.mflash.common.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.common.MIMXRT1021"/>
+    <definition extID="middleware.freertos-kernel.extension.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.network_manager.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.mqtt.MIMXRT1021"/>
+    <definition extID="middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1021"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1021"/>
+    <definition extID="device.MIMXRT1021_system.MIMXRT1021"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.debug"/>
+    <definition extID="com.nxp.mcuxpresso.core.debug.support.segger.release"/>
+    <definition extID="com.crt.advproject.config.exe.debug"/>
+    <definition extID="com.crt.advproject.config.exe.release"/>
+  </externalDefinitions>
+  <example id="evkmimxrt1020_aws_device_configuration_enet" name="aws_device_configuration_enet" dependency="driver.mdio-enet.MIMXRT1021 driver.phy-device-ksz8081.MIMXRT1021 platform.drivers.trng.MIMXRT1021 platform.drivers.dcp.MIMXRT1021 platform.drivers.cache_armv7_m7.MIMXRT1021 middleware.mbedtls.port.ksdk.MIMXRT1021 middleware.mbedtls.rt.MIMXRT1021 platform.drivers.flexspi.MIMXRT1021 middleware.lwip.enet_ethernetif.MIMXRT1021 middleware.lwip.MIMXRT1021 driver.phy-common.MIMXRT1021 platform.drivers.enet.MIMXRT1021 utility.debug_console.MIMXRT1021 component.mflash_file.MIMXRT1021 component.mflash.rt1020.MIMXRT1021 middleware.freertos-aws_iot.vendor.nxp.secure_sockets.lwip.MIMXRT1021 middleware.freertos-aws_iot.demos.MIMXRT1021 middleware.freertos-aws_iot.libraries.3rdparty.jsmn.MIMXRT1021 middleware.lwip.apps.mdns.MIMXRT1021 middleware.freertos-kernel.MIMXRT1021 middleware.freertos-kernel.heap_4.MIMXRT1021 middleware.freertos-aws_iot.c_sdk.standard.shadow.MIMXRT1021 middleware.freertos-aws_iot.c_sdk.standard.serializer.MIMXRT1021 middleware.freertos-aws_iot.libraries.3rdparty.pkcs11.MIMXRT1021 middleware.freertos-aws_iot.vendor.nxp.pkcs11.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.pkcs11.MIMXRT1021 middleware.mbedtls.MIMXRT1021 platform.drivers.clock.MIMXRT1021 platform.drivers.common.MIMXRT1021 device.MIMXRT1021_CMSIS.MIMXRT1021 component.lpuart_adapter.MIMXRT1021 component.serial_manager.MIMXRT1021 component.lists.MIMXRT1021 component.serial_manager_uart.MIMXRT1021 platform.drivers.lpuart.MIMXRT1021 device.MIMXRT1021_startup.MIMXRT1021 platform.drivers.iomuxc.MIMXRT1021 platform.utilities.assert.MIMXRT1021 platform.drivers.igpio.MIMXRT1021 platform.drivers.xip_device.MIMXRT1021 platform.drivers.xip_board.MIMXRT1021 driver.mdio-common.MIMXRT1021 platform.Include_core_cm7.MIMXRT1021 platform.Include_common.MIMXRT1021 platform.Include_dsp.MIMXRT1021 component.mflash.common.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.secure_sockets.MIMXRT1021 middleware.freertos-aws_iot.common.MIMXRT1021 middleware.freertos-kernel.extension.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.platform.MIMXRT1021 middleware.freertos-aws_iot.libraries.freertos_plus.standard.tls.MIMXRT1021 middleware.freertos-aws_iot.libraries.3rdparty.mbedtls_utils.MIMXRT1021 middleware.freertos-aws_iot.libraries.freertos_plus.standard.crypto.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.threading_alt.MIMXRT1021 middleware.freertos-aws_iot.libraries.freertos_plus.standard.pkcs11.MIMXRT1021 middleware.freertos-aws_iot.libraries.freertos_plus.standard.utils.MIMXRT1021 middleware.freertos-aws_iot.network_manager.MIMXRT1021 middleware.freertos-aws_iot.mqtt.MIMXRT1021 middleware.freertos-aws_iot.libraries.abstractions.wifi.MIMXRT1021 platform.utilities.misc_utilities.MIMXRT1021 device.MIMXRT1021_system.MIMXRT1021" category="aws_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <memory>
+      <memoryBlock id="BOARD_FLASH_evkmimxrt1020" name="BOARD_FLASH" addr="60000000" size="00800000" type="ExtFlash" access="RO"/>
+      <memoryBlock id="BOARD_SDRAM_evkmimxrt1020" name="BOARD_SDRAM" addr="80000000" size="01E00000" type="RAM" access="RW"/>
+      <memoryBlock id="NCACHE_REGION_evkmimxrt1020" name="NCACHE_REGION" addr="81E00000" size="00200000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_DTC_evkmimxrt1020" name="SRAM_DTC" addr="20000000" size="00010000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_ITC_evkmimxrt1020" name="SRAM_ITC" addr="00000000" size="00010000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_OC_evkmimxrt1020" name="SRAM_OC" addr="20200000" size="00020000" type="RAM" access="RW"/>
+    </memory>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.optimize</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-fomit-frame-pointer -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
+          <value>SKIP_SYSCLK_INIT</value>
+          <value>DATA_SECTION_IS_CACHEABLE=1</value>
+          <value>CPU_MIMXRT1021DAG5A</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</value>
+          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
+          <value>USE_RTOS=1</value>
+          <value>MBEDTLS_CONFIG_FILE='"aws_mbedtls_config.h"'</value>
+          <value>DEMO_DEVICE_CONFIGURATION_ENET=1</value>
+          <value>MFLASH_FILE_BASEADDR=5767168</value>
+          <value>FSL_RTOS_FREE_RTOS</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.nohost</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
+          <value>&amp;Heap:Default;Default;0x200&amp;Stack:Default;Default;0x200</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <debug_configurations>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.debug">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="script" type="script">
+              <files mask="evkmimxrt1020_sdram_init.jlinkscript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+      <debug_configuration id_refs="com.nxp.mcuxpresso.core.debug.support.segger.release">
+        <scripts>
+          <script type="segger_script">
+            <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="script" type="script">
+              <files mask="evkmimxrt1020_sdram_init.jlinkscript"/>
+            </source>
+          </script>
+        </scripts>
+      </debug_configuration>
+      <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
+        <drivers>
+          <driver id_refs="BOARD_FLASH_evkmimxrt1020">
+            <driverBinary path="devices/MIMXRT1021/mcuxpresso" project_relative_path="binary" type="binary">
+              <files mask="MIMXRT1020-EVK_IS25LP064.cfx"/>
+            </driverBinary>
+          </driver>
+        </drivers>
+      </debug_configuration>
+    </debug_configurations>
+    <include_paths>
+      <include_path path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="source" type="c_include"/>
+      <include_path path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="board" type="c_include"/>
+      <include_path path="boards/evkmimxrt1020" project_relative_path="configs" type="c_include"/>
+      <include_path path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/config_files" project_relative_path="freertos/config_files" type="c_include"/>
+      <include_path path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/ssl_server" project_relative_path="source/ssl_server" type="c_include"/>
+      <include_path path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="evkmimxrt1020/aws_examples/device_configuration_enet" type="c_include"/>
+      <include_path path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/config_files" project_relative_path="freertos/config_files" type="asm_include"/>
+      <include_path path="boards/evkmimxrt1020" project_relative_path="configs" type="asm_include"/>
+    </include_paths>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="aws_device_configuration_enet.ewd"/>
+      <files mask="aws_device_configuration_enet.ewp"/>
+      <files mask="aws_device_configuration_enet.eww"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="aws_device_configuration_enet.uvprojx"/>
+      <files mask="aws_device_configuration_enet.uvoptx"/>
+      <files mask="aws_device_configuration_enet.uvmpw"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="build_all.bat"/>
+      <files mask="build_all.sh"/>
+      <files mask="clean.bat"/>
+      <files mask="clean.sh"/>
+      <files mask="CMakeLists.txt"/>
+      <files mask="flags.cmake"/>
+      <files mask="config.cmake"/>
+      <files mask="build_flexspi_nor_sdram_debug.bat"/>
+      <files mask="build_flexspi_nor_sdram_debug.sh"/>
+      <files mask="build_flexspi_nor_sdram_release.bat"/>
+      <files mask="build_flexspi_nor_sdram_release.sh"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/linkscripts" project_relative_path="linkscripts" type="src" toolchain="mcuxpresso">
+      <files mask="bss.ldt"/>
+      <files mask="data.ldt"/>
+      <files mask="main_text.ldt"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="source" type="c_include">
+      <files mask="aws_clientcredential.h"/>
+      <files mask="device_configuration_lwip.h"/>
+      <files mask="lwipopts.h"/>
+      <files mask="aws_mbedtls_config.h"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="source" type="src">
+      <files mask="device_configuration_lwip.c"/>
+      <files mask="aws_shadow_lightbulb_on_off.c"/>
+      <files mask="main_enet.c"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/iar" project_relative_path="evkmimxrt1020/aws_examples/device_configuration_enet/linker" type="linker" toolchain="iar">
+      <files mask="MIMXRT1021xxxxx_flexspi_nor_sdram.icf"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/mdk" project_relative_path="evkmimxrt1020/aws_examples/device_configuration_enet/linker" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1021xxxxx_flexspi_nor_sdram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/armgcc" project_relative_path="evkmimxrt1020/aws_examples/device_configuration_enet/linker" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1021xxxxx_flexspi_nor_sdram.ld"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/config_files" project_relative_path="freertos/config_files" type="c_include">
+      <files mask="FreeRTOSConfig.h"/>
+      <files mask="aws_bufferpool_config.h"/>
+      <files mask="aws_demo_config.h"/>
+      <files mask="aws_mqtt_config.h"/>
+      <files mask="aws_secure_sockets_config.h"/>
+      <files mask="aws_shadow_config.h"/>
+      <files mask="aws_wifi_config.h"/>
+      <files mask="FreeRTOSIPConfig.h"/>
+      <files mask="aws_iot_network_config.h"/>
+      <files mask="iot_config.h"/>
+      <files mask="iot_mqtt_agent_config.h"/>
+      <files mask="iot_pkcs11_config.h"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/ssl_server" project_relative_path="source/ssl_server" type="src">
+      <files mask="sslsrv.c"/>
+      <files mask="sslsrv_supp.c"/>
+      <files mask="sslsrv_task.c"/>
+      <files mask="sslsrv_tls.c"/>
+      <files mask="sslsrv_port_lwip.c"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/ssl_server" project_relative_path="source/ssl_server" type="c_include">
+      <files mask="sslsrv.h"/>
+      <files mask="sslsrv_config.h"/>
+      <files mask="sslsrv_keys.h"/>
+      <files mask="sslsrv_port.h"/>
+      <files mask="sslsrv_prv.h"/>
+      <files mask="sslsrv_supp.h"/>
+      <files mask="sslsrv_tls.h"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/.idea/codeStyles" project_relative_path="source" type="xml">
+      <files mask="Project.xml" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/.idea" project_relative_path="source" type="xml">
+      <files mask="gradle.xml" hidden="true"/>
+      <files mask="misc.xml" hidden="true"/>
+      <files mask="modules.xml" hidden="true"/>
+      <files mask="runConfigurations.xml" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android" project_relative_path="source" type="other">
+      <files mask="AwsDeviceConfiguration.apk" hidden="true"/>
+      <files mask="build.gradle" hidden="true"/>
+      <files mask="gradle.properties" hidden="true"/>
+      <files mask="gradlew" hidden="true"/>
+      <files mask="settings.gradle" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app" project_relative_path="source" type="other">
+      <files mask=".gitignore" hidden="true"/>
+      <files mask="build.gradle" hidden="true"/>
+      <files mask="proguard-rules.pro" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main" project_relative_path="source" type="xml">
+      <files mask="AndroidManifest.xml" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main" project_relative_path="source" type="image">
+      <files mask="ic_launcher-web.png" hidden="true"/>
+      <files mask="ic_launcher_round-web.png" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/activities/about" project_relative_path="source" type="other">
+      <files mask="AboutActivity.java" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/activities/device" project_relative_path="source" type="other">
+      <files mask="DeviceActivity.java" hidden="true"/>
+      <files mask="DeviceFragment.java" hidden="true"/>
+      <files mask="DeviceSetupFragment.java" hidden="true"/>
+      <files mask="DevicesListAdapter.java" hidden="true"/>
+      <files mask="DevicesListFragment.java" hidden="true"/>
+      <files mask="DevicesListViewModel.java" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/activities/example" project_relative_path="source" type="other">
+      <files mask="ShadowExampleActivity.java" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/iot" project_relative_path="source" type="other">
+      <files mask="AWSResult.java" hidden="true"/>
+      <files mask="AwsConfig.java" hidden="true"/>
+      <files mask="AwsConnection.java" hidden="true"/>
+      <files mask="AwsConstants.java" hidden="true"/>
+      <files mask="AwsIoTConnection.java" hidden="true"/>
+      <files mask="DeviceRequest.java" hidden="true"/>
+      <files mask="DeviceRequestAsyncTask.java" hidden="true"/>
+      <files mask="DeviceRequestCommand.java" hidden="true"/>
+      <files mask="DeviceRequestResponse.java" hidden="true"/>
+      <files mask="MQTTConnection.java" hidden="true"/>
+      <files mask="WiFiSecurity.java" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/iot/listeners" project_relative_path="source" type="other">
+      <files mask="IAWSIoTClientListener.java" hidden="true"/>
+      <files mask="IDeviceRequestAsyncTaskListener.java" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/iot/ssl" project_relative_path="source" type="other">
+      <files mask="ISSLConnectionStatus.java" hidden="true"/>
+      <files mask="SSLConnection.java" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/java/com/nxp/awsdeviceconfiguration/nsd" project_relative_path="source" type="other">
+      <files mask="DeviceInfo.java" hidden="true"/>
+      <files mask="INetworkServiceDiscoveryListener.java" hidden="true"/>
+      <files mask="NetworkServiceDiscovery.java" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/res/drawable" project_relative_path="source" type="image">
+      <files mask="aws.png" hidden="true"/>
+      <files mask="nxp.png" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/res/layout" project_relative_path="source" type="xml">
+      <files mask="activity_about.xml" hidden="true"/>
+      <files mask="activity_device.xml" hidden="true"/>
+      <files mask="activity_shadow_example.xml" hidden="true"/>
+      <files mask="content_about.xml" hidden="true"/>
+      <files mask="content_shadow_example.xml" hidden="true"/>
+      <files mask="dialog_create_aws_thing.xml" hidden="true"/>
+      <files mask="dialog_device_login.xml" hidden="true"/>
+      <files mask="dialog_progress.xml" hidden="true"/>
+      <files mask="fragment_device_setup.xml" hidden="true"/>
+      <files mask="fragment_devices_list.xml" hidden="true"/>
+      <files mask="item_devices_list.xml" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/res/menu" project_relative_path="source" type="xml">
+      <files mask="main.xml" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/res/mipmap-hdpi" project_relative_path="source" type="image">
+      <files mask="ic_launcher.png" hidden="true"/>
+      <files mask="ic_launcher_round.png" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/res/mipmap-mdpi" project_relative_path="source" type="image">
+      <files mask="ic_launcher.png" hidden="true"/>
+      <files mask="ic_launcher_round.png" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/res/mipmap-xhdpi" project_relative_path="source" type="image">
+      <files mask="ic_launcher.png" hidden="true"/>
+      <files mask="ic_launcher_round.png" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/res/mipmap-xxhdpi" project_relative_path="source" type="image">
+      <files mask="ic_launcher.png" hidden="true"/>
+      <files mask="ic_launcher_round.png" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/res/mipmap-xxxhdpi" project_relative_path="source" type="image">
+      <files mask="ic_launcher.png" hidden="true"/>
+      <files mask="ic_launcher_round.png" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/app/src/main/res/values" project_relative_path="source" type="xml">
+      <files mask="colors.xml" hidden="true"/>
+      <files mask="dimens.xml" hidden="true"/>
+      <files mask="drawables.xml" hidden="true"/>
+      <files mask="strings.xml" hidden="true"/>
+      <files mask="styles.xml" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android/gradle/wrapper" project_relative_path="source" type="other">
+      <files mask="gradle-wrapper.jar" hidden="true"/>
+      <files mask="gradle-wrapper.properties" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_android" project_relative_path="source" type="script">
+      <files mask="gradlew.bat" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="board" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+      <files mask="dcd.c"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="board" type="c_include">
+      <files mask="board.h"/>
+      <files mask="clock_config.h"/>
+      <files mask="dcd.h"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/iar" project_relative_path="evkmimxrt1020" type="other" toolchain="iar">
+      <files mask="evkmimxrt1020_sdram_init.mac"/>
+    </source>
+    <source path="boards/evkmimxrt1020/aws_examples/device_configuration_enet/mdk" project_relative_path="evkmimxrt1020" type="configuration" toolchain="mdk">
+      <files mask="evkmimxrt1020_flexspi_nor_sdram.ini"/>
+    </source>
+  </example>
+</ksdk:examples>

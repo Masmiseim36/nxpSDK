@@ -212,9 +212,6 @@ unsigned int axI2CWrite(
 // #pragma O0
 // #endif
 
-#ifdef __ICCARM__
-#pragma optimize=none
-#endif
 
 #if defined(__GNUC__) && !defined(__ARMCC_VERSION)
 __attribute__((optimize("O0")))

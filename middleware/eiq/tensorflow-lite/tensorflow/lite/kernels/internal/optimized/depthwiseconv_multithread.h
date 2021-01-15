@@ -127,7 +127,7 @@ inline void DepthwiseConv(const DepthwiseParams& params,
                           const TS* bias_data, const RuntimeShape& output_shape,
                           T* output_data,
                           CpuBackendContext* cpu_backend_context) {
-  gemmlowp::ScopedProfilingLabel label("DepthwiseConv");
+  ruy::profiler::ScopeLabel label("DepthwiseConv");
 
   TFLITE_DCHECK_EQ(input_shape.DimensionsCount(), 4);
   TFLITE_DCHECK_EQ(filter_shape.DimensionsCount(), 4);
@@ -148,17 +148,14 @@ inline void DepthwiseConv(const DepthwiseParams& params,
   const int output_height = output_shape.Dims(1);
 
   CpuFlags cpu_flags;
-  GetCpuFlags(cpu_backend_context, &cpu_flags);
+  GetCpuFlags(&cpu_flags);
 
-#ifndef TFLITE_MCU
   if (thread_count == 1) {
-#endif
     DepthwiseConvImpl(params, input_shape, input_data, filter_shape,
                       filter_data, bias_shape, bias_data, output_shape,
                       output_data, cpu_flags, /*thread_start=*/0,
                       /*thread_end=*/output_height, /*thread_dim=*/1);
     return;
-#ifndef TFLITE_MCU
   }
 
   int thread_dim, thread_dim_size;
@@ -186,7 +183,6 @@ inline void DepthwiseConv(const DepthwiseParams& params,
   }
   cpu_backend_threadpool::Execute(tasks.size(), tasks.data(),
                                   cpu_backend_context);
-#endif
 }
 
 }  // namespace optimized_ops

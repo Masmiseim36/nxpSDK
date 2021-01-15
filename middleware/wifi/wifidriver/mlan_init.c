@@ -29,7 +29,7 @@ Change log:
     10/13/2008: initial version
 ********************************************************/
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -44,7 +44,7 @@ Change log:
 ********************************************************/
 
 /* We are allocating BSS list globally as we need heap for other purposes */
-__attribute__((section(".wlan_data"))) static BSSDescriptor_t BSS_List[MRVDRV_MAX_BSSID_LIST];
+static BSSDescriptor_t BSS_List[MRVDRV_MAX_BSSID_LIST];
 
 //_IOBUFS_ALIGNED(SDIO_DMA_ALIGNMENT)
 #if defined(SD8977) || defined(SD8978) || defined(SD8987) || defined(SD8997) || defined(SD9097) || defined(SD9098)
@@ -198,9 +198,6 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     pmadapter->ecsa_enable = MFALSE;
 
     /* fixme: enable this later when required */
-#ifdef EXT_SCAN_SUPPORT
-    pmadapter->ext_scan = 1;
-#endif
     pmadapter->scan_probes = DEFAULT_PROBES;
 
     /* fixme: enable this later when required */

@@ -11,9 +11,9 @@
 #include "fsl_spi.h"
 #include "fsl_spi_dma.h"
 #include "fsl_dma.h"
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

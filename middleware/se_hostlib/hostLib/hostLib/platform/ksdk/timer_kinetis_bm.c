@@ -21,6 +21,11 @@
 #include "fsl_sss_ftr_default.h"
 #endif
 
+#if defined(__GNUC__)
+#pragma GCC push_options
+#pragma GCC optimize("O0")
+#endif
+
 
 #if !defined(SDK_OS_FREE_RTOS) && !defined(FSL_RTOS_FREE_RTOS)
 
@@ -28,7 +33,7 @@ extern volatile uint32_t gtimer_kinetis_msticks; // counter for 1ms SysTicks
 
 //__INLINE
 static void systick_delay(const uint32_t delayTicks) {
-    uint32_t currentTicks;
+    volatile uint32_t currentTicks;
     if(delayTicks >= 0x7FFFFFFFu) {
         return;
     }
@@ -68,7 +73,7 @@ WEAK void SysTick_Handler_APP_CB() {
 
 /* interrupt handler for system ticks */
 void SysTick_Handler(void) {
-    gtimer_kinetis_msticks++;
+    gtimer_kinetis_msticks+=1;
     SysTick_Handler_APP_CB();
 }
 
@@ -93,5 +98,9 @@ void sm_sleep(uint32_t msec) {
     /* if struck here check whether sm_initSleep() is called */
     systick_delay(MS_TO_TICKS(msec));
 }
+
+#if defined(__GNUC__)
+#pragma GCC pop_options
+#endif
 
 #endif /* !SDK_OS_FREE_RTOS && ! FSL_RTOS_FREE_RTOS */

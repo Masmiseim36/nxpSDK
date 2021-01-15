@@ -5,9 +5,9 @@ Azure_http demo shows basic communication with iot-hub via http protocol.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -79,7 +79,4 @@ IoTHubClient_LL_SendEventAsync accepted message [3] for transmission to IoT Hub.
 Confirmation[3] received for message tracking id = 3 with result = IOTHUB_CLIENT_CONFIRMATION_OK
 IoTHubClient_LL_SendEventAsync accepted message [4] for transmission to IoT Hub.
 Confirmation[4] received for message tracking id = 4 with result = IOTHUB_CLIENT_CONFIRMATION_OK
-
-Customization options
-=====================
 

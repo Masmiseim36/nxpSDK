@@ -719,7 +719,7 @@ extern usb_status_t USB_HostResumeDeviceResquest(usb_host_handle hostHandle, usb
  */
 extern usb_status_t USB_HostL1SleepDeviceResquest(usb_host_handle hostHandle,
                                                   usb_device_handle deviceHandle,
-                                                  uint8_t sleeptype);
+                                                  uint8_t sleepType);
 
 /*!
  * @brief Send a bus or device resume request.

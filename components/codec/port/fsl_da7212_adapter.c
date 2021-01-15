@@ -58,13 +58,13 @@ status_t HAL_CODEC_DA7212_Init(void *handle, void *config)
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
-    da7212_config_t *da7212Config = (da7212_config_t *)(codecConfig->codecDevConfig);
-    da7212_handle_t *da7212Handle = (da7212_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
+    da7212_config_t *devConfig = (da7212_config_t *)(codecConfig->codecDevConfig);
+    da7212_handle_t *devHandle = (da7212_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
 
     ((codec_handle_t *)handle)->codecCapability = &s_da7212_capability;
 
     /* codec device initialization */
-    return DA7212_Init(da7212Handle, da7212Config);
+    return DA7212_Init(devHandle, devConfig);
 }
 
 /*!

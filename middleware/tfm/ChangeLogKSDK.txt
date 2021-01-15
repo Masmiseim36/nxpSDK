@@ -2,7 +2,14 @@
 @page middleware_log Middleware Change Log
  
 @section tfm Trusted Firmware M (TF-M) for MCUXpresso SDK
-  The current version is based on TF-M v1.0, released 2020-04-06 (d4ac5d14e74d1aa2a78526aa865034fc3d4e199a) on https://git.trustedfirmware.org/trusted-firmware-m.git.
+  The current version is based on TF-M v1.1, released 2020-08-19 (54507b1645087e92b5a115919ae8fd571ace8bdb) on https://git.trustedfirmware.org/TF-M/trusted-firmware-m.git
+
+  - 1.1
+    - Ported TF-M v1.1 to MCUXpresso SDK. Based on the 2020-08-19 snapshot(54507b1645087e92b5a115919ae8fd571ace8bdb).
+
+  - 1.0 Rev3
+    - Ported TF-M v1.0 to MCUXpresso SDK. Based on the 2020-04-20 snapshot(1e089705899ff68c617cc0c01e5ce8618b8ba6b7).
+    - Added HUK derivation function.
 
   - 1.0 Rev2
     - Ported TF-M v1.0 to MCUXpresso SDK. Based on the 2020-04-06 snapshot(d4ac5d14e74d1aa2a78526aa865034fc3d4e199a).
@@ -22,8 +29,5 @@
     - Bug Fixes:
       - Fixed compilation warnings and errors. 
       - Changes in the TF-M original source code are marked by the "NXP" comment.
-
-  Limitations:
-    - IAR is not supported by TFM.
 */
 

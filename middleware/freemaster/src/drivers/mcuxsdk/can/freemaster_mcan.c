@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -29,19 +29,37 @@
 
 #include "freemaster_mcan.h"
 
-#if (!(FMSTR_DISABLE))
+#if FMSTR_DISABLE == 0
 
 #include "freemaster_can.h"
 #include "fsl_mcan.h"
 
 /******************************************************************************
-* Local macros
-******************************************************************************/
+ * Configuration
+ ******************************************************************************/
+
+/* MCAN  needs to know offset of the mcan shared memory, offsets of the buffers into shared memory,
+ * transmit/receive MB numbers */
+#ifndef FMSTR_MCAN_TXMB_OFFSET
+#error "MCAN transmit buffers offset in shared memory must be defined"
+#endif
+
+#ifndef FMSTR_MCAN_RXMB_OFFSET
+#error "MCAN receive buffers offset in shared memory must be defined"
+#endif
+
+#ifndef FMSTR_MCAN_SHAREDMEMORY_OFFSET
+#error "MCAN shared memory address must be defined"
+#endif
+
+/******************************************************************************
+ * Local macros
+ ******************************************************************************/
 
 /* FCAN: id to id-raw (idr) translation */
-#define FMSTR_FCAN_ID2IDR(id) (((id)&FMSTR_CAN_EXTID) ? MCAN_ID_EXT(id) : MCAN_ID_STD(id))
+#define FMSTR_FCAN_ID2IDR(id) (((id)&FMSTR_CAN_EXTID) != 0U ? MCAN_ID_EXT(id) : MCAN_ID_STD(id))
 
-#define FMSTR_MCAN_STD_FILTER_OFS 0x0
+#define FMSTR_MCAN_STD_FILTER_OFS 0x0U
 #define FMSTR_MCAN_STDID_OFFSET   18U
 
 /* Data size of mCAN (8 bytes is for normal CAN, 32 bytes is for CAN FD) */
@@ -55,58 +73,59 @@
 #endif
 
 /******************************************************************************
-* Local functions
-******************************************************************************/
+ * Local functions
+ ******************************************************************************/
 
-static FMSTR_BOOL _FMSTR_MCAN_Init(FMSTR_U32 idRx, FMSTR_U32 idTx);  /* Initialize CAN module on a given base address. */
-static void _FMSTR_MCAN_EnableTxInterrupt(FMSTR_BOOL enable);     /* Enable CAN Transmit interrupt. */
-static void _FMSTR_MCAN_EnableRxInterrupt(FMSTR_BOOL enable);     /* Enable CAN Receive interrupt. */
-static void _FMSTR_MCAN_EnableRx(void);                           /* Enable/re-initialize Receiver buffer. */
-static FMSTR_SIZE8 _FMSTR_MCAN_GetRxFrameLen(void);               /* Return size of received CAN frame, or 0 if no Rx frame is available. */
-static FMSTR_BCHR _FMSTR_MCAN_GetRxFrameByte(FMSTR_SIZE8 index);  /* Get data byte at index (0..8). */
-static void _FMSTR_MCAN_AckRxFrame(void);                         /* Discard received frame and enable receiving a next one. */
-static FMSTR_BOOL _FMSTR_MCAN_PrepareTxFrame(void);               /* Initialize transmit buffer; return false when Tx buffer is not available. */
-static void _FMSTR_MCAN_PutTxFrameByte(FMSTR_SIZE8 index, FMSTR_BCHR data);   /* Fill one byte of transmit data. */
-static void _FMSTR_MCAN_SendTxFrame(FMSTR_SIZE8 len);             /* Send the Tx buffer. */
+static FMSTR_BOOL _FMSTR_MCAN_Init(FMSTR_U32 idRx, FMSTR_U32 idTx); /* Initialize CAN module on a given base address. */
+static void _FMSTR_MCAN_EnableTxInterrupt(FMSTR_BOOL enable);       /* Enable CAN Transmit interrupt. */
+static void _FMSTR_MCAN_EnableRxInterrupt(FMSTR_BOOL enable);       /* Enable CAN Receive interrupt. */
+static void _FMSTR_MCAN_EnableRx(void);                             /* Enable/re-initialize Receiver buffer. */
+static FMSTR_SIZE8 _FMSTR_MCAN_GetRxFrameLen(void);                 /* Return size of received CAN frame. */
+static FMSTR_BCHR _FMSTR_MCAN_GetRxFrameByte(FMSTR_SIZE8 index);    /* Get data byte at index (0..8). */
+static void _FMSTR_MCAN_AckRxFrame(void);           /* Discard received frame and enable receiving a next one. */
+static FMSTR_BOOL _FMSTR_MCAN_PrepareTxFrame(void); /* Initialize transmit buffer. */
+static void _FMSTR_MCAN_PutTxFrameByte(FMSTR_SIZE8 index, FMSTR_BCHR data); /* Fill one byte of transmit data. */
+static void _FMSTR_MCAN_SendTxFrame(FMSTR_SIZE8 len);                       /* Send the Tx buffer. */
+
 /******************************************************************************
-* Local variables
-******************************************************************************/
+ * Local variables
+ ******************************************************************************/
 
 /* Serial base address */
 #ifdef FMSTR_CAN_BASE
-    static CAN_Type *fmstr_canBaseAddr = FMSTR_CAN_BASE;
+static CAN_Type *fmstr_canBaseAddr = FMSTR_CAN_BASE;
 #else
-    static CAN_Type *fmstr_canBaseAddr = NULL;
+static CAN_Type *fmstr_canBaseAddr = NULL;
 #endif
 
-static mcan_frame_filter_config_t rxFilter;             /* RX filter config */
-static mcan_std_filter_element_config_t stdFilter;      /* RX message filter config */
+static mcan_frame_filter_config_t rxFilter;        /* RX filter config */
+static mcan_std_filter_element_config_t stdFilter; /* RX message filter config */
 
-static mcan_rx_buffer_frame_t fmstr_rxmsg;      /* Received frame buffer, valid when length>0 */
-static mcan_tx_buffer_frame_t fmstr_txmsg;      /* Buffer to prepare transmission */
+static mcan_rx_buffer_frame_t fmstr_rxmsg; /* Received frame buffer, valid when length>0 */
+static mcan_tx_buffer_frame_t fmstr_txmsg; /* Buffer to prepare transmission */
 
 static uint8_t txData[FMSTR_MCAN_CAN_DATASIZE];
-/******************************************************************************
-* Driver interface
-******************************************************************************/
 
-const FMSTR_CAN_DRV_INTF FMSTR_CAN_MCUX_MCAN =
-{
-    .Init = _FMSTR_MCAN_Init,
+/******************************************************************************
+ * Driver interface
+ ******************************************************************************/
+
+const FMSTR_CAN_DRV_INTF FMSTR_CAN_MCUX_MCAN = {
+    .Init              = _FMSTR_MCAN_Init,
     .EnableTxInterrupt = _FMSTR_MCAN_EnableTxInterrupt,
     .EnableRxInterrupt = _FMSTR_MCAN_EnableRxInterrupt,
-    .EnableRx =        _FMSTR_MCAN_EnableRx,
-    .GetRxFrameLen =   _FMSTR_MCAN_GetRxFrameLen,
-    .GetRxFrameByte =  _FMSTR_MCAN_GetRxFrameByte,
-    .AckRxFrame =      _FMSTR_MCAN_AckRxFrame,
-    .PrepareTxFrame =  _FMSTR_MCAN_PrepareTxFrame,
-    .PutTxFrameByte =  _FMSTR_MCAN_PutTxFrameByte,
-    .SendTxFrame =     _FMSTR_MCAN_SendTxFrame,
+    .EnableRx          = _FMSTR_MCAN_EnableRx,
+    .GetRxFrameLen     = _FMSTR_MCAN_GetRxFrameLen,
+    .GetRxFrameByte    = _FMSTR_MCAN_GetRxFrameByte,
+    .AckRxFrame        = _FMSTR_MCAN_AckRxFrame,
+    .PrepareTxFrame    = _FMSTR_MCAN_PrepareTxFrame,
+    .PutTxFrameByte    = _FMSTR_MCAN_PutTxFrameByte,
+    .SendTxFrame       = _FMSTR_MCAN_SendTxFrame,
 };
 
 /******************************************************************************
-* Implementation
-******************************************************************************/
+ * Implementation
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_MCAN_Init(FMSTR_U32 idRx, FMSTR_U32 idTx)
 {
@@ -131,9 +150,9 @@ static FMSTR_BOOL _FMSTR_MCAN_Init(FMSTR_U32 idRx, FMSTR_U32 idTx)
 #else
     stdFilter.sfec = kMCAN_storeinFifo1;
 #endif
-    stdFilter.sft   = kMCAN_classic;     /* Classic filter mode, only filter matching ID. */
-    stdFilter.sfid1 = idRx;             /* RX Filter ID */
-    stdFilter.sfid2 = 0;                /* IT MUST BE NULL FOR USED RX BUFFER! */
+    stdFilter.sft   = kMCAN_classic; /* Classic filter mode, only filter matching ID. */
+    stdFilter.sfid1 = idRx;          /* RX Filter ID */
+    stdFilter.sfid2 = 0;             /* IT MUST BE NULL FOR USED RX BUFFER! */
 
     /* Prepare RX buffer */
     FMSTR_MemSet(&fmstr_rxmsg, 0, sizeof(fmstr_rxmsg));
@@ -165,7 +184,6 @@ static FMSTR_BOOL _FMSTR_MCAN_Init(FMSTR_U32 idRx, FMSTR_U32 idTx)
     MCAN_SetRxFifo1Config(fmstr_canBaseAddr, &rxFifo);
 #endif
 
-
     /* TX buffer config. */
     txBuffer.address       = FMSTR_MCAN_TXMB_OFFSET;
     txBuffer.dedicatedSize = 1U;
@@ -184,7 +202,7 @@ static FMSTR_BOOL _FMSTR_MCAN_Init(FMSTR_U32 idRx, FMSTR_U32 idTx)
 
 static void _FMSTR_MCAN_EnableTxInterrupt(FMSTR_BOOL enable)
 {
-    if(enable)
+    if (enable != FMSTR_FALSE)
     {
         MCAN_EnableInterrupts(fmstr_canBaseAddr, 0, CAN_IE_TCE_MASK);
         MCAN_EnableTransmitBufferInterrupts(fmstr_canBaseAddr, 0);
@@ -198,10 +216,14 @@ static void _FMSTR_MCAN_EnableTxInterrupt(FMSTR_BOOL enable)
 
 static void _FMSTR_MCAN_EnableRxInterrupt(FMSTR_BOOL enable)
 {
-    if(enable)
+    if (enable != FMSTR_FALSE)
+    {
         MCAN_EnableInterrupts(fmstr_canBaseAddr, 0, CAN_IE_RF0NE_MASK);
+    }
     else
+    {
         MCAN_DisableInterrupts(fmstr_canBaseAddr, CAN_IE_RF0NE_MASK);
+    }
 }
 
 static void _FMSTR_MCAN_EnableRx(void)
@@ -211,22 +233,25 @@ static void _FMSTR_MCAN_EnableRx(void)
 
 static FMSTR_SIZE8 _FMSTR_MCAN_GetRxFrameLen(void)
 {
-#ifdef FMSTR_POLL_DRIVEN
+#if FMSTR_POLL_DRIVEN > 0
     /* Is any data received? */
-    if(!MCAN_GetStatusFlag(fmstr_canBaseAddr, CAN_IR_RF0N_MASK))
+    if (MCAN_GetStatusFlag(fmstr_canBaseAddr, CAN_IR_RF0N_MASK) == FMSTR_FALSE)
+    {
         return 0;
+    }
 
     /* Clear RX status flag */
     MCAN_ClearStatusFlag(fmstr_canBaseAddr, CAN_IR_RF0N_MASK);
 #endif /* FMSTR_POLL_DRIVEN */
 
-
     /* Current cache still valid? */
-    if(!fmstr_rxmsg.dlc)
+    if (fmstr_rxmsg.dlc == 0U)
     {
-        /* Try to read, when successfull, the MB is acknowledged and set for next receive */
-        if(MCAN_ReadRxFifo(fmstr_canBaseAddr, 0, &fmstr_rxmsg) == kStatus_Fail)
+        /* Try to read, when successful, the MB is acknowledged and set for next receive */
+        if (MCAN_ReadRxFifo(fmstr_canBaseAddr, 0, &fmstr_rxmsg) == kStatus_Fail)
+        {
             return 0; /* no frame available */
+        }
     }
 
     /* we have got some frame, return its size */
@@ -245,21 +270,25 @@ static void _FMSTR_MCAN_AckRxFrame(void)
 {
     /* The frame is already acknowledged in registers by calling MCAN_ReadRxFifo before. */
     /* We only clear the local cached buffer so it appears as if we have acknowledged it. */
-    fmstr_rxmsg.dlc = 0;
+    fmstr_rxmsg.dlc = 0U;
 }
 
 static FMSTR_BOOL _FMSTR_MCAN_PrepareTxFrame(void)
 {
-#ifdef FMSTR_POLL_DRIVEN
+#if FMSTR_POLL_DRIVEN > 0
     /* Was all data sent? */
-    if(fmstr_txmsg.dlc && !MCAN_IsTransmitOccurred(fmstr_canBaseAddr, 0))
+    if (fmstr_txmsg.dlc != 0U && MCAN_IsTransmitOccurred(fmstr_canBaseAddr, 0) == 0)
+    {
         return FMSTR_FALSE;
+    }
 
     /* Acknowledge frame was transmitted */
-    fmstr_txmsg.dlc = 0;
+    fmstr_txmsg.dlc = 0U;
 #else
-    if(fmstr_txmsg.dlc)
+    if (fmstr_txmsg.dlc)
+    {
         return FMSTR_FALSE;
+    }
 #endif /* FMSTR_POLL_DRIVEN */
 
     fmstr_txmsg.size = 0;
@@ -277,46 +306,44 @@ static void _FMSTR_MCAN_PutTxFrameByte(FMSTR_SIZE8 index, FMSTR_BCHR data)
 
 static void _FMSTR_MCAN_SendTxFrame(FMSTR_SIZE8 len)
 {
-    fmstr_txmsg.dlc = len;
+    fmstr_txmsg.dlc  = len;
     fmstr_txmsg.size = len;
 
-    if(MCAN_WriteTxBuffer(fmstr_canBaseAddr, 0, &fmstr_txmsg) == kStatus_Success)
+    if (MCAN_WriteTxBuffer(fmstr_canBaseAddr, 0, &fmstr_txmsg) == kStatus_Success)
         MCAN_TransmitAddRequest(fmstr_canBaseAddr, 0);
 }
 
-/**************************************************************************//*!
-*
-* @brief    Assigning FreeMASTER communication module base address
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Assigning FreeMASTER communication module base address
+ *
+ ******************************************************************************/
 void FMSTR_CanSetBaseAddress(CAN_Type *base)
 {
     fmstr_canBaseAddr = base;
 }
 
-#if FMSTR_LONG_INTR || FMSTR_SHORT_INTR
 void FMSTR_CanIsr(void)
 {
+#if FMSTR_LONG_INTR > 0 || FMSTR_SHORT_INTR > 0
     /* Rx interrupt */
-    if(MCAN_GetStatusFlag(fmstr_canBaseAddr, CAN_IR_RF0N_MASK))
+    if (MCAN_GetStatusFlag(fmstr_canBaseAddr, CAN_IR_RF0N_MASK))
     {
         FMSTR_ProcessCanRx();
         MCAN_ClearStatusFlag(fmstr_canBaseAddr, CAN_IR_RF0N_MASK);
     }
     /* Tx done interrupt */
-    if(MCAN_GetStatusFlag(fmstr_canBaseAddr, CAN_IE_TCE_MASK))
+    if (MCAN_GetStatusFlag(fmstr_canBaseAddr, CAN_IE_TCE_MASK))
     {
         /* Acknowledge frame transmission */
-        fmstr_txmsg.dlc = 0;
+        fmstr_txmsg.dlc = 0U;
         /* Send next frame, if needed */
         FMSTR_ProcessCanTx();
 
         MCAN_ClearStatusFlag(fmstr_canBaseAddr, CAN_IE_TCE_MASK);
     }
-
-
-}
 #endif
+}
 
 #else /* (!(FMSTR_DISABLE)) */
 
@@ -325,11 +352,9 @@ void FMSTR_CanSetBaseAddress(CAN_Type *base)
     FMSTR_UNUSED(base);
 }
 
-#if FMSTR_LONG_INTR || FMSTR_SHORT_INTR
 void FMSTR_CanIsr(void)
 {
 }
-#endif /* FMSTR_LONG_INTR || FMSTR_SHORT_INTR */
 
 #endif /* (!(FMSTR_DISABLE)) */
 #endif /* (FMSTR_MK_IDSTR(FMSTR_CAN_DRV) == FMSTR_CAN_MCUX_MCAN_ID) */

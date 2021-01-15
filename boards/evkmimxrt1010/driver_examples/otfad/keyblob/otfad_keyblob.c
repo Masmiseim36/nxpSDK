@@ -9,13 +9,12 @@
 #include "fsl_flexspi.h"
 #include "app.h"
 #include "fsl_debug_console.h"
-#include "fsl_cache.h"
 #include "fsl_otfad.h"
 #include "fsl_common.h"
 
 #include "pin_mux.h"
-#include "board.h"
 #include "clock_config.h"
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -192,6 +191,10 @@ const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
         FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, 0xC7, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0),
 };
 
+#if APP_USING_CACHE
+#include "fsl_cache.h"
+#endif
+
 int main(void)
 {
     status_t status = kStatus_Success;
@@ -203,8 +206,6 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-    SCB_DisableDCache();
-    SCB_DisableICache();
 
     /* Initialize FlexSPI */
     flexspi_nor_flash_init(EXAMPLE_FLEXSPI);
@@ -305,7 +306,12 @@ int main(void)
         return -1;
     }
 
-    DCACHE_CleanInvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, sizeof(s_encrypted_text));
+#if APP_USING_CACHE
+    /*
+     * Invalidate the cache, so new read will read from memory directly.
+     */
+    DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
+#endif
 
     memcpy(s_decrypted_text, (void *)(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE),
            sizeof(s_decrypted_text));
@@ -336,7 +342,7 @@ void OTFAD_GetEncryptedCounter(uint8_t *counter)
     uint8_t contextHit;
 
     uint8_t i;
-    uint8_t plainText[16];
+    uint8_t plainText[16]     = {0x00U};
     uint8_t *encryptedCounter = counter;
 
     status = OTFAD_HitDetermination(EXAMPLE_OTFAD, sysAddress, &contextHit);
@@ -347,12 +353,12 @@ void OTFAD_GetEncryptedCounter(uint8_t *counter)
         status = flexspi_nor_flash_erase_sector(EXAMPLE_FLEXSPI, EXAMPLE_SECTOR * SECTOR_SIZE);
     }
 
-    flexspi_nor_flash_erase_sector(EXAMPLE_FLEXSPI, EXAMPLE_SECTOR * SECTOR_SIZE);
-
-    for (i = 0U; i < 16U; i++)
-    {
-        plainText[i] = 0x00U;
-    }
+#if APP_USING_CACHE
+    /*
+     * Invalidate the cache, so new read will read from memory directly.
+     */
+    DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
+#endif
 
     if (kStatus_Success == status)
     {

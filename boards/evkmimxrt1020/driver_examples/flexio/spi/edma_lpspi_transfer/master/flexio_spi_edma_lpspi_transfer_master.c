@@ -9,11 +9,11 @@
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
 #include "fsl_flexio_spi_edma.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_dmamux.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -53,7 +53,7 @@
 #define SLAVE_LPSPI_IRQ_HANDLE (LPSPI1_DriverIRQHandler)
 #define SLAVE_LPSPI_IRQN       (LPSPI1_IRQn)
 
-/* Select USB1 PLL PFD0 (720 MHz) as lpspi clock source */
+/* Select USB1 PLL PFD0 (392.72 MHz) as lpspi clock source */
 #define SLAVE_LPSPI_CLOCK_SELECT (1U)
 /* Clock divider for lpspi clock source */
 #define SLAVE_LPSPI_CLOCK_DIVIDER (7U)

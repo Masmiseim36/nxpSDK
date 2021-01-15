@@ -1,5 +1,6 @@
 /*
- * Copyright 2018-2020 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,7 +26,7 @@ product: Clocks v7.0
 processor: MIMXRT1021xxxxx
 package_id: MIMXRT1021DAG5A
 mcu_data: ksdk2_0
-processor_version: 0.7.10
+processor_version: 0.9.0
 board: MIMXRT1020-EVK
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
@@ -411,7 +412,7 @@ void BOARD_BootClockRUN(void)
     /* Set MQS configuration. */
     IOMUXC_MQSConfig(IOMUXC_GPR,kIOMUXC_MqsPwmOverSampleRate32, 0);
     /* Set ENET Tx clock source. */
-    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1RefClkMode, false);
+    IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1RefClkMode, true);
     /* Set GPT1 High frequency reference clock source. */
     IOMUXC_GPR->GPR5 &= ~IOMUXC_GPR_GPR5_VREF_1M_CLK_GPT1_MASK;
     /* Set GPT2 High frequency reference clock source. */

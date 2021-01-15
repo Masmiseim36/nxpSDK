@@ -134,7 +134,7 @@ static const uint32_t powerLdoVoltLevel[5] = {
         {                                                                                                \
             PMC->LVDCORECTRL = PMC_LVDCORECTRL_LVDCORELVL(kLvdFallingTripVol_720);                       \
         }                                                                                                \
-    } while (0)
+    } while (false)
 
 #define PMC_REG(off) (*((volatile uint32_t *)(void *)PMC + (off) / 4))
 
@@ -525,8 +525,8 @@ void POWER_SetLvdFallingTripVoltage(power_lvd_falling_trip_vol_val_t volt)
 
 power_lvd_falling_trip_vol_val_t POWER_GetLvdFallingTripVoltage(void)
 {
-    return (power_lvd_falling_trip_vol_val_t)((PMC->LVDCORECTRL & PMC_LVDCORECTRL_LVDCORELVL_MASK) >>
-                                              PMC_LVDCORECTRL_LVDCORELVL_SHIFT);
+    return (power_lvd_falling_trip_vol_val_t)(uint32_t)((PMC->LVDCORECTRL & PMC_LVDCORECTRL_LVDCORELVL_MASK) >>
+                                                        PMC_LVDCORECTRL_LVDCORELVL_SHIFT);
 }
 
 AT_QUICKACCESS_SECTION_CODE(static void delay(uint32_t count))
@@ -670,7 +670,7 @@ AT_QUICKACCESS_SECTION_CODE(static uint32_t POWER_CalculateSafetyCount(void))
 
     ns += 1000U / PMU_MIN_CLOCK_MHZ; /* ISO disable */
 
-    flag = (SYSCTL0->PDSLEEPCFG0 & 0x800U) == 0;
+    flag = (SYSCTL0->PDSLEEPCFG0 & 0x800U) == 0U;
     ns += (flag ? 6000U : (((SYSCTL0->PDSLEEPCFG0 & 0x1000U) == 0U) ? 88000U : 1000U)) / PMU_MIN_CLOCK_MHZ +
           (flag ? 26000U : 0U); /* Body Bias disable */
 

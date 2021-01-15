@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -53,13 +53,13 @@
     #error FMSTR_COMM_BUFFER_SIZE must be set less than 254 on Serial transport.
 #endif
 
-#if FMSTR_SHORT_INTR
+#if FMSTR_SHORT_INTR > 0
     /* default short-interrupt FIFO size */
     #ifndef FMSTR_COMM_RQUEUE_SIZE
     #define FMSTR_COMM_RQUEUE_SIZE 32
     #endif
 
-    #if !FMSTR_COMM_RQUEUE_SIZE
+    #if FMSTR_COMM_RQUEUE_SIZE == 0
     #undef  FMSTR_COMM_RQUEUE_SIZE
     #define FMSTR_COMM_RQUEUE_SIZE 32
     #endif
@@ -104,9 +104,13 @@ typedef struct FMSTR_SERIAL_DRV_INTF_S
     in case of new data received or next data byte has been transmitted. */
 void FMSTR_ProcessSerial(void);
 
+/* If defined in freemaster_cfg.h, make sure the SERIAL driver interface is also declared properly. */
+#ifdef FMSTR_SERIAL_DRV
+extern const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_DRV;
+#endif
+
 #ifdef __cplusplus
   }
 #endif
 
 #endif /* __FREEMASTER_SERIAL_H */
-

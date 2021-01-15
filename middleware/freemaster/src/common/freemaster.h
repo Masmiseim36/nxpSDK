@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -33,31 +33,31 @@
  ******************************************************************************/
 
 #if FMSTR_PLATFORM_CORTEX_M
-    /* CortexM is a generic 32bit little-endian platform */
-    #define FMSTR_PLATFORM "Cortex-M"
-    #include "freemaster_gen32le.h"
+/* CortexM is a generic 32bit little-endian platform */
+#define FMSTR_PLATFORM "Cortex-M"
+#include "freemaster_gen32le.h"
 #elif FMSTR_PLATFORM_S12Z
-    /* CortexM is a generic 32bit little-endian platform */
-    #define FMSTR_PLATFORM "S12Z"
-    #include "freemaster_s12z.h"
+/* CortexM is a generic 32bit little-endian platform */
+#define FMSTR_PLATFORM "S12Z"
+#include "freemaster_s12z.h"
 #elif FMSTR_PLATFORM_S32
-    #define FMSTR_PLATFORM "S32"
-    #include "freemaster_gen32le.h"
+#define FMSTR_PLATFORM "S32"
+#include "freemaster_gen32le.h"
 #elif FMSTR_PLATFORM_PA32
-    #define FMSTR_PLATFORM "PA32"
-    #include "freemaster_gen32be.h"
+#define FMSTR_PLATFORM "PA32"
+#include "freemaster_gen32be.h"
 #elif FMSTR_PLATFORM_56F800E
-    #define FMSTR_PLATFORM "56F800E"
-    #include "freemaster_56f800e.h"
+#define FMSTR_PLATFORM "56F800E"
+#include "freemaster_56f800e.h"
 #else
-    /* If you are looking for legacy Motorola and Freescale platforms like 56F800,
-       HC08, HC12, ColdFire, please refer to FreeMASTER driver v2.0 available at
-       www.nxp.com/freemaster */
-    #warning Unknown FreeMASTER driver platform, using default settings for generic 32bit platform
+/* If you are looking for legacy Motorola and Freescale platforms like 56F800,
+   HC08, HC12, ColdFire, please refer to FreeMASTER driver v2.0 available at
+   www.nxp.com/freemaster */
+#warning Unknown FreeMASTER driver platform, using default settings for generic 32bit platform
 
-    /* Use default settings */
-    #define FMSTR_PLATFORM "Generic-32LE"
-    #include "freemaster_gen32le.h"
+/* Use default settings */
+#define FMSTR_PLATFORM "Generic-32LE"
+#include "freemaster_gen32le.h"
 #endif
 
 /*****************************************************************************
@@ -77,19 +77,19 @@ extern "C" {
 #endif
 
 /* Pipe usage modes */
-#define FMSTR_PIPE_MODE_CONSOLE 0x00
-#define FMSTR_PIPE_MODE_UINT 0x04
-#define FMSTR_PIPE_MODE_INT 0x08
-#define FMSTR_PIPE_MODE_REAL 0x0C
+#define FMSTR_PIPE_MODE_CONSOLE 0x00U
+#define FMSTR_PIPE_MODE_UINT    0x04U
+#define FMSTR_PIPE_MODE_INT     0x08U
+#define FMSTR_PIPE_MODE_REAL    0x0CU
 
 /* Pipe element size */
-#define FMSTR_PIPE_SIZE_1B 0x00
-#define FMSTR_PIPE_SIZE_2B 0x01
-#define FMSTR_PIPE_SIZE_4B 0x02
-#define FMSTR_PIPE_SIZE_8B 0x03
+#define FMSTR_PIPE_SIZE_1B 0x00U
+#define FMSTR_PIPE_SIZE_2B 0x01U
+#define FMSTR_PIPE_SIZE_4B 0x02U
+#define FMSTR_PIPE_SIZE_8B 0x03U
 
 /* Pipe type constants to be used with FMSTR_PipeOpen() */
-#define FMSTR_PIPE_TYPE_ANSI_TERMINAL (FMSTR_PIPE_MODE_CONSOLE | FMSTR_PIPE_SIZE_1B)
+#define FMSTR_PIPE_TYPE_ANSI_TERMINAL    (FMSTR_PIPE_MODE_CONSOLE | FMSTR_PIPE_SIZE_1B)
 #define FMSTR_PIPE_TYPE_UNICODE_TERMINAL (FMSTR_PIPE_MODE_CONSOLE | FMSTR_PIPE_SIZE_2B)
 
 /******************************************************************************
@@ -110,7 +110,7 @@ typedef unsigned short FMSTR_PIPE_PORT; /* pipe port identifier (unsigned, 7 bit
 typedef unsigned short FMSTR_PIPE_SIZE; /* pipe buffer size type (unsigned, at least 16 bits) */
 
 /* pointer to pipe event handler */
-typedef void (*FMSTR_PPIPEFUNC)(FMSTR_HPIPE);
+typedef void (*FMSTR_PPIPEFUNC)(FMSTR_HPIPE pipeHandle);
 
 #ifdef __cplusplus
 }
@@ -129,26 +129,26 @@ typedef void (*FMSTR_PPIPEFUNC)(FMSTR_HPIPE);
  ******************************************************************************/
 
 /* Application command status information  */
-#define FMSTR_APPCMDRESULT_NOCMD 0xffU
-#define FMSTR_APPCMDRESULT_RUNNING 0xfeU
+#define FMSTR_APPCMDRESULT_NOCMD     0xffU
+#define FMSTR_APPCMDRESULT_RUNNING   0xfeU
 #define MFSTR_APPCMDRESULT_LASTVALID 0xf7U /* F8-FF are reserved  */
 
 /* Recorder time base is reported in nanoseconds in protocol V4 */
-#define FMSTR_REC_BASE_SECONDS(x) ((x)*1000000000UL)
-#define FMSTR_REC_BASE_MILLISEC(x) ((x)*1000000UL)
-#define FMSTR_REC_BASE_MICROSEC(x) ((x)*1000UL)
-#define FMSTR_REC_BASE_NANOSEC(x) (x)
+#define FMSTR_REC_BASE_SECONDS(x)  (((FMSTR_U32)(x)) * 1000000000UL)
+#define FMSTR_REC_BASE_MILLISEC(x) (((FMSTR_U32)(x)) * 1000000UL)
+#define FMSTR_REC_BASE_MICROSEC(x) (((FMSTR_U32)(x)) * 1000UL)
+#define FMSTR_REC_BASE_NANOSEC(x)  ((FMSTR_U32)(x))
 
 /* The Access Protection levels */
-#define FMSTR_RESTRICTED_ACCESS_NO 0
-#define FMSTR_RESTRICTED_ACCESS_R 1
-#define FMSTR_RESTRICTED_ACCESS_RW 2
-#define FMSTR_RESTRICTED_ACCESS_RWF 3
+#define FMSTR_RESTRICTED_ACCESS_NO  0U
+#define FMSTR_RESTRICTED_ACCESS_R   1U
+#define FMSTR_RESTRICTED_ACCESS_RW  2U
+#define FMSTR_RESTRICTED_ACCESS_RWF 3U
 
 /* The Authentication protocols supported */
-#define FMSTR_AUTHENT_PRTCL_SHA1 0x01
+#define FMSTR_AUTHENT_PRTCL_SHA1 0x01U
 
-#define FMSTR_AUTHENT_PRTCL_SHA1_SALT_LEN 16
+#define FMSTR_AUTHENT_PRTCL_SHA1_SALT_LEN 16U
 
 /******************************************************************************
  * NULL needed
@@ -178,14 +178,16 @@ typedef void (*FMSTR_PPIPEFUNC)(FMSTR_HPIPE);
     {                                       \
         FMSTR_ASSERT(condition);            \
         if (!(condition))                   \
-            return ret;                   \
-    } while (0)
+        {                                   \
+            return ret;                     \
+        }                                   \
+    } while (0 == 1)
 
 #define FMSTR_ASSERT_RETURN_VOID(condition) FMSTR_ASSERT_RETURN_VAL(condition, /*nothing*/)
 
 /******************************************************************************
-* standard library functions; redirected to internal implementations by default.
-******************************************************************************/
+ * standard library functions; redirected to internal implementations by default.
+ ******************************************************************************/
 
 /* Platform header may override the defines and use custom implementations */
 #ifndef FMSTR_StrCmp
@@ -269,21 +271,21 @@ FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle,
                                FMSTR_PIPE_SIZE readGranularity);
 
 /* Pipe printing and formatting */
-FMSTR_BOOL FMSTR_PipePuts(FMSTR_HPIPE pipeHandle, const char *pszStr);
-FMSTR_BOOL FMSTR_PipePrintf(FMSTR_HPIPE pipeHandle, const char *pszFmt, ...);
-FMSTR_BOOL FMSTR_PipePrintfU8(FMSTR_HPIPE pipeHandle, const char *pszFmt, FMSTR_U8 arg);
-FMSTR_BOOL FMSTR_PipePrintfS8(FMSTR_HPIPE pipeHandle, const char *pszFmt, FMSTR_S8 arg);
-FMSTR_BOOL FMSTR_PipePrintfU16(FMSTR_HPIPE pipeHandle, const char *pszFmt, FMSTR_U16 arg);
-FMSTR_BOOL FMSTR_PipePrintfS16(FMSTR_HPIPE pipeHandle, const char *pszFmt, FMSTR_S16 arg);
-FMSTR_BOOL FMSTR_PipePrintfU32(FMSTR_HPIPE pipeHandle, const char *pszFmt, FMSTR_U32 arg);
-FMSTR_BOOL FMSTR_PipePrintfS32(FMSTR_HPIPE pipeHandle, const char *pszFmt, FMSTR_S32 arg);
+FMSTR_BOOL FMSTR_PipePuts(FMSTR_HPIPE pipeHandle, const char *text);
+FMSTR_BOOL FMSTR_PipePrintf(FMSTR_HPIPE pipeHandle, const char *format, ...);
+FMSTR_BOOL FMSTR_PipePrintfU8(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U8 arg);
+FMSTR_BOOL FMSTR_PipePrintfS8(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S8 arg);
+FMSTR_BOOL FMSTR_PipePrintfU16(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U16 arg);
+FMSTR_BOOL FMSTR_PipePrintfS16(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S16 arg);
+FMSTR_BOOL FMSTR_PipePrintfU32(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U32 arg);
+FMSTR_BOOL FMSTR_PipePrintfS32(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S32 arg);
 
 /* Standard library internal implementations. Platform header makes them available using macro aliases. */
-FMSTR_INDEX _FMSTR_StrCmp(const FMSTR_CHAR* str1, const FMSTR_CHAR* str2);
-FMSTR_INDEX _FMSTR_MemCmp(const void* b1, const void* b2, FMSTR_SIZE size);
-FMSTR_SIZE  _FMSTR_StrLen(const FMSTR_CHAR* str);
-void _FMSTR_MemCpy(void* dest, const void* src, FMSTR_SIZE size);
-void _FMSTR_MemSet(void* dest, FMSTR_U8 fill, FMSTR_SIZE size);
+FMSTR_INDEX _FMSTR_StrCmp(const FMSTR_CHAR *str1, const FMSTR_CHAR *str2);
+FMSTR_INDEX _FMSTR_MemCmp(const void *b1, const void *b2, FMSTR_SIZE size);
+FMSTR_SIZE _FMSTR_StrLen(const FMSTR_CHAR *str);
+void _FMSTR_MemCpy(void *dest, const void *src, FMSTR_SIZE size);
+void _FMSTR_MemSet(void *dest, FMSTR_U8 fill, FMSTR_SIZE size);
 FMSTR_U32 _FMSTR_Rand(void);
 
 #ifdef __cplusplus

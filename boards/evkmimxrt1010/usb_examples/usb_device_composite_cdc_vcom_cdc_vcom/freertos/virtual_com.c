@@ -4,12 +4,12 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "fsl_device_registers.h"
 #include "clock_config.h"
 #include "board.h"
-
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "usb_device_config.h"
 #include "usb.h"
@@ -336,7 +336,8 @@ void USB_DeviceCdcVcomTask(void)
         if ((1 == vcomInstance->attach) && (1 == vcomInstance->startTransactions))
         {
             /* User Code */
-            if ((0 != vcomInstance->recvSize) && (0xFFFFFFFFU != vcomInstance->recvSize))
+            /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+            if ((0 != vcomInstance->recvSize) && (USB_CANCELLED_TRANSFER_LENGTH != vcomInstance->recvSize))
             {
                 int32_t i;
 

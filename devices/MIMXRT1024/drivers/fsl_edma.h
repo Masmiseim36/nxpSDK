@@ -23,7 +23,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief eDMA driver version */
-#define FSL_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 4, 0)) /*!< Version 2.4.0. */
+#define FSL_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 4, 1)) /*!< Version 2.4.1. */
 /*@}*/
 
 /*! @brief Compute the offset unit from DCHPRI3 */
@@ -538,8 +538,8 @@ void EDMA_DisableChannelInterrupts(DMA_Type *base, uint32_t channel, uint32_t ma
  *
  * @param base eDMA peripheral base address.
  * @param channel edma channel number.
- * @param sourceOffset source address offset.
- * @param destOffset destination address offset.
+ * @param sourceOffset source address offset will be applied to source address after major loop done.
+ * @param destOffset destination address offset will be applied to source address after major loop done.
  */
 void EDMA_SetMajorOffsetConfig(DMA_Type *base, uint32_t channel, int32_t sourceOffset, int32_t destOffset);
 
@@ -689,7 +689,8 @@ void EDMA_TcdDisableInterrupts(edma_tcd_t *tcd, uint32_t mask);
  * Adjustment value added to the source address at the completion of the major iteration count
  *
  * @param tcd A point to the TCD structure.
- * @param config A pointer to the minor offset configuration structure.
+ * @param sourceOffset source address offset wiil be applied to source address after major loop done.
+ * @param destOffset destination address offset will be applied to source address after major loop done.
  */
 void EDMA_TcdSetMajorOffsetConfig(edma_tcd_t *tcd, int32_t sourceOffset, int32_t destOffset);
 

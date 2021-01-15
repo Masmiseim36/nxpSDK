@@ -181,8 +181,8 @@ static led_status_t LED_SetStatus(led_state_t *ledState, led_color_t color, uint
         if (0U != ledRgbPin[i].config.dimmingEnable)
 #endif
         {
-            (void)HAL_PwmUpdateDutycycle(ledState->pwmHandle[i], (uint8_t)ledRgbPin[i].dimming.channel, kHAL_EdgeAlignedPwm,
-                                         (uint8_t)(colorSet * 100U / 255U));
+            (void)HAL_PwmUpdateDutycycle(ledState->pwmHandle[i], (uint8_t)ledRgbPin[i].dimming.channel,
+                                         kHAL_EdgeAlignedPwm, (uint8_t)(colorSet * 100U / 255U));
         }
         else
 #endif
@@ -352,8 +352,8 @@ led_status_t LED_Init(led_handle_t ledHandle, led_config_t *ledConfig)
 #if (defined(LED_DIMMING_ENABLEMENT) && (LED_DIMMING_ENABLEMENT > 0U))
     /* The configure parameters check only work on debug mode in order to reduce code size. */
 #ifdef NDEBUG
-#else /* NDEBUG */
-    uint8_t rgbFlag        = 0;
+#else  /* NDEBUG */
+    uint8_t rgbFlag = 0;
     uint8_t rgbDimmingFlag = 0;
 #endif /* NDEBUG */
 #endif
@@ -408,7 +408,7 @@ led_status_t LED_Init(led_handle_t ledHandle, led_config_t *ledConfig)
 #if (defined(LED_DIMMING_ENABLEMENT) && (LED_DIMMING_ENABLEMENT > 0U))
     /* The configure parameters check only work on debug mode in order to reduce code size. */
 #ifdef NDEBUG
-#else /* NDEBUG */
+#else  /* NDEBUG */
     for (i = 0; i < (int)count; i++)
     {
         if (0U != ledRgbConfigPin[i].dimmingEnable)
@@ -435,15 +435,17 @@ led_status_t LED_Init(led_handle_t ledHandle, led_config_t *ledConfig)
             hal_pwm_setup_config_t setupConfig;
 #if (defined(LED_USE_CONFIGURE_STRUCTURE) && (LED_USE_CONFIGURE_STRUCTURE > 0U))
 #else
-            ledState->pins[i].config.dimmingEnable    = ledRgbConfigPin[i].dimmingEnable;
-            ledState->pins[i].dimming.instance        = ledRgbConfigPin[i].dimming.instance;
-            ledState->pins[i].dimming.channel         = ledRgbConfigPin[i].dimming.channel;
+            ledState->pins[i].config.dimmingEnable = ledRgbConfigPin[i].dimmingEnable;
+            ledState->pins[i].dimming.instance = ledRgbConfigPin[i].dimming.instance;
+            ledState->pins[i].dimming.channel = ledRgbConfigPin[i].dimming.channel;
             ledState->pins[i].dimming.pinStateDefault = ledRgbConfigPin[i].dimming.pinStateDefault;
 #endif
             (void)HAL_PwmInit((hal_pwm_handle_t)ledState->pwmHandle[i], ledRgbConfigPin[i].dimming.instance,
-                        ledRgbConfigPin[i].dimming.sourceClock);
+                              ledRgbConfigPin[i].dimming.sourceClock);
             setupConfig.dutyCyclePercent = 0;
-            setupConfig.level      = (0U != ledRgbConfigPin[i].dimming.pinStateDefault) ? (hal_pwm_level_select_t)kHAL_PwmLowTrue : (hal_pwm_level_select_t)kHAL_PwmHighTrue;
+            setupConfig.level            = (0U != ledRgbConfigPin[i].dimming.pinStateDefault) ?
+                                    (hal_pwm_level_select_t)kHAL_PwmLowTrue :
+                                    (hal_pwm_level_select_t)kHAL_PwmHighTrue;
             setupConfig.mode       = kHAL_EdgeAlignedPwm;
             setupConfig.pwmFreq_Hz = 1000U;
             (void)HAL_PwmSetupPwm(ledState->pwmHandle[i], ledRgbConfigPin[i].dimming.channel, &setupConfig);
@@ -680,7 +682,8 @@ led_status_t LED_Dimming(led_handle_t ledHandle, uint16_t dimmingPeriod, uint8_t
         value = (uint8_t)((ledState->currentColor >> (8U * (i))) & 0xFFU);
         if (0U != ledState->dimming.increasement)
         {
-            ledState->dimming.powerDelta[i] = (uint8_t)(((uint16_t)0xFF - value) * LED_DIMMING_UPDATE_INTERVAL / (dimmingPeriod));
+            ledState->dimming.powerDelta[i] =
+                (uint8_t)(((uint16_t)0xFF - value) * LED_DIMMING_UPDATE_INTERVAL / (dimmingPeriod));
             if ((value + ledState->dimming.powerDelta[i]) < 0xFFU)
             {
                 power[i] = (uint16_t)value + ledState->dimming.powerDelta[i];
@@ -692,7 +695,8 @@ led_status_t LED_Dimming(led_handle_t ledHandle, uint16_t dimmingPeriod, uint8_t
         }
         else
         {
-            ledState->dimming.powerDelta[i] = (uint8_t)((uint16_t)(value)*LED_DIMMING_UPDATE_INTERVAL / (dimmingPeriod));
+            ledState->dimming.powerDelta[i] =
+                (uint8_t)((uint16_t)(value)*LED_DIMMING_UPDATE_INTERVAL / (dimmingPeriod));
             if (value > ledState->dimming.powerDelta[i])
             {
                 power[i] = (uint16_t)value - (uint16_t)ledState->dimming.powerDelta[i];

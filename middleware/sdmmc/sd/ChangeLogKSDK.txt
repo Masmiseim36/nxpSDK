@@ -2,7 +2,15 @@
 @page middleware_log Middleware Change Log
 
 @section sd SD Card driver for MCUXpresso SDK
-  The current driver version is 2.3.2.
+  The current driver version is 2.3.3.
+
+  - 2.3.3
+    - Improvements
+      - Added host SDR timing mode capability validation during card initialization.
+      - Added plling card ready for data status when transfer data failed.
+      - Used cache line size align buffer for SD initialization api.
+    - Bug Fixes
+      - Fixed violations of MISRA C-2012 rule 11.9, 15.7, 4.7, 16.4, 10.1, 10.3, 10.4, 11.3, 14.4, 10.6, 17.7, 16.1, 16.3.
 
   - 2.3.2
     - Improvements

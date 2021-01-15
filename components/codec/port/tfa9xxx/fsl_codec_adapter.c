@@ -40,13 +40,13 @@ status_t HAL_CODEC_Init(void *handle, void *config)
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
-    tfa9xxx_config_t *tfa9xxxConfig = (tfa9xxx_config_t *)(codecConfig->codecDevConfig);
-    tfa9xxx_handle_t *tfa9xxxHandle = (tfa9xxx_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
+    tfa9xxx_config_t *devConfig = (tfa9xxx_config_t *)(codecConfig->codecDevConfig);
+    tfa9xxx_handle_t *devHandle = (tfa9xxx_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
 
     ((codec_handle_t *)handle)->codecCapability = &s_tfa9xxx_capability;
 
     /* codec device initialization */
-    return TFA9XXX_Init(tfa9xxxHandle, tfa9xxxConfig);
+    return TFA9XXX_Init(devHandle, devConfig);
 }
 
 /*!

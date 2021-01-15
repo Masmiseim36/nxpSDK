@@ -30,11 +30,12 @@
 //  Includes
 ///////////////////////////////////////////////////////////////////////////////
 /* SDK Included Files */
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "ksdk_mbedtls.h"
-#include "pin_mux.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 /* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -46,7 +47,6 @@
 #include "aws_demo.h"
 #include "iot_appversion32.h"
 
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"
@@ -241,8 +241,6 @@ int main(void)
     GPIO_WritePinOutput(GPIO1, 9, 0);
     delay();
     GPIO_WritePinOutput(GPIO1, 9, 1);
-
-    SCB_DisableDCache();
     CRYPTO_InitHardware();
 
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);

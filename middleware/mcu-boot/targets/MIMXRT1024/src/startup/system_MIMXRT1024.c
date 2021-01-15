@@ -83,6 +83,12 @@ void SystemInit(void)
     SCB->CPACR |= ((3UL << 10 * 2) | (3UL << 11 * 2)); /* set CP10, CP11 Full Access */
 #endif                                                 /* ((__FPU_PRESENT == 1) && (__FPU_USED == 1)) */
 
+    /* Disable SysTick in case it is enabled in ROM bootloader */
+    if ((SysTick->CTRL & SysTick_CTRL_ENABLE_Msk) != 0U)
+    {
+        SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
+    }
+
     /* Watchdog disable */
 
 #if (DISABLE_WDOG)
@@ -92,11 +98,7 @@ void SystemInit(void)
     }
 #endif /* (DISABLE_WDOG) */
 
-    /* Disable SysTick in case it is enabled in ROM bootloader */
-    if ((SysTick->CTRL & SysTick_CTRL_ENABLE_Msk) != 0U)
-    {
-        SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
-    }
+    SCB_EnableICache();
 }
 
 /* ----------------------------------------------------------------------------

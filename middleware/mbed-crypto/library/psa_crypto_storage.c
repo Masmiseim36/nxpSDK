@@ -38,8 +38,8 @@
 #if defined(MBEDTLS_PSA_ITS_FILE_C)
 #include "psa_crypto_its.h"
 #else /* Native ITS implementation */
-#include "mbed_psa/error.h" //NXP
-#include "mbed_psa/internal_trusted_storage.h" //NXP
+#include "psa/error.h"
+#include "psa/internal_trusted_storage.h"
 #endif
 
 #if defined(MBEDTLS_PLATFORM_C)

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018,2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,9 +32,6 @@
 #include "board.h"
 
 #include "usb_ethernetif.h"
-#if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
-#include "fsl_sysmpu.h"
-#endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
 #include "board.h"
 
@@ -726,7 +723,7 @@ void USB_HosCdcRndisTask(void *param)
             netifapi_netif_set_link_up(netif);
         case kUSB_HostCdcRndisRunDataReceive:
             rndisInstance->runState = kUSB_HostCdcRndisRunIdle;
-            USB_HostRndisRecvDataMsg(rndisInstance->classHandle, rndisInstance->inPutBuffer, RNDIS_FRAME_MAX_FRAMELEN, 
+            USB_HostRndisRecvDataMsg(rndisInstance->classHandle, rndisInstance->inPutBuffer, RNDIS_DATA_MESSAGE, 
                                                             USB_HostCdcRndisDataInCallback, rndisInstance);
             break;
         default:

@@ -314,25 +314,23 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/autobaud</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/crc</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/property</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/packet</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/property</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/flexspi</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/flexspi_nor</state>
         </option>
@@ -747,7 +745,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT685S_flash_bootloader.icf</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/linker/iar/MIMXRT685S/MIMXRT685S_flash_bootloader.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -998,7 +996,7 @@
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_reliable_update_common.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_main.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_context.c</name>
@@ -1010,62 +1008,35 @@
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_tree_root.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_main.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_command.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_context.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral_interface.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_user_entry.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_version.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bootloader.h</name>
       </file>
-    </group>
-    <group>
-      <name>utilities</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_context.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral_interface.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_rtos_abstraction.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_user_entry.h</name>
       </file>
-      <group>
-        <name>src</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/debug_util.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_assert.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_rtos_abstraction.c</name>
-        </file>
-      </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_command.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</name>
       </file>
     </group>
     <group>
@@ -1100,22 +1071,22 @@
       <group>
         <name>src</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/memory.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/memory.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/flexspi_nor_memory.c</name>
@@ -1145,6 +1116,36 @@
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/property/src/property_rt685s.c</name>
         </file>
       </group>
+    </group>
+    <group>
+      <name>utilities</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_rtos_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
+      </file>
+      <group>
+        <name>src</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_assert.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_rtos_abstraction.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/debug_util.c</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>startup</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup/startup.c</name>
+      </file>
     </group>
     <group>
       <name>drivers</name>
@@ -1178,7 +1179,10 @@
     </group>
   </group>
   <group>
-    <name>device</name>
+    <name>MIMXRT685S</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/fsl_device_registers.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/MIMXRT685S_cm33.h</name>
     </file>
@@ -1186,52 +1190,76 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/MIMXRT685S_cm33_features.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/fsl_device_registers.h</name>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bootloader_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</name>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_clock_config_MIMXRT685S.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</name>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/hardware_init_MIMXRT685S.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/memory_map_MIMXRT685S.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/external_memory_property_map_MIMXRT685S.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/target_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_api.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_api.c</name>
     </file>
   </group>
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_crc.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_crc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_crc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_usart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_usart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_reset.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_reset.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c</name>
+    </file>
+  </group>
+  <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT685S/system_MIMXRT685S_cm33.c</name>
     </file>
   </group>
   <group>
@@ -1242,46 +1270,16 @@
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup/ar_asm_macros.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup/startup.c</name>
-    </file>
-  </group>
-  <group>
-    <name>MIMXRT685S</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_api.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_api.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bl_clock_config_MIMXRT685S.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/bootloader_config.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/external_memory_property_map_MIMXRT685S.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/hardware_init_MIMXRT685S.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/memory_map_MIMXRT685S.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT685S/src/target_config.h</name>
-    </file>
   </group>
   <group>
     <name>component</name>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
     <group>
@@ -1290,13 +1288,13 @@
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
       </file>
     </group>
   </group>
@@ -1306,10 +1304,10 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm33.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/tz_context.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/tz_context.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -1321,16 +1319,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

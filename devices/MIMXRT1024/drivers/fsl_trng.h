@@ -23,12 +23,14 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief TRNG driver version 2.0.11.
+/*! @brief TRNG driver version 2.0.12.
  *
- * Current version: 2.0.11
+ * Current version: 2.0.12
  *
 
  * Change log:
+ * - version 2.0.12
+ *   - For KW34A4_SERIES, KW35A4_SERIES, KW36A4_SERIES set TRNG_USER_CONFIG_DEFAULT_OSC_DIV to kTRNG_RingOscDiv8.
  * - version 2.0.11
  *   - Add clearing pending errors in TRNG_Init().
  * - version 2.0.10
@@ -54,7 +56,7 @@
  *   - add support for KL8x and KL28Z
  *   - update default OSCDIV for K81 to divide by 2
  */
-#define FSL_TRNG_DRIVER_VERSION (MAKE_VERSION(2, 0, 11))
+#define FSL_TRNG_DRIVER_VERSION (MAKE_VERSION(2, 0, 12))
 /*@}*/
 
 /*! @brief TRNG sample mode. Used by trng_config_t. */

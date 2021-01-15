@@ -31,7 +31,7 @@
 Change log:
     10/30/2008: initial version
 ******************************************************/
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -375,17 +375,13 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
     PRINTM(MINFO, "ASSOC_CMD: Rates size = %d\n", rates_size);
 
     /* Add the Authentication type to be used for Auth frames if needed */
-    if ((pmpriv->sec_info.authentication_mode != MLAN_AUTH_MODE_AUTO) ||
-        (pbss_desc->owe_transition_mode == OWE_TRANS_MODE_OWE))
+    if ((pmpriv->sec_info.authentication_mode != MLAN_AUTH_MODE_AUTO))
     {
         pauth_tlv              = (MrvlIEtypes_AuthType_t *)pos;
         pauth_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_AUTH_TYPE);
         pauth_tlv->header.len  = sizeof(pauth_tlv->auth_type);
         if (pmpriv->sec_info.authentication_mode == MLAN_AUTH_MODE_SAE)
             pauth_tlv->auth_type = wlan_cpu_to_le16((t_u16)AssocAgentAuth_Wpa3Sae);
-        else if ((pbss_desc->owe_transition_mode == OWE_TRANS_MODE_OWE) ||
-                 (pmpriv->sec_info.authentication_mode == MLAN_AUTH_MODE_OWE))
-            pauth_tlv->auth_type = wlan_cpu_to_le16((t_u16)AssocAgentAuth_Owe);
         else if (pmpriv->sec_info.wep_status == Wlan802_11WEPEnabled)
             pauth_tlv->auth_type = wlan_cpu_to_le16((t_u16)pmpriv->sec_info.authentication_mode);
         else
@@ -417,9 +413,7 @@ mlan_status wlan_cmd_802_11_associate(IN mlan_private *pmpriv, IN HostCmd_DS_COM
        WPS module is mlan integrated yet. Fix after it is done.
     */
     /* if (!pmpriv->wps.session_enable) { */
-    if ((pmpriv->sec_info.wpa_enabled || pmpriv->sec_info.wpa2_enabled) ||
-        (pbss_desc->owe_transition_mode == OWE_TRANS_MODE_OWE) ||
-        (pmpriv->sec_info.authentication_mode == MLAN_AUTH_MODE_OWE))
+    if ((pmpriv->sec_info.wpa_enabled || pmpriv->sec_info.wpa2_enabled))
     {
         prsn_ie_tlv              = (MrvlIEtypes_RsnParamSet_t *)pos;
         prsn_ie_tlv->header.type = (t_u16)pmpriv->wpa_ie[0]; /* WPA_IE

@@ -37,10 +37,10 @@ typedef struct _usb_host_msd_fatfs_instance
     usb_host_interface_handle interfaceHandle;  /*!< interface handle */
     TaskHandle_t hostStackTaskHandle;
     TaskHandle_t hostAppTaskHandle;
-    uint8_t prevDeviceState;                    /*!< device attach/detach previous status */
-    uint8_t deviceState;                        /*!< device attach/detach status */
-    uint8_t runWaitState; /*!< application wait status, go to next run status when the wait status success */
-    uint8_t runState;     /*!< application run status */
+    uint8_t prevDeviceState; /*!< device attach/detach previous status */
+    uint8_t deviceState;     /*!< device attach/detach status */
+    uint8_t runWaitState;    /*!< application wait status, go to next run status when the wait status success */
+    uint8_t runState;        /*!< application run status */
 } usb_host_msd_fatfs_instance_t;
 
 /*******************************************************************************
@@ -65,12 +65,12 @@ extern usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
                                      uint32_t eventCode);
 
 /*!
-* @brief host msd fatfs task function.
-*
-* This function implements the host msd fatfs action, it is used to create task.
-*
-* @param arg   the host msd fatfs instance pointer.
-*/
+ * @brief host msd fatfs task function.
+ *
+ * This function implements the host msd fatfs action, it is used to create task.
+ *
+ * @param arg   the host msd fatfs instance pointer.
+ */
 extern void USB_HostMsdTask(void *arg);
 
 #endif /* _HOST_MSD_FATFS_H_ */

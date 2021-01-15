@@ -7,11 +7,11 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_flexram.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -25,6 +25,12 @@
 
 /* OCRAM relocate definition */
 #define APP_OCRAM_SIZE (128 * 1024U)
+
+/*
+ * If cache is enabled, this example should maintain the cache to make sure
+ * CPU core accesses the memory, not cache only.
+ */
+#define APP_USING_CACHE 1
 
 
 /*******************************************************************************
@@ -67,6 +73,10 @@ void APP_FLEXRAM_IRQ_HANDLER(void)
 /*!
  * @brief Main function
  */
+#if APP_USING_CACHE
+#include "fsl_cache.h"
+#endif
+
 int main(void)
 {
     /* Board pin, clock, debug console init */
@@ -74,9 +84,6 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-#if defined(__DCACHE_PRESENT) && __DCACHE_PRESENT
-    SCB_DisableDCache();
-#endif
 
     PRINTF("\r\nFLEXRAM ram magic address example.\r\n");
 
@@ -109,6 +116,13 @@ static void OCRAM_Access(void)
     {
         /* OCRAM write access */
         *ocramAddr = 0xCCU;
+        /* Synchronizes the execution stream with memory accesses */
+        __DSB();
+        __ISB();
+
+#if APP_USING_CACHE
+        DCACHE_CleanByRange((uint32_t)ocramAddr, sizeof(uint8_t));
+#endif
 
         /* Check ocram magic addr match event */
         if (ocramAddr == (uint8_t *)APP_FLEXRAM_OCRAM_MAGIC_ADDR)

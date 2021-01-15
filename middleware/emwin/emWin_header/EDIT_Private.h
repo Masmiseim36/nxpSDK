@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -99,6 +99,8 @@ struct EDIT_Obj_struct {
   WM_HTIMER            hTimer;
   U8                   MinMaxMode;
   int                  TimerPeriod;
+  int                  ScrollPos;       // Horizontal scrolling position
+  U16                  PrevStrLen;      // Previous string length, used for scrolling position calculation.
 };
 
 /*********************************************************************
@@ -136,6 +138,7 @@ extern EDIT_PROPS EDIT__DefaultProps;
 */
 U16  EDIT__GetCurrentChar  (EDIT_Obj * pObj);
 void EDIT__SetCursorPos    (EDIT_Handle hObj, int CursorPos);
+void EDIT__SetCursorPosEx  (EDIT_Handle hObj, int CursorPos, U8 Delete);
 void EDIT__SetValueUnsigned(EDIT_Handle hObj, I32 Value);
 
 #endif // GUI_WINSUPPORT

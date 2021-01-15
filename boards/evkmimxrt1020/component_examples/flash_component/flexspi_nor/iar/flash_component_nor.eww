@@ -5,14 +5,6 @@
       <name>all</name>
       <member>
         <project>flash_component_nor</project>
-        <configuration>flexspi_nor_debug</configuration>
-      </member>
-      <member>
-        <project>flash_component_nor</project>
-        <configuration>flexspi_nor_release</configuration>
-      </member>
-      <member>
-        <project>flash_component_nor</project>
         <configuration>release</configuration>
       </member>
       <member>
@@ -27,16 +19,10 @@
         <project>flash_component_nor</project>
         <configuration>sdram_release</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_debug</name>
       <member>
         <project>flash_component_nor</project>
         <configuration>flexspi_nor_debug</configuration>
       </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>flexspi_nor_release</name>
       <member>
         <project>flash_component_nor</project>
         <configuration>flexspi_nor_release</configuration>
@@ -68,6 +54,20 @@
       <member>
         <project>flash_component_nor</project>
         <configuration>sdram_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_debug</name>
+      <member>
+        <project>flash_component_nor</project>
+        <configuration>flexspi_nor_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>flexspi_nor_release</name>
+      <member>
+        <project>flash_component_nor</project>
+        <configuration>flexspi_nor_release</configuration>
       </member>
     </batchDefinition>
   </batchBuild>

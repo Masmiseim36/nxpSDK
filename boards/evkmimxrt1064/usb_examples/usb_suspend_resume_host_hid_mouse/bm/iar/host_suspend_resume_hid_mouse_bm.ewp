@@ -188,6 +188,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -317,12 +318,8 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
@@ -336,7 +333,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1178,6 +1175,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1307,12 +1305,8 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
@@ -1326,7 +1320,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2168,6 +2162,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2297,12 +2292,8 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
@@ -2316,7 +2307,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3158,6 +3149,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3287,12 +3279,8 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
@@ -3306,7 +3294,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4148,6 +4136,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4277,12 +4266,8 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
@@ -4296,7 +4281,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5138,6 +5123,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5267,12 +5253,8 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../components/timer</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers</state>
@@ -5286,7 +5268,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -6027,25 +6009,13 @@
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.h</name>
@@ -6054,7 +6024,19 @@
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_hci.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_devices.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/host/usb_host_framework.h</name>
       </file>
     </group>
     <group>
@@ -6084,46 +6066,46 @@
     <group>
       <name>timer</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/timer/pit_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/timer/fsl_adapter_timer.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/timer/timer.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/timer/fsl_adapter_pit.c</name>
       </file>
     </group>
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
     <group>
@@ -6132,13 +6114,13 @@
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
       </file>
     </group>
   </group>
@@ -6163,43 +6145,43 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_pit.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</name>
     </file>
   </group>
   <group>
     <name>device</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/fsl_device_registers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/MIMXRT1064.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/system_MIMXRT1064.c</name>
@@ -6220,6 +6202,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6228,20 +6216,14 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</name>
-    </file>
   </group>
   <group>
     <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../xip/evkmimxrt1064_flexspi_nor_config.c</name>
@@ -6268,16 +6250,16 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

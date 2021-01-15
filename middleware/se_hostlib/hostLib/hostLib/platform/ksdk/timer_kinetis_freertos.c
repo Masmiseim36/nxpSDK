@@ -21,6 +21,12 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+
+#if defined(__GNUC__)
+#pragma GCC push_options
+#pragma GCC optimize("O0")
+#endif
+
 extern volatile uint32_t gtimer_kinetis_msticks; // counter for 1ms SysTicks
 
 
@@ -44,7 +50,11 @@ void sm_sleep(uint32_t msec) {
 }
 
 void vApplicationTickHook() {
-    gtimer_kinetis_msticks++;
+    gtimer_kinetis_msticks+=1;
 }
+
+#if defined(__GNUC__)
+#pragma GCC pop_options
+#endif
 
 #endif /* SDK_OS_FREE_RTOS || FSL_RTOS_FREE_RTOS */

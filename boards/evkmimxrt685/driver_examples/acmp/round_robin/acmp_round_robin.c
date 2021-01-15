@@ -8,11 +8,11 @@
 
 #include "fsl_acmp.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_rtc.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_power.h"
 /*******************************************************************************
  * Definitions

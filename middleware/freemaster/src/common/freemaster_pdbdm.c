@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -25,10 +25,10 @@
 /* Numeric identifier to help pre-processor to identify whether our transport is used or not. */
 #define FMSTR_PDBDM_ID 1
 
-#if (FMSTR_MK_IDSTR(FMSTR_TRANSPORT) == FMSTR_PDBDM_ID) && (!(FMSTR_DISABLE))
+#if (FMSTR_MK_IDSTR(FMSTR_TRANSPORT) == FMSTR_PDBDM_ID) && FMSTR_DISABLE == 0
 
 /* Packet Driven BDM communication does not support any interrupt mode */
-#if (FMSTR_SHORT_INTR) || (FMSTR_LONG_INTR)
+#if FMSTR_SHORT_INTR > 0 || FMSTR_LONG_INTR > 0
      #warning "FreeMASTER Packet Driven BDM driver doesn't support any Interrupt mode. Call the FMSTR_Poll() function in the Timer ISR routine instead."
 #endif
 
@@ -40,29 +40,22 @@
     #error The communication buffer size (FMSTR_COMM_BUFFER_SIZE) must be smaller than 240 bytes.
 #endif
 
-#ifndef FMSTR_PDBDM_DEBUG
-    #define FMSTR_PDBDM_DEBUG 0
-#endif
-
 #include "freemaster_protocol.h"
 #include "freemaster_utils.h"
 
-#if FMSTR_PDBDM_DEBUG
-#include "stdio.h"
-#endif
 /******************************************************************************
 * Protocol constants
 *******************************************************************************/
 
 /* Communication buffer borders */
-#define FMSTR_PDBDM_BUFFBORDER_CODE1 0x00EEBE01  /* Beginning Magic Number for Packet driven BDM communication buffer, highest byte is reserved for communication buffer size  */
-#define FMSTR_PDBDM_BUFFBORDER_CODE2 0xF0EEED01  /* Ending Magic Number for Packet driven BDM communication buffer */
+#define FMSTR_PDBDM_BUFFBORDER_CODE1 0x00EEBE01UL  /* Beginning Magic Number for Packet driven BDM communication buffer, highest byte is reserved for communication buffer size  */
+#define FMSTR_PDBDM_BUFFBORDER_CODE2 0xF0EEED01UL  /* Ending Magic Number for Packet driven BDM communication buffer */
 
 /* Packet Driven BDM Communication States */
-#define FMSTR_PDBDM_IDLE             0x00    /* FreeMASTER serial driver is configured to BDM and ready to communicate */
-#define FMSTR_PDBDM_RECEIVED_FRAME   0x02    /* New Frame is ready in communication buffer. */
-#define FMSTR_PDBDM_DECODING_FRAME   0x04    /* Received frame is processed */
-#define FMSTR_PDBDM_FRAME_TO_SEND    0x08    /* FreeMASTER Communication buffer includes frame to be sent back */
+#define FMSTR_PDBDM_IDLE             0x00U    /* FreeMASTER serial driver is configured to BDM and ready to communicate */
+#define FMSTR_PDBDM_RECEIVED_FRAME   0x02U    /* New Frame is ready in communication buffer. */
+#define FMSTR_PDBDM_DECODING_FRAME   0x04U    /* Received frame is processed */
+#define FMSTR_PDBDM_FRAME_TO_SEND    0x08U    /* FreeMASTER Communication buffer includes frame to be sent back */
 
 /***********************************
 *  local variables
@@ -103,7 +96,7 @@ const FMSTR_TRANSPORT_INTF FMSTR_PDBDM =
     .SendResponse = _FMSTR_PdBdmSendResponse,
 };
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Packet Driven communication initialization
 *
@@ -137,52 +130,54 @@ static void _FMSTR_PdBdmPoll(void)
 {
     if (_pdbdm.bdmState == FMSTR_PDBDM_RECEIVED_FRAME)
     {
-        FMSTR_U8    crc;
-        FMSTR_INDEX i;
+        FMSTR_U8 i;
+        FMSTR_U8 crc;
         FMSTR_Crc8Init(&crc);
 
-#if FMSTR_PDBDM_DEBUG
-        printf("PDBDM - Received Frame(cmd: 0x%02X, len: %d).\n", _pdbdm.cmdStatus, _pdbdm.pcktSize);
+#if FMSTR_DEBUG_LEVEL >= 2
+        FMSTR_DEBUG_PRINTF("PDBDM - Received Frame(cmd: 0x%02X, len: %d).\n", _pdbdm.cmdStatus, _pdbdm.pcktSize);
 #endif
         /* Check Packet consistency */
         FMSTR_Crc8AddByte(&crc, _pdbdm.pcktSize);
         FMSTR_Crc8AddByte(&crc, _pdbdm.cmdStatus);
 
         for(i=0; i<_pdbdm.pcktSize; i++)
+        {
             FMSTR_Crc8AddByte(&crc, _pdbdm.commBuffer[i]);
+        }
 
         /* If CRC is valid, do the prtocol decoding, otherwise wait to finish background write*/
         if(crc == _pdbdm.commBuffer[i])
         {
-#if FMSTR_PDBDM_DEBUG
+#if FMSTR_DEBUG_LEVEL >= 3
             FMSTR_INDEX j;
             if(_pdbdm.pcktSize)
             {
-                printf("PDBDM - Received Frame Data: \n");
+                FMSTR_DEBUG_PRINTF("PDBDM - Received Frame Data: \n");
                 for(j=0;j<_pdbdm.pcktSize;j++)
                 {
-                    printf("%02X ", _pdbdm.commBuffer[j]);
+                    FMSTR_DEBUG_PRINTF("%02X ", _pdbdm.commBuffer[j]);
                 }
-                printf("\n");
+                FMSTR_DEBUG_PRINTF("\n");
             }
 #endif
-            /* Packet is potencionally received */
+            /* Packet is potentially received */
             _pdbdm.bdmState = FMSTR_PDBDM_DECODING_FRAME;
             /* Destroy the last CRC in memory */
             _pdbdm.commBuffer[i] = ~crc;
             /* Decode received packet */
             (void)FMSTR_ProtocolDecoder(_pdbdm.commBuffer, _pdbdm.pcktSize, _pdbdm.cmdStatus);
         }
-#if FMSTR_PDBDM_DEBUG
+#if FMSTR_DEBUG_LEVEL >= 2
         else
         {
-            printf("PDBDM - Received Frame has invalid CRC(excepted: 0x%02X, received: 0x%02X).\n", crc, _pdbdm.commBuffer[i]);
+            FMSTR_DEBUG_PRINTF("PDBDM - Received Frame has invalid CRC(excepted: 0x%02X, received: 0x%02X).\n", crc, _pdbdm.commBuffer[i]);
         }
 #endif
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Finalize transmit buffer before transmitting
 *
@@ -197,33 +192,38 @@ static void _FMSTR_PdBdmPoll(void)
 
 static void _FMSTR_PdBdmSendResponse(FMSTR_BPTR pResponse, FMSTR_SIZE nLength, FMSTR_U8 statusCode)
 {
-    FMSTR_U8    crc;
-    FMSTR_INDEX i;
+    FMSTR_U8   crc;
+    FMSTR_SIZE i;
     /* Check the response that is valid to provided address? */
     FMSTR_ASSERT(pResponse == _pdbdm.commBuffer);
 
     /* Compute CRC8 data consistency check, including status and packet length */
     FMSTR_Crc8Init(&crc);
 
-    FMSTR_Crc8AddByte(&crc, nLength);
+    FMSTR_Crc8AddByte(&crc, (FMSTR_U8)nLength);
     FMSTR_Crc8AddByte(&crc, statusCode);
     for(i=0; i<nLength; i++)
+    {
         FMSTR_Crc8AddByte(&crc, _pdbdm.commBuffer[i]);
+    }
+
     /* Add the response CRC at the end of data, in case that full communication buffer is used the CRC will be written into */
     _pdbdm.commBuffer[i] = crc;
-    _pdbdm.pcktSize = nLength;
+    _pdbdm.pcktSize = (FMSTR_U8)nLength;
     _pdbdm.cmdStatus = statusCode;
-#if FMSTR_PDBDM_DEBUG
-        printf("PDBDM - Prepared response(status: 0x%02X, len: %d).\n", _pdbdm.cmdStatus, _pdbdm.pcktSize);
+
+#if FMSTR_DEBUG_LEVEL >= 2
+        FMSTR_DEBUG_PRINTF("PDBDM - Prepared response(status: 0x%02X, len: %d).\n", _pdbdm.cmdStatus, _pdbdm.pcktSize);
         if(_pdbdm.pcktSize)
         {
             for(i=0;i<_pdbdm.pcktSize;i++)
             {
-                printf("%02X ", _pdbdm.commBuffer[i]);
+                FMSTR_DEBUG_PRINTF("%02X ", _pdbdm.commBuffer[i]);
             }
         }
-        printf(" CRC: 0x%02X.\n", crc);
+        FMSTR_DEBUG_PRINTF(" CRC: 0x%02X.\n", crc);
 #endif
+
     /* Frame is ready to send */
     _pdbdm.bdmState = FMSTR_PDBDM_FRAME_TO_SEND;
 }

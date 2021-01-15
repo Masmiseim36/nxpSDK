@@ -71,37 +71,26 @@
    
 #endif
 #ifdef INITIAL_ATTESTATION
-	{801, &test_entry_a001},
+	{601, &test_entry_a001},
 #endif
-#ifdef INTERNAL_TRUSTED_STORAGE
-	{601, &test_entry_s001},
-	{602, &test_entry_s002},
-	{603, &test_entry_s003},
-	{604, &test_entry_s004},
-	{605, &test_entry_s005},
-	{606, &test_entry_s006},
-	{607, &test_entry_s007},
-	{608, &test_entry_s008},
-	{609, &test_entry_s009},
-	{610, &test_entry_s010},
-#elif PROTECTED_STORAGE
-	{401, &test_entry_p001},
-	{402, &test_entry_p002},
-	{403, &test_entry_p003},
-	{404, &test_entry_p004},
-	{405, &test_entry_p005},
-	{406, &test_entry_p006},
-	{407, &test_entry_p007},
-	{408, &test_entry_p008},
-	{409, &test_entry_p009},
-	{410, &test_entry_p010},
+#if defined(INTERNAL_TRUSTED_STORAGE) || defined(PROTECTED_STORAGE)
+	{401, &test_entry_s001},
+	{402, &test_entry_s002},
+	{403, &test_entry_s003},
+	{404, &test_entry_s004},
+	{405, &test_entry_s005},
+	{406, &test_entry_s006},
+	{407, &test_entry_s007},
+	{408, &test_entry_s008},
+	{409, &test_entry_s009},
+	{410, &test_entry_s010},
 #endif
 #ifdef PROTECTED_STORAGE
-	{411, &test_entry_p011},
-	{412, &test_entry_p012},
-	{413, &test_entry_p013},
-	{414, &test_entry_p014},
-	{415, &test_entry_p015},
-	{416, &test_entry_p016},
-	{417, &test_entry_p017},
+	{411, &test_entry_s011},
+	{412, &test_entry_s012},
+	{413, &test_entry_s013},
+	{414, &test_entry_s014},
+	{415, &test_entry_s015},
+	{416, &test_entry_s016},
+	{417, &test_entry_s017},
 #endif

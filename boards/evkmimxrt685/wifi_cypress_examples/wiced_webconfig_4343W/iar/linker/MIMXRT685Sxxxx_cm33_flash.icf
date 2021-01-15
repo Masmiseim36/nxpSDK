@@ -39,8 +39,9 @@ if (isdefinedsymbol(__heap_size__)) {
   define symbol __size_heap__          = 90000;
 }
 
-/* The SRAM region [0x0-0x20000] is reserved for ROM code and app-specific use cases. */
-/* The SRAM region [0x20000-0x80000] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
+/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] is reserved for app-specific use cases. */
+/* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
 
 define symbol __ram_vector_table_size__        =  isdefinedsymbol(__ram_vector_table__) ? 0x00000130 : 0;
 define symbol __ram_vector_table_offset__      =  isdefinedsymbol(__ram_vector_table__) ? 0x0000012F : 0;

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -70,22 +70,31 @@ Purpose     : Frame window include
 
 /*********************************************************************
 *
-*       Color indices
+*       FRAMEWIN states
+*
+*  Description
+*    State of the FRAMEWIN used for various functions.
 */
-#define FRAMEWIN_CI_INACTIVE 0
-#define FRAMEWIN_CI_ACTIVE   1
+#define FRAMEWIN_CI_INACTIVE 0    // When the FRAMEWIN is inactive.
+#define FRAMEWIN_CI_ACTIVE   1    // When the FRAMEWIN is active.
 
 /*********************************************************************
 *
-*       Create / Status flags
+*       FRAMEWIN create flags
+*
+*  Description
+*    Create flags that define the behavior of the FRAMEWIN widget.
+*    These flags are OR-combinable and can be specified upon creation
+*    of the widget via the \a{ExFlags} parameter of FRAMEWIN_CreateEx().
 */
-#define FRAMEWIN_CF_ACTIVE     (1<<3)
-#define FRAMEWIN_CF_MOVEABLE   (1<<4)
-#define FRAMEWIN_CF_TITLEVIS   (1<<5)
-#define FRAMEWIN_CF_MINIMIZED  (1<<6)
-#define FRAMEWIN_CF_MAXIMIZED  (1<<7)
-#define FRAMEWIN_CF_DRAGGING   (1<<8)
+#define FRAMEWIN_CF_ACTIVE     (1 << 3)    // Active-state of the frame window. See FRAMEWIN_SetActive().
+#define FRAMEWIN_CF_MOVEABLE   (1 << 4)    // Sets the frame window to a moveable state. See FRAMEWIN_SetMoveable().
+#define FRAMEWIN_CF_TITLEVIS   (1 << 5)    // Visibility of the frame window's title. See FRAMEWIN_SetTitleVis().
+#define FRAMEWIN_CF_MINIMIZED  (1 << 6)    // Minimized-state of the frame window. See FRAMEWIN_Minimize().
+#define FRAMEWIN_CF_MAXIMIZED  (1 << 7)    // Maximized-state of the frame window. See FRAMEWIN_Maximize().
+#define FRAMEWIN_CF_DRAGGING   (1 << 8)
 
+/* status flags */
 #define FRAMEWIN_SF_ACTIVE     FRAMEWIN_CF_ACTIVE
 #define FRAMEWIN_SF_MOVEABLE   FRAMEWIN_CF_MOVEABLE
 #define FRAMEWIN_SF_TITLEVIS   FRAMEWIN_CF_TITLEVIS
@@ -95,10 +104,14 @@ Purpose     : Frame window include
 
 /*********************************************************************
 *
-*       BUTTON Flags
+*       FRAMEWIN button flags
+*
+*  Description
+*    These flags determine on which side of the FRAMEWIN widget a button
+*    should be added.
 */
-#define FRAMEWIN_BUTTON_RIGHT   (1<<0)
-#define FRAMEWIN_BUTTON_LEFT    (1<<1)
+#define FRAMEWIN_BUTTON_RIGHT   (1 << 0)    // The BUTTON will be created at the right side.
+#define FRAMEWIN_BUTTON_LEFT    (1 << 1)    // The BUTTON will be created at the left side.
 
 /*********************************************************************
 *

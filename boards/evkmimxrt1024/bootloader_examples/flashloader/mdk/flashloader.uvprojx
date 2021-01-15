@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-null-dereference  -Wno-unknown-attributes  -Wno-expansion-to-defined  -Wno-invalid-noreturn</MiscControls>
               <Define>NDEBUG, CPU_MIMXRT1024DAG5A, CPU_IS_ARM_CORTEX_M7=1, BL_TARGET_RAM, MIMXRT1024, USB_STACK_BM</Define>
               <Undefine/>
-              <IncludePath>../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/targets/MIMXRT1024/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc;../../../../../devices/MIMXRT1024;..;../../../../../devices/MIMXRT1024/drivers;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/crc;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/memory;../../../../../middleware/mcu-boot/src/memory/src;../../../../../middleware/mcu-boot/src/packet;../../../../../middleware/mcu-boot/src/property;../../../../../middleware/mcu-boot/src/sbloader;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/src/drivers/dcp;../../../../../middleware/mcu-boot/src/drivers/trng;../../../../../components/osa;../../../../../middleware/usb/device;../../../../../middleware/usb/include;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/ocotp;../../../../../components/lists;../../../../../middleware/usb/phy;../../../../../middleware/mcu-boot/src/drivers/flexspi;../../../../../middleware/mcu-boot/src/drivers/flexspi_nor</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/drivers;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/crc;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/memory;../../../../../middleware/mcu-boot/src/memory/src;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/packet;../../../../../middleware/mcu-boot/src/property;../../../../../middleware/mcu-boot/src/sbloader;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/src/drivers/dcp;../../../../../middleware/mcu-boot/src/drivers/trng;../../../../../middleware/mcu-boot/targets/MIMXRT1024/src;../../../../../middleware/usb/device;../../../../../components/osa;../../../../../middleware/usb/include;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/ocotp;../../../../../CMSIS/Include;../../../../../components/lists;../../../../../middleware/usb/phy;../../../../../middleware/mcu-boot/src/drivers/flexspi;../../../../../middleware/mcu-boot/src/drivers/flexspi_nor</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -361,7 +361,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>MIMXRT1024_ram_flashloader.scf</ScatterFile>
+            <ScatterFile>../../../../../middleware/mcu-boot/targets/common/linker/arm/MIMXRT1024/MIMXRT1024_ram_flashloader.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>--remove --datacompressor off --entry=Reset_Handler</Misc>
@@ -488,7 +488,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-usb-bm_composite</GroupName>
+          <GroupName>source/usb/bm_composite</GroupName>
           <Files>
             <File>
               <FileName>bootloader_hid_report_ids.h</FileName>
@@ -538,7 +538,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-autobaud</GroupName>
+          <GroupName>source/autobaud</GroupName>
           <Files>
             <File>
               <FileName>autobaud.h</FileName>
@@ -553,7 +553,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-bootloader</GroupName>
+          <GroupName>source/bootloader</GroupName>
           <Files>
             <File>
               <FileName>bl_peripheral_interface.h</FileName>
@@ -618,7 +618,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-bootloader-src</GroupName>
+          <GroupName>source/bootloader/src</GroupName>
           <Files>
             <File>
               <FileName>bl_user_entry.c</FileName>
@@ -693,7 +693,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-crc</GroupName>
+          <GroupName>source/crc</GroupName>
           <Files>
             <File>
               <FileName>crc16.h</FileName>
@@ -718,7 +718,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-include</GroupName>
+          <GroupName>source/include</GroupName>
           <Files>
             <File>
               <FileName>bootloader_common.h</FileName>
@@ -733,7 +733,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-memory</GroupName>
+          <GroupName>source/memory</GroupName>
           <Files>
             <File>
               <FileName>memory.h</FileName>
@@ -743,7 +743,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-memory-src</GroupName>
+          <GroupName>source/memory/src</GroupName>
           <Files>
             <File>
               <FileName>sram_init.h</FileName>
@@ -793,7 +793,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-packet</GroupName>
+          <GroupName>source/packet</GroupName>
           <Files>
             <File>
               <FileName>command_packet.h</FileName>
@@ -808,7 +808,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-packet-src</GroupName>
+          <GroupName>source/packet/src</GroupName>
           <Files>
             <File>
               <FileName>serial_packet.c</FileName>
@@ -818,7 +818,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-property</GroupName>
+          <GroupName>source/property</GroupName>
           <Files>
             <File>
               <FileName>property.h</FileName>
@@ -828,7 +828,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-sbloader</GroupName>
+          <GroupName>source/sbloader</GroupName>
           <Files>
             <File>
               <FileName>sbloader.h</FileName>
@@ -843,7 +843,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-sbloader-src</GroupName>
+          <GroupName>source/sbloader/src</GroupName>
           <Files>
             <File>
               <FileName>sbloader.c</FileName>
@@ -853,7 +853,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-utilities</GroupName>
+          <GroupName>source/utilities</GroupName>
           <Files>
             <File>
               <FileName>fsl_rtos_abstraction.h</FileName>
@@ -873,7 +873,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-utilities-src</GroupName>
+          <GroupName>source/utilities/src</GroupName>
           <Files>
             <File>
               <FileName>fsl_assert.c</FileName>
@@ -893,7 +893,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers</GroupName>
+          <GroupName>source/drivers</GroupName>
           <Files>
             <File>
               <FileName>smc.h</FileName>
@@ -903,7 +903,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-dcp</GroupName>
+          <GroupName>source/drivers/dcp</GroupName>
           <Files>
             <File>
               <FileName>bl_dcp.c</FileName>
@@ -918,7 +918,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-trng</GroupName>
+          <GroupName>source/drivers/trng</GroupName>
           <Files>
             <File>
               <FileName>bl_trng.c</FileName>
@@ -933,7 +933,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-property-src</GroupName>
+          <GroupName>source/property/src</GroupName>
           <Files>
             <File>
               <FileName>property_imx.c</FileName>
@@ -1018,7 +1018,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-include</GroupName>
+          <GroupName>usb/device/include</GroupName>
           <Files>
             <File>
               <FileName>usb_device.h</FileName>
@@ -1033,7 +1033,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source</GroupName>
+          <GroupName>usb/device/source</GroupName>
           <Files>
             <File>
               <FileName>usb_device_dci.c</FileName>
@@ -1088,7 +1088,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-source-ehci</GroupName>
+          <GroupName>usb/device/source/ehci</GroupName>
           <Files>
             <File>
               <FileName>usb_device_ehci.c</FileName>
@@ -1103,7 +1103,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class-hid</GroupName>
+          <GroupName>usb/device/class/hid</GroupName>
           <Files>
             <File>
               <FileName>usb_device_hid.c</FileName>
@@ -1118,7 +1118,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-device-class</GroupName>
+          <GroupName>usb/device/class</GroupName>
           <Files>
             <File>
               <FileName>usb_device_class.c</FileName>
@@ -1133,7 +1133,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-microseconds</GroupName>
+          <GroupName>source/drivers/microseconds</GroupName>
           <Files>
             <File>
               <FileName>microseconds.h</FileName>
@@ -1148,7 +1148,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-ocotp</GroupName>
+          <GroupName>source/drivers/ocotp</GroupName>
           <Files>
             <File>
               <FileName>bl_ocotp.c</FileName>
@@ -1228,7 +1228,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -1243,7 +1243,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-phy</GroupName>
+          <GroupName>usb/phy</GroupName>
           <Files>
             <File>
               <FileName>usb_phy.c</FileName>
@@ -1258,7 +1258,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>usb-include</GroupName>
+          <GroupName>usb/include</GroupName>
           <Files>
             <File>
               <FileName>usb.h</FileName>
@@ -1278,7 +1278,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-flexspi</GroupName>
+          <GroupName>source/drivers/flexspi</GroupName>
           <Files>
             <File>
               <FileName>bl_flexspi.c</FileName>
@@ -1293,7 +1293,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-drivers-flexspi_nor</GroupName>
+          <GroupName>source/drivers/flexspi_nor</GroupName>
           <Files>
             <File>
               <FileName>flexspi_nor_flash.c</FileName>

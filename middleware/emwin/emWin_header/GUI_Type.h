@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -110,50 +110,115 @@ typedef struct {
   U16 HasTrans;
 } GUI_BITMAP_STREAM;
 
+/*********************************************************************
+*
+*       GUI_BITMAPSTREAM_PARAM
+*
+*   Description
+*     Contains a command to be used by a set hook function for
+*     GUI_DrawStreamedBitmapEx().
+*/
 typedef struct {
-  int    Cmd;
-  U32    v;
-  void * p;
+  int    Cmd;  // Command to be executed.
+  U32    v;    // Depends on the command to be executed.
+  void * p;    // Depends on the command to be executed.
 } GUI_BITMAPSTREAM_PARAM;
 
+/*********************************************************************
+*
+*       GUI_BITMAPSTREAM_INFO
+*
+*   Description
+*     Information about a streamed bitmap.
+*/
 typedef struct {
-  int XSize;
-  int YSize;
-  int BitsPerPixel;
-  int NumColors;
-  int HasTrans;
+  int XSize;          // Pixel size in X of the image.
+  int YSize;          // Pixel size in Y of the image.
+  int BitsPerPixel;   // Number of bits per pixel.
+  int NumColors;      // Number of colors in case of an index based image.
+  int HasTrans;       // In case of an index based image 1 if transparency exist, 0 if not.
 } GUI_BITMAPSTREAM_INFO;
 
 typedef void * (* GUI_BITMAPSTREAM_CALLBACK)(GUI_BITMAPSTREAM_PARAM * pParam);
 
+/*********************************************************************
+*
+*       GUI_GRADIENT_INFO
+*
+*   Description
+*     Information used for drawing multi-color gradients.
+*
+*   Additional information
+*     The member Pos is used to define the start and end
+*     position of the colors. It defines also the size of the gradient.
+*/
 typedef struct {
-  U16       Pos;
-  GUI_COLOR Color;
+  U16       Pos;    // Start position of color. The next entry is the end position. The last entry
+                    // also defines the x1 / y1 position of the gradient, either if it's a
+                    // horizontal or vertical gradient.
+  GUI_COLOR Color;  // Color to be used.
 } GUI_GRADIENT_INFO;
 
+/*********************************************************************
+*
+*       GUI_PID_STATE
+*
+*   Description
+*     Stores the position of the pointer input device.
+*/
 typedef struct {
-  int x,y;
-  U8  Pressed;
-  U8  Layer;
+  int x;         // Horizontal position of the PID in window coordinates.
+  int y;         // Vertical position of the PID in window coordinates.
+  U8  Pressed;   // If the message is originated by a touch screen this value can be 0
+                 // (unpressed) or 1 (pressed). \n If the message is originated by a mouse each
+                 // bit represents a mouse button (0 for unpressed and 1 for pressed state):
+                 // \ti{Bit 0 represents the first button (normally the left button)}
+                 // \ti{Bit 1 represents the second button (normally the right button)}
+                 // \ti{Bit 2 represents the third button (normally the middle button)}
+                 // The remaining bits can be used for further buttons.
+  U8  Layer;     // ID of layer.
 } GUI_PID_STATE;
 
+/*********************************************************************
+*
+*       GUI_KEY_STATE
+*
+*   Description
+*     Data structure used to store a key state.
+*/
 typedef struct {
-  int Key;
-  int Pressed;
+  int Key;       // Key code.
+  int Pressed;   // 1, if the key is pressed. \n
+                 // 0, if the key is not pressed. \n
+                 // -1, if the state could not be determined.
 } GUI_KEY_STATE;
 
+/*********************************************************************
+*
+*       GUI_GIF_IMAGE_INFO
+*
+*   Description
+*     Information about a sub-image in a GIF file.
+*/
 typedef struct {
-  int xPos;
-  int yPos;
-  int xSize;
-  int ySize;
-  int Delay;
+  int xPos;       // X-position of the last drawn image.
+  int yPos;       // Y-position of the last drawn image.
+  int xSize;      // X-size of the last drawn image.
+  int ySize;      // Y-size of the last drawn image.
+  int Delay;      // Time in 1/100 seconds the image should be shown in a movie.
 } GUI_GIF_IMAGE_INFO;
 
+/*********************************************************************
+*
+*       GUI_GIF_INFO
+*
+*   Description
+*     Information about a sub-image in a GIF file.
+*/
 typedef struct {
-  int xSize;
-  int ySize;
-  int NumImages;
+  int xSize;      // Pixel size in X of the image.
+  int ySize;      // Pixel size in Y of the image.
+  int NumImages;  // Number of sub-images in the file.
 } GUI_GIF_INFO;
 
 #define GUI_REGISTER_INIT GUI_REGISTER_HOOK
@@ -238,30 +303,41 @@ typedef struct {
 
 /*********************************************************************
 *
-*       FONT structures
+*       GUI_FONTINFO
 *
-* This structure is used when retrieving information about a font.
-* It is designed for future expansion without incompatibilities.
+*   Description
+*     This structure is used when retrieving information about a font.
 */
 typedef struct {
-  U16 Flags;
-  U8 Baseline;
-  U8 LHeight;     /* height of a small lower case character (a,x) */
-  U8 CHeight;     /* height of a small upper case character (A,X) */
+  U16 Flags;      // Flags that define the type of the font. Permitted values are explained in
+                  // \ref{Font info flags}.
+  U8 Baseline;    // Height of the baseline. The baseline is the line where most, but not all
+                  // characters are 'placed on'. The lowest part of an 'A' is on the baseline.
+  U8 LHeight;     // Height of a lower case character such as 'a' or 'x'.
+  U8 CHeight;     // Height of an upper case character such as 'A' or 'X'.
 } GUI_FONTINFO;
 
-#define GUI_FONTINFO_FLAG_PROP    (1 << 0)    /* Is proportional */
-#define GUI_FONTINFO_FLAG_MONO    (1 << 1)    /* Is monospaced */
-#define GUI_FONTINFO_FLAG_AA      (1 << 2)    /* Is an antialiased font */
-#define GUI_FONTINFO_FLAG_AA2     (1 << 3)    /* Is an antialiased font, 2bpp */
-#define GUI_FONTINFO_FLAG_AA4     (1 << 4)    /* Is an antialiased font, 4bpp */
-#define GUI_FONTINFO_FLAG_PROPFRM (1 << 5)    /* Is proportional, framed */
+/*********************************************************************
+*
+*       Font info flags
+*
+*   Description
+*     These flags define of what type a font is. See the chapter
+*     \ref{Font types} for a detailed explanation of the font types.
+*/
+#define GUI_FONTINFO_FLAG_PROP    (1 << 0)    // Font is proportional.
+#define GUI_FONTINFO_FLAG_MONO    (1 << 1)    // Font is monospaced.
+#define GUI_FONTINFO_FLAG_AA      (1 << 2)    // Font is an antialiased font.
+#define GUI_FONTINFO_FLAG_AA2     (1 << 3)    // Font is an antialiased font with 2bpp anti-aliasing.
+#define GUI_FONTINFO_FLAG_AA4     (1 << 4)    // Font is an antialiased font with 4bpp anti-aliasing.
+#define GUI_FONTINFO_FLAG_PROPFRM (1 << 5)    // Font is proportional and framed.
 
 /*********************************************************************
 *
 *       UNICODE Encoding
 */
 typedef U16  tGUI_GetCharCode   (const char * s);
+typedef U16  tGUI_GetGlyph      (const char * s, int CursorPosByte, int * pByteSize);
 typedef int  tGUI_GetCharSize   (const char * s);
 typedef int  tGUI_CalcSizeOfChar(U16 Char);
 typedef int  tGUI_Encode        (char * s, U16 Char);
@@ -551,21 +627,36 @@ typedef struct tGUI_XBF_APIList_struct {
 *
 *       TrueType support (TTF)
 */
+/*********************************************************************
+*
+*       GUI_TTF_DATA
+*
+*   Description
+*     Contains the raw data of a TTF font file.
+*/
 typedef struct {
-  const void * pData;      /* Pointer to TTF font file in addressable memory area */
-  U32 NumBytes;            /* Size of file in bytes */
+  const void * pData;      // Pointer to TTF font file in addressable memory area.
+  U32 NumBytes;            // Size of file in bytes.
 } GUI_TTF_DATA;
 
+/*********************************************************************
+*
+*       GUI_TTF_CS
+*
+*   Description
+*     Stores data necessary to create a TTF font.
+*/
 typedef struct {
-  GUI_TTF_DATA * pTTF;     /* Pointer to GUI_TTF_DATA structure which contains location and size of font file */
+  GUI_TTF_DATA * pTTF;     // Pointer to GUI_TTF_DATA structure which contains location and size
+                           // of font file.
   U32 aImageTypeBuffer[4]; /* Buffer for image type structure */
-  int PixelHeight;         /* Pixel height of new font. It means the height of the surrounding rectangle
-                            * between the glyphs 'g' anf 'f'. Please notice that it is not the distance
-                            * between two lines of text. With other words the value returned byGUI_GetFontSizeY()
-                            * is not identically with this value. */
-  int FaceIndex;           /* Some font files can contain more than one font face. In case of more than one face
-                            * this index specifies the zero based face index to be used to create the font. 
-                            * Usually 0. */
+  int PixelHeight;         // Pixel height of new font. It means the height of the surrounding
+                           // rectangle between the glyphs 'g' anf 'f'. Please notice that it is
+                           // not the distance between two lines of text. With other words the value
+                           // returned by GUI_GetFontSizeY() is not identically with this value.
+  int FaceIndex;           // Some font files can contain more than one font face. In case of more
+                           // than one face this index specifies the zero based face index to be
+                           // used to create the font. Usually 0.
 } GUI_TTF_CS;
 
 /*********************************************************************
@@ -595,17 +686,34 @@ typedef     GUI_HMEM      GUI_HSPRITE;
   #define GUI_MTOUCH_MAX_NUM_POINTS 10
 #endif
 
+/*********************************************************************
+*
+*       GUI_MTOUCH_INPUT
+*
+*  Description
+*    Data structure used by GUI_MTOUCH_GetEvent() to store a multi touch
+*    event in.
+*/
 typedef struct {
-  I32 x;
-  I32 y;
-  U32 Id;
-  U16 Flags;
+  I32 x;          // X-position in pixels of the touch point.
+  I32 y;          // Y-position in pixels of the touch point.
+  U32 Id;         // Unique Id, should be provided by the touch driver. Make sure that this
+                  // element is != 0.
+  U16 Flags;      // See \ref{MultiTouch flags}.
 } GUI_MTOUCH_INPUT;
 
+/*********************************************************************
+*
+*       GUI_MTOUCH_EVENT
+*
+*  Description
+*    Data structure used by GUI_MTOUCH_GetEvent() to store a multi touch
+*    event in.
+*/
 typedef struct {
-  int            LayerIndex;
-  unsigned       NumPoints;
-  GUI_TIMER_TIME TimeStamp;
+  int            LayerIndex;   // Layer index of touched layer (normally 0).
+  unsigned       NumPoints;    // Number of available touch points.
+  GUI_TIMER_TIME TimeStamp;    // Time stamp in ms of that event.
   PTR_ADDR       hInput;
 } GUI_MTOUCH_EVENT;
 

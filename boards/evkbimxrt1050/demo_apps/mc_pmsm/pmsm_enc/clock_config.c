@@ -1,9 +1,11 @@
 /*
- * Copyright 2017-2020 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
 /*
  * How to setup clock using clock driver functions:
  *
@@ -25,7 +27,7 @@ product: Clocks v7.0
 processor: MIMXRT1052xxxxB
 package_id: MIMXRT1052DVL6B
 mcu_data: ksdk2_0
-processor_version: 0.7.9
+processor_version: 0.9.0
 board: IMXRT1050-EVKB
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 

@@ -142,6 +142,8 @@
 
 /* @Brief Board Bluetooth HCI UART configuration */
 #define BOARD_BT_UART_BASEADDR    LPUART3
+#define BOARD_BT_UART_INSTANCE    3
+#define BOARD_BT_UART_BAUDRATE    3000000
 #define BOARD_BT_UART_CLK_FREQ    BOARD_DebugConsoleSrcFreq()
 #define BOARD_BT_UART_IRQ         LPUART3_IRQn
 #define BOARD_BT_UART_IRQ_HANDLER LPUART3_IRQHandler

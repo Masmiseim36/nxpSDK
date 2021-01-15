@@ -122,6 +122,9 @@ static void print_network(struct wlan_network *network)
         case WLAN_SECURITY_WPA3_SAE:
             PRINTF("%s: WPA3 SAE\r\n", sec_tag);
             break;
+        case WLAN_SECURITY_WPA2_WPA3_SAE_MIXED:
+            PRINTF("%s: WPA2/WPA3 SAE Mixed\r\n", sec_tag);
+            break;
         default:
             break;
     }
@@ -230,6 +233,7 @@ static void dump_wlan_add_usage()
         "    wlan-add <profile_name> ssid <ssid> [wpa3 sae <secret> mfpc <1> mfpr <0/1>]"
         "\r\n");
     PRINTF("      If using WPA3 SAE security, always set the PMF configuration.\r\n");
+
     PRINTF("  For static IP address assignment:\r\n");
     PRINTF(
         "    wlan-add <profile_name> ssid <ssid>\r\n"
@@ -262,6 +266,7 @@ void test_wlan_add(int argc, char **argv)
         unsigned channel : 1;
         unsigned address : 2;
         unsigned security : 1;
+        unsigned security2 : 1;
         unsigned role : 1;
         unsigned mfpc : 1;
         unsigned mfpr : 1;
@@ -363,22 +368,22 @@ void test_wlan_add(int argc, char **argv)
             arg += 2;
             info.security++;
         }
-        else if (!info.security && string_equal("wpa3", argv[arg]))
+        else if (!info.security2 && string_equal("wpa3", argv[arg]))
         {
             if (string_equal(argv[arg + 1], "sae"))
             {
                 network.security.type = WLAN_SECURITY_WPA3_SAE;
                 /* copy the PSK phrase */
-                network.security.psk_len = strlen(argv[arg + 2]);
-                if (!network.security.psk_len)
+                network.security.password_len = strlen(argv[arg + 2]);
+                if (!network.security.password_len)
                 {
                     PRINTF(
                         "Error: invalid WPA3 security"
                         " argument\r\n");
                     return;
                 }
-                if (network.security.psk_len < sizeof(network.security.psk))
-                    strcpy(network.security.psk, argv[arg + 2]);
+                if (network.security.password_len < sizeof(network.security.password))
+                    strcpy(network.security.password, argv[arg + 2]);
                 else
                 {
                     PRINTF(
@@ -395,7 +400,7 @@ void test_wlan_add(int argc, char **argv)
                     " argument\r\n");
                 return;
             }
-            info.security++;
+            info.security2++;
         }
         else if (!info.role && string_equal("role", argv[arg]))
         {
@@ -453,6 +458,12 @@ void test_wlan_add(int argc, char **argv)
         dump_wlan_add_usage();
         PRINTF("Error: specify at least the SSID or BSSID\r\n");
         return;
+    }
+
+    if ((network.security.type == WLAN_SECURITY_WPA2) || (network.security.type == WLAN_SECURITY_WPA3_SAE))
+    {
+        if (network.security.psk_len && network.security.password_len)
+            network.security.type = WLAN_SECURITY_WPA2_WPA3_SAE_MIXED;
     }
 
     network.ip.ipv4.addr_type = info.address;

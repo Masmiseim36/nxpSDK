@@ -12,13 +12,13 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_i2c.h"
 #include "fsl_i2s.h"
 #include "fsl_wm8904.h"
 #include "music.h"
 #include "fsl_codec_common.h"
-#include "pin_mux.h"
 #include <stdbool.h>
 #include "fsl_codec_adapter.h"
 /*******************************************************************************
@@ -109,10 +109,17 @@ int main(void)
     if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
     {
         PRINTF("WM8904_Init failed!\r\n");
+        assert(false);
     }
-    /* Initial volume kept low for hearing safety. */
-    /* Adjust it to your needs, 0x0006 for -51 dB, 0x0039 for 0 dB etc. */
-    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 0x0006);
+
+    /* Initial volume kept low for hearing safety.
+     * Adjust it to your needs, 0-100, 0 for mute, 100 for maximum volume.
+     */
+    if (CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight, 30U) !=
+        kStatus_Success)
+    {
+        assert(false);
+    }
 
     PRINTF("Configure I2S\r\n");
 

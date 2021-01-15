@@ -1,13 +1,8 @@
 /*
- * Copyright 2019,2020 NXP
+ * Copyright 2019-2020 NXP
+ * All rights reserved.
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /* Common, Re-Usable main implementation */
@@ -78,7 +73,7 @@
 #include "task.h"
 #endif
 
-#if SSS_HAVE_A71CH
+#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
 #include "ex_a71ch_scp03.h"
 #endif
 
@@ -201,9 +196,9 @@ int main(int argc, const char *argv[])
          */
     }
     else {
-        status = ex_sss_kestore_and_object_init((PCONTEXT));
+        status = ex_sss_key_store_and_object_init((PCONTEXT));
         if (kStatus_SSS_Success != status) {
-            LOG_E("ex_sss_kestore_and_object_init Failed");
+            LOG_E("ex_sss_key_store_and_object_init Failed");
             goto cleanup;
         }
     }
@@ -212,7 +207,7 @@ int main(int argc, const char *argv[])
     ex_sss_boot_open_host_session((PCONTEXT));
 #endif
 
-#if SSS_HAVE_A71CH && SSS_HAVE_A71CH_AUTH_SCP03
+#if (SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM) && SSS_HAVE_A71CH_AUTH_SCP03
     LOG_I("A71CH SCP03 add-on");
     {
         // Variables used by calls to legacy API
@@ -296,10 +291,10 @@ static void sss_ex_rtos_task(void *ctx)
         goto exit;
     }
 
-    status = ex_sss_kestore_and_object_init((PCONTEXT));
+    status = ex_sss_key_store_and_object_init((PCONTEXT));
 
     if (kStatus_SSS_Success != status) {
-        LOG_E("ex_sss_kestore_and_object_init Failed");
+        LOG_E("ex_sss_key_store_and_object_init Failed");
         goto exit;
     }
 
@@ -317,7 +312,7 @@ static void sss_ex_rtos_task(void *ctx)
 #endif // INCLUDE_uxTaskGetStackHighWaterMark
 #endif
 
-#if SSS_HAVE_A71CH
+#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM
 #if EX_SSS_BOOT_OPEN_HOST_SESSION
     ex_sss_boot_open_host_session((PCONTEXT));
 #endif

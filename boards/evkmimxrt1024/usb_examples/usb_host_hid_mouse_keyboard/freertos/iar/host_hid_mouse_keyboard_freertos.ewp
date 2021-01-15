@@ -190,6 +190,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -318,17 +319,14 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/xip</state>
@@ -339,7 +337,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -602,8 +600,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1185,6 +1183,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1313,17 +1312,14 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/xip</state>
@@ -1334,7 +1330,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1597,8 +1593,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2180,6 +2176,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2308,17 +2305,14 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/xip</state>
@@ -2329,7 +2323,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2592,8 +2586,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3174,6 +3168,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3302,17 +3297,14 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/xip</state>
@@ -3323,7 +3315,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3586,8 +3578,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4169,6 +4161,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4297,17 +4290,14 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/xip</state>
@@ -4318,7 +4308,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4581,8 +4571,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -5164,6 +5154,7 @@
           <state>FSL_OSA_BM_TASK_ENABLE=0</state>
           <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5292,17 +5283,14 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/host/class</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/xip</state>
@@ -5313,7 +5301,7 @@
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1024/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5576,8 +5564,8 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>

@@ -63,7 +63,7 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_10_LPUART1_TXD,             /* GPIO_10 is configured as LPUART1_TXD */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_13_OTG1_ID,                 /* GPIO_13 is configured as OTG1_ID */
+      IOMUXC_GPIO_13_USB_OTG1_ID,             /* GPIO_13 is configured as OTG1_ID */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_09_LPUART1_RXD,             /* GPIO_09 PAD functional properties : */
@@ -86,7 +86,7 @@ void BOARD_InitPins(void) {
                                                  Pull Up / Down Config. Field: 100K Ohm Pull Down
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_13_OTG1_ID,                 /* GPIO_13 PAD functional properties : */
+      IOMUXC_GPIO_13_USB_OTG1_ID,             /* GPIO_13 PAD functional properties : */
       0x7888U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0(150 Ohm @ 3.3V, 260 Ohm@1.8V, 240 Ohm for DDR)
                                                  Speed Field: fast(150MHz)

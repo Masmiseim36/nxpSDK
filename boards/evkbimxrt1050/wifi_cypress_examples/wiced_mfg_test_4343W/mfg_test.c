@@ -12,9 +12,9 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "task.h"
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_common.h"
 #include "fsl_gpio.h"
 #include "wwd.h"
@@ -24,7 +24,7 @@
 #include "mfg_test.h"
 
 #include "fsl_lpuart_freertos.h"
-#include "serial_manager.h"
+#include "fsl_component_serial_manager.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

@@ -1343,7 +1343,7 @@ int mbedtls_aes_crypt_ctr( mbedtls_aes_context *ctx,
     while( length-- )
     {
         if( n == 0 ) {
-            mbedtls_aes_crypt_ecb( ctx, MBEDTLS_AES_ENCRYPT, nonce_counter, stream_block );
+            (void)mbedtls_aes_crypt_ecb( ctx, MBEDTLS_AES_ENCRYPT, nonce_counter, stream_block );
 
             for( i = 16; i > 0; i-- )
                 if( ++nonce_counter[i - 1] != 0 )

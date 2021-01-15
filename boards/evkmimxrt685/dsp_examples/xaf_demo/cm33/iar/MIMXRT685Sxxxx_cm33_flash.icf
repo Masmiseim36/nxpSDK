@@ -7,7 +7,7 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
 **     Version:             rev. 1.0, 2018-06-19
-**     Build:               b201029
+**     Build:               b200413
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
@@ -50,7 +50,7 @@ define symbol m_interrupts_start               = 0x08001000;
 define symbol m_interrupts_end                 = 0x0800112F;
 
 define symbol m_text_start                     = 0x08001130;
-define symbol m_text_end                       = 0x081FFFFF;
+define symbol m_text_end                       = 0x083FFFFF;
 
 define symbol m_interrupts_ram_start           = 0x20080000;
 define symbol m_interrupts_ram_end             = 0x20080000 + __ram_vector_table_offset__;

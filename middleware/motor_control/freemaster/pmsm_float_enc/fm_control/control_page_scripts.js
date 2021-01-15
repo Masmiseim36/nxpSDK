@@ -1,7 +1,7 @@
 /*******************************************************************************
 *
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause* 
@@ -83,6 +83,9 @@ $(document).ready(function(){
 
     /* motor current gauge initialization */
     MotorCurrentGaugeInit();
+	
+	/* CPU load gauge initialization */
+	CPULoadGaugeInit();
 
     /* motor current limitation initialization */
     MotorCurrentLimitInit();
@@ -109,6 +112,7 @@ function Init()
     actSpeedID      = pcm.SubscribeVariable("M1 Speed Actual", 100);
     busVoltID       = pcm.SubscribeVariable("M1 DCB Voltage Filtered", 450);
     motorCurrID     = pcm.SubscribeVariable("M1 Iq", 100);
+	CPUloadID		= pcm.SubscribeVariable("M1 Cycle Number", 100);
     faultID         = pcm.SubscribeVariable("M1 Fault Pending", 500);
     demoID          = pcm.SubscribeVariable("Demo Mode Speed",800);
     reqSpeedID      = pcm.SubscribeVariable("M1 Speed Required",100);
@@ -410,7 +414,7 @@ function AppNotificationInit()
 {
     $("#jqxAppState").jqxNotification(
     {
-        width: 280,
+        width: 200,
         height: 50,
         position: "top-centre",
         opacity: 1,
@@ -440,7 +444,7 @@ function DCBusVoltGaugeInit()
         height: 50,
         ticksMajor: { size: '18%', interval: dcbVoltInterMaj },
         ticksMinor: { size: '9%', interval: dcbVoltInterMaj, style: { 'stroke-width': 1, stroke: '#aaaaaa'} },
-        max: dcbVoltScale,
+        max: dcbVoltOver*1.1,
         min: 0,
         pointer: { size: '20%' },
         colorScheme: 'scheme05',
@@ -450,7 +454,7 @@ function DCBusVoltGaugeInit()
         ranges: [
             { startValue: 0, endValue: dcbVoltUnder, style: { fill: '#FF4800', stroke: '#FF4800'} },
             { startValue: dcbVoltUnder, endValue: dcbVoltOver, style: { fill: '#4bb648', stroke: '#4bb648'} },
-            { startValue: dcbVoltOver, endValue: dcbVoltScale, style: { fill: '#FF4800', stroke: '#FF4800'}}],
+            { startValue: dcbVoltOver, endValue: dcbVoltOver*1.1, style: { fill: '#FF4800', stroke: '#FF4800'}}],
         animationDuration: animation_dur
     });
 
@@ -469,29 +473,65 @@ function MotorCurrentGaugeInit()
 {
     var currentScaleMax = Math.ceil(currentScale)+0.5;
 
-    $('#gaugeLinearCurrent').jqxLinearGauge(
+    $('#gaugeContainerCurrentActual').jqxGauge({
+        ranges: [{ startValue: -currentScaleMax, endValue: -currentScale, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 3, startWidth: 3 },
+                { startValue: -currentScale, endValue: currentScale, style: { fill: '#2b8020', stroke: '#2b8020' }, endWidth: 3, startWidth: 3 },
+				{ startValue: currentScale, endValue: currentScaleMax, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 3, startWidth: 3 }],
+        ticksMinor: { interval: 0.25, size: '5%' },
+        ticksMajor: { interval: 0.5, size: '9%' },
+		min: -currentScaleMax,
+		max: currentScaleMax,
+		labels: { distance: 30,  interval: 1},
+		startAngle: 70,
+		endAngle: 390,
+		border: {  size: '5%'},
+        value: 0,
+        width:  150,
+        height: '60%',
+		cap: {size: '6%', style: {fill: 'black', stroke: 'black'}, visible:true},
+        colorScheme: 'scheme05',
+		pointer:{style: {fill: '#e02629', stroke: '#e02629'},
+        length:'55%',width:'2%'},
+        animationDuration: 75
+    });
+	
+    /* set init value */
+    MotorCurrentUpdate();
+};
+
+/******************************************************************************
+@brief   CPU load gauge initialization
+
+@param   void
+
+@return  none
+******************************************************************************/
+function CPULoadGaugeInit()
+{
+	$('#gaugeLinearCPULoad').jqxLinearGauge(
     {
         orientation: 'horizontal',
         width: 280,
         height: 50,
-        ticksMajor: { size: '18%', interval: currentInterMaj },
-        ticksMinor: { size: '9%', interval: currentInterMaj/2, style: { 'stroke-width': 1, stroke: '#aaaaaa'} },
-        max: currentScaleMax,
+        ticksMajor: { size: '18%', interval: 10 },
+        ticksMinor: { size: '9%', interval: 5, style: { 'stroke-width': 1, stroke: '#aaaaaa'} },
+        max: 100,
         min: 0,
         pointer: { size: '20%' },
         colorScheme: 'scheme05',
-        labels: { interval: currentInterMaj, position: 'near',offset: 4 },
+        labels: { interval: 20, position: 'near',offset: 4 },
         background: { style: { stroke: '#ffaaaa', fill: '#ffaaaa' }, visible: false, backgroundType: 'rectangle' },
 		    value: 0,
         ranges: [
-            { startValue: 0, endValue: currentScale, style: { fill: '#4bb648', stroke: '#4bb648'} },
-            { startValue: currentScale, endValue: currentScaleMax, style: { fill: '#FF4800', stroke: '#FF4800'}}],
+            { startValue: 0, endValue: 90, style: { fill: '#4bb648', stroke: '#4bb648'} },
+            { startValue: 90, endValue: 100, style: { fill: '#FF4800', stroke: '#FF4800'}}],
         animationDuration: animation_dur
     });
-
-    /* set init value */
-    MotorCurrentUpdate();
-};
+	
+	/* set init value */
+    CPULoadUpdate();
+	
+}
 
 /******************************************************************************
 @brief   Motor current limiter initialization
@@ -673,6 +713,10 @@ function Event_OnVariableChanged(a,IDsubscribedVariable)
         // Actual Iq current
         MotorCurrentUpdate();
         break;
+	case CPUloadID:
+        // Actual CPU load
+        CPULoadUpdate();
+        break;
     case faultID:
         // Application state update
         SetFaultSource();
@@ -728,13 +772,13 @@ function ApplicationSwitchUpdate()
             {
                 $('#jqxSliderSetSpeed').jqxSlider({value: 0});
                 $('#gaugeContainerSpeedActual').jqxGauge({value: 0, });
-                $("#jqxAppSwitchButton").jqxButton('val', "RUN");
+                $("#jqxAppSwitchButton").jqxButton('val', "Switch PWM ON");
                 $("#jqxAppSwitchButton").jqxButton({template: 'success'});
                 $("#jqxDemoButton").jqxButton({disabled:true});
             }
             else
             {
-                 $("#jqxAppSwitchButton").jqxButton('val', "STOP");
+                 $("#jqxAppSwitchButton").jqxButton('val', "Switch PWM OFF");
                  $("#jqxAppSwitchButton").jqxButton({template: 'danger'});
                  $("#jqxDemoButton").jqxButton({disabled:false});
             }
@@ -770,15 +814,15 @@ function ApplicationStateUpdate()
     /* select particular Application State */
     switch(appState){
     case 0: //FAULT
-        $("#jqxAppStateText").text("Application State: FAULT");
+        $("#jqxAppStateText").text("App State: FAULT");
         $("#jqxAppState").jqxNotification("open");
         break;
     case 1: //INIT
-        $("#jqxAppStateText").text("Application State: INIT");
+        $("#jqxAppStateText").text("App State: INIT");
         $("#jqxAppState").jqxNotification("open");
         break;
     case 2: //STOP
-        $("#jqxAppStateText").text("Application State: STOP");
+        $("#jqxAppStateText").text("App State: STOP");
         $("#jqxAppState").jqxNotification("open");
         break;
     case 3: //RUN
@@ -788,12 +832,12 @@ function ApplicationStateUpdate()
         /* if demo mode is active, update App state notification */
         if (demoMode)
         {
-            $("#jqxAppStateText").text("Application State: DEMO RUN");
+            $("#jqxAppStateText").text("App State: DEMO ON");
             $("#jqxAppState").jqxNotification("open");
         }
         else
         {
-            $("#jqxAppStateText").text("Application State: RUN");
+            $("#jqxAppStateText").text("App State: READY");
             $("#jqxAppState").jqxNotification("open");
         }
         break;
@@ -911,19 +955,28 @@ function CurrentLimitUpdate()
         currentScaleNew = currentLimHigh;
     else
         currentScaleNew = currentLimLow;
-
-    /* update ranges - green and red areas */
-    var ranges = [{
-            startValue: currentScaleNew,
-            endValue: currentScaleMax,
-            style: { fill: '#FF4800', stroke: '#FF4800'}
+		
+	var ranges = [{
+            startValue: -currentScaleMax,
+            endValue: -currentScaleNew,
+            style: { fill: '#e02629', stroke: '#e02629'},
+			endWidth: 3, 
+			startWidth: 3			
         },
-        {   startValue: 0,
+        {   startValue: -currentScaleNew,
             endValue: currentScaleNew,
-            style: { fill: '#4bb648', stroke: '#4bb648'}
+            style: { fill: '#2b8020', stroke: '#2b8020'},
+			endWidth: 3, 
+			startWidth: 3
+		},
+		{   startValue: currentScaleNew,
+            endValue: currentScaleMax,
+            style: { fill: '#e02629', stroke: '#e02629'},
+			endWidth: 3, 
+			startWidth: 3
         }]
-
-    $('#gaugeLinearCurrent').jqxLinearGauge({ ranges: ranges });
+		
+	$('#gaugeContainerCurrentActual').jqxGauge({ ranges: ranges });
     $('#jqxSliderSetCurrentLimit').jqxSlider({value: currentScaleNew});
 
 }
@@ -941,9 +994,29 @@ function MotorCurrentUpdate()
 
     succ = pcm.ReadVariable("M1 Iq", vValue0, tValue0, retMsg);
     if (succ)
-       motorCurrent = Math.abs(pcm.LastVariable_vValue);
+       motorCurrent = pcm.LastVariable_vValue;
 
-    $('#gaugeLinearCurrent').jqxLinearGauge({value: motorCurrent,  });
+    $('#gaugeContainerCurrentActual').jqxGauge({value: motorCurrent});
+    
+}
+
+/******************************************************************************
+@brief   Actual CPU load value update
+
+@param   void
+
+@return  none
+******************************************************************************/
+function CPULoadUpdate()
+{
+    var CPUload = 0;
+
+    succ = pcm.ReadVariable("M1 Cycle Number", vValue0, tValue0, retMsg);
+    if (succ)
+       CPUload = pcm.LastVariable_vValue;
+
+    $('#gaugeLinearCPULoad').jqxLinearGauge({value: CPUload/MaxCycleNumber,  });
+    
 }
 
 /******************************************************************************

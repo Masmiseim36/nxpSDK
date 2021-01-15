@@ -24,13 +24,11 @@
  *
  */
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
 #include <wm_os.h>
-//#include <cli_utils.h>
-//#include <wmcrypto.h>
 
 #include <wifi.h>
 #include "wifi-sdio.h"
@@ -112,6 +110,7 @@ int wifi_cmd_uap_config(char *ssid,
                         t_u8 *mac_addr,
                         t_u8 security,
                         char *passphrase,
+                        char *password,
                         t_u8 channel,
                         wifi_scan_chan_list_t scan_chan_list,
                         t_u16 beacon_period,
@@ -121,15 +120,15 @@ int wifi_cmd_uap_config(char *ssid,
 {
     int ssid_len = strlen(ssid);
     int i;
-#if defined(CONFIG_UAP_AMPDU_TX) || defined(CONFIG_UAP_AMPDU_RX)
     t_u8 supported_mcs_set[] = {0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                                 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-#endif
 
-    if (!(security == 0 || security == 4 || security == 9 || security == 10))
+    if (!(security == WLAN_SECURITY_NONE || security == WLAN_SECURITY_WPA2 || security == WLAN_SECURITY_WPA3_SAE ||
+          security == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED))
         return -WM_E_INVAL;
 
     int passphrase_len = strlen(passphrase);
+    int password_len   = strlen(password);
 
     mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
 
@@ -178,7 +177,7 @@ int wifi_cmd_uap_config(char *ssid,
         else
             bss.param.bss_config.band_cfg = BAND_CONFIG_MANUAL;
 #else
-        bss.param.bss_config.band_cfg = BAND_CONFIG_MANUAL;
+        bss.param.bss_config.band_cfg    = BAND_CONFIG_MANUAL;
 #endif
         bss.param.bss_config.channel = channel;
     }
@@ -206,25 +205,26 @@ int wifi_cmd_uap_config(char *ssid,
         }
     }
 
-    if (security == 0)
+    if (security == WLAN_SECURITY_NONE)
         bss.param.bss_config.protocol = PROTOCOL_NO_SECURITY;
 
-    if (security == 4 || security == 9 || security == 10)
+    if (security == WLAN_SECURITY_WPA2 || security == WLAN_SECURITY_WPA3_SAE ||
+        security == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED)
     {
-        if (security == 4)
+        if (security == WLAN_SECURITY_WPA2)
         {
             bss.param.bss_config.protocol = PROTOCOL_WPA2;
             bss.param.bss_config.key_mgmt = KEY_MGMT_PSK;
         }
-        else if (security == 9)
+        else if (security == WLAN_SECURITY_WPA3_SAE)
         {
             bss.param.bss_config.protocol = PROTOCOL_WPA3_SAE;
-            bss.param.bss_config.key_mgmt = KEY_MGMT_SAE | KEY_MGMT_PSK;
+            bss.param.bss_config.key_mgmt = KEY_MGMT_SAE;
         }
-        else if (security == 10)
+        else if (security == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED)
         {
-            bss.param.bss_config.protocol = PROTOCOL_OWE;
-            bss.param.bss_config.key_mgmt = KEY_MGMT_OWE;
+            bss.param.bss_config.protocol = PROTOCOL_WPA2 | PROTOCOL_WPA3_SAE;
+            bss.param.bss_config.key_mgmt = KEY_MGMT_SAE | KEY_MGMT_PSK;
         }
 
         bss.param.bss_config.wpa_cfg.pairwise_cipher_wpa2 = CIPHER_AES_CCMP;
@@ -237,16 +237,35 @@ int wifi_cmd_uap_config(char *ssid,
          ****************************************/
         bss.param.bss_config.key_mgmt_operation = 0x00;
 
-        /*app has converted pmk with psk*/
-        bss.param.bss_config.wpa_cfg.length = passphrase_len;
-        memcpy(bss.param.bss_config.wpa_cfg.passphrase, passphrase, passphrase_len);
+        if (security == WLAN_SECURITY_WPA2 || security == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED)
+        {
+            /*app has converted pmk with psk*/
+            bss.param.bss_config.wpa_cfg.length = passphrase_len;
+            memcpy(bss.param.bss_config.wpa_cfg.passphrase, passphrase, passphrase_len);
+        }
+        if (security == WLAN_SECURITY_WPA3_SAE || security == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED)
+        {
+            bss.param.bss_config.wpa_cfg.password_length = password_len;
+            memcpy(bss.param.bss_config.wpa_cfg.password, password, password_len);
+        }
     }
 
-#if defined(CONFIG_UAP_AMPDU_TX) || defined(CONFIG_UAP_AMPDU_RX)
-    bss.param.bss_config.ht_cap_info = 0x111c;
+    if (channel)
+    {
+#ifdef CONFIG_5GHz_SUPPORT
+        if (channel > MAX_CHANNELS_BG)
+            bss.param.bss_config.ht_cap_info = wm_wifi.ht_cap_info == 0 ? 0x116e : wm_wifi.ht_cap_info;
+        else
+            bss.param.bss_config.ht_cap_info = wm_wifi.ht_cap_info == 0 ? 0x112c : wm_wifi.ht_cap_info;
+#else
+        bss.param.bss_config.ht_cap_info = wm_wifi.ht_cap_info == 0 ? 0x112c : wm_wifi.ht_cap_info;
+#endif
+    }
+    else
+        bss.param.bss_config.ht_cap_info = wm_wifi.ht_cap_info == 0 ? 0x112c : wm_wifi.ht_cap_info;
+
     bss.param.bss_config.ampdu_param = 0x03;
     memcpy(bss.param.bss_config.supported_mcs_set, supported_mcs_set, sizeof(bss.param.bss_config.supported_mcs_set));
-#endif
     /*
      * Note that we are leaving htcap info set to zero by default. This
      *  will ensure that 11N is disabled.
@@ -387,9 +406,16 @@ void wifi_uap_set_hidden_ssid(const t_u8 bcast_ssid_ctl)
     wm_wifi.bcast_ssid_ctl = bcast_ssid_ctl;
 }
 
-void wifi_uap_set_ecsa(const t_u8 chan_sw_count)
+void wifi_uap_set_ecsa(void)
 {
-    wm_wifi.chan_sw_count = chan_sw_count;
+#if defined(SD8801)
+    wm_wifi.chan_sw_count = 7;
+#endif
+}
+
+void wifi_uap_set_htcapinfo(const t_u16 ht_cap_info)
+{
+    wm_wifi.ht_cap_info = ht_cap_info;
 }
 
 static int wifi_uap_pmf_getset(uint8_t action, bool *mfpc, bool *mfpr);
@@ -399,6 +425,7 @@ int wifi_uap_start(int type,
                    uint8_t *mac_addr,
                    int security,
                    char *passphrase,
+                   char *password,
                    int channel,
                    wifi_scan_chan_list_t scan_chan_list,
                    bool mfpc,
@@ -406,7 +433,7 @@ int wifi_uap_start(int type,
 {
     wuap_d("Configuring");
     /* Configure SSID */
-    int rv = wifi_cmd_uap_config(ssid, mac_addr, security, passphrase, channel, scan_chan_list,
+    int rv = wifi_cmd_uap_config(ssid, mac_addr, security, passphrase, password, channel, scan_chan_list,
                                  wm_wifi.beacon_period == 0 ? UAP_BEACON_PERIOD : wm_wifi.beacon_period,
                                  UAP_DTIM_PERIOD, wm_wifi.chan_sw_count, type);
     if (rv != WM_SUCCESS)
@@ -415,7 +442,9 @@ int wifi_uap_start(int type,
         return rv;
     }
 
-    if ((security == 4 || security == 9 || security == 10) && mfpc)
+    if ((security == WLAN_SECURITY_WPA2 || security == WLAN_SECURITY_WPA3_SAE ||
+         security == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED) &&
+        mfpc)
     {
         wifi_uap_pmf_getset(HostCmd_ACT_GEN_SET, &mfpc, &mfpr);
     }

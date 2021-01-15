@@ -100,7 +100,7 @@ status_t HAL_CODEC_Init(void *handle, void *config)
             break;
 #endif
         default:
-            return kStatus_InvalidArgument;
+            retVal = kStatus_InvalidArgument;
     }
 
     return retVal;
@@ -173,7 +173,7 @@ status_t HAL_CODEC_Deinit(void *handle)
             break;
 #endif
         default:
-            return kStatus_InvalidArgument;
+            retVal = kStatus_InvalidArgument;
     }
 
     return retVal;
@@ -249,7 +249,7 @@ status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, u
             break;
 #endif
         default:
-            return kStatus_InvalidArgument;
+            retVal = kStatus_InvalidArgument;
     }
 
     return retVal;
@@ -324,7 +324,7 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
             break;
 #endif
         default:
-            return kStatus_InvalidArgument;
+            retVal = kStatus_InvalidArgument;
     }
 
     return retVal;
@@ -399,7 +399,7 @@ status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
             break;
 #endif
         default:
-            return kStatus_InvalidArgument;
+            retVal = kStatus_InvalidArgument;
     }
 
     return retVal;
@@ -474,7 +474,7 @@ status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
             break;
 #endif
         default:
-            return kStatus_InvalidArgument;
+            retVal = kStatus_InvalidArgument;
     }
 
     return retVal;
@@ -549,7 +549,7 @@ status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
             break;
 #endif
         default:
-            return kStatus_InvalidArgument;
+            retVal = kStatus_InvalidArgument;
     }
 
     return retVal;
@@ -627,7 +627,7 @@ status_t HAL_CODEC_SetRecordChannel(void *handle, uint32_t leftRecordChannel, ui
             break;
 #endif
         default:
-            return kStatus_InvalidArgument;
+            retVal = kStatus_InvalidArgument;
     }
 
     return retVal;
@@ -702,7 +702,7 @@ status_t HAL_CODEC_SetPlay(void *handle, uint32_t playSource)
             break;
 #endif
         default:
-            return kStatus_InvalidArgument;
+            retVal = kStatus_InvalidArgument;
     }
 
     return retVal;
@@ -777,7 +777,7 @@ status_t HAL_CODEC_ModuleControl(void *handle, uint32_t cmd, uint32_t data)
 #endif
 
         default:
-            return kStatus_InvalidArgument;
+            retVal = kStatus_InvalidArgument;
     }
 
     return retVal;

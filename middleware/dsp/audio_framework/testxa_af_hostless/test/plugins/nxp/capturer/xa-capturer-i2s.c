@@ -151,10 +151,10 @@ typedef struct XACapturer
 * Variables
 ******************************************************************************/
 /* DMA descriptors for data tranfers */
-#ifdef CPU_MIMXRT595SFFOA_dsp
-SDK_ALIGN(
-#else
+#if (XCHAL_DCACHE_SIZE > 0)
 AT_NONCACHEABLE_SECTION_ALIGN(
+#else
+SDK_ALIGN(
 #endif
     static dma_descriptor_t s_dmaDescriptorPingpongI2S[MAX_DMA_TRANSFER_PER_FRAME * 2 * MAX_CAPTURERS], 16
 );
@@ -210,13 +210,18 @@ int RxCaptureCallback(void *arg, int wake_value)
 #endif
 {
     XACapturer *d = (XACapturer*) arg;
+    int32_t err = XOS_OK;
 
     while (1)
     {
 #ifdef HAVE_FREERTOS
         xTaskNotifyWait(pdFALSE, 0xffffff, NULL, portMAX_DELAY);
 #else
-        xos_sem_get(&d->irq_sem);
+        err = xos_sem_get(&d->irq_sem);
+        if(err == XOS_ERR_INVALID_PARAMETER)
+        {
+            return -1;
+        }
 #endif
 
         d->cdata->cb(d->cdata, 0);
@@ -490,11 +495,7 @@ static XA_ERRORCODE xa_capturer_init(XACapturer *d, WORD32 i_idx, pVOID pv_value
         d->frame_size = MAX_DMA_TRANSFER_SIZE;
 
         /* ...hardware defaults */
-#ifdef CPU_MIMXRT595SFFOA_dsp
-        d->i2s_device = 5;
-#else
-        d->i2s_device = 4;
-#endif
+        d->i2s_device = 1;
         d->i2s_master = 0;
         d->i2s_mode = kI2S_ModeI2sClassic;
         d->i2s_sck_polarity = 0;

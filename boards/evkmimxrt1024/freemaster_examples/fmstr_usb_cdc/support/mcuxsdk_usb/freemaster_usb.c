@@ -233,17 +233,16 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
             {
                 if ((epCbParam->buffer != NULL) || ((epCbParam->buffer == NULL) && (epCbParam->length == 0)))
                 {
-                    /* User: add your own code for send complete event */
                     /* Schedule buffer for next receive event */
                     error = USB_DeviceCdcAcmRecv(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_usbRxTxBuff,
                                                  g_UsbDeviceCdcVcomDicEndpoints[0].maxPacketSize);
+                    /* FreeMASTER send complete event */
+                    FMSTR_SerialUsbProcessEvent(FMSTR_SERIAL_USBCDC_EVENT_TYPE_SENT, NULL, 0);
                 }
             }
             else
             {
             }
-            /* Call Freemaster interrupt */
-            FMSTR_SerialUsbProcessEvent(FMSTR_SERIAL_USBCDC_EVENT_TYPE_SENT, NULL, 0);
         }
         break;
         case kUSB_DeviceCdcEventRecvResponse:

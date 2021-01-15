@@ -79,6 +79,9 @@
 #define USB_DEVICE_CONFIG_AUDIO_CLASS_2_0 (1U)
 #endif
 
+/*! @brief Whether enable get sof count feature */
+#define USB_DEVICE_CONFIG_GET_SOF_COUNT (1U)
+
 /*! @brief Whether device is self power. 1U supported, 0U not supported */
 #define USB_DEVICE_CONFIG_SELF_POWER (1U)
 

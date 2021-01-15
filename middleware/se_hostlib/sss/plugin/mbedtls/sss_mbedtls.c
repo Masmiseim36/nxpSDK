@@ -1,18 +1,11 @@
+/*
+ * Copyright 2018-2019 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 /**
- * @file ax_mbedtls.c
- * @author NXP Semiconductors
- * @version 1.0
- * @par License
- * Copyright 2018,2019 NXP
- *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
- *
  * @par Description
  * Implementation of key association between NXP Secure Element and mbedtls.
  * @par History
@@ -193,12 +186,18 @@ int sss_mbedtls_associate_keypair(mbedtls_pk_context *pkey, sss_object_t *pkeyOb
         ((mbedtls_ecp_keypair *)pax_ctx)->grp.pSSSObject = pkeyObject;
         status = sss_util_asn1_get_oid_from_sssObj(pkeyObject, objectId, &objectIdLen);
         if (status != kStatus_SSS_Success) {
+            if (pax_ctx != NULL) {
+                mbedtls_free(pax_ctx);
+            }
             return 1;
         }
 
         ((mbedtls_ecp_keypair *)pax_ctx)->grp.id = get_group_id(objectId, objectIdLen);
         if (((mbedtls_ecp_keypair *)pax_ctx)->grp.id == MBEDTLS_ECP_DP_NONE) {
             LOG_E(" sss_mbedtls_associate_keypair: Group id not found...\n");
+            if (pax_ctx != NULL) {
+                mbedtls_free(pax_ctx);
+            }
             return 1;
         }
         pkey->pk_ctx = pax_ctx;
@@ -226,11 +225,11 @@ int sss_mbedtls_associate_keypair(mbedtls_pk_context *pkey, sss_object_t *pkeyOb
 
         status = sss_util_asn1_rsa_parse_public(pbKey, pbKeyBytetLen, &modulus, &modlen, &pubExp, &pubExplen);
         if (modulus != NULL) {
-            free(modulus);
+            SSS_FREE(modulus);
             modulus = NULL;
         }
         if (pubExp != NULL) {
-            free(pubExp);
+            SSS_FREE(pubExp);
             pubExp = NULL;
         }
         if (status != kStatus_SSS_Success) {
@@ -271,12 +270,18 @@ int sss_mbedtls_associate_pubkey(mbedtls_pk_context *pkey, sss_object_t *pkeyObj
 
         status = sss_util_asn1_get_oid_from_sssObj(pkeyObject, objectId, &objectIdLen);
         if (status != kStatus_SSS_Success) {
+            if (pax_ctx != NULL) {
+                mbedtls_free(pax_ctx);
+            }
             return 1;
         }
 
         ((mbedtls_ecp_keypair *)pax_ctx)->grp.id = get_group_id(objectId, objectIdLen);
         if (((mbedtls_ecp_keypair *)pax_ctx)->grp.id == MBEDTLS_ECP_DP_NONE) {
             LOG_E(" sss_mbedtls_associate_pubkey: Group id not found...\n");
+            if (pax_ctx != NULL) {
+                mbedtls_free(pax_ctx);
+            }
             return 1;
         }
     }
@@ -304,11 +309,11 @@ int sss_mbedtls_associate_pubkey(mbedtls_pk_context *pkey, sss_object_t *pkeyObj
 
         status = sss_util_asn1_rsa_parse_public(pbKey, pbKeyBytetLen, &modulus, &modlen, &pubExp, &pubExplen);
         if (modulus != NULL) {
-            free(modulus);
+            SSS_FREE(modulus);
             modulus = NULL;
         }
         if (pubExp != NULL) {
-            free(pubExp);
+            SSS_FREE(pubExp);
             pubExp = NULL;
         }
         if (status != kStatus_SSS_Success) {

@@ -13,8 +13,8 @@
 #include "fsl_cache.h"
 
 #include "pin_mux.h"
-#include "board.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
@@ -26,7 +26,9 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static uint8_t s_nor_program_buffer[256];
+/* Program data buffer should be 4-bytes alignment, which can avoid busfault due to this memory region is configured as
+   Device Memory by MPU. */
+SDK_ALIGN(static uint8_t s_nor_program_buffer[256], 4);
 static uint8_t s_nor_read_buffer[256];
 
 extern status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address);

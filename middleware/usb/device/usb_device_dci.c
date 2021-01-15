@@ -482,7 +482,8 @@ static usb_status_t USB_DeviceSleepNotification(usb_device_struct_t *handle,
 #endif /* USB_DEVICE_CONFIG_LOW_POWER_MODE */
 
 #if (defined(USB_DEVICE_CONFIG_ERROR_HANDLING) && (USB_DEVICE_CONFIG_ERROR_HANDLING > 0U))
-static usb_status_t USB_DeviceErrorNotification(usb_device_struct_t *handle, usb_device_callback_message_struct_t *message)
+static usb_status_t USB_DeviceErrorNotification(usb_device_struct_t *handle,
+                                                usb_device_callback_message_struct_t *message)
 {
     /* Call device callback to notify the application that the USB bus error signal detected.
     the deviceCallback is the second parameter of USB_DeviceInit */
@@ -1142,6 +1143,11 @@ usb_status_t USB_DeviceGetStatus(usb_device_handle handle, usb_device_status_t t
     }
     switch (type)
     {
+#if defined(USB_DEVICE_CONFIG_GET_SOF_COUNT) && (USB_DEVICE_CONFIG_GET_SOF_COUNT > 0U)
+        case kUSB_DeviceStatusGetCurrentFrameCount:
+            status = USB_DeviceControl(handle, kUSB_DeviceControlGetCurrentFrameCount, param);
+            break;
+#endif
         case kUSB_DeviceStatusSpeed:
             status = USB_DeviceControl(handle, kUSB_DeviceControlGetSpeed, param);
             break;
@@ -1314,6 +1320,10 @@ void USB_DeviceTaskFunction(void *deviceHandle)
 
     if (NULL != deviceHandle)
     {
+        message.buffer  = NULL;
+        message.length  = 0U;
+        message.code    = 0U;
+        message.isSetup = 0U;
         /* Get the message from the queue */
         if (KOSA_StatusSuccess ==
             OSA_MsgQGet(handle->notificationQueue, (osa_msg_handle_t)&message, USB_OSA_WAIT_TIMEOUT))
@@ -1381,7 +1391,7 @@ usb_status_t USB_DeviceUpdateHwTick(usb_device_handle handle, uint64_t tick)
 #elif (defined(USB_DEVICE_CONFIG_CHARGER_DETECT) && (USB_DEVICE_CONFIG_CHARGER_DETECT > 0U)) && \
     (defined(FSL_FEATURE_SOC_USB_ANALOG_COUNT) && (FSL_FEATURE_SOC_USB_ANALOG_COUNT > 0U))
     tempValue = deviceHandle->hwTick;
-    status = USB_DeviceControl(handle, kUSB_DeviceControlUpdateHwTick, (void *)(&tempValue));
+    status    = USB_DeviceControl(handle, kUSB_DeviceControlUpdateHwTick, (void *)(&tempValue));
 #endif
     return status;
 }

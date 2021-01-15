@@ -1,0 +1,20 @@
+if(NOT MIDDLEWARE_EIQ_WORKER_AUDIO_MIMXRT1052_INCLUDED)
+    
+    set(MIDDLEWARE_EIQ_WORKER_AUDIO_MIMXRT1052_INCLUDED true CACHE BOOL "middleware_eiq_worker_audio component is included.")
+
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/common/audio/eiq_micro.c
+        ${CMAKE_CURRENT_LIST_DIR}/common/audio/eiq_speaker_conf.c
+        ${CMAKE_CURRENT_LIST_DIR}/common/audio/eiq_audio_worker.c
+        ${CMAKE_CURRENT_LIST_DIR}/common/audio/eiq_speaker.c
+    )
+
+
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/common/audio
+    )
+
+
+    include(middleware_eiq_worker_MIMXRT1052)
+
+endif()

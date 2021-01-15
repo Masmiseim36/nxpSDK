@@ -19,10 +19,8 @@ limitations under the License.
 #include <memory>
 
 #include "public/gemmlowp.h"
-
-#ifdef TFLITE_WITH_RUY
-#include "tensorflow/lite/experimental/ruy/context.h"
-#endif
+#include "ruy/context.h"  // from @ruy
+#include "tensorflow/lite/c/common.h"
 #include "tensorflow/lite/external_cpu_backend_context.h"
 
 namespace tflite {
@@ -34,9 +32,7 @@ class CpuBackendContext final : public TfLiteInternalBackendContext {
   CpuBackendContext();
   ~CpuBackendContext() override;
 
-#ifdef TFLITE_WITH_RUY
   ruy::Context* ruy_context() const { return ruy_context_.get(); }
-#endif
 
   gemmlowp::GemmContext* gemmlowp_context() const {
     return gemmlowp_context_.get();
@@ -46,11 +42,13 @@ class CpuBackendContext final : public TfLiteInternalBackendContext {
   // passing around this information.
   void SetMaxNumThreads(int max_num_threads) override;
 
-#ifdef TFLITE_MCU
-  int max_num_threads() const { return 1; }
-#else
   int max_num_threads() const { return max_num_threads_; }
-#endif
+
+  void SetUseCaching(bool flag);
+
+  bool use_caching() const { return use_caching_; }
+
+  void ClearCaches() override { ruy_context_->ClearPrepackedCache(); }
 
  private:
   // To enable a smooth transition from the current direct usage
@@ -59,13 +57,10 @@ class CpuBackendContext final : public TfLiteInternalBackendContext {
   // stores both a gemmlowp context and a ruy context.
   // TODO(b/131416458): Once call sites all go through abstractions,
   // elide what can be elided based on TFLITE_WITH_RUY.
-#ifdef TFLITE_WITH_RUY
   const std::unique_ptr<ruy::Context> ruy_context_;
-#endif
   const std::unique_ptr<gemmlowp::GemmContext> gemmlowp_context_;
 
-#ifndef TFLITE_MCU
-  // The maxinum of threads used for parallelizing TfLite ops. However,
+  // The maximum of threads used for parallelizing TfLite ops. However,
   // cpu_backend_threadpool::Execute creates as many threads as it's
   // asked to, regardless of this. Typically a call site would query
   // cpu_backend_context->max_num_threads() and used that to determine
@@ -75,7 +70,12 @@ class CpuBackendContext final : public TfLiteInternalBackendContext {
   // This value also gets propagated to back-ends, where it plays the same
   // information-only role.
   int max_num_threads_;
-#endif
+  // For matrix muliplications with constants parameters (i.e. weights), we can
+  // sometimes provide speedups by caching the "prepacked" data, for some
+  // additional memory cost. This flag permits the user to route all
+  // CpuBackendGem operations to a library that permits such an optimization
+  // (currently the Ruy library only).
+  bool use_caching_;
 
   CpuBackendContext(const CpuBackendContext&) = delete;
 };

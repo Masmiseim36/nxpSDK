@@ -8,10 +8,11 @@
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "fsl_device_registers.h"
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "usb_host_hci.h"
 #include "fsl_common.h"
+#include "pin_mux.h"
+#include "board.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
@@ -30,7 +31,6 @@
 #include "usb_device_class.h"
 #include "usb_device_ch9.h"
 #include "usb_device_descriptor.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

@@ -14,8 +14,6 @@
 
 #define FILE_HEADER "wifi_credentials:"
 
-mflash_file_t g_file_table[] = {{.flash_addr = MFLASH_FILE_BASEADDR, .max_size = MFLASH_FILE_SIZE}, {0}};
-
 static uint32_t save_file(char *filename, char *data, uint32_t data_len)
 {
     if ((filename == NULL) || (strlen(filename) > 63) || (data == NULL) || (data_len <= 0))
@@ -24,7 +22,7 @@ static uint32_t save_file(char *filename, char *data, uint32_t data_len)
     }
 
     /* Write the data to file. */
-    if (pdFALSE == mflash_save_file(filename, (uint8_t *)data, data_len))
+    if (kStatus_Success != mflash_file_save(filename, (uint8_t *)data, data_len))
     {
         PRINTF("[!] mflash_save_file failed\r\n");
         __BKPT(0);
@@ -40,16 +38,10 @@ static uint32_t save_file(char *filename, char *data, uint32_t data_len)
 
 uint32_t init_flash_storage(char *filename)
 {
-    if (filename == NULL || (strlen(filename) > 63))
-    {
-        return 1;
-    }
-
     /* Flash structure */
+    mflash_file_t file_table[] = {{.path = filename, .max_size = 200}, {0}};
 
-    strcpy(g_file_table[0].path, filename);
-
-    if (mflash_init(g_file_table, 1) != pdTRUE)
+    if (mflash_init(file_table, 1) != kStatus_Success)
     {
         PRINTF("[!] ERROR in mflash_init!");
         __BKPT(0);
@@ -102,7 +94,7 @@ uint32_t get_saved_wifi_credentials(char *filename, char *ssid, char *passphrase
 {
     uint8_t *credentials_buf;
     uint32_t data_len = 0;
-    uint32_t result;
+    status_t status;
     ssid[0]       = '\0';
     passphrase[0] = '\0';
 
@@ -111,8 +103,8 @@ uint32_t get_saved_wifi_credentials(char *filename, char *ssid, char *passphrase
         return 1;
     }
 
-    result = mflash_read_file(filename, &credentials_buf, &data_len);
-    if (result == pdTRUE)
+    status = mflash_file_mmap(filename, &credentials_buf, &data_len);
+    if (status == kStatus_Success)
     {
         if ((data_len > sizeof(FILE_HEADER)) &&
             (strncmp((char *)credentials_buf, FILE_HEADER, strlen(FILE_HEADER)) == 0))

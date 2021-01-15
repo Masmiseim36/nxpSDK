@@ -42,6 +42,9 @@
 #define m_text_start                   0x60002400
 #define m_text_size                    0x00FFDC00
 
+#define m_text2_start                  0x00000000
+#define m_text2_size                   0x00008000
+
 #define m_interrupts_ram_start         0x20000000
 #define m_interrupts_ram_size          __ram_vector_table_size__
 
@@ -101,6 +104,9 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   ARM_LIB_HEAP +0 EMPTY Heap_Size {    ; Heap region growing up
   }
   ARM_LIB_STACK m_data_start+m_data_size EMPTY -Stack_Size { ; Stack region growing down
+  }
+  RW_m_ram_text m_text2_start m_text2_size { ;
+    * (CodeQuickAccess)
   }
   RW_m_ncache m_data2_start EMPTY 0 {
   }

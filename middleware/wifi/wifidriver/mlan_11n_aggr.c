@@ -28,7 +28,7 @@
 Change log:
     11/10/2008: initial version
 ********************************************************/
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -49,7 +49,6 @@ Change log:
 ********************************************************/
 
 void wrapper_deliver_amsdu_subframe(pmlan_buffer amsdu_pmbuf, t_u8 *data, t_u16 pkt_len);
-
 
 /**
  *  @brief Get number of aggregated packets
@@ -150,7 +149,6 @@ mlan_status wlan_11n_deaggregate_pkt(mlan_private *priv, pmlan_buffer pmbuf)
         wrapper_deliver_amsdu_subframe(pmbuf, data, pkt_len);
         ret = MLAN_STATUS_SUCCESS;
 
-
         switch (ret)
         {
             case MLAN_STATUS_PENDING:
@@ -171,4 +169,3 @@ done:
     LEAVE();
     return ret;
 }
-

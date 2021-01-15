@@ -36,7 +36,7 @@
 #include "fsl_gpio.h"
 #endif
 
-#ifdef CPU_MIMXRT1052DVL6B
+#ifdef CPU_MIMXRT1062DVL6A
 #include "fsl_trng.h"
 #include "fsl_dcp.h"
 #endif
@@ -65,11 +65,11 @@
 #define TARGET_PLATFORM "FRDM-KW41Z"
 #elif defined(FRDM_K82F)
 #define TARGET_PLATFORM "FRDM-K82F"
-#elif defined(CPU_MIMXRT1052DVL6B)
-#define TARGET_PLATFORM "i.MX RT 1050"
+#elif defined(CPU_MIMXRT1062DVL6A)
+#define TARGET_PLATFORM "i.MX RT 1060"
 #endif
 
-#ifdef CPU_MIMXRT1052DVL6B
+#ifdef CPU_MIMXRT1062DVL6A
 #define TRNG0 TRNG
 #endif
 
@@ -107,7 +107,7 @@ int app_boot_Init()
     LED_RED_INIT(1);
 #endif
 
-#ifdef CPU_MIMXRT1052DVL6B
+#ifdef CPU_MIMXRT1062DVL6A
     dcp_config_t dcpConfig;
     trng_config_t trngConfig;
 

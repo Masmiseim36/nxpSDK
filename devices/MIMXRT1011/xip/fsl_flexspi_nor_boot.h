@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,11 +10,12 @@
 
 #include <stdint.h>
 #include "board.h"
+#include "fsl_common.h"
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief XIP_DEVICE driver version 2.0.0. */
-#define FSL_XIP_DEVICE_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief XIP_DEVICE driver version 2.0.2. */
+#define FSL_XIP_DEVICE_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*************************************
@@ -46,12 +47,12 @@ typedef struct _ivt_
     uint32_t reserved2;
 } ivt;
 
-#define IVT_MAJOR_VERSION 0x4
+#define IVT_MAJOR_VERSION       0x4
 #define IVT_MAJOR_VERSION_SHIFT 0x4
-#define IVT_MAJOR_VERSION_MASK 0xF
-#define IVT_MINOR_VERSION 0x1
+#define IVT_MAJOR_VERSION_MASK  0xF
+#define IVT_MINOR_VERSION       0x1
 #define IVT_MINOR_VERSION_SHIFT 0x0
-#define IVT_MINOR_VERSION_MASK 0xF
+#define IVT_MINOR_VERSION_MASK  0xF
 
 #define IVT_VERSION(major, minor)                                    \
     ((((major)&IVT_MAJOR_VERSION_MASK) << IVT_MAJOR_VERSION_SHIFT) | \
@@ -59,9 +60,9 @@ typedef struct _ivt_
 
 /* IVT header */
 #define IVT_TAG_HEADER 0xD1 /**< Image Vector Table */
-#define IVT_SIZE 0x2000
-#define IVT_PAR IVT_VERSION(IVT_MAJOR_VERSION, IVT_MINOR_VERSION)
-#define IVT_HEADER (IVT_TAG_HEADER | (IVT_SIZE << 8) | (IVT_PAR << 24))
+#define IVT_SIZE       0x2000
+#define IVT_PAR        IVT_VERSION(IVT_MAJOR_VERSION, IVT_MINOR_VERSION)
+#define IVT_HEADER     (IVT_TAG_HEADER | (IVT_SIZE << 8) | (IVT_PAR << 24))
 
 /* Set resume entry */
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
@@ -85,8 +86,8 @@ extern uint32_t __VECTOR_TABLE[];
 #endif
 
 #define BOOT_DATA_ADDRESS &boot_data
-#define CSF_ADDRESS 0
-#define IVT_RSVD (uint32_t)(0x00000000)
+#define CSF_ADDRESS       0
+#define IVT_RSVD          (uint32_t)(0x00000000)
 
 /*************************************
  *  Boot Data

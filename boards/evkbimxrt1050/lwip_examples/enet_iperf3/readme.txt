@@ -1,6 +1,6 @@
 Overview
 ========
-The qca_iperf example provides basic commands to measure performance using qca_wifi stack.
+The iperf3 example provides basic commands to measure performance of network stack.
 Results will be shown on your iperf server. In the case of 'R' mode, server shows the amount of sent data,
 check the terminal output in this case for the total amount of payload in bytes received over UDP,
 which marks the device's throughput.
@@ -9,18 +9,17 @@ Known Issues
 If the iperf3 server shows you that you have 0-bit/s bandwidth, it may be caused due to the version you are using.
 This client works with Iperf v3.7. In case of any more issues, see https://github.com/esnet/iperf/labels/bug. 
 
-'R' mode might not work correctly for QCA WiFi.
-
 Rx UDP mode ('R') has limited bandwidth by UDP_RX_BANDWIDTH macro as sending UDP packets too fast may cause
 the control TCP socket to lost data and test failure.
 Set the macro to a little bit higher than the device can receive or "0" for no limit.
 
+
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -34,14 +33,9 @@ No special settings are required.
 
 Prepare the Demo
 ================
-
-1.  Configure your dedicated device to create a WiFi network with
-    SSID "nxp" and password "NXP0123456789"
-
-    Install Iperf3 on your machine:
-      1. Enter command "sudo apt install iperf3"
-
-    Start the server by running "iperf3 -s"
+1.  Prepare iperf3 server on your machine:
+    - Install iperf3 (Enter command "sudo apt install iperf3")
+    - Start the server by running "iperf3 -s"
 2.  Connect a micro USB cable between the PC host and the SDA port
 3.  Open a serial terminal with the following settings (See Appendix A in Getting started guide for description how to determine serial port number):
     - 115200 baud rate
@@ -58,9 +52,9 @@ Running the demo
 When the demo runs successfully, the log would be seen on the CMSIS DAP terminal like:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Enter IP addr of a server in format '192.168.1.2'
+Enter IP address of a server in format '192.168.1.2'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Enter ip address of the iperf3 server.
+Enter IP address of the iperf3 server.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Using IP xxx.xxx.xxx.xxx
@@ -72,10 +66,7 @@ Press 'R' to start client Rx UDP mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Press 's' to start Iperf3 client in sending mode. (TCP)
-- Press 'r' to start Iperf3 client in recieving mode. (TCP)
+- Press 'r' to start Iperf3 client in receiving mode. (TCP)
 - Press 'S' to start Iperf3 client in sending mode. (UDP)
-- Press 'R' to start Iperf3 client in recieving mode. (UDP)
-
-Customization options
-=====================
+- Press 'R' to start Iperf3 client in receiving mode. (UDP)
 

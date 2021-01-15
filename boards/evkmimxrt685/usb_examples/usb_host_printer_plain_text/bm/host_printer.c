@@ -6,22 +6,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <string.h>
+#include <stdlib.h>
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "usb_host_printer.h"
 #include "host_printer.h"
 #include "app.h"
-#include "string.h"
-#include "stdlib.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 #define DEVICE_ID_STRING_POSTSCRIPT "POSTSCRIPT"
-#define DEVICE_ID_STRING_PJL "PJL"
-#define DEVICE_ID_NXP_STRING "MFG:NXP"
-#define DEVICE_ID_STRING_PCL "PCL"
+#define DEVICE_ID_STRING_PJL        "PJL"
+#define DEVICE_ID_NXP_STRING        "MFG:NXP"
+#define DEVICE_ID_STRING_PCL        "PCL"
 
 /*******************************************************************************
  * Prototypes

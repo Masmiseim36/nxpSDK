@@ -7,7 +7,7 @@
 **     Compiler:            GNU C Compiler
 **     Reference manual:    MIMXRT685 User manual Rev. 0.95 11 November 2019
 **     Version:             rev. 1.0, 2018-06-19
-**     Build:               b201029
+**     Build:               b200512
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
@@ -41,7 +41,7 @@ MEMORY
 {
   m_flash_config        (RX)  : ORIGIN = 0x08000400, LENGTH = 0x00000200
   m_interrupts          (RX)  : ORIGIN = 0x08001000, LENGTH = 0x00000130
-  m_text                (RX)  : ORIGIN = 0x08001130, LENGTH = 0x001FEED0
+  m_text                (RX)  : ORIGIN = 0x08001130, LENGTH = 0x003FEED0
   m_data                (RW)  : ORIGIN = 0x20080000, LENGTH = 0x00180000
   m_usb_sram            (RW)  : ORIGIN = 0x40140000, LENGTH = 0x00004000
 }

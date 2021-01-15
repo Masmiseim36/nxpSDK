@@ -5,7 +5,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -17,11 +19,8 @@
 
 #include "fsl_device_registers.h"
 #include "clock_config.h"
-#include "board.h"
 #include "fsl_debug_console.h"
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "board.h"
 
 #include "composite.h"
 /*******************************************************************************
@@ -298,7 +297,8 @@ usb_status_t USB_DeviceMscBulkIn(usb_device_handle deviceHandle,
     usb_device_msc_struct_t *mscHandle;
 
     mscHandle = &(g_deviceComposite->mscDisk.handle);
-    if (event->length == USB_UNINITIALIZED_VAL_32)
+    /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+    if (event->length == USB_CANCELLED_TRANSFER_LENGTH)
     {
         if (mscHandle->inEndpointCswCancelFlag == 1)
         {
@@ -381,7 +381,8 @@ usb_status_t USB_DeviceMscBulkOut(usb_device_handle deviceHandle,
     usb_device_msc_struct_t *mscHandle;
 
     mscHandle = &(g_deviceComposite->mscDisk.handle);
-    if (event->length == USB_UNINITIALIZED_VAL_32)
+    /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+    if (event->length == USB_CANCELLED_TRANSFER_LENGTH)
     {
         if ((mscHandle->cbwPrimeFlag == 0) && (mscHandle->inEndpointStallFlag == 0) &&
             (mscHandle->outEndpointStallFlag == 0))

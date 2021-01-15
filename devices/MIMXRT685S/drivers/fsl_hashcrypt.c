@@ -57,9 +57,8 @@ typedef struct _hashcrypt_sha_ctx_internal
 } hashcrypt_sha_ctx_internal_t;
 
 #if defined(FSL_FEATURE_HASHCRYPT_HAS_RELOAD_FEATURE) && (FSL_FEATURE_HASHCRYPT_HAS_RELOAD_FEATURE > 0)
-#define SHA1_LEN      5u
-#define SHA256_LEN    8u
-#define ALG_MODE_MASK 0xFFFFFFF8u /*!< Algorithm mode mask */
+#define SHA1_LEN   5u
+#define SHA256_LEN 8u
 #endif
 
 /*!< SHA-1 and SHA-256 digest length in bytes  */
@@ -691,8 +690,12 @@ static void hashcrypt_restore_running_hash(HASHCRYPT_Type *base, hashcrypt_sha_c
 #if defined(FSL_FEATURE_HASHCRYPT_HAS_RELOAD_FEATURE) && (FSL_FEATURE_HASHCRYPT_HAS_RELOAD_FEATURE > 0)
     size_t len = (ctxInternal->algo == kHASHCRYPT_Sha1) ? SHA1_LEN : SHA256_LEN;
 
-    /* Set corresponding mode before reloadning the runningHash */
-    base->CTRL = (base->CTRL & ALG_MODE_MASK) | HASHCRYPT_CTRL_MODE(ctxInternal->algo);
+    /* When switching from different mode, need to set NEW bit to work properly */
+    if ((base->CTRL & HASHCRYPT_CTRL_MODE_MASK) != HASHCRYPT_CTRL_MODE(ctxInternal->algo))
+    {
+        base->CTRL = HASHCRYPT_CTRL_NEW_HASH(1);
+        base->CTRL = HASHCRYPT_CTRL_MODE(ctxInternal->algo) | HASHCRYPT_CTRL_NEW_HASH(1);
+    }
     /* Set RELOAD bit to allow registers to be used */
     base->CTRL |= HASHCRYPT_CTRL_RELOAD_MASK;
 
@@ -1272,6 +1275,7 @@ status_t HASHCRYPT_AES_CryptCtr(HASHCRYPT_Type *base,
     return kStatus_Success;
 }
 
+void HASHCRYPT_DriverIRQHandler(void);
 void HASHCRYPT_DriverIRQHandler(void)
 {
     hashcrypt_sha_ctx_internal_t *ctxInternal;

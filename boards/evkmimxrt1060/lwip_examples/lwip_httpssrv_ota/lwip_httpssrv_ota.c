@@ -18,6 +18,8 @@
 
 #include "lwip/api.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "ksdk_mbedtls.h"
@@ -31,8 +33,6 @@
 
 #include "timers.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "lwip/opt.h"
@@ -378,19 +378,26 @@ static int32_t multipart_read_data(struct multipart_read_ctx *ctx, uint8_t *buff
     int match_idx  = 0;
     int read_total = 0;
 
+    if (ctx->state == MULTIPART_ERROR)
+    {
+        return -1;
+    }
+
     if (ctx->state != MULTIPART_EXPECT_DATA)
     {
         return 0;
     }
 
+    /* Copy data from receive buffer to caller buffer while searching for boundary string using a state machine */
     while (read_total != len)
     {
+        /* If there buffer contains just partially matched boundary string (or is completely empty) we need to receive
+         * more data */
         if (ctx->buf_start + match_idx >= ctx->buf_end)
         {
-            /* Boundary matching is beyond buffer end */
             uint32_t read;
 
-            /* Move unprocessed data to the beginning of the buffer */
+            /* Move the unprocessed data (partially matched boundary string) to the beginning of the buffer */
             memmove(ctx->buffer, ctx->buf_start, ctx->buf_end - ctx->buf_start);
             ctx->buf_end -= ctx->buf_start - ctx->buffer;
             ctx->buf_start = ctx->buffer;
@@ -401,16 +408,18 @@ static int32_t multipart_read_data(struct multipart_read_ctx *ctx, uint8_t *buff
             {
                 /* End od stream unexpected at this point */
                 ctx->state = MULTIPART_ERROR;
-                break;
+                return -1;
             }
             ctx->buf_end += read;
         }
 
+        /* If there is a match with boundary string */
         if (ctx->buf_start[match_idx] == ctx->boundary[match_idx])
         {
+            /* If this is the last character of the bundary string */
             if (++match_idx == ctx->boundary_len)
             {
-                /* Boundary found, consume it and exit the loop*/
+                /* Boundary found, consume it and exit the loop (end of data part) */
                 ctx->buf_start += match_idx;
                 break;
             }
@@ -420,7 +429,7 @@ static int32_t multipart_read_data(struct multipart_read_ctx *ctx, uint8_t *buff
         /* Mismatch, reset matching index */
         match_idx = 0;
 
-        /* Copy character to the caller provided buffer */
+        /* The character is not part of valid boundary string for sure, copy it to the caller provided buffer */
         if (buffer != NULL)
         {
             *buffer++ = *ctx->buf_start;
@@ -470,7 +479,7 @@ int32_t validate_update_image(uint32_t flash_addr, uint32_t size)
 {
     uint8_t *image_ptr;
 
-    image_ptr = mflash_drv_mmap(flash_addr, size);
+    image_ptr = mflash_drv_phys2log(flash_addr, size);
     if (image_ptr == NULL)
     {
         return -1;
@@ -511,7 +520,7 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t flash_addr)
 
     uint8_t buffer[512];
     uint32_t chunk_addr = flash_addr;
-    uint32_t chunk_len;
+    int32_t chunk_len;
 
     uint32_t total_stored = 0;
 
@@ -524,14 +533,24 @@ int32_t store_update_image(struct multipart_read_ctx *ctx, uint32_t flash_addr)
             if (result != 0)
             {
                 /* Error during flash operation */
+                PRINTF("\rstore_update_image: FLASH WRITE FAILED 0x%x, 0x%x\n", chunk_addr, chunk_len);
                 return -1;
             }
+            PRINTF("\rstore_update_image: stored %i bytes", total_stored);
             chunk_addr += chunk_len;
             total_stored += chunk_len;
         }
 
     } while (chunk_len > 0);
 
+    /* If there is error reading multipart content, report failure */
+    if (chunk_len < 0)
+    {
+        PRINTF("store_update_image: error reading data\n");
+        return -1;
+    }
+
+    PRINTF(" - upload complete\n");
     return total_stored;
 }
 
@@ -786,9 +805,6 @@ int main(void)
     BOARD_InitModuleClock();
 
     IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    /* Data cache must be temporarily disabled to be able to use sdram */
-    SCB_DisableDCache();
 
     GPIO_PinInit(GPIO1, 9, &gpio_config);
     GPIO_PinInit(GPIO1, 10, &gpio_config);

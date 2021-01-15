@@ -695,7 +695,7 @@ typedef PACK_START struct
     /** Number of Channels */
     t_u8 num_chans;
     /** Channel Info */
-    wifi_chan_info_t chan_info[40];
+    wifi_chan_info_t chan_info[54];
 } PACK_END wifi_chanlist_t;
 
 /** Wifi subband enum */
@@ -870,5 +870,96 @@ typedef PACK_START struct _wifi_scan_params_v2_t
     /** Callback to be called when scan is completed */
     int (*cb)(unsigned int count);
 } PACK_END wifi_scan_params_v2_t;
+
+#ifdef CONFIG_RF_TEST_MODE
+/** Configuration for Manufacturing generic command */
+typedef PACK_START struct _wifi_mfg_cmd_generic_cfg
+{
+    /** MFG command code */
+    t_u32 mfg_cmd;
+    /** Action */
+    t_u16 action;
+    /** Device ID */
+    t_u16 device_id;
+    /** MFG Error code */
+    t_u32 error;
+    /** value 1 */
+    t_u32 data1;
+    /** value 2 */
+    t_u32 data2;
+    /** value 3 */
+    t_u32 data3;
+} PACK_END wifi_mfg_cmd_generic_cfg_t;
+
+/** Configuration for Manufacturing command Tx Frame */
+typedef PACK_START struct _wifi_mfg_cmd_tx_frame
+{
+    /** MFG command code */
+    t_u32 mfg_cmd;
+    /** Action */
+    t_u16 action;
+    /** Device ID */
+    t_u16 device_id;
+    /** MFG Error code */
+    t_u32 error;
+    /** enable */
+    t_u32 enable;
+    /** data_rate */
+    t_u32 data_rate;
+    /** frame pattern */
+    t_u32 frame_pattern;
+    /** frame length */
+    t_u32 frame_length;
+    /** BSSID */
+    t_u8 bssid[MLAN_MAC_ADDR_LENGTH];
+    /** Adjust burst sifs */
+    t_u16 adjust_burst_sifs;
+    /** Burst sifs in us*/
+    t_u32 burst_sifs_in_us;
+    /** short preamble */
+    t_u32 short_preamble;
+    /** active sub channel */
+    t_u32 act_sub_ch;
+    /** short GI */
+    t_u32 short_gi;
+    /** Adv coding */
+    t_u32 adv_coding;
+    /** Tx beamforming */
+    t_u32 tx_bf;
+    /** HT Greenfield Mode*/
+    t_u32 gf_mode;
+    /** STBC */
+    t_u32 stbc;
+    /** power id */
+    t_u32 rsvd[2];
+} PACK_END wifi_mfg_cmd_tx_frame_t;
+
+/** Configuration for Manufacturing command Tx Continuous */
+typedef PACK_START struct _wifi_mfg_cmd_tx_cont
+{
+    /** MFG command code */
+    t_u32 mfg_cmd;
+    /** Action */
+    t_u16 action;
+    /** Device ID */
+    t_u16 device_id;
+    /** MFG Error code */
+    t_u32 error;
+    /** enable Tx*/
+    t_u32 enable_tx;
+    /** Continuous Wave mode */
+    t_u32 cw_mode;
+    /** payload pattern */
+    t_u32 payload_pattern;
+    /** CS Mode */
+    t_u32 cs_mode;
+    /** active sub channel */
+    t_u32 act_sub_ch;
+    /** Tx rate */
+    t_u32 tx_rate;
+    /** power id */
+    t_u32 rsvd;
+} PACK_END wifi_mfg_cmd_tx_cont_t;
+#endif
 
 #endif /* __WIFI_DECL_H__ */

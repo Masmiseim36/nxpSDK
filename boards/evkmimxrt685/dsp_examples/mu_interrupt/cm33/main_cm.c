@@ -9,10 +9,10 @@
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 #include "fsl_mu.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 #include "dsp_support.h"
 /*******************************************************************************
  * Definitions

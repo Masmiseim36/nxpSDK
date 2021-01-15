@@ -1,63 +1,53 @@
 Overview
 ========
-
-The key word spotting example is based on Keyword spotting for Microcontrollers [1].
+Keyword spotting example based on Keyword spotting for Microcontrollers [1].
 
 Input data preprocessing
 
 Raw audio data is pre-processed first - a spectrogram is calculated: A 40 ms
 window slides over a one-second audio sample with a 20 ms stride. For each
-window, audio frequency strengths are computed using FFT and turned it into
-a set of Mel-Frequency Cepstral Coefficients (MFCC). Only 10 first coefficients
+window, audio frequency strengths are computed using FFT and turned into
+a set of Mel-Frequency Cepstral Coefficients (MFCC). Only first 10 coefficients
 are taken into account. The window slides over a sample 49 times, hence
 a matrix with 49 rows and 10 columns is created. The matrix is called a spectrogram.
 
-In the example, static audio samples (off, right) are evaluated first regardless
-microphone is connected or not. Secondly, audio is processed directly from
-microphone.
+In the example, static audio samples ("off", "right") are evaluated first
+regardless microphone is connected or not. Secondly, audio is processed directly
+from microphone.
 
 Classification
 
-The spectrogram is fed into neural network. The neural network is a deepwise
-separable convolutional neural network called MobileNet and described in [3].
-It outputs a probability vector with probabilities of classes: 'Silence', 'Unknown',
-'yes', 'no', 'up', 'down', 'left', 'right', 'on', 'off', 'stop' and 'go'.
+The spectrogram is fed into a neural network. The neural network is a depthwise
+separable convolutional neural network based on MobileNet described in [2].
+The model produces a probability vector for the following classes:
+"Silence", "Unknown", "yes", "no", "up", "down", "left", "right", "on", "off",
+"stop" and "go".
 
 Quantization
 
 The NN model is quantized to run faster on MCUs and it takes in a quantized
-input and outputs a quantized output. An input spectrogram needs to be scaled
+input and produces a quantized output. An input spectrogram needs to be scaled
 from range [-247, 30] to range [0, 255] and round to integers. Values lower
 than zero are set to zero and values exceeding 255 are set to 255. An output
 of the softmax function is a vector with components in the interval (0, 255)
 and the components will add up to 255).   
 
-Model training and conversion
-
-The ds_cnn model is downloaded from Github [2]. This model is trained without quantization
-awareness and post-training converted to a TF Lite model with following commands:
-
-toco --graph_def_file=/tmp/DS_CNN_S.pb --output_file=/tmp/ds_cnn_s.tflite \
-     --input_shapes=1,49,10,1 --input_arrays=Reshape_1 --output_arrays=labels_softmax \
-     --inference_type=QUANTIZED_UINT8 --mean_values=227 --std_dev_values=1 \
-     --change_concat_input_ranges=false \
-     --default_ranges_min=-6 --default_ranges_max=6
- 
-xxd -i /tmp/ds_cnn_s.tflite > /tmp/ds_cnn_s_model.h
-
-HOW TO USE APPLICATION:
-Play different keyword so that microphone can catch them. Voice recorded by microphone 
-can be heared using headphones. 
-Note Semihosting implementation causes slower or discontinuous audio experience. 
-Select UART in 'Project Options' for using external debug console 
-via UART (Virtual COM port).
+HOW TO USE THE APPLICATION:
+Say different keyword so that microphone can catch them. Voice recorded from
+the microphone can be heared using headphones connected to the audio jack.
+Note semihosting implementation causes slower or discontinuous audio experience. 
+Select UART in 'Project Options' during project import for using external debug
+console via UART (virtual COM port).
 
 [1] https://github.com/ARM-software/ML-KWS-for-MCU
-[2] https://github.com/ARM-software/ML-KWS-for-MCU/blob/master/Pretrained_models/DS_CNN/DS_CNN_S.pb
-[3] https://arxiv.org/abs/1704.04861
+[2] https://arxiv.org/abs/1704.04861
 
 Files:
-  kws.cpp - example source code
+  main.cpp - example main function
+  ds_cnn_s.tflite - pre-trained TensorFlow Lite model converted from DS_CNN_S.pb
+    (source: https://github.com/ARM-software/ML-KWS-for-MCU/blob/master/Pretrained_models/DS_CNN/DS_CNN_S.pb)
+    (for details on how to quantize and convert a model see the eIQ TensorFlow Lite
+    User's Guide, which can be downloaded with the MCUXpresso SDK package)
   off.wav - waveform audio file of the word to recognize
     (source: Speech Commands Dataset available at
     https://storage.cloud.google.com/download.tensorflow.org/data/speech_commands_v0.02.tar.gz,  
@@ -66,31 +56,33 @@ Files:
     (source: Speech Commands Dataset available at
     https://storage.cloud.google.com/download.tensorflow.org/data/speech_commands_v0.02.tar.gz,
     file speech_commands_test_set_v0.02/right/0a2b400e_nohash_1.wav)
-  ds_cnn_s.h - model data converted from a .tflite file
-  commands.h - waveform audio files converted into a C language array of audio signal values (OFF, RIGHT)  
-      audio signal values using Python with the Scipy package:
+  audio_data.h - waveform audio files converted into a C language array of audio signal
+    values ("off", "right") audio signal values using Python with the Scipy package:
     from scipy.io import wavfile
     rate, data = wavfile.read('yes.wav')
     with open('wav_data.h', 'w') as fout:
       print('#define WAVE_DATA {', file=fout)
       data.tofile(fout, ',', '%d')
       print('}\n', file=fout)
-  get_top_n.h - get top result prototypes
-  get_top_n_impl - get top result source code
-  timer.c - timer counter source code
-  timer.h - timer counter function prototypes
-  mfcc.cpp - MFCC feature extraction to match with TensorFlow MFCC Op source code
-  mfcc.h - MFCC feature extraction to match with TensorFlow MFCC Op prototypes
-  kws_mfcc.cpp - Keyword spotting example code using MFCC feature extraction and neural network source code
-  kws_mfcc.h - Keyword spotting example code using MFCC feature extraction and neural network prototypes  
+  timer.c - timer source code
+  audio/* - audio capture and pre-processing code
+  audio/mfcc.cpp - MFCC feature extraction matching the TensorFlow MFCC operation
+  audio/kws_mfcc.cpp - ausio buffer handling for MFCC feature extraction
+  model/get_top_n.cpp - top results retrieval
+  model/model_data.h - model data from the ds_cnn_s.tflite file converted to
+    a C language array using the xxd tool (distributed with the Vim editor
+    at www.vim.org)
+  model/model.cpp - model initialization and inference code
+  model/model_ds_cnn_ops.cpp - model operations registration
+  model/output_postproc.cpp - model output processing
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- MCUXpresso  11.2.0
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -100,9 +92,10 @@ Hardware requirements
 
 Board settings
 ==============
-No special settings are required.
+Disconnect camera device from the J35 connector if connected (possible signal interference).
 
-Prepare the demo
+Prepare the Demo
+================
 1. Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
 2. Open a serial terminal with the following settings:
    - 115200 baud rate
@@ -111,62 +104,42 @@ Prepare the demo
    - One stop bit
    - No flow control
 3. Download the program to the target board.
-
-Prepare the Demo
-================
+4. Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
 Running the demo
 ================
 The log below shows the output of the demo in the terminal window:
 
-Keyword spotting example using a TensorFlow Lite model. 
-
-Detection threshold: 30%
+Keyword spotting example using a TensorFlow Lite model.
+Detection threshold: 25
 
 Static data processing:
+----------------------------------------
+     Inference time: 32 ms
+     Detected:        off (100%)
+----------------------------------------
 
 ----------------------------------------
-     Inference time: 56 ms
-     Detected: off (100%)
-----------------------------------------
-
-----------------------------------------
-     Inference time: 56 ms
-     Detected: right (98%)
+     Inference time: 32 ms
+     Detected:      right (98%)
 ----------------------------------------
 
 
 Microphone data processing:
-
+Data for inference are ready
 ----------------------------------------
-     Inference time: 56 ms
-     Detected: right (43%)
-----------------------------------------
-
-----------------------------------------
-     Inference time: 56 ms
-     Detected: left (63%)
+     Inference time: 32 ms
+     Detected: No label detected (0%)
 ----------------------------------------
 
+Data for inference are ready
 ----------------------------------------
-     Inference time: 56 ms
-     Detected: up (70%)
-----------------------------------------
-
-----------------------------------------
-     Inference time: 56 ms
-     Detected: Silence (38%)
+     Inference time: 32 ms
+     Detected:         up (85%)
 ----------------------------------------
 
+Data for inference are ready
 ----------------------------------------
-     Inference time: 56 ms
-     Detected: up (55%)
+     Inference time: 32 ms
+     Detected:       left (97%)
 ----------------------------------------
-
-----------------------------------------
-     Inference time: 56 ms
-     Detected: down (57%)
-----------------------------------------
-Customization options
-=====================
-

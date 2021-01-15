@@ -13,14 +13,15 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v8.0
+product: Peripherals v9.0
 processor: MIMXRT1024xxxxx
 package_id: MIMXRT1024DAG5A
 mcu_data: ksdk2_0
-processor_version: 0.8.0
+processor_version: 0.9.2
+board: MIMXRT1024-EVK
 functionalGroups:
 - name: BOARD_InitPeripherals
-  UUID: bb4b15f6-226c-408e-a8ed-05bba56fc9df
+  UUID: 6d394465-bc9b-47f2-9a1f-3ca61f76d27b
   called_from_default_init: true
   selectedCore: core0
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
@@ -29,14 +30,9 @@ functionalGroups:
 component:
 - type: 'system'
 - type_id: 'system_54b53072540eeeb8f8e9343e71f28176'
-- global_system_definitions: []
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-component:
-- type: 'msg'
-- type_id: 'msg_6e2baaf3b97dbeef01c0043275f9a0e7'
-- global_messages: []
+- global_system_definitions:
+  - user_definitions: ''
+  - user_includes: ''
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -58,7 +54,7 @@ instance:
 - type: 'edma'
 - mode: 'basic'
 - custom_name_enabled: 'true'
-- type_id: 'edma_a23fca76a894e1bcdf9d01a687505ff9'
+- type_id: 'edma_6d0dd4e17e2f179c7d42d98767129ede'
 - functional_group: 'BOARD_InitPeripherals'
 - peripheral: 'DMA0'
 - config_sets:
@@ -72,7 +68,14 @@ instance:
       - 0: []
       - 1: []
     - edma_channels: []
-    - quick_selection: 'default'
+    - errInterruptConfig:
+      - enableErrInterrupt: 'false'
+      - errorInterrupt:
+        - IRQn: 'DMA_ERROR_IRQn'
+        - enable_interrrupt: 'enabled'
+        - enable_priority: 'false'
+        - priority: '0'
+        - enable_custom_name: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 const edma_config_t DEMO_eDMA_config = {
@@ -82,8 +85,9 @@ const edma_config_t DEMO_eDMA_config = {
   .enableDebugMode = false
 };
 
-void DEMO_eDMA_init(void) {
-}
+/* Empty initialization function (commented out)
+static void DEMO_eDMA_init(void) {
+} */
 
 /***********************************************************************************************************************
  * DEMO_SAI initialization code
@@ -95,7 +99,7 @@ instance:
 - type: 'sai'
 - mode: 'edma'
 - custom_name_enabled: 'true'
-- type_id: 'sai_930e9b093093df3f492b3fa05284d81f'
+- type_id: 'sai_37a0d4b4ecc2db8ea149dbe2026c6550'
 - functional_group: 'BOARD_InitPeripherals'
 - peripheral: 'SAI3'
 - config_sets:
@@ -130,7 +134,7 @@ instance:
           - sampleRate_Hz: 'kSAI_SampleRate16KHz'
           - channelMask: 'kSAI_Channel0Mask'
           - serialData:
-            - dataMode: 'kSAI_DataPinStateOutputZero'
+            - dataMode: 'kSAI_DataPinStateTriState'
             - differentFirstWord: 'false'
             - sameDataWordLengthM: 'kSAI_WordWidth16bits'
             - dataOrder: 'kSAI_DataMSB'
@@ -174,7 +178,7 @@ instance:
           - fifo:
             - fifoWatermarkM: '16'
             - fifoPacking: 'kSAI_FifoPackingDisabled'
-            - fifoContinueOneError: 'true'
+            - fifoContinueOneError: 'false'
         - edma_group:
           - enable_edma_channel: 'true'
           - edma_channel:
@@ -210,7 +214,7 @@ instance:
           - sampleRate_Hz: 'kSAI_SampleRate16KHz'
           - channelMask: 'kSAI_Channel0Mask'
           - serialData:
-            - dataMode: 'kSAI_DataPinStateOutputZero'
+            - dataMode: 'kSAI_DataPinStateTriState'
             - differentFirstWord: 'false'
             - sameDataWordLengthM: 'kSAI_WordWidth16bits'
             - dataOrder: 'kSAI_DataMSB'
@@ -296,7 +300,7 @@ sai_transceiver_t DEMO_SAI_Tx_config = {
   .endChannel = 0U,
   .channelNums = 1U,
   .serialData = {
-    .dataMode = kSAI_DataPinStateOutputZero,
+    .dataMode = kSAI_DataPinStateTriState,
     .dataWord0Length = (uint8_t)kSAI_WordWidth16bits,
     .dataWordNLength = (uint8_t)kSAI_WordWidth16bits,
     .dataWordLength = (uint8_t)kSAI_WordWidth16bits,
@@ -308,7 +312,7 @@ sai_transceiver_t DEMO_SAI_Tx_config = {
   .fifo = {
     .fifoWatermark = 16U,
     .fifoPacking = kSAI_FifoPackingDisabled,
-    .fifoContinueOneError = true
+    .fifoContinueOneError = false
   }
 };
 /* DEMO_SAI Rx configuration */
@@ -331,7 +335,7 @@ sai_transceiver_t DEMO_SAI_Rx_config = {
   .endChannel = 0U,
   .channelNums = 1U,
   .serialData = {
-    .dataMode = kSAI_DataPinStateOutputZero,
+    .dataMode = kSAI_DataPinStateTriState,
     .dataWord0Length = (uint8_t)kSAI_WordWidth16bits,
     .dataWordNLength = (uint8_t)kSAI_WordWidth16bits,
     .dataWordLength = (uint8_t)kSAI_WordWidth16bits,
@@ -351,14 +355,14 @@ edma_handle_t dmaRxHandle;
 sai_edma_handle_t txHandle;
 sai_edma_handle_t rxHandle;
 
-void DEMO_SAI_init(void) {
+static void DEMO_SAI_init(void) {
   /* Set the source kDmaRequestMuxSai3Tx request in the DMAMUX */
   DMAMUX_SetSource(DEMO_SAI_TX_DMAMUX_BASEADDR, DEMO_SAI_TX_DMA_CHANNEL, DEMO_SAI_TX_DMA_REQUEST);
-  /* Enable the 0 channel in the DMAMUX */
+  /* Enable the channel 0 in the DMAMUX */
   DMAMUX_EnableChannel(DEMO_SAI_TX_DMAMUX_BASEADDR, DEMO_SAI_TX_DMA_CHANNEL);
   /* Set the source kDmaRequestMuxSai3Rx request in the DMAMUX */
   DMAMUX_SetSource(DEMO_SAI_RX_DMAMUX_BASEADDR, DEMO_SAI_RX_DMA_CHANNEL, DEMO_SAI_RX_DMA_REQUEST);
-  /* Enable the 1 channel in the DMAMUX */
+  /* Enable the channel 1 in the DMAMUX */
   DMAMUX_EnableChannel(DEMO_SAI_RX_DMAMUX_BASEADDR, DEMO_SAI_RX_DMA_CHANNEL);
   /* Create the eDMA dmaTxHandle handle */
   EDMA_CreateHandle(&dmaTxHandle, DEMO_SAI_TX_DMA_BASEADDR, DEMO_SAI_TX_DMA_CHANNEL);
@@ -390,7 +394,6 @@ void BOARD_InitPeripherals(void)
   EDMA_Init(DEMO_EDMA_DMA_BASEADDR, &DEMO_eDMA_config);
 
   /* Initialize components */
-  DEMO_eDMA_init();
   DEMO_SAI_init();
 }
 

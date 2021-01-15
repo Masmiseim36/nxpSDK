@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v6.0
+product: Pins v9.0
 processor: MIMXRT1011xxxxx
 package_id: MIMXRT1011DAE5A
 mcu_data: ksdk2_0
-processor_version: 0.0.1
+processor_version: 0.9.3
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -40,9 +40,9 @@ void BOARD_InitBootPins(void) {
 BOARD_InitPins:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '59', peripheral: LPUART4, signal: RX, pin_signal: GPIO_AD_01, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_150, drive_strength: R0_4,
+  - {pin_num: '59', peripheral: LPUART4, signal: RXD, pin_signal: GPIO_AD_01, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_4,
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm, hysteresis_enable: Disable}
-  - {pin_num: '58', peripheral: LPUART4, signal: TX, pin_signal: GPIO_AD_02, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_150, drive_strength: R0_4,
+  - {pin_num: '58', peripheral: LPUART4, signal: TXD, pin_signal: GPIO_AD_02, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_4,
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm, hysteresis_enable: Disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */

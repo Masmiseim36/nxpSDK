@@ -1,4 +1,4 @@
-/* This linker script generated from xt-genldscripts.tpp for LSP C:/usr/xtensa/Xplorer-8.0.10-workspaces/workspace/XtensaInfo/Models/nxp_rt600_RI2019_lsp_memmap/gdbio */
+/* This linker script generated from xt-genldscripts.tpp for LSP C:/usr/xtensa/Xplorer-8.0.10-workspaces/XtensaInfo/Models/nxp_rt600_sram_memmap/gdbio */
 /* Linker Script for ld -Ur */
 
 

@@ -68,35 +68,28 @@ usb_host_mouse_instance_t g_HostHidMouse;
  * by specific order. */
 static void USB_HostMouseProcessBuffer(uint8_t *buffer)
 {
+    static uint8_t left_move_count = 0;
+    static uint8_t right_move_count = 0;
+    static uint8_t up_move_count = 0;
+    static uint8_t down_move_count = 0;
+                
     DbgConsole_Flush();
     /* 1. Left key action */
     if (buffer[0] & 0x01)
     {
-        usb_echo("Left Click ");
-    }
-    else
-    {
-        usb_echo("           ");
+        usb_echo("Left Click\r\n");
     }
 
     /* 2. Middle key action */
     if (buffer[0] & 0x04)
     {
-        usb_echo("Middle Click ");
-    }
-    else
-    {
-        usb_echo("            ");
+        usb_echo("Middle Click\r\n");
     }
 
     /* 3. Right key action */
     if (buffer[0] & 0x02)
     {
-        usb_echo("Right Click ");
-    }
-    else
-    {
-        usb_echo("           ");
+        usb_echo("Right Click\r\n");
     }
 
     /* 4. Left/Right movement */
@@ -104,16 +97,22 @@ static void USB_HostMouseProcessBuffer(uint8_t *buffer)
     {
         if (buffer[1] > 127)
         {
-            usb_echo("Left  ");
+            left_move_count++;
+            if (100U == left_move_count)
+            {
+                usb_echo("Left move events: %d times\r\n", left_move_count);
+                left_move_count = 0U;
+            }
         }
         else
         {
-            usb_echo("Right ");
+            right_move_count++;
+            if (100U == right_move_count)
+            {
+                usb_echo("Right move events: %d times\r\n", right_move_count);
+                right_move_count = 0U;
+            }
         }
-    }
-    else
-    {
-        usb_echo("      ");
     }
 
     /* 5. UP/Down movement */
@@ -121,16 +120,22 @@ static void USB_HostMouseProcessBuffer(uint8_t *buffer)
     {
         if (buffer[2] > 127)
         {
-            usb_echo("UP   ");
+            up_move_count++;
+            if (100U == up_move_count)
+            {
+                usb_echo("Up move events: %d times\r\n", up_move_count);
+                up_move_count = 0U;
+            }
         }
         else
         {
-            usb_echo("Down ");
+            down_move_count++;
+            if (100U == down_move_count)
+            {
+                usb_echo("Down move events: %d times\r\n", down_move_count);
+                down_move_count = 0U;
+            }
         }
-    }
-    else
-    {
-        usb_echo("     ");
     }
 
     /* 6. Whell Down/Wheel UP action */
@@ -138,19 +143,13 @@ static void USB_HostMouseProcessBuffer(uint8_t *buffer)
     {
         if (buffer[3] > 127)
         {
-            usb_echo("Wheel Down");
+            usb_echo("Wheel Down\r\n");
         }
         else
         {
-            usb_echo("Wheel UP  ");
+            usb_echo("Wheel UP\r\n");
         }
     }
-    else
-    {
-        usb_echo("          ");
-    }
-
-    usb_echo("\r\n");
 }
 
 static void USB_HostHidControlCallback(void *param, uint8_t *data, uint32_t dataLength, usb_status_t status)

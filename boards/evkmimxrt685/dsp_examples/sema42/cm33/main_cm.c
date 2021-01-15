@@ -11,9 +11,9 @@
 #include "fsl_sema42.h"
 #include "fsl_mu.h"
 
-#include "board.h"
-#include "clock_config.h"
 #include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 #include "dsp_support.h"
 /*******************************************************************************
  * Definitions

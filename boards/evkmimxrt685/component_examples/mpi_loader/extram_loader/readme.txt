@@ -7,13 +7,14 @@ The loader itself is built to run in internal memory, and the application to be 
 run in external RAM. They are combined with elftosb tool. On system reset, ROM loads them as a single
 image into SoC internal memory, and starts the loader. Then the loader will load the secondary
 application and kick off it to run in external memory.
+The elftosb and blhost tool can be downloaded from nxp.com.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.5
-- Keil MDK  5.31
-- MCUXpresso  11.2.0
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================

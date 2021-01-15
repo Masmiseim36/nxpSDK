@@ -2,7 +2,16 @@
 @page middleware_log Middleware Change Log
 
 @section USB USB stack for MCUXpresso SDK  
-  The current version of USB stack is 2.6.1.
+  The current version of USB stack is 2.7.0.
+  - 2.7.0
+    - Improvement:
+      - Use new feeback solution and low latency playback for usb device speaker demo and unified demos. Add underflow and overflow protection.
+      - Optimize hard code for usb audio demos.
+      - Update Unconstrained Power field in the Sink Capabilities Message according to the external power state.
+    - New features:
+      - Enable USB host video demo for mutilple boards.
+      - Enable USB device MTP demo for mutilple boards.
+      - Add PPS message to usb pd stack.
   - 2.6.1
     - Improvement:
       - rename sdcard as disk for all of sdcard demos. For ramdisk demos, they are not changed.
@@ -17,6 +26,9 @@
       - Improved IP3511 controller driver's cancelling transfer function.
       - Enabled the audio2.0 defaultly for device audio demos.
       - Enabled the host audio2.0 function in host audio class driver and host audio speaker demo.
+    - New features:
+      - enable two USB controllers in one USB host mouse demo which named as host_hid_mouse_dual.
+      - enable UAC 5.1 for usb device audio speaker demo. 
   - 2.5.0
     - Improvement:
       - Integrated sdk components (OSA, Timer, GPIO and serial_manager) to USB stack and demos.

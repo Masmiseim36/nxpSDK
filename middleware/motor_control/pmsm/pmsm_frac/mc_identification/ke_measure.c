@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -30,7 +30,7 @@ void MID_getKe(mid_get_ke_a1_t *sKeMeasFcn)
     frac32_t f32Etotal, f32EtotalShifted, f32SpeedElReq, f32Ke;
 
     /* Initialisation */
-    if (sKeMeasFcn->ui16Active == FALSE)
+    if (sKeMeasFcn->ui16Active == 0U)
     {
         sKeMeasFcn->sSpeedElRampParam.f16RampUp   = MID_SPEED_RAMP_UP;
         sKeMeasFcn->sSpeedElRampParam.f16RampDown = MID_SPEED_RAMP_DOWN;
@@ -42,7 +42,7 @@ void MID_getKe(mid_get_ke_a1_t *sKeMeasFcn)
         sKeMeasFcn->sEqMA32Filter.u16Sh  = 10;
         sKeMeasFcn->sEqMA32Filter.a32Acc = FRAC32(0.0);
 
-        sKeMeasFcn->ui16Active      = TRUE;
+        sKeMeasFcn->ui16Active      = 1U;
         sKeMeasFcn->ui16LoopCounter = 0;
         sKeMeasFcn->f16SpeedElRamp  = FRAC16(0.0);
     }
@@ -69,7 +69,7 @@ void MID_getKe(mid_get_ke_a1_t *sKeMeasFcn)
             f32Etotal       = MLIB_Conv_F32s(GFLIB_Sqrt_F16l(MLIB_Add_F32(f32EdFiltSquare, f32EqFiltSquare)));
 
             /* Ke calculation */
-            f32Etotal     = MLIB_ShR_F32(f32Etotal, sKeMeasFcn->i16ShiftKeMax);
+            f32Etotal     = MLIB_ShR_F32(f32Etotal, (uint16_t)sKeMeasFcn->i16ShiftKeMax);
             f32SpeedElReq = MLIB_Conv_F32s(sKeMeasFcn->f16SpeedElReq);
 
             /* Set the i16ShiftRsMax to -1 */
@@ -91,10 +91,12 @@ void MID_getKe(mid_get_ke_a1_t *sKeMeasFcn)
             /* Check Faults */
             /* Check if Ke is negative or saturated*/
             if (sKeMeasFcn->f16Ke < FRAC16(0.0) || sKeMeasFcn->f16Ke == FRAC16(1.0))
+            {
                 ui16FaultMID |= MID_FAULT_KE_OUT_OF_RANGE;
+            }
 
             /* When finished exit the function */
-            sKeMeasFcn->ui16Active = FALSE;
+            sKeMeasFcn->ui16Active = 0U;
         }
     }
 }

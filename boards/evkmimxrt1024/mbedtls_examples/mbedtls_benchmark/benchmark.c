@@ -38,6 +38,8 @@
 #include <stdio.h>
 #include "fsl_debug_console.h"
 #include "fsl_clock.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if defined(MBEDTLS_NXP_SSSAPI)
 #include "sssapi_mbedtls.h"
@@ -120,8 +122,6 @@ int main(void)
 #include "mbedtls/memory_buffer_alloc.h"
 #endif
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -475,9 +475,6 @@ int main( int argc, char *argv[] )
     BOARD_InitBootPins();
     BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
-
-    /* Data cache must be temporarily disabled to be able to use sdram */
-    SCB_DisableDCache();
     CRYPTO_InitHardware();
 
     /* Init SysTick module */

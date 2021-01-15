@@ -12,6 +12,8 @@
  ******************************************************************************/
 
 #include "lwip/tcpip.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "wwd.h"
 #include "wwd_wiced.h"
@@ -19,8 +21,6 @@
 #include "fsl_debug_console.h"
 #include "ble_hello_sensor.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions

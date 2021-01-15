@@ -55,7 +55,7 @@ extern "C" {
 #include "src/lv_demo_stress/lv_demo_stress.h"
 #endif
 
-#if LV_USE_DEMO_KEYPAD_ENCODER != 0
+#if LV_USE_DEMO_KEYPAD_AND_ENCODER != 0
 #include "src/lv_demo_keypad_encoder/lv_demo_keypad_encoder.h"
 #endif
 
@@ -67,7 +67,7 @@ extern "C" {
  *      DEFINES
  *********************/
 /*Test  lvgl version*/
-#if LV_VERSION_CHECK(7, 0, 0) == 0
+#if LV_VERSION_CHECK(7, 4, 0) == 0
 #error "lv_examples: Wrong lvgl version"
 #endif
 

@@ -28,6 +28,8 @@
 #define __WIFI_SDIO_H__
 
 /* fixme: remove this as soon as there is no dependancy */
+//#define INCLUDE_FROM_MLAN
+
 #include <wifi.h>
 
 #define wifi_io_e(...) wmlog_e("wifi_io", ##__VA_ARGS__)
@@ -96,6 +98,9 @@ typedef struct __nvram_backup_struct
 
 extern os_thread_t wifi_core_thread;
 extern bool g_txrx_flag;
+#ifdef WLAN_LOW_POWER_ENABLE
+extern bool low_power_mode;
+#endif
 extern bool cal_data_valid;
 extern bool mac_addr_valid;
 extern bool txpwrlimit_data_valid;
@@ -135,5 +140,10 @@ uint32_t wifi_get_device_value1();
 uint8_t *wifi_get_sdio_outbuf(uint32_t *outbuf_len);
 
 void sdio_enable_interrupt();
+
+#ifdef CONFIG_WIFI_FW_DEBUG
+extern void wifi_dump_firmware_info();
+extern void wifi_sdio_reg_dbg();
+#endif /* CONFIG_WIFI_FW_DEBUG */
 
 #endif /* __WIFI_SDIO_H__ */

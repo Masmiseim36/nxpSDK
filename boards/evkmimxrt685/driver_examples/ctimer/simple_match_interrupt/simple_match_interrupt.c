@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,11 +11,11 @@
  ******************************************************************************/
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_ctimer.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -63,6 +63,19 @@ void ctimer_match1_callback(uint32_t flags)
         }
         CTIMER_SetupMatch(CTIMER, CTIMER_MAT1_OUT, &matchConfig1);
     }
+#if defined(BOARD_HAS_NO_CTIMER_OUTPUT_PIN_CONNECTED_TO_LED)
+    /* No timer match output pin connected to a LED
+    * toggle LED manually according to match status
+    */
+    if (CTIMER_GetOutputMatchStatus(CTIMER, CTIMER_EMT1_OUT))
+    {
+        LED_RED2_ON();
+    }
+    else
+    {
+        LED_RED2_OFF();
+    }
+#endif
 }
 
 void ctimer_match0_callback(uint32_t flags)
@@ -82,6 +95,19 @@ void ctimer_match0_callback(uint32_t flags)
         }
         CTIMER_SetupMatch(CTIMER, CTIMER_MAT0_OUT, &matchConfig0);
     }
+#if defined(BOARD_HAS_NO_CTIMER_OUTPUT_PIN_CONNECTED_TO_LED)
+    /* No timer match output pin connected to a LED
+    * toggle LED manually according to match status
+    */
+    if (CTIMER_GetOutputMatchStatus(CTIMER, CTIMER_EMT0_OUT))
+    {
+        LED_RED1_ON();
+    }
+    else
+    {
+        LED_RED1_OFF();
+    }
+#endif
 }
 
 /*!
@@ -98,6 +124,11 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+
+#if defined(BOARD_HAS_NO_CTIMER_OUTPUT_PIN_CONNECTED_TO_LED)
+    LED_RED1_INIT(LOGIC_LED_OFF);
+    LED_RED2_INIT(LOGIC_LED_OFF);
+#endif
 
     PRINTF("CTimer match example to toggle the output. \r\n");
     PRINTF("This example uses interrupt to change the match period. \r\n");

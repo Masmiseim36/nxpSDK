@@ -1,0 +1,26 @@
+/*
+ * Copyright 2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+#ifndef _LABELS_H_
+#define _LABELS_H_
+
+const char* labels[] = {
+    "Silence",
+    "Unknown",
+    "yes",
+    "no",
+    "up",
+    "down",
+    "left",
+    "right",
+    "on",
+    "off",
+    "stop",
+    "go"
+};
+
+#endif // _LABELS_H_ 

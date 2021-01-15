@@ -11,7 +11,9 @@
 #include "ex_sss_boot.h"
 #include "ex_sss_objid.h"
 #include "ex_sss_scp03_keys.h"
+#if defined(SECURE_WORLD)
 #include "ex_scp03_puf.h"
+#endif /* SECURE_WORLD */
 /* ************************************************************************** */
 /* Includes                                                                   */
 /* ************************************************************************** */
@@ -46,9 +48,15 @@
  */
 
 #if EXTERNAL_CUSTOMER_BUILD_CONFIGURATION
+#ifndef EX_SSS_AUTH_SE05X_KEY_ENC
 #   define EX_SSS_AUTH_SE05X_KEY_ENC SSS_AUTH_SE050_DEVKIT_KEY_ENC
+#endif
+#ifndef EX_SSS_AUTH_SE05X_KEY_MAC
 #   define EX_SSS_AUTH_SE05X_KEY_MAC SSS_AUTH_SE050_DEVKIT_KEY_MAC
+#endif
+#ifndef EX_SSS_AUTH_SE05X_KEY_DEK
 #   define EX_SSS_AUTH_SE05X_KEY_DEK SSS_AUTH_SE050_DEVKIT_KEY_DEK
+#endif
 #else
 /* Test / dummy keys */
 

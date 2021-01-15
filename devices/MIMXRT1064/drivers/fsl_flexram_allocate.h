@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief Driver version 2.0.7. */
-#define FSL_FLEXRAM_DRIVER_VERSION (MAKE_VERSION(2U, 0U, 7U))
+/*! @brief SOC_FLEXRAM_ALLOCATE driver version 2.0.1. */
+#define FSL_SOC_FLEXRAM_ALLOCATE_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 /*@}*/
 
 /*! @brief FLEXRAM bank type */

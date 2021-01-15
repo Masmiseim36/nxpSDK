@@ -14,6 +14,8 @@
 #include "iothubtransportamqp.h"
 #include "certs_azure.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_phy.h"
 #include "ksdk_mbedtls.h"
@@ -29,8 +31,6 @@
 #include "enet_ethernetif.h"
 #include "sntp.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"

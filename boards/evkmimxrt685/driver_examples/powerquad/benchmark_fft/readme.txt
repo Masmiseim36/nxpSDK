@@ -5,10 +5,10 @@ It could be compared with the project powerquad_benckmark_sw_fft to show the Pow
 
 Toolchain supported
 ===================
-- MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.5
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.3.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -34,4 +34,17 @@ Prepare the Demo
 
 Running the demo
 ================
-The message about error or success will be output to the terminal.
+NOTE: Depending on the toolchain configuration, the benchmark result might be different.
+~~~~~~~~~~~~~~~~~~~~~
+CMSIS DSP benchmark fft test start.
+arm_rfft_q15Test: xxx
+arm_rfft_q31Test: xxx
+arm_cfft_q15Test: xxx
+arm_cfft_q31Test: xxx
+arm_ifft_q15Test: xxx
+arm_ifft_q31Test: xxx
+arm_dct4_q15Test: xxx
+arm_dct4_q31Test: xxx
+
+CMSIS DSP benchmark fft test succeeded.
+~~~~~~~~~~~~~~~~~~~~~

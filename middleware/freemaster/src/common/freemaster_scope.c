@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -24,69 +24,72 @@
 #include "freemaster_protocol.h"
 #include "freemaster_utils.h"
 
-#if (FMSTR_USE_SCOPE) && (!(FMSTR_DISABLE))
+#if FMSTR_USE_SCOPE > 0 && FMSTR_DISABLE == 0
 
 /********************************************************
-*  local macros definition
-********************************************************/
+ *  local macros definition
+ ********************************************************/
 /* Define Protocol operations*/
-#define FMSTR_SCOPE_PRTCLSET_OP_CFGMEM    0x01    /* Set number of recorder variables */
-#define FMSTR_SCOPE_PRTCLSET_OP_CFGVAR    0x02    /* Setup address and size of one scope variable */
+#define FMSTR_SCOPE_PRTCLSET_OP_CFGMEM 0x01 /* Set number of recorder variables */
+#define FMSTR_SCOPE_PRTCLSET_OP_CFGVAR 0x02 /* Setup address and size of one scope variable */
 
 /********************************************************
-*  local types definition
-********************************************************/
+ *  local types definition
+ ********************************************************/
 
 /* Scope instance definition */
 typedef struct
 {
-    FMSTR_U8    varCnt;                         /* number of active scope variables */
-    FMSTR_ADDR  varAddr[FMSTR_MAX_SCOPE_VARS];  /* addresses of scope variables */
-    FMSTR_U8    varSize[FMSTR_MAX_SCOPE_VARS];  /* sizes of scope variables */
+    FMSTR_U8 varCnt;                          /* number of active scope variables */
+    FMSTR_ADDR varAddr[FMSTR_MAX_SCOPE_VARS]; /* addresses of scope variables */
+    FMSTR_U8 varSize[FMSTR_MAX_SCOPE_VARS];   /* sizes of scope variables */
 } FMSTR_SCOPE;
 
 /********************************************************
-*  local static functions declarations
-********************************************************/
-static FMSTR_U8 _FMSTR_SetScope_CFGMEM(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE* scope);
-static FMSTR_U8 _FMSTR_SetScope_CFGVAR(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE* scope, FMSTR_U8 opLen);
+ *  local static functions declarations
+ ********************************************************/
+static FMSTR_U8 _FMSTR_SetScope_CFGMEM(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE *scope);
+static FMSTR_U8 _FMSTR_SetScope_CFGVAR(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE *scope, FMSTR_U8 opLen);
 
 /***********************************
-*  local variables
-***********************************/
-static FMSTR_SCOPE  fmstr_scopeCfg[FMSTR_USE_SCOPE];   /* Container of all scopes configurations*/
+ *  local variables
+ ***********************************/
+static FMSTR_SCOPE fmstr_scopeCfg[FMSTR_USE_SCOPE]; /* Container of all scopes configurations*/
 
-/**************************************************************************//*!
-*
-* @brief    Scope Initialization
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Scope Initialization
+ *
+ ******************************************************************************/
 
-void FMSTR_InitScope(void)
+FMSTR_BOOL FMSTR_InitScope(void)
 {
     FMSTR_MemSet(fmstr_scopeCfg, 0, sizeof(fmstr_scopeCfg));
+    return FMSTR_TRUE;
 }
 
-/**************************************************************************//*!
-*
-* @brief    Handling FMSTR_CMD_SETSCOPE Memory configuration command
-*
-* @param    msgBuffIO   - original command (in) and response buffer (out)
-* @param    scope       - pointer to scope configuration
-*
-* @return   status of operation usable in protocol
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Handling FMSTR_CMD_SETSCOPE Memory configuration command
+ *
+ * @param    msgBuffIO   - original command (in) and response buffer (out)
+ * @param    scope       - pointer to scope configuration
+ *
+ * @return   status of operation usable in protocol
+ *
+ ******************************************************************************/
 
-static FMSTR_U8 _FMSTR_SetScope_CFGMEM(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE* scope)
+static FMSTR_U8 _FMSTR_SetScope_CFGMEM(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE *scope)
 {
     FMSTR_U8 varCnt;
-    
+
     /* Get the active variables count of Scope Instance */
     (void)FMSTR_ValueFromBuffer8(&varCnt, msgBuffIO);
 
-    if(varCnt > FMSTR_MAX_SCOPE_VARS)
+    if (varCnt > (FMSTR_U8)FMSTR_MAX_SCOPE_VARS)
+    {
         return FMSTR_STC_INVSIZE;
+    }
 
     /* Initialize the scope configuration */
     FMSTR_MemSet(scope, 0, sizeof(*scope));
@@ -95,22 +98,22 @@ static FMSTR_U8 _FMSTR_SetScope_CFGMEM(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE* scope)
     return FMSTR_STS_OK;
 }
 
-/**************************************************************************//*!
-*
-* @brief    API: Set up the recorder variable configuration (internal version)
-*
-* @param    recIx - index of recorder
-* @param    recCfg - pointer to recorder configuration
-*
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    API: Set up the recorder variable configuration (internal version)
+ *
+ * @param    recIx - index of recorder
+ * @param    recCfg - pointer to recorder configuration
+ *
+ *
+ ******************************************************************************/
 
-static FMSTR_U8 _FMSTR_SetScope_CFGVAR(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE* scope, FMSTR_U8 opLen)
+static FMSTR_U8 _FMSTR_SetScope_CFGVAR(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE *scope, FMSTR_U8 opLen)
 {
-    FMSTR_BPTR  msgBuffIOStart = msgBuffIO;
-    FMSTR_U8    varIx;
-    FMSTR_ADDR  addr;
-    FMSTR_U8    size;
+    FMSTR_BPTR msgBuffIOStart = msgBuffIO;
+    FMSTR_U8 varIx;
+    FMSTR_ADDR addr;
+    FMSTR_U8 size;
 
     /* Get the variable index */
     msgBuffIO = FMSTR_ValueFromBuffer8(&varIx, msgBuffIO);
@@ -120,21 +123,29 @@ static FMSTR_U8 _FMSTR_SetScope_CFGVAR(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE* scope,
     msgBuffIO = FMSTR_ValueFromBuffer8(&size, msgBuffIO);
 
     /* Decoded ULEBs should match the expected op_data length */
-    if((msgBuffIO - msgBuffIOStart) != opLen)
+    if (msgBuffIO != (msgBuffIOStart + opLen))
+    {
         return FMSTR_STC_INVSIZE;
+    }
 
     /* Check the variable index  */
-    if(varIx >= scope->varCnt)
+    if (varIx >= scope->varCnt)
+    {
         return FMSTR_STC_INVBUFF;
+    }
 
     /* Valid numeric variable sizes only */
-    if((size != 1U) && (size != 2U) && (size != 4U) && (size != 8U))
+    if ((size != 1U) && (size != 2U) && (size != 4U) && (size != 8U))
+    {
         return FMSTR_STC_INVSIZE;
+    }
 
     /* Check the TSA safety */
 #if FMSTR_USE_TSA && FMSTR_USE_TSA_SAFETY
-    if(!FMSTR_CheckTsaSpace(addr, size, 0U))
+    if (FMSTR_CheckTsaSpace(addr, size, 0U) == 0U)
+    {
         return FMSTR_STC_EACCESS;
+    }
 #endif /* FMSTR_USE_TSA && FMSTR_USE_TSA_SAFETY */
 
     /* Store the variable configuration */
@@ -144,31 +155,31 @@ static FMSTR_U8 _FMSTR_SetScope_CFGVAR(FMSTR_BPTR msgBuffIO, FMSTR_SCOPE* scope,
     return FMSTR_STS_OK;
 }
 
-/**************************************************************************//*!
-*
-* @brief    Handling SETUPSCOPE command
-*
-* @param    msgBuffIO - original command (in) and response buffer (out)
-* @param    inputLen - Count of received bytes in input buffer
-* @param    retStatus   - pointer to return status variable
-*
-* @return   As all command handlers, the return value should be the buffer
-*           pointer where the response output finished (except checksum)
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Handling SETUPSCOPE command
+ *
+ * @param    msgBuffIO - original command (in) and response buffer (out)
+ * @param    inputLen - Count of received bytes in input buffer
+ * @param    retStatus   - pointer to return status variable
+ *
+ * @return   As all command handlers, the return value should be the buffer
+ *           pointer where the response output finished (except checksum)
+ *
+ ******************************************************************************/
 
 FMSTR_BPTR FMSTR_SetScope(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *retStatus)
 {
     FMSTR_SCOPE *scope;
-    FMSTR_BPTR  response = msgBuffIO;
-    FMSTR_U8    responseCode = FMSTR_STS_OK;
-    FMSTR_U8    scopeIndex;
+    FMSTR_BPTR response   = msgBuffIO;
+    FMSTR_U8 responseCode = FMSTR_STS_OK;
+    FMSTR_U8 scopeIndex;
 
     /* Get recerder index */
     msgBuffIO = FMSTR_ValueFromBuffer8(&scopeIndex, msgBuffIO);
     inputLen--;
 
-    if(scopeIndex >= FMSTR_USE_SCOPE)
+    if (scopeIndex >= (FMSTR_U8)FMSTR_USE_SCOPE)
     {
         *retStatus = FMSTR_STC_INSTERR;
         return response;
@@ -176,38 +187,38 @@ FMSTR_BPTR FMSTR_SetScope(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *r
 
     scope = &fmstr_scopeCfg[scopeIndex];
 
-    while(inputLen && (responseCode == FMSTR_STS_OK))
+    while (inputLen != 0U && (responseCode == FMSTR_STS_OK))
     {
-        FMSTR_U8    opCode, opLen;
+        FMSTR_U8 opCode, opLen;
 
         /* Get Operation Code and data length */
         msgBuffIO = FMSTR_ValueFromBuffer8(&opCode, msgBuffIO);
         msgBuffIO = FMSTR_ValueFromBuffer8(&opLen, msgBuffIO);
 
-        if((opLen + 2) > inputLen)
+        if ((opLen + 2UL) > inputLen)
         {
             *retStatus = FMSTR_STC_INVSIZE;
             return response;
         }
 
-        switch(opCode)
+        switch (opCode)
         {
-        /* Configure scope memory */
-        case FMSTR_SCOPE_PRTCLSET_OP_CFGMEM:
-            responseCode = _FMSTR_SetScope_CFGMEM(msgBuffIO, scope);
-            break;
+            /* Configure scope memory */
+            case FMSTR_SCOPE_PRTCLSET_OP_CFGMEM:
+                responseCode = _FMSTR_SetScope_CFGMEM(msgBuffIO, scope);
+                break;
 
-        /* Configure variable */
-        case FMSTR_SCOPE_PRTCLSET_OP_CFGVAR:
-            responseCode = _FMSTR_SetScope_CFGVAR(msgBuffIO, scope, opLen);
-            break;
+            /* Configure variable */
+            case FMSTR_SCOPE_PRTCLSET_OP_CFGVAR:
+                responseCode = _FMSTR_SetScope_CFGVAR(msgBuffIO, scope, opLen);
+                break;
 
-        default:
-            responseCode = FMSTR_STC_INVCMD;
-            break;
+            default:
+                responseCode = FMSTR_STC_INVCMD;
+                break;
         }
-        
-        inputLen -= 2 + opLen;
+
+        inputLen -= opLen + 2UL;
         msgBuffIO += opLen;
     }
 
@@ -215,18 +226,18 @@ FMSTR_BPTR FMSTR_SetScope(FMSTR_BPTR msgBuffIO, FMSTR_SIZE inputLen, FMSTR_U8 *r
     return response;
 }
 
-/**************************************************************************//*!
-*
-* @brief    Handling READSCOPE command
-*
-* @param    msgBuffIO - original command (in) and response buffer (out)
-* @param    retStatus   - pointer to return status variable
-* @param    maxOutSize - Maximal size of output data
-*
-* @return   As all command handlers, the return value should be the buffer
-*           pointer where the response output finished (except checksum)
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Handling READSCOPE command
+ *
+ * @param    msgBuffIO - original command (in) and response buffer (out)
+ * @param    retStatus   - pointer to return status variable
+ * @param    maxOutSize - Maximal size of output data
+ *
+ * @return   As all command handlers, the return value should be the buffer
+ *           pointer where the response output finished (except checksum)
+ *
+ ******************************************************************************/
 
 FMSTR_BPTR FMSTR_ReadScope(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE maxOutSize)
 {
@@ -239,7 +250,7 @@ FMSTR_BPTR FMSTR_ReadScope(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE
     (void)FMSTR_ValueFromBuffer8(&scopeIndex, msgBuffIO);
 
     /* Check the index of scope if it fits to configuration */
-    if(scopeIndex >= FMSTR_USE_SCOPE)
+    if (scopeIndex >= (FMSTR_U8)FMSTR_USE_SCOPE)
     {
         *retStatus = FMSTR_STC_INSTERR;
         return msgBuffIO;
@@ -249,17 +260,17 @@ FMSTR_BPTR FMSTR_ReadScope(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE
     scope = &fmstr_scopeCfg[scopeIndex];
 
     /* Check if there are defined some variables */
-    if(!scope->varCnt)
+    if (scope->varCnt == 0U)
     {
         *retStatus = FMSTR_STC_NOTINIT;
         return msgBuffIO;
     }
 
     /* Copy all variables into the output buffer */
-    for (i=0U; i<scope->varCnt; i++)
+    for (i = 0U; i < scope->varCnt; i++)
     {
         /* Check the size of output buffer */
-        if(maxOutSize < scope->varSize[i])
+        if (maxOutSize < scope->varSize[i])
         {
             *retStatus = FMSTR_STC_INVSIZE;
             return msgBuffIOStart;
@@ -277,4 +288,3 @@ FMSTR_BPTR FMSTR_ReadScope(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus, FMSTR_SIZE
 }
 
 #endif /* (FMSTR_USE_SCOPE) && !(FMSTR_DISABLE) */
-

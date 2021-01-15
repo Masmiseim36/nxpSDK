@@ -42,6 +42,9 @@ enum
     kFlexSpiSerialClk_200MHz = 9,
 };
 
+//!@brief IMXRT SOC System ID
+#define IMXRT_SOC_SYSTEM_ID (0x1015UL)
+
 #endif // __TARGET_CONFIG_H__
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

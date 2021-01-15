@@ -50,7 +50,7 @@ USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_cdc_
 static usb_status_t USB_DeviceCdcAcmAllocateHandle(usb_device_cdc_acm_struct_t **handle)
 {
     uint32_t count;
-    for (count = 0; count < USB_DEVICE_CONFIG_CDC_ACM; count++)
+    for (count = 0; count < (uint32_t)USB_DEVICE_CONFIG_CDC_ACM; count++)
     {
         if (NULL == g_cdcAcmHandle[count].handle)
         {
@@ -412,7 +412,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
             if (kStatus_USB_Success != error)
             {
 #ifdef DEBUG
-                usb_echo("kUSB_DeviceClassEventSetConfiguration, USB_DeviceInitEndpoint fail\r\n");
+                (void)usb_echo("kUSB_DeviceClassEventSetConfiguration, USB_DeviceInitEndpoint fail\r\n");
 #endif
             }
             break;
@@ -439,7 +439,7 @@ usb_status_t USB_DeviceCdcAcmEvent(void *handle, uint32_t event, void *param)
             if (kStatus_USB_Success != error)
             {
 #ifdef DEBUG
-                usb_echo("kUSB_DeviceClassEventSetInterface, USB_DeviceInitEndpoint fail\r\n");
+                (void)usb_echo("kUSB_DeviceClassEventSetInterface, USB_DeviceInitEndpoint fail\r\n");
 #endif
             }
             break;
@@ -705,21 +705,21 @@ usb_status_t USB_DeviceCdcAcmInit(uint8_t controllerId,
     if (KOSA_StatusSuccess != OSA_MutexCreate((cdcAcmHandle->bulkIn.mutex)))
     {
 #ifdef DEBUG
-        usb_echo("mutex create error!");
+        (void)usb_echo("mutex create error!");
 #endif
     }
     cdcAcmHandle->bulkOut.mutex = (osa_mutex_handle_t)&cdcAcmHandle->bulkOut.mutexBuffer[0];
     if (KOSA_StatusSuccess != OSA_MutexCreate((cdcAcmHandle->bulkOut.mutex)))
     {
 #ifdef DEBUG
-        usb_echo("mutex create error!");
+        (void)usb_echo("mutex create error!");
 #endif
     }
     cdcAcmHandle->interruptIn.mutex = (osa_mutex_handle_t)&cdcAcmHandle->interruptIn.mutexBuffer[0];
     if (KOSA_StatusSuccess != OSA_MutexCreate((cdcAcmHandle->interruptIn.mutex)))
     {
 #ifdef DEBUG
-        usb_echo("mutex create error!");
+        (void)usb_echo("mutex create error!");
 #endif
     }
     *handle = (class_handle_t)cdcAcmHandle;
@@ -749,19 +749,19 @@ usb_status_t USB_DeviceCdcAcmDeinit(class_handle_t handle)
     if (KOSA_StatusSuccess != OSA_MutexDestroy((cdcAcmHandle->bulkIn.mutex)))
     {
 #ifdef DEBUG
-        usb_echo("mutex destroy error!");
+        (void)usb_echo("mutex destroy error!");
 #endif
     }
     if (KOSA_StatusSuccess != OSA_MutexDestroy((cdcAcmHandle->bulkOut.mutex)))
     {
 #ifdef DEBUG
-        usb_echo("mutex destroy error!");
+        (void)usb_echo("mutex destroy error!");
 #endif
     }
     if (KOSA_StatusSuccess != OSA_MutexDestroy((cdcAcmHandle->interruptIn.mutex)))
     {
 #ifdef DEBUG
-        usb_echo("mutex destroy error!");
+        (void)usb_echo("mutex destroy error!");
 #endif
     }
     error = USB_DeviceCdcAcmEndpointsDeinit(cdcAcmHandle);

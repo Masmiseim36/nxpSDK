@@ -28,7 +28,7 @@
 Change log:
     11/10/2008: initial version
 ********************************************************/
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -85,7 +85,7 @@ static mlan_status wlan_11n_dispatch_amsdu_pkt(mlan_private *priv, pmlan_buffer 
  */
 static mlan_status wlan_11n_dispatch_pkt(t_void *priv, t_void *payload)
 {
-    mlan_status ret = MLAN_STATUS_SUCCESS;
+    mlan_status ret         = MLAN_STATUS_SUCCESS;
     pmlan_adapter pmadapter = ((pmlan_private)priv)->adapter;
     ENTER();
     if (payload == (t_void *)RX_PKT_DROPPED_IN_FW)
@@ -370,10 +370,6 @@ static t_void wlan_11n_create_rxreorder_tbl(mlan_private *priv, t_u8 *ta, int ti
 
     ENTER();
 
-#ifdef DEBUG_11N_REORDERING
-    wmprintf("### Creating reorder table for TID: %d\n\r", tid);
-#endif /* DEBUG_11N_REORDERING */
-
     /*
      * If we get a TID, ta pair which is already present dispatch all the
      * the packets and move the window size until the ssn
@@ -467,9 +463,6 @@ RxReorderTbl *wlan_11n_get_rxreorder_tbl(mlan_private *priv, int tid, t_u8 *ta)
                                                            priv->adapter->callbacks.moal_spin_lock,
                                                            priv->adapter->callbacks.moal_spin_unlock)))
     {
-#ifdef DEBUG_11N_REORDERING
-        wmprintf("### Not found even one entry in  RX reorder table\n\r");
-#endif /* DEBUG_11N_REORDERING */
         LEAVE();
         return MNULL;
     }
@@ -485,9 +478,6 @@ RxReorderTbl *wlan_11n_get_rxreorder_tbl(mlan_private *priv, int tid, t_u8 *ta)
         rx_reor_tbl_ptr = rx_reor_tbl_ptr->pnext;
     }
 
-#ifdef DEBUG_11N_REORDERING
-    wmprintf("### Failed to find RX reorder table for TID: %d R: %p\n\r", tid, __builtin_return_address(0));
-#endif /* DEBUG_11N_REORDERING */
     LEAVE();
     return MNULL;
 }
@@ -555,7 +545,7 @@ mlan_status wlan_cmd_11n_addba_rspgen(mlan_private *priv, HostCmd_DS_COMMAND *cm
     padd_ba_rsp->block_ack_param_set = pevt_addba_req->block_ack_param_set;
     tid = (padd_ba_rsp->block_ack_param_set & BLOCKACKPARAM_TID_MASK) >> BLOCKACKPARAM_TID_POS;
     if (priv->addba_reject[tid]
-    /* wmsdk: we are not using UAP with mlan right now */
+        /* wmsdk: we are not using UAP with mlan right now */
     )
         padd_ba_rsp->status_code = wlan_cpu_to_le16(ADDBA_RSP_STATUS_DECLINED);
     else
@@ -609,11 +599,6 @@ mlan_status wlan_cmd_11n_uap_addba_rspgen(mlan_private *priv, HostCmd_DS_COMMAND
     padd_ba_rsp->block_ack_param_set &= ~BLOCKACKPARAM_AMSDU_SUPP_MASK;
 
     padd_ba_rsp->status_code = wlan_cpu_to_le16(ADDBA_RSP_STATUS_ACCEPT);
-
-#ifndef CONFIG_UAP_AMPDU_RX
-    padd_ba_rsp->status_code    = wlan_cpu_to_le16(ADDBA_RSP_STATUS_DECLINED);
-    padd_ba_rsp->add_rsp_result = BA_RESULT_FAILURE;
-#endif
 
     padd_ba_rsp->block_ack_param_set = wlan_cpu_to_le16(padd_ba_rsp->block_ack_param_set);
 

@@ -24,8 +24,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FLEXSPI driver version 2.3.0. */
-#define FSL_FLEXSPI_DRIVER_VERSION (MAKE_VERSION(2, 3, 0))
+/*! @brief FLEXSPI driver version 2.3.2. */
+#define FSL_FLEXSPI_DRIVER_VERSION (MAKE_VERSION(2, 3, 2))
 /*@}*/
 
 #define FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNT FSL_FEATURE_FLEXSPI_AHB_BUFFER_COUNTn(0)
@@ -338,6 +338,22 @@ extern "C" {
  * @name Initialization and deinitialization
  * @{
  */
+
+/*!
+ * @brief Get the instance number for FLEXSPI.
+ *
+ * @param base FLEXSPI base pointer.
+ */
+uint32_t FLEXSPI_GetInstance(FLEXSPI_Type *base);
+
+/*!
+ * @brief Check and clear IP command execution errors.
+ *
+ * @param base FLEXSPI base pointer.
+ * @param status interrupt status.
+ */
+status_t FLEXSPI_CheckAndClearError(FLEXSPI_Type *base, uint32_t status);
+
 /*!
  * @brief Initializes the FLEXSPI module and internal state.
  *

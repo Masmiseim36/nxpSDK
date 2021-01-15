@@ -1,16 +1,11 @@
 /*
-* @author NXP Semiconductors
-* @version 1.0
-* @par License
-* Copyright 2016,2020 NXP
-*
-* This software is owned or controlled by NXP and may only be used
-* strictly in accordance with the applicable license terms.  By expressly
-* accepting such terms or by downloading, installing, activating and/or
-* otherwise using the software, you are agreeing that you have read, and
-* that you agree to comply with and are bound by, such license terms.  If
-* you do not agree to be bound by the applicable license terms, then you
-* may not retain, install, activate or otherwise use the software.
+ * Copyright 2016-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+/*
 *
 * @par History
 * 1.0   1-oct-2016 : Initial version
@@ -485,26 +480,27 @@ U16 SM_Connect(void *conn_ctx, SmCommState_t *commState, U8 *atr, U16 *atrLen)
     if (sw == SMCOM_OK) {
         selectResponseDataLen = sizeof(selectResponseData);
         /* CARD */
-        if (commState->skip_select_applet == 1) {
+        if (commState->select == SELECT_NONE) {
             /* Use Case just Connect to SE (smCom) and no kind of applet selection */
             sw = SMCOM_OK;
             selectResponseDataLen = 0;
         }
-        else if (commState->skip_select_applet == 2) {
+        else if (commState->select == SELECT_SSD) {
 #ifdef SSD_NAME
             /* Rotate keys Use Case Connect to SE and Select SSD */
             /* Select SSD */
             sw = GP_Select(conn_ctx, (U8 *)&ssdName, sizeof(ssdName), selectResponseData, &selectResponseDataLen);
-            //sw = SMCOM_OK;
 #else
             sw = SMCOM_COM_FAILED;
 #endif
         }
         else
         {
+#if SSS_HAVE_A71CH || SSS_HAVE_A71CH_SIM || SSS_HAVE_A71CL
             /* Select card manager */
             GP_Select(conn_ctx, (U8 *)&appletName, 0, selectResponseData, &selectResponseDataLen);
             selectResponseDataLen = sizeof(selectResponseData);
+#endif
             /* Select the applet */
             sw = GP_Select(conn_ctx, (U8 *)&appletName, APPLET_NAME_LEN, selectResponseData, &selectResponseDataLen);
         }

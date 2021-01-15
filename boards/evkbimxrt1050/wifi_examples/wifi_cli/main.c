@@ -2,26 +2,10 @@
  *
  *  @brief main file
  *
- *  Copyright 2008-2020 NXP
+ *  Copyright 2020 NXP
+ *  All rights reserved.
  *
- *  NXP CONFIDENTIAL
- *  The source code contained or described herein and all documents related to
- *  the source code ("Materials") are owned by NXP, its
- *  suppliers and/or its licensors. Title to the Materials remains with NXP,
- *  its suppliers and/or its licensors. The Materials contain
- *  trade secrets and proprietary and confidential information of NXP, its
- *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
- *  and trade secret laws and treaty provisions. No part of the Materials may be
- *  used, copied, reproduced, modified, published, uploaded, posted,
- *  transmitted, distributed, or disclosed in any way without NXP's prior
- *  express written permission.
- *
- *  No license under any patent, copyright, trade secret or other intellectual
- *  property right is granted to or conferred upon you by disclosure or delivery
- *  of the Materials, either expressly, by implication, inducement, estoppel or
- *  otherwise. Any license under such intellectual property rights must be
- *  express and approved by NXP in writing.
- *
+ *  SPDX-License-Identifier: BSD-3-Clause
  */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -29,6 +13,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // SDK Included Files
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
@@ -57,8 +43,6 @@
 #include "ping.h"
 #include "iperf.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_sdmmc_host.h"
 
 
@@ -138,6 +122,13 @@ int wlan_event_callback(enum wlan_event_reason reason, void *data)
             if (ret != WM_SUCCESS)
             {
                 PRINTF("Failed to initialize IPERF CLI\r\n");
+                return 0;
+            }
+
+            ret = dhcpd_cli_init();
+            if (ret != WM_SUCCESS)
+            {
+                PRINTF("Failed to initialize DHCP Server CLI\r\n");
                 return 0;
             }
 

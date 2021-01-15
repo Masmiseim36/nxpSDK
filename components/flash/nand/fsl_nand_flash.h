@@ -113,7 +113,7 @@ status_t Nand_Flash_Read_Page_Partial(
  * @param length  Nand flash read length.
  * @retval execution status
  */
-status_t Nand_Flash_Page_Program(nand_handle_t *handle, uint32_t pageIndex, uint8_t *src, uint32_t length);
+status_t Nand_Flash_Page_Program(nand_handle_t *handle, uint32_t pageIndex, const uint8_t *src, uint32_t length);
 
 /*!
  * @brief Erase block NAND Flash.

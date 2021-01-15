@@ -330,7 +330,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1024DAG5A, LV_CONF_INCLUDE_SIMPLE=1, LV_EX_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../..;../../..;../../../../../middleware/littlevgl;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/freertos/freertos_kernel/include;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../middleware/littlevgl/lvgl;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>../..;..;../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets;../../../../../middleware/littlevgl/lv_examples;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../middleware/littlevgl/lvgl;../../../../../middleware/littlevgl/lvgl/src;../../../../../middleware/littlevgl;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Include;../../../../../CMSIS/Driver/Include;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -348,7 +348,7 @@
               <MiscControls/>
               <Define>DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>..;../../..</IncludePath>
+              <IncludePath>..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -458,7 +458,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_examples-src-lv_demo_widgets</GroupName>
+          <GroupName>littlevgl/lv_examples/src/lv_demo_widgets</GroupName>
           <Files>
             <File>
               <FileName>lv_demo_widgets.c</FileName>
@@ -473,7 +473,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_examples</GroupName>
+          <GroupName>littlevgl/lv_examples</GroupName>
           <Files>
             <File>
               <FileName>lv_examples.h</FileName>
@@ -663,7 +663,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
@@ -678,7 +678,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl</GroupName>
+          <GroupName>littlevgl/lvgl</GroupName>
           <Files>
             <File>
               <FileName>lvgl.h</FileName>
@@ -688,7 +688,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src</GroupName>
+          <GroupName>littlevgl/lvgl/src</GroupName>
           <Files>
             <File>
               <FileName>lv_api_map.h</FileName>
@@ -703,18 +703,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_core</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_core</GroupName>
           <Files>
-            <File>
-              <FileName>lv_debug.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_debug.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_debug.h</FilePath>
-            </File>
             <File>
               <FileName>lv_disp.c</FileName>
               <FileType>1</FileType>
@@ -783,7 +773,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_draw</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_draw</GroupName>
           <Files>
             <File>
               <FileName>lv_draw.h</FileName>
@@ -903,7 +893,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_font</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_font</GroupName>
           <Files>
             <File>
               <FileName>lv_font.c</FileName>
@@ -929,6 +919,16 @@
               <FileName>lv_font_fmt_txt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_fmt_txt.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_loader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_loader.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_loader.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_loader.h</FilePath>
             </File>
             <File>
               <FileName>lv_font_montserrat_12.c</FileName>
@@ -1053,7 +1053,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_gpu</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_gpu</GroupName>
           <Files>
             <File>
               <FileName>lv_gpu_stm32_dma2d.h</FileName>
@@ -1083,7 +1083,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_hal</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_hal</GroupName>
           <Files>
             <File>
               <FileName>lv_hal.h</FileName>
@@ -1123,7 +1123,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_misc</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_misc</GroupName>
           <Files>
             <File>
               <FileName>lv_anim.c</FileName>
@@ -1174,6 +1174,16 @@
               <FileName>lv_color.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_color.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_debug.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_debug.h</FilePath>
             </File>
             <File>
               <FileName>lv_fs.c</FileName>
@@ -1303,7 +1313,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_themes</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_themes</GroupName>
           <Files>
             <File>
               <FileName>lv_theme.c</FileName>
@@ -1358,8 +1368,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_widgets</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_widgets</GroupName>
           <Files>
+            <File>
+              <FileName>lv_anim_img.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_widgets/lv_anim_img.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim_img.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_widgets/lv_anim_img.h</FilePath>
+            </File>
             <File>
               <FileName>lv_arc.c</FileName>
               <FileType>1</FileType>
@@ -1768,7 +1788,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -1783,7 +1803,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -1813,7 +1833,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -1948,7 +1968,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
               <FileName>event_groups.c</FileName>
@@ -1988,7 +2008,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
               <FileName>croutine.h</FileName>
@@ -2088,7 +2108,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
@@ -2103,7 +2123,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
@@ -2441,7 +2461,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1024DAG5A, LV_CONF_INCLUDE_SIMPLE=1, LV_EX_CONF_INCLUDE_SIMPLE=1, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../..;../../..;../../../../../middleware/littlevgl;../../../../../CMSIS/Include;../../../../../devices;../../../../../rtos/freertos/freertos_kernel/include;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../middleware/littlevgl/lvgl;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Driver/Include;../../../../../devices/MIMXRT1024/utilities</IncludePath>
+              <IncludePath>../..;..;../../../../../middleware/littlevgl/lv_examples/src/lv_demo_widgets;../../../../../middleware/littlevgl/lv_examples;../../../../../components/ili9341;../../../../../components/ft6x06;../../../../../devices/MIMXRT1024/drivers;../../../../../devices/MIMXRT1024/cmsis_drivers;../../../../../middleware/littlevgl/lvgl;../../../../../middleware/littlevgl/lvgl/src;../../../../../middleware/littlevgl;../../../../../devices/MIMXRT1024;../../../../../devices/MIMXRT1024/utilities/str;../../../../../devices/MIMXRT1024/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1024/xip;../../../xip;../../../../../CMSIS/Include;../../../../../CMSIS/Driver/Include;../../../../../rtos/freertos/freertos_kernel/include;../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2459,7 +2479,7 @@
               <MiscControls/>
               <Define>NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
-              <IncludePath>..;../../..</IncludePath>
+              <IncludePath>..</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -2569,7 +2589,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_examples-src-lv_demo_widgets</GroupName>
+          <GroupName>littlevgl/lv_examples/src/lv_demo_widgets</GroupName>
           <Files>
             <File>
               <FileName>lv_demo_widgets.c</FileName>
@@ -2584,7 +2604,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lv_examples</GroupName>
+          <GroupName>littlevgl/lv_examples</GroupName>
           <Files>
             <File>
               <FileName>lv_examples.h</FileName>
@@ -2774,7 +2794,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
@@ -2789,7 +2809,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl</GroupName>
+          <GroupName>littlevgl/lvgl</GroupName>
           <Files>
             <File>
               <FileName>lvgl.h</FileName>
@@ -2799,7 +2819,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src</GroupName>
+          <GroupName>littlevgl/lvgl/src</GroupName>
           <Files>
             <File>
               <FileName>lv_api_map.h</FileName>
@@ -2814,18 +2834,8 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_core</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_core</GroupName>
           <Files>
-            <File>
-              <FileName>lv_debug.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_debug.c</FilePath>
-            </File>
-            <File>
-              <FileName>lv_debug.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_core/lv_debug.h</FilePath>
-            </File>
             <File>
               <FileName>lv_disp.c</FileName>
               <FileType>1</FileType>
@@ -2894,7 +2904,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_draw</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_draw</GroupName>
           <Files>
             <File>
               <FileName>lv_draw.h</FileName>
@@ -3014,7 +3024,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_font</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_font</GroupName>
           <Files>
             <File>
               <FileName>lv_font.c</FileName>
@@ -3040,6 +3050,16 @@
               <FileName>lv_font_fmt_txt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_fmt_txt.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_loader.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_loader.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_font_loader.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_font/lv_font_loader.h</FilePath>
             </File>
             <File>
               <FileName>lv_font_montserrat_12.c</FileName>
@@ -3164,7 +3184,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_gpu</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_gpu</GroupName>
           <Files>
             <File>
               <FileName>lv_gpu_stm32_dma2d.h</FileName>
@@ -3194,7 +3214,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_hal</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_hal</GroupName>
           <Files>
             <File>
               <FileName>lv_hal.h</FileName>
@@ -3234,7 +3254,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_misc</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_misc</GroupName>
           <Files>
             <File>
               <FileName>lv_anim.c</FileName>
@@ -3285,6 +3305,16 @@
               <FileName>lv_color.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_color.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_debug.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_debug.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_misc/lv_debug.h</FilePath>
             </File>
             <File>
               <FileName>lv_fs.c</FileName>
@@ -3414,7 +3444,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_themes</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_themes</GroupName>
           <Files>
             <File>
               <FileName>lv_theme.c</FileName>
@@ -3469,8 +3499,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>littlevgl-lvgl-src-lv_widgets</GroupName>
+          <GroupName>littlevgl/lvgl/src/lv_widgets</GroupName>
           <Files>
+            <File>
+              <FileName>lv_anim_img.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_widgets/lv_anim_img.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_anim_img.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_widgets/lv_anim_img.h</FilePath>
+            </File>
             <File>
               <FileName>lv_arc.c</FileName>
               <FileType>1</FileType>
@@ -3879,7 +3919,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
               <FileName>fsl_adapter_uart.h</FileName>
@@ -3894,7 +3934,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_serial_manager.h</FileName>
@@ -3924,7 +3964,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
               <FileName>fsl_component_generic_list.h</FileName>
@@ -4059,7 +4099,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
               <FileName>event_groups.c</FileName>
@@ -4099,7 +4139,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
               <FileName>croutine.h</FileName>
@@ -4199,7 +4239,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
@@ -4214,7 +4254,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>

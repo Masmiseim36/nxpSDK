@@ -147,7 +147,7 @@ void _lv_txt_get_size(lv_point_t * size_res, const char * text, const lv_font_t 
  *
  * If the first character is a break character, returns the next index.
  *
- * Example calls from lv_txt_get_next_line() assuming sufficent max_width and
+ * Example calls from lv_txt_get_next_line() assuming sufficient max_width and
  * txt = "Test text\n"
  *        0123456789
  *
@@ -169,7 +169,7 @@ void _lv_txt_get_size(lv_point_t * size_res, const char * text, const lv_font_t 
  * @param force Force return the fraction of the word that can fit in the provided space.
  * @return the index of the first char of the next word (in byte index not letter index. With UTF-8 they are different)
  */
-static uint16_t lv_txt_get_next_word(const char * txt, const lv_font_t * font,
+static uint32_t lv_txt_get_next_word(const char * txt, const lv_font_t * font,
                                      lv_coord_t letter_space, lv_coord_t max_width,
                                      lv_txt_flag_t flag, uint32_t * word_w_ptr, lv_txt_cmd_state_t * cmd_state, bool force)
 {
@@ -290,7 +290,7 @@ static uint16_t lv_txt_get_next_word(const char * txt, const lv_font_t * font,
  * @param flags settings for the text from 'txt_flag_type' enum
  * @return the index of the first char of the new line (in byte index not letter index. With UTF-8 they are different)
  */
-uint16_t _lv_txt_get_next_line(const char * txt, const lv_font_t * font,
+uint32_t _lv_txt_get_next_line(const char * txt, const lv_font_t * font,
                                lv_coord_t letter_space, lv_coord_t max_width, lv_txt_flag_t flag)
 {
     if(txt == NULL) return 0;
@@ -350,7 +350,7 @@ uint16_t _lv_txt_get_next_line(const char * txt, const lv_font_t * font,
  * @param flags settings for the text from 'txt_flag_t' enum
  * @return length of a char_num long text
  */
-lv_coord_t _lv_txt_get_width(const char * txt, uint16_t length, const lv_font_t * font, lv_coord_t letter_space,
+lv_coord_t _lv_txt_get_width(const char * txt, uint32_t length, const lv_font_t * font, lv_coord_t letter_space,
                              lv_txt_flag_t flag)
 {
     if(txt == NULL) return 0;
@@ -436,6 +436,8 @@ void _lv_txt_ins(char * txt_buf, uint32_t pos, const char * ins_txt)
 {
     size_t old_len = strlen(txt_buf);
     size_t ins_len = strlen(ins_txt);
+    if(ins_len == 0) return;
+
     size_t new_len = ins_len + old_len;
     pos              = _lv_txt_encoded_get_byte_id(txt_buf, pos); /*Convert to byte index instead of letter index*/
 
@@ -534,6 +536,7 @@ static uint32_t lv_txt_unicode_to_utf8(uint32_t letter_uni)
  */
 static uint32_t lv_txt_utf8_conv_wc(uint32_t c)
 {
+#if LV_BIG_ENDIAN_SYSTEM == 0
     /*Swap the bytes (UTF-8 is big endian, but the MCUs are little endian)*/
     if((c & 0x80) != 0) {
         uint32_t swapped;
@@ -547,7 +550,7 @@ static uint32_t lv_txt_utf8_conv_wc(uint32_t c)
         }
         c = swapped;
     }
-
+#endif
     return c;
 }
 

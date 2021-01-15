@@ -1,8 +1,6 @@
-INCLUDE(CMakeForceCompiler)
-
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -17,689 +15,180 @@ SET(CMAKE_STATIC_LIBRARY_SUFFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
- 
 # CURRENT DIRECTORY
 SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -D__STARTUP_CLEAR_BSS")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDEBUG")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -D__STARTUP_INITIALIZE_NONCACHEDATA")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -g")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Wall")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mfpu=fpv5-d16")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -D__STARTUP_CLEAR_BSS")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DNDEBUG")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Wall")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mfpu=fpv5-d16")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_ASM_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DXIP_EXTERNAL_FLASH=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DXIP_BOOT_HEADER_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DXIP_BOOT_HEADER_DCD_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSKIP_SYSCLK_INIT")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDATA_SECTION_IS_CACHEABLE=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDEBUG")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DCPU_MIMXRT1062DVL6A")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSDK_DEBUGCONSOLE_UART")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DFLATBUFFERS_LITTLEENDIAN")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DTFLITE_MCU")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DARM_MATH_CM7")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -D__FPU_PRESENT=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -g")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -O0")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Wall")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mfpu=fpv5-d16")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mthumb")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -MMD")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -MP")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fno-common")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mapcs")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DXIP_EXTERNAL_FLASH=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DXIP_BOOT_HEADER_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DXIP_BOOT_HEADER_DCD_ENABLE=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSKIP_SYSCLK_INIT")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DDATA_SECTION_IS_CACHEABLE=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DNDEBUG")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DCPU_MIMXRT1062DVL6A")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSDK_DEBUGCONSOLE_UART")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DFLATBUFFERS_LITTLEENDIAN")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DTFLITE_MCU")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DARM_MATH_CM7")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -D__FPU_PRESENT=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Os")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Wall")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mfpu=fpv5-d16")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mthumb")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -MMD")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -MP")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-common")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mapcs")
-
-SET(CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_C_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -std=gnu99")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DDEBUG")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSDK_DEBUGCONSOLE_UART")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DFLATBUFFERS_LITTLEENDIAN")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DTFLITE_MCU")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DARM_MATH_CM7")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -D__FPU_PRESENT=1")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DCPU_MIMXRT1062DVL6A")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -g")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -O0")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Wno-sign-compare")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Wall")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mfpu=fpv5-d16")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -MMD")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -MP")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DNDEBUG")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSDK_DEBUGCONSOLE_UART")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DFLATBUFFERS_LITTLEENDIAN")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DTFLITE_MCU")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DARM_MATH_CM7")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -D__FPU_PRESENT=1")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DCPU_MIMXRT1062DVL6A")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Os")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Wno-sign-compare")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Wall")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mfpu=fpv5-d16")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -MP")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_CXX_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-exceptions")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -g")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mfpu=fpv5-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Map=output.map")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} --defsym=__stack_size__=0x10000")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} --defsym=__heap_size__=0x800000")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mfpu=fpv5-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Map=output.map")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} --defsym=__stack_size__=0x10000")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} --defsym=__heap_size__=0x800000")
-
-include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
-
-include_directories(${ProjDirPath}/../../../../../devices)
-
-include_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/cifar10)
-
-include_directories(${ProjDirPath}/../../..)
-
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/source)
-
-include_directories(${ProjDirPath}/../../../../../components/video/camera/device)
-
-include_directories(${ProjDirPath}/../../../../../components/video/camera/receiver)
-
-include_directories(${ProjDirPath}/../../../../../components/video/camera/device/sccb)
-
-include_directories(${ProjDirPath}/../../../../../components/video/camera/device/ov7725)
-
-include_directories(${ProjDirPath}/../../../../../components/video/camera/device/mt9m114)
-
-include_directories(${ProjDirPath}/../../../../../components/video/camera)
-
-include_directories(${ProjDirPath}/../../../../../components/video/camera/receiver/csi)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers)
-
-include_directories(${ProjDirPath}/../../../../../components/video)
-
-include_directories(${ProjDirPath}/../../../../../components/video/i2c)
-
-include_directories(${ProjDirPath}/../../../../../components/video/display/dc)
-
-include_directories(${ProjDirPath}/../../../../../components/video/display/dc/elcdif)
-
-include_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite)
-
-include_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include)
-
-include_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party)
-
-include_directories(${ProjDirPath}/../../../../../components/lists)
-
-include_directories(${ProjDirPath}/../../../../../components/uart)
-
-include_directories(${ProjDirPath}/../../../../../components/serial_manager)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/xip)
-
-include_directories(${ProjDirPath}/../../../xip)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities)
-
-add_executable(tensorflow_lite_cifar10.elf 
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/cifar10/cifar10.cpp"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/source/image.c"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/source/image.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/cifar10/ship.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/cifar10/cifar10_model.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/source/get_top_n.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/source/get_top_n_impl.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/source/timer.c"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/source/timer.h"
-"${ProjDirPath}/../../../display_support.h"
-"${ProjDirPath}/../../../display_support.c"
-"${ProjDirPath}/../../../camera_support.h"
-"${ProjDirPath}/../../../camera_support.c"
+SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+
+
+project(tensorflow_lite_cifar10)
+
+set(MCUX_SDK_PROJECT_NAME tensorflow_lite_cifar10.elf)
+
+include(${ProjDirPath}/flags.cmake)
+
+include(${ProjDirPath}/config.cmake)
+
+add_executable(${MCUX_SDK_PROJECT_NAME} 
+"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_conv.c"
+"${ProjDirPath}/../../../../../middleware/eiq/common/board_init.h"
+"${ProjDirPath}/../../../../../middleware/eiq/common/demo_info.h"
+"${ProjDirPath}/../../../../../middleware/eiq/common/timer.h"
+"${ProjDirPath}/../../../../../middleware/eiq/common/timer.c"
+"${ProjDirPath}/../../../../../middleware/eiq/common/image/image.h"
+"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_capture.c"
+"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_decode_raw.c"
+"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_draw.c"
+"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_resize_nearest.c"
+"${ProjDirPath}/../../../../../middleware/eiq/common/image/image_utils.h"
+"${ProjDirPath}/../../../../../middleware/eiq/common/model/get_top_n.cpp"
+"${ProjDirPath}/../../../../../middleware/eiq/common/model/get_top_n.h"
+"${ProjDirPath}/../../../../../middleware/eiq/common/model/model.h"
+"${ProjDirPath}/../../../../../middleware/eiq/common/model/output_postproc.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/model/model.cpp"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/common/model/output_postproc.cpp"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/cifar10/demo_config.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/cifar10/demo_info.cpp"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/cifar10/image_data.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/cifar10/labels.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/cifar10/model_data.h"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/cifar10/model_cifarnet_ops.cpp"
+"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/main.cpp"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
+"${ProjDirPath}/../board_init.c"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../dcd.c"
 "${ProjDirPath}/../dcd.h"
-"${ProjDirPath}/../../../../../components/video/camera/device/fsl_camera_device.h"
-"${ProjDirPath}/../../../../../components/video/camera/receiver/fsl_camera_receiver.h"
-"${ProjDirPath}/../../../../../components/video/camera/device/sccb/fsl_sccb.c"
-"${ProjDirPath}/../../../../../components/video/camera/device/sccb/fsl_sccb.h"
-"${ProjDirPath}/../../../../../components/video/camera/device/ov7725/fsl_ov7725.c"
-"${ProjDirPath}/../../../../../components/video/camera/device/ov7725/fsl_ov7725.h"
-"${ProjDirPath}/../../../../../components/video/camera/device/mt9m114/fsl_mt9m114.c"
-"${ProjDirPath}/../../../../../components/video/camera/device/mt9m114/fsl_mt9m114.h"
-"${ProjDirPath}/../../../../../components/video/camera/fsl_camera.h"
-"${ProjDirPath}/../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.c"
-"${ProjDirPath}/../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_csi.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_csi.h"
-"${ProjDirPath}/../../../../../components/video/fsl_video_common.c"
-"${ProjDirPath}/../../../../../components/video/fsl_video_common.h"
-"${ProjDirPath}/../../../../../components/video/i2c/fsl_video_i2c.c"
-"${ProjDirPath}/../../../../../components/video/i2c/fsl_video_i2c.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_elcdif.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_elcdif.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_pxp.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_pxp.h"
-"${ProjDirPath}/../../../../../components/video/display/dc/fsl_dc_fb.h"
-"${ProjDirPath}/../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c"
-"${ProjDirPath}/../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/public/session.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/public/version.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/util/stat_summarizer_options.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/core/util/stats_calculator.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/allocation.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/arena_planner.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_op_data.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/builtin_ops.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/builtin_op_data.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/c/c_api_internal.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/context.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/context_util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/op_resolver.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/profiler.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/subgraph.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/error_reporter.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/resource_variable/resource_variable.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/experimental/ruy/ruy.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/external_cpu_backend_context.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/graph_info.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/interpreter.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/activation_functor.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/builtin_op_kernels.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_context.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_custom_gemv.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_eigen.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_gemmlowp.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_params.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_ruy.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_threadpool.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/custom_ops_register.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/eigen_support.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/fully_connected.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/add.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/conv.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/depthwise_conv.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/dequantize.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/fully_connected.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/l2normalization.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/log_softmax.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/logistic.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/mean.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/mul.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/pooling.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/softmax.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/internal/reference/integer_ops/tanh.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/kernel_util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/lstm_eval.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/op_macros.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/padding.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/register.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/kernels/register_ref.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/memory_planner.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/minimal_logging.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/model.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/mutable_op_resolver.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/op_resolver.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/optional_debug_tools.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/buffered_profiler.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/memory_info.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/noop_profiler.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/profile_buffer.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/profile_summarizer.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/profiler.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/profiling/time.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/schema/schema_generated.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/simple_memory_arena.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/stderr_reporter.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/string_type.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/string_util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_model.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_params.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_tflite_model.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_utils.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/benchmark/logging.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/tools/command_line_flags.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/util.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/version.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/absl/base/attributes.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/base.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/code_generators.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatbuffers.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flexbuffers.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/hash.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/idl.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/minireflect.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection_generated.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/registry.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/stl_emulation.h"
-"${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/util.h"
-"${ProjDirPath}/../../../../../components/lists/generic_list.c"
-"${ProjDirPath}/../../../../../components/lists/generic_list.h"
-"${ProjDirPath}/../../../../../components/uart/lpuart_adapter.c"
-"${ProjDirPath}/../../../../../components/uart/uart.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_internal.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/MIMXRT1062.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/MIMXRT1062_features.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/fsl_device_registers.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/gcc/startup_MIMXRT1062.S"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/system_MIMXRT1062.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/system_MIMXRT1062.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h"
-"${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.c"
-"${ProjDirPath}/../../../xip/evkmimxrt1060_flexspi_nor_config.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/fsl_sbrk.c"
 )
 
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/examples/image/cifar10
+    ${ProjDirPath}/../../../../../middleware/eiq/common/image
+    ${ProjDirPath}/../../../../../middleware/eiq/common/model
+    ${ProjDirPath}/..
+)
 
-set(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_DEBUG} -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor_sdram.ld -static")
+set(CMAKE_MODULE_PATH
+    ${ProjDirPath}/../../../../../components/video/camera/device
+    ${ProjDirPath}/../../../../../components/video/camera/receiver
+    ${ProjDirPath}/../../../../../components/video/camera/device/sccb
+    ${ProjDirPath}/../../../../../components/video/camera/device/ov7725
+    ${ProjDirPath}/../../../../../components/video/camera/device/mt9m114
+    ${ProjDirPath}/../../../../../components/video/camera
+    ${ProjDirPath}/../../../../../components/video/camera/receiver/csi
+    ${ProjDirPath}/../../../../../devices/MIMXRT1062/drivers
+    ${ProjDirPath}/../../../../../components/video
+    ${ProjDirPath}/../../../../../components/video/i2c
+    ${ProjDirPath}/../../../../../components/video/display/dc
+    ${ProjDirPath}/../../../../../components/video/display/dc/elcdif
+    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../middleware/eiq
+    ${ProjDirPath}/../../../../../components/lists
+    ${ProjDirPath}/../../../../../components/uart
+    ${ProjDirPath}/../../../../../devices/MIMXRT1062
+    ${ProjDirPath}/../../../../../devices/MIMXRT1062/xip
+    ${ProjDirPath}/../../../xip
+    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../devices/MIMXRT1062/utilities
+)
 
-set(CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE "${CMAKE_EXE_LINKER_FLAGS_FLEXSPI_NOR_SDRAM_RELEASE} -T${ProjDirPath}/MIMXRT1062xxxxx_flexspi_nor_sdram.ld -static")
+# include modules
+include(driver_camera-device-common_MIMXRT1062)
 
-TARGET_LINK_LIBRARIES(tensorflow_lite_cifar10.elf -Wl,--start-group)
-target_link_libraries(tensorflow_lite_cifar10.elf optimized m)
+include(driver_camera-receiver-common_MIMXRT1062)
 
-target_link_libraries(tensorflow_lite_cifar10.elf optimized c)
+include(driver_camera-device-sccb_MIMXRT1062)
 
-target_link_libraries(tensorflow_lite_cifar10.elf optimized gcc)
+include(driver_camera-device-ov7725_MIMXRT1062)
 
-target_link_libraries(tensorflow_lite_cifar10.elf optimized nosys)
+include(driver_camera-device-mt9m114_MIMXRT1062)
 
-target_link_libraries(tensorflow_lite_cifar10.elf optimized m)
+include(driver_camera-common_MIMXRT1062)
 
-target_link_libraries(tensorflow_lite_cifar10.elf optimized c)
+include(driver_camera-receiver-csi_MIMXRT1062)
 
-target_link_libraries(tensorflow_lite_cifar10.elf optimized gcc)
+include(driver_csi_MIMXRT1062)
 
-target_link_libraries(tensorflow_lite_cifar10.elf optimized nosys)
+include(driver_video-common_MIMXRT1062)
 
-link_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/lib/cm7/gcc)
+include(driver_video-i2c_MIMXRT1062)
 
-target_link_libraries(tensorflow_lite_cifar10.elf optimized ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/lib/cm7/gcc/libtensorflow-lite.a)
+include(driver_elcdif_MIMXRT1062)
 
-link_directories(${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/lib/cm7/gcc)
+include(driver_pxp_MIMXRT1062)
 
-target_link_libraries(tensorflow_lite_cifar10.elf optimized ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/lib/cm7/gcc/libtensorflow-lite.a)
+include(driver_dc-fb-common_MIMXRT1062)
 
-TARGET_LINK_LIBRARIES(tensorflow_lite_cifar10.elf -Wl,--end-group)
+include(driver_dc-fb-elcdif_MIMXRT1062)
+
+include(driver_igpio_MIMXRT1062)
+
+include(utility_debug_console_lite_MIMXRT1062)
+
+include(utility_assert_lite_MIMXRT1062)
+
+include(middleware_eiq_worker_video_MIMXRT1062)
+
+include(middleware_eiq_tensorflow_lite_binary_MIMXRT1062)
+
+include(component_lists_MIMXRT1062)
+
+include(component_lpuart_adapter_MIMXRT1062)
+
+include(driver_common_MIMXRT1062)
+
+include(driver_lpuart_MIMXRT1062)
+
+include(device_MIMXRT1062_CMSIS_MIMXRT1062)
+
+include(device_MIMXRT1062_startup_MIMXRT1062)
+
+include(driver_clock_MIMXRT1062)
+
+include(driver_iomuxc_MIMXRT1062)
+
+include(driver_lpi2c_MIMXRT1062)
+
+include(driver_xip_device_MIMXRT1062)
+
+include(driver_xip_board_MIMXRT1062)
+
+include(CMSIS_Include_core_cm7_MIMXRT1062)
+
+include(CMSIS_Include_common_MIMXRT1062)
+
+include(CMSIS_Include_dsp_MIMXRT1062)
+
+include(middleware_eiq_worker_MIMXRT1062)
+
+include(utilities_misc_utilities_MIMXRT1062)
+
+include(device_MIMXRT1062_system_MIMXRT1062)
+
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_debug)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/lib/cm7/gcc/libtensorflow-lite.a)
+endif()
+
+if(CMAKE_BUILD_TYPE STREQUAL flexspi_nor_sdram_release)
+    target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE ${ProjDirPath}/../../../../../middleware/eiq/tensorflow-lite/lib/cm7/gcc/libtensorflow-lite.a)
+endif()
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
 
 

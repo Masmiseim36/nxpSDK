@@ -54,21 +54,13 @@ void PIT_IRQHandler(void);
 void PIT_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(0);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 void PIT0_IRQHandler(void);
 void PIT0_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(0);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif /* FSL_FEATURE_SOC_PIT_COUNT */
 
@@ -77,11 +69,7 @@ void PIT1_IRQHandler(void);
 void PIT1_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(1);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif /* FSL_FEATURE_SOC_PIT_COUNT */
 
@@ -89,11 +77,7 @@ void PIT1_IRQHandler(void)
 void PIT2_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(2);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif /* FSL_FEATURE_SOC_PIT_COUNT */
 
@@ -101,11 +85,7 @@ void PIT2_IRQHandler(void)
 void PIT3_IRQHandler(void)
 {
     HAL_TimerInterruptHandle(3);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U || __CORTEX_M == 7U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif /* FSL_FEATURE_SOC_PIT_COUNT */
 /************************************************************************************
@@ -209,7 +189,7 @@ hal_timer_status_t HAL_TimerUpdateTimeout(hal_timer_handle_t halTimerHandle, uin
     assert(halTimerHandle);
     hal_timer_handle_struct_t *halTimerState = halTimerHandle;
     halTimerState->timeout                   = timeout;
-    tickCount                                = (uint32_t)USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
+    tickCount = (uint32_t)USEC_TO_COUNT(halTimerState->timeout, halTimerState->timerClock_Hz);
     if ((tickCount < 1U) || (tickCount > 0xfffffff0U))
     {
         return kStatus_HAL_TimerOutOfRanger;

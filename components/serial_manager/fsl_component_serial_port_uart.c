@@ -24,7 +24,11 @@
 #else
 /* MISRA C-2012 Rule 17.2 */
 #undef assert
-#define assert(n) while (!(n)) { ; }
+#define assert(n) \
+    while (!(n))  \
+    {             \
+        ;         \
+    }
 #endif
 #endif
 
@@ -171,7 +175,7 @@ serial_manager_status_t Serial_UartInit(serial_handle_t serialHandle, void *seri
     assert(serialHandle);
     assert(SERIAL_PORT_UART_HANDLE_SIZE >= sizeof(serial_uart_state_t));
 
-    serialUartHandle = (serial_uart_state_t *)serialHandle;
+    serialUartHandle    = (serial_uart_state_t *)serialHandle;
     serialManagerStatus = (serial_manager_status_t)HAL_UartInit(
         ((hal_uart_handle_t)&serialUartHandle->usartHandleBuffer[0]), (const hal_uart_config_t *)serialConfig);
     assert(kStatus_SerialManager_Success == serialManagerStatus);
@@ -442,7 +446,8 @@ serial_manager_status_t Serial_UartExitLowpower(serial_handle_t serialHandle)
     (void)uartstatus;
 
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
-    serial_manager_type_t type = *(serial_manager_type_t *)(void *)((uint8_t *)serialHandle - SERIAL_MANAGER_BLOCK_OFFSET);
+    serial_manager_type_t type =
+        *(serial_manager_type_t *)(void *)((uint8_t *)serialHandle - SERIAL_MANAGER_BLOCK_OFFSET);
     if (type != kSerialManager_Blocking)
     {
         status = Serial_UartEnableReceiving(serialUartHandle);

@@ -314,32 +314,31 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1024/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/autobaud</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1024/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/autobaud</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/crc</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/packet</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/property</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/smc</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/dcp</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/trng</state>
-          <state>$PROJ_DIR$/../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MIMXRT1024/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/device</state>
+          <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/ocotp</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/flexspi</state>
@@ -757,7 +756,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MIMXRT1024_ram_flashloader.icf</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/linker/iar/MIMXRT1024/MIMXRT1024_ram_flashloader.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>

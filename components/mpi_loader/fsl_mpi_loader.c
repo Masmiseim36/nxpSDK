@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  *
@@ -11,6 +11,7 @@
 #include <string.h>
 
 #include "fsl_common.h"
+#include "fsl_mpi_loader.h"
 
 /*******************************************************************************
  * Definitions
@@ -18,8 +19,8 @@
 /*****************************************************
  * TZM preset size definition for different devices. *
  *****************************************************/
-#define MPI_TZM_PRESET_SIZE_RT5XX (1140)
-#define MPI_TZM_PRESET_SIZE_RT6XX (1052)
+#define MPI_TZM_PRESET_SIZE_RT5XX (1140U)
+#define MPI_TZM_PRESET_SIZE_RT6XX (1052U)
 
 #define MPI_ASSERT(x)    \
     do                   \
@@ -30,7 +31,7 @@
             {            \
             }            \
         }                \
-    } while (0)
+    } while (false)
 
 #if defined(MIMXRT595S_cm33_SERIES)
 #define MPI_TZM_PRESET_SIZE MPI_TZM_PRESET_SIZE_RT5XX
@@ -60,16 +61,16 @@
 #define MPI_TYPE_IMAGE_BASE_XIP_PLAIN_UNSIGNED (5U << (MPI_TYPE_IMAGE_BASE_SHIFT))
 
 #define MPI_TYPE_MULTICORE_PACKED_SHIFT (11U)
-#define MPI_TYPE_MULTICORE_PACKED_MASK  (1U << (MPI_TYPE_MULTICORE_PACKED_SHIFT))
+#define MPI_TYPE_MULTICORE_PACKED_MASK  (1UL << (MPI_TYPE_MULTICORE_PACKED_SHIFT))
 
 #define MPI_TYPE_TZM_SHIFT (13U)
-#define MPI_TYPE_TZM_MASK  (3U << (MPI_TYPE_TZM_SHIFT))
+#define MPI_TYPE_TZM_MASK  (3UL << (MPI_TYPE_TZM_SHIFT))
 /* Trustzone enabled secure image. */
-#define MPI_TYPE_TZM_SECURE (0U << MPI_TYPE_TZM_SHIFT)
+#define MPI_TYPE_TZM_SECURE (0UL << MPI_TYPE_TZM_SHIFT)
 /* Trustzone enabled secure image with preset values. */
-#define MPI_TYPE_TZM_SECURE_PRESET (1U << MPI_TYPE_TZM_SHIFT)
+#define MPI_TYPE_TZM_SECURE_PRESET (1UL << MPI_TYPE_TZM_SHIFT)
 /* Trustzone disabled non-secure image entry. */
-#define MPI_TYPE_TZM_NONSECURE (2U << MPI_TYPE_TZM_SHIFT)
+#define MPI_TYPE_TZM_NONSECURE (2UL << MPI_TYPE_TZM_SHIFT)
 
 /********************************
  * Relocation table definition. *
@@ -106,37 +107,37 @@ typedef struct
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void MPI_WordCopy(void *dest, void *src, uint32_t size)
+static void MPI_WordCopy(void *dest, void *src, uint32_t size)
 {
     uint32_t *s, *d;
 
-    MPI_ASSERT(src != NULL && (((uint32_t)src & 3U) == 0));
-    MPI_ASSERT(dest != NULL && (((uint32_t)dest & 3U) == 0));
-    MPI_ASSERT((size & 3U) == 0);
+    MPI_ASSERT(src != NULL && (((uint32_t)(uint32_t *)src & 3U) == 0U));
+    MPI_ASSERT(dest != NULL && (((uint32_t)(uint32_t *)dest & 3U) == 0U));
+    MPI_ASSERT((size & 3U) == 0U);
 
     s = (uint32_t *)src;
     d = (uint32_t *)dest;
 
-    while (size > 0)
+    while (size > 0U)
     {
         *d++ = *s++;
-        size -= 4;
+        size -= 4U;
     }
 }
 
-void MPI_WordSet(void *ptr, uint32_t value, uint32_t size)
+static void MPI_WordSet(void *ptr, uint32_t value, uint32_t size)
 {
     uint32_t *p;
 
-    MPI_ASSERT(ptr != NULL && (((uint32_t)ptr & 3U) == 0));
-    MPI_ASSERT((size & 3U) == 0);
+    MPI_ASSERT(ptr != NULL && (((uint32_t)(uint32_t *)ptr & 3U) == 0U));
+    MPI_ASSERT((size & 3U) == 0U);
 
     p = (uint32_t *)ptr;
 
-    while (size > 0)
+    while (size > 0U)
     {
         *p++ = value;
-        size -= 4;
+        size -= 4U;
     }
 }
 
@@ -144,7 +145,7 @@ static void MPI_Relocate(uint32_t *vect, mpi_reloc_entry_t *entry)
 {
     uint32_t srcAddr;
 
-    MPI_ASSERT(entry);
+    MPI_ASSERT(entry != NULL);
 
     srcAddr = ((uint32_t)vect) + entry->srcAddr;
 
@@ -153,14 +154,16 @@ static void MPI_Relocate(uint32_t *vect, mpi_reloc_entry_t *entry)
         case MPI_RELOC_FLAG_LTI_LOAD:
             if ((srcAddr & MPI_ADDRESS_MASK) != (entry->destAddr & MPI_ADDRESS_MASK))
             {
-                MPI_MEMCPY((void *)entry->destAddr, (void *)srcAddr, entry->segmentSize);
+                MPI_MEMCPY((void *)(uint32_t *)entry->destAddr, (void *)(uint32_t *)srcAddr, entry->segmentSize);
             }
             break;
         case MPI_RELOC_FLAG_LTI_INIT:
-            MPI_MEMCLR((void *)entry->destAddr, 0, entry->segmentSize);
+            MPI_MEMCLR((void *)(uint32_t *)entry->destAddr, 0, entry->segmentSize);
             break;
         case MPI_RELOC_FLAG_LTI_OVERLAP:
+            /* Do nothing */
         default:
+            /* Do nothing */
             break;
     }
 }
@@ -175,12 +178,12 @@ static void MPI_HandleRelocTable(uint32_t *vect)
     mpi_reloc_table_t *pRelocTab;
     mpi_reloc_entry_t *pRelocEntry;
 
-    MPI_ASSERT(vect);
+    MPI_ASSERT(vect != NULL);
 
     imageLen  = vect[8];
     imageType = vect[9];
 
-    if (imageType & MPI_TYPE_MULTICORE_PACKED_MASK)
+    if ((imageType & MPI_TYPE_MULTICORE_PACKED_MASK) != 0U)
     {
         /* Need to load other images. */
         imageBase = imageType & MPI_TYPE_IMAGE_BASE_MASK;
@@ -214,18 +217,7 @@ static void MPI_HandleRelocTable(uint32_t *vect)
 /* Must finish loading before application .data, .bss get initialized. */
 void MPI_LoadMultiImages(void)
 {
-/* Addresses for VECTOR_TABLE and VECTOR_RAM come from the linker file */
-#if defined(__CC_ARM) || defined(__ARMCC_VERSION)
-    extern uint32_t Image$$VECTOR_ROM$$Base[];
-#define __VECTOR_TABLE Image$$VECTOR_ROM$$Base
-#elif defined(__ICCARM__)
     extern uint32_t __VECTOR_TABLE[];
-#elif defined(__MCUXPRESSO)
-    extern uint32_t g_pfnVectors[];
-#define __VECTOR_TABLE g_pfnVectors
-#elif defined(__GNUC__)
-    extern uint32_t __VECTOR_TABLE[];
-#endif /* defined(__CC_ARM) || defined(__ARMCC_VERSION) */
 
     MPI_HandleRelocTable(__VECTOR_TABLE);
 }

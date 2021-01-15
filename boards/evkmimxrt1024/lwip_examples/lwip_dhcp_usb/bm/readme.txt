@@ -9,9 +9,9 @@ The application will get ip adress www.nxp.com and ping the ip address.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.6
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================

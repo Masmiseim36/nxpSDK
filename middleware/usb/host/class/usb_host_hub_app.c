@@ -1201,7 +1201,7 @@ usb_status_t USB_HostHubDeviceEvent(usb_host_handle hostHandle,
                                                                  &infoValue);
                     if (infoValue > 5U)
                     {
-#ifdef HOST_ECHO
+#if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
                         (void)usb_echo("Host can support max 5 level hubs\r\n");
 #endif
                         continue;

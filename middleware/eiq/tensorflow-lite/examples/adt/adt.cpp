@@ -1,5 +1,5 @@
 /* Copyright 2017 The TensorFlow Authors. All Rights Reserved.
-   Copyright 2019 NXP. All Rights Reserved.
+   Copyright 2019 NXP
    
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@ limitations under the License.
 
 #include "pin_mux.h"
 #include "clock_config.h"
-#include "board.h"
 #include "fsl_debug_console.h"
+#include "board.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -43,9 +43,24 @@ extern "C" {
 #include "adt_model.h"
 #include "parameters.h"
 
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
 #define DATA_COLLECT false
 #define SAMPLE_NUM 1000
 
+#define LOG(x) std::cout
+#define CHECK_STATUS(STATUS, MESSAGE)                             \
+  if (STATUS != 0) {                                              \
+    LOG(FATAL) << MESSAGE << " Error code: " << STATUS << "\r\n"; \
+  }                                                               \
+  do {                                                            \
+    ;                                                             \
+  } while (STATUS)
+
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
 using namespace std;
 
 /*!
@@ -54,37 +69,39 @@ using namespace std;
  * param reference to flat buffer
  * param reference to interpreter
  * param pointer to storing input tensor address
+ * @return It returns kTfLiteOk if success otherwise kTfLiteError
  */
-void InferenceInit(unique_ptr<tflite::FlatBufferModel> &model, 
-       unique_ptr<tflite::Interpreter> &interpreter, TfLiteTensor** input_tensor)
-{
+TfLiteStatus InferenceInit(unique_ptr<tflite::FlatBufferModel>& model,
+                           unique_ptr<tflite::Interpreter>& interpreter,
+                           TfLiteTensor** input_tensor) {
+  TfLiteStatus status = kTfLiteOk;
+
   model = tflite::FlatBufferModel::BuildFromBuffer(adt_model, adt_model_len);
-  if (!model)
-  {
-    PRINTF("\r\nFailed to load model\r\n ");
-    exit(-1);
+  if (!model) {
+    LOG(FATAL) << "Failed to load model\r\n";
+    return kTfLiteError;
   }
 
   tflite::ops::builtin::BuiltinOpResolver resolver;
 
   tflite::InterpreterBuilder(*model, resolver)(&interpreter);
-  if (!interpreter)
-  {
-    PRINTF("\r\nFailed to construct interpreter\r\n ");
-    exit(-1);
+  if (!interpreter) {
+    LOG(FATAL) << "Failed to construct interpreter\r\n ";
+    return kTfLiteError;
   }
 
   int input = interpreter->inputs()[0];
 
-  if (interpreter->AllocateTensors() != kTfLiteOk)
-  {
-    PRINTF("\r\nFailed to allocate tensors!\r\n");
-    exit(-1);
+  if ((status = interpreter->AllocateTensors()) != kTfLiteOk) {
+    LOG(FATAL) << "Failed to allocate tensors!\r\n";
+    return status;
   }
 
   /* Get input dimension from the input tensor metadata
      assuming one input only */
   *input_tensor = interpreter->tensor(input);
+
+  return status;
 }
 
 /*!
@@ -94,23 +111,23 @@ void InferenceInit(unique_ptr<tflite::FlatBufferModel> &model,
  * param reference to flat buffer model
  * param reference to interpreter
  * param pointer to input tensor
+ * @return It returns kTfLiteOk if success otherwise kTfLiteError
  */
-void RunInference(int16_t* buf, unique_ptr<tflite::FlatBufferModel> &model, 
-       unique_ptr<tflite::Interpreter> &interpreter, TfLiteTensor* input_tensor)
-{
+TfLiteStatus RunInference(int16_t* buf,
+                          unique_ptr<tflite::FlatBufferModel>& model,
+                          unique_ptr<tflite::Interpreter>& interpreter,
+                          TfLiteTensor* input_tensor) {
+  TfLiteStatus status = kTfLiteOk;
+
   /* Load input data */
-  for (int i = 0; i < PATCH_SIZE * NUM_CHANELS; i += 6)
-  {
-    for (int ch = 0; ch < NUM_CHANELS; ch++)
-    {
-      float scaled = ( ch == 3 || ch == 4 || ch == 5) ? buf[i + ch] / 10 : buf[i + ch];
-      if (input_tensor->type == kTfLiteUInt8)
-      {
+  for (int i = 0; i < PATCH_SIZE * NUM_CHANELS; i += 6) {
+    for (int ch = 0; ch < NUM_CHANELS; ch++) {
+      float scaled =
+          (ch == 3 || ch == 4 || ch == 5) ? buf[i + ch] / 10 : buf[i + ch];
+      if (input_tensor->type == kTfLiteUInt8) {
         input_tensor->data.uint8[i + ch] = 
           static_cast<uint8_t>(min(max((scaled + 1) * 127.5, 0.0), 255.0));
-      }
-      else
-      {
+      } else {
         input_tensor->data.f[i + ch] = scaled;
       }
     }
@@ -120,10 +137,9 @@ void RunInference(int16_t* buf, unique_ptr<tflite::FlatBufferModel> &model,
   int32_t timeStart;
   BOARD_SystickStart(&timeStart);
 
-  if (interpreter->Invoke() != kTfLiteOk)
-  {
-    PRINTF("Failed to invoke tflite!\r\n");
-    return;
+  if ((status = interpreter->Invoke()) != kTfLiteOk) {
+    LOG(FATAL) << "Failed to invoke tflite!\r\n";
+    return status;
   }
   uint32_t time = BOARD_SystickElapsedTime_us(&timeStart);
 
@@ -133,15 +149,11 @@ void RunInference(int16_t* buf, unique_ptr<tflite::FlatBufferModel> &model,
   float f2;
   int output = interpreter->outputs()[0];
   TfLiteTensor* output_tensor = interpreter->tensor(output);
-  for (int i = 0; i < PATCH_SIZE * NUM_CHANELS; i++) 
-  {
-    if (input_tensor->type == kTfLiteUInt8)
-    {
+  for (int i = 0; i < PATCH_SIZE * NUM_CHANELS; i++) {
+    if (input_tensor->type == kTfLiteUInt8) {
       f1 = static_cast<float>(input_tensor->data.uint8[i]);
       f2 = static_cast<float>(output_tensor->data.uint8[i]);
-    }
-    else
-    {
+    } else {
       f1 = input_tensor->data.f[i];
       f2 = output_tensor->data.f[i];
     }
@@ -149,19 +161,22 @@ void RunInference(int16_t* buf, unique_ptr<tflite::FlatBufferModel> &model,
   }
   err /= (PATCH_SIZE * NUM_CHANELS);
 
-  PRINTF("(%d us) %d.%d", static_cast<int>(time), 
-        static_cast<int>(err), (static_cast<int>(err * 100)) % 100);
+  LOG(INFO) << "(%" << static_cast<int>(time) << " us) "
+            << static_cast<int>(err) << "."
+            << (static_cast<int>(err * 100)) % 100;
 
-  if (err > THRESHOLD) PRINTF(" anomaly detected!!");
-  PRINTF("\r\n");
+  if (err > THRESHOLD) LOG(INFO) << " anomaly detected!!!\r\n";
+
+  LOG(INFO) << "\r\n";
+
+  return status;
 }
 
 /*!
  * brief Initilizes device and runs KWS application
  *
  */
-int main(void)
-{
+int main(void) {
   /*
    *    SENSOR READING CODE HERE
    */
@@ -175,47 +190,36 @@ int main(void)
   fxos8700_accelmagdata_t rawDataAccel;
 
   status_t status = kStatus_Success;
+  TfLiteStatus tfStatus = kTfLiteOk;
 
   unique_ptr<tflite::FlatBufferModel> model;
   unique_ptr<tflite::Interpreter> interpreter;
   TfLiteTensor* input_tensor = 0;
 
-  if (!DATA_COLLECT)
-  {
-    PRINTF("Anomaly Detection example using a TensorFlow Lite model.\r\n");
-    PRINTF("Threshold value %d.%d\r\n", static_cast<int>(THRESHOLD), 
-          (static_cast<int>(THRESHOLD * 100)) % 100);
-    InferenceInit(model, interpreter, &input_tensor);
+  if (!DATA_COLLECT) {
+    LOG(INFO) << "Anomaly Detection example using a TensorFlow Lite model.\r\n";
+    LOG(INFO) << "Threshold value " << static_cast<int>(THRESHOLD) << "."
+       << (static_cast<int>(THRESHOLD * 100)) % 100 << "\r\n";
+    tfStatus = InferenceInit(model, interpreter, &input_tensor);
+    CHECK_STATUS(tfStatus, "Inference failed.");
   }
 
   status = init_sensors();
+  CHECK_STATUS(status, "Initialization Sensors failed.");
 
-  if (status != kStatus_Success)
-  {
-    PRINTF("Initialization Sensors returns with %d", (int)status);
-    return -1;
-  }
-
-  int16_t sensor_data[PATCH_SIZE*NUM_CHANELS] = {0};
-  int16_t sensor_diff[PATCH_SIZE*NUM_CHANELS] = {0};
+  int16_t sensor_data[PATCH_SIZE * NUM_CHANELS] = {0};
+  int16_t sensor_diff[PATCH_SIZE * NUM_CHANELS] = {0};
 
   int sample_num = 0;
-  if (DATA_COLLECT)
-  {
-    PRINTF("\rtime,wx,wy,wz,ax,ay,az,Bx,By,Bz\r");
+  if (DATA_COLLECT) {
+    LOG(INFO) << "\rtime,wx,wy,wz,ax,ay,az,Bx,By,Bz\r";
   }
   
-  while (true)
-  {
-    for (int j = 0; j < PATCH_SIZE; j++)
-    {
+  while (true) {
+    for (int j = 0; j < PATCH_SIZE; j++) {
       status = run_sensors(&rawDataGyro, &rawDataAccel);
 
-      if (status != kStatus_Success)
-      {
-        PRINTF("Sensors exit with error\r\n");
-        return -1;
-      }
+      CHECK_STATUS(status, "Sensors exit with error.");
 
       sensor_diff[j * NUM_CHANELS + 0] = 
         sensor_data[j * NUM_CHANELS + 0] - rawDataGyro.gyro[0];
@@ -237,25 +241,27 @@ int main(void)
       sensor_data[j * NUM_CHANELS + 4] = rawDataAccel.accel[1];
       sensor_data[j * NUM_CHANELS + 5] = rawDataAccel.accel[2];
 
-      if (DATA_COLLECT)
-      {
-        PRINTF("\r\n %d,%d,%d,%d,%d,%d,%d,%d,%d,%d\r", sample_num,
-              rawDataGyro.gyro[0], rawDataGyro.gyro[1], rawDataGyro.gyro[2],
-              rawDataAccel.accel[0], rawDataAccel.accel[1], rawDataAccel.accel[2],
-              rawDataAccel.mag[0], rawDataAccel.mag[1], rawDataAccel.mag[2]);
+      if (DATA_COLLECT) {
+        LOG(INFO) << "\r\n"
+          << sample_num << "," << rawDataGyro.gyro[0] << ","
+          << rawDataGyro.gyro[1] << "," << rawDataGyro.gyro[2] << ","
+          << rawDataAccel.accel[0] << "," << rawDataAccel.accel[1] << ","
+          << rawDataAccel.accel[2] << "," << rawDataAccel.mag[0] << ","
+          << rawDataAccel.mag[1] << "," << rawDataAccel.mag[2] << "\r";
 
-        if (sample_num++ > SAMPLE_NUM)
-        {
-          PRINTF("\r\nAll samples are collected.\r\n");
-          while (true);
+        if (sample_num++ > SAMPLE_NUM) {
+          LOG(INFO) << "\r\nAll samples are collected.\r\n";
+          while (true) {;}
         }
       }
 
     }
-    if (!DATA_COLLECT)
-    {
-      RunInference(sensor_diff, model, interpreter, input_tensor);
+    if (!DATA_COLLECT) {
+      tfStatus = RunInference(sensor_diff, model, interpreter, input_tensor);
+      CHECK_STATUS(tfStatus, "Inference failed.");
     }
+
+    LOG(INFO) << flush;
   }
 
 }

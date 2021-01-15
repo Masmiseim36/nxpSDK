@@ -92,32 +92,12 @@
 /** SE050 */
 #define SSS_HAVE_SE05X_VER_03_XX 1
 
-/** NXP Internal - 4.4 */
-#define SSS_HAVE_SE05X_VER_04_04 0
-
-/** NXP Internal - 5.00 */
-#define SSS_HAVE_SE05X_VER_05_00 0
-
-/** NXP Internal - 5.02 */
-#define SSS_HAVE_SE05X_VER_05_02 0
-
-/** NXP Internal - 5.04 */
-#define SSS_HAVE_SE05X_VER_05_04 0
-
-/** NXP Internal - 5.06 */
-#define SSS_HAVE_SE05X_VER_05_06 0
-
-/** NXP Internal - 5.08 */
-#define SSS_HAVE_SE05X_VER_05_08 0
+/** NXP Internal - 6.00 */
+#define SSS_HAVE_SE05X_VER_06_00 0
 
 #if (( 0                             \
     + SSS_HAVE_SE05X_VER_03_XX       \
-    + SSS_HAVE_SE05X_VER_04_04       \
-    + SSS_HAVE_SE05X_VER_05_00       \
-    + SSS_HAVE_SE05X_VER_05_02       \
-    + SSS_HAVE_SE05X_VER_05_04       \
-    + SSS_HAVE_SE05X_VER_05_06       \
-    + SSS_HAVE_SE05X_VER_05_08       \
+    + SSS_HAVE_SE05X_VER_06_00       \
     ) > 1)
 #        error "Enable only one of 'SE05X_Ver'"
 #endif
@@ -125,12 +105,7 @@
 
 #if (( 0                             \
     + SSS_HAVE_SE05X_VER_03_XX       \
-    + SSS_HAVE_SE05X_VER_04_04       \
-    + SSS_HAVE_SE05X_VER_05_00       \
-    + SSS_HAVE_SE05X_VER_05_02       \
-    + SSS_HAVE_SE05X_VER_05_04       \
-    + SSS_HAVE_SE05X_VER_05_06       \
-    + SSS_HAVE_SE05X_VER_05_08       \
+    + SSS_HAVE_SE05X_VER_06_00       \
     ) == 0)
 #        error "Enable at-least one of 'SE05X_Ver'"
 #endif
@@ -147,9 +122,7 @@
 #define SSS_HAVE_HOSTCRYPTO_MBEDTLS 1
 
 /** Use mbed-crypto as host crypto
- * Required for ARM-PSA / TF-M
- * NXP Internal
- */
+ * Required for ARM-PSA / TF-M */
 #define SSS_HAVE_HOSTCRYPTO_MBEDCRYPTO 0
 
 /** Use OpenSSL as host crypto */
@@ -268,10 +241,10 @@
  */
 
 /** NO FIPS */
-#define SSS_HAVE_FIPS_NONE 1
+#define SSS_HAVE_FIPS_NONE 0
 
 /** SE050 IC FIPS */
-#define SSS_HAVE_FIPS_SE050 0
+#define SSS_HAVE_FIPS_SE050 1
 
 /** FIPS 140-2 */
 #define SSS_HAVE_FIPS_140_2 0
@@ -296,6 +269,74 @@
     + SSS_HAVE_FIPS_140_3            \
     ) == 0)
 #        error "Enable at-least one of 'FIPS'"
+#endif
+
+
+
+/** SE05X_Auth : SE050 Authentication
+ *
+ * This settings is used by examples to connect using various options
+ * to authenticate with the Applet.
+ * The SE05X_Auth options can be changed for KSDK Demos and Examples.
+ * To change SE05X_Auth option follow below steps.
+ * Set flag ``SSS_HAVE_SCP_SCP03_SSS`` to 1 and Reset flag ``SSS_HAVE_SCP_NONE`` to 0.
+ * To change SE05X_Auth option other than ``None`` and  ``PlatfSCP03``,
+ * execute se05x_Delete_and_test_provision.exe in order to provision the Authentication Key.
+ * To change SE05X_Auth option to ``ECKey`` or ``ECKey_PlatfSCP03``,
+ * Set additional flag ``SSS_HAVE_HOSTCRYPTO_ANY`` to 1.
+ */
+
+/** Use the default session (i.e. session less) login */
+#define SSS_HAVE_SE05X_AUTH_NONE 1
+
+/** Do User Authentication with UserID */
+#define SSS_HAVE_SE05X_AUTH_USERID 0
+
+/** Use Platform SCP for connection to SE */
+#define SSS_HAVE_SE05X_AUTH_PLATFSCP03 0
+
+/** Do User Authentication with AES Key
+ * Earlier this was called AppletSCP03 */
+#define SSS_HAVE_SE05X_AUTH_AESKEY 0
+
+/** Do User Authentication with EC Key
+ * Earlier this was called FastSCP */
+#define SSS_HAVE_SE05X_AUTH_ECKEY 0
+
+/** UserID and PlatfSCP03 */
+#define SSS_HAVE_SE05X_AUTH_USERID_PLATFSCP03 0
+
+/** AESKey and PlatfSCP03 */
+#define SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03 0
+
+/** ECKey and PlatfSCP03 */
+#define SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03 0
+
+#if (( 0                             \
+    + SSS_HAVE_SE05X_AUTH_NONE       \
+    + SSS_HAVE_SE05X_AUTH_USERID     \
+    + SSS_HAVE_SE05X_AUTH_PLATFSCP03 \
+    + SSS_HAVE_SE05X_AUTH_AESKEY     \
+    + SSS_HAVE_SE05X_AUTH_ECKEY      \
+    + SSS_HAVE_SE05X_AUTH_USERID_PLATFSCP03 \
+    + SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03 \
+    + SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03 \
+    ) > 1)
+#        error "Enable only one of 'SE05X_Auth'"
+#endif
+
+
+#if (( 0                             \
+    + SSS_HAVE_SE05X_AUTH_NONE       \
+    + SSS_HAVE_SE05X_AUTH_USERID     \
+    + SSS_HAVE_SE05X_AUTH_PLATFSCP03 \
+    + SSS_HAVE_SE05X_AUTH_AESKEY     \
+    + SSS_HAVE_SE05X_AUTH_ECKEY      \
+    + SSS_HAVE_SE05X_AUTH_USERID_PLATFSCP03 \
+    + SSS_HAVE_SE05X_AUTH_AESKEY_PLATFSCP03 \
+    + SSS_HAVE_SE05X_AUTH_ECKEY_PLATFSCP03 \
+    ) == 0)
+#        error "Enable at-least one of 'SE05X_Auth'"
 #endif
 
 
@@ -428,115 +469,17 @@
 
 /* Version checks GTE - Greater Than Or Equal To */
 #if SSS_HAVE_APPLET_SE05X_IOT
-#    if SSS_HAVE_SE05X_VER_05_08
-#        define SSS_HAVE_SE05X_VER_GTE_05_08 1
-#        define SSS_HAVE_SE05X_VER_GTE_05_06 1
-#        define SSS_HAVE_SE05X_VER_GTE_05_04 1
-#        define SSS_HAVE_SE05X_VER_GTE_05_02 1
-#        define SSS_HAVE_SE05X_VER_GTE_05_00 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
+#    if SSS_HAVE_SE05X_VER_06_00
+#        define SSS_HAVE_SE05X_VER_GTE_06_00 1
 #        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
-#    endif /* SSS_HAVE_SE05X_VER_05_08 */
-#    if SSS_HAVE_SE05X_VER_05_06
-#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_06 1
-#        define SSS_HAVE_SE05X_VER_GTE_05_04 1
-#        define SSS_HAVE_SE05X_VER_GTE_05_02 1
-#        define SSS_HAVE_SE05X_VER_GTE_05_00 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
-#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
-#    endif /* SSS_HAVE_SE05X_VER_05_06 */
-#    if SSS_HAVE_SE05X_VER_05_04
-#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_04 1
-#        define SSS_HAVE_SE05X_VER_GTE_05_02 1
-#        define SSS_HAVE_SE05X_VER_GTE_05_00 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
-#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
-#    endif /* SSS_HAVE_SE05X_VER_05_04 */
-#    if SSS_HAVE_SE05X_VER_05_02
-#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_02 1
-#        define SSS_HAVE_SE05X_VER_GTE_05_00 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
-#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
-#    endif /* SSS_HAVE_SE05X_VER_05_02 */
-#    if SSS_HAVE_SE05X_VER_05_00
-#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_02 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_00 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
-#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
-#    endif /* SSS_HAVE_SE05X_VER_05_00 */
-#    if SSS_HAVE_SE05X_VER_04_12
-#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_02 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_00 0
-#        define SSS_HAVE_SE05X_VER_GTE_04_12 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
-#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
-#    endif /* SSS_HAVE_SE05X_VER_04_12 */
-#    if SSS_HAVE_SE05X_VER_04_08
-#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_02 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_00 0
-#        define SSS_HAVE_SE05X_VER_GTE_04_12 0
-#        define SSS_HAVE_SE05X_VER_GTE_04_08 1
-#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
-#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
-#    endif /* SSS_HAVE_SE05X_VER_04_08 */
-#    if SSS_HAVE_SE05X_VER_04_04
-#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_02 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_00 0
-#        define SSS_HAVE_SE05X_VER_GTE_04_12 0
-#        define SSS_HAVE_SE05X_VER_GTE_04_08 0
-#        define SSS_HAVE_SE05X_VER_GTE_04_04 1
-#        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
-#    endif /* SSS_HAVE_SE05X_VER_04_04 */
+#    endif /* SSS_HAVE_SE05X_VER_06_00 */
 #    if SSS_HAVE_SE05X_VER_03_XX
-#        define SSS_HAVE_SE05X_VER_GTE_05_08 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_06 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_04 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_02 0
-#        define SSS_HAVE_SE05X_VER_GTE_05_00 0
-#        define SSS_HAVE_SE05X_VER_GTE_04_12 0
-#        define SSS_HAVE_SE05X_VER_GTE_04_08 0
-#        define SSS_HAVE_SE05X_VER_GTE_04_04 0
+#        define SSS_HAVE_SE05X_VER_GTE_06_00 0
 #        define SSS_HAVE_SE05X_VER_GTE_03_XX 1
 #    endif /* SSS_HAVE_SE05X_VER_03_XX */
 #else //SSS_HAVE_APPLET_SE05X_IOT
 #   define SSS_HAVE_SE05X_VER_GTE_03_XX 0
-#   define SSS_HAVE_SE05X_VER_GTE_04_04 0
-#   define SSS_HAVE_SE05X_VER_GTE_04_08 0
-#   define SSS_HAVE_SE05X_VER_GTE_04_12 0
-#   define SSS_HAVE_SE05X_VER_GTE_05_00 0
-#   define SSS_HAVE_SE05X_VER_GTE_05_02 0
-#   define SSS_HAVE_SE05X_VER_GTE_05_04 0
-#   define SSS_HAVE_SE05X_VER_GTE_05_06 0
-#   define SSS_HAVE_SE05X_VER_GTE_05_08 0
+#   define SSS_HAVE_SE05X_VER_GTE_06_00 0
 #endif // SSS_HAVE_APPLET_SE05X_IOT
 /** Deprecated items. Used here for backwards compatibility. */
 
@@ -648,6 +591,17 @@
 #if SSS_HAVE_HOSTCRYPTO_NONE
 #   undef SSSFTR_SE05X_AuthSession
 #   define SSSFTR_SE05X_AuthSession 0
+#endif
+
+/* Montgomery curves is not supported in SE05X_A*/
+#if SSS_HAVE_APPLET_SE05X_A
+#   undef SSS_HAVE_EC_MONT
+#   define SSS_HAVE_EC_MONT 0
+/* ED is not supported in SE050_A */
+#if SSS_HAVE_SE05X_VER_03_XX
+#   undef SSS_HAVE_EC_ED
+#   define SSS_HAVE_EC_ED 0
+#endif
 #endif
 
 /* ========= Calculated values : END ======================== */

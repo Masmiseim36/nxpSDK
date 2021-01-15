@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 NXP
+ * Copyright 2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -43,11 +43,6 @@ extern "C" {
  *
  */
 void BOARD_InitBootPins(void);
-
-/* GPIO_AD_B0_09 (coord F14), USER_LED */
-#define BOARD_INITPINS_USER_LED_GPIO                                       GPIO1   /*!< GPIO device name: GPIO1 */
-#define BOARD_INITPINS_USER_LED_PORT                                       GPIO1   /*!< PORT device name: GPIO1 */
-#define BOARD_INITPINS_USER_LED_PIN                                           9U   /*!< GPIO1 pin index: 9 */
 
 
 /*!

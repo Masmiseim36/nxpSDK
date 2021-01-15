@@ -53,6 +53,9 @@ enum
 #define ROM_API_HAS_FLEXSPI_CLEAR_CACHE (1)
 #define ROM_API_HAS_FLEXSPI_XFER (1)
 
+//!@brief IMXRT SOC System ID
+#define IMXRT_SOC_SYSTEM_ID (0x1020UL)
+
 #endif // __TARGET_CONFIG_H__
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

@@ -1,0 +1,5 @@
+if(NOT MIDDLEWARE_MCU-BOOT_CMSIS_CM7_HEADERS_MIMXRT1011_INCLUDED)
+    
+    set(MIDDLEWARE_MCU-BOOT_CMSIS_CM7_HEADERS_MIMXRT1011_INCLUDED true CACHE BOOL "middleware_mcu-boot_CMSIS_cm7_headers component is included.")
+
+endif()

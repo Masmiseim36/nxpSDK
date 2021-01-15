@@ -33,13 +33,19 @@
 #define BOARD_SDMMC_SDIO_HOST_BASEADDR USDHC1
 #define BOARD_SDMMC_SDIO_HOST_IRQ      USDHC1_IRQn
 /* @brief card detect configuration */
-#define BOARD_SDMMC_SD_CD_GPIO_BASE                  GPIO2
-#define BOARD_SDMMC_SD_CD_GPIO_PIN                   28u
-#define BOARD_SDMMC_SD_CD_IRQ_PRIORITY               6U
-#define BOARD_SDMMC_SD_CD_IRQ                        GPIO2_Combined_16_31_IRQn
-#define BOARD_SDMMC_SD_CD_INTTERUPT_TYPE             kGPIO_IntRisingOrFallingEdge
-#define BOARD_SDMMC_SD_CD_INSERT_LEVEL               (0U)
-#define BOARD_SDMMC_SD_CD_PORT_IRQ_HANDLER           GPIO2_Combined_16_31_IRQHandler
+#define BOARD_SDMMC_SD_CD_GPIO_BASE        GPIO2
+#define BOARD_SDMMC_SD_CD_GPIO_PIN         28u
+#define BOARD_SDMMC_SD_CD_IRQ_PRIORITY     6U
+#define BOARD_SDMMC_SD_CD_IRQ              GPIO2_Combined_16_31_IRQn
+#define BOARD_SDMMC_SD_CD_INTTERUPT_TYPE   kGPIO_IntRisingOrFallingEdge
+#define BOARD_SDMMC_SD_CD_INSERT_LEVEL     (0U)
+#define BOARD_SDMMC_SD_CD_PORT_IRQ_HANDLER GPIO2_Combined_16_31_IRQHandler
+/* @brief card detect type
+ *
+ * Note: Please pay attention, DAT3 card detection cannot works during the card access,
+ * since the DAT3 will be used for data transfer, thus the functionality of card detect will be disabled. Using card
+ * detect pin for card detection is recommended.
+ */
 #define BOARD_SDMMC_SD_CD_TYPE                       kSD_DetectCardByGpioCD
 #define BOARD_SDMMC_SD_CARD_DETECT_DEBOUNCE_DELAY_MS (100U)
 /*! @brief SD power reset */
@@ -51,8 +57,8 @@
 #define BOARD_SDMMC_SD_HOST_SUPPORT_SDR104_FREQ (200000000U)
 #define BOARD_SDMMC_MMC_HOST_SUPPORT_HS200_FREQ (180000000U)
 /*! @brief mmc configuration */
-#define BOARD_SDMMC_MMC_VCC_SUPPLY         kMMC_VoltageWindows270to360
-#define BOARD_SDMMC_MMC_VCCQ_SUPPLY        kMMC_VoltageWindows270to360
+#define BOARD_SDMMC_MMC_VCC_SUPPLY  kMMC_VoltageWindows270to360
+#define BOARD_SDMMC_MMC_VCCQ_SUPPLY kMMC_VoltageWindows270to360
 /*! @brief align with cache line size */
 #define BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE (32U)
 
@@ -62,6 +68,8 @@
 #define BOARD_SDMMC_SDIO_HOST_IRQ_PRIORITY (5U)
 /*!@brief dma descriptor buffer size */
 #define BOARD_SDMMC_HOST_DMA_DESCRIPTOR_BUFFER_SIZE (32U)
+/*! @brief cache maintain function enabled for RW buffer */
+#define BOARD_SDMMC_HOST_CACHE_CONTROL kSDMMCHOST_CacheControlRWBuffer
 
 #if defined(__cplusplus)
 extern "C" {

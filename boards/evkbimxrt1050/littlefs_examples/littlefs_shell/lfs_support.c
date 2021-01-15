@@ -9,6 +9,8 @@
 #include "lfs_support.h"
 #include "fsl_debug_console.h"
 #include "fsl_flexspi.h"
+#include "fsl_cache.h"
+#include "peripherals.h"
 
 /*******************************************************************************
  * Variables
@@ -234,14 +236,13 @@ static status_t flexspi_nor_hyperflash_cfi(FLEXSPI_Type *base)
     return status;
 }
 
-static int lfs_hyperflash_read(
-    const struct lfs_config *lfsc, lfs_block_t block, lfs_off_t off, void *buffer, lfs_size_t size)
+int lfs_hyperflash_read(const struct lfs_config *lfsc, lfs_block_t block, lfs_off_t off, void *buffer, lfs_size_t size)
 {
     uint32_t *src;
     uint32_t *dst;
     block += LFS_FIRST_SECTOR;
 
-    src = (uint32_t *)(FlexSPI_AMBA_BASE + block * lfsc->block_size + off);
+    src = (uint32_t *)(EXAMPLE_FLEXSPI_AMBA_BASE + block * lfsc->block_size + off);
     dst = (uint32_t *)buffer;
 
     if (((uint32_t)src & 0x03) || ((uint32_t)dst & 0x03) || (size & 0x03))
@@ -257,14 +258,21 @@ static int lfs_hyperflash_read(
     return LFS_ERR_OK;
 }
 
-static int lfs_hyperflash_prog(
+int lfs_hyperflash_prog(
     const struct lfs_config *lfsc, lfs_block_t block, lfs_off_t off, const void *buffer, lfs_size_t size)
 {
     status_t status;
+    uint32_t prog_addr = (LFS_FIRST_SECTOR + block) * lfsc->block_size + off;
 
-    block += LFS_FIRST_SECTOR;
-    status = flexspi_nor_flash_page_program(EXAMPLE_FLEXSPI, block * lfsc->block_size + off, (void *)buffer);
+    for (uint32_t pos = 0; pos < size; pos += lfsc->prog_size)
+    {
+        status = flexspi_nor_flash_page_program(EXAMPLE_FLEXSPI, prog_addr + pos, (void *)((uintptr_t)buffer + pos));
+        if (status != kStatus_Success)
+            break;
+    }
+
     FLEXSPI_SoftwareReset(EXAMPLE_FLEXSPI);
+    DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + prog_addr, size);
 
     if (status == kStatus_Fail)
     {
@@ -277,13 +285,14 @@ static int lfs_hyperflash_prog(
     return LFS_ERR_OK;
 }
 
-static int lfs_hyperflash_erase(const struct lfs_config *lfsc, lfs_block_t block)
+int lfs_hyperflash_erase(const struct lfs_config *lfsc, lfs_block_t block)
 {
     status_t status;
+    uint32_t erase_addr = (LFS_FIRST_SECTOR + block) * lfsc->block_size;
 
-    block += LFS_FIRST_SECTOR;
-    status = flexspi_nor_flash_erase_sector(EXAMPLE_FLEXSPI, block * lfsc->block_size);
+    status = flexspi_nor_flash_erase_sector(EXAMPLE_FLEXSPI, erase_addr);
     FLEXSPI_SoftwareReset(EXAMPLE_FLEXSPI);
+    DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + erase_addr, lfsc->block_size);
 
     if (status == kStatus_Fail)
     {
@@ -296,34 +305,14 @@ static int lfs_hyperflash_erase(const struct lfs_config *lfsc, lfs_block_t block
     return LFS_ERR_OK;
 }
 
-static int lfs_hyperflash_sync(const struct lfs_config *lfsc)
+int lfs_hyperflash_sync(const struct lfs_config *lfsc)
 {
     return LFS_ERR_OK;
 }
-
-static const struct lfs_config lfsc_default = {
-    // block device driver context data
-    .context = NULL,
-
-    // block device operations
-    .read  = lfs_hyperflash_read,
-    .prog  = lfs_hyperflash_prog,
-    .erase = lfs_hyperflash_erase,
-    .sync  = lfs_hyperflash_sync,
-
-    // block device configuration
-    .read_size      = 16,
-    .prog_size      = FLASH_PAGE_SIZE,
-    .block_size     = FLASH_SECTOR_SIZE,
-    .block_count    = LFS_SECTORS,
-    .block_cycles   = 100,
-    .cache_size     = FLASH_PAGE_SIZE,
-    .lookahead_size = 16,
-};
 
 int lfs_get_default_config(struct lfs_config *lfsc)
 {
-    *lfsc = lfsc_default; /* copy pre-initialized lfs config structure */
+    *lfsc = LittleFS_config; /* copy pre-initialized lfs config structure */
     return 0;
 }
 
@@ -331,9 +320,6 @@ int lfs_storage_init(const struct lfs_config *lfsc)
 {
     flexspi_config_t config;
     status_t status;
-
-    SCB_DisableDCache();
-    PRINTF("FLEXSPI hyperflash example started!\r\n");
 
     /*Get FLEXSPI default settings and configure the flexspi. */
     FLEXSPI_GetDefaultConfig(&config);

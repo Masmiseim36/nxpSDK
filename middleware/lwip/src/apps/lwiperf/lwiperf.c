@@ -99,11 +99,13 @@
 #define CLOCK_RESOLUTION_US 1000u
 #endif
 
+#ifndef LWIP_TIMEVAL_PRIVATE
 /** Added for compatibility */
 struct timespec {
   long tv_sec;
   long tv_nsec;
 };
+#endif
 
 /** This is the Iperf settings struct sent from the client */
 typedef struct _lwiperf_settings {

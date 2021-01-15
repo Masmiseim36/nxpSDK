@@ -19,10 +19,12 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Driver version. */
-#define FSL_SD_DRIVER_VERSION (MAKE_VERSION(2U, 3U, 2U)) /*2.3.2*/
+#define FSL_SD_DRIVER_VERSION (MAKE_VERSION(2U, 3U, 3U)) /*2.3.3*/
 
-/*! @brief SD card flags */
-enum _sd_card_flag
+/*! @brief SD card flags
+ * @anchor _sd_card_flag
+ */
+enum
 {
     kSD_SupportHighCapacityFlag     = (1U << 1U), /*!< Support high capacity */
     kSD_Support4BitWidthFlag        = (1U << 2U), /*!< Support 4-bit data width */

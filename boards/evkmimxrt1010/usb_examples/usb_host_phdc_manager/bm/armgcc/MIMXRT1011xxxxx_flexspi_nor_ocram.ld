@@ -37,6 +37,7 @@ MEMORY
   m_ivt                 (RX)  : ORIGIN = 0x60001000, LENGTH = 0x00001000
   m_interrupts          (RX)  : ORIGIN = 0x60002000, LENGTH = 0x00000400
   m_text                (RX)  : ORIGIN = 0x60002400, LENGTH = 0x00FFDC00
+  m_text2               (RX)  : ORIGIN = 0x00000000, LENGTH = 0x00008000
   m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00008000
   m_data2               (RW)  : ORIGIN = 0x20200000, LENGTH = 0x00010000
 }
@@ -191,7 +192,18 @@ SECTIONS
     . = ALIGN(4);
     __data_end__ = .;        /* define a global symbol at data end */
   } > m_data2
-  __NDATA_ROM = __DATA_ROM + (__data_end__ - __data_start__);
+  __ram_function_flash_start = __DATA_ROM + (__data_end__ - __data_start__); /* Symbol is used by startup for TCM data initialization */
+
+  .ram_function : AT(__ram_function_flash_start)
+  {
+    . = ALIGN(32);
+    __ram_function_start__ = .;
+    *(CodeQuickAccess)
+    . = ALIGN(128);
+    __ram_function_end__ = .;
+  } > m_text2
+
+  __NDATA_ROM = __ram_function_flash_start + (__ram_function_end__ - __ram_function_start__);
   .ncache.init : AT(__NDATA_ROM)
   {
     __noncachedata_start__ = .;   /* create a global symbol at ncache data start */

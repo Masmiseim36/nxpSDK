@@ -28,7 +28,7 @@
 Change Log:
     05/11/2009: initial version
 ************************************************************/
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>

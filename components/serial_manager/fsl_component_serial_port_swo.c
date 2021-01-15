@@ -22,7 +22,11 @@
 #else
 /* MISRA C-2012 Rule 17.2 */
 #undef assert
-#define assert(n) while (!(n)) { ; }
+#define assert(n) \
+    while (!(n))  \
+    {             \
+        ;         \
+    }
 #endif
 #endif
 

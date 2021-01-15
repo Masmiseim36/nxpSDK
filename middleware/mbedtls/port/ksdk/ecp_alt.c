@@ -651,7 +651,7 @@ void mbedtls_ecp_keypair_free( mbedtls_ecp_keypair *key )
     if( key == NULL )
         return;
 
-    if ( key->grp.hlse_handle != 0 )
+    if ( key->grp.hlse_handle != 0U )
     {
         key->grp.hlse_handle = 0;
     }

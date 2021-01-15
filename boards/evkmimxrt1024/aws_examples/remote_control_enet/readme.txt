@@ -7,10 +7,10 @@ Please take look into section "Board settings" if there are some board limitatio
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.6
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -148,7 +148,7 @@ Create policy to be attached into "Cognito_PoolNameUnauth_Role" though "Policies
     a) install and run pre-build apk on Android device (<SDK_Repository>\boards\<board_name>\aws_examples\remote_control\android\AwsRemoteControl.apk)
     b) open project in Android Studio, build it, attach Android device and Run application
 
-    Application requires at least Android version 10.
+    Application requires at least Android version 5.1 (Android SDK 22).
 
     Then in both cases when asked select AwsRemoteControlPreferences.properties file with AWS IoT preferences. Then application will establish MQTT connection to AWS server, download last state of thing's shadow and will be ready for user input.
 

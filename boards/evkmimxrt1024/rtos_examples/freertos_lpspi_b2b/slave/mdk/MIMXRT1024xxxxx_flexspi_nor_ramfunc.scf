@@ -98,7 +98,6 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   RW_m_data m_data_start m_data_size-Stack_Size-Heap_Size { ; RW data
     .ANY (+RW +ZI)
     * (RamFunction)
-    fsl_lpspi.o (+RO +RW +ZI)
     * (NonCacheable.init)
     * (*NonCacheable)
   }
@@ -107,6 +106,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   ARM_LIB_STACK m_data_start+m_data_size EMPTY -Stack_Size { ; Stack region growing down
   }
   RW_m_ram_text m_text2_start m_text2_size { ;
+    fsl_lpspi.o (+RO +RW +ZI)
 	* (CodeQuickAccess)
   }
   RW_m_ncache m_data2_start EMPTY 0 {

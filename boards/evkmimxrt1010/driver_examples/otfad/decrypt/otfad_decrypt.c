@@ -9,12 +9,11 @@
 #include "fsl_flexspi.h"
 #include "app.h"
 #include "fsl_debug_console.h"
-#include "fsl_cache.h"
 #include "fsl_otfad.h"
 
 #include "pin_mux.h"
-#include "board.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
@@ -120,6 +119,10 @@ const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
         FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, 0xC7, kFLEXSPI_Command_STOP, kFLEXSPI_1PAD, 0),
 };
 
+#if APP_USING_CACHE
+#include "fsl_cache.h"
+#endif
+
 int main(void)
 {
     uint32_t i      = 0;
@@ -134,8 +137,6 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-    SCB_DisableDCache();
-    SCB_DisableICache();
 
     /*
      * config.misc.interruptRequest    = false;
@@ -222,9 +223,30 @@ int main(void)
         return status;
     }
 
-    /* Erase sectors. */
     PRINTF("Erasing Serial NOR over FlexSPI...\r\n");
+
+    /* Disable I cache to avoid cache pre-fatch instruction with branch prediction from flash
+       and application operate flash synchronously in multi-tasks. */
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    volatile bool ICacheEnableFlag = false;
+    /* Disable I cache. */
+    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
+    {
+        SCB_DisableICache();
+        ICacheEnableFlag = true;
+    }
+#endif /* __ICACHE_PRESENT */
+    /* Erase sectors. */
     status = flexspi_nor_flash_erase_sector(EXAMPLE_FLEXSPI, EXAMPLE_SECTOR * SECTOR_SIZE);
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    if (ICacheEnableFlag)
+    {
+        /* Enable I cache. */
+        SCB_EnableICache();
+        ICacheEnableFlag = false;
+    }
+#endif /* __ICACHE_PRESENT */
+
     if (status != kStatus_Success)
     {
         PRINTF("Erase sector failure !\r\n");
@@ -246,16 +268,37 @@ int main(void)
     /* Encrypt data with encrypted counter */
     OTFAD_EncryptData(encryptedCounter, s_plain_text, s_cipher_text);
 
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    /* Disable I cache. */
+    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
+    {
+        SCB_DisableICache();
+        ICacheEnableFlag = true;
+    }
+#endif /* __ICACHE_PRESENT */
     /* Write ciphertext into external memory */
     status = flexspi_nor_flash_program(EXAMPLE_FLEXSPI, EXAMPLE_SECTOR * SECTOR_SIZE, (void *)s_cipher_text,
                                        sizeof(s_cipher_text));
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    if (ICacheEnableFlag)
+    {
+        /* Enable I cache. */
+        SCB_EnableICache();
+        ICacheEnableFlag = false;
+    }
+#endif /* __ICACHE_PRESENT */
     if (status != kStatus_Success)
     {
         PRINTF("Ciphertext program failure !\r\n");
         return -1;
     }
 
-    DCACHE_CleanInvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, sizeof(s_cipher_text));
+#if APP_USING_CACHE
+    /*
+     * Invalidate the cache, so new read will read from memory directly.
+     */
+    DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
+#endif
 
     memcpy(s_decrypted_text, (void *)(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE),
            sizeof(s_decrypted_text));
@@ -284,10 +327,22 @@ void OTFAD_GetEncryptedCounter(uint8_t *counter)
     uint8_t contextHit;
 
     uint8_t i;
-    uint8_t plainText[16];
+    uint8_t plainText[16]     = {0x00U};
     uint8_t *encryptedCounter = counter;
 
     status = OTFAD_HitDetermination(EXAMPLE_OTFAD, sysAddress, &contextHit);
+
+    /* Disable I cache to avoid cache pre-fatch instruction with branch prediction from flash
+       and application operate flash synchronously in multi-tasks. */
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    volatile bool ICacheEnableFlag = false;
+    /* Disable I cache. */
+    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
+    {
+        SCB_DisableICache();
+        ICacheEnableFlag = true;
+    }
+#endif /* __ICACHE_PRESENT */
 
     if (status == kStatus_Success)
     {
@@ -295,12 +350,21 @@ void OTFAD_GetEncryptedCounter(uint8_t *counter)
         status = flexspi_nor_flash_erase_sector(EXAMPLE_FLEXSPI, EXAMPLE_SECTOR * SECTOR_SIZE);
     }
 
-    flexspi_nor_flash_erase_sector(EXAMPLE_FLEXSPI, EXAMPLE_SECTOR * SECTOR_SIZE);
-
-    for (i = 0U; i < 16U; i++)
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    if (ICacheEnableFlag)
     {
-        plainText[i] = 0x00U;
+        /* Enable I cache. */
+        SCB_EnableICache();
+        ICacheEnableFlag = false;
     }
+#endif /* __ICACHE_PRESENT */
+
+#if APP_USING_CACHE
+    /*
+     * Invalidate the cache, so new read will read from memory directly.
+     */
+    DCACHE_InvalidateByRange(EXAMPLE_FLEXSPI_AMBA_BASE + EXAMPLE_SECTOR * SECTOR_SIZE, FLASH_PAGE_SIZE);
+#endif
 
     if (kStatus_Success == status)
     {

@@ -20,6 +20,7 @@
  ******************************************************************************/
 /* msc disk information */
 /* Define endpoint for MSC class */
+/* The msc class driver only supports one bulk OUT endpoint and one bulk IN endpoint */
 usb_device_endpoint_struct_t g_mscDiskEndpoints[USB_MSC_DISK_ENDPOINT_COUNT] = {
     {
         USB_MSC_DISK_BULK_IN_ENDPOINT | (USB_IN << 7U),

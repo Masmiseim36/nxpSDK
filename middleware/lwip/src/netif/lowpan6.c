@@ -537,7 +537,7 @@ lowpan6_hwaddr_to_addr(struct netif *netif, struct lowpan6_link_addr *addr)
 {
   addr->addr_len = 8;
   if (netif->hwaddr_len == 8) {
-    LWIP_ERROR("NETIF_MAX_HWADDR_LEN >= 8 required", sizeof(netif->hwaddr) >= 8, return ERR_VAL;);
+    LWIP_ERROR("NETIF_MAX_HWADDR_LEN >= 8 required", sizeof(netif->hwaddr) >= netif->hwaddr_len, return ERR_VAL;);
     SMEMCPY(addr->addr, netif->hwaddr, 8);
   } else if (netif->hwaddr_len == 6) {
     /* Copy from MAC-48 */

@@ -134,25 +134,13 @@ DSTATUS sd_disk_initialize(BYTE pdrv)
         return STA_NOINIT;
     }
 
-    if(g_sd.isHostReady)
+    if (kStatus_Success != SD_Init(&g_sd))
     {
-        /* reset host */
-        SD_HostDoReset(&g_sd);
-        SD_SetCardPower(&g_sd, false);
-        SD_SetCardPower(&g_sd, true);
-    }
-    else
-    {
-        return STA_NOINIT;
-    }
-
-    if (kStatus_Success != SD_CardInit(&g_sd))
-    {
-        SD_CardDeinit(&g_sd);
+        SD_Deinit(&g_sd);
         memset(&g_sd, 0U, sizeof(g_sd));
         return STA_NOINIT;
     }
 
-    return 0;
+    return RES_OK;
 }
 #endif /* SD_DISK_ENABLE */

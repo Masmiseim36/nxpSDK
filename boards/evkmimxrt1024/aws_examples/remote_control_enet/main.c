@@ -30,11 +30,12 @@
 //  Includes
 ///////////////////////////////////////////////////////////////////////////////
 /* SDK Included Files */
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "ksdk_mbedtls.h"
-#include "pin_mux.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 /* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -60,7 +61,6 @@
 #include "netif/ethernet.h"
 #include "enet_ethernetif.h"
 #include "lwip/netifapi.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"
@@ -360,8 +360,6 @@ int main(void)
     /* Clock setting for LPI2C */
     CLOCK_SetMux(kCLOCK_Lpi2cMux, BOARD_ACCEL_I2C_CLOCK_SOURCE_SELECT);
     CLOCK_SetDiv(kCLOCK_Lpi2cDiv, BOARD_ACCEL_I2C_CLOCK_SOURCE_DIVIDER);
-
-    SCB_DisableDCache();
     CRYPTO_InitHardware();
 
 #if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)

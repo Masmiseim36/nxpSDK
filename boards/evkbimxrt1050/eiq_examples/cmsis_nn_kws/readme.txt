@@ -9,8 +9,8 @@ One second of raw audio data is processed first: audio frequency spectrograms
 are computed and converted into Mel-spectrograms using Mel-frequency cepstral
 coefficients method (MFCC). 
 
-In the example, static audio samples (off, right) are evaluated first regardless
-microphone is connected or not. Secondly, audio is processed directly from
+In the example, static audio samples ("off", "right") are evaluated first regardless
+of microphone is connected or not. Secondly, audio is processed directly from
 microphone.
 
 Classification
@@ -30,11 +30,11 @@ quantized ds_cnn model [5] is converted to CMSIS-NN source code [4] and used
 in the example.
 
 HOW TO USE THE APPLICATION:
-Play different keyword so that microphone can catch them. Voice recorded by microphone 
-can be heard using headphones. 
+Say different keywords so that microphone can catch them. Voice recorded by
+the microphone can be heard using headphones. 
 Note that semihosting implementation causes slower or discontinuous audio experience. 
-Select UART in 'Project Options' for using external debug console 
-via UART (Virtual COM port).
+Select UART in 'Project Options' during project import for using external debug console 
+via UART (virtual COM port).
 
 [1] https://github.com/ARM-software/ML-KWS-for-MCU
 [2] Hello edge: Keyword spotting on microcontrollers
@@ -44,7 +44,7 @@ via UART (Virtual COM port).
 [5] https://github.com/ARM-software/ML-KWS-for-MCU/blob/master/Pretrained_models/DS_CNN/DS_CNN_S.pb
 
 Files:
-  main.cpp - example source code
+  main.cpp - example main function
   off.wav - waveform audio file of the word to recognize
     (source: Speech Commands Dataset available at
     https://storage.cloud.google.com/download.tensorflow.org/data/speech_commands_v0.02.tar.gz,  
@@ -53,24 +53,27 @@ Files:
     (source: Speech Commands Dataset available at
     https://storage.cloud.google.com/download.tensorflow.org/data/speech_commands_v0.02.tar.gz,
     file speech_commands_test_set_v0.02/right/0a2b400e_nohash_3.wav)
-  commands.h - waveform audio files converted into a C language array of audio signal values (OFF, RIGHT)
-    audio signal values using Python with the Scipy package:
+  audio_data.h - waveform audio files converted into a C language array of
+    audio signal values ("off", "right") using Python with the Scipy package:
     from scipy.io import wavfile
     rate, data = wavfile.read('yes.wav')
     with open('wav_data.h', 'w') as fout:
       print('#define WAVE_DATA {', file=fout)
       data.tofile(fout, ',', '%d')
       print('}\n', file=fout)
-  timer.c - timer function source code
-  timer.h - timer function prototypes
+  timer.c - timer source code
+  audio/* - audio capture and pre-processing code
+  KWS/* - keyword spotting example application code
+  KWS_NN/* - keyword spotting neural network code
+  MFCC/* - MFCC feature extraction
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -80,9 +83,10 @@ Hardware requirements
 
 Board settings
 ==============
-No special settings are required.
+Disconnect camera device from the J35 connector if connected (possible signal interference).
 
-Prepare the demo
+Prepare the Demo
+================
 1. Connect a USB cable between the host PC and the OpenSDA USB port on the target board. 
 2. Open a serial terminal with the following settings:
    - 115200 baud rate
@@ -91,59 +95,41 @@ Prepare the demo
    - One stop bit
    - No flow control
 3. Download the program to the target board.
-
-Prepare the Demo
-================
+4. Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
 Running the demo
 ================
 The log below shows the output of the demo in the terminal window:
 
 Keyword spotting example using CMSIS-NN.
-Detection threshold: (55%)
+Detection threshold: 25
 
 Static data processing:
 ----------------------------------------
-     Inference time: 19 ms   
-     Detected: off (99%)
+     Inference time: 11 ms
+     Detected:        off (99%)
 ----------------------------------------
 
 ----------------------------------------
-     Inference time: 19 ms   
-     Detected: right (99%)
+     Inference time: 11 ms
+     Detected:      right (99%)
 ----------------------------------------
 
 
 Microphone data processing:
 ----------------------------------------
-     Inference time: 19 ms   
-     Detected: Silence (66%)
+     Inference time: 11 ms
+     Detected:    Silence (99%)
 ----------------------------------------
 
+Data for inference are ready
 ----------------------------------------
-     Inference time: 19 ms   
-     Detected: Silence (99%)
-----------------------------------------
-
-----------------------------------------
-     Inference time: 19 ms   
-     Detected: Silence (99%)
+     Inference time: 11 ms
+     Detected:         up (99%)
 ----------------------------------------
 
+Data for inference are ready
 ----------------------------------------
-     Inference time: 19 ms   
-     Detected: yes (65%)
+     Inference time: 11 ms
+     Detected:      right (79%)
 ----------------------------------------
-
-----------------------------------------
-     Inference time: 19 ms   
-     Detected: right (99%)
-----------------------------------------
-
-----------------------------------------
-     Inference time: 19 ms   
-     Detected: go (99%)
-----------------------------------------
-Customization options
-=====================
-

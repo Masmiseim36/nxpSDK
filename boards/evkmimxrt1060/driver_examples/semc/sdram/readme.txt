@@ -7,10 +7,10 @@ The sdramc example shows how to use SEMC controller driver to initialize the ext
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -72,6 +72,3 @@ SEMC SDRAM Example Start!
 
 Note:
 Examples can't be downloaded again after dowmloading IAR flexspi_nor_debug/flexspi_nor_release target. Please erase flash by serial download mode(SW7:0001b). This issue will be fixed in later release.
-Customization options
-=====================
-

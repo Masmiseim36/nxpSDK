@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -36,17 +36,21 @@
 void MCS_BLDCCommutation(mcs_bldc_ctrl_t *psCtrlBLDC)
 {
     /* select next commutation sector based on direction of spin */
-    if (psCtrlBLDC->ui16MotorDir == 0)
+    if (psCtrlBLDC->ui16MotorDir == 0U)
     {
         /* forward - increase sector */
         if (++psCtrlBLDC->i16SectorCmt > 5)
+        {
             psCtrlBLDC->i16SectorCmt = 0;
+        }
     }
     else
     {
         /* backward - decrease sector */
         if (--psCtrlBLDC->i16SectorCmt < 0)
+        {
             psCtrlBLDC->i16SectorCmt = 5;
+        }
     }
 }
 
@@ -94,7 +98,7 @@ void MCS_BLDCControl(mcs_bldc_ctrl_t *psCtrlBLDC)
         MLIB_Conv_F16l(GFLIB_Ramp_F32(MLIB_Conv_F32s(psCtrlBLDC->f16SpeedCmd), &psCtrlBLDC->sSpeedRampParams));
 
     /* process spin direction and calculate speed error */
-    if (psCtrlBLDC->ui16MotorDir == 0)
+    if (psCtrlBLDC->ui16MotorDir == 0U)
     {
         /* forward */
         psCtrlBLDC->f16SpeedMeasured = f16SpeedMeasuredAbs;

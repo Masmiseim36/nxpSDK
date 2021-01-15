@@ -20,16 +20,28 @@
  * Definitions
  ******************************************************************************/
 
+/* For bulk out endpoint in high speed mode, use long length data transfer to decrease the Ping packet count to increase bulk bandwidth */
+/* The bigger this macro's value is, the higher bandwidth bulk out endpoint has. However, you need to set a reasonable value for this macro based on USB RAM size of Soc. If this macro's value is too big, link may be failed. */
+/* Note that please set this value as integral multiple of 512U */
+#if (((defined(USB_DEVICE_CONFIG_MSC)) && (USB_DEVICE_CONFIG_MSC > 0U)) && ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)))
+#define USB_DEVICE_IP3511HS_BULK_OUT_ONE_TIME_TRANSFER_SIZE_MAX (0U)
+#endif
+
 /*! @brief The reserved buffer size, the buffer is for the memory copy if the application transfer buffer is
      ((not 64 bytes alignment) || (not in the same 64K ram) || (HS && OUT && not multiple of 4)) */
+#if ((defined(USB_DEVICE_IP3511HS_BULK_OUT_ONE_TIME_TRANSFER_SIZE_MAX)) && (USB_DEVICE_IP3511HS_BULK_OUT_ONE_TIME_TRANSFER_SIZE_MAX > 0U))
+/* if use USB_DEVICE_IP3511HS_BULK_OUT_ONE_TIME_TRANSFER_SIZE_MAX (>0U), need to increase the reserved buffer size */
+#define USB_DEVICE_IP3511_ENDPOINT_RESERVED_BUFFER_SIZE ((5U + ((USB_DEVICE_IP3511HS_BULK_OUT_ONE_TIME_TRANSFER_SIZE_MAX - 512U) / 512U)) * 1024U)
+#else
 #define USB_DEVICE_IP3511_ENDPOINT_RESERVED_BUFFER_SIZE (5U * 1024U)
+#endif
 /*! @brief Use one bit to represent one reserved 64 bytes to allocate the buffer by uint of 64 bytes. */
 #define USB_DEVICE_IP3511_BITS_FOR_RESERVED_BUFFER ((USB_DEVICE_IP3511_ENDPOINT_RESERVED_BUFFER_SIZE + 63U) / 64U)
 /*! @brief How many IPs support the reserved buffer */
 #define USB_DEVICE_IP3511_RESERVED_BUFFER_FOR_COPY (USB_DEVICE_CONFIG_LPCIP3511FS + USB_DEVICE_CONFIG_LPCIP3511HS)
 /*! @brief Prime all the double endpoint buffer at the same time, if the transfer length is larger than max packet size.
  */
-#define USB_DEVICE_IP3511_DOUBLE_BUFFER_ENABLE (1u)
+#define USB_DEVICE_IP3511_DOUBLE_BUFFER_ENABLE (1U)
 #if ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
 #define USB_LPC3511IP_Type USBHSD_Type
 #define USB_DEVICE_IP3511_ENDPOINTS_NUM FSL_FEATURE_USBHSD_EP_NUM
@@ -42,9 +54,9 @@
 /*host send data less than maxpacket size and in endpoint prime length more more than maxpacketsize, there will be state
  * mismtach*/
 #if USB_DEVICE_IP3511_DOUBLE_BUFFER_ENABLE
-#define USB_DEVICE_IP3511_DISABLE_OUT_DOUBLE_BUFFER (1u)
+#define USB_DEVICE_IP3511_DISABLE_OUT_DOUBLE_BUFFER (1U)
 #else
-#define USB_DEVICE_IP3511_DISABLE_OUT_DOUBLE_BUFFER (0u)
+#define USB_DEVICE_IP3511_DISABLE_OUT_DOUBLE_BUFFER (0U)
 #endif
 
 #define USB_DEVICE_IP3511HS_LPM_ADPPROBE_ATTACH_DEBOUNCE_COUNT (3)
@@ -92,7 +104,7 @@ typedef struct _usb_device_lpc3511ip_endpoint_state_struct
            For control endpoint, only epBufferStatusUnion[0] is used. */
         struct
         {
-            uint16_t transactionLength : 11U;
+            uint16_t transactionLength : 15U;
             uint16_t epPacketCopyed : 1U;
         } epBufferStatusField;
     } epBufferStatusUnion[2];

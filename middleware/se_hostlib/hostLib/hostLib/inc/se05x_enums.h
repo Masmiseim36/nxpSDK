@@ -1,12 +1,8 @@
-/* Copyright 2019,2020 NXP
+/*
+* Copyright 2019,2020 NXP
+* All rights reserved.
 *
-* This software is owned or controlled by NXP and may only be used
-* strictly in accordance with the applicable license terms.  By expressly
-* accepting such terms or by downloading, installing, activating and/or
-* otherwise using the software, you are agreeing that you have read, and
-* that you agree to comply with and are bound by, such license terms.  If
-* you do not agree to be bound by the applicable license terms, then you
-* may not retain, install, activate or otherwise use the software.
+* SPDX-License-Identifier: BSD-3-Clause
 */
 
 /** @file */
@@ -146,12 +142,12 @@ typedef enum
     kSE05x_P1_CIPHER = 0x0E,
     kSE05x_P1_TLS = 0x0F,
     kSE05x_P1_CRYPTO_OBJ = 0x10,
-#if SSS_HAVE_SE05X_VER_GTE_04_04
+#if SSS_HAVE_SE05X_VER_GTE_06_00
     /** Applet >= 4.4 */
     kSE05x_P1_AEAD = 0x11,
     /** Applet >= 4.4 */
     kSE05x_P1_AEAD_SP800_38D = 0x12,
-#endif /* SSS_HAVE_SE05X_VER_GTE_04_04 */
+#endif /* SSS_HAVE_SE05X_VER_GTE_06_00 */
 } SE05x_P1_t;
 
 /** Values for P2 in ISO7816 APDU */
@@ -184,6 +180,7 @@ typedef enum
     kSE05x_P2_SESSION_REFRESH = 0x1E,
     kSE05x_P2_SESSION_POLICY = 0x1F,
     kSE05x_P2_VERSION = 0x20,
+    kSE05x_P2_VERSION_EXT = 0x21,
     kSE05x_P2_MEMORY = 0x22,
     kSE05x_P2_LIST = 0x25,
     kSE05x_P2_TYPE = 0x26,
@@ -230,12 +227,13 @@ typedef enum
     kSE05x_P2_SCP = 0x52,
     kSE05x_P2_AUTH_FIRST_PART1 = 0x53,
     kSE05x_P2_AUTH_NONFIRST_PART1 = 0x54,
-#if SSS_HAVE_SE05X_VER_GTE_04_04
+#if SSS_HAVE_SE05X_VER_GTE_06_00
     kSE05x_P2_CM_COMMAND = 0x55,
     kSE05x_P2_MODE_OF_OPERATION = 0x56,
     kSE05x_P2_RESTRICT = 0x57,
     kSE05x_P2_SANITY = 0x58,
-    kSE05x_P2_DH_REVERSE = 0x59
+    kSE05x_P2_DH_REVERSE = 0x59,
+    kSE05x_P2_READ_STATE = 0x5B
 #endif
 } SE05x_P2_t;
 
@@ -276,6 +274,7 @@ typedef enum
     kSE05x_TAG_MAX_ATTEMPTS = 0x12,
     kSE05x_TAG_IMPORT_AUTH_DATA = 0x13,
     kSE05x_TAG_IMPORT_AUTH_KEY_ID = 0x14,
+    kSE05x_TAG_POLICY_CHECK = 0x15,
     kSE05x_TAG_1 = 0x41,
     kSE05x_TAG_2 = 0x42,
     kSE05x_TAG_3 = 0x43,
@@ -320,8 +319,8 @@ typedef enum
 {
     /** Invalid */
     kSE05x_EDSignatureAlgo_NA = 0,
-    /** Message input must be pre-hashed (using SHA512). */
-    kSE05x_EDSignatureAlgo_ED25519PH_SHA_512 = 0xA3,
+    /** Message input must be plain Data. Pure EDDSA algorithm */
+    kSE05x_EDSignatureAlgo_ED25519PURE_SHA_512 = 0xA3,
 } SE05x_EDSignatureAlgo_t;
 
 /** Different signature algorithms for ECDAA */
@@ -441,6 +440,7 @@ typedef enum
     /** Invalid */
     kSE05x_AeadAlgo_NA = 0,
     kSE05x_AeadGCMAlgo = 0xB0,
+    kSE05x_AeadGCM_IVAlgo = 0xF3,
     kSE05x_AeadCCMAlgo = 0xF4,
 } SE05x_AeadAlgo_t;
 
@@ -487,7 +487,7 @@ typedef enum
 /** Same as kSE05x_ECCurve_TPM_ECC_BN_P256 */
 #define kSE05x_ECCurve_RESERVED_ID_ECC_ED_25519 kSE05x_ECCurve_ECC_ED_25519
 #define kSE05x_ECCurve_RESERVED_ID_ECC_MONT_DH_25519 kSE05x_ECCurve_ECC_MONT_DH_25519
-#if SSS_HAVE_SE05X_VER_GTE_04_04
+#if SSS_HAVE_SE05X_VER_GTE_06_00
 #define kSE05x_ECCurve_RESERVED_ID_ECC_MONT_DH_448 kSE05x_ECCurve_ECC_MONT_DH_448
 #endif
 #define kSE05x_ECCurve_Total_Weierstrass_Curves kSE05x_ECCurve_TPM_ECC_BN_P256
@@ -539,6 +539,8 @@ typedef enum
     kSE05x_CipherMode_AES_GCM = 0xB0,
     /** Typically using AESKey identifiers */
     kSE05x_CipherMode_AES_CTR = 0xF0,
+    /** Typically using AEAD GCM with internal IV Gen */
+    kSE05x_CipherMode_AES_GCM_INT_IV = 0xF3,
     /** Typically using AEAD CCM mode */
     kSE05x_CipherMode_AES_CCM = 0xF4,
 } SE05x_CipherMode_t;
@@ -663,7 +665,7 @@ typedef enum
     kSE05x_MoreIndicator_MORE = 0x02,
 } SE05x_MoreIndicator_t;
 
-#if SSS_HAVE_SE05X_VER_GTE_04_04
+#if SSS_HAVE_SE05X_VER_GTE_06_00
 /** Health check */
 typedef enum
 {
@@ -734,6 +736,7 @@ typedef enum
     kSE05x_CryptoObject_HMAC_SHA512,
     kSE05x_CryptoObject_CMAC_128,
     kSE05x_CryptoObject_AES_GCM,
+    kSE05x_CryptoObject_AES_GCM_INT_IV,
     kSE05x_CryptoObject_AES_CCM,
 } SE05x_CryptoObject_t;
 
@@ -966,7 +969,7 @@ typedef enum
     kSE05x_AttestationAlgo_EC_SHA_256 = kSE05x_ECSignatureAlgo_SHA_256,
     kSE05x_AttestationAlgo_EC_SHA_384 = kSE05x_ECSignatureAlgo_SHA_384,
     kSE05x_AttestationAlgo_EC_SHA_512 = kSE05x_ECSignatureAlgo_SHA_512,
-    kSE05x_AttestationAlgo_ED25519PH_SHA_512 = kSE05x_EDSignatureAlgo_ED25519PH_SHA_512,
+    kSE05x_AttestationAlgo_ED25519PURE_SHA_512 = kSE05x_EDSignatureAlgo_ED25519PURE_SHA_512,
     kSE05x_AttestationAlgo_ECDAA = kSE05x_ECDAASignatureAlgo_ECDAA,
     kSE05x_AttestationAlgo_RSA_SHA1_PKCS1_PSS = kSE05x_RSASignatureAlgo_SHA1_PKCS1_PSS,
     kSE05x_AttestationAlgo_RSA_SHA224_PKCS1_PSS = kSE05x_RSASignatureAlgo_SHA224_PKCS1_PSS,

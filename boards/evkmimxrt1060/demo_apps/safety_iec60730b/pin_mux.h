@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -44,16 +44,30 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
+#define BOARD_INITPINS_IOMUXC_GPR_GPR26_GPIO_MUX1_GPIO_SEL_MASK 0x08010004U /*!< GPIO1 and GPIO6 share same IO MUX function, GPIO_MUX1 selects one GPIO function: affected bits mask */
+#define BOARD_INITPINS_IOMUXC_GPR_GPR28_GPIO_MUX3_GPIO_SEL_MASK 0x2000U /*!< GPIO3 and GPIO8 share same IO MUX function, GPIO_MUX3 selects one GPIO function: affected bits mask */
+
 /* GPIO_SD_B0_01 (coord J3), SD1_CLK/J24[3] */
-#define BOARD_INITPINS_SD1_CLK_GPIO                                        GPIO3   /*!< GPIO device name: GPIO3 */
-#define BOARD_INITPINS_SD1_CLK_PORT                                        GPIO3   /*!< PORT device name: GPIO3 */
-#define BOARD_INITPINS_SD1_CLK_PIN                                           13U   /*!< GPIO3 pin index: 13 */
+/* Routed pin properties */
+#define BOARD_INITPINS_SD1_CLK_PERIPHERAL                                  GPIO3   /*!< Peripheral name */
+#define BOARD_INITPINS_SD1_CLK_SIGNAL                                    gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_SD1_CLK_CHANNEL                                       13U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_SD1_CLK_GPIO                                        GPIO3   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_SD1_CLK_GPIO_PIN                                      13U   /*!< GPIO pin number */
+#define BOARD_INITPINS_SD1_CLK_GPIO_PIN_MASK                         (1U << 13U)   /*!< GPIO pin mask */
 
 /* GPIO_AD_B1_11 (coord J13), SAI1_RX_BCLK/CSI_D6/J35[7]/J23[2] */
-#define BOARD_INITPINS_CSI_D6_GPIO                                         GPIO1   /*!< GPIO device name: GPIO1 */
-#define BOARD_INITPINS_CSI_D6_PORT                                         GPIO1   /*!< PORT device name: GPIO1 */
-#define BOARD_INITPINS_CSI_D6_PIN                                            27U   /*!< GPIO1 pin index: 27 */
+/* Routed pin properties */
+#define BOARD_INITPINS_CSI_D6_PERIPHERAL                                   GPIO1   /*!< Peripheral name */
+#define BOARD_INITPINS_CSI_D6_SIGNAL                                     gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_CSI_D6_CHANNEL                                        27U   /*!< Signal channel */
 
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_CSI_D6_GPIO                                         GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_CSI_D6_GPIO_PIN                                       27U   /*!< GPIO pin number */
+#define BOARD_INITPINS_CSI_D6_GPIO_PIN_MASK                          (1U << 27U)   /*!< GPIO pin mask */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -62,13 +76,14 @@ void BOARD_InitBootPins(void);
 void BOARD_InitPins(void);
 
 /* GPIO_AD_B0_12 (coord K14), UART1_TXD */
-#define BOARD_INITDEBUG_UARTPINS_UART1_TXD_PERIPHERAL                    LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITDEBUG_UARTPINS_UART1_TXD_SIGNAL                             TX   /*!< LPUART1 signal: TX */
+/* Routed pin properties */
+#define BOARD_INITDEBUG_UARTPINS_UART1_TXD_PERIPHERAL                    LPUART1   /*!< Peripheral name */
+#define BOARD_INITDEBUG_UARTPINS_UART1_TXD_SIGNAL                             TX   /*!< Signal name */
 
 /* GPIO_AD_B0_13 (coord L14), UART1_RXD */
-#define BOARD_INITDEBUG_UARTPINS_UART1_RXD_PERIPHERAL                    LPUART1   /*!< Device name: LPUART1 */
-#define BOARD_INITDEBUG_UARTPINS_UART1_RXD_SIGNAL                             RX   /*!< LPUART1 signal: RX */
-
+/* Routed pin properties */
+#define BOARD_INITDEBUG_UARTPINS_UART1_RXD_PERIPHERAL                    LPUART1   /*!< Peripheral name */
+#define BOARD_INITDEBUG_UARTPINS_UART1_RXD_SIGNAL                             RX   /*!< Signal name */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

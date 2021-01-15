@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -195,11 +195,11 @@ void ClockInit(void)
  *
  * @return  None
  */
-void SerialInit(LPUART_Type *Uart_X, uint32_t baudRate, uint32_t clockFreq)
+void SerialInit(void)
 {
     const lpuart_config_t LPUART_1_config =
     {
-      .baudRate_Bps = baudRate,
+      .baudRate_Bps = UART_BAUD_RATE,
       .parityMode = kLPUART_ParityDisabled,
       .dataBitsCount = kLPUART_EightDataBits,
       .isMsb = false,
@@ -216,7 +216,7 @@ void SerialInit(LPUART_Type *Uart_X, uint32_t baudRate, uint32_t clockFreq)
       .enableRx = true
     };
     
-    LPUART_Init(Uart_X, &LPUART_1_config, clockFreq);
+    LPUART_Init(APPLICATION_SERIAL_BASE, &LPUART_1_config, SERIAL_CLOCK);
 
     FMSTR_SerialSetBaseAddress(APPLICATION_SERIAL_BASE);
 }
@@ -295,7 +295,13 @@ void AdcInit(void)
 * @return None
 */
 void DCPInit(uint32_t *buffer)
-{    
+{
+    /* Zero memory of context switching buffer. 
+     * memset works with char granularity.
+     * We need to clear 52 * uint32_t => thus 52 * 4.
+     */
+    memset(buffer, 0U, 52U * 4U);
+
     /* Turn off the entire data cache */
     SCB_DisableDCache();
   
@@ -303,19 +309,19 @@ void DCPInit(uint32_t *buffer)
     CCM->CCGR0 = (CCM->CCGR0 & ~CCM_CCGR0_CG5_MASK) | CCM_CCGR0_CG5(0x3);
 
     /* residual_writes=1, context_caching=0, interrupt disable */
-    DCP->CTRL = DCP_CTRL_SFTRST(0) | DCP_CTRL_CLKGATE(0) | 
+    FLASH_USED_DCP->CTRL = DCP_CTRL_SFTRST(0) | DCP_CTRL_CLKGATE(0) | 
                 DCP_CTRL_PRESENT_CRYPTO(1) | DCP_CTRL_PRESENT_SHA(1) | 
                 DCP_CTRL_GATHER_RESIDUAL_WRITES(0) | DCP_CTRL_ENABLE_CONTEXT_CACHING(0) | 
                 DCP_CTRL_ENABLE_CONTEXT_SWITCHING(0) | DCP_CTRL_CHANNEL_INTERRUPT_ENABLE(0);
     
     /* context_switching=1 */
-    DCP->CTRL |= DCP_CTRL_ENABLE_CONTEXT_SWITCHING(1);
+    FLASH_USED_DCP->CTRL |= DCP_CTRL_ENABLE_CONTEXT_SWITCHING(1);
 
     /* Enable all channels */
-    DCP->CHANNELCTRL = DCP_CHANNELCTRL_ENABLE_CHANNEL(0xF);
+    FLASH_USED_DCP->CHANNELCTRL = DCP_CHANNELCTRL_ENABLE_CHANNEL(0xF);
     
-    /* Store the CSB address into DCP->CONTEXT */
-    DCP->CONTEXT = (uint32_t)buffer;
+    /* Store the CSB address into FLASH_USED_DCP->CONTEXT */
+    FLASH_USED_DCP->CONTEXT = (uint32_t)buffer;
  }
 
 /*!

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -24,55 +24,59 @@
 #include "freemaster_protocol.h"
 #include "freemaster_utils.h"
 
-#if (FMSTR_USE_TSA) && (!(FMSTR_DISABLE))
+#if FMSTR_USE_TSA > 0 && FMSTR_DISABLE == 0
 
 /* global variables */
-FMSTR_TSA_CDECL char FMSTR_TSA_POINTER[] = { 0xe0 |
-        (sizeof(void*)==2 ? 0x01 :
-         sizeof(void*)==4 ? 0x02 :
-         sizeof(void*)==8 ? 0x03 :
-                            0x00), /* size of pointer is not 2,4 nor 8 (probably S12 platform)*/
-                            0 };   /* zero string-terminating character*/
+FMSTR_TSA_CDECL char FMSTR_TSA_POINTER[] = {
+    (char)(0xe0 |
+           (sizeof(void *) == 2 ?
+                0x01 :
+                sizeof(void *) == 4 ?
+                0x02 :
+                sizeof(void *) == 8 ? 0x03 : 0x00)), /* size of pointer is not 2,4 nor 8 (probably S12 platform) */
+    (char)0};                                        /* string-terminating zero */
 
-#if FMSTR_USE_TSA_DYNAMIC
-static FMSTR_SIZE  fmstr_tsaBuffSize;        /* Dynamic TSA buffer size */
-static FMSTR_ADDR  fmstr_tsaBuffAddr;        /* Dynamic TSA buffer address */
-static FMSTR_SIZE  fmstr_tsaTableIndex;
+#if FMSTR_USE_TSA_DYNAMIC > 0
+static FMSTR_SIZE fmstr_tsaBuffSize; /* Dynamic TSA buffer size */
+static FMSTR_ADDR fmstr_tsaBuffAddr; /* Dynamic TSA buffer address */
+static FMSTR_SIZE fmstr_tsaTableIndex;
 
 #endif
 
-static FMSTR_BOOL _FMSTR_IsMemoryMapped(const char * type, unsigned long info);
-/**************************************************************************//*!
-*
-* @brief    TSA Initialization
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    TSA Initialization
+ *
+ ******************************************************************************/
+static FMSTR_BOOL _FMSTR_IsMemoryMapped(const char *type, unsigned long info);
 
-void FMSTR_InitTsa(void)
+FMSTR_BOOL FMSTR_InitTsa(void)
 {
-#if FMSTR_USE_TSA_DYNAMIC
+#if FMSTR_USE_TSA_DYNAMIC > 0
     fmstr_tsaTableIndex = 0;
-    fmstr_tsaBuffSize = 0;
-    fmstr_tsaBuffAddr = (FMSTR_ADDR)NULL;
+    fmstr_tsaBuffSize   = 0;
+    fmstr_tsaBuffAddr   = (FMSTR_ADDR)NULL;
 #endif
+
+    return FMSTR_TRUE;
 }
 
-/**************************************************************************//*!
-*
-* @brief    Assigning memory to dynamic TSA table
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Assigning memory to dynamic TSA table
+ *
+ ******************************************************************************/
 
 FMSTR_BOOL FMSTR_SetUpTsaBuff(FMSTR_ADDR buffAddr, FMSTR_SIZE buffSize)
 {
-#if FMSTR_USE_TSA_DYNAMIC
+#if FMSTR_USE_TSA_DYNAMIC > 0
     /* only allow to clear or set when cleared */
-    if(!buffAddr || !fmstr_tsaBuffAddr)
+    if (FMSTR_ADDR_VALID(buffAddr) == 0U || FMSTR_ADDR_VALID(fmstr_tsaBuffAddr) == 0U)
     {
         /* TSA table must be aligned on pointer size */
-        FMSTR_SIZE alignment = FMSTR_GetAlignmentCorrection(buffAddr, sizeof(void*));
-        fmstr_tsaBuffAddr = buffAddr + alignment;
-        fmstr_tsaBuffSize = buffSize - alignment;
+        FMSTR_SIZE alignment = FMSTR_GetAlignmentCorrection(buffAddr, sizeof(void *));
+        fmstr_tsaBuffAddr    = buffAddr + alignment;
+        fmstr_tsaBuffSize    = buffSize - alignment;
         return FMSTR_TRUE;
     }
     else
@@ -84,54 +88,72 @@ FMSTR_BOOL FMSTR_SetUpTsaBuff(FMSTR_ADDR buffAddr, FMSTR_SIZE buffSize)
 #endif
 }
 
-/**************************************************************************//*!
-*
-* @brief    Retrieving entry from dynamic TSA table
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Retrieving entry from dynamic TSA table
+ *
+ ******************************************************************************/
 
-#if FMSTR_USE_TSA_DYNAMIC
+#if FMSTR_USE_TSA_DYNAMIC > 0
 FMSTR_TSA_FUNC_PROTO(dynamic_tsa)
 {
-    if(tableSize)
-        *tableSize = (FMSTR_SIZE)(fmstr_tsaTableIndex*sizeof(FMSTR_TSA_ENTRY));
-    return (const FMSTR_TSA_ENTRY*)fmstr_tsaBuffAddr;
+    if (tableSize != NULL)
+    {
+        *tableSize = (FMSTR_SIZE)(fmstr_tsaTableIndex * sizeof(FMSTR_TSA_ENTRY));
+    }
+    return (const FMSTR_TSA_ENTRY *)FMSTR_CAST_ADDR_TO_PTR(fmstr_tsaBuffAddr);
 }
 #endif
 
-/**************************************************************************//*!
-*
-* @brief    Add entry to a dynamic TSA table
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Add entry to a dynamic TSA table
+ *
+ ******************************************************************************/
 
-FMSTR_BOOL FMSTR_TsaAddVar(FMSTR_TSATBL_STRPTR tsaName, FMSTR_TSATBL_STRPTR tsaType, FMSTR_TSATBL_VOIDPTR varAddr, FMSTR_SIZE32 varSize, FMSTR_SIZE flags)
+FMSTR_BOOL FMSTR_TsaAddVar(FMSTR_TSATBL_STRPTR tsaName,
+                           FMSTR_TSATBL_STRPTR tsaType,
+                           FMSTR_TSATBL_VOIDPTR varAddr,
+                           FMSTR_SIZE32 varSize,
+                           FMSTR_SIZE flags)
 {
-#if FMSTR_USE_TSA_DYNAMIC
+#if FMSTR_USE_TSA_DYNAMIC > 0
     /* the new TSA table entry must fit into the memory buffer */
-    if(((fmstr_tsaTableIndex+1)*sizeof(FMSTR_TSA_ENTRY)) <= fmstr_tsaBuffSize)
+    if (((fmstr_tsaTableIndex + 1U) * sizeof(FMSTR_TSA_ENTRY)) <= fmstr_tsaBuffSize)
     {
-        FMSTR_TSA_ENTRY* pItem = (FMSTR_TSA_ENTRY*)fmstr_tsaBuffAddr;
         FMSTR_TSATBL_VOIDPTR info = FMSTR_TSA_INFO2(varSize, flags);
+        FMSTR_TSA_ENTRY *pItem;
         FMSTR_SIZE i;
 
         /* Check if this record is already in table */
-        for(i=0; i<fmstr_tsaTableIndex; i++, pItem++)
+        for (i = 0; i < fmstr_tsaTableIndex; i++)
         {
-            if(FMSTR_StrCmp(pItem->name.p, tsaName))
+            pItem = &((FMSTR_TSA_ENTRY *)FMSTR_CAST_ADDR_TO_PTR(fmstr_tsaBuffAddr))[i];
+
+            if (FMSTR_StrCmp(pItem->name.p, tsaName) != 0)
+            {
                 continue; /* name is different */
-            if(pItem->type.p != tsaType)
+            }
+            if (pItem->type.p != tsaType)
+            {
                 continue; /* type is different */
-            if(pItem->addr.p != varAddr)
+            }
+            if (pItem->addr.p != varAddr)
+            {
                 continue; /* address is different */
-            if(pItem->info.p != info)
+            }
+            if (pItem->info.p != info)
+            {
                 continue; /* size or attributes are different */
+            }
 
             /* the same entry already exists, consider it added okay */
             return FMSTR_TRUE;
         }
 
         /* add the entry to the last-used position */
+        pItem = &((FMSTR_TSA_ENTRY *)FMSTR_CAST_ADDR_TO_PTR(fmstr_tsaBuffAddr))[i];
+
         pItem->name.p = FMSTR_TSATBL_STRPTR_CAST(tsaName);
         pItem->type.p = FMSTR_TSATBL_STRPTR_CAST(tsaType);
         pItem->addr.p = FMSTR_TSATBL_VOIDPTR_CAST(varAddr);
@@ -148,22 +170,22 @@ FMSTR_BOOL FMSTR_TsaAddVar(FMSTR_TSATBL_STRPTR tsaName, FMSTR_TSATBL_STRPTR tsaT
 #endif
 }
 
-/**************************************************************************//*!
-*
-* @brief    Handling GETTSAINFO and GETTSAINFO_EX command
-*
-* @param    msgBuffIO - original command (in) and response buffer (out)
-* @param    retStatus - response status
-*
-* @return   As all command handlers, the return value should be the buffer
-*           pointer where the response output finished (except checksum)
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Handling GETTSAINFO and GETTSAINFO_EX command
+ *
+ * @param    msgBuffIO - original command (in) and response buffer (out)
+ * @param    retStatus - response status
+ *
+ * @return   As all command handlers, the return value should be the buffer
+ *           pointer where the response output finished (except checksum)
+ *
+ ******************************************************************************/
 
 FMSTR_BPTR FMSTR_GetTsaInfo(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 {
     volatile FMSTR_BPTR response = msgBuffIO;
-    const FMSTR_TSA_ENTRY* tsaTbl;
+    const FMSTR_TSA_ENTRY *tsaTbl;
     FMSTR_SIZE tblIndex;
     FMSTR_SIZE tblSize = 0U;
     FMSTR_U8 tblFlags;
@@ -172,19 +194,29 @@ FMSTR_BPTR FMSTR_GetTsaInfo(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     FMSTR_ASSERT(retStatus != NULL);
 
     /* Get ULEB index of table the PC is requesting   */
-    /* msgBuffIO = */ FMSTR_SizeFromBuffer(&tblIndex, msgBuffIO);
+    msgBuffIO = FMSTR_SizeFromBuffer(&tblIndex, msgBuffIO);
+    FMSTR_UNUSED(msgBuffIO);
 
     /* TSA flags */
     tblFlags = FMSTR_TSA_VERSION | FMSTR_TSA_FLAGS;
 
     /* sizeof TSA table entry items */
     /*lint -e{506,774} constant value boolean */
-    if((sizeof(void*)) == 2U)
+    if ((sizeof(void *)) == 2U)
+    {
         tblFlags |= FMSTR_TSA_INFO_ADRSIZE_16;
-    else if((sizeof(void*)) <= 4U)
-        tblFlags |= FMSTR_TSA_INFO_ADRSIZE_32;
-    else if((sizeof(void*)) <= 8U)
-        tblFlags |= FMSTR_TSA_INFO_ADRSIZE_64;
+    }
+    else
+    {
+        if ((sizeof(void *)) <= 4U)
+        {
+            tblFlags |= FMSTR_TSA_INFO_ADRSIZE_32;
+        }
+        else
+        {
+            tblFlags |= FMSTR_TSA_INFO_ADRSIZE_64;
+        }
+    }
 
     /* flags */
     response = FMSTR_ValueToBuffer8(response, tblFlags);
@@ -197,24 +229,24 @@ FMSTR_BPTR FMSTR_GetTsaInfo(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     response = FMSTR_SizeToBuffer(response, tblSize);
 
     /* table address */
-    response = FMSTR_AddressToBuffer(response, (FMSTR_ADDR)tsaTbl);
+    response = FMSTR_AddressToBuffer(response, FMSTR_CAST_PTR_TO_ADDR(tsaTbl));
 
     /* success  */
     *retStatus = FMSTR_STS_OK | FMSTR_STSF_VARLEN;
     return response;
 }
 
-/**************************************************************************//*!
-*
-* @brief    Handling GETSTRLEN and GETSTRLEN_EX commands
-*
-* @param    msgBuffIO - original command (in) and response buffer (out)
-* @param    retStatus - response status
-*
-* @return   As all command handlers, the return value should be the buffer
-*           pointer where the response output finished (except checksum)
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Handling GETSTRLEN and GETSTRLEN_EX commands
+ *
+ * @param    msgBuffIO - original command (in) and response buffer (out)
+ * @param    retStatus - response status
+ *
+ * @return   As all command handlers, the return value should be the buffer
+ *           pointer where the response output finished (except checksum)
+ *
+ ******************************************************************************/
 
 FMSTR_BPTR FMSTR_GetStringLen(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
 {
@@ -225,71 +257,75 @@ FMSTR_BPTR FMSTR_GetStringLen(FMSTR_BPTR msgBuffIO, FMSTR_U8 *retStatus)
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
 
-    /* msgBuffIO = */ FMSTR_AddressFromBuffer(&strAddr, msgBuffIO);
+    msgBuffIO = FMSTR_AddressFromBuffer(&strAddr, msgBuffIO);
+    FMSTR_UNUSED(msgBuffIO);
 
-    len = FMSTR_StrLen((FMSTR_CHAR*)strAddr);
+    len = FMSTR_StrLen((FMSTR_CHAR *)strAddr);
 
     /* return strign size in bytes (even on 16bit DSP) */
-    len *= FMSTR_CFG_BUS_WIDTH ;
+    len *= FMSTR_CFG_BUS_WIDTH;
 
-     /* success  */
+    /* success  */
     *retStatus = FMSTR_STS_OK | FMSTR_STSF_VARLEN;
     return FMSTR_SizeToBuffer(response, len);
 }
 
-/**************************************************************************//*!
-*
-* @brief    Helper (inline) function for TSA memory region check
-*
-* @param    addrUser - address of region to be checked
-* @param    sizeUser - size of region to be checked
-* @param    addrSafe - address of known "safe" region
-* @param    sizeSafe - size of safe region
-*
-* @return   This function returns non-zero if given user space is safe
-*           (i.e. it lies in given safe space)
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Helper (inline) function for TSA memory region check
+ *
+ * @param    addrUser - address of region to be checked
+ * @param    sizeUser - size of region to be checked
+ * @param    addrSafe - address of known "safe" region
+ * @param    sizeSafe - size of safe region
+ *
+ * @return   This function returns non-zero if given user space is safe
+ *           (i.e. it lies in given safe space)
+ *
+ ******************************************************************************/
 
 /* declare function prototype */
-static FMSTR_BOOL FMSTR_CheckMemSpace(FMSTR_ADDR addrUser, FMSTR_SIZE sizeUser,
-    FMSTR_ADDR addrSafe, FMSTR_SIZE sizeSafe);
+static FMSTR_BOOL FMSTR_CheckMemSpace(FMSTR_ADDR addrUser,
+                                      FMSTR_SIZE sizeUser,
+                                      FMSTR_ADDR addrSafe,
+                                      FMSTR_SIZE sizeSafe);
 
-static FMSTR_BOOL FMSTR_CheckMemSpace(FMSTR_ADDR addrUser, FMSTR_SIZE sizeUser,
-                               FMSTR_ADDR addrSafe, FMSTR_SIZE sizeSafe)
+static FMSTR_BOOL FMSTR_CheckMemSpace(FMSTR_ADDR addrUser,
+                                      FMSTR_SIZE sizeUser,
+                                      FMSTR_ADDR addrSafe,
+                                      FMSTR_SIZE sizeSafe)
 {
     FMSTR_BOOL ret = FMSTR_FALSE;
 
-    #ifdef __HCS12X__
+#ifdef __HCS12X__
     /* convert from logical to global if needed */
     addrUser = FMSTR_FixHcs12xAddr(addrUser);
     addrSafe = FMSTR_FixHcs12xAddr(addrSafe);
-    #endif
+#endif
 
-    if(addrUser >= addrSafe)
+    if (addrUser >= addrSafe)
     {
-        ret = (FMSTR_BOOL)
-            (((addrUser + sizeUser) <= (addrSafe + sizeSafe)) ? FMSTR_TRUE : FMSTR_FALSE);
+        ret = (FMSTR_BOOL)(((addrUser + sizeUser) <= (addrSafe + sizeSafe)) ? FMSTR_TRUE : FMSTR_FALSE);
     }
 
     return ret;
 }
 
-/**************************************************************************//*!
-*
-* @brief    Check wether given memory region is "safe" (covered by TSA)
-*
-* @param    varAddr - address of the memory to be checked
-* @param    varSize  - size of the memory to be checked
-* @param    writeAccess - write access is required
-*
-* @return   This function returns non-zero if user space is safe
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Check wether given memory region is "safe" (covered by TSA)
+ *
+ * @param    varAddr - address of the memory to be checked
+ * @param    varSize  - size of the memory to be checked
+ * @param    writeAccess - write access is required
+ *
+ * @return   This function returns non-zero if user space is safe
+ *
+ ******************************************************************************/
 
 FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOOL writeAccess)
 {
-    const FMSTR_TSA_ENTRY* pte;
+    const FMSTR_TSA_ENTRY *pte;
     FMSTR_SIZE tableIndex;
     FMSTR_SIZE i, cnt;
     unsigned long info;
@@ -302,35 +338,42 @@ FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOO
 
     /* to be as fast as possible during normal operation,
        check variable entries in all tables first */
-    for(tableIndex=0U; (pte=FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL; tableIndex++)
+    tableIndex = 0U;
+    while ((pte = FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL)
     {
         /* number of items in a table */
-        cnt /= (FMSTR_SIZE) sizeof(FMSTR_TSA_ENTRY);
+        cnt /= (FMSTR_SIZE)sizeof(FMSTR_TSA_ENTRY);
 
         /* all table entries */
-        for(i=0U; i<cnt; i++)
+        for (i = 0U; i < cnt; i++)
         {
-            if(sizeof(pte->addr.p) < sizeof(pte->addr.n))
+            if (sizeof(pte->addr.p) < sizeof(pte->addr.n))
+            {
                 info = (unsigned long)pte->info.n;
+            }
             else
+            {
                 info = (unsigned long)pte->info.p;
+            }
 
             type = pte->type.p;
 
             /* variable entry only (also check read-write flag) */
-            if(_FMSTR_IsMemoryMapped(type, info) && (!writeAccess || ((info & FMSTR_TSA_INFO_VAR_MASK) == FMSTR_TSA_INFO_RW_VAR)))
+            if (_FMSTR_IsMemoryMapped(type, info) != FMSTR_FALSE &&
+                (writeAccess == FMSTR_FALSE || ((info & FMSTR_TSA_INFO_VAR_MASK) == FMSTR_TSA_INFO_RW_VAR)))
             {
                 /* need to take the larger of the two in union (will be optimized by compiler anyway) */
-                if(sizeof(pte->addr.p) < sizeof(pte->addr.n))
+                if (sizeof(pte->addr.p) < sizeof(pte->addr.n))
                 {
-                    if(FMSTR_CheckMemSpace(varAddr, varSize, pte->addr.n, (FMSTR_SIZE) (info >> 2)))
+                    if (FMSTR_CheckMemSpace(varAddr, varSize, pte->addr.n, (FMSTR_SIZE)(info >> 2)) != FMSTR_FALSE)
                     {
                         return FMSTR_TRUE; /* access granted! */
                     }
                 }
                 else
                 {
-                    if(FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)pte->addr.p, (FMSTR_SIZE) (info >> 2)))
+                    if (FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)pte->addr.p, (FMSTR_SIZE)(info >> 2)) !=
+                        FMSTR_FALSE)
                     {
                         return FMSTR_TRUE; /* access granted! */
                     }
@@ -339,50 +382,63 @@ FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOO
 
             pte++;
         }
+
+        tableIndex++;
     }
 
     /* no more writable memory chunks available */
-    if(writeAccess)
+    if (writeAccess != FMSTR_FALSE)
     {
         return FMSTR_FALSE;
     }
 
     /* allow reading of recorder buffer */
-#if FMSTR_USE_RECORDER
-    if(FMSTR_IsInRecBuffer(varAddr, varSize))
+#if FMSTR_USE_RECORDER > 0
+    if (FMSTR_IsInRecBuffer(varAddr, varSize) != 0U)
     {
         return FMSTR_TRUE;
     }
 #endif
 
     /* allow reading of any C-constant string referenced in TSA tables */
-    for(tableIndex=0U; (pte=FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL; tableIndex++)
+    tableIndex = 0U;
+    while ((pte = FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL)
     {
         /* allow reading of the TSA table itself */
-        if(FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)pte, cnt))
+        if (FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)(FMSTR_TSA_ENTRY *)pte, cnt) != FMSTR_FALSE)
+        {
             return FMSTR_TRUE;
+        }
 
         /* number of items in a table */
-        cnt /= (FMSTR_SIZE) sizeof(FMSTR_TSA_ENTRY);
+        cnt /= (FMSTR_SIZE)sizeof(FMSTR_TSA_ENTRY);
 
         /* all table entries */
-        for(i=0U; i<cnt; i++)
+        for (i = 0U; i < cnt; i++)
         {
             /* system strings are always accessible as C-pointers */
-            if(pte->name.p)
+            if (pte->name.p != NULL)
             {
-                if(FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)(pte->name.p), FMSTR_StrLen(pte->name.p)))
+                if (FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)(pte->name.p), FMSTR_StrLen(pte->name.p)) !=
+                    FMSTR_FALSE)
+                {
                     return FMSTR_TRUE;
+                }
             }
 
-            if(pte->type.p)
+            if (pte->type.p != NULL)
             {
-                if(FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)(pte->type.p), FMSTR_StrLen(pte->type.p)))
+                if (FMSTR_CheckMemSpace(varAddr, varSize, (FMSTR_ADDR)(pte->type.p), FMSTR_StrLen(pte->type.p)) !=
+                    FMSTR_FALSE)
+                {
                     return FMSTR_TRUE;
+                }
             }
 
             pte++;
         }
+
+        tableIndex++;
     }
 
     /* no valid TSA entry found => not-safe to access the memory */
@@ -390,35 +446,42 @@ FMSTR_BOOL FMSTR_CheckTsaSpace(FMSTR_ADDR varAddr, FMSTR_SIZE varSize, FMSTR_BOO
 }
 
 /* Check type of the entry. */
-static FMSTR_BOOL _FMSTR_IsMemoryMapped(const char * type, unsigned long info)
+static FMSTR_BOOL _FMSTR_IsMemoryMapped(const char *type, unsigned long info)
 {
     FMSTR_ASSERT(type != NULL);
 
     /* If type is special non-memory type or memeber structure (0b00 in info) */
-    if(type[0] == FMSTR_TSA_SPECIAL_NOMEM[0] || (info & FMSTR_TSA_INFO_VAR_MASK) == 0)
+    if (type[0] == FMSTR_TSA_SPECIAL_NOMEM[0] || (info & FMSTR_TSA_INFO_VAR_MASK) == 0U)
+    {
         return FMSTR_FALSE;
+    }
 
     return FMSTR_TRUE;
 }
 
 /* Find TSA table row with user resource by resource ID */
-const FMSTR_TSA_ENTRY * FMSTR_FindUresInTsa(FMSTR_ADDR resourceId)
+const FMSTR_TSA_ENTRY *FMSTR_FindUresInTsa(FMSTR_ADDR resourceId)
 {
-    const FMSTR_TSA_ENTRY* pte;
+    const FMSTR_TSA_ENTRY *pte;
     FMSTR_SIZE tableIndex;
     FMSTR_SIZE i, cnt;
 
-    for(tableIndex=0U; (pte=FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL; tableIndex++)
+    tableIndex = 0U;
+    while ((pte = FMSTR_TsaGetTable(tableIndex, &cnt)) != NULL)
     {
         /* number of items in a table */
-        cnt /= (FMSTR_SIZE) sizeof(FMSTR_TSA_ENTRY);
+        cnt /= (FMSTR_SIZE)sizeof(FMSTR_TSA_ENTRY);
 
         /* all table entries */
-        for(i=0U; i<cnt; i++)
+        for (i = 0U; i < cnt; i++)
         {
-            if(pte->addr.n == resourceId)
+            if (pte->addr.n == resourceId)
+            {
                 return pte;
+            }
         }
+
+        tableIndex++;
     }
 
     return NULL;
@@ -434,7 +497,11 @@ FMSTR_BOOL FMSTR_SetUpTsaBuff(FMSTR_ADDR buffAddr, FMSTR_SIZE buffSize)
     return FMSTR_FALSE;
 }
 
-FMSTR_BOOL FMSTR_TsaAddVar(FMSTR_TSATBL_STRPTR tsaName, FMSTR_TSATBL_STRPTR tsaType, FMSTR_TSATBL_VOIDPTR varAddr, FMSTR_SIZE32 varSize, FMSTR_SIZE flags)
+FMSTR_BOOL FMSTR_TsaAddVar(FMSTR_TSATBL_STRPTR tsaName,
+                           FMSTR_TSATBL_STRPTR tsaType,
+                           FMSTR_TSATBL_VOIDPTR varAddr,
+                           FMSTR_SIZE32 varSize,
+                           FMSTR_SIZE flags)
 {
     FMSTR_UNUSED(tsaName);
     FMSTR_UNUSED(tsaType);

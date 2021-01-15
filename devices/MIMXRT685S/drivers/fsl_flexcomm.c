@@ -103,7 +103,7 @@ uint32_t FLEXCOMM_GetInstance(void *base)
         }
     }
 
-    assert(i < FSL_FEATURE_SOC_FLEXCOMM_COUNT);
+    assert(i < (uint32_t)FSL_FEATURE_SOC_FLEXCOMM_COUNT);
     return i;
 }
 
@@ -157,7 +157,7 @@ status_t FLEXCOMM_Init(void *base, FLEXCOMM_PERIPH_T periph)
 
 /*! brief Sets IRQ handler for given FLEXCOMM module. It is used by drivers register IRQ handler according to FLEXCOMM
  * mode */
-void FLEXCOMM_SetIRQHandler(void *base, flexcomm_irq_handler_t handler, void *handle)
+void FLEXCOMM_SetIRQHandler(void *base, flexcomm_irq_handler_t handler, void *flexcommHandle)
 {
     uint32_t instance;
 
@@ -166,13 +166,14 @@ void FLEXCOMM_SetIRQHandler(void *base, flexcomm_irq_handler_t handler, void *ha
 
     /* Clear handler first to avoid execution of the handler with wrong handle */
     s_flexcommIrqHandler[instance] = NULL;
-    s_flexcommHandle[instance]     = handle;
+    s_flexcommHandle[instance]     = flexcommHandle;
     s_flexcommIrqHandler[instance] = handler;
     SDK_ISR_EXIT_BARRIER;
 }
 
 /* IRQ handler functions overloading weak symbols in the startup */
 #if defined(FLEXCOMM0)
+void FLEXCOMM0_DriverIRQHandler(void);
 void FLEXCOMM0_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[0]);
@@ -182,6 +183,7 @@ void FLEXCOMM0_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM1)
+void FLEXCOMM1_DriverIRQHandler(void);
 void FLEXCOMM1_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[1]);
@@ -191,6 +193,7 @@ void FLEXCOMM1_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM2)
+void FLEXCOMM2_DriverIRQHandler(void);
 void FLEXCOMM2_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[2]);
@@ -200,6 +203,7 @@ void FLEXCOMM2_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM3)
+void FLEXCOMM3_DriverIRQHandler(void);
 void FLEXCOMM3_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[3]);
@@ -209,6 +213,7 @@ void FLEXCOMM3_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM4)
+void FLEXCOMM4_DriverIRQHandler(void);
 void FLEXCOMM4_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[4]);
@@ -219,6 +224,7 @@ void FLEXCOMM4_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM5)
+void FLEXCOMM5_DriverIRQHandler(void);
 void FLEXCOMM5_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[5]);
@@ -228,6 +234,7 @@ void FLEXCOMM5_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM6)
+void FLEXCOMM6_DriverIRQHandler(void);
 void FLEXCOMM6_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[6]);
@@ -237,6 +244,7 @@ void FLEXCOMM6_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM7)
+void FLEXCOMM7_DriverIRQHandler(void);
 void FLEXCOMM7_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[7]);
@@ -246,6 +254,7 @@ void FLEXCOMM7_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM8)
+void FLEXCOMM8_DriverIRQHandler(void);
 void FLEXCOMM8_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[8]);
@@ -255,6 +264,7 @@ void FLEXCOMM8_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM9)
+void FLEXCOMM9_DriverIRQHandler(void);
 void FLEXCOMM9_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[9]);
@@ -264,6 +274,7 @@ void FLEXCOMM9_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM10)
+void FLEXCOMM10_DriverIRQHandler(void);
 void FLEXCOMM10_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[10]);
@@ -273,6 +284,7 @@ void FLEXCOMM10_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM11)
+void FLEXCOMM11_DriverIRQHandler(void);
 void FLEXCOMM11_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[11]);
@@ -282,6 +294,7 @@ void FLEXCOMM11_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM12)
+void FLEXCOMM12_DriverIRQHandler(void);
 void FLEXCOMM12_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[12]);
@@ -291,6 +304,7 @@ void FLEXCOMM12_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM13)
+void FLEXCOMM13_DriverIRQHandler(void);
 void FLEXCOMM13_DriverIRQHandler(void)
 {
     assert(s_flexcommIrqHandler[13]);
@@ -300,6 +314,7 @@ void FLEXCOMM13_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM14)
+void FLEXCOMM14_DriverIRQHandler(void);
 void FLEXCOMM14_DriverIRQHandler(void)
 {
     uint32_t instance;
@@ -313,6 +328,7 @@ void FLEXCOMM14_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM15)
+void FLEXCOMM15_DriverIRQHandler(void);
 void FLEXCOMM15_DriverIRQHandler(void)
 {
     uint32_t instance;
@@ -326,6 +342,7 @@ void FLEXCOMM15_DriverIRQHandler(void)
 #endif
 
 #if defined(FLEXCOMM16)
+void FLEXCOMM16_DriverIRQHandler(void);
 void FLEXCOMM16_DriverIRQHandler(void)
 {
     uint32_t instance;

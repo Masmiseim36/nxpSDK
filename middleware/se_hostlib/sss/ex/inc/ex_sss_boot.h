@@ -1,13 +1,8 @@
 /*
- * Copyright 2019,2020 NXP
+ * Copyright 2019-2020 NXP
+ * All rights reserved.
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /** @file
@@ -206,7 +201,9 @@ void ex_sss_session_close(ex_sss_boot_ctx_t *pCtx);
 /** Entry Point for each example */
 sss_status_t ex_sss_entry(ex_sss_boot_ctx_t *pCtx);
 
-sss_status_t ex_sss_kestore_and_object_init(ex_sss_boot_ctx_t *pCtx);
+#define ex_sss_kestore_and_object_init ex_sss_key_store_and_object_init
+
+sss_status_t ex_sss_key_store_and_object_init(ex_sss_boot_ctx_t *pCtx);
 
 int ex_sss_boot_rtos_init(void);
 

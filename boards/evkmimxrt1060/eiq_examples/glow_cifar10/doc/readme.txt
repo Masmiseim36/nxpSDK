@@ -26,15 +26,15 @@ Files:
 
 Toolchains supported
 ====================
-- MCUXpresso IDE 11.0.0
-- IAR Embedded Workbench for ARM 8.32.4
-- Keil uVision MDK 5.28
-- ArmGCC - GNU Tools ARM Embedded 6 2017-q2
+- MCUXpresso IDE
+- IAR Embedded Workbench for ARM
+- Keil uVision MDK
+- ArmGCC - GNU Tools ARM Embedded
 
 Hardware requirements
 =====================
 - Mini/micro USB cable
-- EVKB-IMXRT1050 or EVK-IMXRT1060 board
+- EVKB-IMXRT1050/EVK-IMXRT1060/EVK-IMXRT1170 board
 - Personal computer (Windows)
 - Python 3.x installed
 
@@ -55,7 +55,7 @@ Prepare the demo
    which contains a "ship":
 
 python scripts\glow_process_image.py ^
-    -image-path=dataset\1_ship.png ^
+    -input-path=dataset\1_ship.png ^
     -output-path=source\input_image.inc ^
     -image-mode=0to1 -image-layout=NCHW -image-channel-order=BGR
 

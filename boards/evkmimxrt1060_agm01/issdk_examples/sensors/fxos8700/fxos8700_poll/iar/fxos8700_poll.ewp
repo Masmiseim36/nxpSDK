@@ -313,14 +313,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1060</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -330,8 +327,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1060/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1297,14 +1294,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1060</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -1314,8 +1308,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1060/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2281,14 +2275,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1060</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -2298,8 +2289,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1060/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3263,14 +3254,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1060</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -3280,8 +3268,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1060/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4247,14 +4235,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1060</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -4264,8 +4249,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1060/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5231,14 +5216,11 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../evkmimxrt1060</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/str</state>
@@ -5248,8 +5230,8 @@
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../../../evkmimxrt1060/xip</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5959,24 +5941,39 @@
     </file>
   </group>
   <group>
-    <name>drivers</name>
+    <name>gpio_driver</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver_irq.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</name>
+    </file>
+  </group>
+  <group>
+    <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_edma.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_edma.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_dmamux.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_edma.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_dmamux.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_dmamux.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.c</name>
@@ -5991,10 +5988,10 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c_edma.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers/fsl_lpi2c_cmsis.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers/fsl_lpi2c_cmsis.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers/fsl_lpi2c_cmsis.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers/fsl_lpi2c_cmsis.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpspi.c</name>
@@ -6003,49 +6000,49 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpspi.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpspi_edma.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpspi_edma.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers/fsl_lpspi_cmsis.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpspi_edma.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers/fsl_lpspi_cmsis.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers/fsl_lpspi_cmsis.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpuart_edma.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpuart_edma.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers/fsl_lpuart_cmsis.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_lpuart_edma.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers/fsl_lpuart_cmsis.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/cmsis_drivers/fsl_lpuart_cmsis.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
     </file>
   </group>
   <group>
@@ -6057,6 +6054,12 @@
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6066,28 +6069,7 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
-    <name>gpio_driver</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/i.mx/gpio_driver_irq.c</name>
     </file>
   </group>
   <group>
@@ -6096,28 +6078,28 @@
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_i2c.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_i2c.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_spi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_spi.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_drv.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_spi.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_spi.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_spi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_drv.h</name>
     </file>
   </group>
   <group>
@@ -6126,22 +6108,22 @@
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.c</name>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.h</name>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.c</name>
     </file>
   </group>
   <group>
     <name>device</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/fsl_device_registers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/MIMXRT1062.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/system_MIMXRT1062.c</name>
@@ -6161,47 +6143,47 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_manager.c</name>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_port_internal.h</name>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_port_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
   <group>
     <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../evkmimxrt1060/xip/evkmimxrt1060_flexspi_nor_config.c</name>
@@ -6228,16 +6210,16 @@
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_common_tables.h</name>

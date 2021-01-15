@@ -1,4 +1,4 @@
-eIQ TensorFlow Lite library 1.2.0
+eIQ TensorFlow Lite library 2.3.1
 
 Content
 -------
@@ -18,7 +18,7 @@ inference. Models trained by TensorFlow can be converted into a compressed
 FlatBuffers format with the TensorFlow Lite Converter (available in
 the TensorFlow distributions). Converted .tflite files can be then downloaded
 into an embedded device. The eIQ TensorFlow Lite library is based on
-TensorFlow Lite 2.1.0 and is therefore fully compatible. 
+TensorFlow Lite 2.3.1 and is therefore fully compatible. 
 Note: TensorFlow Lite supports only a subset of operators available in
       TensorFlow. The conversion tool reports any unsupported operators during
       the conversion.
@@ -28,13 +28,15 @@ Note: TensorFlow Lite supports only a subset of operators available in
 <MCUXpresso-SDK-root>
 |-- boards
 |   -- <board>
-|      -- eiq_examples                   - Example build projects
-|         -- tensorflow_lite_cifar10     - CIFAR-10 image recognition example
-|         -- tensorflow_lite_kws         - Keyword spotting example
-|         -- tensorflow_lite_label_image - Image recognition example
-|         -- tensorflow_lite_adt         - Anomaly detection example
-|         -- tensorflow_lite_benchmark   - Benchmark tool
-|         -- tensorflow_lite_lib         - Library build project
+|      -- eiq_examples                         - Example build projects
+|         -- tensorflow_lite_adt               - Anomaly detection example
+|         -- tensorflow_lite_benchmark         - Benchmark tool
+|         -- tensorflow_lite_cifar10           - CIFAR-10 image recognition example
+|         -- tensorflow_lite_kws               - Keyword spotting example
+|         -- tensorflow_lite_label_image       - Image recognition example
+|         -- tensorflow_lite_micro_label_image - Image recognition example
+|                                                using TensorFlow Lite Micro
+|         -- tensorflow_lite_lib               - Library build project
 |-- middleware
     -- eiq
        -- tensorflow-lite
@@ -70,15 +72,19 @@ MCUXpresso IDE, IAR Embedded Workbench, Keil MDK, GNU ARM Embedded Toolchain
 
 6. Release notes
 ----------------
-The library is based on TensorFlow Lite version 2.1.0 available
-at https://github.com/tensorflow/tensorflow/tree/v2.1.0/tensorflow/lite.
+The library is based on TensorFlow Lite version 2.3.1 available
+at https://github.com/tensorflow/tensorflow/tree/v2.3.1/tensorflow/lite.
 Main modifications introduced to the original library source code:
   * Removed files not containing the TensorFlow Lite library source codes or
     not needed for building the TensorFlow Lite library
   * Replaced multi-threaded execution with single threaded on MCUs
   * Fixed source code to build with MCUXpresso SDK supported toolchains
   * Added third party library source codes
-    * Eigen (https://gitlab.com/libeigen/eigen/-/archive/4e696901f873a2347f76d931cf2f701e31e15d05/eigen-4e696901f873a2347f76d931cf2f701e31e15d05.tar.gz)
+    * Abseil (https://github.com/abseil/abseil-cpp/archive/df3ea785d8c30a9503321a3d35ee7d35808f190d.tar.gz)
+      * Removed files not needed for compiling the TensorFlow Lite library
+    * CMSIS-NN (https://github.com/ARM-software/CMSIS_5/archive/1150e71e07c79b538efd842aba5b210a31827ae5.zip)
+      * Removed files not needed for compiling the TensorFlow Lite library
+    * Eigen (https://gitlab.com/libeigen/eigen/-/archive/386d809bde475c65b7940f290efe80e6a05878c4/eigen-386d809bde475c65b7940f290efe80e6a05878c4.tar.gz)
       * Removed files not needed for compiling the TensorFlow Lite library
       * Added support for the IAR Embedded Workbench compiler
     * Farmhash (http://mirror.tensorflow.org/github.com/google/farmhash/archive/816a4ae622e964763ca0862d9dbd19324a1eaf45.tar.gz)
@@ -86,26 +92,18 @@ Main modifications introduced to the original library source code:
       * Added support for the IAR Embedded Workbench compiler
     * FFT2D (http://mirror.tensorflow.org/www.kurims.kyoto-u.ac.jp/~ooura/fft.tgz)
       * Removed files not needed for compiling the TensorFlow Lite library
-    * FlatBuffers (http://mirror.tensorflow.org/github.com/google/flatbuffers/archive/v1.11.0.tar.gz)
+    * FlatBuffers (https://github.com/google/flatbuffers/archive/v1.12.0.tar.gz)
       * Removed files not needed for compiling the TensorFlow Lite library
       * Added support for the IAR Embedded Workbench compiler
-    * Gemmlowp (https://github.com/google/gemmlowp/commit/12fed0cd7cfcd9e169bf1925bc3a7a58725fdcc3)
+    * Gemmlowp (https://github.com/google/gemmlowp/archive/fda83bdc38b118cc6b56753bd540caa49e570745.zip)
       * Removed files not needed for compiling the TensorFlow Lite library
       * Added support for the IAR Embedded Workbench compiler
       * Added support for single threaded execution on MCUs
-  * Added third party library source codes:
-    * Abseil (https://github.com/abseil/abseil-cpp/commit/43ef2148c0936ebf7cb4be6b19927a9d9d145b8f)
+    * Ruy (https://github.com/google/ruy/archive/34ea9f4993955fa1ff4eb58e504421806b7f2e8f.zip)
+      * Removed files not needed for compiling the TensorFlow Lite library
+      * Added support for the IAR Embedded Workbench compiler
+      * Added support for single threaded execution on MCUs
   * Added build projects for MCUXpresso SDK supported toolchains
-  * Modified examples
-      * cifar10 (https://github.com/tensorflow/tensorflow/tree/r0.7/tensorflow/models/image/cifar10/commit/7760ce5)
-        * Added MCUXpresso SDK support
-        * Added camera and LCD support
-      * kws (https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/speech_commands/commit/7144571, https://github.com/ARM-software/ML-KWS-for-MCU/tree/master/Deployment/commit/8151349)
-        * Added MCUXpresso SDK support
-        * Added microphone and headphone support
-      * label_image (https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/examples/label_image/commit/1f40e57)
-        * Added MCUXpresso SDK support
-        * Added camera and LCD support
 
 7. Limitations
 --------------

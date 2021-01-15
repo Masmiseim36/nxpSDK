@@ -12,14 +12,14 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_hashcrypt.h"
 
 #include <string.h>
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -212,6 +212,104 @@ void TestSha256(void)
     PRINTF("SHA-256 Test pass\r\n");
 }
 
+void TestReloadHashcryptFeature(void)
+{
+#if defined(FSL_FEATURE_HASHCRYPT_HAS_RELOAD_FEATURE) && (FSL_FEATURE_HASHCRYPT_HAS_RELOAD_FEATURE > 0)
+    /* Hashcrypt without context switch is not able to calculate SHA in parallel with AES. */
+
+    static const uint8_t keyAes128[] __attribute__((aligned)) = {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
+                                                                 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
+    static const uint8_t plainAes128[]                        = {0x6b, 0xc1, 0xbe, 0xe2, 0x2e, 0x40, 0x9f, 0x96,
+                                          0xe9, 0x3d, 0x7e, 0x11, 0x73, 0x93, 0x17, 0x2a};
+    static const uint8_t cipherAes128[]                       = {0x3a, 0xd7, 0x7b, 0xb4, 0x0d, 0x7a, 0x36, 0x60,
+                                           0xa8, 0x9e, 0xca, 0xf3, 0x24, 0x66, 0xef, 0x97};
+
+    static const uint8_t message1[] =
+        "Once upon a midnight dreary, while I pondered weak and weary,"
+        "Over many a quaint and curious volume of forgotten lore,"
+        "While I nodded, nearly napping, suddenly there came a tapping,"
+        "As of some one gently rapping, rapping at my chamber door"
+        "Tis some visitor, I muttered, tapping at my chamber door"
+        "Only this, and nothing more.";
+
+    /* Expected SHA-256 for the message1. */
+    static const unsigned char sha1[] = {0xf7, 0x2f, 0xa9, 0xc3, 0x2a, 0x9d, 0xc2, 0x3a, 0x23, 0x23, 0x78,
+                                         0xbd, 0xb3, 0xf2, 0x59, 0x86, 0x42, 0xc0, 0xca, 0xff, 0x17, 0x6d,
+                                         0x9c, 0x2c, 0x1a, 0xcd, 0xcc, 0xb9, 0xe1, 0x06, 0x14, 0x1e};
+
+    static const uint8_t message2[] =
+        "Be that word our sign of parting, bird or fiend! I shrieked upstarting"
+        "Get thee back into the tempest and the Nights Plutonian shore!"
+        "Leave no black plume as a token of that lie thy soul hath spoken!"
+        "Leave my loneliness unbroken! quit the bust above my door!"
+        "Take thy beak from out my heart, and take thy form from off my door!"
+        "Quoth the raven, Nevermore.  ";
+
+    /* Expected SHA-256 for the message2. */
+    static const unsigned char sha2[] = {0x63, 0x76, 0xea, 0xcc, 0xc9, 0xa2, 0xc0, 0x43, 0xf4, 0xfb, 0x01,
+                                         0x34, 0x69, 0xb3, 0x0c, 0xf5, 0x28, 0x63, 0x5c, 0xfa, 0xa5, 0x65,
+                                         0x60, 0xef, 0x59, 0x7b, 0xd9, 0x1c, 0xac, 0xaa, 0x31, 0xf7};
+    uint8_t cipher[16]; /*  For AES ECB */
+    uint8_t output[16]; /*  For AES ECB */
+    status_t status;
+
+    size_t outLength1, outLength2;
+    unsigned int length1, length2;
+    unsigned char outputSHA1[32], outputSHA2[32];
+
+    hashcrypt_hash_ctx_t hashCtx1;
+    hashcrypt_hash_ctx_t hashCtx2;
+
+    length1    = sizeof(message1) - 1;
+    outLength1 = sizeof(outputSHA1);
+    memset(&outputSHA1, 0, outLength1);
+
+    length2    = sizeof(message2) - 1;
+    outLength2 = sizeof(outputSHA2);
+    memset(&outputSHA2, 0, outLength2);
+
+    hashcrypt_handle_t m_handle;
+
+    m_handle.keyType = kHASHCRYPT_UserKey;
+
+    status = HASHCRYPT_SHA_Init(HASHCRYPT, &hashCtx1, kHASHCRYPT_Sha256);
+    TEST_ASSERT(kStatus_Success == status);
+
+    status = HASHCRYPT_SHA_Init(HASHCRYPT, &hashCtx2, kHASHCRYPT_Sha256);
+    TEST_ASSERT(kStatus_Success == status);
+
+    status = HASHCRYPT_AES_SetKey(HASHCRYPT, &m_handle, keyAes128, 16);
+    TEST_ASSERT(kStatus_Success == status);
+
+    status = HASHCRYPT_AES_EncryptEcb(HASHCRYPT, &m_handle, plainAes128, cipher, 16);
+    TEST_ASSERT(kStatus_Success == status);
+    TEST_ASSERT(memcmp(cipher, cipherAes128, 16) == 0);
+
+    status = HASHCRYPT_SHA_Update(HASHCRYPT, &hashCtx1, message1, length1);
+    TEST_ASSERT(kStatus_Success == status);
+
+    status = HASHCRYPT_SHA_Update(HASHCRYPT, &hashCtx2, message2, length2);
+    TEST_ASSERT(kStatus_Success == status);
+
+    status = HASHCRYPT_AES_DecryptEcb(HASHCRYPT, &m_handle, cipher, output, 16);
+    TEST_ASSERT(kStatus_Success == status);
+    TEST_ASSERT(memcmp(output, plainAes128, 16) == 0);
+
+    status = HASHCRYPT_SHA_Finish(HASHCRYPT, &hashCtx1, outputSHA1, &outLength1);
+    TEST_ASSERT(kStatus_Success == status);
+    TEST_ASSERT(outLength1 == 32u);
+    TEST_ASSERT(memcmp(outputSHA1, sha1, outLength1) == 0);
+
+    status = HASHCRYPT_SHA_Finish(HASHCRYPT, &hashCtx2, outputSHA2, &outLength2);
+    TEST_ASSERT(kStatus_Success == status);
+    TEST_ASSERT(outLength2 == 32u);
+    TEST_ASSERT(memcmp(outputSHA2, sha2, outLength2) == 0);
+
+    PRINTF("Hashcrypt reload feature pass\r\n");
+
+#endif
+}
+
 /*!
  * @brief Main function.
  */
@@ -231,6 +329,8 @@ int main(void)
     TestAesCtr();
     TestSha1();
     TestSha256();
+
+    TestReloadHashcryptFeature();
 
     HASHCRYPT_Deinit(HASHCRYPT);
 

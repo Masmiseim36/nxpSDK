@@ -17,7 +17,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 err_t ethernetif_init(struct netif *netif, struct ethernetif *ethernetif,
-                      const uint8_t enetIdx,
+                      void *enetBase,
                       const ethernetif_config_t *ethernetifConfig);
 
 void ethernetif_enet_init(struct netif *netif, struct ethernetif *ethernetif,
@@ -25,9 +25,16 @@ void ethernetif_enet_init(struct netif *netif, struct ethernetif *ethernetif,
 
 void ethernetif_phy_init(struct ethernetif *ethernetif,
                          const ethernetif_config_t *ethernetifConfig,
-                         enet_config_t *config);
+                         phy_speed_t *speed,
+                         phy_duplex_t *duplex);
 
-ENET_Type **ethernetif_enet_ptr(struct ethernetif *ethernetif);
+void *ethernetif_get_enet_base(const uint8_t enetIdx);
+
+#if defined(FSL_FEATURE_SOC_ENET_QOS_COUNT) && (FSL_FEATURE_SOC_ENET_QOS_COUNT > 0)
+void *ethernetif_get_enet_qos_base(const uint8_t enetIdx);
+#endif
+
+void **ethernetif_enet_ptr(struct ethernetif *ethernetif);
 
 #if LWIP_IPV4 && LWIP_IGMP
 err_t ethernetif_igmp_mac_filter(struct netif *netif, const ip4_addr_t *group,

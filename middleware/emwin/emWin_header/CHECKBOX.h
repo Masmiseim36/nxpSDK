@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -64,21 +64,27 @@ Purpose     : CHECKBOX include
 
 /*********************************************************************
 *
-*       Color indices
+*       CHECKBOX color indexes
+*
+*  Description
+*    Color indexes for CHECKBOX widget.
 */
-#define CHECKBOX_CI_DISABLED 0
-#define CHECKBOX_CI_ENABLED  1
+#define CHECKBOX_CI_DISABLED 0            // Color used for disabled state.
+#define CHECKBOX_CI_ENABLED  1            // Color used for enabled state.
 
 /*********************************************************************
 *
-*       Bitmap indices
+*       CHECKBOX bitmap indexes
+*
+*  Description
+*    Bitmap indexes for CHECKBOX widget.
 */
-#define CHECKBOX_BI_INACTIV_UNCHECKED 0
-#define CHECKBOX_BI_ACTIV_UNCHECKED   1
-#define CHECKBOX_BI_INACTIV_CHECKED   2
-#define CHECKBOX_BI_ACTIV_CHECKED     3
-#define CHECKBOX_BI_INACTIV_3STATE    4
-#define CHECKBOX_BI_ACTIV_3STATE      5
+#define CHECKBOX_BI_INACTIV_UNCHECKED 0   // Bitmap displayed when the CHECKBOX is unchecked and disabled.
+#define CHECKBOX_BI_ACTIV_UNCHECKED   1   // Bitmap displayed when the CHECKBOX is unchecked and enabled.
+#define CHECKBOX_BI_INACTIV_CHECKED   2   // Bitmap displayed when the CHECKBOX is checked and disabled.
+#define CHECKBOX_BI_ACTIV_CHECKED     3   // Bitmap displayed when the CHECKBOX is checked and enabled.
+#define CHECKBOX_BI_INACTIV_3STATE    4   // Bitmap displayed when the CHECKBOX is in the third state and disabled.
+#define CHECKBOX_BI_ACTIV_3STATE      5   // Bitmap displayed when the CHECKBOX is in the third state and enabled.
 
 /*********************************************************************
 *

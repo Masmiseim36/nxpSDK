@@ -184,8 +184,8 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -314,25 +314,20 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../common/fmstr_example</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1167,8 +1162,8 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1015DAF5A</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1297,25 +1292,20 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../common/fmstr_example</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../common/fmstr_example</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2006,6 +1996,12 @@
   <group>
     <name>board</name>
     <file>
+      <name>$PROJ_DIR$/../clock_config.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../clock_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
     <file>
@@ -2017,12 +2013,6 @@
     <file>
       <name>$PROJ_DIR$/../board.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../clock_config.h</name>
-    </file>
   </group>
   <group>
     <name>doc</name>
@@ -2033,31 +2023,31 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_lpuart.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_lpuart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_lpuart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_common.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_common.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/drivers/fsl_gpio.c</name>
     </file>
   </group>
   <group>
@@ -2069,16 +2059,7 @@
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_appcmd.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_can.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_can.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_defcfg.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_pdbdm.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_pipes.c</name>
@@ -2102,15 +2083,6 @@
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_scope.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_serial.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_serial.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_sha.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_tsa.c</name>
     </file>
     <file>
@@ -2128,89 +2100,110 @@
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_utils.h</name>
     </file>
-    <group>
-      <name>drivers</name>
-      <group>
-        <name>mcuxsdk</name>
-        <group>
-          <name>can</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.h</name>
-          </file>
-        </group>
-        <group>
-          <name>serial</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</name>
-          </file>
-        </group>
-      </group>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_can.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_can.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_sha.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_pdbdm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_serial.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_serial.h</name>
+    </file>
     <group>
       <name>platforms</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.h</name>
       </file>
     </group>
+    <group>
+      <name>drivers</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
   </group>
   <group>
     <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/fsl_device_registers.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/MIMXRT1015.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/MIMXRT1015_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/system_MIMXRT1015.c</name>
@@ -2220,62 +2213,23 @@
     </file>
   </group>
   <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/utilities/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
     <name>component</name>
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -2288,10 +2242,10 @@
   <group>
     <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip/fsl_flexspi_nor_boot.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip/fsl_flexspi_nor_boot.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1015/xip/fsl_flexspi_nor_boot.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../xip/evkmimxrt1015_flexspi_nor_config.c</name>
@@ -2318,16 +2272,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

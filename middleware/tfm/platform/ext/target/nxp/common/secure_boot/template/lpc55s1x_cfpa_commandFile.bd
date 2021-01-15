@@ -1,0 +1,17 @@
+options {
+    flags = 0x8; // bd file format: 0x8 encrypted + signed (always 0x8)
+    buildNumber = 0x1; // not used
+    productVersion = "1.00.00"; // not used
+    componentVersion = "1.00.00"; // not used
+    secureBinaryVersion = "2.1";  // must be 2.1
+}
+sources {
+     cfpaApp = extern(0);
+}
+
+/* Bootable section */
+section (0;hmacEntries=20) {
+
+    erase 0x0..sizeof(cfpaApp);
+    load cfpaApp > 0x0;
+}

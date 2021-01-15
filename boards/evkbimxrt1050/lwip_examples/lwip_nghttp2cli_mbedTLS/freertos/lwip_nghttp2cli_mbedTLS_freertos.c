@@ -10,13 +10,13 @@
  * Includes
  ******************************************************************************/
 #include "nghttp2client.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "ksdk_mbedtls.h"
 
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "lwip/netifapi.h"
@@ -156,9 +156,6 @@ int main(void)
     BOARD_InitModuleClock();
 
     IOMUXC_EnableMode(IOMUXC_GPR, kIOMUXC_GPR_ENET1TxClkOutputDir, true);
-
-    /* Data cache must be temporarily disabled to be able to use sdram */
-    SCB_DisableDCache();
 
     GPIO_PinInit(GPIO1, 9, &gpio_config);
     GPIO_PinInit(GPIO1, 10, &gpio_config);

@@ -6,10 +6,10 @@ and another I2S interface to playback the buffer to output - digital loopback.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.5
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -28,7 +28,7 @@ To make example work, connections needed to be as follows:
 Prepare the Demo
 ================
 1.  Connect headphones to Audio HP / Line-Out connector (J4).
-2.  Connect source of sound to Audio Line-In connector (J3).
+2.  Connect source of sound(from PC or Smart phone) to Audio Line-In connector (J3).
 3.  Connect a micro USB cable between the PC host and the CMSIS DAP USB port (J5) on the board
 4.  Open a serial terminal with the following settings:
     - 115200 baud rate

@@ -28,53 +28,53 @@
 #include "freemaster_serial.h"
 #include "freemaster_56f800e_eonce.h"
 
-#if !(FMSTR_DISABLE)
+#if FMSTR_DISABLE == 0
 
 /***********************************
-*  configuration check
-***********************************/
+ *  configuration check
+ ***********************************/
 
-#if FMSTR_USE_EONCE_TDF_WORKAROUND && (!FMSTR_POLL_DRIVEN)
+#if FMSTR_USE_EONCE_TDF_WORKAROUND > 0 && FMSTR_POLL_DRIVEN == 0
 #error FreeMASTER EOnCE communication with active TDF big workaround only works in polled mode.
 #endif
 
 /***********************************
-*  local variables
-***********************************/
+ *  local variables
+ ***********************************/
 
 /* EOnCE bas address is the same for all DSC platforms */
-#define FMSTR_EONCE_BASE 0xFFFF00
+#define FMSTR_EONCE_BASE 0xFFFF00U
 
 /* EOnCE base address kept as U32 word, but still it needs the LDM to work. */
 #if defined(FMSTR_SERIAL_BASE) && ((FMSTR_SERIAL_BASE) != FMSTR_EONCE_BASE)
-    #warning FMSTR_SERIAL_BASE should not be specified when using JTAG EOnCE RTD Unit (undefine to use default 0xFFFF00)
-    static FMSTR_U32 fmstr_eonceBaseAddr = (FMSTR_U32)FMSTR_SERIAL_BASE;
+#warning FMSTR_SERIAL_BASE should not be specified when using JTAG EOnCE RTD Unit (undefine to use default 0xFFFF00)
+static FMSTR_U32 fmstr_eonceBaseAddr = (FMSTR_U32)FMSTR_SERIAL_BASE;
 #else
-    static FMSTR_U32 fmstr_eonceBaseAddr = 0;
+static FMSTR_U32 fmstr_eonceBaseAddr = 0;
 #endif
 
 struct
 {
-    FMSTR_U32 txData;    /* Cached 4 bytes of transmit data */
-    FMSTR_U32 rxData;    /* Cached 4 bytes of receive data */
-    FMSTR_SIZE8 txSize;  /* Number of bytes in transmit data cache */
-    FMSTR_SIZE8 rxSize;  /* Number of bytes in receive data cache */
+    FMSTR_U32 txData;   /* Cached 4 bytes of transmit data */
+    FMSTR_U32 rxData;   /* Cached 4 bytes of receive data */
+    FMSTR_SIZE8 txSize; /* Number of bytes in transmit data cache */
+    FMSTR_SIZE8 rxSize; /* Number of bytes in receive data cache */
 
     union
     {
         FMSTR_FLAGS all;
         struct
         {
-            unsigned riePending : 1;   /* RX interrupt is pending to be enabled */
-            unsigned tdfNeedRead : 1;  /* used with FMSTR_USE_EONCE_TDF_WORKAROUND logic */
+            unsigned riePending : 1;  /* RX interrupt is pending to be enabled */
+            unsigned tdfNeedRead : 1; /* used with FMSTR_USE_EONCE_TDF_WORKAROUND logic */
         } bit;
     } flags;
 
 } fmstr_eonceCtx;
 
 /***********************************
-*  local function prototypes
-***********************************/
+ *  local function prototypes
+ ***********************************/
 
 /* Interface function - Initialization of EONCE driver adapter */
 static FMSTR_BOOL _FMSTR_56F800E_EOnCE_Init(void);
@@ -86,7 +86,7 @@ static void _FMSTR_56F800E_EOnCE_EnableTransmitCompleteInterrupt(FMSTR_BOOL enab
 static FMSTR_BOOL _FMSTR_56F800E_EOnCE_IsTransmitRegEmpty(void);
 static FMSTR_BOOL _FMSTR_56F800E_EOnCE_IsReceiveRegFull(void);
 static FMSTR_BOOL _FMSTR_56F800E_EOnCE_IsTransmitterActive(void);
-static void _FMSTR_56F800E_EOnCE_PutChar(FMSTR_BCHR  ch);
+static void _FMSTR_56F800E_EOnCE_PutChar(FMSTR_BCHR ch);
 static FMSTR_BCHR _FMSTR_56F800E_EOnCE_GetChar(void);
 static void _FMSTR_56F800E_EOnCE_Flush(void);
 static void _FMSTR_56F800E_EOnCE_Poll(void);
@@ -96,43 +96,43 @@ static void _FMSTR_56F800E_EOnCE_TryReceiveData(void);
 static void _FMSTR_56F800E_EOnCE_TryTransmitData(void);
 
 /***********************************
-*  global variables
-***********************************/
+ *  global variables
+ ***********************************/
 /* Interface of this EONCE driver */
 
-const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_56F800E_EONCE =
-{
-    FMSTR_C99_INIT(Init                       ) _FMSTR_56F800E_EOnCE_Init,
-    FMSTR_C99_INIT(EnableTransmit             ) _FMSTR_56F800E_EOnCE_EnableTransmit,
-    FMSTR_C99_INIT(EnableReceive              ) _FMSTR_56F800E_EOnCE_EnableReceive,
-    FMSTR_C99_INIT(EnableTransmitInterrupt    ) _FMSTR_56F800E_EOnCE_EnableTransmitInterrupt,
-    FMSTR_C99_INIT(EnableTransmitCompleteInterrupt ) _FMSTR_56F800E_EOnCE_EnableTransmitCompleteInterrupt,
-    FMSTR_C99_INIT(EnableReceiveInterrupt     ) _FMSTR_56F800E_EOnCE_EnableReceiveInterrupt,
-    FMSTR_C99_INIT(IsTransmitRegEmpty         ) _FMSTR_56F800E_EOnCE_IsTransmitRegEmpty,
-    FMSTR_C99_INIT(IsReceiveRegFull           ) _FMSTR_56F800E_EOnCE_IsReceiveRegFull,
-    FMSTR_C99_INIT(IsTransmitterActive        ) _FMSTR_56F800E_EOnCE_IsTransmitterActive,
-    FMSTR_C99_INIT(PutChar                    ) _FMSTR_56F800E_EOnCE_PutChar,
-    FMSTR_C99_INIT(GetChar                    ) _FMSTR_56F800E_EOnCE_GetChar,
-    FMSTR_C99_INIT(Flush                      ) _FMSTR_56F800E_EOnCE_Flush,
-    FMSTR_C99_INIT(Poll                       ) _FMSTR_56F800E_EOnCE_Poll,
+const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_56F800E_EONCE = {
+    FMSTR_C99_INIT(Init) _FMSTR_56F800E_EOnCE_Init,
+    FMSTR_C99_INIT(EnableTransmit) _FMSTR_56F800E_EOnCE_EnableTransmit,
+    FMSTR_C99_INIT(EnableReceive) _FMSTR_56F800E_EOnCE_EnableReceive,
+    FMSTR_C99_INIT(EnableTransmitInterrupt) _FMSTR_56F800E_EOnCE_EnableTransmitInterrupt,
+    FMSTR_C99_INIT(EnableTransmitCompleteInterrupt) _FMSTR_56F800E_EOnCE_EnableTransmitCompleteInterrupt,
+    FMSTR_C99_INIT(EnableReceiveInterrupt) _FMSTR_56F800E_EOnCE_EnableReceiveInterrupt,
+    FMSTR_C99_INIT(IsTransmitRegEmpty) _FMSTR_56F800E_EOnCE_IsTransmitRegEmpty,
+    FMSTR_C99_INIT(IsReceiveRegFull) _FMSTR_56F800E_EOnCE_IsReceiveRegFull,
+    FMSTR_C99_INIT(IsTransmitterActive) _FMSTR_56F800E_EOnCE_IsTransmitterActive,
+    FMSTR_C99_INIT(PutChar) _FMSTR_56F800E_EOnCE_PutChar,
+    FMSTR_C99_INIT(GetChar) _FMSTR_56F800E_EOnCE_GetChar,
+    FMSTR_C99_INIT(Flush) _FMSTR_56F800E_EOnCE_Flush,
+    FMSTR_C99_INIT(Poll) _FMSTR_56F800E_EOnCE_Poll,
 };
 
 /****************************************************************************************
-* General peripheral space access macros
-*****************************************************************************************/
+ * General peripheral space access macros
+ *****************************************************************************************/
 
-#define FMSTR_SETBIT(base, offset, bit)     (*(volatile FMSTR_U16*)(((FMSTR_U32)(base))+(offset)) |= bit)
-#define FMSTR_CLRBIT(base, offset, bit)     (*(volatile FMSTR_U16*)(((FMSTR_U32)(base))+(offset)) &= (FMSTR_U16)~((FMSTR_U16)(bit)))
-#define FMSTR_TSTBIT(base, offset, bit)     (*(volatile FMSTR_U16*)(((FMSTR_U32)(base))+(offset)) & (bit))
-#define FMSTR_SETREG(base, offset, value)   (*(volatile FMSTR_U16*)(((FMSTR_U32)(base))+(offset)) = value)
-#define FMSTR_GETREG(base, offset)          (*(volatile FMSTR_U16*)(((FMSTR_U32)(base))+(offset)))
+#define FMSTR_SETBIT(base, offset, bit) (*(volatile FMSTR_U16 *)(((FMSTR_U32)(base)) + (offset)) |= bit)
+#define FMSTR_CLRBIT(base, offset, bit) \
+    (*(volatile FMSTR_U16 *)(((FMSTR_U32)(base)) + (offset)) &= (FMSTR_U16) ~((FMSTR_U16)(bit)))
+#define FMSTR_TSTBIT(base, offset, bit)   (*(volatile FMSTR_U16 *)(((FMSTR_U32)(base)) + (offset)) & (bit))
+#define FMSTR_SETREG(base, offset, value) (*(volatile FMSTR_U16 *)(((FMSTR_U32)(base)) + (offset)) = value)
+#define FMSTR_GETREG(base, offset)        (*(volatile FMSTR_U16 *)(((FMSTR_U32)(base)) + (offset)))
 
-#define FMSTR_SETREG32(base, offset, value) (*(volatile FMSTR_U32*)(((FMSTR_U32)(base))+(offset)) = value)
-#define FMSTR_GETREG32(base, offset)        (*(volatile FMSTR_U32*)(((FMSTR_U32)(base))+(offset)))
+#define FMSTR_SETREG32(base, offset, value) (*(volatile FMSTR_U32 *)(((FMSTR_U32)(base)) + (offset)) = value)
+#define FMSTR_GETREG32(base, offset)        (*(volatile FMSTR_U32 *)(((FMSTR_U32)(base)) + (offset)))
 
 /****************************************************************************************
-* EONCE module constants
-*****************************************************************************************/
+ * EONCE module constants
+ *****************************************************************************************/
 
 /* EONCE module registers */
 #define FMSTR_EONCE_OTXRXSR_OFFSET 0xfdU
@@ -148,28 +148,30 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_56F800E_EONCE =
 #define FMSTR_EONCE_OTXRXSR_TIE 0x08U
 
 /******************************************************************************
-*
-* EONCE communication initialization
-*
-******************************************************************************/
+ *
+ * EONCE communication initialization
+ *
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_56F800E_EOnCE_Init(void)
 {
     /* Default EOnCE address is used */
-    if(fmstr_eonceBaseAddr == 0)
+    if (fmstr_eonceBaseAddr == 0U)
+    {
         fmstr_eonceBaseAddr = FMSTR_EONCE_BASE;
+    }
 
-    fmstr_eonceCtx.flags.all = 0;
-    fmstr_eonceCtx.txSize = 0;
-    fmstr_eonceCtx.rxSize = 0;
+    fmstr_eonceCtx.flags.all = 0U;
+    fmstr_eonceCtx.txSize    = 0U;
+    fmstr_eonceCtx.rxSize    = 0U;
     return FMSTR_TRUE;
 }
 
 /******************************************************************************
-*
-* EONCE polling
-*
-******************************************************************************/
+ *
+ * EONCE polling
+ *
+ ******************************************************************************/
 
 static void _FMSTR_56F800E_EOnCE_Poll(void)
 {
@@ -181,8 +183,8 @@ static void _FMSTR_56F800E_EOnCE_Poll(void)
      * This problem is detected (see how riePending is set) and it is tried to be fixed
      * periodically here in the poll call.
      */
-#if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
-    if(fmstr_eonceCtx.flags.bit.riePending)
+#if FMSTR_LONG_INTR > 0 || FMSTR_SHORT_INTR > 0
+    if (fmstr_eonceCtx.flags.bit.riePending != 0U)
     {
 #if FMSTR_DEBUG_LEVEL >= 3
         FMSTR_DEBUG_PRINTF("FMSTR EOnCE Late RIE attempt\n");
@@ -193,43 +195,45 @@ static void _FMSTR_56F800E_EOnCE_Poll(void)
 }
 
 /******************************************************************************
-*
-* Enable/Disable EONCE transmitter
-*
-******************************************************************************/
+ *
+ * Enable/Disable EONCE transmitter
+ *
+ ******************************************************************************/
 
 static void _FMSTR_56F800E_EOnCE_EnableTransmit(FMSTR_BOOL enable)
 {
-    if(!enable)
+    if (enable == FMSTR_FALSE)
     {
         fmstr_eonceCtx.txSize = 0;
-#if FMSTR_USE_EONCE_TDF_WORKAROUND
+#if FMSTR_USE_EONCE_TDF_WORKAROUND > 0
         fmstr_eonceCtx.flags.bit.tdfNeedRead = 0;
 #endif
     }
 }
 
 /******************************************************************************
-*
-* Enable/Disable EONCE receiver
-*
-******************************************************************************/
+ *
+ * Enable/Disable EONCE receiver
+ *
+ ******************************************************************************/
 
 static void _FMSTR_56F800E_EOnCE_EnableReceive(FMSTR_BOOL enable)
 {
-    if(!enable)
+    if (enable == FMSTR_FALSE)
+    {
         fmstr_eonceCtx.rxSize = 0;
+    }
 }
 
 /******************************************************************************
-*
-* Enable/Disable interrupt from transmit register empty event
-*
-******************************************************************************/
+ *
+ * Enable/Disable interrupt from transmit register empty event
+ *
+ ******************************************************************************/
 
 static void _FMSTR_56F800E_EOnCE_EnableTransmitInterrupt(FMSTR_BOOL enable)
 {
-    if(enable)
+    if (enable != FMSTR_FALSE)
     {
         /* Enable interrupt */
         FMSTR_SETBIT(fmstr_eonceBaseAddr, FMSTR_EONCE_OTXRXSR_OFFSET, FMSTR_EONCE_OTXRXSR_TIE);
@@ -242,10 +246,10 @@ static void _FMSTR_56F800E_EOnCE_EnableTransmitInterrupt(FMSTR_BOOL enable)
 }
 
 /******************************************************************************
-*
-* Enable/Disable interrupt when transmission is complete (=idle)
-*
-******************************************************************************/
+ *
+ * Enable/Disable interrupt when transmission is complete (=idle)
+ *
+ ******************************************************************************/
 
 static void _FMSTR_56F800E_EOnCE_EnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
 {
@@ -253,25 +257,27 @@ static void _FMSTR_56F800E_EOnCE_EnableTransmitCompleteInterrupt(FMSTR_BOOL enab
 }
 
 /******************************************************************************
-*
-* Enable/Disable interrupt from receive register full event
-*
-******************************************************************************/
+ *
+ * Enable/Disable interrupt from receive register full event
+ *
+ ******************************************************************************/
 
 static void _FMSTR_56F800E_EOnCE_EnableReceiveInterrupt(FMSTR_BOOL enable)
 {
     /* this bit will be set eventually if enabling the interrupt fails */
-    fmstr_eonceCtx.flags.bit.riePending = 0;
+    fmstr_eonceCtx.flags.bit.riePending = 0U;
 
-    if(enable)
+    if (enable != FMSTR_FALSE)
     {
         /* Enable interrupt */
         FMSTR_SETBIT(fmstr_eonceBaseAddr, FMSTR_EONCE_OTXRXSR_OFFSET, FMSTR_EONCE_OTXRXSR_RIE);
 
         /* On older core versions, enabling the interrupt may fail if JTAG module is not
          * yet initialized by an external access. See the Poll call for more information. */
-        if(!FMSTR_TSTBIT(fmstr_eonceBaseAddr, FMSTR_EONCE_OTXRXSR_OFFSET, FMSTR_EONCE_OTXRXSR_RIE))
-            fmstr_eonceCtx.flags.bit.riePending = 1;
+        if (FMSTR_TSTBIT(fmstr_eonceBaseAddr, FMSTR_EONCE_OTXRXSR_OFFSET, FMSTR_EONCE_OTXRXSR_RIE) == 0U)
+        {
+            fmstr_eonceCtx.flags.bit.riePending = 1U;
+        }
     }
     else
     {
@@ -281,36 +287,38 @@ static void _FMSTR_56F800E_EOnCE_EnableReceiveInterrupt(FMSTR_BOOL enable)
 }
 
 /******************************************************************************
-*
-* Returns TRUE if the transmit register is empty, and it's possible to put next char
-*
-******************************************************************************/
+ *
+ * Returns TRUE if the transmit register is empty, and it's possible to put next char
+ *
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_56F800E_EOnCE_IsTransmitRegEmpty(void)
 {
     /* Any space in transmit buffer? */
-    if(fmstr_eonceCtx.txSize < 4)
+    if (fmstr_eonceCtx.txSize < 4U)
+    {
         return FMSTR_TRUE;
+    }
 
     /* Try to flush 4 bytes which are pending in our output buffer now */
     _FMSTR_56F800E_EOnCE_TryTransmitData();
 
     /* Any free space by now? */
-    return fmstr_eonceCtx.txSize < 4;
+    return fmstr_eonceCtx.txSize < 4U;
 }
 
 /******************************************************************************
-*
-* Try to receive some EOnCE data from the remote peer into the local buffer
-*
-******************************************************************************/
+ *
+ * Try to receive some EOnCE data from the remote peer into the local buffer
+ *
+ ******************************************************************************/
 
 static void _FMSTR_56F800E_EOnCE_TryReceiveData(void)
 {
-    if(FMSTR_TSTBIT(fmstr_eonceBaseAddr, FMSTR_EONCE_OTXRXSR_OFFSET, FMSTR_EONCE_OTXRXSR_RDF))
+    if (FMSTR_TSTBIT(fmstr_eonceBaseAddr, FMSTR_EONCE_OTXRXSR_OFFSET, FMSTR_EONCE_OTXRXSR_RDF) != 0U)
     {
         fmstr_eonceCtx.rxData = FMSTR_GETREG32(fmstr_eonceBaseAddr, FMSTR_EONCE_ORX_OFFSET);
-        fmstr_eonceCtx.rxSize = 4;
+        fmstr_eonceCtx.rxSize = 4U;
 
 #if FMSTR_DEBUG_LEVEL >= 3
         FMSTR_DEBUG_PRINTF("FMSTR EOnCE RX %04lx\n", fmstr_eonceCtx.rxData);
@@ -319,56 +327,58 @@ static void _FMSTR_56F800E_EOnCE_TryReceiveData(void)
 }
 
 /******************************************************************************
-*
-* Returns TRUE if the receive register is full, and it's possible to get received char
-*
-******************************************************************************/
+ *
+ * Returns TRUE if the receive register is full, and it's possible to get received char
+ *
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_56F800E_EOnCE_IsReceiveRegFull(void)
 {
     /* Still some characters in the receive buffer? */
-    if(fmstr_eonceCtx.rxSize > 0)
+    if (fmstr_eonceCtx.rxSize > 0U)
+    {
         return FMSTR_TRUE;
+    }
 
     /* Try to get next 4 bytes */
     _FMSTR_56F800E_EOnCE_TryReceiveData();
 
     /* Any data by now? */
-    return fmstr_eonceCtx.rxSize > 0;
+    return fmstr_eonceCtx.rxSize > 0U;
 }
 
 /******************************************************************************
-*
-* Low-level testing of TDF flag
-*
-******************************************************************************/
+ *
+ * Low-level testing of TDF flag
+ *
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_56F800E_EOnCE_ReadTDF(void)
 {
     FMSTR_U16 statusReg = FMSTR_GETREG(fmstr_eonceBaseAddr, FMSTR_EONCE_OTXRXSR_OFFSET);
 
     /* The TDF=0 indicates the transmitter has completed the physical transmission. */
-    if(!(statusReg & FMSTR_EONCE_OTXRXSR_TDF))
+    if ((statusReg & FMSTR_EONCE_OTXRXSR_TDF) == 0U)
     {
-#if FMSTR_USE_EONCE_TDF_WORKAROUND
-        if(fmstr_eonceCtx.flags.bit.tdfNeedRead)
+#if FMSTR_USE_EONCE_TDF_WORKAROUND > 0
+        if (fmstr_eonceCtx.flags.bit.tdfNeedRead != 0U)
         {
             /* Silicon bug in older DSC parts makes TDF bit unusable (TDF gets reset too early).
                The FreeMASTER tool sends a dummy confirmation word whenever it receives
                word transmitted by us. This means we can use the RDF as an indication of !TDF */
-            if(statusReg & FMSTR_EONCE_OTXRXSR_RDF)
+            if ((statusReg & FMSTR_EONCE_OTXRXSR_RDF) != 0U)
             {
                 /* Read and discard the data. */
                 FMSTR_U32 dummyRx = FMSTR_GETREG32(fmstr_eonceBaseAddr, FMSTR_EONCE_ORX_OFFSET);
 #if FMSTR_DEBUG_LEVEL >= 3
                 FMSTR_DEBUG_PRINTF("FMSTR EOnCE Dummy RX for !TDF %04lx\n", dummyRx);
 #endif
-                fmstr_eonceCtx.flags.bit.tdfNeedRead = 0;
+                fmstr_eonceCtx.flags.bit.tdfNeedRead = 0U;
                 return FMSTR_FALSE;
             }
             else
             {
-                return FMSTR_TRUE;  /* Not received anything, transmitter is still active. */
+                return FMSTR_TRUE; /* Not received anything, transmitter is still active. */
             }
         }
         else
@@ -387,116 +397,120 @@ static FMSTR_BOOL _FMSTR_56F800E_EOnCE_ReadTDF(void)
 }
 
 /******************************************************************************
-*
-* Returns TRUE if the transmitter is still active
-*
-******************************************************************************/
+ *
+ * Returns TRUE if the transmitter is still active
+ *
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_56F800E_EOnCE_IsTransmitterActive(void)
 {
     /* this call should only be used after flush */
-    FMSTR_ASSERT(fmstr_eonceCtx.txSize == 0 || fmstr_eonceCtx.txSize == 4);
+    FMSTR_ASSERT(fmstr_eonceCtx.txSize == 0U || fmstr_eonceCtx.txSize == 4U);
 
     /* Try physical flushing if word is still pending */
-    if(fmstr_eonceCtx.txSize == 4)
+    if (fmstr_eonceCtx.txSize == 4U)
+    {
         _FMSTR_56F800E_EOnCE_TryTransmitData();
+    }
 
-    return fmstr_eonceCtx.txSize > 0 || _FMSTR_56F800E_EOnCE_ReadTDF();
+    return (FMSTR_BOOL)(fmstr_eonceCtx.txSize > 0U || _FMSTR_56F800E_EOnCE_ReadTDF() != FMSTR_FALSE);
 }
 
 /******************************************************************************
-*
-* The function puts the char for transmit
-*
-******************************************************************************/
+ *
+ * The function puts the char for transmit
+ *
+ ******************************************************************************/
 
 static void _FMSTR_56F800E_EOnCE_PutChar(FMSTR_BCHR ch)
 {
     /* There should be space */
-    if(fmstr_eonceCtx.txSize < 4)
+    if (fmstr_eonceCtx.txSize < 4U)
     {
-        fmstr_eonceCtx.txData = (fmstr_eonceCtx.txData << 8) | (ch & 0xff);
+        fmstr_eonceCtx.txData = (fmstr_eonceCtx.txData << 8) | (ch & 0xffU);
         fmstr_eonceCtx.txSize++;
 
-        if(fmstr_eonceCtx.txSize == 4)
+        if (fmstr_eonceCtx.txSize == 4U)
+        {
             _FMSTR_56F800E_EOnCE_TryTransmitData();
+        }
     }
     else
     {
         /* Caller hasn't checked if IsTransmitRegEmpty */
-        FMSTR_ASSERT(0);
+        FMSTR_ASSERT(0 == 1);
     }
 }
 
 /******************************************************************************
-*
-* The function gets the received char
-*
-******************************************************************************/
+ *
+ * The function gets the received char
+ *
+ ******************************************************************************/
 static FMSTR_BCHR _FMSTR_56F800E_EOnCE_GetChar(void)
 {
-    FMSTR_BCHR ch = 0;
+    FMSTR_BCHR ch = 0U;
 
-    if(fmstr_eonceCtx.rxSize > 0)
+    if (fmstr_eonceCtx.rxSize > 0U)
     {
-        ch = (FMSTR_BCHR)((fmstr_eonceCtx.rxData >> 24) & 0xff);
+        ch = (FMSTR_BCHR)((fmstr_eonceCtx.rxData >> 24) & 0xffU);
         fmstr_eonceCtx.rxData <<= 8;
         fmstr_eonceCtx.rxSize--;
     }
     else
     {
         /* Caller hasn't checked if IsReceiveRegFull */
-        FMSTR_ASSERT(0);
+        FMSTR_ASSERT(0 == 1);
     }
 
     return ch;
 }
 
 /******************************************************************************
-*
-* Sends buffered 32bit word
-*
-******************************************************************************/
+ *
+ * Sends buffered 32bit word
+ *
+ ******************************************************************************/
 
 static void _FMSTR_56F800E_EOnCE_TryTransmitData(void)
 {
     /* This should only be used when full word is ready */
-    FMSTR_ASSERT(fmstr_eonceCtx.txSize == 4);
+    FMSTR_ASSERT(fmstr_eonceCtx.txSize == 4U);
 
     /* Is it possible to transmit physically now? */
-    if(!_FMSTR_56F800E_EOnCE_ReadTDF())
+    if (_FMSTR_56F800E_EOnCE_ReadTDF() == FMSTR_FALSE)
     {
 #if FMSTR_DEBUG_LEVEL >= 3
         FMSTR_DEBUG_PRINTF("FMSTR EOnCE TX %04lx\n", fmstr_eonceCtx.txData);
 #endif
         /* OK put to physical transmit buffer */
         FMSTR_SETREG32(fmstr_eonceBaseAddr, FMSTR_EONCE_OTX_OFFSET, fmstr_eonceCtx.txData);
-        fmstr_eonceCtx.txSize = 0;
+        fmstr_eonceCtx.txSize = 0U;
 
         /* To fix the TDF behavior, we will perform dummy reading. */
-#if FMSTR_USE_EONCE_TDF_WORKAROUND
-        fmstr_eonceCtx.flags.bit.tdfNeedRead = 1;
+#if FMSTR_USE_EONCE_TDF_WORKAROUND > 0
+        fmstr_eonceCtx.flags.bit.tdfNeedRead = 1U;
 #endif
     }
 }
 
 /******************************************************************************
-*
-* Send buffered data
-*
-******************************************************************************/
+ *
+ * Send buffered data
+ *
+ ******************************************************************************/
 
 static void _FMSTR_56F800E_EOnCE_Flush(void)
 {
     /* If anything pending to be transmitted. */
-    if(fmstr_eonceCtx.txSize)
+    if (fmstr_eonceCtx.txSize != 0U)
     {
         /* Send dummy 0xff bytes to wrap up to 4 bytes */
-        if(fmstr_eonceCtx.txSize < 4)
+        if (fmstr_eonceCtx.txSize < 4U)
         {
-            FMSTR_SIZE8 shift = 8*(4-fmstr_eonceCtx.txSize);
-            fmstr_eonceCtx.txData = (fmstr_eonceCtx.txData << shift) | ((1<<shift)-1);
-            fmstr_eonceCtx.txSize = 4;
+            FMSTR_SIZE8 shift     = 8U * (4U - fmstr_eonceCtx.txSize);
+            fmstr_eonceCtx.txData = (fmstr_eonceCtx.txData << shift) | ((1 << shift) - 1);
+            fmstr_eonceCtx.txSize = 4U;
         }
 
         /* Physical flush if possible. */
@@ -505,10 +519,10 @@ static void _FMSTR_56F800E_EOnCE_Flush(void)
 }
 
 /******************************************************************************
-*
-* Assign FreeMASTER communication module base address
-*
-******************************************************************************/
+ *
+ * Assign FreeMASTER communication module base address
+ *
+ ******************************************************************************/
 
 void FMSTR_SerialSetBaseAddress(FMSTR_U32 base)
 {
@@ -516,17 +530,17 @@ void FMSTR_SerialSetBaseAddress(FMSTR_U32 base)
 }
 
 /******************************************************************************
-*
-* Process FreeMASTER serial interrupt (call this function from EONCE ISR)
-*
-******************************************************************************/
+ *
+ * Process FreeMASTER serial interrupt (call this function from EONCE ISR)
+ *
+ ******************************************************************************/
 
 void FMSTR_SerialIsr(void)
 {
+#if FMSTR_LONG_INTR > 0 || FMSTR_SHORT_INTR > 0
     /* process incoming or just transmitted byte */
-    #if (FMSTR_LONG_INTR) || (FMSTR_SHORT_INTR)
     FMSTR_ProcessSerial();
-    #endif
+#endif
 }
 
 #else /* !(FMSTR_DISABLE) */

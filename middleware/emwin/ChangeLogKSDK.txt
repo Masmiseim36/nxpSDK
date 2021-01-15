@@ -2,6 +2,9 @@
 @page middleware_log Middleware Change Log
 
 @section emwin emWin library
-  The currently supported version is 6.10f
-
+  The currently supported version is 6.14d
+  - v6.14d
+  	- upgraded to v6.14d
+  - v6.10f
+    - upgraded to v6.10f
 */

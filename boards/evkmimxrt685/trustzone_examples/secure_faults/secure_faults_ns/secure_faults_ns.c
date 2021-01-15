@@ -6,10 +6,10 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-#include "veneer_table.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+#include "veneer_table.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -101,7 +101,7 @@ int main(void)
 
     /**************************************************************************
      * TEST EXAMPLE 5 - Invalid data access from normal world
-     * In this example the pointer is set to address 0x20010000.
+     * In this example the pointer is set to address defined by DEMO_NONSEC_ADDRESS.
      * This address has non-secure attribute in SAU but it has
      * secure attribute in AHB secure controller.
      * If data is read from this address, the data bus error is generated

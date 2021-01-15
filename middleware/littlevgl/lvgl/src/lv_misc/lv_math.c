@@ -103,7 +103,7 @@ int32_t _lv_bezier3(uint32_t t, int32_t u0, int32_t u1, int32_t u2, int32_t u3)
 
 /**
  * Get the square root of a number
- * @param x integer which square root should be calculatoed
+ * @param x integer which square root should be calculated
  * @param q store the result here. q->i: integer part, q->f: fractional part in 1/256 unit
  * @param mask: optional to skip some iterations if the magnitude of the root is known.
  * Set to 0x8000 by default.
@@ -127,7 +127,6 @@ LV_ATTRIBUTE_FAST_MEM void _lv_sqrt(uint32_t x, lv_sqrt_res_t * q, uint32_t mask
     q->i = (uint32_t) root >> 4;
     q->f = (uint32_t)(root & 0xf) << 4;
 }
-
 
 /**
  * Calculate the atan2 of a vector.
@@ -230,6 +229,32 @@ int64_t _lv_pow(int64_t base, int8_t exp)
     }
 
     return result;
+}
+
+/**
+ * Get the mapped of a number given an input and output range
+ * @param x integer which mapped value should be calculated
+ * @param min_in min input range
+ * @param max_in max input range
+ * @param min_out max output range
+ * @param max_out max output range
+ * @return the mapped number
+ */
+int16_t _lv_map(int32_t x, int32_t min_in, int32_t max_in, int32_t min_out, int32_t max_out)
+{
+    if(x <= min_in) return min_out;
+    if(x >= max_in) return max_out;
+
+    /* The equation should be:
+     *   ((x - min_in) / delta in) * delta_out + min_out
+     * To avoid rounding error reorder the operations:
+     *   (((x - min_in) * delta_out) / delta in) + min_out
+     */
+
+    int32_t delta_in = max_in - min_in;
+    int32_t delta_out = max_out - min_out;
+
+    return ((x - min_in) * delta_out) / delta_in + min_out;
 }
 
 /**********************

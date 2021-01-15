@@ -10,13 +10,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -24,10 +24,6 @@
 #define LED_1_INIT() USER_LED_INIT(LOGIC_LED_OFF)
 #define LED_1_ON()   USER_LED_ON()
 #define LED_1_OFF()  USER_LED_OFF()
-#if !(defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING) || \
-      ((defined(DEBUG_CONSOLE_TRANSFER_NON_BLOCKING) && (DEBUG_CONSOLE_TRANSFER_NON_BLOCKING == 0U))))
-#error "Must set DEBUG_CONSOLE_TRANSFER_NON_BLOCKING as 1"
-#endif
 #define SHELL_Printf PRINTF
 /*******************************************************************************
  * Prototypes

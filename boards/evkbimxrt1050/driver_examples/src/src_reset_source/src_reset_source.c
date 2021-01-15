@@ -1,18 +1,18 @@
 /*
  * Copyright (c) 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_src.h"
 #include "fsl_common.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -45,7 +45,11 @@ int main(void)
 
     PRINTF("Example: SRC Reset Soruce.\r\n");
 
+#if defined(DEMO_GET_RESET_STATUS_FLAGS)
+    flags = DEMO_GET_RESET_STATUS_FLAGS;
+#else
     flags = SRC_GetResetStatusFlags(DEMO_SRC);
+#endif /* DEMO_GET_RESET_STATUS_FLAGS */
     SRC_ClearResetStatusFlags(DEMO_SRC, flags);
 
     PRINTF("SRC_GetResetStatusFlags(): 0x%X.\r\n", flags);

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -69,6 +69,7 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
 *
 *       Macros, function replacement
 */
+#define GUI_ABS(a)              ((a < 0) ? -a : a)
 #define GUI_COUNTOF(a)          (sizeof(a) / sizeof(a[0]))
 #define GUI_MIN(a,b)            (((a) < (b)) ? (a) : (b))
 #define GUI_MAX(a,b)            (((a) > (b)) ? (a) : (b))
@@ -262,7 +263,7 @@ struct GUI_CONTEXT {
   //
   GUI_HMEM    hDevData;
   //
-  // Variables in Anitaliasing module
+  // Variables in Antialiasing module
   //
   const tLCD_HL_APIList * pLCD_HL;       // Required to reroute drawing (HLine & Pixel) to the AA module
   U8 AA_Factor;
@@ -298,15 +299,20 @@ void         GUI_DEVICE_LinkDevices      (GUI_DEVICE * pDevice);
 
 /*********************************************************************
 *
-*       GUI_DIRTYDEVICE
+*       GUI_DIRTYDEVICE_INFO
+*
+*   Description
+*     Information about the dirty device.
 */
 typedef struct {
-  void * pData;         // Pointer to first pixel
-  int    x0, y0;        // Coordinates of the upper left pixel
-  int    xSize, ySize;  // Size of dirty rectangle
-  int    LineOff;       // Virtual xSize in pixels
-  int    BytesPerPixel; // Number of bytes required per pixel
-  int    IsDirty;       // Indicates if dirty pixels exist
+  void * pData;         // Pointer to the first changed pixel.\sup{*1}
+  int    x0;            // Leftmost position of changed area.
+  int    y0;            // Topmost position of changed area.
+  int    xSize;         // Size in X of changed area.
+  int    ySize;         // Size in Y of changed area.
+  int    LineOff;       // Number of pixels (stride) from one line to the next line.\sup{*1}
+  int    BytesPerPixel; // Number of bytes required per pixel.
+  int    IsDirty;       // Indicates if dirty pixels exist.
 } GUI_DIRTYDEVICE_INFO;
 
 int GUI_DIRTYDEVICE_Create      (void);
@@ -335,14 +341,18 @@ extern void (* GUI_DCACHE__pfClearCacheHook)(U32 LayerMask);
 
 /*********************************************************************
 *
-*       GUI_SOFTLAYER
+*       GUI_SOFTLAYER_CONFIG
+*
+*  Description
+*    Data structure used by GUI_SOFTLAYER_Enable() to configurate a
+*    soft layer.
 */
 typedef struct {
-  int xPos;
-  int yPos;
-  int xSize;
-  int ySize;
-  int Visible;
+  int xPos;      // X-position.
+  int yPos;      // Y-position.
+  int xSize;     // X-size.
+  int ySize;     // Y-size.
+  int Visible;   // 1 = visible, 0 = not visible.
 } GUI_SOFTLAYER_CONFIG;
 
 int  GUI_SOFTLAYER_Enable           (GUI_SOFTLAYER_CONFIG * pConfig, int NumLayers, GUI_COLOR CompositeColor);
@@ -518,17 +528,21 @@ void GUI_DrawCircle            (int x0, int y0, int r);
 void GUI_DrawEllipse           (int x0, int y0, int rx, int ry);
 void GUI_DrawEllipseXL         (int x0, int y0, int rx, int ry);
 void GUI_DrawGradientH         (int x0, int y0, int x1, int y1, GUI_COLOR Color0, GUI_COLOR Color1);
-void GUI_DrawGradientHEx       (GUI_RECT * pRect, GUI_COLOR Color0, GUI_COLOR Color1);
+void GUI_DrawGradientHEx       (const GUI_RECT * pRect, GUI_COLOR Color0, GUI_COLOR Color1);
 void GUI_DrawGradientMH        (int x0, int y0, int y1, GUI_GRADIENT_INFO * pGradientInfo, int NumColors);
-void GUI_DrawGradientMHEx      (GUI_RECT * pRect, GUI_GRADIENT_INFO * pGradientInfo, int NumColors);
+void GUI_DrawGradientMHEx      (const GUI_RECT * pRect, GUI_GRADIENT_INFO * pGradientInfo, int NumColors);
 void GUI_DrawGradientMV        (int x0, int y0, int x1, GUI_GRADIENT_INFO * pGradientInfo, int NumColors);
-void GUI_DrawGradientMVEx      (GUI_RECT * pRect, GUI_GRADIENT_INFO * pGradientInfo, int NumColors);
+void GUI_DrawGradientMVEx      (const GUI_RECT * pRect, GUI_GRADIENT_INFO * pGradientInfo, int NumColors);
 void GUI_DrawGradientV         (int x0, int y0, int x1, int y1, GUI_COLOR Color0, GUI_COLOR Color1);
-void GUI_DrawGradientVEx       (GUI_RECT * pRect, GUI_COLOR Color0, GUI_COLOR Color1);
+void GUI_DrawGradientVEx       (const GUI_RECT * pRect, GUI_COLOR Color0, GUI_COLOR Color1);
 void GUI_DrawGradientRoundedH  (int x0, int y0, int x1, int y1, int rd, GUI_COLOR Color0, GUI_COLOR Color1);
-void GUI_DrawGradientRoundedHEx(GUI_RECT * pRect, int rd, GUI_COLOR Color0, GUI_COLOR Color1);
+void GUI_DrawGradientRoundedMH (int x0, int y0, int y1, int rd, GUI_GRADIENT_INFO * pGradientInfo, int NumColors);
+void GUI_DrawGradientRoundedHEx(const GUI_RECT * pRect, int rd, GUI_COLOR Color0, GUI_COLOR Color1);
+void GUI_DrawGradientRoundedMHEx(const GUI_RECT * pRect, int rd, GUI_GRADIENT_INFO * pGradientInfo, int NumColors);
 void GUI_DrawGradientRoundedV  (int x0, int y0, int x1, int y1, int rd, GUI_COLOR Color0, GUI_COLOR Color1);
-void GUI_DrawGradientRoundedVEx(GUI_RECT * pRect, int rd, GUI_COLOR Color0, GUI_COLOR Color1);
+void GUI_DrawGradientRoundedMV (int x0, int y0, int x1, int rd, GUI_GRADIENT_INFO * pGradientInfo, int NumColors);
+void GUI_DrawGradientRoundedVEx(const GUI_RECT * pRect, int rd, GUI_COLOR Color0, GUI_COLOR Color1);
+void GUI_DrawGradientRoundedMVEx(const GUI_RECT * pRect, int rd, GUI_GRADIENT_INFO * pGradientInfo, int NumColors);
 void GUI_DrawGraph             (I16 * pay, int NumPoints, int x0, int y0);
 void GUI_DrawGraphEx           (I16 * pay, int NumPoints, int x0, int y0, int Numerator, int Denominator, int MirrorX);
 void GUI_DrawHLine             (int y0, int x0, int x1);
@@ -544,10 +558,13 @@ void GUI_DrawFocusRect         (const GUI_RECT  * pRect, int Dist);
 void GUI_DrawRect              (int x0, int y0, int x1, int y1);
 void GUI_DrawRectEx            (const GUI_RECT * pRect);
 void GUI_DrawRoundedFrame      (int x0, int y0, int x1, int y1, int r, int w);
+void GUI_DrawRoundedFrameEx    (const GUI_RECT * pRect, int r, int w);
 void GUI_DrawRoundedRect       (int x0, int y0, int x1, int y1, int r);
+void GUI_DrawRoundedRectEx     (const GUI_RECT * pRect, int r);
 void GUI_DrawVLine             (int x0, int y0, int y1);
 void GUI_FillCircle            (int x0, int y0, int r);
 void GUI_FillEllipse           (int x0, int y0, int rx, int ry);
+void GUI_FillEllipseXL         (int x0, int y0, int rx, int ry);
 void GUI_FillPolygon           (const GUI_POINT * pPoints, int NumPoints, int x0, int y0);
 void GUI_FillRect              (int x0, int y0, int x1, int y1);
 void GUI_FillRectEx            (const GUI_RECT * pRect);
@@ -606,6 +623,7 @@ void GUI_BMP_EnableAlpha (void);
 void GUI_BMP_EnableBE    (int OnOff);
 void GUI_BMP_DisableAlpha(void);
 
+
 /*********************************************************************
 *
 *       PNG file support
@@ -621,9 +639,17 @@ int GUI_PNG_GetYSizeEx(GUI_GET_DATA_FUNC * pfGetData, void * p);
 *
 *       JPEG file support
 */
+/*********************************************************************
+*
+*       GUI_JPEG_INFO
+*
+*   Description
+*     Information about a JPEG image.
+*/
 typedef struct {
-  int XSize;
-  int YSize;
+  int XSize;       // X-size of the image.
+  int YSize;       // Y-size of the image.
+  int Progessive;  // Indicates if JPEG is progressive or not
 } GUI_JPEG_INFO;
 
 int GUI_JPEG_Draw        (const void * pFileData, int DataSize,    int x0, int y0);
@@ -639,21 +665,36 @@ void GUI_JPEG_SetpfDrawEx(int (* pfDrawEx)(GUI_GET_DATA_FUNC * pfGetData, void *
 *
 *       MOVIE file support
 */
-#define GUI_MOVIE_NOTIFICATION_PREDRAW  0 // Immediately before frame is drawn
-#define GUI_MOVIE_NOTIFICATION_POSTDRAW 1 // Immediately after a frame is drawn
-#define GUI_MOVIE_NOTIFICATION_START    2 // Send when start playing a movie
-#define GUI_MOVIE_NOTIFICATION_STOP     3 // Movie has stopped
-#define GUI_MOVIE_NOTIFICATION_DELETE   4 // Movie has been deleted
+/*********************************************************************
+*
+*       Movie notifications
+*
+*   Description
+*     Notifications sent to the movie's callback function. The
+*     callback function can be set with GUI_MOVIE_SetpfNotify().
+*/
+#define GUI_MOVIE_NOTIFICATION_PREDRAW  0    // Sent immediately before a frame is drawn.
+#define GUI_MOVIE_NOTIFICATION_POSTDRAW 1    // Sent immediately after a frame is drawn.
+#define GUI_MOVIE_NOTIFICATION_START    2    // Sent when starting to play a movie.
+#define GUI_MOVIE_NOTIFICATION_STOP     3    // Sent when the movie has stopped.
+#define GUI_MOVIE_NOTIFICATION_DELETE   4    // Sent when the movie has been deleted.
 
 typedef GUI_HMEM GUI_MOVIE_HANDLE;
 
 typedef void GUI_MOVIE_FUNC(GUI_MOVIE_HANDLE hMovie, int Notification, U32 CurrentFrame);
 
+/*********************************************************************
+*
+*       GUI_MOVIE_INFO
+*
+*   Description
+*     Information about a movie.
+*/
 typedef struct {
-  int xSize;         // X-size of images
-  int ySize;         // Y-size of images
-  int msPerFrame;    // Default duration of 1 frame
-  U32 NumFrames;     // Number of frames
+  int xSize;         // Horizontal resolution of the movie in pixels.
+  int ySize;         // Vertical resolution of the movie in pixels.
+  int msPerFrame;    // Period of one frame in ms.
+  U32 NumFrames;     // Number of frames of the movie file.
 } GUI_MOVIE_INFO;
 
 GUI_MOVIE_HANDLE GUI_MOVIE_Create       (const void * pFileData, U32 FileSize, GUI_MOVIE_FUNC * pfNotify);
@@ -663,6 +704,7 @@ void             GUI_MOVIE_DrawFrame    (GUI_MOVIE_HANDLE hMovie, int Index, int
 U32              GUI_MOVIE_GetFrameIndex(GUI_MOVIE_HANDLE hMovie);
 int              GUI_MOVIE_GetInfo      (const void * pFileData, U32 FileSize, GUI_MOVIE_INFO * pInfo);
 int              GUI_MOVIE_GetInfoEx    (GUI_GET_DATA_FUNC * pfGetData, void * pParam, GUI_MOVIE_INFO * pInfo);
+int              GUI_MOVIE_GetInfoH     (GUI_MOVIE_HANDLE hMovie, GUI_MOVIE_INFO * pInfo);
 int              GUI_MOVIE_GetNumFrames (GUI_MOVIE_HANDLE hMovie);
 int              GUI_MOVIE_GetPos       (GUI_MOVIE_HANDLE hMovie, int * pxPos, int * pyPos, int * pxSize, int * pySize);
 int              GUI_MOVIE_GotoFrame    (GUI_MOVIE_HANDLE hMovie, U32 Frame);
@@ -697,13 +739,41 @@ typedef struct {
   int                 yHot;
 } GUI_CURSOR;
 
+/*********************************************************************
+*
+*       GUI_CURSOR_ANIM
+*
+*  Description
+*    Structure that stores information about a cursor animation used by GUI_CURSOR_SelectAnim().
+*
+*  Additional information
+*    The bitmaps addressed by ppBM need to fulfill with the following requirements:
+*    
+*    \item They need to have exactly the same X- and Y-size.
+*    \item They should not be compressed.
+*    \item They need to be transparent.
+*    \item They need to be palette based bitmaps with 1, 2, 4 or 8bpp.
+*
+*    Other bitmaps or insufficient memory cause the function to fail.
+*
+*    The pPeriod is only required if the periods for the images are different. If the same
+*    period should be used for all images Period should be used instead of pPeriod. In
+*    this case pPeriod should be \c{NULL}.
+*
+*    xHot and yHot determine the hot spot position of the cursor. This means the relative
+*    position in X and Y from the upper left corner of the image to the position of the
+*    pointer input device.
+*
+*    Customized cursors can be realized by passing a pointer to a custom defined
+*    GUI_CURSOR_ANIM structure.
+*/
 typedef struct {
-  const GUI_BITMAP ** ppBm;
-  int                 xHot;
-  int                 yHot;
-  unsigned            Period;
-  const unsigned    * pPeriod;
-  int                 NumItems;
+  const GUI_BITMAP ** ppBm;       // Pointer to an array of pointers to bitmaps to be used for the animated cursor.
+  int                 xHot;       // X-position of hot spot. Details can be found below.
+  int                 yHot;       // Y-position of hot spot. Details can be found below.
+  unsigned            Period;     // Period to be used to switch between the images.
+  const unsigned    * pPeriod;    // Pointer to an array containing the periods to be used to switch between the images.
+  int                 NumItems;   // Number of images used for the animation.
 } GUI_CURSOR_ANIM;
 
 #if GUI_SUPPORT_CURSOR
@@ -772,9 +842,20 @@ extern GUI_CONST_STORAGE GUI_CURSOR_ANIM GUI_CursorAnimHourglassM;
 
 /*********************************************************************
 *
-*       Wrap modes
+*       GUI_WRAPMODE
+*
+*  Description
+*    Configuration how text will be wrapped.
+*
+*  Additional information
+*    If word wrapping should be performed and the given rectangle is too small for a word, char
+*    wrapping is executed at this word.
 */
-typedef enum { GUI_WRAPMODE_NONE, GUI_WRAPMODE_WORD, GUI_WRAPMODE_CHAR } GUI_WRAPMODE;
+typedef enum {
+  GUI_WRAPMODE_NONE,   // No wrapping will be performed.
+  GUI_WRAPMODE_WORD,   // Text is wrapped word wise.
+  GUI_WRAPMODE_CHAR    // Text is wrapped char wise.
+} GUI_WRAPMODE;
 
 /*********************************************************************
 *
@@ -800,7 +881,7 @@ void  GUI_DispStringInRectWrap  (const char * s, GUI_RECT * pRect, int TextAlign
 void  GUI_DispStringInRectWrapEx(const char * s, GUI_RECT * pRect, int TextAlign, GUI_WRAPMODE WrapMode, const GUI_ROTATION * pLCD_Api);
 #endif
 void  GUI_DispStringLen         (const char * s, int Len);
-U16   GUI_GetCharFromPos        (const char * pText, int x);
+U16   GUI_GetCharFromPos        (const char * pText, int x, int * pIndex);
 void  GUI_GetTextExtend         (GUI_RECT* pRect, const char * s, int Len);
 int   GUI_GetYAdjust            (void);
 int   GUI_GetDispPosX           (void);
@@ -809,6 +890,7 @@ const GUI_FONT * GUI_GetFont    (void);
 int   GUI_GetCharDistX          (U16 c);
 int   GUI_GetCharDistXEx        (U16 c, int * pSizeX);
 int   GUI_GetStringDistX        (const char * s);
+int   GUI_GetStringDistXEx      (const char * s, int n);
 GUI_DRAWMODE GUI_GetDrawMode    (void);
 int   GUI_GetFontDistY          (void);
 int   GUI_GetFontSizeY          (void);
@@ -836,7 +918,8 @@ void  GUI_WrapSetSeparators     (const U16 * pSep, int NumSeps);
 
 int   GUI_GetLeadingBlankCols (U16 c);
 int   GUI_GetTrailingBlankCols(U16 c);
-
+int   GUI_GetLeadingBlankRows (U16 c);
+int   GUI_GetTrailingBlankRows(U16 c);
 
 /*********************************************************************
 *
@@ -921,16 +1004,16 @@ U16  GUI_DB2UC (U8 Byte0, U8 Byte1);
 *
 *       Drawing of binary, decimal and hexadecimal values
 */
-void GUI_DispBin  (U32  v, U8 Len);
-void GUI_DispBinAt(U32  v, I16P x, I16P y, U8 Len);
-void GUI_DispDec  (I32 v, U8 Len);
-void GUI_DispDecAt (I32 v, I16P x, I16P y, U8 Len);
-void GUI_DispDecMin(I32 v);
-void GUI_DispDecShift(I32 v, U8 Len, U8 Shift);
-void GUI_DispDecSpace(I32 v, U8 MaxDigits);
-void GUI_DispHex  (U32 v, U8 Len);
-void GUI_DispHexAt(U32 v, I16P x, I16P y, U8 Len);
-void GUI_DispSDec(I32 v, U8 Len);
+void GUI_DispBin      (U32  v, U8 Len);
+void GUI_DispBinAt    (U32  v, I16P x, I16P y, U8 Len);
+void GUI_DispDec      (I32 v, U8 Len);
+void GUI_DispDecAt    (I32 v, I16P x, I16P y, U8 Len);
+void GUI_DispDecMin   (I32 v);
+void GUI_DispDecShift (I32 v, U8 Len, U8 Shift);
+void GUI_DispDecSpace (I32 v, U8 MaxDigits);
+void GUI_DispHex      (U32 v, U8 Len);
+void GUI_DispHexAt    (U32 v, I16P x, I16P y, U8 Len);
+void GUI_DispSDec     (I32 v, U8 Len);
 void GUI_DispSDecShift(I32 v, U8 Len, U8 Shift);
 
 /*********************************************************************
@@ -991,10 +1074,16 @@ void               GUI_ALLOC_Exit            (void);
 
 /*********************************************************************
 *
-*       Memory devices: GUI_MEMDEV
+*       Memory device flags
+*
+*  Description
+*    Flags to be used for the creation of a memory device.
 */
-#define GUI_MEMDEV_HASTRANS       0
-#define GUI_MEMDEV_NOTRANS  (1 << 0)
+#define GUI_MEMDEV_HASTRANS       0    // Default: The Memory Device is created with a transparency flag which ensures that the background will be drawn correctly.
+#define GUI_MEMDEV_NOTRANS  (1 << 0)   // Creates a Memory Device without transparency. The user must make sure that the background is drawn correctly.
+                                       // This way the Memory Device can be used for non-rectangular areas. An other advantage is the higher speed: Using this
+                                       // flag accelerates the Memory Device approx. by 30 - 50%.
+/* (ignore - emDoc should stop here) */
 
 typedef GUI_HMEM GUI_MEMDEV_Handle;
 typedef void     GUI_CALLBACK_VOID_P        (void * p);
@@ -1083,6 +1172,7 @@ int   GUI_MEMDEV_GetBitsPerPixel     (GUI_MEMDEV_Handle hMemDev);
 int   GUI_MEMDEV_FadeInDevices       (GUI_MEMDEV_Handle hMem0, GUI_MEMDEV_Handle hMem1, int Period);
 int   GUI_MEMDEV_FadeOutDevices      (GUI_MEMDEV_Handle hMem0, GUI_MEMDEV_Handle hMem1, int Period);
 void  GUI_MEMDEV_SerializeBMP        (GUI_MEMDEV_Handle hDev, GUI_CALLBACK_VOID_U8_P * pfSerialize, void * p);
+void  GUI_MEMDEV_SerializeExBMP      (GUI_MEMDEV_Handle hDev, GUI_CALLBACK_VOID_U8_P * pfSerialize, void * p, int xPos, int yPos, int xSize, int ySize);
 void  GUI_MEMDEV_SetAnimationCallback(GUI_ANIMATION_CALLBACK_FUNC * pCbAnimation, void * pVoid);
 void  GUI_MEMDEV__FadeDevice         (GUI_MEMDEV_Handle hMemWin, GUI_MEMDEV_Handle hMemBk, GUI_MEMDEV_Handle hMemDst, U8 Intens);
 void  GUI_MEMDEV__FadeDeviceEx       (GUI_MEMDEV_Handle hMemWin, GUI_MEMDEV_Handle hMemBk, GUI_MEMDEV_Handle hMemDst, U8 Intens, int xPosWin, int yPosWin);
@@ -1108,8 +1198,15 @@ void GUI_MEMDEV_SetDrawMemdev16bppFunc(GUI_DRAWMEMDEV_16BPP_FUNC * pfDrawMemdev1
 *
 *       Alpha blending
 */
+/*********************************************************************
+*
+*       GUI_ALPHA_STATE
+*
+*   Description
+*     Used for storing the alpha value with GUI_SetUserAlpha().
+*/
 typedef struct {
-  U32 UserAlpha;
+  U32 UserAlpha;   // Alpha value to be used.
 } GUI_ALPHA_STATE;
 
 #define GUI_MAKE_ALPHA(Alpha, Color)  ((U32)(((U32)Alpha << 24) | (Color & 0xFFFFFF)))
@@ -1177,33 +1274,48 @@ int  GUI_SPY_X_StartServer(void);
 
 /*********************************************************************
 *
-*       Barcodes
+*       Barcode types
+*
+*  Description
+*    Type of barcode to be drawn.
 */
-#define GUI_BARCODE_ITF 0
-#define GUI_BARCODE_128 1
+#define GUI_BARCODE_ITF 0   // \b{Interleaved 2 of 5 (ITF)} which can display an even amount of digits.
+#define GUI_BARCODE_128 1   // \b{Code128} which can display all 128 ASCII characters.
 
 int GUI_BARCODE_Draw    (int xPos, int yPos, int ModuleSize, int ySize, int Type, const char * sBarcode);
 int GUI_BARCODE_GetXSize(int Type, int ModuleSize, const char * sBarcode);
 
 /*********************************************************************
 *
-*       QR-Codes
+*       ECC levels for QR codes
+*
+*  Description
+*    Error correction level to be used by the Reed-Solomon error correction
+*    for a QR code.
 */
-#define GUI_QR_ECLEVEL_L 0
-#define GUI_QR_ECLEVEL_M 1
-#define GUI_QR_ECLEVEL_Q 2
-#define GUI_QR_ECLEVEL_H 3
+#define GUI_QR_ECLEVEL_L 0   // About 7% or less errors can be corrected.
+#define GUI_QR_ECLEVEL_M 1   // About 15% or less errors can be corrected.
+#define GUI_QR_ECLEVEL_Q 2   // About 25% or less errors can be corrected.
+#define GUI_QR_ECLEVEL_H 3   // About 30% or less errors can be corrected.
 
+/*********************************************************************
+*
+*       GUI_QR_INFO
+*
+*   Description
+*     Information about a QR code.
+*/
 typedef struct {
-  int Version;  // Version according to QR code documentation
-  int Width;    // Number of 'Modules'
-  int Size;     // Size of bitmap in pixels
+  int Version;   // Version according to QR code documentation.
+  int Width;     // Number of 'Modules'.
+  int Size;      // Size of bitmap in pixels.
 } GUI_QR_INFO;
 
-GUI_HMEM GUI_QR_Create (const char * pText, int PixelSize, int EccLevel, int Version);
-void     GUI_QR_Draw   (GUI_HMEM hQR, int xPos, int yPos);
-void     GUI_QR_GetInfo(GUI_HMEM hQR, GUI_QR_INFO * pInfo);
-void     GUI_QR_Delete (GUI_HMEM hQR);
+GUI_HMEM GUI_QR_Create      (const char * pText, int PixelSize, int EccLevel, int Version);
+GUI_HMEM GUI_QR_CreateFramed(const char * pText, int PixelSize, int EccLevel, int Version);
+void     GUI_QR_Draw        (GUI_HMEM hQR, int xPos, int yPos);
+void     GUI_QR_GetInfo     (GUI_HMEM hQR, GUI_QR_INFO * pInfo);
+void     GUI_QR_Delete      (GUI_HMEM hQR);
 
 /*********************************************************************
 *
@@ -1216,10 +1328,22 @@ void     GUI_QR_Delete (GUI_HMEM hQR);
 #define ANIM_SIN        GUI_ANIM__Sin
 #define ANIM_COS        GUI_ANIM__Cos
 
-#define GUI_ANIM_START   0
-#define GUI_ANIM_RUNNING 1
-#define GUI_ANIM_END     2
+/*********************************************************************
+*
+*       Animation states
+*
+*   Description
+*     Describes the current state of an animation. Sent with the
+*     \a{State} member of the GUI_ANIM_INFO structure to an animation callback.
+*/
+#define GUI_ANIM_START   0   // First execution.
+#define GUI_ANIM_RUNNING 1   // Passed to all items which are not the first and not the last.
+#define GUI_ANIM_END     2   // Last execution.
 
+/*********************************************************************
+*
+*       GUI_ANIM_RANGE
+*/
 #ifndef   GUI_ANIM_RANGE
   #define GUI_ANIM_RANGE 32767
 #endif
@@ -1228,11 +1352,18 @@ typedef GUI_HMEM GUI_ANIM_HANDLE;
 
 typedef I32 (* GUI_ANIM_GETPOS_FUNC)(GUI_TIMER_TIME ts, GUI_TIMER_TIME te, GUI_TIMER_TIME tNow);
 
+/*********************************************************************
+*
+*       GUI_ANIM_INFO
+*
+*   Description
+*     Contains information about the current state of an animation.
+*/
 typedef struct {
-  int Pos;
-  int State;
-  GUI_ANIM_HANDLE hAnim;
-  GUI_TIMER_TIME Period;
+  int Pos;                // Position value calculated by the selected position calculation routine.
+  int State;              // State of the animation. See \ref{Animation states} for valid values.
+  GUI_ANIM_HANDLE hAnim;  // Handle of the animation object.
+  GUI_TIMER_TIME Period;  // Period of the animation object.
 } GUI_ANIM_INFO;
 
 typedef void GUI_ANIMATION_FUNC(GUI_ANIM_INFO * pInfo, void * pVoid);
@@ -1457,6 +1588,8 @@ void GUI_AA_EnableHiRes      (void);
 int  GUI_AA_GetFactor        (void);
 void GUI_AA_SetFactor        (int Factor);
 void GUI_AA_DrawArc          (int x0, int y0, int rx, int ry, int a0, int a1);
+void GUI_AA_DrawArcHR        (int x0, int y0, int rx, int ry, I32 a0, I32 a1);
+void GUI_AA_DrawArcEx        (int mx, int my, int r, I32 a0, I32 a1, int c0, int c1);
 void GUI_AA_DrawCircle       (int x0, int y0, int r);  // Currently not implemented, only for Dave2D
 void GUI_AA_DrawLine         (int x0, int y0, int x1, int y1);
 void GUI_AA_DrawPolyOutline  (const GUI_POINT * pSrc, int NumPoints, int Thickness, int x, int y);
@@ -1465,6 +1598,7 @@ void GUI_AA_DrawRoundedRect  (int x0, int y0, int x1, int y1, int r);
 void GUI_AA_DrawRoundedRectEx(GUI_RECT * pRect, int r);
 void GUI_AA_FillCircle       (int x0, int y0, int r);
 void GUI_AA_FillEllipse      (int x0, int y0, int rx, int ry);
+void GUI_AA_FillEllipseXL    (int x0, int y0, int rx, int ry);
 void GUI_AA_FillPolygon      (const GUI_POINT * pPoints, int NumPoints, int x0, int y0);
 void GUI_AA_FillRoundedRect  (int x0, int y0, int x1, int y1, int r);
 void GUI_AA_FillRoundedRectEx(GUI_RECT * pRect, int r);
@@ -1476,7 +1610,7 @@ void GUI_AA_EnableGammaAA4   (int OnOff);
 
 #define GUI_AA_PreserveTrans(OnOff) GUI_PreserveTrans(OnOff)  // For compatibility only
 
-void GUI_AA_SetFuncDrawArc        (int (* pfDrawArc)    (int x0, int y0, int rx, int ry, int a0, int a1));
+void GUI_AA_SetFuncDrawArc        (int (* pfDrawArc)    (int x0, int y0, int rx, int ry, I32 a0, I32 a1));
 void GUI_AA_SetFuncDrawCircle     (int (* pfDrawCircle) (int x0, int y0, int r));
 void GUI_AA_SetFuncDrawLine       (int (* pfDrawLine)   (int x0, int y0, int x1, int y1));
 void GUI_AA_SetFuncDrawPolyOutline(int (* pfDrawPolyOutline)(const GUI_POINT * pSrc, int NumPoints, int Thickness, int x, int y));
@@ -1822,6 +1956,12 @@ extern const tGUI_XBF_APIList GUI_XBF_APIList_Prop_AA4_Ext;
 #define GUI_ID_SCROLLBAR1 0x141
 #define GUI_ID_SCROLLBAR2 0x142
 #define GUI_ID_SCROLLBAR3 0x143
+#define GUI_ID_SCROLLBAR4 0x144
+#define GUI_ID_SCROLLBAR5 0x145
+#define GUI_ID_SCROLLBAR6 0x146
+#define GUI_ID_SCROLLBAR7 0x147
+#define GUI_ID_SCROLLBAR8 0x148
+#define GUI_ID_SCROLLBAR9 0x149
 
 #define GUI_ID_RADIO0     0x150
 #define GUI_ID_RADIO1     0x151
@@ -1831,6 +1971,8 @@ extern const tGUI_XBF_APIList GUI_XBF_APIList_Prop_AA4_Ext;
 #define GUI_ID_RADIO5     0x155
 #define GUI_ID_RADIO6     0x156
 #define GUI_ID_RADIO7     0x157
+#define GUI_ID_RADIO8     0x158
+#define GUI_ID_RADIO9     0x159
 
 #define GUI_ID_TEXT0      0x160
 #define GUI_ID_TEXT1      0x161
@@ -1858,46 +2000,100 @@ extern const tGUI_XBF_APIList GUI_XBF_APIList_Prop_AA4_Ext;
 #define GUI_ID_DROPDOWN1  0x181
 #define GUI_ID_DROPDOWN2  0x182
 #define GUI_ID_DROPDOWN3  0x183
+#define GUI_ID_DROPDOWN4  0x184
+#define GUI_ID_DROPDOWN5  0x185
+#define GUI_ID_DROPDOWN6  0x186
+#define GUI_ID_DROPDOWN7  0x187
+#define GUI_ID_DROPDOWN8  0x188
+#define GUI_ID_DROPDOWN9  0x189
 
 #define GUI_ID_MULTIEDIT0 0x190
 #define GUI_ID_MULTIEDIT1 0x191
 #define GUI_ID_MULTIEDIT2 0x192
 #define GUI_ID_MULTIEDIT3 0x193
+#define GUI_ID_MULTIEDIT4 0x194
+#define GUI_ID_MULTIEDIT5 0x195
+#define GUI_ID_MULTIEDIT6 0x196
+#define GUI_ID_MULTIEDIT7 0x197
+#define GUI_ID_MULTIEDIT8 0x198
+#define GUI_ID_MULTIEDIT9 0x199
 
 #define GUI_ID_LISTVIEW0  0x200
 #define GUI_ID_LISTVIEW1  0x201
 #define GUI_ID_LISTVIEW2  0x202
 #define GUI_ID_LISTVIEW3  0x203
+#define GUI_ID_LISTVIEW4  0x204
+#define GUI_ID_LISTVIEW5  0x205
+#define GUI_ID_LISTVIEW6  0x206
+#define GUI_ID_LISTVIEW7  0x207
+#define GUI_ID_LISTVIEW8  0x208
+#define GUI_ID_LISTVIEW9  0x209
 
 #define GUI_ID_PROGBAR0   0x210
 #define GUI_ID_PROGBAR1   0x211
 #define GUI_ID_PROGBAR2   0x212
 #define GUI_ID_PROGBAR3   0x213
+#define GUI_ID_PROGBAR4   0x214
+#define GUI_ID_PROGBAR5   0x215
+#define GUI_ID_PROGBAR6   0x216
+#define GUI_ID_PROGBAR7   0x217
+#define GUI_ID_PROGBAR8   0x218
+#define GUI_ID_PROGBAR9   0x219
 
 #define GUI_ID_GRAPH0     0x220
 #define GUI_ID_GRAPH1     0x221
 #define GUI_ID_GRAPH2     0x222
 #define GUI_ID_GRAPH3     0x223
+#define GUI_ID_GRAPH4     0x224
+#define GUI_ID_GRAPH5     0x225
+#define GUI_ID_GRAPH6     0x226
+#define GUI_ID_GRAPH7     0x227
+#define GUI_ID_GRAPH8     0x228
+#define GUI_ID_GRAPH9     0x229
 
 #define GUI_ID_MULTIPAGE0 0x230
 #define GUI_ID_MULTIPAGE1 0x231
 #define GUI_ID_MULTIPAGE2 0x232
 #define GUI_ID_MULTIPAGE3 0x233
+#define GUI_ID_MULTIPAGE4 0x234
+#define GUI_ID_MULTIPAGE5 0x235
+#define GUI_ID_MULTIPAGE6 0x236
+#define GUI_ID_MULTIPAGE7 0x237
+#define GUI_ID_MULTIPAGE8 0x238
+#define GUI_ID_MULTIPAGE9 0x239
 
 #define GUI_ID_TREEVIEW0  0x240
 #define GUI_ID_TREEVIEW1  0x241
 #define GUI_ID_TREEVIEW2  0x242
 #define GUI_ID_TREEVIEW3  0x243
+#define GUI_ID_TREEVIEW4  0x244
+#define GUI_ID_TREEVIEW5  0x245
+#define GUI_ID_TREEVIEW6  0x246
+#define GUI_ID_TREEVIEW7  0x247
+#define GUI_ID_TREEVIEW8  0x248
+#define GUI_ID_TREEVIEW9  0x249
 
 #define GUI_ID_ICONVIEW0  0x250
 #define GUI_ID_ICONVIEW1  0x251
 #define GUI_ID_ICONVIEW2  0x252
 #define GUI_ID_ICONVIEW3  0x253
+#define GUI_ID_ICONVIEW4  0x254
+#define GUI_ID_ICONVIEW5  0x255
+#define GUI_ID_ICONVIEW6  0x256
+#define GUI_ID_ICONVIEW7  0x257
+#define GUI_ID_ICONVIEW8  0x258
+#define GUI_ID_ICONVIEW9  0x259
 
 #define GUI_ID_LISTWHEEL0 0x260
 #define GUI_ID_LISTWHEEL1 0x261
 #define GUI_ID_LISTWHEEL2 0x262
 #define GUI_ID_LISTWHEEL3 0x263
+#define GUI_ID_LISTWHEEL4 0x264
+#define GUI_ID_LISTWHEEL5 0x265
+#define GUI_ID_LISTWHEEL6 0x266
+#define GUI_ID_LISTWHEEL7 0x267
+#define GUI_ID_LISTWHEEL8 0x268
+#define GUI_ID_LISTWHEEL9 0x269
 
 #define GUI_ID_IMAGE0     0x270
 #define GUI_ID_IMAGE1     0x271
@@ -1922,6 +2118,15 @@ extern const tGUI_XBF_APIList GUI_XBF_APIList_Prop_AA4_Ext;
 #define GUI_ID_SPINBOX9   0x289
 
 #define GUI_ID_CALENDAR0  0x290
+#define GUI_ID_CALENDAR1  0x291
+#define GUI_ID_CALENDAR2  0x292
+#define GUI_ID_CALENDAR3  0x293
+#define GUI_ID_CALENDAR4  0x294
+#define GUI_ID_CALENDAR5  0x295
+#define GUI_ID_CALENDAR6  0x296
+#define GUI_ID_CALENDAR7  0x297
+#define GUI_ID_CALENDAR8  0x298
+#define GUI_ID_CALENDAR9  0x299
 
 #define GUI_ID_KNOB0      0x300
 #define GUI_ID_KNOB1      0x301
@@ -1948,6 +2153,13 @@ extern const tGUI_XBF_APIList GUI_XBF_APIList_Prop_AA4_Ext;
 #define GUI_ID_SWIPELIST0 0x320
 #define GUI_ID_SWIPELIST1 0x321
 #define GUI_ID_SWIPELIST2 0x322
+#define GUI_ID_SWIPELIST3 0x323
+#define GUI_ID_SWIPELIST4 0x324
+#define GUI_ID_SWIPELIST5 0x325
+#define GUI_ID_SWIPELIST6 0x326
+#define GUI_ID_SWIPELIST7 0x327
+#define GUI_ID_SWIPELIST8 0x328
+#define GUI_ID_SWIPELIST9 0x329
 
 #define GUI_ID_SWITCH0    0x330
 #define GUI_ID_SWITCH1    0x331
@@ -1959,6 +2171,39 @@ extern const tGUI_XBF_APIList GUI_XBF_APIList_Prop_AA4_Ext;
 #define GUI_ID_SWITCH7    0x337
 #define GUI_ID_SWITCH8    0x338
 #define GUI_ID_SWITCH9    0x339
+
+#define GUI_ID_GAUGE0     0x340
+#define GUI_ID_GAUGE1     0x341
+#define GUI_ID_GAUGE2     0x342
+#define GUI_ID_GAUGE3     0x343
+#define GUI_ID_GAUGE4     0x344
+#define GUI_ID_GAUGE5     0x345
+#define GUI_ID_GAUGE6     0x346
+#define GUI_ID_GAUGE7     0x347
+#define GUI_ID_GAUGE8     0x348
+#define GUI_ID_GAUGE9     0x349
+
+#define GUI_ID_QRCODE0    0x350
+#define GUI_ID_QRCODE1    0x351
+#define GUI_ID_QRCODE2    0x352
+#define GUI_ID_QRCODE3    0x353
+#define GUI_ID_QRCODE4    0x354
+#define GUI_ID_QRCODE5    0x355
+#define GUI_ID_QRCODE6    0x356
+#define GUI_ID_QRCODE7    0x357
+#define GUI_ID_QRCODE8    0x358
+#define GUI_ID_QRCODE9    0x359
+
+#define GUI_ID_KEYBOARD0  0x360
+#define GUI_ID_KEYBOARD1  0x361
+#define GUI_ID_KEYBOARD2  0x362
+#define GUI_ID_KEYBOARD3  0x363
+#define GUI_ID_KEYBOARD4  0x364
+#define GUI_ID_KEYBOARD5  0x365
+#define GUI_ID_KEYBOARD6  0x366
+#define GUI_ID_KEYBOARD7  0x367
+#define GUI_ID_KEYBOARD8  0x368
+#define GUI_ID_KEYBOARD9  0x369
 
 #define GUI_ID_USER       0x800
 
@@ -1973,22 +2218,28 @@ extern const tGUI_XBF_APIList GUI_XBF_APIList_Prop_AA4_Ext;
 
 /*********************************************************************
 *
-*       Text styles
+*       Text style flags
+*
+*  Description
+*    Text style how a text will be displayed.
 */
-#define GUI_TS_NORMAL           (0)
-#define GUI_TS_UNDERLINE        (1 << 0)
-#define GUI_TS_STRIKETHRU       (1 << 1)
-#define GUI_TS_OVERLINE         (1 << 2)
+#define GUI_TS_NORMAL           (0)        // Renders text normal (default).
+#define GUI_TS_UNDERLINE        (1 << 0)   // Renders text underlined.
+#define GUI_TS_STRIKETHRU       (1 << 1)   // Renders text in strike through type.
+#define GUI_TS_OVERLINE         (1 << 2)   // Renders text in overline type.
 
 /*********************************************************************
 *
 *       Line styles
+*
+*  Description
+*    Style how a line is drawn.
 */
-#define GUI_LS_SOLID        (0)
-#define GUI_LS_DASH         (1)
-#define GUI_LS_DOT          (2)
-#define GUI_LS_DASHDOT      (3)
-#define GUI_LS_DASHDOTDOT   (4)
+#define GUI_LS_SOLID        (0)    // Lines are drawn solid (default).
+#define GUI_LS_DASH         (1)    // Lines are drawn dashed.
+#define GUI_LS_DOT          (2)    // Lines are drawn dotted.
+#define GUI_LS_DASHDOT      (3)    // Lines are drawn alternating with dashes and dots.
+#define GUI_LS_DASHDOTDOT   (4)    // Lines are drawn alternating with dashes and double dots.
 
 /*********************************************************************
 *
@@ -2062,21 +2313,28 @@ extern const tGUI_XBF_APIList GUI_XBF_APIList_Prop_AA4_Ext;
 *
 *       MultiTouch-Support
 */
-//
-// Defines
-//
-#define GUI_MTOUCH_FLAG_DOWN (1 << 0)
-#define GUI_MTOUCH_FLAG_MOVE (1 << 1)
-#define GUI_MTOUCH_FLAG_UP   (1 << 2)
+/*********************************************************************
+*
+*       MultiTouch flags
+*
+*  Description
+*    Data structure used by GUI_MTOUCH_GetEvent() to store a multi touch
+*    event in.
+*/
+#define GUI_MTOUCH_FLAG_DOWN (1 << 0)    // New touch point has touched the surface.
+#define GUI_MTOUCH_FLAG_MOVE (1 << 1)    // Touch point has been moved.
+#define GUI_MTOUCH_FLAG_UP   (1 << 2)    // Touch point has released the surface.
 
-//
-// Variables
-//
+/*********************************************************************
+*
+*       Variables
+*/
 extern T_GUI_MTOUCH_STOREEVENT GUI_MTOUCH__pStoreEvent;
 
-//
-// Interface
-//
+/*********************************************************************
+*
+*       Interface
+*/
 void GUI_MTOUCH_Enable          (int OnOff);
 int  GUI_MTOUCH_GetEvent        (GUI_MTOUCH_EVENT * pEvent);
 int  GUI_MTOUCH_GetTouchInput   (GUI_MTOUCH_EVENT * pEvent, GUI_MTOUCH_INPUT * pBuffer, unsigned Index);
@@ -2274,17 +2532,17 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_FontComic24B_ASCII, GUI_FontComic24B_1;
 
 /* Text alignment flags, horizontal */
 #define GUI_TA_LEFT       (0)
-#define GUI_TA_HORIZONTAL (3 << 0)
-#define GUI_TA_RIGHT      (1 << 0)
-#define GUI_TA_CENTER     (2 << 0)
+#define GUI_TA_HORIZONTAL (3u)
+#define GUI_TA_RIGHT      (1u)
+#define GUI_TA_CENTER     (2u)
 #define GUI_TA_HCENTER    GUI_TA_CENTER  /* easier to remember :-)  */
 
 /* Text alignment flags, vertical */
 #define GUI_TA_TOP        (0)
-#define GUI_TA_VERTICAL   (3 << 2)
-#define GUI_TA_BOTTOM     (1 << 2)
-#define GUI_TA_BASELINE   (2 << 2)
-#define GUI_TA_VCENTER    (3 << 2)
+#define GUI_TA_VERTICAL   (3u << 2)
+#define GUI_TA_BOTTOM     (1u << 2)
+#define GUI_TA_BASELINE   (2u << 2)
+#define GUI_TA_VCENTER    (3u << 2)
 
 /* General alignment flags */
 #define GUI_ALIGN_LEFT       GUI_TA_LEFT
@@ -2297,9 +2555,9 @@ extern GUI_CONST_STORAGE GUI_FONT GUI_FontComic24B_ASCII, GUI_FontComic24B_1;
 #define GUI_ALIGN_VERTICAL   GUI_TA_VERTICAL
 
 /* General orientation flags */
-#define GUI_MIRROR_X (1 << 0)
-#define GUI_MIRROR_Y (1 << 1)
-#define GUI_SWAP_XY  (1 << 2)
+#define GUI_MIRROR_X (1u)
+#define GUI_MIRROR_Y (1u << 1)
+#define GUI_SWAP_XY  (1u << 2)
 
 #define GUI_ROTATION_0   (0)
 #define GUI_ROTATION_CW  (GUI_MIRROR_X | GUI_SWAP_XY)

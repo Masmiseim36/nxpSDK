@@ -22,6 +22,11 @@ void BOARD_SDCardPowerControl(bool enable);
 /*!brief sdmmc dma buffer */
 AT_NONCACHEABLE_SECTION_ALIGN(static uint32_t s_sdmmcHostDmaBuffer[BOARD_SDMMC_HOST_DMA_DESCRIPTOR_BUFFER_SIZE],
                               SDMMCHOST_DMA_DESCRIPTOR_BUFFER_ALIGN_SIZE);
+#if defined SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER && SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+/* two cache line length for sdmmc host driver maintain unalign transfer */
+SDK_ALIGN(static uint8_t s_sdmmcCacheLineAlignBuffer[BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE * 2U],
+          BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE);
+#endif
 #if defined(SDIO_ENABLED) || defined(SD_ENABLED)
 static sd_detect_card_t s_cd;
 static sd_io_voltage_t s_ioVoltage = {
@@ -214,6 +219,10 @@ void BOARD_SD_Config(void *card, sd_cd_t cd, uint32_t hostIRQPriority, void *use
     s_host.dmaDesBuffer         = s_sdmmcHostDmaBuffer;
     s_host.dmaDesBufferWordsNum = BOARD_SDMMC_HOST_DMA_DESCRIPTOR_BUFFER_SIZE;
     s_host.enableCacheControl   = BOARD_SDMMC_HOST_CACHE_CONTROL;
+#if defined SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER && SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+    s_host.cacheAlignBuffer     = s_sdmmcCacheLineAlignBuffer;
+    s_host.cacheAlignBufferSize = BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE * 2U;
+#endif
 
     ((sd_card_t *)card)->host                                = &s_host;
     ((sd_card_t *)card)->host->hostController.base           = BOARD_SDMMC_SD_HOST_BASEADDR;
@@ -240,6 +249,10 @@ void BOARD_SDIO_Config(void *card, sd_cd_t cd, uint32_t hostIRQPriority, sdio_in
     s_host.dmaDesBuffer         = s_sdmmcHostDmaBuffer;
     s_host.dmaDesBufferWordsNum = BOARD_SDMMC_HOST_DMA_DESCRIPTOR_BUFFER_SIZE;
     s_host.enableCacheControl   = BOARD_SDMMC_HOST_CACHE_CONTROL;
+#if defined SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER && SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+    s_host.cacheAlignBuffer     = s_sdmmcCacheLineAlignBuffer;
+    s_host.cacheAlignBufferSize = BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE * 2U;
+#endif
 
     ((sdio_card_t *)card)->host                                = &s_host;
     ((sdio_card_t *)card)->host->hostController.base           = BOARD_SDMMC_SDIO_HOST_BASEADDR;
@@ -271,6 +284,10 @@ void BOARD_MMC_Config(void *card, uint32_t hostIRQPriority)
     s_host.dmaDesBuffer         = s_sdmmcHostDmaBuffer;
     s_host.dmaDesBufferWordsNum = BOARD_SDMMC_HOST_DMA_DESCRIPTOR_BUFFER_SIZE;
     s_host.enableCacheControl   = BOARD_SDMMC_HOST_CACHE_CONTROL;
+#if defined SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER && SDMMCHOST_ENABLE_CACHE_LINE_ALIGN_TRANSFER
+    s_host.cacheAlignBuffer     = s_sdmmcCacheLineAlignBuffer;
+    s_host.cacheAlignBufferSize = BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE * 2U;
+#endif
 
     ((mmc_card_t *)card)->host                                = &s_host;
     ((mmc_card_t *)card)->host->hostController.base           = BOARD_SDMMC_MMC_HOST_BASEADDR;

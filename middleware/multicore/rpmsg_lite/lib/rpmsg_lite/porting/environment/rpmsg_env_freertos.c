@@ -33,7 +33,7 @@
 /**************************************************************************
  * FILE NAME
  *
- *       freertos_env.c
+ *       rpmsg_env_freertos.c
  *
  *
  * DESCRIPTION

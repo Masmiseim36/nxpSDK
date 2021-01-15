@@ -9,11 +9,11 @@
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
 #include "fsl_flexio_spi_edma.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_dmamux.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

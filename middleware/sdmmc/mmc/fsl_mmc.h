@@ -20,10 +20,12 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Middleware mmc version. */
-#define FSL_MMC_DRIVER_VERSION (MAKE_VERSION(2U, 4U, 0U)) /*2.4.0*/
+#define FSL_MMC_DRIVER_VERSION (MAKE_VERSION(2U, 4U, 1U)) /*2.4.1*/
 
-/*! @brief MMC card flags */
-enum _mmc_card_flag
+/*! @brief MMC card flags
+ * @anchor _mmc_card_flag
+ */
+enum
 {
     kMMC_SupportHighSpeed26MHZFlag            = (1U << 0U),  /*!< Support high speed 26MHZ */
     kMMC_SupportHighSpeed52MHZFlag            = (1U << 1U),  /*!< Support high speed 52MHZ */
@@ -43,7 +45,7 @@ enum _mmc_card_flag
 /*! @brief card io strength control */
 typedef void (*mmc_io_strength_t)(uint32_t busFreq);
 
-/*! @brief sdcard user parameter */
+/*! @brief card user parameter */
 typedef struct _mmc_usr_param
 {
     mmc_io_strength_t ioStrength; /*!< swicth sd io strength */

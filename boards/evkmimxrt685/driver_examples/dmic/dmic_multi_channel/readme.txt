@@ -10,10 +10,10 @@ At last the processed data will be sent out through I2S with TDM format.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.5
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.3.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -74,4 +74,4 @@ Init CS42888 codec
 Start play audio data
 
 
-2. During the DMIC start receive data, you can speak or play song nearby the dmic, then you can hear the multichannel audio data from the CS42888 audio board, AOUT0, AOUT2, AOUT4, AOUT6.
+2. During the DMIC start receive data, you can speak or play song nearby the dmic, then you can hear the multichannel audio data from the CS42888 audio board, AOUT0, AOUT2, AOUT4.

@@ -11,17 +11,20 @@
  ******************************************************************************/
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_ctimer.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define CTIMER          CTIMER0         /* Timer 0 */
 #define CTIMER_MAT_OUT  kCTIMER_Match_0 /* Match output 0 */
 #define CTIMER_CLK_FREQ CLOCK_GetCtimerClkFreq(0)
+#ifndef CTIMER_MAT_PWM_PERIOD_CHANNEL
+#define CTIMER_MAT_PWM_PERIOD_CHANNEL kCTIMER_Match_3
+#endif
 
 /*******************************************************************************
  * Prototypes
@@ -76,7 +79,7 @@ int main(void)
 
     /* Get the PWM period match value and pulse width match value of 20Khz PWM signal with 20% dutycycle */
     CTIMER_GetPwmPeriodValue(20000, 20, timerClock);
-    CTIMER_SetupPwmPeriod(CTIMER, CTIMER_MAT_OUT, g_pwmPeriod, g_pulsePeriod, false);
+    CTIMER_SetupPwmPeriod(CTIMER, CTIMER_MAT_PWM_PERIOD_CHANNEL, CTIMER_MAT_OUT, g_pwmPeriod, g_pulsePeriod, false);
     CTIMER_StartTimer(CTIMER);
 
     while (1)

@@ -5,7 +5,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -17,13 +19,11 @@
 
 #include "fsl_device_registers.h"
 #include "mouse.h"
+#include "fsl_debug_console.h"
+
+#include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
-#include "fsl_debug_console.h"
-#include "pin_mux.h"
-
-#include <stdio.h>
-#include <stdlib.h>
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
@@ -31,11 +31,10 @@
 #include "pmic_support.h"
 #include "fsl_pca9420.h"
 #include "usb_phy.h"
-#include <stdbool.h>
 #include "fsl_inputmux.h"
 #include "fsl_pint.h"
 #include "fsl_power.h"
-#include "timer.h"
+#include "fsl_adapter_timer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -271,15 +270,18 @@ void USB_IRQHandler(void)
 
 void USB_DeviceClockInit(void)
 {
+    uint8_t usbClockDiv = 1;
+    uint32_t usbClockFreq;
     usb_phy_config_struct_t phyConfig = {
         BOARD_USB_PHY_D_CAL,
         BOARD_USB_PHY_TXCAL45DP,
         BOARD_USB_PHY_TXCAL45DM,
     };
+
     /* enable USB IP clock */
     CLOCK_SetClkDiv(kCLOCK_DivPfc1Clk, 5);
     CLOCK_AttachClk(kXTALIN_CLK_to_USB_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivUsbHsFclk, 1);
+    CLOCK_SetClkDiv(kCLOCK_DivUsbHsFclk, usbClockDiv);
     CLOCK_EnableUsbhsDeviceClock();
     RESET_PeripheralReset(kUSBHS_PHY_RST_SHIFT_RSTn);
     RESET_PeripheralReset(kUSBHS_DEVICE_RST_SHIFT_RSTn);
@@ -289,8 +291,11 @@ void USB_DeviceClockInit(void)
     POWER_DisablePD(kPDRUNCFG_APD_USBHS_SRAM);
     POWER_DisablePD(kPDRUNCFG_PPD_USBHS_SRAM);
     POWER_ApplyPD();
-
-    CLOCK_EnableUsbhsPhyClock();
+    
+    /* save usb ip clock freq*/
+    usbClockFreq = g_xtalFreq / usbClockDiv;
+    /* enable USB PHY PLL clock, the phy bus clock (480MHz) source is same with USB IP */
+    CLOCK_EnableUsbHs0PhyPllClock(kXTALIN_CLK_to_USB_CLK, usbClockFreq);
 
 #if defined(FSL_FEATURE_USBHSD_USB_RAM) && (FSL_FEATURE_USBHSD_USB_RAM)
     for (int i = 0; i < FSL_FEATURE_USBHSD_USB_RAM; i++)
@@ -409,7 +414,8 @@ static usb_status_t USB_DeviceHidMouseCallback(class_handle_t handle, uint32_t e
             /* Resport sent */
             if (g_UsbDeviceHidMouse.attach)
             {
-                if ((NULL != message) && (message->length == USB_UNINITIALIZED_VAL_32))
+                /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+                if ((NULL != message) && (message->length == USB_CANCELLED_TRANSFER_LENGTH))
                 {
                     return error;
                 }
@@ -470,7 +476,8 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
 #if (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U))
 #else
-            /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+            /*Add one delay here to make the DP pull down long enough to allow host to detect the previous
+             * disconnection.*/
             SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
             USB_DeviceRun(g_UsbDeviceHidMouse.deviceHandle);
 #endif

@@ -83,21 +83,21 @@ void PCA9420_Init(pca9420_handle_t *handle, const pca9420_config_t *config)
     /* Set Slave Address. */
     handle->slaveAddress = config->slaveAddress;
 
-    topCtl[0] = ((uint32_t)config->vinCurrentLimit) | ((uint32_t)config->powerUpCfg) |
-                ((uint32_t)config->startPowerDown) | ((uint32_t)config->wdogChargeCtrl) |
-                ((uint32_t)config->powerGoodEnable);
-    topCtl[1] = ((uint32_t)config->asysPreWarnThreshold) | ((uint32_t)config->asysInputSource) |
-                ((uint32_t)config->vinOvpThreshold) | ((uint32_t)config->vinUvloThreshold);
-    topCtl[2] = ((uint32_t)config->asysUvloThreshold) | ((uint32_t)config->chargeTermDisable) |
-                ((uint32_t)config->thermalShutdownThreshold) | ((uint32_t)config->tempWarnThreshold);
+    topCtl[0] = (uint8_t)(((uint32_t)config->vinCurrentLimit) | ((uint32_t)config->powerUpCfg) |
+                          ((uint32_t)config->startPowerDown) | ((uint32_t)config->wdogChargeCtrl) |
+                          ((uint32_t)config->powerGoodEnable));
+    topCtl[1] = (uint8_t)(((uint32_t)config->asysPreWarnThreshold) | ((uint32_t)config->asysInputSource) |
+                          ((uint32_t)config->vinOvpThreshold) | ((uint32_t)config->vinUvloThreshold));
+    topCtl[2] = (uint8_t)(((uint32_t)config->asysUvloThreshold) | ((uint32_t)config->chargeTermDisable) |
+                          ((uint32_t)config->thermalShutdownThreshold) | ((uint32_t)config->tempWarnThreshold));
     topCtl[3] = ((uint8_t)config->onPinTimer);
-    regCtl    = (config->disableSw1Bleed ? (uint32_t)kPCA9420_RegCtlSw1Bleed : 0) |
-             (config->disableSw2Bleed ? (uint32_t)kPCA9420_RegCtlSw2Bleed : 0) |
-             (config->disableLdo1Bleed ? (uint32_t)kPCA9420_RegCtlLdo1Bleed : 0) |
-             (config->disableLdo2Bleed ? (uint32_t)kPCA9420_RegCtlLdo2Bleed : 0);
+    regCtl    = (config->disableSw1Bleed ? (uint8_t)kPCA9420_RegCtlSw1Bleed : 0U) |
+             (config->disableSw2Bleed ? (uint8_t)kPCA9420_RegCtlSw2Bleed : 0U) |
+             (config->disableLdo1Bleed ? (uint8_t)kPCA9420_RegCtlLdo1Bleed : 0U) |
+             (config->disableLdo2Bleed ? (uint8_t)kPCA9420_RegCtlLdo2Bleed : 0U);
 
     result = PCA9420_WriteRegs(handle, PCA9420_TOP_CNTL0, topCtl, sizeof(topCtl));
-    result = result ? PCA9420_WriteRegs(handle, PCA9420_ACT_DISCHARGE_CNTL_1, &regCtl, 1) : result;
+    result = result ? PCA9420_WriteRegs(handle, PCA9420_ACT_DISCHARGE_CNTL_1, &regCtl, 1U) : result;
     if (!result)
     {
         assert(false);
@@ -137,58 +137,58 @@ void PCA9420_GetRegulatorVolt(pca9420_modecfg_t *config, pca9420_regulator_mv_t 
     /* SW1 voltage */
     if (config->sw1OutVolt <= kPCA9420_Sw1OutVolt1V500)
     {
-        volt->mVoltSw1 = 500 + config->sw1OutVolt * 25;
+        volt->mVoltSw1 = 500U + (uint32_t)config->sw1OutVolt * 25U;
     }
     else if (config->sw1OutVolt < kPCA9420_Sw1OutVolt1V800)
     {
-        volt->mVoltSw1 = 1500;
+        volt->mVoltSw1 = 1500U;
     }
     else
     {
-        volt->mVoltSw1 = 1800;
+        volt->mVoltSw1 = 1800U;
     }
     /* SW2 voltage */
     if (config->sw2OutVolt <= kPCA9420_Sw2OutVolt2V100)
     {
-        volt->mVoltSw2 = 1500 + config->sw2OutVolt * 25;
+        volt->mVoltSw2 = 1500U + (uint32_t)config->sw2OutVolt * 25U;
     }
     else if (config->sw2OutVolt < kPCA9420_Sw2OutVolt2V700)
     {
-        volt->mVoltSw2 = 2100;
+        volt->mVoltSw2 = 2100U;
     }
     else if (config->sw2OutVolt <= kPCA9420_Sw2OutVolt3V300)
     {
-        volt->mVoltSw2 = 2700 + (config->sw2OutVolt - kPCA9420_Sw2OutVolt2V700) * 25;
+        volt->mVoltSw2 = 2700U + ((uint32_t)config->sw2OutVolt - (uint32_t)kPCA9420_Sw2OutVolt2V700) * 25U;
     }
     else
     {
-        volt->mVoltSw2 = 3300;
+        volt->mVoltSw2 = 3300U;
     }
     /* LDO1 voltage */
     if (config->ldo1OutVolt <= kPCA9420_Ldo1OutVolt1V900)
     {
-        volt->mVoltLdo1 = 1700 + (((uint32_t)config->ldo1OutVolt) >> PCA9420_MODECFG_2_LDO1_OUT_SHIFT) * 25;
+        volt->mVoltLdo1 = 1700U + (((uint32_t)config->ldo1OutVolt) >> PCA9420_MODECFG_2_LDO1_OUT_SHIFT) * 25U;
     }
     else
     {
-        volt->mVoltLdo1 = 1900;
+        volt->mVoltLdo1 = 1900U;
     }
     /* LDO2 voltage */
     if (config->ldo2OutVolt <= kPCA9420_Ldo2OutVolt2V100)
     {
-        volt->mVoltLdo2 = 1500 + config->ldo2OutVolt * 25;
+        volt->mVoltLdo2 = 1500U + (uint32_t)config->ldo2OutVolt * 25U;
     }
     else if (config->ldo2OutVolt < kPCA9420_Ldo2OutVolt2V700)
     {
-        volt->mVoltLdo2 = 2100;
+        volt->mVoltLdo2 = 2100U;
     }
     else if (config->ldo2OutVolt <= kPCA9420_Ldo2OutVolt3V300)
     {
-        volt->mVoltLdo2 = 2700 + (config->ldo2OutVolt - kPCA9420_Ldo2OutVolt2V700) * 25;
+        volt->mVoltLdo2 = 2700U + ((uint32_t)config->ldo2OutVolt - (uint32_t)kPCA9420_Ldo2OutVolt2V700) * 25U;
     }
     else
     {
-        volt->mVoltLdo2 = 3300;
+        volt->mVoltLdo2 = 3300U;
     }
 }
 
@@ -197,12 +197,12 @@ void PCA9420_WriteModeConfigs(pca9420_handle_t *handle,
                               const pca9420_modecfg_t *configs,
                               uint32_t num)
 {
-    uint8_t modeCfgRegBase;
+    uint8_t modeCfgRegBase = PCA9420_MODECFG_0_0;
     uint8_t modeCfg[16];
     uint32_t i;
     bool result;
 
-    assert((num >= 1) && (num <= 4));
+    assert((num >= 1U) && (num <= 4U));
 
     switch (modeBase)
     {
@@ -220,23 +220,23 @@ void PCA9420_WriteModeConfigs(pca9420_handle_t *handle,
             break;
         default:
             assert(false);
-            return;
+            break;
     }
 
     for (i = 0; i < num; i++)
     {
-        modeCfg[i * 4] = ((uint32_t)(configs[i].shipModeEnable)) | ((uint32_t)(configs[i].modeSel)) |
-                         ((uint32_t)(configs[i].sw1OutVolt));
-        modeCfg[i * 4 + 1] = ((uint32_t)(configs[i].onCfg)) | ((uint32_t)(configs[i].sw2OutVolt));
-        modeCfg[i * 4 + 2] = ((uint32_t)(configs[i].ldo1OutVolt)) |
-                             (configs[i].enableSw1Out ? (uint32_t)kPCA9420_RegulatorSwitch1 : 0) |
-                             (configs[i].enableSw2Out ? (uint32_t)kPCA9420_RegulatorSwitch2 : 0) |
-                             (configs[i].enableLdo1Out ? (uint32_t)kPCA9420_RegulatorLdo1 : 0) |
-                             (configs[i].enableLdo2Out ? (uint32_t)kPCA9420_RegulatorLdo2 : 0);
-        modeCfg[i * 4 + 3] = ((uint32_t)(configs[i].wdogTimerCfg)) | ((uint32_t)(configs[i].ldo2OutVolt));
+        modeCfg[i * 4U]      = (uint8_t)(((uint32_t)(configs[i].shipModeEnable)) | ((uint32_t)(configs[i].modeSel)) |
+                                    ((uint32_t)(configs[i].sw1OutVolt)));
+        modeCfg[i * 4U + 1U] = (uint8_t)(((uint32_t)(configs[i].onCfg)) | ((uint32_t)(configs[i].sw2OutVolt)));
+        modeCfg[i * 4U + 2U] = (uint8_t)(((uint32_t)(configs[i].ldo1OutVolt)) |
+                                         (configs[i].enableSw1Out ? (uint32_t)kPCA9420_RegulatorSwitch1 : 0U) |
+                                         (configs[i].enableSw2Out ? (uint32_t)kPCA9420_RegulatorSwitch2 : 0U) |
+                                         (configs[i].enableLdo1Out ? (uint32_t)kPCA9420_RegulatorLdo1 : 0U) |
+                                         (configs[i].enableLdo2Out ? (uint32_t)kPCA9420_RegulatorLdo2 : 0U));
+        modeCfg[i * 4U + 3U] = (uint8_t)(((uint32_t)(configs[i].wdogTimerCfg)) | ((uint32_t)(configs[i].ldo2OutVolt)));
     }
 
-    result = PCA9420_WriteRegs(handle, modeCfgRegBase, modeCfg, 4 * num);
+    result = PCA9420_WriteRegs(handle, modeCfgRegBase, modeCfg, 4U * num);
     if (!result)
     {
         assert(false);
@@ -248,12 +248,12 @@ void PCA9420_ReadModeConfigs(pca9420_handle_t *handle,
                              pca9420_modecfg_t *configs,
                              uint32_t num)
 {
-    uint8_t modeCfgRegBase;
-    uint8_t modeCfg[16];
+    uint8_t modeCfgRegBase = PCA9420_MODECFG_0_0;
+    uint8_t modeCfg[16]    = {0U};
     uint32_t i;
     bool result;
 
-    assert((num >= 1) && (num <= 4));
+    assert((num >= 1U) && (num <= 4U));
 
     switch (modeBase)
     {
@@ -271,10 +271,10 @@ void PCA9420_ReadModeConfigs(pca9420_handle_t *handle,
             break;
         default:
             assert(false);
-            return;
+            break;
     }
 
-    result = PCA9420_ReadRegs(handle, modeCfgRegBase, modeCfg, 4 * num);
+    result = PCA9420_ReadRegs(handle, modeCfgRegBase, modeCfg, 4U * num);
     if (!result)
     {
         assert(false);
@@ -282,28 +282,28 @@ void PCA9420_ReadModeConfigs(pca9420_handle_t *handle,
 
     for (i = 0; i < num; i++)
     {
-        configs[i].shipModeEnable = (pca9420_ship_en_t)(modeCfg[i * 4] & PCA9420_MODECFG_0_SHIP_EN_MASK);
-        configs[i].modeSel        = (pca9420_mode_sel_t)(modeCfg[i * 4] & PCA9420_MODECFG_0_MODE_CTRL_SEL_MASK);
-        configs[i].sw1OutVolt     = (pca9420_sw1_out_t)(modeCfg[i * 4] & PCA9420_MODECFG_0_SW1_OUT_MASK);
+        configs[i].shipModeEnable = (pca9420_ship_en_t)(uint8_t)(modeCfg[i * 4U] & PCA9420_MODECFG_0_SHIP_EN_MASK);
+        configs[i].modeSel    = (pca9420_mode_sel_t)(uint8_t)(modeCfg[i * 4U] & PCA9420_MODECFG_0_MODE_CTRL_SEL_MASK);
+        configs[i].sw1OutVolt = (pca9420_sw1_out_t)(uint8_t)(modeCfg[i * 4U] & PCA9420_MODECFG_0_SW1_OUT_MASK);
 
-        configs[i].onCfg      = (pca9420_on_cfg_t)(modeCfg[i * 4 + 1] & PCA9420_MODECFG_1_ON_CFG_MASK);
-        configs[i].sw2OutVolt = (pca9420_sw2_out_t)(modeCfg[i * 4 + 1] & PCA9420_MODECFG_1_SW2_OUT_MASK);
+        configs[i].onCfg      = (pca9420_on_cfg_t)(uint8_t)(modeCfg[i * 4U + 1U] & PCA9420_MODECFG_1_ON_CFG_MASK);
+        configs[i].sw2OutVolt = (pca9420_sw2_out_t)(uint8_t)(modeCfg[i * 4U + 1U] & PCA9420_MODECFG_1_SW2_OUT_MASK);
 
-        configs[i].ldo1OutVolt   = (pca9420_ldo1_out_t)(modeCfg[i * 4 + 2] & PCA9420_MODECFG_2_LDO1_OUT_MASK);
-        configs[i].enableSw1Out  = (modeCfg[i * 4 + 2] & ((uint8_t)kPCA9420_RegulatorSwitch1)) ? true : false;
-        configs[i].enableSw2Out  = (modeCfg[i * 4 + 2] & ((uint8_t)kPCA9420_RegulatorSwitch2)) ? true : false;
-        configs[i].enableLdo1Out = (modeCfg[i * 4 + 2] & ((uint8_t)kPCA9420_RegulatorLdo1)) ? true : false;
-        configs[i].enableLdo2Out = (modeCfg[i * 4 + 2] & ((uint8_t)kPCA9420_RegulatorLdo2)) ? true : false;
+        configs[i].ldo1OutVolt  = (pca9420_ldo1_out_t)(uint8_t)(modeCfg[i * 4U + 2U] & PCA9420_MODECFG_2_LDO1_OUT_MASK);
+        configs[i].enableSw1Out = ((modeCfg[i * 4U + 2U] & ((uint8_t)kPCA9420_RegulatorSwitch1)) != 0U) ? true : false;
+        configs[i].enableSw2Out = ((modeCfg[i * 4U + 2U] & ((uint8_t)kPCA9420_RegulatorSwitch2)) != 0U) ? true : false;
+        configs[i].enableLdo1Out = ((modeCfg[i * 4U + 2U] & ((uint8_t)kPCA9420_RegulatorLdo1)) != 0U) ? true : false;
+        configs[i].enableLdo2Out = ((modeCfg[i * 4U + 2U] & ((uint8_t)kPCA9420_RegulatorLdo2)) != 0U) ? true : false;
 
-        configs[i].wdogTimerCfg = (pca9420_wd_timer_t)(modeCfg[i * 4 + 3] & PCA9420_MODECFG_3_WD_TIMER_MASK);
-        configs[i].ldo2OutVolt  = (pca9420_ldo2_out_t)(modeCfg[i * 4 + 3] & PCA9420_MODECFG_3_LDO2_OUT_MASK);
+        configs[i].wdogTimerCfg = (pca9420_wd_timer_t)(uint8_t)(modeCfg[i * 4U + 3U] & PCA9420_MODECFG_3_WD_TIMER_MASK);
+        configs[i].ldo2OutVolt  = (pca9420_ldo2_out_t)(uint8_t)(modeCfg[i * 4U + 3U] & PCA9420_MODECFG_3_LDO2_OUT_MASK);
     }
 }
 
 static bool PCA9420_ModeControlledByI2C(pca9420_handle_t *handle, pca9420_mode_t mode)
 {
-    uint8_t modeCfgReg;
-    uint8_t modeCfg0;
+    uint8_t modeCfgReg = PCA9420_MODECFG_0_0;
+    uint8_t modeCfg0   = 0U;
     bool result;
 
     switch (mode)
@@ -322,11 +322,11 @@ static bool PCA9420_ModeControlledByI2C(pca9420_handle_t *handle, pca9420_mode_t
             break;
         default:
             assert(false);
-            return false;
+            break;
     }
     result = PCA9420_ReadRegs(handle, modeCfgReg, &modeCfg0, 1);
     assert(result);
-    if ((modeCfg0 & PCA9420_MODECFG_0_MODE_CTRL_SEL_MASK) == kPCA9420_ModeSelI2C)
+    if ((modeCfg0 & PCA9420_MODECFG_0_MODE_CTRL_SEL_MASK) == (uint8_t)kPCA9420_ModeSelI2C)
     {
         result = true;
     }
@@ -354,8 +354,8 @@ bool PCA9420_SwitchMode(pca9420_handle_t *handle, pca9420_mode_t mode)
 
 bool PCA9420_GetCurrentMode(pca9420_handle_t *handle, pca9420_mode_t *mode)
 {
-    bool result = true;
-    uint8_t regValue;
+    bool result      = true;
+    uint8_t regValue = 0U;
     pca9420_mode_t pinMode, i2cMode;
 
     assert(mode);
@@ -371,9 +371,9 @@ bool PCA9420_GetCurrentMode(pca9420_handle_t *handle, pca9420_mode_t *mode)
         result = PCA9420_ReadRegs(handle, PCA9420_TOP_CNTL3, &regValue, 1);
         if (result)
         {
-            i2cMode =
-                (pca9420_mode_t)((regValue & PCA9420_TOP_CNTL3_MODE_I2C_MASK) >> PCA9420_TOP_CNTL3_MODE_I2C_SHIFT);
-            *mode = i2cMode;
+            i2cMode = (pca9420_mode_t)(uint8_t)((regValue & PCA9420_TOP_CNTL3_MODE_I2C_MASK) >>
+                                                PCA9420_TOP_CNTL3_MODE_I2C_SHIFT);
+            *mode   = i2cMode;
         }
     }
 
@@ -399,7 +399,7 @@ void PCA9420_FeedWatchDog(pca9420_handle_t *handle)
 {
     uint8_t regValue = 1;
 
-    PCA9420_WriteRegs(handle, PCA9420_TOP_CNTL4, &regValue, 1);
+    (void)PCA9420_WriteRegs(handle, PCA9420_TOP_CNTL4, &regValue, 1);
 }
 
 bool PCA9420_WriteRegs(pca9420_handle_t *handle, uint8_t regBase, uint8_t *val, uint32_t size)
@@ -423,7 +423,7 @@ bool PCA9420_ReadRegs(pca9420_handle_t *handle, uint8_t regBase, uint8_t *val, u
 bool PCA9420_ModifyReg(pca9420_handle_t *handle, uint8_t reg, uint8_t mask, uint8_t val)
 {
     bool result;
-    uint8_t regValue;
+    uint8_t regValue = 0U;
 
     assert(handle);
 
@@ -456,11 +456,11 @@ void PCA9420_EnableInterrupts(pca9420_handle_t *handle, uint32_t source)
         assert(false);
     }
 
-    regValues[0] = regValues[2] = regValues[4] = 0; /* Don't clear int status */
+    regValues[0] = regValues[2] = regValues[4] = 0U; /* Don't clear int status */
 
-    regValues[1] &= ~(source & 0xFFU);         /* SUB_INT0_MASK */
-    regValues[3] &= ~((source >> 8) & 0xFFU);  /* SUB_INT1_MASK */
-    regValues[5] &= ~((source >> 16) & 0xFFU); /* SUB_INT2_MASK */
+    regValues[1] &= (uint8_t)(~(source & 0xFFU));         /* SUB_INT0_MASK */
+    regValues[3] &= (uint8_t)(~((source >> 8) & 0xFFU));  /* SUB_INT1_MASK */
+    regValues[5] &= (uint8_t)(~((source >> 16) & 0xFFU)); /* SUB_INT2_MASK */
 
     result = PCA9420_WriteRegs(handle, PCA9420_SUB_INT0, regValues, sizeof(regValues));
     if (!result)
@@ -483,11 +483,11 @@ void PCA9420_DisableInterrupts(pca9420_handle_t *handle, uint32_t source)
         assert(false);
     }
 
-    regValues[0] = regValues[2] = regValues[4] = 0; /* Don't clear int status */
+    regValues[0] = regValues[2] = regValues[4] = 0U; /* Don't clear int status */
 
-    regValues[1] |= (source & 0xFFU);         /* SUB_INT0_MASK */
-    regValues[3] |= ((source >> 8) & 0xFFU);  /* SUB_INT1_MASK */
-    regValues[5] |= ((source >> 16) & 0xFFU); /* SUB_INT2_MASK */
+    regValues[1] |= (uint8_t)(source & 0xFFU);         /* SUB_INT0_MASK */
+    regValues[3] |= (uint8_t)((source >> 8) & 0xFFU);  /* SUB_INT1_MASK */
+    regValues[5] |= (uint8_t)((source >> 16) & 0xFFU); /* SUB_INT2_MASK */
 
     result = PCA9420_WriteRegs(handle, PCA9420_SUB_INT0, regValues, sizeof(regValues));
     if (!result)
@@ -499,7 +499,7 @@ void PCA9420_DisableInterrupts(pca9420_handle_t *handle, uint32_t source)
 uint32_t PCA9420_GetInterruptStatus(pca9420_handle_t *handle)
 {
     bool result;
-    uint8_t regValues[6];
+    uint8_t regValues[6] = {0U};
 
     assert(handle);
 
@@ -527,9 +527,9 @@ void PCA9420_ClearInterruptStatus(pca9420_handle_t *handle, uint32_t source)
         assert(false);
     }
 
-    regValues[0] = source & 0xFFU;         /* SUB_INT1 */
-    regValues[2] = (source >> 8) & 0xFFU;  /* SUB_INT2 */
-    regValues[4] = (source >> 16) & 0xFFU; /* SUB_INT3 */
+    regValues[0] = (uint8_t)(source & 0xFFU);         /* SUB_INT1 */
+    regValues[2] = (uint8_t)((source >> 8) & 0xFFU);  /* SUB_INT2 */
+    regValues[4] = (uint8_t)((source >> 16) & 0xFFU); /* SUB_INT3 */
 
     result = PCA9420_WriteRegs(handle, PCA9420_SUB_INT0, regValues, sizeof(regValues));
     if (!result)

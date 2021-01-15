@@ -1,0 +1,219 @@
+<html xmlns:fn="http://www.w3.org/2005/xpath-functions">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Cortex-M7 Startup Example Code for Arm Compiler 6</title>
+<style type="text/css">
+    body { font-size: 62.5%;    /* default 1.0em = 16px, so 62.5% of 16 = 10. Therefore, 1.0em now = 10px, 1.2em now = 12px etc. */
+        font-family: Verdana, Arial, "Lucida Grande", sans-serif; margin: 10px; padding: 0; background: #fff; min-width: 999px; }
+    /* Content Styling */
+    .para { font-size: 1.2em; margin-bottom: 0px; margin-top: 10px; }
+    p { font-size: 1.2em; margin-bottom: 0px; margin-top: 10px; }
+    h1 { font-size: 1.6em; color: #025066; margin-top: 0px; margin-bottom: 0px; }
+    h2 { font-size: 1.4em; font-weight: bold; color: #025066; margin-bottom: 0px; }
+    h3 { font-size: 1.2em; font-weight: bold; color: #025066; margin-bottom: 0px; }
+    a { color: #127490; }
+    a:hover { color: #014153; }
+    div.indent { margin-left:10px; margin-right: 10px; margin-bottom: 0px; margin-top: 10px; }
+    div.note { font-size: 1.0em; margin-left:10px; margin-right: 10px; margin-bottom: 0px; margin-top: 10px; }
+    .table { margin-top: 5px; margin-bottom: 5px; padding:0px; }
+    ul li { font-size: 1.0em; list-style-image: url(images/bullet_blue.png); }
+    div.toc ul li { font-size: 1.0em; list-style-image: url(images/bullet_blue.png); }
+    .table-cell { font-size: 75%; }
+    .image { margin-top: 5px; margin-bottom: 5px; padding:0px; }
+    .note { margin-bottom: 15px; background: #E0E0E0 }
+    .toc { font-size: 115%; margin-left: 20px; margin-top: 10px; margin-bottom: 15px; }
+    .italic { font-style: italic; }
+    .bold { font-weight: bold; }
+    .emphasis { font-weight: bold; font-style: italic; }
+    .underline { text-decoration: underline; }
+    .bold-underline { text-decoration: underline; font-weight: bold; }
+    .arg { font-family: 'Lucida Sans Typewriter', 'Courier New', Courier, monospace; color:#333399; }
+    .repl { font-style: italic; }
+    .code { font-size: 1.2em; margin-top: 2px; margin-left: 20px; margin-bottom: 2px; color: #333399;
+       font-family: 'Lucida Sans Typewriter', 'Courier New', Courier, monospace; }
+    .menu { font-weight: bold; }
+    .interface { font-weight: bold; }
+    ul {margin-top: 2px; margin-bottom: 5px; }
+    ol {list-style-type:decimal; margin-top: 2px; margin-bottom: 5px; }
+    ol ol {list-style-type:lower-alpha; margin-top: 2px; margin-bottom: 5px; }
+    ol ol ol {list-style-type:lower-roman; margin-top: 2px; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    
+    <a name="Cortex-M7_Startup_Example_Code_for_Arm_Compiler_6"></a><h1>Cortex-M7 Startup Example Code for Arm Compiler 6 - Arm®Development Studio</h1>
+    
+        <div class="para">This example shows the bare-metal startup code for the Cortex-M7 processor, including vector table, SysTick timer, interrupt handler, cache and MPU initialization, all written in C, and is illustrated by a simple semihosted "Hello World" and example sorting application.</div>
+    
+
+    <div class="indent">
+        <a name="Purpose_and_scope"></a><h2>Purpose and scope</h2>
+        <div class="para">This example shows the bare-metal startup code for the Cortex-M7 processor, including vector table, SysTick timer, interrupt handler, cache and MPU initialization, all written in C, and is illustrated by a simple semihosted "Hello World" and example sorting application.
+This example can be run on either Cortex-M7 MPS2 hardware (available separately) or the Cortex-M7 FVP model.
+This is a simple example for the purposes of illustrating features of the Debugger.  For real-world Cortex-M7 software development, the Cortex Microcontroller Software Interface Standard (CMSIS) is recommended to be used as a ready-made starting point instead.</div>
+
+        <h3>Hardware and software requirements</h3>
+        <div class="para">To run the example on MPS2 hardware, you will need:</div>
+        <ul>
+           <li><div class="para">A Versatile Express Cortex-M Prototyping System (V2M-MPS2), with its FPGA configured as a Cortex-M7 ("MPS2-M7") (see <a href="https://developer.arm.com/docs/dai0399/latest/"><i>AN399 - Cortex-M7 SMM on V2M-MPS2</i></a>, <a href="https://developer.arm.com/docs/dai0400/latest/"><i>AN400 - Cortex-M7CS SMM on V2M-MPS2</i></a> or <a href="https://developer.arm.com/docs/dai0500/latest/"><i>AN500 - Cortex-M7 SMM on V2M-MPS2+</i></a> ) and a suitable power supply for it.</div></li>
+           <li><div class="para">DSTREAM or ULINK debug hardware and a suitable power supply for it, and a JTAG cable to connect it to the MPS2-M7</div></li>
+        </ul>
+
+        <div class="para">This example is intended to be built with Arm Compiler 6. If you wish to modify and rebuild the example, you must use Arm Compiler 6 to rebuild it.</div>
+        <div class="para">This example is intended for running on MPS2-M7, but could be easily ported to other Cortex-M7 platforms by simply changing the code and data addresses in the scatter-file <span class="arg">scatter.scat</span>.</div>
+        <div class="para">Ready-made launch configurations <span class="arg">startup_Cortex-M7_AC6-MPS2.launch</span> (to connect to MPS2 hardware via DSTREAM) and <span class="arg">startup_Cortex-M7_AC6-FVP.launch</span> (to connect to the FVP model) are provided.</div>
+    </div>
+
+    <div class="indent">
+        <a name="Building_the_example"></a><h2>Building the example</h2>
+        <div class="para">This example can be built with Arm Compiler 6 using the supplied Eclipse project, or directly on the command line with the supplied <span class="arg">makefile</span>.</div>
+        <div class="para">The Eclipse project is a managed builder project, that creates a makefile in the /Debug directory.</div>
+        
+        <div class="para">This example depends on semihosting support being provided by the debug system.  The Debugger enables semihosting automatically if either symbols <span class="arg">__auto_semihosting</span> or <span class="arg">__semihosting_library_function</span> are present in an image.  Arm Compiler 5 and Arm Compiler 6 both add <span class="arg">__semihosting_library_function</span> automatically to an image at link time if that image uses any semihosting-using functions.  If compiling with GCC or an earlier release of armcc, use an alias symbol definition such as <span class="arg">void __auto_semihosting(void) __attribute__ ((alias("main")));</span> or turn on semihosting support in the Debugger explicitly with <span class="arg">set semihosting enabled on</span>.</div>
+
+    </div>
+
+    <div class="indent">
+        <a name="Building_on_the_command-line"></a><h2>Building on the command-line</h2>
+        <div class="para">To build the example on the command-line with the supplied <span class="arg">make</span> utility:</div>
+        
+        <ul>
+           <li><div class="para">On Windows, open an <span class="interface">Arm DS Command Prompt</span> from the Start menu, run the <span class="arg">select_toolchain</span> utility, and select <span class="arg">Arm Compiler 6</span> from the list</div></li>
+           <li><div class="para">On Linux, run the <span class="arg">suite_exec</span> utility with the <span class="arg">--toolchain</span> option to select the compiler and start a shell configured for the Development Studio environment, for example: <span class="arg">~/developmentstudio/bin/suite_exec --toolchain "Arm Compiler 6" bash</span>
+</div></li>
+        </ul>
+
+        <div class="para">Then navigate to the <span class="arg">...\startup_Cortex-M7_AC6</span> directory, and type:</div>
+        <div class="para"><span class="arg">make</span></div>
+        <div class="para">The usual <span class="arg">make</span> rules: <span class="arg">clean</span>, <span class="arg">all</span> and <span class="arg">rebuild</span> are provided in the <span class="arg">makefile</span>.</div>
+    </div>
+
+    
+    <div class="indent">
+        <a name="Building_from_Eclipse"></a><h2>Building from Eclipse</h2>
+        <div class="para">To build the supplied Eclipse projects:</div>
+        
+    <ol>
+        <li><div class="para">In the Project Explorer view, select the project you want to build.</div></li>
+        <li><div class="para">Select <span class="menu">Project<span class="para"> → </span>Build Project</span>.</div></li>
+    </ol>
+
+    </div>
+
+
+    <div class="indent">
+        <a name="Running_the_example_on_MPS2_hardware"></a><h2>Running the example on MPS2 hardware</h2>
+        <ol>
+            <li><div class="para">Power-up the MPS2-M7</div></li>
+            <li><div class="para">Select <span class="menu">Run<span class="para"> → </span>Debug Configurations...</span>.</div></li>
+            <li><div class="para">Select <span class="arg">startup_Cortex-M7_AC6-MPS2</span> from the list of <span class="interface">Generic Arm C/C++ Application</span> configurations.</div></li>
+            <li><div class="para">In the Connections panel, enter the USB: or TCP: IP address or name of your DSTREAM or ULINK unit in the Debug Hardware Address field,
+                or click on <span class="interface">Browse</span> to select one from a list, otherwise an error is reported:
+                <span class="arg">
+        <span class="arg">Launch configuration has errors: Configuration for connection type 'Bare Metal Debug' is not valid - Connection cannot be empty</span>
+</span>.</div></li>
+            <li><div class="para">Click on <span class="interface">Debug</span> to start debugging.  The example image is downloaded to the target and the program counter (PC) set to the entry point at <span class="arg">__main()</span>.</div></li>
+            <li><div class="para">Start execution (click the <span class="interface">Continue</span> button or press F8).  The code runs to the breakpoint on the <span class="arg">main()</span> function.</div></li>
+            <li>
+<div class="para">Continue execution (press F8).  <span class="arg">printf()</span> output appears in the <span class="interface">App Console</span>.  You should see:</div>
+<pre class="code">
+Cortex-M7 bare-metal startup example
+Calculating using the Cortex-M7's FPU
+Float result should be 80.406250
+Float result is        80.406250
+Insertion sort took 21 clock ticks
+Shell sort took 14 clock ticks
+Quick sort took 14 clock ticks
+SysTick interrupt 1
+SysTick interrupt 2
+SysTick interrupt 3
+SysTick interrupt 4
+SysTick interrupt 5
+SysTick interrupt 6
+</pre>
+            </li>
+        </ol>
+    </div>
+
+    <div class="indent">
+        <a name="Running_the_example_on_FVP_model"></a><h2>Running the example on FVP model</h2>
+        <ol>
+            <li><div class="para">Select <span class="menu">Run<span class="para"> → </span>Debug Configurations...</span>.</div></li>
+            <li><div class="para">Select <span class="arg">startup_Cortex-M7_AC6-FVP</span> from the list of <span class="interface">Generic Arm C/C++ Application</span> configurations.</div></li>
+            <li><div class="para">Click on <span class="interface">Debug</span> to start debugging.  The example image is downloaded to the target and the program counter (PC) set to the entry point at <span class="arg">__main()</span>.</div></li>
+            <li><div class="para">Start execution (click the <span class="interface">Continue</span> button or press F8).  The code runs to the breakpoint on the <span class="arg">main()</span> function.</div></li>
+            <li>
+<div class="para">Continue execution (press F8).  <span class="arg">printf()</span> output appears in the <span class="interface">Target Console</span>.  You should see:</div>
+<pre class="code">
+Cortex-M7 bare-metal startup example
+Insertion sort took 21 clock ticks
+Shell sort took 14 clock ticks
+Quick sort took 14 clock ticks
+SysTick interrupt 1
+SysTick interrupt 2
+SysTick interrupt 3
+SysTick interrupt 4
+SysTick interrupt 5
+SysTick interrupt 6
+</pre>
+            </li>
+        </ol>
+        <div class="para">You can also run the example executable directly on the FVP model from within the <span class="interface">Arm DS Command Prompt</span> on Windows or the <span class="arg">suite_exec</span> shell on Linux with, for example:</div>
+<pre class="code">
+FVP_MPS2_Cortex-M7 -a startup_Cortex-M7_AC6.axf
+</pre>
+    </div>
+
+    <div class="indent">
+        <a name="Exploring_the_example"></a><h2>Exploring the example</h2>
+        <div class="para">Disconnect any existing debug session, then power-cycle the target, and load the executable in the same way as before.</div>
+
+        <ol>
+            <li>
+            <div class="para">The vector table and default exception handlers are coded in C in <span class="arg">exceptions.c</span>.  The vector table is placed first at the start of the image at address 0x0 as specified in the scatter-file <span class="arg">scatter.scat</span>, by creating a named ELF section with <span class="arg">__attribute__((section("vectors")))</span> then placing that section <span class="arg">+FIRST</span> in the first (root) execution region in the scatter-file.  The first two entries in the vector table are the Initial Stack Pointer and the Initial Program Counter.  The Initial SP comes from the top address of the <span class="arg">ARM_LIB_STACKHEAP</span> region, as a linker-generated symbol <span class="arg">Image$$ARM_LIB_STACKHEAP$$ZI$$Limit</span> for the (default) One Region model.  The Initial PC is the address of the Reset handler, which in this example is the C run-time entry point <span class="arg">__main()</span> that performs scatter-loading and all C run-time library initialization necessary before reaching <span class="arg">main()</span>.  The SysTick handler is in <span class="arg">timer.c</span>.  Default exception handlers to trap all exceptions (other than SysTick and Reset) in an endless loop are provided too.  Note that unlike other Arm processors, the Cortex-M familys do not have branch instructions in their vector tables, but have function pointers instead.  A <span class="arg">typedef</span> for <span class="arg">ExecFuncPtr</span> for the function pointers in the exception table makes this explicit.  These function pointers are all pointers to Thumb code, so have their Least Significant Bits set to indicate Thumb.  Open a <span class="interface">Memory</span> view at address 0x0 to check the addresses and that they all (except for the Initial SP) have their LSBs set.</div>
+            </li>
+            <li>
+            <div class="para">The <span class="arg">main()</span> function in <span class="arg">main.c</span> first tells the processor the location of the vector table, obtained from the scatter-file, by writing its address to the Vector Table Offset Register.  This needs to be done early in case some later actions trigger an exception.  <span class="arg">main()</span> then displays a welcome message with a semihosted <span class="arg">printf()</span>, initializes the MPU, and performs a floating point calculation using either the processor's optional FPU or the software floating point library.  <span class="arg">main()</span> then starts the SysTick timer (see later), initializes the Process Stack Pointer, changes Thread mode to Unprivileged and to use the Process Stack.  Single-step from <span class="arg">main()</span> through this code, using the <span class="interface">Registers</span> view to watch the values in registers changing.  <span class="arg">main()</span> then runs the main application (sorts), then sits in an endless loop, waiting for interrupts.  The MPU initialization function <span class="arg">SCS_init()</span> in <span class="arg">scs.c</span> is a minimal example to show what can be done with the Cortex-M7's optional MPU.  This is for illustration only - it can be removed without affecting the rest of the example.</div>
+            </li>
+            <li>
+            <div class="para">The example sorting application in <span class="arg">sorts.c</span> is a simple example of data manipulation using standard C library functionality.  <span class="arg">clock()</span> timing and printing of results is performed via semihosting.  The value of N is limited to 200 to avoid excessive stack usage in <span class="arg">compare_sorts</span> due to the local arrays, because RAM is typically small in Cortex-M systems.</div>
+            </li>
+            <li>
+            <div class="para">The SysTick Timer is initialized by <span class="arg">SysTick_init()</span> in <span class="arg">timer.c</span>.  This is a minimal implementation of a count-down timer with an auto-reload value, that triggers a SysTick interrupt when it reaches zero.  The tick period depends on the clock frequency and reload value.  <span class="arg">timer.c</span> also contains the SysTick exception handler <span class="arg">SysTickHandler()</span> that is called from the vector table when a SysTick interrupt occurs.  You can trap SysTick interrupts for debugging by placing a breakpoint on this function.  Use the <span class="interface">Registers</span> view to see the SysTick registers and to watch the timer value changing.  Use the <span class="interface">Variables</span> view to watch the values of <span class="arg">ticks</span> counting up.</div>
+            </li>
+        </ol>
+    </div>
+
+    <div class="indent">
+        <a name="Using_timed_auto-refresh"></a><h2>Using timed auto-refresh</h2>
+        <div class="para">The Memory view and Screen view both offer "Timed auto-refresh", which is able to update the views without stopping the target on platforms that support this.  Typically, this requires DAP access to the AHB bus.  To illustrate this: </div>
+        <ol>
+            <li>
+            <div class="para">In the <span class="interface">Memory</span> view, locate the <span class="interface">Timed auto-refresh</span> button.  From its drop-down menu, change the "Update Interval" to 1 sec and change "Update When" to "Always".</div>
+            </li>
+            <li>
+            <div class="para">In the <span class="interface">Memory</span> view address field, enter "AHB:0xE000E010" (the base address of the timer peripheral).  To start auto-refreshing, either click on the <span class="interface">Timed auto-refresh</span> button or select "Start" from its drop-down menu.  Observe the <span class="interface">Memory</span> view auto-refreshing.</div>
+            </li>
+            <li>
+            <div class="para">Delete all breakpoints, then continue running (press F8).  Observe the <span class="interface">Memory</span> view continues auto-refreshing and the displayed timer values read from 0xE000E018 change each time the view refreshes showing the timer is "ticking".</div>
+            </li>
+        </ol>
+    </div>
+
+    <h2>See also:</h2>
+<div class="indent"><ul>
+        <li><div class="para"><a href="https://developer.arm.com/docs/101470/latest/configuring-debug-connections-in-arm-debugger"><i>Configuring debug connections in the Debugger</i> in <i>Arm Development Studio User Guide</i></a></div></li>
+        <li><div class="para"><a href="https://developer.arm.com/docs/101470/latest/"><i>Arm Development Studio User Guide</i></a></div></li>
+        <li><div class="para"><a href="https://developer.arm.com/docs/101471/latest/"><i>Arm Debugger Command Reference</i></a></div></li>
+        <li><div class="para"><a href="https://developer.arm.com/docs/100955/latest"><i>DSTREAM User Guide</i></a></div></li>
+        <li><div class="para"><a href="https://developer.arm.com/docs/100748/latest/"><i>Arm Compiler 6 User Guide</i></a></div></li>
+        <li><div class="para"><a href="https://developer.arm.com/docs/101754/latest"><i>Arm Compiler 6 Reference Guide</i></a></div></li>
+        <li><div class="para"><a href="https://developer.arm.com/docs/100066/latest/"><i>Arm Compiler 6 Software Development Guide</i></a></div></li>
+        <li><div class="para"><a href="https://developer.arm.com/docs/dai0399/latest/"><i>AN399 - Cortex-M7 SMM on V2M-MPS2</i></a></div></li>
+        <li><div class="para"><a href="https://developer.arm.com/docs/dai0400/latest/"><i>AN400 - Cortex-M7CS SMM on V2M-MPS2</i></a></div></li>
+        <li><div class="para"><a href="https://developer.arm.com/docs/dai0500/latest/"><i>AN500 - Cortex-M7 SMM on V2M-MPS2+</i></a></div></li>
+    </ul></div>
+<br><br><div align="left" class="legal">
+<hr>Copyright© 2010-2020 Arm Limited (or its affiliates). All rights reserved.</div>
+</body>
+</html>

@@ -39,7 +39,11 @@
 #else
 /* MISRA C-2012 Rule 17.2 */
 #undef assert
-#define assert(n) while (!(n)) { ; }
+#define assert(n) \
+    while (!(n))  \
+    {             \
+        ;         \
+    }
 #endif
 #endif
 
@@ -470,7 +474,8 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
             }
 
             /* Indicates to DCE if DTE is present or not */
-            acmInfo->dtePresent = (0U != (acmInfo->dteStatus & (uint8_t)USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE)) ? true : false;
+            acmInfo->dtePresent =
+                (0U != (acmInfo->dteStatus & (uint8_t)USB_DEVICE_CDC_CONTROL_SIG_BITMAP_DTE_PRESENCE)) ? true : false;
 
             /* Initialize the serial state buffer */
             acmInfo->serialStateBuf[0] = NOTIF_REQUEST_TYPE;                /* bmRequestType */
@@ -528,8 +533,7 @@ static usb_status_t USB_DeviceCdcVcomCallback(class_handle_t handle, uint32_t ev
         break;
         case kUSB_DeviceCdcEventSendBreak:
             break;
-        default:
-            ;/* MISRA C-2012 Rule 16.4 */
+        default:; /* MISRA C-2012 Rule 16.4 */
             break;
     }
 
@@ -553,7 +557,10 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
     usb_status_t error = kStatus_USB_Error;
     uint16_t *temp16   = (uint16_t *)param;
     uint8_t *temp8     = (uint8_t *)param;
+#if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
+    (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
     usb_status_t usbState;
+#endif
 
     serialUsbCdc = USB_DeviceGetInstanceFromDeviceHandle(s_UsbCdcHead, handle);
     if (NULL == serialUsbCdc)
@@ -571,6 +578,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
             /* Get USB speed to configure the device, including max packet size and interval of the endpoints. */
             usbState = USB_DeviceClassGetSpeed(serialUsbCdc->instance, &serialUsbCdc->speed);
+            (void)usbState; /* Fix MISRA C-2012 Rule 2.2: declared but never referenced */
             if (kStatus_USB_Success == usbState)
             {
                 (void)USB_DeviceSetSpeed(handle, serialUsbCdc->speed);
@@ -586,7 +594,8 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 if ((uint8_t)USB_CDC_VCOM_CONFIGURE_INDEX == (*temp8))
                 {
                     /* Schedule buffer for receive */
-                    (void)Serial_UsbCdcRead(serialUsbCdc, s_currRecvBuf, g_UsbDeviceCdcVcomDicEndpoints[0].maxPacketSize);
+                    (void)Serial_UsbCdcRead(serialUsbCdc, s_currRecvBuf,
+                                            g_UsbDeviceCdcVcomDicEndpoints[0].maxPacketSize);
                 }
             }
             break;
@@ -664,11 +673,7 @@ void USBHS_IRQHandler(void)
         }
         serialUsbCdc = serialUsbCdc->next;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 1U)
 #if defined(FSL_FEATURE_USBHS_EHCI_COUNT) && (FSL_FEATURE_USBHS_EHCI_COUNT > 1U)
@@ -685,11 +690,7 @@ void USB1_IRQHandler(void)
         }
         serialUsbCdc = serialUsbCdc->next;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 #endif
@@ -700,19 +701,15 @@ void USB0_IRQHandler(void)
 {
     serial_usb_cdc_state_t *serialUsbCdc = s_UsbCdcHead;
 
-    while (serialUsbCdc)
+    while (NULL != serialUsbCdc)
     {
-        if ((kSerialManager_UsbControllerKhci0 == serialUsbCdc->instance))
+        if (((uint8_t)kSerialManager_UsbControllerKhci0 == serialUsbCdc->instance))
         {
             USB_DeviceKhciIsrFunction(serialUsbCdc->deviceHandle);
         }
         serialUsbCdc = serialUsbCdc->next;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
@@ -729,11 +726,7 @@ void USB0_IRQHandler(void)
         }
         serialUsbCdc = serialUsbCdc->next;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
@@ -742,19 +735,15 @@ void USB1_IRQHandler(void)
 {
     serial_usb_cdc_state_t *serialUsbCdc = s_UsbCdcHead;
 
-    while (serialUsbCdc)
+    while (NULL != serialUsbCdc)
     {
-        if ((kSerialManager_UsbControllerLpcIp3511Hs0 == serialUsbCdc->instance))
+        if (((uint8_t)kSerialManager_UsbControllerLpcIp3511Hs0 == serialUsbCdc->instance))
         {
             USB_DeviceLpcIp3511IsrFunction(serialUsbCdc->deviceHandle);
         }
         serialUsbCdc = serialUsbCdc->next;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
@@ -762,22 +751,26 @@ static void USB_DeviceIsrEnable(serial_usb_cdc_state_t *serialUsbCdc)
 {
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
     IRQn_Type usbDeviceEhciIrq[] = USBHS_IRQS;
-    serialUsbCdc->irqNumber    = (uint8_t)usbDeviceEhciIrq[serialUsbCdc->instance - (uint8_t)kSerialManager_UsbControllerEhci0];
+    serialUsbCdc->irqNumber =
+        (uint8_t)usbDeviceEhciIrq[serialUsbCdc->instance - (uint8_t)kSerialManager_UsbControllerEhci0];
 #endif
 
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-    IRQn_Type usbDeviceKhciIrq[]  = USB_IRQS;
-    serialUsbCdc->irqNumber    = (uint8_t)usbDeviceKhciIrq[serialUsbCdc->instance - (uint8_t)kSerialManager_UsbControllerKhci0];
+    IRQn_Type usbDeviceKhciIrq[] = USB_IRQS;
+    serialUsbCdc->irqNumber =
+        (uint8_t)usbDeviceKhciIrq[serialUsbCdc->instance - (uint8_t)kSerialManager_UsbControllerKhci0];
 #endif
 
 #if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
     IRQn_Type usbDeviceIP3511Irq[] = USB_IRQS;
-    serialUsbCdc->irqNumber = (uint8_t)usbDeviceIP3511Irq[serialUsbCdc->instance - (uint8_t)kSerialManager_UsbControllerLpcIp3511Fs0];
+    serialUsbCdc->irqNumber =
+        (uint8_t)usbDeviceIP3511Irq[serialUsbCdc->instance - (uint8_t)kSerialManager_UsbControllerLpcIp3511Fs0];
 #endif
 
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
     IRQn_Type usbDeviceIP3511Irq[] = USBHSD_IRQS;
-    serialUsbCdc->irqNumber = (uint8_t)usbDeviceIP3511Irq[serialUsbCdc->instance - (uint8_t)kSerialManager_UsbControllerLpcIp3511Hs0];
+    serialUsbCdc->irqNumber =
+        (uint8_t)usbDeviceIP3511Irq[serialUsbCdc->instance - (uint8_t)kSerialManager_UsbControllerLpcIp3511Hs0];
 #endif
 
 /* Install isr, set priority, and enable IRQ. */
@@ -800,7 +793,7 @@ serial_manager_status_t Serial_UsbCdcInit(serial_handle_t serialHandle, void *co
     assert(SERIAL_PORT_USB_CDC_HANDLE_SIZE >= sizeof(serial_usb_cdc_state_t));
 
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
-    SYSMPU_Enable(SYSMPU, 0);
+    SYSMPU_Enable(SYSMPU, (bool)false);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     usbCdcConfig = (serial_port_usb_cdc_config_t *)config;
@@ -968,8 +961,8 @@ serial_manager_status_t Serial_UsbCdcCancelWrite(serial_handle_t serialHandle)
     assert(serialHandle);
 
     serialUsbCdc = (serial_usb_cdc_state_t *)serialHandle;
-    (void)USB_DeviceCancel(serialUsbCdc->deviceHandle,
-                     (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) | (uint8_t)USB_CDC_VCOM_BULK_IN_ENDPOINT);
+    (void)USB_DeviceCancel(serialUsbCdc->deviceHandle, (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) |
+                                                           (uint8_t)USB_CDC_VCOM_BULK_IN_ENDPOINT);
     return kStatus_SerialManager_Success;
 }
 
@@ -1024,23 +1017,23 @@ void Serial_UsbCdcIsrFunction(serial_handle_t serialHandle)
     }
 #endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0)
-    if ((kSerialManager_UsbControllerKhci0 == serialUsbCdc->instance) ||
-        (kSerialManager_UsbControllerKhci1 == serialUsbCdc->instance))
+    if (((uint8_t)kSerialManager_UsbControllerKhci0 == serialUsbCdc->instance) ||
+        ((uint8_t)kSerialManager_UsbControllerKhci1 == serialUsbCdc->instance))
     {
         USB_DeviceKhciIsrFunction(serialUsbCdc->deviceHandle);
     }
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
-    if ((kSerialManager_UsbControllerLpcIp3511Fs0 == serialUsbCdc->instance) ||
-        (kSerialManager_UsbControllerLpcIp3511Fs1 == serialUsbCdc->instance))
+    if (((uint8_t)kSerialManager_UsbControllerLpcIp3511Fs0 == serialUsbCdc->instance) ||
+        ((uint8_t)kSerialManager_UsbControllerLpcIp3511Fs1 == serialUsbCdc->instance))
     {
         USB_DeviceLpcIp3511IsrFunction(serialUsbCdc->deviceHandle);
     }
 #endif
 
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
-    if ((kSerialManager_UsbControllerLpcIp3511Hs0 == serialUsbCdc->instance) ||
-        (kSerialManager_UsbControllerLpcIp3511Hs1 == serialUsbCdc->instance))
+    if (((uint8_t)kSerialManager_UsbControllerLpcIp3511Hs0 == serialUsbCdc->instance) ||
+        ((uint8_t)kSerialManager_UsbControllerLpcIp3511Hs1 == serialUsbCdc->instance))
     {
         USB_DeviceLpcIp3511IsrFunction(serialUsbCdc->deviceHandle);
     }

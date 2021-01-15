@@ -1,14 +1,9 @@
-/* Copyright 2019,2020 NXP
- *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
- *
- */
+/*
+* Copyright 2019,2020 NXP
+* All rights reserved.
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef APPLET_SE050_VERSION_INFO_H_INCLUDED
 #define APPLET_SE050_VERSION_INFO_H_INCLUDED
@@ -51,6 +46,18 @@
 #elif SSS_HAVE_SE05X_VER_05_08 == 1
 #    define APPLET_SE050_VER_MAJOR          (5u)
 #    define APPLET_SE050_VER_MINOR          (8u)
+#    define APPLET_SE050_VER_DEV            (0u)
+#elif SSS_HAVE_SE05X_VER_05_10 == 1
+#    define APPLET_SE050_VER_MAJOR          (5u)
+#    define APPLET_SE050_VER_MINOR          (10u)
+#    define APPLET_SE050_VER_DEV            (0u)
+#elif SSS_HAVE_SE05X_VER_05_12 == 1
+#    define APPLET_SE050_VER_MAJOR          (5u)
+#    define APPLET_SE050_VER_MINOR          (12u)
+#    define APPLET_SE050_VER_DEV            (0u)
+#elif SSS_HAVE_SE05X_VER_06_00 == 1
+#    define APPLET_SE050_VER_MAJOR          (6u)
+#    define APPLET_SE050_VER_MINOR          (0u)
 #    define APPLET_SE050_VER_DEV            (0u)
 #elif SSS_HAVE_FIPS
 #    define APPLET_SE050_VER_MAJOR          (3u)

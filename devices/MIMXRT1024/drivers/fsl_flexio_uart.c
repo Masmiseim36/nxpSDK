@@ -132,7 +132,7 @@ status_t FLEXIO_UART_Init(FLEXIO_UART_Type *base, const flexio_uart_config_t *us
     uint16_t timerCmp = 0;
     uint32_t calculatedBaud;
     uint32_t diff;
-    status_t result   = kStatus_Success;
+    status_t result = kStatus_Success;
 
     /* Clear the shifterConfig & timerConfig struct. */
     (void)memset(&shifterConfig, 0, sizeof(shifterConfig));
@@ -518,6 +518,8 @@ status_t FLEXIO_UART_TransferCreateHandle(FLEXIO_UART_Type *base,
     handle->callback = callback;
     handle->userData = userData;
 
+    /* Clear pending NVIC IRQ before enable NVIC IRQ. */
+    NVIC_ClearPendingIRQ(flexio_irqs[FLEXIO_UART_GetInstance(base)]);
     /* Enable interrupt in NVIC. */
     (void)EnableIRQ(flexio_irqs[FLEXIO_UART_GetInstance(base)]);
 

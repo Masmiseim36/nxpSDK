@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -112,6 +112,11 @@ extern "C" {     /* Make sure we have C-declarations in C++ programs */
   #endif
 #endif
 
+/* Different return value of WM_Exec() and WM_Exec1() */
+#ifndef   WM_EXEC_RET_VAL
+  #define WM_EXEC_RET_VAL 0
+#endif
+
 /*********************************************************************
 *
 *       Locking macros
@@ -138,12 +143,29 @@ struct WM_WINDOW_INFO {
   WM_WINDOW_INFO * pNext;
 };
 
+/*********************************************************************
+*
+*       WM_KEY_INFO
+*
+*   Description
+*     Contains information about a pressed key.
+*/
 typedef struct {
-  int Key, PressedCnt;
+  int Key;         // The key which has been pressed.
+  int PressedCnt;  // \U{#3E}0 if the key has been pressed, 0 if the key has been released.
 } WM_KEY_INFO;
 
+/*********************************************************************
+*
+*       WM_SCROLL_STATE
+*
+*   Description
+*     Saves the scrollstate of a scrollbar.
+*/
 typedef struct {
-  int NumItems, v, PageSize;
+  int NumItems;    // Number of items.
+  int v;           // Current value.
+  int PageSize;    // Number of items visible on one page.
 } WM_SCROLL_STATE;
 
 typedef struct {
@@ -151,64 +173,117 @@ typedef struct {
   int ReturnValue;
 } WM_DIALOG_STATUS;
 
+/*********************************************************************
+*
+*       WM_PID_STATE_CHANGED_INFO
+*
+*   Description
+*     Information about the changed PID state. Sent to a window with
+*     the \uref{WM_PID_STATE_CHANGED} message.
+*/
 typedef struct {
-  int x,y;
-  U8  State;
-  U8  StatePrev;
+  int x;          // Horizontal position of the PID in window coordinates.
+  int y;          // Vertical position of the PID in window coordinates.
+  U8  State;      // Pressed state (> 0 if PID is pressed).
+  U8  StatePrev;  // Previous pressed state.
 } WM_PID_STATE_CHANGED_INFO;
 
+/*********************************************************************
+*
+*       WM_MOTION_INFO
+*
+*   Description
+*     Contains information about a move with motion support.
+*/
 typedef struct {
-  U8  Cmd;
-  U8  FinalMove;
-  U8  StopMotion;
-  U8  IsDragging;
-  int dx, dy, da;
-  int xPos, yPos;
-  int Period;
-  int SnapX;
-  int SnapY;
-  U8  IsOutside;
-  unsigned Overlap;
-  U32 Flags;
+  U8              Cmd;         // Command. See \ref{Motion messages}.
+  U8              FinalMove;   // Set to 1 on the final moving operation.
+  U8              StopMotion;  // Can be set to 1 to stop motion immediately.
+  U8              IsDragging;  // Is set to 1 if the PID is pressed, 0 if released.
+  int             dx;          // Distance in X to be used to move the window.
+  int             dy;          // Distance in Y to be used to move the window.
+  int             da;          // Distance in 1/10 degrees to be used to move an item.
+  int             xPos;        // Used to return the current position in X for custom moving operations.
+  int             yPos;        // Used to return the current position in Y for custom moving operations.
+  int             Period;      // Duration of the moving operation after the PID has been released.
+  int             SnapX;       // Raster size in X for snapping operations, 0 if no snapping is required.
+  int             SnapY;       // Raster size in Y for snapping operations, 0 if no snapping is required.
+  U8              IsOutside;   // If motion is managed by window.
+  unsigned        Overlap;     // Overlapping distance allowed for dragging operations.
+  U32             Flags;       // To be used to enable motion support.
   GUI_PID_STATE * pState;
-  GUI_HMEM hContext;
+  GUI_HMEM        hContext;
 } WM_MOTION_INFO;
 
+/*********************************************************************
+*
+*       WM_ZOOM_INFO
+*
+*  Description
+*    Structure used for scaling and panning windows.
+*
+*  Additional information
+*    The factor is shifted by 16 bits to be able to achieve a smooth result. The native size
+*    needs to be passed by the application to the WM because otherwise it is not possible
+*    to get the exact size of the window in unscaled state.
+*/
 typedef struct {
-  I32       FactorMin;   // Minimum factor to be used (<< 16)
-  I32       FactorMax;   // Maximum factor to be used (<< 16)
-  U32       xSize;       // Native xSize of window to be zoomed in pixels
-  U32       ySize;       // Native ySize of window to be zoomed in pixels
-  U32       xSizeParent; // xSize of parent window
-  U32       ySizeParent; // ySize of parent window
-  I32       Factor0;     // Primary factor when starting zoom gesture (<< 16)
-  int       xPos0;       // Primary window position in x when starting the gesture
-  int       yPos0;       // Primary window position in y when starting the gesture
-  GUI_POINT Center0;     // Primary center point when starting the gesture
+  I32       FactorMin;   // Minimum factor to be used (<< 16).
+  I32       FactorMax;   // Maximum factor to be used (<< 16).
+  U32       xSize;       // Native xSize of window to be zoomed in pixels.
+  U32       ySize;       // Native ySize of window to be zoomed in pixels.
+  U32       xSizeParent; /* xSize of parent window.                                  */
+  U32       ySizeParent; /* ySize of parent window.                                  */
+  I32       Factor0;     /* Primary factor when starting zoom gesture (<< 16).       */
+  int       xPos0;       /* Primary window position in x when starting the gesture.  */
+  int       yPos0;       /* Primary window position in y when starting the gesture.  */
+  GUI_POINT Center0;     /* Primary center point when starting the gesture.          */
 } WM_ZOOM_INFO;
 
+/*********************************************************************
+*
+*       WM_GESTURE_INFO
+*
+*  Description
+*    Stores the information about a gesture.
+*/
 typedef struct {
-  int            Flags;     // Information regarding gesture type
-  GUI_POINT      Point;     // Relative movement
-  GUI_POINT      Center;    // Center point for zooming
-  I32            Angle;     // Angle between the touch points
-  I32            Factor;    // Current zoom factor
-  WM_ZOOM_INFO * pZoomInfo; // Pointer to WM_ZOOM_INFO structure
+  int            Flags;     // Information regarding gesture type. See \ref{MultiTouch gesture flags}.
+  GUI_POINT      Point;     // Relative movement to be processed by the application.
+  GUI_POINT      Center;    // Center point for zooming.
+  I32            Angle;     // Relative angle difference to be processed by the application.
+  I32            Factor;    // When starting a zoom gesture the application has to set the element to the initial value for the gesture. After that during
+                            // the gesture it contains the updated value to be processed by the application.
+  WM_ZOOM_INFO * pZoomInfo; // Pointer to be set to a valid location of a WM_ZOOM_INFO structure. The application should keep sure, that the
+                            // location remains valid during the gesture.
 } WM_GESTURE_INFO;
 
+/*********************************************************************
+*
+*       WM_MOVE_INFO
+*
+*   Description
+*     Stores the distance of a window move operation.
+*/
 typedef struct {
-  int dx, dy;
+  int dx;   // Difference between old and new position on the X-axis.
+  int dy;   // Difference between old and new position on the Y-axis.
 } WM_MOVE_INFO;
 
 /*********************************************************************
 *
-*       Gesture flags for multi touch support
+*       MultiTouch gesture flags
+*
+*   Description
+*     Flags used for processing gesture input.
 */
-#define WM_GF_BEGIN  (1 << 0)
-#define WM_GF_END    (1 << 1)
-#define WM_GF_PAN    (1 << 2)
-#define WM_GF_ZOOM   (1 << 3)
-#define WM_GF_ROTATE (1 << 4)
+#define WM_GF_BEGIN  (1 << 0)    // This flag is set when sending the first message for the gesture.
+#define WM_GF_END    (1 << 1)    // A panning gesture is detected. The element "Point" of WM_GESTURE_INFO contains the relative movement in pixels to be processed by the application.
+#define WM_GF_PAN    (1 << 2)    // Rotation is active. The element "Angle" of WM_GESTURE_INFO contains the relative movement in degrees (<< 16) to be processed by the application.
+                                 // To be able to achieve a smooth rotation the value is passed in 1/65536 degrees. If movement should be considered simultaneously the element "Point" contains also the relative movement.
+#define WM_GF_ZOOM   (1 << 3)    // Zooming is active. When starting a zooming gesture the element "Factor" of WM_GESTURE_INFO has to be set to the initial value to be used by the gesture.
+                                 // During the gesture the same element contains the updated value to be processed by the application. If movement should be considered simultaneously the element "Point" contains also the relative movement.
+#define WM_GF_ROTATE (1 << 4)    // Set when releasing a touch point at the end of a gesture.
 #define WM_GF_DTAP   (1 << 5)
 
 /*********************************************************************
@@ -283,49 +358,67 @@ typedef struct {
 #define WM_USER_DATA                52      /* Send immediately after setting user data */
 #define WM_SET_CALLBACK             53      /* Send immediately after setting user data */
 
-#define WM_GET_VALUE                54      /* Return widget specific value */
-
 #define WM_GESTURE                  0x0119  /* Gesture message */
 
 #define WM_TIMER                    0x0113  /* Timer has expired              (Keep the same as WIN32) */
 #define WM_WIDGET                   0x0300  /* 256 messages reserved for Widget messages */
 #define WM_USER                     0x0400  /* Reserved for user messages ... (Keep the same as WIN32) */
 
+#define APPW_MSG                    0x1000  /* 256 messages reserved for AppWizard messages */
+
 /*********************************************************************
 *
 *       Motion messages
+*
+*  Description
+*    Commands sent with a WM_MOTION message. The command can be found
+*    in the member \c{Cmd} of the WM_MOTION_INFO structure.
+*
+*  Additional information
+*    More information about these commands can be read under
+*    \ref{WM_MOTION message and WM_MOTION_INFO}.
 */
-#define WM_MOTION_INIT       0
-#define WM_MOTION_MOVE       1
-#define WM_MOTION_GETPOS     2
+#define WM_MOTION_INIT       0   // Sent to a window to initiate a motion operation.
+#define WM_MOTION_MOVE       1   // Sent to a window to achieve custom moving operations.
+#define WM_MOTION_GETPOS     2   // Sent to get the current position of custom moving operations.
 #define WM_MOTION_GETCONTEXT 3
 
 /*********************************************************************
 *
 *       Motion flags
+*
+*  Description
+*    Flags for motion support. The flags are supposed to be OR-combined
+*    with the member \c{Flags} of the WM_MOTION_INFO structure.
 */
-#define WM_MOTION_MANAGE_BY_WINDOW   (1 << 0) // Window movement is managed by window itself
+#define WM_MOTION_MANAGE_BY_WINDOW   (1 << 0) // Window movement is managed by window itself.
 
 /*********************************************************************
 *
 *       Notification codes
 *
-* The following is the list of notification codes send
-* with the WM_NOTIFY_PARENT message
+*  Description
+*    List of all notifications sent by the Window Manager. A notification
+*    code is sent with a WM_NOTIFY_PARENT message and can be read with
+*    \c{pMsg->Data.v}.
 */
-#define WM_NOTIFICATION_CLICKED             1
-#define WM_NOTIFICATION_RELEASED            2
-#define WM_NOTIFICATION_MOVED_OUT           3
-#define WM_NOTIFICATION_SEL_CHANGED         4
-#define WM_NOTIFICATION_VALUE_CHANGED       5
-#define WM_NOTIFICATION_SCROLLBAR_ADDED     6      /* Scroller added */
-#define WM_NOTIFICATION_CHILD_DELETED       7      /* Inform window that child is about to be deleted */
-#define WM_NOTIFICATION_GOT_FOCUS           8
-#define WM_NOTIFICATION_LOST_FOCUS          9
-#define WM_NOTIFICATION_SCROLL_CHANGED     10
+#define WM_NOTIFICATION_CLICKED             1      // This notification message will be sent when the window has been clicked.
+#define WM_NOTIFICATION_RELEASED            2      // This notification message will be sent when a clicked widget has been released.
+#define WM_NOTIFICATION_MOVED_OUT           3      // This notification message will be sent when the pointer was moved out of the window while it is clicked.
+#define WM_NOTIFICATION_SEL_CHANGED         4      // This notification message will be sent when the selection of a widget has changed.
+#define WM_NOTIFICATION_VALUE_CHANGED       5      // This notification message will be sent when a widget specific value has changed.
+#define WM_NOTIFICATION_SCROLLBAR_ADDED     6      // This notification message will be sent when a SCROLLBAR widget has been added to the window.
+#define WM_NOTIFICATION_CHILD_DELETED       7      // This notification message will be sent from a window to its parent before it is deleted.
+#define WM_NOTIFICATION_GOT_FOCUS           8      // This notification message will be sent once a window receives and accepts the focus.
+#define WM_NOTIFICATION_LOST_FOCUS          9      // This notification message will be sent when the window has lost the focus.
+#define WM_NOTIFICATION_SCROLL_CHANGED     10      // This notification message will be sent when the scroll position of an attached SCROLLBAR widget has changed.
+
+/* not documented */
 #define WM_NOTIFICATION_MOTION_STOPPED     11
 #define WM_NOTIFICATION_SET                12
 #define WM_NOTIFICATION_CLEAR              13
+#define WM_NOTIFICATION_TEXT_CHANGED       14
+#define WM_NOTIFICATION_ENTER_PRESSED      15
 
 #define WM_NOTIFICATION_WIDGET             20      /* Space for widget defined notifications */
 #define WM_NOTIFICATION_USER               30      /* Space for  application (user) defined notifications */
@@ -349,54 +442,79 @@ typedef struct {
 
 /*********************************************************************
 *
-*       Window create flags.
+*       Window create flags
 *
-* These flags can be passed to the create window
-* function as flag-parameter. The flags are combinable using the
-* binary or operator.
+*  Description
+*    Flags that define a window upon creation.
+*    These flags can be passed to the create window
+*    function as flag-parameter. The flags are combinable using the
+*    binary OR-operator.
 */
-#define WM_CF_HASTRANS         (1UL << 0)  /* Has transparency. Needs to be defined for windows which do not fill the entire
-                                              section of their (client) rectangle. */
-#define WM_CF_HIDE             (0UL << 1)  /* Hide window after creation (default !) */
-#define WM_CF_SHOW             (1UL << 1)  /* Show window after creation */
-#define WM_CF_MEMDEV           (1UL << 2)  /* Use memory device for redraws */
-#define WM_CF_STAYONTOP        (1UL << 3)  /* Stay on top */
-#define WM_CF_DISABLED         (1UL << 4)  /* Disabled: Does not receive PID (mouse & touch) input */
+#define WM_CF_HASTRANS         (1UL << 0)  // Has transparency flag. Must be defined for windows whose client area is not entirely filled.
+                                           // To set this flag after the window has been created the function WM_SetTransState() should be used.
+#define WM_CF_HIDE             (0UL << 1)  // Hide window after creation (default).
+#define WM_CF_SHOW             (1UL << 1)  // Show window after creation.
+#define WM_CF_MEMDEV           (1UL << 2)  // Automatically use a Memory Device for drawing. This will avoid flickering and also improve the
+                                           // output speed in most cases, as clipping is simplified. The Window Manager creates a Memory
+                                           // Device for the current window according to the configured color depth and window size. The
+                                           // Memory Device is deleted immediately after the drawing process was finished. \n 
+                                           // In order to draw images into a remaining Memory Device the IMAGE widget can be used with the
+                                           // creation flag IMAGE_CF_MEMDEV. Details can be found in the section \ref{IMAGE: Image widget}.
+                                           // Note that the Memory Device package is required (and needs to be enabled in the configuration)
+                                           // in order to be able to use this flag. If Memory Devices are not enabled, this flag is ignored.
+#define WM_CF_STAYONTOP        (1UL << 3)  // Make sure window stays on top of all siblings created without this flag.
+#define WM_CF_DISABLED         (1UL << 4)  // Window is disabled after creation. This means it receives no PID (mouse and touch) input.
 
-/* Create only flags ... Not available as status flags */
-#define WM_CF_ACTIVATE         (1UL << 5)  /* If automatic activation upon creation of window is desired */
-#define WM_CF_FGND             (0UL << 6)  /* Put window in foreground after creation (default !) */
-#define WM_CF_BGND             (1UL << 6)  /* Put window in background after creation */
+#define WM_CF_ACTIVATE         (1UL << 5)
+#define WM_CF_FGND             (0UL << 6)  // Put window in foreground after creation (default).
+#define WM_CF_BGND             (1UL << 6)  // Put window in background after creation.
 
-/* Anchor flags */
-#define WM_CF_ANCHOR_RIGHT     (1UL << 7)  /* Right anchor ...  If parent is resized, distance to right  will remain const (left is default) */
-#define WM_CF_ANCHOR_BOTTOM    (1UL << 8)  /* Bottom anchor ... If parent is resized, distance to bottom will remain const (top  is default) */
-#define WM_CF_ANCHOR_LEFT      (1UL << 9)  /* Left anchor ...   If parent is resized, distance to left   will remain const (left is default) */
-#define WM_CF_ANCHOR_TOP       (1UL << 10) /* Top anchor ...    If parent is resized, distance to top    will remain const (top  is default) */
-
-#define WM_CF_CONST_OUTLINE    (1UL << 11) /* Constant outline. This is relevant for transparent windows only. If a window is transparent
-                                              and does not have a constant outline, its background is invalided instead of the window itself.
-                                              This causes add. computation time when redrawing. */
-#define WM_CF_LATE_CLIP        (1UL << 12)
-#define WM_CF_MEMDEV_ON_REDRAW (1UL << 13)
-
+#define WM_CF_ANCHOR_RIGHT     (1UL << 7)  // Anchors the right edge of the new window relative to the right edge of the parent window. If
+                                           // the position of the parent windows right edge will be adjusted due to a size change, the
+                                           // position of new window will also be adjusted.
+#define WM_CF_ANCHOR_BOTTOM    (1UL << 8)  // Anchors the bottom edge of the new window relative to the bottom edge of the parent window. If
+                                           // the position of the parent windows bottom edge will be adjusted due to a size change, the
+                                           // position of new window will also be adjusted.
+#define WM_CF_ANCHOR_LEFT      (1UL << 9)  // Anchors the left edge of the new window relative to the left edge of the parent window (default).
+                                           // If the position of the parent windows left edge will be adjusted due to a size change,
+                                           // the position of new window will also be adjusted.
+#define WM_CF_ANCHOR_TOP       (1UL << 10) // Anchors the top edge of the new window relative to the top edge of the parent window (default).
+                                           // If the position of the parent windows top edge will be adjusted due to a size change, the
+                                           // position of new window will also be adjusted.
+#define WM_CF_CONST_OUTLINE    (1UL << 11) // This flag is an optimization for transparent windows. It gives the Window Manager a chance
+                                           // to optimize redrawing and invalidation of transparent windows. A transparent window is normally
+                                           // redrawn as part of the background, which is less efficient than redrawing the window separately.
+                                           // However, this flag may NOT be used if the window has semi transparency (alpha blending /
+                                           // anti-aliasing with background) or the outline (the shape) changes with the window's states.
+                                           // To set this flag after the window has been created the function WM_SetTransState() should be used.
+#define WM_CF_LATE_CLIP        (1UL << 12) // This flag can be used to tell the WM that the clipping should be done in the drawing routines
+                                           // (late clipping). The default behavior of the WM is early clipping. That means that the clipping
+                                           // rectangle will be calculated before a WM_PAINT message will be sent to a window. In dependence
+                                           // of other existing windows it might be necessary to send more than one WM_PAINT message to a window.
+                                           // If using WM_CF_LATE_CLIP the WM makes sure only one message will be sent to an invalid window and
+                                           // the clipping will be done by the drawing routines. The \c{Sample} folder of emWin contains the
+                                           // example \c{WM_LateClipping.c} to show the effect.
+#define WM_CF_MEMDEV_ON_REDRAW (1UL << 13) // Equals WM_CF_MEMDEV with the difference that the according window is drawn the first time without
+                                           // using a Memory Device. The WM will automatically use a Memory Device for redrawing. This flag can
+                                           // be used as a replacement of WM_CF_MEMDEV. It typically accelerates the initial rendering of the
+                                           // window, but maintains the advantage of flicker free updates.
 #define WM_SF_INVALID_DRAW     (1UL << 14)
-#define WM_SF_DELETE           (1UL << 15) /* Marks the window to be deleted within WM_Exec() when no callback routine is executed */
+#define WM_SF_DELETE           (1UL << 15)
 
-#define WM_CF_STATIC           (1UL << 16) /* Use static memory device for redraws */
+#define WM_CF_STATIC           (1UL << 16) // Window uses a static memory device for redrawing.
 
-#define WM_CF_MOTION_X         (1UL << 17) /* Window can be moved automatically in X axis */
-#define WM_CF_MOTION_Y         (1UL << 18) /* Window can be moved automatically in Y axis */
+#define WM_CF_MOTION_X         (1UL << 17) // Window can be moved automatically in X axis.
+#define WM_CF_MOTION_Y         (1UL << 18) // Window can be moved automatically in Y axis.
 
-#define WM_CF_GESTURE          (1UL << 19) /* Marks the window to be a able to receive gesture messages */
+#define WM_CF_GESTURE          (1UL << 19) // Marks the window to be able to receive gesture messages. This requires gesture support.
 
-#define WM_CF_ZOOM             (1UL << 20) /* Window can be scaled automatically by multi touch gesture input */
+#define WM_CF_ZOOM             (1UL << 20) // Window can be scaled automatically by multi-touch gesture input.
 
-#define WM_CF_MOTION_R         (1UL << 21) /* Window can be rotated */
+#define WM_CF_MOTION_R         (1UL << 21) // This enables the window to be rotated.
 
-#define WM_CF_UNTOUCHABLE      (1UL << 22) /* Window is not touchable */
+#define WM_CF_UNTOUCHABLE      (1UL << 22) // A window created with this flag routes its touch input to its parent. This makes a window 'untouchable'.
 
-#define WM_CF_APPWIZARD        (1UL << 23) /* Marks the window as AppWizard object */
+#define WM_CF_APPWIZARD        (1UL << 23)
 
 /*********************************************************************
 *
@@ -407,13 +525,20 @@ typedef struct WM_MESSAGE WM_MESSAGE;
 
 typedef void WM_CALLBACK( WM_MESSAGE * pMsg);
 
+/*********************************************************************
+*
+*       WM_MESSAGE
+*
+*   Description
+*     Contains the data for a message sent by a window.
+*/
 struct WM_MESSAGE {
-  int MsgId;            /* type of message */
-  WM_HWIN hWin;         /* Destination window */
-  WM_HWIN hWinSrc;      /* Source window  */
+  int MsgId;               // Type of message.
+  WM_HWIN hWin;            // Destination window.
+  WM_HWIN hWinSrc;         // Source window.
   union {
-    const void * p;     /* Message specific data pointer */
-    int v;
+    const void * p;        // Message-specific data pointer.
+    int v;                 // Message-specific data value.
     PTR_ADDR u;
     GUI_COLOR Color;
     void (* pFunc)(void);
@@ -571,20 +696,44 @@ int  WM_SetYSize                  (WM_HWIN hWin, int ySize);
 int  WM_SetScrollbarH             (WM_HWIN hWin, int OnOff); /* not to be documented (may change in future version) */
 int  WM_SetScrollbarV             (WM_HWIN hWin, int OnOff); /* not to be documented (may change in future version) */
 
-/* ToolTip support */
-#define WM_TOOLTIP_PI_FIRST 0
-#define WM_TOOLTIP_PI_SHOW  1
-#define WM_TOOLTIP_PI_NEXT  2
 
-#define WM_TOOLTIP_CI_BK    0
-#define WM_TOOLTIP_CI_FRAME 1
-#define WM_TOOLTIP_CI_TEXT  2
+/*********************************************************************
+*
+*       ToolTip period indexes
+*
+*   Description
+*     Period indexes for ToolTip related routines.
+*/
+#define WM_TOOLTIP_PI_FIRST 0    // Period to be used the first time the PID is hovered over a tool. The ToolTip appears after the
+                                 // PID has not moved for at least this period. Default is 1000 ms.
+#define WM_TOOLTIP_PI_SHOW  1    // Period to be used for showing the ToolTip. The ToolTip disappears after the PID remains for
+                                 // at least this period without moving. Default is 5000 ms.
+#define WM_TOOLTIP_PI_NEXT  2    // Period to be used if the PID hovers over a tool of the same parent as before. The ToolTip
+                                 // appears after the PID is not moved for at least this period. Default is 50 ms.
+
+/*********************************************************************
+*
+*       ToolTip color indexes
+*
+*   Description
+*     Color indexes for ToolTip related routines.
+*/
+#define WM_TOOLTIP_CI_BK    0   // Color to be used for the background.
+#define WM_TOOLTIP_CI_FRAME 1   // Color to be used for the thin frame.
+#define WM_TOOLTIP_CI_TEXT  2   // Color to be used for the text.
 
 typedef WM_HMEM WM_TOOLTIP_HANDLE;
 
+/*********************************************************************
+*
+*       TOOLTIP_INFO
+*
+*   Description
+*     Contains the information about a ToolTip.
+*/
 typedef struct {
-  int          Id;
-  const char * pText;
+  int          Id;     // Id of the ToolTip.
+  const char * pText;  // String containing the text of the ToolTip.
 } TOOLTIP_INFO;
 
 int               WM_TOOLTIP_AddTool         (WM_TOOLTIP_HANDLE hToolTip, WM_HWIN hTool, const char * pText);
@@ -749,6 +898,8 @@ void      WM_ForEachDesc    (WM_HWIN hWin, WM_tfForEach * pcb, void * pData);
 void      WM_SetScreenSize  (int xSize, int ySize);
 int       WM_PollSimMsg     (void);
 int       WM_GetWindowInfo  (WM_WINDOW_INFO * pInfo, int FirstWindow);
+void      WM_EnablePID      (int OnOff);
+int       WM_IsEnabledPID   (void);
 
 /*********************************************************************
 *

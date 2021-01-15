@@ -10,8 +10,8 @@
 #include "fsl_debug_console.h"
 
 #include "pin_mux.h"
-#include "board.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_common.h"
 #include "fsl_dma.h"
 #include "fsl_inputmux.h"

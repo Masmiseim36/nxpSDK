@@ -29,7 +29,7 @@ Change log:
     10/21/2008: initial version
 ******************************************************/
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -51,6 +51,54 @@ void dump_rf_channel_info(HostCmd_DS_802_11_RF_CHANNEL *prf_channel);
 /********************************************************
                 Local Functions
 ********************************************************/
+#ifdef CONFIG_RF_TEST_MODE
+/**
+ *  @brief This function prepares command resp of MFG Cmd
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param resp         A pointer to HostCmd_DS_COMMAND
+ *  @param pioctl_buf   A pointer to mlan_ioctl_req structure
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+mlan_status wlan_ret_mfg(pmlan_private pmpriv, HostCmd_DS_COMMAND *resp, void *pioctl_buf)
+{
+    HostCmd_DS_MFG_CMD_GENERIC_CFG *mcmd = (HostCmd_DS_MFG_CMD_GENERIC_CFG *)&resp->params.mfg_generic_cfg;
+    mlan_ds_mfg_cmd_generic_cfg *cfg     = MNULL;
+    mlan_status ret                      = MLAN_STATUS_SUCCESS;
+
+    ENTER();
+    if (!pioctl_buf)
+    {
+        LEAVE();
+        return MLAN_STATUS_FAILURE;
+    }
+    switch (wlan_le32_to_cpu(mcmd->mfg_cmd))
+    {
+        case MFG_CMD_SET_TEST_MODE:
+        case MFG_CMD_UNSET_TEST_MODE:
+        case MFG_CMD_TX_ANT:
+        case MFG_CMD_RX_ANT:
+        case MFG_CMD_RF_CHAN:
+        case MFG_CMD_CLR_RX_ERR:
+        case MFG_CMD_RF_BAND_AG:
+        case MFG_CMD_RF_CHANNELBW:
+            break;
+        default:
+            ret = MLAN_STATUS_FAILURE;
+            goto cmd_mfg_done;
+    }
+    cfg = (mlan_ds_mfg_cmd_generic_cfg *)pioctl_buf;
+
+    cfg->error = wlan_le32_to_cpu(mcmd->error);
+    cfg->data1 = wlan_le32_to_cpu(mcmd->data1);
+    cfg->data2 = wlan_le32_to_cpu(mcmd->data2);
+    cfg->data3 = wlan_le32_to_cpu(mcmd->data3);
+cmd_mfg_done:
+    LEAVE();
+    return ret;
+}
+#endif
 
 /**
  *  @brief This function handles the command response of snmp_mib
@@ -385,18 +433,11 @@ mlan_status wlan_ops_sta_process_cmdresp(IN t_void *priv, IN t_u16 cmdresp_no, I
         case HostCmd_CMD_TX_RATE_CFG:
             ret = wlan_ret_tx_rate_cfg(pmpriv, resp, pioctl);
             break;
-#ifndef EXT_SCAN_SUPPORT
         case HostCmd_CMD_802_11_SCAN:
             ret        = wlan_ret_802_11_scan(pmpriv, resp, pioctl_buf);
             pioctl_buf = MNULL;
             /* pmadapter->curr_cmd->pioctl_buf = MNULL; */
             break;
-#else
-        case HostCmd_CMD_802_11_SCAN_EXT:
-            ret        = wlan_ret_802_11_scan_ext(pmpriv, resp, pioctl_buf);
-            pioctl_buf = MNULL;
-            break;
-#endif /* EXT_SCAN_SUPPORT */
         case HostCmd_CMD_802_11_ASSOCIATE:
             ret = wlan_ret_802_11_associate(pmpriv, resp, pioctl_buf);
             break;
@@ -412,6 +453,16 @@ mlan_status wlan_ops_sta_process_cmdresp(IN t_void *priv, IN t_u16 cmdresp_no, I
         case HostCmd_CMD_802_11_RF_CHANNEL:
             ret = wlan_ret_802_11_rf_channel(pmpriv, resp, pioctl_buf);
             break;
+#ifdef CONFIG_RF_TEST_MODE
+        case HostCmd_CMD_MFG_COMMAND:
+            ret = wlan_ret_mfg(pmpriv, resp, pioctl_buf);
+            break;
+#endif
+#ifdef OTP_CHANINFO
+        case HostCmd_CMD_CHAN_REGION_CFG:
+            ret = wlan_ret_chan_region_cfg(pmpriv, resp, pioctl_buf);
+            break;
+#endif
         default:
             PRINTM(MERROR, "CMD_RESP: Unknown command response %#x\n", resp->command);
             break;

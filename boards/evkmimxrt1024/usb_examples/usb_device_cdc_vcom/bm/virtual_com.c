@@ -9,6 +9,8 @@
 #include <stdlib.h>
 /*${standard_header_anchor}*/
 #include "fsl_device_registers.h"
+#include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
 
@@ -19,7 +21,6 @@
 #include "usb_device_class.h"
 #include "usb_device_cdc_acm.h"
 #include "usb_device_ch9.h"
-#include "fsl_debug_console.h"
 
 #include "usb_device_descriptor.h"
 #include "virtual_com.h"
@@ -35,7 +36,6 @@
     defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
 extern uint8_t USB_EnterLowpowerMode(void);
 #endif
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

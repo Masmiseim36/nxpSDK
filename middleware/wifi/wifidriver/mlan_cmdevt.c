@@ -28,7 +28,7 @@
 Change Log:
     05/12/2009: initial version
 ************************************************************/
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -154,6 +154,7 @@ mlan_status wlan_cmd_enh_power_mode(
          * once full fledged support is added in the SDK
          * for UAP this macro will be defined and
          * line below will be uncommented*/
+        /*#if defined(UAP_SUPPORT)*/
         if (pdata_buf && (ps_bitmap & (BITMAP_UAP_INACT_PS | BITMAP_UAP_DTIM_PS)))
         {
             mlan_ds_ps_mgmt *ps_mgmt                   = (mlan_ds_ps_mgmt *)pdata_buf;
@@ -743,24 +744,31 @@ mlan_status wlan_ret_get_hw_spec(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND 
         pmadapter->mp_data_port_mask &= ~(1 << (MAX_PORT - i));
     }
 
-    /* Set the region code to WWSM by default */
-    pmadapter->region_code = MRVDRV_DEFAULT_REGION_CODE;
-    for (i = 0; i < MRVDRV_MAX_REGION_CODE; i++)
+#ifdef OTP_CHANINFO
+    if (!(pmadapter->otp_region && pmadapter->otp_region->force_reg))
     {
-        /* Use the region code to search for the index */
-        if (pmadapter->region_code == region_code_index[i])
-            break;
-    }
-    /* If it's unidentified region code, use the default */
-    if (i >= MRVDRV_MAX_REGION_CODE)
-    {
-        pmadapter->region_code = MRVDRV_DEFAULT_REGION_CODE;
-        PRINTM(MWARN, "unidentified region code, use the default (0x%02x)\n", MRVDRV_DEFAULT_REGION_CODE);
-    }
-    /* Synchronize CFP code with region code */
-    pmadapter->cfp_code_bg = pmadapter->region_code;
-    pmadapter->cfp_code_a  = pmadapter->region_code;
+#endif
 
+        /* Set the region code to WWSM by default */
+        pmadapter->region_code = MRVDRV_DEFAULT_REGION_CODE;
+        for (i = 0; i < MRVDRV_MAX_REGION_CODE; i++)
+        {
+            /* Use the region code to search for the index */
+            if (pmadapter->region_code == region_code_index[i])
+                break;
+        }
+        /* If it's unidentified region code, use the default */
+        if (i >= MRVDRV_MAX_REGION_CODE)
+        {
+            pmadapter->region_code = MRVDRV_DEFAULT_REGION_CODE;
+            PRINTM(MWARN, "unidentified region code, use the default (0x%02x)\n", MRVDRV_DEFAULT_REGION_CODE);
+        }
+        /* Synchronize CFP code with region code */
+        pmadapter->cfp_code_bg = pmadapter->region_code;
+        pmadapter->cfp_code_a  = pmadapter->region_code;
+#ifdef OTP_CHANINFO
+    }
+#endif
     if (wlan_set_regiontable(pmpriv, (t_u8)pmadapter->region_code, pmadapter->fw_bands))
     {
         if (pioctl_req)
@@ -822,3 +830,94 @@ mlan_status wlan_cmd_remain_on_channel(IN pmlan_private pmpriv,
     LEAVE();
     return MLAN_STATUS_SUCCESS;
 }
+
+#ifdef OTP_CHANINFO
+/**
+ *  @brief This function handles the command response of chan_region_cfg
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param resp         A pointer to HostCmd_DS_COMMAND
+ *  @param pioctl_buf   A pointer to command buffer
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+mlan_status wlan_ret_chan_region_cfg(IN pmlan_private pmpriv,
+                                     IN HostCmd_DS_COMMAND *resp,
+                                     IN mlan_ioctl_req *pioctl_buf)
+{
+    mlan_adapter *pmadapter = pmpriv->adapter;
+    t_u16 action;
+    HostCmd_DS_CHAN_REGION_CFG *reg = MNULL;
+    t_u8 *tlv_buf                   = MNULL;
+    t_u16 tlv_buf_left;
+    mlan_ds_misc_cfg *misc_cfg     = MNULL;
+    mlan_ds_misc_chnrgpwr_cfg *cfg = MNULL;
+    mlan_status ret                = MLAN_STATUS_SUCCESS;
+
+    ENTER();
+
+    reg = (HostCmd_DS_CHAN_REGION_CFG *)&resp->params.reg_cfg;
+    if (!reg)
+    {
+        ret = MLAN_STATUS_FAILURE;
+        goto done;
+    }
+
+    action = wlan_le16_to_cpu(reg->action);
+    if (action != HostCmd_ACT_GEN_GET)
+    {
+        ret = MLAN_STATUS_FAILURE;
+        goto done;
+    }
+
+    tlv_buf      = (t_u8 *)reg + sizeof(*reg);
+    tlv_buf_left = wlan_le16_to_cpu(resp->size) - S_DS_GEN - sizeof(*reg);
+
+    /* Add FW cfp tables and region info */
+    wlan_add_fw_cfp_tables(pmpriv, tlv_buf, tlv_buf_left);
+
+    if (!pioctl_buf)
+        goto done;
+
+    if (!pioctl_buf->pbuf)
+    {
+        ret = MLAN_STATUS_FAILURE;
+        goto done;
+    }
+
+    misc_cfg = (mlan_ds_misc_cfg *)pioctl_buf->pbuf;
+
+    if (misc_cfg->sub_command == MLAN_OID_MISC_GET_REGIONPWR_CFG)
+    {
+        cfg         = (mlan_ds_misc_chnrgpwr_cfg *)&(misc_cfg->param.rgchnpwr_cfg);
+        cfg->length = wlan_le16_to_cpu(resp->size);
+        memcpy(pmpriv->adapter, cfg->chnrgpwr_buf, (t_u8 *)resp, cfg->length);
+    }
+    else
+    {
+        memset(pmpriv->adapter, &misc_cfg->param.custom_reg_domain, 0, sizeof(mlan_ds_custom_reg_domain));
+        if (pmadapter->otp_region)
+            memcpy(pmpriv->adapter, &misc_cfg->param.custom_reg_domain.region, pmadapter->otp_region,
+                   sizeof(otp_region_info_t));
+        if (pmadapter->cfp_otp_bg)
+        {
+            misc_cfg->param.custom_reg_domain.num_bg_chan = pmadapter->tx_power_table_bg_rows;
+            memcpy(pmpriv->adapter, (t_u8 *)misc_cfg->param.custom_reg_domain.cfp_tbl, (t_u8 *)pmadapter->cfp_otp_bg,
+                   pmadapter->tx_power_table_bg_rows * sizeof(chan_freq_power_t));
+        }
+#ifdef CONFIG_5GHz_SUPPORT
+        if (pmadapter->cfp_otp_a)
+        {
+            misc_cfg->param.custom_reg_domain.num_a_chan = pmadapter->tx_power_table_a_rows;
+            memcpy(pmpriv->adapter,
+                   (t_u8 *)misc_cfg->param.custom_reg_domain.cfp_tbl +
+                       pmadapter->tx_power_table_bg_rows * sizeof(chan_freq_power_t),
+                   (t_u8 *)pmadapter->cfp_otp_a, pmadapter->tx_power_table_a_rows * sizeof(chan_freq_power_t));
+        }
+#endif
+    }
+done:
+    LEAVE();
+    return ret;
+}
+#endif

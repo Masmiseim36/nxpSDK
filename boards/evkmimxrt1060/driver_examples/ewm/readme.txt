@@ -9,10 +9,10 @@ Note: In flash boot mode, if you want to use the IDE reset program, please use s
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -52,6 +52,3 @@ Press SW8 to expire EWM again
 
 Note:
 This case will run to HardFault_Handler on IAR flexspi_nor_debug/flexspi_nor_release target. This issue will be fixed in later release.
-Customization options
-=====================
-

@@ -7,10 +7,10 @@ The SAI Demo application demonstrates complicated digital audio playback and rec
 
 Toolchain supported
 ===================
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.1
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+- IAR embedded Workbench  8.50.9
 
 Hardware requirements
 =====================
@@ -44,6 +44,7 @@ Note: This demo uses both headphone mic and board main mic(P1) as input source. 
 channel data, and main mic (P1) provides right channel data. If users found there is noise while do record operation,
 most probably it is the headphone standard issue (OMTP and CTIA standard difference). should use the OMTP
 standard headphone. You can disable the left channel by using an headphone without microphone feature.
+
 Before you run this demo, please check the txHandle and rxHandle variable in peripherals.c, make sure they are in non-cache area.
 
 This following section shows how to run the demo:
@@ -62,6 +63,3 @@ Please choose the option :
 2. Playback sine wave
 3. Record to SDcard, after record playback it
 4. Quit
-Customization options
-=====================
-

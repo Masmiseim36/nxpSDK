@@ -9,10 +9,10 @@ characters were received, system will be woken up and echo the characters to PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.5
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -37,12 +37,20 @@ Prepare the Demo
 
 Running the demo
 ================
-When the demo runs successfully, the log would be seen on the terminal like:
+When the demo runs successfully, the starting logs of the USART dma low power example should be displayed like:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 USART DMA low power example
 Send back received data
 Echo every 8 characters (1st char 'q' leads to end).
-12345678asdfghjkqwertyui
+------------------
+Input any key to start.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Then after sending one random character, the following log on the terminal should be like:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Now enter deep sleep and wait for 8 characters.
+qwer1234
 Done!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

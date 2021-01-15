@@ -13,12 +13,12 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if defined(FSL_FEATURE_SOC_PORT_COUNT) && (FSL_FEATURE_SOC_PORT_COUNT > 0)
 #include "fsl_port.h"
 #endif
-#include "pin_mux.h"
-#include "clock_config.h"
 #if configUSE_TICKLESS_IDLE == 2
 #include "fsl_gpt.h"
 #endif

@@ -1,31 +1,81 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*     
- *     Processors:          MIMXRT1021CAF4A
- *                          MIMXRT1021CAG4A
- *                          MIMXRT1021DAF5A
- *                          MIMXRT1021DAG5A
+ *     Device:              MIMXRT1021
  */
 
-INCLUDE "evkmimxrt1020_safety_library.ld"
-INCLUDE "evkmimxrt1020_safety_memory.ld"
+/******************************************************************************/
+/******************     LIBRARY     *******************************************/
+/******************************************************************************/
+GROUP (
+  "libcr_c.a"
+  "libcr_eabihelpers.a"
+)
 
-__VECTOR_TABLE = ROM_interrupts_start;
+/******************************************************************************/
+/******************     USER CONFIGURATION PART     ***************************/
+/******************************************************************************/
+stack_test_block_size = 0x10;
+ram_test_backup_size  = 0x20;
+__vector_table_size__ = 0x400;
+__size_cstack__       = 0x0400;
+
+SRAM_DTC_start       = 0x20000000; /* Part of 512KB on-chip RAM (Data-Tightly-Coupled) */
+SRAM_DTC_end         = 0x2000FFFF + 1;
+
+m_flash_config_start = 0x60000000;
+
+m_intvec_table_start = 0x60002000; /* IVT in ROM */
+
+__PC_test_start__    = 0x60002410; /* PC object address */
+__PC_test_end__      = 0x6000242F; /* PC object reserved size: 0x20 */ 
+
+ROM_start            = 0x60002430; /* ROM memory (external ROM) */
+ROM_end              = 0x607FFFFF + 1;
+
+/******************************************************************************/
+/******************     SYMBOLS     *******************************************/
+/******************************************************************************/   
+m_ram_test_backup    = SRAM_DTC_end - ram_test_backup_size;
+m_wd_test_backup     = m_ram_test_backup - 0x20;
+m_pc_test_flag       = m_wd_test_backup - 0x4;
+m_safety_error_code  = m_pc_test_flag - 0x4;
+m_stack_test_p_4     = m_safety_error_code - 0x4;
+m_stack_test_p_3     = m_stack_test_p_4 - stack_test_block_size +0x4;
+__BOOT_STACK_ADDRESS = m_stack_test_p_3 - 0x4;
+m_stack_test_p_2     = __BOOT_STACK_ADDRESS - __size_cstack__;
+m_stack_test_p_1     = m_stack_test_p_2 - stack_test_block_size + 0x4;
+SRAM_DTC_end_edited  = m_stack_test_p_1 - 0x1;
+
+MEMORY
+{
+  /* Define each memory region */
+  ROM_config (rx) : ORIGIN = m_flash_config_start, LENGTH = m_intvec_table_start - m_flash_config_start /* XIP boot header */
+  BOARD_FLASH (rx) : ORIGIN = m_intvec_table_start, LENGTH = ROM_end - ROM_start /* Flash */  
+  SRAM_DTC (rwx) : ORIGIN = SRAM_DTC_start, LENGTH = SRAM_DTC_end - SRAM_DTC_start /* RAM */  
+}
+
+/******************************************************************************/
+/******************     PLACING     *******************************************/
+/******************************************************************************/ 
+__VECTOR_TABLE = m_intvec_table_start;
 __Vectors = __VECTOR_TABLE; /* Not used - must be here because of CMSIS header files upgrade */
 
 ENTRY(ResetISR)
 
 SECTIONS
 {
+/************************************************************************/
     /* Image Vector Table and Boot Data for booting from external flash */
     .boot_hdr : ALIGN(4)
     {
         FILL(0xff)
+
         __boot_hdr_start__ = ABSOLUTE(.) ;
         KEEP(*(.boot_hdr.conf))
         . = 0x1000 ;
@@ -37,56 +87,25 @@ SECTIONS
         __boot_hdr_end__ = ABSOLUTE(.) ;
         . = 0x2000 ;
     } >ROM_config
-
+    
+/************************************************************************/
     /* MAIN TEXT SECTION */
     .text : ALIGN(4)
     {
         /**** IVT ****/
         FILL(0xff)
-        __vectors_start__ = ABSOLUTE(.) ;
-        KEEP(*(.isr_vector))
+        KEEP(*(.intvec))
         /**** IVT ****/
-        
-        /**** Reserved space for CRC calculated by srec_cat ****/
-        . = ALIGN(4);
-        FILL(0xff)
-        . = (__FlashCRC_end__ - ROM_interrupts_start); /* Get the relative offset from 0x60002000 (should be 0x410) */
-        /**** Reserved space for CRC calculated by srec_cat ****/
 
         /**** Reserved space for PC test object ****/
         . = ALIGN(4);
-        *iec60730b_cm4_cm7_pc_object.o
+        KEEP(*iec60730b_cm4_cm7_pc_object.o)
         . = ALIGN(4);
-        /**** Reserved space for PC test object ****/
-
-        /* Global Section Table */
-        __section_table_start = .;
-        __data_section_table = .;
-        LONG(LOADADDR(.data));
-        LONG(    ADDR(.data));
-        LONG(  SIZEOF(.data));
-        LONG(LOADADDR(.data_RAM3));
-        LONG(    ADDR(.data_RAM3));
-        LONG(  SIZEOF(.data_RAM3));
-        __data_section_table_end = .;
-        __safety_ram_section_table = .;
-        LONG(LOADADDR(.safety_ram));
-        LONG(    ADDR(.safety_ram));
-        LONG(  SIZEOF(.safety_ram));
-        __safety_ram_section_table_end = .;
-        __bss_section_table = .;
-        LONG(    ADDR(.bss));
-        LONG(  SIZEOF(.bss));
-        LONG(    ADDR(.bss_RAM3));
-        LONG(  SIZEOF(.bss_RAM3));
-        __bss_section_table_end = .;
-        __section_table_end = . ;
-        /* End of Global Section Table */
-
-        *(.after_vectors*)       
+        /**** Reserved space for PC test object ****/    
 
     } >BOARD_FLASH
-
+    
+/************************************************************************/
     .text : ALIGN(4)
     {
         *EXCLUDE_FILE(*iec60730b_cm4_cm7_pc_object.o)
@@ -94,6 +113,8 @@ SECTIONS
         *(.rodata .rodata.* .constdata .constdata.*)
         . = ALIGN(4);
     } > BOARD_FLASH
+    
+/************************************************************************/
     /*
      * for exception handling/unwind - some Newlib functions (in common
      * with C++ and STDC++) use this. 
@@ -111,22 +132,7 @@ SECTIONS
     __exidx_end = .;
 
     _etext = .;
-    
-/************************************************************************/
-/************************************************************************/    
-    /* DATA section for SRAM_DTC */
-    .data_RAM3 : ALIGN(4)
-    {
-        FILL(0xff)
-        PROVIDE(__start_data_RAM3 = .) ;
-        *(.ramfunc.$RAM3)
-        *(.ramfunc.$SRAM_DTC)
-        *(.data.$RAM3*)
-        *(.data.$SRAM_DTC*)
-        . = ALIGN(4) ;
-        PROVIDE(__end_data_RAM3 = .) ;
-     } > SRAM_DTC AT>BOARD_FLASH
-
+       
 /************************************************************************/
     /* MAIN DATA SECTION */
     .uninit_RESERVED : ALIGN(4)
@@ -141,45 +147,26 @@ SECTIONS
     .data : ALIGN(4)
     {
        FILL(0xff)
-       _data = . ;
-       *(vtable) 
+       m_sec_rwram_load_start = LOADADDR(.data);
+       m_sec_rwram_start = .;
        *(.ramfunc*)
        *(.data*)
        . = ALIGN(4) ;
-       _edata = . ;
+       m_sec_rwram_load_end = LOADADDR(.data) + SIZEOF(.data);
+       m_sec_rwram_end = .;
     } > SRAM_DTC AT>BOARD_FLASH
-    
-/************************************************************************/    
-    /* BSS section for SRAM_DTC */
-    .bss_RAM3 : ALIGN(4)
-    {
-       PROVIDE(__start_bss_RAM3 = .) ;
-       *(.bss.$RAM3*)
-       *(.bss.$SRAM_DTC*)
-       . = ALIGN (. != 0 ? 4 : 1) ; /* avoid empty segment */
-       PROVIDE(__end_bss_RAM3 = .) ;
-    } > SRAM_DTC 
     
 /************************************************************************/    
     /* MAIN BSS SECTION */
     .bss : ALIGN(4)
     {
-        _bss = .;
+        m_sec_bss_start = .;
         *(.bss*)
         *(COMMON)
         . = ALIGN(4) ;
-        _ebss = .;
+        m_sec_bss_end = .;
         PROVIDE(end = .);
     } > SRAM_DTC
-    
-/************************************************************************/    
-    /* NOINIT section for SRAM_DTC */
-    .noinit_RAM3 (NOLOAD) : ALIGN(4)
-    {
-       *(.noinit.$RAM3*)
-       *(.noinit.$SRAM_DTC*)
-       . = ALIGN(4) ;
-    } > SRAM_DTC 
     
 /************************************************************************/    
    
@@ -195,13 +182,23 @@ SECTIONS
 /************************************************************************/    
    .safety_ram : ALIGN(4)    
    {
-   _safety_ram = .;
-   *(.safety_ram*)
+   m_sec_fs_ram_load_start = LOADADDR(.safety_ram);
+   m_sec_fs_ram_start = .;
+   *(.safety_ram)
    . = ALIGN(4);
-   _end_safety_ram = .;
-   } > SRAM_DTC AT>BOARD_FLASH 
-    
+   m_sec_fs_ram_load_end = LOADADDR (.safety_ram) + SIZEOF(.safety_ram);
+   m_sec_fs_ram_end = .;
+   m_safety_flash_end = LOADADDR (.safety_ram) + SIZEOF(.safety_ram);
+   } > SRAM_DTC AT>BOARD_FLASH
+   
 /************************************************************************/    
+   .safety_ram_crc : ALIGN(4)    
+   {
+   m_sec_fs_ram_crc_start = .;
+   *(.safety_ram_crc)
+   . = ALIGN(4);
+   m_sec_fs_ram_crc_end = .;
+   } > SRAM_DTC AT>BOARD_FLASH     
  
 /************************************************************************/
     .stack __BOOT_STACK_ADDRESS - __size_cstack__ :  ALIGN(4)
@@ -210,4 +207,12 @@ SECTIONS
         . = ALIGN(4);       
         _vStackTop = . + __size_cstack__;
     } > SRAM_DTC
+
+/************************************************************************/
+    /* The safety FLASH CRC. */
+    .SEC_CRC : ALIGN(4)
+    {
+        FILL(0xff)
+        KEEP(*(.flshcrc*))
+    } >BOARD_FLASH
 }

@@ -45,7 +45,6 @@ struct iperf_ctx
     /*Declarations*/
     int socket_type;
     int mode;
-    int ctrl_socket;
     volatile signed char state;
     int send_counter;
     int ctrl_sock;
@@ -56,8 +55,6 @@ struct iperf_ctx
     uint32_t addr_len;
     char *send_buf;
     char *recv_buf;
-    char *recv_data_buff;
-    uint32_t sock_ip;
     struct iperf_ip server_ip;
     int data_sock;
     int skip_state_start;

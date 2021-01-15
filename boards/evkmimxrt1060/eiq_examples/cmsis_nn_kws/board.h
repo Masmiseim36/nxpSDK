@@ -282,6 +282,8 @@ status_t BOARD_Camera_I2C_ReceiveSCCB(
 
 void BOARD_SD_Pin_Config(uint32_t speed, uint32_t strength);
 void BOARD_MMC_Pin_Config(uint32_t speed, uint32_t strength);
+void BOARD_EnableSaiMclkOutput(bool enable);
+void BOARD_Microphone_Init(void);
 
 #if defined(__cplusplus)
 }

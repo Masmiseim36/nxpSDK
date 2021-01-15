@@ -29,14 +29,14 @@
 #include "lwip/dns.h"
 #include "netif/etharp.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "usb_host_config.h"
 #include "usb_host.h"
 #include "fsl_device_registers.h"
 #include "usb_phy.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 /*******************************************************************************

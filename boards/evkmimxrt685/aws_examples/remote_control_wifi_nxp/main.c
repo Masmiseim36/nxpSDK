@@ -30,11 +30,12 @@
 //  Includes
 ///////////////////////////////////////////////////////////////////////////////
 /* SDK Included Files */
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "ksdk_mbedtls.h"
-#include "pin_mux.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 /* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -54,7 +55,6 @@
 
 #include "aws_clientcredential.h"
 #include "iot_wifi.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 #include "fsl_gpio.h"
 #include "fsl_power.h"

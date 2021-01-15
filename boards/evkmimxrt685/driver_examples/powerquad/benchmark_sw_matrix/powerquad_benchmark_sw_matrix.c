@@ -6,6 +6,8 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "arm_math.h"
 #include "arm_const_structs.h"
@@ -15,8 +17,6 @@
  * The result could be compared with the software method using CMSIS DSP.
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_power.h"
 /*******************************************************************************
  * Definitions
@@ -113,7 +113,7 @@ int main(void)
     /* Apply power setting. */
     POWER_ApplyPD();
 
-    PRINTF("\r\n CMSIS DSP benchmark software matrix test start.\r\n");
+    PRINTF("\r\nCMSIS DSP benchmark software matrix test start.\r\n");
 
     TEST_InitTime();
 

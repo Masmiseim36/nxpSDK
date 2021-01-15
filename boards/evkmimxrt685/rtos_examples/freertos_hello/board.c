@@ -198,6 +198,7 @@ status_t BOARD_InitPsRam(void)
     CACHE64_GetDefaultConfig(&cacheCfg);
     CACHE64_Init(CACHE64_POLSEL, &cacheCfg);
 #if BOARD_ENABLE_PSRAM_CACHE
+    CACHE64_EnableWriteBuffer(CACHE64, true);
     CACHE64_EnableCache(CACHE64);
 #endif
 

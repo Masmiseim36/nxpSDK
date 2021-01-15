@@ -32,6 +32,12 @@
 #define FOUR_CHAR_CODE(a, b, c, d) (((d) << 24) | ((c) << 16) | ((b) << 8) | ((a)))
 #endif
 
+/*! @brief State information for the CRC16 algorithm. */
+typedef struct Crc16Data
+{
+    uint16_t currentCrc; //!< Current CRC value.
+} crc16_data_t;
+
 /*! @brief Parallel NAND timing config */
 typedef struct _nand_ac_timing_parameter
 {
@@ -53,6 +59,9 @@ typedef struct _nand_ac_timing_parameter
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+static void semc_nand_crc16_onfi_init(crc16_data_t *crc16Info);
+static void semc_nand_crc16_onfi_update(crc16_data_t *crc16Info, const uint8_t *src, uint32_t lengthInBytes);
+static void semc_nand_crc16_onfi_finalize(crc16_data_t *crc16Info, uint16_t *hash);
 static status_t semc_nand_issue_reset(nand_handle_t *handle);
 static status_t semc_nand_issue_read_mode(nand_handle_t *handle);
 static status_t semc_nand_issue_access_feature(nand_handle_t *handle, nand_onfi_feature_config_t *featureConfig);
@@ -116,6 +125,48 @@ semc_mem_nand_handle_t semc_handle;
 /*******************************************************************************
  * API
  ******************************************************************************/
+/* ONFI parameters CRC related functions. */
+static void semc_nand_crc16_onfi_init(crc16_data_t *crc16Info)
+{
+    assert(crc16Info);
+
+    /* initialize running crc and byte count. */
+    crc16Info->currentCrc = 0x4F4EU;
+}
+
+static void semc_nand_crc16_onfi_update(crc16_data_t *crc16Info, const uint8_t *src, uint32_t lengthInBytes)
+{
+    assert(crc16Info);
+    assert(src);
+
+    uint32_t crc = crc16Info->currentCrc;
+
+    for (uint32_t i = 0; i < lengthInBytes; ++i)
+    {
+        uint32_t byte = src[i];
+        crc ^= byte << 8;
+        for (uint32_t j = 0; j < 8; ++j)
+        {
+            uint32_t temp = crc << 1;
+            if (crc & 0x8000)
+            {
+                temp ^= 0x8005U;
+            }
+            crc = temp;
+        }
+    }
+
+    crc16Info->currentCrc = crc;
+}
+
+static void semc_nand_crc16_onfi_finalize(crc16_data_t *crc16Info, uint16_t *hash)
+{
+    assert(crc16Info);
+    assert(hash);
+
+    *hash = crc16Info->currentCrc;
+}
+
 static void semc_get_default_timing_configure(semc_nand_timing_config_t *semcNandTimingConfig)
 {
     assert(semcNandTimingConfig);
@@ -159,8 +210,41 @@ static status_t semc_nand_get_onfi_timing_configure(nand_handle_t *handle, nand_
         return status;
     }
 
-    /* Check ONFI signature. */
-    if (nandOnfiParameterConfig.signature != nandOnfiTag)
+    /*
+       Validate ONFI parameter:
+       From Device Spec, To insure data integrity, device contain more than one copies of the parameter page,
+       The Integrity CRC (Cyclic Redundancy Check) field is used to verify that the contents of the parameters page
+       were transferred correctly to the host.
+    */
+    if (nandOnfiParameterConfig.signature == nandOnfiTag)
+    {
+        /*
+           Validate the interity CRC from ONFI spec:
+           1. The CRC calculation covers all of data between byte 0 and byte 253 of the parameter page inclusive.
+           2. The CRC shall be calculated on byte (8-bit) quantities starting with byte 0 in the parameter page.
+              The bits in the 8-bit quantity are processed from the most significant bit (bit 7) to the least
+           significant bit (bit 0).
+           3. The CRC shall be calculated using the following 16-bit generator polynomial: G(X) = X16 + X15 + X2
+           + 1. This polynomial in hex may be represented as 8005h.
+           4. The CRC value shall be initialized with a value of 4F4Eh before the calculation begins.
+           5. There is no XOR applied to the final CRC value after it is calculated.
+           6. There is no reversal of the data bytes or the CRC calculated value.
+        */
+        uint16_t calculatedCrc   = 0;
+        uint8_t *calculatedStart = (uint8_t *)&nandOnfiParameterConfig;
+        uint32_t calculatedSize  = sizeof(nandOnfiParameterConfig) - 2U;
+
+        crc16_data_t crc16Info;
+        semc_nand_crc16_onfi_init(&crc16Info);
+        semc_nand_crc16_onfi_update(&crc16Info, calculatedStart, calculatedSize);
+        semc_nand_crc16_onfi_finalize(&crc16Info, &calculatedCrc);
+
+        if (calculatedCrc != nandOnfiParameterConfig.integrityCRC)
+        {
+            return kStatus_Fail;
+        }
+    }
+    else
     {
         return kStatus_Fail;
     }
@@ -787,7 +871,7 @@ status_t Nand_Flash_Init(nand_config_t *config, nand_handle_t *handle)
     bool setFlag = false;
     status_t status;
 
-    (void)memset(handle, 0, sizeof(handle));
+    (void)memset(handle, 0, sizeof(nand_handle_t));
 
     /* Store all needs for NAND operations. */
     handle->deviceSpecific        = (void *)&semc_handle;
@@ -923,7 +1007,7 @@ status_t Nand_Flash_Read_Page(nand_handle_t *handle, uint32_t pageIndex, uint8_t
     return status;
 }
 
-status_t Nand_Flash_Page_Program(nand_handle_t *handle, uint32_t pageIndex, uint8_t *src, uint32_t length)
+status_t Nand_Flash_Page_Program(nand_handle_t *handle, uint32_t pageIndex, const uint8_t *src, uint32_t length)
 {
     status_t status  = kStatus_Success;
     uint32_t pageNum = handle->pagesInBlock * handle->blocksInPlane * handle->planesInDevice;

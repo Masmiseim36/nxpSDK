@@ -10,18 +10,16 @@
 #include "usb_host.h"
 #include "fsl_device_registers.h"
 #include "usb_host_hid.h"
-#include "board.h"
 #include "host_mouse.h"
-#include "pin_mux.h"
 #include "fsl_common.h"
+#include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "board.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 #include "app.h"
-#include "board.h"
-
 #include "stdlib.h"
-#include "fsl_debug_console.h"
 #if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
 #error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
 #endif
@@ -29,11 +27,10 @@
 #include "pmic_support.h"
 #include "fsl_pca9420.h"
 #include "usb_phy.h"
-#include <stdbool.h>
 #include "fsl_inputmux.h"
 #include "fsl_pint.h"
 #include "fsl_power.h"
-#include "timer.h"
+#include "fsl_adapter_timer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -41,7 +38,7 @@
 #define APP_USER_WAKEUP_KEY_PORT         BOARD_SW1_GPIO_PORT
 #define APP_USER_WAKEUP_KEY_PIN          BOARD_SW1_GPIO_PIN
 #define APP_USER_WAKEUP_KEY_INPUTMUX_SEL kINPUTMUX_GpioPort1Pin1ToPintsel
-#define APP_DEEPSLEEP_RUNCFG0            (SYSCTL0_PDSLEEPCFG0_SYSXTAL_PD_MASK | SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK)
+#define APP_DEEPSLEEP_RUNCFG0            (SYSCTL0_PDSLEEPCFG0_LPOSC_PD_MASK | SYSCTL0_PDSLEEPCFG0_SYSXTAL_PD_MASK | SYSCTL0_PDSLEEPCFG0_RBB_PD_MASK)
 #define APP_DEEPSLEEP_RUNCFG1                                                              \
     (SYSCTL0_PDSLEEPCFG1_FLEXSPI_SRAM_APD_MASK | SYSCTL0_PDSLEEPCFG1_USBHS_SRAM_PPD_MASK | \
      SYSCTL0_PDSLEEPCFG1_USBHS_SRAM_APD_MASK)
@@ -231,8 +228,8 @@ void USB_PreLowpowerMode(void)
 
 uint8_t USB_EnterLowpowerMode(void)
 {
-    /* Enter Sleep mode */
-    POWER_EnterSleep();
+    /* Enter Deep Sleep mode */
+    POWER_EnterDeepSleep(APP_EXCLUDE_FROM_DEEPSLEEP);
     return kStatus_Success;
 }
 
@@ -269,6 +266,8 @@ void USB_IRQHandler(void)
 
 void USB_HostClockInit(void)
 {
+    uint8_t usbClockDiv = 1;
+    uint32_t usbClockFreq;
     usb_phy_config_struct_t phyConfig = {
         BOARD_USB_PHY_D_CAL,
         BOARD_USB_PHY_TXCAL45DP,
@@ -277,7 +276,7 @@ void USB_HostClockInit(void)
     /* enable USB IP clock */
     CLOCK_SetClkDiv(kCLOCK_DivPfc1Clk, 5);
     CLOCK_AttachClk(kXTALIN_CLK_to_USB_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivUsbHsFclk, 1);
+    CLOCK_SetClkDiv(kCLOCK_DivUsbHsFclk, usbClockDiv);
     CLOCK_EnableUsbhsHostClock();
     RESET_PeripheralReset(kUSBHS_PHY_RST_SHIFT_RSTn);
     RESET_PeripheralReset(kUSBHS_DEVICE_RST_SHIFT_RSTn);
@@ -288,7 +287,10 @@ void USB_HostClockInit(void)
     POWER_DisablePD(kPDRUNCFG_PPD_USBHS_SRAM);
     POWER_ApplyPD();
 
-    CLOCK_EnableUsbhsPhyClock();
+    /* save usb ip clock freq*/
+    usbClockFreq = g_xtalFreq / usbClockDiv;
+    /* enable USB PHY PLL clock, the phy bus clock (480MHz) source is same with USB IP */
+    CLOCK_EnableUsbHs0PhyPllClock(kXTALIN_CLK_to_USB_CLK, usbClockFreq);
 
 #if ((defined FSL_FEATURE_USBHSH_USB_RAM) && (FSL_FEATURE_USBHSH_USB_RAM > 0U))
 
@@ -298,16 +300,27 @@ void USB_HostClockInit(void)
     }
 #endif
     USB_EhciLowPowerPhyInit(CONTROLLER_ID, BOARD_XTAL_SYS_CLK_HZ, &phyConfig);
-
+    
+    /* the workaround for LPM wakeup */
+    CLOCK_AttachClk(kLPOSC_DIV32_to_32KHZWAKE_CLK);
+    CLKCTL0->WAKECLK32KHZDIV = 5;
+    USBPHY->CTRL_CLR = USBPHY_CTRL_CLR_CLKGATE_MASK;
+    (*(volatile uint32_t *)(0x4013B090)) &= 0xFFFFFFFE;
+    
     /* enable usb1 device clock */
     CLOCK_EnableClock(kCLOCK_UsbhsDevice);
     USBHSH->PORTMODE &= ~USBHSH_PORTMODE_DEV_ENABLE_MASK;
+    for (int i = 0; i < 64; i++)
+    {
+        __ASM("nop");
+    }
     while (SYSCTL0->USBCLKSTAT & SYSCTL0_USBCLKSTAT_DEV_NEED_CLKST_MASK)
     {
         __ASM("nop");
     }
     /* disable usb1 device clock */
     CLOCK_DisableClock(kCLOCK_UsbhsDevice);
+    
 }
 void USB_HostIsrEnable(void)
 {

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -23,62 +23,60 @@
 #define __FREEMASTER_URES_H
 
 /******************************************************************************
-* Macro definitions
-******************************************************************************/
+ * Macro definitions
+ ******************************************************************************/
 
 /* User resources operation code */
-#define FMSTR_URES_OP_CODE      FMSTR_SIZE
-#define FMSTR_URES_IOCTL_CODE   FMSTR_SIZE
+#define FMSTR_URES_OP_CODE    FMSTR_SIZE
+#define FMSTR_URES_IOCTL_CODE FMSTR_SIZE
 
 /* Operation codes */
-#define FMSTR_URES_OP_READ  0x00
-#define FMSTR_URES_OP_WRITE 0x01
-#define FMSTR_URES_OP_IOCTL 0x02
+#define FMSTR_URES_OP_READ  0x00U
+#define FMSTR_URES_OP_WRITE 0x01U
+#define FMSTR_URES_OP_IOCTL 0x02U
 
 /* IOCTL codes */
-#define FMSTR_URES_IOCTL_GET_BUSY       0x00
-#define FMSTR_URES_IOCTL_WRITE_FLUSH    0x01
-#define FMSTR_URES_IOCTL_GET_ACCESS     0x02
-#define FMSTR_URES_IOCTL_GET_SIZE       0x04
-#define FMSTR_URES_IOCTL_SET_SIZE       0x05
-#define FMSTR_URES_IOCTL_GET_MAX_SIZE   0x06
-#define FMSTR_URES_IOCTL_ERASE          0x07
-#define FMSTR_URES_IOCTL_BLANK_CHECK    0x08
-#define FMSTR_URES_IOCTL_HASH           0x0A
-#define FMSTR_URES_IOCTL_GET_BLKINFO    0x0C
+#define FMSTR_URES_IOCTL_GET_BUSY     0x00U
+#define FMSTR_URES_IOCTL_WRITE_FLUSH  0x01U
+#define FMSTR_URES_IOCTL_GET_ACCESS   0x02U
+#define FMSTR_URES_IOCTL_GET_SIZE     0x04U
+#define FMSTR_URES_IOCTL_SET_SIZE     0x05U
+#define FMSTR_URES_IOCTL_GET_MAX_SIZE 0x06U
+#define FMSTR_URES_IOCTL_ERASE        0x07U
+#define FMSTR_URES_IOCTL_BLANK_CHECK  0x08U
+#define FMSTR_URES_IOCTL_HASH         0x0AU
+#define FMSTR_URES_IOCTL_GET_BLKINFO  0x0CU
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 /******************************************************************************
-* Types definitions
-******************************************************************************/
+ * Types definitions
+ ******************************************************************************/
 
 /* In/Out buffer structure for user resources function */
-typedef struct 
+typedef struct
 {
-    FMSTR_BPTR buff;            /* In/out buffer */
-    FMSTR_SIZE sizeIn;          /* Input size */
-    FMSTR_SIZE sizeConsumed;    /* Consumed size */
-    FMSTR_SIZE sizeOut;         /* Output size */
-    FMSTR_SIZE sizeOutMax;      /* Maximum output size */
-    
-    FMSTR_ADDR             offset;       /* read/write offset */
-    FMSTR_URES_IOCTL_CODE  ioctlCode;    /* IOCTL code */
+    FMSTR_BPTR buff;         /* In/out buffer */
+    FMSTR_SIZE sizeIn;       /* Input size */
+    FMSTR_SIZE sizeConsumed; /* Consumed size */
+    FMSTR_SIZE sizeOut;      /* Output size */
+    FMSTR_SIZE sizeOutMax;   /* Maximum output size */
+
+    FMSTR_ADDR offset;               /* read/write offset */
+    FMSTR_URES_IOCTL_CODE ioctlCode; /* IOCTL code */
 } FMSTR_RWI_BUFF;
 
 /* User resources function, which is used in TSA table in special entry. */
-typedef FMSTR_BOOL (*FMSTR_URES_HANDLER_FUNC)(FMSTR_URES_OP_CODE opCode, FMSTR_RWI_BUFF * buffer, void * param);
+typedef FMSTR_BOOL (*FMSTR_URES_HANDLER_FUNC)(FMSTR_URES_OP_CODE opCode, FMSTR_RWI_BUFF *buffer, void *param);
 
 /******************************************************************************
-* Global API functions
-******************************************************************************/
-
-
+ * Global API functions
+ ******************************************************************************/
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
 #endif /* __FREEMASTER_URES_H */

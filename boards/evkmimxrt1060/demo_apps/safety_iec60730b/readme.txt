@@ -1,6 +1,6 @@
 Overview
 ========
-This application demonstrates use of certified NXP Safety Library 3.0 which meets the IEC60730 class B standard.
+This application demonstrates use of certified NXP Safety Library 4.1 which meets the IEC60730 class B standard.
 
 More information
 ================

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,7 +14,7 @@
 
 #if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1)
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__)
-__attribute__((section(".boot_hdr.ivt")))
+__attribute__((section(".boot_hdr.ivt"), used))
 #elif defined(__ICCARM__)
 #pragma location = ".boot_hdr.ivt"
 #endif
@@ -33,7 +33,7 @@ const ivt image_vector_table = {
 };
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION) || defined(__GNUC__)
-__attribute__((section(".boot_hdr.boot_data")))
+__attribute__((section(".boot_hdr.boot_data"), used))
 #elif defined(__ICCARM__)
 #pragma location = ".boot_hdr.boot_data"
 #endif
@@ -44,6 +44,6 @@ const BOOT_DATA_T boot_data = {
     FLASH_BASE,  /* boot start location */
     FLASH_SIZE,  /* size */
     PLUGIN_FLAG, /* Plugin flag*/
-    0xFFFFFFFF   /* empty - extra data word */
+    0xFFFFFFFFU  /* empty - extra data word */
 };
 #endif

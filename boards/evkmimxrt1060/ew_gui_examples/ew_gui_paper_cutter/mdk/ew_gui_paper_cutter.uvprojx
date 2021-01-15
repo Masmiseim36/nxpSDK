@@ -329,9 +329,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1062DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../GeneratedCode;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../devices/MIMXRT1062/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../devices/MIMXRT1062/utilities</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../GeneratedCode;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -365,7 +365,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -521,19 +521,14 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -541,9 +536,9 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -551,19 +546,24 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -571,49 +571,49 @@
           <GroupName>touchpanel</GroupName>
           <Files>
             <File>
-              <FileName>fsl_ft5406_rt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_ft5406_rt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ft5406_rt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-GeneratedCode</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>Application.c</FileName>
+              <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Application.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>Application.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Application.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>Core.c</FileName>
+              <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Core.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
-            <File>
-              <FileName>Core.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Core.h</FilePath>
-            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/GeneratedCode</GroupName>
+          <Files>
             <File>
               <FileName>Cutter.c</FileName>
               <FileType>1</FileType>
               <FilePath>../GeneratedCode/Cutter.c</FilePath>
             </File>
             <File>
-              <FileName>Cutter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Cutter.h</FilePath>
+              <FileName>Application.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Application.c</FilePath>
             </File>
             <File>
               <FileName>Effects.c</FileName>
@@ -621,29 +621,14 @@
               <FilePath>../GeneratedCode/Effects.c</FilePath>
             </File>
             <File>
-              <FileName>Effects.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Effects.h</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Graphics.h</FilePath>
-            </File>
-            <File>
               <FileName>Resources.c</FileName>
               <FileType>1</FileType>
               <FilePath>../GeneratedCode/Resources.c</FilePath>
             </File>
             <File>
-              <FileName>Resources.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Resources.h</FilePath>
+              <FileName>Core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Core.c</FilePath>
             </File>
             <File>
               <FileName>Views.c</FileName>
@@ -651,54 +636,14 @@
               <FilePath>../GeneratedCode/Views.c</FilePath>
             </File>
             <File>
-              <FileName>Views.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Views.h</FilePath>
+              <FileName>Graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Graphics.c</FilePath>
             </File>
             <File>
-              <FileName>_ApplicationApplication.h</FileName>
+              <FileName>_ViewsRectangle.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorGrabEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorHit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDialogContext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDragEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreGroup.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreKeyEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
+              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
             </File>
             <File>
               <FileName>_CoreKeyPressHandler.h</FileName>
@@ -706,44 +651,9 @@
               <FilePath>../GeneratedCode/_CoreKeyPressHandler.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreLayoutContext.h</FileName>
+              <FileName>_CutterSmallDigitFont.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreLayoutContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreLayoutQuadContext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreLayoutQuadContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreModalContext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreModalContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreOutline.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreOutline.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreQuadView.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreQuadView.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreRectView.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreResource.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreRoot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterSmallDigitFont.h</FilePath>
             </File>
             <File>
               <FileName>_CoreSimpleTouchHandler.h</FileName>
@@ -751,24 +661,94 @@
               <FilePath>../GeneratedCode/_CoreSimpleTouchHandler.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreTask.h</FileName>
+              <FileName>Resources.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
+              <FilePath>../GeneratedCode/Resources.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreTaskQueue.h</FileName>
+              <FileName>_CutterSpeedDialog.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterSpeedDialog.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreTime.h</FileName>
+              <FileName>_CutterPaperFeed.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTime.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterPaperFeed.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreTimer.h</FileName>
+              <FileName>_ViewsImage.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
+              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreLayoutContext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreLayoutContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterCutter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterCutter.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewlocale.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreLayoutQuadContext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreLayoutQuadContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterSpeedButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterSpeedButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>Views.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Views.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterSpeedWindow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterSpeedWindow.h</FilePath>
+            </File>
+            <File>
+              <FileName>Core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Core.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterThumb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterThumb.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterMediumDigitFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterMediumDigitFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterCancelButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterCancelButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffectTimerClass.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterBatchDialog.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterBatchDialog.h</FilePath>
             </File>
             <File>
               <FileName>_CoreView.h</FileName>
@@ -781,19 +761,14 @@
               <FilePath>../GeneratedCode/_CutterArrows.h</FilePath>
             </File>
             <File>
-              <FileName>_CutterBarGraph.h</FileName>
+              <FileName>_CutterFeedDialog.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterBarGraph.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterFeedDialog.h</FilePath>
             </File>
             <File>
-              <FileName>_CutterBarRaster.h</FileName>
+              <FileName>_CoreTaskQueue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterBarRaster.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterBatchDialog.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterBatchDialog.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
             </File>
             <File>
               <FileName>_CutterBatchWindow.h</FileName>
@@ -801,199 +776,9 @@
               <FilePath>../GeneratedCode/_CutterBatchWindow.h</FilePath>
             </File>
             <File>
-              <FileName>_CutterButton.h</FileName>
+              <FileName>Cutter.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterButton.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterButtonBig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterButtonBig.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterButtonFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterButtonFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterCancelButton.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterCancelButton.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterCaptionFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterCaptionFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterCutter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterCutter.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterDescrFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterDescrFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterDeviceClass.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterDeviceClass.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterFeedButton.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterFeedButton.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterFeedDialog.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterFeedDialog.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterFeedWindow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterFeedWindow.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterFormatDialog.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterFormatDialog.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterFormatWindow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterFormatWindow.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterHorzSlider.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterHorzSlider.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterLargeDigitFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterLargeDigitFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterMainButton.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterMainButton.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterMainButtonFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterMainButtonFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterMediumDigitFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterMediumDigitFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaper.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaper.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperBatch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperBatch.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperCut.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperCut.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperFeed.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperFeed.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperFormat.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperFormat.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperSpeed.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperSpeed.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperStripe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperStripe.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterRemainingWindow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterRemainingWindow.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterSmallDigitFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterSmallDigitFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterSpeedButton.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterSpeedButton.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterSpeedDialog.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterSpeedDialog.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterSpeedWindow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterSpeedWindow.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterStatusBar.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterStatusBar.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterStatusIcons.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterStatusIcons.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterThumb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterThumb.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterVertSlider.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterVertSlider.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterWindow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterWindow.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffectTimerClass.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsInt32Effect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsRectEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsRectEffect.h</FilePath>
+              <FilePath>../GeneratedCode/Cutter.h</FilePath>
             </File>
             <File>
               <FileName>_EffectsTimingList.h</FileName>
@@ -1001,34 +786,69 @@
               <FilePath>../GeneratedCode/_EffectsTimingList.h</FilePath>
             </File>
             <File>
-              <FileName>_GraphicsCanvas.h</FileName>
+              <FileName>_CutterPaperFormat.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_GraphicsCanvas.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterPaperFormat.h</FilePath>
             </File>
             <File>
-              <FileName>_ResourcesBitmap.h</FileName>
+              <FileName>_CutterButtonBig.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterButtonBig.h</FilePath>
             </File>
             <File>
-              <FileName>_ResourcesFont.h</FileName>
+              <FileName>_CutterDeviceClass.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterDeviceClass.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsBorder.h</FileName>
+              <FileName>_CutterPaperCut.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsBorder.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterPaperCut.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsImage.h</FileName>
+              <FileName>_CutterFeedButton.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterFeedButton.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsRectangle.h</FileName>
+              <FileName>_CutterFormatWindow.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterFormatWindow.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsRectEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsRectEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsInt32Effect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterDescrFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterDescrFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterMainButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterMainButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterPaperBatch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterPaperBatch.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
             </File>
             <File>
               <FileName>_ViewsText.h</FileName>
@@ -1036,19 +856,324 @@
               <FilePath>../GeneratedCode/_ViewsText.h</FilePath>
             </File>
             <File>
-              <FileName>ewlocale.h</FileName>
+              <FileName>_CutterFeedWindow.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterFeedWindow.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRoot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsBorder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsBorder.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterStatusBar.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterStatusBar.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreOutline.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreOutline.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreModalContext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreModalContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterVertSlider.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterVertSlider.h</FilePath>
+            </File>
+            <File>
+              <FileName>Application.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Application.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterHorzSlider.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterHorzSlider.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterCaptionFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterCaptionFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterBarGraph.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterBarGraph.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ApplicationApplication.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterRemainingWindow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterRemainingWindow.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterBarRaster.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterBarRaster.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterButtonFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterButtonFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreQuadView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreQuadView.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreDragEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorGrabEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_GraphicsCanvas.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_GraphicsCanvas.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterMainButtonFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterMainButtonFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>Effects.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Effects.h</FilePath>
+            </File>
+            <File>
+              <FileName>Graphics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Graphics.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreKeyEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTime.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTime.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorHit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterLargeDigitFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterLargeDigitFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterPaperStripe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterPaperStripe.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterStatusIcons.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterStatusIcons.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterPaperSpeed.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterPaperSpeed.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreDialogContext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTimer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesBitmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreGroup.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterWindow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterWindow.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterFormatDialog.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterFormatDialog.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterPaper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterPaper.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreResource.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRectView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RGB565</GroupName>
+          <GroupName>EmbeddedWizard/TargetSpecific/RT</GroupName>
           <Files>
             <File>
-              <FileName>ewextbmp.h</FileName>
+              <FileName>ew_bsp_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RGB565</GroupName>
+          <Files>
+            <File>
+              <FileName>ewextgfx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxres.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewextgfx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdriver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
             </File>
             <File>
               <FileName>ewextfnt.h</FileName>
@@ -1056,14 +1181,24 @@
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextfnt.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+              <FileName>ewgfxcore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.h</FileName>
+              <FileName>ewextbmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxlinks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxtasks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
             </File>
             <File>
               <FileName>ewextpxl_RGB565.h</FileName>
@@ -1075,40 +1210,10 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</FilePath>
             </File>
-            <File>
-              <FileName>ewgfxcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdriver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxlinks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxres.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxtasks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RTE</GroupName>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RTE</GroupName>
           <Files>
             <File>
               <FileName>ewextrte.c</FileName>
@@ -1128,93 +1233,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-TargetSpecific-RT</GroupName>
-          <Files>
-            <File>
-              <FileName>ew_bsp_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT1062.h</FileName>
               <FileType>5</FileType>
@@ -1224,11 +1249,6 @@
               <FileName>MIMXRT1062_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1062.c</FileName>
@@ -1243,97 +1263,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1351,14 +1306,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1060_flexspi_nor_config.c</FileName>
@@ -1401,24 +1356,24 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1765,9 +1720,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1062DVL6A, SKIP_SYSCLK_INIT, XIP_BOOT_HEADER_DCD_ENABLE=1, EW_USE_DOUBLE_BUFFER=1, EW_CPU_LOAD_MEASURING=1, EW_FRAME_BUFFER_COLOR_FORMAT=EW_FRAME_BUFFER_COLOR_FORMAT_RGB565, EW_SURFACE_ROTATION=0, EW_USE_FREE_RTOS=0</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../GeneratedCode;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../devices/MIMXRT1062/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1062;../../../../../devices/MIMXRT1062/utilities/str;../../../../../devices/MIMXRT1062/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../devices/MIMXRT1062/utilities</IncludePath>
+              <IncludePath>..;../../../../../devices/MIMXRT1062/drivers;../../../../../components/ft5406_rt;../../../../../devices/MIMXRT1062/utilities/debug_console_lite;../GeneratedCode;../../../../../middleware/EmbeddedWizard/TargetSpecific/RT;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565;../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE;../../../../../devices/MIMXRT1062;../../../../../components/uart;../../../../../components/lists;../../../../../devices/MIMXRT1062/xip;../../../xip;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1801,7 +1756,7 @@
             <ScatterFile>MIMXRT1062xxxxx_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
+            <Misc>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/libewrte-m7-keil.lib ../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/libewgfx-m7-keil.lib --remove --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1957,19 +1912,14 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -1977,9 +1927,9 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1987,19 +1937,24 @@
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_iomuxc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2007,49 +1962,49 @@
           <GroupName>touchpanel</GroupName>
           <Files>
             <File>
-              <FileName>fsl_ft5406_rt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_ft5406_rt.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_ft5406_rt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/ft5406_rt/fsl_ft5406_rt.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-GeneratedCode</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>Application.c</FileName>
+              <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Application.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
             </File>
             <File>
-              <FileName>Application.h</FileName>
+              <FileName>fsl_debug_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Application.h</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
             </File>
             <File>
-              <FileName>Core.c</FileName>
+              <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Core.c</FilePath>
+              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
-            <File>
-              <FileName>Core.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Core.h</FilePath>
-            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/GeneratedCode</GroupName>
+          <Files>
             <File>
               <FileName>Cutter.c</FileName>
               <FileType>1</FileType>
               <FilePath>../GeneratedCode/Cutter.c</FilePath>
             </File>
             <File>
-              <FileName>Cutter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Cutter.h</FilePath>
+              <FileName>Application.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Application.c</FilePath>
             </File>
             <File>
               <FileName>Effects.c</FileName>
@@ -2057,29 +2012,14 @@
               <FilePath>../GeneratedCode/Effects.c</FilePath>
             </File>
             <File>
-              <FileName>Effects.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Effects.h</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../GeneratedCode/Graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>Graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Graphics.h</FilePath>
-            </File>
-            <File>
               <FileName>Resources.c</FileName>
               <FileType>1</FileType>
               <FilePath>../GeneratedCode/Resources.c</FilePath>
             </File>
             <File>
-              <FileName>Resources.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Resources.h</FilePath>
+              <FileName>Core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Core.c</FilePath>
             </File>
             <File>
               <FileName>Views.c</FileName>
@@ -2087,54 +2027,14 @@
               <FilePath>../GeneratedCode/Views.c</FilePath>
             </File>
             <File>
-              <FileName>Views.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/Views.h</FilePath>
+              <FileName>Graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../GeneratedCode/Graphics.c</FilePath>
             </File>
             <File>
-              <FileName>_ApplicationApplication.h</FileName>
+              <FileName>_ViewsRectangle.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorGrabEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreCursorHit.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDialogContext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreDragEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreGroup.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreKeyEvent.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
+              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
             </File>
             <File>
               <FileName>_CoreKeyPressHandler.h</FileName>
@@ -2142,44 +2042,9 @@
               <FilePath>../GeneratedCode/_CoreKeyPressHandler.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreLayoutContext.h</FileName>
+              <FileName>_CutterSmallDigitFont.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreLayoutContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreLayoutQuadContext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreLayoutQuadContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreModalContext.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreModalContext.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreOutline.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreOutline.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreQuadView.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreQuadView.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreRectView.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreResource.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CoreRoot.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterSmallDigitFont.h</FilePath>
             </File>
             <File>
               <FileName>_CoreSimpleTouchHandler.h</FileName>
@@ -2187,24 +2052,94 @@
               <FilePath>../GeneratedCode/_CoreSimpleTouchHandler.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreTask.h</FileName>
+              <FileName>Resources.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
+              <FilePath>../GeneratedCode/Resources.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreTaskQueue.h</FileName>
+              <FileName>_CutterSpeedDialog.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterSpeedDialog.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreTime.h</FileName>
+              <FileName>_CutterPaperFeed.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTime.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterPaperFeed.h</FilePath>
             </File>
             <File>
-              <FileName>_CoreTimer.h</FileName>
+              <FileName>_ViewsImage.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
+              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreLayoutContext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreLayoutContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterCutter.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterCutter.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewlocale.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreLayoutQuadContext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreLayoutQuadContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterSpeedButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterSpeedButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>Views.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Views.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterSpeedWindow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterSpeedWindow.h</FilePath>
+            </File>
+            <File>
+              <FileName>Core.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Core.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterThumb.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterThumb.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterMediumDigitFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterMediumDigitFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterCancelButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterCancelButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffectTimerClass.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterBatchDialog.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterBatchDialog.h</FilePath>
             </File>
             <File>
               <FileName>_CoreView.h</FileName>
@@ -2217,19 +2152,14 @@
               <FilePath>../GeneratedCode/_CutterArrows.h</FilePath>
             </File>
             <File>
-              <FileName>_CutterBarGraph.h</FileName>
+              <FileName>_CutterFeedDialog.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterBarGraph.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterFeedDialog.h</FilePath>
             </File>
             <File>
-              <FileName>_CutterBarRaster.h</FileName>
+              <FileName>_CoreTaskQueue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterBarRaster.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterBatchDialog.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterBatchDialog.h</FilePath>
+              <FilePath>../GeneratedCode/_CoreTaskQueue.h</FilePath>
             </File>
             <File>
               <FileName>_CutterBatchWindow.h</FileName>
@@ -2237,199 +2167,9 @@
               <FilePath>../GeneratedCode/_CutterBatchWindow.h</FilePath>
             </File>
             <File>
-              <FileName>_CutterButton.h</FileName>
+              <FileName>Cutter.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterButton.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterButtonBig.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterButtonBig.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterButtonFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterButtonFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterCancelButton.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterCancelButton.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterCaptionFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterCaptionFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterCutter.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterCutter.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterDescrFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterDescrFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterDeviceClass.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterDeviceClass.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterFeedButton.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterFeedButton.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterFeedDialog.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterFeedDialog.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterFeedWindow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterFeedWindow.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterFormatDialog.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterFormatDialog.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterFormatWindow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterFormatWindow.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterHorzSlider.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterHorzSlider.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterLargeDigitFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterLargeDigitFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterMainButton.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterMainButton.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterMainButtonFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterMainButtonFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterMediumDigitFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterMediumDigitFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaper.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaper.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperBatch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperBatch.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperCut.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperCut.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperFeed.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperFeed.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperFormat.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperFormat.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperSpeed.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperSpeed.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterPaperStripe.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterPaperStripe.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterRemainingWindow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterRemainingWindow.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterSmallDigitFont.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterSmallDigitFont.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterSpeedButton.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterSpeedButton.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterSpeedDialog.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterSpeedDialog.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterSpeedWindow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterSpeedWindow.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterStatusBar.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterStatusBar.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterStatusIcons.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterStatusIcons.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterThumb.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterThumb.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterVertSlider.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterVertSlider.h</FilePath>
-            </File>
-            <File>
-              <FileName>_CutterWindow.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_CutterWindow.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsEffectTimerClass.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsEffectTimerClass.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsInt32Effect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
-            </File>
-            <File>
-              <FileName>_EffectsRectEffect.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_EffectsRectEffect.h</FilePath>
+              <FilePath>../GeneratedCode/Cutter.h</FilePath>
             </File>
             <File>
               <FileName>_EffectsTimingList.h</FileName>
@@ -2437,34 +2177,69 @@
               <FilePath>../GeneratedCode/_EffectsTimingList.h</FilePath>
             </File>
             <File>
-              <FileName>_GraphicsCanvas.h</FileName>
+              <FileName>_CutterPaperFormat.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_GraphicsCanvas.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterPaperFormat.h</FilePath>
             </File>
             <File>
-              <FileName>_ResourcesBitmap.h</FileName>
+              <FileName>_CutterButtonBig.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterButtonBig.h</FilePath>
             </File>
             <File>
-              <FileName>_ResourcesFont.h</FileName>
+              <FileName>_CutterDeviceClass.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterDeviceClass.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsBorder.h</FileName>
+              <FileName>_CutterPaperCut.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsBorder.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterPaperCut.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsImage.h</FileName>
+              <FileName>_CutterFeedButton.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsImage.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterFeedButton.h</FilePath>
             </File>
             <File>
-              <FileName>_ViewsRectangle.h</FileName>
+              <FileName>_CutterFormatWindow.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/_ViewsRectangle.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterFormatWindow.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsRectEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsRectEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsInt32Effect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsInt32Effect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_EffectsEffect.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_EffectsEffect.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterDescrFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterDescrFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterMainButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterMainButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterPaperBatch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterPaperBatch.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorEvent.h</FilePath>
             </File>
             <File>
               <FileName>_ViewsText.h</FileName>
@@ -2472,19 +2247,324 @@
               <FilePath>../GeneratedCode/_ViewsText.h</FilePath>
             </File>
             <File>
-              <FileName>ewlocale.h</FileName>
+              <FileName>_CutterFeedWindow.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../GeneratedCode/ewlocale.h</FilePath>
+              <FilePath>../GeneratedCode/_CutterFeedWindow.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRoot.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRoot.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ViewsBorder.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ViewsBorder.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterStatusBar.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterStatusBar.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreOutline.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreOutline.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreModalContext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreModalContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterVertSlider.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterVertSlider.h</FilePath>
+            </File>
+            <File>
+              <FileName>Application.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Application.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterHorzSlider.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterHorzSlider.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterCaptionFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterCaptionFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterBarGraph.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterBarGraph.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ApplicationApplication.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ApplicationApplication.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterRemainingWindow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterRemainingWindow.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterButton.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterButton.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterBarRaster.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterBarRaster.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterButtonFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterButtonFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreQuadView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreQuadView.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreDragEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreDragEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorGrabEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorGrabEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_GraphicsCanvas.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_GraphicsCanvas.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterMainButtonFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterMainButtonFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>Effects.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Effects.h</FilePath>
+            </File>
+            <File>
+              <FileName>Graphics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/Graphics.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreKeyEvent.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreKeyEvent.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTime.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTime.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreCursorHit.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreCursorHit.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterLargeDigitFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterLargeDigitFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterPaperStripe.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterPaperStripe.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesFont.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesFont.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterStatusIcons.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterStatusIcons.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTask.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTask.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterPaperSpeed.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterPaperSpeed.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreDialogContext.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreDialogContext.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreTimer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreTimer.h</FilePath>
+            </File>
+            <File>
+              <FileName>_ResourcesBitmap.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_ResourcesBitmap.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreGroup.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreGroup.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterWindow.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterWindow.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterFormatDialog.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterFormatDialog.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CutterPaper.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CutterPaper.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreResource.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreResource.h</FilePath>
+            </File>
+            <File>
+              <FileName>_CoreRectView.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../GeneratedCode/_CoreRectView.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RGB565</GroupName>
+          <GroupName>EmbeddedWizard/TargetSpecific/RT</GroupName>
           <Files>
             <File>
-              <FileName>ewextbmp.h</FileName>
+              <FileName>ew_bsp_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_console.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_display.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_touch.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_inout.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_event.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
+            </File>
+            <File>
+              <FileName>ew_bsp_graphics.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RGB565</GroupName>
+          <Files>
+            <File>
+              <FileName>ewextgfx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdefs.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxres.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewextgfx.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxdriver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
             </File>
             <File>
               <FileName>ewextfnt.h</FileName>
@@ -2492,14 +2572,24 @@
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextfnt.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.c</FilePath>
+              <FileName>ewgfxcore.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
             </File>
             <File>
-              <FileName>ewextgfx.h</FileName>
+              <FileName>ewextbmp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</FilePath>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxlinks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
+            </File>
+            <File>
+              <FileName>ewgfxtasks.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
             </File>
             <File>
               <FileName>ewextpxl_RGB565.h</FileName>
@@ -2511,40 +2601,10 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</FilePath>
             </File>
-            <File>
-              <FileName>ewgfxcore.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdefs.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxdriver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxlinks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxres.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</FilePath>
-            </File>
-            <File>
-              <FileName>ewgfxtasks.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-PlatformPackage-RT-RTE</GroupName>
+          <GroupName>EmbeddedWizard/PlatformPackage/RT/RTE</GroupName>
           <Files>
             <File>
               <FileName>ewextrte.c</FileName>
@@ -2564,93 +2624,13 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>EmbeddedWizard-TargetSpecific-RT</GroupName>
-          <Files>
-            <File>
-              <FileName>ew_bsp_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_event.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_graphics.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_inout.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_system.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</FilePath>
-            </File>
-            <File>
-              <FileName>ew_bsp_touch.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MIMXRT1062.h</FileName>
               <FileType>5</FileType>
@@ -2660,11 +2640,6 @@
               <FileName>MIMXRT1062_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MIMXRT1062.c</FileName>
@@ -2679,97 +2654,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2787,14 +2697,14 @@
           <GroupName>xip</GroupName>
           <Files>
             <File>
-              <FileName>fsl_flexspi_nor_boot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_flexspi_nor_boot.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_flexspi_nor_boot.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</FilePath>
             </File>
             <File>
               <FileName>evkmimxrt1060_flexspi_nor_config.c</FileName>
@@ -2837,24 +2747,24 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

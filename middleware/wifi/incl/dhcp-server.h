@@ -91,9 +91,15 @@ enum wm_dhcpd_errno
  * @return -WM_E_DHCPD_REGISTER_CMDS if cli init operation failed.
  * @return WM_SUCCESS if cli init operation success.
  */
-
 int dhcpd_cli_init(void);
-void dhcp_stat(int argc, char **argv);
+
+/** Print DHCP stats
+ *
+ * This function prints the dhcp-stat for the DHCP server.
+ * dhcp-stat command displays ip to associated client mac mapping.
+ *
+ */
+void print_dhcp_stat();
 
 /** Start DHCP server
  *
@@ -167,4 +173,10 @@ int dhcp_server_lease_timeout(uint32_t val);
  * \return WM_SUCCESS on success or -WM_FAIL.
  */
 int dhcp_get_ip_from_mac(uint8_t *client_mac, uint32_t *client_ip);
+
+/** Print DHCP stats on the console
+ *
+ * This API prints DHCP stats on the console
+ */
+void dhcp_stat();
 #endif

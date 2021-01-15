@@ -1,6 +1,6 @@
 """
    Copyright 2017 The TensorFlow Authors. All Rights Reserved.
-   Copyright 2019 NXP. All Rights Reserved.
+   Copyright 2019-2020 NXP
    
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,28 +19,24 @@ limitations under the License.
 import pandas as pd
 import numpy as np
 
-import sys
 import argparse
 
 from sklearn.model_selection import train_test_split
-from keras.models import Model, load_model
-from keras.layers import Input, Dense
-from keras import regularizers
-from keras.initializers import RandomUniform
-from keras.optimizers import SGD
-import tensorflow as tf
-from keras import backend as K
+
+from tensorflow import keras
+from tensorflow.keras import layers
+import tensorflow.lite as tflite
+
 FLAGS = None
 
 def preprocess_data(data):
     #data = (FLAGS.scale_range/3*(data - data.mean())/data.std()).clip(-1,1)
     data = data.diff()[5:]
     data[['ax','ay','az']] /= 10
-    #data = (data + 1)/2
     return data
 
 
-def main(_):
+def main(FLAGS):
     chanels = ['wx', 'wy', 'wz', 'ax', 'ay', 'az']
     patch_size = 5
    
@@ -55,31 +51,31 @@ def main(_):
                        (-1,len(chanels)*patch_size))
                    
     # split into train and test set
-    train_set, test_set = train_test_split(patch, test_size=0.1, random_state=42)
+    train_set, test_set = train_test_split(patch, test_size=0.1,
+                                           random_state=42)
 
     if FLAGS.train_keras_model:
         # create autoencoder model
         input_dim = test_set.shape[1]   
         encoding_dim = 16 
     
-        
-        input_layer = Input(shape=(input_dim, ))
-        encoder = Dense(encoding_dim, activation='tanh', 
-                        activity_regularizer=regularizers.l1(10e-7))(input_layer)
-        encoder = Dense(int(encoding_dim / 2), activation='tanh')(encoder)
-        
-        decoder = Dense(int(encoding_dim / 2), activation='tanh')(encoder)
-        decoder = Dense(input_dim, activation='tanh')(decoder)
-        autoencoder = Model(inputs=input_layer, outputs=decoder)
-        
-        tf.contrib.quantize.create_training_graph(input_graph=K.get_session().graph, quant_delay=int(0))
+        autoencoder = keras.Sequential(
+                [
+                    keras.Input(shape=(input_dim, )),
+                    layers.Dense(encoding_dim, activation='tanh', 
+                            activity_regularizer=keras.regularizers.l1(10e-7)),
+                    layers.Dense(int(encoding_dim / 2), activation='tanh'),                
+                    layers.Dense(int(encoding_dim / 2), activation='tanh'),
+                    layers.Dense(input_dim, activation='tanh')
+                ]
+        )
         
         autoencoder.compile(optimizer='adamax',
                             loss='mean_squared_error', 
-                            metrics=['accuracy'])
+                            metrics=['categorical_accuracy'])
         
         # set training parameters
-        nb_epoch = 1000
+        nb_epoch = 300
         batch_size = 10
     
         # train model
@@ -90,14 +86,12 @@ def main(_):
                                   validation_data=(test_set,test_set),
                                   verbose=1)
         threshold = 3 * history.history['val_loss'][-1]    
-        autoencoder._make_predict_function()
         
         # save keras model
         autoencoder.save(FLAGS.keras_model)    
     else:
       # Recreate the exact same model, including weights and optimizer.
-      autoencoder = load_model(FLAGS.keras_model)
-      autoencoder._make_predict_function()
+      autoencoder = keras.models.load_model(FLAGS.keras_model)
       
       predictions = autoencoder.predict(test_set)
       error = np.mean(np.square(predictions - test_set), 1)
@@ -105,7 +99,7 @@ def main(_):
       
       
     # convert keras model into tf lite model and store it
-    converter = tf.lite.TFLiteConverter.from_keras_model_file(FLAGS.keras_model)
+    converter = tflite.TFLiteConverter.from_keras_model(autoencoder)
     tflite_model = converter.convert()
     open(FLAGS.tflite_model, "wb").write(tflite_model)
     
@@ -117,24 +111,13 @@ def main(_):
                          "const char adt_model[] = {{{}}};\n" +
                          "unsigned int adt_model_len = {};")
                         .format(", ".join(x), len(x)))
-    
-    # convert keras model into quantized tf lite model and store it
-    converter = tf.lite.TFLiteConverter.from_keras_model_file(FLAGS.keras_model)
-    converter.inference_type = tf.uint8
-    converter.default_ranges_stats = (-1,1)
-    converter.quantized_input_stats = {'input_1':(0,0.2)}
-    tflite_model = converter.convert()
-    open(FLAGS.tflite_quantized_model, "wb").write(tflite_model)
-    
-    # convert to C source code                  
-    with open(FLAGS.tflite_quantized_model, 'rb') as f_in:
-        x = [hex(b) for b in f_in.read()]
-        with open(FLAGS.c_quantized_model, 'w') as f_out:
-            f_out.write(("// This file is generated by adt_train.py\n\n" +
-                         "const char adt_model[] = {{{}}};\n" +
-                         "unsigned int adt_model_len = {};")
-                        .format(", ".join(x), len(x)))
-        
+            
+    with open('parameters.h', 'w') as f:
+            f.write('// This file is generated by adt_train.py\n\n')
+            f.write('const int PATCH_SIZE = %d;\n'%(patch_size))
+            f.write('const int  NUM_CHANELS = %d;\n'%(len(chanels)))
+            f.write('const float THRESHOLD = %f;\n'%(threshold))
+            
     if len(FLAGS.validation_data) > 0:
         data = pd.read_csv(FLAGS.validation_data,
                            delimiter = ',', dtype = np.int, header=0)
@@ -146,10 +129,11 @@ def main(_):
                                 'const int16_t in_data[] = {{\n {}}};\n\n' +
                                 '#endif /* COMMANDS_H_ */')
                                  
+            c_content = np.array2string(data[chanels].values.flatten(),
+                                        threshold = data[chanels].size,
+                                        separator=',')[1:-1]
             with open(FLAGS.validation_data_c, 'w') as f:
-                f.write(c_source_contain.format(np.array2string(data[chanels].values.flatten(),
-                                                                threshold = data[chanels].size,
-                                                                separator=',')[1:-1]))
+                f.write(c_source_contain.format(c_content))
                                 
         
         # normalize data
@@ -167,11 +151,6 @@ def main(_):
         for i, err in enumerate(error):
             print(i, err)            
         
-        with open('parameters.h', 'w') as f:
-            f.write('// This file is generated by adt_train.py\n\n')
-            f.write('const int PATCH_SIZE = %d;\n'%(patch_size))
-            f.write('const int  NUM_CHANELS = %d;\n'%(len(chanels)))
-            f.write('const float THRESHOLD = %f;\n'%(threshold))
             
         if (FLAGS.vizualize):
             import matplotlib.pyplot as plt
@@ -194,82 +173,50 @@ if __name__ == '__main__':
     parser.add_argument(
       '--input_data',
       type=str,
-      # pylint: disable=line-too-long
       default='input_data.txt',
-      # pylint: enable=line-too-long
       help='Location of input training data.')
     
     parser.add_argument(
       '--keras_model',
       type=str,
-      # pylint: disable=line-too-long
       default='keras_model.h5',
-      # pylint: enable=line-too-long
       help='Location where output keras model will be stored.')    
     
     parser.add_argument(
       '--train_keras_model',
       type=lambda x: True if x in ('1', 'yes', 'y') else False,
-      # pylint: disable=line-too-long
       default=True,
-      # pylint: enable=line-too-long
       help='If True than train a new model else use an existing model.')
     
     parser.add_argument(
       '--tflite_model',
       type=str,
-      # pylint: disable=line-too-long
       default='adt_model.tflite',
-      # pylint: enable=line-too-long
       help='Location where output tflite model will be stored.')
-    
-    parser.add_argument(
-      '--tflite_quantized_model',
-      type=str,
-      # pylint: disable=line-too-long
-      default='adt_model_quant.tflite',
-      # pylint: enable=line-too-long
-      help='Location where output quantized tflite model will be stored.')
-    
-    parser.add_argument(
-      '--c_quantized_model',
-      type=str,
-      # pylint: disable=line-too-long
-      default='adt_model_quant.h',
-      # pylint: enable=line-too-long
-      help='Location where quantized model as c source code will be stored.')
-    
+        
     parser.add_argument(
       '--c_model',
       type=str,
-      # pylint: disable=line-too-long
       default='adt_model.h',
-      # pylint: enable=line-too-long
       help='Location where model as c source code will be stored.')
       
     parser.add_argument(
       '--validation_data',
       type=str,
-      # pylint: disable=line-too-long
       default='',
-      # pylint: enable=line-too-long
       help='If specified, evaluate validation data.')
     
     parser.add_argument(
       '--validation_data_c',
       type=str,
-      # pylint: disable=line-too-long
       default='commands.h',
-      # pylint: enable=line-too-long
       help='If specified, store validation data as c variable.')
     
     parser.add_argument(
       '--vizualize',
       type=lambda x: True if x in ('1', 'yes', 'y') else False,
-      # pylint: disable=line-too-long
       default=False,
-      # pylint: enable=line-too-long
       help='Show evaluation data.')
       
     FLAGS, unparsed = parser.parse_known_args()
-    tf.app.run(main=main, argv=[sys.argv[0]] + unparsed)
+    main(FLAGS)

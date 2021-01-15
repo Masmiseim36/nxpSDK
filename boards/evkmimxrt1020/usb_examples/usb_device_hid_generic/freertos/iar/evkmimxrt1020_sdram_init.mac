@@ -106,6 +106,37 @@ _sdr_Init()
   // PAD ctrl
   // drive strength = 0x7 to increase drive strength
   // otherwise the data7 bit may fail.
+  __writeMemory32(0x000000F1, 0x401F8188, "Memory");
+  __writeMemory32(0x000000F1, 0x401F818C, "Memory");
+  __writeMemory32(0x000000F1, 0x401F8190, "Memory");
+  __writeMemory32(0x000000F1, 0x401F8194, "Memory");
+  __writeMemory32(0x000000F1, 0x401F8198, "Memory");
+  __writeMemory32(0x000000F1, 0x401F819C, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81A0, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81A4, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81A8, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81AC, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81B0, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81B4, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81B8, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81BC, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81C0, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81C4, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81C8, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81CC, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81D0, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81D4, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81D8, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81DC, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81E0, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81E4, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81E8, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81EC, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81F0, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81F4, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81F8, "Memory");
+  __writeMemory32(0x000000F1, 0x401F81FC, "Memory");
+  __writeMemory32(0x000000F1, 0x401F8200, "Memory");
   __writeMemory32(0x000000F1, 0x401F8204, "Memory");
   __writeMemory32(0x000000F1, 0x401F8208, "Memory");
   __writeMemory32(0x000000F1, 0x401F820C, "Memory");
@@ -115,57 +146,11 @@ _sdr_Init()
   __writeMemory32(0x000000F1, 0x401F821C, "Memory");
   __writeMemory32(0x000000F1, 0x401F8220, "Memory");
   __writeMemory32(0x000000F1, 0x401F8224, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8228, "Memory");
-  __writeMemory32(0x000000F1, 0x401F822C, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8230, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8234, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8238, "Memory");
-  __writeMemory32(0x000000F1, 0x401F823C, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8240, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8244, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8248, "Memory");
-  __writeMemory32(0x000000F1, 0x401F824C, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8250, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8254, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8258, "Memory");
-  __writeMemory32(0x000000F1, 0x401F825C, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8260, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8264, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8268, "Memory");
-  __writeMemory32(0x000000F1, 0x401F826C, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8270, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8274, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8278, "Memory");
-  __writeMemory32(0x000000F1, 0x401F827C, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8280, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8284, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8288, "Memory");
-  __writeMemory32(0x000000F1, 0x401F828C, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8290, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8294, "Memory");
-  __writeMemory32(0x000000F1, 0x401F8298, "Memory");
-  __writeMemory32(0x000000F1, 0x401F829C, "Memory");
-  __writeMemory32(0x000000F1, 0x401F82A0, "Memory");
-
-  __writeMemory32(0x1000E000, 0x402F0000, "Memory");
-  __writeMemory32(0x00030524, 0x402F0008, "Memory");
-  __writeMemory32(0x06030524, 0x402F000C, "Memory");
-  __writeMemory32(0x8000001B, 0x402F0010, "Memory");
-  __writeMemory32(0x90000021, 0x402F0014, "Memory");
-  __writeMemory32(0x00000008, 0x402F0004, "Memory");
-  __writeMemory32(0x00000B27, 0x402F0040, "Memory");
-  __writeMemory32(0x00100100, 0x402F0044, "Memory");
-  __writeMemory32(0x00020201, 0x402F0048, "Memory");
-  __writeMemory32(0x08193D0E, 0x402F004C, "Memory");
-  __writeMemory32(0x00000021, 0x402F0080, "Memory");
-  __writeMemory32(0x00888888, 0x402F0084, "Memory");
-  __writeMemory32(0x00000002, 0x402F0094, "Memory");
-  __writeMemory32(0x00000000, 0x402F0098, "Memory");
 
   // Config SDR Controller Registers/
   __writeMemory32(0x10000004, 0x402F0000, "Memory"); // MCR
-  __writeMemory32(0x00030524, 0x402F0008, "Memory"); // BMCR0
-  __writeMemory32(0x06030524, 0x402F000C, "Memory"); // BMCR1
+  __writeMemory32(0x00000081, 0x402F0008, "Memory"); // BMCR0
+  __writeMemory32(0x00000081, 0x402F000C, "Memory"); // BMCR1
   __writeMemory32(0x8000001B, 0x402F0010, "Memory"); // BR0, 32MB
   __writeMemory32(0x8200001B, 0x402F0014, "Memory"); // BR1, 32MB
   __writeMemory32(0x8400001B, 0x402F0018, "Memory"); // BR2, 32MB

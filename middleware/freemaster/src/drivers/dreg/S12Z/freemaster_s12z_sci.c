@@ -135,7 +135,7 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_S12Z_SCI =
 #define FMSTR_SCISR2_TXDIR     0x02
 #define FMSTR_SCISR2_RAF       0x01
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    SCI communication initialization
 *
@@ -155,7 +155,7 @@ static FMSTR_BOOL _FMSTR_S12zSci_Init(void)
         return FMSTR_FALSE;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable SCI transmitter
 *
@@ -175,7 +175,7 @@ static void _FMSTR_S12zSci_EnableTransmit(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable SCI receiver
 *
@@ -195,7 +195,7 @@ static void _FMSTR_S12zSci_EnableReceive(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from transmit register empty event
 *
@@ -215,7 +215,7 @@ static void _FMSTR_S12zSci_EnableTransmitInterrupt(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt when transmission is complete
 *
@@ -235,7 +235,7 @@ static void _FMSTR_S12zSci_EnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from receive register full event
 *
@@ -255,7 +255,7 @@ static void _FMSTR_S12zSci_EnableReceiveInterrupt(FMSTR_BOOL enable)
     }
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the transmit register is empty, and it's possible to put next char
 *
@@ -266,7 +266,7 @@ static FMSTR_BOOL _FMSTR_S12zSci_IsTransmitRegEmpty(void)
     return (FMSTR_BOOL) FMSTR_TSTBIT(fmstr_sciBaseAddr, FMSTR_SCISR1_OFFSET, FMSTR_SCISR_TDRE);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the receive register is full, and it's possible to get received char
 *
@@ -277,7 +277,7 @@ static FMSTR_BOOL _FMSTR_S12zSci_IsReceiveRegFull(void)
     return (FMSTR_BOOL) FMSTR_TSTBIT(fmstr_sciBaseAddr, FMSTR_SCISR1_OFFSET, FMSTR_SCISR_RDRF);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the transmitter is still active 
 *
@@ -289,7 +289,7 @@ static FMSTR_BOOL _FMSTR_S12zSci_IsTransmitterActive(void)
     return (FMSTR_BOOL) (!(FMSTR_TSTBIT(fmstr_sciBaseAddr, FMSTR_SCISR1_OFFSET, FMSTR_SCISR_TC)));
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function puts the char for transmit
 *
@@ -300,7 +300,7 @@ static void _FMSTR_S12zSci_PutChar(FMSTR_BCHR  ch)
     FMSTR_SETREG(fmstr_sciBaseAddr, FMSTR_SCIDRL_OFFSET, ch);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function gets the received char
 *
@@ -310,7 +310,7 @@ static FMSTR_BCHR _FMSTR_S12zSci_GetChar(void)
     return FMSTR_GETREG(fmstr_sciBaseAddr, FMSTR_SCIDRL_OFFSET);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function sends buffered data
 *
@@ -320,7 +320,7 @@ static void _FMSTR_S12zSci_Flush(void)
 {
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Assign FreeMASTER communication module base address
 *
@@ -331,13 +331,13 @@ void FMSTR_SerialSetBaseAddress(FMSTR_ADDR base)
     fmstr_sciBaseAddr = base;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Process FreeMASTER serial interrupt (call this function from SCI ISR)
 *
 ******************************************************************************/
 
-void FMSTR_SerialIsr()
+void FMSTR_SerialIsr(void)
 {
     /* process incomming or just transmitted byte */
     #if (FMSTR_LONG_INTR) || (FMSTR_SHORT_INTR)
@@ -353,7 +353,7 @@ void FMSTR_SerialSetBaseAddress(FMSTR_ADDR base)
     FMSTR_UNUSED(base);
 }
 
-void FMSTR_SerialIsr()
+void FMSTR_SerialIsr(void)
 {
 }
 

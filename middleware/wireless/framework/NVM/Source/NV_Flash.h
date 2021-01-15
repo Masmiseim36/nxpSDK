@@ -105,6 +105,19 @@
  * Description: the value of one second expressed in microseconds
  */
 #define gNvOneSecondInMicros_c    1000000UL
+  
+/*
+ * Name: PGM_SIZE_BYTE
+ * Description: the value of min flash write operation unit
+ */      
+
+#if (defined(FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE) && (FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE > 0))
+#define PGM_SIZE_BYTE           FSL_FEATURE_FLASH_PFLASH_BLOCK_WRITE_UNIT_SIZE
+#elif (defined(FSL_FEATURE_FLASH_BLOCK_PHRASE_SIZE) && (FSL_FEATURE_FLASH_BLOCK_PHRASE_SIZE > 0))
+#define PGM_SIZE_BYTE           FSL_FEATURE_FLASH_BLOCK_PHRASE_SIZE
+#else
+#define PGM_SIZE_BYTE           16U
+#endif   
 
 /*****************************************************************************
  ******************************************************************************
@@ -127,6 +140,7 @@ typedef union NVM_RecordMetaInfo_tag
         uint16_t NvmElementIndex;
         uint16_t NvmRecordOffset;
         uint8_t NvValidationEndByte;
+        uint8_t Padding[PGM_SIZE_BYTE - sizeof(uint64_t)];
     } fields;
 } NVM_RecordMetaInfo_t;
 #pragma pack()
@@ -148,6 +162,7 @@ typedef union NVM_TableInfo_tag
 #else
         uint64_t NvPageCounter;
 #endif
+        uint8_t Padding[PGM_SIZE_BYTE - sizeof(uint64_t)];
     } fields;
 } NVM_TableInfo_t;
 #pragma pack()
@@ -166,6 +181,7 @@ typedef union NVM_EntryInfo_tag
         uint16_t NvDataEntryType;
         uint16_t NvElementsCount;
         uint16_t NvElementSize;
+        uint8_t Padding[PGM_SIZE_BYTE - sizeof(uint64_t)];
     } fields;
 } NVM_EntryInfo_t;
 #pragma pack()

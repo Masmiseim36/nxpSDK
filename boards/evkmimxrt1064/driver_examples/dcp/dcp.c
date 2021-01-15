@@ -11,12 +11,12 @@
  ******************************************************************************/
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_dcp.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -88,6 +88,9 @@ status_t DCP_OTPKeySelect(dcp_otp_key_select keySelect)
 
 void TestAesEcb(void)
 {
+    /* Input data for DCP like IV, key and plaintext should be handled properly
+     * when DCACHE is used (e.g. Clean&Invalidate, use non-cached memory)
+     */
     static const uint8_t keyAes128[] __attribute__((aligned)) = {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
                                                                  0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
     static const uint8_t plainAes128[]                        = {0x6b, 0xc1, 0xbe, 0xe2, 0x2e, 0x40, 0x9f, 0x96,
@@ -127,6 +130,9 @@ void TestAesEcb(void)
 
 void TestAesCbc(void)
 {
+    /* Input data for DCP like IV, key and plaintext should be handled properly
+     * when DCACHE is used (e.g. Clean&Invalidate, use non-cached memory)
+     */
     static const uint8_t keyAes128[] __attribute__((aligned)) = {0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6,
                                                                  0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c};
     static const uint8_t plainAes128[]                        = {0x6b, 0xc1, 0xbe, 0xe2, 0x2e, 0x40, 0x9f, 0x96,
@@ -172,7 +178,10 @@ void TestSha1(void)
     status_t status;
     size_t outLength;
     unsigned int length;
-    unsigned char output[20];
+    /* Input data for DCP like input and output should be handled properly
+     * when DCACHE is used (e.g. Clean&Invalidate, use non-cached memory)
+     */
+    AT_NONCACHEABLE_SECTION(static unsigned char outputSha[20]);
 
     static const uint8_t message[] = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
 
@@ -187,14 +196,14 @@ void TestSha1(void)
     m_handle.swapConfig = kDCP_NoSwap;
 
     length    = sizeof(message) - 1;
-    outLength = sizeof(output);
-    memset(&output, 0, outLength);
+    outLength = sizeof(outputSha);
+    memset(&outputSha, 0, outLength);
 
     /************************ SHA-1 **************************/
-    status = DCP_HASH(DCP, &m_handle, kDCP_Sha1, message, length, output, &outLength);
+    status = DCP_HASH(DCP, &m_handle, kDCP_Sha1, message, length, outputSha, &outLength);
     TEST_ASSERT(kStatus_Success == status);
     TEST_ASSERT(outLength == 20u);
-    TEST_ASSERT(memcmp(output, sha1, outLength) == 0);
+    TEST_ASSERT(memcmp(outputSha, sha1, outLength) == 0);
 
     PRINTF("SHA-1 Test pass\r\n");
 }
@@ -204,7 +213,10 @@ void TestSha256(void)
     status_t status;
     size_t outLength;
     unsigned int length;
-    unsigned char output[32];
+    /* Input data for DCP like input and output should be handled properly
+     * when DCACHE is used (e.g. Clean&Invalidate, use non-cached memory)
+     */
+    AT_NONCACHEABLE_SECTION(static unsigned char outputSha256[32]);
 
     static const uint8_t message[] =
         "Be that word our sign of parting, bird or fiend! I shrieked upstarting"
@@ -226,14 +238,14 @@ void TestSha256(void)
     m_handle.swapConfig = kDCP_NoSwap;
 
     length    = sizeof(message) - 1;
-    outLength = sizeof(output);
-    memset(&output, 0, outLength);
+    outLength = sizeof(outputSha256);
+    memset(&outputSha256, 0, outLength);
 
     /************************ SHA-256 **************************/
-    status = DCP_HASH(DCP, &m_handle, kDCP_Sha256, message, length, output, &outLength);
+    status = DCP_HASH(DCP, &m_handle, kDCP_Sha256, message, length, outputSha256, &outLength);
     TEST_ASSERT(kStatus_Success == status);
     TEST_ASSERT(outLength == 32u);
-    TEST_ASSERT(memcmp(output, sha256, outLength) == 0);
+    TEST_ASSERT(memcmp(outputSha256, sha256, outLength) == 0);
 
     PRINTF("SHA-256 Test pass\r\n");
 }
@@ -243,6 +255,9 @@ void TestCrc32(void)
     status_t status;
     size_t outLength;
     unsigned int length;
+    /* Input data for DCP like input and output should be handled properly
+     * when DCACHE is used (e.g. Clean&Invalidate, use non-cached memory)
+     */
     AT_NONCACHEABLE_SECTION_INIT(static uint8_t output[4]);
 
     dcp_handle_t m_handle;
@@ -329,17 +344,6 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-
-    /* Data cache can be used if DCP_USE_DCACHE is set to 1 */
-    /* When enable (DCP_USE_DCACHE = 1) Input/output buffers and hash ctx should be in */
-    /* non-cached memory or handled properly (Clean & Invalidate DCACHE) */
-#if defined(DCP_USE_DCACHE) && (DCP_USE_DCACHE > 0)
-    /* keep dcache enabled */
-#else
-    /* disable dcache */
-    SCB_DisableDCache();
-#endif
-
 
     /* Note: When DCACHE is enabled input and output buffers should be in non-cached memory
      * or handled properly (DCACHE Clean and Invalidate).

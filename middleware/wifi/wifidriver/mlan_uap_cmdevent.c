@@ -29,7 +29,7 @@ Change log:
     02/05/2009: initial version
 ********************************************************/
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -37,15 +37,6 @@ Change log:
 
 /* Always keep this include at the end of all include files */
 #include <mlan_remap_mem_operations.h>
-
-/*
- * Disable uAP 11N support if both CONFIG_UAP_AMPDU_TX and
- * CONFIG_UAP_AMPDU_RX are not set.
- *
- */
-#if !defined(CONFIG_UAP_AMPDU_TX) && !defined(CONFIG_UAP_AMPDU_RX)
-#define UAP_DISABLE_11N
-#endif
 
 /**
  *  @brief This function prepares command for config uap settings
@@ -61,18 +52,15 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
                                           IN t_u16 cmd_action,
                                           IN pmlan_ioctl_req pioctl_buf)
 {
-    mlan_ds_bss *bss                               = MNULL;
-    HostCmd_DS_SYS_CONFIG *sys_config              = (HostCmd_DS_SYS_CONFIG *)&cmd->params.sys_config;
-    t_u8 *tlv                                      = MNULL;
-    MrvlIEtypes_MacAddr_t *tlv_mac                 = MNULL;
-    MrvlIEtypes_SsIdParamSet_t *tlv_ssid           = MNULL;
-    MrvlIEtypes_beacon_period_t *tlv_beacon_period = MNULL;
-    MrvlIEtypes_ecsa_config_t *tlv_ecsa_config     = MNULL;
-    MrvlIEtypes_dtim_period_t *tlv_dtim_period     = MNULL;
-    MrvlIEtypes_RatesParamSet_t *tlv_rates         = MNULL;
-#ifdef UAP_DISABLE_11N
-    MrvlIEtypes_Cipher_t *tlv_cipher = MNULL;
-#endif
+    mlan_ds_bss *bss                                     = MNULL;
+    HostCmd_DS_SYS_CONFIG *sys_config                    = (HostCmd_DS_SYS_CONFIG *)&cmd->params.sys_config;
+    t_u8 *tlv                                            = MNULL;
+    MrvlIEtypes_MacAddr_t *tlv_mac                       = MNULL;
+    MrvlIEtypes_SsIdParamSet_t *tlv_ssid                 = MNULL;
+    MrvlIEtypes_beacon_period_t *tlv_beacon_period       = MNULL;
+    MrvlIEtypes_ecsa_config_t *tlv_ecsa_config           = MNULL;
+    MrvlIEtypes_dtim_period_t *tlv_dtim_period           = MNULL;
+    MrvlIEtypes_RatesParamSet_t *tlv_rates               = MNULL;
     MrvlIEtypes_bcast_ssid_t *tlv_bcast_ssid             = MNULL;
     MrvlIEtypes_channel_band_t *tlv_chan_band            = MNULL;
     MrvlIEtypes_ChanListParamSet_t *tlv_chan_list        = MNULL;
@@ -82,11 +70,10 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
     MrvlIEtypes_pwk_cipher_t *tlv_pwk_cipher             = MNULL;
     MrvlIEtypes_gwk_cipher_t *tlv_gwk_cipher             = MNULL;
     MrvlIEtypes_passphrase_t *tlv_passphrase             = MNULL;
-#ifndef UAP_DISABLE_11N
-    MrvlIETypes_HTCap_t *tlv_htcap = MNULL;
-#endif /* UAP_DISABLE_11N */
-    t_u32 cmd_size  = 0;
-    t_u8 zero_mac[] = {0, 0, 0, 0, 0, 0};
+    MrvlIEtypes_password_t *tlv_password                 = MNULL;
+    MrvlIETypes_HTCap_t *tlv_htcap                       = MNULL;
+    t_u32 cmd_size                                       = 0;
+    t_u8 zero_mac[]                                      = {0, 0, 0, 0, 0, 0};
     t_u16 i;
     /* t_u16 ac; */
 
@@ -223,8 +210,7 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
     }
 
     if ((bss->param.bss_config.protocol & PROTOCOL_WPA) || (bss->param.bss_config.protocol & PROTOCOL_WPA2) ||
-        (bss->param.bss_config.protocol & PROTOCOL_WPA3_SAE) || (bss->param.bss_config.protocol & PROTOCOL_OWE) ||
-        (bss->param.bss_config.protocol & PROTOCOL_EAP))
+        (bss->param.bss_config.protocol & PROTOCOL_WPA3_SAE) || (bss->param.bss_config.protocol & PROTOCOL_EAP))
     {
         tlv_akmp                     = (MrvlIEtypes_akmp_t *)tlv;
         tlv_akmp->header.type        = wlan_cpu_to_le16(TLV_TYPE_UAP_AKMP);
@@ -281,12 +267,22 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
             cmd_size += sizeof(MrvlIEtypesHeader_t) + bss->param.bss_config.wpa_cfg.length;
             tlv += sizeof(MrvlIEtypesHeader_t) + bss->param.bss_config.wpa_cfg.length;
         }
+
+        if (bss->param.bss_config.wpa_cfg.password_length)
+        {
+            tlv_password              = (MrvlIEtypes_password_t *)tlv;
+            tlv_password->header.type = wlan_cpu_to_le16(TLV_TYPE_UAP_WPA3_SAE_PASSWORD);
+            tlv_password->header.len  = (t_u16)wlan_cpu_to_le16(bss->param.bss_config.wpa_cfg.password_length);
+            memcpy(pmpriv->adapter, tlv_password->password, bss->param.bss_config.wpa_cfg.password,
+                   bss->param.bss_config.wpa_cfg.password_length);
+            cmd_size += sizeof(MrvlIEtypesHeader_t) + bss->param.bss_config.wpa_cfg.password_length;
+            tlv += sizeof(MrvlIEtypesHeader_t) + bss->param.bss_config.wpa_cfg.password_length;
+        }
     }
     else
     {
     }
 
-#ifndef UAP_DISABLE_11N
     if ((bss->param.bss_config.ht_cap_info))
     {
         /* wmsdk: All the values received will be zero by default. */
@@ -302,18 +298,6 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
         cmd_size += sizeof(MrvlIETypes_HTCap_t);
         tlv += sizeof(MrvlIETypes_HTCap_t);
     }
-#else  /* UAP_DISABLE_11N */
-    /* Disable 11n*/
-    /* Some of the 11n clients fail to associate with uAP since
-       we dont have 11n support in driver hence disabling 11n in
-       firmware */
-    tlv_cipher              = (MrvlIEtypes_Cipher_t *)tlv;
-    tlv_cipher->header.type = 0x2d;
-    tlv_cipher->header.len  = 0x1a;
-    memset(pmadapter, &tlv_cipher->pair_cipher, 0, 0x1a);
-    cmd_size += 0x1a + 0x4;
-    tlv += 0x1a + 0x4;
-#endif /* UAP_DISABLE_11N */
 
     cmd->size = (t_u16)wlan_cpu_to_le16(cmd_size);
     PRINTM(MCMND, "AP config: cmd_size=%d\n", cmd_size);
@@ -609,6 +593,15 @@ mlan_status wlan_ops_uap_prepare_cmd(IN t_void *priv,
             break;
         case HostCmd_CMD_11N_DELBA:
             ret = wlan_cmd_11n_delba(pmpriv, cmd_ptr, pdata_buf);
+            break;
+        case HostCmd_CMD_TX_RATE_CFG:
+            ret = wlan_cmd_tx_rate_cfg(pmpriv, cmd_ptr, cmd_action, pdata_buf);
+            break;
+        case HostCmd_CMD_802_11_TX_RATE_QUERY:
+            cmd_ptr->command = wlan_cpu_to_le16(HostCmd_CMD_802_11_TX_RATE_QUERY);
+            cmd_ptr->size    = wlan_cpu_to_le16(sizeof(HostCmd_TX_RATE_QUERY) + S_DS_GEN);
+            pmpriv->tx_rate  = 0;
+            ret              = MLAN_STATUS_SUCCESS;
             break;
         default:
             PRINTM(MERROR, "PREP_CMD: unknown command- %#x\n", cmd_no);

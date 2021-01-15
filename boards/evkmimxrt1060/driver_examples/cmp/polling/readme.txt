@@ -14,10 +14,10 @@ output is logic one, or turned off when zero.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -55,6 +55,3 @@ CMP polling Example
 Then change CMP analog input, and watch the change of LED.
     - CMP1_IN0 (J23-5) connected to VCC =3.3V (J24-8): USER LED on
     - CMP1_IN0 (J23-5) connected to GND (J24-7): USER LED off
-Customization options
-=====================
-

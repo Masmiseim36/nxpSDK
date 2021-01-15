@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -23,8 +23,8 @@
 #define __FREEMASTER_SERIAL_UART_H
 
 /******************************************************************************
-* Required header files include check
-******************************************************************************/
+ * Required header files include check
+ ******************************************************************************/
 #ifndef __FREEMASTER_H
 #error Please include the freemaster.h master header file before the freemaster_serial_uart.h
 #endif
@@ -33,27 +33,26 @@
 #include "fsl_device_registers.h"
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 /******************************************************************************
-* Types definition
-******************************************************************************/
+ * Types definition
+ ******************************************************************************/
 
 /******************************************************************************
-* inline functions
-******************************************************************************/
+ * inline functions
+ ******************************************************************************/
 
 /******************************************************************************
-* Global API functions
-******************************************************************************/
+ * Global API functions
+ ******************************************************************************/
 
 void FMSTR_SerialSetBaseAddress(UART_Type *base);
 void FMSTR_SerialIsr(void);
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
 #endif /* __FREEMASTER_SERIAL_UART_H */
-

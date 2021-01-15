@@ -10,6 +10,7 @@
 #include "fsl_camera_device.h"
 #include "fsl_csi.h"
 
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
@@ -17,7 +18,6 @@
 #include "fsl_ov7725.h"
 #include "fsl_mt9m114.h"
 #include "fsl_iomuxc.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

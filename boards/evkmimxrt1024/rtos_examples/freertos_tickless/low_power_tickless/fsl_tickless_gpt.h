@@ -13,6 +13,10 @@
 
 #if defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1176_cm4_SERIES)
 #define configGPT_CLOCK_HZ (CLOCK_GetFreq(kCLOCK_OscRc48MDiv2))
+#elif defined(IMX8MSCALE_SERIES)
+#define configGPT_CLOCK_HZ                                                                  \
+    (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootGpt1)) / \
+     (CLOCK_GetRootPostDivider(kCLOCK_RootGpt1)) / 20)
 #else
 #define configGPT_CLOCK_HZ (CLOCK_GetFreq(kCLOCK_IpgClk) / 2)
 #endif

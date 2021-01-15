@@ -7,14 +7,14 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "app.h"
 #include "fsl_nor_flash.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_flexspi.h"
 #include "fsl_flexspi_nor_flash.h"
 /*******************************************************************************

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -23,50 +23,49 @@
 #define __FREEMASTER_SERIAL_USBCDC_H
 
 /******************************************************************************
-* Required header files include check
-******************************************************************************/
+ * Required header files include check
+ ******************************************************************************/
 #ifndef __FREEMASTER_H
 #error Please include the freemaster.h master header file before the freemaster_serial_usb.h
 #endif
 
 #ifdef __cplusplus
-  extern "C" {
+extern "C" {
 #endif
 
 /******************************************************************************
-* Types definition
-******************************************************************************/
+ * Types definition
+ ******************************************************************************/
 
 /* FreeMASTER Serial USB CDC event types. */
 typedef enum
 {
-    FMSTR_SERIAL_USBCDC_EVENT_TYPE_SENT,         /* Interrupt type, that data was sent via USB CDC */
-    FMSTR_SERIAL_USBCDC_EVENT_TYPE_RECEIVED,     /* Interrupt type, that data was received from USB CDC */
+    FMSTR_SERIAL_USBCDC_EVENT_TYPE_SENT,     /* Interrupt type, that data was sent via USB CDC */
+    FMSTR_SERIAL_USBCDC_EVENT_TYPE_RECEIVED, /* Interrupt type, that data was received from USB CDC */
 } FMSTR_SERIAL_USBCDC_EVENT_TYPE;
 
 /* Function for sending data via USB CDC. It must be registered from application. */
-typedef FMSTR_BOOL (*FMSTR_TX_FUNC)(FMSTR_U8 * data, FMSTR_U32 size);
+typedef FMSTR_BOOL (*FMSTR_TX_FUNC)(FMSTR_U8 *data, FMSTR_U32 size);
 
 /******************************************************************************
-* inline functions
-******************************************************************************/
+ * inline functions
+ ******************************************************************************/
 
 /******************************************************************************
-* Global API functions
-******************************************************************************/
+ * Global API functions
+ ******************************************************************************/
 
 /* Function for registering USB CDC transmit function.  */
 void FMSTR_SerialUsbRegisterAppFunctions(FMSTR_TX_FUNC tx_func);
 /* USB CDC event called from application into FreeMASTER serial interface. */
-void FMSTR_SerialUsbProcessEvent(FMSTR_SERIAL_USBCDC_EVENT_TYPE type, FMSTR_U8 * data, FMSTR_U32 size);
+void FMSTR_SerialUsbProcessEvent(FMSTR_SERIAL_USBCDC_EVENT_TYPE type, FMSTR_U8 *data, FMSTR_U32 size);
 
 #ifdef __cplusplus
-  }
+}
 #endif
 
 /****************************************************************************************
-* Global variable declaration
-*****************************************************************************************/
+ * Global variable declaration
+ *****************************************************************************************/
 
 #endif /* __FREEMASTER_SERIAL_USBCDC_H */
-

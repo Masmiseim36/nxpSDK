@@ -1,5 +1,4 @@
-/*
- * Copyright 2017-2018 NXP
+/* * Copyright 2017-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -56,14 +55,14 @@ void BOARD_InitPins(void);
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void LPSPI3_InitPins(void);
+void LPSPI1_InitPins(void);
 
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void LPSPI3_DeinitPins(void);
+void LPSPI1_DeinitPins(void);
 
 #if defined(__cplusplus)
 }

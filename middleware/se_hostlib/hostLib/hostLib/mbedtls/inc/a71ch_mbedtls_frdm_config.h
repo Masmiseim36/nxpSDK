@@ -329,11 +329,12 @@
 #if USE_RTOS && defined(FSL_RTOS_FREE_RTOS)
 #include "FreeRTOS.h"
 
-void *pvPortCalloc(size_t num, size_t size); /*Calloc for HEAP3.*/
+void * pvCalloc( size_t xNumElements, size_t xSize );
 
 #define MBEDTLS_PLATFORM_MEMORY
-#define MBEDTLS_PLATFORM_STD_CALLOC pvPortCalloc
+#define MBEDTLS_PLATFORM_STD_CALLOC pvCalloc
 #define MBEDTLS_PLATFORM_STD_FREE vPortFree
+#define CONFIG_MEDTLS_USE_AFR_MEMORY
 
 #endif /* USE_RTOS*/
 

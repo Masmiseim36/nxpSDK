@@ -9,6 +9,8 @@
 #include <string.h>
 /*  SDK Included Files */
 #include "Driver_ETH_MAC.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_enet.h"
@@ -17,8 +19,6 @@
 #include "fsl_phy.h"
 #include "stdlib.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_phyksz8081.h"
@@ -147,27 +147,38 @@ int main(void)
     SDK_DelayAtLeastUs(1000, CLOCK_GetFreq(kCLOCK_CpuClk));
     GPIO_WritePinOutput(GPIO1, 9, 1);
 
-    PRINTF("\r\n ENET example start.\r\n");
+    PRINTF("\r\nENET example start.\r\n");
 
     /* Initialize the ENET module. */
     EXAMPLE_ENET.Initialize(ENET_SignalEvent_t);
     EXAMPLE_ENET.PowerControl(ARM_POWER_FULL);
     EXAMPLE_ENET.SetMacAddress((ARM_ETH_MAC_ADDR *)g_macAddr);
-    EXAMPLE_ENET_PHY.PowerControl(ARM_POWER_FULL);
-    EXAMPLE_ENET_PHY.SetMode(ARM_ETH_PHY_AUTO_NEGOTIATE);
+
+    PRINTF("Wait for PHY init...\r\n");
+    while (EXAMPLE_ENET_PHY.PowerControl(ARM_POWER_FULL) != ARM_DRIVER_OK)
+    {
+        PRINTF("PHY Auto-negotiation failed, please check the cable connection and link partner setting.\r\n");
+    }
+
     EXAMPLE_ENET.Control(ARM_ETH_MAC_CONTROL_RX, 1);
     EXAMPLE_ENET.Control(ARM_ETH_MAC_CONTROL_TX, 1);
-    if (EXAMPLE_ENET_PHY.GetLinkState() == ARM_ETH_LINK_UP)
+    PRINTF("Wait for PHY link up...\r\n");
+    do
     {
-        linkInfo = EXAMPLE_ENET_PHY.GetLinkInfo();
-        EXAMPLE_ENET.Control(ARM_ETH_MAC_CONFIGURE, linkInfo.speed << ARM_ETH_MAC_SPEED_Pos |
-                                                        linkInfo.duplex << ARM_ETH_MAC_DUPLEX_Pos |
-                                                        ARM_ETH_MAC_ADDRESS_BROADCAST);
-    }
-    else
-    {
-        PRINTF("\r\nPHY Link down, please check the cable connection and link partner setting.\r\n");
-    }
+        if (EXAMPLE_ENET_PHY.GetLinkState() == ARM_ETH_LINK_UP)
+        {
+            linkInfo = EXAMPLE_ENET_PHY.GetLinkInfo();
+            EXAMPLE_ENET.Control(ARM_ETH_MAC_CONFIGURE, linkInfo.speed << ARM_ETH_MAC_SPEED_Pos |
+                                                            linkInfo.duplex << ARM_ETH_MAC_DUPLEX_Pos |
+                                                            ARM_ETH_MAC_ADDRESS_BROADCAST);
+            break;
+        }
+    } while (1);
+
+#if defined(PHY_STABILITY_DELAY_US) && PHY_STABILITY_DELAY_US
+    /* Wait a moment for PHY status to be stable. */
+    SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+#endif
 
     /* Build broadcast for sending. */
     ENET_BuildBroadCastFrame();
@@ -183,7 +194,7 @@ int main(void)
         if (g_rxCheckIdx != g_rxIndex)
         {
             g_rxCheckIdx = g_rxIndex;
-            PRINTF("The %d frame has been successfully received!\r\n", g_rxCheckIdx);
+            PRINTF("A total of %d frame(s) has been successfully received!\r\n", g_rxCheckIdx);
         }
         /* Get the Frame size */
         if (txnumber < ENET_EXAMPLE_LOOP_COUNT)

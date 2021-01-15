@@ -8,13 +8,13 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
-#include "serial_port_usb.h"
-#include "pin_mux.h"
+#include "fsl_component_serial_port_usb.h"
 #include "usb_phy.h"
 #include <stdbool.h>
 #include "fsl_power.h"
@@ -39,6 +39,8 @@ void USB_IRQHandler(void)
 
 void USB_DeviceClockInit(void)
 {
+    uint8_t usbClockDiv = 1;
+    uint32_t usbClockFreq;
     usb_phy_config_struct_t phyConfig = {
         BOARD_USB_PHY_D_CAL,
         BOARD_USB_PHY_TXCAL45DP,
@@ -47,7 +49,7 @@ void USB_DeviceClockInit(void)
     /* enable USB IP clock */
     CLOCK_SetClkDiv(kCLOCK_DivPfc1Clk, 5);
     CLOCK_AttachClk(kXTALIN_CLK_to_USB_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivUsbHsFclk, 1);
+    CLOCK_SetClkDiv(kCLOCK_DivUsbHsFclk, usbClockDiv);
     CLOCK_EnableUsbhsDeviceClock();
     RESET_PeripheralReset(kUSBHS_PHY_RST_SHIFT_RSTn);
     RESET_PeripheralReset(kUSBHS_DEVICE_RST_SHIFT_RSTn);
@@ -65,7 +67,10 @@ void USB_DeviceClockInit(void)
     /* disable usb1 host clock */
     CLOCK_DisableClock(kCLOCK_UsbhsHost);
 
-    CLOCK_EnableUsbhsPhyClock();
+    /* save usb ip clock freq*/
+    usbClockFreq = g_xtalFreq / usbClockDiv;
+    /* enable USB PHY PLL clock, the phy bus clock (480MHz) source is same with USB IP */
+    CLOCK_EnableUsbHs0PhyPllClock(kXTALIN_CLK_to_USB_CLK, usbClockFreq);
 
 #if defined(FSL_FEATURE_USBHSD_USB_RAM) && (FSL_FEATURE_USBHSD_USB_RAM)
     for (int i = 0; i < FSL_FEATURE_USBHSD_USB_RAM; i++)

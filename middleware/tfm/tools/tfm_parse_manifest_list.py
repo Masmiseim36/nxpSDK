@@ -9,7 +9,7 @@ import os
 import io
 import sys
 import argparse
-from jinja2 import Environment, BaseLoader, select_autoescape
+from jinja2 import Environment, BaseLoader, select_autoescape, TemplateNotFound
 
 try:
     import yaml
@@ -84,9 +84,10 @@ def process_manifest(manifest_list_file, append):
         manifest_dic = yaml.safe_load(manifest_list_yaml_file)
         manifest_list.extend(manifest_dic["manifest_list"])
 
-    templatefile_name = 'secure_fw/services/manifestfilename.template'
+    templatefile_name = 'secure_fw/partitions/manifestfilename.template'
     template = ENV.get_template(templatefile_name)
 
+    print("Start to generate PSA manifests:")
     for manifest_item in manifest_list:
         manifest_path = os.path.expandvars(manifest_item['manifest'])
         file = open(manifest_path)
@@ -118,7 +119,7 @@ def process_manifest(manifest_list_file, append):
 
         print ("Generating " + outfile_name)
 
-        outfile = io.open(outfile_name, "w", newline='\n')
+        outfile = io.open(outfile_name, "w", newline=None)
         outfile.write(template.render(context))
         outfile.close()
 
@@ -148,6 +149,7 @@ def gen_files(context, gen_file_list, append):
         file_list_yaml = yaml.safe_load(file_list_yaml_file)
         file_list.extend(file_list_yaml["file_list"])
 
+    print("Start to generate file from the generated list:")
     for file in file_list:
         outfile_name = os.path.expandvars(file["output"])
         templatefile_name = os.path.expandvars(file["template"])
@@ -155,13 +157,15 @@ def gen_files(context, gen_file_list, append):
         if OUT_DIR is not None:
             outfile_name = os.path.join(OUT_DIR, outfile_name)
 
+        print ("Generating " + outfile_name)
+
         outfile_path = os.path.dirname(outfile_name)
         if not os.path.exists(outfile_path):
             os.makedirs(outfile_path)
 
         template = ENV.get_template(templatefile_name)
 
-        outfile = io.open(outfile_name, "w", newline='\n')
+        outfile = io.open(outfile_name, "w", newline=None)
         outfile.write(template.render(context))
         outfile.close()
 

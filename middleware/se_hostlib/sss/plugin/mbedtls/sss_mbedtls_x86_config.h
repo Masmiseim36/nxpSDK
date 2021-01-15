@@ -1,5 +1,5 @@
 /**
- * \file a71ch_mbedtls_x86_config.h
+ * \file sss_mbedtls_x86_config.h
  *
  * \brief Configuration options (set of defines)
  *

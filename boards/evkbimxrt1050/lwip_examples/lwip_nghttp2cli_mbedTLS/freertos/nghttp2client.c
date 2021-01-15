@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "nghttp2/nghttp2.h"
+#include "nghttp2.h"
 #include "FreeRTOS.h"
 /*******************************************************************************
  * Definitions

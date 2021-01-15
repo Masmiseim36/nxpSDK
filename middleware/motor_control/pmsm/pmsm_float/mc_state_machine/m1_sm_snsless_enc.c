@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -315,6 +315,7 @@ static void M1_StateInitFast(void)
     /* Application timing */
     g_sM1Drive.ui16FastCtrlLoopFreq = (g_sClockSetup.ui16M1PwmFreq / M1_FOC_FREQ_VS_PWM_FREQ);
     g_sM1Drive.ui16SlowCtrlLoopFreq = g_sClockSetup.ui16M1SpeedLoopFreq;
+    g_sM1Drive.ui32CpuFrequency = g_sClockSetup.ui32CpuFrequency;
 
     /* Power Stage characteristic data */
     g_sM1Drive.sFocPMSM.fltPwrStgCharIRange   = DTCOMP_I_RANGE;

@@ -11,10 +11,10 @@
 // Includes
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "board.h"
 #include "pin_mux.h"
 #include "fsl_lpuart.h"
 #include "fsl_common.h"
+#include "board.h"
 
 #include "freemaster.h"
 #include "freemaster_serial_lpuart.h"

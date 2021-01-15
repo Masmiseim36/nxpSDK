@@ -29,7 +29,7 @@ Change log:
     10/21/2008: initial version
 ******************************************************/
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -48,6 +48,156 @@ Change log:
 /********************************************************
                 Local Functions
 ********************************************************/
+#ifdef CONFIG_RF_TEST_MODE
+/**
+ *  @brief This function prepares command of MFG Continuous Tx cmd.
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param cmd          A pointer to HostCmd_DS_COMMAND structure
+ *  @param action       The action: GET or SET
+ *  @param pdata_buf    A pointer to data buffer
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+static mlan_status wlan_cmd_mfg_tx_cont(pmlan_private pmpriv, HostCmd_DS_COMMAND *cmd, t_u16 action, t_void *pdata_buf)
+{
+    HostCmd_DS_MFG_CMD_TX_CONT *mcmd = (HostCmd_DS_MFG_CMD_TX_CONT *)&cmd->params.mfg_tx_cont;
+    mlan_ds_mfg_cmd_tx_cont *cfg     = (mlan_ds_mfg_cmd_tx_cont *)pdata_buf;
+
+    ENTER();
+
+    memset(pmpriv->adapter, mcmd, 0x00, sizeof(HostCmd_DS_MFG_CMD_TX_CONT));
+
+    cmd->command = wlan_cpu_to_le16(HostCmd_CMD_MFG_COMMAND);
+    cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_MFG_CMD_TX_CONT) + S_DS_GEN);
+
+    mcmd->mfg_cmd = wlan_cpu_to_le32(cfg->mfg_cmd);
+    mcmd->action  = wlan_cpu_to_le16(action);
+    if (action == HostCmd_ACT_GEN_SET)
+    {
+        mcmd->enable_tx       = wlan_cpu_to_le32(cfg->enable_tx);
+        mcmd->cw_mode         = wlan_cpu_to_le32(cfg->cw_mode);
+        mcmd->payload_pattern = wlan_cpu_to_le32(cfg->payload_pattern);
+        mcmd->cs_mode         = wlan_cpu_to_le32(cfg->cs_mode);
+        mcmd->act_sub_ch      = wlan_cpu_to_le32(cfg->act_sub_ch);
+        mcmd->tx_rate         = wlan_cpu_to_le32(cfg->tx_rate);
+    }
+
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+
+/**
+ *  @brief This function prepares command of MFG Tx frame.
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param cmd          A pointer to HostCmd_DS_COMMAND structure
+ *  @param action       The action: GET or SET
+ *  @param pdata_buf    A pointer to data buffer
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+static mlan_status wlan_cmd_mfg_tx_frame(pmlan_private pmpriv, HostCmd_DS_COMMAND *cmd, t_u16 action, t_void *pdata_buf)
+{
+    HostCmd_DS_MFG_CMD_TX_FRAME2 *mcmd = (HostCmd_DS_MFG_CMD_TX_FRAME2 *)&cmd->params.mfg_tx_frame2;
+    mlan_ds_mfg_cmd_tx_frame2 *cfg     = (mlan_ds_mfg_cmd_tx_frame2 *)pdata_buf;
+
+    ENTER();
+
+    memset(pmpriv->adapter, mcmd, 0x00, sizeof(HostCmd_DS_MFG_CMD_TX_FRAME2));
+
+    cmd->command = wlan_cpu_to_le16(HostCmd_CMD_MFG_COMMAND);
+    cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_MFG_CMD_TX_FRAME2) + S_DS_GEN);
+
+    mcmd->mfg_cmd = wlan_cpu_to_le32(cfg->mfg_cmd);
+    mcmd->action  = wlan_cpu_to_le16(action);
+    if (action == HostCmd_ACT_GEN_SET)
+    {
+        mcmd->enable            = wlan_cpu_to_le32(cfg->enable);
+        mcmd->data_rate         = wlan_cpu_to_le32(cfg->data_rate);
+        mcmd->frame_pattern     = wlan_cpu_to_le32(cfg->frame_pattern);
+        mcmd->frame_length      = wlan_cpu_to_le32(cfg->frame_length);
+        mcmd->adjust_burst_sifs = wlan_cpu_to_le16(cfg->adjust_burst_sifs);
+        mcmd->burst_sifs_in_us  = wlan_cpu_to_le32(cfg->burst_sifs_in_us);
+        mcmd->short_preamble    = wlan_cpu_to_le32(cfg->short_preamble);
+        mcmd->act_sub_ch        = wlan_cpu_to_le32(cfg->act_sub_ch);
+        mcmd->short_gi          = wlan_cpu_to_le32(cfg->short_gi);
+        mcmd->tx_bf             = wlan_cpu_to_le32(cfg->tx_bf);
+        mcmd->gf_mode           = wlan_cpu_to_le32(cfg->gf_mode);
+        mcmd->stbc              = wlan_cpu_to_le32(cfg->stbc);
+        memcpy(pmpriv->adapter, mcmd->bssid, cfg->bssid, MLAN_MAC_ADDR_LENGTH);
+    }
+
+    LEAVE();
+    return MLAN_STATUS_SUCCESS;
+}
+
+/**
+ *  @brief This function prepares command of MFG cmd.
+ *
+ *  @param pmpriv       A pointer to mlan_private structure
+ *  @param cmd          A pointer to HostCmd_DS_COMMAND structure
+ *  @param action       The action: GET or SET
+ *  @param pdata_buf    A pointer to data buffer
+ *
+ *  @return             MLAN_STATUS_SUCCESS
+ */
+static mlan_status wlan_cmd_mfg(pmlan_private pmpriv, HostCmd_DS_COMMAND *cmd, t_u16 action, t_void *pdata_buf)
+{
+    HostCmd_DS_MFG_CMD_GENERIC_CFG *mcmd = (HostCmd_DS_MFG_CMD_GENERIC_CFG *)&cmd->params.mfg_generic_cfg;
+    mlan_ds_mfg_cmd_generic_cfg *cfg     = (mlan_ds_mfg_cmd_generic_cfg *)pdata_buf;
+    mlan_status ret                      = MLAN_STATUS_SUCCESS;
+
+    ENTER();
+
+    if (!mcmd || !cfg)
+    {
+        ret = MLAN_STATUS_FAILURE;
+        goto cmd_mfg_done;
+    }
+
+    memset(pmpriv->adapter, mcmd, 0x00, sizeof(HostCmd_DS_MFG_CMD_GENERIC_CFG));
+
+    switch (cfg->mfg_cmd)
+    {
+        case MFG_CMD_TX_FRAME:
+            ret = wlan_cmd_mfg_tx_frame(pmpriv, cmd, action, pdata_buf);
+            goto cmd_mfg_done;
+            break;
+        case MFG_CMD_TX_CONT:
+            ret = wlan_cmd_mfg_tx_cont(pmpriv, cmd, action, pdata_buf);
+            goto cmd_mfg_done;
+            break;
+        case MFG_CMD_SET_TEST_MODE:
+        case MFG_CMD_UNSET_TEST_MODE:
+        case MFG_CMD_TX_ANT:
+        case MFG_CMD_RX_ANT:
+        case MFG_CMD_RF_CHAN:
+        case MFG_CMD_CLR_RX_ERR:
+        case MFG_CMD_RF_BAND_AG:
+        case MFG_CMD_RF_CHANNELBW:
+        case MFG_CMD_RFPWR:
+            break;
+        default:
+            ret = MLAN_STATUS_FAILURE;
+            goto cmd_mfg_done;
+    }
+    cmd->command = wlan_cpu_to_le16(HostCmd_CMD_MFG_COMMAND);
+    cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_MFG_CMD_GENERIC_CFG) + S_DS_GEN);
+
+    mcmd->mfg_cmd = wlan_cpu_to_le32(cfg->mfg_cmd);
+    mcmd->action  = wlan_cpu_to_le16(action);
+    if (action == HostCmd_ACT_GEN_SET)
+    {
+        mcmd->data1 = wlan_cpu_to_le32(cfg->data1);
+        mcmd->data2 = wlan_cpu_to_le32(cfg->data2);
+        mcmd->data3 = wlan_cpu_to_le32(cfg->data3);
+    }
+cmd_mfg_done:
+    LEAVE();
+    return ret;
+}
+#endif
 
 /**
  *  @brief This function prepares command of RSSI info.
@@ -631,6 +781,7 @@ static mlan_status wlan_cmd_802_11_supplicant_pmk(IN pmlan_private pmpriv,
 {
     MrvlIEtypes_PMK_t *ppmk_tlv                        = MNULL;
     MrvlIEtypes_Passphrase_t *ppassphrase_tlv          = MNULL;
+    MrvlIEtypes_Password_t *ppassword_tlv              = MNULL;
     MrvlIEtypes_SsIdParamSet_t *pssid_tlv              = MNULL;
     MrvlIEtypes_Bssid_t *pbssid_tlv                    = MNULL;
     HostCmd_DS_802_11_SUPPLICANT_PMK *pesupplicant_psk = &cmd->params.esupplicant_psk;
@@ -696,6 +847,17 @@ static mlan_status wlan_cmd_802_11_supplicant_pmk(IN pmlan_private pmpriv,
         cmd->size += (ppassphrase_tlv->header.len + sizeof(MrvlIEtypesHeader_t));
         ppassphrase_tlv->header.len = wlan_cpu_to_le16(ppassphrase_tlv->header.len);
     }
+    if (psk->psk_type == MLAN_PSK_PASSWORD)
+    {
+        ppassword_tlv              = (MrvlIEtypes_Password_t *)ptlv_buffer;
+        ppassword_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_WPA3_SAE_PASSWORD);
+        ppassword_tlv->header.len  = (t_u16)MIN(MLAN_MAX_PASSWORD_LENGTH, psk->password.password_len);
+        memcpy(pmpriv->adapter, ppassword_tlv->password, psk->password.password,
+               MIN(MLAN_MAX_PASSWORD_LENGTH, psk->password.password_len));
+        ptlv_buffer += (ppassword_tlv->header.len + sizeof(MrvlIEtypesHeader_t));
+        cmd->size += (ppassword_tlv->header.len + sizeof(MrvlIEtypesHeader_t));
+        ppassword_tlv->header.len = wlan_cpu_to_le16(ppassword_tlv->header.len);
+    }
     if (psk->psk_type == MLAN_PSK_PMK)
     {
         ppmk_tlv              = (MrvlIEtypes_PMK_t *)ptlv_buffer;
@@ -706,9 +868,10 @@ static mlan_status wlan_cmd_802_11_supplicant_pmk(IN pmlan_private pmpriv,
         cmd->size += (ppmk_tlv->header.len + sizeof(MrvlIEtypesHeader_t));
         ppmk_tlv->header.len = wlan_cpu_to_le16(ppmk_tlv->header.len);
     }
-    if ((cmd_action == HostCmd_ACT_GEN_SET) && ((pssid_tlv || pbssid_tlv) && (!ppmk_tlv && !ppassphrase_tlv)))
+    if ((cmd_action == HostCmd_ACT_GEN_SET) &&
+        ((pssid_tlv || pbssid_tlv) && (!ppmk_tlv && !ppassphrase_tlv && !ppassword_tlv)))
     {
-        PRINTM(MERROR, "Invalid case,ssid/bssid present without pmk or passphrase\n");
+        PRINTM(MERROR, "Invalid case,ssid/bssid present without pmk or passphrase or password\n");
         LEAVE();
         return MLAN_STATUS_FAILURE;
     }
@@ -1075,11 +1238,9 @@ mlan_status wlan_ops_sta_prepare_cmd(IN t_void *priv,
         case HostCmd_CMD_802_11_HS_CFG_ENH:
             ret = wlan_cmd_802_11_hs_cfg(pmpriv, cmd_ptr, cmd_action, (hs_config_param *)pdata_buf);
             break;
-#ifndef EXT_SCAN_SUPPORT
         case HostCmd_CMD_802_11_SCAN:
             ret = wlan_cmd_802_11_scan(pmpriv, cmd_ptr, pdata_buf);
             break;
-#endif
         case HostCmd_CMD_802_11_ASSOCIATE:
             ret = wlan_cmd_802_11_associate(pmpriv, cmd_ptr, pdata_buf);
             break;
@@ -1142,11 +1303,6 @@ mlan_status wlan_ops_sta_prepare_cmd(IN t_void *priv,
         case HostCmd_CMD_MGMT_IE_LIST:
             ret = wlan_cmd_mgmt_ie_list(pmpriv, cmd_ptr, cmd_action, pdata_buf);
             break;
-#ifdef EXT_SCAN_SUPPORT
-        case HostCmd_CMD_802_11_SCAN_EXT:
-            ret = wlan_cmd_802_11_scan_ext(pmpriv, cmd_ptr, pdata_buf);
-            break;
-#endif
         case HostCmd_CMD_802_11_REMAIN_ON_CHANNEL:
             ret = wlan_cmd_remain_on_channel(pmpriv, cmd_ptr, cmd_action, pdata_buf);
             break;
@@ -1156,6 +1312,11 @@ mlan_status wlan_ops_sta_prepare_cmd(IN t_void *priv,
         case HostCmd_CMD_GET_TSF:
             ret = wlan_cmd_get_tsf(pmpriv, cmd_ptr, cmd_action);
             break;
+#ifdef CONFIG_RF_TEST_MODE
+        case HostCmd_CMD_MFG_COMMAND:
+            ret = wlan_cmd_mfg(pmpriv, cmd_ptr, cmd_action, pdata_buf);
+            break;
+#endif
         default:
             PRINTM(MERROR, "PREP_CMD: unknown command- %#x\n", cmd_no);
             ret = MLAN_STATUS_FAILURE;

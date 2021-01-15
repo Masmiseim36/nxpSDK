@@ -3,7 +3,7 @@ Release Name: FreeMASTER Communication Driver
 
 FreeMASTER Communication Driver             Version: 3.x
 for NXP Microcontrollers                    Author: NXP
-                                            License: LA_OPT_NXP_Software_License
+                                            License: LA_OPT_NXP_Software_License - Production Use - Section 2.3 applies
                                             Content register: this file
                                             Format: source code
                                             Location: src/common/*, src/platforms/*, src/drivers/*

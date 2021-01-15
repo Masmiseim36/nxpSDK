@@ -19,22 +19,22 @@
 #include "lwip/ip_addr.h"
 #include "lwip/prot/dhcp.h"
 #include "lwip/tcpip.h"
-#include "ping.h"
 #include "lwip/api.h"
 #include "lwip/sys.h"
-#include "netif/etharp.h"
-#include "netifapi.h"
-#include "usb_ethernetif.h"
+#include "lwip/netifapi.h"
 #include "lwip/priv/api_msg.h"
 #include "lwip/netifapi.h"
+#include "netif/etharp.h"
+#include "usb_ethernetif.h"
+#include "ping.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_device_registers.h"
 #include "usb_host_config.h"
 #include "usb_host.h"
-#include "pin_mux.h"
 #include "usb_phy.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

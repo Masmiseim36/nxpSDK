@@ -1,7 +1,7 @@
 /**************************************************************************
 MODULE:    COMGR
 CONTAINS:  MicroCANopen Plus implementation, CANopen Manager
-COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2019
+COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2020
            All rights reserved. www.em-sa.com/nxp
 DISCLAIM:  Read and understand our disclaimer before using this code!
            www.esacademy.com/disclaim.htm
@@ -10,9 +10,9 @@ DISCLAIM:  Read and understand our disclaimer before using this code!
 LICENSE:   THIS IS THE NXP SDK VERSION OF MICROCANOPEN PLUS MANAGER
            Licensed under a modified BSD License. See LICENSE.INFO
            file in the project root for full license information.
-VERSION:   7.01, EmSA 02-APR-20
-           $LastChangedDate: 2020-04-02 17:30:41 +0200 (Thu, 02 Apr 2020) $
-           $LastChangedRevision: 4909 $
+VERSION:   7.10, ESA 20-SEP-02
+           $LastChangedDate: 2020-09-03 22:04:52 +0200 (Thu, 03 Sep 2020) $
+           $LastChangedRevision: 5038 $
 ***************************************************************************/
 
 #ifndef _MGR_H
@@ -121,17 +121,17 @@ GLOBAL TYPES AND STRUCTURES
 // This structure holds all node specific configuration
 typedef struct
 {
-    uint8_t last_emcy[8];        // Last emergency msg received
-    MEM_FAR uint8_t *p_scanlist; // Pointer to autoscan list (what to read)
-    MEM_FAR uint8_t *p_scandata; // Pointer to autoscan data (data read)
-    uint16_t scandelay;          // Delay in ms between read requests
-    uint16_t delaytimer;         // Timer value used to implement
-    uint16_t hb_time;            // Heartbeat Consumer time in ms
-    uint16_t hb_timestamp;       // Expiration time stamp
-    uint8_t hb_nmtstate;         // Last HB NMT State received
-    HBCONS_STATE hb_consstat;    // Consumer status: off, init, active, lost
-    uint8_t scanclnt;            // SDO client to use for scan
-    uint8_t id_scanstat;         // set to IDSCAN_DONE when autoscan is completed
+    uint8_t last_emcy[EMCY_DATA_SIZE]; // Last emergency msg received
+    MEM_FAR uint8_t *p_scanlist;       // Pointer to autoscan list (what to read)
+    MEM_FAR uint8_t *p_scandata;       // Pointer to autoscan data (data read)
+    uint16_t scandelay;                // Delay in ms between read requests
+    uint16_t delaytimer;               // Timer value used to implement
+    uint16_t hb_time;                  // Heartbeat Consumer time in ms
+    uint16_t hb_timestamp;             // Expiration time stamp
+    uint8_t hb_nmtstate;               // Last HB NMT State received
+    HBCONS_STATE hb_consstat;          // Consumer status: off, init, active, lost
+    uint8_t scanclnt;                  // SDO client to use for scan
+    uint8_t id_scanstat;               // set to IDSCAN_DONE when autoscan is completed
 } NODELIST;
 
 /**************************************************************************

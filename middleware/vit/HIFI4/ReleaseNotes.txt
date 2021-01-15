@@ -1,0 +1,16 @@
+
+VERSION HISTORY (MOST RECENT VERSION ON TOP)
+
+----------------------------------------------------------------------
+REL 2.03.00 - Demo/Eval Use only
+----------------------------------------------------------------------
+VIT integrating WakeWordEngine and Voice Commands Text2Model features.
+Core supported : HIFI4
+Library validated on Xtensa Explorer simulator
+
+WakeWord supported : "HEY NXP"
+See VIT_Voice_Commands.h for the list of commands supported by the VIT lib.
+
+Dependency : libxa_nnlib library (with no TF uLite support) 
+
+Changes : Performance improvements - "HEY NXP" WakeWord support

@@ -1,7 +1,7 @@
 /*
  * FreeRTOS PKCS #11 PAL for LPC54018 IoT Module V1.0.3
- * Copyright (C) 2017 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
- * Copyright 2018-2019 NXP
+ * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
+ * Copyright 2018-2020 NXP
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -48,9 +48,31 @@
 #include <stdio.h>
 #include <string.h>
 
+/* Filenames from config file take precedence */
+#ifdef pkcs11configFILE_NAME_CLIENT_CERTIFICATE
+#define pkcs11palFILE_NAME_CLIENT_CERTIFICATE    (pkcs11configFILE_NAME_CLIENT_CERTIFICATE)
+#endif
+
+#ifdef pkcs11configFILE_NAME_KEY
+#define pkcs11palFILE_NAME_KEY                   (pkcs11configFILE_NAME_KEY)
+#endif
+
+#ifdef pkcs11configFILE_CODE_SIGN_PUBLIC_KEY
+#define pkcs11palFILE_CODE_SIGN_PUBLIC_KEY       (pkcs11configFILE_CODE_SIGN_PUBLIC_KEY)
+#endif
+
+/* Default filenames */
+#ifndef pkcs11palFILE_NAME_CLIENT_CERTIFICATE
 #define pkcs11palFILE_NAME_CLIENT_CERTIFICATE    "FreeRTOS_P11_Certificate.dat"
+#endif
+
+#ifndef pkcs11palFILE_NAME_KEY
 #define pkcs11palFILE_NAME_KEY                   "FreeRTOS_P11_Key.dat"
+#endif
+
+#ifndef pkcs11palFILE_CODE_SIGN_PUBLIC_KEY
 #define pkcs11palFILE_CODE_SIGN_PUBLIC_KEY       "FreeRTOS_P11_CodeSignKey.dat"
+#endif
 
 enum eObjectHandles
 {
@@ -61,18 +83,15 @@ enum eObjectHandles
     eAwsCodeSigningKey
 };
 
-/* Flash structure */
-mflash_file_t g_cert_files[] =
+/* Flash directory template */
+static const mflash_file_t g_cert_files[] =
 {
     { .path = pkcs11palFILE_NAME_CLIENT_CERTIFICATE,
-      .flash_addr = MFLASH_FILE_BASEADDR,
-      .max_size = MFLASH_FILE_SIZE },
+      .max_size = 2000 },
     { .path = pkcs11palFILE_NAME_KEY,
-      .flash_addr = MFLASH_FILE_BASEADDR + MFLASH_FILE_SIZE,
-      .max_size = MFLASH_FILE_SIZE },
+      .max_size = 2000 },
     { .path = pkcs11palFILE_CODE_SIGN_PUBLIC_KEY,
-      .flash_addr = MFLASH_FILE_BASEADDR + ( 2 * MFLASH_FILE_SIZE ),
-      .max_size = MFLASH_FILE_SIZE },
+      .max_size = 2000 },
     { 0 }
 };
 
@@ -136,8 +155,8 @@ void prvLabelToFilenameHandle( uint8_t * pcLabel,
  * @return The file handle of the object that was stored.
  */
 CK_OBJECT_HANDLE PKCS11_PAL_SaveObject( CK_ATTRIBUTE_PTR pxLabel,
-                                        uint8_t * pucData,
-                                        uint32_t ulDataSize )
+                                        CK_BYTE_PTR pucData,
+                                        CK_ULONG ulDataSize )
 {
     CK_OBJECT_HANDLE xHandle = eInvalidHandle;
     char * pcFileName = NULL;
@@ -148,7 +167,7 @@ CK_OBJECT_HANDLE PKCS11_PAL_SaveObject( CK_ATTRIBUTE_PTR pxLabel,
 
     if( xHandle != eInvalidHandle )
     {
-        if( pdFALSE == mflash_save_file( pcFileName, pucData, ulDataSize ) )
+        if( kStatus_Success != mflash_file_save( pcFileName, pucData, ulDataSize ) )
         {
             xHandle = eInvalidHandle;
         }
@@ -165,24 +184,29 @@ CK_OBJECT_HANDLE PKCS11_PAL_SaveObject( CK_ATTRIBUTE_PTR pxLabel,
  * Port-specific object handle retrieval.
  *
  *
- * @param[in] pLabel         Pointer to the label of the object
+ * @param[in] pxLabel         Pointer to the label of the object
  *                           who's handle should be found.
  * @param[in] usLength       The length of the label, in bytes.
  *
  * @return The object handle if operation was successful.
  * Returns eInvalidHandle if unsuccessful.
  */
-CK_OBJECT_HANDLE PKCS11_PAL_FindObject( uint8_t * pLabel,
-                                        uint8_t usLength )
+CK_OBJECT_HANDLE PKCS11_PAL_FindObject( CK_BYTE_PTR pxLabel,
+                                        CK_ULONG usLength )
 {
     CK_OBJECT_HANDLE xHandle = eInvalidHandle;
     char * pcFileName = NULL;
+    uint8_t * pFile = NULL;
+    uint32_t xFileLength = 0;
 
     /* Translate from the PKCS#11 label to local storage file name. */
-    prvLabelToFilenameHandle( pLabel, &pcFileName, &xHandle );
+    prvLabelToFilenameHandle( pxLabel, &pcFileName, &xHandle );
 
-    /*TODO: check if file actually there.
-     * Note: g_cert_files only seems to check if the entry in the array is present */
+    /* Check if the file exists. */
+    if( kStatus_Success != mflash_file_mmap( pcFileName, &pFile, &xFileLength ) )
+    {
+        xHandle = eInvalidHandle;
+    }
 
     return xHandle;
 }
@@ -214,9 +238,9 @@ CK_OBJECT_HANDLE PKCS11_PAL_FindObject( uint8_t * pLabel,
  * error.
  */
 CK_RV PKCS11_PAL_GetObjectValue( CK_OBJECT_HANDLE xHandle,
-                                 uint8_t ** ppucData,
-                                 uint32_t * pulDataSize,
-                                 CK_BBOOL * pIsPrivate )
+                                      CK_BYTE_PTR * ppucData,
+                                      uint32_t * pulDataSize,
+                                      CK_BBOOL * pIsPrivate )
 {
     char * pcFileName = NULL;
     CK_RV ulReturn = CKR_OK;
@@ -247,7 +271,7 @@ CK_RV PKCS11_PAL_GetObjectValue( CK_OBJECT_HANDLE xHandle,
         ulReturn = CKR_KEY_HANDLE_INVALID;
     }
 
-    if( pdFALSE == mflash_read_file( pcFileName, ppucData, pulDataSize ) )
+    if( kStatus_Success != mflash_file_mmap( pcFileName, ppucData, pulDataSize ) )
     {
         ulReturn = CKR_FUNCTION_FAILED;
     }
@@ -263,8 +287,8 @@ CK_RV PKCS11_PAL_GetObjectValue( CK_OBJECT_HANDLE xHandle,
  * @param[in] ulDataSize    The length of the buffer to free.
  *                          (*pulDataSize from PKCS11_PAL_GetObjectValue())
  */
-void PKCS11_PAL_GetObjectValueCleanup( uint8_t * pucData,
-                                       uint32_t ulDataSize )
+void PKCS11_PAL_GetObjectValueCleanup( CK_BYTE_PTR pucData,
+                                       CK_ULONG ulDataSize )
 {
     /* Unused parameters. */
     ( void ) pucData;
@@ -274,43 +298,18 @@ void PKCS11_PAL_GetObjectValueCleanup( uint8_t * pucData,
      * to be done. */
 }
 
-
-/**
- *      PKCS#11 Override
- *
- */
-
-extern CK_RV prvMbedTLS_Initialize( void );
-
-/**
- * @brief Initialize the Cryptoki module for use.
- *
- * Overrides the implementation of C_Initialize in
- * iot_pkcs11_mbedtls.c when pkcs11configC_INITIALIZE_ALT
- * is defined.
- */
-#ifndef pkcs11configC_INITIALIZE_ALT
-    #error LPC54018 requires alternate C_Initialization
-#endif
-
-CK_DEFINE_FUNCTION( CK_RV, C_Initialize )( CK_VOID_PTR pvInitArgs )
-{   /*lint !e9072 It's OK to have different parameter name. */
-    ( void ) ( pvInitArgs );
+CK_RV PKCS11_PAL_Initialize( void )
+{
 
     CK_RV xResult = CKR_OK;
 
     if( !mflash_is_initialized() )
     {
         /* Initialize flash storage. */
-        if( pdTRUE != mflash_init( g_cert_files, 1 ) )
+        if( kStatus_Success != mflash_init( g_cert_files, 1 ) )
         {
-            xResult = CKR_GENERAL_ERROR;
+            xResult = CKR_FUNCTION_FAILED;
         }
-    }
-
-    if( xResult == CKR_OK )
-    {
-        xResult = prvMbedTLS_Initialize();
     }
 
     return xResult;

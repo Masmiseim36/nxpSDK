@@ -12,10 +12,10 @@ In this example, the ENET transmits 20 number broadcast frames and will print th
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.6
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -62,13 +62,13 @@ When the demo runs, the log would be seen on the terminal like:
 
 ENET example start.
 The 1 frame transmitted success!
-The 1 frame has been successfully received!
+A total of 1 frame(s) has been successfully received!
 The 2 frame transmitted success!
-The 2 frame has been successfully received!
+A total of 2 frame(s) has been successfully received!
 The 3 frame transmitted success!
-The 3 frame has been successfully received!
+A total of 3 frame(s) has been successfully received!
 
 ......
 
 The 20 frame transmitted success!
-The 20 frame has been successfully received!
+A total of 20 frame(s) has been successfully received!

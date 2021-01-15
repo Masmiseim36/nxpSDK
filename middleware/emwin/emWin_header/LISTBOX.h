@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -66,12 +66,15 @@ Purpose     : LISTBOX widget include
 
 /*********************************************************************
 *
-*       Color indices
+*       LISTBOX color indexes
+*
+*  Description
+*    Color indexes used by the LISTBOX widget.
 */
-#define LISTBOX_CI_UNSEL    0
-#define LISTBOX_CI_SEL      1
-#define LISTBOX_CI_SELFOCUS 2
-#define LISTBOX_CI_DISABLED 3
+#define LISTBOX_CI_UNSEL    0     // Color of unselected element.
+#define LISTBOX_CI_SEL      1     // Color of selected element.
+#define LISTBOX_CI_SELFOCUS 2     // Color of selected element with focus.
+#define LISTBOX_CI_DISABLED 3     // Color of disabled element.
 
 /************************************************************
 *
@@ -81,7 +84,7 @@ typedef WM_HMEM LISTBOX_Handle;
 
 /*********************************************************************
 *
-*               Notification codes
+*       LISTBOX Notification codes
 *
 * The following is the list of notification codes specific to this widget,
 * Send with the WM_NOTIFY_PARENT message
@@ -107,11 +110,15 @@ typedef WM_HMEM LISTBOX_Handle;
 
 /************************************************************
 *
-*       Fixed scroll mode flags
+*       LISTBOX fixed scroll mode flags
+*
+*  Description
+*    Defines used for the fixed scroll mode of the widget.
+*    Refer to LISTBOX_SetFixedScrollPos() for more information.
 */
-#define LISTBOX_FM_OFF               0  // Turn fixed mode off
-#define LISTBOX_FM_ON                1  // Turn fixed mode on
-#define LISTBOX_FM_CENTER            2  // Set fixed mode to center
+#define LISTBOX_FM_OFF               0       // Disables the fixed scroll mode.
+#define LISTBOX_FM_ON                1       // Enables the fixed scroll mode.
+#define LISTBOX_FM_CENTER            2       // Tries to keep the selected item in the center.
 
 /*********************************************************************
 *

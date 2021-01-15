@@ -295,28 +295,19 @@ static void MEM_BufferFreeBlocksCleanUp(blockHeader_t *BlockHdr)
 
     while (NextBlockHdr == NextFreeBlockHdr)
     {
-        NextBlockHdr     = NextBlockHdr->next;
-        NextFreeBlockHdr = NextFreeBlockHdr->next_free;
-        if ((NextBlockHdr == NULL) && (NextFreeBlockHdr == NULL))
+        if (NextBlockHdr == NULL)
         {
             assert(BlockHdr->next == BlockHdr->next_free);
-            /* pool is reached.  All buffers from BlockHdr to the pool are free */
-            if (BlockHdr->used == MEMMANAGER_BLOCK_FREE)
-            {
-                /* If BlockHdr is free, remove all next buffers */
-                BlockHdr->next        = NULL;
-                BlockHdr->next_free   = NULL;
-                FreeBlockHdrList.tail = BlockHdr;
-            }
-            else
-            {
-                /* If BlockHdr is used, remove all next buffers but keep the next
-                   free block as list tail */
-                BlockHdr->next->next  = NULL;
-                FreeBlockHdrList.tail = BlockHdr->next_free;
-            }
+            assert(BlockHdr->used == MEMMANAGER_BLOCK_FREE);
+            /* pool is reached.  All buffers from BlockHdr to the pool are free
+               remove all next buffers */
+            BlockHdr->next        = NULL;
+            BlockHdr->next_free   = NULL;
+            FreeBlockHdrList.tail = BlockHdr;
             break;
         }
+        NextBlockHdr     = NextBlockHdr->next;
+        NextFreeBlockHdr = NextFreeBlockHdr->next_free;
     }
 }
 #endif /* gMemManagerLightFreeBlocksCleanUp */
@@ -386,35 +377,41 @@ static void MEM_Reports_memStatis(void)
 
 mem_status_t MEM_Init(void)
 {
-    /* union to solve Misra 11.3 */
-    void_ptr_t ptr;
-    ptr.address_ptr = memHeap;
-    blockHeader_t *firstBlockHdr;
-    firstBlockHdr = ptr.block_hdr_ptr;
+    static bool initialized = false;
+    if (initialized == false)
+    {
+        initialized = true;
+        /* union to solve Misra 11.3 */
+        void_ptr_t ptr;
+        ptr.address_ptr = memHeap;
+        blockHeader_t *firstBlockHdr;
+        firstBlockHdr = ptr.block_hdr_ptr;
 
-    // MEM_DBG_LOG("%x %d\r\n", memHeap, heapSize_c/sizeof(uint32_t));
+        /* MEM_DBG_LOG("%x %d\r\n", memHeap, heapSize_c/sizeof(uint32_t)); */
 
-    /* Init firstBlockHdr as a free block */
-    firstBlockHdr->next      = NULL;
-    firstBlockHdr->used      = MEMMANAGER_BLOCK_FREE;
-    firstBlockHdr->next_free = NULL;
-    firstBlockHdr->prev_free = NULL;
+        /* Init firstBlockHdr as a free block */
+        firstBlockHdr->next      = NULL;
+        firstBlockHdr->used      = MEMMANAGER_BLOCK_FREE;
+        firstBlockHdr->next_free = NULL;
+        firstBlockHdr->prev_free = NULL;
+
 #if defined(MEM_STATISTICS)
-    firstBlockHdr->buff_size = 0U;
+        firstBlockHdr->buff_size = 0U;
 #endif
 
-    /* Init FreeBlockHdrList with firstBlockHdr */
-    FreeBlockHdrList.head = firstBlockHdr;
-    FreeBlockHdrList.tail = firstBlockHdr;
+        /* Init FreeBlockHdrList with firstBlockHdr */
+        FreeBlockHdrList.head = firstBlockHdr;
+        FreeBlockHdrList.tail = firstBlockHdr;
 
 #if defined(gMemManagerLightGuardsCheckEnable) && (gMemManagerLightGuardsCheckEnable == 1)
-    MEM_BlockHeaderSetGuards(firstBlockHdr);
+        MEM_BlockHeaderSetGuards(firstBlockHdr);
 #endif
 
 #if defined(MEM_STATISTICS_INTERNAL)
-    /* Init memory statistics */
-    MEM_Inits_memStatis(&s_memStatis);
+        /* Init memory statistics */
+        MEM_Inits_memStatis(&s_memStatis);
 #endif
+    }
 
     return kStatus_MemSuccess;
 }
@@ -552,7 +549,7 @@ static void *MEM_BufferAllocate(uint32_t numBytes, uint8_t poolId)
                 UsableBlockHdr->buff_size = (uint16_t)numBytes;
 #endif
                 NextFreeBlockHdr = UsableBlockHdr->next_free;
-                PrevFreeBlockHdr = FreeBlockHdr->prev_free;
+                PrevFreeBlockHdr = UsableBlockHdr->prev_free;
 
                 /* In the current state, the current block header can be anywhere
                    from list head to previous block of list tail */
@@ -581,8 +578,10 @@ static void *MEM_BufferAllocate(uint32_t numBytes, uint8_t poolId)
         MEM_BlockHeaderCheck(FreeBlockHdr->next_free);
 #endif
         FreeBlockHdr = FreeBlockHdr->next_free;
+        /* avoid looping */
+        assert(FreeBlockHdr != FreeBlockHdr->next_free);
     } while (true);
-    // MEM_DBG_LOG("BlockHdrFound: %x", BlockHdrFound);
+    /* MEM_DBG_LOG("BlockHdrFound: %x", BlockHdrFound); */
 
 #ifdef MEM_DEBUG_OUT_OF_MEMORY
     assert(BlockHdrFound);
@@ -676,7 +675,7 @@ mem_status_t MEM_BufferFree(void *buffer /* IN: Block of memory to free*/)
         MEM_BlockHeaderCheck(BlockHdr->next);
 #endif
 
-        // MEM_DBG_LOG("%x %d", BlockHdr, BlockHdr->buff_size);
+        /* MEM_DBG_LOG("%x %d", BlockHdr, BlockHdr->buff_size); */
 
 #if defined(MEM_STATISTICS_INTERNAL)
         MEM_BufferFrees_memStatis(buffer);
@@ -771,6 +770,8 @@ void *MEM_BufferRealloc(void *buffer, uint32_t new_size)
 {
     void *realloc_buffer = NULL;
     uint16_t block_size  = 0U;
+
+    assert(new_size <= 0x0000FFFFU); /* size will be casted to 16 bits */
 
     if (new_size == 0U)
     {

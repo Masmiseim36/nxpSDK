@@ -32,10 +32,6 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_DEBUGCONSOLE=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DXOS_CLOCK_FREQ=594000000")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DAPP_DSP_ONLY=0")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMXRT685SFVKB_dsp")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
@@ -62,10 +58,6 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_DEBUGCONSOLE=1")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DXOS_CLOCK_FREQ=594000000")
 
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DAPP_DSP_ONLY=0")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMXRT685SFVKB_dsp")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
@@ -85,8 +77,6 @@ SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fmessage-length=0")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCPU_MIMXRT685SFVKB_dsp")
 
@@ -109,8 +99,6 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fmessage-length=0")
 SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -std=c++11")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
 
 SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MIMXRT685SFVKB_dsp")
 
@@ -144,37 +132,23 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-c
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --xtensa-system=${XTENSA_SYSTEM}")
 
-include_directories(${ProjDirPath}/../../../..)
-
-include_directories(${ProjDirPath}/../../../..)
-
 include_directories(${ProjDirPath}/..)
 
-include_directories(${ProjDirPath}/../../../..)
+include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include)
 
-include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
-
-include_directories(${ProjDirPath}/../../../../../../devices)
+include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include_private)
-
-include_directories(${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include)
-
 include_directories(${ProjDirPath}/../../../../../../components/uart)
 
-include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite)
 
 include_directories(${ProjDirPath}/../../../../../../components/lists)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str)
+include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities)
+include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
 add_executable(dsp_naturedsp_hifi4.elf 
 "${ProjDirPath}/../main_dsp.c"
@@ -183,68 +157,62 @@ add_executable(dsp_naturedsp_hifi4.elf
 "${ProjDirPath}/../core_dsp.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/feature.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/math_stdlib.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/version.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_Signal.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_Signal_complex.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_Signal_fft.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_Signal_fir.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_Signal_fit.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_Signal_id.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_Signal_iir.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_Signal_math.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_Signal_matinv.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_Signal_matop.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_Signal_vector.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include/NatureDSP_types.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include_private/bqriir32x32_df1_common.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include_private/common.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include_private/common_fpu.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include_private/fft_twiddles32x32.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/include_private/vec_recip_table.h"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/fft/fft/fft_cplx_stages_S2_radix4_8_32x32_hifi4.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/fft/fft/fft_cplx_stages_S3_radix4_8_32x32_hifi4.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/fft/fft/fft_real_32x32_hifi4.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/fir/firother/fir_blms32x32_hifi4.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/iir/bqriir32x32_df1_hifi4.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/iir/bqriir32x32_df1_process_hifi4.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/twiddles/fft_cplx_twd32_16_tbl.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/twiddles/fft_real_twd32_32_tbl.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/vector/vec_add32x32_fast_hifi4.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/vector/vec_power32x32_hifi4.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/vectorf/vec_dotf_hifi4.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/vectorf/vec_maxf_hifi4.c"
-"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp_hifi4/tables/vec_recip_table.c"
+"${ProjDirPath}/../naturedsp_input.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/feature.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/math_stdlib.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/version.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_complex.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_fft.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_fir.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_fit.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_id.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_iir.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_math.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_matinv.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_matop.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_Signal_vector.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include/NatureDSP_types.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private/bqriir32x32_df1_common.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private/common.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private/common_fpu.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private/fft_twiddles32x32.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/include_private/vec_recip_table.h"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/fft/fft/fft_cplx_stages_S2_radix4_8_32x32_hifi4.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/fft/fft/fft_cplx_stages_S3_radix4_8_32x32_hifi4.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/fft/fft/fft_real_32x32_hifi4.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/fir/firother/fir_blms32x32_hifi4.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/iir/bqriir32x32_df1_hifi4.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/iir/bqriir32x32_df1_process_hifi4.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/twiddles/fft_cplx_twd32_16_tbl.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/twiddles/fft_real_twd32_32_tbl.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/vector/vec_add32x32_fast_hifi4.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/vector/vec_power32x32_hifi4.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/vectorf/vec_dotf_hifi4.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/vectorf/vec_maxf_hifi4.c"
+"${ProjDirPath}/../../../../../../middleware/dsp/naturedsp/hifi4/tables/vec_recip_table.c"
 "${ProjDirPath}/../board_hifi4.c"
 "${ProjDirPath}/../board_hifi4.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.h"
-"${ProjDirPath}/../../../../../../components/uart/uart.h"
-"${ProjDirPath}/../../../../../../components/uart/usart_adapter.c"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_inputmux.c"
+"${ProjDirPath}/../../../../../../components/uart/fsl_adapter_uart.h"
+"${ProjDirPath}/../../../../../../components/uart/fsl_adapter_usart.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_usart.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console_lite/fsl_assert.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.h"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_internal.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_gpio.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../components/lists/generic_list.c"
-"${ProjDirPath}/../../../../../../components/lists/generic_list.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_common.c"
+"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.h"
+"${ProjDirPath}/../../../../../../components/lists/fsl_component_generic_list.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_iopctl.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_clock.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_reset.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/MIMXRT685S_dsp_features.h"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/system_MIMXRT685S_dsp.c"
@@ -252,8 +220,8 @@ add_executable(dsp_naturedsp_hifi4.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c"
 "${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.h"
+"${ProjDirPath}/../../../../../../devices/MIMXRT685S/drivers/fsl_flexcomm.c"
 )
 
 

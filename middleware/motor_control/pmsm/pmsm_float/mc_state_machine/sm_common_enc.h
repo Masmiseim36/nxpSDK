@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -77,6 +77,7 @@ typedef struct _mcdef_pmsm_t
     uint16_t ui16BlockRotorCnt;                    /* Blocked rotor fault counter */
     uint16_t ui16FastCtrlLoopFreq;                 /* Pass fast loop frequency to FreeMASTER */
     uint16_t ui16SlowCtrlLoopFreq;                 /* Pass slow loop frequency to FreeMASTER */
+    uint32_t ui32CpuFrequency;                     /* Pass CPU frequency to FreeMASTER */
     float_t fltSpeedEnc;                           /* Encoder speed */
     frac16_t f16PosElEnc;                          /* Encoder electrical position */
     bool_t bFaultClearMan;                         /* Manual fault clear detection */

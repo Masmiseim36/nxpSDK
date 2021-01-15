@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -61,49 +61,96 @@ Purpose     : TREEVIEW include
 *
 **********************************************************************
 */
-/* Status- and create flags */
-#define TREEVIEW_CF_HIDELINES       (1 << 0)
-#define TREEVIEW_CF_ROWSELECT       (1 << 1)
-#define TREEVIEW_CF_AUTOSCROLLBAR_H (1 << 2)
-#define TREEVIEW_CF_AUTOSCROLLBAR_V (1 << 3)
+/************************************************************
+*
+*       TREEVIEW create flags
+*
+*  Description
+*    Create flags used by the TREEVIEW widget. These flags are used for the \a{ExFlags} parameter
+*    of TREEVIEW_CreateEx(). These values can be OR-combined.
+*/
+#define TREEVIEW_CF_HIDELINES       (1 << 0)   // Joining lines are not displayed.
+#define TREEVIEW_CF_ROWSELECT       (1 << 1)   // Activates row selection mode.
+#define TREEVIEW_CF_AUTOSCROLLBAR_H (1 << 2)   // Enables the use of an automatic horizontal scroll bar.
+#define TREEVIEW_CF_AUTOSCROLLBAR_V (1 << 3)   // Enables the use of an automatic vertical scroll bar.
+/* Status flags */
 #define TREEVIEW_SF_HIDELINES       TREEVIEW_CF_HIDELINES
 #define TREEVIEW_SF_ROWSELECT       TREEVIEW_CF_ROWSELECT
 #define TREEVIEW_SF_AUTOSCROLLBAR_H TREEVIEW_CF_AUTOSCROLLBAR_H
 #define TREEVIEW_SF_AUTOSCROLLBAR_V TREEVIEW_CF_AUTOSCROLLBAR_V
 
-/* Bitmap indices */
-#define TREEVIEW_BI_CLOSED 0
-#define TREEVIEW_BI_OPEN   1
-#define TREEVIEW_BI_LEAF   2
-#define TREEVIEW_BI_PLUS   3
-#define TREEVIEW_BI_MINUS  4
-#define TREEVIEW_BI_PM     5
+/************************************************************
+*
+*       TREEVIEW bitmap indexes
+*
+*  Description
+*    Bitmap indexes used by the TREEVIEW widget. Refer to TREEVIEW_SetImage().
+*/
+#define TREEVIEW_BI_CLOSED          0          // Image of closed nodes.
+#define TREEVIEW_BI_OPEN            1          // Image of open nodes.
+#define TREEVIEW_BI_LEAF            2          // Image of leaf.
+#define TREEVIEW_BI_PLUS            3          // Plus sign of closed nodes.
+#define TREEVIEW_BI_MINUS           4          // Minus sign of open nodes.
+#define TREEVIEW_BI_PM              5          // Used by TREEVIEW_SetBitmapOffset() for setting the offset of the plus/minus bitmaps.
 
-/* Color indices */
-#define TREEVIEW_CI_UNSEL    0
-#define TREEVIEW_CI_SEL      1
-#define TREEVIEW_CI_DISABLED 2
+/************************************************************
+*
+*       TREEVIEW color indexes
+*
+*  Description
+*    Color indexes used by the TREEVIEW widget.
+*/
+#define TREEVIEW_CI_UNSEL           0          // Color of unselected element.
+#define TREEVIEW_CI_SEL             1          // Color of selected element.
+#define TREEVIEW_CI_DISABLED        2          // Color of disabled element.
 
-/* Relative positions (create) */
-#define TREEVIEW_INSERT_ABOVE       0
-#define TREEVIEW_INSERT_BELOW       1
-#define TREEVIEW_INSERT_FIRST_CHILD 2
+/************************************************************
+*
+*       TREEVIEW position flags (insert)
+*
+*  Description
+*    These flags are used to specify a position when creating and inserting
+*    a new item into the TREEVIEW widget.
+*/
+#define TREEVIEW_INSERT_ABOVE       0          // Attaches the item above the given position at the same indent level as the given position.
+#define TREEVIEW_INSERT_BELOW       1          // Attaches the item below the given position at the same indent level as the given position.
+#define TREEVIEW_INSERT_FIRST_CHILD 2          // Attaches the item below the given position by indenting it. The given position needs to be a node level.
 
-/* Relative positions (retrieve) */
-#define TREEVIEW_GET_FIRST        0
-#define TREEVIEW_GET_LAST         1
-#define TREEVIEW_GET_NEXT_SIBLING 2
-#define TREEVIEW_GET_PREV_SIBLING 3
-#define TREEVIEW_GET_FIRST_CHILD  4
-#define TREEVIEW_GET_PARENT       5
+/************************************************************
+*
+*       TREEVIEW position flags (get)
+*
+*  Description
+*    These flags are used to specify a position when retrieving an item
+*    of the TREEVIEW widget using the routine TREEVIEW_GetItem().
+*/
+#define TREEVIEW_GET_FIRST          0          // Returns the first item of the TREEVIEW widget. Parameter hItem is not required and can be 0.
+#define TREEVIEW_GET_LAST           1          // Returns the last item of the TREEVIEW widget. Parameter hItem is not required and can be 0.
+#define TREEVIEW_GET_NEXT_SIBLING   2          // Returns the next child item of the parent node of hItem.
+#define TREEVIEW_GET_PREV_SIBLING   3          // Returns the previous child item of the parent node of hItem.
+#define TREEVIEW_GET_FIRST_CHILD    4          // Returns the first child of the given node.
+#define TREEVIEW_GET_PARENT         5          // Returns the parent node of the given item.
 
-/* Item flags */
-#define TREEVIEW_ITEM_TYPE_LEAF (0 << 0)
-#define TREEVIEW_ITEM_TYPE_NODE (1 << 0)
+/************************************************************
+*
+*       TREEVIEW item flags
+*
+*  Description
+*    Flags that define the item type of a newly created TREEVIEW item.
+*/
+#define TREEVIEW_ITEM_TYPE_LEAF     (0 << 0)   // Used to create a leaf.
+#define TREEVIEW_ITEM_TYPE_NODE     (1 << 0)   // Used to create a node.
 
-/* Selection mode */
-#define TREEVIEW_SELMODE_ROW  1
-#define TREEVIEW_SELMODE_TEXT 0
+/************************************************************
+*
+*       TREEVIEW selection modes
+*
+*  Description
+*    Flags that are used to define the selection mode of a TREEVIEW widget.
+*    Refer to TREEVIEW_SetSelMode() for more information.
+*/
+#define TREEVIEW_SELMODE_ROW        1          // Activates row selection mode.
+#define TREEVIEW_SELMODE_TEXT       0          // Activates text selection mode.
 
 /************************************************************
 *
@@ -114,12 +161,19 @@ Purpose     : TREEVIEW include
 typedef WM_HMEM TREEVIEW_Handle;
 typedef WM_HMEM TREEVIEW_ITEM_Handle;
 
+/************************************************************
+*
+*       TREEVIEW_ITEM_INFO
+*
+*  Description
+*    Structure that contains information about a node in a TREEVIEW widget.
+*/
 typedef struct {
-  int IsNode;
-  int IsExpanded;
-  int HasLines;
-  int HasRowSelect;
-  int Level;
+  int IsNode;           // 1 if item is a node, 0 if not.
+  int IsExpanded;       // 1 if item (node) is open, 0 if closed.
+  int HasLines;         // 1 if joining lines are visible, 0 if not.
+  int HasRowSelect;     // 1 if row selection is active, 0 if not.
+  int Level;            // Indentation level of item.
 } TREEVIEW_ITEM_INFO;
 
 typedef struct {

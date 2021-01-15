@@ -44,6 +44,6 @@ const BOOT_DATA_T boot_data = {
     FLASH_BASE,  /* boot start location */
     FLASH_SIZE,  /* size */
     PLUGIN_FLAG, /* Plugin flag*/
-    0xFFFFFFFF   /* empty - extra data word */
+    0xFFFFFFFFU  /* empty - extra data word */
 };
 #endif

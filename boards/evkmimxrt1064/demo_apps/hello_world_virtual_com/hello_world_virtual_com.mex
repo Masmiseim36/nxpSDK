@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="d792820e-71fc-494a-8fe1-0bb6d30f2ac0" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MIMXRT1064xxxxA" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8.xsd" uuid="d792820e-71fc-494a-8fe1-0bb6d30f2ac0" version="1.8" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MIMXRT1064xxxxA</processor>
       <package>MIMXRT1064DVL6A</package>
@@ -16,9 +16,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="8.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>7.0.1</processor_version>
             <power_domains/>
          </pins_profile>
          <functions_list>
@@ -42,7 +42,7 @@
       </pins>
       <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>7.0.1</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -190,9 +190,9 @@
             </clock_configuration>
          </clock_configurations>
       </clocks>
-      <dcdx name="DCDx" version="2.0" enabled="true" update_project_code="true">
+      <dcdx name="DCDx" version="3.0" enabled="true" update_project_code="true">
          <dcdx_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>7.0.1</processor_version>
             <output_format>c_array</output_format>
          </dcdx_profile>
          <dcdx_configurations>
@@ -252,8 +252,6 @@
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_37" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_38" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_39" value="0x10" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_40" value="0x00" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_41" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_00" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_01" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_02" value="0x110F9" value_width="4"/>
@@ -294,11 +292,9 @@
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_37" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_38" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_39" value="0x110F9" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_40" value="0x110F9" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_41" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="SEMC_MCR" value="0x10000004" value_width="4"/>
-                        <command type="write_value" address="SEMC_BMCR0" value="0x30524" value_width="4"/>
-                        <command type="write_value" address="SEMC_BMCR1" value="0x6030524" value_width="4"/>
+                        <command type="write_value" address="SEMC_BMCR0" value="0x81" value_width="4"/>
+                        <command type="write_value" address="SEMC_BMCR1" value="0x81" value_width="4"/>
                         <command type="write_value" address="SEMC_BR0" value="0x8000001B" value_width="4"/>
                         <command type="write_value" address="SEMC_BR1" value="0x8200001B" value_width="4"/>
                         <command type="write_value" address="SEMC_BR2" value="0x8400001B" value_width="4"/>
@@ -337,9 +333,9 @@
             </dcdx_configuration>
          </dcdx_configurations>
       </dcdx>
-      <periphs name="Peripherals" version="7.0" enabled="true" update_project_code="true">
+      <periphs name="Peripherals" version="8.0" enabled="true" update_project_code="true">
          <peripherals_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>7.0.1</processor_version>
          </peripherals_profile>
          <functional_groups>
             <functional_group name="BOARD_InitPeripherals" uuid="d4c71c6d-bf88-4438-89aa-c8759dec9eb9" called_from_default_init="true" id_prefix="" core="core0">
@@ -356,9 +352,15 @@
             <component name="msg" uuid="80e74a82-f59a-47e7-9420-a112ef7419b5" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
                <config_set_global name="global_messages"/>
             </component>
+            <component name="generic_uart" uuid="bf90738f-176e-4955-9d62-a6822eb546b3" type_id="generic_uart_8cae00565451cf2346eb1b8c624e73a6">
+               <config_set_global name="global_uart"/>
+            </component>
+            <component name="generic_can" uuid="2526aec3-5cfc-479d-9b87-6c7af01ea7d6" type_id="generic_can_1bfdd78b1af214566c1f23cf6a582d80">
+               <config_set_global name="global_can"/>
+            </component>
          </components>
       </periphs>
-      <tee name="TEE" version="1.0" enabled="false" update_project_code="true">
+      <tee name="TEE" version="2.0" enabled="false" update_project_code="true">
          <tee_profile>
             <processor_version>N/A</processor_version>
          </tee_profile>

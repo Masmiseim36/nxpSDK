@@ -2,12 +2,13 @@ Overview
 ========
 The CASPER Example project is a demonstration program that uses the KSDK software implement modular exponentiation algorithm using the CASPER software driver.
 
+
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.5
-- Keil MDK  5.31
-- MCUXpresso  11.2.0
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -33,10 +34,53 @@ Prepare the Demo
 
 Running the demo
 ================
-The log below shows the output of the casper example in the terminal window:
+The log below shows the output of the Casper example in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ModExp Test pass.
 Casper ECC Demo P256
+
+Round: 0
+Round: 1
+Round: 2
+Round: 3
+Round: 4
+Round: 5
+Round: 6
+Round: 7
+All EC scalar multiplication tests were succesfull.
+
+Round: 0
+Round: 1
+Round: 2
+Round: 3
+Round: 4
+Round: 5
+Round: 6
+Round: 7
+All EC double scalar multiplication tests were succesfull.
+
+Casper ECC Demo P384
+
+Round: 0
+Round: 1
+Round: 2
+Round: 3
+Round: 4
+Round: 5
+Round: 6
+Round: 7
+All EC scalar multiplication tests were succesfull.
+Round: 0
+Round: 1
+Round: 2
+Round: 3
+Round: 4
+Round: 5
+Round: 6
+Round: 7
+All EC double scalar multiplication tests were succesfull.
+
+Casper ECC Demo P521
 
 Round: 0
 Round: 1

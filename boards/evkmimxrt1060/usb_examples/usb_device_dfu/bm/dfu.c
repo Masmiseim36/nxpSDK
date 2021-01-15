@@ -6,7 +6,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -20,20 +22,14 @@
 #include "usb_flash.h"
 #include "fsl_device_registers.h"
 #include "clock_config.h"
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "dfu_app.h"
-#include <stdio.h>
-#include <stdlib.h>
-#if defined(__DSC__)
-#include "hardware_init.h"
-#include "cpu.h"
-#include <string.h>
-#endif
-
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define USB_DFU_CRC_INITIALIZED_VAULE (0xFFFFFFFFU)
+
 typedef usb_status_t (*dfu_state_func)(usb_dfu_struct_t *dfu_dev, usb_device_dfu_event_struct_t *event);
 
 /*******************************************************************************
@@ -159,10 +155,8 @@ static uint32_t USB_DeviceDfuCalculateCRC(uint32_t crc, uint8_t *data, uint32_t 
  */
 static void USB_DfuEnterCritical(uint8_t *sr)
 {
-#if defined(__DSC__)
-    DisableDscGlobalIRQ();
-#else
     *sr = DisableGlobalIRQ();
+#if !(defined(__DSC__) || defined(__CW__))
     __ASM("CPSID i");
 #endif
 }
@@ -174,11 +168,7 @@ static void USB_DfuEnterCritical(uint8_t *sr)
  */
 static void USB_DfuExitCritical(uint8_t sr)
 {
-#if defined(__DSC__)
-    EnableDscGlobalIRQ();
-#else
     EnableGlobalIRQ(sr);
-#endif
 }
 /*!
  * @brief Initialize the queue.
@@ -370,10 +360,10 @@ static void USB_DeviceDfuDetachTimeoutIsr(void)
 {
     usb_status_t error = kStatus_USB_Success;
     usb_device_dfu_event_struct_t event;
-    event.name = kUSB_DeviceDfuEventDetachTimeout;
-    event.wValue = 0;
+    event.name    = kUSB_DeviceDfuEventDetachTimeout;
+    event.wValue  = 0;
     event.wLength = 0;
-    error = USB_DeviceDfuQueuePut(&s_DfuEventQueue, &event);
+    error         = USB_DeviceDfuQueuePut(&s_DfuEventQueue, &event);
     if (kStatus_USB_Success != error)
     {
         /* The queue is full, set the status to error unknown */
@@ -534,8 +524,7 @@ static usb_status_t USB_DeviceDfuUpLoadReqest(uint32_t *length, uint8_t **data)
         s_UsbDeviceDfuDemo.dfuFirmwareAddress = (uint32_t)&updateLoadData[0];
         /* get firmware size from USB_DFU_APP_ADDRESS + 4 address */
         s_UsbDeviceDfuDemo.dfuFirmwareSize = UPLOAD_SIZE;
-        if ((0xFFFFFFFFU == s_UsbDeviceDfuDemo.dfuFirmwareSize) ||
-            (0xFFFFFFFFU == s_UsbDeviceDfuDemo.dfuFirmwareAddress))
+        if ((0U == s_UsbDeviceDfuDemo.dfuFirmwareSize) || (NULL == s_UsbDeviceDfuDemo.dfuFirmwareAddress))
         {
             USB_DeviceDfuSetState(kState_DfuError);
             USB_DeviceDfuSetStatus(USB_DFU_STATUS_ERR_STALLEDPKT);
@@ -856,7 +845,7 @@ usb_status_t USB_DeviceDfuDemoCallback(class_handle_t handle, uint32_t event, vo
  */
 void USB_DeviceDfuSwitchMode(void)
 {
-#ifdef __DSC__
+#if defined(__DSC__) || defined(__CW__)
     USB_DeviceClassDeinit(CONTROLLER_ID);
     __DI();
     SIM->PSWR3 = SIM_PSWR3_USB_OTG_MASK;
@@ -873,8 +862,8 @@ void USB_DeviceDfuSwitchMode(void)
     static uint32_t newSP, newPC;
     USB_DeviceClassDeinit(CONTROLLER_ID);
     SCB->VTOR = address;
-    newSP = ((uint32_t *)address)[0U];
-    newPC = ((uint32_t *)address)[1U];
+    newSP     = ((uint32_t *)address)[0U];
+    newPC     = ((uint32_t *)address)[1U];
     __set_CONTROL(0x00000000U);
     /* load new value to stack pointer and program counter */
     __set_MSP(newSP);
@@ -972,7 +961,7 @@ void USB_DeviceDfuDemoInit(void)
     s_UsbDeviceDfuDemo.dfuFirmwareAddress          = USB_DFU_APP_ADDRESS;
     s_UsbDeviceDfuDemo.dfuFirmwareSize             = 0U;
     s_UsbDeviceDfuDemo.dfuIsTheFirstBlock          = 0U;
-    s_UsbDeviceDfuDemo.dfuCRC                      = 0XFFFFFFFF;
+    s_UsbDeviceDfuDemo.dfuCRC                      = USB_DFU_CRC_INITIALIZED_VAULE;
     s_UsbDeviceDfuDemo.dfuFirmwareBlock            = &dfuFirmwareBlock[0];
 
     g_detachRequest = 0U;
@@ -1024,13 +1013,13 @@ void USB_DeviceDfuManifest(void)
     {
         crcValue     = 0;
         remainingLen = s_UsbDeviceDfuDemo.dfuFirmwareSize - 4;
-#if defined(__DSC__)
+#if defined(__DSC__) || defined(__CW__)
         startAddress = (uint8_t *)(USB_DFU_APP_ADDRESS_DATA_MEMORY_MAP * 2);
 #else
         startAddress = (uint8_t *)USB_DFU_APP_ADDRESS;
 #endif
 
-        s_UsbDeviceDfuDemo.dfuCRC = 0xffffffff;
+        s_UsbDeviceDfuDemo.dfuCRC = USB_DFU_CRC_INITIALIZED_VAULE;
         wLength                   = MAX_TRANSFER_SIZE;
         readLen                   = 0;
         if (remainingLen < MAX_TRANSFER_SIZE)
@@ -1175,7 +1164,11 @@ static usb_status_t USB_DeviceStateAppIdle(usb_dfu_struct_t *dfu_dev, usb_device
                 USB_DeviceStop(g_UsbDeviceDfu.deviceHandle);
                 for (i = 0; i < 5000; i++)
                 {
-                    __NOP();
+#if defined(__DSC__) || defined(__CW__)
+                    asm(NOP);
+#else
+                    __ASM("nop");
+#endif
                 }
                 /*Add one delay here to make the DP pull down long enough to allow host to detect the previous
                  * disconnection.*/
@@ -1191,8 +1184,8 @@ static usb_status_t USB_DeviceStateAppIdle(usb_dfu_struct_t *dfu_dev, usb_device
                 else
                 {
                     dfu_timer_object_t dfuTimerObject;
-                    dfuTimerObject.timerCount = event->wValue;
-                    dfuTimerObject.timerCallback = (dfu_timer_callback)USB_DeviceDfuDetachTimeoutIsr;
+                    dfuTimerObject.timerCount     = event->wValue;
+                    dfuTimerObject.timerCallback  = (dfu_timer_callback)USB_DeviceDfuDetachTimeoutIsr;
                     s_UsbDeviceDfuDemo.dfuTimerId = DFU_AddTimerQueue(&dfuTimerObject);
                 }
 #endif

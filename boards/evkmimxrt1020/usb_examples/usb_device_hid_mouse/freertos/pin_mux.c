@@ -13,11 +13,13 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v8.0
 processor: MIMXRT1021xxxxx
 package_id: MIMXRT1021DAG5A
 mcu_data: ksdk2_0
-processor_version: 0.0.0
+processor_version: 8.0.1
+board: MIMXRT1020-EVK
+power_domains: {NVCC_GPIO: '3.3'}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -40,8 +42,16 @@ void BOARD_InitBootPins(void) {
 BOARD_InitPins:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '101', peripheral: LPUART1, signal: RX, pin_signal: GPIO_AD_B0_07, software_input_on: Disable, open_drain: Disable}
-  - {pin_num: '105', peripheral: LPUART1, signal: TX, pin_signal: GPIO_AD_B0_06, software_input_on: Disable, open_drain: Disable}
+  - {peripheral: LPUART1, signal: RXD, pin_signal: GPIO_AD_25, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, pull_keeper_select: Pull}
+  - {peripheral: LPUART1, signal: TXD, pin_signal: GPIO_AD_24, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, pull_keeper_select: Pull}
+  - {peripheral: USB1, signal: usb1_otg_id, pin_signal: GPIO_AD_09, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, pull_keeper_select: Pull}
+  - {peripheral: USB2, signal: usb2_otg_id, pin_signal: GPIO_AD_08, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, pull_keeper_select: Pull}
+  - {pin_num: '105', peripheral: LPUART1, signal: TX, pin_signal: GPIO_AD_B0_06, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_100,
+    pull_keeper_select: Keeper, pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm, hysteresis_enable: Disable}
+  - {pin_num: '101', peripheral: LPUART1, signal: RX, pin_signal: GPIO_AD_B0_07, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_100,
+    pull_keeper_select: Keeper, pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm, hysteresis_enable: Disable}
+  - {pin_num: '79', peripheral: GPIO1, signal: 'gpio_io, 27', pin_signal: GPIO_AD_B1_11, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_100,
+    drive_strength: R0_4, pull_keeper_select: Pull, pull_keeper_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm, hysteresis_enable: Disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -52,7 +62,7 @@ BOARD_InitPins:
  *
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {
-  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
+  CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_06_LPUART1_TX,        /* GPIO_AD_B0_06 is configured as LPUART1_TX */
@@ -63,20 +73,9 @@ void BOARD_InitPins(void) {
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B1_11_GPIO1_IO27,        /* GPIO_AD_B1_11 is configured as GPIO1_IO27 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  
-   IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_B1_11_GPIO1_IO27,        /* GPIO_AD_B0_05 PAD functional properties : */
-      0x70A0u);                               /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: R0/4
-                                                 Speed Field: medium(100MHz)
-                                                 Open Drain Enable Field: Open Drain Disabled
-                                                 Pull / Keep Enable Field: Pull/Keeper Enabled
-                                                 Pull / Keep Select Field: Pull
-                                                 Pull Up / Down Config. Field: 47K Ohm Pull Up
-                                                 Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_06_LPUART1_TX,        /* GPIO_AD_B0_06 PAD functional properties : */
-      0x10B0u);                               /* Slew Rate Field: Slow Slew Rate
+      0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: medium(100MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
@@ -86,13 +85,23 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_07_LPUART1_RX,        /* GPIO_AD_B0_07 PAD functional properties : */
-      0x10B0u);                               /* Slew Rate Field: Slow Slew Rate
+      0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: medium(100MHz)
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper
                                                  Pull Up / Down Config. Field: 100K Ohm Pull Down
+                                                 Hyst. Enable Field: Hysteresis Disabled */
+  IOMUXC_SetPinConfig(
+      IOMUXC_GPIO_AD_B1_11_GPIO1_IO27,        /* GPIO_AD_B1_11 PAD functional properties : */
+      0x70A0U);                               /* Slew Rate Field: Slow Slew Rate
+                                                 Drive Strength Field: R0/4
+                                                 Speed Field: medium(100MHz)
+                                                 Open Drain Enable Field: Open Drain Disabled
+                                                 Pull / Keep Enable Field: Pull/Keeper Enabled
+                                                 Pull / Keep Select Field: Pull
+                                                 Pull Up / Down Config. Field: 47K Ohm Pull Up
                                                  Hyst. Enable Field: Hysteresis Disabled */
 }
 

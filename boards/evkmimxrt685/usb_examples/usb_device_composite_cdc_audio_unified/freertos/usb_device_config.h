@@ -76,8 +76,11 @@
 
 /*! @brief Whether device supports USB Audio class 2.0. 1U supported, 0U not supported */
 #if USB_DEVICE_CONFIG_AUDIO
-#define USB_DEVICE_CONFIG_AUDIO_CLASS_2_0 (0U)
+#define USB_DEVICE_CONFIG_AUDIO_CLASS_2_0 (1U)
 #endif
+
+/*! @brief Whether enable get sof count feature */
+#define USB_DEVICE_CONFIG_GET_SOF_COUNT (1U)
 
 /*! @brief Whether device is self power. 1U supported, 0U not supported */
 #define USB_DEVICE_CONFIG_SELF_POWER (1U)
@@ -103,9 +106,9 @@
 
 #if ((defined(USB_DEVICE_CONFIG_COMPLIANCE_TEST)) && (USB_DEVICE_CONFIG_COMPLIANCE_TEST > 0U))
 
-/*! @brief Undefine the marco USB_DEVICE_CONFIG_USB20_TEST_MODE. */
+/*! @brief Undefine the macro USB_DEVICE_CONFIG_USB20_TEST_MODE. */
 #undef USB_DEVICE_CONFIG_USB20_TEST_MODE
-/*! @brief Undefine the marco USB_DEVICE_CONFIG_CV_TEST. */
+/*! @brief Undefine the macro USB_DEVICE_CONFIG_CV_TEST. */
 #undef USB_DEVICE_CONFIG_CV_TEST
 
 /*! @brief enable the test mode. */

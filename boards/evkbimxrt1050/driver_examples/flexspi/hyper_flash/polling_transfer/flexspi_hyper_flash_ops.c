@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,6 +32,21 @@ void flexspi_hyper_flash_init(void)
 {
     flexspi_config_t config;
 
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    bool DCacheEnableFlag = false;
+    /* Disable D cache. */
+    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR))
+    {
+        SCB_DisableDCache();
+        DCacheEnableFlag = true;
+    }
+#endif /* __DCACHE_PRESENT */
+
+    /* Wait for bus to be idle before changing flash configuration. */
+    while (false == FLEXSPI_GetBusIdleStatus(EXAMPLE_FLEXSPI))
+    {
+    }
+
     flexspi_clock_init();
 
     /*Get FLEXSPI default settings and configure the flexspi. */
@@ -49,6 +64,9 @@ void flexspi_hyper_flash_init(void)
     config.enableCombination = true;
     FLEXSPI_Init(EXAMPLE_FLEXSPI, &config);
 
+    /* Set flexspi root clock. */
+    deviceconfig.flexspiRootClk = flexspi_get_frequency();
+
     /* Configure flash settings according to serial flash feature. */
     FLEXSPI_SetFlashConfig(EXAMPLE_FLEXSPI, &deviceconfig, kFLEXSPI_PortA1);
 
@@ -57,6 +75,14 @@ void flexspi_hyper_flash_init(void)
 
     /* Do software reset. */
     FLEXSPI_SoftwareReset(EXAMPLE_FLEXSPI);
+
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    if (DCacheEnableFlag)
+    {
+        /* Enable D cache. */
+        SCB_EnableDCache();
+    }
+#endif /* __DCACHE_PRESENT */
 }
 
 status_t flexspi_nor_hyperbus_read(FLEXSPI_Type *base, uint32_t addr, uint32_t *buffer, uint32_t bytes)
@@ -201,8 +227,22 @@ status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t address, co
 {
     status_t status;
     flexspi_transfer_t flashXfer;
+    flexspi_clock_t frequency;
 
-    /* Write neable */
+    /* Speed down flexspi clock, beacuse 50 MHz timings are only relevant when a burst write is used to load data during
+     * a HyperFlash Word Program command. */
+    frequency = kFLEXSPI_Clock_Low42M;
+    flexspi_clock_update(frequency);
+    /* Get current flexspi root clock. */
+    deviceconfig.flexspiRootClk = flexspi_get_frequency();
+
+    /* Update DLL value depending on flexspi root clock. */
+    FLEXSPI_UpdateDllValue(base, &deviceconfig, kFLEXSPI_PortA1);
+
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(base);
+
+    /* Write enable */
     status = flexspi_nor_write_enable(base, address);
 
     if (status != kStatus_Success)
@@ -227,7 +267,17 @@ status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t address, co
 
     status = flexspi_nor_wait_bus_busy(base);
 
-    flexspi_clock_update();
+    /* Speed up flexspi clock for a high read performance. */
+    frequency = kFLEXSPI_Clock_High166M;
+    flexspi_clock_update(frequency);
+    /* Get current flexspi root clock. */
+    deviceconfig.flexspiRootClk = flexspi_get_frequency();
+
+    /* Update DLL value depending on flexspi root clock. */
+    FLEXSPI_UpdateDllValue(base, &deviceconfig, kFLEXSPI_PortA1);
+
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(base);
 
     return status;
 }

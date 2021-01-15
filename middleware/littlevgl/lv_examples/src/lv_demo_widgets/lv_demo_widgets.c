@@ -9,6 +9,8 @@
 #include "../../lv_examples.h"
 #include "lv_demo_widgets.h"
 
+#if LV_USE_DEMO_WIDGETS
+
 /*********************
  *      DEFINES
  *********************/
@@ -29,7 +31,7 @@ static void kb_event_cb(lv_obj_t * ta, lv_event_t e);
 static void bar_anim(lv_task_t * t);
 static void arc_anim(lv_obj_t * arc, lv_anim_value_t value);
 static void linemeter_anim(lv_obj_t * linemeter, lv_anim_value_t value);
-static void gauge_anim(lv_obj_t * gauge, lv_anim_value_t value);;
+static void gauge_anim(lv_obj_t * gauge, lv_anim_value_t value);
 static void table_event_cb(lv_obj_t * table, lv_event_t e);
 #if LV_USE_THEME_MATERIAL
 static void color_chg_event_cb(lv_obj_t * sw, lv_event_t e);
@@ -67,6 +69,8 @@ void lv_demo_widgets(void)
         if(disp_size >= LV_DISP_SIZE_MEDIUM) {
             lv_obj_set_style_local_pad_left(tv, LV_TABVIEW_PART_TAB_BG, LV_STATE_DEFAULT, LV_HOR_RES / 2);
             lv_obj_t * sw = lv_switch_create(lv_scr_act(), NULL);
+            if(lv_theme_get_flags() & LV_THEME_MATERIAL_FLAG_DARK)
+                lv_switch_on(sw, LV_ANIM_OFF);
             lv_obj_set_event_cb(sw, color_chg_event_cb);
             lv_obj_set_pos(sw, LV_DPX(10), LV_DPX(10));
             lv_obj_set_style_local_value_str(sw, LV_SWITCH_PART_BG, LV_STATE_DEFAULT, "Dark");
@@ -259,6 +263,7 @@ static void visuals_create(lv_obj_t * parent)
 
     lv_obj_t * chart2 = lv_chart_create(parent, chart);
     lv_chart_set_type(chart2, LV_CHART_TYPE_COLUMN);
+    lv_obj_set_style_local_value_str(chart2, LV_CONT_PART_MAIN, LV_STATE_DEFAULT, "Column chart");
 
     s1 = lv_chart_add_series(chart2, LV_THEME_DEFAULT_COLOR_PRIMARY);
     s2 = lv_chart_add_series(chart2, LV_THEME_DEFAULT_COLOR_SECONDARY);
@@ -409,7 +414,7 @@ static void selectors_create(lv_obj_t * parent)
 
     lv_obj_t * cal = lv_calendar_create(parent, NULL);
     lv_obj_set_drag_parent(cal, true);
-    if(disp_size >= LV_DISP_SIZE_MEDIUM) {
+    if(disp_size > LV_DISP_SIZE_MEDIUM) {
         lv_obj_set_size(cal, LV_MATH_MIN(grid_h, grid_w), LV_MATH_MIN(grid_h, grid_w));
     } else {
         lv_obj_set_size(cal, grid_w, grid_w);
@@ -556,11 +561,13 @@ static void slider_event_cb(lv_obj_t * slider, lv_event_t e)
 
 static void ta_event_cb(lv_obj_t * ta, lv_event_t e)
 {
-    if(e == LV_EVENT_FOCUSED) {
+    if(e == LV_EVENT_RELEASED) {
         if(kb == NULL) {
             lv_obj_set_height(tv, LV_VER_RES / 2);
             kb = lv_keyboard_create(lv_scr_act(), NULL);
             lv_obj_set_event_cb(kb, kb_event_cb);
+
+            lv_indev_wait_release(lv_indev_get_act());
         }
         lv_textarea_set_cursor_hidden(ta, false);
         lv_page_focus(t1, lv_textarea_get_label(ta), LV_ANIM_ON);
@@ -657,7 +664,7 @@ static void color_chg_event_cb(lv_obj_t * sw, lv_event_t e)
         uint32_t flag = LV_THEME_MATERIAL_FLAG_LIGHT;
         if(lv_switch_get_state(sw)) flag = LV_THEME_MATERIAL_FLAG_DARK;
 
-        LV_THEME_DEFAULT_INIT(lv_theme_get_color_primary(), lv_theme_get_color_primary(),
+        LV_THEME_DEFAULT_INIT(lv_theme_get_color_primary(), lv_theme_get_color_secondary(),
                 flag,
                 lv_theme_get_font_small(), lv_theme_get_font_normal(), lv_theme_get_font_subtitle(), lv_theme_get_font_title());
     }
@@ -705,4 +712,6 @@ static void tab_changer_task_cb(lv_task_t * task)
         break;
     }
 }
+#endif
+
 #endif

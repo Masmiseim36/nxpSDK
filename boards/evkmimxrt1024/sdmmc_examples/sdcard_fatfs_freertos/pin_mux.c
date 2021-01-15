@@ -17,8 +17,7 @@ product: Pins v8.0
 processor: MIMXRT1024xxxxx
 package_id: MIMXRT1024DAG5A
 mcu_data: ksdk2_0
-processor_version: 0.0.0
-board: MIMXRT1024-EVK
+processor_version: 8.0.0
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -27,10 +26,10 @@ board: MIMXRT1024-EVK
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
- * 
+ *
  * Function Name : BOARD_InitBootPins
  * Description   : Calls initialization functions.
- * 
+ *
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void) {
     BOARD_InitPins();
@@ -53,7 +52,7 @@ BOARD_InitPins:
     drive_strength: R0_6, pull_keeper_select: Keeper, pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm, hysteresis_enable: Disable}
   - {pin_num: '105', peripheral: LPUART1, signal: TX, pin_signal: GPIO_AD_B0_06, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_100,
     drive_strength: R0_6, pull_keeper_select: Keeper, pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm, hysteresis_enable: Disable}
-  - {pin_num: '27', peripheral: GPIO3, signal: 'gpio_io, 24', pin_signal: GPIO_SD_B1_04, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_100,
+  - {pin_num: '21', peripheral: GPIO3, signal: 'gpio_io, 30', pin_signal: GPIO_SD_B1_10, slew_rate: Slow, software_input_on: Disable, open_drain: Disable, speed: MHZ_100,
     drive_strength: R0_6, pull_keeper_select: Keeper, pull_keeper_enable: Enable, pull_up_down_config: Pull_Down_100K_Ohm, hysteresis_enable: Disable}
   - {pin_num: '41', peripheral: GPIO3, signal: 'gpio_io, 19', pin_signal: GPIO_SD_B0_06, slew_rate: Fast, software_input_on: Disable, open_drain: Disable, speed: MHZ_100,
     drive_strength: R0, pull_keeper_select: Pull, pull_keeper_enable: Enable, pull_up_down_config: Pull_Up_47K_Ohm, hysteresis_enable: Enable}
@@ -114,13 +113,13 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_SD_B0_06_GPIO3_IO19,        /* GPIO_SD_B0_06 is configured as GPIO3_IO19 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_SD_B1_04_GPIO3_IO24,        /* GPIO_SD_B1_04 is configured as GPIO3_IO24 */
+      IOMUXC_GPIO_SD_B1_10_GPIO3_IO30,        /* GPIO_SD_B1_10 is configured as GPIO3_IO30 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_06_LPUART1_TX,        /* GPIO_AD_B0_06 PAD functional properties : */
       0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
-                                                 Speed Field: medium(100MHz)
+                                                 Speed Field: 100MHz - 150MHz
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper
@@ -130,7 +129,7 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_AD_B0_07_LPUART1_RX,        /* GPIO_AD_B0_07 PAD functional properties : */
       0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
-                                                 Speed Field: medium(100MHz)
+                                                 Speed Field: 100MHz - 150MHz
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper
@@ -140,7 +139,7 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_AD_B1_07_USDHC1_VSELECT,    /* GPIO_AD_B1_07 PAD functional properties : */
       0x0170A1U);                             /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0/4
-                                                 Speed Field: medium(100MHz)
+                                                 Speed Field: 100MHz - 150MHz
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Pull
@@ -150,7 +149,7 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_SD_B0_00_USDHC1_DATA2,      /* GPIO_SD_B0_00 PAD functional properties : */
       0x017089U);                             /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0(150 Ohm @ 3.3V, 260 Ohm@1.8V)
-                                                 Speed Field: medium(100MHz)
+                                                 Speed Field: 100MHz - 150MHz
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Pull
@@ -160,7 +159,7 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_SD_B0_01_USDHC1_DATA3,      /* GPIO_SD_B0_01 PAD functional properties : */
       0x017089U);                             /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0(150 Ohm @ 3.3V, 260 Ohm@1.8V)
-                                                 Speed Field: medium(100MHz)
+                                                 Speed Field: 100MHz - 150MHz
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Pull
@@ -170,7 +169,7 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_SD_B0_02_USDHC1_CMD,        /* GPIO_SD_B0_02 PAD functional properties : */
       0x017089U);                             /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0(150 Ohm @ 3.3V, 260 Ohm@1.8V)
-                                                 Speed Field: medium(100MHz)
+                                                 Speed Field: 100MHz - 150MHz
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Pull
@@ -180,7 +179,7 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_SD_B0_03_USDHC1_CLK,        /* GPIO_SD_B0_03 PAD functional properties : */
       0x014089U);                             /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0(150 Ohm @ 3.3V, 260 Ohm@1.8V)
-                                                 Speed Field: medium(100MHz)
+                                                 Speed Field: 100MHz - 150MHz
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Disabled
                                                  Pull / Keep Select Field: Keeper
@@ -190,7 +189,7 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_SD_B0_04_USDHC1_DATA0,      /* GPIO_SD_B0_04 PAD functional properties : */
       0x017089U);                             /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0(150 Ohm @ 3.3V, 260 Ohm@1.8V)
-                                                 Speed Field: medium(100MHz)
+                                                 Speed Field: 100MHz - 150MHz
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Pull
@@ -200,7 +199,7 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_SD_B0_05_USDHC1_DATA1,      /* GPIO_SD_B0_05 PAD functional properties : */
       0x017089U);                             /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0(150 Ohm @ 3.3V, 260 Ohm@1.8V)
-                                                 Speed Field: medium(100MHz)
+                                                 Speed Field: 100MHz - 150MHz
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Pull
@@ -210,17 +209,17 @@ void BOARD_InitPins(void) {
       IOMUXC_GPIO_SD_B0_06_GPIO3_IO19,        /* GPIO_SD_B0_06 PAD functional properties : */
       0x017089U);                             /* Slew Rate Field: Fast Slew Rate
                                                  Drive Strength Field: R0(150 Ohm @ 3.3V, 260 Ohm@1.8V)
-                                                 Speed Field: medium(100MHz)
+                                                 Speed Field: 100MHz - 150MHz
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Pull
                                                  Pull Up / Down Config. Field: 47K Ohm Pull Up
                                                  Hyst. Enable Field: Hysteresis Enabled */
   IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_SD_B1_04_GPIO3_IO24,        /* GPIO_SD_B1_04 PAD functional properties : */
+      IOMUXC_GPIO_SD_B1_10_GPIO3_IO30,        /* GPIO_SD_B1_10 PAD functional properties : */
       0x10B0U);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
-                                                 Speed Field: medium(100MHz)
+                                                 Speed Field: 100MHz - 150MHz
                                                  Open Drain Enable Field: Open Drain Disabled
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper

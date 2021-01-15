@@ -1812,7 +1812,12 @@ int mbedtls_aes_self_test( int verbose )
     int ret = 0, i, j, u, mode;
     unsigned int keybits;
     unsigned char key[32];
-    unsigned char buf[64];
+    /* NXP: Move buffer to NON-CACHED memory because of HW accel */ 
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    AT_NONCACHEABLE_SECTION_INIT(static unsigned char buf[64]);
+#else
+    unsigned char buf[64];    
+#endif /* DCACHE */
     const unsigned char *aes_tests;
 #if defined(MBEDTLS_CIPHER_MODE_CBC) || defined(MBEDTLS_CIPHER_MODE_CFB)
     unsigned char iv[16];

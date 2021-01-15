@@ -14,13 +14,23 @@
 #include <xtensa/xos.h>
 
 #include "xaf-api.h"
-#include "audio/xa_aac_dec_api.h"
-#include "audio/xa_mp3_dec_api.h"
+#if XA_AAC_DECODER
+#include "xa_aac_dec_api.h"
+#endif
+#if XA_MP3_DECODER
+#include "xa_mp3_dec_api.h"
+#endif
+#if XA_SBC_DECODER
+#include "xa_sbc_dec_api.h"
+#endif
+#if XA_VORBIS_DECODER
+#include "xa_vorbis_dec_api.h"
+#endif
+#if XA_OPUS_DECODER
 #include "audio/xa-opus-decoder-api.h"
-#include "audio/xa_sbc_dec_api.h"
-#include "audio/xa_vorbis_dec_api.h"
-#include "audio/xa-renderer-api.h"
+#endif
 #include "audio/xa-audio-decoder-api.h"
+#include "audio/xa-renderer-api.h"
 
 #include "fsl_common.h"
 #if (defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET)
@@ -84,7 +94,7 @@ static XAF_ERR_CODE get_dec_config(void *p_comp, xaf_format_t *comp_format)
 
 static XAF_ERR_CODE renderer_setup(void *p_renderer, xaf_format_t *format)
 {
-    int param[12];
+    int param[14];
 
     param[0]  = XA_RENDERER_CONFIG_PARAM_PCM_WIDTH;
     param[1]  = format->pcm_width;
@@ -98,8 +108,10 @@ static XAF_ERR_CODE renderer_setup(void *p_renderer, xaf_format_t *format)
     param[9]  = (int)DSP_AUDIO_BUFFER_1_PING;
     param[10] = XA_RENDERER_CONFIG_PARAM_AUDIO_BUFFER_2;
     param[11] = (int)DSP_AUDIO_BUFFER_1_PONG;
+    param[12] = XA_RENDERER_CONFIG_PARAM_I2S_INTERFACE;
+    param[13] = AUDIO_I2S_RENDERER_DEVICE;
 
-    return xaf_comp_set_config(p_renderer, 6, &param[0]);
+    return xaf_comp_set_config(p_renderer, 7, &param[0]);
 }
 
 /*******************************************************************************
@@ -156,18 +168,23 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
 
     switch (dec_name)
     {
+#if XA_AAC_DECODER
         case SRTM_Command_AAC:
             param[0]  = XA_AACDEC_CONFIG_PARAM_PCM_WDSZ;
             param[1]  = AAC_DEC_PCM_WIDTH;
             param_num = 1;
             dec_id    = "audio-decoder/aac";
             break;
+#endif
+#if XA_MP3_DECODER
         case SRTM_Command_MP3:
             param[0]  = XA_MP3DEC_CONFIG_PARAM_PCM_WDSZ;
             param[1]  = MP3_DEC_PCM_WIDTH;
             param_num = 1;
             dec_id    = "audio-decoder/mp3";
             break;
+#endif
+#if XA_OPUS_DECODER
         case SRTM_Command_OPUS_DEC:
             param[0]  = XA_OPUS_DEC_CONFIG_PARAM_CHANNELS;
             param[1]  = OPUS_DEC_NUM_CH;
@@ -186,6 +203,8 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
             param_num = 7;
             dec_id    = "audio-decoder/opus";
             break;
+#endif
+#if XA_SBC_DECODER
         case SRTM_Command_SBC_DEC:
             /* Workaround: SBC decoder has not config params to set,
              * but XAF requires set config to be called in order to get through
@@ -195,6 +214,8 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
             param_num = 1;
             dec_id    = "audio-decoder/sbc";
             break;
+#endif
+#if XA_VORBIS_DECODER
         case SRTM_Command_VORBIS:
             param[0]  = XA_VORBISDEC_CONFIG_PARAM_RAW_VORBIS_FILE_MODE;
             param[1]  = raw_input;
@@ -207,6 +228,7 @@ int srtm_decoder(dsp_handle_t *dsp, unsigned int *pCmdParams, unsigned int dec_n
             param_num = 4;
             dec_id    = "audio-decoder/vorbis";
             break;
+#endif
         /* Unknown decoder. */
         default:
             DSP_PRINTF("Decoder failure: unknown codec!\r\n");
@@ -436,6 +458,7 @@ error_cleanup:
             DSP_PRINTF("[DSP Codec] Audio device closed\r\n\r\n");
         }
     }
+
     /* Report the size of the input and decoded output buffer */
     *input_size  = dsp->buffer_in.index;
     *output_size = dsp->buffer_out.index;

@@ -327,7 +327,7 @@ static U16 scp_AddMacToCommand(ChannelId_t channelId, apdu_t *pApdu)
 {
     S32 nRet;
     Scp03SessionState_t session;
-    U8 macToAdd[16];
+    U8 macToAdd[16] = {0};
     //axHcCmacCtx_t *cmacCtx;
     HLSE_CONTEXT_HANDLE hContext;
 
@@ -501,7 +501,7 @@ static U32 scp_TransformResponse(apdu_t *pApdu)
     U8 response[SCP_BUFFER_SIZE];
     U8 plaintextResponse[SCP_BUFFER_SIZE];
     U8 sw[SCP_GP_SW_LEN] = {0};
-    U8 pMac[16];
+    U8 pMac[16] = {0};
     //axHcCmacCtx_t *cmacCtx;
     HLSE_CONTEXT_HANDLE hContext;
 

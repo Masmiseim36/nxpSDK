@@ -9,7 +9,7 @@
 #include "lv_led.h"
 #if LV_USE_LED != 0
 
-#include "../lv_core/lv_debug.h"
+#include "../lv_misc/lv_debug.h"
 #include "../lv_themes/lv_theme.h"
 #include "../lv_draw/lv_draw.h"
 
@@ -88,7 +88,7 @@ lv_obj_t * lv_led_create(lv_obj_t * par, const lv_obj_t * copy)
         ext->bright             = copy_ext->bright;
 
         /*Refresh the style with new signal function*/
-        lv_obj_refresh_style(led, LV_STYLE_PROP_ALL);
+        lv_obj_refresh_style(led, LV_OBJ_PART_ALL, LV_STYLE_PROP_ALL);
     }
 
     LV_LOG_INFO("led created");

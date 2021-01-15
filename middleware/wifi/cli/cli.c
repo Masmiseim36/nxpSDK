@@ -72,213 +72,6 @@ static struct
 static os_thread_t cli_main_thread;
 static os_thread_stack_define(cli_stack, CONFIG_CLI_STACK_SIZE);
 
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
-#define MAX_CMDS_IN_HISTORY 10
-static char *cmd_hist_arr[MAX_CMDS_IN_HISTORY];
-static int total_hist_cmds, last_cmd_num;
-static int console_loop_num;
-static bool hist_inited;
-#define CMD_HIST_VAR_NAME       "cmd-%d"
-#define CMD_HIST_VAR_NAME_MAXSZ 8
-
-char *index(const char *s, int c);
-
-static cli_name_val_get g_get_cb;
-static cli_name_val_set g_set_cb;
-
-static int get_cmd_from_hist(int cmd_no, char *buf, int max_len)
-{
-    if (!hist_inited)
-        return -WM_FAIL;
-
-    if (cmd_no >= MAX_CMDS_IN_HISTORY || cmd_no < 0)
-        return -WM_FAIL;
-
-    if (cmd_hist_arr[cmd_no])
-    {
-        if (strlen(cmd_hist_arr[cmd_no]) >= max_len)
-            return -WM_FAIL;
-
-        strncpy(buf, cmd_hist_arr[cmd_no], max_len);
-        return WM_SUCCESS;
-    }
-
-    char var_name[CMD_HIST_VAR_NAME_MAXSZ];
-    snprintf(var_name, CMD_HIST_VAR_NAME_MAXSZ, CMD_HIST_VAR_NAME, cmd_no);
-
-    int rv = g_get_cb(var_name, buf, max_len);
-    if (rv <= 0)
-        return -WM_FAIL;
-
-    cmd_hist_arr[cmd_no] = strdup(buf); /* ignore failure silently */
-    return WM_SUCCESS;
-}
-
-static int store_cmd_to_hist(int cmd_no, const char *buf)
-{
-    if (cmd_no >= MAX_CMDS_IN_HISTORY || cmd_no < 0)
-        return -WM_FAIL;
-
-    if (cmd_hist_arr[cmd_no])
-    {
-        if (!strcmp(cmd_hist_arr[cmd_no], buf))
-            return WM_SUCCESS; /* avoid rewrite. */
-        else
-        {
-            os_mem_free(cmd_hist_arr[cmd_no]);
-            cmd_hist_arr[cmd_no] = NULL;
-        }
-    }
-
-    char var_name[CMD_HIST_VAR_NAME_MAXSZ];
-    snprintf(var_name, CMD_HIST_VAR_NAME_MAXSZ, CMD_HIST_VAR_NAME, cmd_no);
-
-    int rv = g_set_cb(var_name, buf);
-    if (rv != WM_SUCCESS)
-        return rv;
-
-    cmd_hist_arr[cmd_no] = strdup(buf); /* ignore failure silently */
-
-#if 0 /* debug only */
-	int i;
-	for (i = 0; i < MAX_CMDS_IN_HISTORY; i++)
-		PRINTF("ARR: %s\r\n", cmd_hist_arr[i]);
-#endif
-
-    return WM_SUCCESS;
-}
-
-/* This func has one more goal which is not obvious. To load the values
-   into the ram cache maintained by history handling code in this file. This
-   ensures that history operations are not done in idle thread (console loop)
-*/
-static int get_total_cmds()
-{
-    int cmd_no = 0;
-
-    void *tmpbuf = os_mem_alloc(INBUF_SIZE);
-    if (!tmpbuf)
-        return -WM_FAIL;
-
-    for (; cmd_no < MAX_CMDS_IN_HISTORY; ++cmd_no)
-    {
-        char var_name[CMD_HIST_VAR_NAME_MAXSZ];
-        snprintf(var_name, CMD_HIST_VAR_NAME_MAXSZ, CMD_HIST_VAR_NAME, cmd_no);
-        if (get_cmd_from_hist(cmd_no, tmpbuf, INBUF_SIZE) != WM_SUCCESS)
-        {
-            /* No more cmds */
-            break;
-        }
-    }
-
-    os_mem_free(tmpbuf);
-    return cmd_no;
-}
-
-static int get_next_cmd_num_console()
-{
-    if (!hist_inited)
-        return 0;
-
-    if (console_loop_num < 0)
-        return -1;
-
-    return console_loop_num = ((console_loop_num + 1) % total_hist_cmds);
-}
-
-static int get_prev_cmd_num_console()
-{
-    if (!hist_inited)
-        return 0;
-
-    if (console_loop_num < 0)
-        return -1;
-
-    if ((console_loop_num - 1) < 0)
-        return console_loop_num = total_hist_cmds - 1;
-    else
-        return --console_loop_num;
-}
-
-static int cmd_hist_is_duplicate(const char *cmd)
-{
-    if (last_cmd_num == -1)
-        return false; /* No cmds */
-
-    /* Allocate once */
-    static char *tmpbuf;
-    if (!tmpbuf)
-    {
-        tmpbuf = os_mem_alloc(INBUF_SIZE);
-        if (!tmpbuf)
-            return false; /* ignore silently */
-    }
-
-    int rv = get_cmd_from_hist(last_cmd_num, tmpbuf, INBUF_SIZE);
-    if (rv != WM_SUCCESS)
-    {
-        PRINTF("%s: read cmd %d failed\r\n", __func__, last_cmd_num);
-        return false;
-    }
-
-    if (!strcmp(tmpbuf, cmd))
-    {
-        return true; /* Duplicate */
-    }
-
-    return false;
-}
-
-static int cmd_hist_init()
-{
-    console_loop_num = -1;
-    last_cmd_num     = -1;
-
-    hist_inited     = true;
-    total_hist_cmds = get_total_cmds();
-    if (total_hist_cmds >= 0)
-    {
-        last_cmd_num     = total_hist_cmds - 1;
-        console_loop_num = 0;
-    }
-
-    return WM_SUCCESS;
-}
-
-int cli_add_history_hook(cli_name_val_get get_cb, cli_name_val_set set_cb)
-{
-    if (!get_cb || !set_cb)
-        return -WM_E_INVAL;
-
-    g_get_cb = get_cb;
-    g_set_cb = set_cb;
-
-    return cmd_hist_init();
-}
-
-static void cmd_hist_add(const char *cmd)
-{
-    if (!hist_inited)
-        return;
-
-    if (!strlen(cmd))
-        return;
-
-    if (cmd_hist_is_duplicate(cmd))
-        return;
-
-    int new_cmd_num = (last_cmd_num + 1) % MAX_CMDS_IN_HISTORY;
-    int rv          = store_cmd_to_hist(new_cmd_num, cmd);
-    if (rv != WM_SUCCESS)
-        return;
-
-    if ((new_cmd_num + 1) > total_hist_cmds)
-        total_hist_cmds = new_cmd_num + 1;
-    last_cmd_num     = new_cmd_num;
-    console_loop_num = (new_cmd_num + 1) % total_hist_cmds;
-}
-#endif /* CONFIG_APP_FRM_CLI_HISTORY */
-
 /* Find the command 'name' in the cli commands table.
  * If len is 0 then full match will be performed else upto len bytes.
  * Returns: a pointer to the corresponding cli_command struct or NULL.
@@ -341,10 +134,6 @@ static int handle_input(char *inbuf)
 
     memset((void *)&argv, 0, sizeof(argv));
     memset(&stat, 0, sizeof(stat));
-
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
-    cmd_hist_add(inbuf);
-#endif
 
     /*
      * Some terminals add CRLF to the input buffer.
@@ -499,14 +288,6 @@ enum
     EXT_KEY_SECOND_SYMBOL,
 };
 
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
-static void clear_line(unsigned int cnt)
-{
-    while (cnt--)
-        PRINTF("\b \b");
-}
-#endif /* CONFIG_APP_FRM_CLI_HISTORY */
-
 /* Get an input line.
  *
  * Returns: 1 if there is input, 0 if the line should be ignored. */
@@ -514,9 +295,6 @@ static int get_input(char *inbuf, unsigned int *bp)
 {
     static int state = BASIC_KEY;
     static char second_char;
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
-    int rv = -WM_FAIL;
-#endif /* CONFIG_APP_FRM_CLI_HISTORY */
 
     if (inbuf == NULL)
     {
@@ -541,51 +319,6 @@ static int get_input(char *inbuf, unsigned int *bp)
                     return 1;
                 }
             }
-#ifdef CONFIG_APP_FRM_CLI_HISTORY
-            if (second_char == 0x5B)
-            {
-                if (inbuf[*bp] == 0x41)
-                {
-                    /* UP key */
-                    clear_line(*bp);
-                    *bp = 0;
-                    rv  = get_cmd_from_hist(get_prev_cmd_num_console(), inbuf, INBUF_SIZE);
-                    if (rv == WM_SUCCESS)
-                    {
-                        *bp = strlen(inbuf);
-                        PRINTF("%s", inbuf);
-                    }
-                    state = BASIC_KEY;
-                    continue;
-                }
-                if (inbuf[*bp] == 0x42)
-                {
-                    /* Down key */
-                    clear_line(*bp);
-                    *bp = 0;
-                    rv  = get_cmd_from_hist(get_next_cmd_num_console(), inbuf, INBUF_SIZE);
-                    if (rv == WM_SUCCESS)
-                    {
-                        *bp = strlen(inbuf);
-                        PRINTF("%s", inbuf);
-                    }
-                    state = BASIC_KEY;
-                    continue;
-                }
-                if (inbuf[*bp] == 0x44)
-                {
-                    /* Ignoring left key */
-                    state = BASIC_KEY;
-                    continue;
-                }
-                if (inbuf[*bp] == 0x43)
-                {
-                    /* Ignoring right key */
-                    state = BASIC_KEY;
-                    continue;
-                }
-            }
-#endif /* CONFIG_APP_FRM_CLI_HISTORY */
         }
 
         if (state == EXT_KEY_FIRST_SYMBOL)
@@ -964,43 +697,8 @@ void cli_set_echo_mode(bool enabled)
 }
 #endif
 
-#ifdef CONFIG_CLI_TESTS
-static void test_getopt(int argc, char **argv)
-{
-    int c;
-    cli_optind = 1;
-
-    while ((c = cli_getopt(argc, argv, "abc:d")) != -1)
-    {
-        switch (c)
-        {
-            case 'a':
-            case 'b':
-            case 'd':
-                PRINTF("got option %c\r\n", c);
-                break;
-            case 'c':
-                PRINTF("got option %c with arg %s\r\n", c, cli_optarg);
-                break;
-            default:
-                PRINTF("ERROR: unexpected option: %c\r\n", c);
-                return;
-        }
-    }
-
-    while (cli_optind < argc)
-    {
-        PRINTF("got extra arg %s\r\n", argv[cli_optind]);
-        cli_optind++;
-    }
-}
-#endif
-
 static struct cli_command built_ins[] = {
     {"help", NULL, help_command},
-#ifdef CONFIG_CLI_TESTS
-    {"getopt_test", NULL, test_getopt},
-#endif
 };
 
 /*

@@ -5,6 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
@@ -20,8 +22,6 @@
 #include "fsl_codec_common.h"
 #include "sdmmc_config.h"
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_codec_adapter.h"
 
@@ -86,7 +86,6 @@
  ******************************************************************************/
 void BORAD_CodecReset(bool state);
 static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData);
-static void SDCARD_DetectCallBack(bool isInserted, void *userData);
 static status_t DEMO_MountFileSystem(void);
 extern void BORAD_CodecReset(bool state);
 static void DEMO_InitCS42888(void);
@@ -144,7 +143,6 @@ static uint32_t volatile s_emptyBlock = BUFFER_NUM;
 static FATFS s_fileSystem; /* File system object */
 static FIL s_fileObject;
 static FILINFO s_fileInfo;
-static volatile bool s_cardInserted      = false;
 static volatile bool s_saiTransferFinish = false;
 codec_handle_t codecHandle;
 
@@ -186,10 +184,7 @@ void BORAD_CodecReset(bool state)
         GPIO_PinWrite(DEMO_CODEC_RESET_GPIO, DEMO_CODEC_RESET_GPIO_PIN, 0U);
     }
 }
-static void SDCARD_DetectCallBack(bool isInserted, void *userData)
-{
-    s_cardInserted = isInserted;
-}
+
 static void callback(I2S_Type *base, sai_edma_handle_t *handle, status_t status, void *userData)
 {
     if (kStatus_SAI_RxError == status)
@@ -208,7 +203,7 @@ int main(void)
 {
     sai_transfer_t xfer;
     edma_config_t dmaConfig = {0};
-    sai_transceiver_t config;
+    sai_transceiver_t saiConfig;
     UINT oneTimeRW = 0U;
     UINT bytesRead;
     FRESULT error;
@@ -267,8 +262,8 @@ int main(void)
     SAI_TransferTxCreateHandleEDMA(DEMO_SAI, &txHandle, callback, NULL, &dmaHandle);
 
     /* TDM mode configurations */
-    SAI_GetTDMConfig(&config, DEMO_FRMAE_SYNC_LEN, DEMO_AUDIO_BIT_WIDTH, DEMO_AUDIO_DATA_CHANNEL, DEMO_SAI_CHANNEL);
-    SAI_TransferTxSetConfigEDMA(DEMO_SAI, &txHandle, &config);
+    SAI_GetTDMConfig(&saiConfig, DEMO_FRMAE_SYNC_LEN, DEMO_AUDIO_BIT_WIDTH, DEMO_AUDIO_DATA_CHANNEL, DEMO_SAI_CHANNEL);
+    SAI_TransferTxSetConfigEDMA(DEMO_SAI, &txHandle, &saiConfig);
 
     /* set bit clock divider */
     SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
@@ -468,6 +463,7 @@ static void DEMO_InitCS42888(void)
     if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
     {
         PRINTF("CODEC_Init failed!\r\n");
+        assert(false);
     }
 
     PRINTF("\r\nCS42888 codec Init Done.\r\n");

@@ -64,8 +64,13 @@ static i2s_dma_handle_t s_i2sTxHandle;
 static dmic_dma_handle_t s_dmicDmaHandle;
 static dma_handle_t s_dmicRxDmaHandle;
 
+#if (XCHAL_DCACHE_SIZE > 0)
 AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t s_buffer[BUFFER_SIZE * BUFFER_NUM], 4);
 AT_NONCACHEABLE_SECTION_ALIGN(dma_descriptor_t s_dmaDescriptorPingpong[2], 16);
+#else
+SDK_ALIGN(static uint8_t s_buffer[BUFFER_SIZE * BUFFER_NUM], 4);
+SDK_ALIGN(dma_descriptor_t s_dmaDescriptorPingpong[2], 16);
+#endif
 
 static dmic_transfer_t s_receiveXfer[2U] = {
     /* transfer configurations for channel0 */
@@ -107,6 +112,13 @@ void i2s_Callback(I2S_Type *base, i2s_dma_handle_t *handle, status_t completionS
 /*******************************************************************************
  * Code
  ******************************************************************************/
+static void XOS_Init(void)
+{
+    xos_set_clock_freq(XOS_CLOCK_FREQ);
+
+    xos_start_system_timer(-1, 0);
+}
+
 static void BOARD_InitClock(void)
 {
     /* DSP_INT0_SEL18 = DMA1 */
@@ -189,22 +201,12 @@ static void BOARD_Init_I2S(void)
 }
 
 
-static void XOS_Init(void)
-{
-    xos_set_clock_freq(XOS_CLOCK_FREQ);
-
-    xos_start_system_timer(-1, 0);
-}
-
 /*!
  * @brief Main function
  */
 int main(void)
 {
-    dmic_channel_config_t dmic_channel_cfg;
     i2s_transfer_t i2sTxTransfer;
-
-    xos_start_main("main", 7, 0);
 
     /* Disable DSP cache for noncacheable sections. */
     xthal_set_region_attribute((uint32_t *)&NonCacheable_start,
@@ -212,6 +214,8 @@ int main(void)
     xthal_set_region_attribute((uint32_t *)&NonCacheable_init_start,
                                (uint32_t)&NonCacheable_init_end - (uint32_t)&NonCacheable_init_start, XCHAL_CA_BYPASS,
                                0);
+
+    XOS_Init();
     BOARD_InitBootPins();
     BOARD_InitDebugConsole();
     BOARD_InitClock();
@@ -229,6 +233,8 @@ int main(void)
 
     /* Initialize I2S */
     BOARD_Init_I2S();
+
+    xos_start_main("main", 7, 0);
 
     PRINTF("DSP starts on core '%s'\r\n", XCHAL_CORE_ID);
 

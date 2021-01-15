@@ -28,7 +28,7 @@
 Change Log:
     04/16/2009: initial version
 ************************************************************/
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -148,23 +148,23 @@ static const chan_freq_power_t channel_freq_power_SPECIAL_BG[] = {
 
 /** Band : 'B/G', Region: World Wide Safe */
 static chan_freq_power_t channel_freq_power_WW_BG[] = {
-    {1, 2412, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},  {2, 2417, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {3, 2422, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},  {4, 2427, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {5, 2432, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},  {6, 2437, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {7, 2442, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},  {8, 2447, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {9, 2452, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},  {10, 2457, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {11, 2462, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {12, 2467, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},
-    {13, 2472, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE}};
+    {1, 2412, WLAN_TX_PWR_WW_DEFAULT, MFALSE},  {2, 2417, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {3, 2422, WLAN_TX_PWR_WW_DEFAULT, MFALSE},  {4, 2427, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {5, 2432, WLAN_TX_PWR_WW_DEFAULT, MFALSE},  {6, 2437, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {7, 2442, WLAN_TX_PWR_WW_DEFAULT, MFALSE},  {8, 2447, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {9, 2452, WLAN_TX_PWR_WW_DEFAULT, MFALSE},  {10, 2457, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {11, 2462, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {12, 2467, WLAN_TX_PWR_WW_DEFAULT, MTRUE},
+    {13, 2472, WLAN_TX_PWR_WW_DEFAULT, MTRUE},  {14, 2472, WLAN_TX_PWR_WW_DEFAULT, MTRUE}};
 
 /** Band : 'B/G', Region: Custom - Place holder for Max 14 channels (As defined in WWSM)*/
 static chan_freq_power_t channel_freq_power_Custom_BG[] = {
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}};
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}};
 
 /**
  * The 2.4GHz CFP tables
@@ -293,35 +293,34 @@ static const chan_freq_power_t channel_freq_power_CN_A[] = {{149, 5745, WLAN_TX_
 
 /** Band: 'A', Region: World Wide Safe */
 static chan_freq_power_t channel_freq_power_WW_A[] = {
-    {36, 5180, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {40, 5200, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {44, 5220, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {48, 5240, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {52, 5260, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},  {56, 5280, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},
-    {60, 5300, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},  {64, 5320, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},
-    {100, 5500, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE}, {104, 5520, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},
-    {108, 5540, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE}, {112, 5560, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},
-    {116, 5580, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE}, {120, 5600, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},
-    {124, 5620, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE}, {128, 5640, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},
-    {132, 5660, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE}, {136, 5680, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},
-    {140, 5700, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE}, {144, 5720, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},
-    {149, 5745, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE}, {153, 5765, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},
-    {157, 5785, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE}, {161, 5805, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE},
-    {165, 5825, WLAN_TX_PWR_WW_DEFAULT, MTRUE, MFALSE}};
+    {36, 5180, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {40, 5200, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {44, 5220, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {48, 5240, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {52, 5260, WLAN_TX_PWR_WW_DEFAULT, MTRUE},  {56, 5280, WLAN_TX_PWR_WW_DEFAULT, MTRUE},
+    {60, 5300, WLAN_TX_PWR_WW_DEFAULT, MTRUE},  {64, 5320, WLAN_TX_PWR_WW_DEFAULT, MTRUE},
+    {100, 5500, WLAN_TX_PWR_WW_DEFAULT, MTRUE}, {104, 5520, WLAN_TX_PWR_WW_DEFAULT, MTRUE},
+    {108, 5540, WLAN_TX_PWR_WW_DEFAULT, MTRUE}, {112, 5560, WLAN_TX_PWR_WW_DEFAULT, MTRUE},
+    {116, 5580, WLAN_TX_PWR_WW_DEFAULT, MTRUE}, {120, 5600, WLAN_TX_PWR_WW_DEFAULT, MTRUE},
+    {124, 5620, WLAN_TX_PWR_WW_DEFAULT, MTRUE}, {128, 5640, WLAN_TX_PWR_WW_DEFAULT, MTRUE},
+    {132, 5660, WLAN_TX_PWR_WW_DEFAULT, MTRUE}, {136, 5680, WLAN_TX_PWR_WW_DEFAULT, MTRUE},
+    {140, 5700, WLAN_TX_PWR_WW_DEFAULT, MTRUE}, {149, 5745, WLAN_TX_PWR_WW_DEFAULT, MTRUE},
+    {153, 5765, WLAN_TX_PWR_WW_DEFAULT, MTRUE}, {157, 5785, WLAN_TX_PWR_WW_DEFAULT, MTRUE},
+    {161, 5805, WLAN_TX_PWR_WW_DEFAULT, MTRUE}, {165, 5825, WLAN_TX_PWR_WW_DEFAULT, MTRUE}};
 
 /** Band: 'A', Region: Custom - Place holder for Max 25 channels (As defined in WWSM) */
 static chan_freq_power_t channel_freq_power_Custom_A[] = {
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE},
-    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE, MFALSE}};
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}, {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE},
+    {0, 0, WLAN_TX_PWR_WW_DEFAULT, MFALSE}};
 
 /** Band: 'A', NULL */
 static const chan_freq_power_t channel_freq_power_NULL_A[1] = {0};
@@ -545,6 +544,21 @@ static chan_freq_power_t *wlan_get_region_cfp_table(pmlan_adapter pmadapter, t_u
 
     if (band & (BAND_B | BAND_G | BAND_GN | BAND_GAC))
     {
+#ifdef OTP_CHANINFO
+        /* Return the FW cfp table for requested region code, if available.
+         * If region is not forced and the requested region code is different,
+         * simply return the corresponding pre-defined table.
+         */
+        if (pmadapter->otp_region && pmadapter->cfp_otp_bg)
+        {
+            if (pmadapter->otp_region->force_reg || (cfp_bg == (t_u8)pmadapter->otp_region->region_code))
+            {
+                *cfp_no = pmadapter->tx_power_table_bg_rows;
+                LEAVE();
+                return pmadapter->cfp_otp_bg;
+            }
+        }
+#endif
         for (i = 0; i < MLAN_CFP_TABLE_SIZE_BG; i++)
         {
             PRINTM(MINFO, "cfp_table_BG[%d].code=%d\n", i, cfp_table_BG[i].code);
@@ -562,6 +576,18 @@ static chan_freq_power_t *wlan_get_region_cfp_table(pmlan_adapter pmadapter, t_u
 #ifdef CONFIG_5GHz_SUPPORT
     if (band & (BAND_A | BAND_AN | BAND_AAC))
     {
+#ifdef OTP_CHANINFO
+        /* Return the FW cfp table for requested region code */
+        if (pmadapter->otp_region && pmadapter->cfp_otp_a)
+        {
+            if (pmadapter->otp_region->force_reg || (cfp_a == (t_u8)pmadapter->otp_region->region_code))
+            {
+                *cfp_no = pmadapter->tx_power_table_a_rows;
+                LEAVE();
+                return pmadapter->cfp_otp_a;
+            }
+        }
+#endif
         for (i = 0; i < MLAN_CFP_TABLE_SIZE_A; i++)
         {
             PRINTM(MINFO, "cfp_table_A[%d].code=%d\n", i, cfp_table_A[i].code);
@@ -1345,11 +1371,76 @@ t_u8 wlan_convert_v14_rate_ht_info(t_u8 ht_info)
  * @brief Validate if channel is in range of World Wide Safe Mode
  *
  * @param chan_num	Channel Number
+ *
+ * @return		Valid or Invalid
+ */
+t_bool wlan_is_channel_valid(t_u8 chan_num)
+{
+    t_bool valid = MFALSE;
+    int i        = 0;
+    chan_freq_power_t *cfp_wwsm;
+    int cfp_no;
+
+    ENTER();
+
+    cfp_wwsm = (chan_freq_power_t *)channel_freq_power_WW_BG;
+    cfp_no   = (sizeof(channel_freq_power_WW_BG) / sizeof(chan_freq_power_t));
+
+    for (i = 0; i < cfp_no; i++)
+    {
+        /* Channel 0 is invalid */
+        if (chan_num == 0)
+        {
+            PRINTM(MERROR, "Invalid channel. Channel number can't be %d\r\n", chan_num);
+            valid = MFALSE;
+            break;
+        }
+
+        if (chan_num == cfp_wwsm[i].channel)
+        {
+            valid = MTRUE;
+            break;
+        }
+    }
+
+#ifdef CONFIG_5GHz_SUPPORT
+    if (!valid)
+    {
+        cfp_wwsm = (chan_freq_power_t *)channel_freq_power_WW_A;
+        cfp_no   = (sizeof(channel_freq_power_WW_A) / sizeof(chan_freq_power_t));
+
+        for (i = 0; i < cfp_no; i++)
+        {
+            /* Channel 0 is invalid */
+            if (chan_num == 0)
+            {
+                PRINTM(MERROR, "Invalid channel. Channel number can't be %d\r\n", chan_num);
+                valid = MFALSE;
+                break;
+            }
+
+            if (chan_num == cfp_wwsm[i].channel)
+            {
+                valid = MTRUE;
+                break;
+            }
+        }
+    }
+#endif
+
+    LEAVE();
+    return valid;
+}
+
+/**
+ * @brief Validate if channel and its frequency is in range of World Wide Safe Mode
+ *
+ * @param chan_num	Channel Number
  * @param chan_freq	Channel Frequency
  *
  * @return		Valid or Invalid
  */
-t_bool wlan_is_channel_valid(t_u8 chan_num, t_u16 chan_freq)
+t_bool wlan_is_channel_and_freq_valid(t_u8 chan_num, t_u16 chan_freq)
 {
     t_bool valid = MFALSE;
     int i        = 0;
@@ -1583,3 +1674,328 @@ void wlan_get_active_channel_list(mlan_private *pmpriv, t_u8 *chan_list, t_u8 *n
     }
 #endif
 }
+
+#ifdef OTP_CHANINFO
+/**
+ *  @brief	Update CFP tables and power tables from FW
+ *
+ *  @param priv		Private driver information structure
+ *  @param buf		Pointer to the buffer holding TLV data
+ *					from 0x242 command response.
+ *  @param buf_left	bufsize
+ *
+ *  @return
+ *    None
+ */
+void wlan_add_fw_cfp_tables(pmlan_private pmpriv, t_u8 *buf, t_u16 buf_left)
+{
+    mlan_adapter *pmadapter = pmpriv->adapter;
+    mlan_callbacks *pcb     = (mlan_callbacks *)&pmadapter->callbacks;
+    MrvlIEtypesHeader_t *head;
+    t_u16 tlv;
+    t_u16 tlv_buf_len;
+    t_u16 tlv_buf_left;
+    t_u16 i;
+    int k               = 0, rows, cols;
+    t_u16 max_tx_pwr_bg = WLAN_TX_PWR_DEFAULT;
+#ifdef CONFIG_5GHz_SUPPORT
+    t_u16 max_tx_pwr_a = WLAN_TX_PWR_DEFAULT;
+#endif
+    t_u8 *tlv_buf;
+    t_u8 *data;
+    t_u8 *tmp;
+    mlan_status ret;
+
+    ENTER();
+
+    if (!buf)
+    {
+        PRINTM(MERROR, "CFP table update failed!\n");
+        goto out;
+    }
+    if (pmadapter->otp_region)
+        wlan_free_fw_cfp_tables(pmadapter);
+
+    pmadapter->tx_power_table_bg_rows = FW_CFP_TABLE_MAX_ROWS_BG;
+    pmadapter->tx_power_table_bg_cols = FW_CFP_TABLE_MAX_COLS_BG;
+#ifdef CONFIG_5GHz_SUPPORT
+    pmadapter->tx_power_table_a_rows = FW_CFP_TABLE_MAX_ROWS_A;
+    pmadapter->tx_power_table_a_cols = FW_CFP_TABLE_MAX_COLS_A;
+#endif
+    tlv_buf      = (t_u8 *)buf;
+    tlv_buf_left = buf_left;
+
+    while (tlv_buf_left >= sizeof(*head))
+    {
+        head        = (MrvlIEtypesHeader_t *)tlv_buf;
+        tlv         = wlan_le16_to_cpu(head->type);
+        tlv_buf_len = wlan_le16_to_cpu(head->len);
+
+        if (tlv_buf_left < (sizeof(*head) + tlv_buf_len))
+            break;
+        data = (t_u8 *)head + sizeof(*head);
+
+        switch (tlv)
+        {
+            case TLV_TYPE_REGION_INFO:
+                /* Skip adding fw region info if it already exists or
+                 * if this TLV has no set data
+                 */
+                if (*data == 0)
+                    break;
+                if (pmadapter->otp_region)
+                    break;
+
+                ret = pcb->moal_malloc(pmadapter->pmoal_handle, sizeof(otp_region_info_t), MLAN_MEM_DEF,
+                                       (t_u8 **)&pmadapter->otp_region);
+                if (ret != MLAN_STATUS_SUCCESS || !pmadapter->otp_region)
+                {
+                    PRINTM(MERROR,
+                           "Memory allocation for the otp region"
+                           " info struct failed!\n");
+                    break;
+                }
+                /* Save region info values from OTP in the otp_region
+                 * structure
+                 */
+                memcpy(pmadapter, pmadapter->otp_region, data, sizeof(otp_region_info_t));
+
+                data += sizeof(otp_region_info_t);
+                /* Get pre-defined cfp tables corresponding to the region code
+                 * in OTP
+                 */
+                for (i = 0; i < MLAN_CFP_TABLE_SIZE_BG; i++)
+                {
+                    if (cfp_table_BG[i].code == pmadapter->otp_region->region_code)
+                    {
+                        max_tx_pwr_bg = (cfp_table_BG[i].cfp)->max_tx_power;
+                        break;
+                    }
+                }
+#ifdef CONFIG_5GHz_SUPPORT
+                for (i = 0; i < MLAN_CFP_TABLE_SIZE_A; i++)
+                {
+                    if (cfp_table_A[i].code == pmadapter->otp_region->region_code)
+                    {
+                        max_tx_pwr_a = (cfp_table_A[i].cfp)->max_tx_power;
+                        break;
+                    }
+                }
+#endif
+                /* Update the region code and the country code in pmadapter */
+                pmadapter->region_code                = pmadapter->otp_region->region_code;
+                pmadapter->country_code[0]            = pmadapter->otp_region->country_code[0];
+                pmadapter->country_code[1]            = pmadapter->otp_region->country_code[1];
+                pmadapter->country_code[2]            = '\0';
+                pmadapter->domain_reg.country_code[0] = pmadapter->otp_region->country_code[0];
+                pmadapter->domain_reg.country_code[1] = pmadapter->otp_region->country_code[1];
+                pmadapter->domain_reg.country_code[2] = '\0';
+                pmadapter->cfp_code_bg                = pmadapter->otp_region->region_code;
+#ifdef CONFIG_5GHz_SUPPORT
+                pmadapter->cfp_code_a = pmadapter->otp_region->region_code;
+#endif
+                break;
+            case TLV_TYPE_CHAN_ATTR_CFG:
+                /* Skip adding fw cfp tables if they already exist or
+                 * if this TLV has no set data
+                 */
+                if (*data == 0)
+                    break;
+                if (pmadapter->cfp_otp_bg
+#ifdef CONFIG_5GHz_SUPPORT
+                    || pmadapter->cfp_otp_a
+#endif
+                )
+                {
+                    break;
+                }
+
+                ret = pcb->moal_malloc(pmadapter->pmoal_handle,
+                                       pmadapter->tx_power_table_bg_rows * sizeof(chan_freq_power_t), MLAN_MEM_DEF,
+                                       (t_u8 **)&pmadapter->cfp_otp_bg);
+                if (ret != MLAN_STATUS_SUCCESS || !pmadapter->cfp_otp_bg)
+                {
+                    PRINTM(MERROR,
+                           "Memory allocation for storing otp bg"
+                           " table data failed!\n");
+                    break;
+                }
+                /* Save channel usability flags from OTP data in the fw cfp bg
+                 * table and set frequency and max_tx_power values
+                 */
+                for (i = 0; i < pmadapter->tx_power_table_bg_rows; i++)
+                {
+                    (pmadapter->cfp_otp_bg + i)->channel = *data;
+                    if (*data == 14)
+                        (pmadapter->cfp_otp_bg + i)->freq = 2484;
+                    else
+                        (pmadapter->cfp_otp_bg + i)->freq = 2412 + 5 * (*data - 1);
+                    (pmadapter->cfp_otp_bg + i)->max_tx_power = max_tx_pwr_bg;
+                    data++;
+                    (pmadapter->cfp_otp_bg + i)->dynamic.flags = *data;
+                    if (*data & NXP_CHANNEL_DFS)
+                        (pmadapter->cfp_otp_bg + i)->passive_scan_or_radar_detect = MTRUE;
+                    data++;
+                }
+#ifdef CONFIG_5GHz_SUPPORT
+                ret = pcb->moal_malloc(pmadapter->pmoal_handle,
+                                       pmadapter->tx_power_table_a_rows * sizeof(chan_freq_power_t), MLAN_MEM_DEF,
+                                       (t_u8 **)&pmadapter->cfp_otp_a);
+                if (ret != MLAN_STATUS_SUCCESS || !pmadapter->cfp_otp_a)
+                {
+                    PRINTM(MERROR,
+                           "Memory allocation for storing otp a"
+                           " table data failed!\n");
+                    break;
+                }
+                /* Save channel usability flags from OTP data in the fw cfp a
+                 * table and set frequency and max_tx_power values
+                 */
+                for (i = 0; i < pmadapter->tx_power_table_a_rows; i++)
+                {
+                    (pmadapter->cfp_otp_a + i)->channel = *data;
+                    if (*data < 183)
+                        /* 5GHz channels */
+                        (pmadapter->cfp_otp_a + i)->freq = 5035 + 5 * (*data - 7);
+                    else
+                        /* 4GHz channels */
+                        (pmadapter->cfp_otp_a + i)->freq = 4915 + 5 * (*data - 183);
+                    (pmadapter->cfp_otp_a + i)->max_tx_power = max_tx_pwr_a;
+                    data++;
+                    (pmadapter->cfp_otp_a + i)->dynamic.flags = *data;
+                    if (*data & NXP_CHANNEL_DFS)
+                        (pmadapter->cfp_otp_a + i)->passive_scan_or_radar_detect = MTRUE;
+                    data++;
+                }
+#endif
+                break;
+            case TLV_TYPE_POWER_TABLE:
+                /* Skip adding fw power tables if this TLV has no data or
+                 * if they already exists but force reg rule is set in the otp
+                 */
+                if (*data == 0)
+                    break;
+                if (pmadapter->otp_region && pmadapter->otp_region->force_reg && pmadapter->tx_power_table_bg)
+                    break;
+
+                /* Save the tlv data in power tables for band BG and A */
+                tmp = data;
+                i   = 0;
+                while ((i < pmadapter->tx_power_table_bg_rows * pmadapter->tx_power_table_bg_cols) &&
+                       (i < tlv_buf_len) && (*tmp != 36))
+                {
+                    i++;
+                    tmp++;
+                }
+                if (!pmadapter->tx_power_table_bg)
+                {
+                    ret = pcb->moal_malloc(pmadapter->pmoal_handle, i, MLAN_MEM_DEF,
+                                           (t_u8 **)&pmadapter->tx_power_table_bg);
+                    if (ret != MLAN_STATUS_SUCCESS || !pmadapter->tx_power_table_bg)
+                    {
+                        PRINTM(MERROR,
+                               "Memory allocation for the BG-band"
+                               " power table falied!\n");
+                        break;
+                    }
+                }
+                memcpy(pmadapter, pmadapter->tx_power_table_bg, data, i);
+                pmadapter->tx_power_table_bg_size = i;
+                data += i;
+#ifdef CONFIG_5GHz_SUPPORT
+                i = 0;
+                while ((i < pmadapter->tx_power_table_a_rows * pmadapter->tx_power_table_a_cols) &&
+                       (i < (tlv_buf_len - pmadapter->tx_power_table_bg_size)))
+                {
+                    i++;
+                }
+                if (!pmadapter->tx_power_table_a)
+                {
+                    ret = pcb->moal_malloc(pmadapter->pmoal_handle, i, MLAN_MEM_DEF,
+                                           (t_u8 **)&pmadapter->tx_power_table_a);
+                    if (ret != MLAN_STATUS_SUCCESS || !pmadapter->tx_power_table_a)
+                    {
+                        PRINTM(MERROR,
+                               "Memory allocation for the A-band"
+                               " power table failed!\n");
+                        break;
+                    }
+                }
+                memcpy(pmadapter, pmadapter->tx_power_table_a, data, i);
+                pmadapter->tx_power_table_a_size = i;
+#endif
+                break;
+            case TLV_TYPE_POWER_TABLE_ATTR:
+                pmadapter->tx_power_table_bg_rows = ((power_table_attr_t *)data)->rows_2g;
+                pmadapter->tx_power_table_bg_cols = ((power_table_attr_t *)data)->cols_2g;
+#ifdef CONFIG_5GHz_SUPPORT
+                pmadapter->tx_power_table_a_rows = ((power_table_attr_t *)data)->rows_5g;
+                pmadapter->tx_power_table_a_cols = ((power_table_attr_t *)data)->cols_5g;
+#endif
+                break;
+            default:
+                break;
+        }
+        tlv_buf += (sizeof(*head) + tlv_buf_len);
+        tlv_buf_left -= (sizeof(*head) + tlv_buf_len);
+    }
+    if (!pmadapter->cfp_otp_bg || !pmadapter->tx_power_table_bg)
+        goto out;
+    /* Set remaining flags for BG */
+    rows = pmadapter->tx_power_table_bg_rows;
+    cols = pmadapter->tx_power_table_bg_cols;
+
+    for (i = 0; i < rows; i++)
+    {
+        k = (i * cols) + 1;
+        if ((pmadapter->cfp_otp_bg + i)->dynamic.flags & NXP_CHANNEL_DISABLED)
+            continue;
+
+        if (pmadapter->tx_power_table_bg[k + MOD_CCK] == 0)
+            (pmadapter->cfp_otp_bg + i)->dynamic.flags |= NXP_CHANNEL_NO_CCK;
+
+        if (pmadapter->tx_power_table_bg[k + MOD_OFDM_PSK] == 0 &&
+            pmadapter->tx_power_table_bg[k + MOD_OFDM_QAM16] == 0 &&
+            pmadapter->tx_power_table_bg[k + MOD_OFDM_QAM64] == 0)
+        {
+            (pmadapter->cfp_otp_bg + i)->dynamic.flags |= NXP_CHANNEL_NO_OFDM;
+        }
+    }
+out:
+    LEAVE();
+}
+
+/**
+ *  @brief	This function deallocates otp cfp and power tables memory.
+ *
+ *  @param pmadapter	A pointer to mlan_adapter structure
+ */
+void wlan_free_fw_cfp_tables(mlan_adapter *pmadapter)
+{
+    pmlan_callbacks pcb;
+
+    ENTER();
+
+    pcb = &pmadapter->callbacks;
+    if (pmadapter->otp_region)
+        pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->otp_region);
+    if (pmadapter->cfp_otp_bg)
+        pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->cfp_otp_bg);
+    if (pmadapter->tx_power_table_bg)
+        pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->tx_power_table_bg);
+    pmadapter->otp_region             = MNULL;
+    pmadapter->cfp_otp_bg             = MNULL;
+    pmadapter->tx_power_table_bg      = MNULL;
+    pmadapter->tx_power_table_bg_size = 0;
+#ifdef CONFIG_5GHz_SUPPORT
+    if (pmadapter->cfp_otp_a)
+        pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->cfp_otp_a);
+    if (pmadapter->tx_power_table_a)
+        pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->tx_power_table_a);
+    pmadapter->cfp_otp_a             = MNULL;
+    pmadapter->tx_power_table_a      = MNULL;
+    pmadapter->tx_power_table_a_size = 0;
+#endif
+    LEAVE();
+}
+#endif /* OTP_CHANINFO */

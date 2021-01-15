@@ -185,7 +185,6 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -315,15 +314,13 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/sccb</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/ov7725</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/mt9m114</state>
           <state>$PROJ_DIR$/../../../../../../components/video/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/receiver/csi</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
@@ -331,14 +328,11 @@
           <state>$PROJ_DIR$/../../../../../../components/video/camera/receiver</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1177,7 +1171,6 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1307,15 +1300,13 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/sccb</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/ov7725</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/mt9m114</state>
           <state>$PROJ_DIR$/../../../../../../components/video/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/receiver/csi</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
@@ -1323,14 +1314,11 @@
           <state>$PROJ_DIR$/../../../../../../components/video/camera/receiver</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2166,7 +2154,6 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2296,15 +2283,13 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/sccb</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/ov7725</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/mt9m114</state>
           <state>$PROJ_DIR$/../../../../../../components/video/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/receiver/csi</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
@@ -2312,14 +2297,11 @@
           <state>$PROJ_DIR$/../../../../../../components/video/camera/receiver</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3158,7 +3140,6 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1062DVL6A</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3288,15 +3269,13 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/sccb</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/ov7725</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/device/mt9m114</state>
           <state>$PROJ_DIR$/../../../../../../components/video/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera/receiver/csi</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/video/camera</state>
           <state>$PROJ_DIR$/../../../../../../components/video</state>
@@ -3304,14 +3283,11 @@
           <state>$PROJ_DIR$/../../../../../../components/video/camera/receiver</state>
           <state>$PROJ_DIR$/../../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4017,49 +3993,49 @@
   <group>
     <name>video</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/camera/device/sccb/fsl_sccb.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../components/video/camera/device/sccb/fsl_sccb.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/camera/device/ov7725/fsl_ov7725.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/video/camera/device/sccb/fsl_sccb.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/camera/device/ov7725/fsl_ov7725.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/camera/device/mt9m114/fsl_mt9m114.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/video/camera/device/ov7725/fsl_ov7725.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/camera/device/mt9m114/fsl_mt9m114.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/i2c/fsl_video_i2c.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/video/camera/device/mt9m114/fsl_mt9m114.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/i2c/fsl_video_i2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/video/i2c/fsl_video_i2c.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/video/camera/receiver/csi/fsl_csi_camera_adapter.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../components/video/camera/fsl_camera.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/fsl_video_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/video/fsl_video_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/video/fsl_video_common.h</name>
+      <name>$PROJ_DIR$/../../../../../../components/video/fsl_video_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/video/camera/device/fsl_camera_device.h</name>
@@ -4072,12 +4048,24 @@
     </file>
   </group>
   <group>
-    <name>drivers</name>
+    <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+  </group>
+  <group>
+    <name>drivers</name>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_csi.c</name>
@@ -4104,22 +4092,22 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h</name>
@@ -4128,13 +4116,13 @@
   <group>
     <name>device</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/fsl_device_registers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/MIMXRT1062.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/MIMXRT1062_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/system_MIMXRT1062.c</name>
@@ -4144,62 +4132,23 @@
     </file>
   </group>
   <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/utilities/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
     <name>component</name>
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -4212,10 +4161,10 @@
   <group>
     <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1062/xip/fsl_flexspi_nor_boot.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../xip/evkmimxrt1060_flexspi_nor_config.c</name>
@@ -4242,16 +4191,16 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

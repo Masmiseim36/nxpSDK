@@ -48,7 +48,7 @@ typedef struct _usb_host_rndis_instance_struct
     usb_host_interface_handle controlInterfaceHandle;
     usb_host_interface_handle dataInterfaceHandle;
     usb_host_handle hostHandle;
-#if defined(USB_STACK_FREERTOS)
+#if defined(FSL_RTOS_FREE_RTOS)
     EventGroupHandle_t event_group;
     EventGroupHandle_t lwipoutput;
 #endif

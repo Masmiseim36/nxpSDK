@@ -90,7 +90,7 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_S32K1x_LPUART =
 
 };
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Serial communication initialization
 *
@@ -104,7 +104,7 @@ static FMSTR_BOOL _FMSTR_SerialLpuartInit(void)
     return FMSTR_TRUE;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable Serial transmitter
 *
@@ -115,7 +115,7 @@ static void _FMSTR_SerialLpuartEnableTransmit(FMSTR_BOOL enable)
 	LPUART_SetTransmitterCmd(fmstr_serialBaseAddr, enable);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable Serial receiver
 *
@@ -126,7 +126,7 @@ static void _FMSTR_SerialLpuartEnableReceive(FMSTR_BOOL enable)
 	LPUART_SetReceiverCmd(fmstr_serialBaseAddr, enable);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from transmit register empty event
 *
@@ -140,7 +140,7 @@ static void _FMSTR_SerialLpuartEnableTransmitInterrupt(FMSTR_BOOL enable)
         LPUART_SetIntMode(fmstr_serialBaseAddr, LPUART_INT_TX_DATA_REG_EMPTY, 0);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from transmit complete event
 *
@@ -151,7 +151,7 @@ static void _FMSTR_SerialLpuartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable
     // Single-wire communication is not (yet) enabled in this driver.
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from receive register full event
 *
@@ -165,7 +165,7 @@ static void _FMSTR_SerialLpuartEnableReceiveInterrupt(FMSTR_BOOL enable)
     	 LPUART_SetIntMode(fmstr_serialBaseAddr, LPUART_INT_RX_DATA_REG_FULL, 0);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the transmit register is empty, and it's possible to put next char
 *
@@ -176,7 +176,7 @@ static FMSTR_BOOL _FMSTR_SerialLpuartIsTransmitRegEmpty(void)
 	return LPUART_GetStatusFlag(fmstr_serialBaseAddr, LPUART_TX_DATA_REG_EMPTY);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the receive register is full, and it's possible to get received char
 *
@@ -187,7 +187,7 @@ static FMSTR_BOOL _FMSTR_SerialLpuartIsReceiveRegFull(void)
     return LPUART_GetStatusFlag(fmstr_serialBaseAddr, LPUART_RX_DATA_REG_FULL);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the transmitter is still active
 *
@@ -198,7 +198,7 @@ static FMSTR_BOOL _FMSTR_SerialLpuartIsTransmitterActive(void)
 	return LPUART_GetStatusFlag(fmstr_serialBaseAddr, LPUART_TX_COMPLETE);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function puts the char for transmit
 *
@@ -209,7 +209,7 @@ static void _FMSTR_SerialLpuartPutChar(FMSTR_BCHR  ch)
 	LPUART_Putchar9(fmstr_serialBaseAddr, (uint16_t)ch);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function gets the received char
 *
@@ -221,7 +221,7 @@ static FMSTR_BCHR _FMSTR_SerialLpuartGetChar(void)
 	return (unsigned char)(readData & 0xFF);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function sends buffered data
 *
@@ -230,7 +230,7 @@ static void _FMSTR_SerialLpuartFlush(void)
 {
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Assigning FreeMASTER communication module base address
 *
@@ -240,7 +240,7 @@ void FMSTR_SerialSetBaseAddress(LPUART_Type *base)
     fmstr_serialBaseAddr = base;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    API: Interrupt handler call
 *

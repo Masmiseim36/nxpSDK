@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2020, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,10 +29,9 @@ const client_test_t test_a001_attestation_list[] = {
 
 static int         g_test_count = 1;
 
-int32_t psa_initial_attestation_get_token_test(caller_security_t caller)
+int32_t psa_initial_attestation_get_token_test(caller_security_t caller __UNUSED)
 {
-    int         num_checks = sizeof(check1)/sizeof(check1[0]);
-    uint32_t    i;
+    int         i, num_checks = sizeof(check1)/sizeof(check1[0]);
     int32_t     status;
     size_t      token_buffer_size, token_size;
     uint8_t     challenge[PSA_INITIAL_ATTEST_CHALLENGE_SIZE_64+1];
@@ -40,7 +39,7 @@ int32_t psa_initial_attestation_get_token_test(caller_security_t caller)
 
     for (i = 0; i < num_checks; i++)
     {
-        size_t                  challenge_size = check1[i].challenge_size;
+        size_t                  challenge_size = check1[i].challenge_size; //NXP
         
         val->print(PRINT_TEST, "[Check %d] ", g_test_count++);
         val->print(PRINT_TEST, check1[i].test_desc, 0);
@@ -85,10 +84,9 @@ int32_t psa_initial_attestation_get_token_test(caller_security_t caller)
     return VAL_STATUS_SUCCESS;
 }
 
-int32_t psa_initial_attestation_get_token_size_test(caller_security_t caller)
+int32_t psa_initial_attestation_get_token_size_test(caller_security_t caller __UNUSED)
 {
-    int         num_checks = sizeof(check2)/sizeof(check2[0]);
-    uint32_t    i;
+    int         i, num_checks = sizeof(check2)/sizeof(check2[0]);
     int32_t     status;
     size_t      token_size;
 

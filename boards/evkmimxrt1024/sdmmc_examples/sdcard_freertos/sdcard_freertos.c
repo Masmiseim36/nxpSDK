@@ -12,10 +12,10 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "task.h"
-#include "board.h"
-#include "sdmmc_config.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+#include "sdmmc_config.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions

@@ -3,6 +3,9 @@
 
 @section LittlevGL LittlevGL for KSDK
 
+  - 7.4.0_rev1
+    - Integrate LittlevGL 7.4.0 to SDK.
+
   - 7.0.0_rev1
 
     - Integrate LittlevGL 7.0.0 to SDK.

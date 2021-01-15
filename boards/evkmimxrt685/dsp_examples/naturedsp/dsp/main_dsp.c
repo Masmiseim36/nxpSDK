@@ -5,10 +5,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "NatureDSP_Signal_id.h"
-
 #include "fsl_debug_console.h"
 #include "srtm_naturedsp_test.h"
+
+#include "NatureDSP_Signal.h"
 
 #include <xtensa/config/core.h>
 #include <xtensa/xos.h>

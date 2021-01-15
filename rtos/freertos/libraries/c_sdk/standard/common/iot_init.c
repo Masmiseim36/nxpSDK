@@ -1,5 +1,5 @@
 /*
- * FreeRTOS Common V1.1.1
+ * FreeRTOS Common V1.1.2
  * Copyright (C) 2020 Amazon.com, Inc. or its affiliates.  All Rights Reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -72,7 +72,7 @@ bool IotSdk_Init( void )
 {
     IOT_FUNCTION_ENTRY( bool, true );
     IotTaskPoolError_t taskPoolStatus = IOT_TASKPOOL_SUCCESS;
-    IotTaskPoolInfo_t taskPoolInfo = IOT_TASKPOOL_INFO_INITIALIZER_SMALL;
+    IotTaskPoolInfo_t taskPoolInfo = IOT_TASKPOOL_INFO_INITIALIZER_LARGE;
 
     /* Initialize the mutex for generic atomic operations if needed. */
     #if IOT_ATOMIC_GENERIC == 1

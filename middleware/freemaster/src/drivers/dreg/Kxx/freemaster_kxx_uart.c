@@ -82,7 +82,7 @@ const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_DREG_KXX_UART =
 
 };
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Serial communication initialization
 *
@@ -110,7 +110,7 @@ static FMSTR_BOOL _FMSTR_SerialUartInit(void)
     return FMSTR_TRUE;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable Serial transmitter
 *
@@ -134,7 +134,7 @@ static void _FMSTR_SerialUartEnableTransmit(FMSTR_BOOL enable)
 #endif
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable Serial receiver
 *
@@ -155,7 +155,7 @@ static void _FMSTR_SerialUartEnableReceive(FMSTR_BOOL enable)
 #endif    
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from transmit register empty event
 *
@@ -169,7 +169,7 @@ static void _FMSTR_SerialUartEnableTransmitInterrupt(FMSTR_BOOL enable)
         fmstr_serialBaseAddr->C2 &= ~FMSTR_UART_C2_TIE_MASK;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from transmit complete event
 *
@@ -183,7 +183,7 @@ static void _FMSTR_SerialUartEnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
         fmstr_serialBaseAddr->C2 &= ~FMSTR_UART_C2_TCIE_MASK;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Enable/Disable interrupt from receive register full event
 *
@@ -197,7 +197,7 @@ static void _FMSTR_SerialUartEnableReceiveInterrupt(FMSTR_BOOL enable)
         fmstr_serialBaseAddr->C2 &= ~FMSTR_UART_C2_RIE_MASK;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the transmit register is empty, and it's possible to put next char
 *
@@ -208,7 +208,7 @@ static FMSTR_BOOL _FMSTR_SerialUartIsTransmitRegEmpty(void)
     return fmstr_serialBaseAddr->S1 & FMSTR_UART_S1_TDRE_MASK;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the receive register is full, and it's possible to get received char
 *
@@ -219,7 +219,7 @@ static FMSTR_BOOL _FMSTR_SerialUartIsReceiveRegFull(void)
     return fmstr_serialBaseAddr->S1 & FMSTR_UART_S1_RDRF_MASK;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Returns TRUE if the transmitter is still active
 *
@@ -230,7 +230,7 @@ static FMSTR_BOOL _FMSTR_SerialUartIsTransmitterActive(void)
     return !(fmstr_serialBaseAddr->S1 & FMSTR_UART_S1_TC_MASK);
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function puts the char for transmit
 *
@@ -241,7 +241,7 @@ static void _FMSTR_SerialUartPutChar(FMSTR_BCHR  ch)
     fmstr_serialBaseAddr->D = ch;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function gets the received char
 *
@@ -251,7 +251,7 @@ static FMSTR_BCHR _FMSTR_SerialUartGetChar(void)
     return fmstr_serialBaseAddr->D;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    The function sends buffered data
 *
@@ -260,7 +260,7 @@ static void _FMSTR_SerialUartFlush(void)
 {
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    Assigning FreeMASTER communication module base address
 *
@@ -270,7 +270,7 @@ void FMSTR_SerialSetBaseAddress(void *base)
     fmstr_serialBaseAddr = (FMSTR_UART_Type*)base;
 }
 
-/**************************************************************************//*!
+/******************************************************************************
 *
 * @brief    API: Interrupt handler call
 *
@@ -283,7 +283,7 @@ void FMSTR_SerialSetBaseAddress(void *base)
 *
 ******************************************************************************/
 
-void FMSTR_SerialIsr()
+void FMSTR_SerialIsr(void)
 {
     /* process incomming or just transmitted byte */
     #if (FMSTR_LONG_INTR) || (FMSTR_SHORT_INTR)
@@ -299,7 +299,7 @@ void FMSTR_SerialSetBaseAddress(void *base)
     FMSTR_UNUSED(base);
 }
 
-void FMSTR_SerialIsr()
+void FMSTR_SerialIsr(void)
 {
 }
 

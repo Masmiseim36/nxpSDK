@@ -18,15 +18,15 @@ Files:
 
 Toolchains supported
 ====================
-- MCUXpresso IDE 11.0.0
-- IAR Embedded Workbench for ARM 8.32.4
-- Keil uVision MDK 5.28
-- ArmGCC - GNU Tools ARM Embedded 6 2017-q2
+- MCUXpresso IDE
+- IAR Embedded Workbench for ARM
+- Keil uVision MDK
+- ArmGCC - GNU Tools ARM Embedded
 
 Hardware requirements
 =====================
 - Mini/micro USB cable
-- EVKB-IMXRT1050 or EVK-IMXRT1060 board
+- EVK-IMXRT1060 board
 - Personal computer (Windows)
 - Python 3.x installed
 - Glow AOT tools installed for Windows and added to system PATH variable:
@@ -68,7 +68,7 @@ Prepare the demo
 
 3. Perform profiling on the Mnist dataset using the "image-classifier" Glow tool.
    Open a Windows Command Prompt with the current path set within the project 
-   directory "MIMXRT1052xxxxB_Glow_LeNet" and run the following command:
+   directory and run the following command:
 
 image-classifier model\dataset\*.png ^
     -image-mode=0to1 -image-layout=NCHW ^
@@ -93,7 +93,7 @@ model-compiler -model=model\lenet_mnist -model-input=data,float,[1,1,28,28] ^
    which contains the digit "9":
 
 python scripts\glow_process_image.py ^
-    -image-path=model\dataset\9_1088.png ^
+    -input-path=model\dataset\9_1088.png ^
     -output-path=source\input_image.inc ^
     -image-mode=0to1 -image-layout=NCHW -image-channel-order=RGB
 

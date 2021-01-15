@@ -95,12 +95,13 @@ tIntegerType Add(tIntegerType a, tIntegerType b) {
   return a + b;
 }
 
-// Integer subtraction. Not saturating. Overflow is undefined behavior.
+// Integer multiplication. Not saturating. Overflow is undefined behavior.
 template <typename tIntegerType>
 tIntegerType Mul(tIntegerType a, tIntegerType b) {
   return a * b;
 }
 
+// Integer subtraction. Not saturating. Overflow is undefined behavior.
 template <typename tIntegerType>
 tIntegerType Sub(tIntegerType a, tIntegerType b) {
   return a - b;
@@ -266,6 +267,16 @@ inline std::int16_t SaturatingAdd(std::int16_t a, std::int16_t b) {
   return static_cast<std::int16_t>(
       std::min(static_cast<std::int32_t>(32767),
                std::max(static_cast<std::int32_t>(-32768), sum)));
+}
+
+template <>
+inline std::int8_t SaturatingAdd(std::int8_t a, std::int8_t b) {
+  std::int16_t a16 = a;
+  std::int16_t b16 = b;
+  std::int16_t sum = a16 + b16;
+  return static_cast<std::int8_t>(std::min(
+      static_cast<int16_t>(std::numeric_limits<int8_t>::max()),
+      std::max(static_cast<int16_t>(std::numeric_limits<int8_t>::min()), sum)));
 }
 
 // Returns a+b, saturating if the integers are 16bit or narrower,
@@ -767,13 +778,14 @@ FixedPoint<tRawType, 0> exp_on_negative_values(
         result * kMultiplier, result);                                      \
   }
 
-  GEMMLOWP_EXP_BARREL_SHIFTER(-2, 1672461947);
-  GEMMLOWP_EXP_BARREL_SHIFTER(-1, 1302514674);
-  GEMMLOWP_EXP_BARREL_SHIFTER(+0, 790015084);
-  GEMMLOWP_EXP_BARREL_SHIFTER(+1, 290630308);
-  GEMMLOWP_EXP_BARREL_SHIFTER(+2, 39332535);
-  GEMMLOWP_EXP_BARREL_SHIFTER(+3, 720401);
-  GEMMLOWP_EXP_BARREL_SHIFTER(+4, 242);
+  // Constants below are Q0 representations of negative exp fractionals:
+  GEMMLOWP_EXP_BARREL_SHIFTER(-2, 1672461947);  // exp(-1/4)
+  GEMMLOWP_EXP_BARREL_SHIFTER(-1, 1302514674);  // exp(-1/2)
+  GEMMLOWP_EXP_BARREL_SHIFTER(+0, 790015084);   // exp(-1)
+  GEMMLOWP_EXP_BARREL_SHIFTER(+1, 290630308);   // exp(-2)
+  GEMMLOWP_EXP_BARREL_SHIFTER(+2, 39332535);    // exp(-4)
+  GEMMLOWP_EXP_BARREL_SHIFTER(+3, 720401);      // exp(-8)
+  GEMMLOWP_EXP_BARREL_SHIFTER(+4, 242);         // exp(-16)
 
 #undef GEMMLOWP_EXP_BARREL_SHIFTER
 

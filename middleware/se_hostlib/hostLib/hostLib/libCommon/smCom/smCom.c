@@ -1,18 +1,11 @@
+/*
+ * Copyright 2016-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 /**
- * @file smCom.c
- * @author NXP Semiconductors
- * @version 1.0
- * @par License
- * Copyright 2016,2020 NXP
- *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
- *
  * @par Description
  * Implements installable communication layer to exchange APDU's between Host and Secure Module.
  * Allows the top half of the Host Library to be independent of the actual interconnect
@@ -22,13 +15,22 @@
 #include "smCom.h"
 #include "nxLog_smCom.h"
 
-#if (__GNUC__  && !AX_EMBEDDED)
+#if AX_EMBEDDED && USE_RTOS
+#include "FreeRTOS.h"
+#include "FreeRTOSIPConfig.h"
+#include "semphr.h"
+#include "task.h"
+#endif
+
+#if (__GNUC__ && !AX_EMBEDDED)
 #include<pthread.h>
     /* Only for base session with os */
     static pthread_mutex_t gSmComlock;
+#elif AX_EMBEDDED && USE_RTOS
+    static SemaphoreHandle_t gSmComlock;
 #endif
 
-#if (__GNUC__  && !AX_EMBEDDED)
+#if (__GNUC__ && !AX_EMBEDDED)
 #define LOCK_TXN() \
     LOG_D("Trying to Acquire Lock thread: %ld", pthread_self()); \
     pthread_mutex_lock(&gSmComlock); \
@@ -38,6 +40,19 @@
     LOG_D("Trying to Released Lock by thread: %ld", pthread_self()); \
     pthread_mutex_unlock(&gSmComlock); \
     LOG_D("LOCK Released by thread: %ld", pthread_self());
+#elif AX_EMBEDDED && USE_RTOS
+#define LOCK_TXN()                                               \
+    LOG_D("Trying to Acquire Lock");                             \
+    if (xSemaphoreTake(gSmComlock, portMAX_DELAY) == pdTRUE)     \
+        LOG_D("LOCK Acquired");                                  \
+    else                                                         \
+        LOG_D("LOCK Acquisition failed");
+#define UNLOCK_TXN()                                             \
+    LOG_D("Trying to Released Lock");                            \
+    if (xSemaphoreGive(gSmComlock) == pdTRUE)                    \
+        LOG_D("LOCK Released");                                  \
+    else                                                         \
+        LOG_D("LOCK Releasing failed");
 #else
 #define LOCK_TXN() LOG_D("no lock mode");
 #define UNLOCK_TXN() LOG_D("no lock mode");
@@ -50,27 +65,36 @@ static ApduTransceiveRawFunction_t pSmCom_TransceiveRaw = NULL;
  * Install interconnect and protocol specific implementation of APDU transfer functions.
  *
  */
-void smCom_Init(ApduTransceiveFunction_t pTransceive, ApduTransceiveRawFunction_t pTransceiveRaw)
+U16 smCom_Init(ApduTransceiveFunction_t pTransceive, ApduTransceiveRawFunction_t pTransceiveRaw)
 {
-
-#if (__GNUC__  && !AX_EMBEDDED)
+    U16 ret = SMCOM_COM_INIT_FAILED;
+#if (__GNUC__ && !AX_EMBEDDED)
     if (pthread_mutex_init(&gSmComlock, NULL) != 0)
     {
         LOG_E("\n mutex init has failed");
-        return;
+        return ret;
     }
-    else {
-        LOG_D("Mutext Init successfull");
+#elif AX_EMBEDDED && USE_RTOS
+    gSmComlock = xSemaphoreCreateMutex();
+    if (gSmComlock == NULL) {
+        LOG_E("\n xSemaphoreCreateMutex failed");
+        return ret;
     }
 #endif
     pSmCom_Transceive = pTransceive;
     pSmCom_TransceiveRaw = pTransceiveRaw;
+    ret = SMCOM_OK;
+    return ret;
 }
 
 void smCom_DeInit(void)
 {
-#if (__GNUC__  && !AX_EMBEDDED)
+#if (__GNUC__ && !AX_EMBEDDED)
     pthread_mutex_destroy(&gSmComlock);
+#elif AX_EMBEDDED && USE_RTOS
+    if (gSmComlock != NULL) {
+    	vSemaphoreDelete(gSmComlock);
+    }
 #endif
 }
 

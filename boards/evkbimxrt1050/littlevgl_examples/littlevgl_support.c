@@ -13,13 +13,16 @@
 #endif
 
 #include "fsl_elcdif.h"
-#if LV_USE_GPU
-#include "fsl_pxp.h"
-#endif
 #include "fsl_lpi2c.h"
 #include "fsl_gpio.h"
+#include "fsl_cache.h"
 #include "fsl_ft5406_rt.h"
 #include "fsl_debug_console.h"
+
+#if LV_USE_GPU && LV_USE_GPU_NXP_PXP
+#include "src/lv_gpu/lv_gpu_nxp_pxp.h"
+#include "src/lv_gpu/lv_gpu_nxp_pxp_osa.h"
+#endif
 
 /*******************************************************************************
  * Definitions
@@ -51,6 +54,29 @@
 #define LCD_BL_GPIO     GPIO2
 #define LCD_BL_GPIO_PIN 31
 
+/* Cache line size. */
+#ifndef FSL_FEATURE_L2CACHE_LINESIZE_BYTE
+#define FSL_FEATURE_L2CACHE_LINESIZE_BYTE 0
+#endif
+#ifndef FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
+#define FSL_FEATURE_L1DCACHE_LINESIZE_BYTE 0
+#endif
+
+#if (FSL_FEATURE_L2CACHE_LINESIZE_BYTE > FSL_FEATURE_L1DCACHE_LINESIZE_BYTE)
+#define DEMO_CACHE_LINE_SIZE FSL_FEATURE_L2CACHE_LINESIZE_BYTE
+#else
+#define DEMO_CACHE_LINE_SIZE FSL_FEATURE_L1DCACHE_LINESIZE_BYTE
+#endif
+
+#if (DEMO_CACHE_LINE_SIZE > 0)
+#define DEMO_FB_ALIGN DEMO_CACHE_LINE_SIZE
+#else
+#define DEMO_FB_ALIGN 4U
+#endif
+
+#define DEMO_FB_SIZE \
+    (((LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL) + DEMO_CACHE_LINE_SIZE - 1) & ~(DEMO_CACHE_LINE_SIZE - 1))
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -66,13 +92,6 @@ static void DEMO_InitTouch(void);
 
 static bool DEMO_ReadTouch(lv_indev_drv_t *drv, lv_indev_data_t *data);
 
-#if LV_USE_GPU
-static void DEMO_InitPxp(void);
-
-static void DEMO_GPU_Fill(
-    lv_disp_drv_t *disp_drv, lv_color_t *dest_buf, lv_coord_t dest_width, const lv_area_t *fill_area, lv_color_t color);
-#endif
-
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -81,15 +100,8 @@ static volatile bool s_framePending;
 static SemaphoreHandle_t s_frameSema;
 #endif
 static ft5406_rt_handle_t touchHandle;
-AT_NONCACHEABLE_SECTION_ALIGN(static uint8_t s_frameBuffer[2][LCD_WIDTH * LCD_HEIGHT * LCD_FB_BYTE_PER_PIXEL], 64);
 
-#if LV_USE_GPU
-#if defined(FSL_RTOS_FREE_RTOS)
-static SemaphoreHandle_t s_pxpIdle;
-#else
-static volatile bool s_pxpIdle;
-#endif
-#endif
+SDK_ALIGN(static uint8_t s_frameBuffer[2][DEMO_FB_SIZE], DEMO_FB_ALIGN);
 
 /*******************************************************************************
  * Code
@@ -110,10 +122,6 @@ void lv_port_disp_init(void)
      * -----------------------*/
     DEMO_InitLcd();
 
-#if LV_USE_GPU
-    DEMO_InitPxp();
-#endif
-
     /*-----------------------------------
      * Register the display in LittlevGL
      *----------------------------------*/
@@ -130,15 +138,15 @@ void lv_port_disp_init(void)
     /*Used to copy the buffer's content to the display*/
     disp_drv.flush_cb = DEMO_FlushDisplay;
 
-#if LV_USE_GPU
-    disp_drv.gpu_fill_cb = DEMO_GPU_Fill;
-#endif
-
     /*Set a display buffer*/
     disp_drv.buffer = &disp_buf;
 
     /*Finally register the driver*/
     lv_disp_drv_register(&disp_drv);
+
+#if LV_USE_GPU && LV_USE_GPU_NXP_PXP
+    lv_gpu_nxp_pxp_init(&pxp_default_cfg);
+#endif
 }
 
 void LCDIF_IRQHandler(void)
@@ -263,108 +271,10 @@ static void DEMO_InitLcd(void)
     DEMO_InitLcdBackLight();
 }
 
-#if LV_USE_GPU
-static void DEMO_InitPxp(void)
-{
-#if defined(FSL_RTOS_FREE_RTOS)
-    s_pxpIdle = xSemaphoreCreateBinary();
-    if (NULL == s_pxpIdle)
-    {
-        PRINTF("PXP semaphore create failed\r\n");
-        assert(0);
-    }
-
-    NVIC_SetPriority(PXP_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
-#endif
-
-    PXP_Init(PXP);
-
-    /* Disable CSC1, it is enabled by default. */
-    PXP_EnableCsc1(PXP, false);
-
-    PXP_EnableInterrupts(PXP, kPXP_CompleteInterruptEnable);
-
-    NVIC_EnableIRQ(PXP_IRQn);
-}
-
-void PXP_IRQHandler(void)
-{
-#if defined(FSL_RTOS_FREE_RTOS)
-    BaseType_t taskAwake = pdFALSE;
-#endif
-
-    if (kPXP_CompleteFlag & PXP_GetStatusFlags(PXP))
-    {
-        PXP_ClearStatusFlags(PXP, kPXP_CompleteFlag);
-
-#if defined(FSL_RTOS_FREE_RTOS)
-        xSemaphoreGiveFromISR(s_pxpIdle, &taskAwake);
-
-        portYIELD_FROM_ISR(taskAwake);
-#else
-        s_pxpIdle = true;
-#endif
-    }
-}
-
-static uint32_t DEMO_LVGLColorToXRGB8888(lv_color_t color)
-{
-    return ((uint32_t)color.ch.blue << 3U) | ((uint32_t)color.ch.green << (8U + 2U)) |
-           ((uint32_t)color.ch.red << (16U + 3U));
-}
-
-static void DEMO_GPU_Fill(
-    lv_disp_drv_t *disp_drv, lv_color_t *dest_buf, lv_coord_t dest_width, const lv_area_t *fill_area, lv_color_t color)
-{
-    /*
-     * To fill an area with const color, the process surface and alpha surface
-     * are disabled, the output buffer buffer is configured to the fill area,
-     * and the background color is set as the color to fill.
-     */
-
-    pxp_output_buffer_config_t outputConfig = {
-        .pixelFormat    = kPXP_OutputPixelFormatRGB565,
-        .interlacedMode = kPXP_OutputProgressive,
-        .buffer0Addr    = (uint32_t)(dest_buf + dest_width * fill_area->y1 + fill_area->x1),
-        .buffer1Addr    = NULL,
-        .pitchBytes     = dest_width * sizeof(lv_color_t),
-        .width          = fill_area->x2 - fill_area->x1 + 1,
-        .height         = fill_area->y2 - fill_area->y1 + 1,
-    };
-
-    PXP_SetOutputBufferConfig(PXP, &outputConfig);
-
-    /* Disable AS. */
-    PXP_SetAlphaSurfacePosition(PXP, 0xFFFFU, 0xFFFFU, 0U, 0U);
-
-    /* Disable PS. */
-    PXP_SetProcessSurfacePosition(PXP, 0xFFFFU, 0xFFFFU, 0U, 0U);
-
-    PXP_SetProcessSurfaceBackGroundColor(PXP, DEMO_LVGLColorToXRGB8888(color));
-
-#if !defined(FSL_RTOS_FREE_RTOS)
-    s_pxpIdle = false;
-#endif
-
-    PXP_Start(PXP);
-
-#if defined(FSL_RTOS_FREE_RTOS)
-    if (xSemaphoreTake(s_pxpIdle, portMAX_DELAY) != pdTRUE)
-    {
-        PRINTF("PXP semaphore wait failed\r\n");
-        while (1)
-            ;
-    }
-#else
-    while (false == s_pxpIdle)
-    {
-    }
-#endif
-}
-#endif
-
 static void DEMO_FlushDisplay(lv_disp_drv_t *disp_drv, const lv_area_t *area, lv_color_t *color_p)
 {
+    DCACHE_CleanInvalidateByRange((uint32_t)color_p, DEMO_FB_SIZE);
+
     ELCDIF_SetNextBufferAddr(LCDIF, (uint32_t)color_p);
 
     s_framePending = true;

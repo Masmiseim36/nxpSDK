@@ -6,6 +6,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_codec_common.h"
 #include "fsl_cs42888.h"
@@ -19,7 +20,6 @@
 #include "fsl_inputmux.h"
 #include <stdbool.h>
 #include "fsl_gpio.h"
-#include "pin_mux.h"
 #include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
@@ -431,6 +431,7 @@ static void DEMO_InitCS42888(void)
     if (CODEC_Init(&s_codecHandle, &boardCodecConfig) != kStatus_Success)
     {
         PRINTF("CODEC_Init failed!\r\n");
+        assert(false);
     }
 }
 

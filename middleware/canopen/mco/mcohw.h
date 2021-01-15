@@ -3,7 +3,7 @@ MODULE:    MCOHW
 CONTAINS:  Hardware driver specification for MicroCANopen
            The specific implementations are named mcohwXXX.c, where
            XXX represents the CAN hardware used.
-COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2019
+COPYRIGHT: (c) Embedded Systems Academy (EmSA) 2002-2020
            All rights reserved. www.em-sa.com/nxp
 DISCLAIM:  Read and understand our disclaimer before using this code!
            www.esacademy.com/disclaim.htm
@@ -12,9 +12,9 @@ DISCLAIM:  Read and understand our disclaimer before using this code!
 LICENSE:   THIS IS THE NXP SDK VERSION OF MICROCANOPEN PLUS
            Licensed under a modified BSD License. See LICENSE.INFO
            file in the project root for full license information.
-VERSION:   7.01, EmSA 02-APR-20
-           $LastChangedDate: 2020-04-02 17:30:41 +0200 (Thu, 02 Apr 2020) $
-           $LastChangedRevision: 4909 $
+VERSION:   7.10, ESA 20-SEP-02
+           $LastChangedDate: 2020-09-03 22:04:52 +0200 (Thu, 03 Sep 2020) $
+           $LastChangedRevision: 5038 $
 
 Implementation recommendations:
 
@@ -94,7 +94,7 @@ RETURNS: 1 if filter was set
            (in this case HW will receive EVERY CAN message)
          0 if no more filter is available
 **************************************************************************/
-uint8_t MCOHW_SetCANFilter(uint16_t CANID // CAN-ID to be received by filter
+uint8_t MCOHW_SetCANFilter(COBID_TYPE CANID // CAN-ID to be received by filter
 );
 
 /**************************************************************************
@@ -105,7 +105,7 @@ DOES:    This function implements the deletion of a previously set CAN ID
 RETURNS: 1 if filter was deleted
          0 if filter could not be deleted
 **************************************************************************/
-uint8_t MCOHW_ClearCANFilter(uint16_t CANID);
+uint8_t MCOHW_ClearCANFilter(COBID_TYPE CANID);
 
 #if defined(USE_CANOPEN_FD) && (USE_CANOPEN_FD == 1)
 /**************************************************************************
@@ -117,8 +117,8 @@ RETURNS: 1 if filter was set
            (in this case HW will receive EVERY CAN message)
          0 if no more filter is available
 **************************************************************************/
-uint8_t MCOHW_SetCANFilterRange(uint16_t CANID_Start, // start of identifier range
-                                uint16_t CANID_End    // end of identifier range
+uint8_t MCOHW_SetCANFilterRange(COBID_TYPE CANID_Start, // start of identifier range
+                                COBID_TYPE CANID_End    // end of identifier range
 );
 #endif // USE_CANOPEN_FD
 
@@ -202,6 +202,18 @@ uint16_t time_now;
   }
 }
 **************************************************************************/
+
+#if USE_SYNC_PRODUCER
+/**************************************************************************
+DOES:    Activates the SYNC producer.
+NOTE:    Sync signal is only produced while MY_NMT_STATE is NMTSTATE_OP.
+RETURNS: Notrhing.
+**************************************************************************/
+void MCOHW_SetSyncProducer(COBID_TYPE canid, // CAN ID used for SYNC production
+                           uint32_t cycle,   // SYNC cycle time in microseconds
+                           uint8_t cntovr    // SYNC overflow counter, zero for none used
+);
+#endif
 
 #if MGR_MONITOR_ALL_NODES
 /**************************************************************************

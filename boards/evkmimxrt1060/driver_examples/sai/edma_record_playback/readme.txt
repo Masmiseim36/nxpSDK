@@ -6,10 +6,10 @@ In this example, one sai instance record the audio data from input and playbacks
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -51,6 +51,3 @@ SAI example finished!
 
 Note:
 Examples can't be downloaded again after dowmloading this case by MCUXpresso IDE. Please erase flash by serial download mode(SW7:0001b). This issue will be fixed in later release.
-Customization options
-=====================
-

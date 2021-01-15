@@ -73,7 +73,7 @@ void ex_sss_main_ksdk_bm()
     PUF_GetDefaultConfig(&conf);
     srand(0xbabadeda);
 
-    if(kStatus_Success != PUF_Init(PUF, &conf)) {
+    if (kStatus_Success != PUF_Init(PUF, &conf)) {
         LOG_E("PUF_Init failed");
     }
 #endif

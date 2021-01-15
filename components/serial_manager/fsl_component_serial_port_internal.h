@@ -108,19 +108,19 @@ void Serial_SwoIsrFunction(serial_handle_t serialHandle);
 #endif
 #endif
 
-#if (defined(SERIAL_PORT_TYPE_USBCDC_VIRTUAL) && (SERIAL_PORT_TYPE_USBCDC_VIRTUAL > 0U))
-serial_manager_status_t Serial_UsbCdcVirtualInit(serial_handle_t serialHandle, void *config);
-serial_manager_status_t Serial_UsbCdcVirtualDeinit(serial_handle_t serialHandle);
-serial_manager_status_t Serial_UsbCdcVirtualWrite(serial_handle_t serialHandle, uint8_t *buffer, uint32_t length);
-serial_manager_status_t Serial_UsbCdcVirtualRead(serial_handle_t serialHandle, uint8_t *buffer, uint32_t length);
-serial_manager_status_t Serial_UsbCdcVirtualCancelWrite(serial_handle_t serialHandle);
-serial_manager_status_t Serial_UsbCdcVirtualInstallTxCallback(serial_handle_t serialHandle,
-                                                              serial_manager_callback_t callback,
-                                                              void *callbackParam);
-serial_manager_status_t Serial_UsbCdcVirtualInstallRxCallback(serial_handle_t serialHandle,
-                                                              serial_manager_callback_t callback,
-                                                              void *callbackParam);
-void Serial_UsbCdcVirtualIsrFunction(serial_handle_t serialHandle);
+#if (defined(SERIAL_PORT_TYPE_VIRTUAL) && (SERIAL_PORT_TYPE_VIRTUAL > 0U))
+serial_manager_status_t Serial_PortVirtualInit(serial_handle_t serialHandle, void *config);
+serial_manager_status_t Serial_PortVirtualDeinit(serial_handle_t serialHandle);
+serial_manager_status_t Serial_PortVirtualWrite(serial_handle_t serialHandle, uint8_t *buffer, uint32_t length);
+serial_manager_status_t Serial_PortVirtualRead(serial_handle_t serialHandle, uint8_t *buffer, uint32_t length);
+serial_manager_status_t Serial_PortVirtualCancelWrite(serial_handle_t serialHandle);
+serial_manager_status_t Serial_PortVirtualInstallTxCallback(serial_handle_t serialHandle,
+                                                            serial_manager_callback_t callback,
+                                                            void *callbackParam);
+serial_manager_status_t Serial_PortVirtualInstallRxCallback(serial_handle_t serialHandle,
+                                                            serial_manager_callback_t callback,
+                                                            void *callbackParam);
+void Serial_PortVirtualIsrFunction(serial_handle_t serialHandle);
 #endif
 
 #if defined(__cplusplus)

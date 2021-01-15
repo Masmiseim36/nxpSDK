@@ -5,10 +5,10 @@ It could be compared with the project powerquad_benckmark_sw_matrix to show the 
 
 Toolchain supported
 ===================
-- MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.5
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.3.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -34,4 +34,25 @@ Prepare the Demo
 
 Running the demo
 ================
-The message about error or success will be output to the terminal.
+NOTE: Depending on the toolchain configuration, the benchmark result might be different.
+~~~~~~~~~~~~~~~~~~~~~
+CMSIS DSP benchmark matrix test start.
+arm_mat_add_q15Test: xxx
+arm_mat_add_q31Test: xxx
+arm_mat_add_f32Test: xxx
+arm_mat_sub_q15Test: xxx
+arm_mat_sub_q31Test: xxx
+arm_mat_sub_f32Test: xxx
+arm_mat_mult_q15Test: xxx
+arm_mat_mult_q31Test: xxx
+arm_mat_mult_f32Test: xxx
+arm_mat_inverse_f32Test: xxx
+arm_mat_trans_q15Test: xxx
+arm_mat_trans_q31Test: xxx
+arm_mat_trans_f32Test: xxx
+arm_mat_scale_q15Test: xxx
+arm_mat_scale_q31Test: xxx
+arm_mat_scale_f32Test: xxx
+
+CMSIS DSP benchmark matrix test succeeded.
+~~~~~~~~~~~~~~~~~~~~~

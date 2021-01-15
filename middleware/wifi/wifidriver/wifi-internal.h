@@ -27,7 +27,7 @@
 #ifndef __WIFI_INTERNAL_H__
 #define __WIFI_INTERNAL_H__
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 #include <wm_os.h>
 #include <wifi_events.h>
@@ -110,6 +110,41 @@ typedef struct
     t_u8 chan_sw_count;
     /** Sniffer channel number */
     t_u8 chan_num;
+    /** HT Capability Info */
+    t_u16 ht_cap_info;
+#ifdef CONFIG_WIFI_FW_DEBUG
+    /** This function mount USB device.
+     *
+     * return WM_SUCCESS on success
+     * return -WM_FAIL on failure.
+     */
+    int (*wifi_usb_mount_cb)();
+    /** This function will open file for writing FW dump.
+     *
+     * \param[in] test_file_name Name of file to write FW dump data.
+     *
+     * \return WM_SUCCESS if opening of file is successful.
+     * \return -WM_FAIL in case of failure.
+     */
+    int (*wifi_usb_file_open_cb)(char *test_file_name);
+    /** This function will write data to file opened using wifi_usb_file_open_cb()
+     *
+     * \param[in] data Buffer containing FW dump data.
+     * \param[in] data_len Length of data that needs to be written.
+     *
+     * \return WM_SUCCESS if write is successful
+     * \return -WM_FAIL in case of failure.
+     */
+    int (*wifi_usb_file_write_cb)(uint8_t *data, size_t data_len);
+    /** This function will close the file on which FW dump is written.
+     *
+     * \note This will close file that is opened using wifi_usb_file_open_cb().
+     *
+     * \return WM_SUCCESS on success.
+     * \return -WM_FAIL on failure.
+     */
+    int (*wifi_usb_file_close_cb)();
+#endif
 } wm_wifi_t;
 
 extern wm_wifi_t wm_wifi;

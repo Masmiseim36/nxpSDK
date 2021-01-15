@@ -29,7 +29,7 @@
 
 #include "freemaster_serial_qsci.h"
 
-#if (!(FMSTR_DISABLE))
+#if FMSTR_DISABLE == 0
 
 #include "fsl_common.h"
 #include "fsl_qsci.h"
@@ -38,23 +38,23 @@
 #include "freemaster_serial.h"
 
 /******************************************************************************
-* Adapter configuration
-******************************************************************************/
+ * Adapter configuration
+ ******************************************************************************/
 
 /***********************************
-*  local variables
-***********************************/
+ *  local variables
+ ***********************************/
 
 /* Serial base address */
 #ifdef FMSTR_SERIAL_BASE
-    static QSCI_Type *fmstr_serialBaseAddr = FMSTR_SERIAL_BASE;
+static QSCI_Type *fmstr_serialBaseAddr = FMSTR_SERIAL_BASE;
 #else
-    static QSCI_Type *fmstr_serialBaseAddr = NULL;
+static QSCI_Type *fmstr_serialBaseAddr = NULL;
 #endif
 
 /***********************************
-*  local function prototypes
-***********************************/
+ *  local function prototypes
+ ***********************************/
 
 /* Interface function - Initialization of serial UART driver adapter */
 static FMSTR_BOOL _FMSTR_QSCIInit(void);
@@ -66,220 +66,233 @@ static void _FMSTR_QSCIEnableReceiveInterrupt(FMSTR_BOOL enable);
 static FMSTR_BOOL _FMSTR_QSCIIsTransmitRegEmpty(void);
 static FMSTR_BOOL _FMSTR_QSCIIsReceiveRegFull(void);
 static FMSTR_BOOL _FMSTR_QSCIIsTransmitterActive(void);
-static void _FMSTR_QSCIPutChar(FMSTR_BCHR  ch);
+static void _FMSTR_QSCIPutChar(FMSTR_BCHR ch);
 static FMSTR_BCHR _FMSTR_QSCIGetChar(void);
 static void _FMSTR_QSCIFlush(void);
 
 /***********************************
-*  global variables
-***********************************/
+ *  global variables
+ ***********************************/
 /* Interface of this serial UART driver */
-const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_MCUX_QSCI =
-{
-    FMSTR_C99_INIT(Init                           ) _FMSTR_QSCIInit,
-    FMSTR_C99_INIT(EnableTransmit                 ) _FMSTR_QSCIEnableTransmit,
-    FMSTR_C99_INIT(EnableReceive                  ) _FMSTR_QSCIEnableReceive,
-    FMSTR_C99_INIT(EnableTransmitInterrupt        ) _FMSTR_QSCIEnableTransmitInterrupt,
+const FMSTR_SERIAL_DRV_INTF FMSTR_SERIAL_MCUX_QSCI = {
+    FMSTR_C99_INIT(Init) _FMSTR_QSCIInit,
+    FMSTR_C99_INIT(EnableTransmit) _FMSTR_QSCIEnableTransmit,
+    FMSTR_C99_INIT(EnableReceive) _FMSTR_QSCIEnableReceive,
+    FMSTR_C99_INIT(EnableTransmitInterrupt) _FMSTR_QSCIEnableTransmitInterrupt,
     FMSTR_C99_INIT(EnableTransmitCompleteInterrupt) _FMSTR_QSCIEnableTransmitCompleteInterrupt,
-    FMSTR_C99_INIT(EnableReceiveInterrupt         ) _FMSTR_QSCIEnableReceiveInterrupt,
-    FMSTR_C99_INIT(IsTransmitRegEmpty             ) _FMSTR_QSCIIsTransmitRegEmpty,
-    FMSTR_C99_INIT(IsReceiveRegFull               ) _FMSTR_QSCIIsReceiveRegFull,
-    FMSTR_C99_INIT(IsTransmitterActive            ) _FMSTR_QSCIIsTransmitterActive,
-    FMSTR_C99_INIT(PutChar                        ) _FMSTR_QSCIPutChar,
-    FMSTR_C99_INIT(GetChar                        ) _FMSTR_QSCIGetChar,
-    FMSTR_C99_INIT(Flush                          ) _FMSTR_QSCIFlush,
+    FMSTR_C99_INIT(EnableReceiveInterrupt) _FMSTR_QSCIEnableReceiveInterrupt,
+    FMSTR_C99_INIT(IsTransmitRegEmpty) _FMSTR_QSCIIsTransmitRegEmpty,
+    FMSTR_C99_INIT(IsReceiveRegFull) _FMSTR_QSCIIsReceiveRegFull,
+    FMSTR_C99_INIT(IsTransmitterActive) _FMSTR_QSCIIsTransmitterActive,
+    FMSTR_C99_INIT(PutChar) _FMSTR_QSCIPutChar,
+    FMSTR_C99_INIT(GetChar) _FMSTR_QSCIGetChar,
+    FMSTR_C99_INIT(Flush) _FMSTR_QSCIFlush,
 };
 
-/**************************************************************************//*!
-*
-* @brief    Serial communication initialization
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Serial communication initialization
+ *
+ ******************************************************************************/
 static FMSTR_BOOL _FMSTR_QSCIInit(void)
 {
     /* Valid runtime module address must be assigned */
-    if(!fmstr_serialBaseAddr)
+    if (fmstr_serialBaseAddr == NULL)
+    {
         return FMSTR_FALSE;
+    }
 
-
-#if FMSTR_SERIAL_SINGLEWIRE
-    #error Internal single wire mode is not supported.
+#if FMSTR_SERIAL_SINGLEWIRE > 0
+#error Internal single wire mode is not supported.
     return FMSTR_FALSE;
 #endif
 
     return FMSTR_TRUE;
 }
 
-/**************************************************************************//*!
-*
-* @brief    Enable/Disable Serial transmitter
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Enable/Disable Serial transmitter
+ *
+ ******************************************************************************/
 
 static void _FMSTR_QSCIEnableTransmit(FMSTR_BOOL enable)
 {
-    QSCI_EnableTx(fmstr_serialBaseAddr, enable);
+    QSCI_EnableTx(fmstr_serialBaseAddr, enable != FMSTR_FALSE);
 }
 
-/**************************************************************************//*!
-*
-* @brief    Enable/Disable Serial receiver
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Enable/Disable Serial receiver
+ *
+ ******************************************************************************/
 
 static void _FMSTR_QSCIEnableReceive(FMSTR_BOOL enable)
 {
-    QSCI_EnableRx(fmstr_serialBaseAddr, enable);
+    QSCI_EnableRx(fmstr_serialBaseAddr, enable != FMSTR_FALSE);
 }
 
-/**************************************************************************//*!
-*
-* @brief    Enable/Disable interrupt from transmit register empty event
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Enable/Disable interrupt from transmit register empty event
+ *
+ ******************************************************************************/
 
 static void _FMSTR_QSCIEnableTransmitInterrupt(FMSTR_BOOL enable)
 {
-    if(enable)
-        QSCI_EnableInterrupts(fmstr_serialBaseAddr, kQSCI_TxEmptyInterruptEnable);
+    if (enable != FMSTR_FALSE)
+    {
+        QSCI_EnableInterrupts(fmstr_serialBaseAddr, (uint32_t)kQSCI_TxEmptyInterruptEnable);
+    }
     else
-        QSCI_DisableInterrupts(fmstr_serialBaseAddr, kQSCI_TxEmptyInterruptEnable);
+    {
+        QSCI_DisableInterrupts(fmstr_serialBaseAddr, (uint32_t)kQSCI_TxEmptyInterruptEnable);
+    }
 }
 
-/**************************************************************************//*!
-*
-* @brief    Enable/Disable interrupt from transmit complete event
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Enable/Disable interrupt from transmit complete event
+ *
+ ******************************************************************************/
 
 static void _FMSTR_QSCIEnableTransmitCompleteInterrupt(FMSTR_BOOL enable)
 {
-    if(enable)
-        QSCI_EnableInterrupts(fmstr_serialBaseAddr, kQSCI_TxIdleInterruptEnable);
+    if (enable != FMSTR_FALSE)
+    {
+        QSCI_EnableInterrupts(fmstr_serialBaseAddr, (uint32_t)kQSCI_TxIdleInterruptEnable);
+    }
     else
-        QSCI_DisableInterrupts(fmstr_serialBaseAddr, kQSCI_TxIdleInterruptEnable);
+    {
+        QSCI_DisableInterrupts(fmstr_serialBaseAddr, (uint32_t)kQSCI_TxIdleInterruptEnable);
+    }
 }
 
-/**************************************************************************//*!
-*
-* @brief    Enable/Disable interrupt from receive register full event
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Enable/Disable interrupt from receive register full event
+ *
+ ******************************************************************************/
 
 static void _FMSTR_QSCIEnableReceiveInterrupt(FMSTR_BOOL enable)
 {
-    /* Note that if RX Idle and Error interrupts are "accidentally" enabled by user, we disable 
+    /* Note that if RX Idle and Error interrupts are "accidentally" enabled by user, we disable
      * them along with the RX Data interrupt. This avoids unnecessary interrupts to be serviced. */
-    if(enable)
-        QSCI_EnableInterrupts(fmstr_serialBaseAddr, kQSCI_RxFullInterruptEnable);
+    if (enable != FMSTR_FALSE)
+    {
+        QSCI_EnableInterrupts(fmstr_serialBaseAddr, (uint32_t)kQSCI_RxFullInterruptEnable);
+    }
     else
-        QSCI_DisableInterrupts(fmstr_serialBaseAddr, kQSCI_RxFullInterruptEnable | kQSCI_RxErrorInterruptEnable | kQSCI_RxIdleLineInterruptEnable);
+    {
+        QSCI_DisableInterrupts(
+            fmstr_serialBaseAddr,
+            (uint32_t)(kQSCI_RxFullInterruptEnable | kQSCI_RxErrorInterruptEnable | kQSCI_RxIdleLineInterruptEnable));
+    }
 }
 
-/**************************************************************************//*!
-*
-* @brief    Returns TRUE if the transmit register is empty, and it's possible to put next char
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Returns TRUE if the transmit register is empty, and it's possible to put next char
+ *
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_QSCIIsTransmitRegEmpty(void)
 {
     uint32_t sr = QSCI_GetStatusFlags(fmstr_serialBaseAddr);
 
-    return (sr & kQSCI_TxDataRegEmptyFlag);
+    return (FMSTR_BOOL)((sr & (uint32_t)kQSCI_TxDataRegEmptyFlag) != 0U);
 }
 
-/**************************************************************************//*!
-*
-* @brief    Returns TRUE if the receive register is full, and it's possible to get received char
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Returns TRUE if the receive register is full, and it's possible to get received char
+ *
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_QSCIIsReceiveRegFull(void)
 {
     uint32_t sr = QSCI_GetStatusFlags(fmstr_serialBaseAddr);
 
-    return (sr & kQSCI_RxDataRegFullFlag);
+    return (FMSTR_BOOL)((sr & (uint32_t)kQSCI_RxDataRegFullFlag) != 0U);
 }
 
-/**************************************************************************//*!
-*
-* @brief    Returns TRUE if the transmitter is still active
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Returns TRUE if the transmitter is still active
+ *
+ ******************************************************************************/
 
 static FMSTR_BOOL _FMSTR_QSCIIsTransmitterActive(void)
 {
     uint32_t sr = QSCI_GetStatusFlags(fmstr_serialBaseAddr);
 
-    return !(sr & kQSCI_TxIdleFlag);
+    return (FMSTR_BOOL)((sr & (uint32_t)kQSCI_TxIdleFlag) == 0U);
 }
 
-/**************************************************************************//*!
-*
-* @brief    The function puts the char for transmit
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    The function puts the char for transmit
+ *
+ ******************************************************************************/
 
-static void _FMSTR_QSCIPutChar(FMSTR_BCHR  ch)
+static void _FMSTR_QSCIPutChar(FMSTR_BCHR ch)
 {
     QSCI_WriteByte(fmstr_serialBaseAddr, ch);
 }
 
-/**************************************************************************//*!
-*
-* @brief    The function gets the received char
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    The function gets the received char
+ *
+ ******************************************************************************/
 static FMSTR_BCHR _FMSTR_QSCIGetChar(void)
 {
     return QSCI_ReadByte(fmstr_serialBaseAddr);
 }
 
-/**************************************************************************//*!
-*
-* @brief    The function sends buffered data
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    The function sends buffered data
+ *
+ ******************************************************************************/
 static void _FMSTR_QSCIFlush(void)
 {
 }
 
-/**************************************************************************//*!
-*
-* @brief    Assigning FreeMASTER communication module base address
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    Assigning FreeMASTER communication module base address
+ *
+ ******************************************************************************/
 void FMSTR_SerialSetBaseAddress(QSCI_Type *base)
 {
     fmstr_serialBaseAddr = base;
 }
 
-/**************************************************************************//*!
-*
-* @brief    API: Interrupt handler call
-*
-* This Interrupt Service Routine handles the UART  interrupts for the FreeMASTER
-* driver. In case you want to handle the interrupt in the application yourselves,
-* call the FMSTR_ProcessSerial function which
-* does the same job but is not compiled as an Interrupt Service Routine.
-*
-* In poll-driven mode (FMSTR_POLL_DRIVEN) this function does nothing.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief    API: Interrupt handler call
+ *
+ * This Interrupt Service Routine handles the UART  interrupts for the FreeMASTER
+ * driver. In case you want to handle the interrupt in the application yourselves,
+ * call the FMSTR_ProcessSerial function which
+ * does the same job but is not compiled as an Interrupt Service Routine.
+ *
+ * In poll-driven mode (FMSTR_POLL_DRIVEN) this function does nothing.
+ *
+ ******************************************************************************/
 
-void FMSTR_SerialIsr()
+void FMSTR_SerialIsr(void)
 {
-    #if (FMSTR_LONG_INTR) || (FMSTR_SHORT_INTR)
-
+#if FMSTR_LONG_INTR > 0 || FMSTR_SHORT_INTR > 0
     /* Process received or just-transmitted byte. */
     FMSTR_ProcessSerial();
 
-    /* Clear error flags and also the input-edge flag. Note that "RX Idle" flag is not cleared as it 
+    /* Clear error flags and also the input-edge flag. Note that "RX Idle" flag is not cleared as it
      * messes up with receive process, rather the interrupt is disabled as a whole above. */
-    QSCI_ClearStatusFlags(fmstr_serialBaseAddr, kQSCI_Group1Flags | kQSCI_RxInputEdgeFlag);
+    QSCI_ClearStatusFlags(fmstr_serialBaseAddr, (uint32_t)(kQSCI_Group1Flags | kQSCI_RxInputEdgeFlag));
 
-    #endif
+#endif
 }
 
 #else /* (!(FMSTR_DISABLE)) */

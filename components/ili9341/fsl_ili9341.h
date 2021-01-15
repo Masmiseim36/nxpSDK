@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017, 2019 NXP
+ * Copyright 2016-2017, 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,6 +10,16 @@
 #define _FSL_ILI9341_H_
 
 #include "fsl_common.h"
+
+/*
+ * Change log:
+ *
+ *   1.0.1
+ *     - Fix MISRA 2012 issues.
+ *
+ *   1.0.0
+ *     - Initial version
+ */
 
 /*!
  * @addtogroup ili9341
@@ -59,7 +69,7 @@
  */
 #define ILI9341_RESET_CANCEL_MS 120U
 
-typedef void (*ili9341_send_byte_t)(uint8_t);
+typedef void (*ili9341_send_byte_t)(uint8_t dataToSend);
 void FT9341_Init(ili9341_send_byte_t _writeData, ili9341_send_byte_t _writeCommand);
 
 #endif

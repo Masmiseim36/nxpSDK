@@ -1,16 +1,24 @@
-/*
- * Copyright (c) 2018-2019 by Cadence Design Systems, Inc.  ALL RIGHTS RESERVED.
- * These coded instructions, statements, and computer programs are the
- * copyrighted works and confidential proprietary information of
- * Cadence Design Systems Inc.  They may be adapted and modified by bona fide
- * purchasers for internal use, but neither the original nor any adapted
- * or modified version may be disclosed or distributed to third parties
- * in any manner, medium, or form, in whole or in part, without the prior
- * written consent of Cadence Design Systems Inc.  This software and its
- * derivatives are to be executed solely on products incorporating a Cadence
- * Design Systems processor.
- */
+/*******************************************************************************
+* Copyright (c) 2018-2020 Cadence Design Systems, Inc.
+* 
+* Permission is hereby granted, free of charge, to any person obtaining
+* a copy of this software and associated documentation files (the
+* "Software"), to use this Software with Cadence processor cores only and 
+* not with any other processors and platforms, subject to
+* the following conditions:
+* 
+* The above copyright notice and this permission notice shall be included
+* in all copies or substantial portions of the Software.
+* 
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+******************************************************************************/
 
 
 #ifndef  __XA_TYPE_DEF_H__

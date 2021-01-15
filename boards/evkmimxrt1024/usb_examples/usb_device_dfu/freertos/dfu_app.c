@@ -23,9 +23,10 @@
 #include "dfu.h"
 #include "fsl_gpio.h"
 #include "fsl_device_registers.h"
+#include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
-#include "fsl_debug_console.h"
 
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
@@ -33,7 +34,6 @@
 
 #include "dfu_timer.h"
 #include "fsl_adapter_timer.h"
-#include "pin_mux.h"
 #include "usb_phy.h"
 /*******************************************************************************
  * Definitions

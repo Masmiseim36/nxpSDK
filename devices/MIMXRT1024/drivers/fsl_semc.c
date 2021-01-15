@@ -254,12 +254,14 @@ void SEMC_GetDefaultConfig(semc_config_t *config)
     /* Initializes the configure structure to zero. */
     (void)memset(config, 0, sizeof(*config));
 
+    config->queueWeight.queueaEnable          = true;
     semc_queuea_weight_struct_t *queueaWeight = &(config->queueWeight.queueaWeight.queueaConfig);
+    config->queueWeight.queuebEnable          = true;
     semc_queueb_weight_struct_t *queuebWeight = &(config->queueWeight.queuebWeight.queuebConfig);
 
     /* Get default settings. */
     config->dqsMode          = kSEMC_Loopbackinternal;
-    config->cmdTimeoutCycles = 0;
+    config->cmdTimeoutCycles = 0xFF;
     config->busTimeoutCycles = 0x1F;
 
     queueaWeight->qos              = SEMC_BMCR0_TYPICAL_WQOS;
@@ -311,9 +313,25 @@ void SEMC_Init(SEMC_Type *base, semc_config_t *configure)
     base->MCR |= SEMC_MCR_MDIS_MASK | SEMC_MCR_BTO(configure->busTimeoutCycles) |
                  SEMC_MCR_CTO(configure->cmdTimeoutCycles) | SEMC_MCR_DQSMD(configure->dqsMode);
 
-    /* Configure Queue 0/1 for AXI bus. */
-    base->BMCR0 = (uint32_t)(configure->queueWeight.queueaWeight.queueaValue);
-    base->BMCR1 = (uint32_t)(configure->queueWeight.queuebWeight.queuebValue);
+    if (configure->queueWeight.queueaEnable == true)
+    {
+        /* Configure Queue A for AXI bus access to SDRAM, NAND, NOR, SRAM and DBI slaves.*/
+        base->BMCR0 = (uint32_t)(configure->queueWeight.queueaWeight.queueaValue);
+    }
+    else
+    {
+        base->BMCR0 = 0x00U;
+    }
+
+    if (configure->queueWeight.queuebEnable == true)
+    {
+        /* Configure Queue B for AXI bus access to SDRAM slave. */
+        base->BMCR1 = (uint32_t)(configure->queueWeight.queuebWeight.queuebValue);
+    }
+    else
+    {
+        base->BMCR1 = 0x00U;
+    }
 
     /* Enable SEMC. */
     base->MCR &= ~SEMC_MCR_MDIS_MASK;
@@ -396,9 +414,21 @@ status_t SEMC_ConfigureSDRAM(SEMC_Type *base, semc_sdram_cs_t cs, semc_sdram_con
         return result;
     }
 
-    base->BR[cs]   = (config->address & SEMC_BR_BA_MASK) | SEMC_BR_MS(memsize) | SEMC_BR_VLD_MASK;
-    base->SDRAMCR0 = SEMC_SDRAMCR0_PS(config->portSize) | SEMC_SDRAMCR0_BL(config->burstLen) |
-                     SEMC_SDRAMCR0_COL(config->columnAddrBitNum) | SEMC_SDRAMCR0_CL(config->casLatency);
+    base->BR[cs] = (config->address & SEMC_BR_BA_MASK) | SEMC_BR_MS(memsize) | SEMC_BR_VLD_MASK;
+
+#if defined(FSL_FEATURE_SEMC_SDRAM_SUPPORT_COLUMN_ADDRESS_8BIT) && (FSL_FEATURE_SEMC_SDRAM_SUPPORT_COLUMN_ADDRESS_8BIT)
+    if (kSEMC_SdramColunm_8bit == config->columnAddrBitNum)
+    {
+        base->SDRAMCR0 = SEMC_SDRAMCR0_PS(config->portSize) | SEMC_SDRAMCR0_BL(config->burstLen) |
+                         SEMC_SDRAMCR0_COL8(true) | SEMC_SDRAMCR0_CL(config->casLatency);
+    }
+    else
+#endif /* FSL_FEATURE_SEMC_SDRAM_SUPPORT_COLUMN_ADDRESS_8BIT */
+    {
+        base->SDRAMCR0 = SEMC_SDRAMCR0_PS(config->portSize) | SEMC_SDRAMCR0_BL(config->burstLen) |
+                         SEMC_SDRAMCR0_COL(config->columnAddrBitNum) | SEMC_SDRAMCR0_CL(config->casLatency);
+    }
+
     /* IOMUX setting. */
     if (cs != kSEMC_SDRAM_CS0)
     {
@@ -412,7 +442,7 @@ status_t SEMC_ConfigureSDRAM(SEMC_Type *base, semc_sdram_cs_t cs, semc_sdram_con
 
     tempDelayChain &= ~(SEMC_DCCR_SDRAMVAL_MASK | SEMC_DCCR_SDRAMEN_MASK);
     /* Configure delay chain. */
-    base->DCCR = tempDelayChain | SEMC_DCCR_SDRAMVAL(config->delayChain - 0x01U) | SEMC_DCCR_SDRAMEN_MASK;
+    base->DCCR = tempDelayChain | SEMC_DCCR_SDRAMVAL((uint32_t)config->delayChain - 0x01U) | SEMC_DCCR_SDRAMEN_MASK;
 #endif /* FSL_FEATURE_SEMC_HAS_DELAY_CHAIN_CONTROL */
 
     timing = SEMC_SDRAMCR1_PRE2ACT(SEMC_ConvertTiming(config->tPrecharge2Act_Ns, clkSrc_Hz));
@@ -433,7 +463,7 @@ status_t SEMC_ConfigureSDRAM(SEMC_Type *base, semc_sdram_cs_t cs, semc_sdram_con
     /* SDRAMCR3 timing setting. */
     base->SDRAMCR3 = SEMC_SDRAMCR3_REBL((uint32_t)config->refreshBurstLen - 1UL) |
                      /* N * 16 * 1s / clkSrc_Hz = config->tPrescalePeriod_Ns */
-                     SEMC_SDRAMCR3_PRESCALE(prescale) | SEMC_SDRAMCR3_RT(refresh) | SEMC_SDRAMCR3_UT(urgentRef);
+                     SEMC_SDRAMCR3_PRESCALE(prescale) | SEMC_SDRAMCR3_RT(refresh - 1UL) | SEMC_SDRAMCR3_UT(urgentRef);
 
     SEMC->IPCR1 = 0x2U;
     SEMC->IPCR2 = 0U;
@@ -496,6 +526,9 @@ status_t SEMC_ConfigureNAND(SEMC_Type *base, semc_nand_config_t *config, uint32_
         return kStatus_SEMC_InvalidSwPinmuxSelection;
     }
 
+    /* Disable SEMC module during configuring control registers. */
+    base->MCR |= SEMC_MCR_MDIS_MASK;
+
     uint32_t iocReg =
         base->IOCR & (~((SEMC_IOCR_PINMUXBITWIDTH << (uint32_t)config->cePinMux) | SEMC_IOCR_MUX_RDY_MASK));
 
@@ -557,6 +590,10 @@ status_t SEMC_ConfigureNAND(SEMC_Type *base, semc_nand_config_t *config, uint32_
 
     /* NANDCR3 timing setting. */
     base->NANDCR3 = (uint32_t)config->arrayAddrOption;
+
+    /* Enables SEMC module after configuring control registers completely. */
+    base->MCR &= ~SEMC_MCR_MDIS_MASK;
+
     return kStatus_Success;
 }
 
@@ -667,7 +704,7 @@ status_t SEMC_ConfigureNOR(SEMC_Type *base, semc_nor_config_t *config, uint32_t 
 
     tempDelayChain &= ~(SEMC_DCCR_NORVAL_MASK | SEMC_DCCR_NOREN_MASK);
     /* Configure delay chain. */
-    base->DCCR = tempDelayChain | SEMC_DCCR_NORVAL(config->delayChain - 0x01U) | SEMC_DCCR_NOREN_MASK;
+    base->DCCR = tempDelayChain | SEMC_DCCR_NORVAL((uint32_t)config->delayChain - 0x01U) | SEMC_DCCR_NOREN_MASK;
 #endif /* FSL_FEATURE_SEMC_HAS_DELAY_CHAIN_CONTROL */
 
     timing = SEMC_NORCR1_CES(SEMC_ConvertTiming(config->tCeSetup_Ns, clkSrc_Hz));
@@ -738,13 +775,9 @@ status_t SEMC_ConfigureSRAMWithChipSelection(SEMC_Type *base,
 
     uint32_t iocReg = base->IOCR & (~(SEMC_IOCR_PINMUXBITWIDTH << (uint32_t)config->cePinMux));
 
-#if defined(FSL_FEATURE_SEMC_SUPPORT_SRAM_COUNT) && (FSL_FEATURE_SEMC_SUPPORT_SRAM_COUNT > 0x01U)
-    uint32_t muxCe = (uint32_t)cs;
-#else
     uint32_t muxCe = (config->cePinMux == kSEMC_MUXRDY) ?
                          (SEMC_IOCR_PSRAM_CE - 1U) :
                          ((config->cePinMux == kSEMC_MUXA8) ? SEMC_IOCR_PSRAM_CE_A8 : SEMC_IOCR_PSRAM_CE);
-#endif /* FSL_FEATURE_SEMC_SUPPORT_SRAM_COUNT */
 
     /* IOMUX setting. */
     base->IOCR = iocReg | (muxCe << (uint32_t)config->cePinMux);
@@ -910,7 +943,8 @@ status_t SEMC_ConfigureSRAMWithChipSelection(SEMC_Type *base,
     {
         case kSEMC_SRAM_CS0:
             tempDelayChain &= ~(SEMC_DCCR_SRAM0VAL_MASK | SEMC_DCCR_SRAM0EN_MASK);
-            base->DCCR = tempDelayChain | SEMC_DCCR_SRAM0VAL(config->delayChain - 0x01U) | SEMC_DCCR_SRAM0EN_MASK;
+            base->DCCR =
+                tempDelayChain | SEMC_DCCR_SRAM0VAL((uint32_t)config->delayChain - 0x01U) | SEMC_DCCR_SRAM0EN_MASK;
             break;
 #if defined(FSL_FEATURE_SEMC_SUPPORT_SRAM_COUNT) && (FSL_FEATURE_SEMC_SUPPORT_SRAM_COUNT > 0x01U)
         case kSEMC_SRAM_CS1:
@@ -919,7 +953,8 @@ status_t SEMC_ConfigureSRAMWithChipSelection(SEMC_Type *base,
             SUPPRESS_FALL_THROUGH_WARNING();
         case kSEMC_SRAM_CS3:
             tempDelayChain &= ~(SEMC_DCCR_SRAMXVAL_MASK | SEMC_DCCR_SRAMXEN_MASK);
-            base->DCCR = tempDelayChain | SEMC_DCCR_SRAMXVAL(config->delayChain - 0x01U) | SEMC_DCCR_SRAMXEN_MASK;
+            base->DCCR =
+                tempDelayChain | SEMC_DCCR_SRAMXVAL((uint32_t)config->delayChain - 0x01U) | SEMC_DCCR_SRAMXEN_MASK;
             break;
 #endif /* FSL_FEATURE_SEMC_SUPPORT_SRAM_COUNT */
         default:
@@ -949,7 +984,7 @@ status_t SEMC_ConfigureSRAMWithChipSelection(SEMC_Type *base,
         timing |= SEMC_SRAMCR2_LC(config->latencyCount) | SEMC_SRAMCR2_RD((uint32_t)config->readCycle - 1UL);
         timing |= SEMC_SRAMCR2_CEITV(SEMC_ConvertTiming(config->tCeInterval_Ns, clkSrc_Hz));
 #if defined(FSL_FEATURE_SEMC_HAS_SRAM_RDH_TIME) && (FSL_FEATURE_SEMC_HAS_SRAM_RDH_TIME)
-        timing |= SEMC_SRAMCR2_RDH(SEMC_ConvertTiming(config->readHoldTime_Ns, clkSrc_Hz) + 0x01U);
+        timing |= SEMC_SRAMCR2_RDH((uint32_t)SEMC_ConvertTiming(config->readHoldTime_Ns, clkSrc_Hz) + 0x01U);
 #endif /* FSL_FEATURE_SEMC_HAS_SRAM_RDH_TIME */
 
         /* SRAMCR2 timing setting. */
@@ -977,7 +1012,7 @@ status_t SEMC_ConfigureSRAMWithChipSelection(SEMC_Type *base,
         timing |= SEMC_SRAMCR6_LC(config->latencyCount) | SEMC_SRAMCR2_RD((uint32_t)config->readCycle - 1UL);
         timing |= SEMC_SRAMCR6_CEITV(SEMC_ConvertTiming(config->tCeInterval_Ns, clkSrc_Hz));
 #if defined(FSL_FEATURE_SEMC_HAS_SRAM_RDH_TIME) && (FSL_FEATURE_SEMC_HAS_SRAM_RDH_TIME)
-        timing |= SEMC_SRAMCR6_RDH(SEMC_ConvertTiming(config->readHoldTime_Ns, clkSrc_Hz) + 0x01U);
+        timing |= SEMC_SRAMCR6_RDH((uint32_t)SEMC_ConvertTiming(config->readHoldTime_Ns, clkSrc_Hz) + 0x01U);
 #endif /* FSL_FEATURE_SEMC_HAS_SRAM_RDH_TIME */
 
         /* SRAMCR6 timing setting. */

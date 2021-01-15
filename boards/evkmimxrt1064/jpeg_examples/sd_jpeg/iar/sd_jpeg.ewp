@@ -187,7 +187,6 @@
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>SD_ENABLED</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -317,30 +316,25 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/libjpeg/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1182,7 +1176,6 @@
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>SD_ENABLED</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1312,30 +1305,25 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/libjpeg/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2175,7 +2163,6 @@
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>SD_ENABLED</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2305,30 +2292,25 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/libjpeg/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3170,7 +3152,6 @@
           <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
           <state>SD_ENABLED</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3300,30 +3281,25 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/sd</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/common</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../middleware/libjpeg/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source</state>
           <state>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk</state>
           <state>$PROJ_DIR$/../../../../../components/video</state>
           <state>$PROJ_DIR$/../../../../../components/video/display/dc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/sdmmc/osa</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4043,16 +4019,16 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_cache.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_usdhc.c</name>
@@ -4061,16 +4037,16 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_usdhc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</name>
@@ -4085,16 +4061,16 @@
   <group>
     <name>video</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/video/fsl_video_common.c</name>
+      <name>$PROJ_DIR$/../../../../../components/video/display/dc/elcdif/fsl_dc_fb_elcdif.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/video/fsl_video_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/video/fsl_video_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/video/display/dc/fsl_dc_fb.h</name>
@@ -4102,9 +4078,6 @@
   </group>
   <group>
     <name>sdmmc</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</name>
-    </file>
     <group>
       <name>src</name>
       <file>
@@ -4120,39 +4093,57 @@
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sd/fsl_sd.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_common.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_spec.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_spec.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/common/fsl_sdmmc_common.h</name>
+      </file>
+    </group>
+    <group>
+      <name>sd</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/sd/ChangeLogKSDK.txt</name>
       </file>
     </group>
     <group>
       <name>host</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/non_blocking/fsl_sdmmc_host.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/fsl_sdmmc_host.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/host/usdhc/ChangeLogKSDK.txt</name>
       </file>
     </group>
     <group>
       <name>osa</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/sdmmc/osa/fsl_sdmmc_osa.c</name>
+      </file>
     </group>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
   </group>
   <group>
     <name>libjpeg</name>
@@ -4162,22 +4153,19 @@
         <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/cderror.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/cdjpeg.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/transupp.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jversion.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jdct.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jerror.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jmorecfg.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jinclude.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jmemsys.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jmorecfg.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jpegint.h</name>
@@ -4186,10 +4174,13 @@
         <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jpeglib.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jversion.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jerror.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/transupp.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/cdjpeg.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jmemsys.h</name>
       </file>
     </group>
     <group>
@@ -4342,13 +4333,7 @@
         <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/diskio.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/diskio.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ff.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ff.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ffsystem.c</name>
@@ -4356,13 +4341,19 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ffunicode.c</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/diskio.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/ff.h</name>
+      </file>
       <group>
         <name>fsl_sd_disk</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/fatfs/source/fsl_sd_disk/fsl_sd_disk.c</name>
         </file>
       </group>
     </group>
@@ -4370,13 +4361,13 @@
   <group>
     <name>device</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/fsl_device_registers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/MIMXRT1064.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/system_MIMXRT1064.c</name>
@@ -4386,62 +4377,23 @@
     </file>
   </group>
   <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
     <name>component</name>
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
     <group>
@@ -4450,13 +4402,13 @@
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
       </file>
     </group>
   </group>
@@ -4469,10 +4421,10 @@
   <group>
     <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../xip/evkmimxrt1064_flexspi_nor_config.c</name>
@@ -4499,16 +4451,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

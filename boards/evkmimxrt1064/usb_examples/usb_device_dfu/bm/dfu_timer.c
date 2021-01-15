@@ -6,16 +6,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <string.h>
 #include "usb_device_config.h"
 #include "usb.h"
 #include "fsl_device_registers.h"
-#include "board.h"
 #include "dfu_timer.h"
-#if ((defined DFU_MAX_TIMER_OBJECTS) && (DFU_MAX_TIMER_OBJECTS > 0))
-#include "stdio.h"
-#include "string.h"
-
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -160,4 +157,3 @@ void DFU_TimerISR(void)
         }
     }
 }
-#endif

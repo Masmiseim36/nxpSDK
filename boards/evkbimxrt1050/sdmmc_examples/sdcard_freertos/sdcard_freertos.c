@@ -12,10 +12,10 @@
 #include "FreeRTOS.h"
 #include "semphr.h"
 #include "task.h"
-#include "board.h"
-#include "sdmmc_config.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+#include "sdmmc_config.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
@@ -141,12 +141,11 @@ static void CardDetectTask(void *pvParameters)
             {
                 s_cardInserted = s_cardInsertStatus;
 
-                /* power off card */
-                SD_SetCardPower(&g_sd, false);
-
                 if (s_cardInserted)
                 {
                     PRINTF("\r\nCard inserted.\r\n");
+                    /* power off card */
+                    SD_SetCardPower(&g_sd, false);
                     /* power on the card */
                     SD_SetCardPower(&g_sd, true);
                     /* Init card. */

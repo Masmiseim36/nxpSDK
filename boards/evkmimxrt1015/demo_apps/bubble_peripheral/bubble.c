@@ -6,13 +6,13 @@
  */
 
 #include "fsl_debug_console.h"
-#include "board.h"
 #include "math.h"
-#include "peripherals.h"
-#include "fsl_fxos.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "peripherals.h"
+#include "board.h"
+#include "fsl_fxos.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

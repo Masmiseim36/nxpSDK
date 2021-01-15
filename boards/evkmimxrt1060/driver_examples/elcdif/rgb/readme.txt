@@ -9,10 +9,10 @@ because these two targets spend different time to fill the frame buffer.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -41,6 +41,3 @@ Running the demo
 ================
 If this example runs correctly, a rectangle is moving in the screen, and the color
 changes every time it reaches the edges of the screen.
-Customization options
-=====================
-

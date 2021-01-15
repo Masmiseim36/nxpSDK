@@ -5,10 +5,10 @@ The powerquad driver API results are compared to the reference result.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.2.0
-- Keil MDK  5.31
-- IAR embedded Workbench  8.50.5
-- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.3.0
+- Keil MDK  5.33
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -34,4 +34,8 @@ Prepare the Demo
 
 Running the demo
 ================
-The message about error or success will be output to the terminal.
+The log below shows the output of the powerquad_filter example in the terminal window:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+POWERQUAD filter example started
+POWERQUAD filter example successed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

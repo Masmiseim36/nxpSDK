@@ -21,7 +21,6 @@ processor_version: 6.0.0
 board: IMXRT1050-EVKB
 pin_labels:
 - {pin_num: C14, pin_signal: GPIO_B1_14, label: SD0_VSELECT, identifier: SD0_VSELECT}
-- {pin_num: F14, pin_signal: GPIO_AD_B0_09, label: USER_LED, identifier: USER_LED}
 - {pin_num: G10, pin_signal: GPIO_AD_B0_11, label: WL_REG_ON, identifier: INT2_COMBO;WL_REG_ON}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -69,8 +68,6 @@ BOARD_InitPins:
   - {pin_num: C14, peripheral: GPIO2, signal: 'gpio_io, 30', pin_signal: GPIO_B1_14, direction: OUTPUT, gpio_init_state: 'true', software_input_on: Disable, hysteresis_enable: Enable,
     pull_up_down_config: Pull_Up_47K_Ohm, pull_keeper_select: Pull, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_4, slew_rate: Fast}
   - {pin_num: G10, peripheral: GPIO1, signal: 'gpio_io, 11', pin_signal: GPIO_AD_B0_11, identifier: WL_REG_ON, direction: OUTPUT}
-  - {pin_num: F14, peripheral: GPIO1, signal: 'gpio_io, 09', pin_signal: GPIO_AD_B0_09, direction: OUTPUT, gpio_init_state: 'true', software_input_on: Disable, hysteresis_enable: Disable,
-    pull_up_down_config: Pull_Up_47K_Ohm, pull_keeper_select: Pull, pull_keeper_enable: Disable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_4, slew_rate: Slow}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -82,15 +79,6 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03U */
-
-  /* GPIO configuration of USER_LED on GPIO_AD_B0_09 (pin F14) */
-  gpio_pin_config_t USER_LED_config = {
-      .direction = kGPIO_DigitalOutput,
-      .outputLogic = 1U,
-      .interruptMode = kGPIO_NoIntmode
-  };
-  /* Initialize GPIO functionality on GPIO_AD_B0_09 (pin F14) */
-  GPIO_PinInit(GPIO1, 9U, &USER_LED_config);
 
   /* GPIO configuration of WL_REG_ON on GPIO_AD_B0_11 (pin G10) */
   gpio_pin_config_t WL_REG_ON_config = {
@@ -112,9 +100,6 @@ void BOARD_InitPins(void) {
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_05_GPIO1_IO05,        /* GPIO_AD_B0_05 is configured as GPIO1_IO05 */
-      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
-  IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_09_GPIO1_IO09,        /* GPIO_AD_B0_09 is configured as GPIO1_IO09 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_B0_11_GPIO1_IO11,        /* GPIO_AD_B0_11 is configured as GPIO1_IO11 */
@@ -158,16 +143,6 @@ void BOARD_InitPins(void) {
                                                  Pull / Keep Enable Field: Pull/Keeper Enabled
                                                  Pull / Keep Select Field: Keeper
                                                  Pull Up / Down Config. Field: 100K Ohm Pull Down
-                                                 Hyst. Enable Field: Hysteresis Disabled */
-  IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_B0_09_GPIO1_IO09,        /* GPIO_AD_B0_09 PAD functional properties : */
-      0x60A0U);                               /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: R0/4
-                                                 Speed Field: medium(100MHz)
-                                                 Open Drain Enable Field: Open Drain Disabled
-                                                 Pull / Keep Enable Field: Pull/Keeper Disabled
-                                                 Pull / Keep Select Field: Pull
-                                                 Pull Up / Down Config. Field: 47K Ohm Pull Up
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_B0_12_LPUART1_TX,        /* GPIO_AD_B0_12 PAD functional properties : */

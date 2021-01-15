@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -57,19 +57,28 @@ Purpose     : Multiple choice object include
 
 /************************************************************
 *
-*       Create flags
+*       DROPDOWN create flags
+*
+*  Description
+*    These flags can be used when creating a DROPDOWN widget via
+*    DROPDOWN_CreateEx(). 0 can be specified for the \a{ExFlags} parameter,
+*    if no flags should be used.
 */
-#define DROPDOWN_CF_AUTOSCROLLBAR   (1 << 0)
-#define DROPDOWN_CF_UP              (1 << 1)
+#define DROPDOWN_CF_AUTOSCROLLBAR   (1 << 0)    // Enable automatic use of a scroll bar. For details, refer to DROPDOWN_SetAutoScroll().
+#define DROPDOWN_CF_UP              (1 << 1)    // Creates a DROPDOWN widget which opens the dropdown list above the widget. This flag is useful if
+                                                // the space below the widget is not sufficient for the dropdown list.
 
 /*********************************************************************
 *
-*       Color indices
+*       DROPDOWN color indexes
+*
+*  Description
+*    Color indexes for DROPDOWN widget.
 */
-#define DROPDOWN_CI_UNSEL    0
-#define DROPDOWN_CI_SEL      1
-#define DROPDOWN_CI_SELFOCUS 2
-
+#define DROPDOWN_CI_UNSEL    0    // Unselected element.
+#define DROPDOWN_CI_SEL      1    // Selected element, without focus.
+#define DROPDOWN_CI_SELFOCUS 2    // Selected element, with focus.
+/* not documented */
 #define DROPDOWN_CI_ARROW    0
 #define DROPDOWN_CI_BUTTON   1
 
@@ -149,9 +158,9 @@ void             DROPDOWN_IncSel           (DROPDOWN_Handle hObj);
 void             DROPDOWN_IncSelExp        (DROPDOWN_Handle hObj);
 void             DROPDOWN_InsertString     (DROPDOWN_Handle hObj, const char* s, unsigned int Index);
 void             DROPDOWN_SetAutoScroll    (DROPDOWN_Handle hObj, int OnOff);
-void             DROPDOWN_SetBkColor       (DROPDOWN_Handle hObj, unsigned int Index, GUI_COLOR color);
+void             DROPDOWN_SetBkColor       (DROPDOWN_Handle hObj, unsigned int Index, GUI_COLOR Color);
 void             DROPDOWN_SetColor         (DROPDOWN_Handle hObj, unsigned int Index, GUI_COLOR Color);
-void             DROPDOWN_SetFont          (DROPDOWN_Handle hObj, const GUI_FONT * pfont);
+void             DROPDOWN_SetFont          (DROPDOWN_Handle hObj, const GUI_FONT * pFont);
 void             DROPDOWN_SetItemDisabled  (DROPDOWN_Handle hObj, unsigned Index, int OnOff);
 void             DROPDOWN_SetItemSpacing   (DROPDOWN_Handle hObj, unsigned Value);
 int              DROPDOWN_SetListHeight    (DROPDOWN_Handle hObj, unsigned Height);
@@ -160,7 +169,7 @@ void             DROPDOWN_SetScrollbarWidth(DROPDOWN_Handle hObj, unsigned Width
 void             DROPDOWN_SetSel           (DROPDOWN_Handle hObj, int Sel);
 void             DROPDOWN_SetSelExp        (DROPDOWN_Handle hObj, int Sel);
 void             DROPDOWN_SetTextAlign     (DROPDOWN_Handle hObj, int Align);
-void             DROPDOWN_SetTextColor     (DROPDOWN_Handle hObj, unsigned int index, GUI_COLOR color);
+void             DROPDOWN_SetTextColor     (DROPDOWN_Handle hObj, unsigned int Index, GUI_COLOR Color);
 void             DROPDOWN_SetTextHeight    (DROPDOWN_Handle hObj, unsigned TextHeight);
 int              DROPDOWN_SetUpMode        (DROPDOWN_Handle hObj, int OnOff);
 int              DROPDOWN_SetUserData      (DROPDOWN_Handle hObj, const void * pSrc, int NumBytes);

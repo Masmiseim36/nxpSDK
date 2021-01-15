@@ -10,24 +10,23 @@
 #include "usb_host.h"
 #include "fsl_device_registers.h"
 #include "usb_host_cdc.h"
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "host_cdc.h"
 #include "fsl_common.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 #include "app.h"
-#include "board.h"
-#include "serial_manager.h"
+#include "fsl_component_serial_manager.h"
 #if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
 #error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
 #endif
 
-#include "pin_mux.h"
 #include "usb_phy.h"
 #include "fsl_power.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -68,6 +67,8 @@ void USB_IRQHandler(void)
 
 void USB_HostClockInit(void)
 {
+    uint8_t usbClockDiv = 1;
+    uint32_t usbClockFreq;
     usb_phy_config_struct_t phyConfig = {
         BOARD_USB_PHY_D_CAL,
         BOARD_USB_PHY_TXCAL45DP,
@@ -76,7 +77,7 @@ void USB_HostClockInit(void)
     /* enable USB IP clock */
     CLOCK_SetClkDiv(kCLOCK_DivPfc1Clk, 5);
     CLOCK_AttachClk(kXTALIN_CLK_to_USB_CLK);
-    CLOCK_SetClkDiv(kCLOCK_DivUsbHsFclk, 1);
+    CLOCK_SetClkDiv(kCLOCK_DivUsbHsFclk, usbClockDiv);
     CLOCK_EnableUsbhsHostClock();
     RESET_PeripheralReset(kUSBHS_PHY_RST_SHIFT_RSTn);
     RESET_PeripheralReset(kUSBHS_DEVICE_RST_SHIFT_RSTn);
@@ -87,7 +88,10 @@ void USB_HostClockInit(void)
     POWER_DisablePD(kPDRUNCFG_PPD_USBHS_SRAM);
     POWER_ApplyPD();
 
-    CLOCK_EnableUsbhsPhyClock();
+    /* save usb ip clock freq*/
+    usbClockFreq = g_xtalFreq / usbClockDiv;
+    /* enable USB PHY PLL clock, the phy bus clock (480MHz) source is same with USB IP */
+    CLOCK_EnableUsbHs0PhyPllClock(kXTALIN_CLK_to_USB_CLK, usbClockFreq);
 
 #if ((defined FSL_FEATURE_USBHSH_USB_RAM) && (FSL_FEATURE_USBHSH_USB_RAM > 0U))
 

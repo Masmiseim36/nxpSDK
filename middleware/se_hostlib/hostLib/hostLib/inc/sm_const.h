@@ -1,22 +1,10 @@
-/**
-* @file sm_const.h
-* @author NXP Semiconductors
-* @version 1.0
-* @par License
+/*
 * Copyright 2016,2020 NXP
+* All rights reserved.
 *
-* This software is owned or controlled by NXP and may only be used
-* strictly in accordance with the applicable license terms.  By expressly
-* accepting such terms or by downloading, installing, activating and/or
-* otherwise using the software, you are agreeing that you have read, and
-* that you agree to comply with and are bound by, such license terms.  If
-* you do not agree to be bound by the applicable license terms, then you
-* may not retain, install, activate or otherwise use the software.
-*
-* @par Description
-* Host Library A71CH Constants.
-* @par History
- *****************************************************************************/
+* SPDX-License-Identifier: BSD-3-Clause
+*/
+
 #ifndef _A71CH_CONST_H_
 #define _A71CH_CONST_H_
 
@@ -72,8 +60,8 @@ extern "C" {
 #if SSS_HAVE_APPLET_SE05X_IOT
 #   define APPLET_NAME \
         {0xa0, 0x00, 0x00, 0x03,     0x96, 0x54, 0x53, 0x00,  \
-         0x00, 0x00, 0x01, 0x03,     0x00, 0x00, 0x00,}
-#   define APPLET_NAME_LEN (15)
+         0x00, 0x00, 0x01, 0x03,     0x00, 0x00, 0x00, 0x00}
+#   define APPLET_NAME_LEN (16)
 
 #   define SSD_NAME \
         { 0xD2, 0x76, 0x00, 0x00, 0x85, 0x30, 0x4A, 0x43, 0x4F, 0x90, 0x03}

@@ -8,6 +8,7 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "usb_device_config.h"
@@ -15,7 +16,6 @@
 #include "usb_device.h"
 #include "fsl_component_serial_port_usb.h"
 #include "usb_phy.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

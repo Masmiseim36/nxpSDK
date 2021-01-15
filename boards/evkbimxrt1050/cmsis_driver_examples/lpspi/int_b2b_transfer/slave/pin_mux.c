@@ -84,46 +84,45 @@ void BOARD_InitPins(void) {
                                                  Hyst. Enable Field: Hysteresis Disabled */
 }
 
-
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-LPSPI3_InitPins:
+LPSPI1_InitPins:
 - options: {coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: G11, peripheral: LPSPI3, signal: PCS0, pin_signal: GPIO_AD_B0_03, software_input_on: Disable, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm,
+  - {pin_num: J3, peripheral: LPSPI1, signal: PCS0, pin_signal: GPIO_SD_B0_01, software_input_on: Disable, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm,
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
-  - {pin_num: M14, peripheral: LPSPI3, signal: SCK, pin_signal: GPIO_AD_B0_00, software_input_on: Disable, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm,
+  - {pin_num: J4, peripheral: LPSPI1, signal: SCK, pin_signal: GPIO_SD_B0_00, software_input_on: Disable, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm,
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
-  - {pin_num: M11, peripheral: LPSPI3, signal: SDI, pin_signal: GPIO_AD_B0_02, software_input_on: Disable, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm,
+  - {pin_num: K1, peripheral: LPSPI1, signal: SDI, pin_signal: GPIO_SD_B0_03, software_input_on: Disable, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm,
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
-  - {pin_num: H10, peripheral: LPSPI3, signal: SDO, pin_signal: GPIO_AD_B0_01, software_input_on: Disable, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm,
+  - {pin_num: J1, peripheral: LPSPI1, signal: SDO, pin_signal: GPIO_SD_B0_02, software_input_on: Disable, hysteresis_enable: Disable, pull_up_down_config: Pull_Down_100K_Ohm,
     pull_keeper_select: Keeper, pull_keeper_enable: Enable, open_drain: Disable, speed: MHZ_100, drive_strength: R0_6, slew_rate: Slow}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : LPSPI3_InitPins
+ * Function Name : LPSPI1_InitPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void LPSPI3_InitPins(void) {
+void LPSPI1_InitPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
 
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_00_LPSPI3_SCK,        /* GPIO_AD_B0_00 is configured as LPSPI3_SCK */
+      IOMUXC_GPIO_SD_B0_00_LPSPI1_SCK,        /* GPIO_SD_B0_00 is configured as LPSPI1_SCK */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_01_LPSPI3_SDO,        /* GPIO_AD_B0_01 is configured as LPSPI3_SDO */
+      IOMUXC_GPIO_SD_B0_01_LPSPI1_PCS0,       /* GPIO_SD_B0_01 is configured as LPSPI1_PCS0 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_02_LPSPI3_SDI,        /* GPIO_AD_B0_02 is configured as LPSPI3_SDI */
+      IOMUXC_GPIO_SD_B0_02_LPSPI1_SDO,        /* GPIO_SD_B0_02 is configured as LPSPI1_SDO */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_03_LPSPI3_PCS0,       /* GPIO_AD_B0_03 is configured as LPSPI3_PCS0 */
+      IOMUXC_GPIO_SD_B0_03_LPSPI1_SDI,        /* GPIO_SD_B0_03 is configured as LPSPI1_SDI */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_B0_00_LPSPI3_SCK,        /* GPIO_AD_B0_00 PAD functional properties : */
+      IOMUXC_GPIO_SD_B0_00_LPSPI1_SCK,        /* GPIO_SD_B0_00 PAD functional properties : */
       0x10B0u);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: medium(100MHz)
@@ -133,7 +132,7 @@ void LPSPI3_InitPins(void) {
                                                  Pull Up / Down Config. Field: 100K Ohm Pull Down
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_B0_01_LPSPI3_SDO,        /* GPIO_AD_B0_01 PAD functional properties : */
+      IOMUXC_GPIO_SD_B0_01_LPSPI1_PCS0,       /* GPIO_SD_B0_01 PAD functional properties : */
       0x10B0u);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: medium(100MHz)
@@ -143,7 +142,7 @@ void LPSPI3_InitPins(void) {
                                                  Pull Up / Down Config. Field: 100K Ohm Pull Down
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_B0_02_LPSPI3_SDI,        /* GPIO_AD_B0_02 PAD functional properties : */
+      IOMUXC_GPIO_SD_B0_02_LPSPI1_SDO,        /* GPIO_SD_B0_02 PAD functional properties : */
       0x10B0u);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: medium(100MHz)
@@ -153,7 +152,7 @@ void LPSPI3_InitPins(void) {
                                                  Pull Up / Down Config. Field: 100K Ohm Pull Down
                                                  Hyst. Enable Field: Hysteresis Disabled */
   IOMUXC_SetPinConfig(
-      IOMUXC_GPIO_AD_B0_03_LPSPI3_PCS0,       /* GPIO_AD_B0_03 PAD functional properties : */
+      IOMUXC_GPIO_SD_B0_03_LPSPI1_SDI,        /* GPIO_SD_B0_03 PAD functional properties : */
       0x10B0u);                               /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: R0/6
                                                  Speed Field: medium(100MHz)
@@ -167,36 +166,36 @@ void LPSPI3_InitPins(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-LPSPI3_DeinitPins:
+LPSPI1_DeinitPins:
 - options: {coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: M14, peripheral: GPIO1, signal: 'gpio_io, 00', pin_signal: GPIO_AD_B0_00}
-  - {pin_num: H10, peripheral: GPIO1, signal: 'gpio_io, 01', pin_signal: GPIO_AD_B0_01}
-  - {pin_num: M11, peripheral: GPIO1, signal: 'gpio_io, 02', pin_signal: GPIO_AD_B0_02}
-  - {pin_num: G11, peripheral: GPIO1, signal: 'gpio_io, 03', pin_signal: GPIO_AD_B0_03}
+  - {pin_num: J4, peripheral: GPIO3, signal: 'gpio_io, 12', pin_signal: GPIO_SD_B0_00}
+  - {pin_num: J3, peripheral: GPIO3, signal: 'gpio_io, 13', pin_signal: GPIO_SD_B0_01}
+  - {pin_num: J1, peripheral: GPIO3, signal: 'gpio_io, 14', pin_signal: GPIO_SD_B0_02}
+  - {pin_num: K1, peripheral: GPIO3, signal: 'gpio_io, 15', pin_signal: GPIO_SD_B0_03}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : LPSPI3_DeinitPins
+ * Function Name : LPSPI1_DeinitPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void LPSPI3_DeinitPins(void) {
+void LPSPI1_DeinitPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* iomuxc clock (iomuxc_clk_enable): 0x03u */
 
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_00_GPIO1_IO00,        /* GPIO_AD_B0_00 is configured as GPIO1_IO00 */
+      IOMUXC_GPIO_SD_B0_00_GPIO3_IO12,        /* GPIO_SD_B0_00 is configured as GPIO3_IO12 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_01_GPIO1_IO01,        /* GPIO_AD_B0_01 is configured as GPIO1_IO01 */
+      IOMUXC_GPIO_SD_B0_01_GPIO3_IO13,        /* GPIO_SD_B0_01 is configured as GPIO3_IO13 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_02_GPIO1_IO02,        /* GPIO_AD_B0_02 is configured as GPIO1_IO02 */
+      IOMUXC_GPIO_SD_B0_02_GPIO3_IO14,        /* GPIO_SD_B0_02 is configured as GPIO3_IO14 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
-      IOMUXC_GPIO_AD_B0_03_GPIO1_IO03,        /* GPIO_AD_B0_03 is configured as GPIO1_IO03 */
+      IOMUXC_GPIO_SD_B0_03_GPIO3_IO15,        /* GPIO_SD_B0_03 is configured as GPIO3_IO15 */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
 }
 

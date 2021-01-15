@@ -156,9 +156,6 @@ int dhcp_server_lease_timeout(uint32_t val)
  */
 static unsigned int next_yiaddr()
 {
-#ifdef CONFIG_DHCP_SERVER_DEBUG
-    struct in_addr ip;
-#endif
     uint32_t new_ip;
     struct bootp_header *hdr = (struct bootp_header *)dhcps.msg;
 
@@ -180,12 +177,6 @@ static unsigned int next_yiaddr()
         if (ac_add(hdr->chaddr, new_ip) != WM_SUCCESS)
             dhcp_w("No space to store new mapping..");
     }
-
-#ifdef CONFIG_DHCP_SERVER_DEBUG
-    ip.s_addr = new_ip;
-    dhcp_d("New client IP will be %s", inet_ntoa(ip));
-    ip.s_addr = dhcps.my_ip & dhcps.netmask;
-#endif
 
     return new_ip;
 }
@@ -782,4 +773,25 @@ static int get_ip_addr_from_interface(uint32_t *ip, void *interface_handle)
 static int get_netmask_from_interface(uint32_t *nm, void *interface_handle)
 {
     return net_get_if_ip_mask(nm, interface_handle);
+}
+
+void dhcp_stat()
+{
+    int i = 0;
+    PRINTF("DHCP Server Lease Duration : %d seconds\r\n", (int)dhcp_address_timeout);
+    if (dhcps.count_clients == 0)
+    {
+        PRINTF("No IP-MAC mapping stored\r\n");
+    }
+    else
+    {
+        PRINTF("Client IP\tClient MAC\r\n");
+        for (i = 0; i < dhcps.count_clients && i < MAC_IP_CACHE_SIZE; i++)
+        {
+            PRINTF("%s\t%02X:%02X:%02X:%02X:%02X:%02X\r\n", inet_ntoa(dhcps.ip_mac_mapping[i].client_ip),
+                   dhcps.ip_mac_mapping[i].client_mac[0], dhcps.ip_mac_mapping[i].client_mac[1],
+                   dhcps.ip_mac_mapping[i].client_mac[2], dhcps.ip_mac_mapping[i].client_mac[3],
+                   dhcps.ip_mac_mapping[i].client_mac[4], dhcps.ip_mac_mapping[i].client_mac[5]);
+        }
+    }
 }

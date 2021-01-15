@@ -5,6 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "music.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
@@ -14,8 +16,6 @@
 #include "fsl_sai_edma.h"
 #include "fsl_codec_common.h"
 #include "fsl_wm8960.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_codec_adapter.h"
 /*******************************************************************************
  * Definitions
@@ -68,6 +68,9 @@
 #define BUFFER_SIZE (1600U)
 #define BUFFER_NUM  (2)
 #define PLAY_COUNT  (100)
+#ifndef DEMO_CODEC_INIT_DELAY_MS
+#define DEMO_CODEC_INIT_DELAY_MS (1000U)
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -152,6 +155,14 @@ void EDMA_TX_Callback(edma_handle_t *handle, void *param, bool transferDone, uin
     s_playCount++;
 }
 
+void DelayMS(uint32_t ms)
+{
+    for (uint32_t i = 0; i < ms; i++)
+    {
+        SDK_DelayAtLeastUs(1000, SystemCoreClock);
+    }
+}
+
 /*!
  * @brief Main function
  */
@@ -160,7 +171,7 @@ int main(void)
     edma_config_t dmaConfig               = {0};
     edma_transfer_config_t transferConfig = {0};
     uint32_t destAddr                     = SAI_TxGetDataRegisterAddress(DEMO_SAI, DEMO_SAI_CHANNEL);
-    sai_transceiver_t config;
+    sai_transceiver_t saiConfig;
 
     BOARD_ConfigMPU();
     BOARD_InitPins();
@@ -210,26 +221,32 @@ int main(void)
     SAI_Init(DEMO_SAI);
 
     /* I2S mode configurations */
-    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
-    config.syncMode    = DEMO_SAI_TX_SYNC_MODE;
-    config.masterSlave = DEMO_SAI_MASTER_SLAVE;
-    SAI_TxSetConfig(DEMO_SAI, &config);
+    SAI_GetClassicI2SConfig(&saiConfig, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
+    saiConfig.syncMode    = DEMO_SAI_TX_SYNC_MODE;
+    saiConfig.masterSlave = DEMO_SAI_MASTER_SLAVE;
+    SAI_TxSetConfig(DEMO_SAI, &saiConfig);
     /* set bit clock divider */
     SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
                           DEMO_AUDIO_DATA_CHANNEL);
 
     /* sai rx configurations */
-    BOARD_SAI_RXCONFIG(&config, DEMO_SAI_RX_SYNC_MODE);
+    BOARD_SAI_RXCONFIG(&saiConfig, DEMO_SAI_RX_SYNC_MODE);
     /* master clock configurations */
     BOARD_MASTER_CLOCK_CONFIG();
 
     /* Use default setting to init codec */
-    CODEC_Init(&codecHandle, &boardCodecConfig);
+    if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
+    {
+        assert(false);
+    }
+
+    /* delay for codec output stable */
+    DelayMS(DEMO_CODEC_INIT_DELAY_MS);
 
     /* Configure and submit transfer structure 1 */
     EDMA_PrepareTransfer(&transferConfig, buffer, DEMO_AUDIO_BIT_WIDTH / 8U, (void *)destAddr,
                          DEMO_AUDIO_BIT_WIDTH / 8U,
-                         (FSL_FEATURE_SAI_FIFO_COUNT - config.fifo.fifoWatermark) * (DEMO_AUDIO_BIT_WIDTH / 8U),
+                         (FSL_FEATURE_SAI_FIFO_COUNT - saiConfig.fifo.fifoWatermark) * (DEMO_AUDIO_BIT_WIDTH / 8U),
                          BUFFER_SIZE * BUFFER_NUM, kEDMA_MemoryToPeripheral);
 
     EDMA_TcdSetTransferConfig(&s_emdaTcd, &transferConfig, &s_emdaTcd);

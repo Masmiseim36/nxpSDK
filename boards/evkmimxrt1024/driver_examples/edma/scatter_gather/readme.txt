@@ -24,10 +24,10 @@ debugging and further development.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.6
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -56,15 +56,23 @@ Running the demo
 When the example runs successfully, you can see the similar information from the terminal as below.
 
 ~~~~~~~~~~~~~~~~~~~~~
-EDMA scatter_gather transfer example begin.
+EDMA scatter gather transfer example begin.
+
+
 
 Destination Buffer:
-0       0       0       0       0       0       0       0
 
-EDMA scatter_gather transfer example finish.
+0	0	0	0	0	0	0	0	
+
+
+
+EDMA scatter gather transfer example finish.
+
+
 
 Destination Buffer:
-1       2       3       4       5       6       7       8
+
+1	2	3	4	5	6	7	8	
 ~~~~~~~~~~~~~~~~~~~~~
 
 

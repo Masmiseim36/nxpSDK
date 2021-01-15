@@ -31,15 +31,41 @@ inline std::ptrdiff_t manage_caching_sizes_helper(std::ptrdiff_t a, std::ptrdiff
   return a<=0 ? b : a;
 }
 
-#if EIGEN_ARCH_i386_OR_x86_64
-const std::ptrdiff_t defaultL1CacheSize = 32*1024;
-const std::ptrdiff_t defaultL2CacheSize = 256*1024;
-const std::ptrdiff_t defaultL3CacheSize = 2*1024*1024;
+#if defined(EIGEN_DEFAULT_L1_CACHE_SIZE)
+#define EIGEN_SET_DEFAULT_L1_CACHE_SIZE(val) EIGEN_DEFAULT_L1_CACHE_SIZE
 #else
-const std::ptrdiff_t defaultL1CacheSize = 16*1024;
-const std::ptrdiff_t defaultL2CacheSize = 512*1024;
-const std::ptrdiff_t defaultL3CacheSize = 512*1024;
+#define EIGEN_SET_DEFAULT_L1_CACHE_SIZE(val) val
+#endif // defined(EIGEN_DEFAULT_L1_CACHE_SIZE)
+
+#if defined(EIGEN_DEFAULT_L2_CACHE_SIZE)
+#define EIGEN_SET_DEFAULT_L2_CACHE_SIZE(val) EIGEN_DEFAULT_L2_CACHE_SIZE
+#else
+#define EIGEN_SET_DEFAULT_L2_CACHE_SIZE(val) val
+#endif // defined(EIGEN_DEFAULT_L2_CACHE_SIZE)
+
+#if defined(EIGEN_DEFAULT_L3_CACHE_SIZE)
+#define EIGEN_SET_DEFAULT_L3_CACHE_SIZE(val) EIGEN_SET_DEFAULT_L3_CACHE_SIZE
+#else
+#define EIGEN_SET_DEFAULT_L3_CACHE_SIZE(val) val
+#endif // defined(EIGEN_DEFAULT_L3_CACHE_SIZE)
+  
+#if EIGEN_ARCH_i386_OR_x86_64
+const std::ptrdiff_t defaultL1CacheSize = EIGEN_SET_DEFAULT_L1_CACHE_SIZE(32*1024);
+const std::ptrdiff_t defaultL2CacheSize = EIGEN_SET_DEFAULT_L2_CACHE_SIZE(256*1024);
+const std::ptrdiff_t defaultL3CacheSize = EIGEN_SET_DEFAULT_L3_CACHE_SIZE(2*1024*1024);
+#elif EIGEN_ARCH_PPC
+const std::ptrdiff_t defaultL1CacheSize = EIGEN_SET_DEFAULT_L1_CACHE_SIZE(64*1024);
+const std::ptrdiff_t defaultL2CacheSize = EIGEN_SET_DEFAULT_L2_CACHE_SIZE(512*1024);
+const std::ptrdiff_t defaultL3CacheSize = EIGEN_SET_DEFAULT_L3_CACHE_SIZE(4*1024*1024);
+#else
+const std::ptrdiff_t defaultL1CacheSize = EIGEN_SET_DEFAULT_L1_CACHE_SIZE(16*1024);
+const std::ptrdiff_t defaultL2CacheSize = EIGEN_SET_DEFAULT_L2_CACHE_SIZE(512*1024);
+const std::ptrdiff_t defaultL3CacheSize = EIGEN_SET_DEFAULT_L3_CACHE_SIZE(512*1024);
 #endif
+
+#undef EIGEN_SET_DEFAULT_L1_CACHE_SIZE
+#undef EIGEN_SET_DEFAULT_L2_CACHE_SIZE
+#undef EIGEN_SET_DEFAULT_L3_CACHE_SIZE
 
 /** \internal */
 struct CacheSizes {
@@ -55,7 +81,6 @@ struct CacheSizes {
   std::ptrdiff_t m_l2;
   std::ptrdiff_t m_l3;
 };
-
 
 /** \internal */
 inline void manage_caching_sizes(Action action, std::ptrdiff_t* l1, std::ptrdiff_t* l2, std::ptrdiff_t* l3)
@@ -1076,7 +1101,7 @@ struct gebp_traits <float, float, false, false,Architecture::NEON,GEBPPacketFull
     dest = *b;
   }
 
-  EIGEN_STRONG_INLINE void updateRhs(const RhsScalar* b, RhsPacketx4& dest) const
+  EIGEN_STRONG_INLINE void updateRhs(const RhsScalar*, RhsPacketx4&) const
   {}
 
   EIGEN_STRONG_INLINE void loadRhsQuad(const RhsScalar* b, RhsPacket& dest) const
@@ -1145,7 +1170,7 @@ struct gebp_traits <double, double, false, false,Architecture::NEON>
     loadRhs(b,dest);
   }
 
-  EIGEN_STRONG_INLINE void updateRhs(const RhsScalar* b, RhsPacketx4& dest) const
+  EIGEN_STRONG_INLINE void updateRhs(const RhsScalar*, RhsPacketx4&) const
   {}
 
   EIGEN_STRONG_INLINE void loadRhsQuad(const RhsScalar* b, RhsPacket& dest) const
@@ -2649,94 +2674,104 @@ template<typename Scalar, typename Index, typename DataMapper, int nr, bool Conj
 struct gemm_pack_rhs<Scalar, Index, DataMapper, nr, RowMajor, Conjugate, PanelMode>
 {
   typedef typename packet_traits<Scalar>::type Packet;
+  typedef typename unpacket_traits<Packet>::half HalfPacket;
+  typedef typename unpacket_traits<typename unpacket_traits<Packet>::half>::half QuarterPacket;
   typedef typename DataMapper::LinearMapper LinearMapper;
-  enum { PacketSize = packet_traits<Scalar>::size };
-  EIGEN_DONT_INLINE void operator()(Scalar* blockB, const DataMapper& rhs, Index depth, Index cols, Index stride=0, Index offset=0);
-};
-
-template<typename Scalar, typename Index, typename DataMapper, int nr, bool Conjugate, bool PanelMode>
-EIGEN_DONT_INLINE void gemm_pack_rhs<Scalar, Index, DataMapper, nr, RowMajor, Conjugate, PanelMode>
-  ::operator()(Scalar* blockB, const DataMapper& rhs, Index depth, Index cols, Index stride, Index offset)
-{
-  EIGEN_ASM_COMMENT("EIGEN PRODUCT PACK RHS ROWMAJOR");
-  EIGEN_UNUSED_VARIABLE(stride);
-  EIGEN_UNUSED_VARIABLE(offset);
-  eigen_assert(((!PanelMode) && stride==0 && offset==0) || (PanelMode && stride>=depth && offset<=stride));
-  conj_if<NumTraits<Scalar>::IsComplex && Conjugate> cj;
-  Index packet_cols8 = nr>=8 ? (cols/8) * 8 : 0;
-  Index packet_cols4 = nr>=4 ? (cols/4) * 4 : 0;
-  Index count = 0;
-
-//   if(nr>=8)
-//   {
-//     for(Index j2=0; j2<packet_cols8; j2+=8)
-//     {
-//       // skip what we have before
-//       if(PanelMode) count += 8 * offset;
-//       for(Index k=0; k<depth; k++)
-//       {
-//         if (PacketSize==8) {
-//           Packet A = ploadu<Packet>(&rhs[k*rhsStride + j2]);
-//           pstoreu(blockB+count, cj.pconj(A));
-//         } else if (PacketSize==4) {
-//           Packet A = ploadu<Packet>(&rhs[k*rhsStride + j2]);
-//           Packet B = ploadu<Packet>(&rhs[k*rhsStride + j2 + PacketSize]);
-//           pstoreu(blockB+count, cj.pconj(A));
-//           pstoreu(blockB+count+PacketSize, cj.pconj(B));
-//         } else {
-//           const Scalar* b0 = &rhs[k*rhsStride + j2];
-//           blockB[count+0] = cj(b0[0]);
-//           blockB[count+1] = cj(b0[1]);
-//           blockB[count+2] = cj(b0[2]);
-//           blockB[count+3] = cj(b0[3]);
-//           blockB[count+4] = cj(b0[4]);
-//           blockB[count+5] = cj(b0[5]);
-//           blockB[count+6] = cj(b0[6]);
-//           blockB[count+7] = cj(b0[7]);
-//         }
-//         count += 8;
-//       }
-//       // skip what we have after
-//       if(PanelMode) count += 8 * (stride-offset-depth);
-//     }
-//   }
-  if(nr>=4)
+  enum { PacketSize = packet_traits<Scalar>::size,
+         HalfPacketSize = unpacket_traits<HalfPacket>::size,
+		 QuarterPacketSize = unpacket_traits<QuarterPacket>::size};
+  EIGEN_DONT_INLINE void operator()(Scalar* blockB, const DataMapper& rhs, Index depth, Index cols, Index stride=0, Index offset=0)
   {
-    for(Index j2=packet_cols8; j2<packet_cols4; j2+=4)
+    EIGEN_ASM_COMMENT("EIGEN PRODUCT PACK RHS ROWMAJOR");
+    EIGEN_UNUSED_VARIABLE(stride);
+    EIGEN_UNUSED_VARIABLE(offset);
+    eigen_assert(((!PanelMode) && stride==0 && offset==0) || (PanelMode && stride>=depth && offset<=stride));
+    const bool HasHalf = (int)HalfPacketSize < (int)PacketSize;
+    const bool HasQuarter = (int)QuarterPacketSize < (int)HalfPacketSize;
+    conj_if<NumTraits<Scalar>::IsComplex && Conjugate> cj;
+    Index packet_cols8 = nr>=8 ? (cols/8) * 8 : 0;
+    Index packet_cols4 = nr>=4 ? (cols/4) * 4 : 0;
+    Index count = 0;
+
+  //   if(nr>=8)
+  //   {
+  //     for(Index j2=0; j2<packet_cols8; j2+=8)
+  //     {
+  //       // skip what we have before
+  //       if(PanelMode) count += 8 * offset;
+  //       for(Index k=0; k<depth; k++)
+  //       {
+  //         if (PacketSize==8) {
+  //           Packet A = ploadu<Packet>(&rhs[k*rhsStride + j2]);
+  //           pstoreu(blockB+count, cj.pconj(A));
+  //         } else if (PacketSize==4) {
+  //           Packet A = ploadu<Packet>(&rhs[k*rhsStride + j2]);
+  //           Packet B = ploadu<Packet>(&rhs[k*rhsStride + j2 + PacketSize]);
+  //           pstoreu(blockB+count, cj.pconj(A));
+  //           pstoreu(blockB+count+PacketSize, cj.pconj(B));
+  //         } else {
+  //           const Scalar* b0 = &rhs[k*rhsStride + j2];
+  //           blockB[count+0] = cj(b0[0]);
+  //           blockB[count+1] = cj(b0[1]);
+  //           blockB[count+2] = cj(b0[2]);
+  //           blockB[count+3] = cj(b0[3]);
+  //           blockB[count+4] = cj(b0[4]);
+  //           blockB[count+5] = cj(b0[5]);
+  //           blockB[count+6] = cj(b0[6]);
+  //           blockB[count+7] = cj(b0[7]);
+  //         }
+  //         count += 8;
+  //       }
+  //       // skip what we have after
+  //       if(PanelMode) count += 8 * (stride-offset-depth);
+  //     }
+  //   }
+    if(nr>=4)
     {
-      // skip what we have before
-      if(PanelMode) count += 4 * offset;
+      for(Index j2=packet_cols8; j2<packet_cols4; j2+=4)
+      {
+        // skip what we have before
+        if(PanelMode) count += 4 * offset;
+        for(Index k=0; k<depth; k++)
+        {
+          if (PacketSize==4) {
+            Packet A = rhs.template loadPacket<Packet>(k, j2);
+            pstoreu(blockB+count, cj.pconj(A));
+            count += PacketSize;
+          } else if (HasHalf && HalfPacketSize==4) {
+            HalfPacket A = rhs.template loadPacket<HalfPacket>(k, j2);
+            pstoreu(blockB+count, cj.pconj(A));
+            count += HalfPacketSize;
+          } else if (HasQuarter && QuarterPacketSize==4) {
+            QuarterPacket A = rhs.template loadPacket<QuarterPacket>(k, j2);
+            pstoreu(blockB+count, cj.pconj(A));
+            count += QuarterPacketSize;
+          } else {
+            const LinearMapper dm0 = rhs.getLinearMapper(k, j2);
+            blockB[count+0] = cj(dm0(0));
+            blockB[count+1] = cj(dm0(1));
+            blockB[count+2] = cj(dm0(2));
+            blockB[count+3] = cj(dm0(3));
+            count += 4;
+          }
+        }
+        // skip what we have after
+        if(PanelMode) count += 4 * (stride-offset-depth);
+      }
+    }
+    // copy the remaining columns one at a time (nr==1)
+    for(Index j2=packet_cols4; j2<cols; ++j2)
+    {
+      if(PanelMode) count += offset;
       for(Index k=0; k<depth; k++)
       {
-        if (PacketSize==4) {
-          Packet A = rhs.template loadPacket<Packet>(k, j2);
-          pstoreu(blockB+count, cj.pconj(A));
-          count += PacketSize;
-        } else {
-          const LinearMapper dm0 = rhs.getLinearMapper(k, j2);
-          blockB[count+0] = cj(dm0(0));
-          blockB[count+1] = cj(dm0(1));
-          blockB[count+2] = cj(dm0(2));
-          blockB[count+3] = cj(dm0(3));
-          count += 4;
-        }
+        blockB[count] = cj(rhs(k, j2));
+        count += 1;
       }
-      // skip what we have after
-      if(PanelMode) count += 4 * (stride-offset-depth);
+      if(PanelMode) count += stride-offset-depth;
     }
   }
-  // copy the remaining columns one at a time (nr==1)
-  for(Index j2=packet_cols4; j2<cols; ++j2)
-  {
-    if(PanelMode) count += offset;
-    for(Index k=0; k<depth; k++)
-    {
-      blockB[count] = cj(rhs(k, j2));
-      count += 1;
-    }
-    if(PanelMode) count += stride-offset-depth;
-  }
-}
+};
 
 } // end namespace internal
 

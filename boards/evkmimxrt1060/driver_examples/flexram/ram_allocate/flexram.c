@@ -7,11 +7,11 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_flexram.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -35,8 +35,11 @@
 #define APP_ITCM_ALLOCATE_BANK_NUM  8
 #define APP_DTCM_ALLOCATE_BANK_NUM  4
 
-#define APP_DSB() __DSB()
-#define APP_ISB() __ISB()
+/*
+ * If cache is enabled, this example should maintain the cache to make sure
+ * CPU core accesses the memory, not cache only.
+ */
+#define APP_USING_CACHE 1
 
 
 /*******************************************************************************
@@ -78,6 +81,10 @@ void APP_FLEXRAM_IRQ_HANDLER(void)
 /*!
  * @brief Main function
  */
+#if APP_USING_CACHE
+#include "fsl_cache.h"
+#endif
+
 int main(void)
 {
     /* Board pin, clock, debug console init */
@@ -85,9 +92,6 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-#if defined(__DCACHE_PRESENT) && __DCACHE_PRESENT
-    SCB_DisableDCache();
-#endif
 
     PRINTF("\r\nFLEXRAM ram allocate example.\r\n");
 
@@ -144,8 +148,12 @@ static void OCRAM_Access(void)
     {
         *ocramAddr = 0xCCU;
         /* Synchronizes the execution stream with memory accesses */
-        APP_DSB();
-        APP_ISB();
+        __DSB();
+        __ISB();
+
+#if APP_USING_CACHE
+        DCACHE_CleanByRange((uint32_t)ocramAddr, sizeof(uint32_t));
+#endif
 
         /* check ocram access error event */
         if (s_flexram_ocram_access_error_match)

@@ -1,7 +1,7 @@
 Overview
 ========
 The PowerQuad fetches data from system RAM and private RAM through different
-path, for the calcutations which need data from two parts of memory, such as
+path, for the calculations which need data from two parts of memory, such as
 FIR, convolve, correlate, and some matrix operations, place the input data B
 in private RAM improves the performance.
 PowerQuad private RAM starts from address 0xe0000000, the first 4KByte is used
@@ -10,14 +10,14 @@ for optimization. In this example, the FIR taps, convolve input data B, and corr
 input data B are not changed, so they are converted to float format and saved
 to private RAM at the beginning.
 If the example runs successfully, the performance using optimized method is better
-than the nornal method.
+than the normal method.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.5
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.3.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================

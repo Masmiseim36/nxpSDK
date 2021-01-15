@@ -4,10 +4,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "fsl_flexspi.h"
-#include "mflash_drv.h"
-#include "pin_mux.h"
 #include <stdbool.h>
+
+#include "mflash_drv.h"
+
+#include "fsl_flexspi.h"
+#include "fsl_cache.h"
+#include "pin_mux.h"
 
 #define NOR_CMD_LUT_SEQ_IDX_READ_NORMAL        2
 #define NOR_CMD_LUT_SEQ_IDX_READ_FAST          1
@@ -49,7 +52,7 @@ flexspi_device_config_t deviceconfig = {
 };
 #endif
 
-const uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
+static uint32_t customLUT[CUSTOM_LUT_LENGTH] = {
     /* Normal read mode -SDR */
     [4 * NOR_CMD_LUT_SEQ_IDX_READ_NORMAL] =
         FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, 0x03, kFLEXSPI_Command_RADDR_SDR, kFLEXSPI_1PAD, 0x18),
@@ -184,42 +187,6 @@ static status_t flexspi_nor_write_enable(FLEXSPI_Type *base, uint32_t baseAddr)
     return status;
 }
 
-static status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address)
-{
-    status_t status;
-    flexspi_transfer_t flashXfer;
-
-    /* Write enable */
-    flashXfer.deviceAddress = address;
-    flashXfer.port          = kFLEXSPI_PortA1;
-    flashXfer.cmdType       = kFLEXSPI_Command;
-    flashXfer.SeqNumber     = 1;
-    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_WRITEENABLE;
-
-    status = FLEXSPI_TransferBlocking(base, &flashXfer);
-
-    if (status != kStatus_Success)
-    {
-        return status;
-    }
-
-    flashXfer.deviceAddress = address;
-    flashXfer.port          = kFLEXSPI_PortA1;
-    flashXfer.cmdType       = kFLEXSPI_Command;
-    flashXfer.SeqNumber     = 1;
-    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_ERASESECTOR;
-    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
-
-    if (status != kStatus_Success)
-    {
-        return status;
-    }
-
-    status = flexspi_nor_wait_bus_busy(base);
-
-    return status;
-}
-
 status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
 {
     flexspi_transfer_t flashXfer;
@@ -254,39 +221,34 @@ status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
     return status;
 }
 
-/* Internal - erase single sector */
-static int32_t mflash_drv_erase_sector_internal(uint32_t sector_addr)
+static status_t flexspi_nor_flash_sector_erase(FLEXSPI_Type *base, uint32_t address)
 {
-    int32_t retVal = 0;
-
-    __asm("cpsid i");
-
     status_t status;
-    status = flexspi_nor_flash_erase_sector(MFLASH_FLEXSPI, sector_addr);
+    flexspi_transfer_t flashXfer;
+
+    /* Write enable */
+    status = flexspi_nor_write_enable(base, 0);
+
     if (status != kStatus_Success)
     {
-        retVal = -1;
+        return status;
     }
 
-    __asm("cpsie i");
-    /* Flush pipeline to allow pending interrupts take place
-     * before starting next loop */
-    __ISB();
+    flashXfer.deviceAddress = address;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Command;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_ERASESECTOR;
+    status                  = FLEXSPI_TransferBlocking(base, &flashXfer);
 
-    return retVal;
-}
+    if (status != kStatus_Success)
+    {
+        return status;
+    }
 
-/* Calling wrapper for 'mflash_drv_erase_sector_internal'.
- * Erase one sector starting at 'sector_addr' - must be sector aligned.
- */
-int32_t mflash_drv_erase_sector(void *sector_addr)
-{
-    if (false == mflash_drv_is_sector_aligned((uint32_t)sector_addr))
-        return -1;
+    status = flexspi_nor_wait_bus_busy(base);
 
-    volatile int32_t result;
-    result = mflash_drv_erase_sector_internal((uint32_t)sector_addr);
-    return result;
+    return status;
 }
 
 static status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t address, const uint32_t *src)
@@ -322,55 +284,39 @@ static status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t addr
     return status;
 }
 
-/* Internal - write single page */
-static int32_t mflash_drv_write_page_internal(uint32_t page_addr, uint32_t *data)
+static status_t flexspi_nor_read_data(FLEXSPI_Type *base, uint32_t startAddress, uint32_t *buffer, uint32_t length)
 {
-    __asm("cpsid i");
-
     status_t status;
-    status = flexspi_nor_flash_page_program(MFLASH_FLEXSPI, page_addr, data);
+    flexspi_transfer_t flashXfer;
+    uint32_t readAddress = startAddress;
 
-    /* Do software reset. */
-    FLEXSPI_SoftwareReset(MFLASH_FLEXSPI);
+    /* Read page. */
+    flashXfer.deviceAddress = readAddress;
+    flashXfer.port          = kFLEXSPI_PortA1;
+    flashXfer.cmdType       = kFLEXSPI_Read;
+    flashXfer.SeqNumber     = 1;
+    flashXfer.seqIndex      = NOR_CMD_LUT_SEQ_IDX_READ_FAST_QUAD;
+    flashXfer.data          = buffer;
+    flashXfer.dataSize      = length;
 
-    __asm("cpsie i");
-    /* Flush pipeline to allow pending interrupts take place
-     * before starting next loop */
-    __ISB();
+    status = FLEXSPI_TransferBlocking(base, &flashXfer);
 
-    if (status != kStatus_Success)
-    {
-        return -1;
-    }
-
-    return 0;
-}
-
-/* Calling wrapper for 'mflash_drv_write_page_internal'.
- * Write 'data' to 'page_addr' - must be page aligned.
- * NOTE: Don't try to store constant data that are located in XIP !!
- */
-int32_t mflash_drv_write_page(void *page_addr, uint32_t *data)
-{
-    if (false == mflash_drv_is_page_aligned((uint32_t)page_addr))
-        return -1;
-
-    volatile int32_t result;
-    result = mflash_drv_write_page_internal((uint32_t)page_addr, data);
-    return result;
+    return status;
 }
 
 /* Initialize flash peripheral,
  * cannot be invoked directly, requires calling wrapper in non XIP memory */
 static int32_t mflash_drv_init_internal(void)
 {
+    status_t status = kStatus_Success;
+
     /* NOTE: Multithread access is not supported for SRAM target.
      *       XIP target MUST be protected by disabling global interrupts
      *       since all ISR (and API that is used inside) is placed at XIP.
      *       It is necessary to place at least "mflash_drv.o", "fsl_flexspi.o" to SRAM */
-    /* disable interrupts when running from XIP
-     * TODO: store/restore previous PRIMASK on stack to avoid
-     * failure in case of nested critical sections !! */
+    /* disable interrupts when running from XIP */
+    uint32_t primask = __get_PRIMASK();
+
     __asm("cpsid i");
 
 #ifndef XIP_EXTERNAL_FLASH
@@ -397,27 +343,148 @@ static int32_t mflash_drv_init_internal(void)
     FLEXSPI_UpdateLUT(MFLASH_FLEXSPI, 0, customLUT, CUSTOM_LUT_LENGTH);
 
 #ifndef XIP_EXTERNAL_FLASH
-    status_t status;
-
     /* Enter quad mode. */
     status = flexspi_nor_enable_quad_mode(MFLASH_FLEXSPI);
-    if (status != kStatus_Success)
-    {
-        return -1;
-    }
 #endif
 
-    __asm("cpsie i");
+    if (primask == 0)
+    {
+        __asm("cpsie i");
+    }
 
-    return 0;
+    return status;
 }
 
 /* API - initialize 'mflash' */
 int32_t mflash_drv_init(void)
 {
-    volatile int32_t result;
     /* Necessary to have double wrapper call in non_xip memory */
-    result = mflash_drv_init_internal();
+    return mflash_drv_init_internal();
+}
 
-    return result;
+/* Internal - erase single sector */
+static int32_t mflash_drv_sector_erase_internal(uint32_t sector_addr)
+{
+    status_t status;
+    uint32_t primask = __get_PRIMASK();
+
+    __asm("cpsid i");
+
+    status = flexspi_nor_flash_sector_erase(MFLASH_FLEXSPI, sector_addr);
+
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(MFLASH_FLEXSPI);
+
+    DCACHE_InvalidateByRange(MFLASH_BASE_ADDRESS + sector_addr, MFLASH_SECTOR_SIZE);
+
+    if (primask == 0)
+    {
+        __asm("cpsie i");
+    }
+
+    /* Flush pipeline to allow pending interrupts take place
+     * before starting next loop */
+    __ISB();
+
+    return status;
+}
+
+/* Calling wrapper for 'mflash_drv_sector_erase_internal'.
+ * Erase one sector starting at 'sector_addr' - must be sector aligned.
+ */
+int32_t mflash_drv_sector_erase(uint32_t sector_addr)
+{
+    if (0 == mflash_drv_is_sector_aligned(sector_addr))
+        return kStatus_InvalidArgument;
+
+    return mflash_drv_sector_erase_internal(sector_addr);
+}
+
+/* Internal - write single page */
+static int32_t mflash_drv_page_program_internal(uint32_t page_addr, uint32_t *data)
+{
+    uint32_t primask = __get_PRIMASK();
+
+    __asm("cpsid i");
+
+    status_t status;
+    status = flexspi_nor_flash_page_program(MFLASH_FLEXSPI, page_addr, data);
+
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(MFLASH_FLEXSPI);
+
+    DCACHE_InvalidateByRange(MFLASH_BASE_ADDRESS + page_addr, MFLASH_PAGE_SIZE);
+
+    if (primask == 0)
+    {
+        __asm("cpsie i");
+    }
+
+    /* Flush pipeline to allow pending interrupts take place
+     * before starting next loop */
+    __ISB();
+
+    return status;
+}
+
+/* Calling wrapper for 'mflash_drv_page_program_internal'.
+ * Write 'data' to 'page_addr' - must be page aligned.
+ * NOTE: Don't try to store constant data that are located in XIP !!
+ */
+int32_t mflash_drv_page_program(uint32_t page_addr, uint32_t *data)
+{
+    if (0 == mflash_drv_is_page_aligned(page_addr))
+        return kStatus_InvalidArgument;
+
+    return mflash_drv_page_program_internal(page_addr, data);
+}
+
+/* Internal - read data */
+static int32_t mflash_drv_read_internal(uint32_t addr, uint32_t *buffer, uint32_t len)
+{
+    uint32_t primask = __get_PRIMASK();
+
+    __asm("cpsid i");
+
+    status_t status;
+    status = flexspi_nor_read_data(MFLASH_FLEXSPI, addr, buffer, len);
+
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(MFLASH_FLEXSPI);
+
+    if (primask == 0)
+    {
+        __asm("cpsie i");
+    }
+
+    /* Flush pipeline to allow pending interrupts take place
+     * before starting next loop */
+    __ISB();
+
+    return status;
+}
+
+/* API - Read data */
+int32_t mflash_drv_read(uint32_t addr, uint32_t *buffer, uint32_t len)
+{
+    /* Check alignment */
+    if (((uint32_t)buffer % 4) || (len % 4))
+        return kStatus_InvalidArgument;
+
+    return mflash_drv_read_internal(addr, buffer, len);
+}
+
+/* API - Get pointer to FLASH region */
+void *mflash_drv_phys2log(uint32_t addr, uint32_t len)
+{
+    return (void *)(addr + MFLASH_BASE_ADDRESS);
+}
+
+/* API - Get pointer to FLASH region */
+uint32_t mflash_drv_log2phys(void *ptr, uint32_t len)
+{
+    if ((uint32_t)ptr < MFLASH_BASE_ADDRESS)
+        return kStatus_InvalidArgument;
+
+    return ((uint32_t)ptr - MFLASH_BASE_ADDRESS);
 }

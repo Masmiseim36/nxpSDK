@@ -1,13 +1,9 @@
-/* Copyright 2019,2020 NXP
- *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
- */
+/*
+* Copyright 2019,2020 NXP
+* All rights reserved.
+*
+* SPDX-License-Identifier: BSD-3-Clause
+*/
 
 #ifndef FSL_SSS_SE05X_CONST_H
 #define FSL_SSS_SE05X_CONST_H
@@ -24,20 +20,27 @@
 
 #define SE05X_SESSIONID_LEN (8)
 
-/* See MAX_APDU_PAYLOAD_LENGTH in SE050 APDU Specifications.
+/* See MAX_APDU_PAYLOAD_LENGTH in SE05x APDU Specifications.
  *
- * Using 892 so that buffer boundaries are potentially word aligned.
+ * Using 892 so that buffer boundaries are potentially word aligned for Se050.
+ * Using 1024 for Se051.
  * And expecting a failure from OnCard in case host sends a
  * larger than expected buffer.
- *
- * Please note, depending on choise of of:
+ * Please note, depending on choice of:
  * {No Auth | UserID Auth | Applet SCP | Fast SCP }
  * and combination of either of above along with Platform SCP,
  * there is no easy way how many Exact bytes the host can
- * send to SE050.
+ * send to SE05x.
  */
+#if SSS_HAVE_SE05X_VER_GTE_06_00
+/* SE051 MAX_APDU_PAYLOAD_LENGTH 1024 */
+#define SE05X_MAX_BUF_SIZE_CMD (1024)
+#define SE05X_MAX_BUF_SIZE_RSP (1024)
+#else
+/* SE050 MAX_APDU_PAYLOAD_LENGTH 892 */
 #define SE05X_MAX_BUF_SIZE_CMD (892)
 #define SE05X_MAX_BUF_SIZE_RSP (892)
+#endif
 
 #define SE050_MODULE_UNIQUE_ID_LEN 18
 
@@ -147,10 +150,10 @@ example : B1b8 : 0x80000000
 #define POLICY_OBJ_ALLOW_DESFIRE_AUTHENTICATION     0x00004000
 #define POLICY_OBJ_ALLOW_DESFIRE_DUMP_SESSION_KEYS  0x00002000
 #define POLICY_OBJ_ALLOW_IMPORT_EXPORT              0x00001000
-#if SSS_HAVE_SE05X_VER_GTE_04_04
+#if SSS_HAVE_SE05X_VER_GTE_06_00 // 4.4
 #define POLICY_OBJ_FORBID_DERIVED_OUTPUT            0x00000800
 #endif
-#if SSS_HAVE_SE05X_VER_GTE_05_04
+#if SSS_HAVE_SE05X_VER_GTE_06_00 // 5.4
 #define POLICY_OBJ_ALLOW_KDF_EXT_RANDOM     0x00000400
 #endif
 

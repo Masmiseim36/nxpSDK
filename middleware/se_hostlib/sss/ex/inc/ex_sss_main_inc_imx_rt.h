@@ -36,13 +36,13 @@
 #include "ksdk_mbedtls.h"
 #endif
 
-#ifdef CPU_MIMXRT1052DVL6B
+#ifdef CPU_MIMXRT1062DVL6A
 #include "fsl_dcp.h"
 #include "fsl_trng.h"
 #endif
 #include "fsl_iomuxc.h"
 
-#ifdef CPU_MIMXRT1052DVL6B
+#ifdef CPU_MIMXRT1062DVL6A
 #define TRNG0 TRNG
 #endif
 

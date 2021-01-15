@@ -8,12 +8,12 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i3c.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -174,6 +174,11 @@ int main(void)
         return -1;
     }
 
+    /* Update slave tx buffer according to the received buffer. */
+    memcpy(g_slave_txBuff, g_slave_rxBuff, I3C_DATA_LENGTH);
+    g_txBuff = &g_slave_txBuff[1];
+    g_txSize = g_slave_txBuff[0];
+
     PRINTF("Slave received data :");
 
     for (uint32_t i = 0U; i < g_slave_rxBuff[0]; i++)
@@ -186,10 +191,6 @@ int main(void)
     }
     PRINTF("\r\n\r\n");
 
-    /* Update slave tx buffer according to the received buffer. */
-    memcpy(g_slave_txBuff, g_slave_rxBuff, I3C_DATA_LENGTH);
-    g_txBuff = &g_slave_txBuff[1];
-    g_txSize = g_slave_txBuff[0];
     /* Wait for slave transmit completed. */
     timeout_i = 0U;
     while ((!g_slaveCompletionFlag) && (++timeout_i < I3C_TIME_OUT_INDEX))

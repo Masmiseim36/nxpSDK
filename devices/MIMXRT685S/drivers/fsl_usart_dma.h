@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,8 +25,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief USART dma driver version 2.2.0. */
-#define FSL_USART_DMA_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
+/*! @brief USART dma driver version 2.3.1. */
+#define FSL_USART_DMA_DRIVER_VERSION (MAKE_VERSION(2, 3, 1))
 /*@}*/
 
 /* Forward declaration of the handle typedef. */

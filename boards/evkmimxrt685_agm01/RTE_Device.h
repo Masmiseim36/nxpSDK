@@ -1,35 +1,42 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#ifndef __RTE_DEVICE_H
-#define __RTE_DEVICE_H
+#ifndef _RTE_DEVICE_H
+#define _RTE_DEVICE_H
+
+extern void I2C2_InitPins();
+extern void I2C2_DeinitPins();
+extern void USART0_InitPins();
+extern void USART0_DeinitPins();
+extern void USART0_InitPins();
+extern void USART0_DeinitPins();
+extern void SPI5_InitPins();
+extern void SPI5_DeinitPins();
+extern void SPI5_InitPins();
+extern void SPI5_DeinitPins();
 
 /*Driver name mapping*/
-#define RTE_I2C2        1
-#define RTE_I2C2_DMA_EN 0
+/* User needs to provide the implementation of I2CX_GetFreq/I2CX_InitPins/I2CX_DeinitPins for the enabled I2C instance.
+ */
+#define RTE_I2C2            1
+#define RTE_I2C2_PIN_INIT   I2C2_InitPins
+#define RTE_I2C2_PIN_DEINIT I2C2_DeinitPins
+#define RTE_I2C2_DMA_EN     0
 
 /*I2C configuration*/
-#define RTE_I2C4_Master_DMA_BASE DMA0
-#define RTE_I2C4_Master_DMA_CH   9
 
 /* Driver name mapping. */
-#define RTE_USART0        1
-#define RTE_USART0_DMA_EN 0
-#define RTE_USART1        0
-#define RTE_USART1_DMA_EN 0
-#define RTE_USART2        0
-#define RTE_USART2_DMA_EN 0
-#define RTE_USART3        0
-#define RTE_USART3_DMA_EN 0
-#define RTE_USART4        0
-#define RTE_USART4_DMA_EN 0
-#define RTE_USART5        0
-#define RTE_USART5_DMA_EN 0
+/* User needs to provide the implementation of USARTX_GetFreq/USARTX_InitPins/USARTX_DeinitPins for the enabled USART
+ * instance. */
+#define RTE_USART0            1
+#define RTE_USART0_PIN_INIT   USART0_InitPins
+#define RTE_USART0_PIN_DEINIT USART0_DeinitPins
+#define RTE_USART0_DMA_EN     0
 
 /* USART configuration. */
 #define USART_RX_BUFFER_LEN     64
@@ -40,93 +47,29 @@
 #define USART4_RX_BUFFER_ENABLE 0
 #define USART5_RX_BUFFER_ENABLE 0
 
+#define RTE_USART0_PIN_INIT        USART0_InitPins
+#define RTE_USART0_PIN_DEINIT      USART0_DeinitPins
 #define RTE_USART0_DMA_TX_CH       1
 #define RTE_USART0_DMA_TX_DMA_BASE DMA0
 #define RTE_USART0_DMA_RX_CH       0
 #define RTE_USART0_DMA_RX_DMA_BASE DMA0
 
-#define RTE_USART1_DMA_TX_CH       3
-#define RTE_USART1_DMA_TX_DMA_BASE DMA0
-#define RTE_USART1_DMA_RX_CH       2
-#define RTE_USART1_DMA_RX_DMA_BASE DMA0
-
-#define RTE_USART2_DMA_TX_CH       5
-#define RTE_USART2_DMA_TX_DMA_BASE DMA0
-#define RTE_USART2_DMA_RX_CH       4
-#define RTE_USART2_DMA_RX_DMA_BASE DMA0
-
-#define RTE_USART3_DMA_TX_CH       7
-#define RTE_USART3_DMA_TX_DMA_BASE DMA0
-#define RTE_USART3_DMA_RX_CH       6
-#define RTE_USART3_DMA_RX_DMA_BASE DMA0
-
-#define RTE_USART4_DMA_TX_CH       9
-#define RTE_USART4_DMA_TX_DMA_BASE DMA0
-#define RTE_USART4_DMA_RX_CH       8
-#define RTE_USART4_DMA_RX_DMA_BASE DMA0
-
-#define RTE_USART5_DMA_TX_CH       11
-#define RTE_USART5_DMA_TX_DMA_BASE DMA0
-#define RTE_USART5_DMA_RX_CH       10
-#define RTE_USART5_DMA_RX_DMA_BASE DMA0
-
 /*Driver name mapping*/
-#define RTE_SPI0         0
-#define RTE_SPI0_DMA_EN  0
-#define RTE_SPI1         0
-#define RTE_SPI1_DMA_EN  0
-#define RTE_SPI2         0
-#define RTE_SPI2_DMA_EN  0
-#define RTE_SPI3         0
-#define RTE_SPI3_DMA_EN  0
-#define RTE_SPI4         0
-#define RTE_SPI4_DMA_EN  0
-#define RTE_SPI5         1
-#define RTE_SPI5_DMA_EN  0
-#define RTE_SPI14        0
-#define RTE_SPI14_DMA_EN 0
+/* User needs to provide the implementation of SPIX_GetFreq/SPIX_InitPins/SPIX_DeinitPins for the enabled SPI instance.
+ */
+#define RTE_SPI5            1
+#define RTE_SPI5_PIN_INIT   SPI5_InitPins
+#define RTE_SPI5_PIN_DEINIT SPI5_DeinitPins
+#define RTE_SPI5_DMA_EN     0
 
 /* SPI configuration. */
-#define RTE_SPI0_SSEL_NUM        kSPI_Ssel0
-#define RTE_SPI0_DMA_TX_CH       1
-#define RTE_SPI0_DMA_TX_DMA_BASE DMA0
-#define RTE_SPI0_DMA_RX_CH       0
-#define RTE_SPI0_DMA_RX_DMA_BASE DMA0
-
-#define RTE_SPI1_SSEL_NUM        kSPI_Ssel0
-#define RTE_SPI1_DMA_TX_CH       3
-#define RTE_SPI1_DMA_TX_DMA_BASE DMA0
-#define RTE_SPI1_DMA_RX_CH       2
-#define RTE_SPI1_DMA_RX_DMA_BASE DMA0
-
-#define RTE_SPI2_SSEL_NUM        kSPI_Ssel0
-#define RTE_SPI2_DMA_TX_CH       5
-#define RTE_SPI2_DMA_TX_DMA_BASE DMA0
-#define RTE_SPI2_DMA_RX_CH       4
-#define RTE_SPI2_DMA_RX_DMA_BASE DMA0
-
-#define RTE_SPI3_SSEL_NUM        kSPI_Ssel0
-#define RTE_SPI3_DMA_TX_CH       7
-#define RTE_SPI3_DMA_TX_DMA_BASE DMA0
-#define RTE_SPI3_DMA_RX_CH       6
-#define RTE_SPI3_DMA_RX_DMA_BASE DMA0
-
-#define RTE_SPI4_SSEL_NUM        kSPI_Ssel0
-#define RTE_SPI4_DMA_TX_CH       9
-#define RTE_SPI4_DMA_TX_DMA_BASE DMA0
-#define RTE_SPI4_DMA_RX_CH       8
-#define RTE_SPI4_DMA_RX_DMA_BASE DMA0
 
 #define RTE_SPI5_SSEL_NUM        kSPI_Ssel0
+#define RTE_SPI5_PIN_INIT        SPI5_InitPins
+#define RTE_SPI5_PIN_DEINIT      SPI5_DeinitPins
 #define RTE_SPI5_DMA_TX_CH       11
 #define RTE_SPI5_DMA_TX_DMA_BASE DMA0
 #define RTE_SPI5_DMA_RX_CH       10
 #define RTE_SPI5_DMA_RX_DMA_BASE DMA0
 
-#define RTE_SPI14_SSEL_NUM        kSPI_Ssel0
-#define RTE_SPI14_DMA_TX_CH       27
-#define RTE_SPI14_DMA_TX_DMA_BASE DMA0
-#define RTE_SPI14_DMA_RX_CH       26
-#define RTE_SPI14_DMA_RX_DMA_BASE DMA0
-
-#endif /* __RTE_DEVICE_H */
+#endif /* _RTE_DEVICE_H */

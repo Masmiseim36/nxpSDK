@@ -16,9 +16,9 @@
 #endif
 
 #if defined(FSL_FEATURE_OCOTP_HAS_STATUS) && FSL_FEATURE_OCOTP_HAS_STATUS
-#define OCOTP_STATUS_READ_DED_MASK                                                 \
-    (OCOTP_OUT_STATUS0_DED0_MASK | OCOTP_OUT_STATUS0_DED1_MASK | \
-     OCOTP_OUT_STATUS0_DED2_MASK | OCOTP_OUT_STATUS0_DED3_MASK)
+#define OCOTP_STATUS_READ_DED_MASK                                                             \
+    (OCOTP_OUT_STATUS0_DED0_MASK | OCOTP_OUT_STATUS0_DED1_MASK | OCOTP_OUT_STATUS0_DED2_MASK | \
+     OCOTP_OUT_STATUS0_DED3_MASK)
 #endif
 
 /* Wait time should be not less than 150ns . */
@@ -59,7 +59,7 @@ static void OCOTP_SetWriteTiming(OCOTP_Type *base, ocotp_timing_t timingConfig);
  ******************************************************************************/
 #if (defined(FSL_FEATURE_OCOTP_HAS_TIMING_CTRL) && FSL_FEATURE_OCOTP_HAS_TIMING_CTRL)
 /* Timing configuration for OCOTP controller. */
-ocotp_timing_t s_timingConfig;
+static ocotp_timing_t s_timingConfig;
 #endif
 
 /*******************************************************************************
@@ -155,18 +155,18 @@ void OCOTP_Init(OCOTP_Type *base, uint32_t srcClock_Hz)
 
 #if (defined(FSL_FEATURE_OCOTP_HAS_TIMING_CTRL) && FSL_FEATURE_OCOTP_HAS_TIMING_CTRL)
     /* tWait time shoule be higher than OCOTP_TIMING_WAIT_NS. */
-    s_timingConfig.wait = (OCOTP_TIMING_WAIT_NS * srcClock_Hz + 1000000000) / 1000000000 - 1;
+    s_timingConfig.wait = (uint32_t)((OCOTP_TIMING_WAIT_NS * srcClock_Hz + 1000000000U) / 1000000000U - 1U);
 
     /* tRelax time shoule be higher than OCOTP_TIMING_RELEX_NS. */
-    s_timingConfig.relax = (OCOTP_TIMING_RELEX_NS * srcClock_Hz + 1000000000) / 1000000000 - 1;
+    s_timingConfig.relax = (uint32_t)((OCOTP_TIMING_RELEX_NS * srcClock_Hz + 1000000000U) / 1000000000U - 1U);
 
     /* tStrobe_prog time should be close to OCOTP_TIMING_PROGRAM_NS, only add half of 1000000000. */
-    s_timingConfig.strobe_prog =
-        (OCOTP_TIMING_PROGRAM_NS * srcClock_Hz + 500000000) / 1000000000 + 2 * (s_timingConfig.relax + 1) - 1;
+    s_timingConfig.strobe_prog = (uint32_t)((OCOTP_TIMING_PROGRAM_NS * srcClock_Hz + 500000000U) / 1000000000U) +
+                                 2U * (s_timingConfig.relax + 1U) - 1U;
 
     /* tStrobe_read time should be higher than OCOTP_TIMING_READ_NS. */
-    s_timingConfig.strobe_read =
-        (OCOTP_TIMING_READ_NS * srcClock_Hz + 1000000000) / 1000000000 + 2 * (s_timingConfig.relax + 1) - 1;
+    s_timingConfig.strobe_read = (uint32_t)((OCOTP_TIMING_READ_NS * srcClock_Hz + 1000000000U) / 1000000000U) +
+                                 2U * (s_timingConfig.relax + 1U) - 1U;
 #endif
 }
 
@@ -202,7 +202,7 @@ uint32_t OCOTP_ReadFuseShadowRegister(OCOTP_Type *base, uint32_t address)
 
 status_t OCOTP_ReadFuseShadowRegisterExt(OCOTP_Type *base, uint32_t address, uint32_t *data, uint8_t fuseWords)
 {
-    assert((fuseWords > 0U) && (fuseWords < OCOTP_READ_FUSE_DATA_COUNT));
+    assert((fuseWords > 0U) && (fuseWords <= OCOTP_READ_FUSE_DATA_COUNT));
     assert(NULL != data);
 
     status_t status = kStatus_Success;
@@ -340,8 +340,7 @@ status_t OCOTP_WriteFuseShadowRegisterWithLock(OCOTP_Type *base, uint32_t addres
 
 #if defined(FSL_FEATURE_OCOTP_HAS_STATUS) && FSL_FEATURE_OCOTP_HAS_STATUS
     /* Clear errors. */
-    base->OUT_STATUS0_CLR =
-        (OCOTP_OUT_STATUS0_PROGFAIL_MASK | OCOTP_OUT_STATUS0_LOCKED_MASK);
+    base->OUT_STATUS0_CLR = (OCOTP_OUT_STATUS0_PROGFAIL_MASK | OCOTP_OUT_STATUS0_LOCKED_MASK);
 #endif
 
     /* Write requested address and unlock key to register. */

@@ -1,10 +1,10 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
 #ifndef _CLOCK_CONFIG_H_
 #define _CLOCK_CONFIG_H_
 

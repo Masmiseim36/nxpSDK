@@ -223,6 +223,7 @@ status_t bootloader_property_get(uint8_t tag, uint32_t id, const void **value, u
 
     // Set default value size, may be modified below.
     uint32_t returnSize = sizeof(uint32_t);
+    static uint32_t s_imxrtSystemId = IMXRT_SOC_SYSTEM_ID;
     const void *returnValue;
     switch (tag)
     {
@@ -282,6 +283,10 @@ status_t bootloader_property_get(uint8_t tag, uint32_t id, const void **value, u
         case kPropertyTag_ReservedRegions:
             returnSize = sizeof(propertyStore->reservedRegions);
             returnValue = propertyStore->reservedRegions;
+            break;
+
+        case kPropertyTag_SystemDeviceId:
+            returnValue = &s_imxrtSystemId;
             break;
 
         case kPropertyTag_FlashSecurityState:

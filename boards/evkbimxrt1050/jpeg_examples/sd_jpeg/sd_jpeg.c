@@ -16,11 +16,11 @@
 #include "fsl_sd_disk.h"
 #include "jpeglib.h"
 #include "display_support.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "sdmmc_config.h"
-#include "pin_mux.h"
 #include "fsl_gpio.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

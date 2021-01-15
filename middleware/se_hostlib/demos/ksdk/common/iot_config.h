@@ -26,7 +26,7 @@
 #define IOT_CONFIG_H_
 
 /* Platform thread stack size and priority. */
-#define IOT_THREAD_DEFAULT_STACK_SIZE 1500
+#define IOT_THREAD_DEFAULT_STACK_SIZE 2000
 #define IOT_THREAD_DEFAULT_PRIORITY 5
 
 /* Include the common configuration file for FreeRTOS. */

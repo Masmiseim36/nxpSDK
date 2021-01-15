@@ -29,7 +29,7 @@ Change log:
     11/10/2008: initial version
 ********************************************************/
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -510,14 +510,6 @@ mlan_status wlan_ret_amsdu_aggr_ctrl(IN pmlan_private pmpriv,
 
     ENTER();
 
-#ifdef DEBUG_11N_AGGR
-    wmprintf(
-        "action: %d\n\r"
-        "enable: %d\n\r"
-        "curr_buf_size: %d\n\n\r",
-        amsdu_ctrl->action, amsdu_ctrl->enable, amsdu_ctrl->curr_buf_size);
-#endif /* DEBUG_11N_AGGR */
-
     if (pioctl_buf)
     {
         cfg                                      = (mlan_ds_11n_cfg *)pioctl_buf->pbuf;
@@ -569,16 +561,6 @@ mlan_status wlan_ret_11n_cfg(IN pmlan_private pmpriv, IN HostCmd_DS_COMMAND *res
 {
     mlan_ds_11n_cfg *cfg      = MNULL;
     HostCmd_DS_11N_CFG *htcfg = &resp->params.htcfg;
-
-#ifdef DEBUG_11N_AGGR
-    wmprintf("11n CFG response\n\r");
-    wmprintf("action: 0x%x\n\r", htcfg->action);
-    wmprintf("ht_tx_cap: 0x%x\n\r", htcfg->ht_tx_cap);
-    /** HTTxInfo */
-    wmprintf("ht_tx_info: 0x%x\n\r", htcfg->ht_tx_info);
-    /** Misc configuration */
-    wmprintf("misc_config: 0x%x\n\r", htcfg->misc_config);
-#endif /* DEBUG_11N_AGGR */
 
     ENTER();
     if (pioctl_buf && (wlan_le16_to_cpu(htcfg->action) == HostCmd_ACT_GEN_GET))
@@ -748,9 +730,6 @@ int wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_de
         *ppbuffer += sizeof(MrvlIETypes_HTCap_t);
         ret_len += sizeof(MrvlIETypes_HTCap_t);
         pht_cap->header.len = wlan_cpu_to_le16(pht_cap->header.len);
-#ifdef DEBUG_11N_ASSOC
-        dump_htcap_info(pht_cap);
-#endif /* DEBUG_11N_ASSOC */
     }
 
     if (pbss_desc->pht_info)
@@ -773,9 +752,6 @@ int wlan_cmd_append_11n_tlv(IN mlan_private *pmpriv, IN BSSDescriptor_t *pbss_de
             *ppbuffer += sizeof(MrvlIETypes_HTInfo_t);
             ret_len += sizeof(MrvlIETypes_HTInfo_t);
             pht_info->header.len = wlan_cpu_to_le16(pht_info->header.len);
-#ifdef DEBUG_11N_ASSOC
-            dump_ht_info(pht_info);
-#endif /* DEBUG_11N_ASSOC */
         }
 
         pchan_list = (MrvlIEtypes_ChanListParamSet_t *)*ppbuffer;

@@ -7,10 +7,10 @@ kick off it and both cores then execute in parallel.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.5
-- Keil MDK  5.31
-- MCUXpresso  11.2.0
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -44,7 +44,7 @@ Prepare the Demo
    - blhost.exe -p COM29 -- fill-memory 0x1d000 4 0xf000000f
    - blhost.exe -p COM29 -- configure-memory 0x9 0x1d000
    - blhost.exe -p COM29 -- write-memory 0x08001000 workspace\output_images\mpi_loader_dsp_hello_world.bin
-9. Set board boot mode to flash boot [low, high, high]
+9. Set board boot mode to flash portb boot [low, high, low]
 10. Open a serial terminal with the following settings:
     - 115200 baud rate
     - 8 data bits

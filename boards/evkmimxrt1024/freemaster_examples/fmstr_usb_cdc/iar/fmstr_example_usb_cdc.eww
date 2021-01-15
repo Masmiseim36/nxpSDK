@@ -5,14 +5,6 @@
       <name>all</name>
       <member>
         <project>fmstr_example_usb_cdc</project>
-        <configuration>debug</configuration>
-      </member>
-      <member>
-        <project>fmstr_example_usb_cdc</project>
-        <configuration>release</configuration>
-      </member>
-      <member>
-        <project>fmstr_example_usb_cdc</project>
         <configuration>sdram_debug</configuration>
       </member>
       <member>
@@ -26,20 +18,6 @@
       <member>
         <project>fmstr_example_usb_cdc</project>
         <configuration>flexspi_nor_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>debug</name>
-      <member>
-        <project>fmstr_example_usb_cdc</project>
-        <configuration>debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>release</name>
-      <member>
-        <project>fmstr_example_usb_cdc</project>
-        <configuration>release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

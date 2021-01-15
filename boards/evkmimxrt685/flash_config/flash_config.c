@@ -17,7 +17,7 @@
  ******************************************************************************/
 #if defined(BOOT_HEADER_ENABLE) && (BOOT_HEADER_ENABLE == 1)
 #if defined(__ARMCC_VERSION) || defined(__GNUC__)
-__attribute__((section(".flash_conf")))
+__attribute__((section(".flash_conf"), used))
 #elif defined(__ICCARM__)
 #pragma location = ".flash_conf"
 #endif

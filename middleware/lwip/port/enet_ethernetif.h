@@ -43,33 +43,11 @@
 
 #include "lwip/err.h"
 #include "lwip/netif.h"
-#include "fsl_enet.h"
 #include "fsl_phy.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#ifndef ENET_RXBD_NUM
-    #define ENET_RXBD_NUM (5)
-#endif
-#ifndef ENET_TXBD_NUM
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-    #define ENET_TXBD_NUM (5)
-#else
-    #define ENET_TXBD_NUM (3)
-#endif
-#endif
-#ifndef ENET_RXBUFF_SIZE
-#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
-    #define ENET_RXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN + ETH_PAD_SIZE)
-#else
-    #define ENET_RXBUFF_SIZE ENET_FRAME_MAX_FRAMELEN
-#endif
-#endif
-   
-#ifndef ENET_TXBUFF_SIZE
-    #define ENET_TXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
-#endif
 
 #define ENET_TIMEOUT        (0xFFFU)
 
@@ -101,28 +79,7 @@
 #define IFNAME0 'e'
 #define IFNAME1 'n'
 
-#if defined(FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL) && FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL
-    #if defined(FSL_FEATURE_L2CACHE_LINESIZE_BYTE) \
-        && ((!defined(FSL_SDK_DISBLE_L2CACHE_PRESENT)) || (FSL_SDK_DISBLE_L2CACHE_PRESENT == 0))
-        #if defined(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE)
-            #define FSL_CACHE_LINESIZE_MAX MAX(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE, FSL_FEATURE_L2CACHE_LINESIZE_BYTE)
-            #define FSL_ENET_BUFF_ALIGNMENT MAX(ENET_BUFF_ALIGNMENT, FSL_CACHE_LINESIZE_MAX)
-        #else
-            #define FSL_ENET_BUFF_ALIGNMENT MAX(ENET_BUFF_ALIGNMENT, FSL_FEATURE_L2CACHE_LINESIZE_BYTE)
-        #endif
-    #elif defined(FSL_FEATURE_L1DCACHE_LINESIZE_BYTE)
-        #define FSL_ENET_BUFF_ALIGNMENT MAX(ENET_BUFF_ALIGNMENT, FSL_FEATURE_L1DCACHE_LINESIZE_BYTE)
-    #else
-        #define FSL_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
-    #endif
-#else
-    #define FSL_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
-#endif
-
 #define ENET_RING_NUM 1U
-
-typedef uint8_t rx_buffer_t[SDK_SIZEALIGN(ENET_RXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
-typedef uint8_t tx_buffer_t[SDK_SIZEALIGN(ENET_TXBUFF_SIZE, FSL_ENET_BUFF_ALIGNMENT)];
 
 #if (defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0))
 typedef struct mem_range

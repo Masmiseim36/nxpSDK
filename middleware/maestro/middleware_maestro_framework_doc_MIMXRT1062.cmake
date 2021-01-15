@@ -1,0 +1,5 @@
+if(NOT MIDDLEWARE_MAESTRO_FRAMEWORK_DOC_MIMXRT1062_INCLUDED)
+    
+    set(MIDDLEWARE_MAESTRO_FRAMEWORK_DOC_MIMXRT1062_INCLUDED true CACHE BOOL "middleware_maestro_framework_doc component is included.")
+
+endif()

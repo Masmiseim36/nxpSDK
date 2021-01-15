@@ -30,8 +30,8 @@
  * of such system or application assumes all risk of such use and in doing
  * so agrees to indemnify Cypress against all liability.
  */
-#include "board.h"
 #include "pin_mux.h"
+#include "board.h"
 #include "wwd.h"
 #include "wiced_rtos.h"
 #include "fsl_lpuart_freertos.h"

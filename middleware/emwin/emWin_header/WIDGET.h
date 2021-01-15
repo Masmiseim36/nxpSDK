@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -107,6 +107,7 @@ typedef struct {
 #define FRAMECLNT_ID 0x46524143UL /* FRAC */
 #define GRAPH_ID     0x47524150UL /* GRAP */
 #define HEADER_ID    0x48454144UL /* HEAD */
+#define KEYBOARD_ID  0x4b455942UL /* KEYB */
 #define LISTBOX_ID   0x4C495342UL /* LISB */
 #define LISTVIEW_ID  0x4C495356UL /* LISV */
 #define LISTWHEEL_ID 0x4C495357UL /* LISW */
@@ -128,8 +129,10 @@ typedef struct {
 #define WINDOW_ID    0x57494e44UL /* WIND */
 #define ROTARY_ID    0x524f5441UL /* ROTA */
 #define SWITCH_ID    0x53574954UL /* SWIT */
+#define GAUGE_ID     0x47415547UL /* GAUG */
+#define QRCODE_ID    0x5152434fUL /* QRCO */
 
-#define WIDGET_LOCK(hWin)       ((WIDGET*)GUI_LOCK_H(hWin))
+#define WIDGET_LOCK(hWin) ((WIDGET*)GUI_LOCK_H(hWin))
 
 /*********************************************************************
 *
@@ -348,6 +351,7 @@ void      WIDGET__Init               (WIDGET * pWidget, int Id, U16 State);
 void      WIDGET__RotateRect90       (WIDGET * pWidget, GUI_RECT * pDest, const GUI_RECT * pRect);
 void      WIDGET__SetScrollState     (WM_HWIN hWin, const WM_SCROLL_STATE * pVState, const WM_SCROLL_STATE * pState);
 void      WIDGET__FillStringInRect   (const char * pText, const GUI_RECT * pFillRect, const GUI_RECT * pTextRectMax, const GUI_RECT * pTextRectAct);
+void      WIDGET__FillStringInRectEx (const char * pText, const GUI_RECT * pFillRect, const GUI_RECT * pTextRectMax, const GUI_RECT * pTextRectAct, int xOffset);
 
 //
 // Function pointers for drawing streamed bitmaps

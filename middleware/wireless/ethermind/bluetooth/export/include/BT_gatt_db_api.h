@@ -1,0 +1,1725 @@
+
+/**
+ *  \file BT_gatt_db_api.h
+ *
+ *  \brief Module API Header File contains structure definitions and API definitions
+ *  offered to the application.
+ */
+
+/*
+ *  Copyright (C) 2014. Mindtree Ltd.
+ *  All rights reserved.
+ */
+
+#ifndef _H_BT_GATT_DB_API_
+#define _H_BT_GATT_DB_API_
+
+/* --------------------------------------------- Header File Inclusion */
+#include "BT_common.h"
+#include "BT_att_api.h"
+#include "gatt_defines.h"
+
+/* --------------------------------------------- Global Definitions */
+
+/**
+ * \defgroup gatt_db_module GATT DB (Generic Attribute Profile Database)
+ * \{
+ *  This section describes the interfaces & APIs offered by
+ *  Generic Attribute Profile Database (GATT_DB) module to the Application and
+ *  other upper layers of the stack. GATT Procedures are
+ *  realized using ATT APIs. This module abstracts the Server Database.
+ */
+
+
+/**
+ *  \defgroup gatt_db_defines Defines
+ *  \{
+ *  This section describes the various defines for the module.
+ */
+
+/**
+ *  \defgroup gatt_db_access_operations Access Operations
+ *  \{
+ *  These abstract acess functions for attributes, including read, write,
+ *  prepare. The direction of update is also included as this decides
+ *  checking needed security for peer and if values are editable by the peer.
+ *  Please also note the 'Update' access which is used for local updates of
+ *  values based on \ref GATT_DB_HANDLE as against Attribute Handle.
+ */
+
+/** Read operation for Attribute  */
+#define GATT_DB_READ                            0x01
+
+/** Write operation for Attribute */
+#define GATT_DB_WRITE                           0x02
+
+/** Read blob operation for Attribute */
+#define GATT_DB_READ_BLOB                       0x03
+
+/** Write Without Response operation for Attribute */
+#define GATT_DB_WRITE_WITHOUT_RSP               0x04
+
+/** Read by UUID/Type operation for Attribute */
+#define GATT_DB_READ_BY_TYPE                    0x05
+
+/** Signed Write operation for Attribute */
+#define GATT_DB_SIGNED_WRITE                    0x06
+
+/** Execute Write operation for Attribute */
+#define GATT_DB_EXECUTE                         0x07
+
+/** Prepare Write operation for Attribute */
+#define GATT_DB_PREPARE                         0x08
+
+/**
+ *  Local update of a Readable Attribute Value using \ref GATT_DB_HANDLE instead
+ *  of Attribute Handle. See \ref BT_gatt_db_set_char_val for more details.
+ */
+#define GATT_DB_UPDATE                          0x10
+
+/* 128 Bit Attribute UUID  */
+#define GATT_DB_128_BIT_UUID_FORMAT             0x20
+
+/**
+ *  Peer initiated operation, needed when Peer is Reading or Writing Values
+ *  either using GATT Read Procedures for Value and Descriptors.
+ */
+#define GATT_DB_PEER_INITIATED                  0x80
+
+/**
+ *  Locally initiated operation, needed for local updates based on Attribute
+ *  Handles. In case \ref GATT_DB_HANDLE is known, use of access through
+ *  \ref GATT_DB_UPDATE is recommended.
+ */
+#define GATT_DB_LOCALLY_INITIATED               0x00
+
+/** \} */
+
+/**
+ *  \defgroup gatt_db_operations Operations Notified In Characteristic Callback
+ *  \{
+ *  This section describes the operations notified by the module to the
+ *  application through the callback regsitered by the application.
+ */
+
+/** Characteristic Value Local Read Operation */
+#define GATT_DB_CHAR_VALUE_READ_REQ             0x01
+
+/** Characteristic Value Local Write Operation */
+#define GATT_DB_CHAR_VALUE_WRITE_REQ            0x02
+
+/** Characteristic Value Local Write Without Response Operation */
+#define GATT_DB_CHAR_VALUE_WRITE_WITHOUT_REQ    0x03
+
+/** Characteristic Client Configuration Local Read Operation */
+#define GATT_DB_CHAR_CLI_CNFG_READ_REQ          0x11
+
+/** Characteristic Client Configuration Local Write Operation */
+#define GATT_DB_CHAR_CLI_CNFG_WRITE_REQ         0x12
+
+/** Characteristic Server Configuration Local Read Operation */
+#define GATT_DB_CHAR_SER_CNFG_READ_REQ          0x21
+
+/** Characteristic Server Configuration Local Write Operation */
+#define GATT_DB_CHAR_SER_CNFG_WRITE_REQ         0x22
+
+/** Characteristic Value Peer Read Operation */
+#define GATT_DB_CHAR_PEER_READ_REQ              (GATT_DB_PEER_INITIATED | GATT_DB_READ)
+
+/** Characteristic Value Peer Write Operation */
+#define GATT_DB_CHAR_PEER_WRITE_REQ             (GATT_DB_PEER_INITIATED | GATT_DB_WRITE)
+
+/** Characteristic Value Peer Read Blob Operation */
+#define GATT_DB_CHAR_PEER_READ_BLOB_REQ         (GATT_DB_PEER_INITIATED | GATT_DB_READ_BLOB)
+
+/** Characteristic Value Peer Write Command */
+#define GATT_DB_CHAR_PEER_WRITE_CMD             (GATT_DB_PEER_INITIATED | GATT_DB_WRITE_WITHOUT_RSP)
+
+/** Characteristic Value Peer Read by Type Operation */
+#define GATT_DB_CHAR_PEER_READ_BY_TYPE_REQ      (GATT_DB_PEER_INITIATED | GATT_DB_READ_BY_TYPE)
+
+/** Characteristic Value Peer Signed Write Operation */
+#define GATT_DB_CHAR_PEER_SIGNED_WRITE_CMD      (GATT_DB_PEER_INITIATED | GATT_DB_SIGNED_WRITE)
+
+/** Characteristic Value Peer Execute Write Req */
+#define GATT_DB_CHAR_PEER_EXECUTE_WRITE_REQ     (GATT_DB_PEER_INITIATED | GATT_DB_EXECUTE)
+
+/** Characteristic Value Peer Prepare Write Req */
+#define GATT_DB_CHAR_PEER_PREPARE_WRITE_REQ     (GATT_DB_PEER_INITIATED | GATT_DB_PREPARE)
+
+/** Characteristic Client Configuration Peer Read Operation */
+#define GATT_DB_CHAR_PEER_CLI_CNFG_READ_REQ     0x91
+
+/** Characteristic Client Configuration Peer Write Operation */
+#define GATT_DB_CHAR_PEER_CLI_CNFG_WRITE_REQ    0x92
+
+/** Characteristic Server Configuration Peer Read Operation */
+#define GATT_DB_CHAR_PEER_SER_CNFG_READ_REQ     0xA1
+
+/** Characteristic Server Configuration Peer Write Operation */
+#define GATT_DB_CHAR_PEER_SER_CNFG_WRITE_REQ    0xA2
+
+/** Characteristic User Description Peer Read Operation */
+#define GATT_DB_CHAR_PEER_USR_DESC_READ_REQ     0xB1
+
+/** Characteristic User Description Peer Write Operation */
+#define GATT_DB_CHAR_PEER_USR_DESC_WRITE_REQ    0xB2
+
+/** Characteristic Higher Layer Defined Descriptor Peer Read Operation */
+#define GATT_DB_CHAR_PEER_HLD_DESC_READ_REQ     0xF1
+
+/** Characteristic Higher Layer Defined Descriptor Peer Write Operation */
+#define GATT_DB_CHAR_PEER_HLD_DESC_WRITE_REQ    0xF2
+
+/** \} */
+
+/**
+ *  \defgroup gatt_characteristic_properties Characteristic Properties
+ *  \{
+ *  Characteristic Properties - Combination of these properties (combined
+ *  using bitwise OR) describe properties of the Characteristic. Also
+ *  see \ref GATT_DB_ATTR_LIST.
+ */
+
+/**
+ *  Characteristc support Broadcast of its value to the peer.
+ *  Setting this property automatically includes Characteristic Server
+ *  Configuration Descriptor to the Characteristic
+ */
+#define GATT_DB_CHAR_BROADCAST_PROPERTY                0x00000001
+
+/** Characteristc support Reading its value by peer */
+#define GATT_DB_CHAR_READ_PROPERTY                     0x00000002
+
+/** Characteristc support Writing its value by peer Without Response  */
+#define GATT_DB_CHAR_WRITE_WITHOUT_RSP_PROPERTY        0x00000004
+
+/** Characteristic supports Writing its value by peer */
+#define GATT_DB_CHAR_WRITE_PROPERTY                    0x00000008
+
+/**
+ *  Characteristic supports Notifying its value to the peer.
+ *  Setting this property automatically includes Characteristic Server
+ *  Configuration Descriptor to the Characteristic
+ */
+#define GATT_DB_CHAR_NOTIFY_PROPERTY                   0x00000010
+
+/** Characteristic supports Indicating its value to the peer */
+#define GATT_DB_CHAR_INDICATE_PROPERTY                 0x00000020
+
+/** Characteristic supports Signed Write on its value */
+#define GATT_DB_CHAR_SIGNED_WRITE_PROPERTY             0x00000040
+
+/** Characteristic supports write on its User Description Descriptor */
+#define GATT_DB_CHAR_WRIEABLE_AUX_PROPERTY             0x00000200
+
+/** No Auxillary Property */
+#define GATT_DB_NO_AUXILLARY_PROPERTY                  0x00
+
+/** Characteristic Value is Fixed Length */
+#define GATT_DB_FIXED_LENGTH_PROPERTY                  0x01
+
+#define GATT_DB_AUTHORIZATION_PROPERTY                 0x02
+
+#define GATT_DB_PEER_SPECIFIC_VAL_PROPERTY             0x40
+
+#define GATT_DB_CONST_ATTR_VAL_PROPERTY                0x80
+
+/** \} */
+
+/**
+ *  \defgroup gatt_service_properties Service Properties
+ *  \{
+ *  Service Properties - Combination of these properties (combined
+ *  using bitwise OR) describe properties of the Service. Also
+ *  see \ref GATT_DB_SERVICE_DESC.
+ */
+
+/**
+ *  Security related - combination of Level, Mode and Encryption Key Size
+ *  (if applicable) describes complete security needs
+ */
+/** Service employs Level 0 */
+#define GATT_DB_SER_SECURITY_LEVEL0                    0x00000000
+
+/** Service employs Level 1 */
+#define GATT_DB_SER_SECURITY_LEVEL1                    0x00000001
+
+/** Service employs Level 2 */
+#define GATT_DB_SER_SECURITY_LEVEL2                    0x00000002
+
+/** Service employs Mode 1 */
+#define GATT_DB_SER_SECURITY_MODE1                     0x00000010
+
+/** Service employs Mode 2 */
+#define GATT_DB_SER_SECURITY_MODE2                     0x00000020
+
+/** \cond ignore_this Unused right now */
+#define GATT_DB_SER_MULTIPLE_CLIENTS_SUPPORT           0x00000040
+/** \endcond */
+
+/**
+ *  Service is a Secondary Service. If this not used, Service is by default
+ *  considered to be Primary
+ */
+#define GATT_DB_SER_SECONDARY_SERVICE_PROPERTY         0x00000080
+
+#ifdef GATT_DB_SUPPORT_128_BIT_UUID
+
+/** Service UUID is 128-bit */
+#define GATT_DB_SER_128_BIT_UUID_FORMAT                0x00008000
+
+#endif /* GATT_DB_SUPPORT_128_BIT_UUID */
+
+/** Set this property to relax all Security on the Service */
+#define GATT_DB_SER_NO_SECURITY_PROPERTY               0x00000000
+
+/**
+ *  This is employed to describe Service is not rigid on any Encryption
+ *  Key Size. Any Size used by other Services or on the whole by the device
+ *  will do
+ */
+#define GATT_DB_SER_ENC_KEY_SIZE_DONT_CARE             0x00000000
+
+/** Encyrption Key Size 7 Needed for the Service */
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_7                 0x01000000
+
+/** Encyrption Key Size 8 Needed for the Service */
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_8                 0x02000000
+
+/** Encyrption Key Size 9 Needed for the Service */
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_9                 0x03000000
+
+/** Encyrption Key Size 10 Needed for the Service */
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_10                0x04000000
+
+/** Encyrption Key Size 11 Needed for the Service */
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_11                0x05000000
+
+/** Encyrption Key Size 12 Needed for the Service */
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_12                0x06000000
+
+/** Encyrption Key Size 13 Needed for the Service */
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_13                0x07000000
+
+/** Encyrption Key Size 14 Needed for the Service */
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_14                0x08000000
+
+/** Encyrption Key Size 15 Needed for the Service */
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_15                0x09000000
+
+/** Encyrption Key Size 16 Needed for the Service */
+#define GATT_DB_SER_ENCRYPT_KEY_SIZE_16                0x0A000000
+
+/** \cond ignore_this unused */
+#define GATT_DB_SER_NO_ENCRYPT_PROPERTY                0x00000000
+
+/**
+ *  Macros to describe the Transport access of the Service over BR/EDR only,
+ *  LE only or Any Tranport.
+ */
+/** Service accessible over BR/EDR Link Only */
+#define GATT_DB_SER_SUPPORT_BR_LINK_TYPE               0x10000000
+
+/** Service accessble over LE Link Only */
+#define GATT_DB_SER_SUPPORT_LE_LINK_TYPE               0x20000000
+
+/** Service accessible over Any Link */
+#define GATT_DB_SER_SUPPORT_ANY_LINK_TYPE              0xF0000000
+/** \endcond */
+
+/** \} */
+
+/** \cond ignore_this This Block is for internal use */
+
+#define GATT_DB_SECURITY_MASK                          0x00000033
+#define GATT_DB_ENC_KEY_SIZE_MASK                      0x0F000000
+#define GATT_DB_SER_ENC_KEY_SIZE_LAG                   6
+
+#define GATT_PRIMARY_SERVICE_TYPE_OFFSET      0
+#define GATT_SECONDARY_SERVICE_TYPE_OFFSET    2
+#define GATT_INCLUDE_TYPE_OFFSET              4
+#define GATT_CHARACTERISTIC_TYPE_OFFSET       6
+
+#define GATT_VERIFY_UUID_VALUE(v,o,l)\
+        ((0 == BT_mem_cmp((v),GATT_GET_UUID_VALUE(o),(l)))? BT_TRUE : BT_FALSE)
+
+#define GATT_GET_UUID_VALUE(o)\
+        &gatt_const_uuid_arr_g[(o)]
+
+#define GATT_DB_GET_UUID_OFFSET(i)\
+        gatt_db_attr_table_g[(i)].uuid_offset
+
+#define GATT_DB_GET_UUID(i)\
+        GATT_GET_UUID_VALUE(GATT_DB_GET_UUID_OFFSET(i))
+
+#define GATT_CHK_ATTR_HNDL_AUTHORIZATION(hndl) \
+        (GATT_DB_AUTHORIZATION_PROPERTY == \
+        (gatt_db_attr_table_g[( hndl )].aux_property & GATT_DB_AUTHORIZATION_PROPERTY)) ? BT_TRUE : BT_FALSE
+
+#ifdef GATT_DB_DYNAMIC
+/** GATT Characteristic and Descriptor permissions */
+#define    GATT_DB_PERM_NONE                    0x0000
+#define    GATT_DB_PERM_READ                    0x0001
+#define    GATT_DB_PERM_READ_ENCRYPTED          0x0002
+#define    GATT_DB_PERM_READ_ENCRYPTED_MITM     0x0004
+#define    GATT_DB_PERM_WRITE                   0x0010
+#define    GATT_DB_PERM_WRITE_ENCRYPTED         0x0020
+#define    GATT_DB_PERM_WRITE_ENCRYPTED_MIMT    0x0040
+#define    GATT_DB_PERM_WRITE_SIGNED            0x0080
+#define    GATT_DB_PERM_WRITE_SIGNED_MITM       0x0100
+
+#endif /* GATT_DB_DYNAMIC */
+
+/** \endcond */
+
+/**
+ *  This is dummy macro for Characteristic Value UUID used to locally
+ *  read or update Characteristic Value using \ref GATT_DB_HANDLE.
+ */
+#define GATT_DUMMY_CHAR_VALUE_UUID                           0x0000
+
+#ifdef GATT_DB_HASH_SUPPORT
+ /**
+ *  \defgroup gatt_db_events Events
+ *  \{
+ *  This section lists the Asynchronous Events notified to Application by the
+ *  Module.
+ */
+
+/** GATT Database Hash Calculation Complete Event Indication */
+#define GATT_DB_HASH_IND          0x01
+
+/** \} */
+#endif /* GATT_DB_HASH_SUPPORT */
+
+/** \} */
+/* --------------------------------------------- Data Types/ Structures */
+
+#ifdef GATT_DB_HASH_SUPPORT
+/**
+ *  \defgroup gatt_db_cb Application Callback
+ *  \{
+ *  This Section Describes the module Notification Callback interface offered
+ *  to the application
+ */
+/**
+ * GATT Database Application Asynchronous Notification Callback.
+ *
+ * GATT Database calls the registered callback to indicate events occurred
+ * to the application.
+ *
+ * \param gatt_db_event Any of the Event occurred from the list at \ref gatt_db_events.
+ * \param event_result \ref API_SUCCESS or an error code in \ref gatt_db_error_codes
+ *        or any other internal error code from the stack.
+ * \param data_param Data associated with the event if any or NULL.
+ * \param data_len Size of the event data. 0 if event data is NULL.
+ */
+typedef API_RESULT (*GATT_DB_NTF_CB)
+        (
+            UCHAR         gatt_db_event,
+            API_RESULT    event_result,
+            UCHAR         * data_param,
+            UINT16        data_len
+        ) DECL_REENTRANT;
+/** \} */
+#endif /* GATT_DB_HASH_SUPPORT */
+
+/**
+ * \defgroup gatt_db_typedefs Typedefs
+ * \{
+ * This section describes the types used in the module.
+ */
+
+/**
+ *  \cond ignore_this Unused, was intended for use in
+ *  \ref GATT_DB_HANDLE, not being used right now
+ */
+
+typedef UCHAR GATT_DB_CHAR_HANDLE;
+typedef UCHAR GATT_DB_SERVICE_HANDLE;
+
+/** \endcond */
+
+typedef UCHAR GATT_TYPE_INDEX;
+
+typedef struct
+{
+    UINT16 uuid_offset;
+
+    UINT16 fo;
+
+    UINT16 lo;
+
+}GATT_ATTR_TYPE;
+
+/**
+ *  This abstracts properties of Characteristic, including how the value can be
+ *  accessed, supported descriptors. See \ref gatt_characteristic_properties.
+ *   - Bit 0-7  Characteristic Property as defined by the Specification.
+ *   - Bit 8-23 Characteristic Extended Property as defined by the Specification.
+ *   - Bit 24-30 Supported Characteristic Descriptors
+ *   - Bit 31   Reserved for Future Extension.
+ */
+typedef struct
+{
+    UCHAR   count;
+
+}GATT_DB_ATTR_LIST;
+
+/**
+ *  This abstracts properties of service, including needed secuirty, encryption
+ *  key size, distinction of primary/secondary service. See
+ *  \ref gatt_service_properties.
+ *
+ *  NOTE: GATT Specification allows Each Characteristic/Service to specify the
+ *  endianness of its Characteristic Values.
+ */
+typedef UINT32 GATT_DB_SERVICE_DESC;
+
+/** \} */
+
+/**
+ * \defgroup gatt_db_structures Structures
+ * \{
+ * This section describes the data structures for the module.
+ */
+
+/** Abstracts GATT Characteristic */
+typedef struct
+{
+    /** Characerisic Description */
+    GATT_DB_ATTR_LIST       list;
+
+    /**
+     *  Characterisic Handle Range
+     *  Please Note:
+     *  Characteristic Value                              is at start_handle + 1
+     *  Client Configuration                (if present)  is at start_handle + 2
+     *  Server Configuration                (if present)  is at start_handle + 3
+     *  Characteristic Presentation Format  (if present)  is at start_handle + 4
+     *  User Description                    (if present)  is at start_handle + 5
+     *  Characteristc Aggregate Format      (if present)  is at start_handle + 6
+     *  Extended Property Format            (if present)  is at start_handle + 7
+     *  Profile Defined Descriptor          (if present)  from start_handle + 8
+     */
+    /** Start Handle */
+    ATT_ATTR_HANDLE        start_handle;
+
+    /** Service to which Characteristic Belongs */
+    UCHAR                  service_id;
+
+}GATT_DB_CHARACERISTIC;
+
+/** Abstracts  GATT Service */
+typedef struct
+{
+    /** Characerisic Description */
+    GATT_DB_ATTR_LIST       list;
+
+    GATT_DB_SERVICE_DESC    desc;
+
+    /* Service Handle Range */
+    ATT_ATTR_HANDLE         start_handle;
+
+    ATT_ATTR_HANDLE         end_handle;
+
+    /* Range of Characeristics grouped in the service */
+    UCHAR                   char_start_index;
+
+    UCHAR                   char_end_index;
+
+}GATT_DB_SERVICE;
+
+/**
+ *  Abstracts Not So Often Used Descriptor Information
+ *  Including descriptors like Characteristic Presentation Format,
+ *  Aggregate, User Defined Descriptor, Higher Layer Defined Descriptors.
+ *  'length' indicatates size of descriptor value and data_offset contains
+ *  offset to the value in gatt_db_desc_data_array.
+ *
+ *  Note: In case of Higher Layer Defined Descriptors, first 2 octets contain
+ *  UUID, next octet contains Descriptor Properties (Read/Write/Indicate etc),
+ *  followed  'length' octets of value.
+ */
+typedef struct
+{
+    /* Describe how the descriptor could be accessed */
+    UCHAR     desc_property;
+
+    /**
+     *  Provides information if the desc value is fixed length or the UUID
+     *  format info, if the value is maintained peer specific etc.
+     */
+    UCHAR     aux_property;
+
+    /**  Length of Descriptor Value */
+    UINT16    length;
+
+    /* Pointer to Next Attribute of this type */
+    UINT16     next;
+
+    /* Offset to UUID value */
+    UINT16     uuid_offset;
+
+    /**  Offset where the Descriptor Value is located */
+    DECL_CONST UCHAR     * data_offset;
+
+}GATT_DB_DESC_DATA;
+
+typedef struct
+{
+    /** Identifies the peer accessing the database */
+    DEVICE_HANDLE    device_id;
+
+    /** Identifies the Service being Accessed */
+    UCHAR            service_id;
+
+    /** Identifies the Characteristic being Accessed */
+    UCHAR            char_id;
+
+}GATT_DB_HANDLE;
+
+/**
+ *  Abstracts the Access Operation when notifying the application of the Access
+ *  Request from Peer through the Callback for the Characteristic. See also
+ *  \ref gatt_db_operations
+ */
+typedef UCHAR GATT_DB_OPERATION;
+
+/**
+ *  Abstracts parameters for application specific handling for characteristics.
+ *  See also \ref GATT_DB_OPERATION and \ref gatt_db_operations
+ */
+typedef struct
+{
+    /** Abstracts Value to get/set the Attribute Value */
+    ATT_VALUE            value;
+
+    /** Abstracts the handle information */
+    ATT_ATTR_HANDLE      handle;
+
+    /** Abstracts the Access Operation */
+    GATT_DB_OPERATION    db_op;
+
+#ifdef GATT_DB_HAVE_OFFSET_IN_PARAMS_SUPPORT
+    UINT16               offset;
+#endif /* GATT_DB_HAVE_OFFSET_IN_PARAMS_SUPPORT */
+
+}GATT_DB_PARAMS;
+
+#ifdef GATT_DB_HAVE_REGISTERATION_SUPPORT
+/**
+ * Data structure used by application to register GATT Database
+ * with GATT DB module.
+ */
+typedef struct _GATT_DB_STRUCT
+{
+    /** GATT Services */
+    GATT_DB_SERVICE * gatt_service;
+
+    /** GATT Characteristics */
+    GATT_DB_CHARACERISTIC * gatt_characteristic;
+
+    /** GATT Constant Value Array */
+    UCHAR * gatt_const_value_arr;
+
+    /** GATT Constant UUID Array */
+    UCHAR * gatt_const_uuid_arr;
+
+    /** GATT Attribute Table */
+    GATT_DB_DESC_DATA * gatt_db_attr_table;
+
+    /** GATT Type Table */
+    GATT_ATTR_TYPE * gatt_type_table;
+
+    /** GATT Peer Specific Attribute Value Array */
+    UCHAR * gatt_db_peer_specific_val_arr;
+
+    /** GATT Peer Specific Constant Attribute Value Array */
+    UCHAR * gatt_db_const_peer_specific_val_arr;
+
+    /** GATT Value Array */
+    UCHAR * gatt_value_arr;
+
+    /** GATT Service Count */
+    UCHAR  gatt_service_count;
+
+    /** GATT Characterictic Count */
+    UCHAR  gatt_characteristic_count;
+
+    /** GATT MAX Type Count */
+    UCHAR  gatt_db_max_type_count;
+
+    /** GATT Peer Value Array Size */
+    UCHAR  gatt_db_peer_val_arr_size;
+
+#ifdef STORAGE_RETENTION_SUPPORT
+    /** GATT Value Array Size */
+    UINT16 gatt_value_array_size;
+
+    /** GATT Max Peer Configuration */
+    UINT16 gatt_db_max_peer_config;
+#endif /* STORAGE_RETENTION_SUPPORT */
+
+}GATT_DB_STRUCT;
+#endif /* GATT_DB_HAVE_REGISTERATION_SUPPORT */
+
+/**
+ *  Dynamic configuration of GATT DB Datastructure.
+ *  Used only if 'BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY' is defined.
+ */
+#ifdef BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY
+typedef struct _GATT_DB_DYNAMIC_CONFIG
+{
+    /** Number of GATT Services */
+    UINT16 config_GATT_DB_DYN_MAX_SERVICE_COUNT;
+
+    /** Number of GATT Characteristics */
+    UINT16 config_GATT_DB_DYN_CHARACTERISTIC_COUNT;
+
+    /** Number of GATT Attributes */
+    UINT16 config_GATT_DB_DYN_MAX_ATTRIBUTES;
+
+    /** Number of GATT attribute types or UUIDs */
+    UINT16 config_GATT_DB_DYN_MAX_TYPE_COUNT;
+
+    /**
+     *  Peer specific characteristic or characteristic descriptor
+     *  attribute value array size for a single instance of peer device
+     */
+    UINT16 config_GATT_DB_DYN_PEER_VALUE_ARRAY_SIZE;
+
+    /**
+     *  Characteristic attribute value array size, which are not
+     *  peer specific, but fixed/constant
+     */
+    UINT16 config_GATT_DB_DYN_VALUE_ARRAY_SIZE;
+
+    /**
+     *  Characteristic attribute value array size, which are not
+     *  peer specific, but can be changed
+     */
+    UINT16 config_GATT_VALUE_ARRAY_SIZE;
+
+    /** Flattened list size of UUID values (both 16 and 128 bit) */
+    UINT16 config_GATT_DB_DYN_UUID_ARRAY_SIZE;
+
+    /**
+     *  'config_GATT_DB_DYN_PEER_VALUE_ARRAY_SIZE' times maximum number of
+     *  supported peer devices 'BT_MAX_DEVICE_QUEUE_SIZE'
+     */
+    UINT16 config_GATT_DB_DYN_MAX_PEER_CONFIGURATION;
+
+} GATT_DB_DYNAMIC_CONFIG;
+#endif /* BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY */
+
+/** \} */
+
+/**
+ *  \defgroup gatt_db_marcos Utility Macros
+ *  \{
+ *  Utility Macros offered by the module.
+ */
+/** Macro to fetch needed security for a Service */
+#define GATT_DB_GET_NEEDED_SECURITY(sid)\
+        (UCHAR)(gatt_service_g[(sid)].desc & GATT_DB_SECURITY_MASK)
+
+/** Macro to fetch needed Encryption Key Size for a Service */
+#define GATT_DB_GET_NEEDED_ENC_KEY_SIZE(sid)\
+        (UCHAR)((GATT_DB_SER_ENC_KEY_SIZE_DONT_CARE == \
+        ((gatt_service_g[(sid)].desc & GATT_DB_ENC_KEY_SIZE_MASK) >> 24)) ? \
+        GATT_DB_SER_ENC_KEY_SIZE_DONT_CARE : (((gatt_service_g[(sid)].desc & \
+        GATT_DB_ENC_KEY_SIZE_MASK) >> 24) + GATT_DB_SER_ENC_KEY_SIZE_LAG))
+
+#define GATT_DB_GET_CHAR_VAL_HANDLE(i,j)\
+        (j) = (gatt_characteristic_g[(i)].start_handle + 1)
+
+/** \} */
+
+#define GET_GATT_SERVICE_COUNT()                 gatt_service_count_g
+#define GET_GATT_CHARACTERISTIC_COUNT()          gatt_characteristic_count_g
+#define GET_GATT_MAX_TYPE_COUNT()                gatt_db_max_type_count_g
+#define GET_GATT_DB_PEER_VALUE_ARRAY_SIZE()      gatt_db_peer_val_arr_size_g
+
+#ifdef STORAGE_RETENTION_SUPPORT
+#define GET_GATT_VALUE_ARRAY_SIZE()              gatt_value_array_size_g
+#define GET_GATT_DB_MAX_PEER_CONFIG()            gatt_db_max_peer_config_g
+#endif /* STORAGE_RETENTION_SUPPORT */
+
+#ifdef BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY
+#define GATT_DB_INIT_DYNAMIC_CONFIG(config)                                                 \
+    (config).config_GATT_DB_DYN_MAX_SERVICE_COUNT      = GATT_DB_DYN_MAX_SERVICE_COUNT;     \
+    (config).config_GATT_DB_DYN_CHARACTERISTIC_COUNT   = GATT_DB_DYN_CHARACTERISTIC_COUNT;  \
+    (config).config_GATT_DB_DYN_MAX_ATTRIBUTES         = GATT_DB_DYN_MAX_ATTRIBUTES;        \
+    (config).config_GATT_DB_DYN_MAX_TYPE_COUNT         = GATT_DB_DYN_MAX_TYPE_COUNT;        \
+    (config).config_GATT_DB_DYN_PEER_VALUE_ARRAY_SIZE  = GATT_DB_DYN_PEER_VALUE_ARRAY_SIZE; \
+    (config).config_GATT_DB_DYN_VALUE_ARRAY_SIZE       = GATT_DB_DYN_VALUE_ARRAY_SIZE;      \
+    (config).config_GATT_VALUE_ARRAY_SIZE              = GATT_VALUE_ARRAY_SIZE;             \
+    (config).config_GATT_DB_DYN_UUID_ARRAY_SIZE        = GATT_DB_DYN_UUID_ARRAY_SIZE;       \
+    (config).config_GATT_DB_DYN_MAX_PEER_CONFIGURATION = GATT_DB_DYN_MAX_PEER_CONFIGURATION
+
+#define GATT_DB_DYNAMIC_CONFIG_LIMITS(x) \
+        gatt_db_dynamic_global_config.config_##x
+
+#define BT_DEFINE_GLOBAL_ARRAY(type, var, s) \
+        type * var
+
+#define BT_DECLARE_GLOBAL_ARRAY(type, var, s) \
+        extern type * var
+
+/* TODO: Check if the allocation is success */
+#define BT_INIT_GLOBAL_ARRAY(type, var, s, i)   \
+        var = BT_alloc_mem((s) * sizeof(type)); \
+        COMMON_TRC(BT_MODULE_ID_GATT_DB, "Allocated %lu bytes for %s. Ptr: %p\n", ((s) * sizeof(type)), #var, var); \
+        BT_mem_set(var, (i), ((s) * sizeof(type)))
+
+#define BT_DEINIT_GLOBAL_ARRAY(var) \
+        if (NULL != var)            \
+        {                           \
+            COMMON_TRC(BT_MODULE_ID_GATT_DB, "Freeing %s with Allocated Ptr: %p\n", #var, var);\
+            BT_free_mem((var));     \
+        }
+
+#else
+#define GATT_DB_DYNAMIC_CONFIG_LIMITS(x) (x)
+
+#define BT_DEFINE_GLOBAL_ARRAY(type, var, s) \
+        type var[(s)]
+
+#define BT_DECLARE_GLOBAL_ARRAY(type, var, s) \
+        extern type var[(s)]
+
+#define BT_INIT_GLOBAL_ARRAY(type, var, s, i) \
+        BT_mem_set(var, (i), ((s) * sizeof(type)))
+
+#define BT_DEINIT_GLOBAL_ARRAY(...)
+
+#endif /* BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY */
+
+/** \cond ignore_this Ingore this block */
+extern DECL_CONST GATT_DB_SERVICE * gatt_service_g;
+extern DECL_CONST GATT_DB_CHARACERISTIC * gatt_characteristic_g;
+/**/extern DECL_CONST UCHAR * gatt_const_value_arr_g;
+extern DECL_CONST UCHAR * gatt_const_uuid_arr_g;
+extern DECL_CONST GATT_DB_DESC_DATA * gatt_db_attr_table_g;
+/**/extern DECL_CONST GATT_ATTR_TYPE * gatt_type_table_g;
+/**/extern UCHAR * gatt_db_peer_specific_val_arr_g;
+/**/extern DECL_CONST UCHAR * gatt_db_const_peer_specific_val_arr_g;
+/**/extern UCHAR * gatt_value_arr_g;
+
+extern UCHAR  gatt_service_count_g;
+/**/extern UCHAR  gatt_characteristic_count_g;
+/**/extern UCHAR  gatt_db_max_type_count_g;
+/**/extern UCHAR  gatt_db_peer_val_arr_size_g;
+
+#ifdef STORAGE_RETENTION_SUPPORT
+extern UINT16 gatt_value_array_size_g;
+extern UINT16 gatt_db_max_peer_config_g;
+#endif /* STORAGE_RETENTION_SUPPORT */
+
+#ifdef GATT_DB_DYNAMIC
+/** Abstract UUID with associated format */
+typedef struct _GATT_DB_UUID_TYPE
+{
+    /** Format indicating, 16 bit or 128 bit UUIDs */
+    UCHAR              uuid_format;
+
+    /** Attribute UUID */
+    ATT_UUID           uuid;
+
+} GATT_DB_UUID_TYPE;
+
+/** Service Information */
+typedef struct _GATT_DB_SERVICE_INFO
+{
+    /** UUID */
+    GATT_DB_UUID_TYPE    uuid;
+
+    /** If this service is primary or not */
+    UCHAR                is_primary;
+
+} GATT_DB_SERVICE_INFO;
+#endif /* GATT_DB_DYNAMIC */
+
+/** \endcond */
+
+/* --------------------------------------------- Functions */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ *  \defgroup gatt_db_api API Definitions
+ *  \{
+ *  This section describes the APIs offered by the module to the application.
+ */
+
+/**
+ *  \brief To Initialize the Module.
+ *
+ *  \par Description
+ *  This API is used to initialize the module and shall be called before using
+ *  any of the other module routines.
+ *
+ *  \param [in] blob
+ *         If 'BT_HAVE_GATT_DB_DYNAMIC_GLOBAL_ARRAY' defined,
+ *             application shall provide the desired dynamic configuration
+ *             using a pointer to GATT_DB_DYNAMIC_CONFIG data structure instance.
+ *         else,
+ *             this parameter shall be NULL and ignored by the API.
+ */
+void BT_gatt_db_init
+     (
+         /* IN */ void * blob
+     );
+
+/**
+ *  \brief To De-Initialize the Module.
+ *
+ *  \par Description
+ *  This API is used to Deinitialize the module and shall be called during
+ *  proper/clean shutdown of this module.
+ *
+ *  \param None
+ *
+ *  \return None
+ */
+void BT_gatt_db_deinit(void);
+
+#ifdef GATT_DB_HAVE_REGISTERATION_SUPPORT
+/**
+ *  \brief To register a GATT database.
+ *
+ *  \par Description:
+ *  This API registers a GATT database with the GATT module.
+ *  This allows the application to change the GATT database if required
+ *  based on the usage scenario.
+ *
+ *  \param [in] gatt_db
+ *         This parameter must be a pointer to the GATT_DB_STRUCT variable
+ *         containing the GATT database related data structures.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ *
+ *  \note HAVE_GATT_DB_REGISTRATION_SUPPORT feature flag shall be defined
+ *  for this API.
+ */
+API_RESULT BT_gatt_db_register
+           (
+               /* IN */ GATT_DB_STRUCT   * gatt_db
+           );
+#endif /* GATT_DB_HAVE_REGISTERATION_SUPPORT */
+
+API_RESULT gatt_db_access_value
+           (
+               /* IN */  ATT_HANDLE        * inst,
+               /* OUT */ ATT_VALUE         * value,
+               /* IN */  ATT_ATTR_HANDLE   handle,
+               /* IN */  UINT16            offset,
+               /* IN */  UCHAR             flags
+           );
+/**
+ *
+ *  \brief To search for group entities or get values of a speicifc group.
+ *
+ *  \par Description:
+ *       This routine searches for group entities (services) or get values of a
+ *       speicifc group(PRIMARY/SECONDARY). This API is used to formulate response
+ *       of Read By Group Type Request.
+ *
+ *  \param [in] range
+ *         Requested Range for Group Search
+ *
+ *  \param [out] group_range
+ *         Range of Group Entity on Successful Search.
+ *
+ *  \param [in,out] value
+ *         Value of Service (Needed only for Read By Group Type)
+ *
+ *  \param [in] uuid
+ *         Identifies the UUID of Group Entity (PRIMARY/SECONDARY).
+ *
+ *  \param [in] compare_val_flag
+ *         Indicates if Value needs to be compared or not
+ *
+ *  \return API_SUCCESS on Successful Search and no more Gorup Entities
+ *          (Services) exist
+ *          GATT_DB_MORE_MATCHING_RESULT_FOUND on Successful Search and more
+ *          Gorup Entities (Services) exist to Search Further
+ *          Others - Appropriate Response Code indicating reason why Search did
+ *          not succeed.
+ */
+API_RESULT gatt_db_get_group_hndl_val_list
+           (
+               /* IN */    ATT_HANDLE           * att_inst,
+               /* IN */    ATT_HANDLE_RANGE     * range,
+               /* OUT */   ATT_HANDLE_RANGE     * group_range,
+               /* INOUT */ ATT_VALUE            * value,
+               /* IN */    ATT_VALUE            * uuid,
+               /* IN */    UCHAR                  compare_val_flag
+           );
+
+API_RESULT BT_gatt_db_get_attr_handle_prpty
+           (
+               /* IN */  GATT_DB_HANDLE      * handle,
+               /* IN */  ATT_HANDLE_RANGE    * range,
+               /* IN */  UINT16                uuid,
+               /* OUT */ ATT_ATTR_HANDLE     * attr_handle,
+               /* OUT */ UCHAR               * attr_prpty
+           );
+
+/**
+ *  \brief To get Handle Range for Attribute Type Value Pair in the requested
+ *  Range for local or remote initated operation.
+ *
+ *  \par Description
+ *  This routine fetches Handle Attribute Value Pair in the requested Range of
+ *  a particular Attribute Type, providing one Search Result at a time for
+ *  a locally initiated or Peer Initiated read operation.
+ *
+ *  \param range
+ *         Requested Range for Handle Attribute Value List.
+ *
+ *  \param uuid
+ *         Identifies the Attribute Type whose Values are requested.
+ *
+ *  \param handle_value_pair
+ *         On Successful Search, contains Handle Value Pair in Requested Range
+ *         and of requested Attribute Type.
+ *
+ *  \param flags
+ *         Identifies the direction of operation \ref GATT_DB_PEER_INITIATED
+ *         or \ref GATT_DB_LOCALLY_INITIATED.
+ *
+ *  \return API_SUCCESS on successful search and no more attributes exist.
+ *          GATT_DB_MORE_MATCHING_RESULT_FOUND on successful search and more
+ *          attributes exist to search further.
+ *          Others - Appropriate Code indicating reason why search did not
+ *          succeed.
+ */
+API_RESULT BT_gatt_db_fetch_handle_value_pair
+           (
+                /* IN */  ATT_HANDLE               * inst,
+                /* IN */  ATT_HANDLE_RANGE         * range,
+                /* IN */  ATT_VALUE                * uuid,
+                /* OUT */ ATT_HANDLE_VALUE_PAIR    * handle_value_pair,
+                /* IN */  UCHAR                      flags
+           );
+
+/**
+ *  \brief To get Handle Range for Attribute Type Value Pair in the requested
+ *  Range locally.
+ *
+ *  \par Description
+ *  This routine fetches Handle Attribute Value Pair in the requested Range of
+ *  a particular Attribute Type, providing one Search Result at a time for
+ *  a locally initiated read.
+ *
+ *  \param inst
+ *         Identifies the Peer Entity corresponding to Read of Attribute.
+ *         This is can be NULL. But, when NULL is provided for a handle
+ *         value pair of a characteristic that is Client/Peer specific,
+ *         an appropriate error is returned. It is important for the
+ *         application to then provide the correct instance for such
+ *         characteristics so that value belonging to the corresponding
+ *         peer is fetched.
+ *
+ *  \param range
+ *         Requested Range for Handle Attribute Value List.
+ *
+ *  \param uuid
+ *         Identifies the Attribute Type whose Values are requested.
+ *
+ *  \param handle_value_pair
+ *         On Successful Search, contains Handle Value Pair in Requested Range
+ *         and of requested Attribute Type.
+ *
+ *  \return API_SUCCESS on successful search and no more attributes exist.
+ *          GATT_DB_MORE_MATCHING_RESULT_FOUND on successful search and more
+ *          attributes exist to search further.
+ *          Others - Appropriate Code indicating reason why search did not
+ *          succeed.
+ */
+#define BT_gatt_db_read_handle_value_pair(inst, range, uuid, hvp) \
+        BT_gatt_db_fetch_handle_value_pair((inst), (range), (uuid), (hvp), (GATT_DB_READ | GATT_DB_LOCALLY_INITIATED))
+
+/**
+ *  \brief To search for group entities or get values of a speicifc group.
+ *
+ *  \par Description
+ *  This routine searches for group entities (services) or get values of a
+ *  speicifc group(PRIMARY/SECONDARY). This API is used to formulate response
+ *  of Read By Group Type Request. This routine provides one search result at a
+ *  time. Note, Currently only Primary Services are Supported.
+ *
+ *  \param att_inst
+ *         Identifies the Peer Entity Requesting the Read of Attribute. This is
+ *         important so that necessary Security Checks are performed before the
+ *         the value is fetched.
+ *
+ *  \param range
+ *         Requested Range for Group Search
+ *
+ *  \param group_range
+ *         Range of Group Entity on Successful Search.
+ *
+ *  \param value
+ *         Group (Servie) Value.
+ *
+ *  \param uuid
+ *         Identifies the UUID of Group Entity (PRIMARY/SECONDARY).
+ *
+ *  \return API_SUCCESS on successful search and no more gorup entities
+ *          (Services) exist.
+ *          GATT_DB_MORE_MATCHING_RESULT_FOUND on successful search and more
+ *          Gorup Entities (Services) exist to search further.
+ *          Others - Appropriate Code indicating reason why search did not
+ *          succeed.
+ */
+#define BT_gatt_db_get_group_range_val_pair(att_inst,range,uuid,group_range,value)\
+        gatt_db_get_group_hndl_val_list\
+        (\
+            (att_inst),\
+            (range),\
+            (group_range),\
+            (value),\
+            (uuid),\
+            BT_FALSE\
+        )
+
+
+/**
+ *  \brief To get Handle Attribute Type Pair in the requested Range.
+ *
+ *  \par Description
+ *  This routine fetches Handle Attribute Type Pair in the requested Range,
+ *  providing one Search Result at a time and is used to formulate the response
+ *  for Find Info Request.
+ *
+ *  \param att_inst
+ *         Identifies the Peer Entity Requesting the Read of Attribute. This is
+ *         important so that necessary Security Checks are performed before the
+ *         the value is fetched.
+ *
+ *  \param range
+ *         Requested Range for Handle Attribute Type List.
+ *
+ *  \param handle_uuid
+ *         On Successful Search, contains Handle Attribute Type (UUID) Pair in
+ *         Requested Range.
+ *
+ *  \return API_SUCCESS on successful search and no more attributes exist.
+ *          GATT_DB_MORE_MATCHING_RESULT_FOUND on successful search and more
+ *          attributes exist to search further.
+ *          Others - Appropriate Code indicating reason why search did not
+ *          succeed.
+ */
+API_RESULT BT_gatt_db_get_handle_uuid_pair
+           (
+               /* IN */  ATT_HANDLE               * att_inst,
+               /* IN */  ATT_HANDLE_RANGE         * range,
+               /* OUT */ ATT_HANDLE_VALUE_PAIR    * handle_uuid
+           );
+
+
+/**
+ *  \brief To get Handle Range for Attribute Type Value Pair in the requested
+ *  Range.
+ *
+ *  \par Description
+ *  This routine fetches Handle Attribute Value Pair in the requested Range of
+ *  a particular Attribute Type, providing one Search Result at a time and
+ *  is used to formulate the response for Read By Type Request.
+ *
+ *  \param inst
+ *         Identifies the Peer Entity Requesting the Read of Attribute. This is
+ *         important so that necessary Security Checks are performed before the
+ *         the value is fetched.
+ *
+ *  \param range
+ *         Requested Range for Handle Attribute Value List.
+ *
+ *  \param uuid
+ *         Identifies the Attribute Type whose Values are requested.
+ *
+ *  \param handle_value_pair
+ *         On Successful Search, contains Handle Value Pair in Requested Range
+ *         and of requested Attribute Type.
+ *
+ *  \return API_SUCCESS on successful search and no more attributes exist.
+ *          GATT_DB_MORE_MATCHING_RESULT_FOUND on successful search and more
+ *          attributes exist to search further.
+ *          Others - Appropriate Code indicating reason why search did not
+ *          succeed.
+ */
+#define BT_gatt_db_get_handle_value_pair(inst, range, uuid, hvp)\
+        BT_gatt_db_fetch_handle_value_pair((inst), (range), (uuid), (hvp), (GATT_DB_READ | GATT_DB_PEER_INITIATED))
+
+/**
+ *  \brief To get Handle Attribute Value Pair in the requested Range and of a
+ *         particular Atttribute Type.
+ *
+ *  \par Description
+ *  This routine fetches Handle Range for Attribute Value Type Pair in the
+ *  requested Range, providing one Search Result at a time and is used to
+ *  formulate the response for Find By Type Value Request. Note, if the
+ *  Attribute is not a group range, start end handle will be equal to end
+ *  handle.
+ *
+ *  \param inst
+ *         Identifies the Peer Entity Requesting the Read of Attribute. This is
+ *         important so that necessary Security Checks are performed before the
+ *         the value is fetched.
+ *
+ *  \param range
+ *         Requested Range for Attritbute search.
+ *
+ *  \param type
+ *         Identifies 16-bit Type of Attribute to be matched.
+ *
+ *  \param value
+ *         Contains the Value of Attribute to be matched.
+ *
+ *  \param attr_range
+ *         On Successful Search, contains Handle Range of the attribue requested
+ *         by Type & Value.
+ *
+ *  \return API_SUCCESS on successful search and no more attributes exist.
+ *          GATT_DB_MORE_MATCHING_RESULT_FOUND on successful search and more
+ *          attributes exist to search further.
+ *          Others - Appropriate Code indicating reason why search did not
+ *          succeed.
+ */
+API_RESULT BT_gatt_db_get_range_by_type_val
+           (
+               /* IN */  ATT_HANDLE          * inst,
+               /* IN */  ATT_HANDLE_RANGE    * range,
+               /* IN */  ATT_VALUE           * type,
+               /* IN */  ATT_VALUE           * value,
+               /* OUT */ ATT_HANDLE_RANGE    * attr_range
+           );
+
+/**
+ *
+ *  \brief To Get Characteristic Value Attribute Handle.
+ *
+ *  \par Description
+ *  This routine provides Attribute Handle for Characteristic Value of a
+ *  Characteristic.
+ *
+ *  \param handle
+ *         \ref GATT_DB_HANDLE, identifying the Characteristic whose Value handle
+ *         is to be fetched.
+ *
+ *  \param attr_handle
+ *         On successful return of the routine contains the Attribute handle
+ *         as visible to the peer.
+ *
+ *  \return API_SUCCESS on success or an appropriate error code.
+ */
+#define BT_gatt_db_get_char_val_hndl(handle,attr_handle)\
+        GATT_DB_GET_CHAR_VAL_HANDLE((handle)->char_id,(*(attr_handle)))
+
+API_RESULT gatt_db_access_val_by_db_handle
+           (
+                /* IN */ GATT_DB_HANDLE    * handle,
+                /* IN */ ATT_VALUE         * attr_value,
+                /* IN */ UINT16            uuid,
+                /* IN */ UCHAR             flag
+           );
+
+/**
+ *
+ *  \brief To Locally Set Characteristic Value based on \ref GATT_DB_HANDLE.
+ *
+ *  \par Description
+ *  This routine updates Characteristic Value of the Characteristic indentified
+ *  by handle.
+ *
+ *  \param [in] handle
+ *         \ref GATT_DB_HANDLE, identifying the Characteristic whose value is Set.
+ *
+ *  \param [in] value
+ *         Value to which Characteristic Value is being updated.
+ *
+ *  \return API_SUCCESS on success or an appropriate error code.
+ */
+#define BT_gatt_db_set_char_val(handle,value)\
+        gatt_db_access_val_by_db_handle\
+        (\
+                (handle),\
+                (value),\
+                GATT_DUMMY_CHAR_VALUE_UUID,\
+                GATT_DB_UPDATE\
+        )\
+
+/**
+ *
+ *  \brief To Locally Get Characteristic Value based on \ref GATT_DB_HANDLE.
+ *
+ *  \par Description
+ *  This routine Gets/Reads Characteristic Value of the Characteristic
+ *  indentified by handle.
+ *
+ *  \param [in] handle
+ *         \ref GATT_DB_HANDLE, identifying the Characteristic whose value is Read.
+ *
+ *  \param [out] value
+ *         Contains Characteristic Value in case of successful return of this
+ *         API.
+ *
+ *  \return API_SUCCESS on success or an appropriate error code.
+ */
+#define BT_gatt_db_get_char_val(handle,value)\
+        gatt_db_access_val_by_db_handle\
+        (\
+                (handle),\
+                (value),\
+                GATT_DUMMY_CHAR_VALUE_UUID,\
+                GATT_DB_READ\
+        )
+
+/**
+ *
+ *  \brief To Locally Get Client Configuration Descriptor Value of
+ *         Characteristic.
+ *
+ *  \par Description
+ *  This routine Gets/Reads Value of the Client Configuration Descriptor for the
+ *  characteristic indentified by handle.
+ *
+ *  \param [in] handle
+ *         \ref GATT_DB_HANDLE, identifying the Characteristic whose value is Read.
+ *
+ *  \param [out] value
+ *         Contains Characteristic Value in case of successful return of this
+ *         API.
+ *
+ *  \return API_SUCCESS on success or an appropriate error code.
+ */
+#define BT_gatt_db_get_char_cli_cnfg(handle,value)\
+        gatt_db_access_val_by_db_handle\
+        (\
+                (handle),\
+                (value),\
+                GATT_CLIENT_CONFIG,\
+                GATT_DB_READ\
+        )
+
+/**
+ *
+ *  \brief To Locally Get Application/Profile defined Characteristic Descriptor
+ *         Value based on \ref GATT_DB_HANDLE.
+ *
+ *  \par Description
+ *  This routine Gets/Reads Value of the Application/Profile defined
+ *  Characteristic Descriptor (referred to as HLD standing for Higher Layer
+ *  Defined Descriptor) for the characteristic indentified by handle.
+ *  Note: Used only for characteristic with single Higher Layer Descriptor.
+ *
+ *  \param [in] handle
+ *         \ref GATT_DB_HANDLE, identifying the Characteristic whose value is Read.
+ *
+ *  \param [out] value
+ *         Contains Characteristic Value in case of successful return of this
+ *         API.
+ *
+ *  \param [in] uuid
+ *         UUID, identifying the Characteristic whose value is Read.
+ *
+ *  \return API_SUCCESS on success or an appropriate error code.
+ */
+#define BT_gatt_db_get_hld_char_desc_val(handle,value,uuid)\
+        gatt_db_access_val_by_db_handle\
+        (\
+                (handle),\
+                (value),\
+                (uuid),\
+                GATT_DB_READ\
+        )
+
+/**
+ *
+ *  \brief To Read/Write Attribute Value identfied by Handle.
+ *
+ *  \par Description
+ *  This routine performs read/write of Attribute Value for the requested
+ *  Handle. This is used to formulate the response for Read, Read Blob, Write,
+ *  Write Command. Before the access is allowed necessary Security & Permission
+ *  Checks are performed for the peer and Application is notified of the access
+ *  if the Application has registered a callback for the Characteristic to which
+ *  the attribute belongs.
+ *  This routine can be used for local updates of the database as well using
+ *  necessary flags.
+ *
+ *  \param handle_value
+ *         Contains Attribute Handle to be accessed and if the access is
+ *         successful, contains the Attribute Value.
+ *
+ *  \param att_instance
+ *         Identifies the Peer Entity Requesting access of Attribute. This is
+ *         important so that necessary Security Checks are performed before the
+ *         the value is fetched. In case of Local Read, this is important if
+ *         client specific values are maintained.
+ *
+ *  \param offset
+ *         Identifies the value offset from where the access is requested.
+ *
+ *  \param flags
+ *         Describes nature of access, Read, Write, Write, Without Rsp, Local or
+ *         Peer.
+ *
+ *  \return API_SUCCESS on success access or an appropriate error code.
+ */
+API_RESULT BT_gatt_db_access_handle
+           (
+                /* INOUT */ ATT_HANDLE_VALUE_PAIR     * handle_value,
+                /* IN */    ATT_HANDLE                * att_instance,
+                /* IN */    UINT16                    offset,
+                /* IN */    UCHAR                     flags
+           );
+
+
+/**
+ *
+ *  \brief To Convert a 128-bit UUID in BT Space to its 16-bit equivalent.
+ *
+ *  \par Description
+ *  This routine converts a 128-bit UUID in BT Space to its 16-bit equivalent.
+ *  If the 128-bit UUID is outside the BT Space, an error is indicated.
+ *
+ *  \param uuid128
+ *         128-bit UUID to be converted to 16-bit equivalent.
+ *
+ *  \param uuid16
+ *         On Success contains the 16-bit equivalent of the 128-bit UUID.
+ *
+ *  \return API_SUCCESS on success or an appropriate error code.
+ */
+API_RESULT BT_gatt_db_get_16_bit_uuid
+           (
+                 /* IN */  ATT_VALUE    * uuid128,
+                 /* OUT */ ATT_VALUE    * uuid16
+           );
+
+
+/**
+ *
+ *  \brief To Get the Secuirty requirement of the Service
+ *
+ *  \par Description
+ *  This routine reads the needed secuirty level on the Service identified by
+ *  the handle. Note: Even though this is a macro, it is to be treated as a
+ *  function.
+ *
+ *  \param [in] hndl
+ *         Identifies the Service whose Security needs are being read.
+ *
+ *  \param [out] sec
+ *         Security Level and Mode of the Service.
+ *
+ */
+#define BT_gatt_db_get_service_security(hndl,sec)\
+        ((*(UCHAR *)(sec)) = GATT_DB_GET_NEEDED_SECURITY((hndl)->service_id))
+
+
+/**
+ *
+ *  \brief To Get the Encryption Key Size of the Service
+ *
+ *  \par Description
+ *  This routine reads the needed encryption key size for the Service identified by
+ *  the handle. Note: Even though this is a macro, it is to be treated as a
+ *  function.
+ *
+ *  \param [in] hndl
+ *         Identifies the Service whose Encryption Key Size is being read.
+ *
+ *  \param [out] key_size
+ *         Needed Encryption Key Size for the Service.
+ *
+ */
+#define BT_gatt_db_get_service_enc_key_size(hndl,key_size)\
+        ((*(UCHAR *)(key_size)) = GATT_DB_GET_NEEDED_ENC_KEY_SIZE((hndl)->service_id))
+
+/**
+ *
+ *  \brief Book Keeping of Peer Specific Data on Disconnect or Shutdown.
+ *
+ *  \par Description
+ *  This routine is used for Book Keeping of Peer Specific Data on Disconnect or
+ *  Shutdown. For Bonded Devices, Client Specific Configurations will be stored
+ *  persistently while for non bonded devices, all Client specific information
+ *  will be reinitialized.
+ *
+ *  \param inst
+ *         Identifies the Peer instance for which Book Keeping is to be
+ *         performed.
+ *
+ *  \return API_SUCCESS on success or an appropriate error code.
+ */
+API_RESULT BT_gatt_db_peer_session_shutdown_handler
+           (
+               /* IN */ ATT_HANDLE   * inst
+           );
+
+#ifdef GATT_DB_HASH_SUPPORT
+/**
+ *  \brief To calculate the GATT Database Hash characteristic value.
+ *
+ *  \par Description:
+ *  This API calculates the GATT Database Hash and updates the corresponding
+ *  characteristic value.
+ *
+ *  \param [in] hash_cb
+ *         GATT Database Hash calculation completion callback.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ *
+ *  \note HAVE_GATT_DB_REGISTRATION_SUPPORT feature flag shall be defined
+ *  for this API.
+ */
+API_RESULT BT_gatt_db_calculate_db_hash(GATT_DB_NTF_CB hash_cb);
+#endif /* GATT_DB_HASH_SUPPORT */
+
+#ifdef GATT_DB_DYNAMIC
+/**
+ *  \brief To add a service to GATT Database
+ *
+ *  \par Description:
+ *  This API adds a service to GATT database.
+ *
+ *  \param [in]  service_info        GATT Service Information.
+ *  \param [in]  num_attr_handles    Number of attribute handles associated with the service.
+ *  \param [out] service_handle      Service Handle returned by the API, shall be used
+ *                                   when adding included services and characteritics/descriptors
+ *                                   into the service.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_add_service
+           (
+               /* IN */   GATT_DB_SERVICE_INFO * service_info,
+               /* IN */   UINT16                 num_attr_handles,
+               /* OUT */  UINT16               * service_handle
+           );
+
+/**
+ *  \brief To add an included service to GATT Database
+ *
+ *  \par Description:
+ *  This API adds an included service to GATT database.
+ *
+ *  \param [in] service_handle             Service Handle to which the included service to be added.
+ *  \param [in] included_service_handle    Service Handle of the included service.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_add_included_service
+           (
+               /* IN */  UINT16    service_handle,
+               /* IN */  UINT16    included_service_handle
+           );
+
+/**
+ *  \brief To add a characteristic to GATT Database
+ *
+ *  \par Description:
+ *  This API adds a GATT characteristic to the GATT database.
+ *
+ *  \param [in]  service_handle    Service Handle to which the characteristic to be added.
+ *  \param [in]  char_uuid         Characterestic UUID.
+ *  \param [in]  perm              Attribute Permission of Characterestic value.
+ *  \param [in]  property          Characterestic property.
+ *  \param [in]  char_value        Characterestic value.
+ *  \param [out] char_handle       Characterestic Handle returned by the API, shall be used
+ *                                 when adding descriptors/values into the characteristic.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_add_characteristic
+           (
+               /* IN */  UINT16              service_handle,
+               /* IN */  GATT_DB_UUID_TYPE * char_uuid,
+               /* IN */  UINT16              perm,
+               /* IN */  UINT16              property,
+               /* IN */  ATT_VALUE         * char_value,
+               /* OUT */ UINT16            * char_handle
+           );
+
+/**
+ *  \brief To add a characteristic descriptor to GATT Database
+ *
+ *  \par Description:
+ *  This API adds a GATT characteristic descriptor to the GATT database.
+ *
+ *  \param [in]  service_handle    Service Handle to which the descriptor to be added.
+ *  \param [in]  char_handle       Characterestic Handle to which the descriptor to be added.
+ *  \param [in]  desc_uuid         Characterestic Descriptor UUID.
+ *  \param [in]  perm              Characterestic Descriptor access permission.
+ *  \param [in]  property          Characterestic property.
+ *  \param [in]  desc_value        Characterestic Descriptor value.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_add_characteristic_descriptor
+           (
+               /* IN */  UINT16              service_handle,
+               /* IN */  UINT16              char_handle,
+               /* IN */  GATT_DB_UUID_TYPE * desc_uuid,
+               /* IN */  UINT16              perm,
+               /* IN */  ATT_VALUE         * desc_value
+           );
+
+/**
+ *  \brief To delete a service from GATT Database
+ *
+ *  \par Description:
+ *  This API is to delete a service from GATT database.
+ *
+ *  \param [in]  service_handle    Service Handle to be deleted.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_delete_service
+           (
+               /* IN */  UINT16                service_handle
+           );
+
+/**
+ *  \brief To enable a service in GATT Database
+ *
+ *  \par Description:
+ *  This API is to enable a service in GATT database.
+ *
+ *  \param [in]  service_handle    Service Handle to be enabled.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_enable_service
+           (
+               /* IN */  UINT16                service_handle
+           );
+
+/**
+ *  \brief To disable a service in GATT Database
+ *
+ *  \par Description:
+ *  This API is to disable a service in GATT database.
+ *
+ *  \param [in]  service_handle    Service Handle to be disabled.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_disable_service
+           (
+               /* IN */  UINT16                service_handle
+           );
+
+/**
+ *  \brief To set attribute value.
+ *
+ *  \par Description:
+ *  This API is to set attribute value in GATT database.
+ *
+ *  \param [in] attr_handle    Attribute Handle which is to be set.
+ *  \param [in] value          Pointer to the attribute value.
+ *  \param [in] length         Length of the attribute value.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_set_attr_value
+           (
+               /* IN */  UINT16    attr_handle,
+               /* IN */  UCHAR   * value,
+               /* IN */  UINT16    length
+           );
+
+/**
+ *  \brief To get attribute value.
+ *
+ *  \par Description:
+ *  This API is to get attribute value in GATT database.
+ *
+ *  \param [in] attr_handle    Attribute Handle which is to be retrivedt.
+ *  \param [in] value          Pointer to the attribute value.
+ *  \param [in] length         Pointer to the length of the attribute value.
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_get_attr_value
+           (
+               /* IN */   UINT16          attr_handle,
+               /* OUT */  const UCHAR  ** value,
+               /* OUT */  UINT16        * length
+           );
+
+/**
+ *  \brief To register dynamic GATT Database
+ *
+ *  \par Description:
+ *  This API registers dynamic GATT database.
+ *  This shall be called after constructing the dynmaic GATT database,
+ *  using the exposed APIs (to add service, characteristic, descriptor etc.)
+ *
+ *  \return API_RESULT
+ *          - API_SUCCESS: If successful.
+ *          - Error Codes: Error code describing cause of failure.
+ */
+API_RESULT BT_gatt_db_dyn_register(void);
+
+/**
+ *  \brief To get number of attributes in GATT Database
+ *
+ *  \par Description:
+ *  This API is to get number of attributes in GATT database.
+ *
+ *  \return UINT16
+ *          - Attribute Count
+ */
+UINT16 BT_gatt_db_get_attribute_count(void);
+
+#endif /* GATT_DB_DYNAMIC */
+
+/** \cond ignore_this Internal interface - called only from HCI */
+void gatt_db_handle_hci_command_complete
+     (
+         UCHAR  * packet
+     );
+/** \endcond */
+
+/** \} */
+
+/** \} */
+
+API_RESULT gatt_char_handler (GATT_DB_HANDLE * handle,GATT_DB_PARAMS * param);
+
+#ifdef __cplusplus
+};
+#endif
+
+#endif /* _H_BT_GATT_DB_API_ */
+

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -67,51 +67,68 @@ Purpose     : MENU include
 *
 *       Create flags
 */
-#define MENU_CF_HORIZONTAL              (0<<0)
-#define MENU_CF_VERTICAL                (1<<0)
-#define MENU_CF_OPEN_ON_POINTEROVER     (1<<1)  // Normally a menu opens first when clicked on it
-#define MENU_CF_CLOSE_ON_SECOND_CLICK   (1<<2)  // Normally a menu closes only when clicked outside it
-#define MENU_CF_HIDE_DISABLED_SEL       (1<<3)  // Hides the selection when a disabled item is selected
+#define MENU_CF_HORIZONTAL              (0 << 0)
+#define MENU_CF_VERTICAL                (1 << 0)
+#define MENU_CF_OPEN_ON_POINTEROVER     (1 << 1)  // Normally a menu opens first when clicked on it
+#define MENU_CF_CLOSE_ON_SECOND_CLICK   (1 << 2)  // Normally a menu closes only when clicked outside it
+#define MENU_CF_HIDE_DISABLED_SEL       (1 << 3)  // Hides the selection when a disabled item is selected
 
 /*********************************************************************
 *
-*       Menu item flags
+*       MENU item flags
+*
+*  Description
+*    Flags used by the MENU_ITEM_DATA structure.
 */
-#define MENU_IF_DISABLED                (1<<0)  // Indicates that item is disabled
-#define MENU_IF_SEPARATOR               (1<<1)  // Indicates that item is a separator
+#define MENU_IF_DISABLED                (1 << 0)  // Indicates that item is disabled.
+#define MENU_IF_SEPARATOR               (1 << 1)  // Indicates that item is a separator.
 
 /*********************************************************************
 *
-*       Color indices
+*       MENU color indexes
+*
+*  Description
+*    Color indexes used by the MENU widget.
 */
-#define MENU_CI_ENABLED                 0
-#define MENU_CI_SELECTED                1
-#define MENU_CI_DISABLED                2
-#define MENU_CI_DISABLED_SEL            3
-#define MENU_CI_ACTIVE_SUBMENU          4
+#define MENU_CI_ENABLED                 0         // Color of enabled and not selected MENU items.
+#define MENU_CI_SELECTED                1         // Color of enabled and selected MENU items.
+#define MENU_CI_DISABLED                2         // Color of disabled MENU items.
+#define MENU_CI_DISABLED_SEL            3         // Color of disabled and selected MENU items.
+#define MENU_CI_ACTIVE_SUBMENU          4         // Color of active submenu items.
 
 /*********************************************************************
 *
-*       Border indices
+*       MENU border indexes
+*
+*  Description
+*    Border indexes used by functions to set the border properties of
+*    a MENU widget.
 */
-#define MENU_BI_LEFT                    0
-#define MENU_BI_RIGHT                   1
-#define MENU_BI_TOP                     2
-#define MENU_BI_BOTTOM                  3
+#define MENU_BI_LEFT                    0         // Border between item text and left edge of item.
+#define MENU_BI_RIGHT                   1         // Border between item text and right edge of item.
+#define MENU_BI_TOP                     2         // Border between item text and item top.
+#define MENU_BI_BOTTOM                  3         // Border between item text and item bottom.
 
 /*********************************************************************
 *
-*       Message types
+*       MENU message types
+*
+*  Description
+*    Types of messages sent with the \a{MsgType} parameter of the MENU_MSG_DATA structure.
+*    A pointer to this structure is sent via the \c{Data.p} pointer of a WM_MENU message.
 */
-#define MENU_ON_ITEMSELECT              0   // Send to owner when selecting a menu item
-#define MENU_ON_INITMENU                1   // Send to owner when for the first time selecting a submenu
-#define MENU_ON_INITSUBMENU             2   // Send to owner when selecting a submenu
-#define MENU_ON_OPEN                    3   // Internal message of menu widget (only send to submenus)
-#define MENU_ON_CLOSE                   4   // Internal message of menu widget (only send to submenus)
-#define MENU_IS_MENU                    5   // Internal message of menu widget. Owner must call
-                                            // WM_DefaultProc() when not handle the message
-#define MENU_ON_ITEMACTIVATE            6   // Send to owner when highlighting a menu item
-#define MENU_ON_ITEMPRESSED             7   // Send to owner when a menu item has been pressed
+#define MENU_ON_ITEMSELECT              0         // This message is sent to the owner of a MENU immediately after a MENU item is selected. The \c{ItemId} element of
+                                                  // the MENU_MSG_DATA structure contains the Id of the pressed MENU item.
+#define MENU_ON_INITMENU                1         // This message is sent to the owner of MENU immediately before the MENU opens. This enables the application to
+                                                  // modify the MENU before it is shown.
+#define MENU_ON_INITSUBMENU             2         /* Send to owner when selecting a submenu                                                        */
+#define MENU_ON_OPEN                    3         /* Internal message of menu widget (only send to submenus)                                       */
+#define MENU_ON_CLOSE                   4         /* Internal message of menu widget (only send to submenus)                                       */
+#define MENU_IS_MENU                    5         /* Internal message of menu widget. Owner must call WM_DefaultProc() when not handle the message */
+#define MENU_ON_ITEMACTIVATE            6         // The owner window of a MENU will receive this message after a MENU item has been highlighted. The message is
+                                                  // not sent after highlighting a submenu.
+#define MENU_ON_ITEMPRESSED             7         // After pressing a MENU item this message will be sent to the owner window of the widget. It will be sent also for
+                                                  // disabled MENU items.
 
 /*********************************************************************
 *
@@ -164,22 +181,30 @@ typedef struct {
 
 /*********************************************************************
 *
-*       Menu message data
+*       MENU_MSG_DATA
+*
+*  Description
+*    This structure is used in conjunction with the WM_MENU message,
+*    specific to the MENU widget. The \c{Data.p} pointer of the message
+*    points to a MENU_MSG_DATA structure.
 */
 typedef struct {
-  U16 MsgType;
-  U16 ItemId;
+  U16 MsgType;              // See \ref{MENU message types}.
+  U16 ItemId;               // Id of MENU item.
 } MENU_MSG_DATA;
 
 /*********************************************************************
 *
-*       Menu item data
+*       MENU_ITEM_DATA
+*
+*  Description
+*    This structure serves as a container to set or retrieve information about MENU items.
 */
 typedef struct {
-  const char  * pText;
-  U16           Id;
-  U16           Flags;
-  MENU_Handle   hSubmenu;
+  const char  * pText;      // MENU item text.
+  U16           Id;         // Id of the MENU item.
+  U16           Flags;      // See \ref{MENU item flags}.
+  MENU_Handle   hSubmenu;   // If the item represents a submenu this element contains the handle of the submenu.
 } MENU_ITEM_DATA;
 
 /*********************************************************************

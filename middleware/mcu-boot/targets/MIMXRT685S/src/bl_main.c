@@ -111,15 +111,15 @@ static void bootloader_init(void)
     // Init pinmux and other hardware setup.
     init_hardware();
 
+    // Message so python instantiated debugger can tell the
+    // bootloader application is running on the target.
+    debug_printf("\r\n\r\nRunning bootloader...\r\n");
+    debug_printf("Build time:55 %s %s\r\n", __DATE__, __TIME__);
+
 #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
     // Init flash driver.
     bootloader_flash_init();
 #endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-
-// Init QSPI module if needed
-#if BL_FEATURE_QSPI_MODULE
-    configure_quadspi_as_needed();
-#endif // BL_FEATURE_QSPI_MODULE
 
     // Configure clocks.
     configure_clocks(kClockOption_EnterBootloader);
@@ -146,11 +146,6 @@ static void bootloader_init(void)
         microseconds_shutdown();
         jump_to_application(g_bootloaderContext.imageStart);
     }
-
-    // Message so python instantiated debugger can tell the
-    // bootloader application is running on the target.
-    debug_printf("\r\n\r\nRunning bootloader...\r\n");
-
 #if defined(DEBUG) && !defined(DEBUG_PRINT_DISABLE)
     standard_version_t version = g_bootloaderContext.propertyInterface->store->bootloaderVersion;
     debug_printf("Bootloader version %c%d.%d.%d\r\n", version.name, version.major, version.minor, version.bugfix);
@@ -162,9 +157,21 @@ static void bootloader_init(void)
 //! Infinitely calls the command interface and active peripheral control interface pump routines.
 static void bootloader_run(void)
 {
-    debug_printf("Jumping to the ROM ISP mode...\r\n");
-    uint32_t bootArg = 0xEB130000;
-    bootloader_user_entry(&bootArg);
+    // Switch to ISP mode
+    debug_printf("OTA Application boot failed!\r\n");
+    debug_printf("The OTA application can be downloaded to this device via the following typical appoaches:\r\n");
+    debug_printf("1. ISP interface, steps:\r\n");
+    debug_printf("    a) Switch the board to ISP mode, reset the board\r\n");
+    debug_printf("    b) blhost <peripheral> -- fill-memory 0x1c000  4 0xc1503051\r\n");
+    debug_printf("    c) blhost <peripheral> -- fill-memory 0x1c004  4 0x20000014\r\n");
+    debug_printf("    d) blhost <peripheral> --  configure-memory 0x9 0x1c000 \r\n");
+    debug_printf("    e) blhost <peripheral> --  flash-erase-region <addr> <length> \r\n");
+    debug_printf("    f) blhost <peripheral> --  write-memory <addr> <ota-application file> \r\n");
+    debug_printf("2. IDE download\r\n");
+    debug_printf("3. User customized interface\r\n");
+    while (1)
+    {
+    }
 }
 
 //! @brief Entry point for the bootloader.

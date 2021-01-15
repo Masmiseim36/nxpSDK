@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,8 +20,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief I3C driver version 2.1.0. */
-#define FSL_I3C_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*! @brief I3C driver version */
+#define FSL_I3C_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*@}*/
 
 /*! @brief Timeout times for waiting flag. */
@@ -883,11 +883,10 @@ static inline bool I3C_MasterGetBusIdleState(I3C_Type *base)
  * @param address 7-bit slave device address, in bits [6:0].
  * @param dir Master transfer direction, either #kI3C_Read or #kI3C_Write. This parameter is used to set
  *      the R/w bit (bit 0) in the transmitted slave address.
- * @param rxSize if dir is #kI3C_Read, this assigns bytes to read. Otherwise set to 0.
  * @retval #kStatus_Success START signal and address were successfully enqueued in the transmit FIFO.
  * @retval #kStatus_I3C_Busy Another master is currently utilizing the bus.
  */
-status_t I3C_MasterStart(I3C_Type *base, i3c_bus_type_t type, uint8_t address, i3c_direction_t dir, uint32_t rxSize);
+status_t I3C_MasterStart(I3C_Type *base, i3c_bus_type_t type, uint8_t address, i3c_direction_t dir);
 
 /*!
  * @brief Sends a repeated START signal and slave address on the I2C/I3C bus.
@@ -903,11 +902,9 @@ status_t I3C_MasterStart(I3C_Type *base, i3c_bus_type_t type, uint8_t address, i
  * @param address 7-bit slave device address, in bits [6:0].
  * @param dir Master transfer direction, either #kI3C_Read or #kI3C_Write. This parameter is used to set
  *      the R/w bit (bit 0) in the transmitted slave address.
- * @param rxSize if dir is #kI3C_Read, this assigns bytes to read. Otherwise set to 0.
  * @retval #kStatus_Success Repeated START signal and address were successfully enqueued in the transmit FIFO.
  */
-status_t I3C_MasterRepeatedStart(
-    I3C_Type *base, i3c_bus_type_t type, uint8_t address, i3c_direction_t dir, uint32_t rxSize);
+status_t I3C_MasterRepeatedStart(I3C_Type *base, i3c_bus_type_t type, uint8_t address, i3c_direction_t dir);
 
 /*!
  * @brief Performs a polling send transfer on the I2C/I3C bus.

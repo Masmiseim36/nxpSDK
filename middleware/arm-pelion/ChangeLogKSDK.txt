@@ -1,0 +1,8 @@
+/**
+@page middleware_log Middleware Change Log
+@section ARM Pelion Cloud Client for KSDK
+  The Current version is 4.4.0.
+
+  - 4.4.0
+      - Add support for ARM Pelion into SDK
+*/

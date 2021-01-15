@@ -10,14 +10,12 @@
 #include <string.h>
 #include <errno.h>
 
+#include "naturedsp_input.h"
 #include "fsl_debug_console.h"
 #include "srtm_naturedsp_test.h"
 
 /* Signal Processing Library API. */
 #include "NatureDSP_Signal.h"
-#include "NatureDSP_Signal_fft.h"
-#include "NatureDSP_Signal_fir.h"
-#include "NatureDSP_Signal_iir.h"
 
 /* Portable data types. */
 #include "NatureDSP_types.h"
@@ -55,33 +53,7 @@ const static int32_t fft_in_ref[FFT_LENGTH] = {
     46339,  47462,  48557,  49622,  50658,  51663,  52637,  53579,  54489,  55366,  56210,  57020,  57796,  58537,
     59242,  59912,  60546,  61143,  61704,  62227,  62713,  63161,  63571,  63943,  64276,  64571,  64826,  65043,
     65220,  65358,  65457,  65516};
-const static int32_t fft_out_ref[FFT_LENGTH] = {
-    1943146496, 0,         -20958690, -101372148, 2147908, -49603224, 6367794, -32453290, 7839464, -23749142,
-    8516018,    -18398696, 8884268,   -14715613,  9104819, -11980083, 9244672, -9830400,  9339465, -8066859,
-    9405884,    -6567825,  9457044,   -5252426,   9484568, -4069910,  9509790, -2981956,  9524178, -1953612,
-    9533644,    -966946,   9535488,   0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0,         0,       0,         0,       0,
-    0,          0,         0,         0,          0,       0};
+
 static int32_t fft_out[FFT_LENGTH];
 int TEST_FFT()
 {
@@ -91,7 +63,7 @@ int TEST_FFT()
         fft_in[i] = fft_in_ref[i];
     PRINTF("/*FFT TEST START*/\r\n");
     tic = get_ccount();
-    fft_real32x32(fft_out, fft_in, rfft32_32, 2);
+    fft_real32x32(fft_out, fft_in, rfft32_32, NATUREDSP_FFT_SCALING_OPTION);
     toc = get_ccount();
     for (i = 0; i < FFT_LENGTH; i++)
         if (fft_out[i] != fft_out_ref[i])

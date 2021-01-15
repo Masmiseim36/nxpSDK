@@ -123,7 +123,7 @@ static void *USB_EhciNCGetBase(uint8_t controllerId)
         return NULL;
     }
 
-    usbNCBase = (void *)(uint8_t*)usbnc_base[controllerId];
+    usbNCBase = (void *)(uint8_t *)usbnc_base[controllerId];
 #endif
     return usbNCBase;
 }
@@ -320,14 +320,15 @@ static usb_status_t USB_DeviceEhciEndpointDeinit(usb_device_ehci_state_struct_t 
     /* Disable the endpoint */
     if (0U == endpoint)
     {
-        ehciState->registerBase->EPCR0 &= ~((0U != direction) ? (USBHS_EPCR_TXE_MASK | USBHS_EPCR_TXT_MASK) :
-                                                                (USBHS_EPCR_RXE_MASK | USBHS_EPCR_RXT_MASK));
+        ehciState->registerBase->EPCR0 &=
+            ~((0U != direction) ? (USBHS_EPCR_TXE_MASK | USBHS_EPCR_TXT_MASK | USBHS_EPCR_TXS_MASK) :
+                                  (USBHS_EPCR_RXE_MASK | USBHS_EPCR_RXT_MASK | USBHS_EPCR_RXS_MASK));
     }
     else
     {
         ehciState->registerBase->EPCR[endpoint - 1U] &=
-            ~((0U != direction) ? (USBHS_EPCR_TXE_MASK | USBHS_EPCR_TXT_MASK) :
-                                  (USBHS_EPCR_RXE_MASK | USBHS_EPCR_RXT_MASK));
+            ~((0U != direction) ? (USBHS_EPCR_TXE_MASK | USBHS_EPCR_TXT_MASK | USBHS_EPCR_TXS_MASK) :
+                                  (USBHS_EPCR_RXE_MASK | USBHS_EPCR_RXT_MASK | USBHS_EPCR_RXS_MASK));
     }
 
     return kStatus_USB_Success;
@@ -484,8 +485,8 @@ static void USB_DeviceEhciCancelControlPipe(usb_device_ehci_state_struct_t *ehci
             message.buffer         = (uint8_t *)((bufferAddress & USB_DEVICE_ECHI_DTD_PAGE_MASK) |
                                          (currentDtd->reservedUnion.originalBufferInfo.originalBufferOffest));
         }
-        /* If the dtd is active, set the message length to USB_CANCELLED_TRANSFER_LENGTH. Or set the length by using finished
-         * length. */
+        /* If the dtd is active, set the message length to USB_CANCELLED_TRANSFER_LENGTH. Or set the length by using
+         * finished length. */
         if (0U != (currentDtd->dtdTokenUnion.dtdTokenBitmap.status & USB_DEVICE_ECHI_DTD_STATUS_ACTIVE))
         {
             message.length = USB_CANCELLED_TRANSFER_LENGTH;
@@ -1068,7 +1069,9 @@ static usb_status_t USB_DeviceEhciTransfer(usb_device_ehci_state_struct_t *ehciS
     {
         ehciState->qh[index].nextDtdPointer         = (uint32_t)dtdHard;
         ehciState->qh[index].dtdTokenUnion.dtdToken = 0U;
-        ehciState->registerBase->EPPRIME            = primeBit;
+        /*make sure dtd is linked to dqh*/
+        __DSB();
+        ehciState->registerBase->EPPRIME = primeBit;
         while (0U == (ehciState->registerBase->EPSR & primeBit))
         {
             primeTimesCount++;
@@ -1436,6 +1439,7 @@ usb_status_t USB_DeviceEhciCancel(usb_device_controller_handle ehciHandle, uint8
         1UL << ((ep & USB_ENDPOINT_NUMBER_MASK) + ((ep & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >> 0x03U));
     uint8_t index =
         ((ep & USB_ENDPOINT_NUMBER_MASK) << 1U) | ((ep & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >> 0x07U);
+    uint8_t flag = 0;
 
     OSA_SR_ALLOC();
 
@@ -1518,10 +1522,7 @@ usb_status_t USB_DeviceEhciCancel(usb_device_controller_handle ehciHandle, uint8
             if ((0U != currentDtd->dtdTokenUnion.dtdTokenBitmap.ioc) ||
                 (0U == ((uint32_t)ehciState->dtdHard[index] & USB_DEVICE_ECHI_DTD_POINTER_MASK)))
             {
-                message.code    = ep;
-                message.isSetup = 0U;
-                (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
-                message.buffer = NULL;
+                flag = 1;
             }
             /* Clear the token field. */
             currentDtd->dtdTokenUnion.dtdToken = 0U;
@@ -1541,6 +1542,15 @@ usb_status_t USB_DeviceEhciCancel(usb_device_controller_handle ehciHandle, uint8
         ehciState->qh[index].dtdTokenUnion.dtdToken = 0U;
     }
     OSA_EXIT_CRITICAL();
+
+    if (0U != flag)
+    {
+        message.code    = ep;
+        message.isSetup = 0U;
+        (void)USB_DeviceNotificationTrigger(ehciState->deviceHandle, &message);
+        message.buffer = NULL;
+    }
+
     return kStatus_USB_Success;
 }
 
@@ -1559,6 +1569,9 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 {
     usb_device_ehci_state_struct_t *ehciState = (usb_device_ehci_state_struct_t *)ehciHandle;
     usb_status_t error                        = kStatus_USB_Error;
+#if defined(USB_DEVICE_CONFIG_GET_SOF_COUNT) && (USB_DEVICE_CONFIG_GET_SOF_COUNT > 0U)
+    uint32_t *temp32;
+#endif
     uint16_t *temp16;
     uint8_t *temp8;
 
@@ -1617,9 +1630,11 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             if (NULL != param)
             {
                 temp16  = (uint16_t *)param;
-                *temp16 = ((uint16_t)USB_DEVICE_CONFIG_SELF_POWER << (USB_REQUEST_STANDARD_GET_STATUS_DEVICE_SELF_POWERED_SHIFT))
+                *temp16 = ((uint16_t)USB_DEVICE_CONFIG_SELF_POWER
+                           << (USB_REQUEST_STANDARD_GET_STATUS_DEVICE_SELF_POWERED_SHIFT))
 #if ((defined(USB_DEVICE_CONFIG_REMOTE_WAKEUP)) && (USB_DEVICE_CONFIG_REMOTE_WAKEUP > 0U))
-                          | ((uint16_t)deviceHandle->remotewakeup << (USB_REQUEST_STANDARD_GET_STATUS_DEVICE_REMOTE_WARKUP_SHIFT))
+                          | ((uint16_t)deviceHandle->remotewakeup
+                             << (USB_REQUEST_STANDARD_GET_STATUS_DEVICE_REMOTE_WARKUP_SHIFT))
 #endif
                     ;
                 error = kStatus_USB_Success;
@@ -1699,7 +1714,7 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
             }
             /* ehciState->registerPhyBase->CTRL |= ((1U << 21) | (1U << 22) | (1U << 23)); */
             ehciState->registerBase->USBSTS |= USBHS_USBSTS_SRI_MASK;
-#if (defined(FSL_FEATURE_USBPHY_28FDSOI) && (FSL_FEATURE_USBPHY_28FDSOI > 0U)) 
+#if (defined(FSL_FEATURE_USBPHY_28FDSOI) && (FSL_FEATURE_USBPHY_28FDSOI > 0U))
             ehciState->registerPhyBase->USB1_VBUS_DETECT_SET |= USBPHY_USB1_VBUS_DETECT_VBUSVALID_TO_SESSVALID_MASK;
 #endif
             ehciState->registerBase->PORTSC1 |= USBHS_PORTSC1_PHCD_MASK;
@@ -1796,7 +1811,23 @@ usb_status_t USB_DeviceEhciControl(usb_device_controller_handle ehciHandle, usb_
 
             break;
 #endif
-
+#if defined(USB_DEVICE_CONFIG_GET_SOF_COUNT) && (USB_DEVICE_CONFIG_GET_SOF_COUNT > 0U)
+        case kUSB_DeviceControlGetCurrentFrameCount:
+            if (NULL != param)
+            {
+                temp32 = (uint32_t *)param;
+                if (USB_SPEED_HIGH == ehciState->speed)
+                {
+                    *temp32 = ehciState->registerBase->FRINDEX & (USB_DEVICE_MAX_FRAME_COUNT);
+                }
+                else /* if not high speed, change to use frame count */
+                {
+                    *temp32 = (ehciState->registerBase->FRINDEX & (USB_DEVICE_MAX_FRAME_COUNT)) / 8U;
+                }
+                error = kStatus_USB_Success;
+            }
+            break;
+#endif
         default:
             /*no action*/
             break;

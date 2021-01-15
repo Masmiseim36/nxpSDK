@@ -29,7 +29,7 @@ Change log:
     10/24/2008: initial version
 ********************************************************/
 
-#include <mlan_wmsdk.h>
+#include <mlan_api.h>
 
 /* Additional WMSDK header files */
 #include <wmerrno.h>
@@ -72,7 +72,6 @@ Change log:
 
 /** WMM information IE */
 static const t_u8 wmm_info_ie[] = {WMM_IE, 0x07, 0x00, 0x50, 0xf2, 0x02, 0x00, 0x01, 0x00};
-
 
 /**
  * This table will be used to store the tid values based on ACs.
@@ -143,7 +142,6 @@ static void wlan_wmm_ac_debug_print(const IEEEtypes_WmmAcParameters_t *pac_param
 #define PRINTM_AC(pac_param)
 #endif
 
-
 /**
  *  @brief  This function cleans Tx/Rx queues
  *
@@ -162,9 +160,6 @@ t_void wlan_clean_txrx(pmlan_private priv)
 
     pmadapter->callbacks.moal_spin_lock(pmadapter->pmoal_handle, priv->wmm.ra_list_spinlock);
     wlan_11n_deleteall_txbastream_tbl(priv);
-#ifdef SDIO_MULTI_PORT_TX_AGGR
-    MP_TX_AGGR_BUF_RESET(priv->adapter);
-#endif
     memcpy(pmadapter, tos_to_tid, ac_to_tid, sizeof(tos_to_tid));
     for (i = 0; i < MAX_NUM_TID; i++)
     {
@@ -196,7 +191,6 @@ void wlan_wmm_default_queue_priorities(pmlan_private priv)
     LEAVE();
 }
 
-
 /**
  *  @brief Initialize the WMM state information and the WMM data path queues.
  *
@@ -217,10 +211,10 @@ t_void wlan_wmm_init(pmlan_adapter pmadapter)
         {
             for (i = 0; i < MAX_NUM_TID; ++i)
             {
-                priv->aggr_prio_tbl[i].amsdu = BA_STREAM_NOT_ALLOWED;
-                    priv->aggr_prio_tbl[i].ampdu_ap = priv->aggr_prio_tbl[i].ampdu_user = tos_to_tid_inv[i];
-                priv->wmm.pkts_queued[i]              = 0;
-                priv->wmm.tid_tbl_ptr[i].ra_list_curr = MNULL;
+                priv->aggr_prio_tbl[i].amsdu    = BA_STREAM_NOT_ALLOWED;
+                priv->aggr_prio_tbl[i].ampdu_ap = priv->aggr_prio_tbl[i].ampdu_user = tos_to_tid_inv[i];
+                priv->wmm.pkts_queued[i]                                            = 0;
+                priv->wmm.tid_tbl_ptr[i].ra_list_curr                               = MNULL;
             }
 
             priv->aggr_prio_tbl[6].ampdu_ap = priv->aggr_prio_tbl[6].ampdu_user = BA_STREAM_NOT_ALLOWED;
@@ -233,8 +227,7 @@ t_void wlan_wmm_init(pmlan_adapter pmadapter)
                 priv->add_ba_param.tx_win_size = MLAN_STA_AMPDU_DEF_TXWINSIZE;
                 priv->add_ba_param.rx_win_size = MLAN_STA_AMPDU_DEF_RXWINSIZE;
             }
-            if (priv->bss_type == MLAN_BSS_TYPE_UAP
-            )
+            if (priv->bss_type == MLAN_BSS_TYPE_UAP)
             {
                 priv->add_ba_param.tx_win_size = MLAN_UAP_AMPDU_DEF_TXWINSIZE;
                 priv->add_ba_param.rx_win_size = MLAN_UAP_AMPDU_DEF_RXWINSIZE;
@@ -248,8 +241,6 @@ t_void wlan_wmm_init(pmlan_adapter pmadapter)
 
     LEAVE();
 }
-
-
 
 /**
  *  @brief Call back from the command module to allow insertion of a WMM TLV
@@ -319,4 +310,3 @@ t_u32 wlan_wmm_process_association_req(pmlan_private priv,
     LEAVE();
     return ret_len;
 }
-

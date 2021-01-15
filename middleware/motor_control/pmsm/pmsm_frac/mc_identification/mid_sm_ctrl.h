@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,22 +14,22 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define MID_SM_CTRL_NONE 0x00000000
-#define MID_SM_CTRL_START_ACK 0x00000002
+#define MID_SM_CTRL_NONE 0x00000000UL
+#define MID_SM_CTRL_START_ACK 0x00000002UL
 #define MID_SM_CTRL_START_DONE ((MID_SM_CTRL_START_ACK) << 16)
-#define MID_SM_CTRL_PWR_STG_CHARACT_ACK 0x00000004
+#define MID_SM_CTRL_PWR_STG_CHARACT_ACK 0x00000004UL
 #define MID_SM_CTRL_PWR_STG_CHARACT_DONE ((MID_SM_CTRL_PWR_STG_CHARACT_ACK) << 16)
-#define MID_SM_CTRL_RS_ACK 0x00000008
+#define MID_SM_CTRL_RS_ACK 0x00000008UL
 #define MID_SM_CTRL_RS_DONE ((MID_SM_CTRL_RS_ACK) << 16)
-#define MID_SM_CTRL_LD_ACK 0x00000010
+#define MID_SM_CTRL_LD_ACK 0x00000010UL
 #define MID_SM_CTRL_LD_DONE ((MID_SM_CTRL_LD_ACK) << 16)
-#define MID_SM_CTRL_LQ_ACK 0x00000020
+#define MID_SM_CTRL_LQ_ACK 0x00000020UL
 #define MID_SM_CTRL_LQ_DONE ((MID_SM_CTRL_LQ_ACK) << 16)
-#define MID_SM_CTRL_PP_ACK 0x00000040
+#define MID_SM_CTRL_PP_ACK 0x00000040UL
 #define MID_SM_CTRL_PP_DONE ((MID_SM_CTRL_PP_ACK) << 16)
-#define MID_SM_CTRL_KE_ACK 0x00000080
+#define MID_SM_CTRL_KE_ACK 0x00000080UL
 #define MID_SM_CTRL_KE_DONE ((MID_SM_CTRL_KE_ACK) << 16)
-#define MID_SM_CTRL_STOP_ACK 0x00000100
+#define MID_SM_CTRL_STOP_ACK 0x00000100UL
 #define MID_SM_CTRL_STOP_DONE ((MID_SM_CTRL_STOP_ACK) << 16)
 
 /*! @brief States of machine enumeration */

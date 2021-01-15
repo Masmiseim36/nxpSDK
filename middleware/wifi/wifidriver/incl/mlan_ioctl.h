@@ -96,6 +96,7 @@ enum _mlan_ioctl_req_id
     MLAN_OID_SEC_CFG_WPA_ENABLED,
     MLAN_OID_SEC_CFG_ENCRYPT_KEY,
     MLAN_OID_SEC_CFG_PASSPHRASE,
+    MLAN_OID_SEC_CFG_PASSWORD,
     MLAN_OID_SEC_CFG_EWPA_ENABLED,
     MLAN_OID_SEC_CFG_ESUPP_MODE,
     MLAN_OID_SEC_CFG_WAPI_ENABLED,
@@ -178,9 +179,6 @@ enum _mlan_ioctl_req_id
     MLAN_OID_MISC_GEN_IE,
     MLAN_OID_MISC_REGION,
     MLAN_OID_MISC_WARM_RESET,
-#if defined(SDIO_MULTI_PORT_TX_AGGR) || defined(SDIO_MULTI_PORT_RX_AGGR)
-    MLAN_OID_MISC_SDIO_MPA_CTRL,
-#endif
     MLAN_OID_MISC_HOST_CMD,
     MLAN_OID_MISC_SYS_CLOCK,
     MLAN_OID_MISC_SOFT_RESET,
@@ -201,6 +199,10 @@ enum _mlan_ioctl_req_id
 #endif
     MLAN_OID_MISC_HOTSPOT_CFG,
     MLAN_OID_MISC_OTP_USER_DATA,
+#ifdef WLAN_LOW_POWER_ENABLE
+    MLAN_OID_MISC_LOW_PWR_MODE,
+#endif // WLAN_LOW_POWER_ENABLE
+    MLAN_OID_MISC_GET_REGIONPWR_CFG
 };
 
 /** Sub command size */
@@ -396,10 +398,6 @@ typedef struct _mlan_scan_cfg
     t_u32 scan_probe;
     /** Scan time parameters */
     mlan_scan_time_params scan_time;
-#ifdef EXT_SCAN_SUPPORT
-    /** Extended Scan */
-    t_u32 ext_scan;
-#endif
 } mlan_scan_cfg, *pmlan_scan_cfg;
 
 /** Type defnition of mlan_ds_scan for MLAN_IOCTL_SCAN */
@@ -604,13 +602,9 @@ typedef struct _mlan_ssid_bssid
 #define PROTOCOL_WAPI 0x80
 /** WPA3 SAE */
 #define PROTOCOL_WPA3_SAE 256
-/** OWE */
-#define PROTOCOL_OWE 512
 
 /** Key_mgmt_sae */
 #define KEY_MGMT_SAE 0x400
-/** Key_mgmt_owe */
-#define KEY_MGMT_OWE 0x200
 /** Key_mgmt_psk */
 #define KEY_MGMT_NONE 0x04
 /** Key_mgmt_none */
@@ -661,6 +655,10 @@ typedef struct _wpa_param
     t_u32 length;
     /** passphrase */
     t_u8 passphrase[64];
+    /** password length */
+    t_u32 password_length;
+    /** wpa3 sae password */
+    t_u8 password[255];
     /**group key rekey time in seconds */
     t_u32 gk_rekey_time;
 } wpa_param;
@@ -694,52 +692,26 @@ typedef struct _wep_param
 /** Data structure of WMM QoS information */
 typedef struct _wmm_qos_info_t
 {
-#ifdef BIG_ENDIAN_SUPPORT
-    /** QoS UAPSD */
-    t_u8 qos_uapsd : 1;
-    /** Reserved */
-    t_u8 reserved : 3;
-    /** Parameter set count */
-    t_u8 para_set_count : 4;
-#else
     /** Parameter set count */
     t_u8 para_set_count : 4;
     /** Reserved */
     t_u8 reserved : 3;
     /** QoS UAPSD */
     t_u8 qos_uapsd : 1;
-#endif /* BIG_ENDIAN_SUPPORT */
 } wmm_qos_info_t, *pwmm_qos_info_t;
 
 /** Data structure of WMM ECW */
 typedef struct _wmm_ecw_t
 {
-#ifdef BIG_ENDIAN_SUPPORT
-    /** Maximum Ecw */
-    t_u8 ecw_max : 4;
-    /** Minimum Ecw */
-    t_u8 ecw_min : 4;
-#else
     /** Minimum Ecw */
     t_u8 ecw_min : 4;
     /** Maximum Ecw */
     t_u8 ecw_max : 4;
-#endif /* BIG_ENDIAN_SUPPORT */
 } wmm_ecw_t, *pwmm_ecw_t;
 
 /** Data structure of WMM Aci/Aifsn */
 typedef struct _wmm_aci_aifsn_t
 {
-#ifdef BIG_ENDIAN_SUPPORT
-    /** Reserved */
-    t_u8 reserved : 1;
-    /** Aci */
-    t_u8 aci : 2;
-    /** Acm */
-    t_u8 acm : 1;
-    /** Aifsn */
-    t_u8 aifsn : 4;
-#else
     /** Aifsn */
     t_u8 aifsn : 4;
     /** Acm */
@@ -748,7 +720,6 @@ typedef struct _wmm_aci_aifsn_t
     t_u8 aci : 2;
     /** Reserved */
     t_u8 reserved : 1;
-#endif /* BIG_ENDIAN_SUPPORT */
 } wmm_aci_aifsn_t, *pwmm_aci_aifsn_t;
 
 /** Data structure of WMM AC parameters  */
@@ -928,6 +899,32 @@ typedef struct _mlan_ds_bss
         t_u8 bss_role;
     } param;
 } mlan_ds_bss, *pmlan_ds_bss;
+
+#ifdef OTP_CHANINFO
+/* OTP Region info */
+typedef MLAN_PACK_START struct _otp_region_info
+{
+    t_u8 country_code[2];
+    t_u8 region_code;
+    t_u8 environment;
+    t_u16 force_reg : 1;
+    t_u16 reserved : 15;
+} MLAN_PACK_END otp_region_info_t;
+
+/** Type definition of mlan_ds_custom_reg_domain */
+typedef struct _mlan_ds_custom_reg_domain
+{
+    otp_region_info_t region;
+    /** num of 2g channels in custom_reg_domain */
+    t_u8 num_bg_chan;
+#ifdef CONFIG_5GHz_SUPPORT
+    /** num of 5g channels in custom_reg_domain */
+    t_u8 num_a_chan;
+#endif
+    /** cfp table */
+    chan_freq_power_t cfp_tbl[0];
+} mlan_ds_custom_reg_domain;
+#endif
 
 /*-----------------------------------------------------------------*/
 /** Radio Control Group */
@@ -1524,6 +1521,7 @@ enum _mlan_psk_type
     MLAN_PSK_PMK,
     MLAN_PSK_CLEAR,
     MLAN_PSK_QUERY,
+    MLAN_PSK_PASSWORD,
 };
 
 /** The bit to indicate the key is for unicast */
@@ -1546,6 +1544,10 @@ enum _mlan_psk_type
 /** PMK length */
 #define MLAN_PMK_HEXSTR_LENGTH 64
 /* A few details needed for WEP (Wireless Equivalent Privacy) */
+/** Minimum password length */
+#define MLAN_MIN_PASSWORD_LENGTH 1
+/** Maximum passphrase length */
+#define MLAN_MAX_PASSWORD_LENGTH 255
 /** 104 bits */
 #define MAX_WEP_KEY_SIZE 13
 /** 40 bits RC4 - WEP */
@@ -1609,6 +1611,15 @@ typedef struct _mlan_pmk_t
     t_u8 pmk[MLAN_MAX_KEY_LENGTH];
 } mlan_pmk_t;
 
+/** Type definition of mlan_passphrase_t */
+typedef struct _mlan_password_t
+{
+    /** Length of passphrase */
+    t_u32 password_len;
+    /** Passphrase */
+    t_u8 password[MLAN_MAX_PASSWORD_LENGTH];
+} mlan_password_t;
+
 /** Embedded supplicant RSN type: No RSN */
 #define RSN_TYPE_NO_RSN MBIT(0)
 /** Embedded supplicant RSN type: WPA */
@@ -1644,6 +1655,8 @@ typedef struct _mlan_ds_passphrase
         /** PMK */
         mlan_pmk_t pmk;
     } psk;
+    /** Password */
+    mlan_password_t password;
 } mlan_ds_passphrase, *pmlan_ds_passphrase;
 
 /** Type definition of mlan_ds_esupp_mode for MLAN_OID_SEC_CFG_ESUPP_MODE */
@@ -2633,25 +2646,6 @@ typedef struct _mlan_ds_misc_gen_ie
     t_u8 ie_data[MAX_IE_SIZE];
 } mlan_ds_misc_gen_ie;
 
-#if defined(SDIO_MULTI_PORT_TX_AGGR) || defined(SDIO_MULTI_PORT_RX_AGGR)
-/** Type definition of mlan_ds_misc_sdio_mpa_ctrl for MLAN_OID_MISC_SDIO_MPA_CTRL */
-typedef struct _mlan_ds_misc_sdio_mpa_ctrl
-{
-    /** SDIO MP-A TX enable/disable */
-    t_u16 tx_enable;
-    /** SDIO MP-A RX enable/disable */
-    t_u16 rx_enable;
-    /** SDIO MP-A TX buf size */
-    t_u16 tx_buf_size;
-    /** SDIO MP-A RX buf size */
-    t_u16 rx_buf_size;
-    /** SDIO MP-A TX Max Ports */
-    t_u16 tx_max_ports;
-    /** SDIO MP-A RX Max Ports */
-    t_u16 rx_max_ports;
-} mlan_ds_misc_sdio_mpa_ctrl;
-#endif
-
 /** Type definition of mlan_ds_misc_cmd for MLAN_OID_MISC_HOST_CMD */
 typedef struct _mlan_ds_misc_cmd
 {
@@ -2888,6 +2882,107 @@ typedef struct _mlan_ds_ed_mac_mode
 #endif
 } mlan_ds_misc_ed_mac_mode;
 
+#ifdef OTP_CHANINFO
+typedef struct _mlan_ds_misc_chnrgpwr_cfg
+{
+    /** length */
+    t_u16 length;
+    /** chnrgpwr buf */
+    t_u8 chnrgpwr_buf[2048];
+} mlan_ds_misc_chnrgpwr_cfg;
+#endif
+
+#ifdef CONFIG_RF_TEST_MODE
+/** Configuration for Manufacturing generic command */
+typedef PACK_START struct _mlan_ds_mfg_cmd_generic_cfg
+{
+    /** MFG command code */
+    t_u32 mfg_cmd;
+    /** Action */
+    t_u16 action;
+    /** Device ID */
+    t_u16 device_id;
+    /** MFG Error code */
+    t_u32 error;
+    /** value 1 */
+    t_u32 data1;
+    /** value 2 */
+    t_u32 data2;
+    /** value 3 */
+    t_u32 data3;
+} PACK_END mlan_ds_mfg_cmd_generic_cfg;
+
+/** Configuration for Manufacturing command Tx Frame */
+typedef PACK_START struct _mlan_ds_mfg_cmd_tx_frame2
+{
+    /** MFG command code */
+    t_u32 mfg_cmd;
+    /** Action */
+    t_u16 action;
+    /** Device ID */
+    t_u16 device_id;
+    /** MFG Error code */
+    t_u32 error;
+    /** enable */
+    t_u32 enable;
+    /** data_rate */
+    t_u32 data_rate;
+    /** frame pattern */
+    t_u32 frame_pattern;
+    /** frame length */
+    t_u32 frame_length;
+    /** BSSID */
+    t_u8 bssid[MLAN_MAC_ADDR_LENGTH];
+    /** Adjust burst sifs */
+    t_u16 adjust_burst_sifs;
+    /** Burst sifs in us*/
+    t_u32 burst_sifs_in_us;
+    /** short preamble */
+    t_u32 short_preamble;
+    /** active sub channel */
+    t_u32 act_sub_ch;
+    /** short GI */
+    t_u32 short_gi;
+    /** Adv coding */
+    t_u32 adv_coding;
+    /** Tx beamforming */
+    t_u32 tx_bf;
+    /** HT Greenfield Mode*/
+    t_u32 gf_mode;
+    /** STBC */
+    t_u32 stbc;
+    /** power id */
+    t_u32 rsvd[2];
+} PACK_END mlan_ds_mfg_cmd_tx_frame2;
+
+/** Configuration for Manufacturing command Tx Continuous */
+typedef PACK_START struct _mlan_ds_mfg_cmd_tx_cont
+{
+    /** MFG command code */
+    t_u32 mfg_cmd;
+    /** Action */
+    t_u16 action;
+    /** Device ID */
+    t_u16 device_id;
+    /** MFG Error code */
+    t_u32 error;
+    /** enable Tx*/
+    t_u32 enable_tx;
+    /** Continuous Wave mode */
+    t_u32 cw_mode;
+    /** payload pattern */
+    t_u32 payload_pattern;
+    /** CS Mode */
+    t_u32 cs_mode;
+    /** active sub channel */
+    t_u32 act_sub_ch;
+    /** Tx rate */
+    t_u32 tx_rate;
+    /** power id */
+    t_u32 rsvd;
+} PACK_END mlan_ds_mfg_cmd_tx_cont;
+#endif
+
 /** Type definition of mlan_ds_misc_cfg for MLAN_IOCTL_MISC_CFG */
 typedef struct _mlan_ds_misc_cfg
 {
@@ -2900,10 +2995,6 @@ typedef struct _mlan_ds_misc_cfg
         mlan_ds_misc_gen_ie gen_ie;
         /** Region code for MLAN_OID_MISC_REGION */
         t_u32 region_code;
-#if defined(SDIO_MULTI_PORT_TX_AGGR) || defined(SDIO_MULTI_PORT_RX_AGGR)
-        /** SDIO MP-A Ctrl command for MLAN_OID_MISC_SDIO_MPA_CTRL */
-        mlan_ds_misc_sdio_mpa_ctrl mpa_ctrl;
-#endif
         /** Hostcmd for MLAN_OID_MISC_HOST_CMD */
         mlan_ds_misc_cmd hostcmd;
         /** System clock for MLAN_OID_MISC_SYS_CLOCK */
@@ -2939,6 +3030,19 @@ typedef struct _mlan_ds_misc_cfg
         /** Hotspot config param set */
         t_u32 hotspot_cfg;
         mlan_ds_misc_otp_user_data otp_user_data;
+#ifdef WLAN_LOW_POWER_ENABLE
+        t_u8 low_pwr_mode;
+#endif // WLAN_LOW_POWER_ENABLE
+#ifdef OTP_CHANINFO
+        /** Custom regulatory domain */
+        mlan_ds_custom_reg_domain custom_reg_domain;
+        mlan_ds_misc_chnrgpwr_cfg rgchnpwr_cfg;
+#endif
+#ifdef CONFIG_RF_TEST_MODE
+        mlan_ds_mfg_cmd_generic_cfg mfg_generic_cfg;
+        mlan_ds_mfg_cmd_tx_frame2 mfg_tx_frame2;
+        mlan_ds_mfg_cmd_tx_cont mfg_tx_cont;
+#endif
     } param;
 } mlan_ds_misc_cfg, *pmlan_ds_misc_cfg;
 

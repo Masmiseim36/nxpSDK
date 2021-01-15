@@ -33,8 +33,9 @@ HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0400;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
 
 /* Specify the memory areas */
-/* The SRAM region [0x0-0x20000] is reserved for ROM code and app-specific use cases. */
-/* The SRAM region [0x20000-0x80000] is reserved for Non-cached shared memory between M33 and DSP. */
+/* The SRAM region [0x10000-0x1BFFF] is reserved for ROM code. */
+/* The SRAM region [0x0-0xFFFF], [0x1C000-0x1FFFF] is reserved for app-specific use cases. */
+/* The SRAM region [0x20000-0x7FFFF] is reserved for Non-cached shared memory between M33 and DSP. */
 MEMORY
 {
   m_interrupts          (RX)  : ORIGIN = 0x08000000, LENGTH = 0x00000130

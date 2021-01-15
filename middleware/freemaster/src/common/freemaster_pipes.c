@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -24,24 +24,24 @@
 #include "freemaster_protocol.h"
 #include "freemaster_utils.h"
 
-#if FMSTR_USE_PIPES && (!FMSTR_DISABLE)
+#if FMSTR_USE_PIPES > 0 && FMSTR_DISABLE == 0
 
-#if FMSTR_USE_PIPE_PRINTF_VARG
+#if FMSTR_USE_PIPE_PRINTF_VARG > 0
 #include <stdarg.h>
 #endif
 
 /***********************************
-*  local types
-***********************************/
+ *  local types
+ ***********************************/
 
 /* Flags for command FMSTR_CMD_GETPIPE */
-#define FMSTR_PIPE_GETPIPE_FLAG_PORT    0x01
+#define FMSTR_PIPE_GETPIPE_FLAG_PORT 0x01U
 
 /* Flags for get pipe info in command FMSTR_CMD_GETPIPE */
-#define FMSTR_PIPE_GETINFO_FLAG_ISOPEN  0x01
+#define FMSTR_PIPE_GETINFO_FLAG_ISOPEN 0x01U
 
-#define FMSTR_PIPE_CFGCODE_NAME 0x81
-#define FMSTR_PIPE_CFGCODE_INFO 0x82
+#define FMSTR_PIPE_CFGCODE_NAME 0x81U
+#define FMSTR_PIPE_CFGCODE_INFO 0x82U
 
 /* runtime flags */
 typedef union
@@ -50,9 +50,9 @@ typedef union
 
     struct
     {
-        unsigned bExpectOdd : 1;   /* now expecting even round */
-        unsigned bInComm : 1;      /* in protocol handler now */
-        unsigned bLocked : 1;      /* data buffer access is locked */
+        unsigned bExpectOdd : 1; /* now expecting even round */
+        unsigned bInComm : 1;    /* in protocol handler now */
+        unsigned bLocked : 1;    /* data buffer access is locked */
     } flg;
 
 } FMSTR_PIPE_FLAGS;
@@ -63,14 +63,14 @@ typedef union
 
     struct
     {
-        unsigned bIsFull : 1;     /* buffer is full (wp==rp, but not empty) */
+        unsigned bIsFull : 1; /* buffer is full (wp==rp, but not empty) */
     } flg;
 
 } FMSTR_PIPE_BUFF_FLAGS;
 
 typedef struct
 {
-    FMSTR_U8* buff;
+    FMSTR_U8 *buff;
     FMSTR_PIPE_SIZE size;
     FMSTR_PIPE_SIZE wp;
     FMSTR_PIPE_SIZE rp;
@@ -80,8 +80,8 @@ typedef struct
 typedef struct
 {
     /* pipe information */
-    const FMSTR_CHAR *name;      /* String description of the pipe. */
-    FMSTR_U8         type;       /* Type of the usage of pipe */
+    const FMSTR_CHAR *name; /* String description of the pipe. */
+    FMSTR_U8 type;          /* Type of the usage of pipe */
 
     /* pipe configuration */
     FMSTR_PIPE_BUFF rx;
@@ -99,7 +99,7 @@ typedef struct
     FMSTR_U16 wr8Resid;
 #endif
 
-#if FMSTR_USE_PIPE_PRINTF
+#if FMSTR_USE_PIPE_PRINTF > 0
     FMSTR_CHAR printfBuff[FMSTR_PIPES_PRINTF_BUFF_SIZE];
     FMSTR_SIZE printfBPtr;
 #endif
@@ -134,17 +134,17 @@ typedef struct
 
 } FMSTR_PIPE_PRINTF_CTX;
 
-typedef FMSTR_BOOL (*FMSTR_PIPE_ITOA_FUNC)(FMSTR_HPIPE, const void*, FMSTR_PIPE_PRINTF_CTX*);
+typedef FMSTR_BOOL (*FMSTR_PIPE_ITOA_FUNC)(FMSTR_HPIPE pipeHandle, const void *parg, FMSTR_PIPE_PRINTF_CTX *ctx);
 
 /***********************************
-*  local variables
-***********************************/
+ *  local variables
+ ***********************************/
 
 static FMSTR_PIPE pcm_pipes[FMSTR_USE_PIPES];
 
 /**********************************************************************
-*  local macros
-**********************************************************************/
+ *  local macros
+ **********************************************************************/
 
 #define FMSTR_PIPE_ITOAFMT_BIN  0U
 #define FMSTR_PIPE_ITOAFMT_OCT  1U
@@ -152,82 +152,102 @@ static FMSTR_PIPE pcm_pipes[FMSTR_USE_PIPES];
 #define FMSTR_PIPE_ITOAFMT_HEX  3U
 #define FMSTR_PIPE_ITOAFMT_CHAR 4U
 
-#define FMSTR_IS_DIGIT(x) (((x)>='0') && ((x)<='9'))
-#define FMSTR_I2XU(x) (((x)<10) ? ((x)+'0') : ((x)-10+'A'))
-#define FMSTR_I2XL(x) (((x)<10) ? ((x)+'0') : ((x)-10+'a'))
+#define FMSTR_IS_DIGIT(x) (((x) >= '0') && ((x) <= '9'))
 
 /**********************************************************************
-*  local functions
-**********************************************************************/
+ *  local functions
+ **********************************************************************/
 
-static FMSTR_PIPE* FMSTR_FindPipe(FMSTR_PIPE_PORT pipePort);
-static FMSTR_PIPE_SIZE FMSTR_PipeGetBytesFree(FMSTR_PIPE_BUFF* pipeBuff);
-static FMSTR_PIPE_SIZE FMSTR_PipeGetBytesReady(FMSTR_PIPE_BUFF* pipeBuff);
-static void FMSTR_PipeDiscardBytes(FMSTR_PIPE_BUFF* pipeBuff, FMSTR_SIZE8 countBytes);
-static FMSTR_BPTR FMSTR_PipeReceive(FMSTR_BPTR msgBuffIO, FMSTR_PIPE* pp, FMSTR_SIZE8 msgBuffSize);
-static FMSTR_BPTR FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE* pp, FMSTR_SIZE8 msgBuffSize);
-static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRINTF_CTX* pctx);
+static FMSTR_PIPE *_FMSTR_FindPipe(FMSTR_PIPE_PORT pipePort);
+static FMSTR_PIPE_SIZE _FMSTR_PipeGetBytesFree(FMSTR_PIPE_BUFF *pipeBuff);
+static FMSTR_PIPE_SIZE _FMSTR_PipeGetBytesReady(FMSTR_PIPE_BUFF *pipeBuff);
+static void _FMSTR_PipeDiscardBytes(FMSTR_PIPE_BUFF *pipeBuff, FMSTR_SIZE8 countBytes);
+static FMSTR_BPTR _FMSTR_PipeReceive(FMSTR_BPTR msgBuffIO, FMSTR_PIPE *pp, FMSTR_SIZE8 msgBuffSize);
+static FMSTR_BPTR _FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE *pp, FMSTR_SIZE8 msgBuffSize);
+static FMSTR_BOOL _FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRINTF_CTX *pctx);
 
-static FMSTR_BOOL FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle, const char* pszFmt, void* parg, FMSTR_PIPE_ITOA_FUNC pItoaFunc);
+static FMSTR_BOOL _FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle,
+                                       const char *format,
+                                       void *parg,
+                                       FMSTR_PIPE_ITOA_FUNC pItoaFunc);
 
-static FMSTR_BOOL FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list* parg, FMSTR_PIPE_PRINTF_CTX* pctx);
-static FMSTR_BOOL FMSTR_PipePrintfV(FMSTR_HPIPE pipeHandle, const char* pszFmt, va_list* parg);
+static FMSTR_BOOL _FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list *parg, FMSTR_PIPE_PRINTF_CTX *pctx);
+static FMSTR_BOOL _FMSTR_PipePrintfV(FMSTR_HPIPE pipeHandle, const char *format, va_list *parg);
+static FMSTR_CHAR _FMSTR_XDigit(FMSTR_U8 digit, FMSTR_BOOL uppercase);
 
 /**********************************************************************
-*  local "inline" functions (may also be static on some platforms)
-**********************************************************************/
+ *  local "inline" functions (may also be static on some platforms)
+ **********************************************************************/
 
-FMSTR_INLINE FMSTR_BOOL FMSTR_PipePrintfFlush(FMSTR_HPIPE pipeHandle);
-FMSTR_INLINE FMSTR_BOOL FMSTR_PipePrintfPutc(FMSTR_HPIPE pipeHandle, char c);
+FMSTR_INLINE FMSTR_BOOL _FMSTR_PipePrintfFlush(FMSTR_HPIPE pipeHandle);
+FMSTR_INLINE FMSTR_BOOL _FMSTR_PipePrintfPutc(FMSTR_HPIPE pipeHandle, char c);
 
-/**************************************************************************//*!
-*
-* @brief  Initialization of pipes layer
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  Initialization of pipes layer
+ *
+ ******************************************************************************/
 
-void FMSTR_InitPipes(void)
+FMSTR_BOOL FMSTR_InitPipes(void)
 {
     FMSTR_INDEX i;
 
-    for(i=0; i<FMSTR_USE_PIPES; i++)
+    for (i = 0; i < (FMSTR_INDEX)FMSTR_USE_PIPES; i++)
+    {
         pcm_pipes[i].pipePort = 0;
+    }
+
+    return FMSTR_TRUE;
 }
 
-/**************************************************************************//*!
-*
-* @brief  API: Opening the pipe
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  API: Opening the pipe
+ *
+ ******************************************************************************/
 
-FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort, FMSTR_PPIPEFUNC pipeCallback,
-                           FMSTR_ADDR pipeRxBuff, FMSTR_PIPE_SIZE pipeRxSize,
-                           FMSTR_ADDR pipeTxBuff, FMSTR_PIPE_SIZE pipeTxSize,
-                           FMSTR_U8 type, const FMSTR_CHAR *name)
+FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort,
+                           FMSTR_PPIPEFUNC pipeCallback,
+                           FMSTR_ADDR pipeRxBuff,
+                           FMSTR_PIPE_SIZE pipeRxSize,
+                           FMSTR_ADDR pipeTxBuff,
+                           FMSTR_PIPE_SIZE pipeTxSize,
+                           FMSTR_U8 type,
+                           const FMSTR_CHAR *name)
 {
-    FMSTR_PIPE* pp = &pcm_pipes[0];
+    FMSTR_PIPE *pp    = NULL;
     FMSTR_INDEX ifree = -1;
     FMSTR_INDEX i;
 
-    for(i=0; i<FMSTR_USE_PIPES; i++, pp++)
+    for (i = 0; i < (FMSTR_INDEX)FMSTR_USE_PIPES; i++)
     {
+        pp = &pcm_pipes[i];
+
         /* find first free pipe */
-        if(pp->pipePort == 0 && ifree < 0)
+        if (pp->pipePort == 0U && ifree < 0)
+        {
             ifree = i;
+        }
         /* look for existing pipe with the same port */
-        if(pp->pipePort == pipePort)
+        if (pp->pipePort == pipePort)
+        {
             break;
+        }
     }
 
     /* pipe not found */
-    if(i >= FMSTR_USE_PIPES)
+    if (i >= (FMSTR_INDEX)FMSTR_USE_PIPES)
     {
         /* create new pipe */
-        if(ifree >= 0)
+        if (ifree >= 0)
+        {
             pp = &pcm_pipes[ifree];
+        }
         /* no slot for creating pipe */
         else
+        {
             return NULL;
+        }
     }
 
     FMSTR_MemSet(pp, 0, sizeof(FMSTR_PIPE));
@@ -236,61 +256,68 @@ FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort, FMSTR_PPIPEFUNC pipeCallbac
     pp->pipePort = 0;
 
     /* initialize pipe */
-    pp->rx.buff = pipeRxBuff;
-    pp->rx.size = pipeRxSize;
-    pp->tx.buff = pipeTxBuff;
-    pp->tx.size = pipeTxSize;
+    pp->rx.buff   = pipeRxBuff;
+    pp->rx.size   = pipeRxSize;
+    pp->tx.buff   = pipeTxBuff;
+    pp->tx.size   = pipeTxSize;
     pp->pCallback = pipeCallback;
-    pp->name = name;
-    pp->type = type;
+    pp->name      = name;
+    pp->type      = type;
 
-#if FMSTR_USE_PIPE_PRINTF
+#if FMSTR_USE_PIPE_PRINTF > 0
     pp->printfBPtr = 0;
 #endif
 
     /* activate pipe for the new port */
     pp->pipePort = pipePort;
 
-    return (FMSTR_HPIPE) pp;
+    return (FMSTR_HPIPE)pp;
 }
 
-/**************************************************************************//*!
-*
-* @brief  PIPE API: Close pipe
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PIPE API: Close pipe
+ *
+ ******************************************************************************/
 
 void FMSTR_PipeClose(FMSTR_HPIPE pipeHandle)
 {
-    FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
+    FMSTR_PIPE *pp = (FMSTR_PIPE *)pipeHandle;
 
     /* un-initialize pipe */
-    if(pp != NULL)
+    if (pp != NULL)
+    {
         pp->pipePort = 0;
+    }
 }
 
-/**************************************************************************//*!
-*
-* @brief  PIPE API: Write data to a pipe
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PIPE API: Write data to a pipe
+ *
+ ******************************************************************************/
 
-FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMSTR_PIPE_SIZE pipeDataLen, FMSTR_PIPE_SIZE writeGranularity)
+FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle,
+                                FMSTR_ADDR pipeData,
+                                FMSTR_PIPE_SIZE pipeDataLen,
+                                FMSTR_PIPE_SIZE writeGranularity)
 {
-    FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
-    FMSTR_PIPE_BUFF* pbuff = &pp->tx;
-    FMSTR_PIPE_SIZE total = FMSTR_PipeGetBytesFree(pbuff);
+    FMSTR_PIPE *pp         = (FMSTR_PIPE *)pipeHandle;
+    FMSTR_PIPE_BUFF *pbuff = &pp->tx;
+    FMSTR_PIPE_SIZE total  = _FMSTR_PipeGetBytesFree(pbuff);
     FMSTR_PIPE_SIZE s;
 
     /* when invalid address is given, just return number of bytes free */
-    if(pipeData)
+    if (pipeData != NULL)
     {
         /* only fill the free space */
-        if(pipeDataLen > total)
+        if (pipeDataLen > total)
+        {
             pipeDataLen = total;
+        }
 
         /* obey granularity */
-        if(writeGranularity > 1)
+        if (writeGranularity > 1U)
         {
             pipeDataLen /= writeGranularity;
             pipeDataLen *= writeGranularity;
@@ -300,90 +327,125 @@ FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMS
         total = pipeDataLen;
 
         /* valid length only */
-        if(pipeDataLen > 0)
+        if (pipeDataLen > 0U)
         {
             /* total bytes available in the rest of buffer */
-            s = (FMSTR_PIPE_SIZE) ((pbuff->size - pbuff->wp) * FMSTR_CFG_BUS_WIDTH);
-            if(s > pipeDataLen)
+            s = (FMSTR_PIPE_SIZE)((pbuff->size - pbuff->wp) * FMSTR_CFG_BUS_WIDTH);
+            if (s > pipeDataLen)
+            {
                 s = pipeDataLen;
+            }
 
             /* get the bytes */
-            FMSTR_MemCpyFrom(pbuff->buff + pbuff->wp, pipeData, (FMSTR_SIZE8) s);
+            FMSTR_MemCpyFrom(pbuff->buff + pbuff->wp, pipeData, (FMSTR_SIZE8)s);
             pipeData += s / FMSTR_CFG_BUS_WIDTH;
 
             /* advance & wrap pointer */
             pbuff->wp += s / FMSTR_CFG_BUS_WIDTH;
-            if(pbuff->wp >= pbuff->size)
+            if (pbuff->wp >= pbuff->size)
+            {
                 pbuff->wp = 0;
+            }
 
             /* rest of frame to a (wrapped) beggining of buffer */
-            pipeDataLen -= (FMSTR_SIZE8) s;
-            if(pipeDataLen > 0)
+            pipeDataLen -= (FMSTR_SIZE8)s;
+            if (pipeDataLen > 0U)
             {
-                FMSTR_MemCpyFrom(pbuff->buff + pbuff->wp, pipeData, (FMSTR_SIZE8) pipeDataLen);
+                FMSTR_MemCpyFrom(pbuff->buff + pbuff->wp, pipeData, (FMSTR_SIZE8)pipeDataLen);
                 pbuff->wp += pipeDataLen / FMSTR_CFG_BUS_WIDTH;
             }
 
             /* buffer got full? */
-            if(pbuff->wp == pbuff->rp)
+            if (pbuff->wp == pbuff->rp)
+            {
                 pbuff->flags.flg.bIsFull = 1;
+            }
         }
     }
 
     return total;
 }
 
-/**************************************************************************//*!
-*
-* @brief  PIPE API: Put zero-terminated string into pipe. Succeedes only
-* if full string fits into the output buffer and return TRUE if so.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PIPE API: Put zero-terminated string into pipe. Succeedes only
+ * if full string fits into the output buffer and return TRUE if so.
+ *
+ ******************************************************************************/
 
-FMSTR_BOOL FMSTR_PipePuts(FMSTR_HPIPE pipeHandle, const char* pszStr)
+FMSTR_BOOL FMSTR_PipePuts(FMSTR_HPIPE pipeHandle, const char *text)
 {
-    FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
-    FMSTR_PIPE_BUFF* pbuff = &pp->tx;
-    FMSTR_PIPE_SIZE free = FMSTR_PipeGetBytesFree(pbuff);
-    FMSTR_PIPE_SIZE slen = (FMSTR_PIPE_SIZE) FMSTR_StrLen(pszStr);
+    FMSTR_PIPE *pp         = (FMSTR_PIPE *)pipeHandle;
+    FMSTR_PIPE_BUFF *pbuff = &pp->tx;
+    FMSTR_PIPE_SIZE free   = _FMSTR_PipeGetBytesFree(pbuff);
+    FMSTR_PIPE_SIZE slen   = (FMSTR_PIPE_SIZE)FMSTR_StrLen(text);
 
-    if(slen > free)
+    if (slen > free)
+    {
         return FMSTR_FALSE;
+    }
 
-    FMSTR_PipeWrite(pipeHandle, (FMSTR_ADDR)pszStr, slen, 0);
-    return FMSTR_TRUE;
+    return FMSTR_PipeWrite(pipeHandle, (FMSTR_ADDR)text, slen, 0) >= slen ? FMSTR_TRUE : FMSTR_FALSE;
 }
 
-/**************************************************************************//*!
-*
-* @brief  PRINTF-like formatting functions
-*
-*****************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PRINTF-like formatting functions
+ *
+ *****************************************************************************/
 
-#if FMSTR_USE_PIPE_PRINTF
+#if FMSTR_USE_PIPE_PRINTF > 0
 
-/**************************************************************************//*!
-*
-* @brief  Flush pipe's printf formatting buffer into pipe output buffer
-*
-*****************************************************************************/
-
-FMSTR_INLINE FMSTR_BOOL FMSTR_PipePrintfFlush(FMSTR_HPIPE pipeHandle)
+static FMSTR_CHAR _FMSTR_XDigit(FMSTR_U8 digit, FMSTR_BOOL uppercase)
 {
-    FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
-    FMSTR_BOOL ok = FMSTR_TRUE;
+    FMSTR_CHAR c;
+
+    if (digit < 10U)
+    {
+        c = '0';
+        c += (FMSTR_CHAR)digit;
+    }
+    else
+    {
+        if (uppercase != 0U)
+        {
+            c = 'A' - 10;
+        }
+        else
+        {
+            c = 'a' - 10;
+        }
+
+        c += (FMSTR_CHAR)digit;
+    }
+
+    return c;
+}
+
+/******************************************************************************
+ *
+ * @brief  Flush pipe's printf formatting buffer into pipe output buffer
+ *
+ *****************************************************************************/
+
+FMSTR_INLINE FMSTR_BOOL _FMSTR_PipePrintfFlush(FMSTR_HPIPE pipeHandle)
+{
+    FMSTR_PIPE *pp = (FMSTR_PIPE *)pipeHandle;
+    FMSTR_BOOL ok  = FMSTR_TRUE;
     FMSTR_SIZE i;
 
-    if(pp->printfBPtr)
+    if (pp->printfBPtr != 0U)
     {
         FMSTR_SIZE sz = FMSTR_PipeWrite(pipeHandle, (FMSTR_ADDR)pp->printfBuff, (FMSTR_PIPE_SIZE)pp->printfBPtr, 0);
 
         /* all characters could NOT be printed */
-        if(sz < pp->printfBPtr)
+        if (sz < pp->printfBPtr)
         {
             /* Move not sent characters */
-            for(i=0; i<(pp->printfBPtr - sz); i++)
-                pp->printfBuff[i] = pp->printfBuff[sz+i];
+            for (i = 0; i < (pp->printfBPtr - sz); i++)
+            {
+                pp->printfBuff[i] = pp->printfBuff[sz + i];
+            }
 
             pp->printfBPtr -= sz;
 
@@ -399,42 +461,46 @@ FMSTR_INLINE FMSTR_BOOL FMSTR_PipePrintfFlush(FMSTR_HPIPE pipeHandle)
     return ok;
 }
 
-/**************************************************************************//*!
-*
-* @brief  Put one character into pipe's printf formating buffer
-*
-*****************************************************************************/
+/******************************************************************************
+ *
+ * @brief  Put one character into pipe's printf formating buffer
+ *
+ *****************************************************************************/
 
-FMSTR_INLINE FMSTR_BOOL FMSTR_PipePrintfPutc(FMSTR_HPIPE pipeHandle, char c)
+FMSTR_INLINE FMSTR_BOOL _FMSTR_PipePrintfPutc(FMSTR_HPIPE pipeHandle, char c)
 {
-    FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
+    FMSTR_PIPE *pp = (FMSTR_PIPE *)pipeHandle;
 
     /* when buffer is full */
-    if(pp->printfBPtr >= FMSTR_PIPES_PRINTF_BUFF_SIZE)
+    if (pp->printfBPtr >= FMSTR_PIPES_PRINTF_BUFF_SIZE)
     {
         /* try to flush some bytes */
-        if(!FMSTR_PipePrintfFlush(pipeHandle))
+        if (_FMSTR_PipePrintfFlush(pipeHandle) == FMSTR_FALSE)
+        {
             return FMSTR_FALSE;
+        }
     }
 
     /* abort if still full */
-    if(pp->printfBPtr >= FMSTR_PIPES_PRINTF_BUFF_SIZE)
+    if (pp->printfBPtr >= FMSTR_PIPES_PRINTF_BUFF_SIZE)
+    {
         return FMSTR_FALSE;
+    }
 
     pp->printfBuff[pp->printfBPtr++] = c;
     return FMSTR_TRUE;
 }
 
-/**************************************************************************//*!
-*
-* @brief  This function finishes the number formatting, adds spacing, signs
-*         and reverses the string (the input is comming in reversed order)
-*
-*****************************************************************************/
+/******************************************************************************
+ *
+ * @brief  This function finishes the number formatting, adds spacing, signs
+ *         and reverses the string (the input is comming in reversed order)
+ *
+ *****************************************************************************/
 
-static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRINTF_CTX* pctx)
+static FMSTR_BOOL _FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
-    FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
+    FMSTR_PIPE *pp = (FMSTR_PIPE *)pipeHandle;
     FMSTR_SIZE bptr, minlen, i, bhalf;
     FMSTR_CHAR z, sgn;
 
@@ -445,18 +511,20 @@ static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRIN
     pp->printfBPtr = 0;
 
     /* zero may come as an empty string from itoa procedures */
-    if(bptr == 0)
+    if (bptr == 0U)
     {
         pp->printfBuff[0] = '0';
-        bptr = 1;
+        bptr              = 1;
     }
 
     /* first strip the zeroes put by itoa */
-    while(bptr > 1 && pp->printfBuff[bptr-1] == '0')
+    while (bptr > 1U && pp->printfBuff[bptr - 1U] == '0')
+    {
         bptr--;
+    }
 
     /* determine sign to print */
-    if(pctx->flags.flg.negative)
+    if (pctx->flags.flg.negative != 0U)
     {
         sgn = '-';
 
@@ -470,435 +538,583 @@ static FMSTR_BOOL FMSTR_PipeIToAFinalize(FMSTR_HPIPE pipeHandle, FMSTR_PIPE_PRIN
     }
 
     /* unsigned types can not print sign */
-    if(!pctx->flags.flg.signedtype)
+    if (pctx->flags.flg.signedtype == 0U)
+    {
         pctx->flags.flg.showsign = 0U;
+    }
 
     /* calculate minimum buffer length needed */
     minlen = bptr;
-    if(pctx->flags.flg.showsign)
+    if (pctx->flags.flg.showsign != 0U)
+    {
         minlen++;
+    }
 
     /* will it fit? */
-    if(FMSTR_PIPES_PRINTF_BUFF_SIZE < minlen)
+    if (FMSTR_PIPES_PRINTF_BUFF_SIZE < minlen)
+    {
         return FMSTR_FALSE;
+    }
 
     /* required length should never exceed the buffer length */
-    if(pctx->alen > FMSTR_PIPES_PRINTF_BUFF_SIZE)
+    if (pctx->alen > FMSTR_PIPES_PRINTF_BUFF_SIZE)
+    {
         pctx->alen = FMSTR_PIPES_PRINTF_BUFF_SIZE;
+    }
 
     /* choose prefix character (zero, space or sign-extension OCT/HEX/BIN) */
-    if(pctx->flags.flg.zeroes)
+    if (pctx->flags.flg.zeroes != 0U)
     {
         z = '0';
 
         /* sign extend? */
-        if(pctx->flags.flg.negative)
+        if (pctx->flags.flg.negative != 0U)
         {
-            switch(pctx->radix)
+            switch (pctx->radix)
             {
-            case FMSTR_PIPE_ITOAFMT_BIN:
-                z = '1';
-                break;
-            case FMSTR_PIPE_ITOAFMT_OCT:
-                z = '7';
-                break;
-            case FMSTR_PIPE_ITOAFMT_HEX:
-                z = (FMSTR_CHAR)(pctx->flags.flg.upperc ? 'F' : 'f');
-                break;
+                case FMSTR_PIPE_ITOAFMT_BIN:
+                    z = '1';
+                    break;
+                case FMSTR_PIPE_ITOAFMT_OCT:
+                    z = '7';
+                    break;
+                case FMSTR_PIPE_ITOAFMT_HEX:
+                    z = (FMSTR_CHAR)(pctx->flags.flg.upperc != 0U ? 'F' : 'f');
+                    break;
+                default:
+                    z = '0';
+                    break;
             }
         }
 
         /* the sign will be in front of added zeroes */
-        if(pctx->flags.flg.showsign)
+        if (pctx->flags.flg.showsign != 0U)
+        {
             pctx->alen--;
+        }
     }
     else
     {
         z = ' ';
 
         /* sign should be in front of the number */
-        if(pctx->flags.flg.showsign)
+        if (pctx->flags.flg.showsign != 0U)
         {
-            pp->printfBuff[bptr++] = sgn;
+            pp->printfBuff[bptr++]   = sgn;
             pctx->flags.flg.showsign = 0; /* prevent it to be added again below  */
         }
     }
 
     /* now fill to required len */
-    while(bptr < pctx->alen)
+    while (bptr < pctx->alen)
+    {
         pp->printfBuff[bptr++] = z;
+    }
 
     /* add the sign if needed */
-    if(pctx->flags.flg.showsign)
+    if (pctx->flags.flg.showsign != 0U)
+    {
         pp->printfBuff[bptr++] = sgn;
+    }
 
     /* buffer contains this number of characters */
     pp->printfBPtr = bptr;
 
     /* now reverse the string and feed it to pipe */
-    bhalf = bptr/2;
+    bhalf = bptr / 2U;
     bptr--;
-    for(i=0; i<bhalf; i++)
+    for (i = 0; i < bhalf; i++)
     {
-        z = pp->printfBuff[i];
-        pp->printfBuff[i] = pp->printfBuff[bptr-i];
-        pp->printfBuff[bptr-i] = z;
+        z                        = pp->printfBuff[i];
+        pp->printfBuff[i]        = pp->printfBuff[bptr - i];
+        pp->printfBuff[bptr - i] = z;
     }
 
     return FMSTR_TRUE;
 }
 
-/**************************************************************************//*!
-*
-* @brief  This function formats the argument into the temporary printf buffer
-*         It is granted by the caller that the buffer is empty before calling.
-*
-*****************************************************************************/
+/******************************************************************************
+ *
+ * @brief  This function formats the argument into the temporary printf buffer
+ *         It is granted by the caller that the buffer is empty before calling.
+ *
+ *****************************************************************************/
 
-static FMSTR_BOOL FMSTR_PipeU8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U8* parg, FMSTR_PIPE_PRINTF_CTX* pctx)
+static FMSTR_BOOL FMSTR_PipeU8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U8 *parg, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
-    FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
-    FMSTR_U8 arg = *parg;
-    FMSTR_U8 tmp;
+    FMSTR_PIPE *pp = (FMSTR_PIPE *)pipeHandle;
+    FMSTR_U8 arg   = *parg;
+    FMSTR_U8 dig;
     FMSTR_INDEX i;
 
-    switch(pctx->radix)
+    switch (pctx->radix)
     {
         case FMSTR_PIPE_ITOAFMT_CHAR:
             pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)arg;
             break;
 
         case FMSTR_PIPE_ITOAFMT_BIN:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 8)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<8; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 8U)
             {
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 1) + '0');
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 8; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)'0';
+                dig += (FMSTR_U8)(arg & 1U);
+
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)dig;
                 arg >>= 1;
             }
             break;
 
         case FMSTR_PIPE_ITOAFMT_OCT:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 3)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<3; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 3U)
             {
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 7) + '0');
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 3; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)'0';
+                dig += (FMSTR_U8)(arg & 7U);
+
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)dig;
                 arg >>= 3;
             }
             break;
 
         case FMSTR_PIPE_ITOAFMT_DEC:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 3)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<3; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 3U)
             {
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg % 10) + '0');
-                arg /= 10;
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 3; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)'0';
+                dig += (FMSTR_U8)(arg % 10U);
+
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)dig;
+                arg /= 10U;
             }
             break;
 
         case FMSTR_PIPE_ITOAFMT_HEX:
         default:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 2)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<2; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 2U)
             {
-                tmp = (FMSTR_U8)(arg & 15);
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)(pctx->flags.flg.upperc ? FMSTR_I2XU(tmp) : FMSTR_I2XL(tmp));
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 2; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)(arg & 15U);
+
+                pp->printfBuff[pp->printfBPtr++] =
+                    _FMSTR_XDigit((FMSTR_U8)dig, (FMSTR_BOOL)(pctx->flags.flg.upperc != 0U));
                 arg >>= 4;
             }
             break;
     }
 
-    return FMSTR_PipeIToAFinalize(pipeHandle, pctx);
+    return _FMSTR_PipeIToAFinalize(pipeHandle, pctx);
 }
 
-/**************************************************************************//*!
-*
-* @brief  This function formats the argument into the temporary printf buffer
-*         It is granted by the caller that the buffer is empty before calling.
-*
-*****************************************************************************/
+/******************************************************************************
+ *
+ * @brief  This function formats the argument into the temporary printf buffer
+ *         It is granted by the caller that the buffer is empty before calling.
+ *
+ *****************************************************************************/
 
-static FMSTR_BOOL FMSTR_PipeS8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S8* parg, FMSTR_PIPE_PRINTF_CTX* pctx)
+static FMSTR_BOOL FMSTR_PipeS8ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S8 *parg, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
     FMSTR_S8 arg = *parg;
 
-    if(arg < 0)
+    if (arg < 0)
     {
         pctx->flags.flg.negative = 1U;
 
         /* if sign will be shown, then negate the number */
-        if(pctx->flags.flg.signedtype)
+        if (pctx->flags.flg.signedtype != 0U)
+        {
             arg *= -1;
+        }
     }
 
-    return FMSTR_PipeU8ToA(pipeHandle, (const FMSTR_U8*)&arg, pctx);
+    return FMSTR_PipeU8ToA(pipeHandle, (const FMSTR_U8 *)&arg, pctx);
 }
 
-/**************************************************************************//*!
-*
-* @brief  This function formats the argument into the temporary printf buffer
-*         It is granted by the caller that the buffer is empty before calling.
-*
-*****************************************************************************/
+/******************************************************************************
+ *
+ * @brief  This function formats the argument into the temporary printf buffer
+ *         It is granted by the caller that the buffer is empty before calling.
+ *
+ *****************************************************************************/
 
-static FMSTR_BOOL FMSTR_PipeU16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U16* parg, FMSTR_PIPE_PRINTF_CTX* pctx)
+static FMSTR_BOOL FMSTR_PipeU16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U16 *parg, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
-    FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
-    FMSTR_U16 arg = *parg;
-    FMSTR_U16 tmp;
+    FMSTR_PIPE *pp = (FMSTR_PIPE *)pipeHandle;
+    FMSTR_U16 arg  = *parg;
+    FMSTR_U8 dig;
     FMSTR_INDEX i;
 
-    switch(pctx->radix)
+    switch (pctx->radix)
     {
         case FMSTR_PIPE_ITOAFMT_CHAR:
             pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)arg;
             break;
 
         case FMSTR_PIPE_ITOAFMT_BIN:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 16)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<16; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 16U)
             {
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 1) + '0');
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 16; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)'0';
+                dig += (FMSTR_U8)(arg & 1U);
+
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)dig;
                 arg >>= 1;
             }
             break;
 
         case FMSTR_PIPE_ITOAFMT_OCT:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 6)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<6; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 6U)
             {
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 7) + '0');
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 6; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)'0';
+                dig += (FMSTR_U8)(arg & 7U);
+
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)dig;
                 arg >>= 3;
             }
             break;
 
         case FMSTR_PIPE_ITOAFMT_DEC:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 5)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<5; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 5U)
             {
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg % 10) + '0');
-                arg /= 10;
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 5; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)'0';
+                dig += (FMSTR_U8)(arg % 10U);
+
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)dig;
+                arg /= 10U;
             }
             break;
 
         case FMSTR_PIPE_ITOAFMT_HEX:
         default:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 4)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<4; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 4U)
             {
-                tmp = arg & 15;
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)(pctx->flags.flg.upperc ? FMSTR_I2XU(tmp) : FMSTR_I2XL(tmp));
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 4; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)(arg & 15U);
+
+                pp->printfBuff[pp->printfBPtr++] =
+                    _FMSTR_XDigit((FMSTR_U8)dig, (FMSTR_BOOL)(pctx->flags.flg.upperc != 0U));
                 arg >>= 4;
             }
             break;
     }
 
-    return FMSTR_PipeIToAFinalize(pipeHandle, pctx);
+    return _FMSTR_PipeIToAFinalize(pipeHandle, pctx);
 }
 
-/**************************************************************************//*!
-*
-* @brief  This function formats the argument into the temporary printf buffer
-*         It is granted by the caller that the buffer is empty before calling.
-*
-*****************************************************************************/
+/******************************************************************************
+ *
+ * @brief  This function formats the argument into the temporary printf buffer
+ *         It is granted by the caller that the buffer is empty before calling.
+ *
+ *****************************************************************************/
 
-static FMSTR_BOOL FMSTR_PipeS16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S16* parg, FMSTR_PIPE_PRINTF_CTX* pctx)
+static FMSTR_BOOL FMSTR_PipeS16ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S16 *parg, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
     FMSTR_S16 arg = *parg;
 
-    if(arg < 0)
+    if (arg < 0)
     {
         pctx->flags.flg.negative = 1U;
 
         /* if sign will be shown, then negate the number */
-        if(pctx->flags.flg.signedtype)
+        if (pctx->flags.flg.signedtype != 0U)
+        {
             arg *= -1;
+        }
     }
 
-    return FMSTR_PipeU16ToA(pipeHandle, (const FMSTR_U16*)&arg, pctx);
+    return FMSTR_PipeU16ToA(pipeHandle, (const FMSTR_U16 *)&arg, pctx);
 }
 
-/**************************************************************************//*!
-*
-* @brief  This function formats the argument into the temporary printf buffer
-*         It is granted by the caller that the buffer is empty before calling.
-*
-*****************************************************************************/
+/******************************************************************************
+ *
+ * @brief  This function formats the argument into the temporary printf buffer
+ *         It is granted by the caller that the buffer is empty before calling.
+ *
+ *****************************************************************************/
 
-static FMSTR_BOOL FMSTR_PipeU32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U32* parg, FMSTR_PIPE_PRINTF_CTX* pctx)
+static FMSTR_BOOL FMSTR_PipeU32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_U32 *parg, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
-    FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
-    FMSTR_U32 arg = *parg;
-    FMSTR_U32 tmp;
+    FMSTR_PIPE *pp = (FMSTR_PIPE *)pipeHandle;
+    FMSTR_U32 arg  = *parg;
+    FMSTR_U8 dig;
     FMSTR_INDEX i;
 
-    switch(pctx->radix)
+    switch (pctx->radix)
     {
         case FMSTR_PIPE_ITOAFMT_CHAR:
             pp->printfBuff[pp->printfBPtr++] = (char)arg;
             break;
 
         case FMSTR_PIPE_ITOAFMT_BIN:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 32)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<32; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 32U)
             {
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 1) + '0');
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 32; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)'0';
+                dig += (FMSTR_U8)(arg & 1U);
+
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)dig;
                 arg >>= 1;
             }
             break;
 
         case FMSTR_PIPE_ITOAFMT_OCT:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 11)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<11; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 11U)
             {
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg & 7) + '0');
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 11; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)'0';
+                dig += (FMSTR_U8)(arg & 7U);
+
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)dig;
                 arg >>= 3;
             }
             break;
 
         case FMSTR_PIPE_ITOAFMT_DEC:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 10)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<10; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 10U)
             {
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)((arg % 10) + '0');
-                arg /= 10;
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 10; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)'0';
+                dig += (FMSTR_U8)(arg % 10U);
+
+                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)dig;
+                arg /= 10U;
             }
             break;
 
         case FMSTR_PIPE_ITOAFMT_HEX:
         default:
-            if(FMSTR_PIPES_PRINTF_BUFF_SIZE < 8)
-                return FMSTR_FALSE;
-
-            for(i=0; arg && i<8; i++)
+            if (FMSTR_PIPES_PRINTF_BUFF_SIZE < 8U)
             {
-                tmp = arg & 15;
-                pp->printfBuff[pp->printfBPtr++] = (FMSTR_CHAR)(pctx->flags.flg.upperc ? FMSTR_I2XU(tmp) : FMSTR_I2XL(tmp));
+                return FMSTR_FALSE;
+            }
+
+            for (i = 0; i < 8; i++)
+            {
+                if (arg == 0U)
+                {
+                    break;
+                }
+
+                dig = (FMSTR_U8)(arg & 15U);
+
+                pp->printfBuff[pp->printfBPtr++] =
+                    _FMSTR_XDigit((FMSTR_U8)dig, (FMSTR_BOOL)(pctx->flags.flg.upperc != 0U));
                 arg >>= 4;
             }
             break;
     }
 
-    return FMSTR_PipeIToAFinalize(pipeHandle, pctx);
+    return _FMSTR_PipeIToAFinalize(pipeHandle, pctx);
 }
 
-/**************************************************************************//*!
-*
-* @brief  This function formats the argument into the temporary printf buffer
-*         It is granted by the caller that the buffer is empty before calling.
-*
-*****************************************************************************/
+/******************************************************************************
+ *
+ * @brief  This function formats the argument into the temporary printf buffer
+ *         It is granted by the caller that the buffer is empty before calling.
+ *
+ *****************************************************************************/
 
-static FMSTR_BOOL FMSTR_PipeS32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S32* parg, FMSTR_PIPE_PRINTF_CTX* pctx)
+static FMSTR_BOOL FMSTR_PipeS32ToA(FMSTR_HPIPE pipeHandle, const FMSTR_S32 *parg, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
     FMSTR_S32 arg = *parg;
 
-    if(arg < 0)
+    if (arg < 0)
     {
         pctx->flags.flg.negative = 1U;
 
         /* if sign will be shown, then negate the number */
-        if(pctx->flags.flg.signedtype)
+        if (pctx->flags.flg.signedtype != 0U)
+        {
             arg *= -1;
+        }
     }
 
-    return FMSTR_PipeU32ToA(pipeHandle, (const FMSTR_U32*)&arg, pctx);
+    return FMSTR_PipeU32ToA(pipeHandle, (const FMSTR_U32 *)&arg, pctx);
 }
 
-/**************************************************************************//*!
-*
-* @brief  This function parses the printf format and sets the context
-*         structure properly.
-*
-* @return The function returns the pointer to end of format string handled
-*
-*****************************************************************************/
+/******************************************************************************
+ *
+ * @brief  This function parses the printf format and sets the context
+ *         structure properly.
+ *
+ * @return The function returns the pointer to end of format string handled
+ *
+ *****************************************************************************/
 
-static const char* FMSTR_PipeParseFormat(const char* pszFmt, FMSTR_PIPE_PRINTF_CTX* pctx)
+static const char *FMSTR_PipeParseFormat(const char *format, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
+    FMSTR_CHAR c;
+
     pctx->flags.all = 0;
 
     /* skip percent sign */
-    if(*pszFmt == '%')
-        pszFmt++;
+    if (*format == '%')
+    {
+        format++;
+    }
 
     /* show sign always? */
-    if(*pszFmt == '+')
+    if (*format == '+')
     {
         pctx->flags.flg.showsign = 1U;
-        pszFmt++;
+        format++;
     }
 
     /* prefix with zeroes? */
-    if(*pszFmt == '0')
+    if (*format == '0')
     {
         pctx->flags.flg.zeroes = 1U;
-        pszFmt++;
+        format++;
     }
 
     /* parse length */
     pctx->alen = 0;
-    while(FMSTR_IS_DIGIT(*pszFmt))
+    while (FMSTR_IS_DIGIT(*format))
     {
-        pctx->alen *= 10;
-        pctx->alen += (FMSTR_SIZE8)(*pszFmt - '0');
-        pszFmt++;
+        c = *format++;
+        c -= '0';
+        pctx->alen *= 10U;
+        pctx->alen += (FMSTR_SIZE8)c;
     }
 
-    /* default data type is 'int' */
-    pctx->dtsize = sizeof(int);
-
     /* parse dtsize modifier */
-    switch(*pszFmt)
+    switch (*format)
     {
         /* short modifier (char for hh)*/
         case 'h':
             pctx->dtsize = sizeof(short);
-            pszFmt++;
+            format++;
 
             /* one more 'h' means 'char' */
-            if(*pszFmt == 'h')
+            if (*format == 'h')
             {
                 pctx->dtsize = sizeof(char);
-                pszFmt++;
+                format++;
             }
             break;
 
         case 'l':
             pctx->dtsize = sizeof(long);
-            pszFmt++;
+            format++;
+            break;
+
+        default:
+            /* default data type is 'int' */
+            pctx->dtsize = sizeof(int);
             break;
     }
 
-    /* now finaly concluding to format letter */
-    switch(*pszFmt++)
+    /* now finally concluding to format letter */
+    switch (*format++)
     {
         /* HEXADECIMAL */
         case 'X':
             pctx->flags.flg.upperc = 1U;
-            /* falling thru case */
+            pctx->radix            = FMSTR_PIPE_ITOAFMT_HEX;
+            break;
 
         /* hexadecimal */
         case 'x':
@@ -919,7 +1135,8 @@ static const char* FMSTR_PipeParseFormat(const char* pszFmt, FMSTR_PIPE_PRINTF_C
         case 'd':
         case 'i':
             pctx->flags.flg.signedtype = 1U;
-            /* falling thru case */
+            pctx->radix                = FMSTR_PIPE_ITOAFMT_DEC;
+            break;
 
         /* decimal unsigned */
         case 'u':
@@ -928,56 +1145,64 @@ static const char* FMSTR_PipeParseFormat(const char* pszFmt, FMSTR_PIPE_PRINTF_C
 
         /* character */
         case 'c':
-            pctx->radix = FMSTR_PIPE_ITOAFMT_CHAR;
+            pctx->radix  = FMSTR_PIPE_ITOAFMT_CHAR;
             pctx->dtsize = sizeof(char);
             break;
 
         /* string */
         case 's':
             pctx->flags.flg.isstring = 1U;
-            pctx->dtsize = sizeof(void*);
+            pctx->dtsize             = sizeof(void *);
             break;
 
+        /* unknown */
+        default:
+            FMSTR_ASSERT(0 == 1);
+            pctx->radix = FMSTR_PIPE_ITOAFMT_HEX;
+            break;
     }
 
-    return pszFmt;
+    return format;
 }
 
-/**************************************************************************//*!
-*
-* @brief  Printf with one argument passed by pointer.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  Printf with one argument passed by pointer.
+ *
+ ******************************************************************************/
 
-static FMSTR_BOOL FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle, const char* pszFmt, void* parg, FMSTR_PIPE_ITOA_FUNC pItoaFunc)
+static FMSTR_BOOL _FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle,
+                                       const char *format,
+                                       void *parg,
+                                       FMSTR_PIPE_ITOA_FUNC pItoaFunc)
 {
     FMSTR_BOOL ok = FMSTR_TRUE;
     FMSTR_PIPE_PRINTF_CTX ctx;
 
-    while(*pszFmt && ok)
+    while (*format != (FMSTR_CHAR)0 && ok != FMSTR_FALSE)
     {
-        if(*pszFmt == '%')
+        if (*format == '%')
         {
-            pszFmt++;
+            format++;
 
-            if(*pszFmt == '%')
+            if (*format == '%')
             {
-                ok = FMSTR_PipePrintfPutc(pipeHandle, '%');
-                pszFmt++;
+                ok = _FMSTR_PipePrintfPutc(pipeHandle, '%');
+                format++;
                 continue;
             }
 
             /* empty the pipe's temporary buffer */
-            ok = FMSTR_PipePrintfFlush(pipeHandle);
+            ok = _FMSTR_PipePrintfFlush(pipeHandle);
 
-            if(ok)
+            if (ok != FMSTR_FALSE)
             {
-                pszFmt = FMSTR_PipeParseFormat(pszFmt, &ctx);
+                format = FMSTR_PipeParseFormat(format, &ctx);
 
-                if(ctx.flags.flg.isstring)
+                if (ctx.flags.flg.isstring != 0U)
                 {
-                    const char* psz = (const char*) parg;
-                    ok = FMSTR_PipePuts(pipeHandle, psz ? psz : "NULL");
+                    const char *psz = (const char *)parg;
+                    ok              = FMSTR_PipePuts(pipeHandle, psz != NULL ? psz : "NULL");
                 }
                 else
                 {
@@ -987,212 +1212,224 @@ static FMSTR_BOOL FMSTR_PipePrintfOne(FMSTR_HPIPE pipeHandle, const char* pszFmt
         }
         else
         {
-            ok = FMSTR_PipePrintfPutc(pipeHandle, *pszFmt++);
+            ok = _FMSTR_PipePrintfPutc(pipeHandle, *format++);
         }
     }
 
-    return (FMSTR_BOOL)(ok && FMSTR_PipePrintfFlush(pipeHandle));
+    if (ok != FMSTR_FALSE)
+    {
+        ok = _FMSTR_PipePrintfFlush(pipeHandle);
+    }
+
+    return (FMSTR_BOOL)(ok != FMSTR_FALSE);
 }
 
-/**************************************************************************//*!
-*
-* @brief  PIPE API: Format argument into the pipe output stream. The format
-*         follows the standard printf format. The leading '%' is optional.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PIPE API: Format argument into the pipe output stream. The format
+ *         follows the standard printf format. The leading '%' is optional.
+ *
+ ******************************************************************************/
 
-FMSTR_BOOL FMSTR_PipePrintfU8(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_U8 arg)
+FMSTR_BOOL FMSTR_PipePrintfU8(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U8 arg)
 {
-    return FMSTR_PipePrintfOne(pipeHandle, pszFmt, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU8ToA);
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU8ToA);
 }
 
-/**************************************************************************//*!
-*
-* @brief  PIPE API: Format argument into the pipe output stream. The format
-*         follows the standard printf format. The leading '%' is optional.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PIPE API: Format argument into the pipe output stream. The format
+ *         follows the standard printf format. The leading '%' is optional.
+ *
+ ******************************************************************************/
 
-FMSTR_BOOL FMSTR_PipePrintfS8(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_S8 arg)
+FMSTR_BOOL FMSTR_PipePrintfS8(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S8 arg)
 {
-    return FMSTR_PipePrintfOne(pipeHandle, pszFmt, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS8ToA);
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS8ToA);
 }
 
-/**************************************************************************//*!
-*
-* @brief  PIPE API: Format argument into the pipe output stream. The format
-*         follows the standard printf format. The leading '%' is optional.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PIPE API: Format argument into the pipe output stream. The format
+ *         follows the standard printf format. The leading '%' is optional.
+ *
+ ******************************************************************************/
 
-FMSTR_BOOL FMSTR_PipePrintfU16(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_U16 arg)
+FMSTR_BOOL FMSTR_PipePrintfU16(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U16 arg)
 {
-    return FMSTR_PipePrintfOne(pipeHandle, pszFmt, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU16ToA);
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU16ToA);
 }
 
-/**************************************************************************//*!
-*
-* @brief  PIPE API: Format argument into the pipe output stream. The format
-*         follows the standard printf format. The leading '%' is optional.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PIPE API: Format argument into the pipe output stream. The format
+ *         follows the standard printf format. The leading '%' is optional.
+ *
+ ******************************************************************************/
 
-FMSTR_BOOL FMSTR_PipePrintfS16(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_S16 arg)
+FMSTR_BOOL FMSTR_PipePrintfS16(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S16 arg)
 {
-    return FMSTR_PipePrintfOne(pipeHandle, pszFmt, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS16ToA);
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS16ToA);
 }
 
-/**************************************************************************//*!
-*
-* @brief  PIPE API: Format argument into the pipe output stream. The format
-*         follows the standard printf format. The leading '%' is optional.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PIPE API: Format argument into the pipe output stream. The format
+ *         follows the standard printf format. The leading '%' is optional.
+ *
+ ******************************************************************************/
 
-FMSTR_BOOL FMSTR_PipePrintfU32(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_U32 arg)
+FMSTR_BOOL FMSTR_PipePrintfU32(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U32 arg)
 {
-    return FMSTR_PipePrintfOne(pipeHandle, pszFmt, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU32ToA);
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeU32ToA);
 }
 
-/**************************************************************************//*!
-*
-* @brief  PIPE API: Format argument into the pipe output stream. The format
-*         follows the standard printf format. The leading '%' is optional.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PIPE API: Format argument into the pipe output stream. The format
+ *         follows the standard printf format. The leading '%' is optional.
+ *
+ ******************************************************************************/
 
-FMSTR_BOOL FMSTR_PipePrintfS32(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_S32 arg)
+FMSTR_BOOL FMSTR_PipePrintfS32(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S32 arg)
 {
-    return FMSTR_PipePrintfOne(pipeHandle, pszFmt, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS32ToA);
+    return _FMSTR_PipePrintfOne(pipeHandle, format, &arg, (FMSTR_PIPE_ITOA_FUNC)FMSTR_PipeS32ToA);
 }
 
-
-/**************************************************************************//*!
-*
-* @brief  Format va_list argument into the pipe output stream. This function
-*         is called as a part of our printf routine.
-*
-******************************************************************************/
-
-static FMSTR_BOOL FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list* parg, FMSTR_PIPE_PRINTF_CTX* pctx)
+/******************************************************************************
+ *
+ * @brief  Format va_list argument into the pipe output stream. This function
+ *         is called as a part of our printf routine.
+ *
+ ******************************************************************************/
+static FMSTR_BOOL _FMSTR_PipePrintfAny(FMSTR_HPIPE pipeHandle, va_list *parg, FMSTR_PIPE_PRINTF_CTX *pctx)
 {
     FMSTR_BOOL ok = FMSTR_FALSE;
 
-    switch(pctx->dtsize)
+    switch (pctx->dtsize)
     {
         case 1:
-            if(pctx->flags.flg.signedtype)
+            if (pctx->flags.flg.signedtype != 0U)
             {
                 FMSTR_S8 arg = (FMSTR_S8)va_arg(*parg, int);
-                ok = FMSTR_PipeS8ToA(pipeHandle, &arg, pctx);
+                ok           = FMSTR_PipeS8ToA(pipeHandle, &arg, pctx);
             }
             else
             {
                 FMSTR_U8 arg = (FMSTR_U8)va_arg(*parg, unsigned);
-                ok = FMSTR_PipeU8ToA(pipeHandle, &arg, pctx);
+                ok           = FMSTR_PipeU8ToA(pipeHandle, &arg, pctx);
             }
             break;
 
         case 2:
-            if(pctx->flags.flg.signedtype)
+            if (pctx->flags.flg.signedtype != 0U)
             {
                 FMSTR_S16 arg = (FMSTR_S16)va_arg(*parg, int);
-                ok = FMSTR_PipeS16ToA(pipeHandle, &arg, pctx);
+                ok            = FMSTR_PipeS16ToA(pipeHandle, &arg, pctx);
             }
             else
             {
                 FMSTR_U16 arg = (FMSTR_U16)va_arg(*parg, unsigned);
-                ok = FMSTR_PipeU16ToA(pipeHandle, &arg, pctx);
+                ok            = FMSTR_PipeU16ToA(pipeHandle, &arg, pctx);
             }
             break;
 
         case 4:
-            if(pctx->flags.flg.signedtype)
+            if (pctx->flags.flg.signedtype != 0U)
             {
                 FMSTR_S32 arg = (FMSTR_S32)va_arg(*parg, long);
-                ok = FMSTR_PipeS32ToA(pipeHandle, &arg, pctx);
+                ok            = FMSTR_PipeS32ToA(pipeHandle, &arg, pctx);
             }
             else
             {
                 FMSTR_U32 arg = (FMSTR_U32)va_arg(*parg, unsigned long);
-                ok = FMSTR_PipeU32ToA(pipeHandle, &arg, pctx);
+                ok            = FMSTR_PipeU32ToA(pipeHandle, &arg, pctx);
             }
+            break;
+
+        default:
+            ok = FMSTR_FALSE;
             break;
     }
 
     return ok;
 }
 
-/**************************************************************************//*!
-*
-* @brief  Printf with va_list arguments prepared.
-*
-*         This function is not declared static (may be reused as global),
-*         but public prototype is not available (not to force user to
-*         have va_list defined.
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  Printf with va_list arguments prepared.
+ *
+ *         This function is not declared static (may be reused as global),
+ *         but public prototype is not available (not to force user to
+ *         have va_list defined.
+ *
+ ******************************************************************************/
 
-static FMSTR_BOOL FMSTR_PipePrintfV(FMSTR_HPIPE pipeHandle, const char* pszFmt, va_list* parg)
+static FMSTR_BOOL _FMSTR_PipePrintfV(FMSTR_HPIPE pipeHandle, const char *format, va_list *parg)
 {
     FMSTR_BOOL ok = FMSTR_TRUE;
     FMSTR_PIPE_PRINTF_CTX ctx;
 
-    while(*pszFmt && ok)
+    while (*format != (FMSTR_CHAR)0 && ok != FMSTR_FALSE)
     {
-        if(*pszFmt == '%')
+        if (*format == '%')
         {
-            pszFmt++;
+            format++;
 
-            if(*pszFmt == '%')
+            if (*format == '%')
             {
-                ok = FMSTR_PipePrintfPutc(pipeHandle, '%');
-                pszFmt++;
+                ok = _FMSTR_PipePrintfPutc(pipeHandle, '%');
+                format++;
             }
             else
             {
-                ok = FMSTR_PipePrintfFlush(pipeHandle);
+                ok = _FMSTR_PipePrintfFlush(pipeHandle);
 
-                if(ok)
+                if (ok != FMSTR_FALSE)
                 {
-                    pszFmt = FMSTR_PipeParseFormat(pszFmt, &ctx);
+                    format = FMSTR_PipeParseFormat(format, &ctx);
 
-                    if(ctx.flags.flg.isstring)
+                    if (ctx.flags.flg.isstring != 0U)
                     {
-                        const char* psz = va_arg(*parg, char*);
-                        ok = FMSTR_PipePuts(pipeHandle, psz ? psz : "NULL");
+                        const char *psz = va_arg(*parg, char *);
+                        ok              = FMSTR_PipePuts(pipeHandle, psz != NULL ? psz : "NULL");
                     }
                     else
                     {
-                        ok = FMSTR_PipePrintfAny(pipeHandle, parg, &ctx);
+                        ok = _FMSTR_PipePrintfAny(pipeHandle, parg, &ctx);
                     }
                 }
             }
         }
         else
         {
-            ok = FMSTR_PipePrintfPutc(pipeHandle, *pszFmt++);
+            ok = _FMSTR_PipePrintfPutc(pipeHandle, *format++);
         }
     }
 
-    return (FMSTR_BOOL)(ok && FMSTR_PipePrintfFlush(pipeHandle));
+    if (ok != FMSTR_FALSE)
+    {
+        ok = _FMSTR_PipePrintfFlush(pipeHandle);
+    }
+
+    return (FMSTR_BOOL)(ok != FMSTR_FALSE);
 }
 
-#if FMSTR_USE_PIPE_PRINTF_VARG
+#if FMSTR_USE_PIPE_PRINTF_VARG > 0
 
-/**************************************************************************//*!
-*
-* @brief  PIPE API: The printf into the pipe
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PIPE API: The printf into the pipe
+ *
+ ******************************************************************************/
 
-FMSTR_BOOL FMSTR_PipePrintf(FMSTR_HPIPE pipeHandle, const char* pszFmt, ...)
+FMSTR_BOOL FMSTR_PipePrintf(FMSTR_HPIPE pipeHandle, const char *format, ...)
 {
     FMSTR_BOOL ok;
 
     va_list args;
-    va_start(args, pszFmt);
-    ok = FMSTR_PipePrintfV(pipeHandle, pszFmt, &args);
+    va_start(args, format);
+    ok = _FMSTR_PipePrintfV(pipeHandle, format, &args);
     va_end(args);
 
     return ok;
@@ -1201,32 +1438,37 @@ FMSTR_BOOL FMSTR_PipePrintf(FMSTR_HPIPE pipeHandle, const char* pszFmt, ...)
 #endif /* FMSTR_USE_PIPE_PRINTF_VARG */
 #endif /* FMSTR_USE_PIPE_PRINTF */
 
-/**************************************************************************//*!
-*
-* @brief  PIPE API: Read data from a pipe
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  PIPE API: Read data from a pipe
+ *
+ ******************************************************************************/
 
-FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMSTR_PIPE_SIZE pipeDataLen, FMSTR_PIPE_SIZE readGranularity)
+FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle,
+                               FMSTR_ADDR pipeData,
+                               FMSTR_PIPE_SIZE pipeDataLen,
+                               FMSTR_PIPE_SIZE readGranularity)
 {
-    FMSTR_PIPE* pp = (FMSTR_PIPE*) pipeHandle;
-    FMSTR_PIPE_BUFF* pbuff = &pp->rx;
-    FMSTR_PIPE_SIZE total = FMSTR_PipeGetBytesReady(pbuff);
+    FMSTR_PIPE *pp         = (FMSTR_PIPE *)pipeHandle;
+    FMSTR_PIPE_BUFF *pbuff = &pp->rx;
+    FMSTR_PIPE_SIZE total  = _FMSTR_PipeGetBytesReady(pbuff);
     FMSTR_PIPE_SIZE s;
 
-    /* when invalid address is given, return number of bytes available */
-    if(pipeData)
+    /* when invalid address is given, only return number of bytes available */
+    if (FMSTR_ADDR_VALID(pipeData) != FMSTR_FALSE)
     {
         /* round length to bus width */
         pipeDataLen /= FMSTR_CFG_BUS_WIDTH;
         pipeDataLen *= FMSTR_CFG_BUS_WIDTH;
 
         /* only fetch what we have cached */
-        if(pipeDataLen > total)
+        if (pipeDataLen > total)
+        {
             pipeDataLen = total;
+        }
 
         /* obey granularity */
-        if(readGranularity > 1)
+        if (readGranularity > 1U)
         {
             pipeDataLen /= readGranularity;
             pipeDataLen *= readGranularity;
@@ -1236,27 +1478,31 @@ FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMST
         total = pipeDataLen;
 
         /* rest of cyclic buffer */
-        if(pipeDataLen > 0)
+        if (pipeDataLen > 0U)
         {
             /* total bytes available in the rest of buffer */
-            s = (FMSTR_PIPE_SIZE) ((pbuff->size - pbuff->rp) * FMSTR_CFG_BUS_WIDTH);
-            if(s > pipeDataLen)
+            s = (FMSTR_PIPE_SIZE)((pbuff->size - pbuff->rp) * FMSTR_CFG_BUS_WIDTH);
+            if (s > pipeDataLen)
+            {
                 s = pipeDataLen;
+            }
 
             /* put bytes */
-            FMSTR_MemCpyTo(pipeData, pbuff->buff + pbuff->rp, (FMSTR_SIZE8) s);
+            FMSTR_MemCpyTo(pipeData, pbuff->buff + pbuff->rp, (FMSTR_SIZE8)s);
             pipeData += s / FMSTR_CFG_BUS_WIDTH;
 
             /* advance & wrap pointer */
             pbuff->rp += s / FMSTR_CFG_BUS_WIDTH;
-            if(pbuff->rp >= pbuff->size)
+            if (pbuff->rp >= pbuff->size)
+            {
                 pbuff->rp = 0;
+            }
 
             /* rest of frame to a (wrapped) beggining of buffer */
-            pipeDataLen -= (FMSTR_SIZE8) s;
-            if(pipeDataLen > 0)
+            pipeDataLen -= (FMSTR_SIZE8)s;
+            if (pipeDataLen > 0U)
             {
-                FMSTR_MemCpyTo(pipeData, pbuff->buff + pbuff->rp, (FMSTR_SIZE8) pipeDataLen);
+                FMSTR_MemCpyTo(pipeData, pbuff->buff + pbuff->rp, (FMSTR_SIZE8)pipeDataLen);
                 pbuff->rp += pipeDataLen / FMSTR_CFG_BUS_WIDTH;
             }
 
@@ -1268,42 +1514,46 @@ FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMST
     return total;
 }
 
-/**************************************************************************//*!
-*
-* @brief  Find pipe by port number
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  Find pipe by port number
+ *
+ ******************************************************************************/
 
-static FMSTR_PIPE* FMSTR_FindPipe(FMSTR_PIPE_PORT pipePort)
+static FMSTR_PIPE *_FMSTR_FindPipe(FMSTR_PIPE_PORT pipePort)
 {
-    FMSTR_PIPE* pp = &pcm_pipes[0];
+    FMSTR_PIPE *pp;
     FMSTR_INDEX i;
 
-    for(i=0; i<FMSTR_USE_PIPES; i++, pp++)
+    for (i = 0; i < (FMSTR_INDEX)FMSTR_USE_PIPES; i++)
     {
+        pp = &pcm_pipes[i];
+
         /* look for existing pipe with the same port */
-        if(pp->pipePort == pipePort)
+        if (pp->pipePort == pipePort)
+        {
             return pp;
+        }
     }
 
     return NULL;
 }
 
-/**************************************************************************//*!
-*
-* @brief  Get number of bytes free in the buffer
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  Get number of bytes free in the buffer
+ *
+ ******************************************************************************/
 
-static FMSTR_PIPE_SIZE FMSTR_PipeGetBytesFree(FMSTR_PIPE_BUFF* pipeBuff)
+static FMSTR_PIPE_SIZE _FMSTR_PipeGetBytesFree(FMSTR_PIPE_BUFF *pipeBuff)
 {
     FMSTR_PIPE_SIZE free;
 
-    if(pipeBuff->flags.flg.bIsFull)
+    if (pipeBuff->flags.flg.bIsFull != 0U)
     {
         free = 0;
     }
-    else if(pipeBuff->wp < pipeBuff->rp)
+    else if (pipeBuff->wp < pipeBuff->rp)
     {
         free = (FMSTR_PIPE_SIZE)(pipeBuff->rp - pipeBuff->wp);
     }
@@ -1315,15 +1565,15 @@ static FMSTR_PIPE_SIZE FMSTR_PipeGetBytesFree(FMSTR_PIPE_BUFF* pipeBuff)
     return (FMSTR_PIPE_SIZE)(free * FMSTR_CFG_BUS_WIDTH);
 }
 
-static FMSTR_PIPE_SIZE FMSTR_PipeGetBytesReady(FMSTR_PIPE_BUFF* pipeBuff)
+static FMSTR_PIPE_SIZE _FMSTR_PipeGetBytesReady(FMSTR_PIPE_BUFF *pipeBuff)
 {
     FMSTR_PIPE_SIZE full;
 
-    if(pipeBuff->flags.flg.bIsFull)
+    if (pipeBuff->flags.flg.bIsFull != 0U)
     {
         full = (FMSTR_PIPE_SIZE)pipeBuff->size;
     }
-    else if(pipeBuff->wp >= pipeBuff->rp)
+    else if (pipeBuff->wp >= pipeBuff->rp)
     {
         full = (FMSTR_PIPE_SIZE)(pipeBuff->wp - pipeBuff->rp);
     }
@@ -1335,69 +1585,75 @@ static FMSTR_PIPE_SIZE FMSTR_PipeGetBytesReady(FMSTR_PIPE_BUFF* pipeBuff)
     return (FMSTR_PIPE_SIZE)(full * FMSTR_CFG_BUS_WIDTH);
 }
 
-static void FMSTR_PipeDiscardBytes(FMSTR_PIPE_BUFF* pipeBuff, FMSTR_SIZE8 countBytes)
+static void _FMSTR_PipeDiscardBytes(FMSTR_PIPE_BUFF *pipeBuff, FMSTR_SIZE8 countBytes)
 {
     FMSTR_PIPE_SIZE total;
     FMSTR_PIPE_SIZE discard;
 
-    total = FMSTR_PipeGetBytesReady(pipeBuff);
-    discard = (FMSTR_PIPE_SIZE) (countBytes > total ? total : countBytes);
+    total   = _FMSTR_PipeGetBytesReady(pipeBuff);
+    discard = (FMSTR_PIPE_SIZE)(countBytes > total ? total : countBytes);
     discard /= FMSTR_CFG_BUS_WIDTH;
 
-    if(discard > 0)
+    if (discard > 0U)
     {
         FMSTR_PIPE_SIZE rest = (FMSTR_PIPE_SIZE)(pipeBuff->size - pipeBuff->rp);
         FMSTR_PIPE_SIZE rp;
 
         /* will RP wrap? */
-        if(rest <= discard)
+        if (rest <= discard)
         {
-            rp = (FMSTR_PIPE_SIZE) (discard - rest);
+            rp = (FMSTR_PIPE_SIZE)(discard - rest);
         }
         else
         {
-            rp = (FMSTR_PIPE_SIZE) (pipeBuff->rp + discard);
+            rp = (FMSTR_PIPE_SIZE)(pipeBuff->rp + discard);
         }
 
         /* buffer is for sure not full */
         pipeBuff->flags.flg.bIsFull = 0;
-        pipeBuff->rp = rp;
+        pipeBuff->rp                = rp;
     }
 }
 
 /* get data from frame into our Rx buffer, we are already sure it fits */
 
-static FMSTR_BPTR FMSTR_PipeReceive(FMSTR_BPTR msgBuffIO, FMSTR_PIPE* pp, FMSTR_SIZE8 msgBuffSize)
+static FMSTR_BPTR _FMSTR_PipeReceive(FMSTR_BPTR msgBuffIO, FMSTR_PIPE *pp, FMSTR_SIZE8 msgBuffSize)
 {
-    FMSTR_PIPE_BUFF* pbuff = &pp->rx;
+    FMSTR_PIPE_BUFF *pbuff = &pp->rx;
     FMSTR_PIPE_SIZE s;
 
-    if(msgBuffSize > 0)
+    if (msgBuffSize > 0U)
     {
         /* total bytes available in the rest of buffer */
-        s = (FMSTR_PIPE_SIZE) ((pbuff->size - pbuff->wp) * FMSTR_CFG_BUS_WIDTH);
-        if(s > (FMSTR_PIPE_SIZE) msgBuffSize)
-            s = (FMSTR_PIPE_SIZE) msgBuffSize;
+        s = (FMSTR_PIPE_SIZE)((pbuff->size - pbuff->wp) * FMSTR_CFG_BUS_WIDTH);
+        if (s > (FMSTR_PIPE_SIZE)msgBuffSize)
+        {
+            s = (FMSTR_PIPE_SIZE)msgBuffSize;
+        }
 
         /* get the bytes */
-        msgBuffIO = FMSTR_CopyFromBuffer(pbuff->buff + pbuff->wp, msgBuffIO, (FMSTR_SIZE8) s);
+        msgBuffIO = FMSTR_CopyFromBuffer(pbuff->buff + pbuff->wp, msgBuffIO, (FMSTR_SIZE8)s);
 
         /* advance & wrap pointer */
         pbuff->wp += s / FMSTR_CFG_BUS_WIDTH;
-        if(pbuff->wp >= pbuff->size)
+        if (pbuff->wp >= pbuff->size)
+        {
             pbuff->wp = 0;
+        }
 
         /* rest of frame to a (wrapped) beginning of buffer */
-        msgBuffSize -= (FMSTR_SIZE8) s;
-        if(msgBuffSize > 0)
+        msgBuffSize -= (FMSTR_SIZE8)s;
+        if (msgBuffSize > 0U)
         {
             msgBuffIO = FMSTR_CopyFromBuffer(pbuff->buff + pbuff->wp, msgBuffIO, msgBuffSize);
-            pbuff->wp += msgBuffSize / FMSTR_CFG_BUS_WIDTH;
+            pbuff->wp += ((FMSTR_PIPE_SIZE)msgBuffSize) / FMSTR_CFG_BUS_WIDTH;
         }
 
         /* buffer got full? */
-        if(pbuff->wp == pbuff->rp)
+        if (pbuff->wp == pbuff->rp)
+        {
             pbuff->flags.flg.bIsFull = 1;
+        }
     }
 
     return msgBuffIO;
@@ -1405,29 +1661,33 @@ static FMSTR_BPTR FMSTR_PipeReceive(FMSTR_BPTR msgBuffIO, FMSTR_PIPE* pp, FMSTR_
 
 /* put data into the comm buffer, we are already sure it fits, buffer's RP is not modified */
 
-static FMSTR_BPTR FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE* pp, FMSTR_SIZE8 msgBuffSize)
+static FMSTR_BPTR _FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE *pp, FMSTR_SIZE8 msgBuffSize)
 {
-    FMSTR_PIPE_BUFF* pbuff = &pp->tx;
+    FMSTR_PIPE_BUFF *pbuff = &pp->tx;
     FMSTR_PIPE_SIZE s, rp = pbuff->rp;
 
-    if(msgBuffSize > 0)
+    if (msgBuffSize > 0U)
     {
         /* total bytes available in the rest of buffer */
-        s = (FMSTR_PIPE_SIZE) ((pbuff->size - rp) * FMSTR_CFG_BUS_WIDTH);
-        if(s > (FMSTR_PIPE_SIZE) msgBuffSize)
-            s = (FMSTR_PIPE_SIZE) msgBuffSize;
+        s = (FMSTR_PIPE_SIZE)((pbuff->size - rp) * FMSTR_CFG_BUS_WIDTH);
+        if (s > (FMSTR_PIPE_SIZE)msgBuffSize)
+        {
+            s = (FMSTR_PIPE_SIZE)msgBuffSize;
+        }
 
         /* put bytes */
-        msgBuffIO = FMSTR_CopyToBuffer(msgBuffIO, pbuff->buff + rp, (FMSTR_SIZE8) s);
+        msgBuffIO = FMSTR_CopyToBuffer(msgBuffIO, pbuff->buff + rp, (FMSTR_SIZE8)s);
 
         /* advance & wrap pointer */
         rp += s / FMSTR_CFG_BUS_WIDTH;
-        if(rp >= pbuff->size)
+        if (rp >= pbuff->size)
+        {
             rp = 0;
+        }
 
         /* rest of frame to a (wrapped) beggining of buffer */
-        msgBuffSize -= (FMSTR_SIZE8) s;
-        if(msgBuffSize > 0)
+        msgBuffSize -= (FMSTR_SIZE8)s;
+        if (msgBuffSize > 0U)
         {
             msgBuffIO = FMSTR_CopyToBuffer(msgBuffIO, pbuff->buff + rp, msgBuffSize);
         }
@@ -1436,29 +1696,29 @@ static FMSTR_BPTR FMSTR_PipeTransmit(FMSTR_BPTR msgBuffIO, FMSTR_PIPE* pp, FMSTR
     return msgBuffIO;
 }
 
-/**************************************************************************//*!
-*
-* @brief  Get PIPE info
-*
-* @param    msgBuffIO - original command (in) and response buffer (out)
-* @param    msgSize   - size of data in buffer
-* @param    retStatus - response status
-*
-* @param  msgBuffIO - original command (in) and response buffer (out)
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  Get PIPE info
+ *
+ * @param    msgBuffIO - original command (in) and response buffer (out)
+ * @param    msgSize   - size of data in buffer
+ * @param    retStatus - response status
+ *
+ * @param  msgBuffIO - original command (in) and response buffer (out)
+ *
+ ******************************************************************************/
 
 FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus)
 {
     FMSTR_BPTR response = msgBuffIO;
     FMSTR_U8 cfgCode, pipeIndex, pipeFlags;
-    FMSTR_PIPE* pp;
+    FMSTR_PIPE *pp;
 
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
 
     /* need at least pipe index and cfgCode */
-    if(msgSize < 2)
+    if (msgSize < 2U)
     {
         /* return status  */
         *retStatus = FMSTR_STC_PIPEERR;
@@ -1475,11 +1735,11 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
     msgBuffIO = FMSTR_ValueFromBuffer8(&cfgCode, msgBuffIO);
 
     /* Pipe index is a port number of a pipe */
-    if(pipeFlags & FMSTR_PIPE_GETPIPE_FLAG_PORT)
+    if ((pipeFlags & FMSTR_PIPE_GETPIPE_FLAG_PORT) != 0U)
     {
         /* Find pipe by port number */
-        pp = FMSTR_FindPipe(pipeIndex);
-        if(!pp)
+        pp = _FMSTR_FindPipe(pipeIndex);
+        if (pp == NULL)
         {
             /* return status  */
             *retStatus = FMSTR_STC_PIPEERR;
@@ -1489,7 +1749,7 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
     else
     {
         /* Check maximum pipe index */
-        if(pipeIndex >= FMSTR_USE_PIPES)
+        if (pipeIndex >= (FMSTR_U8)FMSTR_USE_PIPES)
         {
             /* return status  */
             *retStatus = FMSTR_STC_INSTERR;
@@ -1500,27 +1760,33 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
         pp = &pcm_pipes[pipeIndex];
     }
 
-    switch(cfgCode)
+    switch (cfgCode)
     {
-    case FMSTR_PIPE_CFGCODE_NAME:
-        /* Put pipe name */
-        if(pp->name)
-            response = FMSTR_CopyToBuffer(response, (FMSTR_ADDR) pp->name, FMSTR_StrLen(pp->name));
-        break;
-    case FMSTR_PIPE_CFGCODE_INFO:
-        pipeFlags = 0;
+        case FMSTR_PIPE_CFGCODE_NAME:
+            /* Put pipe name */
+            if (pp->name != NULL)
+            {
+                response = FMSTR_CopyToBuffer(response, (FMSTR_ADDR)pp->name, FMSTR_StrLen(pp->name));
+            }
+            break;
 
-        /* Add flag isOpen, when pipe is opened (has port number) */
-        if(pp->pipePort != 0)
-            pipeFlags |= FMSTR_PIPE_GETINFO_FLAG_ISOPEN;
+        case FMSTR_PIPE_CFGCODE_INFO:
+        default:
+            pipeFlags = 0;
 
-        /* Put pipe port */
-        response = FMSTR_ValueToBuffer8(response, pp->pipePort);
-        /* Put pipe type */
-        response = FMSTR_ValueToBuffer8(response, pp->type);
-        /* Put pipe flags */
-        response = FMSTR_ValueToBuffer8(response, pipeFlags);
-        break;
+            /* Add flag isOpen, when pipe is opened (has port number) */
+            if (pp->pipePort != 0U)
+            {
+                pipeFlags |= FMSTR_PIPE_GETINFO_FLAG_ISOPEN;
+            }
+
+            /* Put pipe port */
+            response = FMSTR_ValueToBuffer8(response, pp->pipePort);
+            /* Put pipe type */
+            response = FMSTR_ValueToBuffer8(response, pp->type);
+            /* Put pipe flags */
+            response = FMSTR_ValueToBuffer8(response, pipeFlags);
+            break;
     }
 
     /* success  */
@@ -1528,29 +1794,29 @@ FMSTR_BPTR FMSTR_GetPipe(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *ret
     return response;
 }
 
-/**************************************************************************//*!
-*
-* @brief  Handling PIPE commands
-*
-* @param    msgBuffIO - original command (in) and response buffer (out)
-* @param    msgSize   - size of data in buffer
-* @param    retStatus - response status
-*
-* @param  msgBuffIO - original command (in) and response buffer (out)
-*
-******************************************************************************/
+/******************************************************************************
+ *
+ * @brief  Handling PIPE commands
+ *
+ * @param    msgBuffIO - original command (in) and response buffer (out)
+ * @param    msgSize   - size of data in buffer
+ * @param    retStatus - response status
+ *
+ * @param  msgBuffIO - original command (in) and response buffer (out)
+ *
+ ******************************************************************************/
 
 FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *retStatus)
 {
     FMSTR_BPTR response = msgBuffIO;
     FMSTR_U8 skipLen, pipePort;
-    FMSTR_PIPE* pp;
+    FMSTR_PIPE *pp;
 
     FMSTR_ASSERT(msgBuffIO != NULL);
     FMSTR_ASSERT(retStatus != NULL);
 
     /* need at least port number and tx-discard bytes */
-    if(msgSize < 1)
+    if (msgSize < 1U)
     {
         /* return status  */
         *retStatus = FMSTR_STC_PIPEERR;
@@ -1561,10 +1827,10 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
     msgBuffIO = FMSTR_ValueFromBuffer8(&pipePort, msgBuffIO);
 
     /* get pipe by port */
-    pp = FMSTR_FindPipe((FMSTR_PIPE_PORT)(pipePort & 0x7f));
+    pp = _FMSTR_FindPipe((FMSTR_PIPE_PORT)(pipePort & 0x7fUL));
 
     /* pipe port must exist (i.e. be open) */
-    if(!pp)
+    if (pp == NULL)
     {
         /* return status  */
         *retStatus = FMSTR_STC_PIPEERR;
@@ -1572,23 +1838,31 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
     }
 
     /* data-in are valid only in "matching" request (even to even, odd to odd) */
-    if(pipePort & 0x80)
+    if ((pipePort & 0x80U) != 0U)
     {
-        if(!pp->flags.flg.bExpectOdd)
-            msgSize = 0;
+        if (pp->flags.flg.bExpectOdd == 0U)
+        {
+            msgSize = 0U;
+        }
         else
-            pp->flags.flg.bExpectOdd = !pp->flags.flg.bExpectOdd;
+        {
+            pp->flags.flg.bExpectOdd = pp->flags.flg.bExpectOdd != 0U ? 0U : 1U;
+        }
     }
     else
     {
-        if(pp->flags.flg.bExpectOdd)
-            msgSize = 0;
+        if (pp->flags.flg.bExpectOdd != 0U)
+        {
+            msgSize = 0U;
+        }
         else
-            pp->flags.flg.bExpectOdd = !pp->flags.flg.bExpectOdd;
+        {
+            pp->flags.flg.bExpectOdd = pp->flags.flg.bExpectOdd != 0U ? 0U : 1U;
+        }
     }
 
     /* process received data */
-    if(msgSize > 0)
+    if (msgSize > 0U)
     {
         /* first byte tells me how many output bytes can be discarded from my
            pipe-transmit buffer (this is how PC acknowledges how many bytes it
@@ -1596,27 +1870,32 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
         msgBuffIO = FMSTR_ValueFromBuffer8(&skipLen, msgBuffIO);
 
         /* discard bytes from pipe's transmit buffer */
-        if(skipLen)
-            FMSTR_PipeDiscardBytes(&pp->tx, skipLen);
+        if (skipLen > 0U)
+        {
+            _FMSTR_PipeDiscardBytes(&pp->tx, skipLen);
+        }
 
         /* next come (msgSize-2) bytes to be received */
-        if(msgSize > 2)
+        if (msgSize > 2U)
         {
             /* how many bytes may I accept? */
-            FMSTR_PIPE_SIZE rxFree = FMSTR_PipeGetBytesFree(&pp->rx);
+            FMSTR_PIPE_SIZE rxFree = _FMSTR_PipeGetBytesFree(&pp->rx);
             /* how many bytes PC want to push? */
-            FMSTR_U8 rxToRead = (FMSTR_U8)(msgSize - 2);
+            FMSTR_U8 rxToRead = (FMSTR_U8)(msgSize - 2U);
 
             /* round to bus width */
             rxToRead /= FMSTR_CFG_BUS_WIDTH;
             rxToRead *= FMSTR_CFG_BUS_WIDTH;
 
             /* get the lower of the two numbers */
-            if(rxFree < (FMSTR_PIPE_SIZE)rxToRead)
+            if (rxFree < (FMSTR_PIPE_SIZE)rxToRead)
+            {
                 rxToRead = (FMSTR_U8)rxFree;
+            }
 
             /* get frame data */
-            /* msgBuffIO = */FMSTR_PipeReceive(msgBuffIO, pp, rxToRead);
+            msgBuffIO = _FMSTR_PipeReceive(msgBuffIO, pp, rxToRead);
+            FMSTR_UNUSED(msgBuffIO);
 
             /* this is the number to be returned to PC to inform it how
                many bytes it may discard in his transmit buffer */
@@ -1630,38 +1909,42 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
     }
 
     /* now call the pipe's handler, it may read or write data */
-    if(pp->pCallback)
+    if (pp->pCallback != NULL)
     {
         pp->flags.flg.bInComm = 1;
-        pp->pCallback((FMSTR_HPIPE) pp);
+        pp->pCallback((FMSTR_HPIPE)pp);
         pp->flags.flg.bInComm = 0;
     }
 
     /* now put our output data */
     {
         /* how many bytes are waiting to be sent? */
-        FMSTR_PIPE_SIZE txAvail = FMSTR_PipeGetBytesReady(&pp->tx);
+        FMSTR_PIPE_SIZE txAvail = _FMSTR_PipeGetBytesReady(&pp->tx);
         /* how many bytes I can safely put? */
-        FMSTR_U8 txToSend = FMSTR_COMM_BUFFER_SIZE - 3;
+        FMSTR_U8 txToSend = FMSTR_COMM_BUFFER_SIZE - 3U;
 
         /* round to bus width */
         txToSend /= FMSTR_CFG_BUS_WIDTH;
         txToSend *= FMSTR_CFG_BUS_WIDTH;
 
         /* get the lower of two values */
-        if(txAvail < (FMSTR_PIPE_SIZE)txToSend)
+        if (txAvail < (FMSTR_PIPE_SIZE)txToSend)
+        {
             txToSend = (FMSTR_U8)txAvail;
+        }
 
         /* send pipe's transmit data back */
         response = FMSTR_ValueToBuffer8(response, pipePort);
 
         /* inform PC how many bytes it may discard from its pipe's transmit buffer */
-        skipLen = pp->nLastBytesReceived;
+        skipLen  = pp->nLastBytesReceived;
         response = FMSTR_ValueToBuffer8(response, skipLen);
 
         /* put data */
-        if(txToSend)
-            response = FMSTR_PipeTransmit(response, pp, txToSend);
+        if (txToSend != 0U)
+        {
+            response = _FMSTR_PipeTransmit(response, pp, txToSend);
+        }
     }
 
     /* success  */
@@ -1673,10 +1956,14 @@ FMSTR_BPTR FMSTR_PipeFrame(FMSTR_BPTR msgBuffIO, FMSTR_SIZE msgSize, FMSTR_U8 *r
 
 /* implement void pipe-API functions */
 
-FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort, FMSTR_PPIPEFUNC pipeCallback,
-                           FMSTR_ADDR pipeRxBuff, FMSTR_PIPE_SIZE pipeRxSize,
-                           FMSTR_ADDR pipeTxBuff, FMSTR_PIPE_SIZE pipeTxSize,
-                           FMSTR_U8 type, const FMSTR_CHAR *name)
+FMSTR_HPIPE FMSTR_PipeOpen(FMSTR_PIPE_PORT pipePort,
+                           FMSTR_PPIPEFUNC pipeCallback,
+                           FMSTR_ADDR pipeRxBuff,
+                           FMSTR_PIPE_SIZE pipeRxSize,
+                           FMSTR_ADDR pipeTxBuff,
+                           FMSTR_PIPE_SIZE pipeTxSize,
+                           FMSTR_U8 type,
+                           const FMSTR_CHAR *name)
 {
     FMSTR_UNUSED(pipePort);
     FMSTR_UNUSED(pipeCallback);
@@ -1695,7 +1982,10 @@ void FMSTR_PipeClose(FMSTR_HPIPE pipeHandle)
     FMSTR_UNUSED(pipeHandle);
 }
 
-FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMSTR_PIPE_SIZE pipeDataLen, FMSTR_PIPE_SIZE writeGranularity)
+FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle,
+                                FMSTR_ADDR pipeData,
+                                FMSTR_PIPE_SIZE pipeDataLen,
+                                FMSTR_PIPE_SIZE writeGranularity)
 {
     FMSTR_UNUSED(pipeHandle);
     FMSTR_UNUSED(pipeData);
@@ -1705,7 +1995,10 @@ FMSTR_PIPE_SIZE FMSTR_PipeWrite(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMS
     return 0U;
 }
 
-FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMSTR_PIPE_SIZE pipeDataLen, FMSTR_PIPE_SIZE readGranularity)
+FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle,
+                               FMSTR_ADDR pipeData,
+                               FMSTR_PIPE_SIZE pipeDataLen,
+                               FMSTR_PIPE_SIZE readGranularity)
 {
     FMSTR_UNUSED(pipeHandle);
     FMSTR_UNUSED(pipeData);
@@ -1719,57 +2012,57 @@ FMSTR_PIPE_SIZE FMSTR_PipeRead(FMSTR_HPIPE pipeHandle, FMSTR_ADDR pipeData, FMST
 
 #endif /* FMSTR_USE_PIPES  && (!FMSTR_DISABLE) */
 
-#if (FMSTR_DISABLE) || (!(FMSTR_USE_PIPES)) || (!(FMSTR_USE_PIPE_PRINTF))
+#if FMSTR_DISABLE > 0 || FMSTR_USE_PIPES == 0 || FMSTR_USE_PIPE_PRINTF == 0
 
-FMSTR_BOOL FMSTR_PipePrintfU8(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_U8 arg)
+FMSTR_BOOL FMSTR_PipePrintfU8(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U8 arg)
 {
     FMSTR_UNUSED(pipeHandle);
-    FMSTR_UNUSED(pszFmt);
+    FMSTR_UNUSED(format);
     FMSTR_UNUSED(arg);
 
     return FMSTR_FALSE;
 }
 
-FMSTR_BOOL FMSTR_PipePrintfS8(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_S8 arg)
+FMSTR_BOOL FMSTR_PipePrintfS8(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S8 arg)
 {
     FMSTR_UNUSED(pipeHandle);
-    FMSTR_UNUSED(pszFmt);
+    FMSTR_UNUSED(format);
     FMSTR_UNUSED(arg);
 
     return FMSTR_FALSE;
 }
 
-FMSTR_BOOL FMSTR_PipePrintfU16(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_U16 arg)
+FMSTR_BOOL FMSTR_PipePrintfU16(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U16 arg)
 {
     FMSTR_UNUSED(pipeHandle);
-    FMSTR_UNUSED(pszFmt);
+    FMSTR_UNUSED(format);
     FMSTR_UNUSED(arg);
 
     return FMSTR_FALSE;
 }
 
-FMSTR_BOOL FMSTR_PipePrintfS16(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_S16 arg)
+FMSTR_BOOL FMSTR_PipePrintfS16(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S16 arg)
 {
     FMSTR_UNUSED(pipeHandle);
-    FMSTR_UNUSED(pszFmt);
+    FMSTR_UNUSED(format);
     FMSTR_UNUSED(arg);
 
     return FMSTR_FALSE;
 }
 
-FMSTR_BOOL FMSTR_PipePrintfU32(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_U32 arg)
+FMSTR_BOOL FMSTR_PipePrintfU32(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_U32 arg)
 {
     FMSTR_UNUSED(pipeHandle);
-    FMSTR_UNUSED(pszFmt);
+    FMSTR_UNUSED(format);
     FMSTR_UNUSED(arg);
 
     return FMSTR_FALSE;
 }
 
-FMSTR_BOOL FMSTR_PipePrintfS32(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR_S32 arg)
+FMSTR_BOOL FMSTR_PipePrintfS32(FMSTR_HPIPE pipeHandle, const char *format, FMSTR_S32 arg)
 {
     FMSTR_UNUSED(pipeHandle);
-    FMSTR_UNUSED(pszFmt);
+    FMSTR_UNUSED(format);
     FMSTR_UNUSED(arg);
 
     return FMSTR_FALSE;
@@ -1777,15 +2070,14 @@ FMSTR_BOOL FMSTR_PipePrintfS32(FMSTR_HPIPE pipeHandle, const char* pszFmt, FMSTR
 
 #endif /* (!(FMSTR_USE_PIPES)) || (!(FMSTR_USE_PIPE_PRINTF)) */
 
-#if (FMSTR_DISABLE) || (!(FMSTR_USE_PIPES)) || (!(FMSTR_USE_PIPE_PRINTF_VARG))
+#if FMSTR_DISABLE > 0 || FMSTR_USE_PIPES == 0 || FMSTR_USE_PIPE_PRINTF_VARG == 0
 
-FMSTR_BOOL FMSTR_PipePrintf(FMSTR_HPIPE pipeHandle, const char* pszFmt, ...)
+FMSTR_BOOL FMSTR_PipePrintf(FMSTR_HPIPE pipeHandle, const char *format, ...)
 {
     FMSTR_UNUSED(pipeHandle);
-    FMSTR_UNUSED(pszFmt);
+    FMSTR_UNUSED(format);
 
     return FMSTR_FALSE;
 }
 
 #endif /* (!(FMSTR_USE_PIPES)) || (!(FMSTR_USE_PIPE_PRINTF_VARG)) */
-

@@ -28,11 +28,11 @@
  * Definitions
  ******************************************************************************/
 #if ((defined USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
-#define USB_HOST_IP3516HS_TEST_DESCRIPTOR_LENGTH (18U)
-#define USB_HOST_IP3516HS_PORTSC_PTC_J_STATE (0x01U)
-#define USB_HOST_IP3516HS_PORTSC_PTC_K_STATE (0x02U)
-#define USB_HOST_IP3516HS_PORTSC_PTC_SE0_NAK (0x03U)
-#define USB_HOST_IP3516HS_PORTSC_PTC_PACKET (0x04U)
+#define USB_HOST_IP3516HS_TEST_DESCRIPTOR_LENGTH  (18U)
+#define USB_HOST_IP3516HS_PORTSC_PTC_J_STATE      (0x01U)
+#define USB_HOST_IP3516HS_PORTSC_PTC_K_STATE      (0x02U)
+#define USB_HOST_IP3516HS_PORTSC_PTC_SE0_NAK      (0x03U)
+#define USB_HOST_IP3516HS_PORTSC_PTC_PACKET       (0x04U)
 #define USB_HOST_IP3516HS_PORTSC_PTC_FORCE_ENABLE (0x05U)
 #endif
 /* reset recovery time (ms) */
@@ -466,25 +466,25 @@ static usb_status_t USB_HostIp3516HsControlBus(usb_host_ip3516hs_state_struct_t 
 
                 portStatus = usbHostState->usbRegBase->USBCMD;
                 portStatus &= ~(USB_HOST_IP3516HS_USBCMD_HIRD_MASK | USB_HOST_IP3516HS_USBCMD_LPM_RWU_MASK);
-                portStatus |= (usbHostState->hirdValue << USB_HOST_IP3516HS_USBCMD_HIRD_SHIFT) |
-                              (usbHostState->L1remoteWakeupEnable << USB_HOST_IP3516HS_USBCMD_LPM_RWU_SHIFT);
+                portStatus |= (uint32_t)(
+                    ((uint32_t)usbHostState->hirdValue << USB_HOST_IP3516HS_USBCMD_HIRD_SHIFT) |
+                    ((uint32_t)usbHostState->L1remoteWakeupEnable << USB_HOST_IP3516HS_USBCMD_LPM_RWU_SHIFT));
                 usbHostState->usbRegBase->USBCMD = portStatus;
-                portStatus                       = usbHostState->usbRegBase->PORTSC1;
-                portStatus &= ~(USB_HOST_IP3516HS_PORTSC1_WIC | USB_HOST_IP3516HS_PORTSC1_SUS_L1_MASK |
-                                USB_HOST_IP3516HS_PORTSC1_DEV_ADD_MASK);
+
                 usb_host_device_instance_t *deviceInstance;
 
                 usbHostState->busSuspendStatus = (uint8_t)kBus_Ip3516HsL1StartSleep;
 
                 deviceInstance = (usb_host_device_instance_t *)hostPointer->suspendedDevice;
-                usbHostState->usbRegBase->PORTSC1 |=
-                    USB_HOST_IP3516HS_PORTSC1_SUSP_MASK | USB_HOST_IP3516HS_PORTSC1_SUS_L1_MASK |
-                    ((deviceInstance->setAddress << USB_HOST_IP3516HS_PORTSC1_DEV_ADD_SHIFT) &
-                     USB_HOST_IP3516HS_PORTSC1_DEV_ADD_MASK);
+                usbHostState->usbRegBase->PORTSC1 |= (uint32_t)(
+                    (uint32_t)USB_HOST_IP3516HS_PORTSC1_SUSP_MASK | (uint32_t)USB_HOST_IP3516HS_PORTSC1_SUS_L1_MASK |
+                    (((uint32_t)deviceInstance->setAddress << USB_HOST_IP3516HS_PORTSC1_DEV_ADD_SHIFT) &
+                     (uint32_t)USB_HOST_IP3516HS_PORTSC1_DEV_ADD_MASK));
 #if (defined(FSL_FEATURE_USBHSH_VERSION) && (FSL_FEATURE_USBHSH_VERSION >= 300U))
 #else
-                while ((0U == (usbHostState->usbRegBase->PORTSC1 & USB_HOST_IP3516HS_PORTSC1_SUSP_MASK)) &&
-                       (0U == (usbHostState->usbRegBase->PORTSC1 & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK)))
+                while (0U == (usbHostState->usbRegBase->PORTSC1 &
+                              (uint32_t)((uint32_t)USB_HOST_IP3516HS_PORTSC1_SUSP_MASK |
+                                         (uint32_t)USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK)))
                 {
                     __NOP();
                 }
@@ -906,7 +906,7 @@ static usb_status_t USB_HostIp3516HsPortChange(usb_host_ip3516hs_state_struct_t 
                     usb_host_instance_t *hostPointer = (usb_host_instance_t *)usbHostState->hostHandle;
                     portStatus                       = usbHostState->usbRegBase->PORTSC1;
 
-                    if ((usbHostState->usbRegBase->PORTSC1 & USB_HOST_IP3516HS_PORTSC1_SUSP_MASK) &&
+                    if ((0U != (usbHostState->usbRegBase->PORTSC1 & USB_HOST_IP3516HS_PORTSC1_SUSP_MASK)) &&
                         (0x00U == ((portStatus & USB_HOST_IP3516HS_PORTSC1_SUS_STAT_MASK) >>
                                    USB_HOST_IP3516HS_PORTSC1_SUS_STAT_SHIFT)))
                     {
@@ -952,6 +952,10 @@ static usb_status_t USB_HostIp3516HsPortChange(usb_host_ip3516hs_state_struct_t 
 #else
 
 #endif
+                else
+                {
+                    /* no action */
+                }
 #endif
 #endif
                 break;
@@ -1285,7 +1289,7 @@ static usb_status_t USB_HostIp3516BaudWidthCheck(usb_host_ip3516hs_state_struct_
 
     if (USB_SPEED_HIGH != speed)
     {
-        uint32_t thinkTime;
+        uint32_t thinkTime  = 0U;
         pipe->busNoneHsTime = (uint16_t)USB_HostIp3516HsBusTime(
             speed, pipe->pipeCommon.pipeType, pipe->pipeCommon.direction, pipe->pipeCommon.maxPacketSize);
         (void)USB_HostHelperGetPeripheralInformation(pipe->pipeCommon.deviceHandle, (uint32_t)kUSB_HostGetHubThinkTime,

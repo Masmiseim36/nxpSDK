@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -107,15 +107,14 @@
 *******************************************************************************/
 
 /* control byte (the first byte in each CAN message) */
-#define FMSTR_CANCTL_TGL 0x80   /* toggle bit, first message clear, then toggles */
-#define FMSTR_CANCTL_M2S 0x40   /* master to slave direction */
-#define FMSTR_CANCTL_FST 0x20   /* first CAN message of FreeMASTER packet */
-#define FMSTR_CANCTL_LST 0x10   /* last CAN message of FreeMASTER packet */
-#define FMSTR_CANCTL_SPC 0x08   /* special command (in data[1], handled by CAN sublayer (no FM protocol decode) */
-#define FMSTR_CANCTL_LEN_MASK 0x07   /* number of data bytes after the CTL byte (0..7) */
+#define FMSTR_CANCTL_TGL 0x80U   /* toggle bit, first message clear, then toggles */
+#define FMSTR_CANCTL_M2S 0x40U   /* master to slave direction */
+#define FMSTR_CANCTL_FST 0x20U   /* first CAN message of FreeMASTER packet */
+#define FMSTR_CANCTL_LST 0x10U   /* last CAN message of FreeMASTER packet */
+#define FMSTR_CANCTL_SPC 0x08U   /* special command (in data[1], handled by CAN sublayer (no FM protocol decode) */
+#define FMSTR_CANCTL_LEN_MASK 0x07U   /* number of data bytes after the CTL byte (0..7) */
 
 /* special commands */
-#define FMSTR_CANSPC_PING 0xc0
+#define FMSTR_CANSPC_PING 0xC0U
 
 #endif /* __FREEMASTER_PROTOCOL_H */
-

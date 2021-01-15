@@ -1,5 +1,5 @@
 /** @file
- * Copyright (c) 2019, Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2019-2020, Arm Limited or its affiliates. All rights reserved.
  * SPDX-License-Identifier : Apache-2.0
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,14 +27,15 @@ const client_test_t test_c060_crypto_list[] = {
     NULL,
 };
 
-static int g_test_count = 1;
+static uint32_t g_test_count = 1;
 
-int32_t psa_aead_abort_test(caller_security_t caller)
+int32_t psa_aead_abort_test(caller_security_t caller __UNUSED)
 {
     int32_t               i, status;
     int                   num_checks = sizeof(check1)/sizeof(check1[0]);
     psa_key_attributes_t  attributes = PSA_KEY_ATTRIBUTES_INIT;
     psa_aead_operation_t  operation = PSA_AEAD_OPERATION_INIT;
+    psa_key_handle_t      key_handle;
 
     if (num_checks == 0)
     {
@@ -48,8 +49,6 @@ int32_t psa_aead_abort_test(caller_security_t caller)
 
     for (i = 0; i < num_checks; i++)
     {
-        psa_key_handle_t            key_handle = check1[i].key_handle; //NXP
-        
         val->print(PRINT_TEST, "[Check %d] ", g_test_count++);
         val->print(PRINT_TEST, check1[i].test_desc, 0);
 
@@ -87,11 +86,11 @@ int32_t psa_aead_abort_test(caller_security_t caller)
     return VAL_STATUS_SUCCESS;
 }
 
-int32_t psa_aead_abort_init_test(caller_security_t caller)
+int32_t psa_aead_abort_init_test(caller_security_t caller __UNUSED)
 {
     int32_t               i, status;
     psa_aead_operation_t  operation[] = {PSA_AEAD_OPERATION_INIT, psa_aead_operation_init(), {0} };
-    uint32_t              operation_count = sizeof(operation)/sizeof(operation[0]);
+    int32_t               operation_count = sizeof(operation)/sizeof(operation[0]);
 
     /* Initialize the PSA crypto library*/
     status = val->crypto_function(VAL_CRYPTO_INIT);

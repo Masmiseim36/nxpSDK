@@ -1,0 +1,168 @@
+//
+// Copyright 2020 NXP
+//
+// NXP Confidential. This software is owned or controlled by NXP and may only
+// be used strictly in accordance with the applicable license terms found in
+// file LICENSE.txt
+
+// ** DO NOT MODIFY THIS SECTION **
+// EAP API version: 2.4
+
+// *****************************
+// Simulation Control parameters
+// *****************************
+// Read write file
+105                 // The number of arguments in the file, including this one
+..\W32_Simulation\In\EAP_demo_48000_2ch_short_loudnessMaximiser.pcm
+..\W32_Simulation\OutW32\EAP_demo_48000_2ch_short_LoudnessMaximiser_OUT.pcm
+
+// *****************************
+// EAP Instance parameters
+// *****************************
+480                 // Block size: (0 to 1024) 0 for random block sizes
+MANAGED             // Buffer management: MANAGED or UNMANAGED
+
+// PSA instance parameters
+1000                  // PSA History size (200-5000)ms
+64                    // PSA maximum number of Bands (6-64)
+25                    // PSA Update rate (10-25)
+ON                    // PSA Include in memory allocation ON/OFF
+
+
+// HeadRoom instance parameters
+HEADROOM_OFF	      // headroom management: HEADROOM_ON or HEADROOM_OFF 
+2                     // headroom number of band (0 to 5)
+20                    // headroom Low    ( 20 to 24000 Hz)
+4999                  // headroom High   ( 20 to 24000 Hz)
+3                     // headroom Offset (-15 to    15 dB) 
+5000                  // headroom Low    ( 20 to 24000 Hz)
+24000                 // headroom High   ( 20 to 24000 Hz)
+5                     // headroom Offset (-15 to    15 dB) 
+
+// *****************************
+// Emulator settings
+// *****************************
+// Emulator parameters
+1                     // Malloc alignment offset
+0                     // Event Time
+NO                    // Call No Volume Smoothing between 2 configurations: YES or NO
+YES                   // Call Clear AudioBuffers between 2 configurations : YES or NO
+INPLACE               // Buffer processing: INPLACE or OUTPLACE
+
+// *****************************
+// Simulation Control parameters
+// *****************************
+// EAP Control parameters
+ON 		      		  // EAP operating mode: ON or OFF
+48000		          // Sample rate: 8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100 or 48000
+STEREO		          // Input file format: MONO, MONOINSTEREO, STEREO
+HEADPHONE   	      // CS output device: HEADPHONE, MS_SMALL, MS_MEDIUM or MS_LARGE
+
+// Virtualizer parameters
+OFF                   // Virtualizer operating mode: ON or OFF
+CONCERTSOUND 	      // Virtualizer media type: CONCERTSOUND
+75                    // Virtualizer reverb level: from 0%  to 100%
+32767                 // CS effect level: CS_EFFECT_LOW=16384, CS_EFFECT_MEDIUM=24576 or CS_EFFECT_HIGH=32767
+AP_DEFAULT   	      // Concert sound advanced parameter AP_DEFAULT AP_MANUAL
+0                     // Speaker virtualizer mid channel gain (-10 to 10 dB)
+500                   // Speaker virtualizer mid channel corner frequency (20 to 24000 Hz)
+600                   // Speaker virtualizer side channel HPF (20 to 24000 Hz)
+1544                  // Speaker virtualizer side channel LPF (20 to 24000 Hz)
+10                    // Speaker virtualizer side channel gain (0 to 15 dB)
+
+// Bass enhancement parameters
+BE_OFF                // BE operating mode: BE_ON or BE_OFF
+15                    // BE effect level: 0 to 15 in dB
+BE_CENTRE_55          // BE centre frequency: BE_CENTRE_55, BE_CENTRE_66, BE_CENTRE_78 or BE_CENTRE_90
+BE_HPF_OFF            // BE high pass filter: BE_HPF_ON or BE_HPF_OFF
+
+// Volume control parameters
+-3                     // Volume in dB: -90 to 0
+0                     // Volume Balance
+
+// Treble boost parameters
+TREBLE_OFF            // Treble Boost operating mode: TREBLE_ON or TREBLE_OFF
+9                     // Treble boost level, 0 (Off) to 15 or LVM_TE_LOW_MIPS
+
+// Loudness Maximiser parameters
+LM_ON               // Loudness Maximiser operating mode: LM_ON or LM_OFF
+MEDIUM               // Loudness Maximiser effect level: GENTLE, MEDIUM or EXTREME
+0                    // Loudness Maximiser output attenuation: 0 to 6 in dB
+6                    // Loudness Maximiser output compressor gain: 0 to 6 in dB
+250                  // Loudness Maximiser speaker cutofff frequency (range 150Hz to 1100 Hz & 0 to disable)
+
+// AVL parameters
+AVL_OFF                // AVL operating mode: AVL_OFF or AVL_ON
+
+// Tone Generator
+TG_OFF   	          // TG operating mode: TG_OFF, TG_CONTINUOUS or TG_ONESHOT
+TG_LOG                // Sweep mode: TG_LIN or TG_LOG
+20                    // Start frequency in Hz(20 - 24000)
+-48                   // Start amplitude in dBr(-96 - 0)
+22000                 // Stop frequency in Hz (20 - 24000)  
+-45                   // Stop amplitude in dBr (-96 - 0)
+1                     // Sweep duration in seconds, 0 for infinite duration tone
+
+// PSA Parameters
+EAP_PSA_Output.dat    // Test output file path and name
+SLOW                  // PSA Decay Rate (SLOW/MEDIUM/FAST)
+32            	      // PSA Number of Bands (6-64)
+ON                    // PSA Enable (ON/OFF)
+
+// Peak Limiter Parameters
+LIMP_OFF              // LIMP Operating mode
+-3                    // LIMP Threshold (-24 to 0 dB) 
+
+// RMS Limiter Parameters
+LIMR_OFF              // LIMR Operating mode
+0DBFS		          // reference source INPUT or 0DBFS
+-24                   // LIMR Threshold (-24 to 0 dB) 
+
+// CROSS OVER Parameters
+COV_OFF			    // COV Oprating Mode
+COV_BUTTER_1	 	// Filter type and order (COV_BUTTER_1)
+2000 	 			// Split band frequency (20 to 24000 Hz)
+
+// USER EQNB Equaliser parameters
+EQNB_OFF              // N-Band equaliser operating mode: EQNB_ON or EQNB_OFF
+LPF_OFF               // LPF operating mode: LPF_OFF or LPF_ON
+20000                 // LPF corner frequency in Hz: 1kHz to Nyquist
+HPF_OFF               // HPF operating mode: HPF_OFF or HPF_ON
+20                    // Speaker HighPass Corner Frequency 20Hz to 1kHz
+4                     // Number of bands used
+10                    // Band gain in dB       (-15 to +15 dB)
+50                    // Band centre frequency (20 to 24000 Hz)
+96                    // Band Q (x100)		(25 to 1200)
+10                    // Band gain in dB
+205                   // Band centre frequency
+96                    // Band Q (x100)
+8                     // Band gain in dB
+837                   // Band centre frequency
+96                    // Band Q (x100)
+10                    // Band gain in dB
+3427                  // Band centre frequency
+96                    // Band Q (x100)
+
+// PRODUCT EQNB Equaliser parameters
+EQNB_OFF              // N-Band equaliser operating mode: EQNB_ON or EQNB_OFF
+LPF_OFF               // LPF operating mode: LPF_OFF or LPF_ON
+5000                  // LPF corner frequency in Hz: 1kHz to Nyquist
+HPF_OFF               // Speaker HighPass Mode: HPF_ON or HPF_OFF
+1000                  // Speaker HighPass Corner Frequency 20Hz to 1kHz
+4                     // Number of bands used
+0                     // Band gain in dB       (-15 to +3 dB)
+50                    // Band centre frequency (20 to 24000 Hz)
+96                    // Band Q (x100)		(25 to 1200)
+0                     // Band gain in dB
+205                   // Band centre frequency
+96                    // Band Q (x100)
+0                     // Band gain in dB
+837                   // Band centre frequency
+96                    // Band Q (x100)
+0                     // Band gain in dB
+3427                  // Band centre frequency
+96                    // Band Q (x100)
+
+// **** End Event #0 ****
+
+// ******* Simulation Control parameters ***************

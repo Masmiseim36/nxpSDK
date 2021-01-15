@@ -1,5 +1,5 @@
 /*
- * Copyright  2019 NXP
+ * Copyright  2020 NXP
  * All rights reserved.
  *
  *
@@ -41,15 +41,18 @@ status_t HAL_CODEC_Init(void *handle, void *config)
 {
     assert((config != NULL) && (handle != NULL));
 
+    status_t ret                = kStatus_Success;
     codec_config_t *codecConfig = (codec_config_t *)config;
 
-    cs42888_config_t *cs42888Config = (cs42888_config_t *)(codecConfig->codecDevConfig);
-    cs42888_handle_t *cs42888Handle = (cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
+    cs42888_config_t *devConfig = (cs42888_config_t *)(codecConfig->codecDevConfig);
+    cs42888_handle_t *devHandle = (cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
 
     /* load codec capability */
     ((codec_handle_t *)handle)->codecCapability = &s_cs42888_capability;
     /* codec device initialization */
-    return CS42888_Init(cs42888Handle, cs42888Config);
+    ret = CS42888_Init(devHandle, devConfig);
+
+    return ret;
 }
 
 /*!
@@ -93,13 +96,13 @@ status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, u
 status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume)
 {
     assert(handle != NULL);
-    uint32_t i           = 0U;
+    uint8_t i            = 0U;
     status_t ret         = kStatus_Success;
     uint8_t mappedVolume = 0;
 
-    for (i = 0U; i < kCS42888_AOUT8; i++)
+    for (i = 0U; i < (uint8_t)kCS42888_AOUT8; i++)
     {
-        if ((playChannel & (1U << i)) == 0U)
+        if ((playChannel & (1UL << i)) == 0U)
         {
             continue;
         }
@@ -112,8 +115,8 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
         else
         {
             /* 1 is mapped t0 255, 100 is mapped to 0 */
-            mappedVolume =
-                CS42888_AOUT_MAX_VOLUME_VALUE - ((volume - 1U) * (CS42888_AOUT_MAX_VOLUME_VALUE + 3U)) / 100U;
+            mappedVolume = (uint8_t)(CS42888_AOUT_MAX_VOLUME_VALUE -
+                                     ((volume - 1U) * (CS42888_AOUT_MAX_VOLUME_VALUE + 3U)) / 100U);
 
             ret = CS42888_SetAOUTVolume((cs42888_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
                                         i + 1U, mappedVolume);
@@ -145,12 +148,12 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
 status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
 {
     assert(handle != NULL);
-    uint32_t i   = 0U;
+    uint8_t i    = 0U;
     status_t ret = kStatus_Success;
 
-    for (i = 0U; i < kCS42888_AOUT8; i++)
+    for (i = 0U; i < (uint8_t)kCS42888_AOUT8; i++)
     {
-        if ((playChannel & (1U << i)) == 0U)
+        if ((playChannel & (1UL << i)) == 0U)
         {
             continue;
         }

@@ -1,9 +1,9 @@
-/* This linker script generated from xt-genldscripts.tpp for LSP C:/usr/xtensa/Xplorer-8.0.10-workspaces/workspace/XtensaInfo/Models/nxp_rt600_RI2019_lsp_memmap/min-rt */
+/* This linker script generated from xt-genldscripts.tpp for LSP C:/usr/xtensa/Xplorer-8.0.10-workspaces/XtensaInfo/Models/nxp_rt600_sram_memmap/min-rt */
 /* Linker Script for default link */
 MEMORY
 {
   dsp_core_seg :                      	org = 0x00200000, len = 0x280000
-  dsp_uncached_seg :                  	org = 0x20040000, len = 0x40000
+  dsp_uncached_seg :                  	org = 0x20060000, len = 0x10000
   dram0_0_seg :                       	org = 0x24000000, len = 0x10000
   iram0_0_seg :                       	org = 0x24020000, len = 0x400
   iram0_1_seg :                       	org = 0x24020400, len = 0x17C
@@ -20,7 +20,6 @@ PHDRS
 {
   dsp_core_phdr PT_LOAD;
   dsp_core_bss_phdr PT_LOAD;
-  rpmsg_phdr PT_LOAD;
   dsp_uncached_phdr PT_LOAD;
   dram0_0_phdr PT_LOAD;
   dram0_0_bss_phdr PT_LOAD;
@@ -53,8 +52,8 @@ _memmap_mem_sram_uncached_end   = 0x20480000;
 /*  Memory segment boundary addresses:  */
 _memmap_seg_dsp_core_start = 0x200000;
 _memmap_seg_dsp_core_max   = 0x480000;
-_memmap_seg_dsp_uncached_start = 0x20040000;
-_memmap_seg_dsp_uncached_max   = 0x20080000;
+_memmap_seg_dsp_uncached_start = 0x20060000;
+_memmap_seg_dsp_uncached_max   = 0x20070000;
 _memmap_seg_dram0_0_start = 0x24000000;
 _memmap_seg_dram0_0_max   = 0x24010000;
 _memmap_seg_iram0_0_start = 0x24020000;
@@ -100,7 +99,6 @@ PROVIDE(_memmap_cacheattr_reset = _memmap_cacheattr_wb_trapnull);
 
 SECTIONS
 {
-
 
   NonCacheable.init : ALIGN(4)
   {

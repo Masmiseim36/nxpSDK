@@ -84,7 +84,7 @@ typedef enum _puf_key_slot
 {
     kPUF_KeySlot0 = 0U, /*!< PUF key slot 0 */
     kPUF_KeySlot1 = 1U, /*!< PUF key slot 1 */
-#if defined(FSL_FEATURE_PUF_HAS_KEYSLOTS) && (FSL_FEATURE_PUF_HAS_KEYSLOTS > 2)
+#if defined(PUF_KEYMASK_COUNT) && (PUF_KEYMASK_COUNT > 2)
     kPUF_KeySlot2 = 2U, /*!< PUF key slot 2 */
     kPUF_KeySlot3 = 3U, /*!< PUF key slot 3 */
 #endif
@@ -280,15 +280,33 @@ status_t PUF_Zeroize(PUF_Type *base);
  */
 bool PUF_IsGetKeyAllowed(PUF_Type *base);
 
+#if defined(PUF_CFG_BLOCKKEYOUTPUT_MASK) && PUF_CFG_BLOCKKEYOUTPUT_MASK
 static inline void PUF_BlockSetKey(PUF_Type *base)
 {
     base->CFG |= PUF_CFG_BLOCKKEYOUTPUT_MASK; /* block set key */
 }
+#endif /* PUF_CFG_BLOCKKEYOUTPUT_MASK */
 
+#if defined(PUF_CFG_PUF_BLOCK_SET_KEY_MASK) && PUF_CFG_PUF_BLOCK_SET_KEY_MASK
+static inline void PUF_BlockSetKey(PUF_Type *base)
+{
+    base->CFG |= PUF_CFG_PUF_BLOCK_SET_KEY_MASK; /* block set key */
+}
+#endif /* PUF_CFG_PUF_BLOCK_SET_KEY_MASK */
+
+#if defined(PUF_CFG_BLOCKENROLL_SETKEY_MASK) && PUF_CFG_BLOCKENROLL_SETKEY_MASK
 static inline void PUF_BlockEnroll(PUF_Type *base)
 {
     base->CFG |= PUF_CFG_BLOCKENROLL_SETKEY_MASK; /* block enroll */
 }
+#endif /* PUF_CFG_BLOCKENROLL_SETKEY_MASK */
+
+#if defined(PUF_CFG_PUF_BLOCK_ENROLL_MASK) && PUF_CFG_PUF_BLOCK_ENROLL_MASK
+static inline void PUF_BlockEnroll(PUF_Type *base)
+{
+    base->CFG |= PUF_CFG_PUF_BLOCK_ENROLL_MASK; /* block enroll */
+}
+#endif /* PUF_CFG_PUF_BLOCK_ENROLL_MASK */
 
 /*!
  * @brief Powercycle PUF

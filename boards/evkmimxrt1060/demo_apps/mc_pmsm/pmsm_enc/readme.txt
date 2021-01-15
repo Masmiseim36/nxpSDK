@@ -7,7 +7,7 @@ The reference design uses a closed-loop field-oriented vector speed (FOC) contro
 More information
 ================
 - Release note is in SDK install folder\docs\MC\Release_notes.pdf.
-- Application User's guide is in SDK install folder\docs\MC\PMSMDEMOUG.pdf.
+- Application User's guide is in SDK install folder\docs\MC\3PPMSMCRTUG.pdf.
 - Application page: http://www.nxp.com/motorcontrol_pmsm.
 
 Running the demo

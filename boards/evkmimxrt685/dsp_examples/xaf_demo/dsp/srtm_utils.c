@@ -160,6 +160,22 @@ void DSP_SendFileEnd(dsp_handle_t *dsp)
     xos_mutex_unlock(&dsp->rpmsgMutex);
 }
 
+void DSP_SendFileError(dsp_handle_t *dsp)
+{
+    srtm_message msg = {0};
+
+    msg.head.type         = SRTM_MessageTypeRequest;
+    msg.head.majorVersion = SRTM_VERSION_MAJOR;
+    msg.head.minorVersion = SRTM_VERSION_MINOR;
+
+    msg.head.category = SRTM_MessageCategory_AUDIO;
+    msg.head.command  = SRTM_Command_FileError;
+
+    xos_mutex_lock(&dsp->rpmsgMutex);
+    rpmsg_lite_send(dsp->rpmsg, dsp->ept, MCU_EPT_ADDR, (char *)&msg, sizeof(srtm_message), RL_DONT_BLOCK);
+    xos_mutex_unlock(&dsp->rpmsgMutex);
+}
+
 int DSP_BufferThread(void *arg, int wake_value)
 {
     dsp_handle_t *ctx = (dsp_handle_t *)arg;
@@ -234,6 +250,9 @@ int DSP_ProcessThread(void *arg, int wake_value)
         if (ret != XAF_NO_ERROR)
         {
             DSP_PRINTF("[DSP_ProcessThread] xaf_comp_get_status failure: %d\r\n", ret);
+            ctx->file_playing = false;
+            DSP_PRINTF("[DSP_ProcessThread] Error, exiting\r\n");
+            DSP_SendFileError(ctx);
             return -1;
         }
 

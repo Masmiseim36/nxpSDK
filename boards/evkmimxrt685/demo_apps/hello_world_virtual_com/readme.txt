@@ -1,18 +1,16 @@
 Overview
 ========
-The Hello World demo application provides a sanity check for the new SDK build environments and board bring up. The Hello
-World demo prints the "Hello World" string to the terminal using the SDK UART drivers. The purpose of this demo is to
-show how to use the UART, and to provide a simple project for debugging and further development.
-Note: Please input one character at a time. If you input too many characters each time, the receiver may overflow
-because the low level UART uses simple polling way for receiving. If you want to try inputting many characters each time,
-just define DEBUG_CONSOLE_TRANSFER_NON_BLOCKING in your project to use the advanced debug console utility.
+Hello World Virtual Com demonstrates the use of virtual com to print the "Hello World" string to the terminal.
+Different with Hello World demo (a HW UART peripheral is used to transmit data), the demo transmits data based on
+a serial port simulated by the USB device stack on target board side via USB peripheral.
+The purpose of this demo is to demonstrate how to use virtual com and provide a simple project for debugging and further development. 
 
 Toolchain supported
 ===================
-- Keil MDK  5.31
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.5
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+- IAR embedded Workbench  8.50.9
 
 Hardware requirements
 =====================
@@ -33,7 +31,7 @@ Prepare the Demo
 3.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 4.  A COM port is enumerated in the Device Manager. If it prompts for CDC driver installation, please reference the virtual_com_readme.pdf which can be found at below directory:
     In Release package: <install_dir>\devices\<soc>\utilities\virtual_com_readme.pdf .to install the CDC driver.
-5.  Open the COM port in a terminal tool, such as TeraTerm, SSCOM, Putty, Putty is recommanded while virtual com
+5.  Open the COM port in a terminal tool, such as TeraTerm, SSCOM, Putty, Putty is recommended while virtual com
 is used.
 6.  Then user can communicate with target boards through virtual com.
 

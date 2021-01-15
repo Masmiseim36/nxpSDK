@@ -11,7 +11,7 @@
 **
 **     Reference manual:    IMXRT1024RM Rev.0, 09/2020 | IMXRT102xSRM Rev.0
 **     Version:             rev. 0.1, 2020-01-15
-**     Build:               b200509
+**     Build:               b201016
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -36,8 +36,8 @@
 
 /*!
  * @file MIMXRT1024
- * @version 1.0
- * @date 090520
+ * @version 0.1
+ * @date 2020-01-15
  * @brief Device specific configuration file for MIMXRT1024 (implementation file)
  *
  * Provides a system configuration function and a global variable that contains
@@ -101,19 +101,19 @@ void SystemInit (void) {
 #endif /* #if defined(XIP_BOOT_HEADER_ENABLE) && (XIP_BOOT_HEADER_ENABLE == 1) */
 
 /* Disable Watchdog Power Down Counter */
-WDOG1->WMCR &= ~WDOG_WMCR_PDE_MASK;
-WDOG2->WMCR &= ~WDOG_WMCR_PDE_MASK;
+    WDOG1->WMCR &= ~(uint16_t) WDOG_WMCR_PDE_MASK;
+    WDOG2->WMCR &= ~(uint16_t) WDOG_WMCR_PDE_MASK;
 
 /* Watchdog disable */
 
 #if (DISABLE_WDOG)
     if ((WDOG1->WCR & WDOG_WCR_WDE_MASK) != 0U)
     {
-        WDOG1->WCR &= ~WDOG_WCR_WDE_MASK;
+        WDOG1->WCR &= ~(uint16_t) WDOG_WCR_WDE_MASK;
     }
     if ((WDOG2->WCR & WDOG_WCR_WDE_MASK) != 0U)
     {
-        WDOG2->WCR &= ~WDOG_WCR_WDE_MASK;
+        WDOG2->WCR &= ~(uint16_t) WDOG_WCR_WDE_MASK;
     }
     if ((RTWDOG->CS & RTWDOG_CS_CMD32EN_MASK) != 0U)
     {
@@ -177,7 +177,7 @@ void SystemCoreClockUpdate (void) {
     }
     else
     {
-        PLL3MainClock = (CPU_XTAL_CLK_HZ * ((CCM_ANALOG->PLL_USB1 & CCM_ANALOG_PLL_USB1_DIV_SELECT_MASK) ? 22U : 20U));
+        PLL3MainClock = (CPU_XTAL_CLK_HZ * (((CCM_ANALOG->PLL_USB1 & CCM_ANALOG_PLL_USB1_DIV_SELECT_MASK) != 0U) ? 22U : 20U));
     }
 
     /* Periph_clk2_clk ---> Periph_clk */

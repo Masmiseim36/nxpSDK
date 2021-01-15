@@ -24,6 +24,8 @@
  */
 
 /* Board specific includes. */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 /* Trustzone config. */
@@ -32,8 +34,6 @@
 /* FreeRTOS includes. */
 #include "secure_port_macros.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

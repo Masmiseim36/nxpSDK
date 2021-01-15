@@ -8,10 +8,10 @@ In this example, a flexio simulated master connect to a lpspi slave .
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  9.2.1
-- Keil MDK  5.31
-- IAR embedded Workbench  8.50.5
-- MCUXpresso  11.2.0
+- GCC ARM Embedded  9.3.1
+- Keil MDK  5.33
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
 
 Board settings
 ==============

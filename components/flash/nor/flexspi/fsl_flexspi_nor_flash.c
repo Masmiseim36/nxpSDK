@@ -2001,7 +2001,7 @@ static status_t FLEXSPI_NOR_PrepareQuadModeEnableSequence(nor_handle_t *handle,
                 else
                 {
                     /* Update LUT table to read busy status in status register1. */
-                    if (kSerialNorQuadMode_StatusReg1_Bit6 != enter_quad_mode_option)
+                    if ((uint32_t)kSerialNorQuadMode_StatusReg1_Bit6 != enter_quad_mode_option)
                     {
                         lut_seq[0] = FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, kSerialNorCmd_ReadStatusReg1,
                                                      kFLEXSPI_Command_READ_SDR, kFLEXSPI_1PAD, 1);
@@ -2064,15 +2064,10 @@ static status_t FLEXSPI_NOR_PrepareQuadModeEnableSequence(nor_handle_t *handle,
                     else
                     {
                         /* Update LUT table to read busy status in status register1. */
-                        if (kSerialNorQuadMode_StatusReg1_Bit6 != enter_quad_mode_option)
-                        {
-                            lut_seq[0] =
-                                FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, kSerialNorCmd_ReadStatusReg1,
-                                                kFLEXSPI_Command_READ_SDR, kFLEXSPI_1PAD, 1);
-                            FLEXSPI_UpdateLUT((FLEXSPI_Type *)handle->driverBaseAddr,
-                                              NOR_CMD_LUT_SEQ_IDX_READSTATUS * 4U, lut_seq,
-                                              sizeof(lut_seq) / sizeof(lut_seq[0]));
-                        }
+                        lut_seq[0] = FLEXSPI_LUT_SEQ(kFLEXSPI_Command_SDR, kFLEXSPI_1PAD, kSerialNorCmd_ReadStatusReg1,
+                                                     kFLEXSPI_Command_READ_SDR, kFLEXSPI_1PAD, 1);
+                        FLEXSPI_UpdateLUT((FLEXSPI_Type *)handle->driverBaseAddr, NOR_CMD_LUT_SEQ_IDX_READSTATUS * 4U,
+                                          lut_seq, sizeof(lut_seq) / sizeof(lut_seq[0]));
                     }
                 }
 
@@ -2312,7 +2307,7 @@ static status_t FLEXSPI_NOR_ExitQuadMode(nor_handle_t *handle, flexspi_mem_confi
     if (status == kStatus_Success)
     {
         FLEXSPI_UpdateLUT((FLEXSPI_Type *)handle->driverBaseAddr, NOR_CMD_LUT_SEQ_IDX_WRITECONFIG * 4U,
-                          &config->lookupTable[4U * NOR_CMD_LUT_SEQ_IDX_WRITECONFIG], 4U * seqNumber);
+                          &config->lookupTable[4U * NOR_CMD_LUT_SEQ_IDX_WRITECONFIG], 4UL * (uint32_t)seqNumber);
 
         flashXfer.deviceAddress = 0;
         flashXfer.port          = port;
@@ -2344,7 +2339,7 @@ static status_t FLEXSPI_NOR_MacronixEnterOctalMode(nor_handle_t *handle,
     flexspi_transfer_t flashXfer;
     flexspi_mem_nor_handle_t *memHandle              = (flexspi_mem_nor_handle_t *)handle->deviceSpecific;
     flexspi_port_t port                              = memHandle->port;
-    uint8_t writeConfigRegCmd                        = tbl->xspi_profile_1_tb1.cmd_8d_8d_8d_inst.write_volatile_reg_cmd;
+    uint32_t writeConfigRegCmd                       = tbl->xspi_profile_1_tb1.cmd_8d_8d_8d_inst.write_volatile_reg_cmd;
     jedec_basic_flash_param_table_t *basicFlashTable = &tbl->basic_flash_param_tbl;
     uint32_t lut_seq[4];
 
@@ -2552,6 +2547,11 @@ static status_t FLEXSPI_NOR_MacronixEnterOctalMode(nor_handle_t *handle,
 
             status = FLEXSPI_NOR_WriteEnable((FLEXSPI_Type *)handle->driverBaseAddr, port, 0);
 
+            if (status != kStatus_Success)
+            {
+                return status;
+            }
+
             /* Enable DDR mode */
             uint32_t enableDdrMode = 0x88U;
 
@@ -2683,7 +2683,7 @@ static status_t FLEXSPI_NOR_CheckCommandModeAvailability(nor_handle_t *handle,
     flexspi_port_t port                 = memHandle->port;
     uint8_t readValue[4]                = {0x55U, 0x55U, 0x55U, 0x55U};
     uint8_t currentCommandMode          = (uint8_t)config->CurrentCommandMode;
-    uint8_t readConfigRegCmd            = tbl->xspi_profile_1_tb1.cmd_8d_8d_8d_inst.read_volatile_reg_cmd;
+    uint32_t readConfigRegCmd           = tbl->xspi_profile_1_tb1.cmd_8d_8d_8d_inst.read_volatile_reg_cmd;
     uint32_t manufacturerId             = config->manufacturerId;
     flexspi_transfer_t flashXfer;
 

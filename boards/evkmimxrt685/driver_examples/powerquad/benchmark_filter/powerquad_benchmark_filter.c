@@ -6,6 +6,8 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_powerquad.h"
 #include "arm_math.h"
@@ -16,8 +18,6 @@
  * The result could be compared with the software method using CMSIS DSP.
  */
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_power.h"
 /*******************************************************************************
  * Definitions
@@ -120,7 +120,7 @@ int main(void)
     /* Apply power setting. */
     POWER_ApplyPD();
 
-    PRINTF("\r\n CMSIS DSP benchmark filter test start.\r\n");
+    PRINTF("\r\nCMSIS DSP benchmark filter test start.\r\n");
 
     PQ_Init(POWERQUAD);
 

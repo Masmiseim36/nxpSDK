@@ -19,7 +19,6 @@
 #define FLASH_SECTOR_SIZE 0x1000 /* 4K */
 
 #define LFS_FIRST_SECTOR 1024 /* use second half of the flash */
-#define LFS_SECTORS      1024
 
 #define NOR_CMD_LUT_SEQ_IDX_READ_NORMAL        0
 #define NOR_CMD_LUT_SEQ_IDX_READ_FAST          1

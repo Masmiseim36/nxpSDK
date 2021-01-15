@@ -155,10 +155,20 @@ typedef t_s32 t_sval;
 /** Default Win size attached during ADDBA response */
 #define MLAN_STA_AMPDU_DEF_RXWINSIZE 32
 #endif
+#ifdef SD8801
 /** Default Win size attached during ADDBA request */
-#define MLAN_UAP_AMPDU_DEF_TXWINSIZE 32
+#define MLAN_UAP_AMPDU_DEF_TXWINSIZE 8
+#else
+/** Default Win size attached during ADDBA request */
+#define MLAN_UAP_AMPDU_DEF_TXWINSIZE 16
+#endif
+#ifdef SD8801
 /** Default Win size attached during ADDBA response */
 #define MLAN_UAP_AMPDU_DEF_RXWINSIZE 16
+#else
+/** Default Win size attached during ADDBA response */
+#define MLAN_UAP_AMPDU_DEF_RXWINSIZE 32
+#endif
 /** Block ack timeout value */
 #define MLAN_DEFAULT_BLOCK_ACK_TIMEOUT 0xffff
 /** Maximum Tx Win size configured for ADDBA request [10 bits] */
@@ -458,6 +468,52 @@ typedef struct _mlan_init_param
     /** Other custom data */
 } mlan_init_param, *pmlan_init_param;
 
+/** Channel usability flags */
+#define NXP_CHANNEL_NO_OFDM  MBIT(9)
+#define NXP_CHANNEL_NO_CCK   MBIT(8)
+#define NXP_CHANNEL_DISABLED MBIT(7)
+/* BIT 5/6 resevered for FW */
+#define NXP_CHANNEL_NOHT160 MBIT(4)
+#define NXP_CHANNEL_NOHT80  MBIT(3)
+#define NXP_CHANNEL_NOHT40  MBIT(2)
+#define NXP_CHANNEL_DFS     MBIT(1)
+#define NXP_CHANNEL_PASSIVE MBIT(0)
+
+/** CFP dynamic (non-const) elements */
+typedef struct _cfp_dyn_t
+{
+    /** extra flags to specify channel usability
+     *  bit 9 : if set, channel is non-OFDM
+     *  bit 8 : if set, channel is non-CCK
+     *  bit 7 : if set, channel is disabled
+     *  bit  5/6 resevered for FW
+     *  bit 4 : if set, 160MHz on channel is disabled
+     *  bit 3 : if set, 80MHz on channel is disabled
+     *  bit 2 : if set, 40MHz on channel is disabled
+     *  bit 1 : if set, channel is DFS channel
+     *  bit 0 : if set, channel is passive
+     */
+    t_u16 flags;
+    /** TRUE: Channel is blacklisted (do not use) */
+    t_bool blacklist;
+} cfp_dyn_t;
+
+/** Chan-Freq-TxPower mapping table*/
+typedef struct _chan_freq_power_t
+{
+    /** Channel Number */
+    t_u16 channel;
+    /** Frequency of this Channel */
+    t_u32 freq;
+    /** Max allowed Tx power level */
+    t_u16 max_tx_power;
+    /** TRUE:radar detect required for BAND A or passive scan for BAND B/G;
+     * FALSE:radar detect not required for BAND A or active scan for BAND B/G*/
+    t_bool passive_scan_or_radar_detect;
+    /** Elements associated to cfp that change at run-time */
+    cfp_dyn_t dynamic;
+} chan_freq_power_t;
+
 /** mlan_event data structure */
 typedef struct _mlan_event
 {
@@ -470,27 +526,6 @@ typedef struct _mlan_event
     /** Event buffer */
     t_u8 event_buf[1];
 } mlan_event, *pmlan_event;
-
-#ifdef EXT_SCAN_SUPPORT
-/** mlan_event_scan_result data structure */
-typedef MLAN_PACK_START struct _mlan_event_scan_result
-{
-    /** Event ID */
-    t_u16 event_id;
-    /** BSS index number for multiple BSS support */
-    t_u8 bss_index;
-    /** BSS type */
-    t_u8 bss_type;
-    /** More event available or not */
-    t_u8 more_event;
-    /** Reserved */
-    t_u8 reserved[3];
-    /** Size of the response buffer */
-    t_u16 buf_size;
-    /** Number of BSS in scan response */
-    t_u8 num_of_set;
-} MLAN_PACK_END mlan_event_scan_result, *pmlan_event_scan_result;
-#endif
 
 /** mlan_ioctl_req data structure */
 typedef struct _mlan_ioctl_req

@@ -3,13 +3,13 @@
 *        Solutions for real time microcontroller applications        *
 **********************************************************************
 *                                                                    *
-*        (c) 1996 - 2019  SEGGER Microcontroller GmbH                *
+*        (c) 1996 - 2020  SEGGER Microcontroller GmbH                *
 *                                                                    *
 *        Internet: www.segger.com    Support:  support@segger.com    *
 *                                                                    *
 **********************************************************************
 
-** emWin V6.10 - Graphical user interface for embedded applications **
+** emWin V6.14 - Graphical user interface for embedded applications **
 All  Intellectual Property rights  in the Software belongs to  SEGGER.
 emWin is protected by  international copyright laws.  Knowledge of the
 source code may not be used to write a similar product.  This file may
@@ -153,6 +153,7 @@ GUI_COLOR          RADIO_GetFocusColor(RADIO_Handle hObj);
 const GUI_FONT *   RADIO_GetFont      (RADIO_Handle hObj);
 const GUI_BITMAP * RADIO_GetImage     (RADIO_Handle hObj, unsigned int Index);
 int                RADIO_GetNumItems  (RADIO_Handle hObj);
+U16                RADIO_GetSpacing   (RADIO_Handle hObj);
 int                RADIO_GetText      (RADIO_Handle hObj, unsigned Index, char * pBuffer, int MaxLen);
 GUI_COLOR          RADIO_GetTextColor (RADIO_Handle hObj);
 int                RADIO_GetUserData  (RADIO_Handle hObj, void * pDest, int NumBytes);
@@ -162,6 +163,7 @@ GUI_COLOR          RADIO_SetFocusColor(RADIO_Handle hObj, GUI_COLOR Color);
 void               RADIO_SetFont      (RADIO_Handle hObj, const GUI_FONT * pFont);
 void               RADIO_SetGroupId   (RADIO_Handle hObj, U8 GroupId);
 void               RADIO_SetImage     (RADIO_Handle hObj, const GUI_BITMAP * pBitmap, unsigned int Index);
+void               RADIO_SetSpacing   (RADIO_Handle hObj, U16 Spacing);
 void               RADIO_SetText      (RADIO_Handle hObj, const char* pText, unsigned Index);
 void               RADIO_SetTextColor (RADIO_Handle hObj, GUI_COLOR Color);
 void               RADIO_SetValue     (RADIO_Handle hObj, int v);

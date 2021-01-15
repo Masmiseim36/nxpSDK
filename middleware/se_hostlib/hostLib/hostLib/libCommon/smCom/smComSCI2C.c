@@ -84,8 +84,7 @@ U16 smComSCI2C_Open(void *conn_ctx, U8 mode, U8 seqCnt, U8 *SCI2Catr, U16 *SCI2C
         ENSURE_OR_GO_EXIT(0);
     }
 
-    smCom_Init(&smComSCI2C_Transceive, &smComSCI2C_TransceiveRaw);
-    rv = SMCOM_OK;
+    rv = smCom_Init(&smComSCI2C_Transceive, &smComSCI2C_TransceiveRaw);
 exit:
     return rv;
 }

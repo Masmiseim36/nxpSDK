@@ -1,10 +1,10 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
 /*
  * How to setup clock using clock driver functions:
  *
@@ -26,7 +26,7 @@ product: Clocks v7.0
 processor: MIMXRT1011xxxxx
 package_id: MIMXRT1011DAE5A
 mcu_data: ksdk2_0
-processor_version: 0.7.7
+processor_version: 0.9.0
 board: MIMXRT1010-EVK
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
@@ -97,7 +97,6 @@ settings:
 - {id: CCM.TRACE_CLK_SEL.sel, value: CCM_ANALOG.PLL2_MAIN_CLK}
 - {id: CCM.TRACE_PODF.scale, value: '4', locked: true}
 - {id: CCM_ANALOG.PLL2.denom, value: '1'}
-- {id: CCM_ANALOG.PLL2.div, value: '22'}
 - {id: CCM_ANALOG.PLL2.num, value: '0'}
 - {id: CCM_ANALOG.PLL2_BYPASS.sel, value: CCM_ANALOG.PLL2_OUT_CLK}
 - {id: CCM_ANALOG.PLL2_PFD0_BYPASS.sel, value: CCM_ANALOG.PLL2_PFD0}
@@ -120,7 +119,6 @@ settings:
 - {id: CCM_ANALOG.PLL6_BYPASS.sel, value: CCM_ANALOG.PLL6}
 - {id: CCM_ANALOG_PLL_USB1_POWER_CFG, value: 'Yes'}
 sources:
-- {id: XTALOSC24M.OSC.outFreq, value: 24 MHz, enabled: true}
 - {id: XTALOSC24M.RTC_OSC.outFreq, value: 32.768 kHz, enabled: true}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 

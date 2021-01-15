@@ -1,18 +1,11 @@
+/*
+ * Copyright 2018-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
 /**
-* @file sm_api.h
-* @author NXP Semiconductors
-* @version 1.0
-* @par License
-* Copyright 2018,2020 NXP
-*
-* This software is owned or controlled by NXP and may only be used
-* strictly in accordance with the applicable license terms.  By expressly
-* accepting such terms or by downloading, installing, activating and/or
-* otherwise using the software, you are agreeing that you have read, and
-* that you agree to comply with and are bound by, such license terms.  If
-* you do not agree to be bound by the applicable license terms, then you
-* may not retain, install, activate or otherwise use the software.
-*
 * @par Description
 * This file is the communication specific Host API of the A70CM/CI and A71CH secure module.
 * It also customizes the Generic Ax library for this specific product instance
@@ -74,6 +67,10 @@ typedef enum
     kType_SE_Conn_Type_SIZE = 0x7FFF
 } SSS_Conn_Type_t;
 
+#define SELECT_APPLET 0 //!< Select predefined applet
+#define SELECT_NONE   1 //!< Don't issue a select
+#define SELECT_SSD    2 //!< Select SSD
+
 /**
  * Contains the information required to resume a connection with the Security Module.
  * Its content is only to be interpreted by the Host Library.
@@ -88,7 +85,7 @@ typedef struct {
                               3 leading bits of LSByte contains minor version of Applet;
                               Last bit of LSByte encodes whether Applet is in Debug Mode, a '1' means 'Debug Mode' is available */
     U16 sbVersion;       //!< Expected to be 0x0000
-    U8  skip_select_applet;       //!< Flag to skip Applet select
+    U8  select;          //!< Applet selection mode
 } SmCommState_t;
 
 /** \name Communication functions

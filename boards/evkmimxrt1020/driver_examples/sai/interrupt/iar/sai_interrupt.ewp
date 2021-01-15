@@ -188,7 +188,6 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -317,26 +316,20 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1173,7 +1166,6 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1302,26 +1294,20 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2160,7 +2146,6 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2289,26 +2274,20 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3147,7 +3126,6 @@
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3276,26 +3254,20 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/port/wm8960</state>
           <state>$PROJ_DIR$/../../../../../../components/codec/i2c</state>
           <state>$PROJ_DIR$/../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip</state>
           <state>$PROJ_DIR$/../../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3998,52 +3970,52 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_common.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_sai.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_sai.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_sai.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/drivers/fsl_gpio.c</name>
     </file>
   </group>
   <group>
     <name>codec</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/wm8960/fsl_wm8960.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/wm8960/fsl_wm8960.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/codec/wm8960/fsl_wm8960.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../components/codec/fsl_codec_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8960/fsl_codec_adapter.c</name>
@@ -4052,10 +4024,10 @@
       <name>$PROJ_DIR$/../../../../../../components/codec/port/wm8960/fsl_codec_adapter.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
+      <name>$PROJ_DIR$/../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
     </file>
   </group>
   <group>
@@ -4063,51 +4035,48 @@
     <group>
       <name>i2c</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/i2c/i2c.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_i2c.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/i2c/lpi2c_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/i2c/fsl_adapter_lpi2c.c</name>
       </file>
     </group>
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
   <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+  </group>
+  <group>
     <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/fsl_device_registers.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/MIMXRT1021.h</name>
     </file>
@@ -4115,34 +4084,10 @@
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/MIMXRT1021_features.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/fsl_device_registers.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/system_MIMXRT1021.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/system_MIMXRT1021.h</name>
-    </file>
-  </group>
-  <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/utilities/fsl_assert.c</name>
     </file>
   </group>
   <group>
@@ -4154,10 +4099,10 @@
   <group>
     <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MIMXRT1021/xip/fsl_flexspi_nor_boot.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../xip/evkmimxrt1020_flexspi_nor_config.c</name>
@@ -4184,16 +4129,16 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

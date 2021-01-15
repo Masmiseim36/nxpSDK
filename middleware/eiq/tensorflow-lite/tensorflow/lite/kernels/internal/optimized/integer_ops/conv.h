@@ -15,11 +15,12 @@ limitations under the License.
 #ifndef TENSORFLOW_LITE_KERNELS_INTERNAL_OPTIMIZED_INTEGER_OPS_CONV_H_
 #define TENSORFLOW_LITE_KERNELS_INTERNAL_OPTIMIZED_INTEGER_OPS_CONV_H_
 
-#include "profiling/instrumentation.h"
+#include "ruy/profiler/instrumentation.h"  // from @ruy
 #include "tensorflow/lite/kernels/cpu_backend_context.h"
 #include "tensorflow/lite/kernels/cpu_backend_gemm.h"
 #include "tensorflow/lite/kernels/cpu_backend_gemm_params.h"
 #include "tensorflow/lite/kernels/internal/common.h"
+#include "tensorflow/lite/kernels/internal/compatibility.h"
 #include "tensorflow/lite/kernels/internal/optimized/im2col_utils.h"
 #include "tensorflow/lite/kernels/internal/types.h"
 
@@ -35,7 +36,7 @@ inline void ConvPerChannel(
     const int32* bias_data, const RuntimeShape& output_shape, int8* output_data,
     const RuntimeShape& im2col_shape, int8* im2col_data,
     CpuBackendContext* cpu_backend_context) {
-  gemmlowp::ScopedProfilingLabel label("Conv/8bit");
+  ruy::profiler::ScopeLabel label("Conv/8bit");
   const int stride_width = params.stride_width;
   const int stride_height = params.stride_height;
   const int dilation_width_factor = params.dilation_width_factor;
@@ -43,10 +44,8 @@ inline void ConvPerChannel(
   const int32 input_offset = params.input_offset;
   const int32 output_offset = params.output_offset;
   // Set min and max value of the output.
-  static constexpr int32 output_activation_min =
-      std::numeric_limits<int8_t>::min();
-  static constexpr int32 output_activation_max =
-      std::numeric_limits<int8_t>::max();
+  const int32 output_activation_min = params.quantized_activation_min;
+  const int32 output_activation_max = params.quantized_activation_max;
   TFLITE_DCHECK_EQ(input_shape.DimensionsCount(), 4);
   TFLITE_DCHECK_EQ(filter_shape.DimensionsCount(), 4);
   TFLITE_DCHECK_EQ(output_shape.DimensionsCount(), 4);
@@ -59,9 +58,8 @@ inline void ConvPerChannel(
       dilation_width_factor != 1 || dilation_height_factor != 1;
   const bool need_im2col = stride_width != 1 || stride_height != 1 ||
                            filter_width != 1 || filter_height != 1;
+  const bool partial_im2col = need_im2col && !need_dilated_im2col;
   const int8 input_zero_point = -input_offset;
-  TFLITE_DCHECK_GE(input_zero_point, output_activation_min);
-  TFLITE_DCHECK_LE(input_zero_point, output_activation_max);
   const uint8 zero_point_byte =
       *reinterpret_cast<const uint8*>(&input_zero_point);
   if (need_dilated_im2col) {
@@ -73,8 +71,10 @@ inline void ConvPerChannel(
     gemm_input_shape = &im2col_shape;
   } else if (need_im2col) {
     TFLITE_DCHECK(im2col_data);
-    optimized_ops::Im2col(params, filter_height, filter_width, zero_point_byte,
-                          input_shape, input_data, im2col_shape, im2col_data);
+    if (!partial_im2col) {
+      optimized_ops::Im2col(params, filter_height, filter_width, zero_point_byte,
+                            input_shape, input_data, im2col_shape, im2col_data);
+    }
     gemm_input_data = im2col_data;
     gemm_input_shape = &im2col_shape;
   } else {
@@ -90,7 +90,7 @@ inline void ConvPerChannel(
   const int output_rows = output_shape.Dims(3);
   // See b/79927784.
   // const int output_cols = FlatSizeSkipDim(output_shape, 3);
-  const int output_cols =
+  const int output_cols = partial_im2col ? gemm_input_cols :
       output_shape.Dims(0) * output_shape.Dims(1) * output_shape.Dims(2);
   TFLITE_DCHECK_EQ(output_rows, filter_rows);
   TFLITE_DCHECK_EQ(output_cols, gemm_input_cols);
@@ -120,10 +120,56 @@ inline void ConvPerChannel(
   gemm_params.clamp_min = output_activation_min;
   gemm_params.clamp_max = output_activation_max;
   gemm_params.multiplier_fixedpoint_perchannel = output_multiplier;
-  gemm_params.multiplier_exponent_perchannel = (int32*)output_shift;
-  cpu_backend_gemm::Gemm(lhs_params, filter_data, rhs_params, gemm_input_data,
-                         dst_params, output_data, gemm_params,
-                         cpu_backend_context);
+  gemm_params.multiplier_exponent_perchannel = output_shift;
+
+  if (partial_im2col) {
+    uint8 zero_byte = -input_offset;
+
+    const int stride_width = params.stride_width;
+    const int stride_height = params.stride_height;
+    const int pad_width = params.padding_values.width;
+    const int pad_height = params.padding_values.height;
+    TFLITE_DCHECK_EQ(input_shape.DimensionsCount(), 4);
+    TFLITE_DCHECK_EQ(im2col_shape.DimensionsCount(), 4);
+
+    const int batches = input_shape.Dims(0);
+    const int input_depth = input_shape.Dims(3);
+    const int input_width = input_shape.Dims(2);
+    const int input_height = input_shape.Dims(1);
+    const int im2col_depth = im2col_shape.Dims(3);
+    const int output_width = output_shape.Dims(2);
+    const int output_height = output_shape.Dims(1);
+
+    // Loop over the output nodes.
+    int patch = 0;
+    for (int b = 0; b < batches; ++b) {
+      for (int h = 0; h < output_height; ++h) {
+        for (int w = 0; w < output_width; ++w) {
+          optimized_ops::ExtractPatchIntoBufferColumn(
+              input_shape, w, h, b, filter_height, filter_width, stride_width, stride_height,
+              pad_width, pad_height, input_width, input_height, input_depth,
+              im2col_depth, patch, input_data, im2col_data, zero_byte);
+          patch++;
+          bool last_patch = b == batches - 1 && h == output_height - 1 && w == output_width - 1;
+          if (patch == im2col_shape.Dims(2) || last_patch) {
+            if (last_patch) {
+              rhs_params.cols = patch;
+              dst_params.cols = patch;
+            }
+            cpu_backend_gemm::Gemm(lhs_params, filter_data, rhs_params, gemm_input_data,
+                                   dst_params, output_data, gemm_params,
+                                   cpu_backend_context);
+            output_data += output_rows * patch;
+            patch = 0;
+          }
+        }
+      }
+    }
+  } else {
+    cpu_backend_gemm::Gemm(lhs_params, filter_data, rhs_params, gemm_input_data,
+                           dst_params, output_data, gemm_params,
+                           cpu_backend_context);
+  }
 }
 
 }  // namespace optimized_integer_ops

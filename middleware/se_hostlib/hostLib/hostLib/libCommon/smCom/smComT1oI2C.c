@@ -1,18 +1,11 @@
-/**
- * @file smComT1oI2C.c
- * @author NXP Semiconductors
- * @version 1.0
- * @par License
+/*
  * Copyright 2016-2018,2020 NXP
+ * All rights reserved.
  *
- * This software is owned or controlled by NXP and may only be used
- * strictly in accordance with the applicable license terms.  By expressly
- * accepting such terms or by downloading, installing, activating and/or
- * otherwise using the software, you are agreeing that you have read, and
- * that you agree to comply with and are bound by, such license terms.  If
- * you do not agree to be bound by the applicable license terms, then you
- * may not retain, install, activate or otherwise use the software.
- *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+/**
  * @par Description
  * This file implements the SmCom T1oI2C communication layer.
  *
@@ -90,6 +83,7 @@ U16 smComT1oI2C_Open(void *conn_ctx, U8 mode, U8 seqCnt, U8 *T1oI2Catr, U16 *T1o
     AtrRsp.p_data = T1oI2Catr;
 
     if (conn_ctx == NULL) {
+        // Connection context is stored in global variable contained in phNxpEse_Api.c
         smComT1oI2C_Init(NULL, NULL);
     }
 
@@ -104,8 +98,7 @@ U16 smComT1oI2C_Open(void *conn_ctx, U8 mode, U8 seqCnt, U8 *T1oI2Catr, U16 *T1o
     {
        *T1oI2CatrLen = AtrRsp.len ; /*Retrive INF FIELD*/
     }
-    smCom_Init(&smComT1oI2C_Transceive, &smComT1oI2C_TransceiveRaw);
-    return SMCOM_OK;
+    return smCom_Init(&smComT1oI2C_Transceive, &smComT1oI2C_TransceiveRaw);
 }
 
 static U32 smComT1oI2C_Transceive(void* conn_ctx, apdu_t * pApdu)

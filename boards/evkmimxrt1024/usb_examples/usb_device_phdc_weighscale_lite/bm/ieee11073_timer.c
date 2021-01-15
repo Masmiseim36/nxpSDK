@@ -12,8 +12,8 @@
 #include "usb_device_config.h"
 #include "usb.h"
 #include "fsl_device_registers.h"
-#include "board.h"
 #include "ieee11073_timer.h"
+#include "board.h"
 
 /*******************************************************************************
  * Definitions

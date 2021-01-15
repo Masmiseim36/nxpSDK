@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -13,6 +13,8 @@
 #include "lwip/tcpip.h"
 #include "lwip/apps/lwiperf.h"
 #include "lwip/netifapi.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "wwd.h"
 #include "wwd_wiced.h"
@@ -22,8 +24,6 @@
 
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
@@ -273,14 +273,18 @@ static void select_iperf_mode(bool *server_mode, bool *tcp, enum lwiperf_client_
     while (true)
     {
         PRINTF("\r\nPlease select one of the following modes to run IPERF with:\r\n\r\n");
-        PRINTF("    1: TCP server mode (RX only test)\r\n");
-        PRINTF("    2: TCP client mode (TX only test)\r\n");
-        PRINTF("    3: TCP client dual mode (TX and RX in parallel)\r\n");
-        PRINTF("    4: TCP client tradeoff mode (TX and RX sequentially)\r\n");
-        PRINTF("    5: UDP server mode (RX only test)\r\n");
-        PRINTF("    6: UDP client mode (TX only test)\r\n");
-        PRINTF("    7: UDP client dual mode (TX and RX in parallel)\r\n");
-        PRINTF("    8: UDP client tradeoff mode (TX and RX sequentially)\r\n");
+        //        PRINTF("    1: TCP server mode (RX only test)\r\n");
+        //        PRINTF("    2: TCP client mode (TX only test)\r\n");
+        //        PRINTF("    3: TCP client dual mode (TX and RX in parallel)\r\n");
+        //        PRINTF("    4: TCP client tradeoff mode (TX and RX sequentially)\r\n");
+        //        PRINTF("    5: UDP server mode (RX only test)\r\n");
+        //        PRINTF("    6: UDP client mode (TX only test)\r\n");
+        //        PRINTF("    7: UDP client dual mode (TX and RX in parallel)\r\n");
+        //        PRINTF("    8: UDP client tradeoff mode (TX and RX sequentially)\r\n");
+        PRINTF("    1: TCP server mode (RX test)\r\n");
+        PRINTF("    2: TCP client mode (TX test)\r\n");
+        PRINTF("    3: UDP server mode (RX test)\r\n");
+        PRINTF("    4: UDP client mode (TX test)\r\n");
         PRINTF("\r\nEnter mode number: ");
 
         option = GETCHAR();
@@ -299,36 +303,36 @@ static void select_iperf_mode(bool *server_mode, bool *tcp, enum lwiperf_client_
                 *tcp         = true;
                 *client_type = LWIPERF_CLIENT;
                 return;
+                //            case '3':
+                //                *server_mode = false;
+                //                *tcp         = true;
+                //                *client_type = LWIPERF_DUAL;
+                //                return;
+                //            case '4':
+                //                *server_mode = false;
+                //                *tcp         = true;
+                //                *client_type = LWIPERF_TRADEOFF;
+                //                return;
             case '3':
-                *server_mode = false;
-                *tcp         = true;
-                *client_type = LWIPERF_DUAL;
-                return;
-            case '4':
-                *server_mode = false;
-                *tcp         = true;
-                *client_type = LWIPERF_TRADEOFF;
-                return;
-            case '5':
                 *server_mode = true;
                 *tcp         = false;
                 *client_type = LWIPERF_CLIENT;
                 return;
-            case '6':
+            case '4':
                 *server_mode = false;
                 *tcp         = false;
                 *client_type = LWIPERF_CLIENT;
                 return;
-            case '7':
-                *server_mode = false;
-                *tcp         = false;
-                *client_type = LWIPERF_DUAL;
-                return;
-            case '8':
-                *server_mode = false;
-                *tcp         = false;
-                *client_type = LWIPERF_TRADEOFF;
-                return;
+                //            case '7':
+                //                *server_mode = false;
+                //                *tcp         = false;
+                //                *client_type = LWIPERF_DUAL;
+                //                return;
+                //            case '8':
+                //                *server_mode = false;
+                //                *tcp         = false;
+                //                *client_type = LWIPERF_TRADEOFF;
+                //                return;
         }
     }
 }

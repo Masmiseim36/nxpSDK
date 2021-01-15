@@ -14,6 +14,13 @@
 #define __LWIPOPTS_H__
 
 /**
+ * MEMP_NUM_TCPIP_MSG_API: the number of struct tcpip_msg, which are used
+ * for callback/timeout API communication.
+ * (only needed if you use tcpip.c)
+ */
+#define MEMP_NUM_TCPIP_MSG_API 30
+
+/**
  * SYS_LIGHTWEIGHT_PROT==1: if you want inter-task protection for certain
  * critical regions during buffer allocation, deallocation and memory
  * allocation and deallocation.
@@ -167,9 +174,7 @@ void sys_mark_tcpip_thread(void);
 #endif
 
 /* ---------- DHCP options ---------- */
-/* Define LWIP_DHCP to 1 if you want DHCP configuration of
-   interfaces. DHCP is not implemented in lwIP 0.5.1, however, so
-   turning this on does currently not work. */
+/* Enable DHCP module. */
 #ifndef LWIP_DHCP
 #define LWIP_DHCP 1
 #endif

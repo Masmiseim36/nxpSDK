@@ -10,10 +10,10 @@ the sector data. At last check if the data read back is correct.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -46,9 +46,13 @@ For flexspi_nor targets, the result is:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 FLEXSPI hyperflash example started!
 Found the HyperFlash by CFI
-Erasing Serial NOR over FlexSPI...
-Erase data - successfully.
-Program data - successfully.
+loop nummber: 0
+loop nummber: 1
+loop nummber: 2
+loop nummber: 3
+loop nummber: 4
+loop nummber: 5
+FLEXSPI hyperflash example successfully.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -59,11 +63,12 @@ FLEXSPI hyperflash example started!
 Found the HyperFlash by CFI
 Erasing whole chip over FlexSPI...
 Erase finished !
-Erasing Serial NOR over FlexSPI...
-Erase data - successfully.
-Program data - successfully.
+loop nummber: 0
+loop nummber: 1
+loop nummber: 2
+loop nummber: 3
+loop nummber: 4
+loop nummber: 5
+FLEXSPI hyperflash example successfully.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="MIMXRT1062xxxxA" version="1.6" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7.xsd" uuid="fb80bb67-ec9e-435f-93f5-9cda2bcffa0c" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="MIMXRT1062xxxxA" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8.xsd" uuid="1ec34ae8-cb94-405b-91e6-bfb09ee1ea60" version="1.8" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.8" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MIMXRT1062xxxxA</processor>
       <package>MIMXRT1062DVL6A</package>
@@ -16,9 +16,9 @@
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
    </preferences>
    <tools>
-      <pins name="Pins" version="7.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="8.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>0.8.11</processor_version>
             <power_domains/>
             <pin_labels>
                <pin_label pin_num="J11" pin_signal="GPIO_AD_B1_00" label="I2C1_SCL/CSI_I2C_SCL/J35[20]/J23[6]/U13[17]/U32[4]" identifier="I2C_SCL_FXOS8700CQ;CSI_I2C_SCL;I2C1_SCL"/>
@@ -319,7 +319,7 @@
       </pins>
       <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>0.8.11</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -468,9 +468,9 @@
             </clock_configuration>
          </clock_configurations>
       </clocks>
-      <dcdx name="DCDx" version="2.0" enabled="true" update_project_code="true">
+      <dcdx name="DCDx" version="3.0" enabled="true" update_project_code="true">
          <dcdx_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>0.8.11</processor_version>
             <output_format>c_array</output_format>
          </dcdx_profile>
          <dcdx_configurations>
@@ -530,8 +530,6 @@
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_37" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_38" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_39" value="0x10" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_40" value="0x00" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_41" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_00" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_01" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_02" value="0x110F9" value_width="4"/>
@@ -572,11 +570,9 @@
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_37" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_38" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_39" value="0x110F9" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_40" value="0x110F9" value_width="4"/>
-                        <command type="write_value" address="IOMUXC_SW_PAD_CTL_PAD_GPIO_EMC_41" value="0x110F9" value_width="4"/>
                         <command type="write_value" address="SEMC_MCR" value="0x10000004" value_width="4"/>
-                        <command type="write_value" address="SEMC_BMCR0" value="0x30524" value_width="4"/>
-                        <command type="write_value" address="SEMC_BMCR1" value="0x6030524" value_width="4"/>
+                        <command type="write_value" address="SEMC_BMCR0" value="0x81" value_width="4"/>
+                        <command type="write_value" address="SEMC_BMCR1" value="0x81" value_width="4"/>
                         <command type="write_value" address="SEMC_BR0" value="0x8000001B" value_width="4"/>
                         <command type="write_value" address="SEMC_BR1" value="0x8200001B" value_width="4"/>
                         <command type="write_value" address="SEMC_BR2" value="0x8400001B" value_width="4"/>
@@ -615,7 +611,7 @@
             </dcdx_configuration>
          </dcdx_configurations>
       </dcdx>
-      <periphs name="Peripherals" version="7.0" enabled="true" update_project_code="true">
+      <periphs name="Peripherals" version="8.0" enabled="true" update_project_code="true">
          <dependencies>
             <dependency resourceType="SWComponent" resourceId="platform.drivers.sai" description="SAI Driver not found in the toolchain/IDE project. Project will not compile!" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
@@ -639,56 +635,56 @@
             </dependency>
          </dependencies>
          <peripherals_profile>
-            <processor_version>0.7.9</processor_version>
+            <processor_version>0.8.11</processor_version>
          </peripherals_profile>
          <functional_groups>
             <functional_group name="BOARD_InitPeripherals" uuid="96c1cec6-3bd3-47a2-8301-f38e4b0dd25f" called_from_default_init="true" id_prefix="" core="core0">
                <description></description>
                <options/>
                <dependencies>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="SAI1.i2s_txd0" description="SAI1.TX DATA (0) pin needs to be routed Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="SAI1.i2s_txd0" description="SAI1.TX DATA (0) pin needs to be routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="SAI1.i2s_tclk" description="SAI1.TX BCLK pin needs to be routed Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="SAI1.i2s_tclk" description="SAI1.TX BCLK pin needs to be routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="SAI1.i2s_tfs" description="SAI1.TX SYNC pin needs to be routed Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="SAI1.i2s_tfs" description="SAI1.TX SYNC pin needs to be routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="SAI1.i2s_rxd0" description="SAI1.RX DATA (0) pin needs to be routed Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="SAI1.i2s_rxd0" description="SAI1.RX DATA (0) pin needs to be routed" problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="routed" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.sai_edma" description="The fsl_sai_edma driver is missing in the project (required for the eDMA mode). Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.sai_edma" description="The fsl_sai_edma driver is missing in the project (required for the eDMA mode)." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.sai_edma" description="The compatible version of the fsl_sai_edma driver is not available in the project (required for the eDMA mode). Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.sai_edma" description="The compatible version of the fsl_sai_edma driver is not available in the project (required for the eDMA mode)." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="version" evaluation="compatible">
                         <data type="Version">2.1.5</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.dmamux" description="The fsl_dmamux driver is missing in the project (required for the eDMA). Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.dmamux" description="The fsl_dmamux driver is missing in the project (required for the eDMA)." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.dmamux" description="The compatible version of the fsl_dmamux driver is not available in the project (required for the eDMA). Problem must be resolved in another tool." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.dmamux" description="The compatible version of the fsl_dmamux driver is not available in the project (required for the eDMA)." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="version" evaluation="compatible">
                         <data type="Version">2.0.2</data>
                      </feature>
                   </dependency>
                </dependencies>
                <instances>
-                  <instance name="DEMO_SAI" uuid="c03d0a73-8647-4425-8973-8c5fe742f2d7" type="sai" type_id="sai_930e9b093093df3f492b3fa05284d81f" mode="edma" peripheral="SAI1" enabled="true" comment="" custom_name_enabled="true">
+                  <instance name="DEMO_SAI" uuid="286c4547-f2b7-4dfd-9575-14e7bb343e04" type="sai" type_id="sai_930e9b093093df3f492b3fa05284d81f" mode="edma" peripheral="SAI1" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_sai">
                         <setting name="usage" value="record_playback"/>
                         <array name="signal_config">
@@ -904,7 +900,7 @@
                         </struct>
                      </config_set>
                   </instance>
-                  <instance name="DEMO_eDMA" uuid="345f749f-e305-4aa5-8a44-5a2cb53fd854" type="edma" type_id="edma_a23fca76a894e1bcdf9d01a687505ff9" mode="basic" peripheral="DMA0" enabled="true" comment="" custom_name_enabled="true">
+                  <instance name="DEMO_eDMA" uuid="07753ca9-285e-4589-bfc8-693605b0d805" type="edma" type_id="edma_a23fca76a894e1bcdf9d01a687505ff9" mode="basic" peripheral="DMA0" enabled="true" comment="" custom_name_enabled="true">
                      <config_set name="fsl_edma" quick_selection="default">
                         <struct name="common_settings">
                            <setting name="enableContinuousLinkMode" value="false"/>
@@ -912,7 +908,10 @@
                            <setting name="enableRoundRobinArbitration" value="false"/>
                            <setting name="enableDebugMode" value="false"/>
                         </struct>
-                        <array name="dma_table"/>
+                        <array name="dma_table">
+                           <struct name="0"/>
+                           <struct name="1"/>
+                        </array>
                         <array name="edma_channels"/>
                      </config_set>
                   </instance>
@@ -920,15 +919,21 @@
             </functional_group>
          </functional_groups>
          <components>
-            <component name="system" uuid="9be1acdb-ddc9-480e-96e4-4c05a102b931" type_id="system_54b53072540eeeb8f8e9343e71f28176">
+            <component name="system" uuid="c13a287c-ca3f-464b-84a9-0127878ee31b" type_id="system_54b53072540eeeb8f8e9343e71f28176">
                <config_set_global name="global_system_definitions"/>
             </component>
-            <component name="msg" uuid="fd69cfed-a28f-4082-be18-5f0d8e4dcd7f" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
+            <component name="msg" uuid="367740fe-bad3-4a82-920c-82a9ddaf17a8" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
                <config_set_global name="global_messages"/>
+            </component>
+            <component name="generic_uart" uuid="2ec4dab0-6e76-4883-92b0-938c4d384bf1" type_id="generic_uart_8cae00565451cf2346eb1b8c624e73a6">
+               <config_set_global name="global_uart"/>
+            </component>
+            <component name="generic_can" uuid="9ffce658-ba5f-450c-a600-9ce74dc40b80" type_id="generic_can_1bfdd78b1af214566c1f23cf6a582d80">
+               <config_set_global name="global_can"/>
             </component>
          </components>
       </periphs>
-      <tee name="TEE" version="1.0" enabled="false" update_project_code="true">
+      <tee name="TEE" version="2.0" enabled="false" update_project_code="true">
          <tee_profile>
             <processor_version>N/A</processor_version>
          </tee_profile>

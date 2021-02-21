@@ -30,6 +30,9 @@ enum
 #define MAGIC_NUMBER_FLEXSPI_NOR_PROGRAM_CFG \
     (((uint32_t)kFlexSpiNorProgramConfigBlock_Tag << 28) | kFlexSpiNorProgramConfigBlock_Tag)
 
+#define MAGIC_NUMBER_FLEXSPI_NOR_PRECFG \
+    (0xcf9 | (kSerialNorCfgOption_Tag << 8) & (kSerialNorCfgOption_Tag << 8))
+
 typedef enum _flexspi_nor_property
 {
     kFlexspiNorProperty_InitStatus = 0,

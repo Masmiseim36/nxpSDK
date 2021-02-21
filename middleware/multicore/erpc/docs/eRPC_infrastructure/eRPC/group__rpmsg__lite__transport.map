@@ -1,20 +1,23 @@
 <map id="RPMsg&#45;Lite" name="RPMsg&#45;Lite">
-<area shape="rect" id="node1" href="$group__transports.html" title="Transport layer classes. " alt="" coords="5,452,124,479"/>
-<area shape="rect" id="node2" href="$group__dspi__slave__transport.html" title="Kinetis SDK DSPI slave driver transport. " alt="" coords="516,21,603,48"/>
-<area shape="rect" id="node3" href="$group__port__threads.html" title="Threading model. " alt="" coords="525,72,593,99"/>
-<area shape="rect" id="node4" href="$group__mu__transport.html" title="Messaging Unit transport. " alt="" coords="503,123,615,149"/>
-<area shape="rect" id="node5" href="$group__tcp__transport.html" title="Simple TCP/IP transport. " alt="" coords="528,173,591,200"/>
-<area shape="rect" id="node6" href="$group__infra__client.html" title="Client classes. " alt="" coords="532,224,587,251"/>
-<area shape="rect" id="node7" href="$group__infra__transport.html" title="Superclasses for building transports. " alt="" coords="518,275,601,301"/>
-<area shape="rect" id="node8" href="$group__serial__transport.html" title="POSIX and Win32 serial port transport. " alt="" coords="519,325,600,352"/>
-<area shape="rect" id="node9" href="$group__infra__utility.html" title="Utility code used by the infrastructure. " alt="" coords="527,376,592,403"/>
-<area shape="rect" id="node10" href="$group__spi__slave__transport.html" title="Kinetis SDK SPI slave driver transport. " alt="" coords="520,427,599,453"/>
-<area shape="rect" id="node11" href="$group__uart__transport.html" title="CMSIS UART driver transport. " alt="" coords="509,477,610,504"/>
-<area shape="rect" id="node12" href="$group__spi__master__transport.html" title="Kinetis SDK SPI master driver transport. " alt="" coords="516,528,603,555"/>
-<area shape="rect" id="node13" href="$group__infra__server.html" title="Server classes. " alt="" coords="530,579,589,605"/>
-<area shape="rect" id="node14" href="$group__itbp__transport.html" title="Simple inter&#45;thread communications transport. " alt="" coords="516,629,603,656"/>
-<area shape="rect" id="node15" href="$group__dspi__master__transport.html" title="Kinetis SDK DSPI master driver transport. " alt="" coords="511,680,607,707"/>
-<area shape="rect" id="node16" href="$group__rpmsg__tty__rtos__transport.html" title="Rpmsg_tty_rtos_transport" alt="" coords="473,731,645,757"/>
-<area shape="rect" id="node17" href="$group__infra__codec.html" title="Classes used for message serialization. " alt="" coords="513,781,606,808"/>
-<area shape="rect" id="node18" href="$group__rpmsg__lite__rtos__transport.html" title="RPMsg&#45;Lite zero copy transport using RTOS API. " alt="" coords="495,848,624,875"/>
+<area shape="rect" id="node1" href="$group__transports.html" title="Transport layer classes. " alt="" coords="5,527,124,553"/>
+<area shape="rect" id="node2" href="$group__dspi__slave__transport.html" title="Kinetis SDK DSPI slave driver transport. " alt="" coords="501,20,587,47"/>
+<area shape="rect" id="node3" href="$group__port__threads.html" title="Threading model. " alt="" coords="510,71,578,97"/>
+<area shape="rect" id="node4" href="$group__mu__transport.html" title="Messaging Unit transport. " alt="" coords="488,121,600,148"/>
+<area shape="rect" id="node5" href="$group__tcp__transport.html" title="Simple TCP/IP transport. " alt="" coords="513,172,575,199"/>
+<area shape="rect" id="node6" href="$group__infra__client.html" title="Client classes. " alt="" coords="517,223,571,249"/>
+<area shape="rect" id="node7" href="$group__infra__transport.html" title="Superclasses for building transports. " alt="" coords="503,273,585,300"/>
+<area shape="rect" id="node8" href="$group__serial__transport.html" title="POSIX and Win32 serial port transport. " alt="" coords="503,324,585,351"/>
+<area shape="rect" id="node9" href="$group__infra__utility.html" title="Utility code used by the infrastructure. " alt="" coords="511,375,577,401"/>
+<area shape="rect" id="node10" href="$group__spi__slave__transport.html" title="Kinetis SDK SPI slave driver transport. " alt="" coords="505,425,583,452"/>
+<area shape="rect" id="node11" href="$group__uart__transport.html" title="CMSIS UART driver transport. " alt="" coords="493,476,595,503"/>
+<area shape="rect" id="node12" href="$group__spidev__master__transport.html" title="SPIdev Linux transport. " alt="" coords="473,527,615,553"/>
+<area shape="rect" id="node13" href="$group__spi__master__transport.html" title="Kinetis SDK SPI master driver transport. " alt="" coords="501,577,587,604"/>
+<area shape="rect" id="node14" href="$group__rpmsg__tty__rtos__transport.html" title="RPMsg TTY RTOS transport. " alt="" coords="479,628,609,655"/>
+<area shape="rect" id="node15" href="$group__infra__server.html" title="Server classes. " alt="" coords="515,679,573,705"/>
+<area shape="rect" id="node16" href="$group__itbp__transport.html" title="Simple inter&#45;thread communications transport. " alt="" coords="501,729,587,756"/>
+<area shape="rect" id="node17" href="$group__dspi__master__transport.html" title="Kinetis SDK DSPI master driver transport. " alt="" coords="496,780,592,807"/>
+<area shape="rect" id="node18" href="$group___u_s_b___c_d_c__transport.html" title="USB CDC transport. " alt="" coords="504,831,584,857"/>
+<area shape="rect" id="node19" href="$group__infra__codec.html" title="Classes used for message serialization. " alt="" coords="497,881,591,908"/>
+<area shape="rect" id="node20" href="$group__rpmsg__lite__rtos__transport.html" title="RPMsg&#45;Lite zero copy transport using RTOS API. " alt="" coords="479,943,609,969"/>
+<area shape="rect" id="node22" href="$group__port__setup__extensions.html" title="Extension setup functions. " alt="" coords="485,1004,603,1031"/>
 </map>

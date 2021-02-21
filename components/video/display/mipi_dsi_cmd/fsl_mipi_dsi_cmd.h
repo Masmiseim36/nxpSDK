@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  *
@@ -14,6 +14,9 @@
 
 /*
  * Change log:
+ *
+ *   1.0.2
+ *     - Fix MISRA-C 2012 issues.
  *
  *   1.0.1
  *     - Add more functions for panel works in command mode.

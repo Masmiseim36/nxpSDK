@@ -7,6 +7,7 @@ var searchData=
   ['kmcmgr_5fcoretype',['kMCMGR_CoreType',['../group__mcmgr.html#ggadc2ec0f3fda2d57dd3870335914b407fa878c01cabb8b391e0912d050a3a7c5de',1,'mcmgr.h']]],
   ['kmcmgr_5fcoretypecortexm0',['kMCMGR_CoreTypeCortexM0',['../group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aad0d7f52fc5ed832a259e3fba00d936a6',1,'mcmgr.h']]],
   ['kmcmgr_5fcoretypecortexm0plus',['kMCMGR_CoreTypeCortexM0Plus',['../group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aa9e0502d8798e4e70bbe70888a2573f86',1,'mcmgr.h']]],
+  ['kmcmgr_5fcoretypecortexm3',['kMCMGR_CoreTypeCortexM3',['../group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aae85bf49f95cd80cbb1b293b5662366fc',1,'mcmgr.h']]],
   ['kmcmgr_5fcoretypecortexm33',['kMCMGR_CoreTypeCortexM33',['../group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aa9d0db113fdc4348d3e833dfc0e0a8c38',1,'mcmgr.h']]],
   ['kmcmgr_5fcoretypecortexm4',['kMCMGR_CoreTypeCortexM4',['../group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aaac1299d1dd439558115c6a5f49da6256',1,'mcmgr.h']]],
   ['kmcmgr_5fcoretypecortexm7',['kMCMGR_CoreTypeCortexM7',['../group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aae5015a4bd158184a81f1a413cf1001ba',1,'mcmgr.h']]],

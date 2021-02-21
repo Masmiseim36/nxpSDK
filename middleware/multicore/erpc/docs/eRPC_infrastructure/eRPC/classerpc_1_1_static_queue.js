@@ -5,7 +5,7 @@ var classerpc_1_1_static_queue =
     [ "add", "classerpc_1_1_static_queue.html#ab1fe280f10fdf322ae75f16d80b812cc", null ],
     [ "get", "classerpc_1_1_static_queue.html#a50621cf1d1676983bbf95c7dbf178229", null ],
     [ "size", "classerpc_1_1_static_queue.html#a90d03fc6a09db2f2e9ad4f722ba81547", null ],
-    [ "m_storage", "classerpc_1_1_static_queue.html#ad10392812527307c0f7b411fd5ceb8ee", null ],
+    [ "m_storage", "classerpc_1_1_static_queue.html#a7aca1b45a4496c7a6f3ecc0796b926d8", null ],
     [ "m_capacity", "classerpc_1_1_static_queue.html#a0c43f1fba589c88fbb22a0e8b237d58c", null ],
     [ "m_head", "classerpc_1_1_static_queue.html#aa5b8df6fb776578ca3d8ddf5b4187af2", null ],
     [ "m_tail", "classerpc_1_1_static_queue.html#af18992edddaa6bfb26713fde997273b8", null ]

@@ -12,6 +12,8 @@ var searchData=
   ['getlogger',['getLogger',['../classerpc_1_1_message_logger.html#accf9c20389fce9d539dfbd3309cef9be',1,'erpc::MessageLogger']]],
   ['getname',['getName',['../classerpc_1_1_thread.html#a0a7bea50b487914f2f2383d731b4306e',1,'erpc::Thread']]],
   ['getnext',['getNext',['../classerpc_1_1_message_logger.html#a2837865cc28ee772501fe4d1c81886ae',1,'erpc::MessageLogger::getNext()'],['../classerpc_1_1_service.html#a791ba1d5aea06d35035dab162ed60630',1,'erpc::Service::getNext()']]],
+  ['getpostcb',['getPostCB',['../classerpc_1_1_pre_post_action.html#ab07e3853fdfc54f0a07a330158d3fad3',1,'erpc::PrePostAction']]],
+  ['getprecb',['getPreCB',['../classerpc_1_1_pre_post_action.html#a0317e7261d892f09338bcdc9601714c6',1,'erpc::PrePostAction']]],
   ['getremaining',['getRemaining',['../classerpc_1_1_message_buffer_1_1_cursor.html#a6f3dff599ef13d4ffca7e5d559a50afa',1,'erpc::MessageBuffer::Cursor']]],
   ['getsequence',['getSequence',['../classerpc_1_1_request_context.html#a893ef5c5b1cef2f9dd5e131370bb85e2',1,'erpc::RequestContext']]],
   ['getserviceid',['getServiceId',['../classerpc_1_1_service.html#a6a53f31f19ce52a29c14f903b873b4f2',1,'erpc::Service']]],

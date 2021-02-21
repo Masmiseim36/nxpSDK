@@ -1,6 +1,7 @@
 /*
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2017 NXP
  * All rights reserved.
+ *
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -9,7 +10,6 @@
 #define __FSL_SEMC_H__
 
 #include "fsl_common.h"
-#include "bootloader_config.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -129,16 +129,22 @@ typedef enum _semc_clock_freq
     kSemcClkFreq_108MHz = 0x04U,
     kSemcClkFreq_133MHz = 0x05U,
     kSemcClkFreq_166MHz = 0x06U,
+    kSemcClkFreq_200MHz = 0x07U,
 } semc_clk_freq_t;
 
-#if defined(MIMXRT1064_SERIES) || defined(MIMXRT1062_SERIES) || defined(MIMXRT1051_SERIES) || defined(MIMXRT1052_SERIES)
-// i.MX RT1050 or i.MX RT1060
+#if defined(MIMXRT1062_SERIES) || defined(MIMXRT1051_SERIES)
+// i.MX RT1050
 #define SEMC_MAX_CLK_FREQ kSemcClkFreq_166MHz
 #define SEMC_2ND_MAX_CLK_FREQ kSemcClkFreq_133MHz
 #elif defined(MIMXRT1021_SERIES)
 // i.MX RT1020
 #define SEMC_MAX_CLK_FREQ kSemcClkFreq_133MHz
 #define SEMC_2ND_MAX_CLK_FREQ kSemcClkFreq_108MHz
+#elif defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1176_cm7_SERIES)
+#define SEMC_MAX_CLK_FREQ kSemcClkFreq_200MHz
+#define SEMC_2ND_MAX_CLK_FREQ kSemcClkFreq_166MHz
+#else
+#error "Undefined SEMC MAX clock frequency for current SOC."
 #endif
 
 //!@brief SEMC Clock Type
@@ -202,45 +208,45 @@ typedef enum _semc_nor_address_mode
 typedef struct _semc_nor_mem_config
 {
     // Memory property
-    uint32_t comMemBaseAddress;               //!< [0x000-0x003]
-    uint32_t comMemSizeInByte;                //!< [0x004-0x007]
-    uint8_t reserved0[8];                     //!< [0x008-0x00f]
+    uint32_t comMemBaseAddress; //!< [0x000-0x003]
+    uint32_t comMemSizeInByte;  //!< [0x004-0x007]
+    uint8_t reserved0[8];       //!< [0x008-0x00f]
     // Work mode
-    uint8_t addressMode;                      //!< [0x010-0x010]
-    uint8_t addressPortWidth;                 //!< [0x011-0x011]
-    uint8_t dataPortWidth;                    //!< [0x012-0x012]
-    uint8_t columnAddressWidth;               //!< [0x013-0x013]
-    uint8_t burstLengthInBytes;               //!< [0x014-0x014]
-    uint8_t reserved1[3];                     //!< [0x015-0x017]
+    uint8_t addressMode;        //!< [0x010-0x010]
+    uint8_t addressPortWidth;   //!< [0x011-0x011]
+    uint8_t dataPortWidth;      //!< [0x012-0x012]
+    uint8_t columnAddressWidth; //!< [0x013-0x013]
+    uint8_t burstLengthInBytes; //!< [0x014-0x014]
+    uint8_t reserved1[3];       //!< [0x015-0x017]
     // Port pinmux and polarity
-    uint8_t cePortOutputSelection;            //!< [0x018-0x018]
-    uint8_t rdyPortPolarity;                  //!< [0x019-0x019]
-    uint8_t advPortPolarity;                  //!< [0x01a-0x01a]
-    uint8_t reserved2[13];                    //!< [0x01b-0x027]
+    uint8_t cePortOutputSelection; //!< [0x018-0x018]
+    uint8_t rdyPortPolarity;       //!< [0x019-0x019]
+    uint8_t advPortPolarity;       //!< [0x01a-0x01a]
+    uint8_t reserved2[13];         //!< [0x01b-0x027]
     // AC Characteristics
-    uint8_t ceSetupTime;                      //!< [0x028-0x028]
-    uint8_t ceMinHoldTime;                    //!< [0x029-0x029]
-    uint8_t ceMinIntervalTime;                //!< [0x02a-0x02a]
-    uint8_t addressSetupTime;                 //!< [0x02b-0x02b]
-    uint8_t addressHoldTime;                  //!< [0x02c-0x02c]
-    uint8_t asyncWeLowTime;                   //!< [0x02d-0x02d]
-    uint8_t asyncWeHighTime;                  //!< [0x02e-0x02e]
-    uint8_t asyncOeLowTime;                   //!< [0x02f-0x02f]
-    uint8_t asyncOeHighTime;                  //!< [0x030-0x030]
-    uint8_t asyncTurnaroundTime;              //!< [0x031-0x031]
-    uint8_t asyncAddressToDataHoldTime;       //!< [0x032-0x032]
-    uint8_t syncDataSetupTime;                //!< [0x033-0x033]
-    uint8_t syncDataHoldTime;                 //!< [0x034-0x034]
-    uint8_t syncLatencyCount;                 //!< [0x035-0x035]
-    uint8_t syncReadCycleTime;                //!< [0x036-0x036]
-    uint8_t reserved3[9];                     //!< [0x037-0x03f]
+    uint8_t ceSetupTime;              //!< [0x028-0x028]
+    uint8_t ceMinHoldTime;            //!< [0x029-0x029]
+    uint8_t ceMinIntervalTime;        //!< [0x02a-0x02a]
+    uint8_t addressSetupTime;         //!< [0x02b-0x02b]
+    uint8_t addressHoldTime;          //!< [0x02c-0x02c]
+    uint8_t asyncWeLowTime;           //!< [0x02d-0x02d]
+    uint8_t asyncWeHighTime;          //!< [0x02e-0x02e]
+    uint8_t asyncOeLowTime;           //!< [0x02f-0x02f]
+    uint8_t asyncOeHighTime;          //!< [0x030-0x030]
+    uint8_t asyncTurnaroundTime;      //!< [0x031-0x031]
+    uint8_t asyncAddressTocsHoldTime; //!< [0x032-0x032]
+    uint8_t synccsSetupTime;          //!< [0x033-0x033]
+    uint8_t synccsHoldTime;           //!< [0x034-0x034]
+    uint8_t syncLatencyCount;         //!< [0x035-0x035]
+    uint8_t syncReadCycleTime;        //!< [0x036-0x036]
+    uint8_t reserved3[9];             //!< [0x037-0x03f]
 } semc_nor_mem_config_t;
 
 //!@brief SEMC NAND EDO mode
 typedef enum _semc_nand_edo_mode
 {
-    kSemcNandEdoMode_Disabled = 0U,
-    kSemcNandEdoMode_Enabled = 1U,
+    kSemcNandEdoMode_Enabled = 0U,
+    kSemcNandEdoMode_Disabled = 1U,
 } semc_nand_edo_mode_t;
 
 //!@brief SEMC NAND address option
@@ -265,51 +271,51 @@ typedef enum _semc_nand_column_address_option
 typedef struct _semc_nand_mem_config
 {
     // Memory property
-    uint32_t axiMemBaseAddress;               //!< [0x000-0x003]
-    uint32_t axiMemSizeInByte;                //!< [0x004-0x007]
-    uint32_t ipgMemBaseAddress;               //!< [0x008-0x00b]
-    uint32_t ipgMemSizeInByte;                //!< [0x00c-0x00f]
+    uint32_t axiMemBaseAddress; //!< [0x000-0x003]
+    uint32_t axiMemSizeInByte;  //!< [0x004-0x007]
+    uint32_t ipgMemBaseAddress; //!< [0x008-0x00b]
+    uint32_t ipgMemSizeInByte;  //!< [0x00c-0x00f]
     // Work mode
-    uint8_t edoMode;                          //!< [0x010-0x010]
-    uint8_t ioPortWidth;                      //!< [0x011-0x011]
-    uint8_t arrayAddressOption;               //!< [0x012-0x012]
-    uint8_t columnAddressWidth;               //!< [0x013-0x013]
-    uint8_t burstLengthInBytes;               //!< [0x014-0x014]
-    uint8_t columnAddressOption;              //!< [0x015-0x015]
-    uint8_t reserved0[10];                    //!< [0x016-0x01f]
+    uint8_t edoMode;             //!< [0x010-0x010]
+    uint8_t ioPortWidth;         //!< [0x011-0x011]
+    uint8_t arrayAddressOption;  //!< [0x012-0x012]
+    uint8_t columnAddressWidth;  //!< [0x013-0x013]
+    uint8_t burstLengthInBytes;  //!< [0x014-0x014]
+    uint8_t columnAddressOption; //!< [0x015-0x015]
+    uint8_t reserved0[10];       //!< [0x016-0x01f]
     // Port pinmux and polarity
-    uint8_t cePortOutputSelection;            //!< [0x020-0x020]
-    uint8_t rdyPortPolarity;                  //!< [0x021-0x021]
-    uint8_t reserved1[14];                    //!< [0x022-0x02f]
+    uint8_t cePortOutputSelection; //!< [0x020-0x020]
+    uint8_t rdyPortPolarity;       //!< [0x021-0x021]
+    uint8_t reserved1[14];         //!< [0x022-0x02f]
     // AC Characteristics
-    uint8_t ceSetupTime;                      //!< [0x030-0x030]
-    uint8_t ceMinHoldTime;                    //!< [0x031-0x031]
-    uint8_t ceMinIntervalTime;                //!< [0x032-0x032]
-    uint8_t weLowTime;                        //!< [0x033-0x033]
-    uint8_t weHighTime;                       //!< [0x034-0x034]
-    uint8_t reLowTime;                        //!< [0x035-0x035]
-    uint8_t reHighTime;                       //!< [0x036-0x036]
-    uint8_t weHighToReLowTime;                //!< [0x037-0x037]
-    uint8_t reHighToWeLowTime;                //!< [0x038-0x038]
-    uint8_t aleToDataStartTime;               //!< [0x039-0x039]
-    uint8_t readyToReLowTime;                 //!< [0x03a-0x03a]
-    uint8_t weHighToBusyTime;                 //!< [0x03b-0x03b]
-    uint8_t asyncTurnaroundTime;              //!< [0x03c-0x03c]
-    uint8_t reserved2[3];                     //!< [0x03d-0x03f]
+    uint8_t ceSetupTime;         //!< [0x030-0x030]
+    uint8_t ceMinHoldTime;       //!< [0x031-0x031]
+    uint8_t ceMinIntervalTime;   //!< [0x032-0x032]
+    uint8_t weLowTime;           //!< [0x033-0x033]
+    uint8_t weHighTime;          //!< [0x034-0x034]
+    uint8_t reLowTime;           //!< [0x035-0x035]
+    uint8_t reHighTime;          //!< [0x036-0x036]
+    uint8_t weHighToReLowTime;   //!< [0x037-0x037]
+    uint8_t reHighToWeLowTime;   //!< [0x038-0x038]
+    uint8_t aleToDataStartTime;  //!< [0x039-0x039]
+    uint8_t readyToReLowTime;    //!< [0x03a-0x03a]
+    uint8_t weHighToBusyTime;    //!< [0x03b-0x03b]
+    uint8_t asyncTurnaroundTime; //!< [0x03c-0x03c]
+    uint8_t reserved2[3];        //!< [0x03d-0x03f]
 } semc_nand_mem_config_t;
 
 //!@brief SEMC Memory Configuration Block
 typedef struct _semc_mem_config
 {
-    uint32_t tag;                             //!< [0x000-0x003]
-    uint32_t version;                         //!< [0x004-0x007]
-    uint8_t deviceMemType;                    //!< [0x008-0x008]
-    uint8_t accessCommandType;                //!< [0x009-0x009]
-    uint8_t reserved0[2];                     //!< [0x00a-0x00b]
-    uint8_t asyncClkFreq;                     //!< [0x00c-0x00c]
-    uint8_t busTimeoutCycles;                 //!< [0x00d-0x00d]
-    uint8_t commandExecutionTimeoutCycles;    //!< [0x00e-0x00e]
-    uint8_t readStrobeMode;                   //!< [0x00f-0x00f]
+    uint32_t tag;                          //!< [0x000-0x003]
+    uint32_t version;                      //!< [0x004-0x007]
+    uint8_t deviceMemType;                 //!< [0x008-0x008]
+    uint8_t accessCommandType;             //!< [0x009-0x009]
+    uint8_t reserved0[2];                  //!< [0x00a-0x00b]
+    uint8_t asyncClkFreq;                  //!< [0x00c-0x00c]
+    uint8_t busTimeoutCycles;              //!< [0x00d-0x00d]
+    uint8_t commandExecutionTimeoutCycles; //!< [0x00e-0x00e]
+    uint8_t readStrobeMode;                //!< [0x00f-0x00f]
     union
     {
         semc_nor_mem_config_t norMemConfig;   //!< [0x010-0x04f]
@@ -347,13 +353,15 @@ status_t semc_ipg_command_device_write(uint32_t slaveAddress,
 status_t semc_ipg_command_device_read(uint32_t slaveAddress,
                                       uint16_t commandCode,
                                       uint8_t *readoutData,
-                                      uint8_t lengthInBytes);
+                                      uint8_t lengthInBytes,
+                                      uint8_t ioPort,
+                                      uint8_t readType);
 
 //!@brief Read memory data via SEMC IPG commmand
-status_t semc_ipg_memory_read(semc_mem_config_t *config, uint8_t *readoutData, uint32_t lengthInBytes);
+status_t semc_ipg_memory_read(semc_mem_config_t *config, uint8_t *readoutData, uint32_t lengthInBytes, uint8_t readType);
 
 //!@brief Write memory data via SEMC IPG commmand
-status_t semc_ipg_memory_write(semc_mem_config_t *config, uint8_t *writeData, uint32_t lengthInBytes);
+status_t semc_ipg_memory_write(semc_mem_config_t *config, uint8_t *writeData, uint32_t lengthInBytes, uint8_t writeType);
 
 //!@brief Read memory data via SEMC AXI commmand
 status_t semc_axi_memory_read(uint32_t axiAddress, uint8_t *readoutData, uint32_t lengthInBytes);

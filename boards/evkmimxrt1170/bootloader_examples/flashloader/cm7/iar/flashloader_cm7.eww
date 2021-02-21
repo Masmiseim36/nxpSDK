@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>flashloader_cm7</project>
+        <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>flashloader_cm7</project>
+        <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/flashloader_cm7.ewp</path>
+  </project>
+</workspace>

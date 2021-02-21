@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2017-2020 NXP
+ * Copyright 2019 ACRIOS Systems s.r.o.
  * All rights reserved.
  *
  *
@@ -8,9 +9,12 @@
  */
 
 #include "erpc_rpmsg_tty_rtos_transport.h"
+
 #include "erpc_config_internal.h"
 #include "erpc_framed_transport.h"
+
 #include "rpmsg_ns.h"
+
 #include <cassert>
 
 using namespace erpc;

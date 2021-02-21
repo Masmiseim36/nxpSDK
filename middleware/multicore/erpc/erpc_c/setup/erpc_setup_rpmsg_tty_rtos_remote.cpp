@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2020 NXP
+ * Copyright 2019 ACRIOS Systems s.r.o.
  * All rights reserved.
  *
  *
@@ -36,7 +37,7 @@ erpc_transport_t erpc_transport_rpmsg_lite_tty_rtos_remote_init(uint32_t src_add
     return NULL;
 }
 
-void erpc_transport_rpmsg_lite_tty_rtos_deinit()
+void erpc_transport_rpmsg_lite_tty_rtos_deinit(void)
 {
     s_transport.destroy();
 }

@@ -1,0 +1,76 @@
+<!--
+* Copyright 2017-2018 NXP
+* The CFG element contains a list of recognized usb devices.
+*  DEV elements provide a name, class, vid and pid for each device.
+*
+* Each LIST element contains a list of update instructions.
+*
+* Each CMD element contains one update instruction of attribute type.
+*  "boot" - Finds configured device, forces it to "body" device and downloads "file".
+*  "find" - Waits for "timeout" seconds for the "body" device to connect.
+*  "blhost" - Executes a blhost command.
+-->
+
+
+<UCL>
+
+<CFG>
+    <STATE name="Blhost" dev="KBL-HID" vid="1FC9" pid="013D"/> <!-- KIBBLE USB-HID -->
+    <STATE name="Blhost" dev="KBL-HID" vid="15A2" pid="0073"/>   <!--KIBBLE USB-HID-->
+</CFG>
+
+<LIST name="MXRT117x-DevBootSerialFlashXiP" desc="Boot Flashloader">
+<!-- Stage 1, load and execute Flashloader -->
+    <CMD state="Blhost" type="blhost" body="load-image \"Profiles\\MXRT117X\\OS Firmware\\ivt_flashloader.bin\""> Jumping to Flashloader. </CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1 </CMD> <!--Used to test if flashloader runs successfully-->
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 12"> Get Property 12 </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x20000000 4 0xc0000004"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x20000000"> Configure QuadSPI NOR Flash </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x30000000 0x10000" > Erase 64KBytes </CMD>
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x30000400 \"Profiles\\MXRT117X\\OS Firmware\\boot_image.bin\"" > Program Boot Image. </CMD>
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+<LIST name="MXRT117x-DevBootSerialFlashXiP_NoConfigBlock" desc="Boot Flashloader">
+<!-- Stage 1, load and execute Flashloader -->
+    <CMD state="Blhost" type="blhost" body="load-image \"Profiles\\MXRT117X\\OS Firmware\\ivt_flashloader.bin\""> Jumping to Flashloader. </CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1 </CMD> <!--Used to test if flashloader runs successfully-->
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 12" > Get Property 12 </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x20000000 4 0xc0000004"> Prepare Flash Configuration option </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x20000000"> Configure QuadSPI NOR Flash </CMD>
+    <!-- This erase size need to be updated based on the actual boot image size-->
+    <CMD state="Blhost" type="blhost" timeout="30000" body="flash-erase-region 0x30000000 0x10000" > Erase 64KBytes </CMD>
+    <CMD state="Blhost" type="blhost" body="fill-memory 0x20000000 4 0xf000000f"> Prepare Magic nubmer for config block programming </CMD>
+    <CMD state="Blhost" type="blhost" body="configure-memory 0x9 0x20000000"> Write auto-generated config block to QuadSPI NOR Flash </CMD>
+    <CMD state="Blhost" type="blhost" timeout="15000" body="write-memory 0x30001000 \"Profiles\\MXRT117X\\OS Firmware\\boot_image_no_cfg_block.bin\"" > Program Boot Image. </CMD>
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+<LIST name="MXRT117x-DevBoot" desc="Boot Flashloader">
+<!-- Stage 1, load and execute Flashloader -->
+    <CMD state="Blhost" type="blhost" body="load-image \"Profiles\\MXRT117X\\OS Firmware\\ivt_flashloader.bin\""> Jumping to Flashloader. </CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1 </CMD> <!--Used to test if flashloader runs successfully-->
+<!-- Stage 2, Program boot image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 12" > Get Property 12 </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" timeout="15000" body="receive-sb-file \"Profiles\\MXRT117x\\OS Firmware\\boot_image.sb\"" > Program Boot Image. </CMD>
+    <CMD state="Blhost" type="blhost" body="Update Completed!">Done</CMD>
+</LIST>
+
+<LIST name="MXRT117x-SecureBoot" desc="Boot Signed Flashloader">
+<!-- Stage 1, load and execute Flashloader -->
+    <CMD state="Blhost" type="blhost" body="load-image \"Profiles\\MXRT117X\\OS Firmware\\ivt_flashloader_signed.bin\""> Jumping to Flashloader. </CMD>
+    <CMD state="Blhost" type="blhost" body="get-property 1" > Get Property 1 </CMD> <!--Used to test if flashloader runs successfully-->
+<!-- Stage 2, Enable HAB closed mode using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 12" ifhab="Open" > Get Property 12 </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" body="receive-sb-file \"Profiles\\MXRT117X\\OS Firmware\\enable_hab.sb\"" ifhab="Open" > Program Boot Image. </CMD>
+    <CMD state="Blhost" type="blhost" body="reset" ifhab="Open"> Reset. </CMD> <!--Reset device to enable HAB Close Mode-->
+<!-- Stage 3, Program signed image into external memory using Flashloader -->
+    <CMD state="Blhost" type="blhost" body="get-property 12" ifhab="Close"> Get Property 12 </CMD> <!--Used to test if flashloader runs successfully-->
+    <CMD state="Blhost" type="blhost" timeout="15000" body="receive-sb-file \"Profiles\\MXRT117X\\OS Firmware\\boot_image_signed.sb\"" ifhab="Close" > Program Boot Image. </CMD>
+    <CMD state="Blhost" type="blhost" body="Update Completed!" ifhab="Close" >Done</CMD>
+</LIST>
+
+</UCL>

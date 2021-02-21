@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018 NXP
+ * Copyright 2017-2018, 2020 NXP
  * All rights reserved.
  *
  *
@@ -16,53 +16,63 @@
  ******************************************************************************/
 #define OV5640_DelayMs VIDEO_DelayMs
 
-#define OV5640_SCCB_ADDR 0x3CU
+#define OV5640_SCCB_ADDR            0x3CU
 #define OV5640_RESOLUTION_PARAM_NUM 0x16U
 
 #define OV5640_WriteReg(handle, reg, val)                             \
     SCCB_WriteReg(OV5640_SCCB_ADDR, kSCCB_RegAddr16Bit, (reg), (val), \
-                  ((ov5640_resource_t *)(handle->resource))->i2cSendFunc)
+                  ((ov5640_resource_t *)((handle)->resource))->i2cSendFunc)
 
 #define OV5640_WriteMultiRegs(handle, reg, val, len)                             \
     SCCB_WriteMultiRegs(OV5640_SCCB_ADDR, kSCCB_RegAddr16Bit, (reg), (val), len, \
-                        ((ov5640_resource_t *)(handle->resource))->i2cSendFunc)
+                        ((ov5640_resource_t *)((handle)->resource))->i2cSendFunc)
 
 #define OV5640_ReadReg(handle, reg, val)                             \
     SCCB_ReadReg(OV5640_SCCB_ADDR, kSCCB_RegAddr16Bit, (reg), (val), \
-                 ((ov5640_resource_t *)(handle->resource))->i2cReceiveFunc)
+                 ((ov5640_resource_t *)((handle)->resource))->i2cReceiveFunc)
 
 #define OV5640_ModifyReg(handle, reg, clrMask, val)                               \
     SCCB_ModifyReg(OV5640_SCCB_ADDR, kSCCB_RegAddr16Bit, (reg), (clrMask), (val), \
-                   ((ov5640_resource_t *)(handle->resource))->i2cReceiveFunc,     \
-                   ((ov5640_resource_t *)(handle->resource))->i2cSendFunc)
+                   ((ov5640_resource_t *)((handle)->resource))->i2cReceiveFunc,   \
+                   ((ov5640_resource_t *)((handle)->resource))->i2cSendFunc)
 
-#define OV5640_POLARITY_CTRL00_VSYNC_MASK (1U << 0U)
-#define OV5640_POLARITY_CTRL00_HREF_MASK (1U << 1U)
-#define OV5640_POLARITY_CTRL00_GATE_PCLK_HREF_MASK (1U << 2U)
+#define OV5640_POLARITY_CTRL00_VSYNC_MASK           (1U << 0U)
+#define OV5640_POLARITY_CTRL00_HREF_MASK            (1U << 1U)
+#define OV5640_POLARITY_CTRL00_GATE_PCLK_HREF_MASK  (1U << 2U)
 #define OV5640_POLARITY_CTRL00_GATE_PCLK_VSYNC_MASK (1U << 3U)
-#define OV5640_POLARITY_CTRL00_PCLK_MASK (1U << 5U)
+#define OV5640_POLARITY_CTRL00_PCLK_MASK            (1U << 5U)
 
-#define OV5640_SDE_CTRL0_REG 0x5580
-#define OV5640_SDE_CTRL1_REG 0x5581
-#define OV5640_SDE_CTRL2_REG 0x5582
-#define OV5640_SDE_CTRL3_REG 0x5583
-#define OV5640_SDE_CTRL4_REG 0x5584
-#define OV5640_SDE_CTRL5_REG 0x5585
-#define OV5640_SDE_CTRL6_REG 0x5586
-#define OV5640_SDE_CTRL7_REG 0x5587
-#define OV5640_SDE_CTRL8_REG 0x5588
-#define OV5640_SDE_CTRL9_REG 0x5589
+#define OV5640_SDE_CTRL0_REG  0x5580
+#define OV5640_SDE_CTRL1_REG  0x5581
+#define OV5640_SDE_CTRL2_REG  0x5582
+#define OV5640_SDE_CTRL3_REG  0x5583
+#define OV5640_SDE_CTRL4_REG  0x5584
+#define OV5640_SDE_CTRL5_REG  0x5585
+#define OV5640_SDE_CTRL6_REG  0x5586
+#define OV5640_SDE_CTRL7_REG  0x5587
+#define OV5640_SDE_CTRL8_REG  0x5588
+#define OV5640_SDE_CTRL9_REG  0x5589
 #define OV5640_SDE_CTRL10_REG 0x558a
 #define OV5640_SDE_CTRL11_REG 0x558b
 #define OV5640_SDE_CTRL12_REG 0x558c
 
-#define OV5640_AWB_R_H_REG 0x3400
-#define OV5640_AWB_R_L_REG 0x3401
-#define OV5640_AWB_G_H_REG 0x3402
-#define OV5640_AWB_G_L_REG 0x3403
-#define OV5640_AWB_B_H_REG 0x3404
-#define OV5640_AWB_B_L_REG 0x3405
+#define OV5640_AWB_R_H_REG  0x3400
+#define OV5640_AWB_R_L_REG  0x3401
+#define OV5640_AWB_G_H_REG  0x3402
+#define OV5640_AWB_G_L_REG  0x3403
+#define OV5640_AWB_B_H_REG  0x3404
+#define OV5640_AWB_B_L_REG  0x3405
 #define OV5640_AWB_CTRL_REG 0x3406
+
+#define OV5640_CHECK_RET(x)            \
+    do                                 \
+    {                                  \
+        status = (x);                  \
+        if (kStatus_Success != status) \
+        {                              \
+            return status;             \
+        }                              \
+    } while (false)
 
 typedef struct _ov5640_reg_val
 {
@@ -359,12 +369,12 @@ static const ov5640_reg_val_t ov5640InitParam[] = {
 
 static const ov5640_resolution_param_t resolutionParam[] = {
     {
-        .resolution = kVIDEO_ResolutionVGA,
+        .resolution = (uint32_t)kVIDEO_ResolutionVGA,
         .param      = {0x00, 0x00, 0x00, 0x04, 0x0a, 0x3f, 0x07, 0x9b, 0x02, 0x80, 0x01,
                   0xe0, 0x07, 0x68, 0x03, 0xd8, 0x00, 0x10, 0x00, 0x06, 0x31, 0x31},
     },
     {
-        .resolution = kVIDEO_ResolutionQVGA,
+        .resolution = (uint32_t)kVIDEO_ResolutionQVGA,
         .param      = {0x00, 0x00, 0x00, 0x04, 0x0a, 0x3f, 0x07, 0x9b, 0x01, 0x40, 0x00,
                   0xf0, 0x07, 0x68, 0x03, 0xd8, 0x00, 0x10, 0x00, 0x06, 0x31, 0x31},
     },
@@ -374,12 +384,12 @@ static const ov5640_resolution_param_t resolutionParam[] = {
                   0x10, 0x07, 0x64, 0x02, 0xe4, 0x00, 0x10, 0x00, 0x04, 0x31, 0x31},
     },
     {
-        .resolution = kVIDEO_Resolution720P,
+        .resolution = (uint32_t)kVIDEO_Resolution720P,
         .param      = {0x00, 0x00, 0x00, 0xfa, 0x0a, 0x3f, 0x06, 0xa9, 0x05, 0x00, 0x02,
                   0xd0, 0x07, 0x64, 0x02, 0xe4, 0x00, 0x10, 0x00, 0x04, 0x31, 0x31},
     },
     {
-        .resolution = kVIDEO_Resolution1080P,
+        .resolution = (uint32_t)kVIDEO_Resolution1080P,
         .param      = {0x01, 0x50, 0x01, 0xb2, 0x08, 0xef, 0x05, 0xf1, 0x07, 0x80, 0x04,
                   0x38, 0x09, 0xc4, 0x04, 0x60, 0x00, 0x10, 0x00, 0x04, 0x11, 0x11},
     },
@@ -388,7 +398,7 @@ static const ov5640_resolution_param_t resolutionParam[] = {
 /* DVP */
 static const ov5640_clock_config_t s_ov5640DvpClockConfigs[] = {
     {
-        .resolution  = kVIDEO_ResolutionVGA,
+        .resolution  = (uint32_t)kVIDEO_ResolutionVGA,
         .framePerSec = 15,
         .pllCtrl1    = 0x21,
         .pllCtrl2    = 0x46,
@@ -397,7 +407,7 @@ static const ov5640_clock_config_t s_ov5640DvpClockConfigs[] = {
         .pclkPeriod  = 0x22,
     },
     {
-        .resolution  = kVIDEO_ResolutionVGA,
+        .resolution  = (uint32_t)kVIDEO_ResolutionVGA,
         .framePerSec = 30,
         .pllCtrl1    = 0x11,
         .pllCtrl2    = 0x46,
@@ -406,7 +416,7 @@ static const ov5640_clock_config_t s_ov5640DvpClockConfigs[] = {
         .pclkPeriod  = 0x22,
     },
     {
-        .resolution  = kVIDEO_ResolutionQVGA,
+        .resolution  = (uint32_t)kVIDEO_ResolutionQVGA,
         .framePerSec = 15,
         .pllCtrl1    = 0x21,
         .pllCtrl2    = 0x46,
@@ -415,7 +425,7 @@ static const ov5640_clock_config_t s_ov5640DvpClockConfigs[] = {
         .pclkPeriod  = 0x22,
     },
     {
-        .resolution  = kVIDEO_ResolutionQVGA,
+        .resolution  = (uint32_t)kVIDEO_ResolutionQVGA,
         .framePerSec = 30,
         .pllCtrl1    = 0x11,
         .pllCtrl2    = 0x46,
@@ -442,7 +452,7 @@ static const ov5640_clock_config_t s_ov5640DvpClockConfigs[] = {
         .pclkPeriod  = 0x16,
     },
     {
-        .resolution  = kVIDEO_Resolution720P,
+        .resolution  = (uint32_t)kVIDEO_Resolution720P,
         .framePerSec = 15,
         .pllCtrl1    = 0x41,
         .pllCtrl2    = 0x69,
@@ -451,7 +461,7 @@ static const ov5640_clock_config_t s_ov5640DvpClockConfigs[] = {
         .pclkPeriod  = 0x16,
     },
     {
-        .resolution  = kVIDEO_Resolution720P,
+        .resolution  = (uint32_t)kVIDEO_Resolution720P,
         .framePerSec = 30,
         .pllCtrl1    = 0x21,
         .pllCtrl2    = 0x69,
@@ -460,7 +470,7 @@ static const ov5640_clock_config_t s_ov5640DvpClockConfigs[] = {
         .pclkPeriod  = 0x16,
     },
     {
-        .resolution  = kVIDEO_Resolution1080P,
+        .resolution  = (uint32_t)kVIDEO_Resolution1080P,
         .framePerSec = 15,
         .pllCtrl1    = 0x21,
         .pllCtrl2    = 0x69,
@@ -473,7 +483,7 @@ static const ov5640_clock_config_t s_ov5640DvpClockConfigs[] = {
 /* MIPI */
 static const ov5640_clock_config_t s_ov5640MipiClockConfigs[] = {
     {
-        .resolution  = kVIDEO_ResolutionVGA,
+        .resolution  = (uint32_t)kVIDEO_ResolutionVGA,
         .framePerSec = 15,
         .pllCtrl1    = 0x22,
         .pllCtrl2    = 0x38,
@@ -482,7 +492,7 @@ static const ov5640_clock_config_t s_ov5640MipiClockConfigs[] = {
         .pclkPeriod  = 0x0a,
     },
     {
-        .resolution  = kVIDEO_ResolutionVGA,
+        .resolution  = (uint32_t)kVIDEO_ResolutionVGA,
         .framePerSec = 30,
         .pllCtrl1    = 0x14,
         .pllCtrl2    = 0x38,
@@ -491,7 +501,7 @@ static const ov5640_clock_config_t s_ov5640MipiClockConfigs[] = {
         .pclkPeriod  = 0x0a,
     },
     {
-        .resolution  = kVIDEO_ResolutionQVGA,
+        .resolution  = (uint32_t)kVIDEO_ResolutionQVGA,
         .framePerSec = 15,
         .pllCtrl1    = 0x22,
         .pllCtrl2    = 0x38,
@@ -500,7 +510,7 @@ static const ov5640_clock_config_t s_ov5640MipiClockConfigs[] = {
         .pclkPeriod  = 0x0a,
     },
     {
-        .resolution  = kVIDEO_ResolutionQVGA,
+        .resolution  = (uint32_t)kVIDEO_ResolutionQVGA,
         .framePerSec = 30,
         .pllCtrl1    = 0x14,
         .pllCtrl2    = 0x38,
@@ -509,7 +519,7 @@ static const ov5640_clock_config_t s_ov5640MipiClockConfigs[] = {
         .pclkPeriod  = 0x0a,
     },
     {
-        .resolution  = kVIDEO_Resolution720P,
+        .resolution  = (uint32_t)kVIDEO_Resolution720P,
         .framePerSec = 15,
         .pllCtrl1    = 0x41,
         .pllCtrl2    = 0x54,
@@ -518,7 +528,7 @@ static const ov5640_clock_config_t s_ov5640MipiClockConfigs[] = {
         .pclkPeriod  = 0x0a,
     },
     {
-        .resolution  = kVIDEO_Resolution720P,
+        .resolution  = (uint32_t)kVIDEO_Resolution720P,
         .framePerSec = 30,
         .pllCtrl1    = 0x21,
         .pllCtrl2    = 0x54,
@@ -527,7 +537,7 @@ static const ov5640_clock_config_t s_ov5640MipiClockConfigs[] = {
         .pclkPeriod  = 0x0a,
     },
     {
-        .resolution  = kVIDEO_Resolution1080P,
+        .resolution  = (uint32_t)kVIDEO_Resolution1080P,
         .framePerSec = 15,
         .pllCtrl1    = 0x21,
         .pllCtrl2    = 0x54,
@@ -536,7 +546,7 @@ static const ov5640_clock_config_t s_ov5640MipiClockConfigs[] = {
         .pclkPeriod  = 0x0a,
     },
     {
-        .resolution  = kVIDEO_Resolution1080P,
+        .resolution  = (uint32_t)kVIDEO_Resolution1080P,
         .framePerSec = 30,
         .pllCtrl1    = 0x11,
         .pllCtrl2    = 0x54,
@@ -768,6 +778,7 @@ static const ov5640_clock_config_t *OV5640_GetClockConfig(const camera_config_t 
 
 static status_t OV5640_SetPixelFormat(camera_device_handle_t *handle, video_pixel_format_t pixelFormat)
 {
+    status_t status;
     uint8_t param[2];
 
     switch (pixelFormat)
@@ -784,8 +795,8 @@ static status_t OV5640_SetPixelFormat(camera_device_handle_t *handle, video_pixe
             break;
     }
 
-    OV5640_WriteReg(handle, 0x4300, param[0]);
-    OV5640_WriteReg(handle, 0x501f, param[1]);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x4300, param[0]));
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x501f, param[1]));
 
     return kStatus_Success;
 }
@@ -817,7 +828,7 @@ status_t OV5640_Init(camera_device_handle_t *handle, const camera_config_t *conf
     }
 
     /* Only support 2 data lanes. */
-    if ((kCAMERA_InterfaceMIPI == config->interface) && (2 != config->csiLanes))
+    if ((kCAMERA_InterfaceMIPI == config->interface) && (2U != config->csiLanes))
     {
         return kStatus_InvalidArgument;
     }
@@ -845,7 +856,7 @@ status_t OV5640_Init(camera_device_handle_t *handle, const camera_config_t *conf
     /* Delay 20ms. */
     OV5640_DelayMs(20);
 
-    OV5640_SoftwareReset(handle);
+    OV5640_CHECK_RET(OV5640_SoftwareReset(handle));
 
     /* Delay 5ms. */
     OV5640_DelayMs(5);
@@ -858,75 +869,75 @@ status_t OV5640_Init(camera_device_handle_t *handle, const camera_config_t *conf
     }
 
     /* Resolution. */
-    OV5640_WriteMultiRegs(handle, 0x3800, resParam, OV5640_RESOLUTION_PARAM_NUM);
+    OV5640_CHECK_RET(OV5640_WriteMultiRegs(handle, 0x3800, resParam, OV5640_RESOLUTION_PARAM_NUM));
 
-    if (kVIDEO_Resolution1080P == config->resolution)
+    if ((uint32_t)kVIDEO_Resolution1080P == config->resolution)
     {
-        OV5640_WriteReg(handle, 0x3709, 0x12);
-        OV5640_WriteReg(handle, 0x3821, 0x06);
+        OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3709, 0x12));
+        OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3821, 0x06));
     }
 
-    OV5640_WriteReg(handle, 0x302c, 0xc2);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x302c, 0xc2));
 
     /* Pixel format. */
-    OV5640_SetPixelFormat(handle, config->pixelFormat);
+    OV5640_CHECK_RET(OV5640_SetPixelFormat(handle, config->pixelFormat));
 
     /* Clock. */
-    OV5640_WriteReg(handle, 0x3035, clockConfig->pllCtrl1);
-    OV5640_WriteReg(handle, 0x3036, clockConfig->pllCtrl2);
-    OV5640_WriteReg(handle, 0x460c, clockConfig->vfifoCtrl0C);
-    OV5640_WriteReg(handle, 0x3824, clockConfig->pclkDiv);
-    OV5640_WriteReg(handle, 0x4837, clockConfig->pclkPeriod);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3035, clockConfig->pllCtrl1));
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3036, clockConfig->pllCtrl2));
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x460c, clockConfig->vfifoCtrl0C));
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3824, clockConfig->pclkDiv));
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x4837, clockConfig->pclkPeriod));
 
     /* Interface. */
     if (kCAMERA_InterfaceMIPI == config->interface)
     {
-        OV5640_WriteReg(handle, 0x3034, 0x18);
+        OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3034, 0x18));
 
         /* Set Frex, Vsync, Href, PCLK, data, GPIO to input. */
-        OV5640_WriteReg(handle, 0x3017, 0x00);
-        OV5640_WriteReg(handle, 0x3018, 0x00);
+        OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3017, 0x00));
+        OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3018, 0x00));
 
         /*
          * Set to MIPI mode, set data lane. Currently only support 2 data lanes,
          * if need to use 1 data lane, write 0x25 to register 0x300e.
          */
-        OV5640_WriteReg(handle, 0x300e, 0x45);
+        OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x300e, 0x45));
 
         /* Virtual channel. */
-        OV5640_ModifyReg(handle, 0x4814, (3 << 6), (uint32_t)(config->mipiChannel) << 6);
+        OV5640_CHECK_RET(OV5640_ModifyReg(handle, 0x4814, (3U << 6), (uint8_t)(config->mipiChannel) << 6));
 
-        OV5640_WriteReg(handle, 0x4800, 0x04);
+        OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x4800, 0x04));
     }
     else
     {
-        OV5640_WriteReg(handle, 0x3034, 0x1a);
+        OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3034, 0x1a));
 
         /* Set Frex, Vsync, Href, PCLK, data, GPIO to output. */
-        OV5640_WriteReg(handle, 0x3017, 0xFF);
-        OV5640_WriteReg(handle, 0x3018, 0xFF);
+        OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3017, 0xFF));
+        OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3018, 0xFF));
 
         /* DVP mode */
-        OV5640_WriteReg(handle, 0x300e, 0x58);
+        OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x300e, 0x58));
 
         if (kCAMERA_InterfaceCCIR656 == config->interface)
         {
-            OV5640_WriteReg(handle, 0x4719, 0x01);
-            OV5640_WriteReg(handle, 0x4730, 0x01);
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x4719, 0x01));
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x4730, 0x01));
         }
     }
 
     /* Signal polarity */
     reg = 0;
-    if (kCAMERA_HrefActiveHigh != (config->controlFlags & kCAMERA_HrefActiveHigh))
+    if ((uint32_t)kCAMERA_HrefActiveHigh != (config->controlFlags & (uint32_t)kCAMERA_HrefActiveHigh))
     {
         reg |= OV5640_POLARITY_CTRL00_HREF_MASK;
     }
-    if (kCAMERA_VsyncActiveHigh != (config->controlFlags & kCAMERA_VsyncActiveHigh))
+    if ((uint32_t)kCAMERA_VsyncActiveHigh != (config->controlFlags & (uint32_t)kCAMERA_VsyncActiveHigh))
     {
         reg |= OV5640_POLARITY_CTRL00_VSYNC_MASK;
     }
-    if (kCAMERA_DataLatchOnRisingEdge == (config->controlFlags & kCAMERA_DataLatchOnRisingEdge))
+    if ((uint32_t)kCAMERA_DataLatchOnRisingEdge == (config->controlFlags & (uint32_t)kCAMERA_DataLatchOnRisingEdge))
     {
         reg |= OV5640_POLARITY_CTRL00_PCLK_MASK;
     }
@@ -936,12 +947,12 @@ status_t OV5640_Init(camera_device_handle_t *handle, const camera_config_t *conf
         reg |= OV5640_POLARITY_CTRL00_GATE_PCLK_HREF_MASK | OV5640_POLARITY_CTRL00_GATE_PCLK_VSYNC_MASK;
     }
 
-    OV5640_WriteReg(handle, 0x4740, reg);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x4740, reg));
 
     /* Lenc on, raw gamma on, BPC on, WPC on, CIP on. */
-    OV5640_WriteReg(handle, 0x5000, 0xa7);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x5000, 0xa7));
 
-    OV5640_WriteReg(handle, 0x3008, 0x02);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3008, 0x02));
 
     return kStatus_Success;
 }
@@ -968,16 +979,12 @@ status_t OV5640_Control(camera_device_handle_t *handle, camera_device_cmd_t cmd,
 
 status_t OV5640_Start(camera_device_handle_t *handle)
 {
-    OV5640_WriteReg(handle, 0x3008, 0x02);
-
-    return kStatus_Success;
+    return OV5640_WriteReg(handle, 0x3008, 0x02);
 }
 
 status_t OV5640_Stop(camera_device_handle_t *handle)
 {
-    OV5640_WriteReg(handle, 0x3008, 0x42);
-
-    return kStatus_Success;
+    return OV5640_WriteReg(handle, 0x3008, 0x42);
 }
 
 status_t OV5640_InitExt(camera_device_handle_t *handle, const camera_config_t *config, const void *specialConfig)
@@ -987,30 +994,38 @@ status_t OV5640_InitExt(camera_device_handle_t *handle, const camera_config_t *c
 
 status_t OV5640_SetBrightness(camera_device_handle_t *handle, int32_t brightness)
 {
+    status_t status;
+
     if ((brightness < -4) || (brightness > 4))
     {
         return kStatus_InvalidArgument;
     }
 
-    OV5640_WriteReg(handle, 0x3212, 0x03);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3212, 0x03));
     if (brightness >= 0)
     {
-        OV5640_WriteReg(handle, OV5640_SDE_CTRL8_REG, 0x01);
+        status = OV5640_WriteReg(handle, OV5640_SDE_CTRL8_REG, 0x01);
     }
     else
     {
         brightness = -brightness;
-        OV5640_WriteReg(handle, OV5640_SDE_CTRL8_REG, 0x09);
+        status     = OV5640_WriteReg(handle, OV5640_SDE_CTRL8_REG, 0x09);
     }
 
-    OV5640_WriteReg(handle, OV5640_SDE_CTRL7_REG, ((uint32_t)brightness) << 4U);
+    if (kStatus_Success != status)
+    {
+        return status;
+    }
 
-    OV5640_WriteReg(handle, 0x3212, 0x13);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_SDE_CTRL7_REG, ((uint8_t)brightness) << 4U));
+
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3212, 0x13));
     return OV5640_WriteReg(handle, 0x3212, 0xa3);
 }
 
 status_t OV5640_SetContrast(camera_device_handle_t *handle, int32_t contrast)
 {
+    status_t status;
     uint8_t regVal;
 
     if ((-4 > contrast) || (4 < contrast))
@@ -1018,20 +1033,22 @@ status_t OV5640_SetContrast(camera_device_handle_t *handle, int32_t contrast)
         return kStatus_InvalidArgument;
     }
 
-    regVal = (uint8_t)(0x20 + contrast * 0x04);
+    contrast = 0x20 + contrast * 0x04;
+    regVal   = (uint8_t)contrast;
 
-    OV5640_WriteReg(handle, 0x3212, 0x03);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3212, 0x03));
 
-    OV5640_WriteReg(handle, OV5640_SDE_CTRL0_REG, 0x04);
-    OV5640_WriteReg(handle, OV5640_SDE_CTRL5_REG, regVal);
-    OV5640_WriteReg(handle, OV5640_SDE_CTRL6_REG, regVal);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_SDE_CTRL0_REG, 0x04));
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_SDE_CTRL5_REG, regVal));
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_SDE_CTRL6_REG, regVal));
 
-    OV5640_WriteReg(handle, 0x3212, 0x13);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3212, 0x13));
     return OV5640_WriteReg(handle, 0x3212, 0xa3);
 }
 
 status_t OV5640_SetSaturation(camera_device_handle_t *handle, int32_t saturation)
 {
+    status_t status;
     uint8_t regVal;
 
     if ((-4 > saturation) || (4 < saturation))
@@ -1039,38 +1056,40 @@ status_t OV5640_SetSaturation(camera_device_handle_t *handle, int32_t saturation
         return kStatus_InvalidArgument;
     }
 
-    regVal = (uint8_t)(0x40 + saturation * 0x10);
+    saturation = 0x40 + saturation * 0x10;
+    regVal     = (uint8_t)saturation;
 
-    OV5640_WriteReg(handle, 0x3212, 0x03);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3212, 0x03));
 
-    OV5640_WriteReg(handle, OV5640_SDE_CTRL0_REG, 0x02);
-    OV5640_WriteReg(handle, OV5640_SDE_CTRL3_REG, regVal);
-    OV5640_WriteReg(handle, OV5640_SDE_CTRL4_REG, regVal);
-    OV5640_WriteReg(handle, OV5640_SDE_CTRL8_REG, 0x41);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_SDE_CTRL0_REG, 0x02));
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_SDE_CTRL3_REG, regVal));
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_SDE_CTRL4_REG, regVal));
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_SDE_CTRL8_REG, 0x41));
 
-    OV5640_WriteReg(handle, 0x3212, 0x13);
+    OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3212, 0x13));
     return OV5640_WriteReg(handle, 0x3212, 0xa3);
 }
 
 status_t OV5640_SetLightMode(camera_device_handle_t *handle, int32_t lightMode)
 {
+    status_t status;
     uint8_t i;
 
     for (i = 0; i < ARRAY_SIZE(s_ov5640LightModeConfigs); i++)
     {
-        if (lightMode == s_ov5640LightModeConfigs[i].lightMode)
+        if (lightMode == (int32_t)s_ov5640LightModeConfigs[i].lightMode)
         {
-            OV5640_WriteReg(handle, 0x3212, 0x03);
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3212, 0x03));
 
-            OV5640_WriteReg(handle, OV5640_AWB_CTRL_REG, s_ov5640LightModeConfigs[i].awbCtrl);
-            OV5640_WriteReg(handle, OV5640_AWB_R_H_REG, s_ov5640LightModeConfigs[i].awbR_H);
-            OV5640_WriteReg(handle, OV5640_AWB_R_L_REG, s_ov5640LightModeConfigs[i].awbR_L);
-            OV5640_WriteReg(handle, OV5640_AWB_G_H_REG, s_ov5640LightModeConfigs[i].awbG_H);
-            OV5640_WriteReg(handle, OV5640_AWB_G_L_REG, s_ov5640LightModeConfigs[i].awbG_L);
-            OV5640_WriteReg(handle, OV5640_AWB_B_H_REG, s_ov5640LightModeConfigs[i].awbB_H);
-            OV5640_WriteReg(handle, OV5640_AWB_B_L_REG, s_ov5640LightModeConfigs[i].awbB_L);
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_AWB_CTRL_REG, s_ov5640LightModeConfigs[i].awbCtrl));
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_AWB_R_H_REG, s_ov5640LightModeConfigs[i].awbR_H));
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_AWB_R_L_REG, s_ov5640LightModeConfigs[i].awbR_L));
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_AWB_G_H_REG, s_ov5640LightModeConfigs[i].awbG_H));
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_AWB_G_L_REG, s_ov5640LightModeConfigs[i].awbG_L));
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_AWB_B_H_REG, s_ov5640LightModeConfigs[i].awbB_H));
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_AWB_B_L_REG, s_ov5640LightModeConfigs[i].awbB_L));
 
-            OV5640_WriteReg(handle, 0x3212, 0x13);
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3212, 0x13));
             return OV5640_WriteReg(handle, 0x3212, 0xa3);
         }
     }
@@ -1081,20 +1100,21 @@ status_t OV5640_SetLightMode(camera_device_handle_t *handle, int32_t lightMode)
 
 status_t OV5640_SetSpecialEffect(camera_device_handle_t *handle, int32_t effect)
 {
+    status_t status;
     uint8_t i;
 
     for (i = 0; i < ARRAY_SIZE(s_ov5640SpecialEffectConfigs); i++)
     {
-        if (effect == s_ov5640SpecialEffectConfigs[i].effect)
+        if (effect == (int32_t)s_ov5640SpecialEffectConfigs[i].effect)
         {
-            OV5640_WriteReg(handle, 0x3212, 0x03);
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3212, 0x03));
 
-            OV5640_WriteReg(handle, OV5640_SDE_CTRL0_REG, s_ov5640SpecialEffectConfigs[i].sdeCtrl0);
-            OV5640_WriteReg(handle, OV5640_SDE_CTRL3_REG, s_ov5640SpecialEffectConfigs[i].sdeCtrl3);
-            OV5640_WriteReg(handle, OV5640_SDE_CTRL4_REG, s_ov5640SpecialEffectConfigs[i].sdeCtrl4);
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_SDE_CTRL0_REG, s_ov5640SpecialEffectConfigs[i].sdeCtrl0));
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_SDE_CTRL3_REG, s_ov5640SpecialEffectConfigs[i].sdeCtrl3));
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, OV5640_SDE_CTRL4_REG, s_ov5640SpecialEffectConfigs[i].sdeCtrl4));
 
-            OV5640_WriteReg(handle, 0x5003, 0x08);
-            OV5640_WriteReg(handle, 0x3212, 0x13);
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x5003, 0x08));
+            OV5640_CHECK_RET(OV5640_WriteReg(handle, 0x3212, 0x13));
             return OV5640_WriteReg(handle, 0x3212, 0xa3);
         }
     }

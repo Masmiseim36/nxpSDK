@@ -1,0 +1,171 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section vglite VGLite GPU Driver
+  The current version of the VGLite GPU Driver is 3.0.9_rev2.
+  - version 3.0.9_rev2
+    - Fixed:
+      - (MCUX-40557) Fixed build warnings
+  - version 3.0.9_rev1
+    - Fixed:
+      - (MGG-648) Fixed rendered text overlapping issue
+      - (MGG-650) Fixed memory leak caused by failure to unload RLE font data
+      - (IMX-2395) Fixed incorrect reporting of indexed images as "supported" for GC355 GPU (RT1170)
+    - Changed:
+      - (IMX-2370) Refactored GPU driver HAL and OS layers
+      - (MGG-646) Configured a vector font as default font
+  - version 3.0.9
+    - Fixed:
+      - (IMX-2361) Fixed tessellation bounds computation error
+    - Changed:
+      - (IMX-2367) Enabled alpha channel premultiplication by default for GC355 GPU (RT1170)
+      - (IMX-2261) Added Elementary library input data address alignment verification
+    - Added:
+      - (IMX-2323) Added support for radial colour gradients for GC355 GPU (RT1170)
+      - (IMX-2317) Upgraded the Elementary library to be thread safe
+  - version 3.0.6_rev4
+    - Fixed:
+      - (IMX-2357) Fixed rendering performance degradation since the implementation of the multithread/multicontext support
+      - (MGG-576) Elementary: Fixed hard fault when resetting translation of EVO object
+      - (MCUX-38672) Fixed font and text support build warnings
+      - (MGG-596) Fixed memory leak in raster font loading
+      - (MGG-596) Font and text support: Fixed out of range memory access in Elementary library
+    - Changed:
+      - (MGG-596) "VG_RENDER_TEXT=1" build symbol now required to enable font and text support
+      - (MGG-594) Updated font and text support to allow easy decoupling from GPU driver and Elementary when not needed
+      - (MGG-533) Removed "is_tspan" attribute from "vg_lite_font_attributes_t"
+      - (MGG-533) Added new attribute "tspan_has_dx_dy" to "vg_lite_font_attributes_t"
+      - (MGG-533) Added new argument "matrix" to "vg_lite_draw_text" API function
+      - (MGG-592) Renamed "eFontTypes_t" enum to "eFontType_t"
+      - (MGG-592) Renamed "eFontVectorType" identifier to "eFontTypeVector"
+      - (MGG-592) Renamed "eFontRasterType" identifier to "eFontTypeRaster"
+      - (MGG-596) Changed "vg_lite_draw_text" function return value from "int" to "vg_lite_error_t"
+    - Added:
+      - (MGG-596) Added "vg_lite_find_font" API function
+      - (MGG-596) Added 2 new error codes for "vg_lite_error_t": VG_LITE_ALREADY_EXISTS and VG_LITE_NOT_ALIGNED
+      - (IMX-2357) Allow users to override command queue task priority at build time using QUEUE_TASK_PRIO build symbol
+      - (MGG-551) Added text wrapping support for vector fonts
+      - (MGG-533) Added support for text right alignment
+  - version 3.0.6_rev3
+    - Added:
+      - (MGG-551) Added support for font and text rendering
+  - version 3.0.6_rev2
+    - Fixed:
+      - (IMX-2292) Fixed command buffer flushing after draw
+      - (IMX-2293) Fixed copy of register status when command buffer was not full
+      - (IMX-2305) Fixed scissor window taking no effect
+      - (IMX-2324) Fixed GPU feature table reset when calling "vg_lite_close"
+      - (IMX-2358) Fixed misuse of address operator in checking colour channel premultiplication flag
+      - (MGG-542) Cleaned up useless "memset" in "vg_lite_init"
+  - version 3.0.6_rev1
+    - Fixed:
+      - (IMX-2295) Initialize task context to zero in vg_lite_init()
+  - version 3.0.6
+    - Fixed:
+      - (MGG-525) Fixed "vg_lite_init_path" not properly initializating the "path" data structure
+    - Changed:
+      - (IMX-2255) Updated "vg_lite_set_scissor" arguments to (x, y, width, height) instead of (x0, y0, x1, y1)
+    - Added:
+      - (IMX-2104) Added API to enable/disable colour channel pre-multiplication at runtime on RT1170
+  - version 3.0.5
+    - Fixed:
+      - (IMX-2252) Reset global mutex when it is destroyed
+      - (IMX-2252) Fixed reset of task local context in vg_lite_close()
+    - Changed:
+      - (MGG-333) Enabled scissoring for GC255 GPU (i.MXRT500)
+    - Added:
+      - (IMX-1729) Added support for drawing from multiple threads
+  - version 3.0.4_rev5
+    - Changed:
+      - (IMX-2104) Disabled by default colour channel pre-multiplication on RT1170 platform
+      - (MGG-517) Updated "vg_lite_draw_pattern" function to return VG_LITE_NOT_SUPPORT for A4/A8 patterns
+    - Fixed:
+      - (IMX-2155) Fixed hard coded image mode in "vg_lite_draw_pattern"
+      - (IMX-2153) Updated "vg_lite_draw_pattern" to take into account pattern transparency
+      - (KPSDK-37093) Elementary library - Fixed bad free in "load_evo"
+      - (KPSDK-37093) Elementary library - Avoid resource leak in "ElmCreateBuffer"
+  - version 3.0.4_rev4
+    - Fixed:
+      - Fixed empty function argument lists definition for scissoring related API functions
+      - (IMX-1995) Extended RT500 image rotation fix to vg_lite_blit_rect, vg_lite_draw_pattern
+      - (IMX-1995) Isolated RT500 image rotation fix effects to RT500 platform only
+  - version 3.0.4_rev3
+    - Fixed:
+      - (IMX-1995) Compensated for RT500 image shift effect when rotation is approaching multiples of 90 dgs
+  - version 3.0.4_rev2
+    - Fixed:
+      - Fixed integration issue of "vg_lite_mem_avail" API
+  - version 3.0.4_rev1
+    - Changed:
+      - (IMX-1768) Enabled users to query, at runtime, the support for VG_LITE_UPPER draw quality
+    - Fixed:
+      - (IMX-2074) Fixed GPU exception handling issue
+    - Added:
+      - (IMX-2045) Added API to provide available heap memory
+  - version 3.0.4
+    - Changed:
+      - (IMX-1957) Enabled users to query, at runtime, the support for BORDER_CULLING and SCISSOR features
+      - Enable users to query, at runtime, the support for RGBA 2 bits-per-channel image formats
+    - Fixed:
+      - (IMX-1934) Fixed image stride alignment verification for TILED images
+      - Fix GC355 GPU (i.MXRT1170) draw error when tessellation window width is not aligned to 128
+    - Added:
+      - (MGG-333) Added support for GC355 GPU (i.MXRT1170) scissoring
+  - version 3.0.1_rev1
+    - Fixed:
+      - (MGG-250) Fixed GPU hang after a random time (mostly reproduced on RT1170 platforms)
+      - (KPSDK-33132) Fixed Elementary library memory leaks in case of failed EBO loading
+      - (MGG-336) Allow use of blend modes not affected by the border culling limitation
+      - (MGG-18) Fixed Elementary library memory leaks when loading EVO/EBO/EGO objects
+      - (MGG-353) Fixed linear colour gradient rendering error when loading EVOs using the Elementary library
+  - version 3.0.1
+    - Changed:
+      - Removed "vg_lite_blit2" API function due to lack of hardware support
+      - Removed "vg_lite_scanline" API function due to lack of harware support
+      - Aggregated "vg_lite_error.h" API header file content into "vg_lite.h"
+      - Aggregated "vg_lite_features.h" API header file content into "vg_lite.h"
+      - Aggregated "vg_lite_matrix.h" API header file content into "vg_lite.h"
+      - Aggregated "vg_lite_path.h" API header file content into "vg_lite.h"
+      - Aggregated "vg_lite_util.h" API header file content into "vg_lite.h"
+      - (IMX-1861) Added return code to the "vg_lite_flush" API function
+      - Changed VGLite GPU driver license from proprietary to MIT
+    - Fixed:
+      - Fixed definition of "elm_alloc" function in Elementary toolkit
+      - (IMX-1869) Fixed initialization of aligned bytes in the command buffer
+      - (IMX-1821) Fixed inverted background colours when using "vg_lite_draw_pattern"
+      - Fixed hang when calling "vg_lite_flush" repeatedly
+      - (IMX-1861) Fix propagation of return codes from "stall", "submit", "vg_lite_flush" function calls
+  - version 2.0.14_rev1
+    - Changed:
+      - (IMX-1809) Fixed misspelling of "vg_lite_buffer_transparency_mode"
+      - (IMX-1778) Added verification of colour gradients parameters
+      - (IMX-1813) Added return code to the "vg_lite_hal_allocate_contiguous" function
+      - (MGG-204) Added return code to "vg_lite_finish"
+    - Fixed:
+      - (IMX-1808) Fixed "vg_lite_blit" failure on dynamically allocated buffers
+      - (IMX-1773) Fixed failure to create 16 colours gradients
+      - (IMX-1790) Fixed driver incorrectly reporting available heap space
+      - (IMX-1810) Fixed verification of raster image stride alignment
+      - (IMX-1810) Fixed verification of raster image colour depth
+      - (IMX-1816) Fixed "vg_lite_close" not releasing memory allocated from OS heap
+      - (MGG-201) Fixed hard fault caused by command buffer management
+      - (MGG-202) Fixed "vg_lite_hal_wait_interrupt" function ignoring the timeout
+      - (MGG-203) Fixed "vg_lite_draw" function always returning success
+  - version 2.0.13_rev2
+    - Fixed:
+      - (MGG-102) Fixed incorrect colour gradient clipping issue when using "vg_lite_draw_gradient" API
+      - (MGG-140) Fixed "vg_lite_draw_gradient" error when gradient is not covering the entire shape
+  - version 2.0.13_rev1
+    - Added:
+      - (MGG-88) Support for operating with BGRA2222, ABGR2222, ARGB2222 type images
+      - (MGG-88) Support for operating with ABGR4444, ARGB4444 type images
+      - (MGG-88) Support for operating with ABGR8888, ARGB8888 type images
+      - (MGG-88) Support for operating with XBGR8888, XRGB8888 type images
+      - (MGG-52) Improved GPU bus error reporting by using weak functions
+    - Changed:
+      - (MGG-66) Restructured GPU driver by exposing the HAL source code for easier integration with operating systems
+    - Fixed:
+      - (MGG-72) Fixed rough edges of vector artefacts when using the "vg_lite_draw_pattern" API
+      - (MGG-58) Fixed "vg_lite_blit_rect" API not supporting a zero Y coordinate
+  - version 2.0.13_rev0
+*/

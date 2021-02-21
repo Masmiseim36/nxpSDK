@@ -30,6 +30,7 @@ var classerpcgen_1_1_data_type =
     [ "isString", "classerpcgen_1_1_data_type.html#ab5c453e35889dd4d64ed621a9470b806", null ],
     [ "isStruct", "classerpcgen_1_1_data_type.html#a9fc5f7de98a3c8f1067b832ec4723494", null ],
     [ "isUnion", "classerpcgen_1_1_data_type.html#ac5b57925fbf7b0a69aee8f11add91745", null ],
+    [ "isUString", "classerpcgen_1_1_data_type.html#ac46bfae239f2330dfec8dd8500b3556c", null ],
     [ "isVoid", "classerpcgen_1_1_data_type.html#a19952c8dc8ef8c4c5041fcf3cd26ae8e", null ],
     [ "m_dataType", "classerpcgen_1_1_data_type.html#a49a55bec8ce5196abe868e7209347fbe", null ]
 ];

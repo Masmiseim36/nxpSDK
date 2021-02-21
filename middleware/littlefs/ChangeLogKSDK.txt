@@ -2,7 +2,7 @@
 @page middleware_log Middleware Change Log
 
 @section little fail-safe filesystem for MCUXpresso SDK
-  The current version littlefs filesystem is 2.1.4_rev0.
+  The current version littlefs filesystem is 2.2.1_rev0.
 
   - 2.2.1_rev0
     - littlefs updated to version 2.2.1

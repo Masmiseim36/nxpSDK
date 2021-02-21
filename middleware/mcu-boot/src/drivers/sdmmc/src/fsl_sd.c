@@ -1,14 +1,38 @@
 /*
- * Copyright (c) 2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * The Clear BSD License
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2017 NXP
  * All rights reserved.
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
+ *
+ * o Redistributions of source code must retain the above copyright notice, this list
+ *   of conditions and the following disclaimer.
+ *
+ * o Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
+ *
+ * o Neither the name of the copyright holder nor the names of its
+ *   contributors may be used to endorse or promote products derived from this
+ *   software without specific prior written permission.
+ *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "fsl_card.h"
-#include "fsl_sdmmc.h"
-#include "microseconds/microseconds.h"
+#include "fsl_sd.h"
 
 /*******************************************************************************
  * Prototypes
@@ -285,7 +309,7 @@ static status_t SD_Erase(sd_card_t *card, uint32_t startBlock, uint32_t blockCou
  * @retval kStatus_Success Operate successfully.
  * @retval kStatus_SDMMC_TuningFail tuning fail
  */
-static status_t SD_Transfer(sd_card_t *card, HOST_TRANSFER *content, uint32_t retry);
+static status_t SD_Transfer(sd_card_t *card, SDMMCHOST_TRANSFER *content, uint32_t retry);
 
 /*!
  * @brief card execute tuning function.
@@ -301,7 +325,7 @@ static status_t inline SD_ExecuteTuning(sd_card_t *card);
  * Variables
  ******************************************************************************/
 /* g_sdmmc statement */
-extern uint32_t g_sdmmc[SDK_SIZEALIGN(SDMMC_GLOBAL_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CAHCE)];
+extern uint32_t g_sdmmc[SDK_SIZEALIGN(SDMMC_GLOBAL_BUFFER_SIZE, SDMMC_DATA_BUFFER_ALIGN_CACHE)];
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -337,7 +361,8 @@ static status_t inline SD_ExecuteTuning(sd_card_t *card)
 {
     assert(card);
 
-    return SDMMC_ExecuteTuning(card->host.base, card->host.transfer, kSD_SendTuningBlock, 64U);
+    return SDMMC_ExecuteTuning(card->host.base, card->host.transfer, kSD_SendTuningBlock, 64U,
+                               card->userConfig.tuningStart, card->userConfig.tuningStep);
 }
 
 static status_t SD_SwitchVoltage(sd_card_t *card)
@@ -347,14 +372,7 @@ static status_t SD_SwitchVoltage(sd_card_t *card)
     return SDMMC_SwitchVoltage(card->host.base, card->host.transfer);
 }
 
-static status_t SD_BL_SwitchVoltage(sd_card_t *card)
-{
-    assert(card);
-
-    return SDMMC_BL_SwitchVoltage(card->host.base, card->host.transfer);
-}
-
-static status_t SD_Transfer(sd_card_t *card, HOST_TRANSFER *content, uint32_t retry)
+static status_t SD_Transfer(sd_card_t *card, SDMMCHOST_TRANSFER *content, uint32_t retry)
 {
     assert(card->host.transfer);
     assert(content);
@@ -363,14 +381,14 @@ static status_t SD_Transfer(sd_card_t *card, HOST_TRANSFER *content, uint32_t re
     do
     {
         error = card->host.transfer(card->host.base, content);
-        if (((error == HOST_RETUNING_REQUEST) || (error == HOST_TUNING_ERROR) ||
+        if (((error == SDMMCHOST_RETUNING_REQUEST) || (error == SDMMCHOST_TUNING_ERROR) ||
              (content->command->response[0U] & kSDMMC_R1ErrorAllFlag)) &&
             ((card->currentTiming == kSD_TimingSDR104Mode) || (card->currentTiming == kSD_TimingSDR50Mode)))
         {
             /* tuning error need reset tuning circuit */
-            if (error == HOST_TUNING_ERROR)
+            if (error == SDMMCHOST_TUNING_ERROR)
             {
-                HOST_RESET_TUNING(card->host.base, 100U);
+                SDMMCHOST_RESET_TUNING(card->host.base, 10000U);
             }
 
             /* execute re-tuning */
@@ -378,11 +396,10 @@ static status_t SD_Transfer(sd_card_t *card, HOST_TRANSFER *content, uint32_t re
             {
                 error = kStatus_SDMMC_TuningFail;
             }
-            /* Avoid the infinite loop when re-tuning success but transfer failed.*/
-            // else
-            //{
-            //    continue;
-            //}
+            else
+            {
+                continue;
+            }
         }
         else if (error != kStatus_Success)
         {
@@ -407,8 +424,8 @@ static status_t SD_WaitWriteComplete(sd_card_t *card)
 {
     assert(card);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
 
     command.index = kSDMMC_SendStatus;
     command.argument = card->relativeAddress << 16U;
@@ -438,8 +455,8 @@ static status_t SD_StopTransmission(sd_card_t *card)
 {
     assert(card);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
 
     command.index = kSDMMC_StopTransmission;
     command.argument = 0U;
@@ -461,8 +478,8 @@ static status_t SD_SendRca(sd_card_t *card)
 {
     assert(card);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
 
     command.index = kSD_SendRelativeAddress;
     command.argument = 0U;
@@ -484,9 +501,9 @@ static status_t SD_SwitchFunction(sd_card_t *card, uint32_t mode, uint32_t group
     assert(card);
     assert(status);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
-    HOST_DATA data = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
+    SDMMCHOST_DATA data = { 0 };
 
     command.index = kSD_Switch;
     command.argument = (mode << 31U | 0x00FFFFFFU);
@@ -497,11 +514,6 @@ static status_t SD_SwitchFunction(sd_card_t *card, uint32_t mode, uint32_t group
     data.blockSize = 64U;
     data.blockCount = 1U;
     data.rxData = status;
-
-    if (kStatus_Success != SD_SetBlockSize(card, data.blockSize))
-    {
-        return kStatus_SDMMC_SetCardBlockSizeFailed;
-    }
 
     content.command = &command;
     content.data = &data;
@@ -576,9 +588,9 @@ static status_t SD_SendScr(sd_card_t *card)
 {
     assert(card);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
-    HOST_DATA data = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
+    SDMMCHOST_DATA data = { 0 };
     uint32_t *rawScr = g_sdmmc;
 
     /* memset the global buffer */
@@ -608,16 +620,16 @@ static status_t SD_SendScr(sd_card_t *card)
     /* SCR register data byte sequence from card is big endian(MSB first). */
     switch (card->host.config.endianMode)
     {
-        case kHOST_EndianModeLittle:
+        case kSDMMCHOST_EndianModeLittle:
             /* In little endian mode, SD bus byte transferred first is the byte stored in lowest byte position in a
             word which will cause 4 byte's sequence in a word is not consistent with their original sequence from
             card. So the sequence of 4 bytes received in a word should be converted. */
             rawScr[0U] = SWAP_WORD_BYTE_SEQUENCE(rawScr[0U]);
             rawScr[1U] = SWAP_WORD_BYTE_SEQUENCE(rawScr[1U]);
             break;
-        case kHOST_EndianModeBig:
+        case kSDMMCHOST_EndianModeBig:
             break; /* Doesn't need to switch byte sequence when decodes bytes as big endian sequence. */
-        case kHOST_EndianModeHalfWordBig:
+        case kSDMMCHOST_EndianModeHalfWordBig:
             rawScr[0U] = SWAP_HALF_WROD_BYTE_SEQUENCE(rawScr[0U]);
             rawScr[1U] = SWAP_HALF_WROD_BYTE_SEQUENCE(rawScr[1U]);
             break;
@@ -635,16 +647,15 @@ static status_t SD_SelectFunction(sd_card_t *card, uint32_t group, uint32_t func
     assert(card);
 
     uint32_t *functionStatus = g_sdmmc;
-    uint16_t functionGroupInfo[6U] = { 0 };
     uint32_t currentFunctionStatus = 0U;
 
     /* memset the global buffer */
     memset(g_sdmmc, 0, sizeof(g_sdmmc));
 
     /* check if card support CMD6 */
-    if ((card->version < kSD_SpecificationVersion1_0) || (!(card->csd.cardCommandClass & kSDMMC_CommandClassSwitch)))
+    if (card->version <= kSD_SpecificationVersion1_0)
     {
-        return kStatus_SDMMC_NotSupportYet;
+        return kStatus_SDMMC_CardNotSupport;
     }
 
     /* Check if card support high speed mode. */
@@ -656,7 +667,7 @@ static status_t SD_SelectFunction(sd_card_t *card, uint32_t group, uint32_t func
     /* Switch function status byte sequence from card is big endian(MSB first). */
     switch (card->host.config.endianMode)
     {
-        case kHOST_EndianModeLittle:
+        case kSDMMCHOST_EndianModeLittle:
             /* In little endian mode, SD bus byte transferred first is the byte stored in lowest byte position in
             a word which will cause 4 byte's sequence in a word is not consistent with their original sequence from
             card. So the sequence of 4 bytes received in a word should be converted. */
@@ -666,9 +677,9 @@ static status_t SD_SelectFunction(sd_card_t *card, uint32_t group, uint32_t func
             functionStatus[3U] = SWAP_WORD_BYTE_SEQUENCE(functionStatus[3U]);
             functionStatus[4U] = SWAP_WORD_BYTE_SEQUENCE(functionStatus[4U]);
             break;
-        case kHOST_EndianModeBig:
+        case kSDMMCHOST_EndianModeBig:
             break; /* Doesn't need to switch byte sequence when decodes bytes as big endian sequence. */
-        case kHOST_EndianModeHalfWordBig:
+        case kSDMMCHOST_EndianModeHalfWordBig:
             functionStatus[0U] = SWAP_HALF_WROD_BYTE_SEQUENCE(functionStatus[0U]);
             functionStatus[1U] = SWAP_HALF_WROD_BYTE_SEQUENCE(functionStatus[1U]);
             functionStatus[2U] = SWAP_HALF_WROD_BYTE_SEQUENCE(functionStatus[2U]);
@@ -687,17 +698,10 @@ static status_t SD_SelectFunction(sd_card_t *card, uint32_t group, uint32_t func
        -Check if function 1(high speed) in function group 1 is supported by checking if bit 401 is set;
        -check if function 1 is ready and can be switched by checking if bits 379~376 equal value 1;
      */
-    functionGroupInfo[5U] = (uint16_t)functionStatus[0U];
-    functionGroupInfo[4U] = (uint16_t)(functionStatus[1U] >> 16U);
-    functionGroupInfo[3U] = (uint16_t)(functionStatus[1U]);
-    functionGroupInfo[2U] = (uint16_t)(functionStatus[2U] >> 16U);
-    functionGroupInfo[1U] = (uint16_t)(functionStatus[2U]);
-    functionGroupInfo[0U] = (uint16_t)(functionStatus[3U] >> 16U);
     currentFunctionStatus = ((functionStatus[3U] & 0xFFU) << 8U) | (functionStatus[4U] >> 24U);
 
     /* check if function is support */
-    if (((functionGroupInfo[group] & (1 << function)) == 0U) ||
-        ((currentFunctionStatus >> (group * 4U)) & 0xFU) != function)
+    if (((currentFunctionStatus >> (group * 4U)) & 0xFU) != function)
     {
         return kStatus_SDMMC_NotSupportYet;
     }
@@ -711,16 +715,16 @@ static status_t SD_SelectFunction(sd_card_t *card, uint32_t group, uint32_t func
     /* Switch function status byte sequence from card is big endian(MSB first). */
     switch (card->host.config.endianMode)
     {
-        case kHOST_EndianModeLittle:
+        case kSDMMCHOST_EndianModeLittle:
             /* In little endian mode is little endian, SD bus byte transferred first is the byte stored in lowest byte
             position in a word which will cause 4 byte's sequence in a word is not consistent with their original
             sequence from card. So the sequence of 4 bytes received in a word should be converted. */
             functionStatus[3U] = SWAP_WORD_BYTE_SEQUENCE(functionStatus[3U]);
             functionStatus[4U] = SWAP_WORD_BYTE_SEQUENCE(functionStatus[4U]);
             break;
-        case kHOST_EndianModeBig:
+        case kSDMMCHOST_EndianModeBig:
             break; /* Doesn't need to switch byte sequence when decodes bytes as big endian sequence. */
-        case kHOST_EndianModeHalfWordBig:
+        case kSDMMCHOST_EndianModeHalfWordBig:
             functionStatus[3U] = SWAP_HALF_WROD_BYTE_SEQUENCE(functionStatus[3U]);
             functionStatus[4U] = SWAP_HALF_WROD_BYTE_SEQUENCE(functionStatus[4U]);
             break;
@@ -744,8 +748,8 @@ static status_t SD_SetDataBusWidth(sd_card_t *card, sd_data_bus_width_t width)
 {
     assert(card);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
 
     if (kStatus_Success != SD_SendApplicationCmd(card, card->relativeAddress))
     {
@@ -882,8 +886,8 @@ static status_t SD_SendCsd(sd_card_t *card)
 {
     assert(card);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
 
     command.index = kSDMMC_SendCsd;
     command.argument = (card->relativeAddress << 16U);
@@ -932,8 +936,8 @@ static status_t SD_AllSendCid(sd_card_t *card)
 {
     assert(card);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
 
     command.index = kSDMMC_AllSendCid;
     command.argument = 0U;
@@ -956,8 +960,8 @@ static status_t SD_ApplicationSendOperationCondition(sd_card_t *card, uint32_t a
 {
     assert(card);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
     status_t error = kStatus_Fail;
     uint32_t i = FSL_SDMMC_MAX_VOLTAGE_RETRIES;
 
@@ -1006,8 +1010,8 @@ static status_t SD_BL_ApplicationSendOperationCondition(sd_card_t *card, uint32_
 {
     assert(card);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
     status_t error = kStatus_Fail;
     uint32_t i = FSL_SDMMC_MAX_VOLTAGE_RETRIES;
 
@@ -1019,9 +1023,10 @@ static status_t SD_BL_ApplicationSendOperationCondition(sd_card_t *card, uint32_
 
     while ((i--) && (microseconds_get_ticks() < timeoutTicks))
     {
-        if (kStatus_Success != SD_SendApplicationCmd(card, 0U))
+        error = SD_SendApplicationCmd(card, 0U);
+        if (kStatus_Success != error)
         {
-            continue;
+            return error;
         }
 
         content.command = &command;
@@ -1058,8 +1063,8 @@ static status_t SD_SendInterfaceCondition(sd_card_t *card)
 {
     assert(card);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
     uint32_t i = FSL_SDMMC_MAX_CMD_RETRIES;
     status_t error;
 
@@ -1095,8 +1100,8 @@ static status_t SD_BL_SendInterfaceCondition(sd_card_t *card)
 {
     assert(card);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
     uint32_t i = FSL_SDMMC_MAX_CMD_RETRIES;
     status_t error;
 
@@ -1137,7 +1142,7 @@ static status_t SD_SelectBusTiming(sd_card_t *card)
     if (card->operationVoltage != kCARD_OperationVoltage180V)
     {
         /* Switch the card to high speed mode */
-        if (kHOST_SupportHighSpeed != HOST_NOT_SUPPORT)
+        if (card->host.capability.flags & kSDMMCHOST_SupportHighSpeed)
         {
             /* group 1, function 1 ->high speed mode*/
             error = SD_SelectFunction(card, kSD_GroupTimingMode, kSD_FunctionSDR25HighSpeed);
@@ -1146,7 +1151,8 @@ static status_t SD_SelectBusTiming(sd_card_t *card)
             if (error == kStatus_Success)
             {
                 card->currentTiming = kSD_TimingSDR25HighSpeedMode;
-                card->busClock_Hz = HOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_50MHZ);
+                card->busClock_Hz =
+                    SDMMCHOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_50MHZ);
             }
             else if (error == kStatus_SDMMC_NotSupportYet)
             {
@@ -1161,8 +1167,8 @@ static status_t SD_SelectBusTiming(sd_card_t *card)
         }
     }
     /* card is in UHS_I mode */
-    else if ((kHOST_SupportSDR104 != HOST_NOT_SUPPORT) || (kHOST_SupportSDR50 != HOST_NOT_SUPPORT) ||
-             (kHOST_SupportDDR50 != HOST_NOT_SUPPORT))
+    else if ((kSDMMCHOST_SupportSDR104 != SDMMCHOST_NOT_SUPPORT) ||
+             (kSDMMCHOST_SupportSDR50 != SDMMCHOST_NOT_SUPPORT) || (kSDMMCHOST_SupportDDR50 != SDMMCHOST_NOT_SUPPORT))
     {
         switch (card->currentTiming)
         {
@@ -1173,8 +1179,8 @@ static status_t SD_SelectBusTiming(sd_card_t *card)
                 if (error == kStatus_Success)
                 {
                     card->currentTiming = kSD_TimingSDR104Mode;
-                    card->busClock_Hz =
-                        HOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, HOST_SUPPORT_SDR104_FREQ);
+                    card->busClock_Hz = SDMMCHOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz,
+                                                                 SDMMCHOST_SUPPORT_SDR104_FREQ);
                     break;
                 }
             case kSD_TimingDDR50Mode:
@@ -1183,8 +1189,8 @@ static status_t SD_SelectBusTiming(sd_card_t *card)
                 {
                     card->currentTiming = kSD_TimingDDR50Mode;
                     card->busClock_Hz =
-                        HOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_100MHZ);
-                    HOST_ENABLE_DDR_MODE(card->host.base, true);
+                        SDMMCHOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_100MHZ);
+                    SDMMCHOST_ENABLE_DDR_MODE(card->host.base, true, 0U);
                 }
                 break;
             case kSD_TimingSDR50Mode:
@@ -1193,7 +1199,7 @@ static status_t SD_SelectBusTiming(sd_card_t *card)
                 {
                     card->currentTiming = kSD_TimingSDR50Mode;
                     card->busClock_Hz =
-                        HOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_100MHZ);
+                        SDMMCHOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_100MHZ);
                 }
                 break;
             case kSD_TimingSDR25HighSpeedMode:
@@ -1201,7 +1207,8 @@ static status_t SD_SelectBusTiming(sd_card_t *card)
                 if (error == kStatus_Success)
                 {
                     card->currentTiming = kSD_TimingSDR25HighSpeedMode;
-                    card->busClock_Hz = HOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_50MHZ);
+                    card->busClock_Hz =
+                        SDMMCHOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_50MHZ);
                 }
                 break;
 
@@ -1219,11 +1226,11 @@ static status_t SD_SelectBusTiming(sd_card_t *card)
         /* config IO strength in IOMUX*/
         if (card->currentTiming == kSD_TimingSDR50Mode)
         {
-            HOST_CONFIG_SD_IO(CARD_BUS_FREQ_100MHZ1, CARD_BUS_STRENGTH_7);
+            SDMMCHOST_CONFIG_SD_IO(CARD_BUS_FREQ_100MHZ1, CARD_BUS_STRENGTH_7);
         }
         else
         {
-            HOST_CONFIG_SD_IO(CARD_BUS_FREQ_200MHZ, CARD_BUS_STRENGTH_7);
+            SDMMCHOST_CONFIG_SD_IO(CARD_BUS_FREQ_200MHZ, CARD_BUS_STRENGTH_7);
         }
         /* execute tuning */
         if (SD_ExecuteTuning(card) != kStatus_Success)
@@ -1231,9 +1238,10 @@ static status_t SD_SelectBusTiming(sd_card_t *card)
             return kStatus_SDMMC_TuningFail;
         }
     }
-    else if (card->currentTiming == kSD_TimingDDR50Mode)
+    else
     {
-        HOST_CONFIG_SD_IO(CARD_BUS_FREQ_100MHZ1, CARD_BUS_STRENGTH_3);
+        /* set default IO strength to 4 to cover card adapter driver strength difference */
+        SDMMCHOST_CONFIG_SD_IO(CARD_BUS_FREQ_100MHZ1, CARD_BUS_STRENGTH_4);
     }
 
     return error;
@@ -1249,7 +1257,7 @@ static status_t SD_BL_SelectBusTiming(sd_card_t *card)
     switch (card->userConfig.timing)
     {
         case kSD_TimingDDR50Mode:
-            if (kHOST_SupportDDR50 != HOST_NOT_SUPPORT)
+            if (kSDMMCHOST_SupportDDR50 != SDMMCHOST_NOT_SUPPORT)
             {
                 funcTiming = kSD_FunctionDDR50;
                 freq = SD_CLOCK_100MHZ;
@@ -1260,10 +1268,10 @@ static status_t SD_BL_SelectBusTiming(sd_card_t *card)
                 return kStatus_SDMMC_HostNotSupport;
             }
         case kSD_TimingSDR104Mode:
-            if (kHOST_SupportSDR104 != HOST_NOT_SUPPORT)
+            if (kSDMMCHOST_SupportSDR104 != SDMMCHOST_NOT_SUPPORT)
             {
                 funcTiming = kSD_FunctionSDR104;
-                freq = HOST_SUPPORT_SDR104_FREQ;
+                freq = SDMMCHOST_SUPPORT_SDR104_FREQ;
                 break;
             }
             else
@@ -1271,7 +1279,7 @@ static status_t SD_BL_SelectBusTiming(sd_card_t *card)
                 return kStatus_SDMMC_HostNotSupport;
             }
         case kSD_TimingSDR50Mode:
-            if (kHOST_SupportSDR50 != HOST_NOT_SUPPORT)
+            if (kSDMMCHOST_SupportSDR50 != SDMMCHOST_NOT_SUPPORT)
             {
                 funcTiming = kSD_FunctionSDR50;
                 freq = SD_CLOCK_100MHZ;
@@ -1282,7 +1290,7 @@ static status_t SD_BL_SelectBusTiming(sd_card_t *card)
                 return kStatus_SDMMC_HostNotSupport;
             }
         case kSD_TimingSDR25HighSpeedMode:
-            if (kHOST_SupportHighSpeed != HOST_NOT_SUPPORT)
+            if (kSDMMCHOST_SupportHighSpeed != SDMMCHOST_NOT_SUPPORT)
             {
                 funcTiming = kSD_FunctionSDR25HighSpeed;
                 freq = SD_CLOCK_50MHZ;
@@ -1301,7 +1309,7 @@ static status_t SD_BL_SelectBusTiming(sd_card_t *card)
     if (error == kStatus_Success)
     {
         card->currentTiming = card->userConfig.timing;
-        card->busClock_Hz = HOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, freq);
+        card->busClock_Hz = SDMMCHOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, freq);
     }
     else
     {
@@ -1314,11 +1322,13 @@ static status_t SD_BL_SelectBusTiming(sd_card_t *card)
         /* config IO strength in IOMUX*/
         if (card->currentTiming == kSD_TimingSDR50Mode)
         {
-            HOST_UPDATE_SD_IO(card->host.base, card->userConfig.busWidth, CARD_BUS_FREQ_100MHZ1, CARD_BUS_STRENGTH_7);
+            SDMMCHOST_UPDATE_SD_IO(card->host.base, card->userConfig.busWidth, CARD_BUS_FREQ_100MHZ1,
+                                   CARD_BUS_STRENGTH_7);
         }
         else
         {
-            HOST_UPDATE_SD_IO(card->host.base, card->userConfig.busWidth, CARD_BUS_FREQ_200MHZ, CARD_BUS_STRENGTH_7);
+            SDMMCHOST_UPDATE_SD_IO(card->host.base, card->userConfig.busWidth, CARD_BUS_FREQ_200MHZ,
+                                   CARD_BUS_STRENGTH_7);
         }
         /* execute tuning */
         if (SD_ExecuteTuning(card) != kStatus_Success)
@@ -1326,9 +1336,9 @@ static status_t SD_BL_SelectBusTiming(sd_card_t *card)
             return kStatus_SDMMC_TuningFail;
         }
     }
-    else if (card->currentTiming == kSD_TimingDDR50Mode)
+    else
     {
-        HOST_UPDATE_SD_IO(card->host.base, card->userConfig.busWidth, CARD_BUS_FREQ_100MHZ1, CARD_BUS_STRENGTH_3);
+        SDMMCHOST_UPDATE_SD_IO(card->host.base, card->userConfig.busWidth, CARD_BUS_FREQ_100MHZ1, CARD_BUS_STRENGTH_4);
     }
 
     return error;
@@ -1366,9 +1376,9 @@ static status_t SD_Read(sd_card_t *card, uint8_t *buffer, uint32_t startBlock, u
     assert(blockSize);
     assert(blockSize == FSL_SDMMC_DEFAULT_BLOCK_SIZE);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
-    HOST_DATA data = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
+    SDMMCHOST_DATA data = { 0 };
     status_t error;
 
     if (((card->flags & kSD_SupportHighCapacityFlag) && (blockSize != 512U)) || (blockSize > card->blockSize) ||
@@ -1430,9 +1440,9 @@ static status_t SD_Write(
     assert(blockSize);
     assert(blockSize == FSL_SDMMC_DEFAULT_BLOCK_SIZE);
 
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
-    HOST_DATA data = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
+    SDMMCHOST_DATA data = { 0 };
     status_t error;
 
     if (((card->flags & kSD_SupportHighCapacityFlag) && (blockSize != 512U)) || (blockSize > card->blockSize) ||
@@ -1442,7 +1452,7 @@ static status_t SD_Write(
     }
 
     /* Wait for the card's buffer to be not full to write to improve the write performance. */
-    while ((GET_HOST_STATUS(card->host.base) & CARD_DATA0_STATUS_MASK) != CARD_DATA0_NOT_BUSY)
+    while ((GET_SDMMCHOST_STATUS(card->host.base) & CARD_DATA0_STATUS_MASK) != CARD_DATA0_NOT_BUSY)
     {
     }
 
@@ -1497,11 +1507,11 @@ static status_t SD_Erase(sd_card_t *card, uint32_t startBlock, uint32_t blockCou
 
     uint32_t eraseBlockStart;
     uint32_t eraseBlockEnd;
-    HOST_TRANSFER content = { 0 };
-    HOST_COMMAND command = { 0 };
+    SDMMCHOST_TRANSFER content = { 0 };
+    SDMMCHOST_COMMAND command = { 0 };
 
     /* Wait for the card's buffer to be not full to write to improve the write performance. */
-    while ((GET_HOST_STATUS(card->host.base) & CARD_DATA0_STATUS_MASK) != CARD_DATA0_NOT_BUSY)
+    while ((GET_SDMMCHOST_STATUS(card->host.base) & CARD_DATA0_STATUS_MASK) != CARD_DATA0_NOT_BUSY)
     {
     }
 
@@ -1558,379 +1568,6 @@ static status_t SD_Erase(sd_card_t *card, uint32_t startBlock, uint32_t blockCou
     }
 
     return kStatus_Success;
-}
-
-status_t SD_Init(sd_card_t *card)
-{
-    assert(card);
-
-    uint32_t applicationCommand41Argument = 0U;
-    status_t error = kStatus_Success;
-
-    if (!card->isHostReady)
-    {
-        error = HOST_Init(&(card->host));
-        if (error != kStatus_Success)
-        {
-            return error;
-        }
-        /* set the host status flag, after the card re-plug in, don't need init host again */
-        card->isHostReady = true;
-    }
-    else
-    {
-        /* reset the host */
-        HOST_Reset(card->host.base);
-    }
-
-    /*detect card insert*/
-    error = CardInsertDetect(card->host.base);
-    if (error != kStatus_Success)
-    {
-        return error;
-    }
-    /* reset variables */
-    card->flags = 0U;
-    /* set DATA bus width */
-    HOST_SET_CARD_BUS_WIDTH(card->host.base, kHOST_DATABUSWIDTH1BIT);
-    /*set card freq to 400KHZ*/
-    card->busClock_Hz = HOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SDMMC_CLOCK_400KHZ);
-    /* send card active */
-    HOST_SEND_CARD_ACTIVE(card->host.base, 100U);
-    /* Get host capability. */
-    GET_HOST_CAPABILITY(card->host.base, &(card->host.capability));
-
-    /* card go idle */
-    if (kStatus_Success != SD_GoIdle(card))
-    {
-        return kStatus_SDMMC_GoIdleFailed;
-    }
-
-    if (kHOST_SupportV330 != HOST_NOT_SUPPORT)
-    {
-        applicationCommand41Argument |= (kSD_OcrVdd32_33Flag | kSD_OcrVdd33_34Flag);
-        card->operationVoltage = kCARD_OperationVoltage330V;
-    }
-    else if (kHOST_SupportV300 != HOST_NOT_SUPPORT)
-    {
-        applicationCommand41Argument |= kSD_OcrVdd29_30Flag;
-        card->operationVoltage = kCARD_OperationVoltage330V;
-    }
-
-    /* allow user select the work voltage, if not select, sdmmc will handle it automatically */
-    if (kHOST_SupportV180 != HOST_NOT_SUPPORT)
-    {
-        applicationCommand41Argument |= kSD_OcrSwitch18RequestFlag;
-    }
-
-    /* Check card's supported interface condition. */
-    if (kStatus_Success == SD_SendInterfaceCondition(card))
-    {
-        /* SDHC or SDXC card */
-        applicationCommand41Argument |= kSD_OcrHostCapacitySupportFlag;
-        card->flags |= kSD_SupportSdhcFlag;
-    }
-    else
-    {
-        /* SDSC card */
-        if (kStatus_Success != SD_GoIdle(card))
-        {
-            return kStatus_SDMMC_GoIdleFailed;
-        }
-    }
-    /* Set card interface condition according to SDHC capability and card's supported interface condition. */
-    if (kStatus_Success != SD_ApplicationSendOperationCondition(card, applicationCommand41Argument))
-    {
-        return kStatus_SDMMC_HandShakeOperationConditionFailed;
-    }
-
-    /* check if card support 1.8V */
-    if ((card->flags & kSD_SupportVoltage180v))
-    {
-        if (kStatus_Success != SD_SwitchVoltage(card))
-        {
-            return kStatus_SDMMC_InvalidVoltage;
-        }
-        card->operationVoltage = kCARD_OperationVoltage180V;
-    }
-
-    /* Initialize card if the card is SD card. */
-    if (kStatus_Success != SD_AllSendCid(card))
-    {
-        return kStatus_SDMMC_AllSendCidFailed;
-    }
-    if (kStatus_Success != SD_SendRca(card))
-    {
-        return kStatus_SDMMC_SendRelativeAddressFailed;
-    }
-    if (kStatus_Success != SD_SendCsd(card))
-    {
-        return kStatus_SDMMC_SendCsdFailed;
-    }
-    if (kStatus_Success != SD_SelectCard(card, true))
-    {
-        return kStatus_SDMMC_SelectCardFailed;
-    }
-
-    if (kStatus_Success != SD_SendScr(card))
-    {
-        return kStatus_SDMMC_SendScrFailed;
-    }
-
-    /* Set to max frequency in non-high speed mode. */
-    card->busClock_Hz = HOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_25MHZ);
-
-    /* Set to 4-bit data bus mode. */
-    if ((kHOST_Support4BitBusWidth != HOST_NOT_SUPPORT) && (card->flags & kSD_Support4BitWidthFlag))
-    {
-        if (kStatus_Success != SD_SetDataBusWidth(card, kSD_DataBusWidth4Bit))
-        {
-            return kStatus_SDMMC_SetDataBusWidthFailed;
-        }
-        HOST_SET_CARD_BUS_WIDTH(card->host.base, kHOST_DATABUSWIDTH4BIT);
-    }
-
-    /* set sd card driver strength */
-    SD_SetDriverStrength(card, card->driverStrength);
-    /* set sd card current limit */
-    SD_SetMaxCurrent(card, card->maxCurrent);
-
-    /* set block size */
-    if (SD_SetBlockSize(card, FSL_SDMMC_DEFAULT_BLOCK_SIZE))
-    {
-        return kStatus_SDMMC_SetCardBlockSizeFailed;
-    }
-
-    /* select bus timing */
-    if (kStatus_Success != SD_SelectBusTiming(card))
-    {
-        return kStatus_SDMMC_SwitchBusTimingFailed;
-    }
-
-    return kStatus_Success;
-}
-
-status_t SD_BL_Init(sd_card_t *card)
-{
-    assert(card);
-
-    uint32_t applicationCommand41Argument = 0U;
-    status_t error = kStatus_Success;
-    bool isUHSImode = false;
-
-    HOST_Reset(card->host.base);
-    error = HOST_Init(&(card->host));
-    if (error != kStatus_Success)
-    {
-        return error;
-    }
-
-    /* init the pin mux here. */
-    HOST_CONFIG_SD_MUX(card->host.base, card->userConfig.busWidth);
-
-    isUHSImode = (card->userConfig.timing == kSD_TimingSDR50Mode) ||
-                 (card->userConfig.timing == kSD_TimingSDR104Mode) || (card->userConfig.timing == kSD_TimingDDR50Mode);
-    /* execute the power cycle here */
-    if ((card->userConfig.enablePowerCycle) || (isUHSImode))
-    {
-        HOST_INIT_SD_POWER();
-
-        /* card power off */
-        HOST_ENABLE_SD_POWER(card->userConfig.powerPolarity);
-        /* Delay some time to make card stable. */
-        microseconds_delay(card->userConfig.powerDownDelay_US);
-        /* card power on */
-        HOST_ENABLE_SD_POWER(!card->userConfig.powerPolarity);
-        /* Delay some time to make card stable. */
-        microseconds_delay(card->userConfig.powerUpDelay_US);
-    }
-
-    if (isUHSImode)
-    {
-        /* UHSI mode only supports 4bit. Update to 4bit mode even config 1bit. */
-        card->userConfig.busWidth = kSD_DataBusWidth4Bit;
-        /* init vselect pin */
-        HOST_INIT_SD_VSEL();
-    }
-
-    /*detect card insert*/
-    // No need to check the card
-    // error = CardInsertDetect(card->host.base);
-    // if (error != kStatus_Success)
-    //{
-    //    return error;
-    //}
-    /* reset variables */
-    card->flags = 0U;
-    /* set DATA bus width */
-    HOST_SET_CARD_BUS_WIDTH(card->host.base, kHOST_DATABUSWIDTH1BIT);
-    /*set card freq to 400KHZ*/
-    card->busClock_Hz = HOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SDMMC_CLOCK_400KHZ);
-    /* send card active */
-    HOST_SEND_CARD_ACTIVE(card->host.base, 100U);
-    /* Get host capability. */
-    GET_HOST_CAPABILITY(card->host.base, &(card->host.capability));
-
-    /* card go idle */
-    if (kStatus_Success != SD_GoIdle(card))
-    {
-        return kStatus_SDMMC_GoIdleFailed;
-    }
-
-    // if (kHOST_SupportV330 != HOST_NOT_SUPPORT)
-    //{
-    //    applicationCommand41Argument |= (kSD_OcrVdd32_33Flag | kSD_OcrVdd33_34Flag);
-    //    card->operationVoltage = kCARD_OperationVoltage330V;
-    //}
-    // if (kHOST_SupportV300 != HOST_NOT_SUPPORT)
-    //{
-    //    applicationCommand41Argument |= kSD_OcrVdd29_30Flag;
-    //    card->operationVoltage = kCARD_OperationVoltage330V;
-    //}
-    // For bootloader, check all supplied voltage level.
-    applicationCommand41Argument |=
-        (kSD_OcrVdd27_28Flag | kSD_OcrVdd28_29Flag | kSD_OcrVdd29_30Flag | kSD_OcrVdd30_31Flag | kSD_OcrVdd31_32Flag |
-         kSD_OcrVdd32_33Flag | kSD_OcrVdd33_34Flag | kSD_OcrVdd34_35Flag | kSD_OcrVdd35_36Flag);
-    card->operationVoltage = kCARD_OperationVoltage330V;
-
-    /* allow user select the work voltage, if not select, sdmmc will handle it automatically */
-    if (kHOST_SupportV180 != HOST_NOT_SUPPORT)
-    {
-        if (isUHSImode)
-        {
-            applicationCommand41Argument |= kSD_OcrSwitch18RequestFlag;
-        }
-    }
-    else
-    {
-        if (isUHSImode)
-        {
-            return kStatus_SDMMC_HostNotSupport;
-        }
-    }
-
-    /* Check card's supported interface condition. */
-    error = SD_BL_SendInterfaceCondition(card);
-    if (kStatus_Success == error)
-    {
-        /* Ver2.00 or later SD card */
-        applicationCommand41Argument |= kSD_OcrHostCapacitySupportFlag;
-        card->flags |= kSD_SupportSdhcFlag;
-    }
-    else if (kStatus_SDMMC_CardNotSupport == error)
-    {
-        return error;
-    }
-    else /* No response */
-    {
-        /* Ver2.00 or later SD Memory Card(voltage mismatch),
-         * or Ver1.X SD card, or not SD card
-         */
-        if (kStatus_Success != SD_GoIdle(card))
-        {
-            return kStatus_SDMMC_GoIdleFailed;
-        }
-    }
-    /* Set card interface condition according to SDHC capability and card's supported interface condition. */
-    if (kStatus_Success != SD_BL_ApplicationSendOperationCondition(card, applicationCommand41Argument))
-    {
-        return kStatus_SDMMC_HandShakeOperationConditionFailed;
-    }
-
-    /* check if card support 1.8V */
-    if (card->flags & kSD_SupportVoltage180v)
-    {
-        if (kStatus_Success != SD_BL_SwitchVoltage(card))
-        {
-            return kStatus_SDMMC_InvalidVoltage;
-        }
-        card->operationVoltage = kCARD_OperationVoltage180V;
-    }
-    else if (applicationCommand41Argument & kSD_OcrSwitch18RequestFlag)
-    {
-        // 1V8 is request, but not supported by SD card.
-        return kStatus_SDMMC_CardNotSupport;
-    }
-
-    /* Initialize card if the card is SD card. */
-    if (kStatus_Success != SD_AllSendCid(card))
-    {
-        return kStatus_SDMMC_AllSendCidFailed;
-    }
-    if (kStatus_Success != SD_SendRca(card))
-    {
-        return kStatus_SDMMC_SendRelativeAddressFailed;
-    }
-    if (kStatus_Success != SD_SendCsd(card))
-    {
-        return kStatus_SDMMC_SendCsdFailed;
-    }
-    if (kStatus_Success != SD_SelectCard(card, true))
-    {
-        return kStatus_SDMMC_SelectCardFailed;
-    }
-
-    if (kStatus_Success != SD_SendScr(card))
-    {
-        return kStatus_SDMMC_SendScrFailed;
-    }
-
-    /* Set to max frequency in non-high speed mode. */
-    card->busClock_Hz = HOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_25MHZ);
-
-    /* Set 4 bit data bus mode. */
-    if ((card->userConfig.busWidth == kSD_DataBusWidth4Bit) || isUHSImode)
-    {
-        if (kHOST_Support4BitBusWidth != HOST_NOT_SUPPORT)
-        {
-            if (card->flags & kSD_Support4BitWidthFlag)
-            {
-                if (kStatus_Success != SD_SetDataBusWidth(card, kSD_DataBusWidth4Bit))
-                {
-                    return kStatus_SDMMC_SetDataBusWidthFailed;
-                }
-                HOST_SET_CARD_BUS_WIDTH(card->host.base, kHOST_DATABUSWIDTH4BIT);
-            }
-            else
-            {
-                return kStatus_SDMMC_CardNotSupport;
-            }
-        }
-        else
-        {
-            return kStatus_SDMMC_HostNotSupport;
-        }
-    }
-
-    /* set sd card driver strength */
-    SD_SetDriverStrength(card, card->driverStrength);
-    /* set sd card current limit */
-    SD_SetMaxCurrent(card, card->maxCurrent);
-
-    /* set block size */
-    if (SD_SetBlockSize(card, FSL_SDMMC_DEFAULT_BLOCK_SIZE))
-    {
-        return kStatus_SDMMC_SetCardBlockSizeFailed;
-    }
-
-    /* select bus timing */
-    error = SD_BL_SelectBusTiming(card);
-    if (error != kStatus_Success)
-    {
-        return error;
-    }
-
-    return kStatus_Success;
-}
-
-void SD_Deinit(sd_card_t *card)
-{
-    assert(card);
-
-    SD_SelectCard(card, false);
-    HOST_Deinit(&(card->host));
-    /* should re-init host */
-    card->isHostReady = false;
 }
 
 bool SD_CheckReadOnly(sd_card_t *card)
@@ -2069,4 +1706,450 @@ status_t SD_EraseBlocks(sd_card_t *card, uint32_t startBlock, uint32_t blockCoun
     }
 
     return kStatus_Success;
+}
+
+status_t SD_CardInit(sd_card_t *card)
+{
+    assert(card);
+
+    uint32_t applicationCommand41Argument = 0U;
+
+    if (!card->isHostReady)
+    {
+        return kStatus_SDMMC_HostNotReady;
+    }
+    /* reset variables */
+    card->flags = 0U;
+    /* set DATA bus width */
+    SDMMCHOST_SET_CARD_BUS_WIDTH(card->host.base, kSDMMCHOST_DATABUSWIDTH1BIT);
+    /*set card freq to 400KHZ*/
+    card->busClock_Hz = SDMMCHOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SDMMC_CLOCK_400KHZ);
+    /* send card active */
+    SDMMCHOST_SEND_CARD_ACTIVE(card->host.base, 100U);
+    /* Get host capability. */
+    GET_SDMMCHOST_CAPABILITY(card->host.base, &(card->host.capability));
+
+    /* card go idle */
+    if (kStatus_Success != SD_GoIdle(card))
+    {
+        return kStatus_SDMMC_GoIdleFailed;
+    }
+
+    if (kSDMMCHOST_SupportV330 != SDMMCHOST_NOT_SUPPORT)
+    {
+        applicationCommand41Argument |= (kSD_OcrVdd32_33Flag | kSD_OcrVdd33_34Flag);
+        card->operationVoltage = kCARD_OperationVoltage330V;
+    }
+    else if (kSDMMCHOST_SupportV300 != SDMMCHOST_NOT_SUPPORT)
+    {
+        applicationCommand41Argument |= kSD_OcrVdd29_30Flag;
+        card->operationVoltage = kCARD_OperationVoltage330V;
+    }
+
+    /* allow user select the work voltage, if not select, sdmmc will handle it automatically */
+    if (kSDMMCHOST_SupportV180 != SDMMCHOST_NOT_SUPPORT)
+    {
+        applicationCommand41Argument |= kSD_OcrSwitch18RequestFlag;
+    }
+
+    /* Check card's supported interface condition. */
+    if (kStatus_Success == SD_SendInterfaceCondition(card))
+    {
+        /* SDHC or SDXC card */
+        applicationCommand41Argument |= kSD_OcrHostCapacitySupportFlag;
+        card->flags |= kSD_SupportSdhcFlag;
+    }
+    else
+    {
+        /* SDSC card */
+        if (kStatus_Success != SD_GoIdle(card))
+        {
+            return kStatus_SDMMC_GoIdleFailed;
+        }
+    }
+    /* Set card interface condition according to SDHC capability and card's supported interface condition. */
+    if (kStatus_Success != SD_ApplicationSendOperationCondition(card, applicationCommand41Argument))
+    {
+        return kStatus_SDMMC_HandShakeOperationConditionFailed;
+    }
+
+    /* check if card support 1.8V */
+    if ((card->flags & kSD_SupportVoltage180v))
+    {
+        if (kStatus_Success != SD_SwitchVoltage(card))
+        {
+            return kStatus_SDMMC_InvalidVoltage;
+        }
+        card->operationVoltage = kCARD_OperationVoltage180V;
+    }
+
+    /* Initialize card if the card is SD card. */
+    if (kStatus_Success != SD_AllSendCid(card))
+    {
+        return kStatus_SDMMC_AllSendCidFailed;
+    }
+    if (kStatus_Success != SD_SendRca(card))
+    {
+        return kStatus_SDMMC_SendRelativeAddressFailed;
+    }
+    if (kStatus_Success != SD_SendCsd(card))
+    {
+        return kStatus_SDMMC_SendCsdFailed;
+    }
+    if (kStatus_Success != SD_SelectCard(card, true))
+    {
+        return kStatus_SDMMC_SelectCardFailed;
+    }
+
+    if (kStatus_Success != SD_SendScr(card))
+    {
+        return kStatus_SDMMC_SendScrFailed;
+    }
+
+    /* Set to max frequency in non-high speed mode. */
+    card->busClock_Hz = SDMMCHOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_25MHZ);
+
+    /* Set to 4-bit data bus mode. */
+    if (((card->host.capability.flags) & kSDMMCHOST_Support4BitBusWidth) && (card->flags & kSD_Support4BitWidthFlag))
+    {
+        if (kStatus_Success != SD_SetDataBusWidth(card, kSD_DataBusWidth4Bit))
+        {
+            return kStatus_SDMMC_SetDataBusWidthFailed;
+        }
+        SDMMCHOST_SET_CARD_BUS_WIDTH(card->host.base, kSDMMCHOST_DATABUSWIDTH4BIT);
+    }
+
+    /* set sd card driver strength */
+    SD_SetDriverStrength(card, card->driverStrength);
+    /* set sd card current limit */
+    SD_SetMaxCurrent(card, card->maxCurrent);
+
+    /* set block size */
+    if (SD_SetBlockSize(card, FSL_SDMMC_DEFAULT_BLOCK_SIZE))
+    {
+        return kStatus_SDMMC_SetCardBlockSizeFailed;
+    }
+
+    /* select bus timing */
+    if (kStatus_Success != SD_SelectBusTiming(card))
+    {
+        return kStatus_SDMMC_SwitchBusTimingFailed;
+    }
+
+    return kStatus_Success;
+}
+
+status_t SD_BL_CardInit(sd_card_t *card)
+{
+    assert(card);
+
+    uint32_t applicationCommand41Argument = 0U;
+    status_t error = kStatus_Success;
+    bool isUHSImode = false;
+
+    if (!card->isHostReady)
+    {
+        return kStatus_SDMMC_HostNotReady;
+    }
+
+    /* init the pin mux here. */
+    SDMMCHOST_CONFIG_SD_MUX(card->host.base, card->userConfig.busWidth);
+
+    isUHSImode = (card->userConfig.timing == kSD_TimingSDR50Mode) ||
+                 (card->userConfig.timing == kSD_TimingSDR104Mode) || (card->userConfig.timing == kSD_TimingDDR50Mode);
+    /* execute the power cycle here */
+    if ((card->userConfig.enablePowerCycle) || (isUHSImode))
+    {
+        SDMMCHOST_INIT_SD_RESET(card->host.base);
+
+        /* card power off */
+        SDMMCHOST_SET_SD_RESET(card->host.base, card->userConfig.powerPolarity);
+        /* Delay some time to make card stable. */
+        microseconds_delay(card->userConfig.powerDownDelay_US);
+        /* card power on */
+        SDMMCHOST_SET_SD_RESET(card->host.base, !card->userConfig.powerPolarity);
+        /* Delay some time to make card stable. */
+        microseconds_delay(card->userConfig.powerUpDelay_US);
+    }
+
+    if (isUHSImode)
+    {
+        /* UHSI mode only supports 4bit. Update to 4bit mode even config 1bit. */
+        card->userConfig.busWidth = kSD_DataBusWidth4Bit;
+        /* init vselect pin */
+        SDMMCHOST_INIT_SD_VSEL(card->host.base);
+    }
+
+    /* reset variables */
+    card->flags = 0U;
+    /* set DATA bus width */
+    SDMMCHOST_SET_CARD_BUS_WIDTH(card->host.base, kSDMMCHOST_DATABUSWIDTH1BIT);
+    /*set card freq to 300KHZ*/
+    /*
+     * Note: according to spec, the maximum frequency at identification state is 400KHz. But considering clock jitter,
+     * and some devices might not tolerant the frequency is higher than 400KHz, 300KHz is more compatible.
+     */
+    card->busClock_Hz = SDMMCHOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SDMMC_CLOCK_300KHZ);
+    /* send card active */
+    SDMMCHOST_SEND_CARD_ACTIVE(card->host.base, 10000U);
+    /* Get host capability. */
+    GET_SDMMCHOST_CAPABILITY(card->host.base, &(card->host.capability));
+
+    /* card go idle */
+    if (kStatus_Success != SD_GoIdle(card))
+    {
+        return kStatus_SDMMC_GoIdleFailed;
+    }
+
+    // if (kHOST_SupportV330 != HOST_NOT_SUPPORT)
+    //{
+    //    applicationCommand41Argument |= (kSD_OcrVdd32_33Flag | kSD_OcrVdd33_34Flag);
+    //    card->operationVoltage = kCARD_OperationVoltage330V;
+    //}
+    // if (kHOST_SupportV300 != HOST_NOT_SUPPORT)
+    //{
+    //    applicationCommand41Argument |= kSD_OcrVdd29_30Flag;
+    //    card->operationVoltage = kCARD_OperationVoltage330V;
+    //}
+    // For bootloader, check all supplied voltage level.
+    applicationCommand41Argument |=
+        (kSD_OcrVdd27_28Flag | kSD_OcrVdd28_29Flag | kSD_OcrVdd29_30Flag | kSD_OcrVdd30_31Flag | kSD_OcrVdd31_32Flag |
+         kSD_OcrVdd32_33Flag | kSD_OcrVdd33_34Flag | kSD_OcrVdd34_35Flag | kSD_OcrVdd35_36Flag);
+    card->operationVoltage = kCARD_OperationVoltage330V;
+
+    /* allow user select the work voltage, if not select, sdmmc will handle it automatically */
+    if (kSDMMCHOST_SupportV180 != SDMMCHOST_NOT_SUPPORT)
+    {
+        if (isUHSImode)
+        {
+            applicationCommand41Argument |= kSD_OcrSwitch18RequestFlag;
+        }
+    }
+    else
+    {
+        if (isUHSImode)
+        {
+            return kStatus_SDMMC_HostNotSupport;
+        }
+    }
+
+    /* Check card's supported interface condition. */
+    error = SD_BL_SendInterfaceCondition(card);
+    if (kStatus_Success == error)
+    {
+        /* Ver2.00 or later SD card */
+        applicationCommand41Argument |= kSD_OcrHostCapacitySupportFlag;
+        card->flags |= kSD_SupportSdhcFlag;
+    }
+    else if (kStatus_SDMMC_CardNotSupport == error)
+    {
+        return error;
+    }
+    else /* No response */
+    {
+        /* Ver2.00 or later SD Memory Card(voltage mismatch),
+         * or Ver1.X SD card, or not SD card
+         */
+        if (kStatus_Success != SD_GoIdle(card))
+        {
+            return kStatus_SDMMC_GoIdleFailed;
+        }
+    }
+    /* Set card interface condition according to SDHC capability and card's supported interface condition. */
+    if (kStatus_Success != SD_BL_ApplicationSendOperationCondition(card, applicationCommand41Argument))
+    {
+        return kStatus_SDMMC_HandShakeOperationConditionFailed;
+    }
+
+    /* check if card support 1.8V */
+    if (card->flags & kSD_SupportVoltage180v)
+    {
+        if (kStatus_Success != SD_SwitchVoltage(card))
+        {
+            return kStatus_SDMMC_InvalidVoltage;
+        }
+        card->operationVoltage = kCARD_OperationVoltage180V;
+    }
+    else if (applicationCommand41Argument & kSD_OcrSwitch18RequestFlag)
+    {
+        // 1V8 is request, but not supported by SD card.
+        return kStatus_SDMMC_CardNotSupport;
+    }
+
+    /* Initialize card if the card is SD card. */
+    if (kStatus_Success != SD_AllSendCid(card))
+    {
+        return kStatus_SDMMC_AllSendCidFailed;
+    }
+    if (kStatus_Success != SD_SendRca(card))
+    {
+        return kStatus_SDMMC_SendRelativeAddressFailed;
+    }
+    if (kStatus_Success != SD_SendCsd(card))
+    {
+        return kStatus_SDMMC_SendCsdFailed;
+    }
+    if (kStatus_Success != SD_SelectCard(card, true))
+    {
+        return kStatus_SDMMC_SelectCardFailed;
+    }
+
+    /* Set to max frequency in non-high speed mode. */
+    card->busClock_Hz = SDMMCHOST_SET_CARD_CLOCK(card->host.base, card->host.sourceClock_Hz, SD_CLOCK_25MHZ);
+
+    /* Set 4 bit data bus mode. */
+    if ((card->userConfig.busWidth == kSD_DataBusWidth4Bit) || isUHSImode)
+    {
+        if (kSDMMCHOST_Support4BitBusWidth != SDMMCHOST_NOT_SUPPORT)
+        {
+            /* Note: No need to check if 4bit is supported or not.
+             * SPEC writes: "SD Memory Card shall support at least the two bus modes 1-bit or 4-bit width."
+             */
+            // if (card->flags & kSD_Support4BitWidthFlag)
+            //{
+            if (kStatus_Success != SD_SetDataBusWidth(card, kSD_DataBusWidth4Bit))
+            {
+                return kStatus_SDMMC_SetDataBusWidthFailed;
+            }
+            SDMMCHOST_SET_CARD_BUS_WIDTH(card->host.base, kSDMMCHOST_DATABUSWIDTH4BIT);
+            //}
+            // else
+            //{
+            //    return kStatus_SDMMC_CardNotSupport;
+            //}
+        }
+        else
+        {
+            return kStatus_SDMMC_HostNotSupport;
+        }
+    }
+
+    if (kStatus_Success != SD_SendScr(card))
+    {
+        return kStatus_SDMMC_SendScrFailed;
+    }
+
+    /* Not necessary for bootloader. */
+    /* set sd card driver strength */
+    // SD_SetDriverStrength(card, card->driverStrength);
+    /* set sd card current limit */
+    // SD_SetMaxCurrent(card, card->maxCurrent);
+
+    /* set block size */
+    if (SD_SetBlockSize(card, FSL_SDMMC_DEFAULT_BLOCK_SIZE))
+    {
+        return kStatus_SDMMC_SetCardBlockSizeFailed;
+    }
+
+    /* select bus timing */
+    error = SD_BL_SelectBusTiming(card);
+    if (error != kStatus_Success)
+    {
+        return error;
+    }
+
+    return kStatus_Success;
+}
+
+void SD_CardDeinit(sd_card_t *card)
+{
+    assert(card);
+
+    SD_SelectCard(card, false);
+}
+
+status_t SD_HostInit(sd_card_t *card)
+{
+    assert(card);
+
+    if ((!card->isHostReady) && SDMMCHOST_Init(&(card->host), (void *)(card->usrParam.cd)) != kStatus_Success)
+    {
+        return kStatus_Fail;
+    }
+
+    /* set the host status flag, after the card re-plug in, don't need init host again */
+    card->isHostReady = true;
+
+    return kStatus_Success;
+}
+
+void SD_HostDeinit(sd_card_t *card)
+{
+    assert(card);
+
+    SDMMCHOST_Deinit(&(card->host));
+    /* should re-init host */
+    card->isHostReady = false;
+}
+
+void SD_HostReset(SDMMCHOST_CONFIG *host)
+{
+    SDMMCHOST_Reset(host->base);
+}
+
+void SD_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr)
+{
+    SDMMCHOST_PowerOnCard(base, pwr);
+}
+
+void SD_PowerOffCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr)
+{
+    SDMMCHOST_PowerOffCard(base, pwr);
+}
+
+status_t SD_WaitCardDetectStatus(SDMMCHOST_TYPE *hostBase, const sdmmchost_detect_card_t *cd, bool waitCardStatus)
+{
+    return SDMMCHOST_WaitCardDetectStatus(hostBase, cd, waitCardStatus);
+}
+
+bool SD_IsCardPresent(sd_card_t *card)
+{
+    return SDMMCHOST_IsCardPresent();
+}
+
+status_t SD_Init(sd_card_t *card)
+{
+    assert(card);
+
+    if (!card->isHostReady)
+    {
+        if (SD_HostInit(card) != kStatus_Success)
+        {
+            return kStatus_SDMMC_HostNotReady;
+        }
+    }
+    else
+    {
+        SD_HostReset(&(card->host));
+    }
+    SD_PowerOffCard(card->host.base, card->usrParam.pwr);
+
+    if (SD_WaitCardDetectStatus(card->host.base, card->usrParam.cd, true) != kStatus_Success)
+    {
+        return kStatus_SDMMC_CardDetectFailed;
+    }
+    SD_PowerOnCard(card->host.base, card->usrParam.pwr);
+
+    return SD_CardInit(card);
+}
+
+status_t SD_BL_Init(sd_card_t *card)
+{
+    assert(card);
+
+    SD_HostReset(&(card->host));
+    if (SD_HostInit(card) != kStatus_Success)
+    {
+        return kStatus_SDMMC_HostNotReady;
+    }
+
+    return SD_BL_CardInit(card);
+}
+
+void SD_Deinit(sd_card_t *card)
+{
+    /* card deinitialize */
+    SD_CardDeinit(card);
+    /* host deinitialize */
+    SD_HostDeinit(card);
 }

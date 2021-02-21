@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="cm7_MIMXRT1176xxxxx"/>
+    <definition extID="middleware.eiq.tensorflow_lite.MIMXRT1176"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.eigen.MIMXRT1176"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.farmhash.MIMXRT1176"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.fft2d.MIMXRT1176"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.flatbuffers.MIMXRT1176"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1176"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.absl.MIMXRT1176"/>
+    <definition extID="middleware.eiq.tensorflow_lite.third_party.ruy.MIMXRT1176"/>
+    <definition extID="platform.utilities.misc_utilities.MIMXRT1176"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+  </externalDefinitions>
+  <example id="evkmimxrt1170_tensorflow_lite_lib" name="tensorflow_lite_lib" device_core="cm7_MIMXRT1176xxxxx" dependency="middleware.eiq.tensorflow_lite.MIMXRT1176 middleware.eiq.tensorflow_lite.third_party.eigen.MIMXRT1176 middleware.eiq.tensorflow_lite.third_party.farmhash.MIMXRT1176 middleware.eiq.tensorflow_lite.third_party.fft2d.MIMXRT1176 middleware.eiq.tensorflow_lite.third_party.flatbuffers.MIMXRT1176 middleware.eiq.tensorflow_lite.third_party.gemmlowp.MIMXRT1176 middleware.eiq.tensorflow_lite.third_party.absl.MIMXRT1176 middleware.eiq.tensorflow_lite.third_party.ruy.MIMXRT1176 platform.utilities.misc_utilities.MIMXRT1176" category="eiq_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.lib" nature="org.eclipse.cdt.core.ccnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.most</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-Wno-unused-but-set-variable -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.nowarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.extrawarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.wconversion" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="com.crt.advproject.cpp.exe.release.option.optimization.level" type="enum">
+          <value>gnu.cpp.compiler.optimization.level.most</value>
+        </option>
+        <option id="com.crt.advproject.cpp.fpu" type="enum">
+          <value>com.crt.advproject.cpp.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.cpp.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnupp11</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.other.other" type="string">
+          <value>-fno-rtti -fno-exceptions -fpermissive -Wno-comment -Wno-format -Wno-restrict -Wno-sign-compare -Wno-unused-but-set-variable -Wno-unused-function -c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+        </option>
+        <option id="gnu.cpp.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMXRT1176DVMAA_cm7</value>
+          <value>SDK_DEBUGCONSOLE=1</value>
+          <value>XIP_EXTERNAL_FLASH=1</value>
+          <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>EIGEN_MPL2_ONLY</value>
+          <value>EIGEN_STACK_ALLOCATION_LIMIT=16384</value>
+          <value>FARMHASH_MCU</value>
+          <value>FARMHASH_LITTLE_ENDIAN</value>
+          <value>FARMHASH_NO_BUILTIN_EXPECT</value>
+          <value>FLATBUFFERS_LITTLEENDIAN</value>
+          <value>GEMMLOWP_MCU</value>
+          <value>RUY_MCU</value>
+          <value>TFLITE_MCU</value>
+        </option>
+        <option id="gnu.cpp.compiler.option.preprocessor.def" type="stringList">
+          <value>EIGEN_MPL2_ONLY</value>
+          <value>EIGEN_STACK_ALLOCATION_LIMIT=16384</value>
+          <value>FARMHASH_MCU</value>
+          <value>FARMHASH_LITTLE_ENDIAN</value>
+          <value>FARMHASH_NO_BUILTIN_EXPECT</value>
+          <value>FLATBUFFERS_LITTLEENDIAN</value>
+          <value>GEMMLOWP_MCU</value>
+          <value>RUY_MCU</value>
+          <value>TFLITE_MCU</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <source path="boards/evkmimxrt1170/eiq_examples/tensorflow_lite_lib/iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="tensorflow_lite_lib.ewp"/>
+      <files mask="tensorflow_lite_lib.eww"/>
+    </source>
+    <source path="boards/evkmimxrt1170/eiq_examples/tensorflow_lite_lib/mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="tensorflow_lite_lib.uvprojx"/>
+      <files mask="tensorflow_lite_lib.uvmpw"/>
+    </source>
+    <source path="boards/evkmimxrt1170/eiq_examples/tensorflow_lite_lib/armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="build_all.bat"/>
+      <files mask="build_all.sh"/>
+      <files mask="clean.bat"/>
+      <files mask="clean.sh"/>
+      <files mask="CMakeLists.txt"/>
+      <files mask="flags.cmake"/>
+      <files mask="build_release.bat"/>
+      <files mask="build_release.sh"/>
+      <files mask="build_debug.bat"/>
+      <files mask="build_debug.sh"/>
+    </source>
+    <source path="boards/evkmimxrt1170/eiq_examples/tensorflow_lite_lib" project_relative_path="doc" type="doc">
+      <files mask="readme.txt"/>
+    </source>
+  </example>
+</ksdk:examples>

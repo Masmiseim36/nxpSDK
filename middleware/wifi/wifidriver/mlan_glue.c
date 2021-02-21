@@ -1195,8 +1195,6 @@ int wrapper_wifi_assoc(const unsigned char *bssid, int wlan_security, bool is_wp
     priv->sec_info.wpa_enabled         = false;
     priv->sec_info.authentication_mode = MLAN_AUTH_MODE_AUTO;
 
-    /* Reset ADDBA flag so STA sends request on each new connection */
-    ampdu_status_flag  = MFALSE;
     BSSDescriptor_t *d = &mlan_adap->pscan_table[idx];
     /* fixme: This code is quite hacky and is present only because
      * security part is yet not fully integrated into mlan. This will
@@ -1253,7 +1251,7 @@ int wrapper_wifi_assoc(const unsigned char *bssid, int wlan_security, bool is_wp
          * but if the configured security is WPA2 PSK then AKM must be of PSK
          * hence update the AKM to WPA2 PSK and reset the PMF capabilities
          */
-        if ((wlan_security == WLAN_SECURITY_WPA2) && (priv->wpa_ie[19] == 0x8))
+        if (wlan_security == WLAN_SECURITY_WPA2)
         {
             priv->wpa_ie[19] = 0x02;
             priv->wpa_ie[20] = 0x00;

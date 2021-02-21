@@ -258,6 +258,11 @@
 #define FMSTR_COMM_BUFFER_SIZE 240U
 #endif
 
+/* PDBDM buffer is defined in the driver by default */
+#ifndef FMSTR_PDBDM_USER_BUFFER
+#define FMSTR_PDBDM_USER_BUFFER 0
+#endif
+
 /* Help macro to create ID string for preprocessor to recognize the drivers to enable or not */
 #define FMSTR_MK_IDSTR1(x) x##_ID
 #define FMSTR_MK_IDSTR(x)  FMSTR_MK_IDSTR1(x)

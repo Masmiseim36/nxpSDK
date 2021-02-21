@@ -1,8 +1,10 @@
 var group__infra__transport =
 [
+    [ "erpc_client_server_common.h", "erpc__client__server__common_8h.html", null ],
     [ "erpc_crc16.h", "erpc__crc16_8h.html", null ],
     [ "erpc_framed_transport.h", "erpc__framed__transport_8h.html", null ],
     [ "erpc_message_loggers.h", "erpc__message__loggers_8h.html", null ],
+    [ "erpc_pre_post_action.h", "erpc__pre__post__action_8h.html", null ],
     [ "erpc_transport.h", "erpc__transport_8h.html", null ],
     [ "erpc_transport_arbitrator.h", "erpc__transport__arbitrator_8h.html", null ],
     [ "FramedTransport", "classerpc_1_1_framed_transport.html", [

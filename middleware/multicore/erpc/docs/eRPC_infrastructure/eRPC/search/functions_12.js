@@ -1,6 +1,7 @@
 var searchData=
 [
   ['_7eclientmanager',['~ClientManager',['../classerpc_1_1_client_manager.html#a4197117d3db3d5c791800bc78acfc68e',1,'erpc::ClientManager']]],
+  ['_7eclientservercommon',['~ClientServerCommon',['../classerpc_1_1_client_server_common.html#aaa5bd85c4a41c2cd8e5f18d9b3867355',1,'erpc::ClientServerCommon']]],
   ['_7ecodec',['~Codec',['../classerpc_1_1_codec.html#adab0e09abe91747902ac3d4622682082',1,'erpc::Codec']]],
   ['_7ecodecfactory',['~CodecFactory',['../classerpc_1_1_codec_factory.html#a340ade285bf186ed97ced97430db628b',1,'erpc::CodecFactory']]],
   ['_7ecrc16',['~Crc16',['../classerpc_1_1_crc16.html#a5c88ccea12e2212095a1853dbeca37d1',1,'erpc::Crc16']]],
@@ -14,6 +15,7 @@ var searchData=
   ['_7emutex',['~Mutex',['../classerpc_1_1_mutex.html#a115e8bae072b7d0767f75bc3369d521d',1,'erpc::Mutex']]],
   ['_7emutransport',['~MUTransport',['../classerpc_1_1_m_u_transport.html#aa6b15a8fbb08393fff58a74cd9020b6c',1,'erpc::MUTransport']]],
   ['_7ependingclientinfo',['~PendingClientInfo',['../structerpc_1_1_transport_arbitrator_1_1_pending_client_info.html#a15be4295b73da5849e5dc62bc8df17c4',1,'erpc::TransportArbitrator::PendingClientInfo']]],
+  ['_7eprepostaction',['~PrePostAction',['../classerpc_1_1_pre_post_action.html#a69d47d8c7beaac96de19e9085b0c0a40',1,'erpc::PrePostAction']]],
   ['_7erpmsgmessagebufferfactory',['~RPMsgMessageBufferFactory',['../class_r_p_msg_message_buffer_factory.html#a2ac9382a9ce7956ef0f1fa8464f786a8',1,'RPMsgMessageBufferFactory']]],
   ['_7erpmsgrtostransport',['~RPMsgRTOSTransport',['../classerpc_1_1_r_p_msg_r_t_o_s_transport.html#aa231589d297458bba899bdb0f70984b3',1,'erpc::RPMsgRTOSTransport']]],
   ['_7erpmsgtransport',['~RPMsgTransport',['../classerpc_1_1_r_p_msg_transport.html#a9170c0983cf46938b63433d1256f08c8',1,'erpc::RPMsgTransport']]],
@@ -23,6 +25,7 @@ var searchData=
   ['_7eserialtransport',['~SerialTransport',['../classerpc_1_1_serial_transport.html#a7665efda4dacfa4d9c66690fa32ef12f',1,'erpc::SerialTransport']]],
   ['_7eserver',['~Server',['../classerpc_1_1_server.html#a7d16c4654358bd70e50f6f2527bf43a5',1,'erpc::Server']]],
   ['_7eservice',['~Service',['../classerpc_1_1_service.html#a0a6140625249eed4c73e2a78da969ef8',1,'erpc::Service']]],
+  ['_7espidevmastertransport',['~SpidevMasterTransport',['../classerpc_1_1_spidev_master_transport.html#a4839a90687c0dd2b506154e13d818bd0',1,'erpc::SpidevMasterTransport']]],
   ['_7espimastertransport',['~SpiMasterTransport',['../classerpc_1_1_spi_master_transport.html#ae3a82d2a5d772bd608218fbffb275430',1,'erpc::SpiMasterTransport']]],
   ['_7espislavetransport',['~SpiSlaveTransport',['../classerpc_1_1_spi_slave_transport.html#a8ef4f9e6c7b8bf6ca67aceea843c7533',1,'erpc::SpiSlaveTransport']]],
   ['_7estaticmessagebufferfactory',['~StaticMessageBufferFactory',['../class_static_message_buffer_factory.html#abf0e875d3ccb2c659142ffd3e4d81c75',1,'StaticMessageBufferFactory']]],
@@ -32,5 +35,6 @@ var searchData=
   ['_7etransport',['~Transport',['../classerpc_1_1_transport.html#a0cb1c4441873bce62f2ef455a6136888',1,'erpc::Transport']]],
   ['_7etransportarbitrator',['~TransportArbitrator',['../classerpc_1_1_transport_arbitrator.html#a78a458fc9b25401c8092829717a40b23',1,'erpc::TransportArbitrator']]],
   ['_7etransportfactory',['~TransportFactory',['../classerpc_1_1_transport_factory.html#a6cb6c55c590192643b1da1a4c54b866a',1,'erpc::TransportFactory']]],
-  ['_7euarttransport',['~UartTransport',['../classerpc_1_1_uart_transport.html#a0e59e1c38d0d7b61fbc489e4b36cb28a',1,'erpc::UartTransport']]]
+  ['_7euarttransport',['~UartTransport',['../classerpc_1_1_uart_transport.html#a0e59e1c38d0d7b61fbc489e4b36cb28a',1,'erpc::UartTransport']]],
+  ['_7eusbcdctransport',['~UsbCdcTransport',['../classerpc_1_1_usb_cdc_transport.html#aa2986d4c89f285609d24a041116b490b',1,'erpc::UsbCdcTransport']]]
 ];

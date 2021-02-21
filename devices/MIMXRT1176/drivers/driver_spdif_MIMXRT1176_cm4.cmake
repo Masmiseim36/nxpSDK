@@ -1,0 +1,17 @@
+if(NOT DRIVER_SPDIF_MIMXRT1176_cm4_INCLUDED)
+    
+    set(DRIVER_SPDIF_MIMXRT1176_cm4_INCLUDED true CACHE BOOL "driver_spdif component is included.")
+
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/fsl_spdif.c
+    )
+
+
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/.
+    )
+
+
+    include(driver_common_MIMXRT1176_cm4)
+
+endif()

@@ -25,6 +25,7 @@ var searchData=
   ['simpleserver',['SimpleServer',['../classerpc_1_1_simple_server.html#a02c18785b49f6e65017f58530480183d',1,'erpc::SimpleServer']]],
   ['size',['size',['../classerpc_1_1_static_queue.html#a90d03fc6a09db2f2e9ad4f722ba81547',1,'erpc::StaticQueue']]],
   ['sleep',['sleep',['../classerpc_1_1_thread.html#a22708d7df4c6ddd86564abbc7f81af08',1,'erpc::Thread']]],
+  ['spidevmastertransport',['SpidevMasterTransport',['../classerpc_1_1_spidev_master_transport.html#ad16f67c7eae1ee0b6aafdabb35f61f9e',1,'erpc::SpidevMasterTransport']]],
   ['spimastertransport',['SpiMasterTransport',['../classerpc_1_1_spi_master_transport.html#a906828ee0bb3b5a6fe9c68457c5408c4',1,'erpc::SpiMasterTransport']]],
   ['spislavetransport',['SpiSlaveTransport',['../classerpc_1_1_spi_slave_transport.html#aed7f2fb55a4a5f87472c297055cf4b1f',1,'erpc::SpiSlaveTransport']]],
   ['start',['start',['../classerpc_1_1_thread.html#aae9e0fa0c6b9f2a0bd9e2a6fbc43dc56',1,'erpc::Thread']]],

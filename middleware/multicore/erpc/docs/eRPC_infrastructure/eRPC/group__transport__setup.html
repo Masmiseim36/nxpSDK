@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.7.4</span>
+   &#160;<span id="projectnumber">Rev. 1.8.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -170,6 +170,12 @@ DSPI transport setup</h2></td></tr>
 <tr class="separator:gac616eb1f8e41b1ac4b14ebfb231c565e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+SPIdev transport setup</h2></td></tr>
+<tr class="memitem:gadb42991295a59e64ef2ba0d26416dfc7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#gadb42991295a59e64ef2ba0d26416dfc7">erpc_transport_spidev_master_init</a> (const char *spidev, uint32_t speed_Hz)</td></tr>
+<tr class="memdesc:gadb42991295a59e64ef2ba0d26416dfc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a SPIdev transport.  <a href="#gadb42991295a59e64ef2ba0d26416dfc7">More...</a><br /></td></tr>
+<tr class="separator:gadb42991295a59e64ef2ba0d26416dfc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
 MU transport setup</h2></td></tr>
 <tr class="memitem:gaa5b2e0c4868c59f9210a8a43cc8feaac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#gaa5b2e0c4868c59f9210a8a43cc8feaac">erpc_transport_mu_init</a> (void *baseAddr)</td></tr>
 <tr class="memdesc:gaa5b2e0c4868c59f9210a8a43cc8feaac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an MU transport.  <a href="#gaa5b2e0c4868c59f9210a8a43cc8feaac">More...</a><br /></td></tr>
@@ -204,6 +210,21 @@ Linux RPMSG endpoint setup</h2></td></tr>
 <tr class="memitem:ga47ceb0fc19ed2d526711e5edb7857bfc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#ga47ceb0fc19ed2d526711e5edb7857bfc">erpc_transport_rpmsg_linux_deinit</a> (void)</td></tr>
 <tr class="memdesc:ga47ceb0fc19ed2d526711e5edb7857bfc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deinitialize an Linux RPMSG endpoint transport.  <a href="#ga47ceb0fc19ed2d526711e5edb7857bfc">More...</a><br /></td></tr>
 <tr class="separator:ga47ceb0fc19ed2d526711e5edb7857bfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+TCP transport setup</h2></td></tr>
+<tr class="memitem:ga04d179a8f547f7f7924fd9a7ec9205aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#ga04d179a8f547f7f7924fd9a7ec9205aa">erpc_transport_tcp_init</a> (const char *host, uint16_t port, bool isServer)</td></tr>
+<tr class="memdesc:ga04d179a8f547f7f7924fd9a7ec9205aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create and open TCP transport.  <a href="#ga04d179a8f547f7f7924fd9a7ec9205aa">More...</a><br /></td></tr>
+<tr class="separator:ga04d179a8f547f7f7924fd9a7ec9205aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6a7cbe195e4275705c0e3ab5338c8664"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#ga6a7cbe195e4275705c0e3ab5338c8664">erpc_transport_tcp_close</a> (void)</td></tr>
+<tr class="memdesc:ga6a7cbe195e4275705c0e3ab5338c8664"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close TCP connection.  <a href="#ga6a7cbe195e4275705c0e3ab5338c8664">More...</a><br /></td></tr>
+<tr class="separator:ga6a7cbe195e4275705c0e3ab5338c8664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
+USB CDC transport setup</h2></td></tr>
+<tr class="memitem:ga34c5ca73771a6175e9ba1ffe40630879"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__transport__setup.html#ga34c5ca73771a6175e9ba1ffe40630879">erpc_transport_usb_cdc_init</a> (void *serialHandle, void *serialConfig, void *usbCdcConfig, uint8_t *usbRingBuffer, uint32_t usbRingBufferLength)</td></tr>
+<tr class="memdesc:ga34c5ca73771a6175e9ba1ffe40630879"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an USB CDC transport.  <a href="#ga34c5ca73771a6175e9ba1ffe40630879">More...</a><br /></td></tr>
+<tr class="separator:ga34c5ca73771a6175e9ba1ffe40630879"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="gadd5c1658590ea80c4c777c872ac4dd94"></a>
@@ -438,6 +459,43 @@ Linux RPMSG endpoint setup</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">baseAddr</td><td>Base address of DSPI peripheral used in this transport layer. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">baudRate</td><td>DSPI baud rate. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">srcClock_Hz</td><td>DSPI source clock in Hz.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return NULL or erpc_transport_t instance pointer. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gadb42991295a59e64ef2ba0d26416dfc7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a> erpc_transport_spidev_master_init </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>spidev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>speed_Hz</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a SPIdev transport. </p>
+<p>Create SPIdev master transport instance, to be used at master core.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">spidev</td><td>SPI device name. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">speed_Hz</td><td>SPI clock speed in Hz.</td></tr>
   </table>
   </dd>
 </dl>
@@ -834,6 +892,128 @@ Linux RPMSG endpoint setup</h2></td></tr>
 
 <p>Deinitialize an Linux RPMSG endpoint transport. </p>
 <p>This function deinitializes the Linux RPMSG endpoint transport. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga04d179a8f547f7f7924fd9a7ec9205aa"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a> erpc_transport_tcp_init </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>isServer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create and open TCP transport. </p>
+<p>For server, create a TCP listen socket and wait for connections For client, connect to server</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">host</td><td>hostname/IP address to listen on or server to connect to </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">port</td><td>port to listen on or server to connect to </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">isServer</td><td>true if we are a server</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return NULL or erpc_transport_t instance pointer. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6a7cbe195e4275705c0e3ab5338c8664"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void erpc_transport_tcp_close </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Close TCP connection. </p>
+<p>For server, stop listening and close all sockets. Note that the server mode uses and accept() which is a not-recommended blocking method so we can't exit until a connection attempts is made. This is a deadlock but assuming that TCP code is supposed to be for test, I assume it's acceptable. Otherwise a non-blocking socket or select() shoudl be used For client, close server connection</p>
+<dl class="section return"><dt>Returns</dt><dd>Return TRUE if listen/connection successful </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga34c5ca73771a6175e9ba1ffe40630879"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__transport__setup.html#ga925aa73c3fc0da2a6f94ee65c4b108c0">erpc_transport_t</a> erpc_transport_usb_cdc_init </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>serialHandle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>serialConfig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>usbCdcConfig</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>usbRingBuffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>usbRingBufferLength</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create an USB CDC transport. </p>
+<p>Create an USB CDC transport instance.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">serialHandle</td><td>Pointer to point to a memory space of size #SERIAL_MANAGER_HANDLE_SIZE allocated by the caller, see serial manager header file. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">serialConfig</td><td>Pointer to user-defined configuration structure allocated by the caller, see serial manager header file. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">usbCdcConfig</td><td>Pointer to serial port usb config structure allocated by the caller, see serial manager header file. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">usbRingBuffer</td><td>Pointer to point serial manager ring buffer allocated by the caller, see serial manager header file. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">usbRingBufferLength</td><td>Serial manager ring buffer size.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Return NULL or erpc_transport_t instance pointer. </dd></dl>
 
 </div>
 </div>

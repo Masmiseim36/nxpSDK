@@ -1,0 +1,182 @@
+if(NOT MIDDLEWARE_EIQ_TENSORFLOW_LITE_MIMXRT1176_cm7_INCLUDED)
+    
+    set(MIDDLEWARE_EIQ_TENSORFLOW_LITE_MIMXRT1176_cm7_INCLUDED true CACHE BOOL "middleware_eiq_tensorflow_lite component is included.")
+
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/allocation.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/mutable_op_resolver.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/interpreter.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/optional_debug_tools.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/interpreter_builder.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/graph_info.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/string_util.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/mmap_allocation_disabled.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/minimal_logging_default.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/tflite_with_xnnpack_optional.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/minimal_logging.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/stderr_reporter.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/util.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/configuration.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/simple_memory_arena.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/model_builder.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/external_cpu_backend_context.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/arena_planner.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/experimental/resource/resource_variable.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/delegates/interpreter_utils.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/delegates/utils.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/delegates/utils/simple_delegate.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/range.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/sub.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/unique.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/register.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/neg.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/tile.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/concatenation.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/gather.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/l2norm.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/batch_to_space_nd.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/shape.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/lstm_eval.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/transpose.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/bidirectional_sequence_lstm.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/space_to_batch_nd.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/audio_spectrogram.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/detection_postprocess.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/split.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/round.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/transpose_conv.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/segment_sum.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/gather_nd.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/floor_mod.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/assign_variable.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/mfcc.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/register_ref.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/numeric_verify.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/resize_bilinear.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/add.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/resize_nearest_neighbor.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/mul.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/fully_connected.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_context.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/sparse_to_dense.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/densify.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/hashtable_lookup.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/maximum_minimum.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/elementwise.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/matrix_diag.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/cast.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/depth_to_space.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/where.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/lsh_projection.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/conv.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/while.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/reduce.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/lstm.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/pooling.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/fill.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/depthwise_conv.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/ceil.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/rfft2d.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/pack.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/cpu_backend_gemm_eigen.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/matrix_set_diag.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/slice.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/zeros_like.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/mirror_pad.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/expand_dims.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/activations.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/split_v.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/comparisons.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/basic_rnn.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/exp.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/space_to_depth.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/kernel_util.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/scatter_nd.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/arg_min_max.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/logical.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/eigen_support.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/embedding_lookup.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/add_n.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/embedding_lookup_sparse.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/pow.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/reverse.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/dequantize.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/if.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/reshape.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/squared_difference.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/unidirectional_sequence_lstm.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/bidirectional_sequence_rnn.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/fake_quant.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/quantize.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/local_response_norm.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/select.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/unidirectional_sequence_rnn.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/reverse_sequence.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/non_max_suppression.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/div.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/topk_v2.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/unpack.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/rank.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/floor.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/one_hot.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/strided_slice.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/squeeze.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/batch_matmul.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/floor_div.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/skip_gram.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/pad.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/svdf.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/quantization_util.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/mfcc_.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/transpose_utils.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/spectrogram.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/mfcc_dct.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/kernel_utils.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/tensor_utils.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/mfcc_mel_filterbank.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/sse_tensor_utils.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/neon_tensor_utils.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/optimized/cpu_check.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/kernels/internal/reference/portable_tensor_utils.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/profiling/profile_summarizer.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/profiling/time.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/profiling/platform_profiler.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/profiling/memory_info.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/profiling/profile_summary_formatter.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/c/common.c
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/c/c_api.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/core/subgraph.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/core/api/error_reporter.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/core/api/op_resolver.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/core/api/tensor_utils_.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/tools/command_line_flags.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/tools/tool_params.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/tools/benchmark/profiling_listener.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/tools/benchmark/benchmark_utils.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/tools/delegates/default_execution_provider.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/lite/tools/optimize/sparsity/format_converter.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite/tensorflow/core/util/stats_calculator.cpp
+    )
+
+
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/tensorflow-lite
+    )
+
+
+    include(middleware_eiq_tensorflow_lite_third_party_eigen_MIMXRT1176_cm7)
+
+    include(middleware_eiq_tensorflow_lite_third_party_farmhash_MIMXRT1176_cm7)
+
+    include(middleware_eiq_tensorflow_lite_third_party_fft2d_MIMXRT1176_cm7)
+
+    include(middleware_eiq_tensorflow_lite_third_party_flatbuffers_MIMXRT1176_cm7)
+
+    include(middleware_eiq_tensorflow_lite_third_party_gemmlowp_MIMXRT1176_cm7)
+
+    include(middleware_eiq_tensorflow_lite_third_party_absl_MIMXRT1176_cm7)
+
+    include(middleware_eiq_tensorflow_lite_third_party_ruy_MIMXRT1176_cm7)
+
+endif()

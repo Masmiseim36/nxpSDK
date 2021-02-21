@@ -6,6 +6,7 @@ var searchData=
   ['service',['Service',['../classerpc_1_1_service.html',1,'erpc']]],
   ['sharedstate',['SharedState',['../classerpc_1_1_inter_thread_buffer_transport.html#structerpc_1_1_inter_thread_buffer_transport_1_1_shared_state',1,'erpc::InterThreadBufferTransport']]],
   ['simpleserver',['SimpleServer',['../classerpc_1_1_simple_server.html',1,'erpc']]],
+  ['spidevmastertransport',['SpidevMasterTransport',['../classerpc_1_1_spidev_master_transport.html',1,'erpc']]],
   ['spimastertransport',['SpiMasterTransport',['../classerpc_1_1_spi_master_transport.html',1,'erpc']]],
   ['spislavetransport',['SpiSlaveTransport',['../classerpc_1_1_spi_slave_transport.html',1,'erpc']]],
   ['staticmessagebufferfactory',['StaticMessageBufferFactory',['../class_static_message_buffer_factory.html',1,'']]],

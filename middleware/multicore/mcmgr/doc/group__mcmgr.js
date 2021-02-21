@@ -27,7 +27,8 @@ var group__mcmgr =
       [ "kMCMGR_CoreTypeCortexM0Plus", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aa9e0502d8798e4e70bbe70888a2573f86", null ],
       [ "kMCMGR_CoreTypeCortexM4", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aaac1299d1dd439558115c6a5f49da6256", null ],
       [ "kMCMGR_CoreTypeCortexM33", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aa9d0db113fdc4348d3e833dfc0e0a8c38", null ],
-      [ "kMCMGR_CoreTypeCortexM7", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aae5015a4bd158184a81f1a413cf1001ba", null ]
+      [ "kMCMGR_CoreTypeCortexM7", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aae5015a4bd158184a81f1a413cf1001ba", null ],
+      [ "kMCMGR_CoreTypeCortexM3", "group__mcmgr.html#ggaad6bc70b5f869884191902e305d51a0aae85bf49f95cd80cbb1b293b5662366fc", null ]
     ] ],
     [ "_mcmgr_event_type_t", "group__mcmgr.html#ga0a45660b38a87ca65052a15d721a4949", null ],
     [ "_mcmgr_start_mode", "group__mcmgr.html#ga2b471b0504b78138baba1e17a05a9b9c", [

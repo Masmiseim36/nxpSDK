@@ -7,10 +7,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "erpc_tcp_transport.h"
+
 #include <cstdio>
+#if ERPC_HAS_POSIX
 #include <err.h>
+#endif
 #include <errno.h>
 #include <netdb.h>
+#include <netinet/tcp.h>
 #include <signal.h>
 #include <string>
 #include <sys/socket.h>
@@ -81,12 +85,12 @@ erpc_status_t TCPTransport::connectClient(void)
 {
     if (m_socket != -1)
     {
-        TCP_DEBUG_PRINT("socket already connected\n");
+        TCP_DEBUG_PRINT("%s", "socket already connected\n");
         return kErpcStatus_Success;
     }
 
     // Fill in hints structure for getaddrinfo.
-    struct addrinfo hints = { 0 };
+    struct addrinfo hints = {};
     hints.ai_flags = AI_NUMERICSERV;
     hints.ai_family = PF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
@@ -141,12 +145,15 @@ erpc_status_t TCPTransport::connectClient(void)
         return kErpcStatus_ConnectionFailure;
     }
 
+    int set = 1;
+    setsockopt(sock, IPPROTO_TCP, TCP_NODELAY, (void *)&set, sizeof(int));
+
 // On some systems (BSD) we can disable SIGPIPE on the socket. For others (Linux), we have to
 // ignore SIGPIPE.
 #if defined(SO_NOSIGPIPE)
     // Disable SIGPIPE for this socket. This will cause write() to return an EPIPE error if the
     // other side has disappeared instead of our process receiving a SIGPIPE.
-    int set = 1;
+    set = 1;
     if (setsockopt(sock, SOL_SOCKET, SO_NOSIGPIPE, (void *)&set, sizeof(int)) < 0)
     {
         ::close(sock);
@@ -162,9 +169,9 @@ erpc_status_t TCPTransport::connectClient(void)
     return kErpcStatus_Success;
 }
 
-erpc_status_t TCPTransport::close(void)
+erpc_status_t TCPTransport::close(bool stopServer)
 {
-    if (m_isServer)
+    if (m_isServer && stopServer)
     {
         m_runServer = false;
     }
@@ -197,7 +204,8 @@ erpc_status_t TCPTransport::underlyingReceive(uint8_t *data, uint32_t size)
         // Length will be zero if the connection is closed.
         if (length == 0)
         {
-            close();
+            // close socket, not server
+            close(false);
             return kErpcStatus_ConnectionClosed;
         }
         else if (length < 0)
@@ -218,7 +226,8 @@ erpc_status_t TCPTransport::underlyingSend(const uint8_t *data, uint32_t size)
 {
     if (m_socket <= 0)
     {
-        return kErpcStatus_Success;
+        // we should not pretend to have a succesful Send or we create a deadlock
+        return kErpcStatus_ConnectionFailure;
     }
 
     // Loop until all data is sent.
@@ -234,8 +243,8 @@ erpc_status_t TCPTransport::underlyingSend(const uint8_t *data, uint32_t size)
         {
             if (errno == EPIPE)
             {
-                // Server closed.
-                close();
+                // close socket, not server
+                close(false);
                 return kErpcStatus_ConnectionClosed;
             }
             return kErpcStatus_SendFailed;
@@ -247,7 +256,7 @@ erpc_status_t TCPTransport::underlyingSend(const uint8_t *data, uint32_t size)
 
 void TCPTransport::serverThread(void)
 {
-    TCP_DEBUG_PRINT("in server thread\n");
+    TCP_DEBUG_PRINT("%s", "in server thread\n");
 
     // Create socket.
     int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -292,17 +301,21 @@ void TCPTransport::serverThread(void)
         return;
     }
 
-    TCP_DEBUG_PRINT("Listening for connections\n");
+    TCP_DEBUG_PRINT("%s", "Listening for connections\n");
 
     while (m_runServer)
     {
         struct sockaddr incomingAddress;
         socklen_t incomingAddressLength = sizeof(struct sockaddr);
+        // we should use select() otherwise we can't end the server properly
         int incomingSocket = accept(serverSocket, &incomingAddress, &incomingAddressLength);
         if (incomingSocket > 0)
         {
             // Successfully accepted a connection.
             m_socket = incomingSocket;
+            // should be inherited from accept() socket but it's not always ...
+            int yes = 1;
+            setsockopt(m_socket, IPPROTO_TCP, TCP_NODELAY, (void *)&yes, sizeof(yes));
         }
         else
         {

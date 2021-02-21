@@ -13,6 +13,7 @@ var classerpcgen_1_1_builtin_type =
       [ "kFloatType", "classerpcgen_1_1_builtin_type.html#a631f1f1e3e9aff50d2d18b6e1c288aacaad5f4633b198823073b69a2a1e9161ff", null ],
       [ "kDoubleType", "classerpcgen_1_1_builtin_type.html#a631f1f1e3e9aff50d2d18b6e1c288aaca575257e1c5d8ccaba7eedc23856826d8", null ],
       [ "kStringType", "classerpcgen_1_1_builtin_type.html#a631f1f1e3e9aff50d2d18b6e1c288aaca26a5e988cbdf86f4d2cdea2e063f7054", null ],
+      [ "kUStringType", "classerpcgen_1_1_builtin_type.html#a631f1f1e3e9aff50d2d18b6e1c288aaca34545b3795ffcefb7a16ce12716ac4fb", null ],
       [ "kBinaryType", "classerpcgen_1_1_builtin_type.html#a631f1f1e3e9aff50d2d18b6e1c288aaca1591ce83e1ed79222a1388466968a2b2", null ]
     ] ],
     [ "BuiltinType", "classerpcgen_1_1_builtin_type.html#ae63a5dda5dccb51406768ee887cb34b0", null ],
@@ -24,5 +25,6 @@ var classerpcgen_1_1_builtin_type =
     [ "isInt", "classerpcgen_1_1_builtin_type.html#aefe3eb8ff9c15466fad1568058daf72d", null ],
     [ "isScalar", "classerpcgen_1_1_builtin_type.html#abdeaaab765db6146f0599adab08ca99b", null ],
     [ "isString", "classerpcgen_1_1_builtin_type.html#a8684c51036dbadb6f0f996994bac27ba", null ],
+    [ "isUString", "classerpcgen_1_1_builtin_type.html#ae47182657951be20a90456d38f650449", null ],
     [ "m_builtinType", "classerpcgen_1_1_builtin_type.html#acde044e9a252a99cfb221064e694bd78", null ]
 ];

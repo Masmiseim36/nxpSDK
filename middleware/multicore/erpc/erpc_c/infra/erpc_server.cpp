@@ -8,6 +8,7 @@
  */
 
 #include "erpc_server.h"
+
 #include "assert.h"
 
 using namespace erpc;
@@ -17,6 +18,7 @@ using namespace erpc;
 ////////////////////////////////////////////////////////////////////////////////
 
 #if ERPC_NESTED_CALLS_DETECTION
+extern bool nestingDetection;
 bool nestingDetection = false;
 #endif
 

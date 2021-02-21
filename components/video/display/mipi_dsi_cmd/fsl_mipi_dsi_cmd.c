@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  *
@@ -22,7 +22,7 @@
 status_t MIPI_DSI_DCS_SoftReset(mipi_dsi_device_t *device)
 {
     dsi_transfer_t dsiXfer = {0};
-    uint8_t txData         = kMIPI_DCS_SoftReset;
+    uint8_t txData         = (uint8_t)kMIPI_DCS_SoftReset;
 
     dsiXfer.virtualChannel = device->virtualChannel;
     dsiXfer.txDataType     = kDSI_TxDataDcsShortWrNoParam;
@@ -44,11 +44,11 @@ status_t MIPI_DSI_DCS_SetDisplayOn(mipi_dsi_device_t *device, bool on)
 
     if (on)
     {
-        txData = kMIPI_DCS_SetDisplayOn;
+        txData = (uint8_t)kMIPI_DCS_SetDisplayOn;
     }
     else
     {
-        txData = kMIPI_DCS_SetDisplayOff;
+        txData = (uint8_t)kMIPI_DCS_SetDisplayOff;
     }
 
     return device->xferFunc(&dsiXfer);
@@ -66,7 +66,7 @@ status_t MIPI_DSI_DCS_SetPixelFormat(mipi_dsi_device_t *device,
     dsiXfer.txDataSize     = 2;
     dsiXfer.txData         = txData;
 
-    txData[0] = kMIPI_DCS_SetPixelFormat;
+    txData[0] = (uint8_t)kMIPI_DCS_SetPixelFormat;
     txData[1] = ((uint8_t)dbiFormat << 0U) | ((uint8_t)dpiFormat << 4U);
 
     return device->xferFunc(&dsiXfer);
@@ -84,11 +84,11 @@ status_t MIPI_DSI_DCS_EnterSleepMode(mipi_dsi_device_t *device, bool enter)
 
     if (enter)
     {
-        txData = kMIPI_DCS_EnterSleepMode;
+        txData = (uint8_t)kMIPI_DCS_EnterSleepMode;
     }
     else
     {
-        txData = kMIPI_DCS_ExitSleepMode;
+        txData = (uint8_t)kMIPI_DCS_ExitSleepMode;
     }
 
     return device->xferFunc(&dsiXfer);
@@ -106,11 +106,11 @@ status_t MIPI_DSI_DCS_EnterPartialMode(mipi_dsi_device_t *device, bool enter)
 
     if (enter)
     {
-        txData = kMIPI_DCS_EnterPartialMode;
+        txData = (uint8_t)kMIPI_DCS_EnterPartialMode;
     }
     else
     {
-        txData = kMIPI_DCS_EnterNormalMode;
+        txData = (uint8_t)kMIPI_DCS_EnterNormalMode;
     }
 
     return device->xferFunc(&dsiXfer);
@@ -128,11 +128,11 @@ status_t MIPI_DSI_DCS_EnterInvertMode(mipi_dsi_device_t *device, bool enter)
 
     if (enter)
     {
-        txData = kMIPI_DCS_EnterInvertMode;
+        txData = (uint8_t)kMIPI_DCS_EnterInvertMode;
     }
     else
     {
-        txData = kMIPI_DCS_ExitInvertMode;
+        txData = (uint8_t)kMIPI_DCS_ExitInvertMode;
     }
 
     return device->xferFunc(&dsiXfer);
@@ -150,11 +150,11 @@ status_t MIPI_DSI_DCS_EnterIdleMode(mipi_dsi_device_t *device, bool enter)
 
     if (enter)
     {
-        txData = kMIPI_DCS_EnterIdleMode;
+        txData = (uint8_t)kMIPI_DCS_EnterIdleMode;
     }
     else
     {
-        txData = kMIPI_DCS_ExitIdleMode;
+        txData = (uint8_t)kMIPI_DCS_ExitIdleMode;
     }
 
     return device->xferFunc(&dsiXfer);
@@ -165,7 +165,7 @@ status_t MIPI_DSI_DCS_Write(mipi_dsi_device_t *device, const uint8_t *txData, in
     dsi_transfer_t dsiXfer = {0};
 
     dsiXfer.virtualChannel = device->virtualChannel;
-    dsiXfer.txDataSize     = txDataSize;
+    dsiXfer.txDataSize     = (uint16_t)txDataSize;
     dsiXfer.txData         = txData;
 
     if (0 == txDataSize)
@@ -194,7 +194,7 @@ status_t MIPI_DSI_GenericWrite(mipi_dsi_device_t *device, const uint8_t *txData,
     dsi_transfer_t dsiXfer = {0};
 
     dsiXfer.virtualChannel = device->virtualChannel;
-    dsiXfer.txDataSize     = txDataSize;
+    dsiXfer.txDataSize     = (uint16_t)txDataSize;
     dsiXfer.txData         = txData;
 
     if (0 == txDataSize)
@@ -228,12 +228,12 @@ status_t MIPI_DSI_SelectArea(mipi_dsi_device_t *device, uint16_t startX, uint16_
     dsiXfer.txDataSize     = 4;
     dsiXfer.txData         = txData;
     dsiXfer.sendDscCmd     = true;
-    dsiXfer.dscCmd         = kMIPI_DCS_SetColumnAddress;
+    dsiXfer.dscCmd         = (uint8_t)kMIPI_DCS_SetColumnAddress;
 
-    txData[0] = (startX >> 8U) & 0xFFU;
-    txData[1] = startX & 0xFFU;
-    txData[2] = (endX >> 8U) & 0xFFU;
-    txData[3] = endX & 0xFFU;
+    txData[0] = (uint8_t)((startX >> 8U) & 0xFFU);
+    txData[1] = (uint8_t)(startX & 0xFFU);
+    txData[2] = (uint8_t)((endX >> 8U) & 0xFFU);
+    txData[3] = (uint8_t)(endX & 0xFFU);
 
     status = device->xferFunc(&dsiXfer);
 
@@ -242,11 +242,11 @@ status_t MIPI_DSI_SelectArea(mipi_dsi_device_t *device, uint16_t startX, uint16_
         return status;
     }
 
-    dsiXfer.dscCmd = kMIPI_DCS_SetPageAddress;
-    txData[0]      = (startY >> 8U) & 0xFFU;
-    txData[1]      = startY & 0xFFU;
-    txData[2]      = (endY >> 8U) & 0xFFU;
-    txData[3]      = endY & 0xFFU;
+    dsiXfer.dscCmd = (uint8_t)kMIPI_DCS_SetPageAddress;
+    txData[0]      = (uint8_t)((startY >> 8U) & 0xFFU);
+    txData[1]      = (uint8_t)(startY & 0xFFU);
+    txData[2]      = (uint8_t)((endY >> 8U) & 0xFFU);
+    txData[3]      = (uint8_t)(endY & 0xFFU);
 
     return device->xferFunc(&dsiXfer);
 }
@@ -266,7 +266,7 @@ void MIPI_DSI_MemoryDoneDriverCallback(status_t status, void *userData)
 {
     mipi_dsi_device_t *device = (mipi_dsi_device_t *)userData;
 
-    if (device->callback)
+    if (NULL != device->callback)
     {
         device->callback(status, device->userData);
     }

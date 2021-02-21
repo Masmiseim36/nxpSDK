@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2014-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * Copyright 2020 ACRIOS Systems s.r.o.
  * All rights reserved.
  *
  *
@@ -8,12 +9,14 @@
  */
 
 #include "erpc_server_setup.h"
+
 #include "erpc_basic_codec.h"
 #include "erpc_crc16.h"
 #include "erpc_manually_constructed.h"
 #include "erpc_message_buffer.h"
 #include "erpc_simple_server.h"
 #include "erpc_transport.h"
+
 #include <cassert>
 
 using namespace erpc;
@@ -24,6 +27,7 @@ using namespace erpc;
 
 // global server variables
 static ManuallyConstructed<SimpleServer> s_server;
+extern SimpleServer *g_server;
 SimpleServer *g_server = NULL;
 static ManuallyConstructed<BasicCodecFactory> s_codecFactory;
 static ManuallyConstructed<Crc16> s_crc16;
@@ -114,5 +118,21 @@ bool erpc_server_add_message_logger(erpc_transport_t transport)
         return g_server->addMessageLogger(reinterpret_cast<Transport *>(transport));
     }
     return false;
+}
+#endif
+
+#if ERPC_PRE_POST_ACTION
+void erpc_client_add_pre_cb_action(pre_post_action_cb preCB)
+{
+    assert(g_server);
+
+    g_server->addPreCB(preCB);
+}
+
+void erpc_client_add_post_cb_action(pre_post_action_cb postCB)
+{
+    assert(g_server);
+
+    g_server->addPostCB(postCB);
 }
 #endif

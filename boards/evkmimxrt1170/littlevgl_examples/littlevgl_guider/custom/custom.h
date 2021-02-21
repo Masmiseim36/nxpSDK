@@ -1,0 +1,13 @@
+/*
+ * Copyright 2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+#ifndef _CUSTOM_H_
+#define _CUSTOM_H_
+
+/* User code. */
+
+#endif

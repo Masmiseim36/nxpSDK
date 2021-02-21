@@ -11,6 +11,25 @@
 
 #include "fsl_device_registers.h"
 
+#if defined(MIMXRT1021_SERIES) || \
+    defined(MIMXRT1024_SERIES) || \
+    defined(MIMXRT1051_SERIES) || \
+    defined(MIMXRT1052_SERIES) || \
+    defined(MIMXRT1061_SERIES) || \
+    defined(MIMXRT1062_SERIES) || \
+    defined(MIMXRT1064_SERIES) || \
+    defined(MIMXRT106A_SERIES) || \
+    defined(MIMXRT106C_SERIES) || \
+    defined(MIMXRT106F_SERIES) || \
+    defined(MIMXRT106L_SERIES)
+
+#define LEGACY_KEYBLOB_SUPPORT
+
+#endif
+
+/* Device specific definitions */
+#if defined(LEGACY_KEYBLOB_SUPPORT)
+
 #if defined(CAAM)
 #include "bl_keyblob_caam.h"
 #endif
@@ -86,5 +105,11 @@ int32_t generate_key_blob(uint32_t *key_addr, uint8_t *key_blob_addr);
 int32_t keyblob_update(keyblob_info_t *key_info);
 
 int32_t keyblob_get(uint8_t **keyblob_start, uint32_t *keyblob_size);
+
+#else /* No LEGACY_KEYBLOB_SUPPORT */
+
+#include "keyblob.h"
+
+#endif /* LEGACY_KEYBLOB_SUPPORT */
 
 #endif /* __BL_KEYBLOB_H__ */

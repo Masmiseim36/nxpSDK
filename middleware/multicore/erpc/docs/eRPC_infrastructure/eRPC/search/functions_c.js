@@ -12,7 +12,7 @@ var searchData=
   ['releaserequest',['releaseRequest',['../classerpc_1_1_client_manager.html#adaef79f3392683e2135e3873fa20bc72',1,'erpc::ClientManager']]],
   ['removependingclient',['removePendingClient',['../classerpc_1_1_transport_arbitrator.html#a7e2fe51df4bf80ec12718b1754dc42c5',1,'erpc::TransportArbitrator']]],
   ['removeservice',['removeService',['../classerpc_1_1_server.html#a1560af298a463f75b921e8c00c11d5f9',1,'erpc::Server']]],
-  ['requestcontext',['RequestContext',['../classerpc_1_1_request_context.html#ae48f8baa20da5d4ac5da77e83758e6a5',1,'erpc::RequestContext']]],
+  ['requestcontext',['RequestContext',['../classerpc_1_1_request_context.html#aafeb0f6cde1276d5f372c3dcfec7f507',1,'erpc::RequestContext']]],
   ['reset',['reset',['../classerpc_1_1_codec.html#a5ee5a1d8930812d4256201bde6390bf3',1,'erpc::Codec']]],
   ['rpmsg_5fread_5fcb',['rpmsg_read_cb',['../classerpc_1_1_r_p_msg_transport.html#a218c8710c2a9b3aa9226ba0471322718',1,'erpc::RPMsgTransport']]],
   ['rpmsglinuxtransport',['RPMsgLinuxTransport',['../classerpc_1_1_r_p_msg_linux_transport.html#adbf0409a3a387c522f4f3e0d421be7a8',1,'erpc::RPMsgLinuxTransport']]],
@@ -25,5 +25,5 @@ var searchData=
   ['runinternal',['runInternal',['../classerpc_1_1_simple_server.html#a6240256d54741c25d936166a5a9d7f03',1,'erpc::SimpleServer']]],
   ['runinternalbegin',['runInternalBegin',['../classerpc_1_1_simple_server.html#aaebcde628fafb08ee1bcdb4dd6593f53',1,'erpc::SimpleServer']]],
   ['runinternalend',['runInternalEnd',['../classerpc_1_1_simple_server.html#a6f585d5c7d98d79af70f0caea33504f5',1,'erpc::SimpleServer']]],
-  ['rx_5fcb',['rx_cb',['../classerpc_1_1_m_u_transport.html#a686380ce4763ecff876bea8d2cc72e44',1,'erpc::MUTransport']]]
+  ['rx_5fcb',['rx_cb',['../classerpc_1_1_m_u_transport.html#a686380ce4763ecff876bea8d2cc72e44',1,'erpc::MUTransport::rx_cb()'],['../classerpc_1_1_uart_transport.html#aaf1bc0658d86c6019901f668595ede7b',1,'erpc::UartTransport::rx_cb()'],['../classerpc_1_1_usb_cdc_transport.html#a09444bdeee3d7b745af88f222f4ec187',1,'erpc::UsbCdcTransport::rx_cb()']]]
 ];

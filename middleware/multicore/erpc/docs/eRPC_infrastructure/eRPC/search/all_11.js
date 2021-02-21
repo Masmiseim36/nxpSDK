@@ -19,5 +19,5 @@ var searchData=
   ['transportfactory',['TransportFactory',['../classerpc_1_1_transport_factory.html',1,'erpc']]],
   ['transport_20layers',['Transport Layers',['../group__transports.html',1,'']]],
   ['trylock',['tryLock',['../classerpc_1_1_mutex.html#a69702e86e24cbb72cb144a626bae07bb',1,'erpc::Mutex']]],
-  ['tx_5fcb',['tx_cb',['../classerpc_1_1_m_u_transport.html#ad7d078fe2c9e6c31c4eefe6d7720a244',1,'erpc::MUTransport']]]
+  ['tx_5fcb',['tx_cb',['../classerpc_1_1_m_u_transport.html#ad7d078fe2c9e6c31c4eefe6d7720a244',1,'erpc::MUTransport::tx_cb()'],['../classerpc_1_1_uart_transport.html#ae285c1aa6b805c50ff2d743535bdfd27',1,'erpc::UartTransport::tx_cb()'],['../classerpc_1_1_usb_cdc_transport.html#ac2ea2e9052222e1ceba6eddf1e6ba0c3',1,'erpc::UsbCdcTransport::tx_cb()']]]
 ];

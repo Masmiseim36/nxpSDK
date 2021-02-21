@@ -6,6 +6,7 @@ var group__config =
     [ "ERPC_THREADS_FREERTOS", "group__config.html#ga495d2109c2e80b0f81dd87206227bbef", null ],
     [ "ERPC_THREADS_ZEPHYR", "group__config.html#gaf95f61991be1c2ad5c24825b2d6feed4", null ],
     [ "ERPC_THREADS_MBED", "group__config.html#ga6af4fbf20df90ec291b37bd403920632", null ],
+    [ "ERPC_THREADS_WIN32", "group__config.html#gaba195e47c390bd98ca3ea1e825047905", null ],
     [ "ERPC_NOEXCEPT_DISABLED", "group__config.html#ga1940cf01227ad6e0a6481a19a3b1eb08", null ],
     [ "ERPC_NOEXCEPT_ENABLED", "group__config.html#gaf6268fa5fa5e4825347dae29734dbe34", null ],
     [ "ERPC_NESTED_CALLS_DISABLED", "group__config.html#ga158f0ba976b5f46ad37e5604c3dc536c", null ],
@@ -16,10 +17,16 @@ var group__config =
     [ "ERPC_MESSAGE_LOGGING_ENABLED", "group__config.html#ga3eebaaef3f4ef8712d9a83ea8dc7141c", null ],
     [ "ERPC_TRANSPORT_MU_USE_MCMGR_DISABLED", "group__config.html#ga80f86b98f08e652cef6559fd735493e0", null ],
     [ "ERPC_TRANSPORT_MU_USE_MCMGR_ENABLED", "group__config.html#ga756377c015b4b551b1c5ad8862053ded", null ],
+    [ "ERPC_PRE_POST_ACTION_DISABLED", "group__config.html#gac4121c031e8d723da48f8f8ba0dd9dcb", null ],
+    [ "ERPC_PRE_POST_ACTION_ENABLED", "group__config.html#gac0a263ec0c5342652e77aedd0208b496", null ],
+    [ "ERPC_PRE_POST_ACTION_DEFAULT_DISABLED", "group__config.html#gaa85dbad8af388a1e1655bd45fa66b156", null ],
+    [ "ERPC_PRE_POST_ACTION_DEFAULT_ENABLED", "group__config.html#ga86a8d740ad99a21fdab5795c9343725c", null ],
     [ "ERPC_DEFAULT_BUFFER_SIZE", "group__config.html#ga31c380773a119185d1ab1816accc3f04", null ],
     [ "ERPC_DEFAULT_BUFFERS_COUNT", "group__config.html#ga4c997c7ee5b73d96d9e11af367dbfd6a", null ],
     [ "ERPC_NOEXCEPT", "group__config.html#ga7bbddfd6191116e2a7120409795f8477", null ],
     [ "ERPC_NESTED_CALLS", "group__config.html#gaf8059c84025ab0e6a7183a26d03765b2", null ],
     [ "ERPC_NESTED_CALLS_DETECTION", "group__config.html#gaaf995e04dd88652da38a175140e43f1f", null ],
-    [ "ERPC_MESSAGE_LOGGING", "group__config.html#ga6bf78dda89db480b3f31f224836b21c0", null ]
+    [ "ERPC_MESSAGE_LOGGING", "group__config.html#ga6bf78dda89db480b3f31f224836b21c0", null ],
+    [ "ERPC_PRE_POST_ACTION", "group__config.html#gaef8271664172b8832c18eb9502e04597", null ],
+    [ "ERPC_PRE_POST_ACTION_DEFAULT", "group__config.html#gaef0ed126bb0073ad3d66e64e228cc7ab", null ]
 ];

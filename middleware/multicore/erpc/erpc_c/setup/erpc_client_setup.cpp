@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2014-2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * Copyright 2020 ACRIOS Systems s.r.o.
  * All rights reserved.
  *
  *
@@ -8,12 +9,14 @@
  */
 
 #include "erpc_client_setup.h"
+
 #include "erpc_basic_codec.h"
 #include "erpc_client_manager.h"
 #include "erpc_crc16.h"
 #include "erpc_manually_constructed.h"
 #include "erpc_message_buffer.h"
 #include "erpc_transport.h"
+
 #include <cassert>
 #if ERPC_NESTED_CALLS
 #include "erpc_threading.h"
@@ -27,6 +30,7 @@ using namespace erpc;
 
 // global client variables
 static ManuallyConstructed<ClientManager> s_client;
+extern ClientManager *g_client;
 ClientManager *g_client = NULL;
 static ManuallyConstructed<BasicCodecFactory> s_codecFactory;
 static ManuallyConstructed<Crc16> s_crc16;
@@ -92,6 +96,22 @@ bool erpc_client_add_message_logger(erpc_transport_t transport)
         return g_client->addMessageLogger(reinterpret_cast<Transport *>(transport));
     }
     return false;
+}
+#endif
+
+#if ERPC_PRE_POST_ACTION
+void erpc_client_add_pre_cb_action(pre_post_action_cb preCB)
+{
+    assert(g_client);
+
+    g_client->addPreCB(preCB);
+}
+
+void erpc_client_add_post_cb_action(pre_post_action_cb postCB)
+{
+    assert(g_client);
+
+    g_client->addPostCB(postCB);
 }
 #endif
 

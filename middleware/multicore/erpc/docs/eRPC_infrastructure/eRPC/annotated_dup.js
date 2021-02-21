@@ -5,6 +5,7 @@ var annotated_dup =
       [ "BasicCodec", "classerpc_1_1_basic_codec.html", "classerpc_1_1_basic_codec" ],
       [ "BasicCodecFactory", "classerpc_1_1_basic_codec_factory.html", "classerpc_1_1_basic_codec_factory" ],
       [ "ClientManager", "classerpc_1_1_client_manager.html", "classerpc_1_1_client_manager" ],
+      [ "ClientServerCommon", "classerpc_1_1_client_server_common.html", "classerpc_1_1_client_server_common" ],
       [ "Codec", "classerpc_1_1_codec.html", "classerpc_1_1_codec" ],
       [ "CodecFactory", "classerpc_1_1_codec_factory.html", "classerpc_1_1_codec_factory" ],
       [ "Crc16", "classerpc_1_1_crc16.html", "classerpc_1_1_crc16" ],
@@ -19,6 +20,7 @@ var annotated_dup =
       [ "MessageLoggers", "classerpc_1_1_message_loggers.html", "classerpc_1_1_message_loggers" ],
       [ "Mutex", "classerpc_1_1_mutex.html", "classerpc_1_1_mutex" ],
       [ "MUTransport", "classerpc_1_1_m_u_transport.html", "classerpc_1_1_m_u_transport" ],
+      [ "PrePostAction", "classerpc_1_1_pre_post_action.html", "classerpc_1_1_pre_post_action" ],
       [ "RequestContext", "classerpc_1_1_request_context.html", "classerpc_1_1_request_context" ],
       [ "RPMsgBaseTransport", "classerpc_1_1_r_p_msg_base_transport.html", "classerpc_1_1_r_p_msg_base_transport" ],
       [ "RPMsgLinuxTransport", "classerpc_1_1_r_p_msg_linux_transport.html", "classerpc_1_1_r_p_msg_linux_transport" ],
@@ -30,6 +32,7 @@ var annotated_dup =
       [ "Server", "classerpc_1_1_server.html", "classerpc_1_1_server" ],
       [ "Service", "classerpc_1_1_service.html", "classerpc_1_1_service" ],
       [ "SimpleServer", "classerpc_1_1_simple_server.html", "classerpc_1_1_simple_server" ],
+      [ "SpidevMasterTransport", "classerpc_1_1_spidev_master_transport.html", "classerpc_1_1_spidev_master_transport" ],
       [ "SpiMasterTransport", "classerpc_1_1_spi_master_transport.html", "classerpc_1_1_spi_master_transport" ],
       [ "SpiSlaveTransport", "classerpc_1_1_spi_slave_transport.html", "classerpc_1_1_spi_slave_transport" ],
       [ "StaticQueue", "classerpc_1_1_static_queue.html", "classerpc_1_1_static_queue" ],
@@ -38,7 +41,8 @@ var annotated_dup =
       [ "Transport", "classerpc_1_1_transport.html", "classerpc_1_1_transport" ],
       [ "TransportArbitrator", "classerpc_1_1_transport_arbitrator.html", "classerpc_1_1_transport_arbitrator" ],
       [ "TransportFactory", "classerpc_1_1_transport_factory.html", "classerpc_1_1_transport_factory" ],
-      [ "UartTransport", "classerpc_1_1_uart_transport.html", "classerpc_1_1_uart_transport" ]
+      [ "UartTransport", "classerpc_1_1_uart_transport.html", "classerpc_1_1_uart_transport" ],
+      [ "UsbCdcTransport", "classerpc_1_1_usb_cdc_transport.html", "classerpc_1_1_usb_cdc_transport" ]
     ] ],
     [ "DynamicMessageBufferFactory", "class_dynamic_message_buffer_factory.html", "class_dynamic_message_buffer_factory" ],
     [ "RPMsgMessageBufferFactory", "class_r_p_msg_message_buffer_factory.html", "class_r_p_msg_message_buffer_factory" ],

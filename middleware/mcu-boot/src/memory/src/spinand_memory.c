@@ -67,7 +67,7 @@ typedef struct _spinand_mem_context
     uint32_t readBuffer[kSpiNandMemory_MaxPageSize / sizeof(uint32_t)];
     bool isReadBufferValid;
     uint32_t readBufferPageAddr;
-    uint8_t writeBuffer[kSpiNandMemory_MaxPageSize / sizeof(uint32_t)];
+    uint32_t writeBuffer[kSpiNandMemory_MaxPageSize / sizeof(uint32_t)];
     bool isWriteBufferValid;
     uint32_t writeBufferOffset;
     uint32_t writeBufferPageAddr;
@@ -1148,7 +1148,7 @@ static status_t spinand_mem_flush_buffer(void)
 
     // Flush the data in the write buffer to SPI NAND
     status =
-        spinand_memory_write_and_verify(srcPageAddr, s_spinandContext.writeBufferOffset, s_spinandContext.writeBuffer);
+        spinand_memory_write_and_verify(srcPageAddr, s_spinandContext.writeBufferOffset, (uint8_t*)s_spinandContext.writeBuffer);
     if (status == kStatus_Success)
     {
         // Write success, return.
@@ -1234,7 +1234,7 @@ static status_t spinand_mem_block_backup(uint32_t srcPageAddr, uint32_t destBloc
     }
     // Flush the last page. The data is contained in the write buffer.
     return spinand_memory_write_and_verify(destPageAddr, s_spinandFcb.config.pageDataSize,
-                                           s_spinandContext.writeBuffer);
+                                           (uint8_t*)s_spinandContext.writeBuffer);
 }
 
 #if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE

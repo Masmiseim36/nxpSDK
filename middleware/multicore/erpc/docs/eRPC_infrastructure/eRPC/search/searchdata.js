@@ -8,7 +8,7 @@ var indexSectionsWithContent =
   5: "cert",
   6: "_m",
   7: "k",
-  8: "cdimprstu",
+  8: "cdeimprstu",
   9: "i"
 };
 

@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.7.4</span>
+   &#160;<span id="projectnumber">Rev. 1.8.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -159,9 +159,9 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="c
 <tr class="memitem:af43c66b7123b3845d37a7e3478ef98fd"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#af43c66b7123b3845d37a7e3478ef98fd">open</a> (void)</td></tr>
 <tr class="memdesc:af43c66b7123b3845d37a7e3478ef98fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function will create host on server side, or connect client to the server.  <a href="#af43c66b7123b3845d37a7e3478ef98fd">More...</a><br /></td></tr>
 <tr class="separator:af43c66b7123b3845d37a7e3478ef98fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a163a9cd6d14167297e4160cbf9bf3269"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#a163a9cd6d14167297e4160cbf9bf3269">close</a> (void)</td></tr>
-<tr class="memdesc:a163a9cd6d14167297e4160cbf9bf3269"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function disconnects client or stop server host.  <a href="#a163a9cd6d14167297e4160cbf9bf3269">More...</a><br /></td></tr>
-<tr class="separator:a163a9cd6d14167297e4160cbf9bf3269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc5323167b50a62b73724eb978153175"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_t_c_p_transport.html#acc5323167b50a62b73724eb978153175">close</a> (bool stopServer=true)</td></tr>
+<tr class="memdesc:acc5323167b50a62b73724eb978153175"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function disconnects client or stop server host.  <a href="#acc5323167b50a62b73724eb978153175">More...</a><br /></td></tr>
+<tr class="separator:acc5323167b50a62b73724eb978153175"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classerpc_1_1_framed_transport"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classerpc_1_1_framed_transport')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classerpc_1_1_framed_transport.html">erpc::FramedTransport</a></td></tr>
 <tr class="memitem:a5cfed6f7b88aae9d017b4a1053acebc3 inherit pub_methods_classerpc_1_1_framed_transport"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5cfed6f7b88aae9d017b4a1053acebc3"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classerpc_1_1_framed_transport.html#a5cfed6f7b88aae9d017b4a1053acebc3">FramedTransport</a> (void)</td></tr>
@@ -382,7 +382,7 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a163a9cd6d14167297e4160cbf9bf3269"></a>
+<a class="anchor" id="acc5323167b50a62b73724eb978153175"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -392,8 +392,8 @@ Protected Attributes</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="group__infra.html#ga5f8872e58f09a16d192bf664f9898651">erpc_status_t</a> TCPTransport::close </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>stopServer</em> = <code>true</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -405,6 +405,12 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>This function disconnects client or stop server host. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">stopServer</td><td>Specify is server shall be closed as well (stop listen()) </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname"><a class="el" href="group__infra.html#ggacf5d3df9e7a78f29bc823b71f1529752aad3aa76a604b7bd6c3828c50b33dca33" title="No error occurred. ">kErpcStatus_Success</a></td><td>Always return this. </td></tr>

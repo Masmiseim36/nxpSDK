@@ -7,7 +7,7 @@ var group__tcp__transport =
       [ "~TCPTransport", "classerpc_1_1_t_c_p_transport.html#ad56ac5ecade7c28d44b60530f001c636", null ],
       [ "configure", "classerpc_1_1_t_c_p_transport.html#a9cb91952fa78e3d6489b2de9c1f8613e", null ],
       [ "open", "classerpc_1_1_t_c_p_transport.html#af43c66b7123b3845d37a7e3478ef98fd", null ],
-      [ "close", "classerpc_1_1_t_c_p_transport.html#a163a9cd6d14167297e4160cbf9bf3269", null ],
+      [ "close", "classerpc_1_1_t_c_p_transport.html#acc5323167b50a62b73724eb978153175", null ],
       [ "connectClient", "classerpc_1_1_t_c_p_transport.html#a5eb8f5ed0b9d7a8691cf09aa962ec82a", null ],
       [ "underlyingReceive", "classerpc_1_1_t_c_p_transport.html#ad8d68b7622a84df194ed952c4bfbd2a4", null ],
       [ "underlyingSend", "classerpc_1_1_t_c_p_transport.html#a3775372dfa7de5fe614c02d635cac05a", null ],

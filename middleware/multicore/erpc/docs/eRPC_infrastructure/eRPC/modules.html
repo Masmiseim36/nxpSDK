@@ -34,7 +34,7 @@
   <td id="projectlogo"><img alt="Logo" src="nxp_logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">eRPC API Reference
-   &#160;<span id="projectnumber">Rev. 1.7.4</span>
+   &#160;<span id="projectnumber">Rev. 1.8.0</span>
    </div>
    <div id="projectbrief">NXP Semiconductors</div>
   </td>
@@ -117,26 +117,31 @@ $(document).ready(function(){initNavTree('modules.html','');});
 <tr id="row_1_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__port__mem.html" target="_self">Memory</a></td><td class="desc">Memory allocation </td></tr>
 <tr id="row_1_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__port__threads.html" target="_self">Threads</a></td><td class="desc">Threading model </td></tr>
 <tr id="row_1_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__port__serial.html" target="_self">Serial</a></td><td class="desc">Serial port </td></tr>
+<tr id="row_1_3_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__port__spidev.html" target="_self">SPIdev</a></td><td class="desc">SPIdev port </td></tr>
+<tr id="row_1_4_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__port__sysgpio.html" target="_self">SysGPIO</a></td><td class="desc">SysGPIO port </td></tr>
 <tr id="row_2_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_2_" class="arrow" onclick="toggleFolder('2_')">&#9660;</span><a class="el" href="group__setup.html" target="_self">Setup API</a></td><td class="desc">C language setup functions </td></tr>
 <tr id="row_2_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__server__setup.html" target="_self">Server Setup</a></td><td class="desc">Server side setup and control functions </td></tr>
 <tr id="row_2_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__client__setup.html" target="_self">Client Setup</a></td><td class="desc">Client side setup functions </td></tr>
-<tr id="row_2_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__transport__setup.html" target="_self">Transport Setup</a></td><td class="desc">Transport layer initialization </td></tr>
+<tr id="row_2_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__message__buffer__factory__setup.html" target="_self">Message Buffer Factory Setup</a></td><td class="desc">Message Buffer Factory setup functions </td></tr>
+<tr id="row_2_3_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__transport__setup.html" target="_self">Transport Setup</a></td><td class="desc">Transport layer initialization </td></tr>
+<tr id="row_2_4_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__port__setup__extensions.html" target="_self">Extension Setup</a></td><td class="desc">Extension setup functions </td></tr>
 <tr id="row_3_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_3_" class="arrow" onclick="toggleFolder('3_')">&#9660;</span><a class="el" href="group__transports.html" target="_self">Transport Layers</a></td><td class="desc">Transport layer classes </td></tr>
 <tr id="row_3_0_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__dspi__master__transport.html" target="_self">DSPI Master</a></td><td class="desc">Kinetis SDK DSPI master driver transport </td></tr>
 <tr id="row_3_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__dspi__slave__transport.html" target="_self">DSPI Slave</a></td><td class="desc">Kinetis SDK DSPI slave driver transport </td></tr>
 <tr id="row_3_2_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__spi__master__transport.html" target="_self">SPI Master</a></td><td class="desc">Kinetis SDK SPI master driver transport </td></tr>
 <tr id="row_3_3_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__spi__slave__transport.html" target="_self">SPI Slave</a></td><td class="desc">Kinetis SDK SPI slave driver transport </td></tr>
-<tr id="row_3_4_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__itbp__transport.html" target="_self">Inter-thread</a></td><td class="desc">Simple inter-thread communications transport </td></tr>
-<tr id="row_3_5_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__uart__transport.html" target="_self">CMSIS UART</a></td><td class="desc">CMSIS UART driver transport </td></tr>
-<tr id="row_3_6_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__serial__transport.html" target="_self">Serial port</a></td><td class="desc">POSIX and Win32 serial port transport </td></tr>
-<tr id="row_3_7_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__rpmsg__lite__rtos__transport.html" target="_self">RPMsg-Lite RTOS</a></td><td class="desc">RPMsg-Lite zero copy transport using RTOS API </td></tr>
-<tr id="row_3_8_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__rpmsg__lite__transport.html" target="_self">RPMsg-Lite</a></td><td class="desc">RPMsg-Lite zero copy transport </td></tr>
-<tr id="row_3_9_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__tcp__transport.html" target="_self">TCP/IP</a></td><td class="desc">Simple TCP/IP transport </td></tr>
-<tr id="row_3_10_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__mu__transport.html" target="_self">Messaging Unit</a></td><td class="desc">Messaging Unit transport </td></tr>
-<tr id="row_3_11_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__rpmsg__linux__transport.html" target="_self">RPMsg Endpoints</a></td><td class="desc">RPMsg endpoints linux transport </td></tr>
-<tr id="row_4_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="group__config.html" target="_self">Configuration</a></td><td class="desc">Configuration settings </td></tr>
-<tr id="row_5_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="group__message__buffer__factory__setup.html" target="_self">Message_buffer_factory_setup</a></td><td class="desc"></td></tr>
-<tr id="row_6_"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="group__rpmsg__tty__rtos__transport.html" target="_self">Rpmsg_tty_rtos_transport</a></td><td class="desc"></td></tr>
+<tr id="row_3_4_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__spidev__master__transport.html" target="_self">SPIdev Linux Master</a></td><td class="desc">SPIdev Linux transport </td></tr>
+<tr id="row_3_5_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__itbp__transport.html" target="_self">Inter-thread</a></td><td class="desc">Simple inter-thread communications transport </td></tr>
+<tr id="row_3_6_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__uart__transport.html" target="_self">CMSIS UART</a></td><td class="desc">CMSIS UART driver transport </td></tr>
+<tr id="row_3_7_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__serial__transport.html" target="_self">Serial port</a></td><td class="desc">POSIX and Win32 serial port transport </td></tr>
+<tr id="row_3_8_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__rpmsg__lite__rtos__transport.html" target="_self">RPMsg-Lite RTOS</a></td><td class="desc">RPMsg-Lite zero copy transport using RTOS API </td></tr>
+<tr id="row_3_9_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__rpmsg__lite__transport.html" target="_self">RPMsg-Lite</a></td><td class="desc">RPMsg-Lite zero copy transport </td></tr>
+<tr id="row_3_10_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__rpmsg__tty__rtos__transport.html" target="_self">RPMsg TTY RTOS</a></td><td class="desc">RPMsg TTY RTOS transport </td></tr>
+<tr id="row_3_11_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__tcp__transport.html" target="_self">TCP/IP</a></td><td class="desc">Simple TCP/IP transport </td></tr>
+<tr id="row_3_12_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__mu__transport.html" target="_self">Messaging Unit</a></td><td class="desc">Messaging Unit transport </td></tr>
+<tr id="row_3_13_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group__rpmsg__linux__transport.html" target="_self">RPMsg Endpoints</a></td><td class="desc">RPMsg endpoints linux transport </td></tr>
+<tr id="row_3_14_"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><a class="el" href="group___u_s_b___c_d_c__transport.html" target="_self">USB CDC</a></td><td class="desc">USB CDC transport </td></tr>
+<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="group__config.html" target="_self">Configuration</a></td><td class="desc">Configuration settings </td></tr>
 </table>
 </div><!-- directory -->
 </div><!-- contents -->

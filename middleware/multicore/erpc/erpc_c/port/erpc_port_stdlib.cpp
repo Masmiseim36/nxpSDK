@@ -8,6 +8,7 @@
  */
 
 #include "erpc_port.h"
+
 #include <cstdlib>
 #include <new>
 
@@ -21,6 +22,7 @@ void *operator new(size_t count) THROW_BADALLOC
 
 void *operator new(size_t count, const nothrow_t &tag) THROW NOEXCEPT
 {
+    (void)tag;
     void *p = erpc_malloc(count);
     return p;
 }
@@ -33,17 +35,30 @@ void *operator new[](size_t count) THROW_BADALLOC
 
 void *operator new[](size_t count, const nothrow_t &tag) THROW NOEXCEPT
 {
+    (void)tag;
     void *p = erpc_malloc(count);
     return p;
 }
 
-void operator delete(void *ptr) THROW NOEXCEPT
+void operator delete(void *ptr)THROW NOEXCEPT
 {
+    erpc_free(ptr);
+}
+
+void operator delete(void *ptr, std::size_t count)THROW NOEXCEPT
+{
+    (void)count;
     erpc_free(ptr);
 }
 
 void operator delete[](void *ptr) THROW NOEXCEPT
 {
+    erpc_free(ptr);
+}
+
+void operator delete[](void *ptr, std::size_t count) THROW NOEXCEPT
+{
+    (void)count;
     erpc_free(ptr);
 }
 
@@ -60,7 +75,7 @@ void erpc_free(void *ptr)
 
 /* Provide function for pure virtual call to avoid huge demangling code being linked in ARM GCC */
 #if ((defined(__GNUC__)) && (defined(__arm__)))
-extern "C" void __cxa_pure_virtual()
+extern "C" void __cxa_pure_virtual(void)
 {
     while (1)
         ;

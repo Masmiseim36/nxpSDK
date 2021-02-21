@@ -37,6 +37,7 @@ var searchData=
   ['isstring',['isString',['../classerpcgen_1_1_builtin_type.html#a8684c51036dbadb6f0f996994bac27ba',1,'erpcgen::BuiltinType::isString()'],['../classerpcgen_1_1_data_type.html#ab5c453e35889dd4d64ed621a9470b806',1,'erpcgen::DataType::isString()']]],
   ['isstruct',['isStruct',['../classerpcgen_1_1_data_type.html#a9fc5f7de98a3c8f1067b832ec4723494',1,'erpcgen::DataType::isStruct()'],['../classerpcgen_1_1_struct_type.html#a840aa2dea297e8eb3abc15ed453fbb6b',1,'erpcgen::StructType::isStruct()']]],
   ['isunion',['isUnion',['../classerpcgen_1_1_data_type.html#ac5b57925fbf7b0a69aee8f11add91745',1,'erpcgen::DataType::isUnion()'],['../classerpcgen_1_1_union_type.html#a3eac98c19587d456ad2f2f8c596baebb',1,'erpcgen::UnionType::isUnion()']]],
+  ['isustring',['isUString',['../classerpcgen_1_1_builtin_type.html#ae47182657951be20a90456d38f650449',1,'erpcgen::BuiltinType::isUString()'],['../classerpcgen_1_1_data_type.html#ac46bfae239f2330dfec8dd8500b3556c',1,'erpcgen::DataType::isUString()']]],
   ['isvoid',['isVoid',['../classerpcgen_1_1_data_type.html#a19952c8dc8ef8c4c5041fcf3cd26ae8e',1,'erpcgen::DataType::isVoid()'],['../classerpcgen_1_1_void_type.html#a95819eb90801f50d7ad6b97e5dd7d7ba',1,'erpcgen::VoidType::isVoid()']]],
   ['iterator',['iterator',['../classerpcgen_1_1_ast_node.html#a6a1e32ead902f4832fe77bf0fea9b85d',1,'erpcgen::AstNode']]]
 ];

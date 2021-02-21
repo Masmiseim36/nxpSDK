@@ -2,6 +2,10 @@ var group__infra__utility =
 [
     [ "erpc_manually_constructed.h", "erpc__manually__constructed_8h.html", null ],
     [ "erpc_static_queue.h", "erpc__static__queue_8h.html", null ],
+    [ "ClientServerCommon", "classerpc_1_1_client_server_common.html", [
+      [ "ClientServerCommon", "classerpc_1_1_client_server_common.html#ad996c06b457d3e8abc48bb02e7f56c5e", null ],
+      [ "~ClientServerCommon", "classerpc_1_1_client_server_common.html#aaa5bd85c4a41c2cd8e5f18d9b3867355", null ]
+    ] ],
     [ "ManuallyConstructed", "classerpc_1_1_manually_constructed.html", [
       [ "get", "classerpc_1_1_manually_constructed.html#acd1ee01fd0d61971e59616b02d7b38d2", null ],
       [ "get", "classerpc_1_1_manually_constructed.html#ace67bfe44de98e5b0152a5b71452033c", null ],
@@ -17,6 +21,7 @@ var group__infra__utility =
       [ "construct", "classerpc_1_1_manually_constructed.html#a2647883ac3a74186e3c24a199cae09c9", null ],
       [ "construct", "classerpc_1_1_manually_constructed.html#a8b2a90add53fb6d3eb87a45740ddb6b4", null ],
       [ "construct", "classerpc_1_1_manually_constructed.html#aab05586fce056b9fa87510fe9553beb4", null ],
+      [ "construct", "classerpc_1_1_manually_constructed.html#a7a93a5f83f4188c2c832963ff3ea7c8d", null ],
       [ "destroy", "classerpc_1_1_manually_constructed.html#ac898468f9a960e8be8054821d73cbc34", null ],
       [ "m_storage", "classerpc_1_1_manually_constructed.html#a6d220c46013cfd6f7713013c3a77e592", null ]
     ] ],
@@ -36,13 +41,23 @@ var group__infra__utility =
       [ "logMessage", "classerpc_1_1_message_loggers.html#ad6c78c02e2288688103e66e73fd9d1b8", null ],
       [ "m_logger", "classerpc_1_1_message_loggers.html#afa59675c94a72e77218291d74c995693", null ]
     ] ],
+    [ "PrePostAction", "classerpc_1_1_pre_post_action.html", [
+      [ "PrePostAction", "classerpc_1_1_pre_post_action.html#a8027b611f640f32af8af0985098ece46", null ],
+      [ "~PrePostAction", "classerpc_1_1_pre_post_action.html#a69d47d8c7beaac96de19e9085b0c0a40", null ],
+      [ "addPreCB", "classerpc_1_1_pre_post_action.html#ab17345c89fe9d2c0f1d671efbfd1a356", null ],
+      [ "addPostCB", "classerpc_1_1_pre_post_action.html#aacbec4d6ddf7b155163413b31c056598", null ],
+      [ "getPreCB", "classerpc_1_1_pre_post_action.html#a0317e7261d892f09338bcdc9601714c6", null ],
+      [ "getPostCB", "classerpc_1_1_pre_post_action.html#ab07e3853fdfc54f0a07a330158d3fad3", null ],
+      [ "m_preCB", "classerpc_1_1_pre_post_action.html#a5ef59d8f4afc699722e5fc6215d116e3", null ],
+      [ "m_postCB", "classerpc_1_1_pre_post_action.html#ae3675a7722583d999ee472a992b312d7", null ]
+    ] ],
     [ "StaticQueue", "classerpc_1_1_static_queue.html", [
       [ "StaticQueue", "classerpc_1_1_static_queue.html#a248662ae7d3a228d056332389739b941", null ],
       [ "~StaticQueue", "classerpc_1_1_static_queue.html#a24ddc2195588cee38e390652f9a6d070", null ],
       [ "add", "classerpc_1_1_static_queue.html#ab1fe280f10fdf322ae75f16d80b812cc", null ],
       [ "get", "classerpc_1_1_static_queue.html#a50621cf1d1676983bbf95c7dbf178229", null ],
       [ "size", "classerpc_1_1_static_queue.html#a90d03fc6a09db2f2e9ad4f722ba81547", null ],
-      [ "m_storage", "classerpc_1_1_static_queue.html#ad10392812527307c0f7b411fd5ceb8ee", null ],
+      [ "m_storage", "classerpc_1_1_static_queue.html#a7aca1b45a4496c7a6f3ecc0796b926d8", null ],
       [ "m_capacity", "classerpc_1_1_static_queue.html#a0c43f1fba589c88fbb22a0e8b237d58c", null ],
       [ "m_head", "classerpc_1_1_static_queue.html#aa5b8df6fb776578ca3d8ddf5b4187af2", null ],
       [ "m_tail", "classerpc_1_1_static_queue.html#af18992edddaa6bfb26713fde997273b8", null ]

@@ -7,7 +7,7 @@ var classerpcgen_1_1_function_base =
     [ "getReturnStructMemberType", "classerpcgen_1_1_function_base.html#a6b3bb26fbdfb7cffa3aa042fcdaa354d", null ],
     [ "getReturnType", "classerpcgen_1_1_function_base.html#ae1496e6b0df7d7c86351bd13d18ff02c", null ],
     [ "isOneway", "classerpcgen_1_1_function_base.html#ab2d79a501e60877400f1033440f36b3b", null ],
-    [ "setIsOneway", "classerpcgen_1_1_function_base.html#a63606d73b3e1c2cce257112d6251db87", null ],
+    [ "setIsOneway", "classerpcgen_1_1_function_base.html#a53c6624bfe0b3bdfded2a7546bbef98d", null ],
     [ "setReturnStructMemberType", "classerpcgen_1_1_function_base.html#af45d6d0bfa0a06da9287cf5eb66c574a", null ],
     [ "m_isOneway", "classerpcgen_1_1_function_base.html#a20ec91947cd0331e28ff9fa0271c01a2", null ],
     [ "m_parameters", "classerpcgen_1_1_function_base.html#a3282f5e6d5c3478055f40c06d2144ec6", null ],

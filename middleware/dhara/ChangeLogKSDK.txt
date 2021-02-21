@@ -1,0 +1,11 @@
+/*!
+@page middleware_log Middleware Change Log
+
+@section nand flash management stack for KSDK
+  Current driver version is 2.0.0
+
+  - 2.0.0
+  Initial version, remove the bb_last initial value.
+
+*/
+

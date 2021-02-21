@@ -7,5 +7,5 @@ var searchData=
   ['transportarbitrator',['TransportArbitrator',['../classerpc_1_1_transport_arbitrator.html#a036683937acdb539f8fbc44995120648',1,'erpc::TransportArbitrator']]],
   ['transportfactory',['TransportFactory',['../classerpc_1_1_transport_factory.html#a3df8dc7ce4f6c9972fe4a5183c3a894f',1,'erpc::TransportFactory']]],
   ['trylock',['tryLock',['../classerpc_1_1_mutex.html#a69702e86e24cbb72cb144a626bae07bb',1,'erpc::Mutex']]],
-  ['tx_5fcb',['tx_cb',['../classerpc_1_1_m_u_transport.html#ad7d078fe2c9e6c31c4eefe6d7720a244',1,'erpc::MUTransport']]]
+  ['tx_5fcb',['tx_cb',['../classerpc_1_1_m_u_transport.html#ad7d078fe2c9e6c31c4eefe6d7720a244',1,'erpc::MUTransport::tx_cb()'],['../classerpc_1_1_uart_transport.html#ae285c1aa6b805c50ff2d743535bdfd27',1,'erpc::UartTransport::tx_cb()'],['../classerpc_1_1_usb_cdc_transport.html#ac2ea2e9052222e1ceba6eddf1e6ba0c3',1,'erpc::UsbCdcTransport::tx_cb()']]]
 ];

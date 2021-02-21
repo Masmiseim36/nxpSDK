@@ -7,9 +7,11 @@ var searchData=
   ['clientmanager',['ClientManager',['../classerpc_1_1_client_manager.html#ad58efffd393eafceb94a7637964eeeda',1,'erpc::ClientManager']]],
   ['clientmanager',['ClientManager',['../classerpc_1_1_client_manager.html',1,'erpc']]],
   ['clientreceive',['clientReceive',['../classerpc_1_1_transport_arbitrator.html#aba5660b83cd5f9ca55eaa362c84c7916',1,'erpc::TransportArbitrator']]],
-  ['close',['close',['../classerpc_1_1_t_c_p_transport.html#a163a9cd6d14167297e4160cbf9bf3269',1,'erpc::TCPTransport']]],
-  ['codec',['Codec',['../classerpc_1_1_codec.html',1,'erpc']]],
+  ['clientservercommon',['ClientServerCommon',['../classerpc_1_1_client_server_common.html',1,'erpc']]],
+  ['clientservercommon',['ClientServerCommon',['../classerpc_1_1_client_server_common.html#ad996c06b457d3e8abc48bb02e7f56c5e',1,'erpc::ClientServerCommon']]],
+  ['close',['close',['../classerpc_1_1_t_c_p_transport.html#acc5323167b50a62b73724eb978153175',1,'erpc::TCPTransport']]],
   ['codec',['Codec',['../classerpc_1_1_codec.html#a39f0596a2957fb80bf3b5de6a4420f26',1,'erpc::Codec']]],
+  ['codec',['Codec',['../classerpc_1_1_codec.html',1,'erpc']]],
   ['codecfactory',['CodecFactory',['../classerpc_1_1_codec_factory.html',1,'erpc']]],
   ['codecfactory',['CodecFactory',['../classerpc_1_1_codec_factory.html#a06079d9d28d159258521fa6373417d55',1,'erpc::CodecFactory']]],
   ['computecrc16',['computeCRC16',['../classerpc_1_1_crc16.html#a8a12a46cd5b081fe6e76f0344c649c46',1,'erpc::Crc16']]],
@@ -23,8 +25,8 @@ var searchData=
   ['createbufferandcodec',['createBufferAndCodec',['../classerpc_1_1_client_manager.html#aa15e083405efee077a059c832f9368b7',1,'erpc::ClientManager']]],
   ['createrequest',['createRequest',['../classerpc_1_1_client_manager.html#afc479442d1a9155035659410cf8a5a4b',1,'erpc::ClientManager']]],
   ['createserverbuffer',['createServerBuffer',['../classerpc_1_1_message_buffer_factory.html#a52d400d44d1836d7764cc64e3d842a06',1,'erpc::MessageBufferFactory::createServerBuffer()'],['../class_r_p_msg_message_buffer_factory.html#ac138322782db86733dfe641363dca38e',1,'RPMsgMessageBufferFactory::createServerBuffer()'],['../class_r_p_msg_t_t_y_message_buffer_factory.html#a9ac04949815a91b1aede1845c8c4cf61',1,'RPMsgTTYMessageBufferFactory::createServerBuffer()']]],
-  ['cursor',['Cursor',['../classerpc_1_1_message_buffer_1_1_cursor.html#a60509ca3865cd27ce1200acf6ea21393',1,'erpc::MessageBuffer::Cursor::Cursor(void)'],['../classerpc_1_1_message_buffer_1_1_cursor.html#a0e15e87d9811aa62005be4a985b94451',1,'erpc::MessageBuffer::Cursor::Cursor(MessageBuffer *buffer)']]],
   ['cursor',['Cursor',['../classerpc_1_1_message_buffer_1_1_cursor.html',1,'erpc::MessageBuffer']]],
+  ['cursor',['Cursor',['../classerpc_1_1_message_buffer_1_1_cursor.html#a60509ca3865cd27ce1200acf6ea21393',1,'erpc::MessageBuffer::Cursor::Cursor(void)'],['../classerpc_1_1_message_buffer_1_1_cursor.html#a0e15e87d9811aa62005be4a985b94451',1,'erpc::MessageBuffer::Cursor::Cursor(MessageBuffer *buffer)']]],
   ['client',['Client',['../group__infra__client.html',1,'']]],
   ['cmsis_20uart',['CMSIS UART',['../group__uart__transport.html',1,'']]]
 ];

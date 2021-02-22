@@ -39,6 +39,7 @@
       <file file_name="$(TargetsDir)/iMXRT/$(DeviceName).h" />
       <file file_name="$(TargetsDir)/iMXRT/$(DeviceName)_features.h" />
       <file file_name="$(TargetsDir)/iMXRT/fsl_device_registers.h" />
+      <file file_name="placement_tcm.xml" />
     </folder>
     <folder Name="source">
       <file file_name="./../lpspi_edma_b2b_transfer_master.c" />

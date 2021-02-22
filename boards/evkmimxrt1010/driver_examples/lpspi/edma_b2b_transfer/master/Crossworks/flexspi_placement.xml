@@ -1,0 +1,55 @@
+<!DOCTYPE Linker_Placement_File>
+<Root name="Flash Section Placement">
+  <MemorySegment name="$(FLASH_NAME:FlexSPI)">
+    <ProgramSection alignment="4" load="Yes" name=".boot_hdr.conf" address_symbol="__FLASH_BASE" keep="Yes" />
+    <ProgramSection alignment="0x1000" load="Yes" name=".boot_hdr.ivt" keep="Yes" />
+    <ProgramSection load="Yes" name=".boot_hdr.boot_data" keep="Yes" />
+    <ProgramSection load="Yes" name=".boot_hdr.dcd_data" keep="Yes" />
+    <ProgramSection alignment="0x1000" load="Yes" name=".vectors" address_symbol="__VECTOR_TABLE" />
+    <ProgramSection alignment="4" load="Yes" name=".init" />
+    <ProgramSection alignment="4" load="Yes" name=".init_rodata" />
+    <ProgramSection alignment="4" load="Yes" name=".text" />
+    <ProgramSection alignment="4" load="Yes" name=".dtors" />
+    <ProgramSection alignment="4" load="Yes" name=".ctors" />
+    <ProgramSection alignment="4" load="Yes" name=".rodata" />
+    <ProgramSection alignment="4" load="Yes" name=".ARM.exidx" address_symbol="__exidx_start" end_symbol="__exidx_end" />
+    <ProgramSection alignment="4" load="Yes" runin=".fast_run" name=".fast" />
+    <ProgramSection alignment="4" load="Yes" runin=".data_run" name=".data" />
+    <ProgramSection alignment="4" load="Yes" runin=".tdata_run" name=".tdata" />
+    <ProgramSection alignment="4" load="Yes" runin=".text_tcm_run" name=".text_tcm" />
+    <ProgramSection alignment="4" load="Yes" runin=".data_tcm_run" name=".data_tcm" />
+    <ProgramSection alignment="4" load="Yes" runin=".rodata_tcm_run" name=".rodata_tcm" />
+  </MemorySegment>
+  <MemorySegment name="$(RAM_NAME:ITCM)">
+    <ProgramSection alignment="0x100" load="No" name=".vectors_ram" start="$(RAM_START:$(SRAM_START:))" />
+    <ProgramSection alignment="4" load="No" name=".fast_run" />
+    <ProgramSection alignment="4" load="No" name=".text_tcm_run" />
+  </MemorySegment>
+  <MemorySegment name="$(DTCM_NAME:DTCM)">
+    <ProgramSection alignment="4" load="No" name=".bss_tcm" />
+    <ProgramSection alignment="4" load="No" name=".data_tcm_run" />
+    <ProgramSection alignment="4" load="No" name=".rodata_tcm_run" />
+    <ProgramSection alignment="4" load="No" name="NonCacheable" />
+    <ProgramSection alignment="4" load="No" name="NonCacheable.init" />
+  </MemorySegment>
+  <MemorySegment name="$(RAM_NAME:OCRAM)">
+    <ProgramSection alignment="4" load="No" name=".data_run" />
+    <ProgramSection alignment="4" load="No" name=".bss" />
+    <ProgramSection alignment="4" load="No" name=".tbss" />
+    <ProgramSection alignment="4" load="No" name=".tdata_run" />
+    <ProgramSection alignment="4" load="No" name=".non_init" />
+    <ProgramSection alignment="4" size="__HEAPSIZE__" load="No" name=".heap" />
+    <ProgramSection alignment="8" size="__STACKSIZE__" load="No" name=".stack" />
+    <ProgramSection alignment="8" size="__STACKSIZE_PROCESS__" load="No" name=".stack_process" />
+  </MemorySegment>
+  <MemorySegment name="$(FLASH2_NAME:FLASH2)">
+    <ProgramSection alignment="4" load="Yes" name=".text2" />
+    <ProgramSection alignment="4" load="Yes" name=".rodata2" />
+    <ProgramSection alignment="4" load="Yes" runin=".data2_run" name=".data2" />
+  </MemorySegment>
+  <MemorySegment name="$(RAM2_NAME:RAM)">
+    <ProgramSection alignment="4" load="No" name=".data2_run" />
+    <ProgramSection alignment="4" load="No" name=".bss2" />
+    <ProgramSection alignment="4" load="No" name="NonCacheable" size="0x200000" place_from_segment_end="Yes" />
+  </MemorySegment>
+</Root>

@@ -1,0 +1,5 @@
+@Start
+@Input_path ../test_inp/
+@Output_path ../test_out/
+-ifile:sbc_test_02.sbc -ofile:sbc_test_02.wav
+@Stop

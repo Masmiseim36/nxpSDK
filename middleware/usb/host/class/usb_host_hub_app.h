@@ -82,6 +82,18 @@ typedef enum _usb_host_hub_prime_status
 /*******************************************************************************
  * API
  ******************************************************************************/
+#if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U)) || \
+ (defined(USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST > 0U)))
+/*!
+ * @brief get device's hub device instance.
+ *
+ * @param parent_hub_no  device's parent hub instance.
+ *
+ * @return think time value.
+ */
+usb_host_hub_instance_t *USB_HostHubGetHubDeviceHandle(usb_host_handle hostHandle, uint8_t parentHubNo);
+#endif
+   
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
 /*!
  * @brief Suspend the device.

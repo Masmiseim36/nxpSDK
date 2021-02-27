@@ -1,0 +1,172 @@
+#
+# Copyright (c) 2006-2019 Cadence Design Systems, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+# Top-level makefile for binary and source licensees to generate
+# example test programs for the MP3 decoder library
+
+ROOTDIR = ../..
+LIBDIR = .
+
+WARNING_AS_ERROR ?=1
+
+ifeq ($(WARNING_AS_ERROR), 1)
+
+WERROR_FLAG=-Werror
+
+endif
+
+MP3LIB = $(ROOTDIR)/$(LIBDIR)/lib/xa_mp3_dec.a
+MP2LIB = $(ROOTDIR)/$(LIBDIR)/lib/xa_mp2_dec.a
+MP3MCHLIB = $(ROOTDIR)/$(LIBDIR)/lib/xa_mp3mch_dec.a
+
+CFLAGS = -Wall -I$(ROOTDIR)/test/include -I$(ROOTDIR)/$(LIBDIR)/include $(EXTRA_CFLAGS)
+
+ifeq ($(GCC),1)
+
+  CC = g++ -m32
+  RM_R = rm -rf
+  MKPATH = mkdir -p
+
+else
+
+  CC = xt-xcc $(XTCORE)
+  ISS = xt-run $(XTCORE)
+  OBJCOPY = xt-objcopy $(XTCORE)
+  LD = xt-ld $(XTCORE)
+  CFLAGS += $(WERROR_FLAG) -mno-mul16 -mno-mul32 -mno-div32 -mlongcalls
+
+  CONFIGDIR := $(shell $(ISS) --show-config=config)
+  include $(CONFIGDIR)/misc/hostenv.mk
+
+endif
+
+ifeq ($(DEBUG),1)
+  OPT_O2 = -O0 -g
+else
+  OPT_O2 = -O2
+endif
+
+
+LDFLAGS = $(EXTRA_LDFLAGS)
+
+ifneq ($(FRAMES),)
+  CFLAGS += -DFRAMES=$(FRAMES)
+endif
+
+ifeq ($(WRITE_THROUGH),1)
+  LDFLAGS += \
+	-Wl,--defsym,_memmap_cacheattr_reset=0 \
+	-Wl,--defsym,_memmap_cacheattr_reset=_memmap_cacheattr_wt_trapnull
+endif
+
+
+ifeq ($(MEM_INPUT),1)
+  CFLAGS += -DMEM_INPUT=1 -DENABLE_ID3=0
+
+  STREAM_IN = hihat_1s.mp3
+  STREAM_IN_SIZE := $(shell stat --format=%s $(STREAM_IN))
+
+  STREAM_DATA_OBJ = $(OBJDIR)/stream_data.o
+  LDSCRIPT_STREAM_DATA = ldscript_stream_data.txt
+
+  FORCE = FORCE
+endif
+
+ifeq ($(SUPPRESS_OUTPUT),1)
+  CFLAGS += -DSUPPRESS_OUTPUT=1 -DWAV_HEADER=0
+endif
+
+MP3DECBIN = xa_mp3_dec_test
+MP2DECBIN = xa_mp2_dec_test
+MP3MCHDECBIN = xa_mp3mch_dec_test
+
+SRCDIR = $(ROOTDIR)/test/src
+
+OBJDIR = objs
+
+OBJS = \
+	xa_mp3_dec_error_handler.o \
+	xa_mp3_dec_sample_testbench.o \
+	id3_tag_decode.o
+
+OBJS_OBJS = $(addprefix $(OBJDIR)/,$(OBJS))
+
+
+all:
+	#@echo "Please specify target: mp3, mp2, mp3mch, mp2ec or mp3ec"
+	@echo "Please specify target: mp3, mp2 or mp3mch"
+
+mp3: $(MP3DECBIN)
+mp2: $(MP2DECBIN)
+mp3mch: $(MP3MCHDECBIN)
+
+ifeq ($(MSVC),1)
+
+$(MP3DECBIN) $(MP2DECBIN) $(MP3MCHDECBIN): %_test:
+	cl /nologo /Fe$@ \
+		$(SRCDIR)/xa_mp3_dec_error_handler.c \
+		$(SRCDIR)/xa_mp3_dec_sample_testbench.c \
+		$(SRCDIR)/id3_tag_decode.c \
+		$(ROOTDIR)/$(LIBDIR)/lib/$*.lib \
+		/I $(ROOTDIR)/test/include /I$(ROOTDIR)/$(LIBDIR)/include
+
+else
+
+$(MP3DECBIN): $(OBJDIR) $(OBJS_OBJS) $(STREAM_DATA_OBJ) $(MP3LIB)
+	$(CC) -o $@ $(OBJS_OBJS) $(STREAM_DATA_OBJ) $(MP3LIB) $(LDFLAGS)
+
+$(MP2DECBIN): $(OBJDIR) $(OBJS_OBJS) $(STREAM_DATA_OBJ) $(MP2LIB)
+	$(CC) -o $@ $(OBJS_OBJS) $(STREAM_DATA_OBJ) $(MP2LIB) $(LDFLAGS)
+
+$(MP3MCHDECBIN): $(OBJDIR) $(OBJS_OBJS) $(STREAM_DATA_OBJ) $(MP3MCHLIB)
+	$(CC) -o $@ $(OBJS_OBJS) $(STREAM_DATA_OBJ) $(MP3MCHLIB) $(LDFLAGS)
+
+endif
+
+$(OBJDIR):
+	-$(MKPATH) $(OBJDIR)
+
+$(OBJS_OBJS): $(OBJDIR)/%.o: $(SRCDIR)/%.c $(FORCE)
+	$(CC) -c $(OPT_O2) $(CFLAGS) -o $@ $<
+
+ifeq ($(MEM_INPUT),1)
+$(STREAM_DATA_OBJ): $(OBJDIR)/%.o: $(ROOTDIR)/test/src/%.c FORCE
+	@echo "====================================================================="
+	@echo "Input stream:                 $(STREAM_IN)"
+	@echo "Input stream size:            $(STREAM_IN_SIZE) bytes"
+	@echo "====================================================================="
+	$(CC) -c $(CFLAGS) -o $@ $< \
+		-DSTREAM_IN_SIZE=$(STREAM_IN_SIZE)
+	$(OBJCOPY) \
+		--add-section=.rodata.stream_in=$(STREAM_IN) \
+		--set-section-flags=.rodata.stream_in=contents,alloc,load,data,readonly \
+		$@ $(OBJDIR)/$*-tmp.o
+	$(LD) -r --script $(LDSCRIPT_STREAM_DATA) $(OBJDIR)/$*-tmp.o -o $@
+
+FORCE:
+endif
+
+clean:
+	#-$(RM) $(MP3DECBIN) $(MP2DECBIN) $(MP3MCHDECBIN)
+	-$(RM) $(MP3DECBIN) $(MP2DECBIN) $(MP3MCHDECBIN)
+	-$(RM_R) $(OBJDIR)

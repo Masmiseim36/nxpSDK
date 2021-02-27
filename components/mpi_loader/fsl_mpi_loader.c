@@ -107,6 +107,7 @@ typedef struct
 /*******************************************************************************
  * Code
  ******************************************************************************/
+#if defined(MIMXRT685S_cm33_SERIES)
 static void MPI_WordCopy(void *dest, void *src, uint32_t size)
 {
     uint32_t *s, *d;
@@ -140,6 +141,7 @@ static void MPI_WordSet(void *ptr, uint32_t value, uint32_t size)
         size -= 4U;
     }
 }
+#endif
 
 static void MPI_Relocate(uint32_t *vect, mpi_reloc_entry_t *entry)
 {

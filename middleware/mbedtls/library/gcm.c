@@ -562,8 +562,7 @@ void mbedtls_gcm_free( mbedtls_gcm_context *ctx )
 static const int key_index[MAX_TESTS] =
     { 0, 0, 1, 1, 1, 1 };
 
-/* NXP: AT_NONCACHEABLE_SECTION for DCACHE compatibility */
-AT_NONCACHEABLE_SECTION_ALIGN_INIT(static unsigned char key[MAX_TESTS][32],8U) =
+static const unsigned char key[MAX_TESTS][32] __attribute__((aligned)) =
 {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -581,7 +580,7 @@ static const size_t iv_len[MAX_TESTS] =
 static const int iv_index[MAX_TESTS] =
     { 0, 0, 1, 1, 1, 2 };
 
-AT_NONCACHEABLE_SECTION_INIT(static unsigned char iv[MAX_TESTS][64]) =
+static const unsigned char iv[MAX_TESTS][64] =
 {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
       0x00, 0x00, 0x00, 0x00 },
@@ -603,7 +602,7 @@ static const size_t add_len[MAX_TESTS] =
 static const int add_index[MAX_TESTS] =
     { 0, 0, 0, 1, 1, 1 };
 
-AT_NONCACHEABLE_SECTION_INIT(static unsigned char additional[MAX_TESTS][64]) =
+static const unsigned char additional[MAX_TESTS][64] =
 {
     { 0x00 },
     { 0xfe, 0xed, 0xfa, 0xce, 0xde, 0xad, 0xbe, 0xef,
@@ -617,7 +616,7 @@ static const size_t pt_len[MAX_TESTS] =
 static const int pt_index[MAX_TESTS] =
     { 0, 0, 1, 1, 1, 1 };
 
-AT_NONCACHEABLE_SECTION_INIT(static unsigned char pt[MAX_TESTS][64]) =
+static const unsigned char pt[MAX_TESTS][64] =
 {
     { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
       0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 },
@@ -631,7 +630,7 @@ AT_NONCACHEABLE_SECTION_INIT(static unsigned char pt[MAX_TESTS][64]) =
       0xba, 0x63, 0x7b, 0x39, 0x1a, 0xaf, 0xd2, 0x55 },
 };
 
-AT_NONCACHEABLE_SECTION_INIT(static unsigned char ct[MAX_TESTS * 3][64]) =
+static const unsigned char ct[MAX_TESTS * 3][64] =
 {
     { 0x00 },
     { 0x03, 0x88, 0xda, 0xce, 0x60, 0xb6, 0xa3, 0x92,
@@ -740,7 +739,7 @@ AT_NONCACHEABLE_SECTION_INIT(static unsigned char ct[MAX_TESTS * 3][64]) =
       0x44, 0xae, 0x7e, 0x3f },
 };
 
-AT_NONCACHEABLE_SECTION_INIT(static unsigned char tag[MAX_TESTS * 3][16]) =
+static const unsigned char tag[MAX_TESTS * 3][16] =
 {
     { 0x58, 0xe2, 0xfc, 0xce, 0xfa, 0x7e, 0x30, 0x61,
       0x36, 0x7f, 0x1d, 0x57, 0xa4, 0xe7, 0x45, 0x5a },
@@ -792,13 +791,13 @@ int mbedtls_gcm_self_test( int verbose )
     {
         int key_len = 128 + 64 * j;
 
-        #ifdef MBEDTLS_AES_ALT_NO_192
+        #if defined(MBEDTLS_AES_ALT_NO_192) && !defined(MBEDTLS_AES192_ALT_SW)
         if (j == 1)
         {
             continue;
         }
         #endif
-        #ifdef MBEDTLS_AES_ALT_NO_256
+        #if defined(MBEDTLS_AES_ALT_NO_256) && !defined(MBEDTLS_AES256_ALT_SW)
         if (j == 2)
         {
             continue;

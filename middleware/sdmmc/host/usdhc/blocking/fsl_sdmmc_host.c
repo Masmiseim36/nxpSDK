@@ -44,13 +44,25 @@ status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd)
 {
     USDHC_Type *base       = host->hostController.base;
     sd_detect_card_t *sdCD = (sd_detect_card_t *)cd;
-
-    if ((cd == NULL) || ((sdCD->type != kSD_DetectCardByHostDATA3) && (sdCD->type != kSD_DetectCardByHostCD)))
+    if (cd == NULL)
     {
         return kStatus_Fail;
     }
 
     host->cd = cd;
+
+    if (sdCD->type == kSD_DetectCardByHostDATA3)
+    {
+        USDHC_CardDetectByData3(base, true);
+    }
+    else if (sdCD->type == kSD_DetectCardByHostCD)
+    {
+        USDHC_CardDetectByData3(base, false);
+    }
+    else
+    {
+        assert(false);
+    }
 
     /* enable card detect interrupt */
     USDHC_EnableInterruptStatus(base, kUSDHC_CardInsertionFlag);
@@ -64,32 +76,18 @@ uint32_t SDMMCHOST_CardDetectStatus(sdmmchost_t *host)
     sd_detect_card_t *sdCD = (sd_detect_card_t *)(host->cd);
     uint32_t insertStatus  = kSD_Removed;
 
-    if (sdCD->type == kSD_DetectCardByHostDATA3)
+    if (sdCD->dat3PullFunc != NULL)
     {
-        USDHC_CardDetectByData3(host->hostController.base, true);
-        if (sdCD->dat3PullFunc != NULL)
-        {
-            sdCD->dat3PullFunc(kSD_DAT3PullDown);
-            SDMMC_OSADelay(1U);
-        }
-    }
-    else
-    {
-        USDHC_CardDetectByData3(host->hostController.base, false);
+        sdCD->dat3PullFunc(kSD_DAT3PullDown);
+        SDMMC_OSADelay(1U);
     }
 
     if ((USDHC_GetPresentStatusFlags(host->hostController.base) & (uint32_t)kUSDHC_CardInsertedFlag) != 0U)
     {
         insertStatus = kSD_Inserted;
-
-        if (sdCD->type == kSD_DetectCardByHostDATA3)
+        if (sdCD->dat3PullFunc != NULL)
         {
-            if (sdCD->dat3PullFunc != NULL)
-            {
-                sdCD->dat3PullFunc(kSD_DAT3PullUp);
-            }
-            /* disable the DAT3 card detec function */
-            USDHC_CardDetectByData3(host->hostController.base, false);
+            sdCD->dat3PullFunc(kSD_DAT3PullUp);
         }
     }
 

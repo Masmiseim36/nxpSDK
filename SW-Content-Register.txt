@@ -1,5 +1,5 @@
 Release Name: MCUXpresso Software Development Kit (SDK)
-Release Version: 2.9.0
+Release Version: 2.9.1
 Package License: LA_OPT_NXP_Software_License.txt - Additional Distribution License granted, license in Section 2.3 applies
 
 SDK_Peripheral_Driver      Name: SDK Peripheral Driver                       
@@ -1336,6 +1336,86 @@ naturedsp_hifi4            Name: naturedsp
                            Description: Digital Signal Processing for Xtensa 
                            HiFi Audio Engines                                
                            Location: middleware/dsp/naturedsp/hifi4          
+                           Origin: Cadence Design Systems (Proprietary)      
+
+dsp_audio_codec_aac_dec_fusName: dsp_audio_codec_aac_dec_fusionf1            
+ionf1                      Version: 3.8                                      
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           - Additional distribution license granted -       
+                           License in Section 2.3 applies                    
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: binary                                    
+                           Description: Tensilica HiFi AAC-LC, aacPlus       
+                           (HE-AAC) and aacPlus v2 Decoder                   
+                           Location:                                         
+                           middleware/dsp/codecs/aacplus_dec/fusionf1        
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_mp3_dec_fusName: dsp_audio_codec_mp3_dec_fusionf1            
+ionf1                      Version: 3.18                                     
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           - Additional distribution license granted -       
+                           License in Section 2.3 applies                    
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: binary                                    
+                           Description: Tensilica HiFi MP3 Decoder           
+                           Location: middleware/dsp/codecs/mp3_dec/fusionf1  
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_asrc_src_ppName: dsp_audio_codec_asrc_src_pp_fusionf1        
+_fusionf1                  Version: 1.1                                      
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           - Additional distribution license granted -       
+                           License in Section 2.3 applies                    
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: binary                                    
+                           Description: Tensilica HiFi Asynchronous and      
+                           Synchronous Sample Rate Converter (SRC)           
+                           Location:                                         
+                           middleware/dsp/codecs/asrc_src_pp/fusionf1        
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_opus_fusionName: dsp_audio_codec_opus_fusionf1               
+f1                         Version: 1.9                                      
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           - Additional distribution license granted -       
+                           License in Section 2.3 applies                    
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: binary                                    
+                           Description: Cadence Tensilica HiFi Opus Codec    
+                           Location: middleware/dsp/codecs/opus/fusionf1     
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_sbc_dec_fusName: dsp_audio_codec_sbc_dec_fusionf1            
+ionf1                      Version: 1.4                                      
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           - Additional distribution license granted -       
+                           License in Section 2.3 applies                    
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: binary                                    
+                           Description: Cadence Tensilica HiFi SBC Decoder   
+                           Location: middleware/dsp/codecs/sbc_dec/fusionf1  
+                           Origin: Cadence Design Systems                    
+
+dsp_audio_codec_sbc_enc_fusName: dsp_audio_codec_sbc_enc_fusionf1            
+ionf1                      Version: 1.5                                      
+                           Outgoing License: LA_OPT_NXP_Software_License.txt 
+                           - Additional distribution license granted -       
+                           License in Section 2.3 applies                    
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: binary                                    
+                           Description: Cadence Tensilica HiFi SBC Encoder   
+                           Location: middleware/dsp/codecs/sbc_enc/fusionf1  
+                           Origin: Cadence Design Systems                    
+
+naturedsp_fusionf1         Name: naturedsp                                   
+                           Version: 1.0.1                                    
+                           Outgoing License: LA_OPT_NXP_Software_License     
+                           License File: LA_OPT_NXP_Software_License.txt     
+                           Format: source code                               
+                           Description: Digital Signal Processing for Xtensa 
+                           Fusion Audio Engines                              
+                           Location: middleware/dsp/naturedsp/fusionf1       
                            Origin: Cadence Design Systems (Proprietary)      
 
 CRC32-GS                   Name: CRC32 code                                  

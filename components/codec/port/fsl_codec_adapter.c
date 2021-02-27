@@ -1,5 +1,5 @@
 /*
- * Copyright  2019 NXP
+ * Copyright  2019 - 2020 NXP
  * All rights reserved.
  *
  *
@@ -101,6 +101,7 @@ status_t HAL_CODEC_Init(void *handle, void *config)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
+            break;
     }
 
     return retVal;
@@ -174,6 +175,7 @@ status_t HAL_CODEC_Deinit(void *handle)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
+            break;
     }
 
     return retVal;
@@ -250,6 +252,7 @@ status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, u
 #endif
         default:
             retVal = kStatus_InvalidArgument;
+            break;
     }
 
     return retVal;
@@ -325,6 +328,7 @@ status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume
 #endif
         default:
             retVal = kStatus_InvalidArgument;
+            break;
     }
 
     return retVal;
@@ -400,6 +404,7 @@ status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
+            break;
     }
 
     return retVal;
@@ -475,6 +480,7 @@ status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
+            break;
     }
 
     return retVal;
@@ -550,6 +556,7 @@ status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
+            break;
     }
 
     return retVal;
@@ -628,6 +635,7 @@ status_t HAL_CODEC_SetRecordChannel(void *handle, uint32_t leftRecordChannel, ui
 #endif
         default:
             retVal = kStatus_InvalidArgument;
+            break;
     }
 
     return retVal;
@@ -703,6 +711,7 @@ status_t HAL_CODEC_SetPlay(void *handle, uint32_t playSource)
 #endif
         default:
             retVal = kStatus_InvalidArgument;
+            break;
     }
 
     return retVal;
@@ -778,6 +787,7 @@ status_t HAL_CODEC_ModuleControl(void *handle, uint32_t cmd, uint32_t data)
 
         default:
             retVal = kStatus_InvalidArgument;
+            break;
     }
 
     return retVal;

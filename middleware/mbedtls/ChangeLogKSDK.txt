@@ -3,6 +3,10 @@
  
 @section mbedtls mbedTLS for MCUXpresso SDK
   The current version of mbedTLS is based on mbedTLS 2.16.6 released 2020-04-14
+
+  - 2.16.6_rev2
+    - New features:
+      - Added support for SW computing AES-192/256 while using DCP driver.
   
   - 2.16.6_rev1
     - New features:

@@ -629,12 +629,12 @@ status_t WM8904_SetFLLConfig(wm8904_handle_t *handle, wm8904_fll_config_t *confi
         inputDivider = 3;
     }
 
-    if (referenceClock / ((uint32_t)1U << inputDivider) > 13500000U)
+    if (referenceClock / (1UL << inputDivider) > 13500000U)
     {
         return kStatus_InvalidArgument;
     }
 
-    referenceClock = referenceClock / ((uint32_t)1U << inputDivider);
+    referenceClock = referenceClock / (1UL << inputDivider);
 
     for (outputDiv = 4U; outputDiv <= 64U; outputDiv++)
     {

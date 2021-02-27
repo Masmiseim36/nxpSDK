@@ -1,0 +1,21 @@
+if(NOT DRIVER_DBI_FLEXIO_SMARTDMA_MIMXRT595S_cm33_INCLUDED)
+    
+    set(DRIVER_DBI_FLEXIO_SMARTDMA_MIMXRT595S_cm33_INCLUDED true CACHE BOOL "driver_dbi_flexio_smartdma component is included.")
+
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/fsl_dbi_flexio_smartdma.c
+    )
+
+
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/.
+    )
+
+
+    include(driver_dbi_MIMXRT595S_cm33)
+
+    include(driver_flexio_mculcd_MIMXRT595S_cm33)
+
+    include(driver_flexio_mculcd_smartdma_MIMXRT595S_cm33)
+
+endif()

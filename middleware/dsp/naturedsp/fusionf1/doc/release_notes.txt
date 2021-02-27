@@ -1,0 +1,23 @@
+---------------- Release v1.0.1 ----------------
+Library workspace structure is changed into a single library folder
+There is no source code changes from the previous version
+There is no documentation changes with respect to the previous version
+besides this file.
+
+---------------- Release v1.0.0 ----------------
+This is the first release of the NatureDSP Signal Library for Fusion F1.
+
+Xtensa Xplorer IDE and tools version:
+All testing and performance measurements have been using RF.2015.3
+  version of the Xtensa Xplorer and tools.
+
+Release includes functions for following categories for 32, 24, 16 bit fixed 
+and single precision floating point data:
+  - FIR filters and related functions
+  - FIR filters for decimation and interpolation
+  - IIR filters
+  - Vector/scalar mathematics
+  - Matrix operations (including quaternion to rotation matrix conversions)
+  - Matrix inversion
+  - FFT (real, complex FFTs with power of 2 sizes)
+  - Discrete Cosine Transform (DCT)

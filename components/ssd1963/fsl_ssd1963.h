@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,6 +18,9 @@
 
 /*
  * Change log:
+ *
+ *   1.1.2
+ *     - Fix MISRA 2012 issues.
  *
  *   1.1.1
  *     - Support RGB565/RGB888/BGR565/BGR888.
@@ -40,94 +43,94 @@
 
 /*! @brief Data width between host and SSD1963 controller, only supports 8 and 16. */
 #ifndef SSD1963_DATA_WITDH
-#define SSD1963_DATA_WITDH (16)
+#define SSD1963_DATA_WITDH (16U)
 #endif
 
 /*! @brief SSD1963 command. */
-#define SSD1963_NOP                      0x00
-#define SSD1963_SOFT_RESET               0x01
-#define SSD1963_GET_POWER_MODE           0x0A
-#define SSD1963_GET_ADDRESS_MODE         0x0B
-#define SSD1963_GET_DISPLAY_MODE         0x0D
-#define SSD1963_GET_TEAR_EFFECT_STATUS   0x0E
-#define SSD1963_ENTER_SLEEP_MODE         0x10
-#define SSD1963_EXIT_SLEEP_MODE          0x11
-#define SSD1963_ENTER_PARTIAL_MODE       0x12
-#define SSD1963_ENTER_NORMAL_MODE        0x13
-#define SSD1963_EXIT_INVERT_MODE         0x20
-#define SSD1963_ENTER_INVERT_MODE        0x21
-#define SSD1963_SET_GAMMA_CURVE          0x26
-#define SSD1963_SET_DISPLAY_OFF          0x28
-#define SSD1963_SET_DISPLAY_ON           0x29
-#define SSD1963_SET_COLUMN_ADDRESS       0x2A
-#define SSD1963_SET_PAGE_ADDRESS         0x2B
-#define SSD1963_WRITE_MEMORY_START       0x2C
-#define SSD1963_READ_MEMORY_START        0x2E
-#define SSD1963_SET_PARTIAL_AREA         0x30
-#define SSD1963_SET_SCROLL_AREA          0x33
-#define SSD1963_SET_TEAR_OFF             0x34
-#define SSD1963_SET_TEAR_ON              0x35
-#define SSD1963_SET_ADDRESS_MODE         0x36
-#define SSD1963_SET_SCROLL_START         0x37
-#define SSD1963_EXIT_IDLE_MODE           0x38
-#define SSD1963_ENTER_IDLE_MODE          0x39
-#define SSD1963_WRITE_MEMORY_CONTINUE    0x3C
-#define SSD1963_READ_MEMORY_CONTINUE     0x3E
-#define SSD1963_SET_TEAR_SCANLINE        0x44
-#define SSD1963_GET_SCANLINE             0x45
-#define SSD1963_READ_DDB                 0xA1
-#define SSD1963_SET_LCD_MODE             0xB0
-#define SSD1963_GET_LCD_MODE             0xB1
-#define SSD1963_SET_HORI_PERIOD          0xB4
-#define SSD1963_GET_HORI_PERIOD          0xB5
-#define SSD1963_SET_VERT_PERIOD          0xB6
-#define SSD1963_GET_VERT_PERIOD          0xB7
-#define SSD1963_SET_GPIO_CONF            0xB8
-#define SSD1963_GET_GPIO_CONF            0xB9
-#define SSD1963_SET_GPIO_VALUE           0xBA
-#define SSD1963_GET_GPIO_STATUS          0xBB
-#define SSD1963_SET_POST_PROC            0xBC
-#define SSD1963_GET_POST_PROC            0xBD
-#define SSD1963_SET_PWM_CONF             0xBE
-#define SSD1963_GET_PWM_CONF             0xBF
-#define SSD1963_GET_LCD_GEN0             0xC0
-#define SSD1963_SET_LCD_GEN0             0xC1
-#define SSD1963_GET_LCD_GEN1             0xC2
-#define SSD1963_SET_LCD_GEN1             0xC3
-#define SSD1963_GET_LCD_GEN2             0xC4
-#define SSD1963_SET_LCD_GEN2             0xC5
-#define SSD1963_GET_LCD_GEN3             0xC6
-#define SSD1963_SET_LCD_GEN3             0xC7
-#define SSD1963_SET_GPIO0_ROP            0xC8
-#define SSD1963_GET_GPIO0_ROP            0xC9
-#define SSD1963_SET_GPIO1_ROP            0xCA
-#define SSD1963_GET_GPIO1_ROP            0xCB
-#define SSD1963_SET_GPIO2_ROP            0xCC
-#define SSD1963_GET_GPIO2_ROP            0xCD
-#define SSD1963_SET_GPIO3_ROP            0xCE
-#define SSD1963_GET_GPIO3_ROP            0xCF
-#define SSD1963_SET_DBC_CONF             0xD0
-#define SSD1963_GET_DBC_CONF             0xD1
-#define SSD1963_SET_DBC_TH               0xD4
-#define SSD1963_GET_DBC_TH               0xD5
-#define SSD1963_SET_PLL                  0xE0
-#define SSD1963_SET_PLL_MN               0xE2
-#define SSD1963_GET_PLL_MN               0xE3
-#define SSD1963_GET_PLL_STATUS           0xE4
-#define SSD1963_SET_DEEP_SLEEP           0xE5
-#define SSD1963_SET_LSHIFT_FREQ          0xE6
-#define SSD1963_GET_LSHIFT_FREQ          0xE7
-#define SSD1963_SET_PIXEL_DATA_INTERFACE 0xF0
-#define SSD1963_GET_PIXEL_DATA_INTERFACE 0xF1
+#define SSD1963_NOP                      0x00U
+#define SSD1963_SOFT_RESET               0x01U
+#define SSD1963_GET_POWER_MODE           0x0AU
+#define SSD1963_GET_ADDRESS_MODE         0x0BU
+#define SSD1963_GET_DISPLAY_MODE         0x0DU
+#define SSD1963_GET_TEAR_EFFECT_STATUS   0x0EU
+#define SSD1963_ENTER_SLEEP_MODE         0x10U
+#define SSD1963_EXIT_SLEEP_MODE          0x11U
+#define SSD1963_ENTER_PARTIAL_MODE       0x12U
+#define SSD1963_ENTER_NORMAL_MODE        0x13U
+#define SSD1963_EXIT_INVERT_MODE         0x20U
+#define SSD1963_ENTER_INVERT_MODE        0x21U
+#define SSD1963_SET_GAMMA_CURVE          0x26U
+#define SSD1963_SET_DISPLAY_OFF          0x28U
+#define SSD1963_SET_DISPLAY_ON           0x29U
+#define SSD1963_SET_COLUMN_ADDRESS       0x2AU
+#define SSD1963_SET_PAGE_ADDRESS         0x2BU
+#define SSD1963_WRITE_MEMORY_START       0x2CU
+#define SSD1963_READ_MEMORY_START        0x2EU
+#define SSD1963_SET_PARTIAL_AREA         0x30U
+#define SSD1963_SET_SCROLL_AREA          0x33U
+#define SSD1963_SET_TEAR_OFF             0x34U
+#define SSD1963_SET_TEAR_ON              0x35U
+#define SSD1963_SET_ADDRESS_MODE         0x36U
+#define SSD1963_SET_SCROLL_START         0x37U
+#define SSD1963_EXIT_IDLE_MODE           0x38U
+#define SSD1963_ENTER_IDLE_MODE          0x39U
+#define SSD1963_WRITE_MEMORY_CONTINUE    0x3CU
+#define SSD1963_READ_MEMORY_CONTINUE     0x3EU
+#define SSD1963_SET_TEAR_SCANLINE        0x44U
+#define SSD1963_GET_SCANLINE             0x45U
+#define SSD1963_READ_DDB                 0xA1U
+#define SSD1963_SET_LCD_MODE             0xB0U
+#define SSD1963_GET_LCD_MODE             0xB1U
+#define SSD1963_SET_HORI_PERIOD          0xB4U
+#define SSD1963_GET_HORI_PERIOD          0xB5U
+#define SSD1963_SET_VERT_PERIOD          0xB6U
+#define SSD1963_GET_VERT_PERIOD          0xB7U
+#define SSD1963_SET_GPIO_CONF            0xB8U
+#define SSD1963_GET_GPIO_CONF            0xB9U
+#define SSD1963_SET_GPIO_VALUE           0xBAU
+#define SSD1963_GET_GPIO_STATUS          0xBBU
+#define SSD1963_SET_POST_PROC            0xBCU
+#define SSD1963_GET_POST_PROC            0xBDU
+#define SSD1963_SET_PWM_CONF             0xBEU
+#define SSD1963_GET_PWM_CONF             0xBFU
+#define SSD1963_GET_LCD_GEN0             0xC0U
+#define SSD1963_SET_LCD_GEN0             0xC1U
+#define SSD1963_GET_LCD_GEN1             0xC2U
+#define SSD1963_SET_LCD_GEN1             0xC3U
+#define SSD1963_GET_LCD_GEN2             0xC4U
+#define SSD1963_SET_LCD_GEN2             0xC5U
+#define SSD1963_GET_LCD_GEN3             0xC6U
+#define SSD1963_SET_LCD_GEN3             0xC7U
+#define SSD1963_SET_GPIO0_ROP            0xC8U
+#define SSD1963_GET_GPIO0_ROP            0xC9U
+#define SSD1963_SET_GPIO1_ROP            0xCAU
+#define SSD1963_GET_GPIO1_ROP            0xCBU
+#define SSD1963_SET_GPIO2_ROP            0xCCU
+#define SSD1963_GET_GPIO2_ROP            0xCDU
+#define SSD1963_SET_GPIO3_ROP            0xCEU
+#define SSD1963_GET_GPIO3_ROP            0xCFU
+#define SSD1963_SET_DBC_CONF             0xD0U
+#define SSD1963_GET_DBC_CONF             0xD1U
+#define SSD1963_SET_DBC_TH               0xD4U
+#define SSD1963_GET_DBC_TH               0xD5U
+#define SSD1963_SET_PLL                  0xE0U
+#define SSD1963_SET_PLL_MN               0xE2U
+#define SSD1963_GET_PLL_MN               0xE3U
+#define SSD1963_GET_PLL_STATUS           0xE4U
+#define SSD1963_SET_DEEP_SLEEP           0xE5U
+#define SSD1963_SET_LSHIFT_FREQ          0xE6U
+#define SSD1963_GET_LSHIFT_FREQ          0xE7U
+#define SSD1963_SET_PIXEL_DATA_INTERFACE 0xF0U
+#define SSD1963_GET_PIXEL_DATA_INTERFACE 0xF1U
 
-#define SSD1963_ADDR_MODE_FLIP_VERT           (1 << 0)
-#define SSD1963_ADDR_MODE_FLIP_HORZ           (1 << 1)
-#define SSD1963_ADDR_MODE_LATCH_RIGHT_TO_LEFT (1 << 2)
-#define SSD1963_ADDR_MODE_BGR                 (1 << 3)
-#define SSD1963_ADDR_MODE_REFRESH_BOTTOM_UP   (1 << 4)
-#define SSD1963_ADDR_MODE_PAG_COL_ADDR_ORDER  (1 << 5)
-#define SSD1963_ADDR_MODE_COL_ADDR_ORDER      (1 << 6)
-#define SSD1963_ADDR_MODE_PAGE_ADDR_ORDER     (1 << 7)
+#define SSD1963_ADDR_MODE_FLIP_VERT           (1U << 0)
+#define SSD1963_ADDR_MODE_FLIP_HORZ           (1U << 1)
+#define SSD1963_ADDR_MODE_LATCH_RIGHT_TO_LEFT (1U << 2)
+#define SSD1963_ADDR_MODE_BGR                 (1U << 3)
+#define SSD1963_ADDR_MODE_REFRESH_BOTTOM_UP   (1U << 4)
+#define SSD1963_ADDR_MODE_PAG_COL_ADDR_ORDER  (1U << 5)
+#define SSD1963_ADDR_MODE_COL_ADDR_ORDER      (1U << 6)
+#define SSD1963_ADDR_MODE_PAGE_ADDR_ORDER     (1U << 7)
 
 /*! @brief ssd1963 handle. */
 typedef struct _ssd1963_handle
@@ -272,14 +275,14 @@ void SSD1963_Deinit(ssd1963_handle_t *handle);
  *
  * @param handle SSD1963 handle structure.
  */
-void SSD1963_StartDisplay(ssd1963_handle_t *handle);
+status_t SSD1963_StartDisplay(ssd1963_handle_t *handle);
 
 /*!
  * @brief Set display off.
  *
  * @param handle SSD1963 handle structure.
  */
-void SSD1963_StopDisplay(ssd1963_handle_t *handle);
+status_t SSD1963_StopDisplay(ssd1963_handle_t *handle);
 
 /*!
  * @brief Set display flip mode.
@@ -287,7 +290,7 @@ void SSD1963_StopDisplay(ssd1963_handle_t *handle);
  * @param handle SSD1963 handle structure.
  * @param mode The flip mode.
  */
-void SSD1963_SetFlipMode(ssd1963_handle_t *handle, ssd1963_flip_mode_t mode);
+status_t SSD1963_SetFlipMode(ssd1963_handle_t *handle, ssd1963_flip_mode_t mode);
 
 /*!
  * @brief Set display orientation mode.
@@ -295,7 +298,7 @@ void SSD1963_SetFlipMode(ssd1963_handle_t *handle, ssd1963_flip_mode_t mode);
  * @param handle SSD1963 handle structure.
  * @param mode The orientation mode.
  */
-void SSD1963_SetOrientationMode(ssd1963_handle_t *handle, ssd1963_orientation_mode_t mode);
+status_t SSD1963_SetOrientationMode(ssd1963_handle_t *handle, ssd1963_orientation_mode_t mode);
 
 /*!
  * @brief Set the backlight value.
@@ -303,7 +306,7 @@ void SSD1963_SetOrientationMode(ssd1963_handle_t *handle, ssd1963_orientation_mo
  * @param handle SSD1963 handle structure.
  * @param value Backlight value, must be in the range of 0 to 255.
  */
-void SSD1963_SetBackLight(ssd1963_handle_t *handle, uint8_t value);
+status_t SSD1963_SetBackLight(ssd1963_handle_t *handle, uint8_t value);
 
 /*!
  * @brief Select area to read or write.
@@ -314,7 +317,7 @@ void SSD1963_SetBackLight(ssd1963_handle_t *handle, uint8_t value);
  * @param endX End point X coordination.
  * @param endY End point Y coordination.
  */
-void SSD1963_SelectArea(ssd1963_handle_t *handle, uint16_t startX, uint16_t startY, uint16_t endX, uint16_t endY);
+status_t SSD1963_SelectArea(ssd1963_handle_t *handle, uint16_t startX, uint16_t startY, uint16_t endX, uint16_t endY);
 
 #if (16 == SSD1963_DATA_WITDH)
 /*!
@@ -332,7 +335,7 @@ void SSD1963_SelectArea(ssd1963_handle_t *handle, uint16_t startX, uint16_t star
  * @deprecated Use @ref SSD1963_ReadMemory instead, note the @p length of this function
  * is pixel count, and the @p length of @ref SSD1963_ReadMemory is byte count.
  */
-void SSD1963_ReadPixels(ssd1963_handle_t *handle, uint16_t *pixels, uint32_t length);
+status_t SSD1963_ReadPixels(ssd1963_handle_t *handle, uint16_t *pixels, uint32_t length);
 
 /*!
  * @brief Write pixel data to the selected area.
@@ -350,7 +353,7 @@ void SSD1963_ReadPixels(ssd1963_handle_t *handle, uint16_t *pixels, uint32_t len
  * @deprecated Use @ref SSD1963_WriteMemory instead, note the @p length of this function
  * is pixel count, and the @p length of @ref SSD1963_WriteMemory is byte count.
  */
-void SSD1963_WritePixels(ssd1963_handle_t *handle, const uint16_t *pixels, uint32_t length);
+status_t SSD1963_WritePixels(ssd1963_handle_t *handle, const uint16_t *pixels, uint32_t length);
 #endif
 
 /*!
@@ -364,7 +367,7 @@ void SSD1963_WritePixels(ssd1963_handle_t *handle, const uint16_t *pixels, uint3
  * @param data Pointer to the memory to save the read pixels.
  * @param length Length of the data to read (in byte).
  */
-void SSD1963_ReadMemory(ssd1963_handle_t *handle, uint8_t *data, uint32_t length);
+status_t SSD1963_ReadMemory(ssd1963_handle_t *handle, uint8_t *data, uint32_t length);
 
 /*!
  * @brief Write pixel data to the selected area.
@@ -378,7 +381,7 @@ void SSD1963_ReadMemory(ssd1963_handle_t *handle, uint8_t *data, uint32_t length
  * @param data Pointer to the pixels to write.
  * @param length Length of the data to write (in byte).
  */
-void SSD1963_WriteMemory(ssd1963_handle_t *handle, const uint8_t *data, uint32_t length);
+status_t SSD1963_WriteMemory(ssd1963_handle_t *handle, const uint8_t *data, uint32_t length);
 
 /*!
  * @brief Enable or disable tear effect signal.
@@ -386,7 +389,7 @@ void SSD1963_WriteMemory(ssd1963_handle_t *handle, const uint8_t *data, uint32_t
  * @param handle SSD1963 handle structure.
  * @param enable Pass in true to enable, false to disable.
  */
-void SSD1963_EnableTearEffect(ssd1963_handle_t *handle, bool enable);
+status_t SSD1963_EnableTearEffect(ssd1963_handle_t *handle, bool enable);
 
 /*!
  * @brief Set the pixel format.
@@ -394,7 +397,7 @@ void SSD1963_EnableTearEffect(ssd1963_handle_t *handle, bool enable);
  * @param handle SSD1963 handle structure.
  * @param pixelFormat Pixel format to set.
  */
-void SSD1963_SetPixelFormat(ssd1963_handle_t *handle, ssd1963_pixel_interface_t pixelFormat);
+status_t SSD1963_SetPixelFormat(ssd1963_handle_t *handle, ssd1963_pixel_interface_t pixelFormat);
 
 #if defined(__cplusplus)
 }

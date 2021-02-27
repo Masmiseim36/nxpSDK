@@ -480,61 +480,6 @@ status_t mem_init(void)
 }
 
 // See memory.h for documentation on this function.
-status_t mem_config(uint32_t memoryId, void *config)
-{
-    status_t status = kStatus_InvalidArgument;
-    bool isMemoryInterfaceFound = false;
-    switch (GROUPID(memoryId))
-    {
-        case kGroup_Internal:
-        {
-            const memory_map_entry_t *map = &g_bootloaderContext.memoryMap[0];
-            while (map->memoryInterface != NULL)
-            {
-                if (map->memoryId == memoryId)
-                {
-                    isMemoryInterfaceFound = true;
-                    break;
-                }
-                ++map;
-            }
-            if (isMemoryInterfaceFound)
-            {
-                if (map->memoryInterface->config != NULL)
-                {
-                    status = map->memoryInterface->config(config);
-                }
-            }
-        }
-        break;
-#if BL_FEATURE_EXPAND_MEMORY
-        case kGroup_External:
-        {
-            external_memory_map_entry_t *extMap =
-                (external_memory_map_entry_t *)&g_bootloaderContext.externalMemoryMap[0];
-            while (extMap->memoryInterface != NULL)
-            {
-                if (extMap->memoryId == memoryId)
-                {
-                    isMemoryInterfaceFound = true;
-                    break;
-                }
-                ++extMap;
-            }
-
-            if (isMemoryInterfaceFound)
-            {
-                status = extMap->memoryInterface->config(config);
-            }
-        }
-        break;
-#endif // #if BL_FEATURE_EXPAND_MEMORY
-    }
-
-    return status;
-}
-
-// See memory.h for documentation on this function.
 bool mem_is_erased(uint32_t address, uint32_t length)
 {
     const uint8_t *start = (const uint8_t *)address;

@@ -21,7 +21,9 @@
  ******************************************************************************/
 /*! @brief Enable or disable serial manager non-blocking mode (1 - enable, 0 - disable) */
 #ifdef DEBUG_CONSOLE_TRANSFER_NON_BLOCKING
-#ifndef SERIAL_MANAGER_NON_BLOCKING_MODE
+#if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE == 0U))
+#error When SERIAL_MANAGER_NON_BLOCKING_MODE=0, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING can not be set.
+#else
 #define SERIAL_MANAGER_NON_BLOCKING_MODE (1U)
 #endif
 #else
@@ -196,9 +198,50 @@
 #error SERIAL_PORT_TYPE_UART, SERIAL_PORT_TYPE_USBCDC, SERIAL_PORT_TYPE_SWO and SERIAL_PORT_TYPE_VIRTUAL should not be cleared at same time.
 #endif
 
+#if defined(OSA_USED)
+#include "fsl_component_common_task.h"
+#endif
+/*! @brief Macro to determine whether use common task. */
+#ifndef SERIAL_MANAGER_USE_COMMON_TASK
+#define SERIAL_MANAGER_USE_COMMON_TASK (0U)
+#if (defined(COMMON_TASK_ENABLE) && (COMMON_TASK_ENABLE == 0U))
+#undef SERIAL_MANAGER_USE_COMMON_TASK
+#define SERIAL_MANAGER_USE_COMMON_TASK (0U)
+#endif
+#endif
+
+#if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
+#if (defined(OSA_USED) && !(defined(SERIAL_MANAGER_USE_COMMON_TASK) && (SERIAL_MANAGER_USE_COMMON_TASK > 0U)))
+#include "fsl_os_abstraction.h"
+#endif
+#endif
+
+#if defined(OSA_USED)
+#include "fsl_component_common_task.h"
+#endif
+/*! @brief Macro to determine whether use common task. */
+#ifndef SERIAL_MANAGER_USE_COMMON_TASK
+#define SERIAL_MANAGER_USE_COMMON_TASK (0U)
+#if (defined(COMMON_TASK_ENABLE) && (COMMON_TASK_ENABLE == 0U))
+#undef SERIAL_MANAGER_USE_COMMON_TASK
+#define SERIAL_MANAGER_USE_COMMON_TASK (0U)
+#endif
+#endif
+
+#if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
+#if (defined(OSA_USED) && !(defined(SERIAL_MANAGER_USE_COMMON_TASK) && (SERIAL_MANAGER_USE_COMMON_TASK > 0U)))
+#include "fsl_os_abstraction.h"
+#endif
+#endif
+
 /*! @brief Definition of serial manager handle size. */
 #if (defined(SERIAL_MANAGER_NON_BLOCKING_MODE) && (SERIAL_MANAGER_NON_BLOCKING_MODE > 0U))
-#define SERIAL_MANAGER_HANDLE_SIZE       (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 124U)
+#if (defined(OSA_USED) && !(defined(SERIAL_MANAGER_USE_COMMON_TASK) && (SERIAL_MANAGER_USE_COMMON_TASK > 0U)))
+#define SERIAL_MANAGER_HANDLE_SIZE \
+    (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 124U + OSA_TASK_HANDLE_SIZE + OSA_EVENT_HANDLE_SIZE)
+#else /*defined(OSA_USED)*/
+#define SERIAL_MANAGER_HANDLE_SIZE (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 124U)
+#endif /*defined(OSA_USED)*/
 #define SERIAL_MANAGER_BLOCK_HANDLE_SIZE (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 16U)
 #else
 #define SERIAL_MANAGER_HANDLE_SIZE       (SERIAL_MANAGER_HANDLE_SIZE_TEMP + 12U)
@@ -262,17 +305,6 @@
     uint32_t name[((SERIAL_MANAGER_READ_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]
 #define SERIAL_MANAGER_READ_BLOCK_HANDLE_DEFINE(name) \
     uint32_t name[((SERIAL_MANAGER_READ_BLOCK_HANDLE_SIZE + sizeof(uint32_t) - 1U) / sizeof(uint32_t))]
-#if defined(OSA_USED)
-#include "fsl_component_common_task.h"
-#endif
-/*! @brief Macro to determine whether use common task. */
-#ifndef SERIAL_MANAGER_USE_COMMON_TASK
-#define SERIAL_MANAGER_USE_COMMON_TASK (0U)
-#if (defined(COMMON_TASK_ENABLE) && (COMMON_TASK_ENABLE == 0U))
-#undef SERIAL_MANAGER_USE_COMMON_TASK
-#define SERIAL_MANAGER_USE_COMMON_TASK (0U)
-#endif
-#endif
 
 /*! @brief Macro to set serial manager task priority. */
 #ifndef SERIAL_MANAGER_TASK_PRIORITY

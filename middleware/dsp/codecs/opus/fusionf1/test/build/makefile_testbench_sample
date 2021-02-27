@@ -1,0 +1,149 @@
+#
+# Copyright (c) 2014-2020 Cadence Design Systems, Inc.
+# 
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+# CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+# TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+.PHONY: all clean opus
+
+ROOTDIR = ../..
+
+# Tools settings.
+ifeq "$(CPU)" "gcc"
+	CC       = g++
+	AR       = ar
+	OBJCOPY  = objcopy
+	RM_R     = rm -rf
+	NOSTRIP  = 0
+    ISS      =
+else
+	CC       = xt-xcc
+	AR       = xt-ar $(XTCORE)
+	OBJCOPY  = xt-objcopy $(XTCORE)
+	RM_R     = rm -rf
+    ISS      = xt-run --turbo
+endif
+
+
+ifeq "$(OSNAME)" "Linux"
+	LIBDIR = ../lib
+	MKPATH = mkdir -p
+	CP     = cp -f
+else ifeq "$(OSNAME)" "Darwin"
+	LIBDIR = ../lib
+	MKPATH = mkdir -p
+	CP     = cp -f
+else
+	LIBDIR = ..\lib
+	MKPATH = mkdir
+	CP     = xcopy 
+endif
+
+
+ifeq ($(DEBUG),1)
+  OPT_O2 = -O0 -g
+else
+  OPT_O2 = -O2
+endif
+
+
+ifeq "$(CPU)" "gcc"
+  CFLAGS  = -m32
+  LDFLAGS = -m32
+else
+  CFLAGS  = -Wall -Werror -mlongcalls
+  LDFLAGS = -lm
+endif
+
+# OGG Parser support
+CFLAGS += -DENABLE_OGG_SUPPORT
+
+# Include directory paths added.
+CFLAGS += $(EXTRA_CFLAGS)
+CFLAGS  += -DHAVE_CONFIG_H -DDISABLE_FLOAT_API
+CFLAGS += -I$(ROOTDIR)/include -I$(ROOTDIR)/include/opus_codec -I$(ROOTDIR)/test/include
+
+ifneq ($(MEASURE_STACK),1)
+  LDFLAGS += $(EXTRA_LDFLAGS)
+else
+  LDFLAGS += -Wl,-u -Wl,malloc -lferret $(EXTRA_LDFLAGS)
+endif
+
+
+# Variable definitions
+ifneq "$(CPU)" "gcc"
+  LIB_NAME = xa_opus_codec.a
+  DEC_BIN_NAME = xa_opus_dec_test
+  ENC_BIN_NAME = xa_opus_enc_test
+else
+  LIB_NAME = xgcc_opus_codec.a
+  DEC_BIN_NAME = xgcc_opus_dec_test
+  ENC_BIN_NAME = xgcc_opus_enc_test
+endif
+
+SRCDIR = $(ROOTDIR)/test/src
+OBJDIRDEC = objsDec
+OBJDIRENC = objsEnc
+LIBDIR = $(ROOTDIR)/lib
+
+# List of objs to be generated.
+ENCODER_O = xa_opus_encoder_sample_testbench.o xa_opus_codec_error_handler.o xa_common_error_handler.o
+DECODER_O = xa_opus_decoder_sample_testbench.o xa_opus_codec_error_handler.o xa_common_error_handler.o xa_ogg_lib_error_handler.o opus_header.o
+
+ENCODER_OBJS = $(addprefix $(OBJDIRENC)/,$(ENCODER_O))
+DECODER_OBJS = $(addprefix $(OBJDIRDEC)/,$(DECODER_O))
+LIBS	     = $(addprefix $(LIBDIR)/,$(LIB_NAME))
+
+# Rules
+opus:all
+xa_opus_codec_test:all
+
+# Rule for creating testbench app binaries.
+all:       $(OBJDIRDEC) $(OBJDIRENC) $(ENC_BIN_NAME) $(DEC_BIN_NAME)
+opus_dec:  $(OBJDIRDEC) $(DEC_BIN_NAME)
+opus_enc:  $(OBJDIRENC) $(ENC_BIN_NAME)
+
+# Create the objs directory if not present.
+$(OBJDIRDEC):
+	-$(MKPATH) $@
+	
+$(OBJDIRENC):
+	-$(MKPATH) $@	
+
+# Rules for creating encoder/decoder obj files.
+$(ENCODER_OBJS): $(OBJDIRENC)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(OPT_O2) $(CFLAGS) -o $@ $<
+
+$(DECODER_OBJS): $(OBJDIRDEC)/%.o: $(SRCDIR)/%.c
+	$(CC) -c $(OPT_O2) $(CFLAGS) -o $@ $<
+
+$(ENC_BIN_NAME): $(ENCODER_OBJS) $(LIBS)
+	$(CC) -o $(ENC_BIN_NAME) $(ENCODER_OBJS) $(LIBS) $(LDFLAGS) 
+
+$(DEC_BIN_NAME): $(DECODER_OBJS) $(LIBS)	
+	$(CC) -o $(DEC_BIN_NAME) $(DECODER_OBJS) $(LIBS) $(LDFLAGS) 
+
+run:
+	$(ISS) ./$(DEC_BIN_NAME)
+	$(ISS) ./$(ENC_BIN_NAME)
+    
+clean:
+	$(RM) $(ENC_BIN_NAME) $(DEC_BIN_NAME)
+	-$(RM_R) $(OBJDIRENC) $(OBJDIRDEC)

@@ -2116,277 +2116,277 @@
     <group>
       <name>GeneratedCode</name>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Cutter.c</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Effects.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/Application.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Effects.c</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Resources.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Resources.c</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Cutter.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/Core.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Views.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../GeneratedCode/Graphics.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsRectangle.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyPressHandler.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterSmallDigitFont.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreSimpleTouchHandler.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Resources.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterSpeedDialog.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperFeed.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsImage.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterCutter.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/ewlocale.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutQuadContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterSpeedButton.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Views.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterSpeedWindow.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Core.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterThumb.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterMediumDigitFont.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterCancelButton.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffectTimerClass.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterBatchDialog.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreView.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterArrows.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterFeedDialog.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreTaskQueue.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterBatchWindow.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Cutter.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsTimingList.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperFormat.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterButtonBig.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterDeviceClass.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperCut.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterFeedButton.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterFormatWindow.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsRectEffect.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsInt32Effect.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffect.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterDescrFont.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterMainButton.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperBatch.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsText.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterFeedWindow.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreRoot.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsBorder.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterStatusBar.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreOutline.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreModalContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterVertSlider.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Application.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterHorzSlider.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterCaptionFont.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterBarGraph.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ApplicationApplication.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterRemainingWindow.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterButton.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterBarRaster.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterButtonFont.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Views.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreQuadView.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreDragEvent.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterMediumDigitFont.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorGrabEvent.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_ApplicationApplication.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsCanvas.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterVertSlider.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterMainButtonFont.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterThumb.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Effects.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsText.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Graphics.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterMainButton.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyEvent.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterCutter.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreTime.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorHit.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterLargeDigitFont.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperStripe.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffect.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_ResourcesFont.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Resources.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperStripe.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterBarGraph.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterStatusBar.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterHorzSlider.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CutterStatusIcons.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsRectangle.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterRemainingWindow.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreTask.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperSpeed.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreDialogContext.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreTaskQueue.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreTimer.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesBitmap.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreGroup.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterWindow.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreOutline.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CutterFormatDialog.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterMainButtonFont.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Core.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterBarRaster.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreRoot.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterButtonBig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsBorder.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutContext.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterFeedWindow.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterDeviceClass.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffectTimerClass.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterBatchWindow.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreModalContext.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsTimingList.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CutterPaper.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsRectEffect.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterCancelButton.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperFormat.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperBatch.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterFeedDialog.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperSpeed.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreResource.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorGrabEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesBitmap.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreTime.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterButtonFont.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Cutter.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorHit.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Application.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterFormatWindow.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterDescrFont.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterSpeedButton.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Effects.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterSpeedDialog.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterWindow.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreRectView.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterSpeedWindow.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterArrows.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterSmallDigitFont.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsInt32Effect.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterCaptionFont.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterFeedButton.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterFormatDialog.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsImage.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperFeed.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/ewlocale.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterLargeDigitFont.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreDialogContext.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterButton.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsCanvas.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreDragEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Graphics.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Views.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyPressHandler.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterPaperCut.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreView.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CutterBatchDialog.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreSimpleTouchHandler.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutQuadContext.h</name>
       </file>
     </group>
     <group>
@@ -2394,10 +2394,10 @@
       <group>
         <name>RT</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</name>
@@ -2409,7 +2409,7 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</name>
@@ -2418,10 +2418,13 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</name>
@@ -2430,16 +2433,13 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</name>
         </file>
       </group>
     </group>
@@ -2456,22 +2456,13 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextfnt.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</name>
@@ -2480,10 +2471,19 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextpxl_RGB565.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</name>
           </file>
         </group>
         <group>
@@ -2492,10 +2492,10 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewrte.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewrte.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.h</name>
           </file>
         </group>
       </group>

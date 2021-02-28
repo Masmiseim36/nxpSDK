@@ -40,7 +40,7 @@ UINT  fx_media_format_oem_name_set(UCHAR new_oem_name[8]);
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _fx_media_format_oem_name_set                       PORTABLE C      */ 
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -72,6 +72,8 @@ UINT  fx_media_format_oem_name_set(UCHAR new_oem_name[8]);
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  fx_media_format_oem_name_set(UCHAR new_oem_name[8])

@@ -24,7 +24,7 @@
 
 #include "nx_secure_tls.h"
 
-#ifdef NX_SECURE_TLS_ENABLE_SECURE_RENEGOTIATION
+#ifndef NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION
 static UINT _nx_secure_tls_send_serverhello_sec_reneg_extension(NX_SECURE_TLS_SESSION *tls_session,
                                                                 UCHAR *packet_buffer,
                                                                 ULONG *packet_offset,
@@ -56,7 +56,7 @@ static UINT _nx_secure_tls_send_serverhello_psk_extension(NX_SECURE_TLS_SESSION 
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_send_serverhello_extensions          PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -93,6 +93,9 @@ static UINT _nx_secure_tls_send_serverhello_psk_extension(NX_SECURE_TLS_SESSION 
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
+/*  09-30-2020     Timothy Stapko           Modified comment(s),          */
+/*                                            fixed renegotiation bug,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_tls_send_serverhello_extensions(NX_SECURE_TLS_SESSION *tls_session,
@@ -101,11 +104,15 @@ UINT _nx_secure_tls_send_serverhello_extensions(NX_SECURE_TLS_SESSION *tls_sessi
 {
 ULONG  length = *packet_offset;
 UCHAR *extension_offset;
-#ifdef NX_SECURE_TLS_ENABLE_SECURE_RENEGOTIATION
+#if !defined(NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION) || (NX_SECURE_TLS_TLS_1_3_ENABLED)
 USHORT extension_length = 0;
-#endif /* NX_SECURE_TLS_ENABLE_SECURE_RENEGOTIATION */
+#endif /* !defined(NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION) || (NX_SECURE_TLS_TLS_1_3_ENABLED)  */
 USHORT total_extensions_length;
 UINT   status = NX_SUCCESS;
+
+#if defined(NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION) && (!NX_SECURE_TLS_TLS_1_3_ENABLED)
+    NX_PARAMETER_NOT_USED(tls_session);
+#endif /* defined(NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION) && (!NX_SECURE_TLS_TLS_1_3_ENABLED) */
 
     if (available_size < (*packet_offset + 2u))
     {
@@ -122,7 +129,7 @@ UINT   status = NX_SUCCESS;
     length += 2;
     total_extensions_length = 0;
 
-#ifdef NX_SECURE_TLS_ENABLE_SECURE_RENEGOTIATION
+#ifndef NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION
 #if (NX_SECURE_TLS_TLS_1_3_ENABLED)
     /* Renegotiation is deprecated in TLS 1.3 so don't send extension. */
     if(!tls_session->nx_secure_tls_1_3)
@@ -138,7 +145,7 @@ UINT   status = NX_SUCCESS;
             return(status);
         }
     }
-#endif /* NX_SECURE_TLS_ENABLE_SECURE_RENEGOTIATION */
+#endif /* NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION */
 
 
 #if (NX_SECURE_TLS_TLS_1_3_ENABLED)
@@ -212,7 +219,7 @@ UINT   status = NX_SUCCESS;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_send_serverhello_sec_reneg_extension PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -249,12 +256,14 @@ UINT   status = NX_SUCCESS;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
-/*  06-30-2020     Timothy Stapko           Modified comment(s), improved */
+/*  09-30-2020     Timothy Stapko           Modified comment(s), improved */
 /*                                            buffer length verification, */
-/*                                            resulting in version 6.0.1  */
+/*                                            verified memcpy use cases,  */
+/*                                            fixed renegotiation bug,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
-#ifdef NX_SECURE_TLS_ENABLE_SECURE_RENEGOTIATION
+#ifndef NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION
 static UINT _nx_secure_tls_send_serverhello_sec_reneg_extension(NX_SECURE_TLS_SESSION *tls_session,
                                                                 UCHAR *packet_buffer,
                                                                 ULONG *packet_offset,
@@ -354,9 +363,9 @@ UINT   data_length;
         offset++;
 
         /* Copy the verify data into the packet. */
-        NX_SECURE_MEMCPY(&packet_buffer[offset], tls_session -> nx_secure_tls_remote_verify_data, NX_SECURE_TLS_FINISHED_HASH_SIZE); 
+        NX_SECURE_MEMCPY(&packet_buffer[offset], tls_session -> nx_secure_tls_remote_verify_data, NX_SECURE_TLS_FINISHED_HASH_SIZE); /* Use case of memcpy is verified. */
         offset += NX_SECURE_TLS_FINISHED_HASH_SIZE;
-        NX_SECURE_MEMCPY(&packet_buffer[offset], tls_session -> nx_secure_tls_local_verify_data, NX_SECURE_TLS_FINISHED_HASH_SIZE); 
+        NX_SECURE_MEMCPY(&packet_buffer[offset], tls_session -> nx_secure_tls_local_verify_data, NX_SECURE_TLS_FINISHED_HASH_SIZE); /* Use case of memcpy is verified. */
         offset += NX_SECURE_TLS_FINISHED_HASH_SIZE;
     }
 
@@ -378,7 +387,7 @@ UINT   data_length;
 /*                                                                        */
 /*    _nx_secure_tls_send_clienthello_supported_versions_extension        */
 /*                                                        PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -414,6 +423,8 @@ UINT   data_length;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
+/*  09-30-2020     Timothy Stapko           Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if (NX_SECURE_TLS_TLS_1_3_ENABLED)
@@ -479,7 +490,7 @@ UINT   data_length;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_send_serverhello_key_share_extension PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -515,6 +526,9 @@ UINT   data_length;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
+/*  09-30-2020     Timothy Stapko           Modified comment(s),          */
+/*                                            verified memcpy use cases,  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if (NX_SECURE_TLS_TLS_1_3_ENABLED)
@@ -684,7 +698,7 @@ USHORT named_curve;
     offset += 2;
 
     /* Set the key data from our already-generated ECC keys. */
-    NX_SECURE_MEMCPY(&packet_buffer[offset], &ecdhe_data->nx_secure_tls_ecdhe_public_key[0], key_length); 
+    NX_SECURE_MEMCPY(&packet_buffer[offset], &ecdhe_data->nx_secure_tls_ecdhe_public_key[0], key_length); /* Use case of memcpy is verified. */
     offset += (key_length);
 
     /* Get the length of the entire extension. */
@@ -710,7 +724,7 @@ USHORT named_curve;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_send_serverhello_psk_extension       PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -746,6 +760,8 @@ USHORT named_curve;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
+/*  09-30-2020     Timothy Stapko           Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 

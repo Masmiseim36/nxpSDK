@@ -38,7 +38,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_media_flush                                     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -78,6 +78,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            added conditional to        */
+/*                                            disable cache,              */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_media_flush(FX_MEDIA  *media_ptr)
@@ -221,6 +225,7 @@ FX_INT_SAVE_AREA
     UCHAR *buffer_ptr;
     ULONG  signature;
 
+#ifndef FX_DISABLE_CACHE
 
         /* Setup a pointer to the first cached entry's buffer.  */
         buffer_ptr =  (media_ptr -> fx_media_sector_cache_list_ptr) -> fx_cached_sector_memory_buffer;
@@ -228,6 +233,9 @@ FX_INT_SAVE_AREA
         /* Invalidate this cache entry.  */
         (media_ptr -> fx_media_sector_cache_list_ptr) -> fx_cached_sector =  (~(ULONG64)0);
         (media_ptr -> fx_media_sector_cache_list_ptr) -> fx_cached_sector_valid =  FX_FALSE;
+#else
+        buffer_ptr =  media_ptr -> fx_media_memory_buffer;
+#endif /* FX_DISABLE_CACHE */
 
         /* Read the FAT32 additional information sector from the device.  */
         media_ptr -> fx_media_driver_request =          FX_DRIVER_READ;

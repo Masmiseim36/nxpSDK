@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2021 NXP
+ * Copyright 2018-2020 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -111,20 +111,6 @@ typedef unsigned short FMSTR_PIPE_SIZE; /* pipe buffer size type (unsigned, at l
 
 /* pointer to pipe event handler */
 typedef void (*FMSTR_PPIPEFUNC)(FMSTR_HPIPE pipeHandle);
-
-/* PDBDM buffer type, it is in a public header as user may want to define a custom buffer instance
-  (when FMSTR_PDBDM_USER_BUFFER is defined) */
-typedef struct
-{
-    FMSTR_U32   ctxStart;                   /* Border code of Packet driven BDM communication buffer */
-    FMSTR_U8    bdmState;                   /* State of the Packet driven BDM communication */
-    FMSTR_U8    pcktSize;                   /* Size of current buffer. */
-    FMSTR_U8    padding0;                   /* Padding to align buffer by 4. */
-    FMSTR_U8    cmdStatus;                  /* Command status byte */
-    FMSTR_BCHR  commBuffer[FMSTR_COMM_BUFFER_SIZE]; /*FreeMASTER Packet driven BDM communication buffer (in/out) plus the STS */
-    FMSTR_U32   reservedForCrc;             /* Reserved to store additional checking informations in communication in case that full length of buffer is used. */
-    FMSTR_U32   ctxEnd;                     /* Border code of Packet driven BDM communication buffer */
-} FMSTR_PDBDM_COMBUFF;
 
 #ifdef __cplusplus
 }

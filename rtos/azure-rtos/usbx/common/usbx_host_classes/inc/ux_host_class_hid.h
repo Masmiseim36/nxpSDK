@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */ 
 /*                                                                        */ 
 /*    ux_host_class_hid.h                                 PORTABLE C      */ 
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -41,6 +41,12 @@
 /*    DATE              NAME                      DESCRIPTION             */ 
 /*                                                                        */ 
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+/*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            used UX prefix to refer to  */
+/*                                            TX symbols instead of using */
+/*                                            them directly, fixed struct */
+/*                                            field definition issues,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -847,7 +853,7 @@ typedef struct UX_HOST_CLASS_HID_FIELD_STRUCT
     ULONG           ux_host_class_hid_field_number_usage;
     ULONG           *ux_host_class_hid_field_values;
     ULONG           ux_host_class_hid_field_number_values;
-    struct UX_HOST_CLASS_HID_REPORT 
+    struct UX_HOST_CLASS_HID_REPORT_STRUCT 
                     *ux_host_class_hid_field_report;
     struct UX_HOST_CLASS_HID_FIELD_STRUCT 
                     *ux_host_class_hid_field_next_field;
@@ -932,7 +938,7 @@ typedef struct UX_HOST_CLASS_HID_STRUCT
                     ux_host_class_hid_parser;
     struct UX_HOST_CLASS_HID_CLIENT_STRUCT       
                     *ux_host_class_hid_client;
-    TX_SEMAPHORE    ux_host_class_hid_semaphore;
+    UX_SEMAPHORE    ux_host_class_hid_semaphore;
 } UX_HOST_CLASS_HID;
 
 

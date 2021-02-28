@@ -405,9 +405,6 @@ static usb_status_t USB_HostProcessCallback(usb_host_device_instance_t *deviceIn
     usb_host_instance_t *hostInstance = (usb_host_instance_t *)deviceInstance->hostHandle;
     void *temp;
     usb_host_device_enumeration_status_t state;
-#if (defined(USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
-    usb_host_hub_instance_t *hubInstance4Device = NULL;
-#endif
 
     state = (usb_host_device_enumeration_status_t)deviceInstance->state;
     switch (state)
@@ -495,22 +492,8 @@ static usb_status_t USB_HostProcessCallback(usb_host_device_instance_t *deviceIn
         case kStatus_DEV_GetCfg: /* process get configuration result */
             if (dataLength != deviceInstance->configurationLen)
             {
-#if (defined(USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
-                usb_echo("Host can only provide a maximum of 500mA current\r\n");
-#endif
                 return kStatus_USB_Error;
             }
-
-#if (defined(USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST))
-            hubInstance4Device = USB_HostHubGetHubDeviceHandle(hostInstance, deviceInstance->hubNumber);
-            if ((!(((usb_descriptor_configuration_t *)deviceInstance->configurationDesc)->bmAttributes & USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_MASK)) &&
-                (((usb_descriptor_configuration_t *)deviceInstance->configurationDesc)->bMaxPower > 50) && (hubInstance4Device != NULL) && 
-                  (!(((usb_descriptor_configuration_t *)((usb_host_device_instance_t *)hubInstance4Device->deviceHandle)->configurationDesc)->bmAttributes & USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_MASK)))
-            {
-                usb_echo("The device power exceeded\r\n");
-                return kStatus_USB_Error;
-            }
-#endif
             temp = (void *)deviceInstance->configurationDesc;
             if (((usb_descriptor_configuration_t *)temp)->bMaxPower > USB_HOST_CONFIG_MAX_POWER)
             {

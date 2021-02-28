@@ -1,11 +1,10 @@
 
-#include "board.h"
 #include "fsl_debug_console.h"
-#include "fx_api.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 
+#include "fx_api.h"
 #ifdef FX_ENABLE_FAULT_TOLERANT
 #include "fx_fault_tolerant.h"
 #endif /* FX_ENABLE_FAULT_TOLERANT */
@@ -31,6 +30,8 @@ unsigned char media_memory[512];
 UCHAR fault_tolerant_memory[FX_FAULT_TOLERANT_MAXIMUM_LOG_FILE_SIZE];
 #endif /* FX_ENABLE_FAULT_TOLERANT */
 
+CHAR demo_stack[DEMO_STACK_SIZE];
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -47,7 +48,7 @@ void thread_0_entry(ULONG thread_input);
 
 FX_MEDIA ram_disk;
 FX_FILE my_file;
-CHAR *ram_disk_memory;
+CHAR ram_disk_memory[DEMO_RAM_DISK_SIZE];
 
 /* Define ThreadX global data structures.  */
 
@@ -81,25 +82,14 @@ void main(void)
 
 void tx_application_define(void *first_unused_memory)
 {
-    CHAR *pointer = TX_NULL;
-    int nu        = GET_UNUSED_MEM_SIZE();
-    /* Check whether the size of first_unused_memory is enough. */
-    if (GET_UNUSED_MEM_SIZE() < DEMO_STACK_SIZE + DEMO_RAM_DISK_SIZE)
-    {
-        PRINTF("The unused memory size is only %d %d Bytes.\r\n", GET_UNUSED_MEM_SIZE(), nu);
-        return;
-    }
+    TX_THREAD_NOT_USED(first_unused_memory);
 
     /* Put system definition stuff in here, e.g. thread creates and other assorted
        create information.  */
 
     /* Create the main thread.  */
-    tx_thread_create(&thread_0, "thread 0", thread_0_entry, 0, first_unused_memory, DEMO_STACK_SIZE, 1, 1,
+    tx_thread_create(&thread_0, "thread 0", thread_0_entry, 0, (VOID *)demo_stack, DEMO_STACK_SIZE, 1, 1,
                      TX_NO_TIME_SLICE, TX_AUTO_START);
-    pointer = (CHAR *)first_unused_memory + DEMO_STACK_SIZE;
-
-    /* Save the memory pointer for the RAM disk.  */
-    ram_disk_memory = pointer;
 
     /* Initialize FileX.  */
     fx_system_initialize();
@@ -116,7 +106,7 @@ void thread_0_entry(ULONG thread_input)
 #ifdef FX_ENABLE_EXFAT
     fx_media_exFAT_format(&ram_disk,
                           _fx_ram_driver,       // Driver entry
-                          ram_disk_memory,      // RAM disk memory pointer
+                          (VOID *)ram_disk_memory,      // RAM disk memory pointer
                           media_memory,         // Media buffer pointer
                           sizeof(media_memory), // Media buffer size
                           "MY_RAM_DISK",        // Volume Name
@@ -130,7 +120,7 @@ void thread_0_entry(ULONG thread_input)
 #else
     fx_media_format(&ram_disk,
                     _fx_ram_driver,       // Driver entry
-                    ram_disk_memory,      // RAM disk memory pointer
+                    (VOID *)ram_disk_memory,    // RAM disk memory pointer
                     media_memory,         // Media buffer pointer
                     sizeof(media_memory), // Media buffer size
                     "MY_RAM_DISK",        // Volume Name

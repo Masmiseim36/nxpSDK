@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_utility_logical_sector_cache_entry_read         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -71,12 +71,17 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            added conditional to        */
+/*                                            disable cache,              */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 FX_CACHED_SECTOR  *_fx_utility_logical_sector_cache_entry_read(FX_MEDIA *media_ptr, ULONG64 logical_sector,
                                                                FX_CACHED_SECTOR **previous_cache_entry)
 {
 
+#ifndef FX_DISABLE_CACHE
 FX_CACHED_SECTOR *cache_entry;
 FX_CACHED_SECTOR  temp_storage;
 ULONG             cache_size;
@@ -341,5 +346,8 @@ ULONG             index;
 
     /* The requested sector is not in cache, return the last cache entry.  */
     return(cache_entry);
+#else
+    return(FX_NULL);
+#endif /* FX_DISABLE_CACHE */
 }
 

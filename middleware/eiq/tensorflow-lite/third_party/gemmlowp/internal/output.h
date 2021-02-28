@@ -33,12 +33,6 @@
 
 namespace gemmlowp {
 
-#if defined GEMMLOWP_MCU && defined __ARMCC_VERSION
-#define OPTIMIZATION_WORKAROUND(x) static volatile int x##_addr = reinterpret_cast<uint32_t>(&x)
-#else
-#define OPTIMIZATION_WORKAROUND(x)
-#endif
-
 template <typename OutputStage, typename InputBufferType>
 struct OutputStageEvalBufferImpl {
   // This generic template body should never be hit.
@@ -201,7 +195,6 @@ struct OutputStageEvalImpl<
   OutputStageEvalImpl(const OutputStage& s) : output_stage(s) {}
 
   OutputType Eval(InputType input, int row, int col) const {
-    OPTIMIZATION_WORKAROUND(input);
     OutputType output;
     const int pos = Shape == VectorShape::Row ? col : row;
     using RegisterType = typename InputType::RegisterType;
@@ -267,7 +260,6 @@ struct OutputStageEvalBufferImpl<OutputStageSaturatingCastToInt8,
   OutputStageEvalBufferImpl(const OutputStage&) {}
 
   OutputType Eval(InputType input) const {
-    OPTIMIZATION_WORKAROUND(input);
     OutputType output;
     for (int i = 0; i < InputType::kRegisterCount; i++) {
       std::int32_t data = input.reg[i];
@@ -332,7 +324,6 @@ struct OutputStageEvalImpl<OutputStageBiasAddition<VectorType>,
   OutputStageEvalImpl(const OutputStage& s) : output_stage(s) {}
 
   OutputType Eval(InputType input, int row, int col) const {
-    OPTIMIZATION_WORKAROUND(input);
     const int pos = VectorType::kShape == VectorShape::Row ? col : row;
     return BroadcastAdd<InputType>(
         input, LoadForBroadcasting<InputType>(output_stage.bias_vector, pos));
@@ -352,7 +343,6 @@ struct OutputStageEvalBufferImpl<OutputStageClamp,
   OutputStageEvalBufferImpl(const OutputStage& s) : output_stage(s) {}
 
   OutputType Eval(InputType input) const {
-    OPTIMIZATION_WORKAROUND(input);
     using RegisterType = typename InputType::RegisterType;
     const RegisterType min = Dup<RegisterType>(output_stage.min);
     const RegisterType max = Dup<RegisterType>(output_stage.max);
@@ -529,7 +519,6 @@ struct StoreFinalOutputImpl<RegisterBlock<ScalarType, Rows, Cols>, DstType> {
   using RegisterBlockType = RegisterBlock<ScalarType, Rows, Cols>;
   static void Run(const RegisterBlockType& src, DstType* dst, int row,
                   int col) {
-    OPTIMIZATION_WORKAROUND(src);
     for (int r = 0; r < Rows; r++) {
       for (int c = 0; c < Cols; c++) {
         *dst->data(row + r, col + c) = src.buf.reg[r + c * Rows];

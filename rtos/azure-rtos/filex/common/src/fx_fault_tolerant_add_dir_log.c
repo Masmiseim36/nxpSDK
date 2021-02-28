@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_fault_tolerant_add_dir_log                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -72,6 +72,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), verified */
+/*                                            memcpy usage,               */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _fx_fault_tolerant_add_dir_log(FX_MEDIA *media_ptr, ULONG64 logical_sector, ULONG offset,
@@ -115,7 +118,7 @@ FX_FAULT_TOLERANT_DIR_LOG *dir_log;
     _fx_utility_64_unsigned_write((UCHAR *)&dir_log -> fx_fault_tolerant_dir_log_sector, logical_sector);
     _fx_utility_32_unsigned_write((UCHAR *)&dir_log -> fx_fault_tolerant_dir_log_offset, offset);
 
-    memcpy(media_ptr -> fx_media_fault_tolerant_memory_buffer +
+    memcpy(media_ptr -> fx_media_fault_tolerant_memory_buffer +  /* Use case of memcpy is verified. */
            media_ptr -> fx_media_fault_tolerant_file_size + FX_FAULT_TOLERANT_DIR_LOG_ENTRY_SIZE,
            data, data_size);
 

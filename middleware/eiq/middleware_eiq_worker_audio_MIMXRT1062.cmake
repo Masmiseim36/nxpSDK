@@ -4,8 +4,8 @@ if(NOT MIDDLEWARE_EIQ_WORKER_AUDIO_MIMXRT1062_INCLUDED)
 
     target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/common/audio/eiq_micro.c
-        ${CMAKE_CURRENT_LIST_DIR}/common/audio/eiq_speaker_conf.c
         ${CMAKE_CURRENT_LIST_DIR}/common/audio/eiq_audio_worker.c
+        ${CMAKE_CURRENT_LIST_DIR}/common/audio/eiq_speaker_conf.c
         ${CMAKE_CURRENT_LIST_DIR}/common/audio/eiq_speaker.c
     )
 

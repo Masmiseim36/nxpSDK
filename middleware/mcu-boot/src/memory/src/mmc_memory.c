@@ -1,20 +1,19 @@
 /*
-* Copyright 2014-2016 Freescale Semiconductor, Inc.
-* Copyright 2016-2018 NXP
-* All rights reserved.
-*
-* SPDX-License-Identifier: BSD-3-Clause
-*
-*/
-
+ * Copyright (c) 2015 Freescale Semiconductor, Inc.
+ * Copyright 2016-2020 NXP
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+#include "bl_card.h"
+#include "bl_host.h"
+#include "bootloader.h"
 #include "bootloader_common.h"
-#include "bootloader/bootloader.h"
-#include "fsl_device_registers.h"
-#include "memory/memory.h"
 #include "fsl_clock.h"
+#include "fsl_device_registers.h"
+#include "memory.h"
 #include "mmc_memory.h"
-#include "sd_memory.h"
-#include "property/property.h"
+#include "property.h"
 
 #if BL_FEATURE_GEN_KEYBLOB
 #include "bl_keyblob.h"
@@ -30,9 +29,9 @@ enum
     kMMCCardErasedPattern0 = 0x00000000, /*!< The default value of MMC memory bits. */
     kMMCCardErasedPattern1 = 0xFFFFFFFF, /*!< The default value of MMC memory bits when ERASED_MEM_CONT is set */
     kMMCStartAddress = 0x0,              /*!< The default start address of MMC Card. */
-#if SDMMCHOST_DMA_BUFFER_ADDR_ALIGN == USDHC_ADMA1_ADDRESS_ALIGN /*!< ADMA1 is not really supported yet */
-    kMMCBufferBlockCount = 8,                                    /*!< The MMC memory buffer size in block count. */
-#elif SDMMCHOST_DMA_BUFFER_ADDR_ALIGN == USDHC_ADMA2_ADDRESS_ALIGN
+#if HOST_DMA_BUFFER_ADDR_ALIGN == USDHC_ADMA1_ADDRESS_ALIGN /*!< ADMA1 is not really supported yet */
+    kMMCBufferBlockCount = 8,                               /*!< The MMC memory buffer size in block count. */
+#elif HOST_DMA_BUFFER_ADDR_ALIGN == USDHC_ADMA2_ADDRESS_ALIGN
     kMMCBufferBlockCount = 1, /*!< The MMC memory buffer size in block count. */
 #else
 #error Invalid USDHC DMA selection.
@@ -47,8 +46,7 @@ enum
 /*! @brief Configuration structure used for MMC memory. */
 typedef struct _mmc_config
 {
-    union
-    {
+    union {
         struct
         {
             uint32_t boot_config_enable : 1;
@@ -70,13 +68,11 @@ typedef struct _mmc_config
         uint32_t U;
     } word0;
 
-    union
-    {
+    union {
         struct
         {
-            uint32_t instance : 4;
             uint32_t rsv_perm_config_enable : 2;
-            uint32_t rsv0 : 10;
+            uint32_t rsv0 : 14;
             uint32_t rsv_perm_boot_config_prot : 2;
             uint32_t enable1V8 : 1;
             uint32_t enablePowerCycle : 1;
@@ -90,6 +86,22 @@ typedef struct _mmc_config
         uint32_t U;
     } word1;
 } mmc_config_t;
+
+/*! @brief Context structure used for MMC memory. */
+typedef struct _mmc_mem_context
+{
+    mmc_card_t mmc;
+    bool isConfigured;
+    bool isReadBufferValid;
+    uint32_t readBufferBlockAddr;
+    bool isWriteBufferValid;
+    uint32_t writeBufferOffset;
+    uint32_t writeBufferBlockAddr;
+#if BL_FEATURE_GEN_KEYBLOB
+    bool has_keyblob;
+    uint32_t keyblob_offset;
+#endif // BL_FEATURE_GEN_KEYBLOB
+} mmc_mem_context_t;
 
 /*******************************************************************************
  * Prototypes
@@ -161,11 +173,11 @@ static status_t check_update_keyblob_info(void *config);
  * Variables
  ******************************************************************************/
 /* @brief Context variable used for MMC memory */
-mmc_mem_context_t g_mmcContext = { 0 };
+static mmc_mem_context_t s_mmcContext = { 0 };
 
 /* @brief Buffer used for MMC memory */
-BL_ALIGN(SDMMCHOST_DMA_BUFFER_ADDR_ALIGN) static uint8_t s_mmc_mem_readBuffer[kMMCBufferSizeInBytes] = { 0 };
-BL_ALIGN(SDMMCHOST_DMA_BUFFER_ADDR_ALIGN) static uint8_t s_mmc_mem_writeBuffer[kMMCBufferSizeInBytes] = { 0 };
+SDK_ALIGN(static uint8_t s_mmc_mem_readBuffer[kMMCBufferSizeInBytes], HOST_DMA_BUFFER_ADDR_ALIGN);
+SDK_ALIGN(static uint8_t s_mmc_mem_writeBuffer[kMMCBufferSizeInBytes], HOST_DMA_BUFFER_ADDR_ALIGN);
 
 /* @brief Interface to spi nand memory operations */
 const external_memory_region_interface_t g_mmcMemoryInterface = {
@@ -176,7 +188,6 @@ const external_memory_region_interface_t g_mmcMemoryInterface = {
     .config = mmc_mem_config,
     .flush = mmc_mem_flush,
     .finalize = mmc_mem_finalize,
-    .erase_all = mmc_mem_erase_all,
 };
 
 /*******************************************************************************
@@ -189,7 +200,7 @@ status_t check_update_keyblob_info(void *config)
 
     do
     {
-        if ((config == NULL) || (g_mmcContext.isConfigured == false))
+        if ((config == NULL) || (s_mmcContext.isConfigured == false))
         {
             break;
         }
@@ -212,15 +223,15 @@ status_t check_update_keyblob_info(void *config)
             status = keyblob_update(keyblob_info);
             if (status != kStatus_Success)
             {
-                g_mmcContext.has_keyblob = false;
+                s_mmcContext.has_keyblob = false;
                 break;
             }
-            g_mmcContext.keyblob_offset = keyblob_info->keyblob_offset;
-            g_mmcContext.has_keyblob = true;
+            s_mmcContext.keyblob_offset = keyblob_info->keyblob_offset;
+            s_mmcContext.has_keyblob = true;
         }
         else if (keyblob_info_type == kKeyBlobInfoType_Program)
         {
-            if (!g_mmcContext.has_keyblob)
+            if (!s_mmcContext.has_keyblob)
             {
                 break;
             }
@@ -253,7 +264,7 @@ status_t check_update_keyblob_info(void *config)
                 break;
             }
 
-            uint32_t keyblob_offset = g_mmcContext.keyblob_offset;
+            uint32_t keyblob_offset = s_mmcContext.keyblob_offset;
             uint32_t keyblob_addr = image_start + keyblob_offset;
             uint8_t *keyblob_buffer;
             uint32_t keyblob_size;
@@ -280,7 +291,7 @@ status_t check_update_keyblob_info(void *config)
 #if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE
             if (!is_erased_memory(keyblob_addr / block_size,
                                   keyblob_size / block_size + (keyblob_size % block_size ? 1 : 0),
-                                  (g_mmcContext.mmc.extendedCsd.eraseMemoryContent == 0x1) ? kMMCCardErasedPattern1 :
+                                  (s_mmcContext.mmc.extendedCsd.eraseMemoryContent == 0x1) ? kMMCCardErasedPattern1 :
                                                                                              kMMCCardErasedPattern0))
             {
                 status = kStatusMemoryCumulativeWrite;
@@ -308,8 +319,10 @@ status_t check_update_keyblob_info(void *config)
 status_t mmc_mem_init(void)
 {
     status_t status = kStatus_Success;
-    mmc_card_t *card = &g_mmcContext.mmc;
+    mmc_card_t *card = &s_mmcContext.mmc;
     // Init the basic variable, fill in the uSDHC base address and current frequency.
+    card->host.base = BOARD_MMC_HOST_BASEADDR;
+    card->host.sourceClock_Hz = MMC_HOST_CLK_FREQ;
     card->hostVoltageWindowVCC = kMMC_VoltageWindows270to360; // Not really used for bootloader.
     card->hostVoltageWindowVCCQ = kMMC_VoltageWindow170to195; // Not really used for bootloader.
 
@@ -342,11 +355,11 @@ status_t mmc_mem_init(void)
         g_externalMemoryMap[index].basicUnitCount = blockCount;
 
         // Once initialization is succeed, MMC card is accessable.
-        g_mmcContext.isConfigured = true;
+        s_mmcContext.isConfigured = true;
     }
     else
     {
-        g_mmcContext.isConfigured = false;
+        s_mmcContext.isConfigured = false;
     }
 
     return status;
@@ -382,63 +395,12 @@ status_t mmc_mem_config(uint32_t *config)
     }
 
     // Clear the Context.
-    memset(&g_mmcContext, 0, sizeof(mmc_mem_context_t));
+    memset(&s_mmcContext, 0, sizeof(mmc_mem_context_t));
 
-    mmc_card_t *card = &g_mmcContext.mmc;
+    mmc_card_t *card = &s_mmcContext.mmc;
 
-/* If BL_FEATURE_MMC_MODULE_PERIPHERAL_INSTANCE is defined, fixed instance is enabled. Cannot be configured by
- * configuration block.*/
-#if defined(BL_FEATURE_MMC_MODULE_PERIPHERAL_INSTANCE)
-#if BL_FEATURE_MMC_MODULE_PERIPHERAL_INSTANCE == 0
-    card->host.base = BOARD_USDHC0_BASEADDR;
-    card->host.sourceClock_Hz = BOARD_USDHC0_CLK_FREQ;
-#elif BL_FEATURE_MMC_MODULE_PERIPHERAL_INSTANCE == 1
-    card->host.base = BOARD_USDHC1_BASEADDR;
-    card->host.sourceClock_Hz = BOARD_USDHC1_CLK_FREQ;
-#elif BL_FEATURE_MMC_MODULE_PERIPHERAL_INSTANCE == 2
-    card->host.base = BOARD_USDHC2_BASEADDR;
-    card->host.sourceClock_Hz = BOARD_USDHC2_CLK_FREQ;
-#else
-#error Unkown USDHC instance
-#endif // #if BL_FEATURE_MMC_MODULE_PERIPHERAL_INSTANCE == 0
-#else
-    switch (mmcConfig->word1.B.instance)
-    {
-#if defined(BOARD_USDHC0_BASEADDR)
-        case 0:
-            card->host.base = BOARD_USDHC0_BASEADDR;
-            card->host.sourceClock_Hz = BOARD_USDHC0_CLK_FREQ;
-            break;
-#else
-        // it means the instance starts from index 1, if instance 0 is not defined,
-        case 0:
-#endif // #if defined(BOARD_USDHC0_BASEADDR)
-#if defined(BOARD_USDHC1_BASEADDR)
-        case 1:
-            card->host.base = BOARD_USDHC1_BASEADDR;
-            card->host.sourceClock_Hz = BOARD_USDHC1_CLK_FREQ;
-            break;
-#endif // #if defined(BOARD_USDHC1_BASEADDR)
-#if defined(BOARD_USDHC2_BASEADDR)
-        case 2:
-            card->host.base = BOARD_USDHC2_BASEADDR;
-            card->host.sourceClock_Hz = BOARD_USDHC2_CLK_FREQ;
-            break;
-#endif // #if defined(BOARD_USDHC2_BASEADDR)
-        default:
-            return kStatus_InvalidArgument;
-    }
-#endif // #if defined(BL_FEATURE_MMC_MODULE_PERIPHERAL_INSTANCE)
-
-#if BL_FEATURE_SD_MODULE
-    // If this instance has already enabled for sd,
-    // then set sd configuration status to un-configured.
-    if (card->host.base == g_sdContext.sd.host.base)
-    {
-        g_sdContext.isConfigured = false;
-    }
-#endif // #if BL_FEATURE_SD_MODULE
-
+    card->host.base = BOARD_MMC_HOST_BASEADDR;
+    card->host.sourceClock_Hz = MMC_HOST_CLK_FREQ;
     card->hostVoltageWindowVCC = kMMC_VoltageWindows270to360; // Not really used for bootloader.
     card->hostVoltageWindowVCCQ = kMMC_VoltageWindow170to195; // Not really used for bootloader.
 
@@ -508,27 +470,25 @@ status_t mmc_mem_config(uint32_t *config)
     // Check if boot mode configuration is needed.
     if (mmcConfig->word0.B.boot_config_enable)
     {
-        mmc_boot_config_t mmcBootConfig = { 0 };
+        mmc_boot_config_t mmcBootConfig;
 
-        mmcBootConfig.bootDataBusWidth = (mmc_boot_data_bus_width_t)mmcConfig->word0.B.boot_bus_width;
-        mmcBootConfig.bootTimingMode = (mmc_boot_timing_mode_t)mmcConfig->word0.B.boot_mode;
+        mmcBootConfig.bootBusWidth = (mmc_boot_bus_width_t)mmcConfig->word0.B.boot_bus_width;
+        mmcBootConfig.bootMode = (mmc_boot_mode_t)mmcConfig->word0.B.boot_mode;
         mmcBootConfig.bootPartition = (mmc_boot_partition_enable_t)mmcConfig->word0.B.boot_partition_enable;
         mmcBootConfig.enableBootAck = mmcConfig->word0.B.boot_ack == 1 ? true : false;
-        mmcBootConfig.retainBootbusCondition = mmcConfig->word0.B.reset_boot_bus_conditions == 1 ? true : false;
-#if BL_FEATURE_MMC_MODULE_ENABLE_PERMANENT_CONFIG
-// Will be added in the future.
-#else
-        mmcBootConfig.updateBootConfigProtection = false;
-#endif
+        mmcBootConfig.retainBootBusWidth = mmcConfig->word0.B.reset_boot_bus_conditions == 1 ? true : false;
+
         // Do eMMC boot mode configuration.
-        status = MMC_SetBootConfig(&g_mmcContext.mmc, &mmcBootConfig);
+        status = MMC_SetBootConfig(&s_mmcContext.mmc, &mmcBootConfig);
         if (status != kStatus_Success)
         {
             return status;
         }
     }
-
-    g_mmcContext.isConfigured = true;
+#if BL_FEATURE_MMC_MODULE_ENABLE_PERMANENT_CONFIG
+// Will be added in the future.
+#endif
+    s_mmcContext.isConfigured = true;
 
     return status;
 }
@@ -566,7 +526,7 @@ status_t mmc_mem_read(uint32_t address, uint32_t length, uint8_t *restrict buffe
         }
         else
         {
-            bufferOffset = address - g_mmcContext.readBufferBlockAddr * FSL_SDMMC_DEFAULT_BLOCK_SIZE;
+            bufferOffset = address - s_mmcContext.readBufferBlockAddr * FSL_SDMMC_DEFAULT_BLOCK_SIZE;
         }
 
         // If it is a read accoss the block, divide it into two steps.
@@ -616,7 +576,7 @@ status_t mmc_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer)
         if (!is_write_block_cached(blockAddr))
         {
             // There is data already cached in the buffer, flush it to MMC.
-            if (g_mmcContext.isWriteBufferValid)
+            if (s_mmcContext.isWriteBufferValid)
             {
                 status = mmc_mem_flush_buffer();
                 if (status != kStatus_Success)
@@ -629,17 +589,17 @@ status_t mmc_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer)
             {
                 return kStatusMemoryAlignmentError;
             }
-            g_mmcContext.writeBufferOffset = bufferOffset;
-            g_mmcContext.writeBufferBlockAddr = blockAddr;
-            g_mmcContext.isWriteBufferValid = true;
+            s_mmcContext.writeBufferOffset = bufferOffset;
+            s_mmcContext.writeBufferBlockAddr = blockAddr;
+            s_mmcContext.isWriteBufferValid = true;
         }
         else
         {
-            bufferOffset = address - g_mmcContext.writeBufferBlockAddr * FSL_SDMMC_DEFAULT_BLOCK_SIZE;
+            bufferOffset = address - s_mmcContext.writeBufferBlockAddr * FSL_SDMMC_DEFAULT_BLOCK_SIZE;
         }
 
         // If the address is not continuous, start a new block write.
-        if (g_mmcContext.writeBufferOffset != bufferOffset)
+        if (s_mmcContext.writeBufferOffset != bufferOffset)
         {
             status = mmc_mem_flush_buffer();
             if (status != kStatus_Success)
@@ -658,18 +618,12 @@ status_t mmc_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer)
             writeLength = bufferSize - bufferOffset;
         }
         memcpy(&s_mmc_mem_writeBuffer[bufferOffset], buffer, writeLength);
-        g_mmcContext.writeBufferOffset += writeLength;
+        s_mmcContext.writeBufferOffset += writeLength;
         length -= writeLength;
         buffer += writeLength;
         bufferOffset += writeLength;
         if (bufferOffset >= bufferSize)
         {
-            status = mmc_mem_flush_buffer();
-            if (status != kStatus_Success)
-            {
-                return status;
-            }
-
             bufferOffset -= bufferSize;
             blockAddr += kMMCBufferBlockCount;
         }
@@ -681,7 +635,7 @@ status_t mmc_mem_flush(void)
 {
     status_t status = kStatus_Success;
     // If there still is data in the buffer, then flush them to MMC.
-    if (g_mmcContext.isWriteBufferValid)
+    if (s_mmcContext.isWriteBufferValid)
     {
         status = mmc_mem_flush_buffer();
     }
@@ -692,15 +646,15 @@ status_t mmc_mem_finalize(void)
     status_t status = kStatus_Success;
 
     // Mark buffer to invalid.
-    g_mmcContext.isWriteBufferValid = false;
-    g_mmcContext.isReadBufferValid = false;
+    s_mmcContext.isWriteBufferValid = false;
+    s_mmcContext.isReadBufferValid = false;
 
     return status;
 }
 status_t mmc_mem_erase(uint32_t address, uint32_t length)
 {
     status_t status;
-    mmc_card_t *card = &g_mmcContext.mmc;
+    mmc_card_t *card = &s_mmcContext.mmc;
 
     // MMC should be initialized before access.
     if (!is_mmc_configured())
@@ -744,7 +698,7 @@ status_t mmc_mem_erase(uint32_t address, uint32_t length)
 status_t mmc_mem_erase_all(void)
 {
     status_t status;
-    mmc_card_t *card = &g_mmcContext.mmc;
+    mmc_card_t *card = &s_mmcContext.mmc;
     // SPI NAND should be configured before access.
     if (!is_mmc_configured())
     {
@@ -781,7 +735,7 @@ status_t mmc_mem_erase_all(void)
 }
 status_t mmc_get_property(uint32_t whichProperty, uint32_t *value)
 {
-    mmc_card_t *card = &g_mmcContext.mmc;
+    mmc_card_t *card = &s_mmcContext.mmc;
     status_t status;
     uint32_t blockCount;
 
@@ -824,14 +778,14 @@ static status_t mmc_mem_load_buffer(uint32_t blockAddr)
 {
     status_t status;
 
-    g_mmcContext.isReadBufferValid = false; // Mark read buffer invalid.
+    s_mmcContext.isReadBufferValid = false; // Mark read buffer invalid.
 
     // Read the page to read buffer.
-    status = MMC_ReadBlocks(&g_mmcContext.mmc, s_mmc_mem_readBuffer, blockAddr, kMMCBufferBlockCount);
+    status = MMC_ReadBlocks(&s_mmcContext.mmc, s_mmc_mem_readBuffer, blockAddr, kMMCBufferBlockCount);
     if (status == kStatus_Success)
     {
-        g_mmcContext.isReadBufferValid = true;
-        g_mmcContext.readBufferBlockAddr = blockAddr;
+        s_mmcContext.isReadBufferValid = true;
+        s_mmcContext.readBufferBlockAddr = blockAddr;
     }
     return status;
 }
@@ -839,7 +793,7 @@ static status_t mmc_mem_load_buffer(uint32_t blockAddr)
 static status_t mmc_mem_flush_buffer(void)
 {
     status_t status = kStatus_Success;
-    mmc_card_t *card = &g_mmcContext.mmc;
+    mmc_card_t *card = &s_mmcContext.mmc;
 
     if (MMC_CheckReadOnly(card))
     {
@@ -847,18 +801,18 @@ static status_t mmc_mem_flush_buffer(void)
     }
 
     // Fill up the left bytes.
-    if (g_mmcContext.writeBufferOffset != kMMCBufferSizeInBytes)
+    if (s_mmcContext.writeBufferOffset != kMMCBufferSizeInBytes)
     {
-        memset(&s_mmc_mem_writeBuffer[g_mmcContext.writeBufferOffset],
+        memset(&s_mmc_mem_writeBuffer[s_mmcContext.writeBufferOffset],
                (card->extendedCsd.eraseMemoryContent == 0x1) ? kMMCCardErasedPattern1 : kMMCCardErasedPattern0,
-               kMMCBufferSizeInBytes - g_mmcContext.writeBufferOffset);
+               kMMCBufferSizeInBytes - s_mmcContext.writeBufferOffset);
     }
 
-    g_mmcContext.isWriteBufferValid = false;
+    s_mmcContext.isWriteBufferValid = false;
 
 #if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE
     if (!is_erased_memory(
-            g_mmcContext.writeBufferBlockAddr, kMMCBufferBlockCount,
+            s_mmcContext.writeBufferBlockAddr, kMMCBufferBlockCount,
             (card->extendedCsd.eraseMemoryContent == 0x1) ? kMMCCardErasedPattern1 : kMMCCardErasedPattern0))
     {
         return kStatusMemoryCumulativeWrite;
@@ -866,7 +820,7 @@ static status_t mmc_mem_flush_buffer(void)
 #endif // #if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE
 
     // Flush the data in the write buffer to MMC
-    status = MMC_WriteBlocks(card, s_mmc_mem_writeBuffer, g_mmcContext.writeBufferBlockAddr, kMMCBufferBlockCount);
+    status = MMC_WriteBlocks(card, s_mmc_mem_writeBuffer, s_mmcContext.writeBufferBlockAddr, kMMCBufferBlockCount);
     if (status != kStatus_Success)
     {
         return status;
@@ -874,7 +828,7 @@ static status_t mmc_mem_flush_buffer(void)
 
     // Indeed, no need to check if the memory is written correct or not. Card will guarantee it.
     // But still do it to make sure user's data written without any incorrect.
-    status = MMC_ReadBlocks(card, s_mmc_mem_readBuffer, g_mmcContext.writeBufferBlockAddr, kMMCBufferBlockCount);
+    status = MMC_ReadBlocks(card, s_mmc_mem_readBuffer, s_mmcContext.writeBufferBlockAddr, kMMCBufferBlockCount);
     if (status != kStatus_Success)
     {
         return status;
@@ -891,7 +845,7 @@ static status_t mmc_mem_flush_buffer(void)
 static bool is_erased_memory(uint32_t blockAddr, uint32_t blockCount, uint32_t erasedPattern)
 {
     status_t status = kStatus_Success;
-    mmc_card_t *card = &g_mmcContext.mmc;
+    mmc_card_t *card = &s_mmcContext.mmc;
     uint32_t offset, *buffer, readblock;
     while (blockCount)
     {
@@ -930,19 +884,19 @@ static bool is_erased_memory(uint32_t blockAddr, uint32_t blockCount, uint32_t e
 
 static bool is_mmc_configured(void)
 {
-    return g_mmcContext.isConfigured;
+    return s_mmcContext.isConfigured;
 }
 
 static bool is_read_block_cached(uint32_t blockAddr)
 {
-    return (g_mmcContext.isReadBufferValid) && (g_mmcContext.readBufferBlockAddr <= blockAddr) &&
-           (g_mmcContext.readBufferBlockAddr + kMMCBufferBlockCount > blockAddr);
+    return (s_mmcContext.isReadBufferValid) && (s_mmcContext.readBufferBlockAddr <= blockAddr) &&
+           (s_mmcContext.readBufferBlockAddr + kMMCBufferBlockCount > blockAddr);
 }
 
 static bool is_write_block_cached(uint32_t blockAddr)
 {
-    return (g_mmcContext.isWriteBufferValid) && (g_mmcContext.writeBufferBlockAddr <= blockAddr) &&
-           (g_mmcContext.writeBufferBlockAddr + kMMCBufferBlockCount > blockAddr);
+    return (s_mmcContext.isWriteBufferValid) && (s_mmcContext.writeBufferBlockAddr <= blockAddr) &&
+           (s_mmcContext.writeBufferBlockAddr + kMMCBufferBlockCount > blockAddr);
 }
 
 static status_t get_current_block_count(mmc_card_t *card, uint32_t *partitionBlocks)

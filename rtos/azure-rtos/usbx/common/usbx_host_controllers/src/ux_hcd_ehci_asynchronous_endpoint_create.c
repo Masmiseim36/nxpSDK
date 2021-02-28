@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_hcd_ehci_asynchronous_endpoint_create           PORTABLE C      */ 
-/*                                                           6.0          */
+/*                                                           6.1.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -68,6 +68,13 @@
 /*    DATE              NAME                      DESCRIPTION             */ 
 /*                                                                        */ 
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+/*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            optimized based on compile  */
+/*                                            definitions,                */
+/*                                            resulting in version 6.1    */
+/*  11-09-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            fixed compile warnings,     */
+/*                                            resulting in version 6.1.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_hcd_ehci_asynchronous_endpoint_create(UX_HCD_EHCI *hcd_ehci, UX_ENDPOINT *endpoint)
@@ -92,7 +99,7 @@ UX_EHCI_LINK_POINTER    queue_head;
     endpoint -> ux_endpoint_ed =  (VOID *) ed;
 
     /* Now do the opposite, attach the ED container to the physical ED.  */
-    ed -> ux_ehci_ed_endpoint =  endpoint;
+    ed -> REF_AS.INTR.ux_ehci_ed_endpoint =  endpoint;
 
     /* Set the default MPS Capability info in the ED.  */
     ed -> ux_ehci_ed_cap0 =  endpoint -> ux_endpoint_descriptor.wMaxPacketSize << UX_EHCI_QH_MPS_LOC;
@@ -134,6 +141,7 @@ UX_EHCI_LINK_POINTER    queue_head;
 
     case  UX_FULL_SPEED_DEVICE:
 
+#if UX_MAX_DEVICES > 1
         /* The device must be on a hub for this code to execute. We still do a sanity check.  */
         if (device -> ux_device_parent != UX_NULL)
         {
@@ -144,6 +152,7 @@ UX_EHCI_LINK_POINTER    queue_head;
             /* And the port index onto which this device is attached.  */                                    
             ed -> ux_ehci_ed_cap1 |=  device -> ux_device_port_location << UX_EHCI_QH_PORT_NUMBER_LOC;
         }
+#endif
         break;
     }
             

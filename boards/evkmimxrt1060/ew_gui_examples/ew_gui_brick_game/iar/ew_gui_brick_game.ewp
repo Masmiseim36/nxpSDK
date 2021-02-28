@@ -2116,13 +2116,10 @@
     <group>
       <name>GeneratedCode</name>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Application.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Templates.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../GeneratedCode/Effects.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Application.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/Resources.c</name>
@@ -2131,169 +2128,172 @@
         <name>$PROJ_DIR$/../GeneratedCode/Core.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Views.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/BrickGame.c</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Templates.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/Graphics.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsRectangle.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/BrickGame.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyPressHandler.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreSimpleTouchHandler.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Resources.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameLcdNumbers.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsImage.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/ewlocale.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutQuadContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Templates.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Views.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameLcdDisplay.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Core.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffectTimerClass.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreView.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameBricks.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreTaskQueue.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_TemplatesDeviceClass.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameStars.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameDataClass.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameBallPosition.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameBrickGame.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsText.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreRoot.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreOutline.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameLandscape.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreModalContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Application.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ApplicationApplication.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameDescrFont.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Views.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreQuadView.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreDragEvent.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameStars.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorGrabEvent.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_ApplicationApplication.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsText.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameDescrFont.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameLcdDisplay.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_BrickGamePaddle.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsCanvas.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesFont.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Effects.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Resources.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Graphics.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameDataClass.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyEvent.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorHit.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameLandscape.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesFont.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsRectangle.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreTask.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreDialogContext.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreTaskQueue.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreTimer.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesBitmap.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/BrickGame.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreGroup.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameBrickRow.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreOutline.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameBricks.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Core.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreRoot.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_TemplatesDeviceClass.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutContext.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffectTimerClass.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreModalContext.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameBallPosition.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreResource.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorGrabEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesBitmap.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorHit.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Application.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Effects.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Templates.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreRectView.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameLcdNumbers.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../GeneratedCode/_BrickGameBall.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameBrickGame.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsImage.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/ewlocale.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreDialogContext.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsCanvas.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreDragEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BrickGameBrickRow.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Graphics.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Views.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyPressHandler.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreView.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/BrickGame.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreSimpleTouchHandler.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutQuadContext.h</name>
       </file>
     </group>
     <group>
@@ -2301,10 +2301,10 @@
       <group>
         <name>RT</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</name>
@@ -2316,7 +2316,7 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</name>
@@ -2325,10 +2325,13 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</name>
@@ -2337,16 +2340,13 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</name>
         </file>
       </group>
     </group>
@@ -2363,22 +2363,13 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextfnt.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</name>
@@ -2387,10 +2378,19 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextpxl_RGB565.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</name>
           </file>
         </group>
         <group>
@@ -2399,10 +2399,10 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewrte.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewrte.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.h</name>
           </file>
         </group>
       </group>

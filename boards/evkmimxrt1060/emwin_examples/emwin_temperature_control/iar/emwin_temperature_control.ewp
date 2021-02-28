@@ -2086,13 +2086,13 @@
       <group>
         <name>Image</name>
         <file>
-          <name>$PROJ_DIR$/../AppWizard/Resource/Image/GreenGlowMarker_16x9.c</name>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Image/SeggerLogo_80x40.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../AppWizard/Resource/Image/KNOB_106x106.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c</name>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Image/GreenGlowMarker_16x9.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../AppWizard/Resource/Image/ButtonRound_48x21.c</name>
@@ -2101,16 +2101,16 @@
           <name>$PROJ_DIR$/../AppWizard/Resource/Image/TemperatureControl_3_480x272.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../AppWizard/Resource/Image/SeggerLogo_80x40.c</name>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c</name>
         </file>
       </group>
       <group>
         <name>Text</name>
         <file>
-          <name>$PROJ_DIR$/../AppWizard/Resource/Text/APPW_Language_0.c</name>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Text/APPW_Pattern.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../AppWizard/Resource/Text/APPW_Pattern.c</name>
+          <name>$PROJ_DIR$/../AppWizard/Resource/Text/APPW_Language_0.c</name>
         </file>
       </group>
     </group>
@@ -2122,25 +2122,25 @@
       <group>
         <name>CustomCode</name>
         <file>
-          <name>$PROJ_DIR$/../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c</name>
+          <name>$PROJ_DIR$/../AppWizard/Source/CustomCode/Application.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../AppWizard/Source/CustomCode/Application.h</name>
+          <name>$PROJ_DIR$/../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c</name>
         </file>
       </group>
       <group>
         <name>Generated</name>
         <file>
-          <name>$PROJ_DIR$/../AppWizard/Source/Generated/APPWConf.c</name>
+          <name>$PROJ_DIR$/../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../AppWizard/Source/Generated/Resource.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../AppWizard/Source/Generated/Resource.c</name>
+          <name>$PROJ_DIR$/../AppWizard/Source/Generated/APPWConf.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c</name>
+          <name>$PROJ_DIR$/../AppWizard/Source/Generated/Resource.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.h</name>

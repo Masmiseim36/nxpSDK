@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_host_class_video_deactivate                     PORTABLE C      */ 
-/*                                                           6.0          */
+/*                                                           6.1.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -73,6 +73,15 @@
 /*    DATE              NAME                      DESCRIPTION             */ 
 /*                                                                        */ 
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+/*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            fixed issue of aborting     */
+/*                                            transfer without endpoint   */
+/*                                            ready, deleted new semaphore*/
+/*                                            for control requests,       */
+/*                                            resulting in version 6.1    */
+/*  11-09-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            freed descriptor memory,    */
+/*                                            resulting in version 6.1.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_host_class_video_deactivate(UX_HOST_CLASS_COMMAND *command)
@@ -95,17 +104,23 @@ UINT                    status;
         return(status);
     
     /* We need to abort transactions on the iso out pipe.  */
-    _ux_host_stack_endpoint_transfer_abort(video -> ux_host_class_video_isochronous_endpoint);
+    if (video -> ux_host_class_video_isochronous_endpoint)
+        _ux_host_stack_endpoint_transfer_abort(video -> ux_host_class_video_isochronous_endpoint);
 
     /* The enumeration thread needs to sleep a while to allow the application or the class that may be using
        endpoints to exit properly.  */
     _ux_utility_thread_schedule_other(UX_THREAD_PRIORITY_ENUM); 
 
+    /* Free descriptor memory.  */
+    if (video -> ux_host_class_video_configuration_descriptor)
+        _ux_utility_memory_free(video -> ux_host_class_video_configuration_descriptor);
+
     /* Destroy the instance.  */
     _ux_host_stack_class_instance_destroy(video -> ux_host_class_video_class, (VOID *) video);
 
-    /* Destroy the semaphore.  */
+    /* Destroy the semaphores.  */
     _ux_utility_semaphore_delete(&video -> ux_host_class_video_semaphore);
+    _ux_utility_semaphore_delete(&video -> ux_host_class_video_semaphore_control_request);
 
     /* Before we free the device resources, we need to inform the application
         that the device is removed.  */

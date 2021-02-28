@@ -39,7 +39,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_file_write                                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -92,6 +92,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), verified */
+/*                                            memcpy usage,               */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_file_write(FX_FILE *file_ptr, VOID *buffer_ptr, ULONG size)
@@ -1291,7 +1294,7 @@ UCHAR                  dont_use_fat_old = FX_FALSE; /* Used by exFAT logic to in
             }
 
             /* Actually perform the memory copy.  */
-            _fx_utility_memory_copy(source_ptr, ((UCHAR *)media_ptr -> fx_media_memory_buffer) +
+            _fx_utility_memory_copy(source_ptr, ((UCHAR *)media_ptr -> fx_media_memory_buffer) +  /* Use case of memcpy is verified. */
                                     file_ptr -> fx_file_current_logical_offset,
                                     copy_bytes);
 

@@ -676,39 +676,9 @@
           <GroupName>libjpeg/inc</GroupName>
           <Files>
             <File>
-              <FileName>cderror.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/cderror.h</FilePath>
-            </File>
-            <File>
-              <FileName>transupp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/transupp.h</FilePath>
-            </File>
-            <File>
-              <FileName>jversion.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jversion.h</FilePath>
-            </File>
-            <File>
-              <FileName>jdct.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jdct.h</FilePath>
-            </File>
-            <File>
-              <FileName>jmorecfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jmorecfg.h</FilePath>
-            </File>
-            <File>
               <FileName>jinclude.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/libjpeg/inc/jinclude.h</FilePath>
-            </File>
-            <File>
-              <FileName>jpegint.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jpegint.h</FilePath>
             </File>
             <File>
               <FileName>jpeglib.h</FileName>
@@ -721,14 +691,44 @@
               <FilePath>../../../../../middleware/libjpeg/inc/jerror.h</FilePath>
             </File>
             <File>
-              <FileName>cdjpeg.h</FileName>
+              <FileName>cderror.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/cdjpeg.h</FilePath>
+              <FilePath>../../../../../middleware/libjpeg/inc/cderror.h</FilePath>
+            </File>
+            <File>
+              <FileName>jdct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jdct.h</FilePath>
             </File>
             <File>
               <FileName>jmemsys.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/libjpeg/inc/jmemsys.h</FilePath>
+            </File>
+            <File>
+              <FileName>cdjpeg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/cdjpeg.h</FilePath>
+            </File>
+            <File>
+              <FileName>jversion.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jversion.h</FilePath>
+            </File>
+            <File>
+              <FileName>transupp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/transupp.h</FilePath>
+            </File>
+            <File>
+              <FileName>jpegint.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jpegint.h</FilePath>
+            </File>
+            <File>
+              <FileName>jmorecfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jmorecfg.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1892,39 +1892,9 @@
           <GroupName>libjpeg/inc</GroupName>
           <Files>
             <File>
-              <FileName>cderror.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/cderror.h</FilePath>
-            </File>
-            <File>
-              <FileName>transupp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/transupp.h</FilePath>
-            </File>
-            <File>
-              <FileName>jversion.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jversion.h</FilePath>
-            </File>
-            <File>
-              <FileName>jdct.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jdct.h</FilePath>
-            </File>
-            <File>
-              <FileName>jmorecfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jmorecfg.h</FilePath>
-            </File>
-            <File>
               <FileName>jinclude.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/libjpeg/inc/jinclude.h</FilePath>
-            </File>
-            <File>
-              <FileName>jpegint.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jpegint.h</FilePath>
             </File>
             <File>
               <FileName>jpeglib.h</FileName>
@@ -1937,14 +1907,44 @@
               <FilePath>../../../../../middleware/libjpeg/inc/jerror.h</FilePath>
             </File>
             <File>
-              <FileName>cdjpeg.h</FileName>
+              <FileName>cderror.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/cdjpeg.h</FilePath>
+              <FilePath>../../../../../middleware/libjpeg/inc/cderror.h</FilePath>
+            </File>
+            <File>
+              <FileName>jdct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jdct.h</FilePath>
             </File>
             <File>
               <FileName>jmemsys.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/libjpeg/inc/jmemsys.h</FilePath>
+            </File>
+            <File>
+              <FileName>cdjpeg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/cdjpeg.h</FilePath>
+            </File>
+            <File>
+              <FileName>jversion.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jversion.h</FilePath>
+            </File>
+            <File>
+              <FileName>transupp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/transupp.h</FilePath>
+            </File>
+            <File>
+              <FileName>jpegint.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jpegint.h</FilePath>
+            </File>
+            <File>
+              <FileName>jmorecfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jmorecfg.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -3108,39 +3108,9 @@
           <GroupName>libjpeg/inc</GroupName>
           <Files>
             <File>
-              <FileName>cderror.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/cderror.h</FilePath>
-            </File>
-            <File>
-              <FileName>transupp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/transupp.h</FilePath>
-            </File>
-            <File>
-              <FileName>jversion.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jversion.h</FilePath>
-            </File>
-            <File>
-              <FileName>jdct.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jdct.h</FilePath>
-            </File>
-            <File>
-              <FileName>jmorecfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jmorecfg.h</FilePath>
-            </File>
-            <File>
               <FileName>jinclude.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/libjpeg/inc/jinclude.h</FilePath>
-            </File>
-            <File>
-              <FileName>jpegint.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jpegint.h</FilePath>
             </File>
             <File>
               <FileName>jpeglib.h</FileName>
@@ -3153,14 +3123,44 @@
               <FilePath>../../../../../middleware/libjpeg/inc/jerror.h</FilePath>
             </File>
             <File>
-              <FileName>cdjpeg.h</FileName>
+              <FileName>cderror.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/cdjpeg.h</FilePath>
+              <FilePath>../../../../../middleware/libjpeg/inc/cderror.h</FilePath>
+            </File>
+            <File>
+              <FileName>jdct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jdct.h</FilePath>
             </File>
             <File>
               <FileName>jmemsys.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/libjpeg/inc/jmemsys.h</FilePath>
+            </File>
+            <File>
+              <FileName>cdjpeg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/cdjpeg.h</FilePath>
+            </File>
+            <File>
+              <FileName>jversion.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jversion.h</FilePath>
+            </File>
+            <File>
+              <FileName>transupp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/transupp.h</FilePath>
+            </File>
+            <File>
+              <FileName>jpegint.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jpegint.h</FilePath>
+            </File>
+            <File>
+              <FileName>jmorecfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jmorecfg.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -4324,39 +4324,9 @@
           <GroupName>libjpeg/inc</GroupName>
           <Files>
             <File>
-              <FileName>cderror.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/cderror.h</FilePath>
-            </File>
-            <File>
-              <FileName>transupp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/transupp.h</FilePath>
-            </File>
-            <File>
-              <FileName>jversion.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jversion.h</FilePath>
-            </File>
-            <File>
-              <FileName>jdct.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jdct.h</FilePath>
-            </File>
-            <File>
-              <FileName>jmorecfg.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jmorecfg.h</FilePath>
-            </File>
-            <File>
               <FileName>jinclude.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/libjpeg/inc/jinclude.h</FilePath>
-            </File>
-            <File>
-              <FileName>jpegint.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/jpegint.h</FilePath>
             </File>
             <File>
               <FileName>jpeglib.h</FileName>
@@ -4369,14 +4339,44 @@
               <FilePath>../../../../../middleware/libjpeg/inc/jerror.h</FilePath>
             </File>
             <File>
-              <FileName>cdjpeg.h</FileName>
+              <FileName>cderror.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/libjpeg/inc/cdjpeg.h</FilePath>
+              <FilePath>../../../../../middleware/libjpeg/inc/cderror.h</FilePath>
+            </File>
+            <File>
+              <FileName>jdct.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jdct.h</FilePath>
             </File>
             <File>
               <FileName>jmemsys.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/libjpeg/inc/jmemsys.h</FilePath>
+            </File>
+            <File>
+              <FileName>cdjpeg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/cdjpeg.h</FilePath>
+            </File>
+            <File>
+              <FileName>jversion.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jversion.h</FilePath>
+            </File>
+            <File>
+              <FileName>transupp.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/transupp.h</FilePath>
+            </File>
+            <File>
+              <FileName>jpegint.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jpegint.h</FilePath>
+            </File>
+            <File>
+              <FileName>jmorecfg.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/libjpeg/inc/jmorecfg.h</FilePath>
             </File>
           </Files>
         </Group>

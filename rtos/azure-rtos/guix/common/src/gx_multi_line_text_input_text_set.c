@@ -38,7 +38,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_input_new_line_character_get    PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -72,6 +72,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_multi_line_text_input_new_line_character_get(GX_MULTI_LINE_TEXT_INPUT *text_input)
@@ -100,12 +102,12 @@ UINT glyph_len;
         {
             if (ch[1] == GX_KEY_LINE_FEED)
             {
-                memcpy(text_input -> gx_multi_line_text_input_new_line_character, "\r\n", 3);
+                memcpy(text_input -> gx_multi_line_text_input_new_line_character, "\r\n", 3); /* Use case of memcpy is verified. */
                 text_input -> gx_multi_line_text_input_new_line_character_size = 2;
             }
             else
             {
-                memcpy(text_input -> gx_multi_line_text_input_new_line_character, "\r", 2);
+                memcpy(text_input -> gx_multi_line_text_input_new_line_character, "\r", 2); /* Use case of memcpy is verified. */
                 text_input -> gx_multi_line_text_input_new_line_character_size = 1;
             }
 
@@ -113,7 +115,7 @@ UINT glyph_len;
         }
         else if (ch[0] == GX_KEY_LINE_FEED)
         {
-            memcpy(text_input -> gx_multi_line_text_input_new_line_character, "\n", 2);
+            memcpy(text_input -> gx_multi_line_text_input_new_line_character, "\n", 2); /* Use case of memcpy is verified. */
             text_input -> gx_multi_line_text_input_new_line_character_size = 1;
             break;
         }
@@ -125,7 +127,7 @@ UINT glyph_len;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_input_text_set                  PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -160,6 +162,8 @@ UINT glyph_len;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -186,7 +190,7 @@ GX_STRING new_string;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_multi_line_text_input_text_set_ext              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -228,6 +232,8 @@ GX_STRING new_string;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_multi_line_text_input_text_set_ext(GX_MULTI_LINE_TEXT_INPUT *text_input, GX_CONST GX_STRING *text)
@@ -266,7 +272,7 @@ UINT      glyph_len = 0;
             copy_size = text -> gx_string_length;
         }
 
-        memcpy((GX_CHAR *)text_input -> gx_multi_line_text_view_text.gx_string_ptr, text -> gx_string_ptr, copy_size);
+        memcpy((GX_CHAR *)text_input -> gx_multi_line_text_view_text.gx_string_ptr, text -> gx_string_ptr, copy_size); /* Use case of memcpy is verified. */
         text_input -> gx_multi_line_text_view_text.gx_string_length = copy_size;
     }
     else

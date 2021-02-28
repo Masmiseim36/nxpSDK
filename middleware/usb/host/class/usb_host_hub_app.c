@@ -90,6 +90,9 @@ static void USB_HostHubControlCallback(void *param, uint8_t *data, uint32_t data
 void USB_HostHubInterruptInCallback(void *param, uint8_t *data, uint32_t data_len, usb_status_t status);
 
 #if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
+
+static usb_host_hub_instance_t *USB_HostHubGetHubDeviceHandle(usb_host_handle hostHandle, uint8_t parentHubNo);
+
 static usb_status_t USB_HostSendHubRequest(usb_device_handle deviceHandle,
                                            uint8_t requestType,
                                            uint8_t request,
@@ -872,8 +875,7 @@ static void USB_HostHubControlCallback(void *param, uint8_t *data, uint32_t data
     }
 }
 
-#if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U)) || \
- (defined(USB_HOST_CONFIG_COMPLIANCE_TEST) && (USB_HOST_CONFIG_COMPLIANCE_TEST > 0U)))
+#if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
 /*!
  * @brief get device's hub device instance.
  *
@@ -881,7 +883,7 @@ static void USB_HostHubControlCallback(void *param, uint8_t *data, uint32_t data
  *
  * @return think time value.
  */
-usb_host_hub_instance_t *USB_HostHubGetHubDeviceHandle(usb_host_handle hostHandle, uint8_t parentHubNo)
+static usb_host_hub_instance_t *USB_HostHubGetHubDeviceHandle(usb_host_handle hostHandle, uint8_t parentHubNo)
 {
     usb_host_hub_instance_t *hubInstance;
     uint32_t deviceAddress;
@@ -909,9 +911,7 @@ usb_host_hub_instance_t *USB_HostHubGetHubDeviceHandle(usb_host_handle hostHandl
     }
     return (usb_host_hub_instance_t *)NULL;
 }
-#endif
 
-#if ((defined(USB_HOST_CONFIG_LOW_POWER_MODE)) && (USB_HOST_CONFIG_LOW_POWER_MODE > 0U))
 static void USB_HostSetHubRequestCallback(void *param, usb_host_transfer_t *transfer, usb_status_t status)
 {
     usb_host_instance_t *hostInstance = (usb_host_instance_t *)param;

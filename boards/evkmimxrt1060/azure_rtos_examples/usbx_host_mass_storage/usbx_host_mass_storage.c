@@ -17,7 +17,14 @@
  * Definitions
  ******************************************************************************/
 /* Define constants. */
-#define USBX_MEMORY_SIZE (100 * 1024)
+#ifndef USBX_MEMORY_SIZE
+#define USBX_MEMORY_SIZE            (60 * 1024)
+#endif
+
+#ifndef USBX_MEMORY_CACHESAFE_SIZE
+#define USBX_MEMORY_CACHESAFE_SIZE  (60 * 1024)
+#endif
+
 #define DEMO_STACK_SIZE  (2 * 1024)
 #define DEMO_BUFFER_SIZE 1024
 
@@ -45,8 +52,10 @@ FX_MEDIA *media;
 CHAR file_name[64];
 UCHAR local_buffer[1024];
 UCHAR storage_buffer[DEMO_BUFFER_SIZE];
+CHAR demo_stack[DEMO_STACK_SIZE];
 
-AT_NONCACHEABLE_SECTION(static char usb_memory[USBX_MEMORY_SIZE]);
+UINT usb_memory[USBX_MEMORY_SIZE / sizeof(UINT)];
+AT_NONCACHEABLE_SECTION_ALIGN(char usb_memory_cachesafe[USBX_MEMORY_CACHESAFE_SIZE], 64);
 
 /* Define the SysTick cycles which will be loaded on tx_initialize_low_level.s */
 int systick_cycles;
@@ -62,6 +71,33 @@ UINT demo_class_storage_get(void);
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+/* this function is for the macro UX_HCD_EHCI_EXT_USBPHY_HIGHSPEED_MODE_SET in ux_user.h */
+void usbphy_set_highspeed_mode(void *regs, int on_off)
+{
+    USB_Type* usb_base[] = USB_BASE_PTRS;
+    USBPHY_Type* usbphy_base[] = USBPHY_BASE_PTRS;
+    uint32_t ehci_base;
+    UX_HCD_EHCI *hcd_ehci;
+    int i;
+
+    hcd_ehci = (UX_HCD_EHCI *)regs;
+    if (hcd_ehci->ux_hcd_ehci_base == 0)
+        return;
+
+    /* the first value in USB_BASE_ADDRS is always zero, so skip it */
+    for (i = 1; i < sizeof(usb_base) / sizeof(usb_base[0]); i++)
+    {
+        ehci_base = (uint32_t)(&usb_base[i]->CAPLENGTH);
+        if ((uint32_t)hcd_ehci->ux_hcd_ehci_base == ehci_base) {
+            if (on_off)
+                usbphy_base[i]->CTRL_SET = USBPHY_CTRL_SET_ENHOSTDISCONDETECT_MASK;
+            else
+                usbphy_base[i]->CTRL_CLR = USBPHY_CTRL_CLR_ENHOSTDISCONDETECT_MASK;
+        }
+    }
+}
+
 int main(void)
 {
     /* Initialize the board. */
@@ -81,22 +117,16 @@ int main(void)
 /* Define what the initial system looks like. */
 void tx_application_define(void *first_unused_memory)
 {
-    CHAR *stack_pointer;
-    CHAR *memory_pointer;
-
-    /* Initialize the free memory pointer */
-    stack_pointer = (CHAR *)first_unused_memory;
-
-    memory_pointer = usb_memory;
+    TX_THREAD_NOT_USED(first_unused_memory);
 
     /* Initialize FileX.  */
     fx_system_initialize();
 
     /* Initialize USBX memory. */
-    ux_system_initialize(memory_pointer, USBX_MEMORY_SIZE, UX_NULL, 0);
+    ux_system_initialize((VOID *)usb_memory, USBX_MEMORY_SIZE, usb_memory_cachesafe, USBX_MEMORY_CACHESAFE_SIZE);
 
     /* Create the main demo thread. */
-    tx_thread_create(&tx_demo_thread, "tx demo", demo_thread_entry, 0, stack_pointer, DEMO_STACK_SIZE, 30, 30, 1,
+    tx_thread_create(&tx_demo_thread, "tx demo", demo_thread_entry, 0, (VOID *)demo_stack, DEMO_STACK_SIZE, 20, 20, 1,
                      TX_AUTO_START);
 }
 
@@ -107,43 +137,45 @@ void demo_thread_entry(ULONG arg)
     /* The code below is required for installing the host portion of USBX.  */
     status = ux_host_stack_initialize(NULL);
     if (status != UX_SUCCESS)
-        return;
+        goto err;
 
     /* Register the HUB class. */
     status = ux_host_stack_class_register(_ux_system_host_class_hub_name, _ux_host_class_hub_entry);
     if (status != UX_SUCCESS)
-        return;
+        goto err;
 
     /* Register storage class. */
     status = ux_host_stack_class_register(_ux_system_host_class_storage_name, _ux_host_class_storage_entry);
     if (status != UX_SUCCESS)
-        return;
+        goto err;
 
     usb_host_interrupt_setup(USB_HOST_INTERRUPT_PRIORITY);
     /* Register all the USB host controllers available in this system.  */
 
     status = ux_host_stack_hcd_register((UCHAR *)"ehci test", _ux_hcd_ehci_initialize, usb_host_base(), 0x0);
     if (status != UX_SUCCESS)
-        return;
+        goto err;
 
     while (1)
     {
         /* Find the storage class. */
         status = demo_class_storage_get();
+        if (status == UX_SUCCESS) {
 
-        if (status != UX_SUCCESS)
-            continue;
+            /* Find first file on media. */
+            status = fx_directory_first_entry_find(media, file_name);
+            if (status == FX_SUCCESS) {
+                demo_read_file();
+            }
+        }
 
-        /* Find first file on media. */
-        status = fx_directory_first_entry_find(media, file_name);
-
-        if (status != UX_SUCCESS)
-            continue;
-
-        demo_read_file();
-
-        tx_thread_sleep(10);
+        tx_thread_sleep(4 * TX_TIMER_TICKS_PER_SECOND);
     }
+
+err:
+    PRINTF("demo_thread_entry: FAIL(0x%x)\r\n", status);
+    while(1)
+        ;
 }
 
 void demo_read_file()

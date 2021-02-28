@@ -39,7 +39,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_system_initialize                               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -76,6 +76,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _gx_system_initialize(VOID)
@@ -109,6 +111,10 @@ UINT length;
     memset(_gx_system_input_capture_stack, 0, sizeof(GX_WIDGET *) * GX_MAX_INPUT_CAPTURE_NESTING);
     _gx_system_capture_count = 0;
     _gx_system_input_owner = GX_NULL;
+
+    /* initialize rich text context stack. */
+    _gx_system_rich_text_context_stack.gx_rich_text_context_stack_top = 0;
+    _gx_system_rich_text_context_stack_save.gx_rich_text_context_stack_top = 0;
 
     /* initialize the lock count to 0 */
     _gx_system_lock_nesting =                       0;
@@ -156,7 +162,7 @@ UINT length;
     length = sizeof("Version ") - 1;
 
     /* Copy "Version " to version string. */
-    memcpy(_gx_system_version_string, "Version ", length);
+    memcpy(_gx_system_version_string, "Version ", length); /* Use case of memcpy is verified. */
 
     index = length;
 

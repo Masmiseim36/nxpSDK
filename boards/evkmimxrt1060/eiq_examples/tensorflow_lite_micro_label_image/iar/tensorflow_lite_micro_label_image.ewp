@@ -2103,34 +2103,34 @@
         <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/display/RK043FN02HC/eiq_display_conf.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_camera.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_pxp.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_display.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_video_worker.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_display.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_pxp.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_camera_conf.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_display.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_camera.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_video_worker.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_camera.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_pxp.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_camera_conf.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_display_conf.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_pxp.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_display.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/video/eiq_camera.h</name>
       </file>
     </group>
     <file>
@@ -2360,6 +2360,9 @@
                 <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/op_resolver.h</name>
               </file>
               <file>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils.h</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/profiler.h</name>
               </file>
               <file>
@@ -2369,19 +2372,16 @@
                 <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils.h</name>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.cpp</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.cpp</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/op_resolver.cpp</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/flatbuffer_conversions.cpp</name>
-              </file>
-              <file>
                 <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/tensor_utils_.cpp</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/core/api/error_reporter.cpp</name>
               </file>
             </group>
           </group>
@@ -2568,79 +2568,70 @@
           <group>
             <name>micro</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compatibility.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_optional_debug_tools.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_utils.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_interpreter.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_simple_memory_allocator.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/simple_memory_allocator.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_mutable_op_resolver.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/all_ops_resolver.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_profiler.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_error_reporter.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_op_resolver.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_allocator.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_utils.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_time.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_op_resolver.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_mutable_op_resolver.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_string.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_allocator.cpp</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_error_reporter.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.cpp</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.cpp</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_profiler.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_interpreter.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/all_ops_resolver.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_simple_memory_allocator.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/simple_memory_allocator.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_optional_debug_tools.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/compatibility.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_error_reporter.cpp</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/simple_memory_allocator.cpp</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_utils.cpp</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/all_ops_resolver.cpp</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_string.cpp</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter.cpp</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_profiler.cpp</name>
@@ -2649,16 +2640,25 @@
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_time.cpp</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.cpp</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/simple_memory_allocator.cpp</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_interpreter.cpp</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_string.cpp</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_optional_debug_tools.cpp</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/micro_allocator.cpp</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_helpers.cpp</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/debug_log.cpp</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/all_ops_resolver.cpp</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_micro_allocator.cpp</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/recording_simple_memory_allocator.cpp</name>
@@ -2764,38 +2764,38 @@
               <group>
                 <name>cmsis-nn</name>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/conv.cpp</name>
-                </file>
-                <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/add.cpp</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/softmax.cpp</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/fully_connected.cpp</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/depthwise_conv.cpp</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/mul.cpp</name>
                 </file>
                 <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/fully_connected.cpp</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/softmax.cpp</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/conv.cpp</name>
+                </file>
+                <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/pooling.cpp</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/kernels/cmsis-nn/depthwise_conv.cpp</name>
                 </file>
               </group>
             </group>
             <group>
               <name>memory_planner</name>
               <file>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/greedy_memory_planner.h</name>
+              </file>
+              <file>
                 <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/linear_memory_planner.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/memory_planner.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/greedy_memory_planner.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/tensorflow/lite/micro/memory_planner/linear_memory_planner.cpp</name>
@@ -2833,85 +2833,85 @@
               <group>
                 <name>Include</name>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm23.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_armcc.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/tz_context.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm3.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/mpu_armv8.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm4.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm0.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/pmu_armv8.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_armclang.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm7.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_iccarm.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm1.h</name>
-                </file>
-                <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_compiler.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm55.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm0plus.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_sc000.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_armv81mml.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cachel1_armv7.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm35p.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm4.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_gcc.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm0plus.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/mpu_armv7.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cachel1_armv7.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/mpu_armv8.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm1.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/pmu_armv8.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm7.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/tz_context.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_armcc.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_sc000.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_armv8mml.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm33.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_sc300.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_version.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_armclang.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_iccarm.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm0.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_armv8mbl.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_sc300.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm33.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/mpu_armv7.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_armv81mml.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_gcc.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm3.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm55.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_version.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/core_cm23.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/Core/Include/cmsis_armclang_ltm.h</name>
                 </file>
               </group>
             </group>
@@ -2920,34 +2920,34 @@
               <group>
                 <name>Include</name>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_common_tables_f16.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_math.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_math_f16.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_helium_utils.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_math.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_mve_tables.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_mve_tables_f16.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_vec_math.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_mve_tables.h</name>
-                </file>
-                <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_const_structs_f16.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_common_tables.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_const_structs.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_common_tables.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_common_tables_f16.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_vec_math.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_const_structs_f16.h</name>
+                </file>
+                <file>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/DSP/Include/arm_helium_utils.h</name>
                 </file>
               </group>
             </group>
@@ -2956,13 +2956,13 @@
               <group>
                 <name>Include</name>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include/arm_nnfunctions.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include/arm_nn_types.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include/arm_nnsupportfunctions.h</name>
                 </file>
                 <file>
-                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include/arm_nn_types.h</name>
+                  <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include/arm_nnfunctions.h</name>
                 </file>
                 <file>
                   <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Include/arm_nn_tables.h</name>
@@ -2973,19 +2973,19 @@
                 <group>
                   <name>ActivationFunctions</name>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ActivationFunctions/arm_relu_q7.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ActivationFunctions/arm_relu_q15.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q15.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ActivationFunctions/arm_relu_q7.c</name>
                   </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ActivationFunctions/arm_relu6_s8.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ActivationFunctions/arm_relu_q15.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q7.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q7.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ActivationFunctions/arm_nn_activations_q15.c</name>
                   </file>
                 </group>
                 <group>
@@ -3000,10 +3000,10 @@
                 <group>
                   <name>ConcatenationFunctions</name>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_z.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_w.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_w.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_z.c</name>
                   </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConcatenationFunctions/arm_concatenation_s8_y.c</name>
@@ -3015,107 +3015,122 @@
                 <group>
                   <name>ConvolutionFunctions</name>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_wrapper_s8.c</name>
                   </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast_nonsquare.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8_opt.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1_x_n_s8.c</name>
                   </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_3x3_s8.c</name>
                   </file>
                   <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</name>
+                  </file>
+                  <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_s8_fast.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_depthwise_conv_s8_core.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1_x_n_s8.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_s8.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</name>
                   </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_s8.c</name>
                   </file>
                   <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8_opt.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast_nonsquare.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_1x1_s8_fast.c</name>
+                  </file>
+                  <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16_reordered.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_wrapper_s8.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_s8.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_s8_s16.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_depthwise_conv_s8_core.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_depthwise_conv_s8.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</name>
                   </file>
                 </group>
                 <group>
                   <name>FullyConnectedFunctions</name>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_s8.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7.c</name>
                   </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_q15.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/arm_fully_connected_s8.c</name>
                   </file>
                 </group>
                 <group>
                   <name>NNSupportFunctions</name>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q15.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s8.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mult_nt_t_s8.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_core_4x_s8.c</name>
+                  </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q7.c</name>
                   </file>
@@ -3123,43 +3138,28 @@
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_accumulate_q7_to_q15.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_core_4x_s8.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_with_offset.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mult_nt_t_s8.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_add_q7.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_s8.c</name>
                   </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_padded_s8.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nntables.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c</name>
+                  </file>
+                  <file>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_add_q7.c</name>
                   </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_with_offset.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_depthwise_conv_nt_t_s8.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_accumulate_q7_to_q15.c</name>
                   </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mat_mul_core_1x_s8.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_vec_mat_mult_t_s8.c</name>
-                  </file>
-                  <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_nn_mult_q15.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/arm_q7_to_q15_reordered_with_offset.c</name>
                   </file>
                 </group>
                 <group>
@@ -3168,13 +3168,13 @@
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_max_pool_s8.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_max_pool_s8_opt.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_pool_q7_HWC.c</name>
                   </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_avgpool_s8.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_pool_q7_HWC.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/arm_max_pool_s8_opt.c</name>
                   </file>
                 </group>
                 <group>
@@ -3189,16 +3189,16 @@
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q7.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_u8.c</name>
                   </file>
                   <file>
                     <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_s8.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_with_batch_q7.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_q15.c</name>
                   </file>
                   <file>
-                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_u8.c</name>
+                    <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/arm_softmax_with_batch_q7.c</name>
                   </file>
                 </group>
               </group>
@@ -3221,40 +3221,40 @@
             <group>
               <name>flatbuffers</name>
               <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/idl.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection_generated.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/hash.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/minireflect.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/util.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/code_generators.h</name>
-              </file>
-              <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flexbuffers.h</name>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/registry.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection.h</name>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/reflection_generated.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/idl.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/code_generators.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/stl_emulation.h</name>
               </file>
               <file>
                 <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/base.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatbuffers.h</name>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flexbuffers.h</name>
               </file>
               <file>
-                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/stl_emulation.h</name>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/util.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/minireflect.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/hash.h</name>
+              </file>
+              <file>
+                <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/flatbuffers/include/flatbuffers/flatbuffers.h</name>
               </file>
             </group>
           </group>
@@ -3262,13 +3262,13 @@
         <group>
           <name>gemmlowp</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/LICENSE</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/AUTHORS</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/CONTRIBUTORS</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/LICENSE</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/README.md</name>
@@ -3276,97 +3276,46 @@
           <group>
             <name>fixedpoint</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint/fixedpoint_msa.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint/fixedpoint_sse.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint/fixedpoint.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint/fixedpoint_msa.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint/fixedpoint_neon.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint/fixedpoint_sse.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/fixedpoint/fixedpoint.h</name>
             </file>
           </group>
           <group>
             <name>internal</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/output_sse.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/detect_platform.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/multi_thread_gemm.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_msa.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/compute.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/pack.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/pack_neon.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_reference.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/simd_wrappers_sse.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/simd_wrappers_common_neon_sse.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_neon.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/simd_wrappers.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/output_msa.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/output.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_sse.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/allocator.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/common.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_dsp.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/block_params.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/pack_sse.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/dispatch_gemm_shape.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/pack_msa.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/simd_wrappers.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/common.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_msa.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/pack_neon.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/platform.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/pack_sse.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_default.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/simd_wrappers_neon.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/output_neon.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/block_params.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/single_thread_gemm.h</name>
@@ -3375,34 +3324,88 @@
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/simd_wrappers_msa.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/allocator.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/unpack.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/pack_msa.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/output_sse.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_default.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/simd_wrappers_common_neon_sse.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_dsp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/output_msa.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/simd_wrappers_sse.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/pack.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/output.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/compute.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/simd_wrappers_neon.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_sse.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/multi_thread_gemm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_reference.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/detect_platform.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/output_neon.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/internal/kernel_neon.h</name>
             </file>
           </group>
           <group>
             <name>meta</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/multi_thread_gemm.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/multi_thread_transform.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/transform_kernels_arm_32.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/quantized_mul_kernels_arm_32.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/streams.h</name>
             </file>
             <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/legacy_multi_thread_gemm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/legacy_multi_thread_common.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/legacy_multi_thread_gemv.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/transform_kernels_arm_32.h</name>
+            </file>
+            <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/streams_arm_32.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/quantized_mul_kernels_arm_32.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/legacy_single_thread_gemm.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/single_thread_transform.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/multi_thread_common.h</name>
@@ -3411,61 +3414,58 @@
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/streams_arm_64.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/legacy_multi_thread_common.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/legacy_multi_thread_gemm.h</name>
-            </file>
-            <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/transform_kernels.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/quantized_mul_kernels.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/multi_thread_transform.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/base.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/single_thread_gemm.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/quantized_mul_kernels_arm_64.h</name>
-            </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/legacy_operations_common.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/legacy_single_thread_gemm.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/transform_kernels_arm_64.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/single_thread_transform.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/base.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/legacy_multi_thread_gemv.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/legacy_operations_common.h</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/single_thread_gemm.h</name>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/quantized_mul_kernels.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/multi_thread_gemm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/meta/quantized_mul_kernels_arm_64.h</name>
             </file>
           </group>
           <group>
             <name>profiling</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/profiling/pthread_everywhere.h</name>
+            </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/profiling/profiler.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/profiling/instrumentation.h</name>
             </file>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/profiling/pthread_everywhere.h</name>
-            </file>
           </group>
           <group>
             <name>public</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/public/config.h</name>
-            </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/public/bit_depth.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/public/gemmlowp.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/public/config.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/gemmlowp/public/map.h</name>
@@ -3484,106 +3484,16 @@
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/LICENSE</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/context.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/cpu_cache_params.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/side_pair.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/thread_pool.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/ctx_impl.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/size_util.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/system_aligned_alloc.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/tune.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/ruy.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/apply_multiplier.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/matrix.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/blocking_counter.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_x86.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_arm.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/trmul_params.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/cpu_cache_params.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/cpuinfo.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_common.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/mat.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/allocator.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/common.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_arm.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/prepacked_cache.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_x86.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/block_map.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/opt_set.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/ctx.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/dispatch.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/trmul.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/have_built_path_for.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/platform.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/path.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_common.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/tune.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/mul_params.h</name>
@@ -3592,28 +3502,106 @@
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/time.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/common.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/size_util.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/context.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/trmul.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/platform.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/ctx.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_x86.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/path.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/prepacked_cache.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/side_pair.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_x86.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/system_aligned_alloc.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/allocator.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/have_built_path_for.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/mat.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/ctx_impl.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/blocking_counter.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_common.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/apply_multiplier.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/opt_set.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/thread_pool.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/cpuinfo.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_arm.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/trmul_params.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/matrix.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/block_map.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_arm.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/check_macros.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_common.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/context_get_ctx.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/block_map.cpp</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/trmul.cpp</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/prepacked_cache.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/tune.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/context_get_ctx.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/have_built_path_for_avx2.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_avx512.cpp</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_avx2.cpp</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/cpuinfo.cpp</name>
@@ -3622,52 +3610,10 @@
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/have_built_path_for_sse42.cpp</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/ctx.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/trmul.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/allocator.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/thread_pool.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_avx2.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_arm32.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/context.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_avx2.cpp</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_avxvnni.cpp</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/system_aligned_alloc.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_avxvnni.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_arm.cpp</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_arm64.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_avx512.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/apply_multiplier.cpp</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_sse42.cpp</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/blocking_counter.cpp</name>
@@ -3676,21 +3622,75 @@
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/have_built_path_for_avxvnni.cpp</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/allocator.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/system_aligned_alloc.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_avx512.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/tune.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/context_get_ctx.cpp</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_sse42.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/apply_multiplier.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_avx512.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_avx2.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/thread_pool.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/prepacked_cache.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/ctx.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/context.cpp</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/have_built_path_for_avx512.cpp</name>
           </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/have_built_path_for_avx2.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_sse42.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/block_map.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/kernel_arm32.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_avxvnni.cpp</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/pack_arm.cpp</name>
+          </file>
           <group>
             <name>profiler</name>
-            <file>
-              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/profiler/treeview.h</name>
-            </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/profiler/profiler.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/profiler/instrumentation.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/profiler/treeview.h</name>
             </file>
             <file>
               <name>$PROJ_DIR$/../../../../../middleware/eiq/tensorflow-lite/third_party/ruy/profiler/profiler.cpp</name>

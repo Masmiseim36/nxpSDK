@@ -26,7 +26,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */ 
 /*                                                                        */ 
 /*    nx_pppoe_client.h                                   PORTABLE C      */  
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Yuxin Zhou, Microsoft Corporation                                   */
@@ -42,6 +42,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
+/*  09-30-2020     Yuxin Zhou               Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -349,4 +351,4 @@ VOID    _nx_pppoe_client_packet_deferred_receive(NX_PACKET *packet_ptr);
         }
 #endif
 
-#endif /* NX_PPP_CLIENT_H */ 
+#endif /* NX_PPPOE_CLIENT_H */ 

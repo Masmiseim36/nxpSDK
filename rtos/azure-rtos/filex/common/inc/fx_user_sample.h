@@ -26,7 +26,7 @@
 /*  PORT SPECIFIC C INFORMATION                            RELEASE        */
 /*                                                                        */
 /*    fx_user.h                                           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*                                                                        */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -45,6 +45,11 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            added product constants     */
+/*                                            to enable code              */
+/*                                            size optimization,          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -182,6 +187,53 @@
    Note that this field (byte 116 to 119) is marked as reserved by FAT 12/16/32/exFAT specification. */
 
 /*#define FX_FAULT_TOLERANT_BOOT_INDEX      116 */
+
+/* Below FX_DISABLE_XXX macros can be used for code size optimization required for memory 
+   critical aplications */
+
+/* Defined, error checking is disabled.  */
+
+/*#define FX_DISABLE_ERROR_CHECKING   */
+
+
+/* Defined, cache is disabled.  */
+
+/*#define FX_DISABLE_CACHE   */
+
+
+/* Defined, file close is disabled.  */
+
+/*#define FX_DISABLE_FILE_CLOSE   */
+
+
+/* Defined, fast open is disabled.  */
+
+/*#define FX_DISABLE_FAST_OPEN   */
+
+
+/* Defined, force memory operations are disabled.  */
+
+/*#define FX_DISABLE_FORCE_MEMORY_OPERATION   */
+
+
+/* Defined, build options is disabled.  */
+
+/*#define FX_DISABLE_BUILD_OPTIONS   */
+
+
+/* Defined, one line function is disabled.  */
+
+/*#define FX_DISABLE_ONE_LINE_FUNCTION   */
+
+
+/* Defined, FAT entry refresh is disabled.  */
+
+/*#define FX_DIABLE_FAT_ENTRY_REFRESH   */
+
+
+/* Defined, consecutive detect is disabled.  */
+
+/*#define FX_DISABLE_CONSECUTIVE_DETECT   */
 
 
 #endif

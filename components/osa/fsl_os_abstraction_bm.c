@@ -131,9 +131,7 @@ typedef struct _osa_state
     volatile uint32_t interruptDisableCount;
     volatile uint32_t tickCounter;
 #if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
-#if (defined(FSL_OSA_MAIN_FUNC_ENABLE) && (FSL_OSA_MAIN_FUNC_ENABLE > 0U))
     OSA_TASK_HANDLE_DEFINE(mainTaskHandle);
-#endif
 #endif
 } osa_state_t;
 
@@ -148,6 +146,12 @@ __WEAK_FUNC void main_task(osa_task_param_t arg)
 }
 __WEAK_FUNC void OSA_TimeInit(void);
 __WEAK_FUNC uint32_t OSA_TimeDiff(uint32_t time_start, uint32_t time_end);
+#if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
+osa_status_t OSA_Init(void);
+#endif /* FSL_OSA_TASK_ENABLE */
+#if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
+void OSA_Start(void);
+#endif /* FSL_OSA_TASK_ENABLE */
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -1233,38 +1237,38 @@ void OSA_InstallIntHandler(uint32_t IRQNumber, void (*handler)(void))
 *************************************************************************************
 ********************************************************************************** */
 #if ((defined(FSL_OSA_TASK_ENABLE)) && (FSL_OSA_TASK_ENABLE > 0U))
-#if (defined(FSL_OSA_MAIN_FUNC_ENABLE) && (FSL_OSA_MAIN_FUNC_ENABLE > 0U))
+
 static OSA_TASK_DEFINE(main_task, gMainThreadPriority_c, 1, gMainThreadStackSize_c, 0);
 
-void main(void)
+int main(void)
 {
-    OSA_Init();
-
-    /* Initialize MCU clock */
     extern void BOARD_InitHardware(void);
+    (void)OSA_Init();
+    /* Initialize MCU clock */
     BOARD_InitHardware();
-
+#if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
+    OSA_TimeInit();
+#endif
     (void)OSA_TaskCreate((osa_task_handle_t)s_osaState.mainTaskHandle, OSA_TASK(main_task), NULL);
-
     OSA_Start();
+
+    return 0;
 }
-#endif /*(defined(FSL_OSA_MAIN_FUNC_ENABLE) && (FSL_OSA_MAIN_FUNC_ENABLE > 0U))*/
 #endif /* FSL_OSA_TASK_ENABLE */
 
 /*FUNCTION**********************************************************************
  *
  * Function Name : OSA_Init
  * Description   : This function is used to setup the basic services, it should
- * be called first in function main.
+ * be called first in function main. Return kStatus_OSA_Success if services
+ * are initialized successfully, otherwise return kStatus_OSA_Error.
  *
  *END**************************************************************************/
 #if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
-void OSA_Init(void)
+osa_status_t OSA_Init(void)
 {
     LIST_Init((&s_osaState.taskList), 0);
-    s_osaState.curTaskHandler        = NULL;
-    s_osaState.interruptDisableCount = 0U;
-    s_osaState.tickCounter           = 0U;
+    return KOSA_StatusSuccess;
 }
 #endif
 
@@ -1280,26 +1284,25 @@ void OSA_Start(void)
     list_element_handle_t list_element;
     task_control_block_t *tcb;
 
-#if (FSL_OSA_BM_TIMER_CONFIG != FSL_OSA_BM_TIMER_NONE)
-    OSA_TimeInit();
-#endif
-
-    list_element = LIST_GetHead(&s_osaState.taskList);
-    while (1)
+    for (;;)
     {
-        tcb                       = (task_control_block_t *)(void *)list_element;
-        s_osaState.curTaskHandler = (osa_task_handle_t)tcb;
-        if (0U != tcb->haveToRun)
+        list_element = LIST_GetHead(&s_osaState.taskList);
+        while (NULL != list_element)
         {
-            if (NULL != tcb->p_func)
+            tcb                       = (task_control_block_t *)(void *)list_element;
+            s_osaState.curTaskHandler = (osa_task_handle_t)tcb;
+            if (0U != tcb->haveToRun)
             {
-                tcb->p_func(tcb->param);
+                if (NULL != tcb->p_func)
+                {
+                    tcb->p_func(tcb->param);
+                }
+                list_element = LIST_GetHead(&s_osaState.taskList);
             }
-            list_element = LIST_GetHead(&s_osaState.taskList);
-        }
-        else
-        {
-            list_element = LIST_GetNext(list_element);
+            else
+            {
+                list_element = LIST_GetNext(list_element);
+            }
         }
     }
 }

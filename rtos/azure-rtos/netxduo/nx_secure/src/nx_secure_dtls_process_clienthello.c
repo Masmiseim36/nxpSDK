@@ -40,7 +40,7 @@ static UINT _nx_secure_dtls_check_ciphersuite(const NX_SECURE_TLS_CIPHERSUITE_IN
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_dtls_process_clienthello                 PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -81,12 +81,15 @@ static UINT _nx_secure_dtls_check_ciphersuite(const NX_SECURE_TLS_CIPHERSUITE_IN
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
-/*  06-30-2020     Timothy Stapko           Modified comment(s), added    */
+/*  09-30-2020     Timothy Stapko           Modified comment(s), added    */
 /*                                            priority ciphersuite logic, */
+/*                                            verified memcpy use cases,  */
 /*                                            fixed configuration problem */
 /*                                            that would result in        */
-/*                                            compiler error,             */
-/*                                            resulting in version 6.0.1  */
+/*                                            compiler error, fixed       */
+/*                                            renegotiation bug,          */
+/*                                            improved negotiation logic, */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_dtls_process_clienthello(NX_SECURE_DTLS_SESSION *dtls_session, UCHAR *packet_buffer,
@@ -145,6 +148,14 @@ NX_SECURE_TLS_ECDHE_HANDSHAKE_DATA   *ecdhe_data;
     /* Get a reference to TLS state. */
     tls_session = &dtls_session -> nx_secure_dtls_tls_session;
 
+    /* If we are currently in a session, we have a renegotiation handshake. */
+    if (tls_session -> nx_secure_tls_local_session_active)
+    {
+
+        /* Session renegotiation is disabled, send a "no_renegotiation" alert! */
+        return(NX_SECURE_TLS_NO_RENEGOTIATION_ERROR);
+    }
+
     /* Client is establishing a TLS session with our server. */
     /* Extract the protocol version - only part of the ClientHello message. */
     protocol_version = (USHORT)(((USHORT)packet_buffer[0] << 8) | packet_buffer[1]);
@@ -163,7 +174,7 @@ NX_SECURE_TLS_ECDHE_HANDSHAKE_DATA   *ecdhe_data;
             /* If the version isn't supported, it's not an issue - TLS is backward-compatible,
              * so pick the highest version we do support. If the version isn't recognized,
              * flag an error. */
-            _nx_secure_tls_newest_supported_version(tls_session, &protocol_version, NX_SECURE_DTLS);
+            _nx_secure_tls_highest_supported_version_negotiate(tls_session, &protocol_version, NX_SECURE_DTLS);
 
             if (protocol_version == 0x0)
             {
@@ -183,7 +194,7 @@ NX_SECURE_TLS_ECDHE_HANDSHAKE_DATA   *ecdhe_data;
     tls_session -> nx_secure_tls_protocol_version = protocol_version;
 
     /* Save off the random value for key generation later. */
-    NX_SECURE_MEMCPY(tls_session -> nx_secure_tls_key_material.nx_secure_tls_client_random, packet_buffer, NX_SECURE_TLS_RANDOM_SIZE); 
+    NX_SECURE_MEMCPY(tls_session -> nx_secure_tls_key_material.nx_secure_tls_client_random, packet_buffer, NX_SECURE_TLS_RANDOM_SIZE); /* Use case of memcpy is verified. */
     packet_buffer += NX_SECURE_TLS_RANDOM_SIZE;
 
     /* Extract the session ID if there is one. */
@@ -194,7 +205,7 @@ NX_SECURE_TLS_ECDHE_HANDSHAKE_DATA   *ecdhe_data;
     tls_session -> nx_secure_tls_session_id_length = session_id_length;
     if (session_id_length > 0)
     {
-        NX_SECURE_MEMCPY(tls_session -> nx_secure_tls_session_id, &packet_buffer[0], session_id_length); 
+        NX_SECURE_MEMCPY(tls_session -> nx_secure_tls_session_id, &packet_buffer[0], session_id_length); /* Use case of memcpy is verified. */
         packet_buffer += session_id_length;
     }
 
@@ -211,7 +222,7 @@ NX_SECURE_TLS_ECDHE_HANDSHAKE_DATA   *ecdhe_data;
 
     if (dtls_session -> nx_secure_dtls_cookie_length > 0)
     {
-        NX_SECURE_MEMCPY(dtls_session -> nx_secure_dtls_cookie, packet_buffer, dtls_session -> nx_secure_dtls_cookie_length); 
+        NX_SECURE_MEMCPY(dtls_session -> nx_secure_dtls_cookie, packet_buffer, dtls_session -> nx_secure_dtls_cookie_length); /* Use case of memcpy is verified. */
         packet_buffer += dtls_session -> nx_secure_dtls_cookie_length;
     }
 
@@ -594,7 +605,7 @@ NX_SECURE_TLS_ECDHE_HANDSHAKE_DATA   *ecdhe_data;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_dtls_check_ciphersuite                   PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -629,6 +640,8 @@ NX_SECURE_TLS_ECDHE_HANDSHAKE_DATA   *ecdhe_data;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
+/*  09-30-2020     Timothy Stapko           Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #ifdef NX_SECURE_ENABLE_ECC_CIPHERSUITE

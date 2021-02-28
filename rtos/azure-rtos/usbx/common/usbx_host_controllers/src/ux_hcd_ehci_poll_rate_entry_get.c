@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _ux_hcd_ehci_poll_rate_entry_get                    PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -76,6 +76,11 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+/*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            resulting in version 6.1    */
+/*  11-09-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            fixed compile warnings,     */
+/*                                            resulting in version 6.1.2  */
 /*                                                                        */
 /**************************************************************************/
 UX_EHCI_ED *_ux_hcd_ehci_poll_rate_entry_get(UX_HCD_EHCI *hcd_ehci,
@@ -93,9 +98,9 @@ UX_EHCI_ED *_ux_hcd_ehci_poll_rate_entry_get(UX_HCD_EHCI *hcd_ehci,
     /* Obtain next link pointer including Typ and T.  */
     while(poll_depth --)
     {
-        if (ed_list -> ux_ehci_ed_next_anchor == UX_NULL)
+        if (ed_list -> REF_AS.ANCHOR.ux_ehci_ed_next_anchor == UX_NULL)
             break;
-        ed_list = ed_list -> ux_ehci_ed_next_anchor;
+        ed_list = ed_list -> REF_AS.ANCHOR.ux_ehci_ed_next_anchor;
     }
 
     /* Return the list entry.  */

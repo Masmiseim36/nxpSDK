@@ -111,10 +111,6 @@ static void SDMMCHOST_DetectCardRemoveByHost(USDHC_Type *base, void *userData)
             if (cd->type == kSD_DetectCardByHostDATA3)
             {
                 USDHC_DisableInterruptSignal(base, kUSDHC_CardRemovalFlag);
-                if (cd->dat3PullFunc != NULL)
-                {
-                    cd->dat3PullFunc(kSD_DAT3PullUp);
-                }
             }
         }
     }
@@ -159,10 +155,6 @@ status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd)
     if (sdCD->type == kSD_DetectCardByHostDATA3)
     {
         USDHC_CardDetectByData3(base, true);
-        if (sdCD->dat3PullFunc != NULL)
-        {
-            sdCD->dat3PullFunc(kSD_DAT3PullDown);
-        }
     }
     else if (sdCD->type == kSD_DetectCardByHostCD)
     {
@@ -228,26 +220,11 @@ status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardS
 
     (void)SDMMC_OSAEventGet(&(host->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED | SDMMC_OSA_EVENT_CARD_REMOVED, &event);
     if ((((event & SDMMC_OSA_EVENT_CARD_INSERTED) == SDMMC_OSA_EVENT_CARD_INSERTED) &&
-         (SDMMCHOST_CardDetectStatus(host) == (uint32_t)kSD_Inserted) && (waitCardStatus == (uint32_t)kSD_Inserted)) ||
+         (waitCardStatus == (uint32_t)kSD_Inserted)) ||
         (((event & SDMMC_OSA_EVENT_CARD_REMOVED) == SDMMC_OSA_EVENT_CARD_REMOVED) &&
-         (SDMMCHOST_CardDetectStatus(host) == (uint32_t)kSD_Removed) && (waitCardStatus == (uint32_t)kSD_Removed)))
+         (waitCardStatus == (uint32_t)kSD_Removed)))
     {
         return kStatus_Success;
-    }
-
-    (void)SDMMC_OSAEventClear(&(host->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED | SDMMC_OSA_EVENT_CARD_REMOVED);
-
-    if (cd->type == kSD_DetectCardByHostDATA3)
-    {
-        if (cd->dat3PullFunc != NULL)
-        {
-            cd->dat3PullFunc(kSD_DAT3PullDown);
-        }
-        USDHC_ClearInterruptStatusFlags(host->hostController.base,
-                                        (uint32_t)kUSDHC_CardInsertionFlag | (uint32_t)kUSDHC_CardRemovalFlag);
-        USDHC_EnableInterruptSignal(host->hostController.base, waitCardStatus == (uint32_t)kSD_Inserted ?
-                                                                   kUSDHC_CardInsertionFlag :
-                                                                   kUSDHC_CardRemovalFlag);
     }
 
     /* Wait card inserted. */

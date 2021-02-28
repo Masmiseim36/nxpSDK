@@ -73,7 +73,7 @@ static uint32_t usb_hid_packet_get_max_packet_size(const peripheral_descriptor_t
 // static bool s_dHidMscActivity[USB_COMPOSITE_INTERFACE_COUNT] = {false};
 static bool s_dHidMscActivity[2] = { false };
 
-static IRQn_Type s_usbIRQs[] = USBHS_IRQS;
+static IRQn_Type s_usbIRQs[] = USB_IRQS;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -247,11 +247,11 @@ status_t usb_device_full_init(const peripheral_descriptor_t *self, serial_byte_r
     irqNumber = usbDeviceEhciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
 #endif
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-    uint8_t usbDeviceKhciIrq[] = USBHS_IRQS;
+    uint8_t usbDeviceKhciIrq[] = USB_IRQS;
     irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
-    uint8_t usbDeviceLpcip3511Irq[] = USBHS_IRQS;
+    uint8_t usbDeviceLpcip3511Irq[] = USB_IRQS;
     irqNumber = usbDeviceLpcip3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Fs0];
 #endif
 #if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
@@ -405,8 +405,6 @@ void usb_device_full_shutdown(const peripheral_descriptor_t *self)
 #else
         CLOCK_DisableClock(kCLOCK_UsbOh3);
 #endif
-#elif defined(ANADIG_MISC_BASE)
-        CLOCK_DisableClock(kCLOCK_Usb);
 #else
         if (SIM->SCGC3 & SIM_SCGC3_USBHS_MASK)
         {

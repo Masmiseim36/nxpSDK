@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    nx_secure_tls.h                                     PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -41,13 +41,17 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
-/*  06-30-2020     Timothy Stapko           Modified comment(s), and      */
+/*  09-30-2020     Timothy Stapko           Modified comment(s), and      */
 /*                                            fixed race condition for    */
 /*                                            multithread transmission,   */
+/*                                            supported chained packet,   */
 /*                                            priority ciphersuite and ECC*/
 /*                                            curve logic, updated product*/
-/*                                            constants,                  */
-/*                                            resulting in version 6.0.1  */
+/*                                            constants, fixed compiler   */
+/*                                            warning, fixed renegotiation*/
+/*                                            bug, fixed certificate      */
+/*                                            buffer allocation,          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -107,8 +111,8 @@ extern   "C" {
 
 #define AZURE_RTOS_NETX_SECURE
 #define NETX_SECURE_MAJOR_VERSION                       6
-#define NETX_SECURE_MINOR_VERSION                       0
-#define NETX_SECURE_PATCH_VERSION                       1
+#define NETX_SECURE_MINOR_VERSION                       1
+#define NETX_SECURE_PATCH_VERSION                       0
 
 /* The following symbols are defined for backward compatibility reasons. */
 #define EL_PRODUCT_NETX_SECURE
@@ -148,8 +152,13 @@ extern   "C" {
 /* Configuration macro: allow self-signed certificates to be used to identify a remote host. */
 /* #define NX_SECURE_ALLOW_SELF_SIGNED_CERTIFICATES */
 
-/* Configuration macro: enable secure session renegotiation extension (RFC 5746). */
-#define NX_SECURE_TLS_ENABLE_SECURE_RENEGOTIATION
+/* Configuration macro: disable secure session renegotiation extension (RFC 5746).
+   #define NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION
+ */
+/* Configuration macro: terminate the connection immediately upon failure to receive the 
+   secure renegotiation extension during the initial handshake.
+   #define NX_SECURE_TLS_REQUIRE_RENEGOTIATION_EXT
+ */
 
 /* API return values.  */
 
@@ -1055,9 +1064,7 @@ typedef struct NX_SECURE_TLS_SESSION_STRUCT
 
     /* Queue the incoming packets for one record. */
     NX_PACKET *nx_secure_record_queue_header;
-    NX_PACKET *nx_secure_record_queue_tail;
     NX_PACKET *nx_secure_record_decrypted_packet;
-    ULONG      nx_secure_record_queue_length;
 
     /* Packet pool used by TLS stack to allocate outgoing packets used in TLS handshake. */
     NX_PACKET_POOL *nx_secure_tls_packet_pool;
@@ -1086,6 +1093,9 @@ typedef struct NX_SECURE_TLS_SESSION_STRUCT
     /* This field overrides the version returned by _nx_secure_tls_newest_supported_version. */
     USHORT nx_secure_tls_protocol_version_override;
 
+    /* The highest supported protocol version obtained through negotiation. */
+	USHORT nx_secure_tls_negotiated_highest_protocol_version;
+
     /* State of local and remote encryption - post ChangeCipherSpec. */
     UCHAR nx_secure_tls_remote_session_active;
     UCHAR nx_secure_tls_local_session_active;
@@ -1105,17 +1115,21 @@ typedef struct NX_SECURE_TLS_SESSION_STRUCT
     /* Session ID used for session re-negotiation. */
     UCHAR nx_secure_tls_session_id[NX_SECURE_TLS_SESSION_ID_SIZE];
 
-#ifdef NX_SECURE_TLS_ENABLE_SECURE_RENEGOTIATION
+#ifndef NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION
     /* This flag indicates whether the remote host supports secure renegotiation
        as indicated in the initial Hello messages (SCSV or the renegotiation
        extension were provided). */
     USHORT nx_secure_tls_secure_renegotiation;
 
+    /* This flag indicates whether the renegotiation_info extension is present and
+       the data in the extension is verified during secure renegotiation. */
+    USHORT nx_secure_tls_secure_renegotiation_verified;
+
     /* The verify data is named "remote" and "local" since it can be used by
        both TLS Client and TLS Server instances. */
     UCHAR nx_secure_tls_remote_verify_data[NX_SECURE_TLS_FINISHED_HASH_SIZE];
     UCHAR nx_secure_tls_local_verify_data[NX_SECURE_TLS_FINISHED_HASH_SIZE];
-#endif
+#endif /* NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION */
 
 
     /* Sequence number for the current TLS session - local host. */
@@ -1144,12 +1158,14 @@ typedef struct NX_SECURE_TLS_SESSION_STRUCT
     /* This mutex used for TLS session while transmitting packets. */
     TX_MUTEX nx_secure_tls_session_transmit_mutex;
 
+#ifndef NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION
     /* If we receive a hello message from the remote server during a session,
        we have a re-negotiation handshake we need to process. */
     USHORT nx_secure_tls_renegotiation_handshake;
 
     /* Flag to enable/disable session renegotiation at application's choosing. */
     USHORT nx_secure_tls_renegotation_enabled;
+#endif /* NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION */
 
 #ifndef NX_SECURE_TLS_SERVER_DISABLED
     /* The state of the server handshake if this is a server socket. */
@@ -1222,8 +1238,10 @@ typedef struct NX_SECURE_TLS_SESSION_STRUCT
        by the application before being accepted. */
     ULONG (*nx_secure_tls_session_certificate_callback)(struct NX_SECURE_TLS_SESSION_STRUCT *session, NX_SECURE_X509_CERT *certificate);
 
+#ifndef NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION
     /* Function (set by user) to call when TLS receives a re-negotiation request from the remote host. */
     ULONG (*nx_secure_tls_session_renegotiation_callback)(struct NX_SECURE_TLS_SESSION_STRUCT *session);
+#endif /* NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION */
 
     /* Function (set by user) to call when a TLS Client receives a ServerHello message containing extensions
        that require specific actions. */
@@ -1286,6 +1304,11 @@ typedef struct NX_SECURE_TLS_SESSION_STRUCT
 
 /* Declare internal functions. */
 
+#ifdef NX_SECURE_KEY_CLEAR
+#define nx_secure_tls_packet_release _nx_secure_tls_packet_release
+#else
+#define nx_secure_tls_packet_release nx_packet_release
+#endif /* NX_SECURE_KEY_CLEAR */
 
 #if (NX_SECURE_TLS_TLS_1_3_ENABLED)
 UINT _nx_secure_tls_1_3_crypto_init(NX_SECURE_TLS_SESSION *tls_session);
@@ -1306,6 +1329,8 @@ UINT _nx_secure_tls_1_3_generate_psk_secret(NX_SECURE_TLS_SESSION *tls_session,
                                             NX_SECURE_TLS_PSK_STORE *psk_entry,
                                             const NX_CRYPTO_METHOD *hash_method);
 UINT _nx_secure_tls_send_newsessionticket(NX_SECURE_TLS_SESSION *tls_session, NX_PACKET *send_packet);
+UINT _nx_secure_tls_process_newsessionticket(NX_SECURE_TLS_SESSION *tls_session, UCHAR *packet_buffer,
+                                             UINT message_length);
 UINT _nx_secure_tls_process_encrypted_extensions(NX_SECURE_TLS_SESSION *tls_session,
                                                  UCHAR *packet_buffer, UINT message_length);
 UINT _nx_secure_tls_send_encrypted_extensions(NX_SECURE_TLS_SESSION *tls_session, NX_PACKET *send_packet);
@@ -1329,15 +1354,19 @@ UINT _nx_secure_tls_handshake_hash_init(NX_SECURE_TLS_SESSION *tls_session);
 UINT _nx_secure_tls_handshake_hash_update(NX_SECURE_TLS_SESSION *tls_session, UCHAR *data,
                                           UINT length);
 UINT _nx_secure_tls_handshake_process(NX_SECURE_TLS_SESSION *tls_session, UINT wait_option);
-UINT _nx_secure_tls_hash_record(NX_SECURE_TLS_SESSION * tls_session,
+UINT _nx_secure_tls_hash_record(NX_SECURE_TLS_SESSION *tls_session,
                                 ULONG sequence_num[NX_SECURE_TLS_SEQUENCE_NUMBER_SIZE],
-                                UCHAR * header, UINT header_length, UCHAR * data, UINT length,
-                                UCHAR * record_hash, UINT * hash_length, UCHAR * mac_secret);
+                                UCHAR *header, UINT header_length, NX_PACKET *packet_ptr,
+                                ULONG offset, UINT length, UCHAR *record_hash, UINT *hash_length,
+                                UCHAR *mac_secret);
 UINT _nx_secure_tls_key_material_init(NX_SECURE_TLS_KEY_MATERIAL *key_material);
 VOID _nx_secure_tls_map_error_to_alert(UINT error_number, UINT *alert_number,
                                        UINT *alert_level);
 VOID _nx_secure_tls_newest_supported_version(NX_SECURE_TLS_SESSION *session_ptr,
                                              USHORT *protocol_version, UINT id);
+VOID _nx_secure_tls_highest_supported_version_negotiate(NX_SECURE_TLS_SESSION *session_ptr,
+                                                        USHORT *protocol_version, UINT id);
+UINT _nx_secure_tls_packet_release(NX_PACKET *packet_ptr);
 VOID _nx_secure_tls_protocol_version_get(NX_SECURE_TLS_SESSION *session_ptr,
                                          USHORT *protocol_version, UINT id);
 UINT _nx_secure_tls_process_certificate_request(NX_SECURE_TLS_SESSION *tls_session,
@@ -1366,7 +1395,8 @@ UINT _nx_secure_tls_process_record(NX_SECURE_TLS_SESSION *tls_session, NX_PACKET
                                    ULONG *bytes_processed, ULONG wait_option);
 UINT _nx_secure_tls_process_remote_certificate(NX_SECURE_TLS_SESSION *tls_session,
                                                UCHAR *packet_buffer,
-                                               UINT message_length);
+                                               UINT message_length,
+                                               UINT data_length);
 UINT _nx_secure_tls_process_server_key_exchange(NX_SECURE_TLS_SESSION *tls_session,
                                                 UCHAR *packet_buffer, UINT message_length);
 UINT _nx_secure_tls_process_serverhello(NX_SECURE_TLS_SESSION *tls_session, UCHAR *packet_buffer,
@@ -1383,10 +1413,10 @@ UINT _nx_secure_tls_record_hash_initialize(NX_SECURE_TLS_SESSION *tls_session,
                                            UCHAR *mac_secret);
 UINT _nx_secure_tls_record_hash_update(NX_SECURE_TLS_SESSION *tls_session, UCHAR *data,
                                        UINT length);
-UINT _nx_secure_tls_record_payload_decrypt(NX_SECURE_TLS_SESSION *tls_session, UCHAR *data,
-                                           UINT *length,
+UINT _nx_secure_tls_record_payload_decrypt(NX_SECURE_TLS_SESSION *tls_session, NX_PACKET *encrypted_packet,
+                                           UINT offset, UINT message_length, NX_PACKET **decrypted_packet,
                                            ULONG sequence_num[NX_SECURE_TLS_SEQUENCE_NUMBER_SIZE],
-                                           UCHAR record_type);
+                                           UCHAR record_type, UINT wait_option);                                           
 UINT _nx_secure_tls_record_payload_encrypt(NX_SECURE_TLS_SESSION *tls_session,
                                            NX_PACKET *send_packet,
                                            ULONG sequence_num[NX_SECURE_TLS_SEQUENCE_NUMBER_SIZE],
@@ -1435,7 +1465,7 @@ UINT _nx_secure_tls_session_keys_set(NX_SECURE_TLS_SESSION *tls_session, USHORT 
 UINT _nx_secure_tls_session_receive_records(NX_SECURE_TLS_SESSION *tls_session,
                                             NX_PACKET **packet_ptr_ptr, ULONG wait_option);
 UINT _nx_secure_tls_verify_mac(NX_SECURE_TLS_SESSION *tls_session, UCHAR *header_data,
-                               USHORT header_length, UCHAR *data, UINT *length);
+                               USHORT header_length, NX_PACKET *packet_ptr, ULONG offset, UINT *length);
 #ifdef NX_SECURE_ENABLE_ECC_CIPHERSUITE
 UINT _nx_secure_tls_ecc_generate_keys(NX_SECURE_TLS_SESSION *tls_session, UINT ecc_named_curve, USHORT sign_key,
                                       UCHAR *public_key, UINT *public_key_size, NX_SECURE_TLS_ECDHE_HANDSHAKE_DATA *ecc_data);

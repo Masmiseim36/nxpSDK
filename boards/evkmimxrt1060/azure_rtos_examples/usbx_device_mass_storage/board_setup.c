@@ -1,11 +1,11 @@
 
 #include <stdio.h>
-#include "board.h"
 #include "fsl_common.h"
 #include "fsl_clock.h"
 #include "pin_mux.h"
 #include "usb.h"
 #include "usb_phy.h"
+#include "board.h"
 
 const clock_enet_pll_config_t config = {true, false, false, 1, 1};
 

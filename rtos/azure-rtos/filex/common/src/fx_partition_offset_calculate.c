@@ -52,7 +52,7 @@ UINT    _fx_utility_partition_get(FX_MEDIA_PARTITION *partition_table,
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _fx_partition_offset_calculate                      PORTABLE C      */ 
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -101,6 +101,8 @@ UINT    _fx_utility_partition_get(FX_MEDIA_PARTITION *partition_table,
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_partition_offset_calculate(void  *partition_sector, UINT partition,
@@ -252,7 +254,7 @@ UCHAR               *partition_sector_ptr;
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _fx_utility_partition_get                           PORTABLE C      */ 
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -287,6 +289,8 @@ UCHAR               *partition_sector_ptr;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_utility_partition_get(FX_MEDIA_PARTITION *partition_table, 

@@ -512,8 +512,10 @@ button_status_t BUTTON_EnterLowpower(button_handle_t buttonHandle)
     {
         status = HAL_GpioEnterLowpower(buttonState->gpioHandle);
 
-        assert(kStatus_HAL_GpioSuccess == status);
-        (void)status;
+        if (kStatus_HAL_GpioSuccess != status)
+        {
+            return kStatus_BUTTON_Error;
+        }
 
         BUTTON_CloseTimer();
 
@@ -550,8 +552,10 @@ button_status_t BUTTON_ExitLowpower(button_handle_t buttonHandle)
     {
         status = HAL_GpioExitLowpower(buttonState->gpioHandle);
 
-        assert(kStatus_HAL_GpioSuccess == status);
-        (void)status;
+        if (kStatus_HAL_GpioSuccess != status)
+        {
+            return kStatus_BUTTON_Error;
+        }
 
         BUTTON_OpenTimer();
 

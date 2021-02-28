@@ -190,30 +190,30 @@
       <files mask="Roboto_16_Normal_EXT_AA4.c"/>
     </source>
     <source path="boards/evkmimxrt1060/emwin_examples/emwin_temperature_control/AppWizard/Resource/Image" project_relative_path="AppWizard/Resource/Image" type="src">
-      <files mask="GreenGlowMarker_16x9.c"/>
+      <files mask="SeggerLogo_80x40.c"/>
       <files mask="KNOB_106x106.c"/>
-      <files mask="ButtonRoundPressed_48x21.c"/>
+      <files mask="GreenGlowMarker_16x9.c"/>
       <files mask="ButtonRound_48x21.c"/>
       <files mask="TemperatureControl_3_480x272.c"/>
-      <files mask="SeggerLogo_80x40.c"/>
+      <files mask="ButtonRoundPressed_48x21.c"/>
     </source>
     <source path="boards/evkmimxrt1060/emwin_examples/emwin_temperature_control/AppWizard/Resource/Text" project_relative_path="AppWizard/Resource/Text" type="src">
-      <files mask="APPW_Language_0.c"/>
       <files mask="APPW_Pattern.c"/>
+      <files mask="APPW_Language_0.c"/>
     </source>
     <source path="boards/evkmimxrt1060/emwin_examples/emwin_temperature_control/AppWizard/Source" project_relative_path="AppWizard/Source" type="src">
       <files mask="APPW_MainTask.c"/>
     </source>
-    <source path="boards/evkmimxrt1060/emwin_examples/emwin_temperature_control/AppWizard/Source/CustomCode" project_relative_path="AppWizard/Source/CustomCode" type="src">
-      <files mask="ID_SCREEN_TEMP_CTRL_Slots.c"/>
-    </source>
     <source path="boards/evkmimxrt1060/emwin_examples/emwin_temperature_control/AppWizard/Source/CustomCode" project_relative_path="AppWizard/Source/CustomCode" type="c_include">
       <files mask="Application.h"/>
     </source>
+    <source path="boards/evkmimxrt1060/emwin_examples/emwin_temperature_control/AppWizard/Source/CustomCode" project_relative_path="AppWizard/Source/CustomCode" type="src">
+      <files mask="ID_SCREEN_TEMP_CTRL_Slots.c"/>
+    </source>
     <source path="boards/evkmimxrt1060/emwin_examples/emwin_temperature_control/AppWizard/Source/Generated" project_relative_path="AppWizard/Source/Generated" type="src">
+      <files mask="ID_SCREEN_TEMP_CTRL.c"/>
       <files mask="APPWConf.c"/>
       <files mask="Resource.c"/>
-      <files mask="ID_SCREEN_TEMP_CTRL.c"/>
     </source>
     <source path="boards/evkmimxrt1060/emwin_examples/emwin_temperature_control/AppWizard/Source/Generated" project_relative_path="AppWizard/Source/Generated" type="c_include">
       <files mask="Resource.h"/>

@@ -38,7 +38,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_utility_logical_sector_read                     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -87,15 +87,21 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s),          */
+/*                                            verified memcpy usage, and  */
+/*                                            added conditional to        */
+/*                                            disable cache,              */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_utility_logical_sector_read(FX_MEDIA *media_ptr, ULONG64 logical_sector,
                                       VOID *buffer_ptr, ULONG sectors, UCHAR sector_type)
 {
-
+#ifndef FX_DISABLE_CACHE
 FX_CACHED_SECTOR *cache_entry;
 FX_CACHED_SECTOR *previous_cache_entry;
 ULONG64           end_sector;
+#endif /* FX_DISABLE_CACHE */
 
 #ifdef FX_ENABLE_FAULT_TOLERANT
 UINT              status;
@@ -119,6 +125,7 @@ UINT              status;
     /* Extended port-specific processing macro, which is by default defined to white space.  */
     FX_UTILITY_LOGICAL_SECTOR_READ_EXTENSION
 
+#ifndef FX_DISABLE_CACHE
     /* Determine if the request is for the internal media buffer area.  */
     if ((((UCHAR *)buffer_ptr) >= media_ptr -> fx_media_memory_buffer) &&
         (((UCHAR *)buffer_ptr) <= media_ptr -> fx_media_sector_cache_end))
@@ -328,6 +335,12 @@ UINT              status;
         /* Return the driver status.  */
         return(media_ptr -> fx_media_driver_status);
     }
+#else
+    if ((logical_sector == media_ptr -> fx_media_memory_buffer_sector) && (sectors == 1) && (buffer_ptr == media_ptr -> fx_media_memory_buffer))
+    {
+        return(FX_SUCCESS);
+    }
+#endif
     else
     {
 
@@ -339,6 +352,7 @@ UINT              status;
             return(FX_SECTOR_INVALID);
         }
 
+#ifndef FX_DISABLE_CACHE
         /* Attempt to fill the beginning of the buffer from cached sectors.  */
         while (sectors)
         {
@@ -352,7 +366,7 @@ UINT              status;
             }
 
             /* Yes, sector is in the cache. Copy the data from the cache to the destination buffer.  */
-            _fx_utility_memory_copy(media_ptr -> fx_media_memory_buffer, buffer_ptr, media_ptr -> fx_media_bytes_per_sector);
+            _fx_utility_memory_copy(media_ptr -> fx_media_memory_buffer, buffer_ptr, media_ptr -> fx_media_bytes_per_sector); /* Use case of memcpy is verified. */
 
             /* Advance the destination buffer.  */
             buffer_ptr =  ((UCHAR *)buffer_ptr) + media_ptr -> fx_media_bytes_per_sector;
@@ -378,7 +392,7 @@ UINT              status;
             }
 
             /* Yes, sector is in the cache. Copy the data from the cache to the destination buffer.  */
-            _fx_utility_memory_copy(media_ptr -> fx_media_memory_buffer,
+            _fx_utility_memory_copy(media_ptr -> fx_media_memory_buffer, /* Use case of memcpy is verified. */
                                     ((UCHAR *)buffer_ptr) + ((sectors - 1) * media_ptr -> fx_media_bytes_per_sector),
                                     media_ptr -> fx_media_bytes_per_sector);
 
@@ -397,6 +411,7 @@ UINT              status;
 
         /* Flush and invalidate any entries in the cache that are in this direct I/O read request range.  */
         _fx_utility_logical_sector_flush(media_ptr, logical_sector, (ULONG64) sectors, FX_TRUE);
+#endif /* FX_DISABLE_CACHE */
 
 #ifndef FX_MEDIA_STATISTICS_DISABLE
 
@@ -432,6 +447,14 @@ UINT              status;
 
         /* Clear data sector is present flag.  */
         media_ptr -> fx_media_driver_data_sector_read =  FX_FALSE;
+
+#ifdef FX_DISABLE_CACHE
+        if ((media_ptr -> fx_media_driver_status == FX_SUCCESS) && (sectors == 1) && (buffer_ptr == media_ptr -> fx_media_memory_buffer))
+        {
+            media_ptr -> fx_media_memory_buffer_sector = logical_sector;
+            return(FX_SUCCESS);
+        }
+#endif /* FX_DISABLE_CACHE */
 
 #ifndef FX_DISABLE_DIRECT_DATA_READ_CACHE_FILL
 
@@ -559,7 +582,7 @@ UINT              status;
                 }
 
                 /* Copy the data from the destination buffer to the cache entry.  */
-                _fx_utility_memory_copy(buffer_ptr,
+                _fx_utility_memory_copy(buffer_ptr, /* Use case of memcpy is verified. */
                                         cache_entry -> fx_cached_sector_memory_buffer,
                                         media_ptr -> fx_media_bytes_per_sector);
 

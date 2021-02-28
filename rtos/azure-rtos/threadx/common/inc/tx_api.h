@@ -26,7 +26,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    tx_api.h                                            PORTABLE C      */
-/*                                                           6.0.1        */
+/*                                                           6.1.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -44,9 +44,20 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
-/*  06-30-2020     William E. Lamie         Modified comment(s), and      */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
 /*                                            updated product constants,  */
-/*                                            resulting in version 6.0.1  */
+/*                                            added new thread execution  */
+/*                                            state TX_PRIORITY_CHANGE,   */
+/*                                            added macros for casting    */
+/*                                            pointers to ALIGN_TYPE,     */
+/*                                            resulting in version 6.1    */
+/*  10-16-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            increased patch version,    */
+/*                                            resulting in version 6.1.1  */
+/*  11-09-2020     Yuxin Zhou               Modified comment(s), and      */
+/*                                            moved TX_THREAD_GET_SYSTEM_ */
+/*                                            STATE to tx_api.h,          */
+/*                                            resulting in version 6.1.2  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -78,11 +89,12 @@ extern   "C" {
    
 #define AZURE_RTOS_THREADX
 #define THREADX_MAJOR_VERSION           6
-#define THREADX_MINOR_VERSION           0
-#define THREADX_PATCH_VERSION           1
+#define THREADX_MINOR_VERSION           1
+#define THREADX_PATCH_VERSION           2
 
 /* Define the following symbol for backward compatibility */
 #define EL_PRODUCT_THREADX
+
 
 /* API input parameters and general constants.  */
 
@@ -132,6 +144,7 @@ extern   "C" {
 #define TX_FILE                         ((UINT) 11)
 #define TX_TCP_IP                       ((UINT) 12)
 #define TX_MUTEX_SUSP                   ((UINT) 13)
+#define TX_PRIORITY_CHANGE              ((UINT) 14)
 
 
 /* API return values.  */
@@ -1880,6 +1893,8 @@ VOID                    _tx_misra_thread_entry_exit_notify_not_used(VOID (*threa
 #define TX_ULONG_POINTER_DIF(a,b)                       ((ULONG)(((ULONG *) (a)) - ((ULONG *) (b))))
 #define TX_POINTER_TO_ULONG_CONVERT(a)                  ((ULONG) ((VOID *) (a)))
 #define TX_ULONG_TO_POINTER_CONVERT(a)                  ((VOID *) ((ULONG) (a)))
+#define TX_POINTER_TO_ALIGN_TYPE_CONVERT(a)             ((ALIGN_TYPE) ((VOID *) (a)))
+#define TX_ALIGN_TYPE_TO_POINTER_CONVERT(a)             ((VOID *) ((ALIGN_TYPE) (a)))
 #define TX_TIMER_POINTER_DIF(a,b)                       ((ULONG)(((TX_TIMER_INTERNAL **) (a)) - ((TX_TIMER_INTERNAL **) (b))))
 #define TX_TIMER_POINTER_ADD(a,b)                       (((TX_TIMER_INTERNAL **) (a)) + ((ULONG) (b)))
 #define TX_USER_TIMER_POINTER_GET(a,b)                  { \
@@ -2201,6 +2216,13 @@ void __ghs_rnerr(char *errMsg, int stackLevels, int stackTraceDisplay, void *hex
 #define TX_EL_TIMER_PERFORMANCE_SYSTEM_INFO_GET_INSERT
 
 #endif
+
+/* Define the get system state macro. By default, it simply maps to the variable _tx_thread_system_state.  */
+/* Note that prior to Azure RTOS 6.1, this symbol was defined in tx_thread.h. */   
+#ifndef TX_THREAD_GET_SYSTEM_STATE
+#define TX_THREAD_GET_SYSTEM_STATE()        _tx_thread_system_state
+#endif
+
 
 
 

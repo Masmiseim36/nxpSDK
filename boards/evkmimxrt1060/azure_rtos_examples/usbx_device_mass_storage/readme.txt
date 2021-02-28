@@ -5,9 +5,10 @@ This example illustrates USBX Device Mass Storage.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -43,8 +44,8 @@ USBX device mass storage example
 
 Then, connect a USB cable between PC and USB device port
 of the board. PC will detect a u-disk and can format it.
-When theformat is completed, the PC will display the
-capacity of 32K removable disk.
-Customization options
-=====================
-
+After format is completed, the PC will display a removable
+disk and it can be used as a normal u-disk.
+Please note that the USBX Device Mass Storage example use
+RAM disk as storage media, data will lost after board is
+reset.

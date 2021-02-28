@@ -39,7 +39,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_system_initialize                               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -70,6 +70,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            added conditional to        */
+/*                                            disable build options,      */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID  _fx_system_initialize(VOID)
@@ -102,6 +106,7 @@ VOID  _fx_system_initialize(VOID)
                     FX_UPDATE_RATE_IN_TICKS, FX_UPDATE_RATE_IN_TICKS, TX_AUTO_ACTIVATE);
 #endif
 
+#ifndef FX_DISABLE_BUILD_OPTIONS
     /* Setup the build options variables.  */
 
     /* Setup the first build options variable.  */
@@ -197,5 +202,6 @@ VOID  _fx_system_initialize(VOID)
     {
         _fx_system_build_options_3 =  _fx_system_build_options_3 | ((ULONG)FX_UPDATE_RATE_IN_TICKS);
     }
+#endif /* FX_DISABLE_BUILD_OPTIONS */
 }
 

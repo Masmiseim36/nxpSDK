@@ -513,7 +513,7 @@ static uint16_t calculate_framing_crc16(framing_data_packet_t *packet, const uin
     crc16_init(&crcInfo);
 
     // Run CRC on all header bytes besides the CRC field
-    crc16_update(&crcInfo, (uint8_t *)packet, sizeof(framing_data_packet_t) - sizeof(uint16_t));
+    crc16_update(&crcInfo, (uint8_t *)&packet->header.startByte, sizeof(framing_data_packet_t) - sizeof(uint16_t));
 
     // Continue running CRC on any payload bytes
     crc16_update(&crcInfo, data, packet->length);

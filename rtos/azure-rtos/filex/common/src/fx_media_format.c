@@ -59,7 +59,7 @@ ULONG _fx_media_format_volume_id =  1;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_media_format                                    PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -112,6 +112,10 @@ ULONG _fx_media_format_volume_id =  1;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            added conditional to        */
+/*                                            disable force memset,       */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_media_format(FX_MEDIA *media_ptr, VOID (*driver)(FX_MEDIA *media), VOID *driver_info_ptr, UCHAR *memory_ptr, UINT memory_size,
@@ -178,6 +182,7 @@ UINT   sectors_per_fat, f, s;
     /* Move the buffer pointer into a local copy.  */
     byte_ptr =  media_ptr -> fx_media_driver_buffer;
 
+#ifndef FX_DISABLE_FORCE_MEMORY_OPERATION
     /* Clear the buffer record out, assuming it is large enough for one sector.   */
     for (i = 0; i < bytes_per_sector; i++)
     {
@@ -185,6 +190,9 @@ UINT   sectors_per_fat, f, s;
         /* Clear each byte of the boot record.  */
         byte_ptr[i] =  (UCHAR)0;
     }
+#else
+    _fx_utility_memory_set(byte_ptr, 0, bytes_per_sector);
+#endif /* FX_DISABLE_FORCE_MEMORY_OPERATION */
 
     /* Set jump instruction at the beginning of the sector.  */
     byte_ptr[0] =  (UCHAR)0xEB;
@@ -417,13 +425,16 @@ UINT   sectors_per_fat, f, s;
     }
 
     /* Now blank-pad the remainder of the volume name.  */
+#ifndef FX_DISABLE_FORCE_MEMORY_OPERATION
     while (i < 11)
     {
 
         byte_ptr[j + i] =  (UCHAR)' ';
         i++;
     }
-
+#else
+    _fx_utility_memory_set(&byte_ptr[j + i], ' ', (11 - i));
+#endif /* FX_DISABLE_FORCE_MEMORY_OPERATION */
 
 
 #ifdef FX_FORCE_512_BYTE_BOOT_SECTOR
@@ -466,11 +477,15 @@ UINT   sectors_per_fat, f, s;
     if ((total_clusters >= FX_16_BIT_FAT_SIZE) && (bytes_per_sector == 512))
     {
 
+#ifndef FX_DISABLE_FORCE_MEMORY_OPERATION
         /* Clear sector buffer.  */
         for (i = 0; i < bytes_per_sector; i++)
         {
             byte_ptr[i] =  (CHAR)0;
         }
+#else
+        _fx_utility_memory_set(byte_ptr, 0, bytes_per_sector);
+#endif /* FX_DISABLE_FORCE_MEMORY_OPERATION */
 
         /* Build the FSINFO fields.  */
 
@@ -584,11 +599,15 @@ UINT   sectors_per_fat, f, s;
                 i = 0;
             }
 
+#ifndef FX_DISABLE_FORCE_MEMORY_OPERATION
             /* Clear remainder of sector buffer.  */
             for (; i < bytes_per_sector; i++)
             {
                 byte_ptr[i] =  (CHAR)0;
             }
+#else
+            _fx_utility_memory_set(&byte_ptr[i], 0, (bytes_per_sector - i));
+#endif  /* FX_DISABLE_FORCE_MEMORY_OPERATION */
 
             /* Build sector write command.  */
             media_ptr -> fx_media_driver_logical_sector =  reserved_sectors + (f * sectors_per_fat) + s;
@@ -614,11 +633,15 @@ UINT   sectors_per_fat, f, s;
         }
     }
 
+#ifndef FX_DISABLE_FORCE_MEMORY_OPERATION
     /* Clear sector buffer.  */
     for (i = 0; i < bytes_per_sector; i++)
     {
         byte_ptr[i] =  (CHAR)0;
     }
+#else
+    _fx_utility_memory_set(byte_ptr, 0, bytes_per_sector);
+#endif /* FX_DISABLE_FORCE_MEMORY_OPERATION */
 
     /* Now clear the root directory sectors.  */
     for (s = 0; s < root_sectors; s++)

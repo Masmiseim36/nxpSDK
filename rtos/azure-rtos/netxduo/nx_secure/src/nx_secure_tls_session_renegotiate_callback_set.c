@@ -30,7 +30,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_session_renegotiate_callback_set     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -68,8 +68,12 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
+/*  09-30-2020     Timothy Stapko           Modified comment(s),          */
+/*                                            fixed renegotiation bug,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
+#ifndef NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION
 UINT _nx_secure_tls_session_renegotiate_callback_set(NX_SECURE_TLS_SESSION *tls_session,
                                                      ULONG (*func_ptr)(struct NX_SECURE_TLS_SESSION_STRUCT *session))
 {
@@ -78,4 +82,4 @@ UINT _nx_secure_tls_session_renegotiate_callback_set(NX_SECURE_TLS_SESSION *tls_
 
     return(NX_SUCCESS);
 }
-
+#endif /* NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION */

@@ -449,7 +449,7 @@ const ULONG UpCaseTableCheckSum = 0xE619D30D;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_media_exFAT_format                              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -510,6 +510,9 @@ const ULONG UpCaseTableCheckSum = 0xE619D30D;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), verified */
+/*                                            memcpy usage,               */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_media_exFAT_format(FX_MEDIA *media_ptr,
@@ -628,11 +631,11 @@ UINT   status;
     /* Clear work buffer.  */
     _fx_utility_memory_set(byte_ptr, 0x00, FX_BOOT_SECTOR_SIZE);
 
-    _fx_utility_memory_copy((UCHAR *)jump_boot,
+    _fx_utility_memory_copy((UCHAR *)jump_boot, /* Use case of memcpy is verified. */
                             &byte_ptr[FX_JUMP_INSTR],
                             sizeof(jump_boot));
 
-    _fx_utility_memory_copy((UCHAR *)file_system_name,
+    _fx_utility_memory_copy((UCHAR *)file_system_name, /* Use case of memcpy is verified. */
                             &byte_ptr[FX_OEM_NAME],
                             sizeof(file_system_name));
 
@@ -800,7 +803,7 @@ UINT   status;
     offset = sizeof(fat_init_mask);
 
     /* Copy the initial values for FAT table.  */
-    _fx_utility_memory_copy((UCHAR *)fat_init_mask,
+    _fx_utility_memory_copy((UCHAR *)fat_init_mask, /* Use case of memcpy is verified. */
                             byte_ptr,
                             sizeof(fat_init_mask));
 
@@ -1076,7 +1079,7 @@ UINT   status;
         _fx_utility_memory_set(byte_ptr, 0x00, media_ptr -> fx_media_bytes_per_sector);
 
         /* Copy the remaining bytes.  */
-        _fx_utility_memory_copy((UCHAR *)_fx_utility_exFAT_upcase_table_compressed + sizeof(_fx_utility_exFAT_upcase_table_compressed) - i, byte_ptr, i);
+        _fx_utility_memory_copy((UCHAR *)_fx_utility_exFAT_upcase_table_compressed + sizeof(_fx_utility_exFAT_upcase_table_compressed) - i, byte_ptr, i); /* Use case of memcpy is verified. */
 
         /* Write out the sector.  */
         status = _fx_utility_exFAT_system_sector_write(media_ptr, byte_ptr,

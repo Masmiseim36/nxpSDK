@@ -1,9 +1,9 @@
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "tx_api.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -46,6 +46,9 @@ ULONG thread_7_counter;
 /* Define the SysTick cycles which will be loaded on tx_initialize_low_level.s */
 int systick_cycles;
 
+/* memory pool */
+char mem_pool[DEMO_BYTE_POOL_SIZE];
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -85,15 +88,10 @@ void tx_application_define(void *first_unused_memory)
 {
     CHAR *pointer = TX_NULL;
 
-    /* Check whether the size of first_unused_memory is enough. */
-    if (GET_UNUSED_MEM_SIZE() < DEMO_BYTE_POOL_SIZE)
-    {
-        PRINTF("The unused memory size is only %d Bytes.\r\n", GET_UNUSED_MEM_SIZE());
-        return;
-    }
+    TX_THREAD_NOT_USED(first_unused_memory);
 
     /* Create a byte memory pool from which to allocate the thread stacks.  */
-    tx_byte_pool_create(&byte_pool_0, "byte pool 0", first_unused_memory, DEMO_BYTE_POOL_SIZE);
+    tx_byte_pool_create(&byte_pool_0, "byte pool 0", (VOID *)mem_pool, DEMO_BYTE_POOL_SIZE);
 
     /* Put system definition stuff in here, e.g. thread creates and other
        assorted create information.  */

@@ -120,10 +120,12 @@ status_t HAL_CODEC_Deinit(void *handle)
 status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
 {
     assert(handle != NULL);
+    status_t ret = kStatus_Success;
 
-    return WM8904_SetAudioFormat((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), mclk,
+    ret = WM8904_SetAudioFormat((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), mclk,
                                 sampleRate, bitWidth);
 
+    return ret;
 }
 
 /*!
@@ -192,9 +194,12 @@ status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
 status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
 {
     assert(handle != NULL);
+    status_t ret = kStatus_Success;
 
-    return WM8904_SetModulePower((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
+    ret = WM8904_SetModulePower((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
                                 HAL_WM8904_MAP_MODULE((codec_module_t)module), powerOn);
+
+    return ret;
 }
 
 /*!
@@ -208,8 +213,11 @@ status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
 status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
 {
     assert(handle != NULL);
+    status_t ret = kStatus_Success;
 
-    return WM8904_SetRecord((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), recordSource);
+    ret = WM8904_SetRecord((wm8904_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), recordSource);
+
+    return ret;
 }
 
 /*!

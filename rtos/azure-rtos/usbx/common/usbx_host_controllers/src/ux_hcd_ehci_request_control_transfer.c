@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_hcd_ehci_request_control_transfer               PORTABLE C      */ 
-/*                                                           6.0          */
+/*                                                           6.1.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -79,6 +79,12 @@
 /*    DATE              NAME                      DESCRIPTION             */ 
 /*                                                                        */ 
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+/*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            prefixed UX to MS_TO_TICK,  */
+/*                                            resulting in version 6.1    */
+/*  11-09-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            fixed compile warnings,     */
+/*                                            resulting in version 6.1.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_hcd_ehci_request_control_transfer(UX_HCD_EHCI *hcd_ehci, UX_TRANSFER *transfer_request)
@@ -105,11 +111,11 @@ UINT            pid;
     if (setup_request == UX_NULL)
         return(UX_MEMORY_INSUFFICIENT);
 
-    *setup_request =                            transfer_request -> ux_transfer_request_function;
-    *(setup_request + UX_SETUP_REQUEST_TYPE) =  transfer_request -> ux_transfer_request_type;
-    *(setup_request + UX_SETUP_REQUEST) =       transfer_request -> ux_transfer_request_function;
-    _ux_utility_short_put(setup_request + UX_SETUP_VALUE, transfer_request -> ux_transfer_request_value);
-    _ux_utility_short_put(setup_request + UX_SETUP_INDEX, transfer_request -> ux_transfer_request_index);
+    *setup_request =                            (UCHAR)transfer_request -> ux_transfer_request_function;
+    *(setup_request + UX_SETUP_REQUEST_TYPE) =  (UCHAR)transfer_request -> ux_transfer_request_type;
+    *(setup_request + UX_SETUP_REQUEST) =       (UCHAR)transfer_request -> ux_transfer_request_function;
+    _ux_utility_short_put(setup_request + UX_SETUP_VALUE, (USHORT)transfer_request -> ux_transfer_request_value);
+    _ux_utility_short_put(setup_request + UX_SETUP_INDEX, (USHORT)transfer_request -> ux_transfer_request_index);
     _ux_utility_short_put(setup_request + UX_SETUP_LENGTH, (USHORT) transfer_request -> ux_transfer_request_requested_length);
 
     /* Reset the last TD pointer since it is the first time we hook a transaction.  */
@@ -205,7 +211,7 @@ UINT            pid;
     ed -> ux_ehci_ed_queue_element =  (UX_EHCI_TD *) td_component;
 
     /* Wait for the completion of the transfer request.  */
-    status =  _ux_utility_semaphore_get(&transfer_request -> ux_transfer_request_semaphore, MS_TO_TICK(UX_CONTROL_TRANSFER_TIMEOUT));
+    status =  _ux_utility_semaphore_get(&transfer_request -> ux_transfer_request_semaphore, UX_MS_TO_TICK(UX_CONTROL_TRANSFER_TIMEOUT));
 
     /* If the semaphore did not succeed we probably have a time out.  */
     if (status != UX_SUCCESS)

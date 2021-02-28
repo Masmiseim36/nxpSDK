@@ -38,7 +38,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_utility_logical_sector_write                    PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -83,18 +83,23 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            added conditional to        */
+/*                                            disable cache,              */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_utility_logical_sector_write(FX_MEDIA *media_ptr, ULONG64 logical_sector,
                                        VOID *buffer_ptr, ULONG sectors, UCHAR sector_type)
 {
 
+#ifndef FX_DISABLE_CACHE
 FX_CACHED_SECTOR *cache_entry;
 UINT              cache_size;
 UINT              index;
 UINT              i;
 UCHAR             cache_found = FX_FALSE;
-
+#endif /* FX_DISABLE_CACHE */
 
 #ifndef FX_MEDIA_STATISTICS_DISABLE
 
@@ -113,6 +118,7 @@ UCHAR             cache_found = FX_FALSE;
     /* Extended port-specific processing macro, which is by default defined to white space.  */
     FX_UTILITY_LOGICAL_SECTOR_WRITE_EXTENSION
 
+#ifndef FX_DISABLE_CACHE
     /* Determine if the request is from the internal media buffer area.  */
     if ((((UCHAR *)buffer_ptr) >= media_ptr -> fx_media_memory_buffer) &&
         (((UCHAR *)buffer_ptr) <= media_ptr -> fx_media_sector_cache_end))
@@ -362,6 +368,7 @@ UCHAR             cache_found = FX_FALSE;
         return(FX_SUCCESS);
     }
     else
+#endif /* FX_DISABLE_CACHE */
     {
 
         /* Otherwise, the write request is being made directly from an application
@@ -381,6 +388,13 @@ UCHAR             cache_found = FX_FALSE;
 
         /* Flush and invalidate for any entries in the cache that are in this direct I/O read request range.  */
         _fx_utility_logical_sector_flush(media_ptr, logical_sector, (ULONG64) sectors, FX_TRUE);
+
+#ifdef FX_DISABLE_CACHE
+        if ((logical_sector <= media_ptr -> fx_media_memory_buffer_sector) && (logical_sector + sectors >= media_ptr -> fx_media_memory_buffer_sector))
+        {
+            media_ptr -> fx_media_memory_buffer_sector = (ULONG64)-1;
+        }
+#endif /* FX_DISABLE_CACHE */
 
 #ifndef FX_MEDIA_STATISTICS_DISABLE
 

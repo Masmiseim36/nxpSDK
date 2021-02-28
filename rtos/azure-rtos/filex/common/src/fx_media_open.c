@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_media_open                                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -124,6 +124,11 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            added conditional to        */
+/*                                            disable force memset,       */
+/*                                            build options and cache,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_media_open(FX_MEDIA *media_ptr, CHAR *media_name,
@@ -135,7 +140,9 @@ FX_MEDIA_PTR      tail_ptr;
 ULONG             cluster_number;
 ULONG             FAT_entry, FAT_sector, FAT_read_sectors;
 ULONG             i, j;
+#ifndef FX_DISABLE_CACHE
 FX_CACHED_SECTOR *cache_entry_ptr;
+#endif /* FX_DISABLE_CACHE */
 UINT              status;
 UINT              additional_info_sector;
 UCHAR            *original_memory_ptr;
@@ -143,6 +150,7 @@ ULONG             bytes_in_buffer;
 FX_INT_SAVE_AREA
 
 
+#ifndef FX_DISABLE_BUILD_OPTIONS
     /* Reference the version ID and option words to ensure they are linked in.  */
     if ((_fx_system_build_options_1 | _fx_system_build_options_2 | _fx_system_build_options_3) == 0 ||
         _fx_version_id[0] == 0)
@@ -151,14 +159,24 @@ FX_INT_SAVE_AREA
         /* We should never get here!  */
         return(FX_NOT_IMPLEMENTED);
     }
+#endif /* FX_DISABLE_BUILD_OPTIONS */
+
+#ifdef FX_DISABLE_FORCE_MEMORY_OPERATION
+    _fx_utility_memory_set((UCHAR *)media_ptr, 0, sizeof(FX_MEDIA));
+#ifdef FX_DISABLE_CACHE
+    media_ptr -> fx_media_memory_buffer_sector = (ULONG64)-1;
+#endif /* FX_DISABLE_CACHE */
+#endif /* FX_DISABLE_FORCE_MEMORY_OPERATION */
 
     /* Save the basic information in the media control block.  */
     media_ptr -> fx_media_name =                        media_name;
     media_ptr -> fx_media_driver_entry =                media_driver;
     media_ptr -> fx_media_memory_buffer =               (UCHAR *)memory_ptr;
     media_ptr -> fx_media_memory_size =                 memory_size;
+#ifndef FX_DISABLE_FORCE_MEMORY_OPERATION
     media_ptr -> fx_media_disable_burst_cache =         FX_FALSE;
     media_ptr -> fx_media_FAT_type =                    0;
+#endif /* FX_DISABLE_FORCE_MEMORY_OPERATION */
 
     /* Save the original memory pointer.  */
     original_memory_ptr =  (UCHAR *)memory_ptr;
@@ -233,9 +251,6 @@ FX_INT_SAVE_AREA
     media_ptr -> fx_media_fault_tolerant_enabled = FX_FALSE;
     media_ptr -> fx_media_fault_tolerant_state = 0;
 #endif /* FX_ENABLE_FAULT_TOLERANT */
-
-    /* If trace is enabled, register this object.  */
-    FX_TRACE_OBJECT_REGISTER(FX_TRACE_OBJECT_TYPE_MEDIA, media_ptr, media_name, FX_MAX_FAT_CACHE, media_ptr -> fx_media_sector_cache_size)
 
     /* If trace is enabled, insert this event into the trace buffer.  */
     FX_TRACE_IN_LINE_INSERT(FX_TRACE_MEDIA_OPEN, media_ptr, media_driver, memory_ptr, memory_size, FX_TRACE_MEDIA_EVENTS, 0, 0)
@@ -322,6 +337,7 @@ FX_INT_SAVE_AREA
     /* Pickup the additional info sector number. This will only be used in FAT32 situations.  */
     additional_info_sector =  _fx_utility_16_unsigned_read(&media_ptr -> fx_media_driver_buffer[48]);
 
+#ifndef FX_DISABLE_CACHE
     /* Determine how many logical sectors can be cached with user's supplied
        buffer area - there must be at least enough for one sector!  */
     media_ptr -> fx_media_sector_cache_size =  memory_size / media_ptr -> fx_media_bytes_per_sector;
@@ -344,6 +360,9 @@ FX_INT_SAVE_AREA
         return(FX_BUFFER_ERROR);
     }
 
+    /* If trace is enabled, register this object.  */
+    FX_TRACE_OBJECT_REGISTER(FX_TRACE_OBJECT_TYPE_MEDIA, media_ptr, media_name, FX_MAX_FAT_CACHE, media_ptr -> fx_media_sector_cache_size)
+    
     /* Adjust the internal cache to fit the fixed number of sector cache control blocks
        built into the media control block.  */
     if (media_ptr -> fx_media_sector_cache_size > FX_MAX_SECTOR_CACHE)
@@ -413,7 +432,11 @@ FX_INT_SAVE_AREA
         /* Clear the logical sector cache flag.  */
         media_ptr -> fx_media_sector_cache_hashed =  FX_FALSE;
     }
+#else
+    media_ptr -> fx_media_memory_buffer = memory_ptr;
+#endif /* FX_DISABLE_CACHE */
 
+#ifndef FX_DISABLE_FORCE_MEMORY_OPERATION
     /* Initialize the FAT cache entry array.  */
     for (i = 0; i < FX_MAX_FAT_CACHE; i++)
     {
@@ -431,6 +454,8 @@ FX_INT_SAVE_AREA
         /* Clear bit map entry for secondary FAT update.  */
         media_ptr -> fx_media_fat_secondary_update_map[i] =  0;
     }
+#endif /* FX_DISABLE_FORCE_MEMORY_OPERATION */
+
 #ifdef FX_ENABLE_EXFAT
     if (media_ptr -> fx_media_FAT_type != FX_exFAT)
     {
@@ -598,11 +623,13 @@ FX_INT_SAVE_AREA
                                                          media_ptr -> fx_media_bytes_per_sector) / FX_DIR_ENTRY_SIZE;
     }
 
+#ifndef FX_DISABLE_FORCE_MEMORY_OPERATION
     /* Calculate the number of available clusters.  */
     media_ptr -> fx_media_available_clusters =  0;
 
     /* Set the cluster search start to an invalid value.  */
     media_ptr -> fx_media_cluster_search_start =  0;
+#endif /* FX_DISABLE_FORCE_MEMORY_OPERATION */
 
     /* Determine if there is 32-bit FAT additional information sector. */
     if (media_ptr -> fx_media_FAT32_additional_info_sector)
@@ -615,12 +642,16 @@ FX_INT_SAVE_AREA
         /* Yes, read the FAT32 additional information sector to get the available cluster count and
            the hint for the first available cluster.  */
 
+#ifndef FX_DISABLE_CACHE
         /* Setup a pointer to the first cached entry's buffer.  */
         buffer_ptr =  (media_ptr -> fx_media_sector_cache_list_ptr) -> fx_cached_sector_memory_buffer;
 
         /* Invalidate this cache entry.  */
         (media_ptr -> fx_media_sector_cache_list_ptr) -> fx_cached_sector =  (~((ULONG64) 0));
         (media_ptr -> fx_media_sector_cache_list_ptr) -> fx_cached_sector_valid =  FX_FALSE;
+#else
+        buffer_ptr =  media_ptr -> fx_media_memory_buffer;
+#endif /* FX_DISABLE_CACHE */
 
         /* Read the FAT32 additional information sector from the device.  */
         media_ptr -> fx_media_driver_request =          FX_DRIVER_READ;
@@ -785,6 +816,7 @@ FX_INT_SAVE_AREA
         /* Loop through all FAT sectors in the primary FAT.  The first two entries are
            examined in this loop, but they are always unavailable.  */
         cluster_number =  0;
+#ifndef FX_DISABLE_CACHE
         for (i = 0; i < media_ptr -> fx_media_sectors_per_FAT; i = i + media_ptr -> fx_media_sector_cache_size)
         {
 
@@ -799,6 +831,16 @@ FX_INT_SAVE_AREA
             {
                 FAT_read_sectors =  media_ptr -> fx_media_sector_cache_size;
             }
+#else
+        for (i = 0; i < media_ptr -> fx_media_sectors_per_FAT; i++)
+        {
+
+            /* Calculate the starting next FAT sector.  */
+            FAT_sector =  media_ptr -> fx_media_reserved_sectors + i;
+
+            /* Calculate how many sectors to read.  */
+            FAT_read_sectors =  1;
+#endif /* FX_DISABLE_CACHE */
 
             /* Read the FAT sectors directly from the driver.  */
             media_ptr -> fx_media_driver_request =          FX_DRIVER_READ;
@@ -928,9 +970,11 @@ FX_INT_SAVE_AREA
     media_ptr -> fx_media_last_found_name[0] =  0;
 #endif
 
+#ifndef FX_DISABLE_FORCE_MEMORY_OPERATION
     /* Initialize the opened file linked list and associated counter.  */
     media_ptr -> fx_media_opened_file_list =      FX_NULL;
     media_ptr -> fx_media_opened_file_count =     0;
+#endif /* FX_DISABLE_FORCE_MEMORY_OPERATION */
 
     /* Create the media protection structure if FX_SINGLE_THREAD is not
        defined.  */

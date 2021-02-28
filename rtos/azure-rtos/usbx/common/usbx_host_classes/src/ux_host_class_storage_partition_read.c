@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_host_class_storage_partition_read               PORTABLE C      */ 
-/*                                                           6.0          */
+/*                                                           6.1.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -71,11 +71,23 @@
 /*    DATE              NAME                      DESCRIPTION             */ 
 /*                                                                        */ 
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+/*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added option to disable FX  */
+/*                                            media integration,          */
+/*                                            resulting in version 6.1    */
+/*  11-09-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added exFAT support,        */
+/*                                            resulting in version 6.1.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_host_class_storage_partition_read(UX_HOST_CLASS_STORAGE *storage, UCHAR *sector_memory, ULONG sector)
 {
-
+#if defined(UX_HOST_CLASS_STORAGE_NO_FILEX)
+    UX_PARAMETER_NOT_USED(storage);
+    UX_PARAMETER_NOT_USED(sector_memory);
+    UX_PARAMETER_NOT_USED(sector);
+    return(UX_FUNCTION_NOT_SUPPORTED);
+#else
 UINT        status =  UX_ERROR;
 UINT        partition_index;
     
@@ -97,6 +109,7 @@ UINT        partition_index;
         case UX_HOST_CLASS_STORAGE_PARTITION_FAT_16_LBA_MAPPED: 
         case UX_HOST_CLASS_STORAGE_PARTITION_FAT_32_1:   
         case UX_HOST_CLASS_STORAGE_PARTITION_FAT_32_2:   
+        case UX_HOST_CLASS_STORAGE_PARTITION_EXFAT:
 
             /* We have found a legal partition entry pointing to a potential boot sector.  */
             status =  _ux_host_class_storage_media_open(storage, sector + _ux_utility_long_get(sector_memory + UX_HOST_CLASS_STORAGE_PARTITION_SECTORS_BEFORE));
@@ -123,5 +136,6 @@ UINT        partition_index;
 
     /* Return completion status.  */
     return(status);
+#endif
 }
 

@@ -25,13 +25,13 @@
 /*                                                                        */ 
 /*  PORT SPECIFIC C INFORMATION                            RELEASE        */ 
 /*                                                                        */ 
-/*    nx_port.h                                         Cortex-M7/IAR     */ 
-/*                                                           6.0          */ 
+/*    nx_port.h                                          Cortex-M7/IAR    */ 
+/*                                                          6.1           */
 /*                                                                        */
-/*  AUTHOR                                                                */ 
-/*                                                                        */ 
-/*    Yuxin Zhou, Microsoft Corporation                                   */ 
-/*                                                                        */ 
+/*  AUTHOR                                                                */
+/*                                                                        */
+/*    Yuxin Zhou, Microsoft Corporation                                   */
+/*                                                                        */
 /*  DESCRIPTION                                                           */ 
 /*                                                                        */ 
 /*    This file contains data type definitions that make the NetX         */ 
@@ -40,21 +40,17 @@
 /*                                                                        */ 
 /*  RELEASE HISTORY                                                       */ 
 /*                                                                        */ 
-/*    DATE              NAME                      DESCRIPTION             */ 
-/*                                                                        */ 
-/*  05-19-2020     Yuxin Zhou               Initial Version 6.0           */
-/*                                                                        */ 
-/**************************************************************************/ 
+/*    DATE              NAME                      DESCRIPTION             */
+/*                                                                        */
+/*  09-30-2020     Yuxin Zhou               Initial Version 6.1           */
+/*                                                                        */
+/**************************************************************************/
 
 #ifndef NX_PORT_H
 #define NX_PORT_H
 
-
 /* Determine if the optional NetX user define file should be used.  */
 
-/* 
-#define NX_INCLUDE_USER_DEFINE_FILE
-*/
 #ifdef NX_INCLUDE_USER_DEFINE_FILE
 
 
@@ -68,14 +64,12 @@
 /* Default to little endian, since this is what most ARM targets are.  */
 
 #define NX_LITTLE_ENDIAN    1
-#define FEATURE_NX_IPV6
 
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-#define NX_SECURE_ENABLE
 
 /* Define various constants for the port.  */ 
 
@@ -89,11 +83,10 @@
 
 
 /* Define macros that swap the endian for little endian ports.  */
+
 #ifdef NX_LITTLE_ENDIAN
 #define NX_CHANGE_ULONG_ENDIAN(arg) arg = __REV(arg)
 #define NX_CHANGE_USHORT_ENDIAN(arg) arg = __REV16(arg)
-
-
 
 
 #ifndef htonl
@@ -134,35 +127,6 @@
 #endif
 
 
-/* The device driver enables the checksum offload feature. Therefore the following symbols must be
-   defined when building the NetX library. */
-
-#define NX_PACKET_ALIGNMENT 32
-
-#define NX_DISABLE_ICMPV4_RX_CHECKSUM
-#define NX_DISABLE_ICMPV4_TX_CHECKSUM  
-#define NX_DISABLE_IP_RX_CHECKSUM
-#define NX_DISABLE_IP_TX_CHECKSUM
-#define NX_DISABLE_TCP_RX_CHECKSUM
-#define NX_DISABLE_TCP_TX_CHECKSUM
-#define NX_DISABLE_UDP_RX_CHECKSUM
-#define NX_DISABLE_UDP_TX_CHECKSUM
-
-#define NX_DISABLE_ERROR_CHECKING
-#define NX_TCP_ACK_EVERY_N_PACKETS  2
-#define NX_DISABLE_RX_SIZE_CHECKING
-#define NX_DISABLE_ARP_INFO
-#define NX_DISABLE_IP_INFO
-#define NX_DISABLE_ICMP_INFO
-#define NX_DISABLE_IGMPV2
-#define NX_DISABLE_IGMP_INFO
-#define NX_DISABLE_PACKET_INFO
-#define NX_DISABLE_RARP_INFO
-#define NX_DISABLE_TCP_INFO
-#define NX_DISABLE_UDP_INFO
-#define NX_DISABLE_EXTENDED_NOTIFY_SUPPORT
-#define NX_DISABLE_INCLUDE_SOURCE_CODE
-
 /* Define several macros for the error checking shell in NetX.  */
 
 #ifndef TX_TIMER_PROCESS_IN_ISR
@@ -171,21 +135,21 @@
                                             extern  TX_THREAD           _tx_timer_thread; \
                                             extern  volatile ULONG      _tx_thread_system_state;
 
-#define NX_THREADS_ONLY_CALLER_CHECKING     if ((_tx_thread_system_state) || \
+#define NX_THREADS_ONLY_CALLER_CHECKING     if ((TX_THREAD_GET_SYSTEM_STATE()) || \
                                                 (_tx_thread_current_ptr == TX_NULL) || \
                                                 (_tx_thread_current_ptr == &_tx_timer_thread)) \
                                                 return(NX_CALLER_ERROR);
 
-#define NX_INIT_AND_THREADS_CALLER_CHECKING if (((_tx_thread_system_state) && (_tx_thread_system_state < ((ULONG) 0xF0F0F0F0))) || \
+#define NX_INIT_AND_THREADS_CALLER_CHECKING if (((TX_THREAD_GET_SYSTEM_STATE()) && (TX_THREAD_GET_SYSTEM_STATE() < ((ULONG) 0xF0F0F0F0))) || \
                                                 (_tx_thread_current_ptr == &_tx_timer_thread)) \
                                                 return(NX_CALLER_ERROR);
 
 
-#define NX_NOT_ISR_CALLER_CHECKING          if ((_tx_thread_system_state) && (_tx_thread_system_state < ((ULONG) 0xF0F0F0F0))) \
+#define NX_NOT_ISR_CALLER_CHECKING          if ((TX_THREAD_GET_SYSTEM_STATE()) && (TX_THREAD_GET_SYSTEM_STATE() < ((ULONG) 0xF0F0F0F0))) \
                                                 return(NX_CALLER_ERROR);
 
 #define NX_THREAD_WAIT_CALLER_CHECKING      if ((wait_option) && \
-                                               ((_tx_thread_current_ptr == NX_NULL) || (_tx_thread_system_state) || (_tx_thread_current_ptr == &_tx_timer_thread))) \
+                                               ((_tx_thread_current_ptr == NX_NULL) || (TX_THREAD_GET_SYSTEM_STATE()) || (_tx_thread_current_ptr == &_tx_timer_thread))) \
                                             return(NX_CALLER_ERROR);
 
 
@@ -196,18 +160,18 @@
 #define NX_CALLER_CHECKING_EXTERNS          extern  TX_THREAD           *_tx_thread_current_ptr; \
                                             extern  volatile ULONG      _tx_thread_system_state;
 
-#define NX_THREADS_ONLY_CALLER_CHECKING     if ((_tx_thread_system_state) || \
+#define NX_THREADS_ONLY_CALLER_CHECKING     if ((TX_THREAD_GET_SYSTEM_STATE()) || \
                                                 (_tx_thread_current_ptr == TX_NULL)) \
                                                 return(NX_CALLER_ERROR);
 
-#define NX_INIT_AND_THREADS_CALLER_CHECKING if (((_tx_thread_system_state) && (_tx_thread_system_state < ((ULONG) 0xF0F0F0F0)))) \
+#define NX_INIT_AND_THREADS_CALLER_CHECKING if (((TX_THREAD_GET_SYSTEM_STATE()) && (TX_THREAD_GET_SYSTEM_STATE() < ((ULONG) 0xF0F0F0F0)))) \
                                                 return(NX_CALLER_ERROR);
 
-#define NX_NOT_ISR_CALLER_CHECKING          if ((_tx_thread_system_state) && (_tx_thread_system_state < ((ULONG) 0xF0F0F0F0))) \
+#define NX_NOT_ISR_CALLER_CHECKING          if ((TX_THREAD_GET_SYSTEM_STATE()) && (TX_THREAD_GET_SYSTEM_STATE() < ((ULONG) 0xF0F0F0F0))) \
                                                 return(NX_CALLER_ERROR);
 
 #define NX_THREAD_WAIT_CALLER_CHECKING      if ((wait_option) && \
-                                               ((_tx_thread_current_ptr == NX_NULL) || (_tx_thread_system_state))) \
+                                               ((_tx_thread_current_ptr == NX_NULL) || (TX_THREAD_GET_SYSTEM_STATE()))) \
                                             return(NX_CALLER_ERROR);
 
 #endif
@@ -217,7 +181,7 @@
 
 #ifdef NX_SYSTEM_INIT
 CHAR                            _nx_version_id[] = 
-                                    "Copyright (c) Microsoft Corporation. All rights reserved.  *  NetX Duo Cortex-M7/IAR Version G6.0 *";
+                                    "Copyright (c) Microsoft Corporation. All rights reserved.  *  NetX Duo Cortex-M7/IAR Version 6.1 *";
 #else
 extern  CHAR                    _nx_version_id[];
 #endif

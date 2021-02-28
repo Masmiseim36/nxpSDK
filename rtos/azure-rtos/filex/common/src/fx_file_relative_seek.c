@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_file_relative_seek                              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -74,11 +74,17 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            Added conditional to        */
+/*                                            disable one line function,  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
+#ifndef FX_DISABLE_ONE_LINE_FUNCTION
 UINT  _fx_file_relative_seek(FX_FILE *file_ptr, ULONG byte_offset, UINT seek_from)
 {
 
     return(_fx_file_extended_relative_seek(file_ptr, (ULONG64)byte_offset, seek_from));
 }
+#endif /* FX_DISABLE_ONE_LINE_FUNCTION */
 

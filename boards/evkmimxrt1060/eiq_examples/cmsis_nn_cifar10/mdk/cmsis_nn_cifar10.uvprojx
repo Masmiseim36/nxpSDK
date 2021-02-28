@@ -766,14 +766,9 @@
               <FilePath>../../../../../middleware/eiq/common/video/display/RK043FN02HC/eiq_display_conf.c</FilePath>
             </File>
             <File>
-              <FileName>eiq_camera.c</FileName>
+              <FileName>eiq_display.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_pxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.c</FilePath>
             </File>
             <File>
               <FileName>eiq_video_worker.c</FileName>
@@ -781,19 +776,14 @@
               <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.c</FilePath>
             </File>
             <File>
-              <FileName>eiq_display.c</FileName>
+              <FileName>eiq_pxp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.c</FilePath>
             </File>
             <File>
-              <FileName>eiq_camera_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.h</FilePath>
+              <FileName>eiq_camera.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.c</FilePath>
             </File>
             <File>
               <FileName>eiq_video_worker.h</FileName>
@@ -801,9 +791,14 @@
               <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.h</FilePath>
             </File>
             <File>
-              <FileName>eiq_camera.h</FileName>
+              <FileName>eiq_pxp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera_conf.h</FilePath>
             </File>
             <File>
               <FileName>eiq_display_conf.h</FileName>
@@ -811,9 +806,14 @@
               <FilePath>../../../../../middleware/eiq/common/video/eiq_display_conf.h</FilePath>
             </File>
             <File>
-              <FileName>eiq_pxp.h</FileName>
+              <FileName>eiq_display.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -821,14 +821,14 @@
           <GroupName>eiq/cmsis-nn/Include</GroupName>
           <Files>
             <File>
-              <FileName>arm_nnfunctions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nnfunctions.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_nnsupportfunctions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nnsupportfunctions.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nnfunctions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nnfunctions.h</FilePath>
             </File>
             <File>
               <FileName>arm_nn_tables.h</FileName>
@@ -841,24 +841,24 @@
           <GroupName>eiq/cmsis-nn/Source/ActivationFunctions</GroupName>
           <Files>
             <File>
-              <FileName>arm_relu_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_activations_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q15.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_relu_q15.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q15.c</FilePath>
             </File>
             <File>
+              <FileName>arm_relu_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q7.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_activations_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q15.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -871,19 +871,19 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
@@ -896,34 +896,19 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
+              <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
+              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c</FilePath>
             </File>
             <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
+              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_conv_u8_basic_ver1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</FilePath>
             </File>
             <File>
               <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
@@ -931,9 +916,24 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
+              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_conv_u8_basic_ver1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -941,19 +941,9 @@
           <GroupName>eiq/cmsis-nn/Source/FullyConnectedFunctions</GroupName>
           <Files>
             <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
+              <FileName>arm_fully_connected_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q7_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_fully_connected_q15_opt.c</FileName>
@@ -961,20 +951,40 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c</FilePath>
             </File>
             <File>
-              <FileName>arm_fully_connected_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>eiq/cmsis-nn/Source/NNSupportFunctions</GroupName>
           <Files>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nntables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nntables.c</FilePath>
+            </File>
             <File>
               <FileName>arm_nn_mult_q7.c</FileName>
               <FileType>1</FileType>
@@ -986,19 +996,9 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c</FilePath>
             </File>
             <File>
-              <FileName>arm_nntables.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nntables.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_q7_to_q15_no_shift.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q15.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1972,14 +1972,9 @@
               <FilePath>../../../../../middleware/eiq/common/video/display/RK043FN02HC/eiq_display_conf.c</FilePath>
             </File>
             <File>
-              <FileName>eiq_camera.c</FileName>
+              <FileName>eiq_display.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.c</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_pxp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.c</FilePath>
             </File>
             <File>
               <FileName>eiq_video_worker.c</FileName>
@@ -1987,19 +1982,14 @@
               <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.c</FilePath>
             </File>
             <File>
-              <FileName>eiq_display.c</FileName>
+              <FileName>eiq_pxp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.c</FilePath>
             </File>
             <File>
-              <FileName>eiq_camera_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>eiq_display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.h</FilePath>
+              <FileName>eiq_camera.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.c</FilePath>
             </File>
             <File>
               <FileName>eiq_video_worker.h</FileName>
@@ -2007,9 +1997,14 @@
               <FilePath>../../../../../middleware/eiq/common/video/eiq_video_worker.h</FilePath>
             </File>
             <File>
-              <FileName>eiq_camera.h</FileName>
+              <FileName>eiq_pxp.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera_conf.h</FilePath>
             </File>
             <File>
               <FileName>eiq_display_conf.h</FileName>
@@ -2017,9 +2012,14 @@
               <FilePath>../../../../../middleware/eiq/common/video/eiq_display_conf.h</FilePath>
             </File>
             <File>
-              <FileName>eiq_pxp.h</FileName>
+              <FileName>eiq_display.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/common/video/eiq_pxp.h</FilePath>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_display.h</FilePath>
+            </File>
+            <File>
+              <FileName>eiq_camera.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/common/video/eiq_camera.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -2027,14 +2027,14 @@
           <GroupName>eiq/cmsis-nn/Include</GroupName>
           <Files>
             <File>
-              <FileName>arm_nnfunctions.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nnfunctions.h</FilePath>
-            </File>
-            <File>
               <FileName>arm_nnsupportfunctions.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nnsupportfunctions.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nnfunctions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Include/arm_nnfunctions.h</FilePath>
             </File>
             <File>
               <FileName>arm_nn_tables.h</FileName>
@@ -2047,24 +2047,24 @@
           <GroupName>eiq/cmsis-nn/Source/ActivationFunctions</GroupName>
           <Files>
             <File>
-              <FileName>arm_relu_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q7.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_activations_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q15.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_relu_q15.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q15.c</FilePath>
             </File>
             <File>
+              <FileName>arm_relu_q7.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q7.c</FilePath>
+            </File>
+            <File>
               <FileName>arm_nn_activations_q7.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q7.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_activations_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q15.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2077,19 +2077,19 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
+              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_convolve_HWC_q15_fast_nonsquare.c</FileName>
@@ -2102,34 +2102,19 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
+              <FileName>arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_depthwise_separable_conv_HWC_q7.c</FileName>
+              <FileName>arm_convolve_HWC_q15_fast.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c</FilePath>
             </File>
             <File>
-              <FileName>arm_nn_mat_mult_kernel_q7_q15_reordered.c</FileName>
+              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_basic_nonsquare.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_depthwise_conv_u8_basic_ver1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</FilePath>
             </File>
             <File>
               <FileName>arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FileName>
@@ -2137,9 +2122,24 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c</FilePath>
             </File>
             <File>
-              <FileName>arm_convolve_HWC_q7_RGB.c</FileName>
+              <FileName>arm_convolve_HWC_q15_basic.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_depthwise_conv_u8_basic_ver1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_convolve_HWC_q7_fast.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nn_mat_mult_kernel_q7_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2147,19 +2147,9 @@
           <GroupName>eiq/cmsis-nn/Source/FullyConnectedFunctions</GroupName>
           <Files>
             <File>
-              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
+              <FileName>arm_fully_connected_q7.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q15.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_fully_connected_q7_opt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</FilePath>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7.c</FilePath>
             </File>
             <File>
               <FileName>arm_fully_connected_q15_opt.c</FileName>
@@ -2167,20 +2157,40 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c</FilePath>
             </File>
             <File>
-              <FileName>arm_fully_connected_q7.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_fully_connected_mat_q7_vec_q15.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q7_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_fully_connected_mat_q7_vec_q15_opt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>eiq/cmsis-nn/Source/NNSupportFunctions</GroupName>
           <Files>
+            <File>
+              <FileName>arm_nn_mult_q15.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q15.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_nntables.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nntables.c</FilePath>
+            </File>
             <File>
               <FileName>arm_nn_mult_q7.c</FileName>
               <FileType>1</FileType>
@@ -2192,19 +2202,9 @@
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c</FilePath>
             </File>
             <File>
-              <FileName>arm_nntables.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nntables.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_q7_to_q15_no_shift.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_nn_mult_q15.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q15.c</FilePath>
             </File>
           </Files>
         </Group>

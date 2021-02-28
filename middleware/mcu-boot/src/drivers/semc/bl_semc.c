@@ -56,11 +56,8 @@ static status_t semc_convert_memory_size_to_ms(uint32_t memorySize, uint8_t *ms)
 //!@brief Convert burst length to bl parameter for NORCR0/NANDCR0 configuration
 static status_t semc_convert_burst_length_to_bl(uint32_t burstLength, uint8_t *bl);
 
-#if BL_FEATURE_SEMC_NOR_MODULE
 //!@brief Configure NOR flash control registers
 static status_t semc_config_nor_flash_control_registers(semc_mem_config_t *config);
-#endif // BL_FEATURE_SEMC_NOR_MODULE
-
 //!@brief Configure NAND flash control registers
 static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *config);
 
@@ -572,7 +569,6 @@ static status_t semc_convert_burst_length_to_bl(uint32_t burstLength, uint8_t *b
     }
 }
 
-#if BL_FEATURE_SEMC_NOR_MODULE
 //!@brief Configure NOR flash control registers
 static status_t semc_config_nor_flash_control_registers(semc_mem_config_t *config)
 {
@@ -746,7 +742,6 @@ static status_t semc_config_nor_flash_control_registers(semc_mem_config_t *confi
 
     return status;
 }
-#endif // BL_FEATURE_SEMC_NOR_MODULE
 
 //!@brief Configure NAND flash control registers
 static status_t semc_config_nand_flash_control_registers(semc_mem_config_t *config)
@@ -945,24 +940,20 @@ status_t semc_init(semc_mem_config_t *config)
     base->MCR |= SEMC_MCR_MDIS_MASK;
 
     // Configure device control register
-    switch (config->deviceMemType)
+    if (config->deviceMemType == kSemcDeviceMemType_NOR)
     {
-#if BL_FEATURE_SEMC_NOR_MODULE
-    case kSemcDeviceMemType_NOR:
         portWidth = config->norMemConfig.dataPortWidth;
         status = semc_config_nor_flash_control_registers(config);
-        break;
-#endif // BL_FEATURE_SEMC_NOR_MODULE
-#if BL_FEATURE_SEMC_NAND_MODULE
-    case kSemcDeviceMemType_NAND:
+    }
+    else if (config->deviceMemType == kSemcDeviceMemType_NAND)
+    {
         portWidth = config->nandMemConfig.ioPortWidth;
         status = semc_config_nand_flash_control_registers(config);
-        break;
-#endif // BL_FEATURE_SEMC_NAND_MODULE
-    default:
-        status = kStatus_SEMC_InvalidDeviceType;
     }
-
+    else
+    {
+        return kStatus_SEMC_InvalidDeviceType;
+    }
     if (status != kStatus_Success)
     {
         return status;

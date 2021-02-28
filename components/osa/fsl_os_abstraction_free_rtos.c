@@ -72,9 +72,7 @@ typedef struct _osa_state
 {
 #if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
     list_label_t taskList;
-#if (defined(FSL_OSA_MAIN_FUNC_ENABLE) && (FSL_OSA_MAIN_FUNC_ENABLE > 0U))
     OSA_TASK_HANDLE_DEFINE(mainTaskHandle);
-#endif
 #endif
     uint32_t basePriority;
     int32_t basePriorityNesting;
@@ -268,10 +266,17 @@ osa_status_t OSA_TaskSetPriority(osa_task_handle_t taskHandle, osa_task_priority
 #if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
 osa_status_t OSA_TaskCreate(osa_task_handle_t taskHandle, const osa_task_def_t *thread_def, osa_task_param_t task_param)
 {
+    static uint8_t s_osaTaskListInitialized = 0;
     assert(sizeof(osa_freertos_task_t) == OSA_TASK_HANDLE_SIZE);
     assert(taskHandle);
     TaskHandle_t pxCreatedTask;
     osa_freertos_task_t *ptask = (osa_freertos_task_t *)taskHandle;
+
+    if (0u == s_osaTaskListInitialized)
+    {
+        s_osaTaskListInitialized = 1u;
+        LIST_Init((&s_osaState.taskList), 0);
+    }
 
     if (xTaskCreate((TaskFunction_t)thread_def->pthread, /* pointer to the task */
                     (char const *)thread_def->tname,     /* task name for kernel awareness debugging */
@@ -1035,45 +1040,21 @@ void OSA_InstallIntHandler(uint32_t IRQNumber, void (*handler)(void))
 #if (defined(FSL_OSA_MAIN_FUNC_ENABLE) && (FSL_OSA_MAIN_FUNC_ENABLE > 0U))
 static OSA_TASK_DEFINE(startup_task, gMainThreadPriority_c, 1, gMainThreadStackSize_c, 0);
 
-void main(void)
+__WEAK_FUNC int main(void)
 {
     extern void BOARD_InitHardware(void);
-    OSA_Init();
+
     /* Initialize MCU clock */
     BOARD_InitHardware();
 
-    (void)OSA_TaskCreate((osa_task_handle_t)s_osaState.mainTaskHandle, OSA_TASK(startup_task), NULL);
-
-    OSA_Start();
-}
-#endif /*(defined(FSL_OSA_MAIN_FUNC_ENABLE) && (FSL_OSA_MAIN_FUNC_ENABLE > 0U))*/
-#endif /* FSL_OSA_TASK_ENABLE */
-
-/*FUNCTION**********************************************************************
- *
- * Function Name : OSA_Init
- * Description   : This function is used to setup the basic services, it should
- * be called first in function main.
- *
- *END**************************************************************************/
-#if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
-void OSA_Init(void)
-{
-    LIST_Init((&s_osaState.taskList), 0);
     s_osaState.basePriorityNesting   = 0;
     s_osaState.interruptDisableCount = 0;
+    (void)OSA_TaskCreate((osa_task_handle_t)s_osaState.mainTaskHandle, OSA_TASK(startup_task), NULL);
+
+    vTaskStartScheduler();
+    return 0;
 }
+
 #endif
 
-/*FUNCTION**********************************************************************
- *
- * Function Name : OSA_Start
- * Description   : This function is used to start RTOS scheduler.
- *
- *END**************************************************************************/
-#if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
-void OSA_Start(void)
-{
-    vTaskStartScheduler();
-}
-#endif
+#endif /* FSL_OSA_TASK_ENABLE */

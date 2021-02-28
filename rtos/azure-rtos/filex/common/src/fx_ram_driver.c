@@ -57,7 +57,7 @@ VOID _fx_ram_driver(FX_MEDIA *media_ptr);
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_ram_driver                                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -105,6 +105,8 @@ VOID _fx_ram_driver(FX_MEDIA *media_ptr);
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID  _fx_ram_driver(FX_MEDIA *media_ptr)
@@ -210,7 +212,7 @@ UINT   bytes_per_sector;
              media_ptr -> fx_media_bytes_per_sector);
 
         /* Copy the RAM sector into the destination.  */
-        _fx_utility_memory_copy(source_buffer, media_ptr -> fx_media_driver_buffer,
+        _fx_utility_memory_copy(source_buffer, media_ptr -> fx_media_driver_buffer, 
                                 media_ptr -> fx_media_driver_sectors * 
                                 media_ptr -> fx_media_bytes_per_sector);
 

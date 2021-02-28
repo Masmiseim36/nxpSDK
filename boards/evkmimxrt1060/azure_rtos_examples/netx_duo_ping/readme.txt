@@ -5,9 +5,10 @@ This is a small ping demo of the high-performance NetX Duo TCP/IP stack.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -40,7 +41,8 @@ DHCP In Progress...
 IP address: 192.168.2.10
 Mask: 255.255.255.0
 
-Then, on a PC, use the ping command to ping the IP address, 192.168.2.10.
+It shows that the board gets a new IP address, for example, 192.168.2.10. Then, on a PC,
+use the ping command to ping the new IP address of the board, for example:
 
 $ ping 192.168.2.10
 Pinging 192.168.2.10 with 32 bytes of data:
@@ -49,7 +51,5 @@ Reply from 192.168.2.10: bytes=32 time=4ms TTL=127
 Reply from 192.168.2.10: bytes=32 time=3ms TTL=127
 Reply from 192.168.2.10: bytes=32 time=2ms TTL=127
 
-It shows that the example program has been running on the board successfully.
-Customization options
-=====================
+It shows that the example program running on the board can handle ping packages.
 

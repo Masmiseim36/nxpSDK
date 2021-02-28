@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_dtls_send_record                         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -64,7 +64,7 @@
 /*    _nxd_udp_socket_send                  Send UDP packet               */
 /*    _nxd_udp_socket_source_send           Send UDP packet with specific */
 /*                                            source address              */
-/*    nx_packet_release                     Release packet (on error)     */
+/*    nx_secure_tls_packet_release          Release packet                */
 /*    tx_mutex_get                          Get protection mutex          */
 /*    tx_mutex_put                          Put protection mutex          */
 /*                                                                        */
@@ -82,6 +82,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
+/*  09-30-2020     Timothy Stapko           Modified comment(s),          */
+/*                                            verified memcpy use cases,  */
+/*                                            released packet securely,   */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_dtls_send_record(NX_SECURE_DTLS_SESSION *dtls_session, NX_PACKET *send_packet,
@@ -209,7 +213,7 @@ UCHAR                  epoch_seq_num[8];
         }
 
         /* Append the hash to the plaintext data before encryption. */
-        NX_SECURE_MEMCPY(&data[length], record_hash, hash_length); 
+        NX_SECURE_MEMCPY(&data[length], record_hash, hash_length); /* Use case of memcpy is verified. */
 
 #ifdef NX_SECURE_KEY_CLEAR
         NX_SECURE_MEMSET(record_hash, 0, hash_length);
@@ -295,7 +299,7 @@ UCHAR                  epoch_seq_num[8];
 
     if (status != NX_SUCCESS)
     {
-        nx_packet_release(send_packet);
+        nx_secure_tls_packet_release(send_packet);
         return(NX_SECURE_TLS_TCP_SEND_FAILED);
     }
 

@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_8bpp_canvas_copy                 PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_display_driver_8bpp_canvas_copy(GX_CANVAS *canvas, GX_CANVAS *composite)
@@ -105,7 +107,7 @@ INT          row;
 
         for (row = overlap.gx_rectangle_top; row <= overlap.gx_rectangle_bottom; row++)
         {
-            memcpy(write, read, (size_t)width);
+            memcpy(write, read, (size_t)width); /* Use case of memcpy is verified. */
 
             write += composite -> gx_canvas_x_resolution;
             read += canvas -> gx_canvas_x_resolution;

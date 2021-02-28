@@ -37,7 +37,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_directory_information_get                       PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -80,6 +80,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), verified */
+/*                                            memcpy usage,               */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_directory_information_get(FX_MEDIA *media_ptr, CHAR *directory_name,
@@ -149,7 +152,7 @@ FX_FILE     *search_ptr;
 
             /* The file has been opened for writing by a previous call. Use the information used by
                the writer instead of what is currently on the media.  */
-            _fx_utility_memory_copy((UCHAR *)&search_ptr -> fx_file_dir_entry, (UCHAR *)&dir_entry, sizeof(FX_DIR_ENTRY));
+            _fx_utility_memory_copy((UCHAR *)&search_ptr -> fx_file_dir_entry, (UCHAR *)&dir_entry, sizeof(FX_DIR_ENTRY)); /* Use case of memcpy is verified. */
             break;
         }
 

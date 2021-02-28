@@ -37,7 +37,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_file_open                                       PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -75,12 +75,20 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            added conditional to        */
+/*                                            disable fast open and       */
+/*                                            consecutive detect,         */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_file_open(FX_MEDIA *media_ptr, FX_FILE *file_ptr, CHAR *file_name, UINT open_type)
 {
 
-UINT     status, leading_consecutive;
+UINT     status;
+#ifndef FX_DISABLE_CONSECUTIVE_DETECT
+UINT     leading_consecutive;
+#endif /* FX_DISABLE_CONSECUTIVE_DETECT */
 ULONG    cluster;
 ULONG    contents = 0;
 ULONG    open_count;
@@ -92,7 +100,9 @@ ULONG    cluster_count;
 ULONG64  bytes_available;
 ULONG64  bytes_remaining;
 ULONG    fat_last;
+#ifndef FX_DISABLE_FAST_OPEN
 UINT     fast_open;
+#endif /* FX_DISABLE_FAST_OPEN */
 UCHAR    not_a_file_attr;
 
 
@@ -134,6 +144,7 @@ UCHAR    not_a_file_attr;
         not_a_file_attr = FX_DIRECTORY | FX_VOLUME;
     }
 
+#ifndef FX_DISABLE_FAST_OPEN
     /* Determine if a fast open is selected.  */
     if (open_type == FX_OPEN_FOR_READ_FAST)
     {
@@ -150,6 +161,7 @@ UCHAR    not_a_file_attr;
         /* A fast open is not selected, set the flag to false.  */
         fast_open =  FX_FALSE;
     }
+#endif /* FX_DISABLE_FAST_OPEN */
 
     /* If trace is enabled, register this object.  */
     FX_TRACE_OBJECT_REGISTER(FX_TRACE_OBJECT_TYPE_FILE, file_ptr, file_name, 0, 0)
@@ -308,8 +320,12 @@ UCHAR    not_a_file_attr;
 
     last_cluster =      0;
     cluster_count =     0;
+
+#ifndef FX_DISABLE_CONSECUTIVE_DETECT
     leading_consecutive = 1;
+#endif /* FX_DISABLE_CONSECUTIVE_DETECT */
     file_ptr -> fx_file_consecutive_cluster = 1;
+#ifndef FX_DISABLE_FAST_OPEN
 
     /* Determine if the file is being open for reading with the fast option.  */
     if (fast_open)
@@ -329,6 +345,7 @@ UCHAR    not_a_file_attr;
 #endif /* FX_ENABLE_EXFAT */
     }
     else
+#endif /* FX_DISABLE_FAST_OPEN */
     {
 #ifdef FX_ENABLE_EXFAT
 
@@ -405,6 +422,8 @@ UCHAR    not_a_file_attr;
                     return(FX_FAT_READ_ERROR);
                 }
 
+#ifndef FX_DISABLE_CONSECUTIVE_DETECT
+
                 /* Check if present and next clusters are consecutive */
                 if (cluster + 1 == contents)
                 {
@@ -423,6 +442,7 @@ UCHAR    not_a_file_attr;
                     /* The clusters are no longer consecutive, clear the consecutive flag.  */
                     leading_consecutive = 0;
                 }
+#endif /* FX_DISABLE_CONSECUTIVE_DETECT */
 
                 /* Save the last valid cluster.  */
                 last_cluster =  cluster;

@@ -26,7 +26,7 @@
 /*  COMPONENT DEFINITION                                   RELEASE        */
 /*                                                                        */
 /*    ux_device_class_storage.h                           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -41,6 +41,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+/*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            optimized command logic,    */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -167,11 +170,22 @@
 
 #define UX_SLAVE_CLASS_STORAGE_MODE_SENSE_PARAMETER_MEDIUM_TYPE_6    1
 #define UX_SLAVE_CLASS_STORAGE_MODE_SENSE_PARAMETER_MEDIUM_TYPE_10   2
+#define UX_SLAVE_CLASS_STORAGE_MODE_SENSE_PARAMETER_FLAGS_6          2
+#define UX_SLAVE_CLASS_STORAGE_MODE_SENSE_PARAMETER_FLAGS_10         3
+#define UX_SLAVE_CLASS_STORAGE_MODE_SENSE_PARAMETER_FLAG_WP          0x80
 #define UX_SLAVE_CLASS_STORAGE_MODE_SENSE_PARAMETER_HEADER_LENGTH_6  4
 #define UX_SLAVE_CLASS_STORAGE_MODE_SENSE_PARAMETER_HEADER_LENGTH_10 8
 
 #define UX_SLAVE_CLASS_STORAGE_MODE_SENSE_COMMAND_LENGTH_UFI         12
 #define UX_SLAVE_CLASS_STORAGE_MODE_SENSE_COMMAND_LENGTH_SBC         12
+
+#define UX_SLAVE_CLASS_STORAGE_IEC_MODE_PAGE_PAGE_LENGTH             0x0A
+
+#define UX_SLAVE_CLASS_STORAGE_CACHING_MODE_PAGE_PAGE_LENGTH         0x12
+#define UX_SLAVE_CLASS_STORAGE_CACHING_MODE_PAGE_CODE                0
+#define UX_SLAVE_CLASS_STORAGE_CACHING_MODE_PAGE_LENGTH              1
+#define UX_SLAVE_CLASS_STORAGE_CACHING_MODE_PAGE_FLAGS               2
+#define UX_SLAVE_CLASS_STORAGE_CACHING_MODE_PAGE_FLAG_WCE            (1u<<2)
 
 
 /* Define Storage Class SCSI request sense command constants.  */
@@ -411,9 +425,7 @@ typedef struct UX_SLAVE_CLASS_STORAGE_LUN_STRUCT
     ULONG           ux_slave_class_storage_media_read_only_flag;
     ULONG           ux_slave_class_storage_media_id;
     ULONG           ux_slave_class_storage_scsi_tag;
-    UCHAR           ux_slave_class_storage_request_sense_key;
-    UCHAR           ux_slave_class_storage_request_code;
-    UCHAR           ux_slave_class_storage_request_code_qualifier;
+    ULONG           ux_slave_class_storage_request_sense_status;
     ULONG           ux_slave_class_storage_disk_status;
     ULONG           ux_slave_class_storage_last_session_state;
     UINT            (*ux_slave_class_storage_media_read)(VOID *storage, ULONG lun, UCHAR *data_pointer, ULONG number_blocks, ULONG lba, ULONG *media_status);
@@ -423,6 +435,14 @@ typedef struct UX_SLAVE_CLASS_STORAGE_LUN_STRUCT
     UINT            (*ux_slave_class_storage_media_notification)(VOID *storage, ULONG lun, ULONG media_id, ULONG notification_class, UCHAR **media_notification, ULONG *media_notification_length);
 } UX_SLAVE_CLASS_STORAGE_LUN;
 
+/* Sense status value (key at bit0-7, code at bit8-15 and qualifier at bit16-23).  */
+
+#define UX_DEVICE_CLASS_STORAGE_SENSE_STATUS(key,code,qualifier)        (((key) & 0xFF)|(((code) & 0xFF) << 8)|(((qualifier) & 0xFF) << 16))
+#define UX_DEVICE_CLASS_STORAGE_SENSE_KEY(status)                       ((status) & 0xFF)
+#define UX_DEVICE_CLASS_STORAGE_SENSE_CODE(status)                      (((status) >> 8) & 0xFF)
+#define UX_DEVICE_CLASS_STORAGE_SENSE_QUALIFIER(status)                 (((status) >> 16) & 0xFF)
+
+
 /* Define Slave Storage Class structure.  */
 
 typedef struct UX_SLAVE_CLASS_STORAGE_STRUCT
@@ -430,7 +450,7 @@ typedef struct UX_SLAVE_CLASS_STORAGE_STRUCT
     UX_SLAVE_INTERFACE          *ux_slave_class_storage_interface;
     ULONG                       ux_slave_class_storage_number_lun;
     UX_SLAVE_CLASS_STORAGE_LUN  ux_slave_class_storage_lun[UX_MAX_SLAVE_LUN];
-    ULONG                       ux_slave_class_storage_phase_error;
+    ULONG                       ux_slave_class_storage_csw_status;
     VOID                        (*ux_slave_class_storage_instance_activate)(VOID *);
     VOID                        (*ux_slave_class_storage_instance_deactivate)(VOID *);
     UCHAR                       *ux_slave_class_storage_vendor_id;
@@ -439,6 +459,9 @@ typedef struct UX_SLAVE_CLASS_STORAGE_STRUCT
     UCHAR                       *ux_slave_class_storage_product_serial;
 
 } UX_SLAVE_CLASS_STORAGE;
+
+#define UX_DEVICE_CLASS_STORAGE_CSW_STATUS(p)               (((UCHAR*)(p))[0])
+#define UX_DEVICE_CLASS_STORAGE_CSW_SKIP(p)                 (((UCHAR*)(p))[3])
 
 /* Define Slave Storage Class Calling Parameter structure */
 

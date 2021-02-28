@@ -820,17 +820,17 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libosa.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libmp3dec.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libccimeta.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libopus.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libstreamer.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libogg.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libopusfile.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libwavdec.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libccicontainer.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libsrc48k.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libosa.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libcommon.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libccicontainer.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libmp3dec.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libogg.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libstreamer.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libccimeta.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libopusfile.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libopus.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1841,17 +1841,17 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libosa.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libmp3dec.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libccimeta.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libopus.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libstreamer.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libogg.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libopusfile.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libwavdec.a</state>
-          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libccicontainer.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libsrc48k.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libosa.a</state>
           <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libcommon.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libccicontainer.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libmp3dec.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libogg.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libstreamer.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libccimeta.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libopusfile.a</state>
+          <state>$PROJ_DIR$/../../../../../middleware/maestro/libs/cm7f/iar/libopus.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2471,46 +2471,22 @@
     <group>
       <name>inc</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_freertos.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_time.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_event.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_types.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/error.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/logging.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_message.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_dir.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/lib_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_misc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_element_properties.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_pcm.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_thread.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/vector.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/container.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_message.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/error.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_mutex.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_isr.h</name>
@@ -2519,31 +2495,43 @@
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_api.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_types.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_error.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_time.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/general_utils.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/logging.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/file_utils.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_memory.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_sem.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/container.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_error.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_message.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/lib_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_thread.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/vector.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_init.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_memory.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_pcm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_freertos.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_dir.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/ringbuffer.h</name>
@@ -2552,7 +2540,19 @@
         <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_cond.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_mutex.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/general_utils.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/file_utils.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_event.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/streamer_element_properties.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/maestro/inc/osa_misc.h</name>
       </file>
     </group>
     <group>
@@ -2560,13 +2560,13 @@
       <group>
         <name>inc</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/inc/memtypes.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/inc/af_error.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/inc/metadata_error.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/inc/af_error.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/maestro/streamer/inc/memtypes.h</name>
         </file>
       </group>
     </group>

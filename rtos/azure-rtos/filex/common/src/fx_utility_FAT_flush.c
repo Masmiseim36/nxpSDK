@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_utility_FAT_flush                               PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -70,6 +70,12 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s),          */
+/*                                            resulting in version 6.1    */
+/*  11-09-2020     William E. Lamie         Modified comment(s),          */
+/*                                            updated logic for           */
+/*                                            FAT secondary update map,   */
+/*                                            resulting in version 6.1.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_utility_FAT_flush(FX_MEDIA *media_ptr)
@@ -310,7 +316,7 @@ ULONG  sector;
                 ind = ((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) >> 3;
                 media_ptr -> fx_media_fat_secondary_update_map[ind] = 
                     (UCHAR)((INT)media_ptr -> fx_media_fat_secondary_update_map[ind]
-                    | (1 << ((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) & 7));
+                    | (1 <<(((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) & 7)));
 
                 /* Determine if the multi-sector flag is set.  */
                 if (multi_sector_entry != -1)
@@ -428,7 +434,7 @@ ULONG  sector;
             ind = ((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) >> 3;
             media_ptr -> fx_media_fat_secondary_update_map[ind] = 
                 (UCHAR)((INT)media_ptr -> fx_media_fat_secondary_update_map[ind]
-                | (1 << ((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) & 7));
+                | (1 <<(((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) & 7)));
         }
         else
         {
@@ -534,7 +540,7 @@ ULONG  sector;
                 ind = ((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) >> 3;
                 media_ptr -> fx_media_fat_secondary_update_map[ind] = 
                     (UCHAR)((INT)media_ptr -> fx_media_fat_secondary_update_map[ind]
-                    | (1 << ((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) & 7));
+                    | (1 <<(((FAT_sector - media_ptr -> fx_media_reserved_sectors) / sectors_per_bit) & 7)));
 #ifdef FX_ENABLE_EXFAT
             }
 #endif /* FX_ENABLE_EXFAT */

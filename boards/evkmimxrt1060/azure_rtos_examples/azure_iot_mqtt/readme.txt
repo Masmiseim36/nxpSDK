@@ -35,9 +35,10 @@ Prerequisites
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -77,7 +78,4 @@ Subscribed to server
 [Published] topic = devices/imxrt1050/messages/events/, message: {"temperature": 22}
 [Published] topic = devices/imxrt1050/messages/events/, message: {"temperature": 23}
 [Published] topic = devices/imxrt1050/messages/events/, message: {"temperature": 24}
-
-Customization options
-=====================
 

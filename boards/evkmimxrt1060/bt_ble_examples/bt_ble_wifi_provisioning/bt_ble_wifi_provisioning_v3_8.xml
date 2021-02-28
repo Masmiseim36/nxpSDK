@@ -818,59 +818,59 @@
       <files mask="eBT_timer.h"/>
     </source>
     <source path="middleware/wireless/ethermind/bluetooth/export/include" project_relative_path="ethermind/bluetooth/export/include" type="c_include">
-      <files mask="BT_gatt_db_api.h"/>
-      <files mask="BT_mcap_api.h"/>
-      <files mask="BT_hdp_api.h"/>
-      <files mask="BT_irobex_api.h"/>
-      <files mask="BT_bnep_api.h"/>
-      <files mask="gatt_defines.h"/>
-      <files mask="BT_hfp_unit_api.h"/>
-      <files mask="BT_hfp_ag_api.h"/>
-      <files mask="BT_sm_api.h"/>
-      <files mask="BT_avrcp_ca_api.h"/>
-      <files mask="BT_version.h"/>
-      <files mask="BT_smp_api.h"/>
-      <files mask="fsm_engine.h"/>
-      <files mask="BT_jpl_api.h"/>
-      <files mask="BT_error.h"/>
       <files mask="BT_ftp_api.h"/>
-      <files mask="BT_racp.h"/>
-      <files mask="BT_rfcomm_api.h"/>
-      <files mask="BT_bpp_api.h"/>
-      <files mask="BT_api.h"/>
-      <files mask="BT_pbap_api.h"/>
-      <files mask="BT_avdtp_api.h"/>
-      <files mask="BT_ctn_api.h"/>
-      <files mask="BT_a2dp_api.h"/>
-      <files mask="BT_opp_api.h"/>
-      <files mask="BT_avrcp_api.h"/>
-      <files mask="BT_bip_api.h"/>
-      <files mask="BT_hci_api.h"/>
-      <files mask="BT_spp_api.h"/>
-      <files mask="BT_gap_api.h"/>
-      <files mask="fsm_defines.h"/>
-      <files mask="BT_security.h"/>
-      <files mask="BT_dbase_api.h"/>
-      <files mask="BT_att_api.h"/>
-      <files mask="BT_bottom_half.h"/>
-      <files mask="BT_hid_device_api.h"/>
-      <files mask="hci_transport.h"/>
-      <files mask="BT_sap_api.h"/>
-      <files mask="BT_obex_api.h"/>
-      <files mask="BT_sdp_api.h"/>
-      <files mask="BT_hid_host_api.h"/>
-      <files mask="BT_pan_api.h"/>
-      <files mask="BT_status.h"/>
-      <files mask="BT_common.h"/>
-      <files mask="BT_device_queue.h"/>
-      <files mask="l2cap.h"/>
-      <files mask="BT_avctp_api.h"/>
       <files mask="BT_at_parser_api.h"/>
-      <files mask="BT_map_api.h"/>
-      <files mask="BT_storage.h"/>
-      <files mask="BT_assigned_numbers.h"/>
-      <files mask="BT_snoop.h"/>
       <files mask="write_task.h"/>
+      <files mask="BT_bpp_api.h"/>
+      <files mask="BT_security.h"/>
+      <files mask="BT_bip_api.h"/>
+      <files mask="BT_opp_api.h"/>
+      <files mask="BT_pan_api.h"/>
+      <files mask="BT_dbase_api.h"/>
+      <files mask="BT_a2dp_api.h"/>
+      <files mask="BT_hid_host_api.h"/>
+      <files mask="BT_hfp_ag_api.h"/>
+      <files mask="BT_status.h"/>
+      <files mask="fsm_defines.h"/>
+      <files mask="BT_bottom_half.h"/>
+      <files mask="BT_racp.h"/>
+      <files mask="BT_jpl_api.h"/>
+      <files mask="BT_snoop.h"/>
+      <files mask="gatt_defines.h"/>
+      <files mask="BT_storage.h"/>
+      <files mask="BT_rfcomm_api.h"/>
+      <files mask="BT_gatt_db_api.h"/>
+      <files mask="BT_assigned_numbers.h"/>
+      <files mask="BT_avdtp_api.h"/>
+      <files mask="BT_hdp_api.h"/>
+      <files mask="BT_bnep_api.h"/>
+      <files mask="BT_att_api.h"/>
+      <files mask="hci_transport.h"/>
+      <files mask="fsm_engine.h"/>
+      <files mask="BT_error.h"/>
+      <files mask="BT_api.h"/>
+      <files mask="BT_smp_api.h"/>
+      <files mask="BT_obex_api.h"/>
+      <files mask="BT_ctn_api.h"/>
+      <files mask="BT_sdp_api.h"/>
+      <files mask="l2cap.h"/>
+      <files mask="BT_version.h"/>
+      <files mask="BT_hfp_unit_api.h"/>
+      <files mask="BT_device_queue.h"/>
+      <files mask="BT_common.h"/>
+      <files mask="BT_avctp_api.h"/>
+      <files mask="BT_avrcp_ca_api.h"/>
+      <files mask="BT_avrcp_api.h"/>
+      <files mask="BT_mcap_api.h"/>
+      <files mask="BT_spp_api.h"/>
+      <files mask="BT_pbap_api.h"/>
+      <files mask="BT_sap_api.h"/>
+      <files mask="BT_hid_device_api.h"/>
+      <files mask="BT_sm_api.h"/>
+      <files mask="BT_irobex_api.h"/>
+      <files mask="BT_hci_api.h"/>
+      <files mask="BT_map_api.h"/>
+      <files mask="BT_gap_api.h"/>
     </source>
     <source path="middleware/wireless/ethermind/bluetooth/export/vendor" project_relative_path="ethermind/bluetooth/export/vendor" type="c_include">
       <files mask="vendor_specific_commands.h"/>
@@ -943,24 +943,24 @@
       <files mask="xml_parser.h"/>
     </source>
     <source path="middleware/wireless/ethermind/port/osal/src/freertos" project_relative_path="ethermind/port/osal/src/freertos" type="c_include">
-      <files mask="EM_fops.h"/>
-      <files mask="EM_timer.h"/>
-      <files mask="EM_assert.h"/>
       <files mask="EM_debug_api.h"/>
       <files mask="EM_debug_internal.h"/>
-      <files mask="EM_os.h"/>
+      <files mask="EM_fops.h"/>
+      <files mask="EM_serial.h"/>
       <files mask="EM_timer_internal.h"/>
       <files mask="EM_debug.h"/>
-      <files mask="EM_serial.h"/>
+      <files mask="EM_os.h"/>
+      <files mask="EM_assert.h"/>
       <files mask="EM_config.h"/>
+      <files mask="EM_timer.h"/>
     </source>
     <source path="middleware/wireless/ethermind/port/osal/src/freertos" project_relative_path="ethermind/port/osal/src/freertos" type="src">
       <files mask="EM_serial.c"/>
       <files mask="EM_timer.c"/>
-      <files mask="EM_debug.c"/>
-      <files mask="EM_config.c"/>
       <files mask="EM_os.c"/>
       <files mask="EM_fops.c"/>
+      <files mask="EM_debug.c"/>
+      <files mask="EM_config.c"/>
     </source>
     <source path="middleware/wireless/ethermind/port/pal/mcux/bluetooth" project_relative_path="ethermind/port/pal/mcux/bluetooth" type="c_include">
       <files mask="BT_assert.h"/>
@@ -996,33 +996,33 @@
       <files mask="write_task_pl.c"/>
     </source>
     <source path="middleware/wireless/ethermind/port/pal/mcux/ethal" project_relative_path="ethermind/port/pal/mcux/ethal" type="c_include">
-      <files mask="ethal_fops.h"/>
-      <files mask="ethal_os.h"/>
-      <files mask="ethal_serial.h"/>
-      <files mask="ethal_debug.h"/>
-      <files mask="ethal_debug_api.h"/>
-      <files mask="ethal_config.h"/>
       <files mask="ethal_timer_internal.h"/>
-      <files mask="ethal_debug_internal.h"/>
-      <files mask="ethal_timer.h"/>
+      <files mask="ethal_serial.h"/>
+      <files mask="ethal_config.h"/>
+      <files mask="ethal_fops.h"/>
+      <files mask="ethal_debug_api.h"/>
       <files mask="ethal_assert.h"/>
+      <files mask="ethal_debug.h"/>
+      <files mask="ethal_timer.h"/>
+      <files mask="ethal_os.h"/>
+      <files mask="ethal_debug_internal.h"/>
     </source>
     <source path="middleware/wireless/ethermind/port/pal/mcux/ethal" project_relative_path="ethermind/port/pal/mcux/ethal" type="src">
       <files mask="ethal_debug.c"/>
+      <files mask="ethal_config.c"/>
       <files mask="ethal_fops.c"/>
       <files mask="ethal_timer.c"/>
       <files mask="ethal_serial.c"/>
-      <files mask="ethal_config.c"/>
       <files mask="ethal_os.c"/>
     </source>
     <source path="middleware/wireless/ethermind/port/pal/mcux/sbc" project_relative_path="ethermind/port/pal/mcux/sbc" type="c_include">
       <files mask="sbc_os.h"/>
     </source>
-    <source path="middleware/wireless/ethermind/port/pal/mcux/toolspec/mcuxpresso" project_relative_path="ethermind/port/pal/mcux/toolspec/mcuxpresso" type="src" toolchain="mcuxpresso">
-      <files mask="toolspec.c"/>
-    </source>
     <source path="middleware/wireless/ethermind/port/pal/mcux/toolspec/mcuxpresso" project_relative_path="ethermind/port/pal/mcux/toolspec/mcuxpresso" type="c_include" toolchain="mcuxpresso">
       <files mask="toolspec.h"/>
+    </source>
+    <source path="middleware/wireless/ethermind/port/pal/mcux/toolspec/mcuxpresso" project_relative_path="ethermind/port/pal/mcux/toolspec/mcuxpresso" type="src" toolchain="mcuxpresso">
+      <files mask="toolspec.c"/>
     </source>
     <source path="middleware/wireless/ethermind/port/pal/mcux" project_relative_path="ethermind/port/pal/mcux" type="src">
       <files mask="EM_platform.c"/>

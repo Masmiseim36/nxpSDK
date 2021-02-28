@@ -34,7 +34,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_single_line_text_input_text_set                 PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 #if defined(GX_ENABLE_DEPRECATED_STRING_API)
@@ -102,7 +104,7 @@ GX_STRING string;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_single_line_text_input_text_set_ext             PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -140,6 +142,8 @@ GX_STRING string;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_single_line_text_input_text_set_ext(GX_SINGLE_LINE_TEXT_INPUT *text_input, GX_CONST GX_STRING *text)
@@ -177,7 +181,7 @@ UINT      glyph_len = 0;
             copy_size = text -> gx_string_length;
         }
 
-        memcpy((GX_CHAR *)text_input -> gx_single_line_text_input_buffer, text -> gx_string_ptr, copy_size);
+        memcpy((GX_CHAR *)text_input -> gx_single_line_text_input_buffer, text -> gx_string_ptr, copy_size); /* Use case of memcpy is verified. */
     }
     else
     {

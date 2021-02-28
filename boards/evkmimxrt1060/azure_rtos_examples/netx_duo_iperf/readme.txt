@@ -5,9 +5,10 @@ This is a small Iperf demo of the high-performance NetX Duo TCP/IP stack.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -41,13 +42,12 @@ DHCP In Progress...
 IP address: 192.168.2.10
 Mask: 255.255.255.0
 
-2. On a PC, open a Web browser to access http://192.168.2.10, and a iperf test
-Web page will display.
+2. The board gets a new IP address, for example, 192.168.2.10. On a Linux PC, open a Web browser to
+access the new IP address at http://192.168.2.10, and a iperf test Web page will display.
 
-3. To start a UDP iperf test, run the iperf command in a command console on the PC.
-Run it in the server mode:
+3. To start a UDP iperf test, run the iperf command in a command console on the Linux PC. For example,
 
-> iperf.exe -u -s
+  $ iperf -u -s -i 1
 
 4. In the iperf test Web page, click the "Start UDP Transmit Test" button. The test
 will begin.
@@ -62,6 +62,3 @@ Test Time(milliseconds): 10000
 Number of Packets Transmitted: 30328
 Number of Bytes Transmitted: 44582160
 Throughput(Mbps):35
-Customization options
-=====================
-

@@ -36,7 +36,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_rgb2gray                           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -67,6 +67,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 VOID _gx_image_reader_rgb2gray(GX_PIXEL *pixel, GX_UBYTE *gray)
@@ -81,7 +83,7 @@ VOID _gx_image_reader_rgb2gray(GX_PIXEL *pixel, GX_UBYTE *gray)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_gray_threshold_calculate           PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -113,6 +115,8 @@ VOID _gx_image_reader_rgb2gray(GX_PIXEL *pixel, GX_UBYTE *gray)
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_gray_threshold_calculate(GX_IMAGE_READER *image_reader)
@@ -165,7 +169,7 @@ GX_UBYTE gray;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_pixelmap_info_set                  PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -198,6 +202,8 @@ GX_UBYTE gray;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_pixelmap_info_set(GX_IMAGE_READER *image_reader, GX_PIXELMAP *outmap)
@@ -286,7 +292,7 @@ static UINT _gx_image_reader_pixelmap_info_set(GX_IMAGE_READER *image_reader, GX
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_start                              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -332,6 +338,8 @@ static UINT _gx_image_reader_pixelmap_info_set(GX_IMAGE_READER *image_reader, GX
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_image_reader_start(GX_IMAGE_READER *image_reader, GX_PIXELMAP *outmap)
@@ -387,7 +395,7 @@ GX_BOOL     do_compress;
     /* Color Space Convert.  */
     if (status == GX_SUCCESS)
     {
-        memcpy(&tempmap, outmap, sizeof(GX_PIXELMAP));
+        tempmap = *outmap;
 
         status = _gx_image_reader_pixel_read_callback_set(image_reader, &srcmap);
     }
@@ -408,7 +416,7 @@ GX_BOOL     do_compress;
             _gx_system_memory_free((VOID *)srcmap.gx_pixelmap_aux_data);
         }
 
-        memcpy(&srcmap, &tempmap, sizeof(GX_PIXELMAP));
+        srcmap = tempmap;
     }
 
     /* Compare compressed size and raw size. */
@@ -424,7 +432,7 @@ GX_BOOL     do_compress;
 
         if (status == GX_SUCCESS)
         {
-            memcpy(&tempmap, outmap, sizeof(GX_PIXELMAP));
+            tempmap = *outmap;
             tempmap.gx_pixelmap_data_size = 0;
             tempmap.gx_pixelmap_aux_data_size = 0;
             tempmap.gx_pixelmap_flags |= GX_PIXELMAP_COMPRESSED;
@@ -457,14 +465,14 @@ GX_BOOL     do_compress;
             }
             else
             {
-                memcpy(outmap, &srcmap, sizeof(GX_PIXELMAP));
+                *outmap = srcmap;
                 memset(&srcmap, 0, sizeof(GX_PIXELMAP));
             }
         }
     }
     else
     {
-        memcpy(outmap, &srcmap, sizeof(GX_PIXELMAP));
+        *outmap = srcmap;
         memset(&srcmap, 0, sizeof(GX_PIXELMAP));
     }
 

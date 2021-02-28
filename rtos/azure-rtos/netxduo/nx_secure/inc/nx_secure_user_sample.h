@@ -26,7 +26,7 @@
 /*  PORT SPECIFIC C INFORMATION                            RELEASE        */
 /*                                                                        */
 /*    nx_secure_user.h                                    PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*                                                                        */
 /*  AUTHOR                                                                */
 /*                                                                        */
@@ -46,6 +46,8 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
+/*  09-30-2020     Timothy Stapko           Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 
@@ -270,6 +272,19 @@
    By default this feature is not enabled. */
 /*
    #define NX_SECURE_TLS_USE_SCSV_CIPHPERSUITE
+*/
+
+/* NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION disables secure session renegotiation extension (RFC 5746).
+   By default this feature is enabled. */
+/*
+   #define NX_SECURE_TLS_DISABLE_SECURE_RENEGOTIATION
+*/
+
+/* NX_SECURE_TLS_REQUIRE_RENEGOTIATION_EXT defines whether or not the connection should be terminated immediately
+   upon failure to receive the secure renegotiation extension during the initial handshake.
+   By default the connection is not terminated. */
+/*
+   #define NX_SECURE_TLS_REQUIRE_RENEGOTIATION_EXT
 */
 
 /* NX_SECURE_X509_DISABLE_CRL disables X509 Certificate Revocation List check.

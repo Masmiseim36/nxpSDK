@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */ 
 /*                                                                        */ 
 /*    _ux_hcd_ohci_periodic_endpoint_destroy              PORTABLE C      */ 
-/*                                                           6.0          */
+/*                                                           6.1.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -66,6 +66,13 @@
 /*    DATE              NAME                      DESCRIPTION             */ 
 /*                                                                        */ 
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
+/*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            fixed physical and virtual  */
+/*                                            address conversion,         */
+/*                                            resulting in version 6.1    */
+/*  11-09-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            fixed compile warnings,     */
+/*                                            resulting in version 6.1.2  */
 /*                                                                        */
 /**************************************************************************/
 UINT  _ux_hcd_ohci_periodic_endpoint_destroy(UX_HCD_OHCI *hcd_ohci, UX_ENDPOINT *endpoint)
@@ -78,7 +85,9 @@ UX_OHCI_TD      *tail_td;
 UX_OHCI_TD      *head_td;
 ULONG           value_td;
 
-    
+
+    UX_PARAMETER_NOT_USED(hcd_ohci);
+
     /* From the endpoint container fetch the OHCI ED descriptor.  */
     ed =  (UX_OHCI_ED*) endpoint -> ux_endpoint_ed;
 
@@ -113,18 +122,17 @@ ULONG           value_td;
     /* There may not be any next endpoint.  But if there is one, link it
        to the previous ED. */
     if (next_ed != UX_NULL)
+    {
 
         /* Update the previous ED pointer in the next ED.  */
+        next_ed = _ux_utility_virtual_address(next_ed);
         next_ed -> ux_ohci_ed_previous_ed =  previous_ed;
-
-    /* We use the tail TD as a pointer to the Dummy TD.  */
-    tail_td =  (UX_OHCI_TD *) _ux_utility_virtual_address(ed -> ux_ohci_ed_tail_td);
+    }
 
     /* Ensure that the potential Halt bit is removed in the head ED.  */
     value_td =  (ULONG) _ux_utility_virtual_address(ed -> ux_ohci_ed_head_td) & UX_OHCI_ED_MASK_TD;
-    head_td =   (UX_OHCI_TD *) _ux_utility_physical_address((VOID *) value_td);
-    ed -> ux_ohci_ed_head_td =  head_td;
-    
+    head_td =   (UX_OHCI_TD *)value_td;
+
     /* Remove all the tds from this ED and leave the head and tail pointing
        to the dummy TD.  */
     tail_td =  _ux_utility_virtual_address(ed -> ux_ohci_ed_tail_td);

@@ -31,7 +31,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_tls_server_handshake                     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -81,7 +81,7 @@
 /*                                          Send ServerKeyExchange        */
 /*    _nx_secure_tls_send_serverhello       Send TLS ServerHello          */
 /*    _nx_secure_tls_session_keys_set       Set session keys              */
-/*    nx_packet_release                     Release packet                */
+/*    nx_secure_tls_packet_release          Release packet                */
 /*    tx_mutex_get                          Get protection mutex          */
 /*    tx_mutex_put                          Put protection mutex          */
 /*                                                                        */
@@ -94,6 +94,11 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
+/*  09-30-2020     Timothy Stapko           Modified comment(s),          */
+/*                                            released packet securely,   */
+/*                                            fixed certificate buffer    */
+/*                                            allocation,                 */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_tls_server_handshake(NX_SECURE_TLS_SESSION *tls_session, UCHAR *packet_buffer,
@@ -158,7 +163,7 @@ const NX_CRYPTO_METHOD               *method_ptr = NX_NULL;
 #ifdef NX_SECURE_ENABLE_CLIENT_CERTIFICATE_VERIFY
     case NX_SECURE_TLS_CERTIFICATE_MSG:
         /* Client sent certificate message (in response to a request from us. Process it now. */
-        status = _nx_secure_tls_process_remote_certificate(tls_session, packet_buffer, message_length);
+        status = _nx_secure_tls_process_remote_certificate(tls_session, packet_buffer, message_length, data_length);
         tls_session -> nx_secure_tls_server_state = NX_SECURE_TLS_SERVER_STATE_CLIENT_CERTIFICATE;
         break;
     case NX_SECURE_TLS_CERTIFICATE_VERIFY:
@@ -387,7 +392,7 @@ const NX_CRYPTO_METHOD               *method_ptr = NX_NULL;
 
         if (status != NX_SUCCESS)
         {
-            nx_packet_release(send_packet);
+            nx_secure_tls_packet_release(send_packet);
             break;
         }
 
@@ -495,7 +500,7 @@ const NX_CRYPTO_METHOD               *method_ptr = NX_NULL;
 
             if (status != NX_SECURE_TLS_SUCCESS)
             {
-                nx_packet_release(send_packet);
+                nx_secure_tls_packet_release(send_packet);
             }
         }
 

@@ -26,7 +26,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */
 /*                                                                        */
 /*    fx_api.h                                            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -43,6 +43,14 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            updated product constants,  */
+/*                                            and added conditionals to   */
+/*                                            disable few declarations    */
+/*                                            for code size reduction,    */
+/*                                            resulting in version 6.1    */
+/*  11-09-2020     William E. Lamie         Modified comment(s),          */
+/*                                            resulting in version 6.1.2  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -84,10 +92,13 @@ extern   "C" {
 /* Define the major/minor version information that can be used by the application
    and the FileX source as well.  */
 
-#define EL_PRODUCT_FILEX
+#define AZURE_RTOS_FILEX
 #define FILEX_MAJOR_VERSION     6
-#define FILEX_MINOR_VERSION     0
+#define FILEX_MINOR_VERSION     1
+#define FILEX_PATCH_VERSION     2
 
+/* Define the following symbols for backward compatibility */
+#define EL_PRODUCT_FILEX
 
 /* Override the interrupt protection provided in FileX port files to simply use ThreadX protection,
    which is often in-line assembly.  */
@@ -821,6 +832,10 @@ typedef struct FX_MEDIA_STRUCT
     UCHAR               *fx_media_memory_buffer;
     ULONG               fx_media_memory_size;
 
+#ifdef FX_DISABLE_CACHE
+    ULONG64             fx_media_memory_buffer_sector;
+#else
+
     /* Define the flag that indicates whether the logical cache utilizes
        a hash function or is a linear search. If set, the logical cache
        is accessed via a hash function on the requested sector.  */
@@ -847,6 +862,7 @@ typedef struct FX_MEDIA_STRUCT
     /* Define the outstanding dirty sector counter. This is used to optimize
        the searching of sectors to flush to the media.  */
     ULONG               fx_media_sector_cache_dirty_count;
+#endif /* FX_DISABLE_CACHE */
 
     /* Define the basic information about the associated media.  */
     UINT                fx_media_bytes_per_sector;
@@ -1069,6 +1085,7 @@ typedef struct FX_MEDIA_STRUCT
     CHAR                fx_media_rename_buffer[FX_MAXIMUM_PATH];
 #endif
 
+#ifndef FX_DISABLE_CACHE
     /* Define the sector cache control structures for this media.  */
     struct FX_CACHED_SECTOR_STRUCT
                         fx_media_sector_cache[FX_MAX_SECTOR_CACHE];
@@ -1076,6 +1093,7 @@ typedef struct FX_MEDIA_STRUCT
     /* Define the sector cache hash mask so that the hash algorithm can be used with
        any power of 2 number of cache sectors.  */
     ULONG               fx_media_sector_cache_hash_mask;
+#endif /* FX_DISABLE_CACHE */
 
     /* Define a variable to disable burst cache. This is used by the underlying
        driver.  */
@@ -1215,6 +1233,13 @@ typedef FX_FILE  *FX_FILE_PTR;
 
 #ifndef FX_SOURCE_CODE
 
+#ifdef FX_DISABLE_ONE_LINE_FUNCTION
+#define fx_file_seek(f, b)                    fx_file_extended_seek(f, (ULONG64)b)
+#define fx_file_allocate(f, s)                fx_file_extended_allocate(f, (ULONG64)s);
+#define fx_file_truncate(f, s)                fx_file_extended_truncate(f, (ULONG64)s);
+#define fx_file_relative_seek(f, b, sf)       fx_file_extended_relative_seek(f, (ULONG64)b, sf);
+#define fx_file_truncate_release(f, s)        fx_file_extended_truncate_release(f, (ULONG64)s);
+#endif /* FX_DISABLE_ONE_LINE_FUNCTION */
 
 /* Determine if error checking is desired.  If so, map API functions
    to the appropriate error checking front-ends.  Otherwise, map API
@@ -1249,7 +1274,9 @@ typedef FX_FILE  *FX_FILE_PTR;
 #define fx_directory_short_name_get           _fx_directory_short_name_get
 #define fx_directory_short_name_get_extended  _fx_directory_short_name_get_extended
 
+#ifndef FX_DISABLE_ONE_LINE_FUNCTION
 #define fx_file_allocate                      _fx_file_allocate
+#endif /* FX_DISABLE_ONE_LINE_FUNCTION */
 #define fx_file_attributes_read               _fx_file_attributes_read
 #define fx_file_attributes_set                _fx_file_attributes_set
 #define fx_file_best_effort_allocate          _fx_file_best_effort_allocate
@@ -1259,11 +1286,15 @@ typedef FX_FILE  *FX_FILE_PTR;
 #define fx_file_delete                        _fx_file_delete
 #define fx_file_open                          _fx_file_open
 #define fx_file_read                          _fx_file_read
+#ifndef FX_DISABLE_ONE_LINE_FUNCTION
 #define fx_file_relative_seek                 _fx_file_relative_seek
+#endif /* FX_DISABLE_ONE_LINE_FUNCTION */
 #define fx_file_rename                        _fx_file_rename
+#ifndef FX_DISABLE_ONE_LINE_FUNCTION
 #define fx_file_seek                          _fx_file_seek
 #define fx_file_truncate                      _fx_file_truncate
 #define fx_file_truncate_release              _fx_file_truncate_release
+#endif /* FX_DISABLE_ONE_LINE_FUNCTION */
 #define fx_file_write                         _fx_file_write
 #define fx_file_write_notify_set              _fx_file_write_notify_set
 #define fx_file_extended_allocate             _fx_file_extended_allocate
@@ -1342,7 +1373,9 @@ typedef FX_FILE  *FX_FILE_PTR;
 #define fx_directory_short_name_get           _fxe_directory_short_name_get
 #define fx_directory_short_name_get_extended  _fxe_directory_short_name_get_extended
 
+#ifndef FX_DISABLE_ONE_LINE_FUNCTION
 #define fx_file_allocate                      _fxe_file_allocate
+#endif  /* FX_DISABLE_ONE_LINE_FUNCTION */
 #define fx_file_attributes_read               _fxe_file_attributes_read
 #define fx_file_attributes_set                _fxe_file_attributes_set
 #define fx_file_best_effort_allocate          _fxe_file_best_effort_allocate
@@ -1352,11 +1385,15 @@ typedef FX_FILE  *FX_FILE_PTR;
 #define fx_file_delete                        _fxe_file_delete
 #define fx_file_open(m, f, n, t)              _fxe_file_open(m, f, n, t, sizeof(FX_FILE))
 #define fx_file_read                          _fxe_file_read
+#ifndef FX_DISABLE_ONE_LINE_FUNCTION
 #define fx_file_relative_seek                 _fxe_file_relative_seek
+#endif /* FX_DISABLE_ONE_LINE_FUNCTION */
 #define fx_file_rename                        _fxe_file_rename
+#ifndef FX_DISABLE_ONE_LINE_FUNCTION
 #define fx_file_seek                          _fxe_file_seek
 #define fx_file_truncate                      _fxe_file_truncate
 #define fx_file_truncate_release              _fxe_file_truncate_release
+#endif /* FX_DISABLE_ONE_LINE_FUNCTION */
 #define fx_file_write                         _fxe_file_write
 #define fx_file_write_notify_set              _fxe_file_write_notify_set
 #define fx_file_extended_allocate             _fxe_file_extended_allocate
@@ -1442,7 +1479,9 @@ UINT fx_directory_rename(FX_MEDIA *media_ptr, CHAR *old_directory_name, CHAR *ne
 UINT fx_directory_short_name_get(FX_MEDIA *media_ptr, CHAR *long_file_name, CHAR *short_file_name);
 UINT fx_directory_short_name_get_extended(FX_MEDIA* media_ptr, CHAR* long_file_name, CHAR* short_file_name, UINT short_file_name_length);
 
+#ifndef FX_DISABLE_ONE_LINE_FUNCTION
 UINT fx_file_allocate(FX_FILE *file_ptr, ULONG size);
+#endif /* FX_DISABLE_ONE_LINE_FUNCTION*/
 UINT fx_file_attributes_read(FX_MEDIA *media_ptr, CHAR *file_name, UINT *attributes_ptr);
 UINT fx_file_attributes_set(FX_MEDIA *media_ptr, CHAR *file_name, UINT attributes);
 UINT fx_file_best_effort_allocate(FX_FILE *file_ptr, ULONG size, ULONG *actual_size_allocated);
@@ -1459,11 +1498,15 @@ UINT _fxe_file_open(FX_MEDIA *media_ptr, FX_FILE *file_ptr, CHAR *file_name,
                     UINT open_type, UINT file_control_block_size);
 #endif
 UINT fx_file_read(FX_FILE *file_ptr, VOID *buffer_ptr, ULONG request_size, ULONG *actual_size);
+#ifndef FX_DISABLE_ONE_LINE_FUNCTION
 UINT fx_file_relative_seek(FX_FILE *file_ptr, ULONG byte_offset, UINT seek_from);
+#endif /* FX_DISABLE_ONE_LINE_FUNCTION */
 UINT fx_file_rename(FX_MEDIA *media_ptr, CHAR *old_file_name, CHAR *new_file_name);
+#ifndef FX_DISABLE_ONE_LINE_FUNCTION
 UINT fx_file_seek(FX_FILE *file_ptr, ULONG byte_offset);
 UINT fx_file_truncate(FX_FILE *file_ptr, ULONG size);
 UINT fx_file_truncate_release(FX_FILE *file_ptr, ULONG size);
+#endif /* FX_DISABLE_ONE_LINE_FUNCTION */
 UINT fx_file_write(FX_FILE *file_ptr, VOID *buffer_ptr, ULONG size);
 UINT fx_file_write_notify_set(FX_FILE *file_ptr, VOID (*file_write_notify)(FX_FILE *));
 UINT fx_file_extended_allocate(FX_FILE *file_ptr, ULONG64 size);

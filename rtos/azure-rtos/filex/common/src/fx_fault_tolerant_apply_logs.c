@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_fault_tolerant_apply_logs                       PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -78,6 +78,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), verified */
+/*                                            memcpy usage,               */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _fx_fault_tolerant_apply_logs(FX_MEDIA *media_ptr)
@@ -212,8 +215,13 @@ ULONG                          tail_cluster;
 
             copy_size = log_len - FX_FAULT_TOLERANT_DIR_LOG_ENTRY_SIZE;
 
+            if ((copy_offset + copy_size) > media_ptr -> fx_media_memory_size)
+            {
+                return(FX_FILE_CORRUPT);
+            }
+
             /* Copy data into destination sector. */
-            memcpy(media_ptr -> fx_media_memory_buffer + copy_offset,
+            memcpy(media_ptr -> fx_media_memory_buffer + copy_offset, /* Use case of memcpy is verified. */
                    current_ptr + FX_FAULT_TOLERANT_DIR_LOG_ENTRY_SIZE, copy_size);
 
 

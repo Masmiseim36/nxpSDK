@@ -32,7 +32,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _nx_secure_dtls_client_handshake                    PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Timothy Stapko, Microsoft Corporation                               */
@@ -90,7 +90,7 @@
 /*                                          Send ClientKeyExchange        */
 /*    _nx_secure_tls_send_finished          Send Finished message         */
 /*    _nx_secure_tls_session_keys_set       Set session keys              */
-/*    nx_packet_release                     Release packet                */
+/*    nx_secure_tls_packet_release          Release packet                */
 /*    tx_mutex_get                          Get protection mutex          */
 /*    tx_mutex_put                          Put protection mutex          */
 /*                                                                        */
@@ -103,6 +103,13 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Timothy Stapko           Initial Version 6.0           */
+/*  09-30-2020     Timothy Stapko           Modified comment(s),          */
+/*                                            verified memcpy use cases,  */
+/*                                            verified memmove use cases, */
+/*                                            released packet securely,   */
+/*                                            fixed certificate buffer    */
+/*                                            allocation,                 */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _nx_secure_dtls_client_handshake(NX_SECURE_DTLS_SESSION *dtls_session, UCHAR *packet_buffer,
@@ -163,7 +170,8 @@ NX_SECURE_TLS_SESSION *tls_session;
             }
 
             /* Check available area of buffer. */
-            if ((fragment_offset + fragment_length) > tls_session -> nx_secure_tls_packet_buffer_size)
+            if ((fragment_offset + fragment_length) > tls_session -> nx_secure_tls_packet_buffer_size ||
+                (header_bytes + message_length) > tls_session -> nx_secure_tls_packet_buffer_size)
             {
                 return(NX_SECURE_TLS_PACKET_BUFFER_TOO_SMALL);
             }
@@ -181,7 +189,7 @@ NX_SECURE_TLS_SESSION *tls_session;
             dtls_session -> nx_secure_dtls_fragment_length -= fragment_length;
 
             /* Copy the fragment data (minus the header) into the reassembly buffer. */
-            NX_SECURE_MEMCPY(&fragment_buffer[fragment_offset], &packet_buffer[header_bytes], fragment_length); 
+            NX_SECURE_MEMCPY(&fragment_buffer[fragment_offset], &packet_buffer[header_bytes], fragment_length); /* Use case of memcpy is verified. */
 
             /* If we still have fragments to add, just return success. */
             if (dtls_session -> nx_secure_dtls_fragment_length > 0)
@@ -208,7 +216,7 @@ NX_SECURE_TLS_SESSION *tls_session;
 
                 /* Put the header into the packet buffer, adjusting the fields to create a seam-less
                  * DTLS record. */
-                NX_SECURE_MEMMOVE(&fragment_buffer[header_bytes], fragment_buffer, message_length);
+                NX_SECURE_MEMMOVE(&fragment_buffer[header_bytes], fragment_buffer, message_length); /* Use case of memmove is verified. */
 
                 /* Reconstruct the header in the fragment buffer so we can hash the
                    reconstructed record as if it were never fragmented. */
@@ -280,7 +288,7 @@ NX_SECURE_TLS_SESSION *tls_session;
             break;
         case NX_SECURE_TLS_CERTIFICATE_MSG:
             /* Server has sent its certificate message. */
-            status = _nx_secure_tls_process_remote_certificate(tls_session, data_start, message_length);
+            status = _nx_secure_tls_process_remote_certificate(tls_session, data_start, message_length, message_length);
             break;
         case NX_SECURE_TLS_SERVER_HELLO_DONE:
             /* Server has responded to our ClientHello. */
@@ -516,7 +524,7 @@ NX_SECURE_TLS_SESSION *tls_session;
             if (status != NX_SUCCESS)
             {
                 /* Release packet on send error. */
-                nx_packet_release(send_packet);
+                nx_secure_tls_packet_release(send_packet);
                 break;
             }
             /* The local session is now active since we sent the changecipherspec message.

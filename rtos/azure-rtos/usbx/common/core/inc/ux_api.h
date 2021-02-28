@@ -26,7 +26,7 @@
 /*  APPLICATION INTERFACE DEFINITION                       RELEASE        */ 
 /*                                                                        */ 
 /*    ux_api.h                                            PORTABLE C      */ 
-/*                                                           6.0.1        */
+/*                                                           6.1.2        */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Chaoqiong Xiao, Microsoft Corporation                               */
@@ -44,11 +44,30 @@
 /*    DATE              NAME                      DESCRIPTION             */ 
 /*                                                                        */ 
 /*  05-19-2020     Chaoqiong Xiao           Initial Version 6.0           */
-/*  06-30-2020     Chaoqiong Xiao           Modified comment(s), and      */
-/*                                            updated product constants,  */
-/*                                            avoided div 0 in overflow   */
-/*                                            checking macro,             */
-/*                                            resulting in version 6.0.1  */
+/*  09-30-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            added query usage of device */
+/*                                            ClassSubclassProtocol,      */
+/*                                            added option to disable FX  */
+/*                                            media integration, prefixed */
+/*                                            UX to MS_TO_TICK, added     */
+/*                                            APIs and macros related to  */
+/*                                            uninitialize, optimized     */
+/*                                            based on compile            */
+/*                                            definitions, updated        */
+/*                                            product constants, used     */
+/*                                            host class extension        */
+/*                                            pointer for class specific  */
+/*                                            structured data, used UX    */
+/*                                            prefix to refer to TX       */
+/*                                            symbols instead of using    */
+/*                                            them directly,              */
+/*                                            resulting in version 6.1    */
+/*  11-09-2020     Chaoqiong Xiao           Modified comment(s),          */
+/*                                            used unsigned defines,      */
+/*                                            added HCD uninit command,   */
+/*                                            modified HCD status code,   */
+/*                                            fixed compile warnings,     */
+/*                                            resulting in version 6.1.2  */
 /*                                                                        */
 /**************************************************************************/
 
@@ -110,13 +129,59 @@ typedef signed char               SCHAR;
 #endif /* UX_ENABLE_ASSERT */
 
 
+/* Convert from millisecond to ThreadX Tick value. */
+#define UX_MS_TO_TICK(ms)                                  ((ms) * (UX_PERIODIC_RATE) / 1000)
+
+/* Deprecated, left to be compatible with apps already using MS_TO_TICK.  */
+#define MS_TO_TICK(ms)                                     UX_MS_TO_TICK(ms)
+
+
+/* If UX_DEVICE_INITIALIZE_FRAMEWORK_SCAN_DISABLE is defined,
+   it define USBX device max number of endpoints (1~n).
+   else max number of endpoints are from scan result.
+   It must be equal to or larger than max number of endpoints
+   can be activated at the same time.  */
+#ifndef UX_MAX_DEVICE_ENDPOINTS
+#define UX_MAX_DEVICE_ENDPOINTS                             6
+#endif
+
+/* If UX_DEVICE_INITIALIZE_FRAMEWORK_SCAN_DISABLE is defined,
+   it define USBX device max number of interfacess (1~n).
+   else max number of interfacess are from scan result.
+   It must be equal to or larger than max number of interfaces
+   in a activated configuration.  */
+#ifndef UX_MAX_DEVICE_INTERFACES
+#define UX_MAX_DEVICE_INTERFACES                            6
+#endif
+
+
+/* Define USBX device max bInterfaceNumber of interfaces (0 ~ n),
+   it must be larger than max bInterfaceNumber in USB
+   framework descriptors.  */
 #ifndef UX_MAX_SLAVE_INTERFACES  
 #define UX_MAX_SLAVE_INTERFACES                             16
 #endif
 
-/* Convert from millisecond to ThreadX Tick value. */
-#define MS_TO_TICK(ms)                                     ((ms) * (UX_PERIODIC_RATE) / 1000)
 
+/* Define USBX max number of devices (1 ~ n).  */
+#ifndef UX_MAX_DEVICES
+#define UX_MAX_DEVICES                                      4
+#endif
+
+/* Define USBX max number of HCDs (1 ~ n).  */
+#ifndef UX_MAX_HCD
+#define UX_MAX_HCD                                          2
+#endif
+
+/* Define USBX max root hub port (1 ~ n).  */
+#ifndef UX_MAX_ROOTHUB_PORT
+#define UX_MAX_ROOTHUB_PORT                                 4
+#endif
+
+/* Define USBX max TT.  */
+#ifndef UX_MAX_TT
+#define UX_MAX_TT                                           8
+#endif
 
 /* Define USBX Host Enum Thread Stack Size. */
 #ifndef UX_HOST_ENUM_THREAD_STACK_SIZE
@@ -136,8 +201,8 @@ typedef signed char               SCHAR;
 /* Define basic constants for the USBX Stack.  */
 #define AZURE_RTOS_USBX
 #define USBX_MAJOR_VERSION            6
-#define USBX_MINOR_VERSION            0
-#define USBX_PATCH_VERSION            1
+#define USBX_MINOR_VERSION            1
+#define USBX_PATCH_VERSION            2
 
 /* Macros for concatenating tokens, where UX_CONCATn concatenates n tokens.  */
 
@@ -308,7 +373,7 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
 #define UX_TRACE_HOST_STACK_ENDPOINT_INSTANCE_DELETE                    (UX_TRACE_HOST_STACK_EVENTS_BASE + 16)              /* I1 = device          , I2 = endpoint                                                             */    
 #define UX_TRACE_HOST_STACK_ENDPOINT_RESET                              (UX_TRACE_HOST_STACK_EVENTS_BASE + 17)              /* I1 = device          , I2 = endpoint                                                             */    
 #define UX_TRACE_HOST_STACK_ENDPOINT_TRANSFER_ABORT                     (UX_TRACE_HOST_STACK_EVENTS_BASE + 18)              /* I1 = endpoint                                                                                    */    
-#define UX_TRACE_HOST_STACK_HCD_REGISTER                                (UX_TRACE_HOST_STACK_EVENTS_BASE + 19)              /* I1 = hcd name                                                                                    */    
+#define UX_TRACE_HOST_STACK_HCD_REGISTER                                (UX_TRACE_HOST_STACK_EVENTS_BASE + 19)              /* I1 = hcd name        , I2 = parameter 1     , I3 = parameter 2                                   */    
 #define UX_TRACE_HOST_STACK_INITIALIZE                                  (UX_TRACE_HOST_STACK_EVENTS_BASE + 20)              /*                                                                                                  */       
 #define UX_TRACE_HOST_STACK_INTERFACE_ENDPOINT_GET                      (UX_TRACE_HOST_STACK_EVENTS_BASE + 21)              /* I1 = interface       , I2 = endpoint index                                                       */    
 #define UX_TRACE_HOST_STACK_INTERFACE_INSTANCE_CREATE                   (UX_TRACE_HOST_STACK_EVENTS_BASE + 22)              /* I1 = interface                                                                                   */    
@@ -323,6 +388,10 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
 #define UX_TRACE_HOST_STACK_RH_DEVICE_INSERTION                         (UX_TRACE_HOST_STACK_EVENTS_BASE + 31)              /* I1 = hcd             , I2 = port index                                                           */    
 #define UX_TRACE_HOST_STACK_TRANSFER_REQUEST                            (UX_TRACE_HOST_STACK_EVENTS_BASE + 32)              /* I1 = device          , I2 = endpoint        , I3 = transfer request                              */    
 #define UX_TRACE_HOST_STACK_TRANSFER_REQUEST_ABORT                      (UX_TRACE_HOST_STACK_EVENTS_BASE + 33)              /* I1 = device          , I2 = endpoint        , I3 = transfer request                              */    
+#define UX_TRACE_HOST_STACK_UNINITIALIZE                                (UX_TRACE_HOST_STACK_EVENTS_BASE + 34)              /*                                                                                                  */       
+#define UX_TRACE_HOST_STACK_HCD_UNREGISTER                              (UX_TRACE_HOST_STACK_EVENTS_BASE + 35)              /* I1 = hcd name        , I2 = parameter 1     , I3 = parameter 2                                   */    
+#define UX_TRACE_HOST_STACK_CLASS_REGISTER                              (UX_TRACE_HOST_STACK_EVENTS_BASE + 36)              /* I1 = class name      , I2 = entry function                                                       */    
+#define UX_TRACE_HOST_STACK_CLASS_UNREGISTER                            (UX_TRACE_HOST_STACK_EVENTS_BASE + 37)              /* I1 = class entry                                                                                 */    
                                                                                                                                                                                                                     
 /* Define the USBX host class events.  */                                                                                                                                                                     
 
@@ -637,113 +706,218 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
 #endif
 #endif
 
+
+/* Define interrupts lockout constructs to protect the memory allocation/release which could happen
+   under ISR in the device stack.  */
+
+#ifndef UX_INTERRUPT_SAVE_AREA
+#define UX_INTERRUPT_SAVE_AREA                                          TX_INTERRUPT_SAVE_AREA
+#endif
+
+#ifndef UX_DISABLE
+#define UX_DISABLE                                                      TX_DISABLE
+#endif
+
+#ifndef UX_RESTORE
+#define UX_RESTORE                                                      TX_RESTORE
+#endif
+
+
+/* Define thread/timer related things.  */
+
+#ifndef UX_EMPTY
+#define UX_EMPTY                                                        TX_EMPTY
+#endif
+
+#ifndef UX_TIMER
+#define UX_TIMER                                                        TX_TIMER
+#endif
+
+#ifndef UX_THREAD
+#define UX_THREAD                                                       TX_THREAD
+#endif
+
+#ifndef UX_AUTO_START
+#define UX_AUTO_START                                                   TX_AUTO_START
+#endif
+
+#ifndef UX_DONT_START
+#define UX_DONT_START                                                   TX_DONT_START
+#endif
+
+#ifndef UX_AUTO_ACTIVATE
+#define UX_AUTO_ACTIVATE                                                TX_AUTO_ACTIVATE
+#endif
+
+#ifndef UX_NO_ACTIVATE
+#define UX_NO_ACTIVATE                                                  TX_NO_ACTIVATE
+#endif
+
+#ifndef UX_THREAD_GET_SYSTEM_STATE
+#define UX_THREAD_GET_SYSTEM_STATE                                      TX_THREAD_GET_SYSTEM_STATE
+#endif
+
+#ifndef UX_WAIT_FOREVER
+#define UX_WAIT_FOREVER                                                 TX_WAIT_FOREVER
+#endif
+
+#ifndef UX_NO_WAIT
+#define UX_NO_WAIT                                                      TX_NO_WAIT
+#endif
+
+#ifndef UX_NO_TIME_SLICE
+#define UX_NO_TIME_SLICE                                                TX_NO_TIME_SLICE
+#endif
+
+
+/* Define semaphore related things.  */
+
+#ifndef UX_SEMAPHORE
+#define UX_SEMAPHORE                                                    TX_SEMAPHORE
+#endif
+
+
+/* Define mutex related things.  */
+
+#ifndef UX_MUTEX
+#define UX_MUTEX                                                        TX_MUTEX
+#endif
+
+
+/* Define event flags group related things.  */
+
+#ifndef UX_EVENT_FLAGS_GROUP
+#define UX_EVENT_FLAGS_GROUP                                            TX_EVENT_FLAGS_GROUP
+#endif
+
+#ifndef UX_OR_CLEAR
+#define UX_OR_CLEAR                                                     TX_OR_CLEAR
+#endif
+
+#ifndef UX_OR
+#define UX_OR                                                           TX_OR
+#endif
+
+#ifndef UX_AND_CLEAR
+#define UX_AND_CLEAR                                                    TX_AND_CLEAR
+#endif
+
+#ifndef UX_AND
+#define UX_AND                                                          TX_AND
+#endif
+
+#ifndef UX_NO_EVENTS
+#define UX_NO_EVENTS                                                    TX_NO_EVENTS
+#endif
+
+
 /* Define basic USBX constants.  */
 
 #define UX_NULL                                                         ((void*)0)
-#define UX_TRUE                                                         1
-#define UX_FALSE                                                        0
-#define UX_MAX_TT                                                       8
-#define UX_TT_MASK                                                      0x1FF
-#define UX_TT_BANDWIDTH                                                 6000
-#define UX_SLAVE_ENDPOINT_DEFAULT_BUFFER_SIZE                           256
-#define UX_REGULAR_MEMORY                                               0
-#define UX_CACHE_SAFE_MEMORY                                            1
+#define UX_TRUE                                                         1u
+#define UX_FALSE                                                        0u
+#define UX_TT_MASK                                                      0x1FFu
+#define UX_TT_BANDWIDTH                                                 6000u
+#define UX_SLAVE_ENDPOINT_DEFAULT_BUFFER_SIZE                           256u
 
-#define UX_MAX_BYTES_PER_FRAME_FS                                       1157
-#define UX_MAX_BYTES_PER_MICROFRAME_HS                                  5785
+#define UX_MAX_BYTES_PER_FRAME_FS                                       1157u
+#define UX_MAX_BYTES_PER_MICROFRAME_HS                                  5785u
 
 /* Define USBX command request constants.  */
 
-#define UX_SETUP_REQUEST_TYPE                                           0
-#define UX_SETUP_REQUEST                                                1
-#define UX_SETUP_VALUE                                                  2
-#define UX_SETUP_INDEX                                                  4
-#define UX_SETUP_LENGTH                                                 6
-#define UX_SETUP_SIZE                                                   8
+#define UX_SETUP_REQUEST_TYPE                                           0u
+#define UX_SETUP_REQUEST                                                1u
+#define UX_SETUP_VALUE                                                  2u
+#define UX_SETUP_INDEX                                                  4u
+#define UX_SETUP_LENGTH                                                 6u
+#define UX_SETUP_SIZE                                                   8u
                                                                         
                                                                         
 /* Define USBX standard commands.  */                                   
                                                                         
-#define UX_GET_STATUS                                                   0
-#define UX_CLEAR_FEATURE                                                1
-#define UX_SET_FEATURE                                                  3 
-#define UX_SET_ADDRESS                                                  5
-#define UX_GET_DESCRIPTOR                                               6
-#define UX_SET_DESCRIPTOR                                               7
-#define UX_GET_CONFIGURATION                                            8
-#define UX_SET_CONFIGURATION                                            9
-#define UX_GET_INTERFACE                                                10
-#define UX_SET_INTERFACE                                                11
-#define UX_SYNCH_FRAME                                                  12
+#define UX_GET_STATUS                                                   0u
+#define UX_CLEAR_FEATURE                                                1u
+#define UX_SET_FEATURE                                                  3u 
+#define UX_SET_ADDRESS                                                  5u
+#define UX_GET_DESCRIPTOR                                               6u
+#define UX_SET_DESCRIPTOR                                               7u
+#define UX_GET_CONFIGURATION                                            8u
+#define UX_SET_CONFIGURATION                                            9u
+#define UX_GET_INTERFACE                                                10u
+#define UX_SET_INTERFACE                                                11u
+#define UX_SYNCH_FRAME                                                  12u
                                                                         
                                                                         
 /* Define USBX command sub constants.  */                               
                                                                         
-#define UX_ENDPOINT_HALT                                                0
+#define UX_ENDPOINT_HALT                                                0u
                                                                         
 /* Define USBX feature selector constants.  */
-#define UX_REQUEST_FEATURE_ENDPOINT_HALT 0
-#define UX_REQUEST_FEATURE_DEVICE_REMOTE_WAKEUP 1
-#define UX_REQUEST_FEATURE_TEST_MODE 2
+#define UX_REQUEST_FEATURE_ENDPOINT_HALT                                0u
+#define UX_REQUEST_FEATURE_DEVICE_REMOTE_WAKEUP                         1u
+#define UX_REQUEST_FEATURE_TEST_MODE                                    2u
 
 /* Define Generic USBX constants.  */                                   
                                                                         
-#define UX_WAIT_FOREVER                                                 0xffffffff
 #define UX_UNUSED                                                       0
 #define UX_USED                                                         1
-#define UX_MEMORY_UNUSED                                                0x12345678
-#define UX_MEMORY_USED                                                  0x87654321
-#define UX_NO_ALIGN                                                     0
-#define UX_ALIGN_16                                                     0x0f
-#define UX_ALIGN_MIN                                                    0x0f
-#define UX_ALIGN_32                                                     0x1f
-#define UX_ALIGN_64                                                     0x3f
-#define UX_ALIGN_128                                                    0x7f 
-#define UX_ALIGN_256                                                    0xff
-#define UX_ALIGN_512                                                    0x1ff
-#define UX_ALIGN_1024                                                   0x3ff
-#define UX_ALIGN_2048                                                   0x7ff
-#define UX_ALIGN_4096                                                   0xfff
-#define UX_SAFE_ALIGN                                                   0xffffffff
+
+#define UX_MEMORY_UNUSED                                                0x00000000u
+#define UX_MEMORY_USED                                                  0x80000000u
+#define UX_REGULAR_MEMORY                                               0
+#define UX_CACHE_SAFE_MEMORY                                            1
+
+#define UX_NO_ALIGN                                                     0u
+#define UX_ALIGN_16                                                     0x0fu
+#define UX_ALIGN_MIN                                                    0x0fu
+#define UX_ALIGN_32                                                     0x1fu
+#define UX_ALIGN_64                                                     0x3fu
+#define UX_ALIGN_128                                                    0x7fu 
+#define UX_ALIGN_256                                                    0xffu
+#define UX_ALIGN_512                                                    0x1ffu
+#define UX_ALIGN_1024                                                   0x3ffu
+#define UX_ALIGN_2048                                                   0x7ffu
+#define UX_ALIGN_4096                                                   0xfffu
+#define UX_SAFE_ALIGN                                                   0xffffffffu
 #define UX_MAX_SCATTER_GATHER_ALIGNMENT                                 4096
                                                                         
 #define UX_MAX_USB_DEVICES                                              127
                                                                         
-#define UX_ENDPOINT_DIRECTION                                           0x80
-#define UX_ENDPOINT_IN                                                  0x80
-#define UX_ENDPOINT_OUT                                                 0x00
+#define UX_ENDPOINT_DIRECTION                                           0x80u
+#define UX_ENDPOINT_IN                                                  0x80u
+#define UX_ENDPOINT_OUT                                                 0x00u
                                                                         
-#define UX_MASK_ENDPOINT_TYPE                                           3
-#define UX_CONTROL_ENDPOINT                                             0
-#define UX_ISOCHRONOUS_ENDPOINT                                         1
-#define UX_BULK_ENDPOINT                                                2
-#define UX_INTERRUPT_ENDPOINT                                           3
+#define UX_MASK_ENDPOINT_TYPE                                           3u
+#define UX_CONTROL_ENDPOINT                                             0u
+#define UX_ISOCHRONOUS_ENDPOINT                                         1u
+#define UX_BULK_ENDPOINT                                                2u
+#define UX_INTERRUPT_ENDPOINT                                           3u
                                                                         
-#define UX_ISOCHRONOUS_ENDPOINT_IN                                      0x81
-#define UX_ISOCHRONOUS_ENDPOINT_OUT                                     0x01
-#define UX_BULK_ENDPOINT_IN                                             0x82
-#define UX_BULK_ENDPOINT_OUT                                            0x02
-#define UX_INTERRUPT_ENDPOINT_IN                                        0x83
-#define UX_INTERRUPT_ENDPOINT_OUT                                       0x03
+#define UX_ISOCHRONOUS_ENDPOINT_IN                                      0x81u
+#define UX_ISOCHRONOUS_ENDPOINT_OUT                                     0x01u
+#define UX_BULK_ENDPOINT_IN                                             0x82u
+#define UX_BULK_ENDPOINT_OUT                                            0x02u
+#define UX_INTERRUPT_ENDPOINT_IN                                        0x83u
+#define UX_INTERRUPT_ENDPOINT_OUT                                       0x03u
                                                                         
-#define UX_MAX_PACKET_SIZE_MASK                                         0x7ff
-#define UX_MAX_NUMBER_OF_TRANSACTIONS_MASK                              0x1800
+#define UX_MAX_PACKET_SIZE_MASK                                         0x7ffu
+#define UX_MAX_NUMBER_OF_TRANSACTIONS_MASK                              0x1800u
 #define UX_MAX_NUMBER_OF_TRANSACTIONS_SHIFT                             11
 
-#define UX_REQUEST_DIRECTION                                            0x80
-#define UX_REQUEST_IN                                                   0x80
-#define UX_REQUEST_OUT                                                  0x00
+#define UX_REQUEST_DIRECTION                                            0x80u
+#define UX_REQUEST_IN                                                   0x80u
+#define UX_REQUEST_OUT                                                  0x00u
                                                                         
-#define UX_REQUEST_TYPE                                                 0x60
-#define UX_REQUEST_TYPE_STANDARD                                        0x00
-#define UX_REQUEST_TYPE_CLASS                                           0x20
-#define UX_REQUEST_TYPE_VENDOR                                          0x40
+#define UX_REQUEST_TYPE                                                 0x60u
+#define UX_REQUEST_TYPE_STANDARD                                        0x00u
+#define UX_REQUEST_TYPE_CLASS                                           0x20u
+#define UX_REQUEST_TYPE_VENDOR                                          0x40u
                                                                         
-#define UX_REQUEST_TARGET                                               0x03
-#define UX_REQUEST_TARGET_DEVICE                                        0x00
-#define UX_REQUEST_TARGET_INTERFACE                                     0x01
-#define UX_REQUEST_TARGET_ENDPOINT                                      0x02
-#define UX_REQUEST_TARGET_OTHER                                         0x03
+#define UX_REQUEST_TARGET                                               0x03u
+#define UX_REQUEST_TARGET_DEVICE                                        0x00u
+#define UX_REQUEST_TARGET_INTERFACE                                     0x01u
+#define UX_REQUEST_TARGET_ENDPOINT                                      0x02u
+#define UX_REQUEST_TARGET_OTHER                                         0x03u
                                                                         
 #define UX_DEVICE_RESET                                                 0
 #define UX_DEVICE_ATTACHED                                              1
@@ -762,17 +936,17 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
 #define UX_ENDPOINT_RUNNING                                             1
 #define UX_ENDPOINT_HALTED                                              2
                                                                         
-#define UX_DEVICE_DESCRIPTOR_ITEM                                       1
-#define UX_CONFIGURATION_DESCRIPTOR_ITEM                                2
-#define UX_STRING_DESCRIPTOR_ITEM                                       3
-#define UX_INTERFACE_DESCRIPTOR_ITEM                                    4
-#define UX_ENDPOINT_DESCRIPTOR_ITEM                                     5
-#define UX_DEVICE_QUALIFIER_DESCRIPTOR_ITEM                             6
-#define UX_OTHER_SPEED_DESCRIPTOR_ITEM                                  7
-#define UX_OTG_DESCRIPTOR_ITEM                                          9
-#define UX_INTERFACE_ASSOCIATION_DESCRIPTOR_ITEM                        11
-#define UX_DFU_FUNCTIONAL_DESCRIPTOR_ITEM                               0x21
-#define UX_HUB_DESCRIPTOR_ITEM                                          0x29
+#define UX_DEVICE_DESCRIPTOR_ITEM                                       1u
+#define UX_CONFIGURATION_DESCRIPTOR_ITEM                                2u
+#define UX_STRING_DESCRIPTOR_ITEM                                       3u
+#define UX_INTERFACE_DESCRIPTOR_ITEM                                    4u
+#define UX_ENDPOINT_DESCRIPTOR_ITEM                                     5u
+#define UX_DEVICE_QUALIFIER_DESCRIPTOR_ITEM                             6u
+#define UX_OTHER_SPEED_DESCRIPTOR_ITEM                                  7u
+#define UX_OTG_DESCRIPTOR_ITEM                                          9u
+#define UX_INTERFACE_ASSOCIATION_DESCRIPTOR_ITEM                        11u
+#define UX_DFU_FUNCTIONAL_DESCRIPTOR_ITEM                               0x21u
+#define UX_HUB_DESCRIPTOR_ITEM                                          0x29u
                                                                         
 
 #define UX_CONTROL_TRANSFER_TIMEOUT                                     1000
@@ -818,6 +992,8 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
 #define UX_DEVICE_REMOVAL                                               2
 #define UX_HID_CLIENT_INSERTION                                         3
 #define UX_HID_CLIENT_REMOVAL                                           4
+#define UX_STORAGE_MEDIA_INSERTION                                      5
+#define UX_STORAGE_MEDIA_REMOVAL                                        6
                                                                         
                                                                         
 /* Define USBX transfer request status constants.  */                   
@@ -829,48 +1005,48 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
                                                                         
 /* Define USBX device power constants.  */                              
                                                                         
-#define UX_DEVICE_BUS_POWERED                                           1
-#define UX_DEVICE_SELF_POWERED                                          2
-#define UX_MAX_SELF_POWER                                               (500/2)
-#define UX_MAX_BUS_POWER                                                (100/2)
-#define UX_CONFIGURATION_DEVICE_BUS_POWERED                             0x80
-#define UX_CONFIGURATION_DEVICE_SELF_POWERED                            0x40
-#define UX_STATUS_DEVICE_SELF_POWERED                                   1
+#define UX_DEVICE_BUS_POWERED                                           1u
+#define UX_DEVICE_SELF_POWERED                                          2u
+#define UX_MAX_SELF_POWER                                               (500u/2)
+#define UX_MAX_BUS_POWER                                                (100u/2)
+#define UX_CONFIGURATION_DEVICE_BUS_POWERED                             0x80u
+#define UX_CONFIGURATION_DEVICE_SELF_POWERED                            0x40u
+#define UX_STATUS_DEVICE_SELF_POWERED                                   1u
 
 /* Define USBX OTG constants.  */
 
-#define UX_OTG_BM_ATTRIBUTES                                            2
-#define UX_OTG_SRP_SUPPORT                                              1
-#define UX_OTG_HNP_SUPPORT                                              2
-#define UX_HCD_OTG_CAPABLE                                              1
-#define UX_DCD_OTG_CAPABLE                                              1
+#define UX_OTG_BM_ATTRIBUTES                                            2u
+#define UX_OTG_SRP_SUPPORT                                              1u
+#define UX_OTG_HNP_SUPPORT                                              2u
+#define UX_HCD_OTG_CAPABLE                                              1u
+#define UX_DCD_OTG_CAPABLE                                              1u
            
-#define UX_OTG_FEATURE_B_HNP_ENABLE                                     3           
-#define UX_OTG_FEATURE_A_HNP_SUPPORT                                    4           
-#define UX_OTG_FEATURE_A_ALT_HNP_SUPPORT                                5           
-#define UX_OTG_STATUS_SELECTOR                                          0xF000
-#define UX_OTG_HOST_REQUEST_FLAG                                        0x01
+#define UX_OTG_FEATURE_B_HNP_ENABLE                                     3u           
+#define UX_OTG_FEATURE_A_HNP_SUPPORT                                    4u           
+#define UX_OTG_FEATURE_A_ALT_HNP_SUPPORT                                5u           
+#define UX_OTG_STATUS_SELECTOR                                          0xF000u
+#define UX_OTG_HOST_REQUEST_FLAG                                        0x01u
         
-#define UX_OTG_IDLE                                                     0
-#define UX_OTG_IDLE_TO_HOST                                             1        
-#define UX_OTG_IDLE_TO_SLAVE                                            2        
-#define UX_OTG_HOST_TO_IDLE                                             3        
-#define UX_OTG_HOST_TO_SLAVE                                            4        
-#define UX_OTG_SLAVE_TO_IDLE                                            5        
-#define UX_OTG_SLAVE_TO_HOST                                            6        
-#define UX_OTG_SLAVE_SRP                                                7        
+#define UX_OTG_IDLE                                                     0u
+#define UX_OTG_IDLE_TO_HOST                                             1u        
+#define UX_OTG_IDLE_TO_SLAVE                                            2u        
+#define UX_OTG_HOST_TO_IDLE                                             3u        
+#define UX_OTG_HOST_TO_SLAVE                                            4u        
+#define UX_OTG_SLAVE_TO_IDLE                                            5u        
+#define UX_OTG_SLAVE_TO_HOST                                            6u        
+#define UX_OTG_SLAVE_SRP                                                7u        
         
-#define UX_OTG_MODE_IDLE                                                0        
-#define UX_OTG_MODE_SLAVE                                               1        
-#define UX_OTG_MODE_HOST                                                2        
+#define UX_OTG_MODE_IDLE                                                0u        
+#define UX_OTG_MODE_SLAVE                                               1u        
+#define UX_OTG_MODE_HOST                                                2u        
 
-#define UX_OTG_DEVICE_IDLE                                              0        
-#define UX_OTG_DEVICE_A                                                 1        
-#define UX_OTG_DEVICE_B                                                 2        
+#define UX_OTG_DEVICE_IDLE                                              0u        
+#define UX_OTG_DEVICE_A                                                 1u        
+#define UX_OTG_DEVICE_B                                                 2u        
 
-#define UX_OTG_VBUS_IDLE                                                0        
-#define UX_OTG_VBUS_ON                                                  1        
-#define UX_OTG_VBUS_OFF                                                 2        
+#define UX_OTG_VBUS_IDLE                                                0u        
+#define UX_OTG_VBUS_ON                                                  1u        
+#define UX_OTG_VBUS_OFF                                                 2u        
 
                                                                         
 #define UX_OTG_HNP_THREAD_SLEEP_TIME                                    (2 * UX_PERIODIC_RATE)
@@ -887,18 +1063,18 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
                                                                         
 /* Define USBX generic port status constants.  */                       
                                                                         
-#define UX_PS_CCS                                                       0x01
-#define UX_PS_CPE                                                       0x01
-#define UX_PS_PES                                                       0x02
-#define UX_PS_PSS                                                       0x04
-#define UX_PS_POCI                                                      0x08
-#define UX_PS_PRS                                                       0x10
-#define UX_PS_PPS                                                       0x20
-#define UX_PS_DS_LS                                                     0x00
-#define UX_PS_DS_FS                                                     0x40
-#define UX_PS_DS_HS                                                     0x80
+#define UX_PS_CCS                                                       0x01u
+#define UX_PS_CPE                                                       0x01u
+#define UX_PS_PES                                                       0x02u
+#define UX_PS_PSS                                                       0x04u
+#define UX_PS_POCI                                                      0x08u
+#define UX_PS_PRS                                                       0x10u
+#define UX_PS_PPS                                                       0x20u
+#define UX_PS_DS_LS                                                     0x00u
+#define UX_PS_DS_FS                                                     0x40u
+#define UX_PS_DS_HS                                                     0x80u
                                                                         
-#define UX_PS_DS                                                        6
+#define UX_PS_DS                                                        6u
 
 
 /* Define USBX Error Code constants. The following format describes 
@@ -1008,6 +1184,7 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
 #define UX_HCD_DESTROY_ENDPOINT                                         15
 #define UX_HCD_RESET_ENDPOINT                                           16
 #define UX_HCD_PROCESS_DONE_QUEUE                                       17
+#define UX_HCD_UNINITIALIZE                                             18
                                                                         
 /* Define USBX DCD API function constants.  */                          
                                                                         
@@ -1036,9 +1213,10 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
                                                                         
 /* Define USBX generic host controller constants.  */                   
                                                                         
-#define UX_HCD_STATUS_HALTED                                            0
-#define UX_HCD_STATUS_OPERATIONAL                                       1
-#define UX_HCD_STATUS_DEAD                                              2
+#define UX_HCD_STATUS_UNUSED                                            0
+#define UX_HCD_STATUS_HALTED                                            1
+#define UX_HCD_STATUS_OPERATIONAL                                       2
+#define UX_HCD_STATUS_DEAD                                              3
                                                                         
 /* Define USBX generic SLAVE controller constants.  */                  
                                                                         
@@ -1056,6 +1234,7 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
 #define UX_HOST_CLASS_COMMAND_QUERY                                     1
 #define UX_HOST_CLASS_COMMAND_ACTIVATE                                  2
 #define UX_HOST_CLASS_COMMAND_DEACTIVATE                                3
+#define UX_HOST_CLASS_COMMAND_DESTROY                                   4
                                                                         
 #define UX_SLAVE_CLASS_COMMAND_QUERY                                    1
 #define UX_SLAVE_CLASS_COMMAND_ACTIVATE                                 2
@@ -1067,6 +1246,7 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
                                                                         
 #define UX_HOST_CLASS_COMMAND_USAGE_PIDVID                              1
 #define UX_HOST_CLASS_COMMAND_USAGE_CSP                                 2
+#define UX_HOST_CLASS_COMMAND_USAGE_DCSP                                3
                                                                         
 #define UX_HOST_CLASS_INSTANCE_FREE                                     0
 #define UX_HOST_CLASS_INSTANCE_LIVE                                     1
@@ -1086,19 +1266,19 @@ VOID    _ux_trace_event_update(TX_TRACE_BUFFER_ENTRY *event, ULONG timestamp, UL
 #define UX_PCI_NB_DEVICE                                                32
 #define UX_PCI_NB_BUS                                                   0xff
                                                                         
-#define UX_PCI_CMD_IO_ENABLE                                            0x0001
-#define UX_PCI_CMD_MEM_ENABLE                                           0x0002
-#define UX_PCI_CMD_MASTER_ENABLE                                        0x0004
-#define UX_PCI_CMD_MONITOR_ENABLE                                       0x0008
-#define UX_PCI_CMD_MEM_WRITE_INV_ENABLE                                 0x0010
-#define UX_PCI_CMD_SNOOP_PALETTE_ENABLE                                 0x0020
-#define UX_PCI_CMD_PARITY_ERROR_ENABLE                                  0x0040
-#define UX_PCI_CMD_WAIT_CYCLE_CTRL_ENABLE                               0x0080
-#define UX_PCI_CMD_SERR_ENABLE                                          0x0100
-#define UX_PCI_CMD_FBB_ENABLE                                           0x0200
+#define UX_PCI_CMD_IO_ENABLE                                            0x0001u
+#define UX_PCI_CMD_MEM_ENABLE                                           0x0002u
+#define UX_PCI_CMD_MASTER_ENABLE                                        0x0004u
+#define UX_PCI_CMD_MONITOR_ENABLE                                       0x0008u
+#define UX_PCI_CMD_MEM_WRITE_INV_ENABLE                                 0x0010u
+#define UX_PCI_CMD_SNOOP_PALETTE_ENABLE                                 0x0020u
+#define UX_PCI_CMD_PARITY_ERROR_ENABLE                                  0x0040u
+#define UX_PCI_CMD_WAIT_CYCLE_CTRL_ENABLE                               0x0080u
+#define UX_PCI_CMD_SERR_ENABLE                                          0x0100u
+#define UX_PCI_CMD_FBB_ENABLE                                           0x0200u
                                                                         
-#define UX_PCI_CFG_CTRL_ADDRESS                                         0x0cf8
-#define UX_PCI_CFG_DATA_ADDRESS                                         0x0cfc
+#define UX_PCI_CFG_CTRL_ADDRESS                                         0x0cf8u
+#define UX_PCI_CFG_DATA_ADDRESS                                         0x0cfcu
                                                                         
 #define UX_PCI_CFG_VENDOR_ID                                            0x00
 #define UX_PCI_CFG_DEVICE_ID                                            0x02
@@ -1188,15 +1368,18 @@ typedef struct UX_HOST_CLASS_COMMAND_STRUCT
 typedef struct UX_HOST_CLASS_STRUCT
 {
 
+#if defined(UX_NAME_REFERENCED_BY_POINTER)
+    const UCHAR     *ux_host_class_name;
+#else
     UCHAR           ux_host_class_name[UX_MAX_CLASS_NAME_LENGTH + 1]; /* "+1" for string null-terminator */
+#endif
+
     UINT            ux_host_class_status;
-    UINT            (*ux_host_class_entry_function) (struct UX_HOST_CLASS_COMMAND_STRUCT *) ;
-    UINT            ux_host_class_nb_devices_owned;
+    UINT            (*ux_host_class_entry_function) (struct UX_HOST_CLASS_COMMAND_STRUCT *);
     VOID            *ux_host_class_first_instance;
     VOID            *ux_host_class_client;
-    TX_THREAD       ux_host_class_thread;
-    VOID            *ux_host_class_thread_stack;
     VOID            *ux_host_class_media;
+    VOID            *ux_host_class_ext;
 } UX_HOST_CLASS;
 
 
@@ -1216,7 +1399,7 @@ typedef struct UX_TRANSFER_STRUCT
     UINT            ux_transfer_request_value;
     UINT            ux_transfer_request_index;
     VOID            (*ux_transfer_request_completion_function) (struct UX_TRANSFER_STRUCT *);
-    TX_SEMAPHORE    ux_transfer_request_semaphore;
+    UX_SEMAPHORE    ux_transfer_request_semaphore;
     VOID            *ux_transfer_request_class_instance;
     ULONG           ux_transfer_request_maximum_length;
     ULONG           ux_transfer_request_timeout_value;
@@ -1225,7 +1408,7 @@ typedef struct UX_TRANSFER_STRUCT
     struct UX_TRANSFER_STRUCT               
                     *ux_transfer_request_next_transfer_request;
     VOID            *ux_transfer_request_user_specific;
-    TX_THREAD       *ux_transfer_request_thread_pending;
+    UX_THREAD       *ux_transfer_request_thread_pending;
 } UX_TRANSFER;
 
 
@@ -1373,29 +1556,64 @@ typedef struct UX_DEVICE_STRUCT
     ULONG           ux_device_state;
     ULONG           ux_device_address;
     ULONG           ux_device_speed;
-    ULONG           ux_device_port_location;
-    ULONG           ux_device_max_power;
     ULONG           ux_device_power_source;
     UINT            ux_device_current_configuration;
-    TX_SEMAPHORE    ux_device_protection_semaphore;
-    struct UX_DEVICE_STRUCT
-                    *ux_device_parent;
+    UX_SEMAPHORE    ux_device_protection_semaphore;
     struct UX_HOST_CLASS_STRUCT                       
                     *ux_device_class;
     VOID            *ux_device_class_instance;
-    struct UX_HCD_STRUCT                         
-                    *ux_device_hcd;
     struct UX_CONFIGURATION_STRUCT               
                     *ux_device_first_configuration;
-    struct UX_DEVICE_STRUCT                      
-                    *ux_device_next_device;
     struct UX_DEVICE_DESCRIPTOR_STRUCT           
                     ux_device_descriptor;
     struct UX_ENDPOINT_STRUCT                    
                     ux_device_control_endpoint;
+    ULONG           ux_device_port_location;
+#if UX_MAX_HCD > 1
+    struct UX_HCD_STRUCT                         
+                    *ux_device_hcd;
+#endif
+#if UX_MAX_DEVICES > 1
+    struct UX_DEVICE_STRUCT
+                    *ux_device_parent;
+    ULONG           ux_device_max_power;
     struct UX_HUB_TT_STRUCT                      
                     ux_device_hub_tt[UX_MAX_TT];
+#endif
 } UX_DEVICE;
+
+
+#if UX_MAX_HCD > 1
+#define UX_DEVICE_HCD_GET(d)                    ((d)->ux_device_hcd)
+#define UX_DEVICE_HCD_SET(d,h)                  do { (d)->ux_device_hcd = (h); } while(0)
+#define UX_DEVICE_HCD_MATCH(d,h)                ((d)->ux_device_hcd == (h))
+#else
+#define UX_DEVICE_HCD_GET(d)                    (_ux_system_host->ux_system_host_hcd_array)
+#define UX_DEVICE_HCD_SET(d,h)
+#define UX_DEVICE_HCD_MATCH(d,h)                (_ux_system_host->ux_system_host_hcd_array == (h))
+#endif
+
+
+#if UX_MAX_DEVICES > 1
+#define UX_DEVICE_PARENT_GET(d)                 ((d)->ux_device_parent)
+#define UX_DEVICE_PARENT_SET(d,p)               do { (d)->ux_device_parent = (p); } while(0)
+#define UX_DEVICE_PARENT_MATCH(d,p)             ((d)->ux_device_parent == (p))
+#define UX_DEVICE_PARENT_IS_HUB(d)              ((d)->ux_device_parent != UX_NULL)
+#define UX_DEVICE_PARENT_IS_ROOTHUB(d)          ((d)->ux_device_parent == UX_NULL)
+#define UX_DEVICE_MAX_POWER_GET(d)              ((d)->ux_device_max_power)
+#define UX_DEVICE_MAX_POWER_SET(d,p)            do {(d)->ux_device_max_power = (p); } while(0)
+#else
+#define UX_DEVICE_PARENT_GET(d)                 (UX_NULL)
+#define UX_DEVICE_PARENT_SET(d,p)               UX_PARAMETER_NOT_USED(p)
+#define UX_DEVICE_PARENT_MATCH(d,p)             ((p) == UX_NULL)
+#define UX_DEVICE_PARENT_IS_HUB(d)              (UX_FALSE)
+#define UX_DEVICE_PARENT_IS_ROOTHUB(d)          (UX_TRUE)
+#define UX_DEVICE_MAX_POWER_GET(d)              (UX_MAX_SELF_POWER)
+#define UX_DEVICE_MAX_POWER_SET(d,p)            UX_PARAMETER_NOT_USED(p)
+#endif
+#define UX_DEVICE_PORT_LOCATION_GET(d)          ((d)->ux_device_port_location)
+#define UX_DEVICE_PORT_LOCATION_SET(d,l)        do { (d)->ux_device_port_location = (l); } while(0)
+#define UX_DEVICE_PORT_LOCATION_MATCH(d,l)      ((d)->ux_device_port_location == (l))
 
 
 /* Define USBX Configuration Descriptor structure.  */
@@ -1520,24 +1738,34 @@ typedef struct UX_DFU_FUNCTIONAL_DESCRIPTOR_STRUCT
 typedef struct UX_HCD_STRUCT
 {                        
 
+#if defined(UX_NAME_REFERENCED_BY_POINTER)
+    const UCHAR     *ux_hcd_name;
+#else
     UCHAR           ux_hcd_name[UX_MAX_HCD_NAME_LENGTH + 1]; /* "+1" for string null-terminator */
-    UCHAR           ux_hcd_address[16];
+#endif
+
     UINT            ux_hcd_status;
     UINT            ux_hcd_controller_type;
-    UINT            ux_hcd_otg_capabilities;
     UINT            ux_hcd_irq;
     UINT            ux_hcd_nb_root_hubs;
-    UINT            ux_hcd_root_hub_signal[16];
+    UINT            ux_hcd_root_hub_signal[UX_MAX_ROOTHUB_PORT];
     UINT            ux_hcd_nb_devices;
-    UINT            ux_hcd_power_switch;
     UINT            ux_hcd_thread_signal;
     ULONG           ux_hcd_rh_device_connection;
     ULONG           ux_hcd_io;
-    ULONG           ux_hcd_available_bandwidth;
-    ULONG           ux_hcd_maximum_transfer_request_size;
-    ULONG           ux_hcd_version;
     UINT            (*ux_hcd_entry_function) (struct UX_HCD_STRUCT *, UINT, VOID *);
     void            *ux_hcd_controller_hardware;
+
+#if defined(UX_OTG_SUPPORT)
+    UINT            ux_hcd_otg_capabilities;
+#endif
+
+#if UX_MAX_DEVICES > 1
+    UCHAR           ux_hcd_address[16];
+    UINT            ux_hcd_power_switch;
+    ULONG           ux_hcd_available_bandwidth;
+    ULONG           ux_hcd_version;
+#endif
 } UX_HCD;
 
 
@@ -1558,7 +1786,7 @@ typedef struct UX_SLAVE_TRANSFER_STRUCT
     ULONG           ux_slave_transfer_request_completion_code;
     ULONG           ux_slave_transfer_request_phase;
     VOID            (*ux_slave_transfer_request_completion_function) (struct UX_SLAVE_TRANSFER_STRUCT *);
-    TX_SEMAPHORE    ux_slave_transfer_request_semaphore;
+    UX_SEMAPHORE    ux_slave_transfer_request_semaphore;
     ULONG           ux_slave_transfer_request_timeout;
     ULONG           ux_slave_transfer_request_force_zlp;
     UCHAR           ux_slave_transfer_request_setup[UX_SETUP_SIZE];
@@ -1636,7 +1864,6 @@ typedef struct UX_SLAVE_DEVICE_STRUCT
 typedef struct UX_SLAVE_DCD_STRUCT
 {                        
 
-    UCHAR           ux_slave_dcd_name[32];
     UINT            ux_slave_dcd_status;
     UINT            ux_slave_dcd_controller_type;
     UINT            ux_slave_dcd_otg_capabilities;
@@ -1673,12 +1900,17 @@ typedef struct UX_SLAVE_CLASS_COMMAND_STRUCT
 typedef struct UX_SLAVE_CLASS_STRUCT
 {
 
+#if defined(UX_NAME_REFERENCED_BY_POINTER)
+    const UCHAR     *ux_slave_class_name;
+#else
     UCHAR           ux_slave_class_name[UX_MAX_CLASS_NAME_LENGTH + 1]; /* "+1" for string null-terminator */
+#endif
+
     UINT            ux_slave_class_status;
-    UINT            (*ux_slave_class_entry_function) (struct UX_SLAVE_CLASS_COMMAND_STRUCT *) ;
+    UINT            (*ux_slave_class_entry_function) (struct UX_SLAVE_CLASS_COMMAND_STRUCT *);
     VOID            *ux_slave_class_instance;
     VOID            *ux_slave_class_client;
-    TX_THREAD       ux_slave_class_thread;
+    UX_THREAD       ux_slave_class_thread;
     VOID            *ux_slave_class_thread_stack;
     VOID            *ux_slave_class_interface_parameter;                    
     ULONG           ux_slave_class_interface_number;                    
@@ -1711,18 +1943,41 @@ typedef struct UX_SYSTEM_STRUCT
     UX_MEMORY_BLOCK *ux_system_cache_safe_memory_pool_start;
     ULONG           ux_system_cache_safe_memory_pool_size;
     ULONG           ux_system_cache_safe_memory_pool_free;
+#ifdef UX_ENABLE_MEMORY_STATISTICS
+    UCHAR           *ux_system_regular_memory_pool_base;
+    ALIGN_TYPE      ux_system_regular_memory_pool_max_start_offset;
+    ALIGN_TYPE      ux_system_regular_memory_pool_min_free;
+    UCHAR           *ux_system_cache_safe_memory_pool_base;
+    ALIGN_TYPE      ux_system_cache_safe_memory_pool_max_start_offset;
+    ALIGN_TYPE      ux_system_cache_safe_memory_pool_min_free;
+    ULONG           ux_system_regular_memory_pool_alloc_count;
+    ULONG           ux_system_regular_memory_pool_alloc_total;
+    ULONG           ux_system_regular_memory_pool_alloc_max_count;
+    ULONG           ux_system_regular_memory_pool_alloc_max_total;
+    ULONG           ux_system_cache_safe_memory_pool_alloc_count;
+    ULONG           ux_system_cache_safe_memory_pool_alloc_total;
+    ULONG           ux_system_cache_safe_memory_pool_alloc_max_count;
+    ULONG           ux_system_cache_safe_memory_pool_alloc_max_total;
+#endif
+
     UINT            ux_system_thread_lowest_priority;
-    TX_MUTEX        ux_system_mutex;
-    ULONG           ux_system_debug_code;
-    ULONG           ux_system_debug_count;
+    UX_MUTEX        ux_system_mutex;
+
+#ifndef UX_DISABLE_ERROR_HANDLER
     UINT            ux_system_last_error;
     UINT            ux_system_error_count;
+    VOID            (*ux_system_error_callback_function) (UINT system_level, UINT system_context, UINT error_code);
+#endif
+
+#ifdef UX_ENABLE_DEBUG_LOG
+    ULONG           ux_system_debug_code;
+    ULONG           ux_system_debug_count;
     UCHAR           *ux_system_debug_log_buffer;
     UCHAR           *ux_system_debug_log_head;
     UCHAR           *ux_system_debug_log_tail;
     ULONG           ux_system_debug_log_size;
-    VOID            (*ux_system_debug_callback_function) (UCHAR *debug_message, ULONG debug_value) ;
-    VOID            (*ux_system_error_callback_function) (UINT system_level, UINT system_context, UINT error_code) ;
+    VOID            (*ux_system_debug_callback_function) (UCHAR *debug_message, ULONG debug_value);
+#endif
 } UX_SYSTEM;
 
 
@@ -1731,29 +1986,69 @@ typedef struct UX_SYSTEM_STRUCT
 typedef struct UX_SYSTEM_HOST_STRUCT
 {                                        
 
+#if UX_MAX_CLASS_DRIVER > 1
     UINT            ux_system_host_max_class;
-    UINT            ux_system_host_registered_class;
+#endif
     UX_HOST_CLASS   *ux_system_host_class_array;
+
+#if UX_MAX_HCD > 1
     UINT            ux_system_host_max_hcd;
-    UX_HCD          *ux_system_host_hcd_array;
+#endif
     UINT            ux_system_host_registered_hcd;
-    UX_DEVICE       *ux_system_host_device_array;
+    UX_HCD          *ux_system_host_hcd_array;
+
+#if UX_MAX_DEVICES > 1
     ULONG           ux_system_host_max_devices;
+#endif
+    UX_DEVICE       *ux_system_host_device_array;
+
     ULONG           ux_system_host_max_ed;
     ULONG           ux_system_host_max_td;
     ULONG           ux_system_host_max_iso_td;
-    UINT            ux_system_host_rhsc_hcd;
+
     UCHAR           *ux_system_host_enum_thread_stack;
-    TX_THREAD       ux_system_host_enum_thread;
-    TX_SEMAPHORE    ux_system_host_enum_semaphore;
+    UX_THREAD       ux_system_host_enum_thread;
+    UX_SEMAPHORE    ux_system_host_enum_semaphore;
+
+#if UX_MAX_DEVICES > 1
     VOID            (*ux_system_host_enum_hub_function) (VOID);
+#endif
+
     UCHAR           *ux_system_host_hcd_thread_stack;
-    TX_THREAD       ux_system_host_hcd_thread;
+    UX_THREAD       ux_system_host_hcd_thread;
+    UX_SEMAPHORE    ux_system_host_hcd_semaphore;
+
+#if defined(UX_OTG_SUPPORT)
     UCHAR           *ux_system_host_hnp_polling_thread_stack;
-    TX_THREAD       ux_system_host_hnp_polling_thread;
-    TX_SEMAPHORE    ux_system_host_hcd_semaphore;
+    UX_THREAD       ux_system_host_hnp_polling_thread;
+#endif
+
     UINT            (*ux_system_host_change_function) (ULONG, UX_HOST_CLASS *, VOID *);
 } UX_SYSTEM_HOST;
+
+#if UX_MAX_CLASS_DRIVER > 1
+#define UX_SYSTEM_HOST_MAX_CLASS_GET()          (_ux_system_host->ux_system_host_max_class)
+#define UX_SYSTEM_HOST_MAX_CLASS_SET(n)         do { _ux_system_host->ux_system_host_max_class = (n); } while(0)
+#else
+#define UX_SYSTEM_HOST_MAX_CLASS_GET()          (1)
+#define UX_SYSTEM_HOST_MAX_CLASS_SET(n)         UX_PARAMETER_NOT_USED(n)
+#endif
+
+#if UX_MAX_HCD > 1
+#define UX_SYSTEM_HOST_MAX_HCD_GET()            (_ux_system_host->ux_system_host_max_hcd)
+#define UX_SYSTEM_HOST_MAX_HCD_SET(n)           do { _ux_system_host->ux_system_host_max_hcd = (n); } while(0)
+#else
+#define UX_SYSTEM_HOST_MAX_HCD_GET()            (1)
+#define UX_SYSTEM_HOST_MAX_HCD_SET(n)           UX_PARAMETER_NOT_USED(n)
+#endif
+
+#if UX_MAX_DEVICES > 1
+#define UX_SYSTEM_HOST_MAX_DEVICES_SET(n)       do { _ux_system_host->ux_system_host_max_devices = (n); } while(0)
+#define UX_SYSTEM_HOST_MAX_DEVICES_GET()        (_ux_system_host->ux_system_host_max_devices)
+#else
+#define UX_SYSTEM_HOST_MAX_DEVICES_SET(n)       UX_PARAMETER_NOT_USED(n)
+#define UX_SYSTEM_HOST_MAX_DEVICES_GET()        (1)
+#endif
 
 
 typedef struct UX_SYSTEM_SLAVE_STRUCT
@@ -1773,8 +2068,9 @@ typedef struct UX_SYSTEM_SLAVE_STRUCT
     ULONG           ux_system_slave_language_id_framework_length;
     UCHAR           *ux_system_slave_dfu_framework;
     ULONG           ux_system_slave_dfu_framework_length;
+#if UX_MAX_SLAVE_CLASS_DRIVER > 1
     UINT            ux_system_slave_max_class;
-    UINT            ux_system_slave_registered_class;
+#endif
     UX_SLAVE_CLASS  *ux_system_slave_class_array;
     UX_SLAVE_CLASS  *ux_system_slave_interface_class_array[UX_MAX_SLAVE_INTERFACES];
     ULONG           ux_system_slave_speed;
@@ -1792,12 +2088,20 @@ typedef struct UX_SYSTEM_SLAVE_STRUCT
 
 } UX_SYSTEM_SLAVE;
 
+#if UX_MAX_SLAVE_CLASS_DRIVER > 1
+#define UX_SYSTEM_DEVICE_MAX_CLASS_SET(n)       do { _ux_system_slave->ux_system_slave_max_class = (n); } while(0)
+#define UX_SYSTEM_DEVICE_MAX_CLASS_GET()        (_ux_system_slave->ux_system_slave_max_class)
+#else
+#define UX_SYSTEM_DEVICE_MAX_CLASS_SET(n)       do { UX_PARAMETER_NOT_USED(n); } while(0)
+#define UX_SYSTEM_DEVICE_MAX_CLASS_GET()        (1)
+#endif
+
 typedef struct UX_SYSTEM_OTG_STRUCT
 {                                        
 
-    TX_THREAD       ux_system_otg_thread;
+    UX_THREAD       ux_system_otg_thread;
     UCHAR           *ux_system_otg_thread_stack;
-    TX_SEMAPHORE    ux_system_otg_semaphore;
+    UX_SEMAPHORE    ux_system_otg_semaphore;
     UINT            (*ux_system_otg_function) (ULONG);
     ULONG           ux_system_otg_mode;
     ULONG           ux_system_otg_io;
@@ -1826,7 +2130,7 @@ typedef struct UX_HOST_CLASS_DPUMP_STRUCT
     UX_ENDPOINT     *ux_host_class_dpump_bulk_in_endpoint;
     UX_ENDPOINT     *ux_host_class_dpump_interrupt_endpoint;
     UINT            ux_host_class_dpump_state;
-    TX_SEMAPHORE    ux_host_class_dpump_semaphore;
+    UX_SEMAPHORE    ux_host_class_dpump_semaphore;
 } UX_HOST_CLASS_DPUMP;
 
 
@@ -1852,13 +2156,16 @@ typedef struct UX_HOST_CLASS_DPUMP_STRUCT
 #define ux_host_stack_class_instance_destroy                    _ux_host_stack_class_instance_destroy
 #define ux_host_stack_class_instance_get                        _ux_host_stack_class_instance_get
 #define ux_host_stack_class_register                            _ux_host_stack_class_register
+#define ux_host_stack_class_unregister                          _ux_host_stack_class_unregister
 #define ux_host_stack_configuration_interface_get               _ux_host_stack_configuration_interface_get
 #define ux_host_stack_device_configuration_get                  _ux_host_stack_device_configuration_get
 #define ux_host_stack_device_configuration_select               _ux_host_stack_device_configuration_select
 #define ux_host_stack_device_get                                _ux_host_stack_device_get
 #define ux_host_stack_endpoint_transfer_abort                   _ux_host_stack_endpoint_transfer_abort
 #define ux_host_stack_hcd_register                              _ux_host_stack_hcd_register
+#define ux_host_stack_hcd_unregister                            _ux_host_stack_hcd_unregister
 #define ux_host_stack_initialize                                _ux_host_stack_initialize
+#define ux_host_stack_uninitialize                              _ux_host_stack_uninitialize
 #define ux_host_stack_interface_endpoint_get                    _ux_host_stack_interface_endpoint_get
 #define ux_host_stack_interface_setting_select                  _ux_host_stack_interface_setting_select
 #define ux_host_stack_transfer_request                          _ux_host_stack_transfer_request
@@ -1919,6 +2226,7 @@ UINT    ux_host_stack_class_instance_create(UX_HOST_CLASS *host_class, VOID *cla
 UINT    ux_host_stack_class_instance_destroy(UX_HOST_CLASS *host_class, VOID *class_instance);
 UINT    ux_host_stack_class_instance_get(UX_HOST_CLASS *host_class, UINT class_index, VOID **class_instance);
 UINT    ux_host_stack_class_register(UCHAR *class_name, UINT (*class_entry_function)(struct UX_HOST_CLASS_COMMAND_STRUCT *));
+UINT    ux_host_stack_class_unregister(UINT (*class_entry_function)(struct UX_HOST_CLASS_COMMAND_STRUCT *));
 UINT    ux_host_stack_configuration_interface_get(UX_CONFIGURATION *configuration, UINT interface_index,
                                     UINT alternate_setting_index, UX_INTERFACE **interface);
 UINT    ux_host_stack_device_configuration_get(UX_DEVICE *device, UINT configuration_index, UX_CONFIGURATION **configuration);
@@ -1926,7 +2234,9 @@ UINT    ux_host_stack_device_configuration_select(UX_CONFIGURATION *configuratio
 UINT    ux_host_stack_device_get(ULONG device_index, UX_DEVICE **device);
 UINT    ux_host_stack_endpoint_transfer_abort(UX_ENDPOINT *endpoint);
 UINT    ux_host_stack_hcd_register(UCHAR *hcd_name, UINT (*hcd_initialize_function)(struct UX_HCD_STRUCT *), ULONG hcd_param1, ULONG hcd_param2);
+UINT    ux_host_stack_hcd_unregister(UCHAR *hcd_name, ULONG hcd_param1, ULONG hcd_param2);
 UINT    ux_host_stack_initialize(UINT (*ux_system_host_change_function)(ULONG, UX_HOST_CLASS *, VOID *));
+UINT    ux_host_stack_uninitialize(VOID);
 UINT    ux_host_stack_interface_endpoint_get(UX_INTERFACE *interface, UINT endpoint_index, UX_ENDPOINT **endpoint);
 UINT    ux_host_stack_interface_setting_select(UX_INTERFACE *interface);
 UINT    ux_host_stack_transfer_request(UX_TRANSFER *transfer_request);

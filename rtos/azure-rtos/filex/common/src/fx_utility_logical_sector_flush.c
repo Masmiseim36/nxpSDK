@@ -35,7 +35,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_utility_logical_sector_flush                    PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -72,11 +72,16 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            added conditional to        */
+/*                                            disable cache,              */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_utility_logical_sector_flush(FX_MEDIA *media_ptr, ULONG64 starting_sector, ULONG64 sectors, UINT invalidate)
 {
 
+#ifndef FX_DISABLE_CACHE
 FX_CACHED_SECTOR *cache_entry;
 UINT              cache_size;
 UINT              i, bit_set, use_starting_sector;
@@ -501,6 +506,7 @@ ULONG             valid_bit_map;
             }
         }
     }
+#endif /* FX_DISABLE_CACHE */
 
     /* If we get here, return successful status to the caller.  */
     return(FX_SUCCESS);

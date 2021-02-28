@@ -38,7 +38,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_utility_FAT_entry_read                          PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -76,6 +76,10 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), and      */
+/*                                            added conditional to        */
+/*                                            disable fat entry refresh,  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT  _fx_utility_FAT_entry_read(FX_MEDIA *media_ptr, ULONG cluster, ULONG *entry_ptr)
@@ -121,6 +125,7 @@ FX_FAT_CACHE_ENTRY  temp_cache_entry;
     /* Build a pointer to the cache entry.  */
     cache_entry_ptr =  &media_ptr -> fx_media_fat_cache[index];
 
+#ifndef FX_DISABLE_FAT_ENTRY_REFRESH
     /* Determine if the FAT entry is in the cache - assuming the depth of the FAT cache is
        4 entries.  */
     if ((cache_entry_ptr -> fx_fat_cache_entry_cluster) == cluster)
@@ -179,6 +184,18 @@ FX_FAT_CACHE_ENTRY  temp_cache_entry;
         /* Return a successful status.  */
         return(FX_SUCCESS);
     }
+#else
+    for (UINT i = 0; i < 4; i++)
+    {
+        if (((cache_entry_ptr + i) -> fx_fat_cache_entry_cluster) == cluster)
+        {
+            *entry_ptr =  (cache_entry_ptr + i) -> fx_fat_cache_entry_value;
+
+            /* Return a successful status.  */
+            return(FX_SUCCESS);
+        }
+    }
+#endif /* FX_DISABLE_FAT_ENTRY_REFRESH */
 
     /* Determine if the oldest entry was modified, i.e. whether or not it is
        dirty.  */

@@ -39,7 +39,7 @@ static UINT _bit_count;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_crc_table_make                 PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -69,6 +69,8 @@ static UINT _bit_count;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_png_crc_table_make(GX_PNG *png)
@@ -100,7 +102,7 @@ UINT k;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_display_driver_png_crc_get                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -134,6 +136,8 @@ UINT k;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_png_crc_get(GX_PNG *png, UINT *crc, UINT len)
@@ -155,7 +159,7 @@ UINT      crc_cal = (*crc);
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_4bytes_read                    PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -189,6 +193,8 @@ UINT      crc_cal = (*crc);
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_png_4bytes_read(GX_PNG *png, INT *value)
@@ -215,7 +221,7 @@ INT get_value;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_chunk_type_read                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -247,6 +253,8 @@ INT get_value;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_png_chunk_type_read(GX_PNG *png, CHAR *chunk_type)
@@ -262,7 +270,7 @@ static VOID _gx_image_reader_png_chunk_type_read(GX_PNG *png, CHAR *chunk_type)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_bits_get                       PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -302,6 +310,8 @@ static VOID _gx_image_reader_png_chunk_type_read(GX_PNG *png, CHAR *chunk_type)
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_bits_get(GX_PNG *png, UINT num_of_bits, UINT *return_value)
@@ -359,7 +369,7 @@ INT      index = png -> gx_png_trunk_end_index;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_bits_revert                    PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -392,6 +402,8 @@ INT      index = png -> gx_png_trunk_end_index;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static void _gx_image_reader_png_bits_revert(UINT *bits, UINT bits_len)
@@ -413,7 +425,7 @@ UINT i;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_bits_skip                      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -446,6 +458,8 @@ UINT i;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static VOID _gx_image_reader_png_bits_skip(UINT num_of_skip_bits)
@@ -460,7 +474,7 @@ static VOID _gx_image_reader_png_bits_skip(UINT num_of_skip_bits)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_IHDR_chunk_read                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -491,10 +505,27 @@ static VOID _gx_image_reader_png_bits_skip(UINT num_of_skip_bits)
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added data boundary check,  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_IHDR_chunk_read(GX_PNG *png)
 {
+    /* The IHDR chunk contains:
+        Width: 4 bytes
+        Height: 4 bytes
+        Bit depth: 1 byte
+        Color type: 1 byte
+        Compression method: 1 byte
+        Filter method: 1 byte
+        Interlace method: 1 byte */
+
+    if (png -> gx_png_data_index + 13 > png -> gx_png_trunk_end_index)
+    {
+        return GX_INVALID_SIZE;
+    }
+
     _gx_image_reader_png_4bytes_read(png, &png -> gx_png_width);
     _gx_image_reader_png_4bytes_read(png, &png -> gx_png_height);
 
@@ -583,7 +614,7 @@ static UINT _gx_image_reader_png_IHDR_chunk_read(GX_PNG *png)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_dynamic_huffman_code_find      PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -620,6 +651,8 @@ static UINT _gx_image_reader_png_IHDR_chunk_read(GX_PNG *png)
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_dynamic_huffman_code_find(INT  *huffman_table,
@@ -670,7 +703,7 @@ UINT code_index = 0;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_fixed_ll_huffman_code_find     PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -705,6 +738,8 @@ UINT code_index = 0;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_fixed_ll_huffman_code_find(UINT scan_buffer,
@@ -763,7 +798,7 @@ UINT code;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_clen_huffman_read              PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -796,6 +831,8 @@ UINT code;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_clen_huffman_read(GX_PNG *png, UINT hclen)
@@ -853,7 +890,7 @@ INT  pos[16];
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_ll_huffman_read                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -890,6 +927,8 @@ INT  pos[16];
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_ll_huffman_read(GX_PNG *png, UINT hlit, UINT hdist)
@@ -1068,7 +1107,7 @@ INT  index;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_huffcode_decode                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1082,6 +1121,7 @@ INT  index;
 /*    png                                   PNG control block.            */
 /*    dynamic                               True, use dynamic huff table  */
 /*                                          False, use fixed huff table   */
+/*    decoded_data_size                     Expected decoded data size    */
 /*                                                                        */
 /*  OUTPUT                                                                */
 /*                                                                        */
@@ -1108,12 +1148,16 @@ INT  index;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added data boundary check,  */
+/*                                            fixed gcc compile warning,  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
-static UINT _gx_image_reader_png_huffcode_decode(GX_PNG *png, GX_BOOL dynamic)
+static UINT _gx_image_reader_png_huffcode_decode(GX_PNG *png, GX_BOOL dynamic, UINT decoded_data_size)
 {
 UINT scan_buffer;
-UINT bit_len;
+UINT bit_len = 0;
 UINT code_value = 300;
 UINT length;
 UINT distance;
@@ -1145,6 +1189,12 @@ UINT copy_len;
 
         if (code_value < 256)
         {
+            if ((UINT)(png -> gx_png_decoded_data_len + 1) > decoded_data_size)
+            {
+                /* Decoded data size exceed allocated buffer size. */
+                return GX_FAILURE;
+            }
+
             png -> gx_png_decoded_data[png -> gx_png_decoded_data_len++] = (GX_UBYTE)code_value;
         }
         else if (code_value == 256)
@@ -1240,7 +1290,15 @@ UINT copy_len;
                     length = 0;
                 }
 
-                memcpy(png -> gx_png_decoded_data + png -> gx_png_decoded_data_len,
+                if ((distance > (UINT)png -> gx_png_decoded_data_len) ||
+                    ((UINT)png -> gx_png_decoded_data_len + copy_len > decoded_data_size))
+                {
+
+                    /* Distance exceed current decoded data length or copied length exceed remaining buffer size. */
+                    return GX_FAILURE;
+                }
+
+                memcpy(png -> gx_png_decoded_data + png -> gx_png_decoded_data_len, /* Use case of memcpy is verified. */
                        png -> gx_png_decoded_data + png -> gx_png_decoded_data_len - distance,
                        copy_len * sizeof(GX_UBYTE));
                 png -> gx_png_decoded_data_len += (INT)copy_len;
@@ -1256,7 +1314,7 @@ UINT copy_len;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_tRNS_chunk_read                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1287,6 +1345,8 @@ UINT copy_len;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_tRNS_chunk_read(GX_PNG *png)
@@ -1349,7 +1409,7 @@ INT index;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_IDAT_chunk_read                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1387,6 +1447,9 @@ INT index;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added data boundary check,  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_IDAT_chunk_read(GX_PNG *png)
@@ -1443,7 +1506,7 @@ INT  nlen;
 
     /* Safe int math is not required here, calling function limits max width, height to 14 bits so
        overflow cannot occur. */
-    alloc_size = (UINT)(png -> gx_png_height * ((png->gx_png_width * png->gx_png_bpp + 7) / 8));
+    alloc_size = (UINT)(png -> gx_png_height * ((png -> gx_png_width * png -> gx_png_bpp + 7) / 8));
     alloc_size = alloc_size + (UINT)png -> gx_png_height;
     png -> gx_png_decoded_data = (GX_UBYTE *)_gx_system_memory_allocator(alloc_size);
     png -> gx_png_decoded_data_len = 0;
@@ -1473,6 +1536,12 @@ INT  nlen;
                 _gx_image_reader_png_bits_skip(_bit_count);
             }
 
+            /* 4 = 2 bytes len + 2 bytes nlen. */
+            if (png -> gx_png_data_index + 4 > png -> gx_png_data_size)
+            {
+                return GX_INVALID_SIZE;
+            }
+
             /* Read "LEN".  */
             len = png -> gx_png_data[png -> gx_png_data_index];
             png -> gx_png_data_index++;
@@ -1494,7 +1563,18 @@ INT  nlen;
             /* Read data to outbuffer directly */
             if (len)
             {
-                memcpy(png -> gx_png_decoded_data, png -> gx_png_data + png -> gx_png_data_index, (UINT)len);
+                if ((UINT)(png -> gx_png_decoded_data_len + len) > alloc_size)
+                {
+                    /* Copied size exceed remaining buffer size. */
+                    return GX_FAILURE;
+                }
+
+                if (png -> gx_png_data_index + len > png -> gx_png_data_size)
+                {
+                    return GX_INVALID_SIZE;
+                }
+
+                memcpy(png -> gx_png_decoded_data + png -> gx_png_decoded_data_len, png -> gx_png_data + png -> gx_png_data_index, (UINT)len); /* Use case of memcpy is verified. */
                 png -> gx_png_data_index += len;
                 png -> gx_png_decoded_data_len += len;
             }
@@ -1504,7 +1584,7 @@ INT  nlen;
             _gx_image_reader_png_bits_skip(3);
 
             /* compressed with fixed Huffman codes */
-            if (_gx_image_reader_png_huffcode_decode(png, GX_FALSE) != GX_SUCCESS)
+            if (_gx_image_reader_png_huffcode_decode(png, GX_FALSE, alloc_size) != GX_SUCCESS)
             {
                 return GX_FAILURE;
             }
@@ -1553,7 +1633,7 @@ INT  nlen;
                 return GX_FAILURE;
             }
 
-            if (_gx_image_reader_png_huffcode_decode(png, GX_TRUE) != GX_SUCCESS)
+            if (_gx_image_reader_png_huffcode_decode(png, GX_TRUE, alloc_size) != GX_SUCCESS)
             {
                 return GX_FAILURE;
             }
@@ -1583,7 +1663,7 @@ INT  nlen;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_gAMA_chunk_read                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1614,11 +1694,19 @@ INT  nlen;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added data boundary check,  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_gAMA_chunk_read(GX_PNG *png)
 {
-    /* Specifies the gamma of the camera taht produced the image. */
+    if (png -> gx_png_data_index + 4 > png -> gx_png_trunk_end_index)
+    {
+        return GX_INVALID_SIZE;
+    }
+
+    /* Specifies the gamma of the camera that produced the image. */
 
     /* A gamma of 0.45 would be stored as teh integer 45000. */
     _gx_image_reader_png_4bytes_read(png, &png -> gx_png_gamma);
@@ -1631,7 +1719,7 @@ static UINT _gx_image_reader_png_gAMA_chunk_read(GX_PNG *png)
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_PLTE_chunk_read                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1661,6 +1749,8 @@ static UINT _gx_image_reader_png_gAMA_chunk_read(GX_PNG *png)
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_PLTE_chunk_read(GX_PNG *png)
@@ -1695,7 +1785,7 @@ GX_UBYTE blue;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_paeth_predictor                PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1727,6 +1817,8 @@ GX_UBYTE blue;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static GX_UBYTE _gx_image_reader_png_paeth_predictor(GX_UBYTE a, GX_UBYTE b, GX_UBYTE c)
@@ -1760,7 +1852,7 @@ INT pa, pb, pc;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_unfilter                       PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1791,6 +1883,8 @@ INT pa, pb, pc;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 static UINT _gx_image_reader_png_unfilter(GX_PNG *png)
@@ -1897,7 +1991,7 @@ INT y;
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _gx_image_reader_png_decode                         PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    Kenneth Maxwell, Microsoft Corporation                              */
@@ -1945,6 +2039,9 @@ INT y;
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     Kenneth Maxwell          Initial Version 6.0           */
+/*  09-30-2020     Kenneth Maxwell          Modified comment(s),          */
+/*                                            added data boundary check,  */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT _gx_image_reader_png_decode(GX_CONST GX_UBYTE *read_data, ULONG data_size, GX_PIXELMAP *outmap)
@@ -1955,6 +2052,11 @@ INT     data_len;
 CHAR    chunk_type[4];
 INT     checksum;
 GX_BOOL idat_done = GX_FALSE;
+
+    if (data_size < 8)
+    {
+        return GX_INVALID_SIZE;
+    }
 
     if ((read_data[0] == 137) &&
         (read_data[1] == 80) &&
@@ -1987,12 +2089,18 @@ GX_BOOL idat_done = GX_FALSE;
         _bit_buffer = 0;
         _bit_count = 0;
 
-        while (png -> gx_png_data_index < png -> gx_png_data_size)
+        while ((png -> gx_png_data_index + 4) < png -> gx_png_data_size)
         {
             /* data_len*/
             _gx_image_reader_png_4bytes_read(png, &data_len);
 
             png -> gx_png_trunk_crc = 0xffffffff;
+
+            if (png -> gx_png_data_index + data_len + 4 > png -> gx_png_data_size)
+            {
+                status = GX_INVALID_SIZE;
+                break;
+            }
 
             /* Calculate checksum of the chunk data.  */
             _gx_image_reader_png_crc_get(png, &png -> gx_png_trunk_crc, (UINT)(4 + data_len));
@@ -2124,7 +2232,8 @@ GX_BOOL idat_done = GX_FALSE;
                 {
                     return GX_SYSTEM_MEMORY_ERROR;
                 }
-                memcpy((GX_UBYTE *)outmap -> gx_pixelmap_aux_data, png -> gx_png_palette_table, outmap -> gx_pixelmap_aux_data_size);
+
+                memcpy((GX_UBYTE *)outmap -> gx_pixelmap_aux_data, png -> gx_png_palette_table, outmap -> gx_pixelmap_aux_data_size); /* Use case of memcpy is verified. */
                 break;
             case 2:
                 /* Each pixel is an RGB triple. */

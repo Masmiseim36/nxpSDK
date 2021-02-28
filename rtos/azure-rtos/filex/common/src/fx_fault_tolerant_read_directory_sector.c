@@ -33,7 +33,7 @@
 /*  FUNCTION                                               RELEASE        */
 /*                                                                        */
 /*    _fx_fault_tolerant_read_directory_sector            PORTABLE C      */
-/*                                                           6.0          */
+/*                                                           6.1          */
 /*  AUTHOR                                                                */
 /*                                                                        */
 /*    William E. Lamie, Microsoft Corporation                             */
@@ -72,6 +72,9 @@
 /*    DATE              NAME                      DESCRIPTION             */
 /*                                                                        */
 /*  05-19-2020     William E. Lamie         Initial Version 6.0           */
+/*  09-30-2020     William E. Lamie         Modified comment(s), verified */
+/*                                            memcpy usage,               */
+/*                                            resulting in version 6.1    */
 /*                                                                        */
 /**************************************************************************/
 UINT    _fx_fault_tolerant_read_directory_sector(FX_MEDIA *media_ptr, ULONG64 logical_sector,
@@ -149,8 +152,13 @@ FX_FAULT_TOLERANT_DIR_LOG *dir_log;
 
                 copy_size = log_len - FX_FAULT_TOLERANT_DIR_LOG_ENTRY_SIZE;
 
+                if ((copy_offset + copy_size) > media_ptr -> fx_media_bytes_per_sector)
+                {
+                    return(FX_FILE_CORRUPT);
+                }
+
                 /* Copy data into destination sector. */
-                memcpy(current_buffer_ptr + copy_offset,
+                memcpy(current_buffer_ptr + copy_offset,  /* Use case of memcpy is verified. */
                        current_ptr + FX_FAULT_TOLERANT_DIR_LOG_ENTRY_SIZE, copy_size);
             }
         }

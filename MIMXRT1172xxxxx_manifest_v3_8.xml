@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1172xxxxx" name="MIMXRT1172xxxxx" brief="This is SDK version 2.9.0 manifest file. It describes the content of the MIMXRT1172xxxxx and additional settings for tools that support SDK version 2.9.0" format_version="3.8" api_version="2.0.0" configuration="fa876bf24c55960b5fba19beece8633d" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
-  <!--Timestamp (UTC): 2021-02-10 10:34:30.610302-->
-  <!--This manifest is generated based on sdk repo commit: d0697eec057516fef9b856b39234570b6132c530-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1172xxxxx" name="MIMXRT1172xxxxx" brief="This is SDK version 2.9.1 manifest file. It describes the content of the MIMXRT1172xxxxx and additional settings for tools that support SDK version 2.9.1" format_version="3.8" api_version="2.0.0" configuration="3c5968655755bcda007b7c0ee98beccc" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
+  <!--Timestamp (UTC): 2021-03-11 12:43:33.014387-->
+  <!--This manifest is generated based on sdk repo commit: 74854bb9df7ddbdde273b12fca5e860ea565a12e-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso290" name="MCUXpresso290" version="2.9.0" revision="447 2021-02-09"/>
+  <ksdk id="MCUXpresso291" name="MCUXpresso291" version="2.9.1" revision="455 2021-03-11"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>

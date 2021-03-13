@@ -124,6 +124,13 @@ typedef struct _serial_nor_config_option
             uint32_t tag : 4;               //!< Tag, must be 0x0E
         } B;
         uint32_t U;
+#if defined(BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL) && BL_FEATURE_FLEXSPI_NOR_MODULE_PERIPHERAL_INSTANCE_RUNTIME_SEL
+        struct
+        {
+            uint32_t cf9_field : 20; //!< CFG data field
+            uint32_t magic : 12;     //!< Magic, must be 0xcf9 (standing for "CFG")
+        } P;                         // Preconfig
+#endif
     } option0;
 
     union

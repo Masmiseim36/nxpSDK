@@ -75,6 +75,7 @@
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
           <value>USE_SDRAM</value>
           <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
+          <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>CPU_MIMXRT1176DVMAA_cm7</value>
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
@@ -82,6 +83,11 @@
           <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
           <value>SDK_DEBUGCONSOLE_UART</value>
           <value>SD_ENABLED</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=KEEP(*(CodeQuickAccess));region=SRAM_ITC_cm7;type=.data</value>
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
         </option>
         <option id="com.crt.advproject.gas.hdrlib" type="enum">
           <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
@@ -103,10 +109,6 @@
         </option>
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
-        </option>
-        <option id="com.crt.advproject.link.memory.sections" type="stringList">
-          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
-          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x20000&amp;Stack:Default;Default;0x1000</value>

@@ -29,7 +29,7 @@ enum _bootloader_version_constants
     kBootloader_Version_Name = 'K',
     kBootloader_Version_Major = 2,
     kBootloader_Version_Minor = 7,
-    kBootloader_Version_Bugfix = 1
+    kBootloader_Version_Bugfix = 0
 };
 
 //! @}

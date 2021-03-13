@@ -184,6 +184,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>VG_RESOLVE_ENGINE=0</state>
           <state>VG_PE_COLOR_KEY=0</state>
           <state>VG_IM_INDEX_FORMAT=0</state>
@@ -1208,6 +1209,7 @@
           <state>USE_SDRAM</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>VG_RESOLVE_ENGINE=0</state>
           <state>VG_PE_COLOR_KEY=0</state>
           <state>VG_IM_INDEX_FORMAT=0</state>
@@ -2229,6 +2231,7 @@
           <state>USE_SDRAM</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>VG_RESOLVE_ENGINE=0</state>
           <state>VG_PE_COLOR_KEY=0</state>
           <state>VG_IM_INDEX_FORMAT=0</state>
@@ -3253,6 +3256,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>VG_RESOLVE_ENGINE=0</state>
           <state>VG_PE_COLOR_KEY=0</state>
           <state>VG_IM_INDEX_FORMAT=0</state>

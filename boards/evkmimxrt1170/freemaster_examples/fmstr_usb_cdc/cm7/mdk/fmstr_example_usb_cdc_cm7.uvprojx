@@ -332,7 +332,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM</Define>
+              <Define>DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</Define>
               <Undefine/>
               <IncludePath>..;../../common/fmstr_example;../support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
@@ -1481,7 +1481,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</Define>
               <Undefine/>
               <IncludePath>..;../../common/fmstr_example;../support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
@@ -2630,7 +2630,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</Define>
               <Undefine/>
               <IncludePath>..;../../common/fmstr_example;../support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
@@ -3779,7 +3779,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, DEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</Define>
               <Undefine/>
               <IncludePath>..;../../common/fmstr_example;../support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
@@ -4928,7 +4928,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM</Define>
+              <Define>NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</Define>
               <Undefine/>
               <IncludePath>..;../../common/fmstr_example;../support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
@@ -6077,7 +6077,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM</Define>
+              <Define>XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</Define>
               <Undefine/>
               <IncludePath>..;../../common/fmstr_example;../support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
@@ -7226,7 +7226,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, XIP_EXTERNAL_FLASH=1, XIP_BOOT_HEADER_ENABLE=1, XIP_BOOT_HEADER_DCD_ENABLE=1, USE_SDRAM, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</Define>
               <Undefine/>
               <IncludePath>..;../../common/fmstr_example;../support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>
@@ -8375,7 +8375,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM</Define>
+              <Define>DATA_SECTION_IS_CACHEABLE=1, USE_SDRAM, NDEBUG, CPU_MIMXRT1176DVMAA_cm7, SDK_DEBUGCONSOLE=1, USB_STACK_BM, FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</Define>
               <Undefine/>
               <IncludePath>..;../../common/fmstr_example;../support/mcuxsdk_usb;../../../../../../middleware/usb/device;../../../../../../components/osa;../../../../../../middleware/usb/include;../../../../../../middleware/freemaster/src/common;../../../../../../devices/MIMXRT1176/utilities/debug_console_lite;../../../../../../devices/MIMXRT1176/drivers;../../../../../../devices/MIMXRT1176;../../../../../../CMSIS/Include;../../../../../../components/uart;../../../../../../components/lists;../../../../../../devices/MIMXRT1176/xip;../../../../xip;../../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../../middleware/usb/phy</IncludePath>
             </VariousControls>

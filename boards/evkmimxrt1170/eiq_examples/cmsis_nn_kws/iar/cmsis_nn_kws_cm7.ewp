@@ -192,6 +192,7 @@
           <state>ARM_MATH_CM7</state>
           <state>__FPU_PRESENT=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>
@@ -1190,6 +1191,7 @@
           <state>ARM_MATH_CM7</state>
           <state>__FPU_PRESENT=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>BOARD_USE_CODEC=1</state>
           <state>CODEC_WM8960_ENABLE</state>

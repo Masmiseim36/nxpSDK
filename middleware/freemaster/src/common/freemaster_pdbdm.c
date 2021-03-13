@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2020 NXP
+ * Copyright 2018-2021 NXP
  *
  * License: NXP LA_OPT_NXP_Software_License
  *
@@ -60,19 +60,13 @@
 /***********************************
 *  local variables
 ***********************************/
-typedef struct
-{
-    FMSTR_U32   ctxStart;                   /* Border code of Packet driven BDM communication buffer */
-    FMSTR_U8    bdmState;                   /* State of the Packet driven BDM communication */
-    FMSTR_U8    pcktSize;                   /* Size of current buffer. */
-    FMSTR_U8    padding0;                   /* Padding to align buffer by 4. */
-    FMSTR_U8    cmdStatus;                  /* Command status byte */
-    FMSTR_BCHR  commBuffer[FMSTR_COMM_BUFFER_SIZE]; /*FreeMASTER Packet driven BDM communication buffer (in/out) plus the STS */
-    FMSTR_U32   reservedForCrc;             /* Reserved to store additional checking informations in communication in case that full length of buffer is used. */
-    FMSTR_U32   ctxEnd;                     /* Border code of Packet driven BDM communication buffer */
-}FMSTR_PDBDM_COMBUFF;
 
-static FMSTR_PDBDM_COMBUFF _pdbdm;    /* Packet driven communication buffer */
+/* Packet driven communication buffer */
+#if FMSTR_PDBDM_USER_BUFFER != 0
+extern FMSTR_PDBDM_COMBUFF _pdbdm;  /* Defined by user (e.g. special section placement needed) */
+#else
+static FMSTR_PDBDM_COMBUFF _pdbdm;  /* Defined locally */
+#endif
 
 /***********************************
 *  local function prototypes
@@ -104,7 +98,7 @@ const FMSTR_TRANSPORT_INTF FMSTR_PDBDM =
 
 static FMSTR_BOOL _FMSTR_PdBdmInit(void)
 {
-        /* Initialize buffer border and size in communication buffer */
+    /* Initialize buffer border and size in communication buffer */
     _pdbdm.ctxStart   = (FMSTR_U32)(FMSTR_PDBDM_BUFFBORDER_CODE1 | ((FMSTR_U32)FMSTR_COMM_BUFFER_SIZE << 24));
     _pdbdm.pcktSize   = 0;
     _pdbdm.ctxEnd     = FMSTR_PDBDM_BUFFBORDER_CODE2;

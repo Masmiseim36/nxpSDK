@@ -186,6 +186,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1162,6 +1163,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2138,6 +2140,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3117,6 +3120,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4092,6 +4096,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5066,6 +5071,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -6040,6 +6046,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -7016,6 +7023,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -7992,6 +8000,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -8971,6 +8980,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -9946,6 +9956,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -10920,6 +10931,7 @@
           <state>SCANF_FLOAT_ENABLE=0</state>
           <state>PRINTF_ADVANCED_ENABLE=0</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>

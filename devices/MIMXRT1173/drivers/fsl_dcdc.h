@@ -629,7 +629,7 @@ static inline uint16_t DCDC_GetVDD1P8StandbyModeTargetVoltage(DCDC_Type *base)
 static inline void DCDC_SetVDD1P0BuckModeTargetVoltage(DCDC_Type *base, dcdc_buck_mode_1P0_target_vol_t targetVoltage)
 {
     base->REG3 &= ~DCDC_REG3_VDD1P0CTRL_DISABLE_STEP_MASK;
-    base->CTRL1 |= ((base->CTRL1 & (~DCDC_CTRL1_VDD1P0CTRL_TRG_MASK)) | DCDC_CTRL1_VDD1P0CTRL_TRG(targetVoltage));
+    base->CTRL1 = ((base->CTRL1 & (~DCDC_CTRL1_VDD1P0CTRL_TRG_MASK)) | DCDC_CTRL1_VDD1P0CTRL_TRG(targetVoltage));
     while (DCDC_REG0_STS_DC_OK_MASK != (DCDC_REG0_STS_DC_OK_MASK & base->REG0))
     {
     }
@@ -659,7 +659,7 @@ static inline uint16_t DCDC_GetVDD1P0BuckModeTargetVoltage(DCDC_Type *base)
 static inline void DCDC_SetVDD1P8BuckModeTargetVoltage(DCDC_Type *base, dcdc_buck_mode_1P8_target_vol_t targetVoltage)
 {
     base->REG3 &= ~DCDC_REG3_VDD1P8CTRL_DISABLE_STEP_MASK;
-    base->CTRL1 |= ((base->CTRL1 & (~DCDC_CTRL1_VDD1P8CTRL_TRG_MASK)) | DCDC_CTRL1_VDD1P8CTRL_TRG(targetVoltage));
+    base->CTRL1 = ((base->CTRL1 & (~DCDC_CTRL1_VDD1P8CTRL_TRG_MASK)) | DCDC_CTRL1_VDD1P8CTRL_TRG(targetVoltage));
     while (DCDC_REG0_STS_DC_OK_MASK != (DCDC_REG0_STS_DC_OK_MASK & base->REG0))
     {
     }

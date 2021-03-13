@@ -1175,6 +1175,7 @@
           <name>CCDefines</name>
           <state>USE_SDRAM</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>DEBUG</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
@@ -3163,6 +3164,7 @@
           <name>CCDefines</name>
           <state>USE_SDRAM</state>
           <state>XIP_BOOT_HEADER_DCD_ENABLE=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>

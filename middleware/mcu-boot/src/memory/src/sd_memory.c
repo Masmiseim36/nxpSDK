@@ -1,18 +1,19 @@
 /*
- * Copyright (c) 2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2014-2016 Freescale Semiconductor, Inc.
+ * Copyright 2016-2018 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
+ *
  */
-#include "bl_card.h"
-#include "bl_host.h"
-#include "bootloader.h"
+
+#include "bootloader/bootloader.h"
 #include "bootloader_common.h"
 #include "fsl_clock.h"
 #include "fsl_device_registers.h"
-#include "memory.h"
-#include "property.h"
+#include "memory/memory.h"
+#include "mmc_memory.h"
+#include "property/property.h"
 #include "sd_memory.h"
 
 #if BL_FEATURE_GEN_KEYBLOB
@@ -29,9 +30,9 @@ enum
     kSDCardErasedPattern0 = 0x00000000, /*!< The default value of SD memory bits. */
     kSDCardErasedPattern1 = 0xFFFFFFFF, /*!< The default value of SD memory bits when DATA_STAT_AFTER_ERASE is set */
     kSDStartAddress = 0x0,              /*!< The default start address of SD Card. */
-#if HOST_DMA_BUFFER_ADDR_ALIGN == USDHC_ADMA1_ADDRESS_ALIGN /*!< ADMA1 is not really supported yet */
-    kSDBufferBlockCount = 8,                                /*!< The SD memory buffer size in block count. */
-#elif HOST_DMA_BUFFER_ADDR_ALIGN == USDHC_ADMA2_ADDRESS_ALIGN
+#if SDMMCHOST_DMA_BUFFER_ADDR_ALIGN == USDHC_ADMA1_ADDRESS_ALIGN /*!< ADMA1 is not really supported yet */
+    kSDBufferBlockCount = 8,                                     /*!< The SD memory buffer size in block count. */
+#elif SDMMCHOST_DMA_BUFFER_ADDR_ALIGN == USDHC_ADMA2_ADDRESS_ALIGN
     kSDBufferBlockCount = 1, /*!< The SD memory buffer size in block count. */
 #else
 #error Invalid USDHC DMA selection.
@@ -48,38 +49,23 @@ typedef struct _sd_config
     union {
         struct
         {
-            uint32_t rsv0 : 8;
+            uint32_t instance : 4;
+            uint32_t rsv0 : 4;
             uint32_t bus_width : 1;
-            uint32_t rsv1 : 3;
+            uint32_t tuningStart : 3;
             uint32_t timing_interface : 3;
-            uint32_t rsv2 : 4;
+            uint32_t rsv1 : 4;
             uint32_t enablePowerCycle : 1;
             uint32_t powerUpTime : 1;
-            uint32_t rsv3 : 2;
+            uint32_t tuningStep : 2;
             uint32_t powerPolarity : 1;
             uint32_t powerDownTime : 2;
-            uint32_t rsv4 : 2;
+            uint32_t rsv2 : 2;
             uint32_t tag : 4;
         } B;
         uint32_t U;
     } word0;
 } sd_config_t;
-
-/*! @brief Context structure used for SD memory. */
-typedef struct _sd_mem_context
-{
-    sd_card_t sd;
-    bool isConfigured;
-    bool isReadBufferValid;
-    uint32_t readBufferBlockAddr;
-    bool isWriteBufferValid;
-    uint32_t writeBufferOffset;
-    uint32_t writeBufferBlockAddr;
-#if BL_FEATURE_GEN_KEYBLOB
-    bool has_keyblob;
-    uint32_t keyblob_offset;
-#endif // BL_FEATURE_GEN_KEYBLOB
-} sd_mem_context_t;
 
 /*******************************************************************************
  * Prototypes
@@ -146,11 +132,11 @@ static status_t check_update_keyblob_info(void *config);
  * Variables
  ******************************************************************************/
 /* @brief Context variable used for SD memory */
-static sd_mem_context_t s_sdContext = { 0 };
+sd_mem_context_t g_sdContext = { 0 };
 
 /* @brief Buffer used for SD memory */
-SDK_ALIGN(static uint8_t s_sd_mem_readBuffer[kSDBufferSizeInBytes], HOST_DMA_BUFFER_ADDR_ALIGN);
-SDK_ALIGN(static uint8_t s_sd_mem_writeBuffer[kSDBufferSizeInBytes], HOST_DMA_BUFFER_ADDR_ALIGN);
+BL_ALIGN(SDMMCHOST_DMA_BUFFER_ADDR_ALIGN) static uint8_t s_sd_mem_readBuffer[kSDBufferSizeInBytes] = { 0 };
+BL_ALIGN(SDMMCHOST_DMA_BUFFER_ADDR_ALIGN) static uint8_t s_sd_mem_writeBuffer[kSDBufferSizeInBytes] = { 0 };
 
 /* @brief Interface to spi nand memory operations */
 const external_memory_region_interface_t g_sdMemoryInterface = {
@@ -161,6 +147,7 @@ const external_memory_region_interface_t g_sdMemoryInterface = {
     .config = sd_mem_config,
     .flush = sd_mem_flush,
     .finalize = sd_mem_finalize,
+    .erase_all = sd_mem_erase_all,
 };
 
 /*******************************************************************************
@@ -173,7 +160,7 @@ status_t check_update_keyblob_info(void *config)
 
     do
     {
-        if ((config == NULL) || (s_sdContext.isConfigured == false))
+        if ((config == NULL) || (g_sdContext.isConfigured == false))
         {
             break;
         }
@@ -196,15 +183,15 @@ status_t check_update_keyblob_info(void *config)
             status = keyblob_update(keyblob_info);
             if (status != kStatus_Success)
             {
-                s_sdContext.has_keyblob = false;
+                g_sdContext.has_keyblob = false;
                 break;
             }
-            s_sdContext.keyblob_offset = keyblob_info->keyblob_offset;
-            s_sdContext.has_keyblob = true;
+            g_sdContext.keyblob_offset = keyblob_info->keyblob_offset;
+            g_sdContext.has_keyblob = true;
         }
         else if (keyblob_info_type == kKeyBlobInfoType_Program)
         {
-            if (!s_sdContext.has_keyblob)
+            if (!g_sdContext.has_keyblob)
             {
                 break;
             }
@@ -237,7 +224,7 @@ status_t check_update_keyblob_info(void *config)
                 break;
             }
 
-            uint32_t keyblob_offset = s_sdContext.keyblob_offset;
+            uint32_t keyblob_offset = g_sdContext.keyblob_offset;
             uint32_t keyblob_addr = image_start + keyblob_offset;
             uint8_t *keyblob_buffer;
             uint32_t keyblob_size;
@@ -264,7 +251,7 @@ status_t check_update_keyblob_info(void *config)
 #if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE
             if (!is_erased_memory(keyblob_addr / block_size,
                                   keyblob_size / block_size + (keyblob_size % block_size ? 1 : 0),
-                                  s_sdContext.sd.scr.flags & kSD_ScrDataStatusAfterErase ? kSDCardErasedPattern1 :
+                                  g_sdContext.sd.scr.flags & kSD_ScrDataStatusAfterErase ? kSDCardErasedPattern1 :
                                                                                            kSDCardErasedPattern0))
             {
                 status = kStatusMemoryCumulativeWrite;
@@ -292,10 +279,7 @@ status_t check_update_keyblob_info(void *config)
 status_t sd_mem_init(void)
 {
     status_t status = kStatus_Success;
-    sd_card_t *card = &s_sdContext.sd;
-    // Init the basic variable, fill in the uSDHC base address and current frequency.
-    card->host.base = BOARD_SD_HOST_BASEADDR;
-    card->host.sourceClock_Hz = SD_HOST_CLK_FREQ;
+    sd_card_t *card = &g_sdContext.sd;
 
     status = get_sd_default_configuration(card);
     if (status != kStatus_Success)
@@ -326,11 +310,11 @@ status_t sd_mem_init(void)
         g_externalMemoryMap[index].basicUnitCount = card->blockCount;
 
         // Once initialization is succeed, SD card is accessable.
-        s_sdContext.isConfigured = true;
+        g_sdContext.isConfigured = true;
     }
     else
     {
-        s_sdContext.isConfigured = false;
+        g_sdContext.isConfigured = false;
     }
 
     return status;
@@ -360,19 +344,69 @@ status_t sd_mem_config(uint32_t *config)
     else
 #endif // BL_FEATURE_GEN_KEYBLOB
 
-        // Check the tag.
-        if (sdConfig->word0.B.tag != kSDConfigTag)
+    // Check the tag.
+    if (sdConfig->word0.B.tag != kSDConfigTag)
     {
         return kStatus_InvalidArgument;
     }
 
     // Clear the Context.
-    memset(&s_sdContext, 0, sizeof(sd_mem_context_t));
+    memset(&g_sdContext, 0, sizeof(sd_mem_context_t));
 
-    sd_card_t *card = &s_sdContext.sd;
+    sd_card_t *card = &g_sdContext.sd;
 
-    card->host.base = BOARD_SD_HOST_BASEADDR;
-    card->host.sourceClock_Hz = SD_HOST_CLK_FREQ;
+/* If BL_FEATURE_SD_MODULE_PERIPHERAL_INSTANCE is defined, fixed instance is enabled. Cannot be configured by
+ * configuration block.*/
+#if defined(BL_FEATURE_SD_MODULE_PERIPHERAL_INSTANCE)
+#if BL_FEATURE_SD_MODULE_PERIPHERAL_INSTANCE == 0
+    card->host.base = BOARD_USDHC0_BASEADDR;
+    card->host.sourceClock_Hz = BOARD_USDHC0_CLK_FREQ;
+#elif BL_FEATURE_SD_MODULE_PERIPHERAL_INSTANCE == 1
+    card->host.base = BOARD_USDHC1_BASEADDR;
+    card->host.sourceClock_Hz = BOARD_USDHC1_CLK_FREQ;
+#elif BL_FEATURE_SD_MODULE_PERIPHERAL_INSTANCE == 2
+    card->host.base = BOARD_USDHC2_BASEADDR;
+    card->host.sourceClock_Hz = BOARD_USDHC2_CLK_FREQ;
+#else
+#error Unkown USDHC instance
+#endif // #if BL_FEATURE_SD_MODULE_PERIPHERAL_INSTANCE == 0
+#else
+    switch (sdConfig->word0.B.instance)
+    {
+#if defined(BOARD_USDHC0_BASEADDR)
+        case 0:
+            card->host.base = BOARD_USDHC0_BASEADDR;
+            card->host.sourceClock_Hz = BOARD_USDHC0_CLK_FREQ;
+            break;
+#else
+        // it means the instance starts from index 1, if instance 0 is not defined,
+        case 0:
+#endif // #if defined(BOARD_USDHC0_BASEADDR)
+#if defined(BOARD_USDHC1_BASEADDR)
+        case 1:
+            card->host.base = BOARD_USDHC1_BASEADDR;
+            card->host.sourceClock_Hz = BOARD_USDHC1_CLK_FREQ;
+            break;
+#endif // #if defined(BOARD_USDHC1_BASEADDR)
+#if defined(BOARD_USDHC2_BASEADDR)
+        case 2:
+            card->host.base = BOARD_USDHC2_BASEADDR;
+            card->host.sourceClock_Hz = BOARD_USDHC2_CLK_FREQ;
+            break;
+#endif // #if defined(BOARD_USDHC2_BASEADDR)
+        default:
+            return kStatus_InvalidArgument;
+    }
+#endif // #if defined(BL_FEATURE_SD_MODULE_PERIPHERAL_INSTANCE)
+
+#if BL_FEATURE_MMC_MODULE
+    // If this instance has already enabled for mmc,
+    // then set mmc configuration status to un-configured.
+    if (card->host.base == g_mmcContext.mmc.host.base)
+    {
+        g_mmcContext.isConfigured = false;
+    }
+#endif // #if BL_FEATURE_MMC_MODULE
 
     card->userConfig.timing = (sd_timing_mode_t)sdConfig->word0.B.timing_interface;
     card->userConfig.busWidth = (sd_data_bus_width_t)sdConfig->word0.B.bus_width;
@@ -405,6 +439,9 @@ status_t sd_mem_config(uint32_t *config)
             break;
     }
 
+    card->userConfig.tuningStart = sdConfig->word0.B.tuningStart * 32;
+    card->userConfig.tuningStep = sdConfig->word0.B.tuningStep ? (sdConfig->word0.B.tuningStep * 2) : 1;
+
     status = SD_BL_Init(card);
     if (status == kStatus_Success)
     {
@@ -427,11 +464,11 @@ status_t sd_mem_config(uint32_t *config)
         g_externalMemoryMap[index].basicUnitCount = card->blockCount;
 
         // Once initialization is succeed, SD card is accessable.
-        s_sdContext.isConfigured = true;
+        g_sdContext.isConfigured = true;
     }
     else
     {
-        s_sdContext.isConfigured = false;
+        g_sdContext.isConfigured = false;
     }
 
     return status;
@@ -472,7 +509,7 @@ status_t sd_mem_read(uint32_t address, uint32_t length, uint8_t *restrict buffer
         {
             // If the block is cached in the buffer, then need to change the buffer offset.
             // Buffer might has multi blocks. And the dest might not locate at the first block.
-            bufferOffset = address - s_sdContext.readBufferBlockAddr * FSL_SDMMC_DEFAULT_BLOCK_SIZE;
+            bufferOffset = address - g_sdContext.readBufferBlockAddr * FSL_SDMMC_DEFAULT_BLOCK_SIZE;
         }
 
         // If it is a read accoss the block, divide it into two steps.
@@ -523,7 +560,7 @@ status_t sd_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer)
         if (!is_write_block_cached(blockAddr))
         {
             // There is data already cached in the buffer, flush it to SD.
-            if (s_sdContext.isWriteBufferValid)
+            if (g_sdContext.isWriteBufferValid)
             {
                 status = sd_mem_flush_buffer();
                 if (status != kStatus_Success)
@@ -537,19 +574,19 @@ status_t sd_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer)
             {
                 return kStatusMemoryAlignmentError;
             }
-            s_sdContext.writeBufferOffset = bufferOffset;
-            s_sdContext.writeBufferBlockAddr = blockAddr;
-            s_sdContext.isWriteBufferValid = true;
+            g_sdContext.writeBufferOffset = bufferOffset;
+            g_sdContext.writeBufferBlockAddr = blockAddr;
+            g_sdContext.isWriteBufferValid = true;
         }
         else
         {
             // If the block is cached in the buffer, then need to change the buffer offset.
             // Buffer might has multi blocks. And the dest might not locate at the first block.
-            bufferOffset = address - s_sdContext.writeBufferBlockAddr * FSL_SDMMC_DEFAULT_BLOCK_SIZE;
+            bufferOffset = address - g_sdContext.writeBufferBlockAddr * FSL_SDMMC_DEFAULT_BLOCK_SIZE;
         }
 
         // If the address is not continuous, start a new block write.
-        if (s_sdContext.writeBufferOffset != bufferOffset)
+        if (g_sdContext.writeBufferOffset != bufferOffset)
         {
             status = sd_mem_flush_buffer();
             if (status != kStatus_Success)
@@ -568,12 +605,18 @@ status_t sd_mem_write(uint32_t address, uint32_t length, const uint8_t *buffer)
             writeLength = bufferSize - bufferOffset;
         }
         memcpy(&s_sd_mem_writeBuffer[bufferOffset], buffer, writeLength);
-        s_sdContext.writeBufferOffset += writeLength;
+        g_sdContext.writeBufferOffset += writeLength;
         length -= writeLength;
         buffer += writeLength;
         bufferOffset += writeLength;
         if (bufferOffset >= bufferSize)
         {
+            status = sd_mem_flush_buffer();
+            if (status != kStatus_Success)
+            {
+                return status;
+            }
+
             bufferOffset -= bufferSize;
             blockAddr += kSDBufferBlockCount;
         }
@@ -585,7 +628,7 @@ status_t sd_mem_flush(void)
 {
     status_t status = kStatus_Success;
     // If there still is data in the buffer, then flush them to SD.
-    if (s_sdContext.isWriteBufferValid)
+    if (g_sdContext.isWriteBufferValid)
     {
         status = sd_mem_flush_buffer();
     }
@@ -594,15 +637,15 @@ status_t sd_mem_flush(void)
 status_t sd_mem_finalize(void)
 {
     // Mark buffer to invalid.
-    s_sdContext.isWriteBufferValid = false;
-    s_sdContext.isReadBufferValid = false;
+    g_sdContext.isWriteBufferValid = false;
+    g_sdContext.isReadBufferValid = false;
 
     return kStatus_Success;
 }
 status_t sd_mem_erase(uint32_t address, uint32_t length)
 {
     status_t status;
-    sd_card_t *card = &s_sdContext.sd;
+    sd_card_t *card = &g_sdContext.sd;
 
     // SD should be initialized before access.
     if (!is_sd_configured())
@@ -645,7 +688,7 @@ status_t sd_mem_erase(uint32_t address, uint32_t length)
 status_t sd_mem_erase_all(void)
 {
     status_t status;
-    sd_card_t *card = &s_sdContext.sd;
+    sd_card_t *card = &g_sdContext.sd;
     // SD should be configured before access.
     if (!is_sd_configured())
     {
@@ -675,7 +718,7 @@ status_t sd_mem_erase_all(void)
 }
 status_t sd_get_property(uint32_t whichProperty, uint32_t *value)
 {
-    sd_card_t *card = &s_sdContext.sd;
+    sd_card_t *card = &g_sdContext.sd;
 
     if (value == NULL)
     {
@@ -711,14 +754,14 @@ static status_t sd_mem_load_buffer(uint32_t blockAddr)
 {
     status_t status;
 
-    s_sdContext.isReadBufferValid = false; // Mark read buffer invalid.
+    g_sdContext.isReadBufferValid = false; // Mark read buffer invalid.
 
     // Read the page to read buffer.
-    status = SD_ReadBlocks(&s_sdContext.sd, s_sd_mem_readBuffer, blockAddr, kSDBufferBlockCount);
+    status = SD_ReadBlocks(&g_sdContext.sd, s_sd_mem_readBuffer, blockAddr, kSDBufferBlockCount);
     if (status == kStatus_Success)
     {
-        s_sdContext.isReadBufferValid = true;
-        s_sdContext.readBufferBlockAddr = blockAddr;
+        g_sdContext.isReadBufferValid = true;
+        g_sdContext.readBufferBlockAddr = blockAddr;
     }
     return status;
 }
@@ -726,7 +769,7 @@ static status_t sd_mem_load_buffer(uint32_t blockAddr)
 static status_t sd_mem_flush_buffer(void)
 {
     status_t status = kStatus_Success;
-    sd_card_t *card = &s_sdContext.sd;
+    sd_card_t *card = &g_sdContext.sd;
 
     if (SD_CheckReadOnly(card))
     {
@@ -734,18 +777,18 @@ static status_t sd_mem_flush_buffer(void)
     }
 
     // Fill up the left bytes.
-    if (s_sdContext.writeBufferOffset != kSDBufferSizeInBytes)
+    if (g_sdContext.writeBufferOffset != kSDBufferSizeInBytes)
     {
-        memset(&s_sd_mem_writeBuffer[s_sdContext.writeBufferOffset],
+        memset(&s_sd_mem_writeBuffer[g_sdContext.writeBufferOffset],
                (card->scr.flags & kSD_ScrDataStatusAfterErase) ? kSDCardErasedPattern1 : kSDCardErasedPattern0,
-               kSDBufferSizeInBytes - s_sdContext.writeBufferOffset);
+               kSDBufferSizeInBytes - g_sdContext.writeBufferOffset);
     }
 
-    s_sdContext.isWriteBufferValid = false;
+    g_sdContext.isWriteBufferValid = false;
 
 #if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE
     if (!is_erased_memory(
-            s_sdContext.writeBufferBlockAddr, kSDBufferBlockCount,
+            g_sdContext.writeBufferBlockAddr, kSDBufferBlockCount,
             (card->scr.flags & kSD_ScrDataStatusAfterErase) ? kSDCardErasedPattern1 : kSDCardErasedPattern0))
     {
         return kStatusMemoryCumulativeWrite;
@@ -753,7 +796,7 @@ static status_t sd_mem_flush_buffer(void)
 #endif // #if BL_FEATURE_FLASH_CHECK_CUMULATIVE_WRITE
 
     // Flush the data in the write buffer to SD
-    status = SD_WriteBlocks(card, s_sd_mem_writeBuffer, s_sdContext.writeBufferBlockAddr, kSDBufferBlockCount);
+    status = SD_WriteBlocks(card, s_sd_mem_writeBuffer, g_sdContext.writeBufferBlockAddr, kSDBufferBlockCount);
     if (status != kStatus_Success)
     {
         return status;
@@ -761,7 +804,7 @@ static status_t sd_mem_flush_buffer(void)
 
     // Indeed, no need to check if the memory is written correct or not. Card will guarantee it.
     // But still do it to make sure user's data written without any incorrect.
-    status = SD_ReadBlocks(card, s_sd_mem_readBuffer, s_sdContext.writeBufferBlockAddr, kSDBufferBlockCount);
+    status = SD_ReadBlocks(card, s_sd_mem_readBuffer, g_sdContext.writeBufferBlockAddr, kSDBufferBlockCount);
     if (status != kStatus_Success)
     {
         return status;
@@ -778,7 +821,7 @@ static status_t sd_mem_flush_buffer(void)
 static bool is_erased_memory(uint32_t blockAddr, uint32_t blockCount, uint32_t erasedPattern)
 {
     status_t status = kStatus_Success;
-    sd_card_t *card = &s_sdContext.sd;
+    sd_card_t *card = &g_sdContext.sd;
     uint32_t offset, *buffer, readblock;
     while (blockCount)
     {
@@ -818,18 +861,18 @@ static bool is_erased_memory(uint32_t blockAddr, uint32_t blockCount, uint32_t e
 
 static bool is_sd_configured(void)
 {
-    return s_sdContext.isConfigured;
+    return g_sdContext.isConfigured;
 }
 
 static bool is_read_block_cached(uint32_t blockAddr)
 {
-    return (s_sdContext.isReadBufferValid) && (s_sdContext.readBufferBlockAddr <= blockAddr) &&
-           ((s_sdContext.readBufferBlockAddr + kSDBufferBlockCount) > blockAddr);
+    return (g_sdContext.isReadBufferValid) && (g_sdContext.readBufferBlockAddr <= blockAddr) &&
+           ((g_sdContext.readBufferBlockAddr + kSDBufferBlockCount) > blockAddr);
 }
 
 static bool is_write_block_cached(uint32_t blockAddr)
 {
-    return (s_sdContext.isWriteBufferValid) && (s_sdContext.writeBufferBlockAddr == blockAddr) &&
-           ((s_sdContext.writeBufferBlockAddr + kSDBufferBlockCount) > blockAddr);
+    return (g_sdContext.isWriteBufferValid) && (g_sdContext.writeBufferBlockAddr == blockAddr) &&
+           ((g_sdContext.writeBufferBlockAddr + kSDBufferBlockCount) > blockAddr);
 }
 #endif // #if BL_FEATURE_SD_MODULE

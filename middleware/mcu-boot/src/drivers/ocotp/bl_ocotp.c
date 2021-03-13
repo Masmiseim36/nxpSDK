@@ -28,12 +28,7 @@
 
 #define OCOTP_TIMING_RELEX_NS (uint64_t)17
 #define OCOTP_TIMING_PROGRAM_NS (uint64_t)10000
-
-#if defined(BL_TARGET_FPGA)
-#define OCOTP_TIMING_READ_NS (uint64_t)1000
-#else
 #define OCOTP_TIMING_READ_NS (uint64_t)37
-#endif
 
 typedef struct _ocotp_timing
 {
@@ -51,10 +46,11 @@ static inline status_t ocotp_reload_shadow(OCOTP_Type *base);
 
 static inline void ocotp_clear_error(OCOTP_Type *base);
 
+#if (defined(FSL_FEATURE_OCOTP_HAS_TIMING_CTRL) && FSL_FEATURE_OCOTP_HAS_TIMING_CTRL)
 static inline void ocotp_set_program_timing(OCOTP_Type *base);
 
 static inline void ocotp_set_read_timing(OCOTP_Type *base);
-
+#endif // (defined(FSL_FEATURE_OCOTP_HAS_TIMING_CTRL) && FSL_FEATURE_OCOTP_HAS_TIMING_CTRL)
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
@@ -131,8 +127,10 @@ status_t ocotp_program_once(OCOTP_Type *base, uint32_t index, uint32_t *src, uin
     // Clear the error status caused by previous operation.
     ocotp_clear_error(base);
 
+#if (defined(FSL_FEATURE_OCOTP_HAS_TIMING_CTRL) && FSL_FEATURE_OCOTP_HAS_TIMING_CTRL)
     // Set the timing parameter.
     ocotp_set_program_timing(base);
+#endif
 
 // Unlock the write operation.
 // Write the index to the address bits.
@@ -213,8 +211,10 @@ status_t ocotp_read_once(OCOTP_Type *base, uint32_t index, uint32_t *dst, uint32
     // Clear the error status caused by previous operation.
     ocotp_clear_error(base);
 
+#if (defined(FSL_FEATURE_OCOTP_HAS_TIMING_CTRL) && FSL_FEATURE_OCOTP_HAS_TIMING_CTRL)
     // Set the timing parameter.
     ocotp_set_read_timing(base);
+#endif
 
 // Note: Shouldn't read the efuse data from the physical address.
 // Reading physical address returns the value in shadow register,
@@ -249,8 +249,27 @@ status_t ocotp_read_once(OCOTP_Type *base, uint32_t index, uint32_t *dst, uint32
         return kStatus_OCOTP_ReadFailure;
     }
 
-    // Read the result data.
+// Read the result data.
+#if (OCOTP_READ_FUSE_DATA_COUNT == 1U)
     *dst = base->READ_FUSE_DATA;
+#else
+    switch (lengthInBytes / 4)
+    {
+        case 4:
+            dst[3] = base->READ_FUSE_DATAS[3].READ_FUSE_DATA;
+            // No break
+        case 3:
+            dst[2] = base->READ_FUSE_DATAS[2].READ_FUSE_DATA;
+            // No break
+        case 2:
+            dst[1] = base->READ_FUSE_DATAS[1].READ_FUSE_DATA;
+            // No break
+        case 1:
+            dst[0] = base->READ_FUSE_DATAS[0].READ_FUSE_DATA;
+            // No break
+        default:;
+    }
+#endif
 
     return kStatus_Success;
 }
@@ -297,9 +316,12 @@ static inline status_t ocotp_reload_shadow(OCOTP_Type *base)
     // Clear the error status caused by previous operation.
     ocotp_clear_error(base);
 
+#if (defined(FSL_FEATURE_OCOTP_HAS_TIMING_CTRL) && FSL_FEATURE_OCOTP_HAS_TIMING_CTRL)
     // Set the timing parameter.
     // Reload shadow operation uses the read timing.
     ocotp_set_read_timing(base);
+#endif
+
 #ifdef K32H844P_SERIES
     base->CTRL.SET = OCOTP_CTRL_RELOAD_SHADOWS(1);
 #else
@@ -325,6 +347,7 @@ static inline void ocotp_clear_error(OCOTP_Type *base)
 #endif
 }
 
+#if (defined(FSL_FEATURE_OCOTP_HAS_TIMING_CTRL) && FSL_FEATURE_OCOTP_HAS_TIMING_CTRL)
 static inline void ocotp_set_program_timing(OCOTP_Type *base)
 {
     base->TIMING &= ~(OCOTP_TIMING_RELAX_MASK | OCOTP_TIMING_STROBE_PROG_MASK);
@@ -336,3 +359,4 @@ static inline void ocotp_set_read_timing(OCOTP_Type *base)
     base->TIMING &= ~(OCOTP_TIMING_RELAX_MASK | OCOTP_TIMING_STROBE_READ_MASK);
     base->TIMING |= OCOTP_TIMING_RELAX(s_ocotpTiming.relax) | OCOTP_TIMING_STROBE_READ(s_ocotpTiming.strobe_read);
 }
+#endif // #if (defined(FSL_FEATURE_OCOTP_HAS_TIMING_CTRL) && FSL_FEATURE_OCOTP_HAS_TIMING_CTRL)

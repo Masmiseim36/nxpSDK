@@ -423,15 +423,6 @@ hal_flash_status_t HAL_FlashProgram(uint32_t dest, uint32_t size, uint8_t *pData
     status_t status;
     flexspi_transfer_t flashXfer;
     uint32_t key;
-#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
-    bool ICacheEnableFlag = false;
-    /* Disable I cache. */
-    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
-    {
-        SCB_DisableICache();
-        ICacheEnableFlag = true;
-    }
-#endif /* __ICACHE_PRESENT */
 
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
     bool DCacheEnableFlag = false;
@@ -521,13 +512,6 @@ hal_flash_status_t HAL_FlashProgram(uint32_t dest, uint32_t size, uint8_t *pData
         SCB_EnableDCache();
     }
 #endif /* __DCACHE_PRESENT */
-#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
-    if (ICacheEnableFlag)
-    {
-        /* Enable I cache. */
-        SCB_EnableICache();
-    }
-#endif /* __ICACHE_PRESENT */
     return (hal_flash_status_t)status;
 }
 
@@ -567,15 +551,7 @@ hal_flash_status_t HAL_FlashEraseSector(uint32_t dest, uint32_t size)
     {
         return kStatus_HAL_Flash_Fail;
     }
-#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
-    bool ICacheEnableFlag = false;
-    /* Disable I cache. */
-    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
-    {
-        SCB_DisableICache();
-        ICacheEnableFlag = true;
-    }
-#endif /* __ICACHE_PRESENT */
+
     dest = dest - FLEXSPI_AMBA_BASE;
     base = s_flexspiBase[0];
 
@@ -614,21 +590,9 @@ hal_flash_status_t HAL_FlashEraseSector(uint32_t dest, uint32_t size)
         SDK_DelayAtLeastUs(2U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
         EnableGlobalIRQ(key);
     }
-    if (status != kStatus_Success)
-    {
-        key = DisableGlobalIRQ();
-        /* Do software reset. */
-        FLEXSPI_SoftwareReset(base);
-        SDK_DelayAtLeastUs(2U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
-        EnableGlobalIRQ(key);
-    }
-#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
-    if (ICacheEnableFlag)
-    {
-        /* Enable I cache. */
-        SCB_EnableICache();
-    }
-#endif /* __ICACHE_PRESENT */
+
+    /* Do software reset. */
+    FLEXSPI_SoftwareReset(base);
 
     return (hal_flash_status_t)status;
 }

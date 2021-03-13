@@ -198,6 +198,7 @@
           <state>FSL_RTOS_BM</state>
           <state>SKIP_SYSCLK_INIT</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1186,6 +1187,7 @@
           <state>FSL_RTOS_BM</state>
           <state>SKIP_SYSCLK_INIT</state>
           <state>SDK_OS_BAREMETAL</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>

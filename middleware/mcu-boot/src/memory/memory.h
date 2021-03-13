@@ -10,6 +10,7 @@
 #define _memory_h
 
 #include <stdint.h>
+
 #include "bootloader_common.h"
 
 //! @addtogroup memif
@@ -136,11 +137,11 @@ enum
      * Bit[18] : Reserved.(Reserved for Shareable. 0 Not shareable, 1 Shareable)
      * Bit[31-19] : Reserved.
      */
-    kMemoryNotExecutable = 0,  //!< The memory doesn't support executing in place.
-    kMemoryIsExecutable = 1,   //!< The memory supports executing in place.
-    kMemoryType_FLASH = 0x00,  //!< The memory is FLASH device
-    kMemoryType_RAM = 0x10,    //!< The memory is RAM device
-    kMemoryType_Device = 0x20, //!< The memory is device register
+    kMemoryNotExecutable = 0,       //!< The memory doesn't support executing in place.
+    kMemoryIsExecutable = 1,        //!< The memory supports executing in place.
+    kMemoryType_FLASH = 0x00,       //!< The memory is FLASH device
+    kMemoryType_RAM = 0x10,         //!< The memory is RAM device
+    kMemoryType_Device = 0x20,      //!< The memory is device register
     kMemorySkipInitError = 0x8000u, //!< Skip initialization errors
 };
 
@@ -167,6 +168,7 @@ typedef struct _memory_region_interface
     status_t (*fill)(uint32_t address, uint32_t length, uint32_t pattern);
     status_t (*flush)(void);
     status_t (*erase)(uint32_t address, uint32_t length);
+    status_t (*config)(uint32_t *buffer);
     status_t (*erase_all)(void);
 } memory_region_interface_t;
 
@@ -176,6 +178,7 @@ typedef struct _memory_map_entry
     uint32_t startAddress;
     uint32_t endAddress;
     uint32_t memoryProperty;
+    uint32_t memoryId;
     const memory_region_interface_t *memoryInterface;
 } memory_map_entry_t;
 
@@ -190,6 +193,7 @@ typedef struct _external_memory_region_interface
     status_t (*config)(uint32_t *buffer);
     status_t (*flush)(void);
     status_t (*finalize)(void);
+    status_t (*erase_all)(void);
 } external_memory_region_interface_t;
 
 typedef struct _external_memory_map_entry
@@ -201,46 +205,6 @@ typedef struct _external_memory_map_entry
     const external_memory_region_interface_t *memoryInterface;
 } external_memory_map_entry_t;
 #endif // BL_FEATURE_EXPAND_MEMORY
-
-//! @brief Memory Map index constants
-enum _memorymap_constants
-{
-#if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-    kIndexFlashArray = 0,
-    kIndexSRAM = 1,
-#if BL_FEATURE_SUPPORT_DFLASH
-    kIndexDFlashArray = 2,
-#endif
-#if CPU_IS_ARM_CORTEX_M7
-    kIndexDTCM = 2,
-    kIndexOCRAM = 3,
-#endif // CPU_IS_ARM_CORTEX_M7
-#if defined(K28F15_SERIES)
-    kIndexOCRAM = 4,
-#endif
-#else
-    kIndexSRAM = 0,
-#if CPU_IS_ARM_CORTEX_M7
-    kIndexDTCM = 1,
-    kIndexOCRAM = 2,
-#endif // CPU_IS_ARM_CORTEX_M7
-#endif // #if !BL_FEATURE_HAS_NO_INTERNAL_FLASH
-#if BL_FEATURE_FLEXSPI_NOR_MODULE
-    kIndexFlexSpiNor = 3,
-    kIndexFlexSpiNorAlias = 4,
-#endif // #if BL_FEATURE_FLEXSPI_NOR_MODULE
-#if BL_FEATURE_SPIFI_NOR_MODULE
-    kIndexSpifiNor = 5,
-#endif // #if BL_FEATURE_SPIFI_NOR_MODULE
-#if BL_FEATURE_SEMC_NOR_MODULE
-    kIndexSemcNor = 4,
-#endif // #if BL_FEATURE_SEMC_NOR_MODULE
-#if BL_FEATURE_QSPI_MODULE
-    kIndexQspiMemory = 2,
-    kIndexQspiAliasArea = 3,
-#endif                                     // BL_FEATURE_QSPI_MODULE
-    kSRAMSeparatrix = (uint32_t)0x20000000 //!< This value is the start address of SRAM_U
-};
 
 #if BL_FEATURE_EXPAND_MEMORY
 enum _external_memorymap_constants
@@ -394,6 +358,9 @@ extern "C"
 
     //! @brief Initialize memory interface.
     status_t mem_init(void);
+
+    //! @brief Configure memory interface
+    status_t mem_config(uint32_t memoryId, void *config);
 
     //! @brief Read memory.
     status_t mem_read(uint32_t address, uint32_t length, uint8_t *buffer, uint32_t memoryId);

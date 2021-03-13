@@ -189,6 +189,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm4</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>LV_EX_CONF_INCLUDE_SIMPLE=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
@@ -1190,6 +1191,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm4</state>
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>LV_EX_CONF_INCLUDE_SIMPLE=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>

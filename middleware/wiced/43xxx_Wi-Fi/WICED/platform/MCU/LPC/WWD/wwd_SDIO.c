@@ -186,14 +186,14 @@ wwd_result_t host_platform_bus_init( void )
 		return (wwd_result_t)err;
     }
 
-    /* power off card */
-    SDIO_SetCardPower(&g_sdio, false);
     /* card detect */
     if (SDIO_PollingCardInsert(&g_sdio, kSD_Inserted) != kStatus_Success)
     {
         WPRINT_WWD_INFO(("\n SDIO card detect failed \n"));
         return (wwd_result_t)err;
     }
+    /* power off card */
+    SDIO_SetCardPower(&g_sdio, false);
     /* power on card */
     SDIO_SetCardPower(&g_sdio, true);
 

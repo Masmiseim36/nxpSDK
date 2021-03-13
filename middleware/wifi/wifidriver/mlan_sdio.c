@@ -212,11 +212,6 @@ static int sdio_card_init(void)
 
     /* power off card */
     SDIO_SetCardPower(&wm_g_sd, false);
-    /* card detect */
-    if (SDIO_PollingCardInsert(&wm_g_sd, kSD_Inserted) != kStatus_Success)
-    {
-        return kStatus_SDMMC_CardDetectFailed;
-    }
     /* power on card */
     SDIO_SetCardPower(&wm_g_sd, true);
 

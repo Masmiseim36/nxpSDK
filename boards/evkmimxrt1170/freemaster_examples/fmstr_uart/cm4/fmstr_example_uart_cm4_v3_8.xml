@@ -62,6 +62,7 @@
           <value>USE_SDRAM</value>
           <value>DATA_SECTION_IS_CACHEABLE=1</value>
           <value>USB_STACK_BM</value>
+          <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
@@ -87,12 +88,13 @@
         <option id="com.crt.advproject.link.toram" type="boolean">
           <value>true</value>
         </option>
-        <option id="gnu.c.link.option.nostdlibs" type="boolean">
-          <value>true</value>
-        </option>
         <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=KEEP(*(CodeQuickAccess));region=SRAM_ITC_cm4;type=.data</value>
           <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
           <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>

@@ -77,6 +77,7 @@
           <value>SDK_DEBUGCONSOLE=1</value>
           <value>XIP_EXTERNAL_FLASH=1</value>
           <value>XIP_BOOT_HEADER_ENABLE=1</value>
+          <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
           <value>VG_RESOLVE_ENGINE=0</value>
           <value>VG_PE_COLOR_KEY=0</value>
           <value>VG_IM_INDEX_FORMAT=0</value>
@@ -106,6 +107,17 @@
           <value>SERIAL_PORT_TYPE_UART=1</value>
           <value>FSL_RTOS_FREE_RTOS</value>
         </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=KEEP(*(CodeQuickAccess));region=SRAM_ITC_cm7;type=.data</value>
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.fpv5dp.hard</value>
         </option>
@@ -123,16 +135,6 @@
         </option>
         <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
           <value>false</value>
-        </option>
-        <option id="com.crt.advproject.link.fpu" type="enum">
-          <value>com.crt.advproject.link.fpu.fpv5dp.hard</value>
-        </option>
-        <option id="gnu.c.link.option.nostdlibs" type="boolean">
-          <value>true</value>
-        </option>
-        <option id="com.crt.advproject.link.memory.sections" type="stringList">
-          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
-          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
         </option>
       </toolchainSetting>
     </toolchainSettings>

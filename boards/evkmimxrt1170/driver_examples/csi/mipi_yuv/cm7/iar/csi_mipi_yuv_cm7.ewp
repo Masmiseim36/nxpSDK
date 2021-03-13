@@ -185,6 +185,7 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1175,6 +1176,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2162,6 +2164,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3152,6 +3155,7 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>

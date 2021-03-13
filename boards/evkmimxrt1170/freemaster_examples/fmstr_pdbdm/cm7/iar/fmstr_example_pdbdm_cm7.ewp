@@ -184,6 +184,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1165,6 +1166,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2143,6 +2145,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3119,6 +3122,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4100,6 +4104,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5078,6 +5083,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>SDK_DEBUGCONSOLE=1</state>
           <state>USB_STACK_BM</state>
+          <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>

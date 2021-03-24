@@ -39,11 +39,12 @@
 /* No, not required for this driver.  #define NX_DIRVER_INTERNAL_TRANSMIT_QUEUE   */
 
 /* Include driver specific include file.  */
-#include "board.h"
 #include "fsl_common.h"
 #include "fsl_enet.h"
 #include "fsl_phy.h"
 #include "fsl_debug_console.h"
+#include "board.h"
+
 #include "nx_driver_imxrt.h"
 
 //#endif
@@ -1794,9 +1795,8 @@ UINT                i;
     /* Set Receive Descriptor List Address Register.  */
     ENET->RDSR = (ULONG) nx_driver_information.nx_driver_information_dma_rx_descriptors;
 
-    for (i = 64; i; i--)
+    for (i = 0; i < 64; i++)
     {
-
         nx_driver_information.nx_driver_information_multicast_count[i] = 0;
     }
 

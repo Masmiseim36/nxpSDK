@@ -383,6 +383,10 @@ static uint8_t semc_nand_get_specific_ac_cycles(semc_nand_config_t *config,
     uint32_t baseTick_ps;
     uint32_t requiredTime_ps = requiredTime_ns * 1000;
 
+#if defined(BL_TARGET_FPGA)
+    semc_get_clock(kSemcClkType_AxiClock, &baseClkInMHz);
+    baseClkInMHz /= 1000000;
+#else
     semc_clk_freq_t clkFreq = (semc_clk_freq_t)config->memConfig.asyncClkFreq;
     switch (clkFreq)
     {
@@ -403,6 +407,7 @@ static uint8_t semc_nand_get_specific_ac_cycles(semc_nand_config_t *config,
             baseClkInMHz = 66;
             break;
     }
+#endif
 
     baseTick_ps = 1000000 / baseClkInMHz;
 
@@ -577,6 +582,8 @@ static status_t semc_nand_switch_device_timing_mode(semc_nand_config_t *config)
 {
     status_t status = kStatus_Success;
 
+#ifndef BL_TARGET_RTL
+
     if (s_nandOperationInfo.isFeatureCommandSupport)
     {
         // Set desired timing mode
@@ -610,12 +617,16 @@ static status_t semc_nand_switch_device_timing_mode(semc_nand_config_t *config)
         }
     }
 
+#endif
+
     return status;
 }
 
 static status_t semc_nand_make_use_of_onfi_parameter(semc_nand_config_t *config)
 {
     status_t status = kStatus_Success;
+
+#ifndef BL_TARGET_RTL
 
     // Cleanup ONFI config block
     memset((uint8_t *)&s_nandOnfiParameterConfig, 0, sizeof(s_nandOnfiParameterConfig));
@@ -813,15 +824,19 @@ static status_t semc_nand_make_use_of_onfi_parameter(semc_nand_config_t *config)
         ((uint32_t)s_nandOnfiParameterConfig.maxPageProgramTimeInUs[1] << 8) +
         s_nandOnfiParameterConfig.maxPageProgramTimeInUs[0];
 
+#ifndef BL_TARGET_RTL
     // Actual ready check interval time = max operation time / 4;
     s_nandOperationInfo.pageReadTimeInUs_tR >>= 2;
     s_nandOperationInfo.blockEraseTimeInUs_tBERS >>= 2;
     s_nandOperationInfo.PageProgramTimeInUs_tPROG >>= 2;
+#endif
 
     // Set change cloumn setup time for AXI access
     s_nandOperationInfo.changeColumnSetupTimeInNs_tCCS =
         ((uint32_t)s_nandOnfiParameterConfig.minChangeColunmSetupTimeInNs[1] << 8) +
         s_nandOnfiParameterConfig.minChangeColunmSetupTimeInNs[0];
+
+#endif
 
     return status;
 }

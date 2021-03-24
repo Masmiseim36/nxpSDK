@@ -12,7 +12,7 @@ The current version is Amazon-FreeRTOS 202007.00 Original package is available a
 
   - 202002.00_rev1
       - updated iot_tls.c as per latest SSS stack v2.14. All SSS/SE05x code under conditional compilation.
-      - fix "#pragma weak"" issue caused by IAR update to version 8.50.5. Use __weak definition of vPortSetupTimerInterrupt instead of "#pragma weak" declaration.
+      - fix "\#pragma weak"" issue caused by IAR update to version 8.50.5. Use __weak definition of vPortSetupTimerInterrupt instead of "\#pragma weak" declaration.
 
   - 202002.00_rev0
       - update aws_iot_network_manager

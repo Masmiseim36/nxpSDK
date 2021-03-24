@@ -185,13 +185,13 @@
           <state>DEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>PRINTF_FLOAT_ENABLE=0</state>
-          <state>SCANF_FLOAT_ENABLE=0</state>
-          <state>PRINTF_ADVANCED_ENABLE=0</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SCANF_FLOAT_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>GX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -320,14 +320,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
@@ -338,7 +333,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -506,6 +503,7 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>TX_ENABLE_FPU_SUPPORT</state>
         </option>
         <option>
           <name>AList</name>
@@ -1179,13 +1177,13 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1052DVL6B</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>PRINTF_FLOAT_ENABLE=0</state>
-          <state>SCANF_FLOAT_ENABLE=0</state>
-          <state>PRINTF_ADVANCED_ENABLE=0</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SCANF_FLOAT_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>GX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1314,14 +1312,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
@@ -1332,7 +1325,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1500,6 +1495,7 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>TX_ENABLE_FPU_SUPPORT</state>
         </option>
         <option>
           <name>AList</name>
@@ -2170,13 +2166,13 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1052DVL6B</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>PRINTF_FLOAT_ENABLE=0</state>
-          <state>SCANF_FLOAT_ENABLE=0</state>
-          <state>PRINTF_ADVANCED_ENABLE=0</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SCANF_FLOAT_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>GX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2305,14 +2301,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
@@ -2323,7 +2314,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2491,6 +2484,7 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>TX_ENABLE_FPU_SUPPORT</state>
         </option>
         <option>
           <name>AList</name>
@@ -3164,13 +3158,13 @@
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1052DVL6B</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>PRINTF_FLOAT_ENABLE=0</state>
-          <state>SCANF_FLOAT_ENABLE=0</state>
-          <state>PRINTF_ADVANCED_ENABLE=0</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SCANF_FLOAT_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
           <state>GX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3299,14 +3293,9 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406_rt</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052</state>
@@ -3317,7 +3306,9 @@
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip</state>
           <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3485,6 +3476,7 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>TX_ENABLE_FPU_SUPPORT</state>
         </option>
         <option>
           <name>AList</name>
@@ -3977,12 +3969,6 @@
       <name>$PROJ_DIR$/../tx_user.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../tx_initialize_low_level_iar.s</name>
-    </file>
-  </group>
-  <group>
-    <name>user</name>
-    <file>
       <name>$PROJ_DIR$/../gx_user.h</name>
     </file>
   </group>
@@ -4056,12 +4042,222 @@
     </file>
   </group>
   <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.txt</name>
+    </file>
+  </group>
+  <group>
+    <name>azure-rtos</name>
+    <group>
+      <name>guix</name>
+      <group>
+        <name>common</name>
+        <group>
+          <name>inc</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_utility.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_input.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_sprite.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_slider.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_menu.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_animation.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_text_input_cursor.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_canvas.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_line_chart.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_button.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_radial_progress_bar.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_prompt.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_scroll_wheel.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_context.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_icon.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_window.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_system.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_numeric_pixelmap_prompt.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_image_reader.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_progress_bar.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_tree_view.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_user_sample.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_prompt.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_api.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_rich_text_view.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_slider.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_display.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_single_line_text_input.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_binres_loader.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_pixelmap_prompt.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_widget.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_scrollbar.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_screen_stack.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_system_rtos_bind.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_multi_line_text_view.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_circular_gauge.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/common/inc/gx_drop_list.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>ports</name>
+        <group>
+          <name>cortex_m7</name>
+          <group>
+            <name>iar</name>
+            <group>
+              <name>inc</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/guix/ports/cortex_m7/iar/inc/gx_port.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>threadx</name>
+      <group>
+        <name>common</name>
+        <group>
+          <name>inc</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_byte_pool.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>ports</name>
+        <group>
+          <name>cortex_m7</name>
+          <group>
+            <name>iar</name>
+            <group>
+              <name>inc</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc/tx_port.h</name>
+              </file>
+            </group>
+            <group>
+              <name>src</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_initialize_low_level.s</name>
+              </file>
+            </group>
+          </group>
+        </group>
+      </group>
+    </group>
+  </group>
+  <group>
     <name>touchpanel</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/ft5406_rt/fsl_ft5406_rt.c</name>
+      <name>$PROJ_DIR$/../../../../../components/ft5406_rt/fsl_ft5406_rt.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/ft5406_rt/fsl_ft5406_rt.h</name>
+      <name>$PROJ_DIR$/../../../../../components/ft5406_rt/fsl_ft5406_rt.c</name>
     </file>
   </group>
   <group>
@@ -4079,43 +4275,43 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_clock.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/drivers/fsl_gpio.c</name>
     </file>
   </group>
   <group>
     <name>device</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/fsl_device_registers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/MIMXRT1052.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/MIMXRT1052_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/system_MIMXRT1052.c</name>
@@ -4127,6 +4323,12 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4134,12 +4336,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/utilities/fsl_assert.c</name>
@@ -4150,37 +4346,37 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -4193,10 +4389,10 @@
   <group>
     <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1052/xip/fsl_flexspi_nor_boot.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../xip/evkbimxrt1050_flexspi_nor_config.c</name>
@@ -4223,16 +4419,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

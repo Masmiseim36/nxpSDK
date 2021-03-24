@@ -11,13 +11,12 @@
 
 #include <stdio.h>
 #include "fsl_gpio.h"
-#include "board.h"
 #include "clock_config.h"
-#include "board.h"
 #include "pin_mux.h"
 #include "fsl_common.h"
 #include "fsl_elcdif.h"
 #include "fsl_debug_console.h"
+#include "board.h"
 
 #include "gx_api.h"
 #include "gx_display.h"

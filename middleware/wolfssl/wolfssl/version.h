@@ -1,14 +1,23 @@
 /* wolfssl_version.h.in
  *
- * Copyright (C) 2006-2016 wolfSSL Inc.  All rights reserved.
+ * Copyright (C) 2006-2020 wolfSSL Inc.
  *
  * This file is part of wolfSSL.
  *
- * Contact licensing@wolfssl.com with any questions or comments.
+ * wolfSSL is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- * http://www.wolfssl.com
+ * wolfSSL is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1335, USA
  */
-
 
 
 #ifndef WOLFSSL_VERSION_H
@@ -19,8 +28,8 @@
 extern "C" {
 #endif
 
-#define LIBWOLFSSL_VERSION_STRING "3.9.8"
-#define LIBWOLFSSL_VERSION_HEX 0x03009008
+#define LIBWOLFSSL_VERSION_STRING "4.6.0"
+#define LIBWOLFSSL_VERSION_HEX 0x04006000
 
 #ifdef __cplusplus
 }

@@ -86,3 +86,5 @@ place in DATA_region                        { block HEAP };
 place in DATA_region                        { last section FREE_MEM};
 place in CSTACK_region                      { block CSTACK };
 place in NCACHE_region                      { block NCACHE_VAR };
+
+keep { block HEAP, block CSTACK };

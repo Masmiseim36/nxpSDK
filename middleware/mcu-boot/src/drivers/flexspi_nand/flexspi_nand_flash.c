@@ -7,10 +7,9 @@
  *
  */
 
-#include <stdbool.h>
-#include <stdlib.h>
 #include <string.h>
-
+#include <stdlib.h>
+#include <stdbool.h>
 #include "flexspi_nand_flash.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -34,25 +33,21 @@ enum
 ////////////////////////////////////////////////////////////////////////////////
 // Local variables
 ////////////////////////////////////////////////////////////////////////////////
-#ifdef FLEXSPI_AMBA_BASE_ADDS
-static const uint32_t kFlexSpiAmbaBase[] = FLEXSPI_AMBA_BASE_ADDS;
-#else
 #if FSL_FEATURE_SOC_FLEXSPI_COUNT > 1
-#if defined(FlexSPI0_AMBA_BASE)
+#ifndef FlexSPI0_AMBA_BASE
+#define FlexSPI0_AMBA_BASE FlexSPI_AMBA_BASE
+#ifndef FlexSPI1_AMBA_BASE
+#define FlexSPI1_AMBA_BASE FlexSPI2_AMBA_BASE
+#endif
+#endif
 static const uint32_t kFlexSpiAmbaBase[] = { FlexSPI0_AMBA_BASE, FlexSPI1_AMBA_BASE };
-#elif defined(FlexSPI_AMBA_BASE)
-static const uint32_t kFlexSpiAmbaBase[] = { 0, FlexSPI_AMBA_BASE, FlexSPI2_AMBA_BASE };
-#else
-static const uint32_t kFlexSpiAmbaBase[] = { 0, FlexSPI1_AMBA_BASE, FlexSPI2_AMBA_BASE };
-#endif // #if defined(FlexSPI0_AMBA_BASE)
 #else
 #if defined(FlexSPI0_AMBA_BASE)
 static const uint32_t kFlexSpiAmbaBase[] = { FlexSPI0_AMBA_BASE };
 #else
 static const uint32_t kFlexSpiAmbaBase[] = { FlexSPI_AMBA_BASE };
-#endif // #if defined(FlexSPI0_AMBA_BASE)
-#endif // #if FSL_FEATURE_SOC_FLEXSPI_COUNT > 1
-#endif // #ifdef FLEXSPI_AMBA_BASE_ADDS
+#endif
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 // Local prototypes

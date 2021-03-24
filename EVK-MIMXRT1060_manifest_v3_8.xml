@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1060" name="EVK-MIMXRT1060" brief="This is SDK version 2.9.1 manifest file. It describes the content of the EVK-MIMXRT1060 and additional settings for tools that support SDK version 2.9.1" format_version="3.8" api_version="2.0.0" configuration="36ca6b30e39b3c55a1ae8b17ce48b850" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
-  <!--Timestamp (UTC): 2021-02-03 21:06:41.741973-->
-  <!--This manifest is generated based on sdk repo commit: 75808db6409113099ad7fa8094e7e65f559d0e0f-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT1060" name="EVK-MIMXRT1060" brief="This is SDK version 2.9.2 manifest file. It describes the content of the EVK-MIMXRT1060 and additional settings for tools that support SDK version 2.9.2" format_version="3.8" api_version="2.0.0" configuration="b13c3ca280791c5a0c8fe0f4a81dfd1c" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
+  <!--Timestamp (UTC): 2021-03-10 16:56:18.782878-->
+  <!--This manifest is generated based on sdk repo commit: 25c4f93766fafdc552a84591d0d1a958e37caf7a-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso291" name="MCUXpresso291" version="2.9.1" revision="440 2021-01-20"/>
+  <ksdk id="MCUXpresso292" name="MCUXpresso292" version="2.9.2" revision="453 2021-03-10"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -1866,6 +1866,16 @@ ${load}</script>
         <example id="evkmimxrt1060_wifi_webconfig" name="wifi_webconfig" brief="Simple AP to Client configuration over web." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1060/wifi_examples/wifi_webconfig">
           <external path="boards/evkmimxrt1060/wifi_examples/wifi_webconfig" type="xml">
             <files mask="wifi_webconfig_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_wolfssl_benchmark" name="wolfssl_benchmark" brief="The mbdedTLS benchmark program performs cryptographic algorithm testing and prints results to theterminal." toolchain="armgcc iar" compiler="compiler_gcc compiler_iar" category="wolfssl_examples" path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_benchmark">
+          <external path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_benchmark" type="xml">
+            <files mask="wolfssl_benchmark_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_wolfssl_selftest" name="wolfssl_selftest" brief="The mbdedTLS SelfTest program performs cryptographic algorithm testing and prints results to theterminal." toolchain="armgcc iar" compiler="compiler_gcc compiler_iar" category="wolfssl_examples" path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest">
+          <external path="boards/evkmimxrt1060/wolfssl_examples/wolfssl_selftest" type="xml">
+            <files mask="wolfssl_selftest_v3_8.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1060_xbar_aoi" name="xbar_aoi" brief="The XBAR AOI demo application demonstrates the usage of the XBAR, AOI peripheral to combine interruptfrom CMP and PIT. If the button is pressed(CMP interrupt) and the PIT periodic interrupt occurs a message is printed." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1060/demo_apps/xbar_aoi">
@@ -30283,6 +30293,177 @@ ${load}</script>
         <include_path relative_path="framework/FunctionLib" project_relative_path="FunctionLib" type="c_include"/>
       </include_paths>
     </component>
+    <component id="middleware.wolfssl.MIMXRT1062" name="wolfssl" brief="WolfSSL library" version="4.6.0" full_name="WolfSSL open source SSL library" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/WolfSSL library" user_visible="true" type="middleware" package_base_path="middleware/wolfssl" project_base_path="wolfssl">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.wolfssl.template.MIMXRT1062"/>
+          <component_dependency value="utility.debug_console.MIMXRT1062"/>
+          <component_dependency value="middleware.wolfssl.docs.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source relative_path="wolfcrypt/src" type="src">
+        <files mask="wc_port.c"/>
+        <files mask="wc_encrypt.c"/>
+        <files mask="random.c"/>
+        <files mask="logging.c"/>
+        <files mask="sp_int.c"/>
+        <files mask="sp_cortexm.c"/>
+        <files mask="ecc.c"/>
+        <files mask="rsa.c"/>
+        <files mask="aes.c"/>
+        <files mask="asn.c"/>
+        <files mask="sha.c"/>
+        <files mask="sha256.c"/>
+        <files mask="sha512.c"/>
+        <files mask="sha3.c"/>
+        <files mask="chacha.c"/>
+        <files mask="md5.c"/>
+        <files mask="hmac.c"/>
+        <files mask="coding.c"/>
+        <files mask="ge_low_mem.c"/>
+        <files mask="hash.c"/>
+        <files mask="pwdbased.c"/>
+        <files mask="wolfmath.c"/>
+        <files mask="misc.c"/>
+        <files mask="ed25519.c"/>
+        <files mask="fe_operations.c"/>
+        <files mask="fe_low_mem.c"/>
+      </source>
+      <source relative_path="wolfssl/wolfcrypt" type="c_include">
+        <files mask="wc_port.h"/>
+        <files mask="wc_encrypt.h"/>
+        <files mask="random.h"/>
+        <files mask="logging.h"/>
+        <files mask="sp_int.h"/>
+        <files mask="ecc.h"/>
+        <files mask="rsa.h"/>
+        <files mask="aes.h"/>
+        <files mask="asn.h"/>
+        <files mask="sha.h"/>
+        <files mask="sha256.h"/>
+        <files mask="sha512.h"/>
+        <files mask="sha3.h"/>
+        <files mask="chacha.h"/>
+        <files mask="ed25519.h"/>
+        <files mask="md5.h"/>
+        <files mask="md2.h"/>
+        <files mask="hmac.h"/>
+        <files mask="coding.h"/>
+        <files mask="hash.h"/>
+        <files mask="pwdbased.h"/>
+        <files mask="wolfmath.h"/>
+        <files mask="settings.h"/>
+        <files mask="visibility.h"/>
+        <files mask="types.h"/>
+        <files mask="error-crypt.h"/>
+        <files mask="memory.h"/>
+        <files mask="integer.h"/>
+        <files mask="cpuid.h"/>
+        <files mask="tfm.h"/>
+        <files mask="md4.h"/>
+        <files mask="misc.h"/>
+        <files mask="asn_public.h"/>
+        <files mask="ge_operations.h"/>
+        <files mask="sp.h"/>
+        <files mask="des3.h"/>
+        <files mask="fe_operations.h"/>
+        <files mask="rc2.h"/>
+        <files mask="cryptocb.h"/>
+        <files mask="arc4.h"/>
+        <files mask="signature.h"/>
+        <files mask="cmac.h"/>
+        <files mask="poly1305.h"/>
+        <files mask="camellia.h"/>
+        <files mask="dh.h"/>
+        <files mask="dsa.h"/>
+        <files mask="srp.h"/>
+        <files mask="idea.h"/>
+        <files mask="hc128.h"/>
+        <files mask="rabbit.h"/>
+        <files mask="chacha20_poly1305.h"/>
+        <files mask="ripemd.h"/>
+      </source>
+      <source relative_path="wolfssl" type="c_include">
+        <files mask="version.h"/>
+        <files mask="certs_test.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_wolfssl_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="middleware.wolfssl.benchmark.MIMXRT1062" name="wolfssl_bechmark" brief="WolfSSL benchmark source codes." version="4.6.0" full_name="WolfSSL benchmark source codes." devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/WolfSSL library" user_visible="true" type="middleware" package_base_path="middleware/wolfssl" project_base_path="wolfssl">
+      <dependencies>
+        <component_dependency value="middleware.wolfssl.MIMXRT1062"/>
+      </dependencies>
+      <source relative_path="wolfcrypt/benchmark" type="c_include">
+        <files mask="benchmark.h"/>
+      </source>
+      <source relative_path="wolfcrypt/benchmark" type="src">
+        <files mask="benchmark.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_wolfssl_benchmark_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+    </component>
+    <component id="middleware.wolfssl.docs.MIMXRT1062" name="wolfssl_bechmark" brief="WolfSSL documents." version="4.6.0" full_name="WolfSSL documents." devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/WolfSSL library" user_visible="true" type="middleware" package_base_path="middleware/wolfssl" project_base_path="wolfssl">
+      <dependencies>
+        <component_dependency value="middleware.wolfssl.MIMXRT1062"/>
+      </dependencies>
+      <source relative_path="./" type="other">
+        <files mask="ChangeLog.md"/>
+        <files mask="README.md"/>
+        <files mask="README"/>
+      </source>
+      <source relative_path="./" type="doc">
+        <files mask="ChangeLogKSDK.txt"/>
+        <files mask="LA_OPT_EVAL_DEMO_ONLY.pdf"/>
+      </source>
+      <source relative_path="../.." type="doc">
+        <files mask="LA_OPT_EVAL_DEMO_ONLY.htm"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_wolfssl_docs_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+    </component>
+    <component id="middleware.wolfssl.empty.MIMXRT1062" name="wolfssl_empty" brief="On-chip MCUX Crypto accelerator" version="4.6.0" full_name="WolfSSL Adaptation" devices="MIMXRT1062xxxxA" category="Security/WolfSSL library" user_visible="true" type="middleware" package_base_path="middleware/wolfssl" project_base_path="wolfssl"/>
+    <component id="middleware.wolfssl.rt.MIMXRT1062" name="wolfssl_rt" brief="On-chip RT Crypto accelerator" version="4.6.0" full_name="WolfSSL Adaptation for On-chip RT Crypto accelerator." devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/WolfSSL library" user_visible="true" type="middleware" package_base_path="middleware/wolfssl" project_base_path="wolfssl">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.wolfssl.MIMXRT1062"/>
+          <component_dependency value="platform.drivers.dcp.MIMXRT1062"/>
+          <component_dependency value="platform.drivers.trng.MIMXRT1062"/>
+          <component_dependency value="platform.drivers.cache_armv7_m7.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source relative_path="wolfcrypt/src/port/nxp" type="src">
+        <files mask="dcp_port.c"/>
+      </source>
+      <source relative_path="wolfssl/wolfcrypt/port/nxp" type="c_include">
+        <files mask="dcp_port.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_wolfssl_rt_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+    </component>
+    <component id="middleware.wolfssl.template.MIMXRT1062" name="wolfssl_template" brief="WolfSSL Template" version="4.6.0" full_name="WolfSSL Template" devices="MIMXRT1062xxxxA" user_visible="false" type="project_template" package_base_path="middleware/wolfssl" project_base_path="wolfssl"/>
+    <component id="middleware.wolfssl.test.MIMXRT1062" name="wolfssl_test" brief="WolfSSL test source codes." version="4.6.0" full_name="WolfSSL test source codes." devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Security/WolfSSL library" user_visible="true" type="middleware" package_base_path="middleware/wolfssl" project_base_path="wolfssl">
+      <dependencies>
+        <component_dependency value="middleware.wolfssl.MIMXRT1062"/>
+      </dependencies>
+      <source relative_path="wolfcrypt/test" type="c_include">
+        <files mask="test.h"/>
+      </source>
+      <source relative_path="wolfcrypt/test" type="src">
+        <files mask="test.c"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_wolfssl_test_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+    </component>
+    <component id="middleware.wolfssl.unused_files.MIMXRT1062" name="unused_files" brief="WolfSSL files unused by projects" version="4.6.0" full_name="WolfSSL unused files" devices="MIMXRT1062xxxxA" user_visible="false" type="other" package_base_path="middleware/wolfssl" project_base_path="wolfssl"/>
     <component id="platform.utilities.misc_utilities.MIMXRT1062" name="misc_utilities" brief="Utilities which is needed for particular toolchain like the SBRK function required to address limitation between HEAP and STACK in GCC toolchain library." version="1.0.0" full_name="Utilities miscellaneous" devices="MIMXRT1062xxxxA" user_visible="true" type="utilities" package_base_path="devices/MIMXRT1062/utilities" project_base_path="utilities">
       <source toolchain="armgcc" relative_path="./" type="src">
         <files mask="fsl_sbrk.c"/>

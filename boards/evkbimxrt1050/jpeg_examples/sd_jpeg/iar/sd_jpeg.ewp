@@ -4152,25 +4152,7 @@
     <group>
       <name>inc</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/cderror.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/transupp.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jversion.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jdct.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jmorecfg.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jinclude.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jpegint.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jpeglib.h</name>
@@ -4179,10 +4161,28 @@
         <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jerror.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/cdjpeg.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/cderror.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jdct.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jmemsys.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/cdjpeg.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jversion.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/transupp.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jpegint.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/libjpeg/inc/jmorecfg.h</name>
       </file>
     </group>
     <group>

@@ -576,9 +576,9 @@
           <GroupName>AppWizard/Resource/Image</GroupName>
           <Files>
             <File>
-              <FileName>GreenGlowMarker_16x9.c</FileName>
+              <FileName>SeggerLogo_80x40.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/GreenGlowMarker_16x9.c</FilePath>
+              <FilePath>../AppWizard/Resource/Image/SeggerLogo_80x40.c</FilePath>
             </File>
             <File>
               <FileName>KNOB_106x106.c</FileName>
@@ -586,9 +586,9 @@
               <FilePath>../AppWizard/Resource/Image/KNOB_106x106.c</FilePath>
             </File>
             <File>
-              <FileName>ButtonRoundPressed_48x21.c</FileName>
+              <FileName>GreenGlowMarker_16x9.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c</FilePath>
+              <FilePath>../AppWizard/Resource/Image/GreenGlowMarker_16x9.c</FilePath>
             </File>
             <File>
               <FileName>ButtonRound_48x21.c</FileName>
@@ -601,9 +601,9 @@
               <FilePath>../AppWizard/Resource/Image/TemperatureControl_3_480x272.c</FilePath>
             </File>
             <File>
-              <FileName>SeggerLogo_80x40.c</FileName>
+              <FileName>ButtonRoundPressed_48x21.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/SeggerLogo_80x40.c</FilePath>
+              <FilePath>../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -611,14 +611,14 @@
           <GroupName>AppWizard/Resource/Text</GroupName>
           <Files>
             <File>
-              <FileName>APPW_Language_0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Text/APPW_Language_0.c</FilePath>
-            </File>
-            <File>
               <FileName>APPW_Pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>../AppWizard/Resource/Text/APPW_Pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>APPW_Language_0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Text/APPW_Language_0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -636,14 +636,14 @@
           <GroupName>AppWizard/Source/CustomCode</GroupName>
           <Files>
             <File>
-              <FileName>ID_SCREEN_TEMP_CTRL_Slots.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c</FilePath>
-            </File>
-            <File>
               <FileName>Application.h</FileName>
               <FileType>5</FileType>
               <FilePath>../AppWizard/Source/CustomCode/Application.h</FilePath>
+            </File>
+            <File>
+              <FileName>ID_SCREEN_TEMP_CTRL_Slots.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -651,9 +651,9 @@
           <GroupName>AppWizard/Source/Generated</GroupName>
           <Files>
             <File>
-              <FileName>APPWConf.c</FileName>
+              <FileName>ID_SCREEN_TEMP_CTRL.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/Generated/APPWConf.c</FilePath>
+              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c</FilePath>
             </File>
             <File>
               <FileName>Resource.h</FileName>
@@ -661,14 +661,14 @@
               <FilePath>../AppWizard/Source/Generated/Resource.h</FilePath>
             </File>
             <File>
+              <FileName>APPWConf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/Generated/APPWConf.c</FilePath>
+            </File>
+            <File>
               <FileName>Resource.c</FileName>
               <FileType>1</FileType>
               <FilePath>../AppWizard/Source/Generated/Resource.c</FilePath>
-            </File>
-            <File>
-              <FileName>ID_SCREEN_TEMP_CTRL.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c</FilePath>
             </File>
             <File>
               <FileName>ID_SCREEN_TEMP_CTRL.h</FileName>
@@ -2107,9 +2107,9 @@
           <GroupName>AppWizard/Resource/Image</GroupName>
           <Files>
             <File>
-              <FileName>GreenGlowMarker_16x9.c</FileName>
+              <FileName>SeggerLogo_80x40.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/GreenGlowMarker_16x9.c</FilePath>
+              <FilePath>../AppWizard/Resource/Image/SeggerLogo_80x40.c</FilePath>
             </File>
             <File>
               <FileName>KNOB_106x106.c</FileName>
@@ -2117,9 +2117,9 @@
               <FilePath>../AppWizard/Resource/Image/KNOB_106x106.c</FilePath>
             </File>
             <File>
-              <FileName>ButtonRoundPressed_48x21.c</FileName>
+              <FileName>GreenGlowMarker_16x9.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c</FilePath>
+              <FilePath>../AppWizard/Resource/Image/GreenGlowMarker_16x9.c</FilePath>
             </File>
             <File>
               <FileName>ButtonRound_48x21.c</FileName>
@@ -2132,9 +2132,9 @@
               <FilePath>../AppWizard/Resource/Image/TemperatureControl_3_480x272.c</FilePath>
             </File>
             <File>
-              <FileName>SeggerLogo_80x40.c</FileName>
+              <FileName>ButtonRoundPressed_48x21.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Image/SeggerLogo_80x40.c</FilePath>
+              <FilePath>../AppWizard/Resource/Image/ButtonRoundPressed_48x21.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2142,14 +2142,14 @@
           <GroupName>AppWizard/Resource/Text</GroupName>
           <Files>
             <File>
-              <FileName>APPW_Language_0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Resource/Text/APPW_Language_0.c</FilePath>
-            </File>
-            <File>
               <FileName>APPW_Pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>../AppWizard/Resource/Text/APPW_Pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>APPW_Language_0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Resource/Text/APPW_Language_0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2167,14 +2167,14 @@
           <GroupName>AppWizard/Source/CustomCode</GroupName>
           <Files>
             <File>
-              <FileName>ID_SCREEN_TEMP_CTRL_Slots.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c</FilePath>
-            </File>
-            <File>
               <FileName>Application.h</FileName>
               <FileType>5</FileType>
               <FilePath>../AppWizard/Source/CustomCode/Application.h</FilePath>
+            </File>
+            <File>
+              <FileName>ID_SCREEN_TEMP_CTRL_Slots.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/CustomCode/ID_SCREEN_TEMP_CTRL_Slots.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2182,9 +2182,9 @@
           <GroupName>AppWizard/Source/Generated</GroupName>
           <Files>
             <File>
-              <FileName>APPWConf.c</FileName>
+              <FileName>ID_SCREEN_TEMP_CTRL.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/Generated/APPWConf.c</FilePath>
+              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c</FilePath>
             </File>
             <File>
               <FileName>Resource.h</FileName>
@@ -2192,14 +2192,14 @@
               <FilePath>../AppWizard/Source/Generated/Resource.h</FilePath>
             </File>
             <File>
+              <FileName>APPWConf.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../AppWizard/Source/Generated/APPWConf.c</FilePath>
+            </File>
+            <File>
               <FileName>Resource.c</FileName>
               <FileType>1</FileType>
               <FilePath>../AppWizard/Source/Generated/Resource.c</FilePath>
-            </File>
-            <File>
-              <FileName>ID_SCREEN_TEMP_CTRL.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../AppWizard/Source/Generated/ID_SCREEN_TEMP_CTRL.c</FilePath>
             </File>
             <File>
               <FileName>ID_SCREEN_TEMP_CTRL.h</FileName>

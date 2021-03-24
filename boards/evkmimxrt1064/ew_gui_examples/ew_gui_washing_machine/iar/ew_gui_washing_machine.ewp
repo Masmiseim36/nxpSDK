@@ -2116,10 +2116,10 @@
     <group>
       <name>GeneratedCode</name>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Application.c</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Effects.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Effects.c</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Application.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/Resources.c</name>
@@ -2128,34 +2128,46 @@
         <name>$PROJ_DIR$/../GeneratedCode/Core.c</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Graphics.c</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../GeneratedCode/Washer.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/Views.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Graphics.c</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreQuadView.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsRectangle.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherListFontM.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgHot.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherShadow.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyPressHandler.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_ApplicationApplication.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherTimeList.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherHourItemS.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherTempItemL.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsText.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherProgList.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherMinItemS.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreSimpleTouchHandler.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgEco.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffect.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesFont.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherWasher.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/Resources.h</name>
@@ -2164,16 +2176,157 @@
         <name>$PROJ_DIR$/../GeneratedCode/_WasherSpinItemS.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherStartButton.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyEvent.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsImage.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherDeviceClass.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsRectangle.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreTask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreSlideTouchHandler.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreTaskQueue.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreTimer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreGroup.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgSportswear.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreOutline.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherTimeList.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgDelicates.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherSpinItemL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Core.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreRoot.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreVerticalList.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherOptList.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsBorder.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CorePropertyObserver.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutContext.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherOptList.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherStartButton.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffectTimerClass.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreModalContext.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsTimingList.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsRectEffect.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgEasyCare.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreResource.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherTempList.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorGrabEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesBitmap.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherListFontL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorHit.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Application.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Effects.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherProgItemS.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherMinItemL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreRectView.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Washer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgHot.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherSpinList.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherOptItemL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgWool.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherListFontXL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherHourItemL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgSpin.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgDrain.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsInt32Effect.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherTempItemL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsImage.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/ewlocale.h</name>
@@ -2182,202 +2335,49 @@
         <name>$PROJ_DIR$/../GeneratedCode/_WasherListFontS.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgSpin.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutQuadContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Views.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgDelicates.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgEco.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Core.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherListFontL.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffectTimerClass.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreView.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreTaskQueue.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreVerticalList.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherMinItemS.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherMinItemL.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsTimingList.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherOptItemL.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherTempItemS.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgDrain.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgSportswear.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherProgItemL.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsRectEffect.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsInt32Effect.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherListFontXL.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherShadow.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffect.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsText.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreRoot.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsBorder.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreOutline.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreModalContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherTempList.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Application.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ApplicationApplication.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CorePropertyObserver.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreQuadView.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherProgItemS.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreDragEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorGrabEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsCanvas.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Effects.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Graphics.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgWool.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherWasher.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreDialogContext.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_WasherDescrFont.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyEvent.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsCanvas.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorHit.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherProgItemL.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreSlideTouchHandler.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreDragEvent.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherBgEasyCare.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Graphics.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherSpinItemL.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherTempItemS.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherOptItemS.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Views.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesFont.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyPressHandler.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherSpinList.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherProgList.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreTask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherDeviceClass.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreDialogContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreTimer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesBitmap.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherHourItemS.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreGroup.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherListFontM.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Washer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WasherHourItemL.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreView.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_ViewsFrame.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreResource.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_WasherOptItemS.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreRectView.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreSimpleTouchHandler.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutQuadContext.h</name>
       </file>
     </group>
     <group>
@@ -2385,10 +2385,10 @@
       <group>
         <name>RT</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</name>
@@ -2400,7 +2400,7 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</name>
@@ -2409,10 +2409,13 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</name>
@@ -2421,16 +2424,13 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</name>
         </file>
       </group>
     </group>
@@ -2447,22 +2447,13 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextfnt.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</name>
@@ -2471,10 +2462,19 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextpxl_RGB565.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</name>
           </file>
         </group>
         <group>
@@ -2483,10 +2483,10 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewrte.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewrte.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.h</name>
           </file>
         </group>
       </group>

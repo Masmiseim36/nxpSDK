@@ -2017,16 +2017,13 @@
         <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_micro.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_speaker_conf.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_audio_worker.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_speaker.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_speaker_conf.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_speaker.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_speaker.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_audio_worker.h</name>
@@ -2035,13 +2032,16 @@
         <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_speaker_conf.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_micro_conf.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/audio.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_micro.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/audio.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_micro_conf.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/eiq/common/audio/eiq_speaker.h</name>
       </file>
     </group>
     <file>
@@ -2277,10 +2277,10 @@
       <group>
         <name>Include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Include/arm_nnfunctions.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Include/arm_nnsupportfunctions.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Include/arm_nnsupportfunctions.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Include/arm_nnfunctions.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Include/arm_nn_tables.h</name>
@@ -2291,16 +2291,16 @@
         <group>
           <name>ActivationFunctions</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q7.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q15.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q15.c</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_relu_q7.c</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q7.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ActivationFunctions/arm_nn_activations_q15.c</name>
           </file>
         </group>
         <group>
@@ -2309,13 +2309,13 @@
             <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast_nonsquare.c</name>
@@ -2324,53 +2324,59 @@
             <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast_nonsquare.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_1x1_HWC_q7_fast_nonsquare.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_fast.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15_reordered.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_basic_nonsquare.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_separable_conv_HWC_q7_nonsquare.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_RGB.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q15_basic.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_depthwise_conv_u8_basic_ver1.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_convolve_HWC_q7_fast.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/ConvolutionFunctions/arm_nn_mat_mult_kernel_q7_q15.c</name>
           </file>
         </group>
         <group>
           <name>FullyConnectedFunctions</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q15.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7.c</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q15_opt.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15.c</name>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q7_opt.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_q15.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/FullyConnectedFunctions/arm_fully_connected_mat_q7_vec_q15_opt.c</name>
           </file>
         </group>
         <group>
           <name>NNSupportFunctions</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q15.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nntables.c</name>
+          </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q7.c</name>
           </file>
@@ -2378,13 +2384,7 @@
             <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_reordered_no_shift.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nntables.c</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_q7_to_q15_no_shift.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/eiq/cmsis-nn/Source/NNSupportFunctions/arm_nn_mult_q15.c</name>
           </file>
         </group>
         <group>

@@ -5,16 +5,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef __BL_SEMC_H__
-#define __BL_SEMC_H__
+#ifndef __FSL_SEMC_H__
+#define __FSL_SEMC_H__
 
-#include "fsl_device_registers.h"
-
-#if !(defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1176_cm7_SERIES))
-#define LEGACY_SEMC_SUPPORT
-#endif
-
-#if defined(LEGACY_SEMC_SUPPORT)
 #include "bootloader_config.h"
 #include "fsl_common.h"
 
@@ -136,11 +129,9 @@ typedef enum _semc_clock_freq
     kSemcClkFreq_108MHz = 0x04U,
     kSemcClkFreq_133MHz = 0x05U,
     kSemcClkFreq_166MHz = 0x06U,
-    kSemcClkFreq_200MHz = 0x07U,
 } semc_clk_freq_t;
 
-#if defined(MIMXRT1064_SERIES) || defined(MIMXRT1062_SERIES) || defined(MIMXRT1051_SERIES) || \
-    defined(MIMXRT1052_SERIES) || defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1176_cm4_SERIES)
+#if defined(MIMXRT1064_SERIES) || defined(MIMXRT1062_SERIES) || defined(MIMXRT1051_SERIES) || defined(MIMXRT1052_SERIES)
 // i.MX RT1050 or i.MX RT1060
 #define SEMC_MAX_CLK_FREQ kSemcClkFreq_166MHz
 #define SEMC_2ND_MAX_CLK_FREQ kSemcClkFreq_133MHz
@@ -319,8 +310,7 @@ typedef struct _semc_mem_config
     uint8_t busTimeoutCycles;              //!< [0x00d-0x00d]
     uint8_t commandExecutionTimeoutCycles; //!< [0x00e-0x00e]
     uint8_t readStrobeMode;                //!< [0x00f-0x00f]
-    union
-    {
+    union {
         semc_nor_mem_config_t norMemConfig;   //!< [0x010-0x04f]
         semc_nand_mem_config_t nandMemConfig; //!< [0x010-0x04f]
     };
@@ -408,11 +398,7 @@ extern "C"
 }
 #endif
 
-#else // !defined(LEGACY_SEMC_SUPPORT)
-#include "semc/fsl_semc.h"
-#endif // LEGACY_SEMC_SUPPORT
-
-#endif // __BL_SEMC_H__
+#endif // __FSL_SEMC_H__
 
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

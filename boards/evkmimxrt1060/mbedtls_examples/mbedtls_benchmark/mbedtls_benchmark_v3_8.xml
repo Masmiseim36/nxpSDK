@@ -161,8 +161,6 @@
       <files mask="MIMXRT1062xxxxx_flexspi_nor.icf"/>
     </source>
     <source path="boards/evkmimxrt1060/mbedtls_examples/mbedtls_benchmark/mdk" project_relative_path="MIMXRT1062/arm" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1062xxxxx_ram.scf"/>
-      <files mask="MIMXRT1062xxxxx_sdram.scf"/>
       <files mask="MIMXRT1062xxxxx_flexspi_nor.scf"/>
     </source>
     <source path="boards/evkmimxrt1060/mbedtls_examples/mbedtls_benchmark/armgcc" project_relative_path="MIMXRT1062/gcc" type="linker" toolchain="armgcc">
@@ -175,8 +173,6 @@
       <files mask="evkmimxrt1060_sdram_init.mac"/>
     </source>
     <source path="boards/evkmimxrt1060/mbedtls_examples/mbedtls_benchmark/mdk" project_relative_path="evkmimxrt1060" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1060_ram.ini"/>
-      <files mask="evkmimxrt1060_sdram_init.ini"/>
       <files mask="evkmimxrt1060_flexspi_nor.ini"/>
     </source>
   </example>

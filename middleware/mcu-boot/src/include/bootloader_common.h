@@ -12,7 +12,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-
 #include "bootloader_config.h"
 #include "fsl_common.h"
 #include "target_config.h"
@@ -56,26 +55,6 @@
 
 //! @name Alignment macros
 //@{
-/* @{ */
-#if (defined(__ICCARM__))
-#define BL_PRAGMA(x) _Pragma(#x)
-/*! Macro to define a variable with alignbytes alignment */
-#define BL_ALIGN(alignbytes) BL_PRAGMA(data_alignment = alignbytes)
-#define BL_SECTION(x) @x
-#elif defined(__CC_ARM)
-/*! Macro to define a variable with alignbytes alignment */
-#define BL_ALIGN(alignbytes) __align(alignbytes)
-#define BL_SECTION(x) __attribute__((section(x)))
-#elif defined(__GNUC__)
-/*! Macro to define a variable with alignbytes alignment */
-#define BL_ALIGN(alignbytes) __attribute__((aligned(alignbytes)))
-#define BL_SECTION(x) __attribute__((section(x)))
-#else
-#error Toolchain not supported
-#define BL_ALIGN(alignbytes)
-#define BL_SECTION(x)
-#endif
-
 #ifndef ALIGN_DOWN
 #define ALIGN_DOWN(x, a) ((x) & -(a))
 #endif
@@ -139,8 +118,7 @@ enum _bl_driver_status_groups
 //! @brief Structure of version property.
 //!
 //! @ingroup bl_core
-typedef union StandardVersion
-{
+typedef union StandardVersion {
     struct
     {
         uint8_t bugfix; //!< bugfix version [7:0]

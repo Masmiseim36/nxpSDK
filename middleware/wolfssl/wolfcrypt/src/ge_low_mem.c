@@ -1,14 +1,23 @@
 /* ge_low_mem.c
  *
- * Copyright (C) 2006-2016 wolfSSL Inc.  All rights reserved.
+ * Copyright (C) 2006-2020 wolfSSL Inc.
  *
  * This file is part of wolfSSL.
  *
- * Contact licensing@wolfssl.com with any questions or comments.
+ * wolfSSL is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- * http://www.wolfssl.com
+ * wolfSSL is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1335, USA
  */
-
 
 
  /* Based from Daniel Beer's public domain work. */
@@ -19,8 +28,8 @@
 
 #include <wolfssl/wolfcrypt/settings.h>
 
-#if defined(CURVED25519_SMALL) /* use slower code that takes less memory */
-#if defined(HAVE_ED25519)
+#ifdef HAVE_ED25519
+#ifdef ED25519_SMALL /* use slower code that takes less memory */
 
 #include <wolfssl/wolfcrypt/ge_operations.h>
 #include <wolfssl/wolfcrypt/error-crypt.h>
@@ -43,11 +52,11 @@ static const byte ed25519_order[F25519_SIZE] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10
 };
 
-/*Arithmetic modulo the group order m = 2^252 +
+/*Arithmetic modulo the group order mod = 2^252 +
  27742317777372353535851937790883648493 =
  7237005577332262213973186563042994240857116359379907606001950938285454250989 */
 
-static const word32 m[32] = {
+static const word32 mod[32] = {
     0xED,0xD3,0xF5,0x5C,0x1A,0x63,0x12,0x58,0xD6,0x9C,0xF7,0xA2,0xDE,0xF9,
     0xDE,0x14,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
     0x00,0x00,0x00,0x10
@@ -68,10 +77,10 @@ int ge_compress_key(byte* out, const byte* xIn, const byte* yIn,
     byte pt[32];
     int     i;
 
-    fe_copy(tmp, xIn);
+    lm_copy(tmp, xIn);
     parity = (tmp[0] & 1) << 7;
 
-    fe_copy(pt, yIn);
+    lm_copy(pt, yIn);
     pt[31] |= parity;
 
     for(i = 0; i < 32; i++) {
@@ -84,7 +93,7 @@ int ge_compress_key(byte* out, const byte* xIn, const byte* yIn,
 
 static word32 lt(word32 a,word32 b) /* 16-bit inputs */
 {
-  unsigned int x = a;
+  word32 x = a;
   x -= (unsigned int) b; /* 0..65535: no; 4294901761..4294967295: yes */
   x >>= 31; /* 0: no; 1: yes */
   return x;
@@ -102,7 +111,7 @@ static void reduce_add_sub(word32 *r)
 
   for(i=0;i<32;i++)
   {
-    pb += m[i];
+    pb += mod[i];
     b = lt(r[i],pb);
     t[i] = r[i]-pb+(b<<8);
     pb = b;
@@ -140,7 +149,7 @@ static void barrett_reduce(word32* r, word32 x[64])
   for(i=0;i<33;i++)r1[i] = x[i];
   for(i=0;i<32;i++)
     for(j=0;j<33;j++)
-      if(i+j < 33) r2[i+j] += m[i]*q3[j];
+      if(i+j < 33) r2[i+j] += mod[i]*q3[j];
 
   for(i=0;i<32;i++)
   {
@@ -292,13 +301,13 @@ void ed25519_add(ge_p3 *r,
     byte h[F25519_SIZE];
 
     /* A = (Y1-X1)(Y2-X2) */
-    fe_sub(c, p1->Y, p1->X);
-    fe_sub(d, p2->Y, p2->X);
+    lm_sub(c, p1->Y, p1->X);
+    lm_sub(d, p2->Y, p2->X);
     fe_mul__distinct(a, c, d);
 
     /* B = (Y1+X1)(Y2+X2) */
-    fe_add(c, p1->Y, p1->X);
-    fe_add(d, p2->Y, p2->X);
+    lm_add(c, p1->Y, p1->X);
+    lm_add(d, p2->Y, p2->X);
     fe_mul__distinct(b, c, d);
 
     /* C = T1 k T2 */
@@ -307,19 +316,19 @@ void ed25519_add(ge_p3 *r,
 
     /* D = Z1 2 Z2 */
     fe_mul__distinct(d, p1->Z, p2->Z);
-    fe_add(d, d, d);
+    lm_add(d, d, d);
 
     /* E = B - A */
-    fe_sub(e, b, a);
+    lm_sub(e, b, a);
 
     /* F = D - C */
-    fe_sub(f, d, c);
+    lm_sub(f, d, c);
 
     /* G = D + C */
-    fe_add(g, d, c);
+    lm_add(g, d, c);
 
     /* H = B + A */
-    fe_add(h, b, a);
+    lm_add(h, b, a);
 
     /* X3 = E F */
     fe_mul__distinct(r->X, e, f);
@@ -370,24 +379,24 @@ void ed25519_double(ge_p3 *r, const ge_p3 *p)
 
     /* C = 2 Z1^2 */
     fe_mul__distinct(c, p->Z, p->Z);
-    fe_add(c, c, c);
+    lm_add(c, c, c);
 
     /* D = a A (alter sign) */
     /* E = (X1+Y1)^2-A-B */
-    fe_add(f, p->X, p->Y);
+    lm_add(f, p->X, p->Y);
     fe_mul__distinct(e, f, f);
-    fe_sub(e, e, a);
-    fe_sub(e, e, b);
+    lm_sub(e, e, a);
+    lm_sub(e, e, b);
 
     /* G = D + B */
-    fe_sub(g, b, a);
+    lm_sub(g, b, a);
 
     /* F = G - C */
-    fe_sub(f, g, c);
+    lm_sub(f, g, c);
 
     /* H = D - B */
-    fe_neg(h, b);
-    fe_sub(h, h, a);
+    lm_neg(h, b);
+    lm_sub(h, h, a);
 
     /* X3 = E F */
     fe_mul__distinct(r->X, e, f);
@@ -448,7 +457,7 @@ void ge_p3_tobytes(unsigned char *s,const ge_p3 *h)
     fe_normalize(y);
 
     parity = (x[0] & 1) << 7;
-    fe_copy(s, y);
+    lm_copy(s, y);
     fe_normalize(s);
     s[31] |= parity;
 }
@@ -470,7 +479,7 @@ void ge_tobytes(unsigned char *s,const ge_p2 *h)
     fe_normalize(y);
 
     parity = (x[0] & 1) << 7;
-    fe_copy(s, y);
+    lm_copy(s, y);
     fe_normalize(s);
     s[31] |= parity;
 }
@@ -493,17 +502,17 @@ int ge_frombytes_negate_vartime(ge_p3 *p,const unsigned char *s)
 
     /* unpack the key s */
     parity = s[31] >> 7;
-    fe_copy(y, s);
+    lm_copy(y, s);
     y[31] &= 127;
 
     fe_mul__distinct(c, y, y);
     fe_mul__distinct(b, c, ed25519_d);
-    fe_add(a, b, f25519_one);
+    lm_add(a, b, f25519_one);
     fe_inv__distinct(b, a);
-    fe_sub(a, c, f25519_one);
+    lm_sub(a, c, f25519_one);
     fe_mul__distinct(c, a, b);
     fe_sqrt(a, c);
-    fe_neg(b, a);
+    lm_neg(b, a);
     fe_select(x, a, b, (a[0] ^ parity) & 1);
 
     /* test that x^2 is equal to c */
@@ -513,14 +522,14 @@ int ge_frombytes_negate_vartime(ge_p3 *p,const unsigned char *s)
     ret |= ConstantCompare(a, c, F25519_SIZE);
 
     /* project the key s onto p */
-    fe_copy(p->X, x);
-    fe_copy(p->Y, y);
+    lm_copy(p->X, x);
+    lm_copy(p->Y, y);
     fe_load(p->Z, 1);
     fe_mul__distinct(p->T, x, y);
 
     /* negate, the point becomes (-X,Y,Z,-T) */
-    fe_neg(p->X,p->X);
-    fe_neg(p->T,p->T);
+    lm_neg(p->X,p->X);
+    lm_neg(p->T,p->T);
 
     return ret;
 }
@@ -543,13 +552,12 @@ int ge_double_scalarmult_vartime(ge_p2* R, const unsigned char *h,
     /* SB + -H(R,A,M)A */
     ed25519_add(&A, &p, &A);
 
-    fe_copy(R->X, A.X);
-    fe_copy(R->Y, A.Y);
-    fe_copy(R->Z, A.Z);
+    lm_copy(R->X, A.X);
+    lm_copy(R->Y, A.Y);
+    lm_copy(R->Z, A.Z);
 
     return ret;
 }
 
+#endif /* ED25519_SMALL */
 #endif /* HAVE_ED25519 */
-#endif /* CURVED25519_SMALL */
-

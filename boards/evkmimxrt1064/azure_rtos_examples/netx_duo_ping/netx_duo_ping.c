@@ -2,18 +2,19 @@
 /* Enable DHCP feature */
 #define NX_ENABLE_DHCP
 
-#include "board.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
+
 #include "tx_api.h"
 #include "nx_api.h"
 #ifdef NX_ENABLE_DHCP
 #include "nxd_dhcp_client.h"
 #endif
 
-#include "pin_mux.h"
 #include "fsl_iomuxc.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

@@ -12,6 +12,8 @@
 #define UX_SLAVE_REQUEST_DATA_MAX_LENGTH         (1024 * 2)
 #define UX_HOST_CLASS_STORAGE_MEMORY_BUFFER_SIZE (1024 * 8)
 
+#define UX_MAX_DEVICES  2
+
 /*
  * Defined, this value represents the maximum number of Ed,
  * regular TDs and Isochronous TDs. These values depend on
@@ -19,7 +21,7 @@
  * constraint environments.
  */
 #define UX_MAX_ED     80
-#define UX_MAX_TD     128
+#define UX_MAX_TD     64
 #define UX_MAX_ISO_TD 1
 
 /*
@@ -76,5 +78,10 @@
 
 /* Defined, this value represents the size of the log pool. */
 #define UX_DEBUG_LOG_SIZE (1024 * 16)
+
+extern void usbphy_set_highspeed_mode(void *regs, int on_off);
+
+#define UX_HCD_EHCI_EXT_USBPHY_HIGHSPEED_MODE_SET(hcd_ehci, on_off)             \
+    usbphy_set_highspeed_mode(hcd_ehci, on_off)
 
 #endif

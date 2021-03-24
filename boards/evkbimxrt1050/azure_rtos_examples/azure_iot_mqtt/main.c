@@ -9,9 +9,13 @@
 /*                                                                        */
 /**************************************************************************/
 
-#include "board.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
+#include "fsl_trng.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
+
 #include "nx_api.h"
 #ifndef SAMPLE_DHCP_DISABLE
 #include "nxd_dhcp_client.h"
@@ -19,9 +23,7 @@
 #include "nxd_dns.h"
 #include "nx_secure_tls_api.h"
 
-#include "pin_mux.h"
 #include "fsl_iomuxc.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -127,6 +129,8 @@ extern VOID sample_entry(NX_IP *ip_ptr, NX_PACKET_POOL *pool_ptr, NX_DNS *dns_pt
 
 /* Include the platform IP driver. */
 extern VOID nx_driver_imx(NX_IP_DRIVER *driver_req_ptr);
+
+uint32_t get_seed(void);
 
 /*******************************************************************************
  * Code
@@ -280,8 +284,8 @@ static void sample_helper_thread_entry(ULONG parameter)
     ULONG network_mask    = 0;
     ULONG gateway_address = 0;
 
-    /* Use time to init the seed. FIXME: use real rand.  */
-    srand(tx_time_get());
+    /* Use a random number to init the seed.  */
+    srand(get_seed());
 
 #ifndef AZRTOS_IOT_CLIENT_DHCP_DISABLE
     dhcp_wait();
@@ -382,4 +386,20 @@ static UINT dns_create()
            (dns_server_address[0] >> 16 & 0xFF), (dns_server_address[0] >> 8 & 0xFF), (dns_server_address[0] & 0xFF));
 
     return (NX_SUCCESS);
+}
+
+uint32_t get_seed(void)
+{
+    uint32_t random_val;
+    trng_config_t trngConfig;
+
+    TRNG_GetDefaultConfig(&trngConfig);
+    trngConfig.sampleMode = kTRNG_SampleModeVonNeumann;
+    TRNG_Init(TRNG, &trngConfig);
+
+    delay();
+
+    TRNG_GetRandomData(TRNG, (void *)&random_val, sizeof(random_val));
+
+    return random_val;
 }

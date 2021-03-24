@@ -7,30 +7,6 @@
 #ifndef TX_USER_H
 #define TX_USER_H
 
-#if defined (__MCUXPRESSO)
-
-extern char _vStackBase;
-extern char _pvHeapLimit;
-
-#define GET_UNUSED_MEM_SIZE() (&_vStackBase - &_pvHeapLimit)
-
-#elif defined(__ICCARM__)
-
-#pragma section="HEAP"
-#pragma section="CSTACK"
-
-#define _StackBase ((unsigned int)__sfb("CSTACK"))
-#define _HeapLimit ((unsigned int)__sfe("HEAP"))
-#define GET_UNUSED_MEM_SIZE() (_StackBase - _HeapLimit)
-
-#else
-
-extern char __StackLimit;
-extern char __HeapLimit;
-
-#define GET_UNUSED_MEM_SIZE() (&__StackLimit - &__HeapLimit)
-
-#endif
 
 #define TX_ENABLE_FPU_SUPPORT
 

@@ -1,144 +1,14 @@
 Overview
 ========
-The wolfssl_benchmark demo application demonstrates cryptographic acceleration on supported platforms that have MMCAU,
-LTC or similar accelerator peripheral. The hardware acceleration is enabled by default, and can be configured at build time in
-the middleware/wolfssl/wolfssl/wolfcrypt/settings.h header file. FREESCALE_USE_MMCAU, FREESCALE_USE_LTC, FREESCALE_USE_LPC_AES
-and FREESCALE_USE_LPC_SHA macros can be used to compile the wolfssl_benchmark project source code with support for
-the Freescale hardware cryptographic accelerator, or when none of these macros is defined, all algorithms are implemented in software only.
+The WolfSSL benchmark program performs cryptographic algorithm prints results to the
+terminal.
 
-Prepare the Demo
-================
-Connect a serial cable from the debug UART port of the board to the PC. Start TeraTerm
-(http://ttssh2.osdn.jp) and make a connection to the virtual serial port.
 
-1. Start TeraTerm.
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
-2. New connection -> Serial.
-
-3. Set the appropriate COMx port (where x is port number) in the port context menu. The number is provided by the operation
-   system, and could be different from computer to computer. Select the COM number related to virtual
-   serial port. Confirm the selected port by clicking the "OK" button.
-
-4. Set following connection parameters in menu Setup -> Serial port
-        Baud rate:    115200
-        Data:         8
-        Parity:       none
-        Stop:         1
-        Flow control: none
-
-5.  Confirm selected parameters by clicking the "OK" button.
-
-Running the demo
-================
-The demo prints the system clock frequency and actual hardware acceleration configuration to the terminal,
-then executes cryptographic algorithms. The results are printed to the terminal.
-Actual result times may vary significantly depending on the device, its available hardware acceleration modules,
-system clock frequency and the compiler used.
-Below are example outputs produced on three different development boards.
-
-FRDM-K64F:
-
-fsys=120000000
-Using following implementations:
-  SHA: MMCAU HW accelerated
-  AES: MMCAU HW accelerated
-  AES GCM: MMCAU HW accelerated
-  DES: MMCAU HW accelerated
-  Asymmetric encryption: Software implementation
-
-RNG      25 kB took 0.033 seconds,    0.736 MB/s
-AES enc  25 kB took 0.014 seconds,    1.732 MB/s
-AES dec  25 kB took 0.014 seconds,    1.708 MB/s
-AES-GCM  25 kB took 0.144 seconds,    0.170 MB/s
-AES-CTR  25 kB took 0.011 seconds,    2.283 MB/s
-AES-CCM  25 kB took 0.023 seconds,    1.064 MB/s
-3DES     25 kB took 0.032 seconds,    0.756 MB/s
-
-MD5      25 kB took 0.004 seconds,    5.865 MB/s
-SHA      25 kB took 0.007 seconds,    3.434 MB/s
-SHA-256  25 kB took 0.010 seconds,    2.357 MB/s
-
-RSA 2048 encryption took 127.712 milliseconds, avg over 1 iterations
-RSA 2048 decryption took 2121.931 milliseconds, avg over 1 iterations
-DH  2048 key generation  954.829 milliseconds, avg over 1 iterations
-DH  2048 key agreement   959.273 milliseconds, avg over 1 iterations
-
-ECC  256 key generation  419.483 milliseconds, avg over 5 iterations
-EC-DHE   key agreement   417.120 milliseconds, avg over 5 iterations
-EC-DSA   sign   time     424.719 milliseconds, avg over 5 iterations
-EC-DSA   verify time     835.282 milliseconds, avg over 5 iterations
-
-FRDM-KL81Z:
-
-fsys=72000000
-Using following implementations:
-  SHA: LTC HW accelerated
-  AES: LTC HW accelerated
-  AES GCM: LTC HW accelerated
-  DES: LTC HW accelerated
-  Asymmetric encryption: LTC HW accelerated
-
-RNG      25 kB took 0.054 seconds,    0.455 MB/s
-AES enc  25 kB took 0.010 seconds,    2.476 MB/s
-AES dec  25 kB took 0.010 seconds,    2.469 MB/s
-AES-GCM  25 kB took 0.010 seconds,    2.348 MB/s
-AES-CTR  25 kB took 0.011 seconds,    2.300 MB/s
-AES-CCM  25 kB took 0.011 seconds,    2.227 MB/s
-3DES     25 kB took 0.010 seconds,    2.465 MB/s
-
-MD5      25 kB took 0.011 seconds,    2.211 MB/s
-SHA      25 kB took 0.008 seconds,    3.167 MB/s
-SHA-256  25 kB took 0.008 seconds,    3.084 MB/s
-SHA-512  25 kB took 0.249 seconds,    0.098 MB/s
-
-RSA 2048 encryption took 30.046 milliseconds, avg over 1 iterations
-RSA 2048 decryption took 285.885 milliseconds, avg over 1 iterations
-DH  2048 key generation  122.453 milliseconds, avg over 1 iterations
-DH  2048 key agreement   127.467 milliseconds, avg over 1 iterations
-
-ECC  256 key generation  37.692 milliseconds, avg over 5 iterations
-EC-DHE   key agreement   32.212 milliseconds, avg over 5 iterations
-EC-DSA   sign   time     44.746 milliseconds, avg over 5 iterations
-EC-DSA   verify time     71.144 milliseconds, avg over 5 iterations
-
-CURVE25519 256 key generation 30.269 milliseconds, avg over 5 iterations
-CURVE25519 key agreement      30.157 milliseconds, avg over 5 iterations
-
-ED25519  key generation  32.269 milliseconds, avg over 5 iterations
-ED25519  sign   time     44.990 milliseconds, avg over 5 iterations
-ED25519  verify time     68.437 milliseconds, avg over 5 iterations
-
-LPCXpresso54S608:
-
-fsys=96000000
-Using following implementations:
-  SHA: LPC HW accelerated
-  AES: LPC HW accelerated
-  AES GCM: LPC HW accelerated
-  DES: Software implementation
-  Asymmetric encryption: Software implementation
-
-RNG      25 kB took 0.022 seconds,    1.100 MB/s
-AES enc  25 kB took 0.005 seconds,    5.226 MB/s
-AES dec  25 kB took 0.005 seconds,    5.219 MB/s
-AES-GCM  25 kB took 0.005 seconds,    4.846 MB/s
-AES-CTR  25 kB took 0.005 seconds,    5.219 MB/s
-AES-CCM  25 kB took 0.033 seconds,    0.736 MB/s
-3DES     25 kB took 0.305 seconds,    0.080 MB/s
-
-MD5      25 kB took 0.008 seconds,    3.251 MB/s
-SHA      25 kB took 0.001 seconds,   21.602 MB/s
-SHA-256  25 kB took 0.001 seconds,   21.544 MB/s
-
-RSA 2048 encryption took 160.586 milliseconds, avg over 1 iterations
-RSA 2048 decryption took 2698.775 milliseconds, avg over 1 iterations
-DH  2048 key generation  1199.249 milliseconds, avg over 1 iterations
-DH  2048 key agreement   1205.080 milliseconds, avg over 1 iterations
-
-ECC  256 key generation  557.645 milliseconds, avg over 5 iterations
-EC-DHE   key agreement   554.486 milliseconds, avg over 5 iterations
-EC-DSA   sign   time     564.837 milliseconds, avg over 5 iterations
-EC-DSA   verify time     1109.984 milliseconds, avg over 5 iterations
 Hardware requirements
 =====================
 - Mini/micro USB cable
@@ -148,11 +18,77 @@ Hardware requirements
 Board settings
 ==============
 No special settings are required.
+Prepare the Demo
+================
+Connect a serial cable from the debug UART port of the target board to the PC. Start TeraTerm
+(http://ttssh2.osdn.jp) and make a connection to the virtual serial port.
 
-Toolchain supported
-===================
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.3.1
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.26
+1. Start TeraTerm.
 
+2. New connection -> Serial.
+
+3. Set the appropriate COMx port (where x is port number) in port context menu. The number is provided by the operating
+   system, and could be different from computer to computer. Select the COM number related to the virtual
+   serial port. Confirm the selected port by clicking the "OK" button.
+
+4. Set following connection parameters in menu Setup -> Serial port.
+        Baud rate:    115200
+        Data:         8
+        Parity:       none
+        Stop:         1
+        Flow control: none
+
+5.  Confirm the selected parameters by clicking the "OK" button.
+
+Running the demo
+================
+When the demo runs successfully, the terminal will display similar information like the following:
+
+wolfCrypt Benchmark (block bytes 1024, min 1.0 sec each)
+------------------------------------------------------------------------------
+ wolfSSL version 4.6.0
+------------------------------------------------------------------------------
+wolfCrypt Benchmark (block bytes 1024, min 1.0 sec each)
+RNG                100 KB took 1.167 seconds,   85.690 KB/s
+AES-128-CBC-enc     66 MB took 1.001 seconds,   65.925 MB/s
+AES-128-CBC-dec     66 MB took 1.000 seconds,   65.942 MB/s
+AES-192-CBC-enc      5 MB took 1.004 seconds,    4.620 MB/s
+AES-192-CBC-dec      5 MB took 1.001 seconds,    4.585 MB/s
+AES-256-CBC-enc      4 MB took 1.005 seconds,    4.203 MB/s
+AES-256-CBC-dec      4 MB took 1.002 seconds,    4.191 MB/s
+AES-128-GCM-enc      2 MB took 1.010 seconds,    2.441 MB/s
+AES-128-GCM-dec      2 MB took 1.003 seconds,    2.434 MB/s
+AES-192-GCM-enc      2 MB took 1.012 seconds,    1.640 MB/s
+AES-192-GCM-dec      2 MB took 1.013 seconds,    1.639 MB/s
+AES-256-GCM-enc      2 MB took 1.000 seconds,    1.563 MB/s
+AES-256-GCM-dec      2 MB took 1.015 seconds,    1.563 MB/s
+AES-128-ECB-enc      8 MB took 1.000 seconds,    7.798 MB/s
+AES-128-ECB-dec     12 MB took 1.000 seconds,   11.961 MB/s
+AES-192-ECB-enc      4 MB took 1.001 seconds,    3.664 MB/s
+AES-192-ECB-dec      4 MB took 1.000 seconds,    3.781 MB/s
+AES-256-ECB-enc      3 MB took 1.000 seconds,    3.420 MB/s
+AES-256-ECB-dec      4 MB took 1.000 seconds,    3.617 MB/s
+CHACHA               5 MB took 1.000 seconds,    5.420 MB/s
+MD5                 34 MB took 1.000 seconds,   33.594 MB/s
+SHA                 87 MB took 1.000 seconds,   86.768 MB/s
+SHA-256            102 MB took 1.000 seconds,  102.319 MB/s
+SHA-512              1 MB took 1.000 seconds,    1.440 MB/s
+SHA3-224             7 MB took 1.002 seconds,    6.749 MB/s
+SHA3-256             6 MB took 1.001 seconds,    6.366 MB/s
+SHA3-384             5 MB took 1.000 seconds,    4.907 MB/s
+SHA3-512             3 MB took 1.003 seconds,    3.432 MB/s
+HMAC-MD5            33 MB took 1.000 seconds,   33.228 MB/s
+HMAC-SHA            85 MB took 1.000 seconds,   84.668 MB/s
+HMAC-SHA256         99 MB took 1.000 seconds,   99.487 MB/s
+HMAC-SHA512          1 MB took 1.011 seconds,    1.401 MB/s
+PBKDF2               5 KB took 1.001 seconds,    4.527 KB/s
+RSA     2048 public        222 ops took 1.008 sec, avg 4.541 ms, 220.238 ops/sec
+RSA     2048 private         4 ops took 1.327 sec, avg 331.750 ms, 3.014 ops/sec
+ECC      256 key gen       601 ops took 1.001 sec, avg 1.666 ms, 600.400 ops/sec
+ECDHE    256 agree         272 ops took 1.002 sec, avg 3.684 ms, 271.457 ops/sec
+ECDSA    256 sign          404 ops took 1.000 sec, avg 2.475 ms, 404.000 ops/sec
+ECDSA    256 verify        194 ops took 1.000 sec, avg 5.155 ms, 194.000 ops/sec
+ED     25519 key gen        14 ops took 1.001 sec, avg 71.500 ms, 13.986 ops/sec
+ED     25519 sign           14 ops took 1.025 sec, avg 73.214 ms, 13.659 ops/sec
+ED     25519 verify          8 ops took 1.204 sec, avg 150.500 ms, 6.645 ops/sec
+Benchmark complete

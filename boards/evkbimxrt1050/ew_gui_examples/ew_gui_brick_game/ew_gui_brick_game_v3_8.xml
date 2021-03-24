@@ -183,84 +183,84 @@
       <files mask="evkbimxrt1050_flexspi_nor.ini"/>
     </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/GeneratedCode" project_relative_path="EmbeddedWizard/GeneratedCode" type="src">
-      <files mask="Application.c"/>
-      <files mask="Templates.c"/>
       <files mask="Effects.c"/>
+      <files mask="Application.c"/>
       <files mask="Resources.c"/>
       <files mask="Core.c"/>
-      <files mask="Views.c"/>
-      <files mask="BrickGame.c"/>
+      <files mask="Templates.c"/>
       <files mask="Graphics.c"/>
+      <files mask="BrickGame.c"/>
+      <files mask="Views.c"/>
     </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/GeneratedCode" project_relative_path="EmbeddedWizard/GeneratedCode" type="c_include">
-      <files mask="_ViewsRectangle.h"/>
-      <files mask="_CoreKeyPressHandler.h"/>
-      <files mask="_CoreSimpleTouchHandler.h"/>
-      <files mask="Resources.h"/>
-      <files mask="_BrickGameLcdNumbers.h"/>
-      <files mask="_ViewsImage.h"/>
-      <files mask="_CoreLayoutContext.h"/>
-      <files mask="ewlocale.h"/>
-      <files mask="_CoreLayoutQuadContext.h"/>
-      <files mask="Templates.h"/>
-      <files mask="_CoreEvent.h"/>
-      <files mask="Views.h"/>
-      <files mask="_BrickGameLcdDisplay.h"/>
-      <files mask="Core.h"/>
-      <files mask="_EffectsEffectTimerClass.h"/>
-      <files mask="_CoreView.h"/>
-      <files mask="_BrickGameBricks.h"/>
-      <files mask="_CoreTaskQueue.h"/>
-      <files mask="_TemplatesDeviceClass.h"/>
-      <files mask="_BrickGameStars.h"/>
-      <files mask="_BrickGameDataClass.h"/>
-      <files mask="_BrickGameBallPosition.h"/>
-      <files mask="_BrickGameBrickGame.h"/>
-      <files mask="_CoreCursorEvent.h"/>
-      <files mask="_ViewsText.h"/>
-      <files mask="_CoreRoot.h"/>
-      <files mask="_CoreOutline.h"/>
-      <files mask="_BrickGameLandscape.h"/>
-      <files mask="_CoreModalContext.h"/>
-      <files mask="Application.h"/>
-      <files mask="_ApplicationApplication.h"/>
-      <files mask="_BrickGameDescrFont.h"/>
       <files mask="_CoreQuadView.h"/>
-      <files mask="_CoreDragEvent.h"/>
-      <files mask="_CoreCursorGrabEvent.h"/>
+      <files mask="_BrickGameStars.h"/>
+      <files mask="_ApplicationApplication.h"/>
+      <files mask="_ViewsText.h"/>
+      <files mask="_BrickGameDescrFont.h"/>
+      <files mask="_BrickGameLcdDisplay.h"/>
       <files mask="_BrickGamePaddle.h"/>
-      <files mask="_GraphicsCanvas.h"/>
-      <files mask="Effects.h"/>
-      <files mask="Graphics.h"/>
-      <files mask="_CoreKeyEvent.h"/>
-      <files mask="_CoreCursorHit.h"/>
       <files mask="_ResourcesFont.h"/>
+      <files mask="Resources.h"/>
+      <files mask="_BrickGameDataClass.h"/>
+      <files mask="_CoreKeyEvent.h"/>
+      <files mask="_BrickGameLandscape.h"/>
+      <files mask="_ViewsRectangle.h"/>
       <files mask="_CoreTask.h"/>
-      <files mask="_CoreDialogContext.h"/>
+      <files mask="_CoreTaskQueue.h"/>
       <files mask="_CoreTimer.h"/>
-      <files mask="_ResourcesBitmap.h"/>
-      <files mask="BrickGame.h"/>
       <files mask="_CoreGroup.h"/>
-      <files mask="_BrickGameBrickRow.h"/>
+      <files mask="_CoreOutline.h"/>
+      <files mask="_BrickGameBricks.h"/>
+      <files mask="_CoreCursorEvent.h"/>
+      <files mask="Core.h"/>
+      <files mask="_CoreRoot.h"/>
+      <files mask="_TemplatesDeviceClass.h"/>
+      <files mask="_CoreLayoutContext.h"/>
+      <files mask="_CoreEvent.h"/>
+      <files mask="_EffectsEffectTimerClass.h"/>
+      <files mask="_CoreModalContext.h"/>
+      <files mask="_BrickGameBallPosition.h"/>
       <files mask="_CoreResource.h"/>
+      <files mask="_CoreCursorGrabEvent.h"/>
+      <files mask="_ResourcesBitmap.h"/>
+      <files mask="_CoreCursorHit.h"/>
+      <files mask="Application.h"/>
+      <files mask="Effects.h"/>
+      <files mask="Templates.h"/>
       <files mask="_CoreRectView.h"/>
+      <files mask="_BrickGameLcdNumbers.h"/>
       <files mask="_BrickGameBall.h"/>
-    </source>
-    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/EmbeddedWizard" project_relative_path="EmbeddedWizard/Project" type="other" exclude="true">
-      <files mask="Application.ewu"/>
-      <files mask="BrickGame.ews"/>
-      <files mask="BrickGame.ewu"/>
+      <files mask="_BrickGameBrickGame.h"/>
+      <files mask="_ViewsImage.h"/>
+      <files mask="ewlocale.h"/>
+      <files mask="_CoreDialogContext.h"/>
+      <files mask="_GraphicsCanvas.h"/>
+      <files mask="_CoreDragEvent.h"/>
+      <files mask="_BrickGameBrickRow.h"/>
+      <files mask="Graphics.h"/>
+      <files mask="Views.h"/>
+      <files mask="_CoreKeyPressHandler.h"/>
+      <files mask="_CoreView.h"/>
+      <files mask="BrickGame.h"/>
+      <files mask="_CoreSimpleTouchHandler.h"/>
+      <files mask="_CoreLayoutQuadContext.h"/>
     </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/EmbeddedWizard" project_relative_path="EmbeddedWizard/Project" type="project" exclude="true">
       <files mask="BrickGame.ewp"/>
     </source>
+    <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/EmbeddedWizard" project_relative_path="EmbeddedWizard/Project" type="other" exclude="true">
+      <files mask="BrickGame.ews"/>
+      <files mask="Application.ewu"/>
+      <files mask="BrickGame.ewu"/>
+    </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/EmbeddedWizard/Res" project_relative_path="EmbeddedWizard/Project/Res" type="image" exclude="true">
-      <files mask="Ball.png"/>
       <files mask="LcdNumbers.png"/>
-      <files mask="Bricks.png"/>
-      <files mask="Stars.png"/>
+      <files mask="Ball.png"/>
       <files mask="Landscape.png"/>
+      <files mask="Bricks.png"/>
       <files mask="Paddle.png"/>
+      <files mask="Stars.png"/>
     </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/Simulation" project_relative_path="EmbeddedWizard/Simulation" type="src" exclude="true">
       <files mask="index.html"/>
@@ -272,28 +272,28 @@
       <files mask="emwi_compr_9_30.js"/>
     </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/Simulation/code" project_relative_path="EmbeddedWizard/Simulation/code" type="script" exclude="true">
-      <files mask="Application.js"/>
-      <files mask="Effects.js"/>
-      <files mask="Graphics.js"/>
-      <files mask="Core.js"/>
-      <files mask="_project.js"/>
-      <files mask="Templates.js"/>
       <files mask="BrickGame.js"/>
+      <files mask="Graphics.js"/>
+      <files mask="Templates.js"/>
+      <files mask="Application.js"/>
+      <files mask="_project.js"/>
       <files mask="Resources.js"/>
+      <files mask="Effects.js"/>
+      <files mask="Core.js"/>
       <files mask="Views.js"/>
     </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/Simulation/res" project_relative_path="EmbeddedWizard/Simulation/res" type="script" exclude="true">
-      <files mask="SimulationIcon.js"/>
       <files mask="BrickGameDescrFont.js"/>
+      <files mask="SimulationIcon.js"/>
       <files mask="SimulationFont.js"/>
     </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/Simulation/res" project_relative_path="EmbeddedWizard/Simulation/res" type="image" exclude="true">
-      <files mask="BrickGamePaddle.png"/>
-      <files mask="BrickGameLandscape.png"/>
-      <files mask="BrickGameBall.png"/>
-      <files mask="BrickGameLcdNumbers.png"/>
-      <files mask="BrickGameBricks.png"/>
       <files mask="embedded-wizard-logo.png"/>
+      <files mask="BrickGameLcdNumbers.png"/>
+      <files mask="BrickGameLandscape.png"/>
+      <files mask="BrickGamePaddle.png"/>
+      <files mask="BrickGameBall.png"/>
+      <files mask="BrickGameBricks.png"/>
       <files mask="BrickGameStars.png"/>
     </source>
     <source path="boards/evkbimxrt1050/ew_gui_examples/ew_gui_brick_game/Simulation/res" project_relative_path="EmbeddedWizard/Simulation/res" type="image" exclude="true">

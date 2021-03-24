@@ -2116,16 +2116,10 @@
     <group>
       <name>GeneratedCode</name>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Application.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Templates.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/BezierClock.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../GeneratedCode/Effects.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Application.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/Resources.c</name>
@@ -2134,7 +2128,7 @@
         <name>$PROJ_DIR$/../GeneratedCode/Core.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Views.c</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Templates.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/WidgetSet.c</name>
@@ -2143,154 +2137,88 @@
         <name>$PROJ_DIR$/../GeneratedCode/Graphics.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsRectangle.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/BezierClock.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetRadioButtonConfig.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Views.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyPressHandler.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsPointEffect.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreSimpleTouchHandler.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetPushButtonConfig.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Resources.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockOrange.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetPushButton.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsFloatEffect.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsImage.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutContext.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreQuadView.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_ViewsStrokePath.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsArcPath.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockFontXXL.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockDark.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_ApplicationApplication.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsFillPath.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockBackground.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockSettingsScreen.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockTimerWheel.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetWidgetConfig.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/ewlocale.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutQuadContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsTransition.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Templates.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_TemplatesPickerControl.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Views.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/BezierClock.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Core.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockDeviceClass.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockBezierClock.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsPositionFader.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffectTimerClass.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreView.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockBackgroundPreview.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreTaskQueue.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/WidgetSet.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreVerticalList.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockClockScreen.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsVisibilityFader.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockBubble.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsFader.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsTimingList.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsInt32Effect.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffect.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_TemplatesRotaryKnob.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorEvent.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockTimePicker.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_ViewsText.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreRoot.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockOrange.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockTimerScreen.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockStyleScreen.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockClockScreen.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockBezierClock.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockFontL.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffect.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockDark.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesFont.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Resources.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsSlideTransition.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetPushButton.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsRectangle.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreTask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetPushButtonConfig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreSlideTouchHandler.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreTaskQueue.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockSettingsScreen.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreTimer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreGroup.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_ResourcesNavigationIconsMedium.h</name>
@@ -2299,127 +2227,199 @@
         <name>$PROJ_DIR$/../GeneratedCode/_CoreOutline.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreModalContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Application.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesWhiteBitmap.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsShowHideTransition.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ApplicationApplication.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockFontL.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CorePropertyObserver.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreQuadView.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreDragEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorGrabEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsCanvas.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreLineView.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsLine.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesWhiteBitmapStripe.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Effects.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/Graphics.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockTimePicker.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreRotateTouchHandler.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyEvent.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreTime.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockStyleScreen.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorHit.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsPath.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_BezierClockDatePicker.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreSlideTouchHandler.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorEvent.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockFontXXL.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/Core.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesFont.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockDigit.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreTask.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetRadioButton.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutLineContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreDialogContext.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreTimer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesBitmap.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsPath.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_CoreGroup.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsFloatEffect.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_BezierClockBlue.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_EffectsSlideTransition.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/BezierClock.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../GeneratedCode/_ViewsFrame.h</name>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsTransition.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreRoot.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreVerticalList.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockBubble.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CorePropertyObserver.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutContext.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsArcPath.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockTimerWheel.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsEffectTimerClass.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreModalContext.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesWhiteBitmap.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsTimingList.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreRotateTouchHandler.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreResource.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorGrabEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesBitmap.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreTime.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsPointEffect.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ResourcesWhiteBitmapStripe.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_TemplatesPickerControl.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreCursorHit.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Application.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockTimerScreen.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Effects.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetRadioButton.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Templates.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../GeneratedCode/_CoreRectView.h</name>
       </file>
       <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutLineContext.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsFader.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsLine.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../GeneratedCode/_EffectsFaderTask.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockDeviceClass.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsInt32Effect.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockBackgroundPreview.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetRadioButtonConfig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/WidgetSet.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsImage.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockBackground.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/ewlocale.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreDialogContext.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_GraphicsCanvas.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsPositionFader.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsShowHideTransition.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreDragEvent.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Graphics.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/Views.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreKeyPressHandler.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_BezierClockDigit.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreView.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsFrame.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_EffectsVisibilityFader.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_WidgetSetWidgetConfig.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreSimpleTouchHandler.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreLineView.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_ViewsFillPath.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_TemplatesRotaryKnob.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../GeneratedCode/_CoreLayoutQuadContext.h</name>
       </file>
     </group>
     <group>
@@ -2427,10 +2427,10 @@
       <group>
         <name>RT</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.c</name>
@@ -2442,7 +2442,7 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.c</name>
@@ -2451,10 +2451,13 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_touch.h</name>
@@ -2463,16 +2466,13 @@
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_clock.h</name>
         </file>
         <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_console.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_display.h</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_inout.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_system.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_event.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/TargetSpecific/RT/ew_bsp_graphics.h</name>
         </file>
       </group>
     </group>
@@ -2489,22 +2489,13 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdefs.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</name>
-          </file>
-          <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextfnt.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxres.h</name>
           </file>
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxlinks.h</name>
@@ -2513,10 +2504,19 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxtasks.h</name>
           </file>
           <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextgfx.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxdriver.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfxcore.h</name>
+          </file>
+          <file>
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextpxl_RGB565.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewgfx.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RGB565/ewextbmp.h</name>
           </file>
         </group>
         <group>
@@ -2525,10 +2525,10 @@
             <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewrte.h</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewrte.h</name>
+            <name>$PROJ_DIR$/../../../../../middleware/EmbeddedWizard/PlatformPackage/RT/RTE/ewextrte.h</name>
           </file>
         </group>
       </group>

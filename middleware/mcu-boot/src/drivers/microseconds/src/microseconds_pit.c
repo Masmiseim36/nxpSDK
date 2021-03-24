@@ -11,10 +11,9 @@
  *
  * Notes: The driver configure PIT as lifetime timer
  */
-#include <stdarg.h>
-
-#include "bootloader_common.h"
 #include "microseconds.h"
+#include <stdarg.h>
+#include "bootloader_common.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
@@ -23,8 +22,6 @@
 // Below MACROs are defined in order to keep this driver compabtile among all targets.
 #if defined(PIT0)
 #define PIT PIT0
-#elif defined(PIT1)
-#define PIT PIT1
 #endif
 
 enum

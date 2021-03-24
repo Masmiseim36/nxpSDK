@@ -5,9 +5,10 @@ This example illustrates USBX Host Mass Storage.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -37,7 +38,7 @@ After writing the program to the flash of the target board,
 press the reset button on your board to start the demo.
 The serial port will output:
 
-USBX device mass storage example
+USBX host mass storage example
 
 Then, connect a U-disk to the USB device port of the board.
 The example will scan the disk and dump the file name to
@@ -47,6 +48,3 @@ For example:
 
 Find File: 1234.text
 Find File: test.text
-Customization options
-=====================
-

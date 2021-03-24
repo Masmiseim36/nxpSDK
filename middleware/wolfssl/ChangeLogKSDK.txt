@@ -1,8 +1,10 @@
 /*!
 @page middleware_log Middleware Change Log
- 
-@section wolfSSL wolfSSL
-  The current version is 3.9.8_rev3, based on Release 3.9.8 of wolfSSL.
+@section WolfSSL for KSDK
+  The Current version is 4.6.0.
+
+  - 4.6.0
+      - Add support for WolfSSL into SDK
 
   - 3.9.8_rev3
     - New features:

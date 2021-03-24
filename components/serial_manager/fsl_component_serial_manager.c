@@ -815,21 +815,11 @@ void SerialManager_RxCallback(void *callbackParam,
 
 /*
  * This function is used for perdiodic check if the transfer is complete, and will be called in blocking transfer at
- * non-blocking mode. The perdiodic unit is ms and default value is define by
- * SERIAL_MANAGER_WRITE_TIME_DELAY_DEFAULT_VALUE/SERIAL_MANAGER_READ_TIME_DELAY_DEFAULT_VALUE. The function
- * SerialManager_WriteTimeDelay()/SerialManager_ReadTimeDelay() is a weak function, so it could be re-implemented by
- * upper layer.
+ * non-blocking mode. The predic unit is ms and default value is define by SERIAL_MANAGER_TIME_DELAY_DEFAULT_VALUE. The
+ * function SerialManager_TimeDelay() is a weak function, so it could be re-implemented by upper layer.
  */
-__WEAK_FUNC void SerialManager_WriteTimeDelay(uint32_t ms);
-__WEAK_FUNC void SerialManager_WriteTimeDelay(uint32_t ms)
-{
-#if defined(OSA_USED)
-    OSA_TimeDelay(ms);
-#endif
-}
-
-__WEAK_FUNC void SerialManager_ReadTimeDelay(uint32_t ms);
-__WEAK_FUNC void SerialManager_ReadTimeDelay(uint32_t ms)
+__WEAK_FUNC void SerialManager_TimeDelay(uint32_t ms);
+__WEAK_FUNC void SerialManager_TimeDelay(uint32_t ms)
 {
 #if defined(OSA_USED)
     OSA_TimeDelay(ms);
@@ -930,7 +920,7 @@ static serial_manager_status_t SerialManager_Write(serial_write_handle_t writeHa
             }
             else
             {
-                SerialManager_WriteTimeDelay(SERIAL_MANAGER_WRITE_TIME_DELAY_DEFAULT_VALUE);
+                SerialManager_TimeDelay(SERIAL_MANAGER_TIME_DELAY_DEFAULT_VALUE);
             }
         }
     }
@@ -1029,7 +1019,6 @@ static serial_manager_status_t SerialManager_Read(serial_read_handle_t readHandl
         {
             while (serialReadHandle->transfer.length > serialReadHandle->transfer.soFar)
             {
-                SerialManager_ReadTimeDelay(SERIAL_MANAGER_READ_TIME_DELAY_DEFAULT_VALUE);
             }
         }
     }

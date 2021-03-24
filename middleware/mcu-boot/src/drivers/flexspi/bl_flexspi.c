@@ -1166,7 +1166,7 @@ status_t flexspi_command_xfer(uint32_t instance, flexspi_xfer_t *xfer)
                     status = kStatus_FLEXSPI_InvalidSequence;
                     break;
                 case kFlexSpiIpCmdError_SequenceExecutionTimeout:
-                    status = kStatus_FLEXSPI_DeviceTimeout;
+                    status = kStatus_FLEXSPI_SequenceExecutionTimeout;
                     break;
             }
         }

@@ -77,10 +77,6 @@ FMSTR_BOOL FMSTR_Init(void)
 {
     FMSTR_BOOL ok = FMSTR_TRUE;
 
-#if FMSTR_DEBUG_LEVEL >= 1
-    FMSTR_DEBUG_PRINTF("FMSTR Init begins\n");
-#endif
-
     /* Check the transport interface validity */
     FMSTR_ASSERT_RETURN(FMSTR_TRANSPORT.Init != NULL, FMSTR_FALSE);
     FMSTR_ASSERT_RETURN(FMSTR_TRANSPORT.Poll != NULL, FMSTR_FALSE);
@@ -154,10 +150,6 @@ FMSTR_BOOL FMSTR_Init(void)
             fmstr_grantedAccess = access; /* level not protected by a password is set by default */
         }
     }
-#endif
-
-#if FMSTR_DEBUG_LEVEL >= 1
-    FMSTR_DEBUG_PRINTF("FMSTR Init finished, ok=%d\n", (int)ok);
 #endif
 
     return ok;

@@ -15,24 +15,21 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Ram disk in SDRAM.
- *
- * if RAM_DISK_IN_SDRAM is set, SRAM_DTC will still be used
- * instead of BOARD_SDRAM, it will exceeds the size of SRAM_DTC
- */
-/* #define RAM_DISK_IN_SDRAM       1 */
-#if RAM_DISK_IN_SDRAM
-#define RAM_DISK_SIZE (1024 * 1024 * 24)
-#else
+#ifndef RAM_DISK_SIZE
 #define RAM_DISK_SIZE (1024 * 48)
 #endif
+
 #define RAM_DISK_LAST_LBA ((RAM_DISK_SIZE / 512) - 1)
 
 /* Define constants. */
 #define USB_DEVICE_INTERRUPT_PRIORITY (3U)
 
 #define DEMO_STACK_SIZE                    (4 * 1024)
+
+#ifndef USBX_MEMORY_SIZE
 #define USBX_MEMORY_SIZE                   (32 * 1024)
+#endif
+
 #define DEVICE_FRAMEWORK_LENGTH_FULL_SPEED 50
 
 /*******************************************************************************
@@ -44,12 +41,9 @@ FX_MEDIA ram_disk;
 UX_SLAVE_CLASS_STORAGE_PARAMETER storage_parameter;
 UX_SLAVE_CLASS_DFU_PARAMETER dfu_parameter;
 
-#if RAM_DISK_IN_SDRAM
-#pragma location = ".sdram_noinit"
+ULONG thread_stack[DEMO_STACK_SIZE / sizeof(ULONG)];
+
 CHAR ram_disk_memory[RAM_DISK_SIZE];
-#else
-CHAR *ram_disk_memory;
-#endif
 
 /* Buffer for FileX RAM media initialization. */
 unsigned char buffer[512];
@@ -159,25 +153,15 @@ int main(void)
 
 void tx_application_define(void *first_unused_memory)
 {
-    CHAR *stack_pointer;
-    CHAR *memory_pointer;
     UINT status;
 
-    /* Initialize the free memory pointer. */
-    stack_pointer = (CHAR *)first_unused_memory;
-
-    /* Initialize the RAM disk memory. */
-    memory_pointer = usb_memory;
+    UX_PARAMETER_NOT_USED(first_unused_memory);
 
     /* Initialize USBX Memory */
-    ux_system_initialize(memory_pointer, USBX_MEMORY_SIZE, UX_NULL, 0);
-
-#if !RAM_DISK_IN_SDRAM
-    ram_disk_memory = stack_pointer + USBX_MEMORY_SIZE;
-#endif
+    ux_system_initialize(usb_memory, USBX_MEMORY_SIZE, UX_NULL, 0);
 
     /* Reset RAM disk. */
-    _ux_utility_memory_set(ram_disk_memory, 0, RAM_DISK_SIZE);
+    ux_utility_memory_set(ram_disk_memory, 0, RAM_DISK_SIZE);
 
     /* Initialize FileX. */
     fx_system_initialize();
@@ -186,7 +170,7 @@ void tx_application_define(void *first_unused_memory)
      * The code below is required for installing the device portion of USBX.
      * In this demo, DFU is possible and we have a call back for state change.
      */
-    status = _ux_device_stack_initialize(device_framework_high_speed, DEVICE_FRAMEWORK_LENGTH_HIGH_SPEED,
+    status = ux_device_stack_initialize(device_framework_high_speed, DEVICE_FRAMEWORK_LENGTH_HIGH_SPEED,
                                          device_framework_full_speed, DEVICE_FRAMEWORK_LENGTH_FULL_SPEED,
                                          string_framework, STRING_FRAMEWORK_LENGTH, language_id_framework,
                                          LANGUAGE_ID_FRAMEWORK_LENGTH, UX_NULL);
@@ -211,13 +195,13 @@ void tx_application_define(void *first_unused_memory)
         demo_thread_media_flush;
 
     /* Initilize the device storage class. The class is connected with interface 0 on configuration 1. */
-    status = _ux_device_stack_class_register(_ux_system_slave_class_storage_name, _ux_device_class_storage_entry, 1, 0,
+    status = ux_device_stack_class_register(_ux_system_slave_class_storage_name, _ux_device_class_storage_entry, 1, 0,
                                              (VOID *)&storage_parameter);
     if (status != UX_SUCCESS)
         return;
 
     /* Create the main demo thread. */
-    tx_thread_create(&demo_thread, "tx demo", demo_thread_entry, 0, stack_pointer, DEMO_STACK_SIZE, 20, 20, 1,
+    tx_thread_create(&demo_thread, "tx demo", demo_thread_entry, 0, thread_stack, sizeof(thread_stack), 20, 20, 1,
                      TX_AUTO_START);
 
     return;

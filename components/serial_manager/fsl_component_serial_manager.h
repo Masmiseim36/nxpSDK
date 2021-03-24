@@ -80,14 +80,9 @@
 #endif
 #endif
 
-/*! @brief Set the default delay time in ms used by SerialManager_WriteTimeDelay(). */
-#ifndef SERIAL_MANAGER_WRITE_TIME_DELAY_DEFAULT_VALUE
-#define SERIAL_MANAGER_WRITE_TIME_DELAY_DEFAULT_VALUE (1U)
-#endif
-
-/*! @brief Set the default delay time in ms used by SerialManager_ReadTimeDelay(). */
-#ifndef SERIAL_MANAGER_READ_TIME_DELAY_DEFAULT_VALUE
-#define SERIAL_MANAGER_READ_TIME_DELAY_DEFAULT_VALUE (1U)
+/*! @brief Set the default delay time in ms used by SerialManager_TimeDelay(). */
+#ifndef SERIAL_MANAGER_TIME_DELAY_DEFAULT_VALUE
+#define SERIAL_MANAGER_TIME_DELAY_DEFAULT_VALUE (1U)
 #endif
 
 /*! @brief Enable or disable SerialManager_Task() handle RX data available notify */

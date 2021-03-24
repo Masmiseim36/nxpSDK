@@ -24,6 +24,7 @@
 #include "fsl_rtos_abstraction.h"
 #include "microseconds.h"
 #include "property.h"
+#include "smc.h"
 #include "vector_table_info.h"
 #if BL_FEATURE_CRC_CHECK
 #include "bl_app_crc_check.h"

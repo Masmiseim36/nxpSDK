@@ -182,17 +182,18 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>PRINTF_FLOAT_ENABLE=0</state>
-          <state>SCANF_FLOAT_ENABLE=0</state>
-          <state>PRINTF_ADVANCED_ENABLE=0</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SCANF_FLOAT_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MIMXRT</state>
           <state>UX_OTG_SUPPORT</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>UX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>NX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>FX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -321,26 +322,28 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
+          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/auto_ip</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/cloud</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/BSD</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dhcp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
@@ -362,16 +365,12 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/ports</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -539,6 +538,7 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>TX_ENABLE_FPU_SUPPORT</state>
         </option>
         <option>
           <name>AList</name>
@@ -833,9 +833,9 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/usbx/iar/libusbx.a</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/netxduo/iar/libnetxduo.a</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/filex/iar/libfilex.a</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/threadx/iar/libthreadx.a</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/netxduo/iar/libnetxduo.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1210,17 +1210,18 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>PRINTF_FLOAT_ENABLE=0</state>
-          <state>SCANF_FLOAT_ENABLE=0</state>
-          <state>PRINTF_ADVANCED_ENABLE=0</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SCANF_FLOAT_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MIMXRT</state>
           <state>UX_OTG_SUPPORT</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>UX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>NX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>FX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1349,26 +1350,28 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
+          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/auto_ip</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/cloud</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/BSD</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dhcp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
@@ -1390,16 +1393,12 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/ports</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1567,6 +1566,7 @@
           <name>ADefines</name>
           <state>DEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>TX_ENABLE_FPU_SUPPORT</state>
         </option>
         <option>
           <name>AList</name>
@@ -1861,9 +1861,9 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/usbx/iar/libusbx.a</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/netxduo/iar/libnetxduo.a</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/filex/iar/libfilex.a</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/threadx/iar/libthreadx.a</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/netxduo/iar/libnetxduo.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -2236,17 +2236,18 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>PRINTF_FLOAT_ENABLE=0</state>
-          <state>SCANF_FLOAT_ENABLE=0</state>
-          <state>PRINTF_ADVANCED_ENABLE=0</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SCANF_FLOAT_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MIMXRT</state>
           <state>UX_OTG_SUPPORT</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>UX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>NX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>FX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2375,26 +2376,28 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
+          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/auto_ip</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/cloud</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/BSD</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dhcp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
@@ -2416,16 +2419,12 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/ports</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2593,6 +2592,7 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>TX_ENABLE_FPU_SUPPORT</state>
         </option>
         <option>
           <name>AList</name>
@@ -2887,9 +2887,9 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/usbx/iar/libusbx.a</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/netxduo/iar/libnetxduo.a</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/filex/iar/libfilex.a</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/threadx/iar/libthreadx.a</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/netxduo/iar/libnetxduo.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -3264,17 +3264,18 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1064DVL6A</state>
+          <state>MIMXRT</state>
           <state>SDK_DEBUGCONSOLE_UART</state>
-          <state>PRINTF_FLOAT_ENABLE=0</state>
-          <state>SCANF_FLOAT_ENABLE=0</state>
-          <state>PRINTF_ADVANCED_ENABLE=0</state>
+          <state>PRINTF_FLOAT_ENABLE=1</state>
+          <state>SCANF_FLOAT_ENABLE=1</state>
+          <state>PRINTF_ADVANCED_ENABLE=1</state>
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
-          <state>MIMXRT</state>
           <state>UX_OTG_SUPPORT</state>
-          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
-          <state>FX_INCLUDE_USER_DEFINE_FILE</state>
           <state>UX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>NX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>FX_INCLUDE_USER_DEFINE_FILE</state>
+          <state>TX_INCLUDE_USER_DEFINE_FILE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3403,26 +3404,28 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/usb/phy</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
+          <state>$PROJ_DIR$/../../../xip</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/iar/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/auto_ip</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/cloud</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/BSD</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dhcp</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dns</state>
@@ -3444,16 +3447,12 @@
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/ports</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip</state>
-          <state>$PROJ_DIR$/../../../xip</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3621,6 +3620,7 @@
           <name>ADefines</name>
           <state>NDEBUG</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
+          <state>TX_ENABLE_FPU_SUPPORT</state>
         </option>
         <option>
           <name>AList</name>
@@ -3915,9 +3915,9 @@
         <option>
           <name>IlinkAdditionalLibs</name>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/usbx/iar/libusbx.a</state>
+          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/netxduo/iar/libnetxduo.a</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/filex/iar/libfilex.a</state>
           <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/threadx/iar/libthreadx.a</state>
-          <state>$PROJ_DIR$/../../../../../rtos/azure-rtos/binary/netxduo/iar/libnetxduo.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -4178,10 +4178,10 @@
       <name>$PROJ_DIR$/../tx_user.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../tx_initialize_low_level_iar.s</name>
+      <name>$PROJ_DIR$/../fx_user.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../fx_user.h</name>
+      <name>$PROJ_DIR$/../nx_user.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../ux_hcd_interrupt_handler.c</name>
@@ -4191,45 +4191,51 @@
     </file>
   </group>
   <group>
-    <name>drivers</name>
+    <name>doc</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../readme.txt</name>
     </file>
+  </group>
+  <group>
+    <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_iomuxc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpio.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/drivers/fsl_gpio.c</name>
     </file>
   </group>
   <group>
     <name>device</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/fsl_device_registers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/MIMXRT1064.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/MIMXRT1064_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/system_MIMXRT1064.c</name>
@@ -4241,6 +4247,12 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -4248,12 +4260,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/str/fsl_str.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/utilities/fsl_assert.c</name>
@@ -4264,37 +4270,37 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -4307,10 +4313,10 @@
   <group>
     <name>xip</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMXRT1064/xip/fsl_flexspi_nor_boot.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../xip/evkmimxrt1064_flexspi_nor_config.c</name>
@@ -4318,6 +4324,693 @@
     <file>
       <name>$PROJ_DIR$/../../../xip/evkmimxrt1064_flexspi_nor_config.h</name>
     </file>
+  </group>
+  <group>
+    <name>azure-rtos</name>
+    <group>
+      <name>usbx</name>
+      <group>
+        <name>common</name>
+        <group>
+          <name>core</name>
+          <group>
+            <name>inc</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_host_class_dpump.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_device_class_dpump.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_utility.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_hcd_sim_host.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_dcd_sim_slave.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_device_stack.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_host_stack.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_system.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_api.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/core/inc/ux_user_sample.h</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>usbx_device_classes</name>
+          <group>
+            <name>inc</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_rndis.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_storage.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_ecm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_pima.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_cdc_acm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio20.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_audio10.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_hid.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_device_classes/inc/ux_device_class_dfu.h</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>usbx_host_classes</name>
+          <group>
+            <name>inc</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_pima.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_cdc_acm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hub.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_cdc_ecm.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_keyboard.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_audio.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_mouse.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_printer.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_swar.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_asix.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_video.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_prolific.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_gser.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_storage.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_classes/inc/ux_host_class_hid_remote_control.h</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>usbx_host_controllers</name>
+          <group>
+            <name>inc</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ohci.h</name>
+            </file>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_host_controllers/inc/ux_hcd_ehci.h</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>usbx_network</name>
+          <group>
+            <name>inc</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_network/inc/ux_network_driver.h</name>
+            </file>
+          </group>
+        </group>
+        <group>
+          <name>usbx_pictbridge</name>
+          <group>
+            <name>inc</name>
+            <file>
+              <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/common/usbx_pictbridge/inc/ux_pictbridge.h</name>
+            </file>
+          </group>
+        </group>
+      </group>
+      <group>
+        <name>ports</name>
+        <group>
+          <name>cortex_m7</name>
+          <group>
+            <name>iar</name>
+            <group>
+              <name>inc</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/usbx/ports/cortex_m7/iar/inc/ux_port.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>netxduo</name>
+      <group>
+        <name>addons</name>
+        <group>
+          <name>auto_ip</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/auto_ip/nx_auto_ip.h</name>
+          </file>
+        </group>
+        <group>
+          <name>cloud</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/cloud/nx_cloud.h</name>
+          </file>
+        </group>
+        <group>
+          <name>BSD</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/BSD/nxd_bsd.h</name>
+          </file>
+        </group>
+        <group>
+          <name>dhcp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dhcp/nxd_dhcp_server.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dhcp/nxd_dhcpv6_server.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dhcp/nxd_dhcpv6_client.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dhcp/nxd_dhcp_client.h</name>
+          </file>
+        </group>
+        <group>
+          <name>dns</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/dns/nxd_dns.h</name>
+          </file>
+        </group>
+        <group>
+          <name>ftp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ftp/nxd_ftp_client.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ftp/nxd_ftp_server.h</name>
+          </file>
+        </group>
+        <group>
+          <name>http</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/http/nxd_http_server.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/http/nxd_http_client.h</name>
+          </file>
+        </group>
+        <group>
+          <name>mdns</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mdns/nxd_mdns.h</name>
+          </file>
+        </group>
+        <group>
+          <name>mqtt</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/mqtt/nxd_mqtt_client.h</name>
+          </file>
+        </group>
+        <group>
+          <name>nat</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/nat/nx_nat.h</name>
+          </file>
+        </group>
+        <group>
+          <name>pop3</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/pop3/nxd_pop3_client.h</name>
+          </file>
+        </group>
+        <group>
+          <name>ppp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/ppp/nx_ppp.h</name>
+          </file>
+        </group>
+        <group>
+          <name>pppoe</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/pppoe/nx_pppoe_server.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/pppoe/nx_pppoe_client.h</name>
+          </file>
+        </group>
+        <group>
+          <name>smtp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/smtp/nxd_smtp_client.h</name>
+          </file>
+        </group>
+        <group>
+          <name>snmp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/snmp/nxd_snmp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/snmp/nx_des.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/snmp/nx_sha1.h</name>
+          </file>
+        </group>
+        <group>
+          <name>sntp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/sntp/nxd_sntp_client.h</name>
+          </file>
+        </group>
+        <group>
+          <name>telnet</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/telnet/nxd_telnet_server.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/telnet/nxd_telnet_client.h</name>
+          </file>
+        </group>
+        <group>
+          <name>tftp</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/tftp/nxd_tftp_server.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/tftp/nxd_tftp_client.h</name>
+          </file>
+        </group>
+        <group>
+          <name>web</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web/nx_web_http_server.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web/nx_tcpserver.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web/nx_web_http_common.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/addons/web/nx_web_http_client.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>common</name>
+        <group>
+          <name>inc</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_igmp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv4.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_packet.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_nd_cache.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_md5.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmpv6.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_user_sample.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_tcp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_icmpv4.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_arp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ipv6.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_system.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_api.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_rarp.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_mld.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_ip.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/common/inc/nx_udp.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>crypto_libraries</name>
+        <group>
+          <name>inc</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha1.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_md5.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_xcbc_mac.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ccm.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_dh.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_1.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_const.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_cbc.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ec.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_md5.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha384.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha5.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_rsa.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ecdh.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ecdsa.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha2.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_3des.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_null.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_drbg.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_phash.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha1.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_gcm.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha256.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_sha2.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_pkcs1_v1.5.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_tls_prf_sha512.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_huge_number.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hmac_sha5.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ecjpake.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_des.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_ctr.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_aes.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_method_self_test.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/crypto_libraries/inc/nx_crypto_hkdf.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>nx_secure</name>
+        <group>
+          <name>inc</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_tls_api.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_dtls_api.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_user_sample.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_x509.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_dtls.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_crypto_table_self_test.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/inc/nx_secure_tls.h</name>
+          </file>
+        </group>
+        <group>
+          <name>ports</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/nx_secure/ports/nx_secure_port.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>samples</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/samples/demo_snmp_helper.h</name>
+        </file>
+      </group>
+      <group>
+        <name>ports</name>
+        <group>
+          <name>cortex_m7</name>
+          <group>
+            <name>iar</name>
+            <group>
+              <name>inc</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/netxduo/ports/cortex_m7/iar/inc/nx_port.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>filex</name>
+      <group>
+        <name>common</name>
+        <group>
+          <name>inc</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_media.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_unicode.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_api.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_directory_exFAT.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_utility.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_file.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_system.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_directory.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_user_sample.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/common/inc/fx_fault_tolerant.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>ports</name>
+        <group>
+          <name>cortex_m7</name>
+          <group>
+            <name>iar</name>
+            <group>
+              <name>inc</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/filex/ports/cortex_m7/iar/inc/fx_port.h</name>
+              </file>
+            </group>
+          </group>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>threadx</name>
+      <group>
+        <name>common</name>
+        <group>
+          <name>inc</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_byte_pool.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_event_flags.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_timer.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_queue.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_thread.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_mutex.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_trace.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_initialize.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_api.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_user_sample.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_block_pool.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/common/inc/tx_semaphore.h</name>
+          </file>
+        </group>
+      </group>
+      <group>
+        <name>ports</name>
+        <group>
+          <name>cortex_m7</name>
+          <group>
+            <name>iar</name>
+            <group>
+              <name>inc</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/inc/tx_port.h</name>
+              </file>
+            </group>
+            <group>
+              <name>src</name>
+              <file>
+                <name>$PROJ_DIR$/../../../../../rtos/azure-rtos/threadx/ports/cortex_m7/iar/src/tx_initialize_low_level.s</name>
+              </file>
+            </group>
+          </group>
+        </group>
+      </group>
+    </group>
   </group>
   <group>
     <name>CMSIS</name>
@@ -4337,16 +5030,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

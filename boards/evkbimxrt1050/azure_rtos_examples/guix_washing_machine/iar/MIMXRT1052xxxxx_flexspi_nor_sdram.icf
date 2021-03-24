@@ -43,7 +43,7 @@ define symbol m_data_end               = 0x2001FFFF;
 define symbol m_data2_start            = 0x20200000;
 define symbol m_data2_end              = 0x2023FFFF;
 
-define symbol m_data3_start            = 0x80200000;
+define symbol m_data3_start            = 0x80000000;
 define symbol m_data3_end              = 0x81DFFFFF;
 
 define symbol m_ncache_start           = 0x81E00000;
@@ -108,3 +108,5 @@ place in DATA3_region                       { block HEAP };
 place in DATA3_region                       { last section FREE_MEM};
 place in NCACHE_region                      { block NCACHE_VAR };
 place in CSTACK_region                      { block CSTACK };
+
+keep { block HEAP, block CSTACK };

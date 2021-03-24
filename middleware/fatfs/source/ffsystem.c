@@ -9,6 +9,10 @@
 
 #if FF_USE_LFN == 3	/* Dynamic memory allocation */
 
+#ifdef FSL_RTOS_FREE_RTOS
+#include "FreeRTOS.h"
+#endif
+
 /*------------------------------------------------------------------------*/
 /* Allocate a memory block                                                */
 /*------------------------------------------------------------------------*/
@@ -17,7 +21,11 @@ void* ff_memalloc (	/* Returns pointer to the allocated memory block (null if no
 	UINT msize		/* Number of bytes to allocate */
 )
 {
+#ifdef FSL_RTOS_FREE_RTOS
+    return pvPortMalloc(msize);
+#else
 	return malloc(msize);	/* Allocate a new memory block with POSIX API */
+#endif
 }
 
 
@@ -29,7 +37,11 @@ void ff_memfree (
 	void* mblock	/* Pointer to the memory block to free (nothing to do if null) */
 )
 {
+#ifdef FSL_RTOS_FREE_RTOS
+    vPortFree(mblock);
+#else
 	free(mblock);	/* Free the memory block with POSIX API */
+#endif
 }
 
 #endif

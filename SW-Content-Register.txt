@@ -1,5 +1,5 @@
 Release Name: MCUXpresso Software Development Kit (SDK)
-Release Version: 2.9.1
+Release Version: 2.9.2
 Package License: LA_OPT_NXP_Software_License.txt - Additional Distribution License granted, license in Section 2.3 applies
 
 SDK_Peripheral_Driver      Name: SDK Peripheral Driver                       
@@ -315,7 +315,7 @@ tracealyzer_recorder       Name: tracealyzer_recorder
 
 win_pcap                   Name: win_pcap                                    
                            Version: NA                                       
-                           Outgoing License: BSD-4-Clause, BSD-3-Clause      
+                           Outgoing License: WinPcap License                 
                            License File:                                     
                            rtos/freertos/libraries/3rdparty/win_pcap/LICENSE 
                            Format: source code                               
@@ -326,22 +326,6 @@ win_pcap                   Name: win_pcap
                            Url:                                              
                            https://github.com/aws/amazon-freertos/tree/202007
                            .00/libraries/3rdparty/win_pcap                   
-
-mbedtls_utils              Name: mbedtls_utils                               
-                           Version: NA                                       
-                           Outgoing License: Apache-2.0                      
-                           License File:                                     
-                           rtos/freertos/libraries/3rdparty/mbedtls_utils/LIC
-                           ENSE-2.0.txt                                      
-                           Format: source code                               
-                           Description: Functions to convert the high-level  
-                           and low-level mbedtls error codes.                
-                           Location:                                         
-                           rtos/freertos/libraries/3rdparty/mbedtls_utils    
-                           Origin: ARM Limited                               
-                           Url:                                              
-                           https://github.com/aws/amazon-freertos/tree/202007
-                           .00/libraries/3rdparty/mbedtls_utils              
 
 unity                      Name: unity                                       
                            Version: NA                                       
@@ -471,6 +455,33 @@ mbedtls                    Name: Mbed TLS
                            Origin: ARM(Apache-2.0) -                         
                            https://github.com/ARMmbed/mbedtls/releases/tag/mb
                            edtls-2.16.6                                      
+
+mbedtls_utils              Name: mbedtls_utils                               
+                           Version: NA                                       
+                           Outgoing License: Apache-2.0                      
+                           License File:                                     
+                           rtos/freertos/libraries/3rdparty/mbedtls_utils/LIC
+                           ENSE-2.0.txt                                      
+                           Format: source code                               
+                           Description: Functions to convert the high-level  
+                           and low-level mbedtls error codes.                
+                           Location:                                         
+                           rtos/freertos/libraries/3rdparty/mbedtls_utils    
+                           Origin: ARM Limited                               
+                           Url:                                              
+                           https://github.com/aws/amazon-freertos/tree/202007
+                           .00/libraries/3rdparty/mbedtls_utils              
+
+wolfssl                    Name: WolfSSL                                     
+                           Version: 4.0.6                                    
+                           Outgoing License: NXP Evaluation/Demonstration    
+                           License Agreement                                 
+                           License File: LA_OPT_EVAL_DEMO_ONLY.htm           
+                           Format: source code                               
+                           Description: Cryptographic and SSL/TLS Library    
+                           Location: middleware/wolfssl                      
+                           Origin: WolfSSL                                   
+                           Url: https://github.com/wolfSSL/wolfssl           
 
 lwip                       Name: lwIP TCP/IP Stack                           
                            Version: lwIP git repository (2019-12-12, branch: 
@@ -757,7 +768,8 @@ TinyCBOR                   Name: TinyCBOR
                            Version: 0.5.2                                    
                            Outgoing License: MIT                             
                            License File:                                     
-                           rtos/freertos/libraries/3rdparty/tinycbor/LICENSE 
+                           rtos/freertos/libraries/3rdparty/tinycbor/src/LICE
+                           NSE                                               
                            Format: source code                               
                            Description: TinyCBOR                             
                            Location:                                         
@@ -906,7 +918,7 @@ Azure-macro-utils-c        Name: Azure macro utils
                            Url: https://github.com/Azure/azure-macro-utils-c 
 
 azure_rtos_threadx         Name: Azure RTOS ThreadX                          
-                           Version: 6.0.1                                    
+                           Version: 6.1.2                                    
                            Outgoing License: MICROSOFT SOFTWARE LICENSE      
                            License File: rtos/azure-rtos/threadx/LICENSE.txt 
                            Format: source code                               
@@ -917,7 +929,7 @@ azure_rtos_threadx         Name: Azure RTOS ThreadX
                            https://azure.microsoft.com/en-us/services/rtos/  
 
 azure_rtos_filex           Name: Azure RTOS FileX                            
-                           Version: 6.0.1                                    
+                           Version: 6.1.2                                    
                            Outgoing License: MICROSOFT SOFTWARE LICENSE      
                            License File: rtos/azure-rtos/filex/LICENSE.txt   
                            Format: source code                               
@@ -928,7 +940,7 @@ azure_rtos_filex           Name: Azure RTOS FileX
                            https://azure.microsoft.com/en-us/services/rtos/  
 
 azure_rtos_levelx          Name: Azure RTOS LevelX                           
-                           Version: 6.0.1                                    
+                           Version: 6.1.2                                    
                            Outgoing License: MICROSOFT SOFTWARE LICENSE      
                            License File: rtos/azure-rtos/levelx/LICENSE.txt  
                            Format: source code                               
@@ -940,7 +952,7 @@ azure_rtos_levelx          Name: Azure RTOS LevelX
                            https://azure.microsoft.com/en-us/services/rtos/  
 
 azure_rtos_netxduo         Name: Azure RTOS NetX Duo                         
-                           Version: 6.0.1                                    
+                           Version: 6.1.2                                    
                            Outgoing License: MICROSOFT SOFTWARE LICENSE      
                            License File: rtos/azure-rtos/netxduo/LICENSE.txt 
                            Format: source code                               
@@ -952,7 +964,7 @@ azure_rtos_netxduo         Name: Azure RTOS NetX Duo
                            https://azure.microsoft.com/en-us/services/rtos/  
 
 azure_rtos_guix            Name: Azure RTOS GUIX                             
-                           Version: 6.0.1                                    
+                           Version: 6.1.0                                    
                            Outgoing License: MICROSOFT SOFTWARE LICENSE      
                            License File: rtos/azure-rtos/guix/LICENSE.txt    
                            Format: source code                               
@@ -964,7 +976,7 @@ azure_rtos_guix            Name: Azure RTOS GUIX
                            https://azure.microsoft.com/en-us/services/rtos/  
 
 azure_rtos_usbx            Name: Azure RTOS USBX                             
-                           Version: 6.0.1                                    
+                           Version: 6.1.2                                    
                            Outgoing License: MICROSOFT SOFTWARE LICENSE      
                            License File: rtos/azure-rtos/usbx/LICENSE.txt    
                            Format: source code                               
@@ -974,65 +986,6 @@ azure_rtos_usbx            Name: Azure RTOS USBX
                            Origin: Microsoft                                 
                            Url:                                              
                            https://azure.microsoft.com/en-us/services/rtos/  
-
-c-utility                  Name: Azure C Shared Utility                      
-                           Version: 1.1.12                                   
-                           Outgoing License: MIT                             
-                           License File:                                     
-                           middleware/azure_iot/c-utility/LICENSE            
-                           Format: source code                               
-                           Description: Common functionality for basic tasks 
-                           Location: middleware/azure_iot/c-utility          
-                           Origin: Microsoft Corporation (MIT)               
-                           Url:                                              
-                           https://github.com/Azure/azure-c-shared-utility   
-
-Crank Storyboard GUI       Name: Crank Storyboard GUI                        
-                           Version: 6.2                                      
-                           Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           - Additional distribution license granted -       
-                           License in Section 2.3 applies                    
-                           License File: LA_OPT_NXP_Software_License.txt     
-                           Format: Precompiled libraries, source code        
-                           Description: Crank Storyboard GUI Engine          
-                           Location: middleware/Crank_Software               
-                           Origin: Crank Software Inc. (Proprietary)         
-                           Url: https://www.cranksoftware.com/storyboard     
-
-Embedded Wizard            Name: Embedded Wizard GUI solution                
-                           Version: 9.3                                      
-                           Outgoing License: LA_OPT_NXP_Software_License.txt 
-                           - Additional distribution license granted -       
-                           License in Section 2.3 applies                    
-                           License File: LA_OPT_NXP_Software_License.txt     
-                           Format: Precompiled libraries, source code        
-                           Description: Embedded Wizard GUI solution         
-                           Location: middleware/EmbeddedWizard               
-                           Origin: TARA Systems GmbH (Proprietary)           
-                           Url: https://www.embedded-wizard.de               
-
-CJSON                      Name: CJSON                                       
-                           Version: 1.7.4                                    
-                           Outgoing License: MIT                             
-                           License File: middleware/cjson/LICENSE            
-                           Format: source code                               
-                           Description: CJSON - Ultralightweight JSON parser 
-                           in ANSI C                                         
-                           Location: middleware/cjson                        
-                           Origin: Dave Gamble                               
-                           Url:                                              
-                           https://github.com/DaveGamble/cJSON/releases/tag/v
-                           1.7.4                                             
-
-nghttp2                    Name: nghttp2                                     
-                           Version: 1.32.90                                  
-                           Outgoing License: The MIT License                 
-                           License File: middleware/nghttp2/COPYING          
-                           Format: source code                               
-                           Description: HTTP/2 C Library                     
-                           Location: middleware/nghttp2                      
-                           Origin: Tatsuhiro Tsujikawa & nghttp2 contributors
-                           Url: https://github.com/nghttp2/nghttp2           
 
 CMSIS-NN                   Name: CMSIS-NN library                            
                            Version: 1.2.0 (CMSIS version 5.6.0)              

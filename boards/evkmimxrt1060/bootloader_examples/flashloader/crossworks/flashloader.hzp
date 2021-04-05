@@ -1,0 +1,368 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="flashloader" target="8" version="2">
+  <project Name="flashloader">
+    <configuration
+      CMSIS_CORE="Yes"
+      Name="Common"
+      Placement="TCM"
+      Target="MIMXRT1062DVL6A"
+      arm_architecture="v7EM"
+      arm_core_type="Cortex-M7"
+      arm_fp_abi="Hard"
+      arm_fpu_type="FPv5-D16"
+      arm_linker_heap_size="1024"
+      arm_linker_stack_size="1024"
+      arm_simulator_memory_simulation_parameter="RAM;0x00000000;0x00020000;RAM;0x20000000;0x00020000;RAM;0x20200000;0x00040000;ROM;0x60000000;0x04000000"
+      arm_target_loader_applicable_loaders=""
+      arm_target_loader_default_loader=""
+      arm_target_loader_reset_after_download="No"
+      c_preprocessor_definitions="NDEBUG;CPU_MIMXRT1062DVL6A;CPU_IS_ARM_CORTEX_M7=1;BL_TARGET_RAM;MIMXRT1062;USB_STACK_BM"
+      c_system_include_directories="$(StudioDir)/include;$(PackagesDir)/include;$(TargetsDir)/iMXRT"
+      c_user_include_directories=";./..;./../../../../../devices/MIMXRT1062;./../../../../../devices/MIMXRT1062/drivers;./../../../../../middleware/mcu-boot/src/bm_usb;./../../../../../middleware/mcu-boot/src/autobaud;./../../../../../middleware/mcu-boot/src/bootloader;./../../../../../middleware/mcu-boot/src/crc;./../../../../../middleware/mcu-boot/src/include;./../../../../../middleware/mcu-boot/src/memory;./../../../../../middleware/mcu-boot/src/memory/src;./../../../../../middleware/mcu-boot/src/startup;./../../../../../middleware/mcu-boot/src/packet;./../../../../../middleware/mcu-boot/src/property;./../../../../../middleware/mcu-boot/src/sbloader;./../../../../../middleware/mcu-boot/src/utilities;./../../../../../middleware/mcu-boot/src/drivers/smc;./../../../../../middleware/mcu-boot/src/drivers/dcp;./../../../../../middleware/mcu-boot/src/drivers/trng;./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src;./../../../../../middleware/usb/device;./../../../../../components/osa;./../../../../../middleware/usb/include;./../../../../../middleware/mcu-boot/src/drivers/microseconds;./../../../../../middleware/mcu-boot/src/drivers/flexspi;./../../../../../middleware/mcu-boot/src/drivers/flexspi_nand;./../../../../../middleware/mcu-boot/src/drivers/ocotp;./../../../../../CMSIS/Include;./../../../../../components/lists;./../../../../../middleware/usb/phy;./../../../../../middleware/mcu-boot/src/drivers/flexspi_nor;./../../../../../middleware/mcu-boot/src/drivers/semc;./../../../../../middleware/mcu-boot/src/drivers/semc_nor;./../../../../../middleware/mcu-boot/src/drivers/semc_nand;./../../../../../middleware/mcu-boot/src/drivers/nand_ecc;./../../../../../middleware/mcu-boot/src/drivers/usdhc;./../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc;./../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom"
+      debug_register_definition_file="$(TargetsDir)/iMXRT/XML/$(DeviceName)_registers.xml"
+      debug_startup_completion_point="main"
+      linker_memory_map_file="$(TargetsDir)/iMXRT/MemoryMap_MIMXRT106x.xml"
+      linker_section_placement_file="$(TargetsDir)/iMXRT/placement_tcm.xml"
+      linker_section_placement_macros=""
+      macros="DeviceName=MIMXRT1062;Family=iMXRT1060"
+      project_directory=""
+      project_type="Executable"
+      property_groups_file_path="$(TargetsDir)/iMXRT/propertyGroups.xml"
+      target_connect_script="Connect()"
+      target_get_partname_script="GetPartName()"
+      target_reset_script="Reset()"
+      target_script_file="$(TargetsDir)/iMXRT/iMXRT_Target.js" />
+    <configuration
+      Name="Flash"
+      arm_target_flash_loader_file_path="$(TargetsDir)/iMXRT/Loader2/Loader_$(Family).elf" />
+    <folder Name="System Files">
+      <file file_name="$(StudioDir)/source/thumb_crt0.s" />
+      <file file_name="$(TargetsDir)/iMXRT/startup_$(DeviceName).s" />
+      <file file_name="$(TargetsDir)/iMXRT/system_$(DeviceName).h" />
+      <file file_name="$(TargetsDir)/iMXRT/system_$(DeviceName).c" />
+      <file file_name="$(TargetsDir)/iMXRT/$(DeviceName).h" />
+      <file file_name="$(TargetsDir)/iMXRT/$(DeviceName)_features.h" />
+      <file file_name="$(TargetsDir)/iMXRT/fsl_device_registers.h" />
+    </folder>
+    <folder Name="board">
+      <file file_name="./../pin_mux.c" />
+      <file file_name="./../pin_mux.h" />
+    </folder>
+    <folder Name="drivers">
+      <file file_name="./../../../../../devices/MIMXRT1062/drivers/fsl_clock.h" />
+      <file file_name="./../../../../../devices/MIMXRT1062/drivers/fsl_clock.c" />
+      <file file_name="./../../../../../devices/MIMXRT1062/drivers/fsl_gpio.h" />
+      <file file_name="./../../../../../devices/MIMXRT1062/drivers/fsl_gpio.c" />
+      <file file_name="./../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.h" />
+      <file file_name="./../../../../../devices/MIMXRT1062/drivers/fsl_lpuart.c" />
+      <file file_name="./../../../../../devices/MIMXRT1062/drivers/fsl_iomuxc.h" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/fsl_wdog.h" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/fsl_rtwdog.h" />
+      <file file_name="./../../../../../devices/MIMXRT1062/drivers/fsl_common.h" />
+      <file file_name="./../../../../../devices/MIMXRT1062/drivers/fsl_common.c" />
+      <file file_name="./../../../../../devices/MIMXRT1062/drivers/fsl_lpspi.c" />
+      <file file_name="./../../../../../devices/MIMXRT1062/drivers/fsl_lpspi.h" />
+    </folder>
+    <folder Name="startup">
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/startup/iar/startup_MIMXRT1062.s">
+        <configuration Name="Common" build_exclude_from_build="Yes" />
+      </file>
+      <file file_name="./../../../../../middleware/mcu-boot/src/startup/ar_asm_macros.h" />
+      <file file_name="./../../../../../middleware/mcu-boot/src/startup/startup.c" />
+    </folder>
+    <folder Name="source">
+      <folder Name="usb">
+        <folder Name="bm_composite">
+          <file file_name="./../../../../../middleware/mcu-boot/src/bm_usb/bootloader_hid_report_ids.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bm_usb/fat_directory_entry.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bm_usb/composite.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bm_usb/composite.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bm_usb/hid_bootloader.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bm_usb/hid_bootloader.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bm_usb/usb_descriptor.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bm_usb/usb_descriptor.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/usb_device_config.h" />
+        </folder>
+      </folder>
+      <folder Name="autobaud">
+        <file file_name="./../../../../../middleware/mcu-boot/src/autobaud/autobaud.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/autobaud/src/autobaud_irq.c" />
+      </folder>
+      <folder Name="bootloader">
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral_interface.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bl_user_entry.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bl_version.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bootloader.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bl_command.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bl_context.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h" />
+        <folder Name="src">
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_user_entry.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_main.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_context.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_exception_handler.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_tree_root.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_command.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_shutdown_cleanup.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_misc.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/lpuart_peripheral_interface.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/usb_hid_msc_peripheral_interface.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_nor_encrypt_bee.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_keyblob.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/src/bl_keyblob_dcp.c" />
+        </folder>
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bl_irq_common.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bl_nor_encrypt.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/bootloader/bl_keyblob.h" />
+      </folder>
+      <folder Name="crc">
+        <file file_name="./../../../../../middleware/mcu-boot/src/crc/crc16.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/crc/crc32.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/crc/src/crc16.c" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/crc/src/crc32.c" />
+      </folder>
+      <folder Name="include">
+        <file file_name="./../../../../../middleware/mcu-boot/src/include/bootloader_common.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/include/bootloader_core.h" />
+      </folder>
+      <folder Name="memory">
+        <file file_name="./../../../../../middleware/mcu-boot/src/memory/memory.h" />
+        <folder Name="src">
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/sram_init.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/memory.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s">
+            <configuration Name="Common" build_exclude_from_build="Yes" />
+          </file>
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/sram_init_MIMXRT1062.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/flexspi_nor_memory.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/flexspi_nor_memory.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/spinand_memory.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/spinand_memory.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/semc_nor_memory.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/semc_nor_memory.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/semc_nand_memory.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/semc_nand_memory.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/sd_memory.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/sd_memory.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/mmc_memory.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/mmc_memory.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/spi_nor_eeprom_memory.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/memory/src/spi_nor_eeprom_memory.h" />
+        </folder>
+      </folder>
+      <folder Name="packet">
+        <file file_name="./../../../../../middleware/mcu-boot/src/packet/command_packet.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/packet/serial_packet.h" />
+        <folder Name="src">
+          <file file_name="./../../../../../middleware/mcu-boot/src/packet/src/serial_packet.c" />
+        </folder>
+      </folder>
+      <folder Name="property">
+        <file file_name="./../../../../../middleware/mcu-boot/src/property/property.h" />
+        <folder Name="src">
+          <file file_name="./../../../../../middleware/mcu-boot/src/property/src/property_imx.c" />
+        </folder>
+      </folder>
+      <folder Name="sbloader">
+        <file file_name="./../../../../../middleware/mcu-boot/src/sbloader/sbloader.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/sbloader/sb_file_format.h" />
+        <folder Name="src">
+          <file file_name="./../../../../../middleware/mcu-boot/src/sbloader/src/sbloader.c" />
+        </folder>
+      </folder>
+      <folder Name="utilities">
+        <file file_name="./../../../../../middleware/mcu-boot/src/utilities/fsl_rtos_abstraction.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h" />
+        <file file_name="./../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h" />
+        <folder Name="src">
+          <file file_name="./../../../../../middleware/mcu-boot/src/utilities/src/fsl_assert.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/utilities/src/fsl_rtos_abstraction.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/utilities/src/debug_util.c" />
+        </folder>
+      </folder>
+      <folder Name="drivers">
+        <file file_name="./../../../../../middleware/mcu-boot/src/drivers/smc/smc.h" />
+        <folder Name="dcp">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/dcp/bl_dcp.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/dcp/bl_dcp.h" />
+        </folder>
+        <folder Name="trng">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/trng/bl_trng.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/trng/bl_trng.h" />
+        </folder>
+        <folder Name="microseconds">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/microseconds/microseconds.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/microseconds/src/microseconds_pit.c" />
+        </folder>
+        <folder Name="flexspi">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/flexspi/bl_flexspi.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/flexspi/bl_flexspi.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/flexspi/bl_flexspi.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/flexspi/bl_flexspi.h" />
+        </folder>
+        <folder Name="flexspi_nand">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/flexspi_nand/flexspi_nand_flash.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/flexspi_nand/flexspi_nand_flash.h" />
+        </folder>
+        <folder Name="ocotp">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/ocotp/bl_ocotp.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/ocotp/bl_ocotp.h" />
+        </folder>
+        <folder Name="flexspi_nor">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/flexspi_nor/flexspi_nor_flash.h" />
+        </folder>
+        <folder Name="semc">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/semc/bl_semc.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/semc/bl_semc.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/semc/bl_semc.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/semc/bl_semc.h" />
+        </folder>
+        <folder Name="semc_nor">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/semc_nor/semc_nor_flash.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/semc_nor/semc_nor_flash.h" />
+        </folder>
+        <folder Name="semc_nand">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/semc_nand/semc_nand_flash.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/semc_nand/semc_nand_flash.h" />
+        </folder>
+        <folder Name="nand_ecc">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/nand_ecc/nand_ecc.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/nand_ecc/nand_ecc.h" />
+        </folder>
+        <folder Name="usdhc">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/usdhc/bl_usdhc.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/usdhc/bl_usdhc.h" />
+        </folder>
+        <folder Name="sdmmc">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/bl_card.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/bl_host.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/bl_sdmmc.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/sdmmc/inc/bl_specification.h" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/sdmmc/port/usdhc/polling/bl_host.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/bl_sd.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/bl_mmc.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/sdmmc/src/bl_sdmmc.c" />
+        </folder>
+        <folder Name="serial_nor_eeprom">
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom/serial_nor_eeprom.c" />
+          <file file_name="./../../../../../middleware/mcu-boot/src/drivers/serial_nor_eeprom/serial_nor_eeprom.h" />
+        </folder>
+      </folder>
+    </folder>
+    <folder Name="MIMXRT1062">
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/bl_api.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/bl_api.h" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/bootloader_config.h" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/bl_clock_config_MIMXRT1062.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/hardware_init_MIMXRT1062.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/memory_map_MIMXRT1062.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/external_memory_property_map_MIMXRT1062.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/flexspi_nand_config_MIMXRT1062.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/flexspi_nor_config_MIMXRT1062.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/semc_nand_config_MIMXRT1062.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/semc_nor_config_MIMXRT1062.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/bl_peripherals_MIMXRT1062.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/peripherals_pinmux.h" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/target_config.h" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/fusemap.h" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/common/src/pinmux_utility_imxrt_series.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/bl_lpuart_irq_config_MIMXRT1062.c" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/sdmmc_init.h" />
+      <file file_name="./../../../../../middleware/mcu-boot/targets/MIMXRT1062/src/sdmmc_config_MIMXRT1062.c" />
+    </folder>
+    <folder Name="usb">
+      <folder Name="device">
+        <folder Name="include">
+          <file file_name="./../../../../../middleware/usb/device/usb_device.h" />
+          <file file_name="./../../../../../middleware/usb/device/usb_device.h" />
+        </folder>
+        <folder Name="source">
+          <file file_name="./../../../../../middleware/usb/device/usb_device_dci.c" />
+          <file file_name="./../../../../../middleware/usb/device/usb_device_dci.h" />
+          <folder Name="ehci">
+            <file file_name="./../../../../../middleware/usb/device/usb_device_ehci.c" />
+            <file file_name="./../../../../../middleware/usb/device/usb_device_ehci.h" />
+          </folder>
+          <file file_name="./../usb_device_ch9.c" />
+          <file file_name="./../usb_device_ch9.h" />
+          <file file_name="./../../../../../middleware/usb/device/usb_device_dci.h" />
+        </folder>
+        <folder Name="class">
+          <folder Name="hid">
+            <file file_name="./../usb_device_hid.c" />
+            <file file_name="./../usb_device_hid.h" />
+          </folder>
+          <file file_name="./../usb_device_class.c" />
+          <file file_name="./../usb_device_class.h" />
+        </folder>
+      </folder>
+      <folder Name="phy">
+        <file file_name="./../../../../../middleware/usb/phy/usb_phy.c" />
+        <file file_name="./../../../../../middleware/usb/phy/usb_phy.h" />
+      </folder>
+      <folder Name="include">
+        <file file_name="./../../../../../middleware/usb/include/usb.h" />
+        <file file_name="./../../../../../middleware/usb/include/usb_misc.h" />
+        <file file_name="./../../../../../middleware/usb/include/usb_spec.h" />
+      </folder>
+    </folder>
+    <folder Name="component">
+      <folder Name="osa">
+        <file file_name="./../../../../../components/osa/fsl_os_abstraction.h" />
+        <file file_name="./../../../../../components/osa/fsl_os_abstraction_config.h" />
+        <file file_name="./../../../../../components/osa/fsl_os_abstraction_bm.h" />
+        <file file_name="./../../../../../components/osa/fsl_os_abstraction_bm.c" />
+      </folder>
+      <folder Name="lists">
+        <file file_name="./../../../../../components/lists/fsl_component_generic_list.h" />
+        <file file_name="./../../../../../components/lists/fsl_component_generic_list.c" />
+      </folder>
+    </folder>
+    <folder Name="CMSIS">
+      <file file_name="./../../../../../CMSIS/Include/core_cm7.h" />
+      <file file_name="./../../../../../CMSIS/Include/mpu_armv7.h" />
+      <file file_name="./../../../../../CMSIS/Include/cmsis_armcc.h" />
+      <file file_name="./../../../../../CMSIS/Include/cmsis_armclang.h" />
+      <file file_name="./../../../../../CMSIS/Include/cmsis_armclang_ltm.h" />
+      <file file_name="./../../../../../CMSIS/Include/cmsis_gcc.h" />
+      <file file_name="./../../../../../CMSIS/Include/cmsis_compiler.h" />
+      <file file_name="./../../../../../CMSIS/Include/cmsis_version.h" />
+      <file file_name="./../../../../../CMSIS/Include/cmsis_iccarm.h" />
+      <file file_name="./../../../../../CMSIS/Include/arm_common_tables.h" />
+      <file file_name="./../../../../../CMSIS/Include/arm_const_structs.h" />
+      <file file_name="./../../../../../CMSIS/Include/arm_math.h" />
+    </folder>
+  </project>
+  <configuration Name="THUMB Debug" inherited_configurations="THUMB;Debug" />
+  <configuration
+    Name="THUMB"
+    Platform="ARM"
+    arm_instruction_set="Thumb"
+    arm_library_instruction_set="Thumb"
+    c_preprocessor_definitions="__THUMB"
+    hidden="Yes" />
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="None"
+    hidden="Yes" />
+  <configuration
+    Name="THUMB Release"
+    inherited_configurations="THUMB;Release" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="None"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="Level 1"
+    hidden="Yes" />
+</solution>

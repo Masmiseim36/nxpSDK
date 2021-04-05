@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 - 2018 NXP
+ * Copyright 2017 - 2020 NXP
  * All rights reserved.
  *
  *
@@ -7,6 +7,8 @@
  */
 #ifndef _FSL_DEBUG_CONSOLE_CONF_H_
 #define _FSL_DEBUG_CONSOLE_CONF_H_
+
+#include "fsl_common.h"
 
 /****************Debug console configuration********************/
 
@@ -50,6 +52,14 @@
 #define DEBUG_CONSOLE_RECEIVE_BUFFER_LEN (1024U)
 #endif /* DEBUG_CONSOLE_RECEIVE_BUFFER_LEN */
 
+/*!@ brief Whether enable the reliable TX function
+ * If the macro is zero, the reliable TX function of the debug console is disabled.
+ * When the macro is zero, the string of PRINTF will be thrown away after the transmit buffer is full.
+ */
+#ifndef DEBUG_CONSOLE_TX_RELIABLE_ENABLE
+#define DEBUG_CONSOLE_TX_RELIABLE_ENABLE (1U)
+#endif /* DEBUG_CONSOLE_TX_RELIABLE_ENABLE */
+
 #else
 #define DEBUG_CONSOLE_TRANSFER_BLOCKING
 #endif /* DEBUG_CONSOLE_TRANSFER_NON_BLOCKING */
@@ -83,7 +93,7 @@
  * corresponding synchronization mechanism per different software environment.
  * Such as, if another RTOS is used,
  * add:
- *  #define DEBUG_CONSOLE_SYNCHRONIZATION_XXXX 3
+ *  \#define DEBUG_CONSOLE_SYNCHRONIZATION_XXXX 3
  * in this configuration file and implement the synchronization in fsl.log.c.
  */
 /*! @brief synchronization for baremetal software */

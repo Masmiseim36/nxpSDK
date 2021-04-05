@@ -4,7 +4,7 @@
 /*            MIMX8QM6_cm4_core0                                             */
 /*  @version: 4.0                                                            */
 /*  @date:    2018-8-30                                                      */
-/*  @build:   b180831                                                        */
+/*  @build:   b200630                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
@@ -1000,6 +1000,24 @@ IRQSTEER_7_IRQHandler:
     ldr   r0,=IRQSTEER_7_DriverIRQHandler
     bx    r0
     .size IRQSTEER_7_IRQHandler, . - IRQSTEER_7_IRQHandler
+
+    .align 1
+    .thumb_func
+    .weak MIPI_DSI0_INT_OUT_IRQHandler
+    .type MIPI_DSI0_INT_OUT_IRQHandler, %function
+MIPI_DSI0_INT_OUT_IRQHandler:
+    ldr   r0,=MIPI_DSI0_INT_OUT_DriverIRQHandler
+    bx    r0
+    .size MIPI_DSI0_INT_OUT_IRQHandler, . - MIPI_DSI0_INT_OUT_IRQHandler
+
+    .align 1
+    .thumb_func
+    .weak MIPI_DSI1_INT_OUT_IRQHandler
+    .type MIPI_DSI1_INT_OUT_IRQHandler, %function
+MIPI_DSI1_INT_OUT_IRQHandler:
+    ldr   r0,=MIPI_DSI1_INT_OUT_DriverIRQHandler
+    bx    r0
+    .size MIPI_DSI1_INT_OUT_IRQHandler, . - MIPI_DSI1_INT_OUT_IRQHandler
 
     .align 1
     .thumb_func
@@ -2840,8 +2858,8 @@ M4_0_INTMUX_SOURCE_MU0_A0_IRQHandler:
     def_irq_handler    Reserved155_IRQHandler
     def_irq_handler    LVDS0_INT_OUT_IRQHandler
     def_irq_handler    LVDS1_INT_OUT_IRQHandler
-    def_irq_handler    MIPI_DSI0_INT_OUT_IRQHandler
-    def_irq_handler    MIPI_DSI1_INT_OUT_IRQHandler
+    def_irq_handler    MIPI_DSI0_INT_OUT_DriverIRQHandler
+    def_irq_handler    MIPI_DSI1_INT_OUT_DriverIRQHandler
     def_irq_handler    HDMI_TX_INT_OUT_IRQHandler
     def_irq_handler    Reserved161_IRQHandler
     def_irq_handler    Reserved162_IRQHandler

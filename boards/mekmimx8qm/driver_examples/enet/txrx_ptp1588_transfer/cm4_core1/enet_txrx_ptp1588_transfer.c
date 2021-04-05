@@ -1,12 +1,14 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include <stdlib.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_enet.h"
@@ -14,28 +16,42 @@
 #if defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
 #include "fsl_memory.h"
 #endif
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_lpuart.h"
 #include "svc/misc/misc_api.h"
 #include "fsl_irqsteer.h"
+#include "fsl_enet_mdio.h"
+#include "fsl_phyar8031.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_ENET CONNECTIVITY__ENET0
-#define EXAMPLE_PHY (0x00U)
-#define CORE_CLK_FREQ (167000000U)
-#define PTP_CLK_FREQ (125000000U)
-#define ENET_RXBD_NUM (4)
-#define ENET_TXBD_NUM (4)
-#define ENET_RXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
-#define ENET_TXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
-#define ENET_DATA_LENGTH (1000)
+#define EXAMPLE_ENET        CONNECTIVITY__ENET0
+#define EXAMPLE_PHY_ADDRESS (0x00U)
+#define PTP_CLK_FREQ        (125000000U)
+#define EXAMPLE_PHY_INTERFACE_RGMII
+
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyar8031_ops
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ (167000000U)
+#define ENET_RXBD_NUM          (4)
+#define ENET_TXBD_NUM          (4)
+#define ENET_RXBUFF_SIZE       (ENET_FRAME_MAX_FRAMELEN)
+#define ENET_TXBUFF_SIZE       (ENET_FRAME_MAX_FRAMELEN)
+#define ENET_DATA_LENGTH       (1000)
 #define ENET_TRANSMIT_DATA_NUM (20)
-#define ENET_PTP_SYNC_MSG 0x00U
+#define ENET_PTP_SYNC_MSG      0x00U
 #ifndef APP_ENET_BUFF_ALIGNMENT
 #define APP_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
 #endif
+#ifndef PHY_AUTONEGO_TIMEOUT_COUNT
+#define PHY_AUTONEGO_TIMEOUT_COUNT (300000)
+#endif
+#ifndef PHY_STABILITY_DELAY_US
+#define PHY_STABILITY_DELAY_US (0U)
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -58,16 +74,20 @@ SDK_ALIGN(uint8_t g_rxDataBuff[ENET_RXBD_NUM][SDK_SIZEALIGN(ENET_RXBUFF_SIZE, AP
 SDK_ALIGN(uint8_t g_txDataBuff[ENET_TXBD_NUM][SDK_SIZEALIGN(ENET_TXBUFF_SIZE, APP_ENET_BUFF_ALIGNMENT)],
           APP_ENET_BUFF_ALIGNMENT);
 
-/* Buffers for store receive and transmit timestamp. */
-enet_ptp_time_data_t g_rxPtpTsBuff[ENET_RXBD_NUM];
-enet_ptp_time_data_t g_txPtpTsBuff[ENET_TXBD_NUM];
-
 enet_handle_t g_handle;
 uint8_t g_frame[ENET_DATA_LENGTH + 14];
 uint32_t g_testTxNum = 0;
+enet_frame_info_t txFrameInfoArray[ENET_TXBD_NUM];
 
 /* The MAC address for ENET device. */
 uint8_t g_macAddr[6] = {0xd4, 0xbe, 0xd9, 0x45, 0x22, 0x60};
+
+static volatile bool tx_frame_over   = false;
+static enet_frame_info_t txFrameInfo = {0};
+
+/*! @brief Enet PHY and MDIO interface handler. */
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
 /*******************************************************************************
  * Code
@@ -106,26 +126,43 @@ static void ENET_BuildPtpEventFrame(void)
     g_frame[0x48U + 1] = 0;
 }
 
+static void enetCallback(ENET_Type *base,
+                         enet_handle_t *handle,
+#if FSL_FEATURE_ENET_QUEUE > 1
+                         uint32_t ringId,
+#endif /* FSL_FEATURE_ENET_QUEUE > 1 */
+                         enet_event_t event,
+                         enet_frame_info_t *frameInfo,
+                         void *userData)
+{
+    /* Get frame info after whole frame transmits out */
+    if ((event == kENET_TxEvent) && (frameInfo != NULL))
+    {
+        txFrameInfo   = *frameInfo;
+        tx_frame_over = true;
+    }
+}
+
 /*!
  * @brief Main function
  */
 int main(void)
 {
     enet_config_t config;
-    uint32_t length = 0;
-    uint32_t sysClock;
+    phy_config_t phyConfig = {0};
+    uint32_t length        = 0;
     uint32_t ptpClock;
     uint32_t count = 0;
     bool link      = false;
+    bool autonego  = false;
     phy_speed_t speed;
     phy_duplex_t duplex;
     status_t result;
     uint32_t txnumber = 0;
-    enet_ptp_time_data_t ptpData;
     enet_ptp_time_t ptpTime;
-    uint32_t totalDelay;
     status_t status;
     uint8_t mGAddr[6] = {0x01, 0x00, 0x5e, 0x01, 0x01, 0x1};
+
     /* Hardware Initialization. */
     sc_ipc_t ipcHandle = BOARD_InitRpc();
 
@@ -173,7 +210,7 @@ int main(void)
     }
     BOARD_EnableNVIC();
 
-    PRINTF("\r\n ENET PTP 1588 example start.\r\n");
+    PRINTF("\r\nENET PTP 1588 example start.\r\n");
 
     /* prepare the buffer configuration. */
     enet_buffer_config_t buffConfig[] = {{
@@ -185,13 +222,16 @@ int main(void)
         &g_txBuffDescrip[0],
         &g_rxDataBuff[0][0],
         &g_txDataBuff[0][0],
+        true,
+        true,
+        &txFrameInfoArray[0],
     }};
 
-    sysClock = CORE_CLK_FREQ;
     ptpClock = PTP_CLK_FREQ;
     /* Prepare the PTP configure */
     enet_ptp_config_t ptpConfig = {
-        ENET_RXBD_NUM, ENET_TXBD_NUM, &g_rxPtpTsBuff[0], &g_txPtpTsBuff[0], kENET_PtpTimerChannel1, ptpClock,
+        kENET_PtpTimerChannel1,
+        ptpClock,
     };
 
     /*
@@ -201,25 +241,56 @@ int main(void)
      * config.rxMaxFrameLen = ENET_FRAME_MAX_FRAMELEN;
      */
     ENET_GetDefaultConfig(&config);
-    status = PHY_Init(EXAMPLE_ENET, EXAMPLE_PHY, sysClock);
-    while (status != kStatus_Success)
-    {
-        PRINTF("\r\nPHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
-        status = PHY_Init(EXAMPLE_ENET, EXAMPLE_PHY, sysClock);
-    }
 
-    PHY_GetLinkStatus(EXAMPLE_ENET, EXAMPLE_PHY, &link);
-    if (link)
+    /* The miiMode should be set according to the different PHY interfaces. */
+#ifdef EXAMPLE_PHY_INTERFACE_RGMII
+    config.miiMode = kENET_RgmiiMode;
+#else
+    config.miiMode = kENET_RmiiMode;
+#endif
+    phyConfig.phyAddr               = EXAMPLE_PHY_ADDRESS;
+    phyConfig.autoNeg               = true;
+    mdioHandle.resource.base        = EXAMPLE_ENET;
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
+
+    /* Initialize PHY and wait auto-negotiation over. */
+    PRINTF("Wait for PHY init...\r\n");
+    do
     {
-        /* Get the actual PHY link speed. */
-        PHY_GetLinkSpeedDuplex(EXAMPLE_ENET, EXAMPLE_PHY, &speed, &duplex);
-        /* Change the MII speed and duplex for actual link status. */
-        config.miiSpeed  = (enet_mii_speed_t)speed;
-        config.miiDuplex = (enet_mii_duplex_t)duplex;
-    }
+        status = PHY_Init(&phyHandle, &phyConfig);
+        if (status == kStatus_Success)
+        {
+            PRINTF("Wait for PHY link up...\r\n");
+            /* Wait for auto-negotiation success and link up */
+            count = PHY_AUTONEGO_TIMEOUT_COUNT;
+            do
+            {
+                PHY_GetAutoNegotiationStatus(&phyHandle, &autonego);
+                PHY_GetLinkStatus(&phyHandle, &link);
+                if (autonego && link)
+                {
+                    break;
+                }
+            } while (--count);
+            if (!autonego)
+            {
+                PRINTF("PHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
+            }
+        }
+    } while (!(link && autonego));
+
+#if PHY_STABILITY_DELAY_US
+    /* Wait a moment for PHY status to be stable. */
+    SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+#endif
+
+    /* Change the MII speed and duplex for actual link status. */
+    PHY_GetLinkSpeedDuplex(&phyHandle, &speed, &duplex);
+    config.miiSpeed  = (enet_mii_speed_t)speed;
+    config.miiDuplex = (enet_mii_duplex_t)duplex;
 
     /* Initialize ENET. */
-    ENET_Init(EXAMPLE_ENET, &g_handle, &config, &buffConfig[0], &g_macAddr[0], sysClock);
+    ENET_Init(EXAMPLE_ENET, &g_handle, &config, &buffConfig[0], &g_macAddr[0], EXAMPLE_CLOCK_FREQ);
     /* Configure PTP */
     ENET_Ptp1588Configure(EXAMPLE_ENET, &g_handle, &ptpConfig);
     /* Add to multicast group to receive ptp multicast frame. */
@@ -229,37 +300,45 @@ int main(void)
 
     ENET_BuildPtpEventFrame();
 
+    /* Enable Tx Reclaim and set callback to get timestamp */
+    ENET_SetTxReclaim(&g_handle, true, 0);
+    ENET_SetCallback(&g_handle, enetCallback, NULL);
+
+    /* Check if the timestamp is running */
     for (count = 1; count <= 10; count++)
     {
         ENET_Ptp1588GetTimer(EXAMPLE_ENET, &g_handle, &ptpTime);
         PRINTF(" Get the %d-th time", count);
         PRINTF(" %d second,", (uint32_t)ptpTime.second);
         PRINTF(" %d nanosecond  \r\n", ptpTime.nanosecond);
-        for (totalDelay = 0; totalDelay < 0xffffffU; totalDelay++)
-        {
-        }
+        SDK_DelayAtLeastUs(200000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     }
 
     while (1)
     {
         /* Get the Frame size */
-        result = ENET_GetRxFrameSize(&g_handle, &length);
+        result = ENET_GetRxFrameSize(&g_handle, &length, 0);
         /* Call ENET_ReadFrame when there is a received frame. */
         if (length != 0)
         {
             /* Received valid frame. Deliver the rx buffer with the size equal to length. */
             uint8_t *data = (uint8_t *)malloc(length);
-            result        = ENET_ReadFrame(EXAMPLE_ENET, &g_handle, data, length);
+            uint32_t ts;
+            enet_ptp_time_t rxPtpTime;
+            result = ENET_ReadFrame(EXAMPLE_ENET, &g_handle, data, length, 0, &ts);
             if (result == kStatus_Success)
             {
-                PRINTF(" A frame received. the length %d ", length);
-                memset((void *)&ptpData, 0, sizeof(enet_ptp_time_data_t));
-                ptpData.messageType = ENET_PTP_SYNC_MSG;
-                if (ENET_GetRxFrameTime(&g_handle, &ptpData) == kStatus_Success)
+                ENET_Ptp1588GetTimer(EXAMPLE_ENET, &g_handle, &rxPtpTime);
+                /* If latest timestamp reloads after getting from Rx BD, then second - 1 to make sure the actual Rx
+                 * timestamp is accurate */
+                if (rxPtpTime.nanosecond < ts)
                 {
-                    PRINTF(" the timestamp is %d second,", (uint32_t)ptpData.timeStamp.second);
-                    PRINTF(" %d nanosecond  \r\n", ptpData.timeStamp.nanosecond);
+                    rxPtpTime.second--;
                 }
+
+                PRINTF(" A frame received. the length %d ", length);
+                PRINTF(" the timestamp is %d second,", (uint32_t)rxPtpTime.second);
+                PRINTF(" %d nanosecond  \r\n", ts);
                 PRINTF(" Dest Address %02x:%02x:%02x:%02x:%02x:%02x Src Address %02x:%02x:%02x:%02x:%02x:%02x \r\n",
                        data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9],
                        data[10], data[11]);
@@ -269,27 +348,31 @@ int main(void)
         else if (result == kStatus_ENET_RxFrameError)
         {
             /* Update the received buffer when error happened. */
-            ENET_ReadFrame(EXAMPLE_ENET, &g_handle, NULL, 0);
+            ENET_ReadFrame(EXAMPLE_ENET, &g_handle, NULL, 0, 0, NULL);
         }
 
         if (g_testTxNum < ENET_TRANSMIT_DATA_NUM)
         {
             /* Send a multicast frame when the PHY is link up. */
-            if (kStatus_Success == PHY_GetLinkStatus(EXAMPLE_ENET, EXAMPLE_PHY, &link))
+            if (kStatus_Success == PHY_GetLinkStatus(&phyHandle, &link))
             {
                 if (link)
                 {
                     g_testTxNum++;
-                    if (kStatus_Success == ENET_SendFrame(EXAMPLE_ENET, &g_handle, &g_frame[0], ENET_DATA_LENGTH))
+                    tx_frame_over = false;
+                    if (kStatus_Success ==
+                        ENET_SendFrame(EXAMPLE_ENET, &g_handle, &g_frame[0], ENET_DATA_LENGTH, 0, true, NULL))
                     {
                         txnumber++;
-                        PRINTF("The %d frame transmitted success!", txnumber);
-                        memset((void *)&ptpData, 0, sizeof(enet_ptp_time_data_t));
-                        ptpData.messageType = ENET_PTP_SYNC_MSG;
-                        if (ENET_GetTxFrameTime(&g_handle, &ptpData) == kStatus_Success)
+                        /* Wait for Tx over then check timestamp */
+                        while (!tx_frame_over)
                         {
-                            PRINTF(" the timestamp is %d second,", (uint32_t)ptpData.timeStamp.second);
-                            PRINTF(" %d nanosecond  \r\n", ptpData.timeStamp.nanosecond);
+                        }
+                        PRINTF("The %d frame transmitted success!", txnumber);
+                        if (txFrameInfo.isTsAvail)
+                        {
+                            PRINTF(" the timestamp is %d second,", (uint32_t)txFrameInfo.timeStamp.second);
+                            PRINTF(" %d nanosecond  \r\n", txFrameInfo.timeStamp.nanosecond);
                         }
                         else
                         {

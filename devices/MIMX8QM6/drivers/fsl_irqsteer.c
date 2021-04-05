@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -77,17 +77,17 @@ void IRQSTEER_Init(IRQSTEER_Type *base)
     uint32_t i;
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Enable clock. */
-    CLOCK_EnableClock(s_irqsteerClockName[IRQSTEER_GetInstance(base)]);
+    (void)CLOCK_EnableClock(s_irqsteerClockName[IRQSTEER_GetInstance(base)]);
 #endif
     /* Mask all interrupts. */
-    for (i = 0; i < FSL_FEATURE_IRQSTEER_CHn_MASK_COUNT; i++)
+    for (i = 0; i < (uint32_t)FSL_FEATURE_IRQSTEER_CHn_MASK_COUNT; i++)
     {
         base->CHn_MASK[i] &= ~IRQSTEER_CHn_MASK_MASKFLD_MASK;
     }
     /* Enable NVIC vectors for all IRQSTEER master. */
-    for (i = 0; i < FSL_FEATURE_IRQSTEER_MASTER_COUNT; i++)
+    for (i = 0; i < (uint32_t)FSL_FEATURE_IRQSTEER_MASTER_COUNT; i++)
     {
-        EnableIRQ(s_irqsteerIRQNumber[i]);
+        (void)EnableIRQ(s_irqsteerIRQNumber[i]);
     }
 }
 
@@ -103,12 +103,12 @@ void IRQSTEER_Deinit(IRQSTEER_Type *base)
     uint32_t master;
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Disable clock. */
-    CLOCK_DisableClock(s_irqsteerClockName[IRQSTEER_GetInstance(base)]);
+    (void)CLOCK_DisableClock(s_irqsteerClockName[IRQSTEER_GetInstance(base)]);
 #endif
     /* Disable NVIC vectors for all IRQSTEER master. */
-    for (master = 0; master < FSL_FEATURE_IRQSTEER_MASTER_COUNT; master++)
+    for (master = 0; master < (uint32_t)FSL_FEATURE_IRQSTEER_MASTER_COUNT; master++)
     {
-        DisableIRQ(s_irqsteerIRQNumber[master]);
+        (void)DisableIRQ(s_irqsteerIRQNumber[master]);
     }
 }
 
@@ -122,8 +122,9 @@ void IRQSTEER_Deinit(IRQSTEER_Type *base)
  */
 IRQn_Type IRQSTEER_GetMasterNextInterrupt(IRQSTEER_Type *base, irqsteer_int_master_t intMasterIndex)
 {
-    uint32_t regIndex = FSL_FEATURE_IRQSTEER_CHn_MASK_COUNT - 1U - intMasterIndex * 2U;
+    uint32_t regIndex = (uint32_t)FSL_FEATURE_IRQSTEER_CHn_MASK_COUNT - 1U - ((uint32_t)intMasterIndex) * 2U;
     uint32_t bitOffset;
+    uint32_t irqNum;
 
     bitOffset = __CLZ(__RBIT(base->CHn_STATUS[regIndex]));
     /* When no result found, continue the loop to parse the next CHn_STATUS register. */
@@ -139,7 +140,8 @@ IRQn_Type IRQSTEER_GetMasterNextInterrupt(IRQSTEER_Type *base, irqsteer_int_mast
     }
     else
     {
-        return (IRQn_Type)(IRQSTEER_INT_SRC_NUM(regIndex, bitOffset) + FSL_FEATURE_IRQSTEER_IRQ_START_INDEX);
+        irqNum = (uint32_t)IRQSTEER_INT_SRC_NUM(regIndex, bitOffset) + (uint32_t)FSL_FEATURE_IRQSTEER_IRQ_START_INDEX;
+        return (IRQn_Type)irqNum;
     }
 }
 
@@ -151,7 +153,7 @@ static void IRQSTEER_CommonIRQHandler(IRQSTEER_Type *base, irqsteer_int_master_t
     intSource = IRQSTEER_GetMasterNextInterrupt(base, intMasterIndex);
     if (NotAvail_IRQn != intSource)
     {
-        isr = *(uint32_t *)(SCB->VTOR + ((uint32_t)(intSource + 16) << 2U));
+        isr = *(uint32_t *)(SCB->VTOR + (((uint32_t)intSource + 16UL) << 2U));
 
         ((void (*)(void))isr)();
     }
@@ -161,53 +163,57 @@ static void IRQSTEER_CommonIRQHandler(IRQSTEER_Type *base, irqsteer_int_master_t
     {
         if ((intMasterIndex == 6) && ((base->CHn_MASK[2]) & 0x10))
         {
-            isr = *(uint32_t *)(SCB->VTOR + ((ADMA_ESAI0_INT_IRQn + 16) << 2U));
+            isr = *(uint32_t *)(SCB->VTOR + (((uint32_t)ADMA_ESAI0_INT_IRQn + 16UL) << 2U));
             ((void (*)(void))isr)();
         }
     }
 #endif
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
+void IRQSTEER_0_DriverIRQHandler(void);
 void IRQSTEER_0_DriverIRQHandler(void)
 {
     IRQSTEER_CommonIRQHandler(IRQSTEER, kIRQSTEER_InterruptMaster0);
 }
 
+void IRQSTEER_1_DriverIRQHandler(void);
 void IRQSTEER_1_DriverIRQHandler(void)
 {
     IRQSTEER_CommonIRQHandler(IRQSTEER, kIRQSTEER_InterruptMaster1);
 }
 
+void IRQSTEER_2_DriverIRQHandler(void);
 void IRQSTEER_2_DriverIRQHandler(void)
 {
     IRQSTEER_CommonIRQHandler(IRQSTEER, kIRQSTEER_InterruptMaster2);
 }
 
+void IRQSTEER_3_DriverIRQHandler(void);
 void IRQSTEER_3_DriverIRQHandler(void)
 {
     IRQSTEER_CommonIRQHandler(IRQSTEER, kIRQSTEER_InterruptMaster3);
 }
 
+void IRQSTEER_4_DriverIRQHandler(void);
 void IRQSTEER_4_DriverIRQHandler(void)
 {
     IRQSTEER_CommonIRQHandler(IRQSTEER, kIRQSTEER_InterruptMaster4);
 }
 
+void IRQSTEER_5_DriverIRQHandler(void);
 void IRQSTEER_5_DriverIRQHandler(void)
 {
     IRQSTEER_CommonIRQHandler(IRQSTEER, kIRQSTEER_InterruptMaster5);
 }
 
+void IRQSTEER_6_DriverIRQHandler(void);
 void IRQSTEER_6_DriverIRQHandler(void)
 {
     IRQSTEER_CommonIRQHandler(IRQSTEER, kIRQSTEER_InterruptMaster6);
 }
 
+void IRQSTEER_7_DriverIRQHandler(void);
 void IRQSTEER_7_DriverIRQHandler(void)
 {
     IRQSTEER_CommonIRQHandler(IRQSTEER, kIRQSTEER_InterruptMaster7);

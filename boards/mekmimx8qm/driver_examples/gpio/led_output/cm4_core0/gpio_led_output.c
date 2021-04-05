@@ -1,32 +1,27 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_lpuart.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LED_GPIO LSIO__GPIO3
+#define EXAMPLE_LED_GPIO     LSIO__GPIO3
 #define EXAMPLE_LED_GPIO_PIN 7U
-#define EXAMPLE_DELAY_COUNT (SystemCoreClock / 100U)
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-/*!
- * @brief delay a while.
- */
-void delay(void);
 
 /*******************************************************************************
  * Variables
@@ -36,15 +31,6 @@ volatile bool g_pinSet = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void delay(void)
-{
-    volatile uint32_t i = 0;
-    for (i = 0; i < EXAMPLE_DELAY_COUNT; ++i)
-    {
-        __asm("NOP"); /* delay */
-    }
-}
-
 /*!
  * @brief Main function
  */
@@ -78,7 +64,7 @@ int main(void)
 
     while (1)
     {
-        delay();
+        SDK_DelayAtLeastUs(100000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 #if (defined(FSL_FEATURE_IGPIO_HAS_DR_TOGGLE) && (FSL_FEATURE_IGPIO_HAS_DR_TOGGLE == 1))
         GPIO_PortToggle(EXAMPLE_LED_GPIO, 1u << EXAMPLE_LED_GPIO_PIN);
 #else

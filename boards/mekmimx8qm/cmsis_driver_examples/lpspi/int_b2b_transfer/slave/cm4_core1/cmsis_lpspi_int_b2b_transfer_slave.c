@@ -8,16 +8,16 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi_cmsis.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /*Master related*/
-#define DRIVER_SLAVE_SPI Driver_SPI2
+#define DRIVER_SLAVE_SPI                 Driver_SPI2
 #define EXAMPLE_LPSPI_SLAVE_DMA_BASEADDR DMA__EDMA0
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 

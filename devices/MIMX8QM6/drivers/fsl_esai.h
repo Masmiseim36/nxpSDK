@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,11 +22,11 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_ESAI_DRIVER_VERSION (MAKE_VERSION(2, 0, 1)) /*!< Version 2.0.1 */
+#define FSL_ESAI_DRIVER_VERSION (MAKE_VERSION(2, 1, 1)) /*!< Version 2.1.1 */
 /*@}*/
 
-/*! @brief ESAI return status*/
-enum _esai_status_t
+/*! @brief ESAI return status, _esai_status_t*/
+enum
 {
     kStatus_ESAI_TxBusy    = MAKE_STATUS(kStatusGroup_ESAI, 0), /*!< ESAI Tx is busy. */
     kStatus_ESAI_RxBusy    = MAKE_STATUS(kStatusGroup_ESAI, 1), /*!< ESAI Rx is busy. */
@@ -85,22 +85,22 @@ typedef enum _esai_clock_polarity
     kESAI_ClockActiveLow,         /*!< Clock actie while low */
 } esai_clock_polarity_t;
 
-/*!< @brief ESAI shifter register shift direction */
+/*! @brief ESAI shifter register shift direction */
 typedef enum _esai_shift_direction
 {
     kESAI_ShifterMSB = 0x0, /*!< Data is shifted MSB first */
     kESAI_ShifterLSB = 0x1  /*!< Data is shifted LSB first */
 } esai_shift_direction_t;
 
-/*!< @brief ESAI clock direction */
+/*! @brief ESAI clock direction */
 typedef enum _esai_clock_direction
 {
     kESAI_ClockInput  = 0x0, /*!< Clock direction is input */
     kESAI_ClockOutput = 0x1  /*!< Clock direction is output */
 } esai_clock_direction_t;
 
-/*! @brief The ESAI interrupt enable flag */
-enum _esai_interrupt_enable_t
+/*! @brief The ESAI interrupt enable flag, _esai_interrupt_enable_t */
+enum
 {
     kESAI_LastSlotInterruptEnable =
         ESAI_TCR_TLIE_MASK, /*!< Enable interrupt at the beginning of last slot of frame in network mode */
@@ -109,8 +109,8 @@ enum _esai_interrupt_enable_t
     kESAI_ExceptionInterruptEnable    = ESAI_TCR_TEIE_MASK,  /*!< FIFO error flag */
 };
 
-/*! @brief The ESAI status flag */
-enum _esai_flags
+/*! @brief The ESAI status flag, _esai_flags*/
+enum
 {
     kESAI_TransmitInitFlag          = ESAI_ESR_TINIT_MASK, /*!< Indicates transmit FIFO is writing the first word */
     kESAI_ReceiveFIFOFullFlag       = ESAI_ESR_RFF_MASK,   /*!< Receive FIFO full flag */
@@ -125,8 +125,8 @@ enum _esai_flags
     kESAI_ReceiveData               = ESAI_ESR_RD_MASK,    /*!< Receive data */
 };
 
-/*! @brief SAI interface port status flag*/
-enum _esai_sai_flags
+/*! @brief SAI interface port status flag, _esai_sai_flags*/
+enum
 {
     kESAI_TransmitOddRegEmpty   = ESAI_SAISR_TODFE_MASK, /*!< Enabled transmitter register empty at odd slot */
     kESAI_TransmitEvenRegEmpty  = ESAI_SAISR_TEDE_MASK,  /*!< Enabled transmitter register empty at even slot */
@@ -166,6 +166,7 @@ typedef enum _esai_word_width
     kESAI_WordWidth32bits = 32U  /*!< Audio data width 32 bits */
 } esai_word_width_t;
 
+/*! @brief esai slot word length */
 typedef enum _esai_slot_format
 {
     kESAI_SlotLen8WordLen8   = 0x0U,  /*!< Slot length 8 bits, word length 8 bits */
@@ -228,7 +229,7 @@ typedef struct _esai_config
 } esai_config_t;
 
 /*!@brief ESAI transfer queue size, user can refine it according to use case. */
-#define ESAI_XFER_QUEUE_SIZE (4)
+#define ESAI_XFER_QUEUE_SIZE (4U)
 
 /*! @brief esai transfer format */
 typedef struct _esai_format
@@ -468,6 +469,24 @@ static inline void EASI_RxSetSlotMask(ESAI_Type *base, uint32_t slot)
     base->RSMB = (slot & 0xFFFF0000U) >> 16U;
 }
 
+/*!
+ * @brief Get the data length and slot length from the input.
+ *
+ * This API sets the audio protocol defined by users.
+ *
+ * @param slotFormat Slot type.
+ * @param slotLen Pointer to the return slot length value.
+ * @param dataLen Pointer to the return data length in a slot.
+ */
+void ESAI_AnalysisSlot(esai_slot_format_t slotFormat, uint8_t *slotLen, uint8_t *dataLen);
+
+/*!
+ * @brief Get the instance number for ESAI.
+ *
+ * @param base ESAI base pointer.
+ */
+uint32_t ESAI_GetInstance(ESAI_Type *base);
+
 /*! @} */
 
 /*!
@@ -479,7 +498,7 @@ static inline void EASI_RxSetSlotMask(ESAI_Type *base, uint32_t slot)
  * @brief Gets the ESAI status flag state.
  *
  * @param base ESAI base pointer
- * @return ESAI staus flag value. Use status flag to AND #_esai_flags to get the related status.
+ * @return ESAI staus flag value. Use status flag to AND _esai_flags to get the related status.
  */
 static inline uint32_t ESAI_GetStatusFlag(ESAI_Type *base)
 {
@@ -490,7 +509,7 @@ static inline uint32_t ESAI_GetStatusFlag(ESAI_Type *base)
  * @brief Gets the ESAI SAI port status flag state.
  *
  * @param base ESAI base pointer
- * @return ESAI staus flag value. Use status flag to AND #_esai_sai_flags to get the related status.
+ * @return ESAI staus flag value. Use status flag to AND _esai_sai_flags to get the related status.
  */
 static inline uint32_t ESAI_GetSAIStatusFlag(ESAI_Type *base)
 {

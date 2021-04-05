@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -63,7 +63,7 @@ bool CLOCK_EnableClockExt(clock_ip_name_t name, uint32_t gate)
     err = sc_pm_clock_enable(ipcHandle, LPCG_TUPLE_RSRC(name), SC_PM_CLK_PER, true, (bool)gate);
 
     /* Enable the Clock Gate control in LPCG */
-    CLOCK_ConfigLPCG(name, 1U, gate);
+    CLOCK_ConfigLPCG(name, true, (bool)gate);
 
     if (err != SC_ERR_NONE)
     {
@@ -86,7 +86,7 @@ bool CLOCK_DisableClock(clock_ip_name_t name)
     sc_err_t err;
 
     /* Disable the Clock Gate control in LPCG */
-    CLOCK_ConfigLPCG(name, 0U, 0U);
+    CLOCK_ConfigLPCG(name, false, false);
 
     err = sc_pm_clock_enable(ipcHandle, LPCG_TUPLE_RSRC(name), SC_PM_CLK_PER, false, false);
 
@@ -207,12 +207,12 @@ uint32_t CLOCK_GetFreq(clock_name_t name)
  *
  * param regBase LPCG register base address.
  * param swGate Software clock gating. 0: clock is gated;  1: clock is enabled
- * param swGate Hardware auto gating. 0: disable the HW clock gate control;  1: HW clock gating is enabled
+ * param hwGate Hardware auto gating. 0: disable the HW clock gate control;  1: HW clock gating is enabled
  * param bitsMask The available bits in LPCG register. Each bit indicate the corresponding bit is available or not.
  */
-void CLOCK_SetLpcgGate(volatile uint32_t *regBase, uint32_t swGate, uint32_t hwGate, uint32_t bitsMask)
+void CLOCK_SetLpcgGate(volatile uint32_t *regBase, bool swGate, bool hwGate, uint32_t bitsMask)
 {
-    if (regBase)
+    if (regBase != NULL)
     {
         if (swGate)
         {
@@ -241,14 +241,14 @@ void CLOCK_SetLpcgGate(volatile uint32_t *regBase, uint32_t swGate, uint32_t hwG
  * param swGate Software clock gating. 0: clock is gated;  1: clock is enabled
  * param swGate Hardware auto gating. 0: disable the HW clock gate control;  1: HW clock gating is enabled
  */
-void CLOCK_ConfigLPCG(clock_ip_name_t name, uint32_t swGate, uint32_t hwGate)
+void CLOCK_ConfigLPCG(clock_ip_name_t name, bool swGate, bool hwGate)
 {
     volatile uint32_t *regBase;
 
     regBase = LPCG_TUPLE_REG_BASE(name);
 
     /* Return if LPCG Cell is not available. */
-    if (regBase == NV)
+    if (regBase == NULL)
     {
         return;
     }
@@ -260,7 +260,7 @@ void CLOCK_ConfigLPCG(clock_ip_name_t name, uint32_t swGate, uint32_t hwGate)
         case kCLOCK_CONNECTIVITY_Enet0:
         case kCLOCK_CONNECTIVITY_Enet1:
             CLOCK_SetLpcgGate(regBase, swGate, hwGate, 0xBBAAABU);
-            CLOCK_SetLpcgGate(regBase + 0x1U, swGate, hwGate, 0xAU);
+            CLOCK_SetLpcgGate(&regBase[1U], swGate, hwGate, 0xAU);
             break;
 
         /* LPCG cell avalialbe bits field mask 0xA000B.*/
@@ -278,7 +278,7 @@ void CLOCK_ConfigLPCG(clock_ip_name_t name, uint32_t swGate, uint32_t hwGate)
         case kCLOCK_AUDIO_Gpt5:
             CLOCK_SetLpcgGate(regBase, swGate, hwGate, 0xAA000BU);
             break;
-            
+
         /* LPCG cell avalialbe bits field mask 0xAAB0AAB.*/
         case kCLOCK_LSIO_Gpt0:
         case kCLOCK_LSIO_Gpt1:
@@ -287,7 +287,7 @@ void CLOCK_ConfigLPCG(clock_ip_name_t name, uint32_t swGate, uint32_t hwGate)
         case kCLOCK_LSIO_Gpt4:
             CLOCK_SetLpcgGate(regBase, swGate, hwGate, 0xAAB0AABU);
             break;
-            
+
         /* LPCG cell avalialbe bits field mask 0xB0000.*/
         case kCLOCK_HSIO_Gpio:
         case kCLOCK_LSIO_Gpio0:
@@ -362,7 +362,7 @@ void CLOCK_ConfigLPCG(clock_ip_name_t name, uint32_t swGate, uint32_t hwGate)
         case kCLOCK_DMA_Can2:
             CLOCK_SetLpcgGate(regBase, swGate, hwGate, 0xBB000B);
             break;
-            
+
         /* LPCG cell avalialbe bits field mask 0xBAA000A.*/
         case kCLOCK_LSIO_Flexspi0:
         case kCLOCK_LSIO_Flexspi1:
@@ -371,6 +371,7 @@ void CLOCK_ConfigLPCG(clock_ip_name_t name, uint32_t swGate, uint32_t hwGate)
 
         /* LPCG cell is not avaliable or is not supported by this function. */
         default:
+            /* Add comments to avoid the violation of MISRA C-2012 rule 16.4. */
             break;
     }
 }

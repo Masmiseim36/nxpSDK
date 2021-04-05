@@ -8,24 +8,24 @@
 #include "fsl_debug_console.h"
 #include "fsl_intmux.h"
 #include "fsl_irqsteer.h"
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_lpuart.h"
 #include "fsl_lpit.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* Timer to generate input interrupt source for INTMUX */
-#define DEMO_LPIT_BASE CM4_0__LPIT
+#define DEMO_LPIT_BASE   CM4_0__LPIT
 #define LPIT_SOURCECLOCK CLOCK_GetIpFreq(kCLOCK_M4_0_Lpit)
 
 #define DEMO_IRQSTEER_BASE IRQSTEER
-#define DEMO_INTMUX_BASE CM4_0__INTMUX
+#define DEMO_INTMUX_BASE   CM4_0__INTMUX
 
-#define DEMO_INTMUX_CHANNEL 0U
+#define DEMO_INTMUX_CHANNEL    0U
 #define DEMO_INTMUX_SOURCE_IRQ M4_0_INTMUX_SOURCE_LPIT_IRQn /* LPIT */
-#define DEMO_M4_INT_OUT_IRQn M4_0_INT_OUT0_IRQn             /* The IRQSTEER IRQ handle */
+#define DEMO_M4_INT_OUT_IRQn   M4_0_INT_OUT0_IRQn           /* The IRQSTEER IRQ handle */
 
 
 /*******************************************************************************

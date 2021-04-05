@@ -16,10 +16,10 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_lpuart.h"
 /*******************************************************************************
  * Definitions
@@ -76,7 +76,10 @@ static void write_task_1(void *pvParameters)
 {
     while (1)
     {
-        xSemaphoreTake(xMutex, portMAX_DELAY);
+        if (xSemaphoreTake(xMutex, portMAX_DELAY) != pdTRUE)
+        {
+            PRINTF("Failed to take semaphore.\r\n");
+        }
         PRINTF("ABCD |");
         taskYIELD();
         PRINTF(" EFGH\r\n");
@@ -92,7 +95,10 @@ static void write_task_2(void *pvParameters)
 {
     while (1)
     {
-        xSemaphoreTake(xMutex, portMAX_DELAY);
+        if (xSemaphoreTake(xMutex, portMAX_DELAY) != pdTRUE)
+        {
+            PRINTF("Failed to take semaphore.\r\n");
+        }
         PRINTF("1234 |");
         taskYIELD();
         PRINTF(" 5678\r\n");

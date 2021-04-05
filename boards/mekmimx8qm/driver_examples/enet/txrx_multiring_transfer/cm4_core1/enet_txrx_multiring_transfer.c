@@ -1,10 +1,13 @@
 /*
- * Copyright  2017 NXP.
+ * Copyright 2017-2020 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+
 #include <stdlib.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_enet.h"
@@ -12,43 +15,57 @@
 #if defined(FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET) && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
 #include "fsl_memory.h"
 #endif
-#include "pin_mux.h"
-#include "clock_config.h"
+
 #include "fsl_lpuart.h"
 #include "svc/misc/misc_api.h"
 #include "fsl_irqsteer.h"
+#include "fsl_enet_mdio.h"
+#include "fsl_phyar8031.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_ENET CONNECTIVITY__ENET0
-#define EXAMPLE_PHY (0x00U)
-#define CORE_CLK_FREQ (167000000U)
-#define ENET_RXBD_NUM (2)
-#define ENET_TXBD_NUM (2)
-#define ENET_RXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
-#define ENET_TXBUFF_SIZE (ENET_FRAME_MAX_FRAMELEN)
-#define ENET_BuffSizeAlign(n) ENET_ALIGN(n, ENET_BUFF_ALIGNMENT)
-#define ENET_DATA_LENGTH (1000)
-#define ENET_HEAD_LENGTH (14)
-#define ENET_FRAME_LENGTH ENET_DATA_LENGTH + ENET_HEAD_LENGTH
-#define ENET_TRANSMIT_DATA_NUM (30)
-#define ENET_ALIGN(x, align) ((unsigned int)((x) + ((align)-1)) & (unsigned int)(~(unsigned int)((align)-1)))
-#define ENET_HEAD_TYPE_OFFSET 12U               /*!< ENET head type offset. */
-#define ENET_VLANTYPE 0x8100U                   /*! @brief VLAN TYPE */
-#define ENET_VLANTAGLEN 4U                      /*! @brief VLAN TAG length */
-#define ENET_AVBTYPE 0x22F0U                    /*! @brief AVB TYPE */
-#define ENET_AVTPDU_IEC61883 0U                 /*! @brief AVTPDU formats to use the IEC 61883 protocol as subtype. */
-#define ENET_AVTPDU_IEC61883_SUBTYPE_MASK 0x7FU /*! @brief AVTPDU formats to use the IEC 61883 subtype mask. */
-#define ENET_AVTPDU_IEC61883_SPH_OFFSET 26U     /*! @brief AVTPDU IEC61883 format SPH feild byte-offset. */
-#define ENET_AVTPDU_IEC61883_SPH_MASK 0x04U     /*! @brief AVTPDU IEC61883 format SPH BIT MASK in the byte. */
-#define ENET_AVTPDU_IEC61883_FMT_OFFSET 28U     /*! @brief AVTPDU IEC61883 format FMT feild byte-offset. */
-#define ENET_AVTPDU_IEC61883_FMT_MASK 0x3FU     /*! @brief AVTPDU IEC61883 format FMT BIT MASK in the byte. */
-#define ENET_AVTPDU_IEC61883_6AUDIOTYPE 0x10U   /*! @brief AVTPDU IEC61883-6 audio&music type. */
-#define ENET_AVTPDU_IEC61883_8DVDTYPE 0x00U     /*! @brief AVTPDU IEC61883-8 DV type. */
-#define ENET_HTONS(n) __REV16(n)
+#define EXAMPLE_ENET          CONNECTIVITY__ENET0
+#define EXAMPLE_PHY_ADDRESS   (0x00U)
+
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyar8031_ops
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ (167000000U)
+#define ENET_RXBD_NUM                     (2)
+#define ENET_TXBD_NUM                     (2)
+#define ENET_RXBUFF_SIZE                  (ENET_FRAME_MAX_FRAMELEN)
+#define ENET_TXBUFF_SIZE                  (ENET_FRAME_MAX_FRAMELEN)
+#define ENET_BuffSizeAlign(n)             ENET_ALIGN(n, ENET_BUFF_ALIGNMENT)
+#define ENET_DATA_LENGTH                  (1000)
+#define ENET_HEAD_LENGTH                  (14)
+#define ENET_FRAME_LENGTH                 ENET_DATA_LENGTH + ENET_HEAD_LENGTH
+#define ENET_TRANSMIT_DATA_NUM            (30)
+#define ENET_ALIGN(x, align)              ((unsigned int)((x) + ((align)-1)) & (unsigned int)(~(unsigned int)((align)-1)))
+#define ENET_HEAD_TYPE_OFFSET             12U     /*!< ENET head type offset. */
+#define ENET_VLANTYPE                     0x8100U /*! @brief VLAN TYPE */
+#define ENET_VLANTAGLEN                   4U      /*! @brief VLAN TAG length */
+#define ENET_AVBTYPE                      0x22F0U /*! @brief AVB TYPE */
+#define ENET_AVTPDU_IEC61883              0U      /*! @brief AVTPDU formats to use the IEC 61883 protocol as subtype. */
+#define ENET_AVTPDU_IEC61883_SUBTYPE_MASK 0x7FU   /*! @brief AVTPDU formats to use the IEC 61883 subtype mask. */
+#define ENET_AVTPDU_IEC61883_SPH_OFFSET   26U     /*! @brief AVTPDU IEC61883 format SPH feild byte-offset. */
+#define ENET_AVTPDU_IEC61883_SPH_MASK     0x04U   /*! @brief AVTPDU IEC61883 format SPH BIT MASK in the byte. */
+#define ENET_AVTPDU_IEC61883_FMT_OFFSET   28U     /*! @brief AVTPDU IEC61883 format FMT feild byte-offset. */
+#define ENET_AVTPDU_IEC61883_FMT_MASK     0x3FU   /*! @brief AVTPDU IEC61883 format FMT BIT MASK in the byte. */
+#define ENET_AVTPDU_IEC61883_6AUDIOTYPE   0x10U   /*! @brief AVTPDU IEC61883-6 audio&music type. */
+#define ENET_AVTPDU_IEC61883_8DVDTYPE     0x00U   /*! @brief AVTPDU IEC61883-8 DV type. */
+#define ENET_HTONS(n)                     __REV16(n)
 #ifndef APP_ENET_BUFF_ALIGNMENT
 #define APP_ENET_BUFF_ALIGNMENT ENET_BUFF_ALIGNMENT
 #endif
+#ifndef PHY_AUTONEGO_TIMEOUT_COUNT
+#define PHY_AUTONEGO_TIMEOUT_COUNT (800000U)
+#endif
+#ifndef PHY_STABILITY_DELAY_US
+#define PHY_STABILITY_DELAY_US (500000U)
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -94,6 +111,11 @@ uint32_t g_txIndex2      = 0;
 uint32_t g_txCurrentIdx  = 0;
 uint32_t g_txSuccessFlag = false;
 uint32_t g_rxSuccessFlag = false;
+
+/*! @brief Enet PHY and MDIO interface handler. */
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -171,7 +193,12 @@ static void ENET_BuildFrame(void)
     }
 }
 
-void ENET_IntCallback(ENET_Type *base, enet_handle_t *handle, uint32_t ringId, enet_event_t event, void *param)
+void ENET_IntCallback(ENET_Type *base,
+                      enet_handle_t *handle,
+                      uint32_t ringId,
+                      enet_event_t event,
+                      enet_frame_info_t *frameInfo,
+                      void *param)
 {
     status_t status;
     uint32_t length;
@@ -180,12 +207,12 @@ void ENET_IntCallback(ENET_Type *base, enet_handle_t *handle, uint32_t ringId, e
     {
         case kENET_RxEvent:
             /* Get the Frame size */
-            status = ENET_GetRxFrameSizeMultiRing(&g_handle, &length, ringId);
+            status = ENET_GetRxFrameSize(&g_handle, &length, ringId);
             if ((status == kStatus_Success) && (length != 0))
             {
                 /* Received valid frame. Deliver the rx buffer with the size equal to length. */
                 uint8_t *data = (uint8_t *)malloc(length);
-                status        = ENET_ReadFrameMultiRing(EXAMPLE_ENET, &g_handle, data, length, ringId);
+                status        = ENET_ReadFrame(EXAMPLE_ENET, &g_handle, data, length, ringId, NULL);
                 if (status == kStatus_Success)
                 {
                     if (ringId == 0)
@@ -206,7 +233,7 @@ void ENET_IntCallback(ENET_Type *base, enet_handle_t *handle, uint32_t ringId, e
             else if (status == kStatus_ENET_RxFrameError)
             {
                 /* update the receive buffer. */
-                ENET_ReadFrameMultiRing(EXAMPLE_ENET, &g_handle, NULL, 0, ringId);
+                ENET_ReadFrame(EXAMPLE_ENET, &g_handle, NULL, 0, ringId, NULL);
             }
             /* Set rx success flag. */
             if (g_rxIndex + g_rxIndex1 + g_rxIndex2 == ENET_TRANSMIT_DATA_NUM)
@@ -248,12 +275,16 @@ void ENET_IntCallback(ENET_Type *base, enet_handle_t *handle, uint32_t ringId, e
 int main(void)
 {
     enet_config_t config;
-    uint32_t sysClock;
-    bool link = false;
     enet_avb_config_t avbConfig;
-    uint32_t ringId    = 0;
-    uint32_t testTxNum = 0;
+    phy_config_t phyConfig = {0};
+    bool link              = false;
+    bool autonego          = false;
+    uint32_t ringId        = 0;
+    uint32_t testTxNum     = 0;
     status_t result;
+    phy_speed_t speed;
+    phy_duplex_t duplex;
+    volatile uint32_t count = 0;
 
     /* Hardware Initialization. */
     sc_ipc_t ipcHandle = BOARD_InitRpc();
@@ -304,7 +335,7 @@ int main(void)
 
     memset(&avbConfig, 0, sizeof(enet_avb_config_t));
 
-    /* prepare the buffer configuration. */
+    /* Prepare the buffer configuration. */
     const enet_buffer_config_t buffConfig[FSL_FEATURE_ENET_QUEUE] = {
         {
             ENET_RXBD_NUM,
@@ -315,6 +346,9 @@ int main(void)
             &g_txBuffDescrip[0][0],
             &g_rxDataBuff[0][0],
             &g_txDataBuff[0][0],
+            true,
+            true,
+            NULL,
         },
         {
             ENET_RXBD_NUM,
@@ -325,6 +359,9 @@ int main(void)
             &g_txBuffDescrip[1][0],
             &g_rxDataBuff1[0][0],
             &g_txDataBuff1[0][0],
+            true,
+            true,
+            NULL,
         },
         {
             ENET_RXBD_NUM,
@@ -335,39 +372,60 @@ int main(void)
             &g_txBuffDescrip[2][0],
             &g_rxDataBuff2[0][0],
             &g_txDataBuff2[0][0],
+            true,
+            true,
+            NULL,
         }};
 
-    sysClock = CORE_CLK_FREQ;
-
-    PRINTF("\r\n ENET multi-ring txrx example start.\r\n");
+    PRINTF("\r\nENET multi-ring txrx example start.\r\n");
 
     /* Get default configuration 100M RMII. */
     ENET_GetDefaultConfig(&config);
     /* Set SMI to get PHY link status. */
-    sysClock = CORE_CLK_FREQ;
-    result   = PHY_Init(EXAMPLE_ENET, EXAMPLE_PHY, sysClock);
-    /* PHY will not be succeed to finish auto-negotiation when in loopback mode.
-       So if you didn't insert the cable with the valid linker partner or set phy
-       with loopback mode. the auto-negotiation will fail. in this demo auto-negotiation
-       failure will not be a problem since we use the phy loopback mode.
-     */
-    if ((result != kStatus_PHY_AutoNegotiateFail) && (result != kStatus_Success))
+    phyConfig.phyAddr               = EXAMPLE_PHY_ADDRESS;
+    phyConfig.autoNeg               = true;
+    mdioHandle.resource.base        = EXAMPLE_ENET;
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
+
+    /* Initialize PHY and wait auto-negotiation over. */
+    PRINTF("Wait for PHY init...\r\n");
+    do
     {
-        PRINTF("PHY initialize failed\r\n");
-    }
+        result = PHY_Init(&phyHandle, &phyConfig);
+        if (result == kStatus_Success)
+        {
+            PRINTF("Wait for PHY link up...\r\n");
+            /* Wait for auto-negotiation success and link up */
+            count = PHY_AUTONEGO_TIMEOUT_COUNT;
+            do
+            {
+                PHY_GetAutoNegotiationStatus(&phyHandle, &autonego);
+                PHY_GetLinkStatus(&phyHandle, &link);
+                if (autonego && link)
+                {
+                    break;
+                }
+            } while (--count);
+            if (!autonego)
+            {
+                PRINTF("PHY Auto-negotiation failed. Please check the cable connection and link partner setting.\r\n");
+            }
+        }
+    } while (!(link && autonego));
 
-    /*Set Phy local loop back mode*/
-    PHY_EnableLoopback(EXAMPLE_ENET, EXAMPLE_PHY, kPHY_LocalLoop, kPHY_Speed1000M, true);
+    /* Wait a moment for PHY status to be stable. */
+    SDK_DelayAtLeastUs(PHY_STABILITY_DELAY_US, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
-    /* Initialize ENET. */
-    config.miiSpeed = kENET_MiiSpeed1000M;
-    config.miiMode  = kENET_RgmiiMode; /* For zebu test mii mode with loop mode*/
-
+    /* Change the MII speed and duplex for actual link status. */
+    PHY_GetLinkSpeedDuplex(&phyHandle, &speed, &duplex);
+    config.miiSpeed  = (enet_mii_speed_t)speed;
+    config.miiDuplex = (enet_mii_duplex_t)duplex;
+    config.miiMode   = kENET_RgmiiMode;
     config.interrupt = ENET_TX_INTERRUPT | ENET_RX_INTERRUPT;
     config.ringNum   = 3;
-    /* Open promiscuous mode for loopback */
-    config.macSpecialConfig = kENET_ControlPromiscuousEnable;
-    ENET_Init(EXAMPLE_ENET, &g_handle, &config, &buffConfig[0], &g_macAddr[0], sysClock);
+
+    /* Initialize ENET. */
+    ENET_Init(EXAMPLE_ENET, &g_handle, &config, &buffConfig[0], &g_macAddr[0], EXAMPLE_CLOCK_FREQ);
     /* Ring 1 BW fraction is 0.5 = 1/(1+ 512/512), Ring 2 BW fraction is 0.2 = 1/(1 + 512/128)  */
     avbConfig.idleSlope[0] = kENET_IdleSlope512;
     avbConfig.idleSlope[1] = kENET_IdleSlope128;
@@ -382,20 +440,19 @@ int main(void)
 
     /* Build broadcast for sending and active for receiving. */
     ENET_BuildFrame();
-
-    ENET_ActiveReadMultiRing(EXAMPLE_ENET);
+    ENET_ActiveRead(EXAMPLE_ENET);
 
     while (1)
     {
         if (testTxNum < ENET_TRANSMIT_DATA_NUM)
         {
             /* Send a multicast frame when the PHY is link up. */
-            PHY_GetLinkStatus(EXAMPLE_ENET, EXAMPLE_PHY, &link);
+            PHY_GetLinkStatus(&phyHandle, &link);
             if (link)
             {
                 testTxNum++;
-                if (kStatus_Success ==
-                    ENET_SendFrameMultiRing(EXAMPLE_ENET, &g_handle, &g_frame[ringId][0], ENET_FRAME_LENGTH, ringId))
+                if (kStatus_Success == ENET_SendFrame(EXAMPLE_ENET, &g_handle, &g_frame[ringId][0], ENET_FRAME_LENGTH,
+                                                      ringId, false, NULL))
                 {
                     PRINTF("The %d frame transmitted from the ring %d !\r\n", g_txCurrentIdx, ringId);
                     ringId = (ringId + 1) % 3;

@@ -9,11 +9,11 @@
 #include "fsl_common.h"
 #include "fsl_sema42.h"
 #include "fsl_mu.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_lpuart.h"
 #include "main/imx8qm_pads.h"
 /*******************************************************************************
@@ -21,11 +21,11 @@
  ******************************************************************************/
 #define APP_BOARD_HAS_LED 0 /* No LED connected to CM4 pads */
 
-#define APP_MU LSIO__MU7_A
+#define APP_MU     LSIO__MU7_A
 #define APP_SEMA42 CM4_0__SEMA42
 
 #define USE_STATIC_DOMAIN_ID 0
-#define CORE0_BOOT_CORE1 0
+#define CORE0_BOOT_CORE1     0
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U
 /* Flag indicates Core 0 has locked the sema42 gate. */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,16 +16,16 @@
 #define FSL_COMPONENT_ID "platform.drivers.ldb"
 #endif
 
-#define LDB_CH_COUNT 2
+#define LDB_CH_COUNT 2U
 
-#define LDB_DPI_24BIT 5
+#define LDB_DPI_24BIT 5U
 
 #if (defined(FSL_FEATURE_LDB_COMBO_PHY) && FSL_FEATURE_LDB_COMBO_PHY)
 
-#define LDB_PM_CTRL_REG_CH_MODE_MASK(ch) (LDB_PM_CTRL_REG_CH0_MODE_MASK << ((ch)*2))
-#define LDB_PM_CTRL_REG_CH_DATA_WIDTH_MASK(ch) (LDB_PM_CTRL_REG_CH0_DATA_WIDTH_MASK << ((ch)*2))
-#define LDB_PM_CTRL_REG_CH_BIT_MAPPING_MASK(ch) (LDB_PM_CTRL_REG_CH0_BIT_MAPPING_MASK << ((ch)*2))
-#define LDB_PM_CTRL_REG_DI_VS_POLARITY_MASK(di) (LDB_PM_CTRL_REG_DI0_VS_POLARITY_MASK << (di))
+#define LDB_PM_CTRL_REG_CH_MODE_MASK(ch)        ((uint32_t)LDB_PM_CTRL_REG_CH0_MODE_MASK << ((ch)*2U))
+#define LDB_PM_CTRL_REG_CH_DATA_WIDTH_MASK(ch)  ((uint32_t)LDB_PM_CTRL_REG_CH0_DATA_WIDTH_MASK << ((ch)*2U))
+#define LDB_PM_CTRL_REG_CH_BIT_MAPPING_MASK(ch) ((uint32_t)LDB_PM_CTRL_REG_CH0_BIT_MAPPING_MASK << ((ch)*2U))
+#define LDB_PM_CTRL_REG_DI_VS_POLARITY_MASK(di) ((uint32_t)LDB_PM_CTRL_REG_DI0_VS_POLARITY_MASK << (di))
 
 #define LDB_PM_CTRL_REG_CH_MASK(ch)                                              \
     (LDB_PM_CTRL_REG_CH_MODE_MASK(ch) | LDB_PM_CTRL_REG_CH_DATA_WIDTH_MASK(ch) | \
@@ -35,12 +35,12 @@
 
 #else
 
-#define LDB_PM_CTRL_REG_CH_MODE_MASK(ch) (LDB_PM_CTRL_REG_CH0_MODE_MASK << ((ch)*2))
-#define LDB_PM_CTRL_REG_CH_DATA_WIDTH_MASK(ch) (LDB_PM_CTRL_REG_CH0_DATA_WIDTH_MASK << ((ch)*2))
-#define LDB_PM_CTRL_REG_CH_BIT_MAPPING_MASK(ch) (LDB_PM_CTRL_REG_CH0_BIT_MAPPING_MASK << ((ch)*2))
-#define LDB_PM_CTRL_REG_CH_10B_EN_MASK(ch) (LDB_PM_CTRL_REG_CH0_10B_EN_MASK << (ch))
-#define LDB_PM_CTRL_REG_DI_DATA_WIDTH_MASK(di) (LDB_PM_CTRL_REG_DI0_DATA_WIDTH_MASK << ((di)*2))
-#define LDB_PM_CTRL_REG_DI_VS_POLARITY_MASK(di) (LDB_PM_CTRL_REG_DI0_VS_POLARITY_MASK << (di))
+#define LDB_PM_CTRL_REG_CH_MODE_MASK(ch)        ((uint32_t)LDB_PM_CTRL_REG_CH0_MODE_MASK << ((ch)*2U))
+#define LDB_PM_CTRL_REG_CH_DATA_WIDTH_MASK(ch)  ((uint32_t)LDB_PM_CTRL_REG_CH0_DATA_WIDTH_MASK << ((ch)*2U))
+#define LDB_PM_CTRL_REG_CH_BIT_MAPPING_MASK(ch) ((uint32_t)LDB_PM_CTRL_REG_CH0_BIT_MAPPING_MASK << ((ch)*2U))
+#define LDB_PM_CTRL_REG_CH_10B_EN_MASK(ch)      ((uint32_t)LDB_PM_CTRL_REG_CH0_10B_EN_MASK << (ch))
+#define LDB_PM_CTRL_REG_DI_DATA_WIDTH_MASK(di)  ((uint32_t)LDB_PM_CTRL_REG_DI0_DATA_WIDTH_MASK << ((di)*2U))
+#define LDB_PM_CTRL_REG_DI_VS_POLARITY_MASK(di) ((uint32_t)LDB_PM_CTRL_REG_DI0_VS_POLARITY_MASK << (di))
 
 #define LDB_PM_CTRL_REG_CH_MASK(ch)                                              \
     (LDB_PM_CTRL_REG_CH_MODE_MASK(ch) | LDB_PM_CTRL_REG_CH_DATA_WIDTH_MASK(ch) | \
@@ -50,14 +50,14 @@
 
 #endif
 
-#define LDB_SS_CTRL_CH_VSYNC_POL_MASK(ch) (LDB_SS_CTRL_CH0_VSYNC_POL_MASK << (ch * 2))
-#define LDB_SS_CTRL_CH_HSYNC_POL_MASK(ch) (LDB_SS_CTRL_CH0_HSYNC_POL_MASK << (ch * 2))
+#define LDB_SS_CTRL_CH_VSYNC_POL_MASK(ch) ((uint32_t)LDB_SS_CTRL_CH0_VSYNC_POL_MASK << ((ch)*2U))
+#define LDB_SS_CTRL_CH_HSYNC_POL_MASK(ch) ((uint32_t)LDB_SS_CTRL_CH0_HSYNC_POL_MASK << ((ch)*2U))
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 /*! @brief Pointers to ldb bases for each instance. */
-LDB_Type *const s_ldbBases[] = LDB_BASE_PTRS;
+static LDB_Type *const s_ldbBases[] = LDB_BASE_PTRS;
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
 /*! @brief Pointers to LDB clocks for each instance. */
@@ -92,7 +92,7 @@ static uint32_t LDB_GetInstance(LDB_Type *base)
     uint32_t instance;
 
     /* Find the instance index from base address mappings. */
-    for (instance = 0; instance < ARRAY_SIZE(s_ldbBases); instance++)
+    for (instance = 0U; instance < ARRAY_SIZE(s_ldbBases); instance++)
     {
         if (s_ldbBases[instance] == base)
         {
@@ -108,13 +108,13 @@ static uint32_t LDB_GetInstance(LDB_Type *base)
 static uint32_t LDB_GetPixelMapConfig(ldb_output_bus_t outputBus, uint8_t ch)
 {
 #if (defined(FSL_FEATURE_LDB_COMBO_PHY) && FSL_FEATURE_LDB_COMBO_PHY)
-    return outputBus << (ch * 2);
+    return outputBus << (ch * 2U);
 #else
-    uint32_t reg = 0;
+    uint32_t reg = 0U;
 
     /* Handle the LDB_PM_CTRL_REG_DI_DATA_WIDTH */
-    reg |= ((outputBus & LDB_PM_CTRL_REG_CH0_10B_EN_MASK) << (ch));
-    reg |= ((outputBus & ~LDB_PM_CTRL_REG_CH0_10B_EN_MASK) << ch * 2);
+    reg |= (((uint32_t)outputBus & LDB_PM_CTRL_REG_CH0_10B_EN_MASK) << (ch));
+    reg |= (((uint32_t)outputBus & ~LDB_PM_CTRL_REG_CH0_10B_EN_MASK) << (ch * 2U));
 
     return reg;
 #endif
@@ -128,7 +128,7 @@ static uint32_t LDB_GetPixelMapConfig(ldb_output_bus_t outputBus, uint8_t ch)
 void LDB_Init(LDB_Type *base)
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-    CLOCK_EnableClock(s_ldbClocks[LDB_GetInstance(base)]);
+    (void)CLOCK_EnableClock(s_ldbClocks[LDB_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
 #if (defined(FSL_FEATURE_LDB_COMBO_PHY) && FSL_FEATURE_LDB_COMBO_PHY)
@@ -188,13 +188,13 @@ void LDB_Init(LDB_Type *base)
 void LDB_Deinit(LDB_Type *base)
 {
 #if (defined(FSL_FEATURE_LDB_COMBO_PHY) && FSL_FEATURE_LDB_COMBO_PHY)
-    base->PHY_CTRL = 0;
+    base->PHY_CTRL = 0U;
 #else
     base->PHY_CTRL |= LDB_PHY_CTRL_PD_MASK;
 #endif
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-    CLOCK_DisableClock(s_ldbClocks[LDB_GetInstance(base)]);
+    (void)CLOCK_DisableClock(s_ldbClocks[LDB_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -211,19 +211,17 @@ status_t LDB_InitChannel(LDB_Type *base, uint8_t channel, const ldb_channel_conf
     assert(channel < LDB_CH_COUNT);
 
     uint32_t reg;
-#if !(defined(FSL_FEATURE_LDB_COMBO_PHY) && FSL_FEATURE_LDB_COMBO_PHY)
     uint32_t reg_m;
     uint32_t pixelClock_MHz;
-#endif
 
     reg = base->PHY_SS_CTRL & ~(LDB_SS_CTRL_CH_VSYNC_POL_MASK(channel) | LDB_SS_CTRL_CH_HSYNC_POL_MASK(channel));
 
-    if (config->inputFlag & kLDB_InputVsyncActiveHigh)
+    if (0U != (config->inputFlag & (uint32_t)kLDB_InputVsyncActiveHigh))
     {
         reg |= LDB_SS_CTRL_CH_VSYNC_POL_MASK(channel);
     }
 
-    if (config->inputFlag & kLDB_InputHsyncActiveHigh)
+    if (0U != (config->inputFlag & (uint32_t)kLDB_InputHsyncActiveHigh))
     {
         reg |= LDB_SS_CTRL_CH_HSYNC_POL_MASK(channel);
     }
@@ -235,12 +233,12 @@ status_t LDB_InitChannel(LDB_Type *base, uint8_t channel, const ldb_channel_conf
 
     reg |= LDB_GetPixelMapConfig(config->outputBus, channel);
 
-    if (config->inputFlag & kLDB_InputVsyncActiveHigh)
+    if (0U != (config->inputFlag & (uint32_t)kLDB_InputVsyncActiveHigh))
     {
         reg |= LDB_PM_CTRL_REG_DI_VS_POLARITY_MASK(channel);
     }
 
-    if (channel == 0)
+    if (channel == 0U)
     {
         reg |= (1U << LDB_PM_CTRL_REG_CH0_MODE_SHIFT);
     }
@@ -257,6 +255,38 @@ status_t LDB_InitChannel(LDB_Type *base, uint8_t channel, const ldb_channel_conf
 
 #if (defined(FSL_FEATURE_LDB_COMBO_PHY) && FSL_FEATURE_LDB_COMBO_PHY)
     reg = (base->PHY_CTRL & ~LDB_PHY_CTRL_RFB_MASK);
+
+    /*
+     * DPHY_CO is configured based on pixel clock and NB.
+     *
+     * if NB = 1:
+     *         input pixel clock           REG_M
+     *            25M ~ 32M                  2
+     *            33M ~ 64M                  1
+     *            65M ~ 165M                 0
+     *
+     * if NB = 0:
+     *         input pixel clock           REG_M
+     *            25M ~ 45M                  2
+     *            46M ~ 92M                  1
+     *            93M ~ 165M                 0
+     *
+     * Current driver only supports NB=0 (7bit).
+     */
+    pixelClock_MHz = config->pixelClock_Hz / 1000000U;
+    if (pixelClock_MHz <= 45U)
+    {
+        reg_m = 2U;
+    }
+    else if (pixelClock_MHz <= 92U)
+    {
+        reg_m = 1U;
+    }
+    else
+    {
+        reg_m = 0U;
+    }
+
 #else
     /*
      * LDB_PHY_CTRL_M is configured based on pixel clock and NB.
@@ -275,22 +305,22 @@ status_t LDB_InitChannel(LDB_Type *base, uint8_t channel, const ldb_channel_conf
      *
      * Current driver only supports NB=0 (7bit).
      */
-    pixelClock_MHz = config->pixelClock_Hz / 1000000;
-    if (pixelClock_MHz < 24)
+    pixelClock_MHz = config->pixelClock_Hz / 1000000U;
+    if (pixelClock_MHz < 24U)
     {
         return kStatus_InvalidArgument;
     }
-    else if (pixelClock_MHz <= 31)
+    else if (pixelClock_MHz <= 43U)
     {
-        reg_m = 2;
+        reg_m = 2U;
     }
-    else if (pixelClock_MHz <= 62)
+    else if (pixelClock_MHz <= 89U)
     {
-        reg_m = 1;
+        reg_m = 1U;
     }
-    else if (pixelClock_MHz <= 165)
+    else if (pixelClock_MHz <= 165U)
     {
-        reg_m = 0;
+        reg_m = 0U;
     }
     else
     {
@@ -300,7 +330,7 @@ status_t LDB_InitChannel(LDB_Type *base, uint8_t channel, const ldb_channel_conf
     reg            = (base->PHY_CTRL & ~(LDB_PHY_CTRL_RFB_MASK | LDB_PHY_CTRL_M_MASK)) | LDB_PHY_CTRL_M(reg_m);
 #endif
 
-    if (kLDB_InputDataLatchOnRisingEdge & config->inputFlag)
+    if (0U != ((uint32_t)kLDB_InputDataLatchOnRisingEdge & config->inputFlag))
     {
         reg |= LDB_PHY_CTRL_RFB_MASK;
     }
@@ -308,12 +338,13 @@ status_t LDB_InitChannel(LDB_Type *base, uint8_t channel, const ldb_channel_conf
     base->PHY_CTRL = reg;
 
 #if (defined(FSL_FEATURE_LDB_COMBO_PHY) && FSL_FEATURE_LDB_COMBO_PHY)
-    base->DPHY_PD_PLL = 0;
-    base->DPHY_PD_TX  = 0;
-    base->ULPS        = 0;
+    base->DPHY_PD_PLL = 0U;
+    base->DPHY_PD_TX  = 0U;
+    base->DPHY_CO     = reg_m;
+    base->ULPS        = 0U;
     base->PHY_CTRL    = reg | LDB_PHY_CTRL_LVDS_EN_MASK;
 #else
-    base->PHY_CTRL = reg | (LDB_PHY_CTRL_CH0_EN_MASK << channel);
+    base->PHY_CTRL = reg | ((uint32_t)LDB_PHY_CTRL_CH0_EN_MASK << channel);
 #endif
 
     return kStatus_Success;
@@ -335,8 +366,9 @@ void LDB_DeinitChannel(LDB_Type *base, uint8_t channel)
     base->DPHY_PD_TX  = LDB_DPHY_PD_PLL_PD_MASK;
     base->DPHY_PD_PLL = LDB_DPHY_PD_PLL_PD_MASK;
 #else
-    base->PM_CTRL_REG &= ~(LDB_PM_CTRL_REG_CH0_MODE_MASK << (LDB_PM_CTRL_REG_CH1_MODE_MASK * channel));
+    base->PM_CTRL_REG &= ~(LDB_PM_CTRL_REG_CH_MODE_MASK(channel));
+
     /* Power off the PHY */
-    base->PHY_CTRL &= ~(LDB_PHY_CTRL_CH0_EN_MASK << channel);
+    base->PHY_CTRL &= ~((uint32_t)LDB_PHY_CTRL_CH0_EN_MASK << channel);
 #endif
 }

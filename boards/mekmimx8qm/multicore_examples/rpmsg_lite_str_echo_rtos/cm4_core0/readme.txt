@@ -20,8 +20,8 @@ address is then exported from the linker to the application.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  8.50.9
 
 Hardware requirements
 =====================
@@ -83,5 +83,3 @@ Get Message From Master Side : "test" [len : 4]
 Get New Line From Master Side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================

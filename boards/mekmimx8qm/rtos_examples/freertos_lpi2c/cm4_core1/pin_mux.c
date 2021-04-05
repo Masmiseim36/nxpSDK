@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v8.0
 processor: MIMX8QM6xxxFF
 package_id: MIMX8QM6AVUFF
 mcu_data: ksdk2_0
@@ -281,14 +281,14 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'false', coreID: cm4_1}
+- options: {callFromInitBoot: 'false', coreID: cm4_core1}
 - pin_list:
-  - {pin_num: BN9, peripheral: DMA__I2C0, signal: i2c_scl, pin_signal: HDMI_TX0_TS_SCL, sw_config: sw_config_2}
-  - {pin_num: BN7, peripheral: DMA__I2C0, signal: i2c_sda, pin_signal: HDMI_TX0_TS_SDA, sw_config: sw_config_2}
-  - {pin_num: A13, peripheral: DMA__I2C4, signal: i2c_scl, pin_signal: ENET1_MDC, sw_config: sw_config_2}
-  - {pin_num: C13, peripheral: DMA__I2C4, signal: i2c_sda, pin_signal: ENET1_MDIO, sw_config: sw_config_2}
-  - {pin_num: AU45, peripheral: DMA__UART2, signal: uart_rx, pin_signal: UART0_RTS_B, sw_config: sw_config_0}
-  - {pin_num: AW49, peripheral: DMA__UART2, signal: uart_tx, pin_signal: UART0_CTS_B, sw_config: sw_config_0}
+  - {pin_num: BN9, peripheral: DMA__I2C0, signal: i2c_scl, pin_signal: HDMI_TX0_TS_SCL, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: BN7, peripheral: DMA__I2C0, signal: i2c_sda, pin_signal: HDMI_TX0_TS_SDA, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: A13, peripheral: DMA__I2C4, signal: i2c_scl, pin_signal: ENET1_MDC, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: C13, peripheral: DMA__I2C4, signal: i2c_sda, pin_signal: ENET1_MDIO, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AU45, peripheral: DMA__UART2, signal: uart_rx, pin_signal: UART0_RTS_B, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AW49, peripheral: DMA__UART2, signal: uart_tx, pin_signal: UART0_CTS_B, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -298,7 +298,7 @@ BOARD_InitPins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_1] */
+void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_core1] */
 {
   sc_err_t err = SC_ERR_NONE;
 

@@ -12,21 +12,10 @@
 #if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
 #include "fsl_lpi2c.h"
 #endif /* SDK_I2C_BASED_COMPONENT_USED */
-#if defined BOARD_USE_CODEC
-#include "fsl_wm8960.h"
-#endif
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 static sc_ipc_t ipcHandle; /* ipc handle */
-
-#if defined BOARD_USE_CODEC
-codec_config_t boardCodecConfig = {.I2C_SendFunc    = BOARD_Codec_I2C_Send,
-                                   .I2C_ReceiveFunc = BOARD_Codec_I2C_Receive,
-                                   .op.Init         = WM8960_Init,
-                                   .op.Deinit       = WM8960_Deinit,
-                                   .op.SetFormat    = WM8960_ConfigDataFormat};
-#endif
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -41,6 +30,15 @@ sc_ipc_t BOARD_InitRpc(void)
         CLOCK_Init(ipcHandle);
     }
 
+    /*
+     * Current core reports it is done to SCFW when early boot mode is enabled.
+     * This mode is used to minimize the time from POR to M4 execution for some specific fast-boot use-cases.
+     * Please refer to Boot Flow chapter of System Controller Firmware Porting Guide document for more information.
+     */
+    if (sc_misc_boot_done(ipcHandle, BOARD_M4_CPU_RSRC) != SC_ERR_NONE)
+    {
+        assert(0);
+    }
     return ipcHandle;
 }
 
@@ -88,7 +86,7 @@ void BOARD_InitMemory(void)
        Since the base address of MPU region should be multiples of region size, to make it simple, the MPU region 0 set
        the all 512M of SRAM space
        with device attributes, then disable subregion 0 and 1 (address space 0x20000000 ~ 0x27FFFFFF) to use the
-       background memory attributes。
+       background memory attributes.
     */
 
     /* Select Region 0 and set its base address to the M4 code bus start address. */
@@ -205,52 +203,69 @@ status_t BOARD_LPI2C_Send(LPI2C_Type *base,
                           uint8_t *txBuff,
                           uint8_t txBuffSize)
 {
-    status_t reVal;
+    lpi2c_master_transfer_t xfer;
 
-    /* Send master blocking data to slave */
-    reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Write);
-    if (kStatus_Success == reVal)
-    {
-        while (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
-        {
-        }
+    xfer.flags          = kLPI2C_TransferDefaultFlag;
+    xfer.slaveAddress   = deviceAddress;
+    xfer.direction      = kLPI2C_Write;
+    xfer.subaddress     = subAddress;
+    xfer.subaddressSize = subAddressSize;
+    xfer.data           = txBuff;
+    xfer.dataSize       = txBuffSize;
 
-        reVal = LPI2C_MasterSend(base, &subAddress, subAddressSize);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterSend(base, txBuff, txBuffSize);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterStop(base);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-    }
-
-    return reVal;
+    return LPI2C_MasterTransferBlocking(base, &xfer);
 }
 
-status_t BOARD_LPI2C_SendWithoutSubAddr(
-    LPI2C_Type *base, uint8_t deviceAddress, uint8_t *txBuff, uint8_t txBuffSize, uint8_t needStop)
+status_t BOARD_LPI2C_SendWithoutSubAddr(LPI2C_Type *base,
+                                        uint32_t baudRate_Hz,
+                                        uint8_t deviceAddress,
+                                        uint8_t *txBuff,
+                                        uint8_t txBuffSize,
+                                        uint8_t needStop)
 {
     status_t reVal;
+    size_t txCount = 0xFFU;
+    size_t txSize  = 0;
+    /* 9 I2C SCLK cycles in us, get the next larger integer if can not be divided with no remainder to retain enough
+     * time*/
+    uint32_t delay = (9000000U + baudRate_Hz - 1U) / baudRate_Hz;
 
-    /* Send master blocking data to slave */
+    /* Send master blocking data to slave. */
     reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Write);
     if (kStatus_Success == reVal)
     {
-        while (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
+        /* Wait I2C master tx FIFO empty. */
+        while (txCount)
         {
+            LPI2C_MasterGetFifoCounts(base, NULL, &txCount);
+        }
+        /* Wait for 9 cycle to ensure the ack/nack cycle ends. */
+        SDK_DelayAtLeastUs(delay, SystemCoreClock);
+        /* Check communicate with slave successful or not */
+        if (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
+        {
+            return kStatus_LPI2C_Nak;
         }
 
-        reVal = LPI2C_MasterSend(base, txBuff, txBuffSize);
+        /* Check each response from slave. */
+        for (txSize = 0; txSize < txBuffSize; txSize++)
+        {
+            reVal = LPI2C_MasterSend(base, &txBuff[txSize], 1);
+            /* Wait tx FIFO empty. */
+            LPI2C_MasterGetFifoCounts(base, NULL, &txCount);
+            while (txCount)
+            {
+                LPI2C_MasterGetFifoCounts(base, NULL, &txCount);
+            }
+            /* Wait for 9 cycle to ensure the ack/nack cycle ends. */
+            SDK_DelayAtLeastUs(delay, SystemCoreClock);
+            /* Check communicate with slave successful or not */
+            if (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
+            {
+                return kStatus_LPI2C_Nak;
+            }
+        }
+
         if (reVal != kStatus_Success)
         {
             return reVal;
@@ -276,54 +291,44 @@ status_t BOARD_LPI2C_Receive(LPI2C_Type *base,
                              uint8_t *rxBuff,
                              uint8_t rxBuffSize)
 {
-    status_t reVal;
+    lpi2c_master_transfer_t xfer;
 
-    reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Write);
-    if (kStatus_Success == reVal)
-    {
-        while (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
-        {
-        }
+    xfer.flags          = kLPI2C_TransferDefaultFlag;
+    xfer.slaveAddress   = deviceAddress;
+    xfer.direction      = kLPI2C_Read;
+    xfer.subaddress     = subAddress;
+    xfer.subaddressSize = subAddressSize;
+    xfer.data           = rxBuff;
+    xfer.dataSize       = rxBuffSize;
 
-        reVal = LPI2C_MasterSend(base, &subAddress, subAddressSize);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterRepeatedStart(base, deviceAddress, kLPI2C_Read);
-
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterReceive(base, rxBuff, rxBuffSize);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterStop(base);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-    }
-    return reVal;
+    return LPI2C_MasterTransferBlocking(base, &xfer);
 }
 
 status_t BOARD_LPI2C_ReceiveWithoutSubAddr(
-    LPI2C_Type *base, uint8_t deviceAddress, uint8_t *rxBuff, uint8_t rxBuffSize, uint8_t flags)
+    LPI2C_Type *base, uint32_t baudRate_Hz, uint8_t deviceAddress, uint8_t *rxBuff, uint8_t rxBuffSize, uint8_t flags)
 {
     status_t reVal;
+    size_t txCount = 0xFFU;
+    /* 9 I2C SCLK cycles in us, get the next larger integer if can not be divided with no remainder to retain enough
+     * time*/
+    uint32_t delay = (9000000U + baudRate_Hz - 1U) / baudRate_Hz;
 
     reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Read);
     if (kStatus_Success == reVal)
     {
-        while (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
+        /* Wait I2C master tx FIFO empty. */
+        while (txCount)
         {
+            LPI2C_MasterGetFifoCounts(base, NULL, &txCount);
         }
+        /* Wait for 9 cycle to ensure the ack/nack cycle ends. */
+        SDK_DelayAtLeastUs(delay, SystemCoreClock);
+        /* Check communicate with slave successful or not. */
+        if (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
+        {
+            return kStatus_LPI2C_Nak;
+        }
+
         reVal = LPI2C_MasterReceive(base, rxBuff, rxBuffSize);
         if (reVal != kStatus_Success)
         {
@@ -346,7 +351,17 @@ status_t BOARD_LPI2C_SendSCCB(LPI2C_Type *base,
                               uint8_t *txBuff,
                               uint8_t txBuffSize)
 {
-    return BOARD_LPI2C_Send(base, deviceAddress, subAddress, subAddressSize, txBuff, txBuffSize);
+    lpi2c_master_transfer_t xfer;
+
+    xfer.flags          = kLPI2C_TransferDefaultFlag;
+    xfer.slaveAddress   = deviceAddress;
+    xfer.direction      = kLPI2C_Write;
+    xfer.subaddress     = subAddress;
+    xfer.subaddressSize = subAddressSize;
+    xfer.data           = txBuff;
+    xfer.dataSize       = txBuffSize;
+
+    return LPI2C_MasterTransferBlocking(base, &xfer);
 }
 
 status_t BOARD_LPI2C_ReceiveSCCB(LPI2C_Type *base,
@@ -356,49 +371,30 @@ status_t BOARD_LPI2C_ReceiveSCCB(LPI2C_Type *base,
                                  uint8_t *rxBuff,
                                  uint8_t rxBuffSize)
 {
-    status_t reVal;
+    status_t status;
+    lpi2c_master_transfer_t xfer;
 
-    reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Write);
-    if (kStatus_Success == reVal)
+    xfer.flags          = kLPI2C_TransferDefaultFlag;
+    xfer.slaveAddress   = deviceAddress;
+    xfer.direction      = kLPI2C_Write;
+    xfer.subaddress     = subAddress;
+    xfer.subaddressSize = subAddressSize;
+    xfer.data           = NULL;
+    xfer.dataSize       = 0;
+
+    status = LPI2C_MasterTransferBlocking(base, &xfer);
+
+    if (kStatus_Success == status)
     {
-        while (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
-        {
-        }
+        xfer.subaddressSize = 0;
+        xfer.direction      = kLPI2C_Read;
+        xfer.data           = rxBuff;
+        xfer.dataSize       = rxBuffSize;
 
-        reVal = LPI2C_MasterSend(base, &subAddress, subAddressSize);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        /* SCCB does not support LPI2C repeat start, must stop then start. */
-        reVal = LPI2C_MasterStop(base);
-
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Read);
-
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterReceive(base, rxBuff, rxBuffSize);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
-
-        reVal = LPI2C_MasterStop(base);
-        if (reVal != kStatus_Success)
-        {
-            return reVal;
-        }
+        status = LPI2C_MasterTransferBlocking(base, &xfer);
     }
-    return reVal;
+
+    return status;
 }
 
 void BOARD_Display0_I2C_Init(void)
@@ -660,7 +656,20 @@ void BOARD_Camera0_I2C_Init(void)
         assert(false);
     }
 
-    BOARD_LPI2C_Init(BOARD_CAMERA0_I2C_BASEADDR, lpi2cClkFreq_Hz);
+    lpi2c_master_config_t lpi2cConfig = {0};
+    /*
+     * lpi2cConfig.debugEnable = false;
+     * lpi2cConfig.ignoreAck = false;
+     * lpi2cConfig.pinConfig = kLPI2C_2PinOpenDrain;
+     * lpi2cConfig.baudRate_Hz = 100000U;
+     * lpi2cConfig.busIdleTimeout_ns = 0;
+     * lpi2cConfig.pinLowTimeout_ns = 0;
+     * lpi2cConfig.sdaGlitchFilterWidth_ns = 0;
+     * lpi2cConfig.sclGlitchFilterWidth_ns = 0;
+     */
+    LPI2C_MasterGetDefaultConfig(&lpi2cConfig);
+    lpi2cConfig.baudRate_Hz = 400000U;
+    LPI2C_MasterInit(BOARD_CAMERA0_I2C_BASEADDR, &lpi2cConfig, lpi2cClkFreq_Hz);
 }
 
 void BOARD_Camera0_I2C_Deinit(void)
@@ -695,7 +704,20 @@ void BOARD_Camera1_I2C_Init(void)
         assert(false);
     }
 
-    BOARD_LPI2C_Init(BOARD_CAMERA1_I2C_BASEADDR, lpi2cClkFreq_Hz);
+    lpi2c_master_config_t lpi2cConfig = {0};
+    /*
+     * lpi2cConfig.debugEnable = false;
+     * lpi2cConfig.ignoreAck = false;
+     * lpi2cConfig.pinConfig = kLPI2C_2PinOpenDrain;
+     * lpi2cConfig.baudRate_Hz = 100000U;
+     * lpi2cConfig.busIdleTimeout_ns = 0;
+     * lpi2cConfig.pinLowTimeout_ns = 0;
+     * lpi2cConfig.sdaGlitchFilterWidth_ns = 0;
+     * lpi2cConfig.sclGlitchFilterWidth_ns = 0;
+     */
+    LPI2C_MasterGetDefaultConfig(&lpi2cConfig);
+    lpi2cConfig.baudRate_Hz = 400000U;
+    LPI2C_MasterInit(BOARD_CAMERA1_I2C_BASEADDR, &lpi2cConfig, lpi2cClkFreq_Hz);
 }
 
 void BOARD_Camera1_I2C_Deinit(void)

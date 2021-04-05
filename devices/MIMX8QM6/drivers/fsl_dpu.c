@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, NXP Semiconductors, Inc.
+ * Copyright 2017, 2019-2020 NXP
  * All rights reserved.
  *
  *
@@ -447,25 +447,25 @@ typedef struct
     DPU_SIG_Type SIG;
 } DPU_DISPLAY_Type;
 
-#define DPU_INT_GROUP_NUM 2U        /* Interrupt group number. */
-#define DPU_DISPLAY_COUNT 2U        /* Display number. */
-#define DPU_SIG_EAVL_WINDOW_COUNT 8 /* Signature unit evaluation window count. */
+#define DPU_INT_GROUP_NUM         2U /* Interrupt group number. */
+#define DPU_DISPLAY_COUNT         2U /* Display number. */
+#define DPU_SIG_EAVL_WINDOW_COUNT 8U /* Signature unit evaluation window count. */
 
-#define DPU_MAKE_DIMENSION(heigth, width) (((uint32_t)(heigth) << 16U) | ((uint32_t)(width) << 0U))
+#define DPU_MAKE_DIMENSION(heigth, width)   (((uint32_t)(heigth) << 16U) | ((uint32_t)(width) << 0U))
 #define DPU_MAKE_POSITION(offsetY, offsetX) (((uint32_t)(offsetY) << 16U) | ((uint32_t)(offsetX) << 0U))
-#define DPU_REG(base, offset) *((volatile uint32_t *)((uint32_t)(base) + (offset)))
+#define DPU_REG(base, offset)               *((volatile uint32_t *)((uint32_t)(base) + (offset)))
 
 /* Make the register <fetch_unit>_StaticControl */
 #define DPU_MAKE_SOURCEBUFFERATTRIBUTES(bitsPerPixel, stride) \
-    ((((uint32_t)(bitsPerPixel) << 16U) & 0x003F0000U) | (((uint32_t)((stride)-1U) << 0U) & 0x0000FFFFU))
+    ((((uint32_t)(bitsPerPixel) << 16U) & 0x003F0000U) | ((((uint32_t)(stride)-1U) << 0U) & 0x0000FFFFU))
 
 #define DPU_MAKE_DESTINATIONBUFFERATTRIBUTES(bitsPerPixel, stride) \
-    ((((uint32_t)(bitsPerPixel) << 24U) & 0x7F000000U) | (((uint32_t)((stride)-1U) << 0U) & 0x0001FFFFU))
+    ((((uint32_t)(bitsPerPixel) << 24U) & 0x7F000000U) | ((((uint32_t)(stride)-1U) << 0U) & 0x0001FFFFU))
 
 #define DPU_SCALER_CONTROL_OUTPUTSIZE(output_size) ((((uint32_t)(output_size)) << 16U) & 0x3FFF0000U)
-#define DPU_SCALER_CONTROL_SCALEMODE_MASK (0x10U)
-#define DPU_SCALER_CONTROL_FILTERMODE_MASK (0x100U)
-#define DPU_SCALER_CONTROL_MODE_MASK (0x01U)
+#define DPU_SCALER_CONTROL_SCALEMODE_MASK          (0x10U)
+#define DPU_SCALER_CONTROL_FILTERMODE_MASK         (0x100U)
+#define DPU_SCALER_CONTROL_MODE_MASK               (0x01U)
 
 /* Offset of register <unit>_StaticControl in each unit control block. */
 #define DPU_STATIC_CONTROL_OFFSET 0x8U
@@ -474,11 +474,11 @@ typedef struct
 #define DPU_UNIT_SHDEN_MASK 0x01U
 
 #define DPU_LAYERPROPERTY_SOURCEBUFFERENABLE_MASK 0x80000000U
-#define DPU_LAYERPROPERTY_CLIPWINDOWENABLE_MASK 0x40000000U
-#define DPU_LAYERPROPERTY_PALETTEENABLE_MASK 0x1U
-#define DPU_LAYERPROPERTY_GAMMAREMOVE_MASK 0x100000U
+#define DPU_LAYERPROPERTY_CLIPWINDOWENABLE_MASK   0x40000000U
+#define DPU_LAYERPROPERTY_PALETTEENABLE_MASK      0x1U
+#define DPU_LAYERPROPERTY_GAMMAREMOVE_MASK        0x100000U
 
-#define DPU_EXTDST_STATICCONTROL_KICKMODE_MASK 0x100U
+#define DPU_EXTDST_STATICCONTROL_KICKMODE_MASK   0x100U
 #define DPU_EXTDST_CONTROL_GAMMAAPPLYENABLE_MASK 0x01U
 
 /* Register TiggerEnable offset in FetchWarp unit. */
@@ -497,138 +497,139 @@ typedef struct
 #define DPU_PALETTE_OFFSET 0x400U
 
 #if DPU_USE_GENERATE_HEADER
-#define DPU_STORE9_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.STORE9_DYNAMIC)
-#define DPU_FETCHWARP9_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.FETCHWARP9_DYNAMIC)
+#define DPU_STORE9_DYNAMIC_OFFSET       DPU_UNIT_OFFSET(PIXENGCFG.STORE9_DYNAMIC)
+#define DPU_FETCHWARP9_DYNAMIC_OFFSET   DPU_UNIT_OFFSET(PIXENGCFG.FETCHWARP9_DYNAMIC)
 #define DPU_FETCHDECODE9_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.FETCHDECODE9_DYNAMIC)
-#define DPU_ROP9_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.ROP9_DYNAMIC)
-#define DPU_BLITBLEND9_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.BLITBLEND9_DYNAMIC)
-#define DPU_H_SCALER9_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.HSCALER9_DYNAMIC)
-#define DPU_V_SCALER9_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.VSCALER9_DYNAMIC)
-#define DPU_EXTDST0_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.EXTDST0_DYNAMIC)
-#define DPU_EXTDST4_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.EXTDST4_DYNAMIC)
-#define DPU_EXTDST1_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.EXTDST1_DYNAMIC)
-#define DPU_EXTDST5_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.EXTDST5_DYNAMIC)
-#define DPU_FETCHWARP2_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.FETCHWARP2_DYNAMIC)
+#define DPU_ROP9_DYNAMIC_OFFSET         DPU_UNIT_OFFSET(PIXENGCFG.ROP9_DYNAMIC)
+#define DPU_BLITBLEND9_DYNAMIC_OFFSET   DPU_UNIT_OFFSET(PIXENGCFG.BLITBLEND9_DYNAMIC)
+#define DPU_H_SCALER9_DYNAMIC_OFFSET    DPU_UNIT_OFFSET(PIXENGCFG.HSCALER9_DYNAMIC)
+#define DPU_V_SCALER9_DYNAMIC_OFFSET    DPU_UNIT_OFFSET(PIXENGCFG.VSCALER9_DYNAMIC)
+#define DPU_EXTDST0_DYNAMIC_OFFSET      DPU_UNIT_OFFSET(PIXENGCFG.EXTDST0_DYNAMIC)
+#define DPU_EXTDST4_DYNAMIC_OFFSET      DPU_UNIT_OFFSET(PIXENGCFG.EXTDST4_DYNAMIC)
+#define DPU_EXTDST1_DYNAMIC_OFFSET      DPU_UNIT_OFFSET(PIXENGCFG.EXTDST1_DYNAMIC)
+#define DPU_EXTDST5_DYNAMIC_OFFSET      DPU_UNIT_OFFSET(PIXENGCFG.EXTDST5_DYNAMIC)
+#define DPU_FETCHWARP2_DYNAMIC_OFFSET   DPU_UNIT_OFFSET(PIXENGCFG.FETCHWARP2_DYNAMIC)
 #define DPU_FETCHDECODE0_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.FETCHDECODE0_DYNAMIC)
 #define DPU_FETCHDECODE1_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.FETCHDECODE1_DYNAMIC)
-#define DPU_H_SCALER4_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.HSCALER4_DYNAMIC)
-#define DPU_V_SCALER4_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.VSCALER4_DYNAMIC)
-#define DPU_H_SCALER5_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.HSCALER5_DYNAMIC)
-#define DPU_V_SCALER5_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.VSCALER5_DYNAMIC)
-#define DPU_LAYERBLEND0_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.LAYERBLEND0_DYNAMIC)
-#define DPU_LAYERBLEND1_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.LAYERBLEND1_DYNAMIC)
-#define DPU_LAYERBLEND2_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.LAYERBLEND2_DYNAMIC)
-#define DPU_LAYERBLEND3_DYNAMIC_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.LAYERBLEND3_DYNAMIC)
+#define DPU_H_SCALER4_DYNAMIC_OFFSET    DPU_UNIT_OFFSET(PIXENGCFG.HSCALER4_DYNAMIC)
+#define DPU_V_SCALER4_DYNAMIC_OFFSET    DPU_UNIT_OFFSET(PIXENGCFG.VSCALER4_DYNAMIC)
+#define DPU_H_SCALER5_DYNAMIC_OFFSET    DPU_UNIT_OFFSET(PIXENGCFG.HSCALER5_DYNAMIC)
+#define DPU_V_SCALER5_DYNAMIC_OFFSET    DPU_UNIT_OFFSET(PIXENGCFG.VSCALER5_DYNAMIC)
+#define DPU_LAYERBLEND0_DYNAMIC_OFFSET  DPU_UNIT_OFFSET(PIXENGCFG.LAYERBLEND0_DYNAMIC)
+#define DPU_LAYERBLEND1_DYNAMIC_OFFSET  DPU_UNIT_OFFSET(PIXENGCFG.LAYERBLEND1_DYNAMIC)
+#define DPU_LAYERBLEND2_DYNAMIC_OFFSET  DPU_UNIT_OFFSET(PIXENGCFG.LAYERBLEND2_DYNAMIC)
+#define DPU_LAYERBLEND3_DYNAMIC_OFFSET  DPU_UNIT_OFFSET(PIXENGCFG.LAYERBLEND3_DYNAMIC)
 
 #else /* DPU_USE_GENERATE_HEADER */
 
-#define DPU_STORE9_DYNAMIC_OFFSET 0x094C
-#define DPU_FETCHWARP9_DYNAMIC_OFFSET 0x0848
+#define DPU_STORE9_DYNAMIC_OFFSET       0x094C
+#define DPU_FETCHWARP9_DYNAMIC_OFFSET   0x0848
 #define DPU_FETCHDECODE9_DYNAMIC_OFFSET 0x0828
-#define DPU_ROP9_DYNAMIC_OFFSET 0x0868
-#define DPU_BLITBLEND9_DYNAMIC_OFFSET 0x0928
-#define DPU_H_SCALER9_DYNAMIC_OFFSET 0x08C8
-#define DPU_V_SCALER9_DYNAMIC_OFFSET 0x08E8
-#define DPU_EXTDST0_DYNAMIC_OFFSET 0x098C
-#define DPU_EXTDST4_DYNAMIC_OFFSET 0x09CC
-#define DPU_EXTDST1_DYNAMIC_OFFSET 0x0a0C
-#define DPU_EXTDST5_DYNAMIC_OFFSET 0x0a4C
-#define DPU_FETCHWARP2_DYNAMIC_OFFSET 0x0a68
+#define DPU_ROP9_DYNAMIC_OFFSET         0x0868
+#define DPU_BLITBLEND9_DYNAMIC_OFFSET   0x0928
+#define DPU_H_SCALER9_DYNAMIC_OFFSET    0x08C8
+#define DPU_V_SCALER9_DYNAMIC_OFFSET    0x08E8
+#define DPU_EXTDST0_DYNAMIC_OFFSET      0x098C
+#define DPU_EXTDST4_DYNAMIC_OFFSET      0x09CC
+#define DPU_EXTDST1_DYNAMIC_OFFSET      0x0a0C
+#define DPU_EXTDST5_DYNAMIC_OFFSET      0x0a4C
+#define DPU_FETCHWARP2_DYNAMIC_OFFSET   0x0a68
 #define DPU_FETCHDECODE0_DYNAMIC_OFFSET 0x0a88
 #define DPU_FETCHDECODE1_DYNAMIC_OFFSET 0x0aA8
-#define DPU_H_SCALER4_DYNAMIC_OFFSET 0x0b08
-#define DPU_V_SCALER4_DYNAMIC_OFFSET 0x0b28
-#define DPU_H_SCALER5_DYNAMIC_OFFSET 0x0b68
-#define DPU_V_SCALER5_DYNAMIC_OFFSET 0x0b88
-#define DPU_LAYERBLEND0_DYNAMIC_OFFSET 0x0bA8
-#define DPU_LAYERBLEND1_DYNAMIC_OFFSET 0x0bC8
-#define DPU_LAYERBLEND2_DYNAMIC_OFFSET 0x0bE8
-#define DPU_LAYERBLEND3_DYNAMIC_OFFSET 0x0c08
+#define DPU_H_SCALER4_DYNAMIC_OFFSET    0x0b08
+#define DPU_V_SCALER4_DYNAMIC_OFFSET    0x0b28
+#define DPU_H_SCALER5_DYNAMIC_OFFSET    0x0b68
+#define DPU_V_SCALER5_DYNAMIC_OFFSET    0x0b88
+#define DPU_LAYERBLEND0_DYNAMIC_OFFSET  0x0bA8
+#define DPU_LAYERBLEND1_DYNAMIC_OFFSET  0x0bC8
+#define DPU_LAYERBLEND2_DYNAMIC_OFFSET  0x0bE8
+#define DPU_LAYERBLEND3_DYNAMIC_OFFSET  0x0c08
 
 #endif /* DPU_USE_GENERATE_HEADER */
 
 #define DPU_STRUCT_OFFSET(structure, member) (uint32_t)(&((structure *)0)->member)
 
-#define DPU_FETCHECO_FRAMEDIMENSIONS_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHECO_Type, FRAMEDIMENSIONS)
-#define DPU_FETCHDECODE_FRAMEDIMENSIONS_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHDECODER_Type, FRAMEDIMENSIONS)
-#define DPU_FETCHLAYER_FRAMEDIMENSIONS_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHLAYER_Type, FRAMEDIMENSIONS)
-#define DPU_FETCHWARP_FRAMEDIMENSIONS_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHWARP_Type, FRAMEDIMENSIONS)
-#define DPU_FETCHECO_FRAMERESAMPLING_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHECO_Type, FRAMERESAMPLING)
-#define DPU_FETCHDECODE_FRAMERESAMPLING_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHDECODER_Type, FRAMERESAMPLING)
-#define DPU_FETCHLAYER_FRAMERESAMPLING_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHLAYER_Type, FRAMERESAMPLING)
-#define DPU_FETCHWARP_FRAMERESAMPLING_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHWARP_Type, FRAMERESAMPLING)
-#define DPU_FETCHECO_CONTROL_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHECO_Type, CONTROL)
-#define DPU_FETCHDECODE_CONTROL_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHDECODER_Type, CONTROL)
-#define DPU_FETCHLAYER_CONTROL_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHLAYER_Type, CONTROL)
-#define DPU_FETCHWARP_CONTROL_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHWARP_Type, CONTROL)
-#define DPU_FETCHECO_SUBLAYER_CONTROL_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHECO_Type, LAYER)
-#define DPU_FETCHDECODE_SUBLAYER_CONTROL_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHDECODER_Type, LAYER)
-#define DPU_FETCHLAYER_SUBLAYER_CONTROL_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHLAYER_Type, LAYER)
-#define DPU_FETCHWARP_SUBLAYER_CONTROL_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHWARP_Type, LAYER)
-#define DPU_FETCHUNIT_BURSTBUFFERMANAGEMENT_OFFSET DPU_STRUCT_OFFSET(DPU_FETCHWARP_Type, BURSTBUFFERMANAGEMENT)
+#define DPU_FETCHECO_FRAMEDIMENSIONS_OFFSET        (uint32_t)(&((DPU_FETCHECO_Type *)0)->FRAMEDIMENSIONS)
+#define DPU_FETCHDECODE_FRAMEDIMENSIONS_OFFSET     (uint32_t)(&((DPU_FETCHDECODER_Type *)0)->FRAMEDIMENSIONS)
+#define DPU_FETCHLAYER_FRAMEDIMENSIONS_OFFSET      (uint32_t)(&((DPU_FETCHLAYER_Type *)0)->FRAMEDIMENSIONS)
+#define DPU_FETCHWARP_FRAMEDIMENSIONS_OFFSET       (uint32_t)(&((DPU_FETCHWARP_Type *)0)->FRAMEDIMENSIONS)
+#define DPU_FETCHECO_FRAMERESAMPLING_OFFSET        (uint32_t)(&((DPU_FETCHECO_Type *)0)->FRAMERESAMPLING)
+#define DPU_FETCHDECODE_FRAMERESAMPLING_OFFSET     (uint32_t)(&((DPU_FETCHDECODER_Type *)0)->FRAMERESAMPLING)
+#define DPU_FETCHLAYER_FRAMERESAMPLING_OFFSET      (uint32_t)(&((DPU_FETCHLAYER_Type *)0)->FRAMERESAMPLING)
+#define DPU_FETCHWARP_FRAMERESAMPLING_OFFSET       (uint32_t)(&((DPU_FETCHWARP_Type *)0)->FRAMERESAMPLING)
+#define DPU_FETCHECO_CONTROL_OFFSET                (uint32_t)(&((DPU_FETCHECO_Type *)0)->CONTROL)
+#define DPU_FETCHDECODE_CONTROL_OFFSET             (uint32_t)(&((DPU_FETCHDECODER_Type *)0)->CONTROL)
+#define DPU_FETCHLAYER_CONTROL_OFFSET              (uint32_t)(&((DPU_FETCHLAYER_Type *)0)->CONTROL)
+#define DPU_FETCHWARP_CONTROL_OFFSET               (uint32_t)(&((DPU_FETCHWARP_Type *)0)->CONTROL)
+#define DPU_FETCHECO_SUBLAYER_CONTROL_OFFSET       (uint32_t)(&((DPU_FETCHECO_Type *)0)->LAYER)
+#define DPU_FETCHDECODE_SUBLAYER_CONTROL_OFFSET    (uint32_t)(&((DPU_FETCHDECODER_Type *)0)->LAYER)
+#define DPU_FETCHLAYER_SUBLAYER_CONTROL_OFFSET     (uint32_t)(&((DPU_FETCHLAYER_Type *)0)->LAYER)
+#define DPU_FETCHWARP_SUBLAYER_CONTROL_OFFSET      (uint32_t)(&((DPU_FETCHWARP_Type *)0)->LAYER)
+#define DPU_FETCHUNIT_BURSTBUFFERMANAGEMENT_OFFSET (uint32_t)(&((DPU_FETCHWARP_Type *)0)->BURSTBUFFERMANAGEMENT)
 
-#define DPU_BURSTBUFFERMANAGEMENT_SETNUMBUFFERS(x) (((uint32_t)(x) << 0U) & 0xffU)
+#define DPU_BURSTBUFFERMANAGEMENT_SETNUMBUFFERS(x)  (((uint32_t)(x) << 0U) & 0xffU)
 #define DPU_BURSTBUFFERMANAGEMENT_SETBURSTLENGTH(x) (((uint32_t)(x) << 8U) & 0x1f00U)
 
-#define DPU_MAKE_FETCH_RESAMPLING(swap, deltaX, deltaY, startX, startY) \
-    (((swap) << 24U) | ((deltaY) << 18U) | ((deltaX) << 12U) | ((startY) << 6U) | (startX))
+#define DPU_MAKE_FETCH_RESAMPLING(swap, deltaX, deltaY, startX, startY)                      \
+    (((uint32_t)(swap) << 24U) | ((uint32_t)(deltaY) << 18U) | ((uint32_t)(deltaX) << 12U) | \
+     ((uint32_t)(startY) << 6U) | (uint32_t)(startX))
 
-#define DPU_FETCH_CONTROL_RASTERMODE_MASK 0x7U
-#define DPU_FETCH_CONTROL_INPUTSELECT_MASK 0x18U
+#define DPU_FETCH_CONTROL_RASTERMODE_MASK           0x7U
+#define DPU_FETCH_CONTROL_INPUTSELECT_MASK          0x18U
 #define DPU_FETCH_CONTROL_YUV422UPSAMPLINGMODE_MASK 0x20U
-#define DPU_FETCH_CONTROL_RAWPIXEL_MASK 0x80U
-#define DPU_FETCH_CONTROL_PALETTEIDXWIDTH_MASK 0x700U
-#define DPU_FETCH_CONTROL_CLIPCOLOR_MASK 0x10000U
-#define DPU_FETCH_CONTROL_CLIPLAYER_MASK 0xE0000U
-#define DPU_FETCH_CONTROL_FILTERMODE_MASK 0x700000U
+#define DPU_FETCH_CONTROL_RAWPIXEL_MASK             0x80U
+#define DPU_FETCH_CONTROL_PALETTEIDXWIDTH_MASK      0x700U
+#define DPU_FETCH_CONTROL_CLIPCOLOR_MASK            0x10000U
+#define DPU_FETCH_CONTROL_CLIPLAYER_MASK            0xE0000U
+#define DPU_FETCH_CONTROL_FILTERMODE_MASK           0x700000U
 
-#define DPU_FETCH_CONTROL_RASTERMODE(x) ((x))
-#define DPU_FETCH_CONTROL_INPUTSELECT(x) ((uint32_t)(x) << 3U)
+#define DPU_FETCH_CONTROL_RASTERMODE(x)           ((uint32_t)(x))
+#define DPU_FETCH_CONTROL_INPUTSELECT(x)          ((uint32_t)(x) << 3U)
 #define DPU_FETCH_CONTROL_YUV422UPSAMPLINGMODE(x) ((uint32_t)(x) << 5U)
-#define DPU_FETCH_CONTROL_RAWPIXEL(x) ((uint32_t)(x) << 7U)
-#define DPU_FETCH_CONTROL_PALETTEIDXWIDTH(x) ((uint32_t)(x) << 8U)
-#define DPU_FETCH_CONTROL_CLIPCOLOR(x) ((uint32_t)(x) << 16U)
-#define DPU_FETCH_CONTROL_CLIPLAYER(x) ((uint32_t)(x) << 17U)
-#define DPU_FETCH_CONTROL_FILTERMODE(x) ((uint32_t)(x) << 20U)
+#define DPU_FETCH_CONTROL_RAWPIXEL(x)             ((uint32_t)(x) << 7U)
+#define DPU_FETCH_CONTROL_PALETTEIDXWIDTH(x)      ((uint32_t)(x) << 8U)
+#define DPU_FETCH_CONTROL_CLIPCOLOR(x)            ((uint32_t)(x) << 16U)
+#define DPU_FETCH_CONTROL_CLIPLAYER(x)            ((uint32_t)(x) << 17U)
+#define DPU_FETCH_CONTROL_FILTERMODE(x)           ((uint32_t)(x) << 20U)
 
 #if DPU_USE_GENERATE_HEADER
-#define DPU_PIPELINE_STATIC_SYNCMODE_MASK DPU_PIXENGCFG_EXTDST0_STATIC_extdst0_Sync_Mode_MASK
-#define DPU_PIPELINE_STATIC_POWERDOWN_MASK DPU_PIXENGCFG_EXTDST0_STATIC_extdst0_powerdown_MASK
-#define DPU_PIPELINE_STATIC_DIV(x) DPU_PIXENGCFG_EXTDST0_STATIC_extdst0_div(x)
+#define DPU_PIPELINE_STATIC_SYNCMODE_MASK      DPU_PIXENGCFG_EXTDST0_STATIC_extdst0_Sync_Mode_MASK
+#define DPU_PIPELINE_STATIC_POWERDOWN_MASK     DPU_PIXENGCFG_EXTDST0_STATIC_extdst0_powerdown_MASK
+#define DPU_PIPELINE_STATIC_DIV(x)             DPU_PIXENGCFG_EXTDST0_STATIC_extdst0_div(x)
 #define DPU_PIPELINE_TRIGGER_SYNC_TRIGGER_MASK DPU_PIXENGCFG_EXTDST0_TRIGGER_extdst0_Sync_Trigger_MASK
-#define DPU_PIPELINE_TRIGGER_SEQ_COMP_MASK DPU_PIXENGCFG_EXTDST0_TRIGGER_extdst0_trigger_sequence_complete_MASK;
+#define DPU_PIPELINE_TRIGGER_SEQ_COMP_MASK     DPU_PIXENGCFG_EXTDST0_TRIGGER_extdst0_trigger_sequence_complete_MASK;
 
 #define DPU_FETCH_STATICCONTROL_SHDLDREQSTICKY_MASK DPU_FETCHLAYER_STATICCONTROL_ShdLdReqSticky_MASK
 
 #else /* DPU_USE_GENERATE_HEADER */
 
-#define DPU_PIPELINE_STATIC_SYNCMODE_MASK (1U << 8U)
-#define DPU_PIPELINE_STATIC_POWERDOWN_MASK (1U << 4U)
-#define DPU_PIPELINE_STATIC_DIV(x) (((uint32_t)(x) << 16U) & 0x00ff0000U)
-#define DPU_PIPELINE_TRIGGER_SYNC_TRIGGER_MASK (1U << 0U)
-#define DPU_PIPELINE_TRIGGER_SEQ_COMP_MASK (1U << 4U)
-#define DPU_STORE_START_Start_MASK (1U << 0U)
+#define DPU_PIPELINE_STATIC_SYNCMODE_MASK      (1UL << 8U)
+#define DPU_PIPELINE_STATIC_POWERDOWN_MASK     (1UL << 4U)
+#define DPU_PIPELINE_STATIC_DIV(x)             (((uint32_t)(x) << 16U) & 0x00ff0000U)
+#define DPU_PIPELINE_TRIGGER_SYNC_TRIGGER_MASK (1UL << 0U)
+#define DPU_PIPELINE_TRIGGER_SEQ_COMP_MASK     (1UL << 4U)
+#define DPU_STORE_START_Start_MASK             (1UL << 0U)
 
 #define DPU_FETCH_STATICCONTROL_SHDLDREQSTICKY_MASK 0xFF000000U
 
-#define DPU_LAYERBLEND_STATICCONTROL_ShdEn_MASK (1U << 0U)
+#define DPU_LAYERBLEND_STATICCONTROL_ShdEn_MASK   (1UL << 0U)
 #define DPU_LAYERBLEND_STATICCONTROL_ShdTokSel(x) ((uint32_t)(x) << 3U)
-#define DPU_LAYERBLEND_STATICCONTROL_ShdLdSel(x) ((uint32_t)(x) << 1U)
+#define DPU_LAYERBLEND_STATICCONTROL_ShdLdSel(x)  ((uint32_t)(x) << 1U)
 
-#define DPU_LAYERBLEND_BLENDCONTROL_BlendAlpha(x) (((uint32_t)(x)&0xFFU) << 16U)
+#define DPU_LAYERBLEND_BLENDCONTROL_BlendAlpha(x)      (((uint32_t)(x)&0xFFU) << 16U)
 #define DPU_LAYERBLEND_BLENDCONTROL_PRIM_C_BLD_FUNC(x) (((uint32_t)(x)&0x7U) << 0U)
-#define DPU_LAYERBLEND_BLENDCONTROL_SEC_C_BLD_FUNC(x) (((uint32_t)(x)&0x7U) << 4U)
+#define DPU_LAYERBLEND_BLENDCONTROL_SEC_C_BLD_FUNC(x)  (((uint32_t)(x)&0x7U) << 4U)
 #define DPU_LAYERBLEND_BLENDCONTROL_PRIM_A_BLD_FUNC(x) (((uint32_t)(x)&0x7U) << 8U)
-#define DPU_LAYERBLEND_BLENDCONTROL_SEC_A_BLD_FUNC(x) (((uint32_t)(x)&0x7U) << 12U)
+#define DPU_LAYERBLEND_BLENDCONTROL_SEC_A_BLD_FUNC(x)  (((uint32_t)(x)&0x7U) << 12U)
 
-#define DPU_LAYERBLEND_CONTROL_MODE_MASK (1U << 0U)
-#define DPU_LAYERBLEND_CONTROL_AlphaMaskEnable_MASK (1U << 2U)
-#define DPU_LAYERBLEND_CONTROL_AlphaMaskMode_MASK (7U << 4U)
-#define DPU_LAYERBLEND_CONTROL_AlphaMaskEnable(x) (((uint32_t)(x)&0x1U) << 2U)
-#define DPU_LAYERBLEND_CONTROL_AlphaMaskMode(x) (((uint32_t)(x)&0x7U) << 4U)
+#define DPU_LAYERBLEND_CONTROL_MODE_MASK            (1UL << 0U)
+#define DPU_LAYERBLEND_CONTROL_AlphaMaskEnable_MASK (1UL << 2U)
+#define DPU_LAYERBLEND_CONTROL_AlphaMaskMode_MASK   (7UL << 4U)
+#define DPU_LAYERBLEND_CONTROL_AlphaMaskEnable(x)   (((uint32_t)(x)&0x1U) << 2U)
+#define DPU_LAYERBLEND_CONTROL_AlphaMaskMode(x)     (((uint32_t)(x)&0x7U) << 4U)
 
-#define DPU_FETCHWARP_WARPCONTROL_WarpBitsPerPixel(x) (((uint32_t)(x) << 0U) & 0x3FU)
-#define DPU_FETCHWARP_WARPCONTROL_WarpCoordinateMode(x) (((uint32_t)(x)&0x03U) << 8U)
+#define DPU_FETCHWARP_WARPCONTROL_WarpBitsPerPixel(x)    (((uint32_t)(x) << 0U) & 0x3FU)
+#define DPU_FETCHWARP_WARPCONTROL_WarpCoordinateMode(x)  (((uint32_t)(x)&0x03U) << 8U)
 #define DPU_FETCHWARP_WARPCONTROL_WarpSymmetricOffset(x) (((uint32_t)(x)&0x01U) << 12U)
 
 #define DPU_FETCHWARP_ARBDELTA_ArbDeltaXX(x) ((uint32_t)(x) << 0U)
@@ -636,22 +637,22 @@ typedef struct
 #define DPU_FETCHWARP_ARBDELTA_ArbDeltaYX(x) ((uint32_t)(x) << 16U)
 #define DPU_FETCHWARP_ARBDELTA_ArbDeltaYY(x) ((uint32_t)(x) << 24U)
 
-#define DPU_BLITBLEND_NEUTRALBORDER_NeutralBorderLeft(x) (((uint32_t)(x)&0x07U) << 8U)
+#define DPU_BLITBLEND_NEUTRALBORDER_NeutralBorderLeft(x)  (((uint32_t)(x)&0x07U) << 8U)
 #define DPU_BLITBLEND_NEUTRALBORDER_NeutralBorderRight(x) (((uint32_t)(x)&0x07U) << 12U)
-#define DPU_BLITBLEND_NEUTRALBORDER_NeutralBorderMode(x) (((uint32_t)(x)&0x01U) << 0U)
+#define DPU_BLITBLEND_NEUTRALBORDER_NeutralBorderMode(x)  (((uint32_t)(x)&0x01U) << 0U)
 
-#define DPU_BLITBLEND_CONTROL_Mode_MASK (1U << 0U)
+#define DPU_BLITBLEND_CONTROL_Mode_MASK (1UL << 0U)
 
-#define DPU_TCON_TCON_CTRL_Bypass_MASK (1U << 3U)
+#define DPU_TCON_TCON_CTRL_Bypass_MASK (1UL << 3U)
 
-#define DPU_TCON_SPGPOSON_SPGPSON_X(x) (((uint32_t)(x)&0x7FFFU) << 16U)
-#define DPU_TCON_SPGPOSON_SPGPSON_Y(x) (((uint32_t)(x)&0xFFFFU) << 0U)
-#define DPU_TCON_SPGPOSON_SPGPSON_X_MASK (0x7FFFU << 16U)
-#define DPU_TCON_SPGPOSON_SPGPSON_Y_MASK (0xFFFFU << 0U)
-#define DPU_TCON_SPGPOSOFF_SPGPSOFF_X(x) (((uint32_t)(x)&0x7FFFU) << 16U)
-#define DPU_TCON_SPGPOSOFF_SPGPSOFF_Y(x) (((uint32_t)(x)&0xFFFFU) << 0U)
-#define DPU_TCON_SPGPOSOFF_SPGPSOFF_X_MASK (0x7FFFU << 16U)
-#define DPU_TCON_SPGPOSOFF_SPGPSOFF_Y_MASK (0xFFFFU << 0U)
+#define DPU_TCON_SPGPOSON_SPGPSON_X(x)     (((uint32_t)(x)&0x7FFFU) << 16U)
+#define DPU_TCON_SPGPOSON_SPGPSON_Y(x)     (((uint32_t)(x)&0xFFFFU) << 0U)
+#define DPU_TCON_SPGPOSON_SPGPSON_X_MASK   (0x7FFFUL << 16U)
+#define DPU_TCON_SPGPOSON_SPGPSON_Y_MASK   (0xFFFFUL << 0U)
+#define DPU_TCON_SPGPOSOFF_SPGPSOFF_X(x)   (((uint32_t)(x)&0x7FFFU) << 16U)
+#define DPU_TCON_SPGPOSOFF_SPGPSOFF_Y(x)   (((uint32_t)(x)&0xFFFFU) << 0U)
+#define DPU_TCON_SPGPOSOFF_SPGPSOFF_X_MASK (0x7FFFUL << 16U)
+#define DPU_TCON_SPGPOSOFF_SPGPSOFF_Y_MASK (0xFFFFUL << 0U)
 
 #define DPU_TCON_SMXSIGS_SMXSIGS_S0(x) (((uint32_t)(x)&0x7U) << 0U)
 #define DPU_TCON_SMXSIGS_SMXSIGS_S1(x) (((uint32_t)(x)&0x7U) << 3U)
@@ -660,47 +661,47 @@ typedef struct
 #define DPU_TCON_SMXSIGS_SMXSIGS_S4(x) (((uint32_t)(x)&0x7U) << 12U)
 
 #define DPU_FRAMEGEN_HTCFG1_Htotal(x) (((uint32_t)(x)&0x3FFFU) << 16U)
-#define DPU_FRAMEGEN_HTCFG1_Hact(x) (((uint32_t)(x)&0x3FFFU) << 0U)
-#define DPU_FRAMEGEN_HTCFG2_Hsync(x) (((uint32_t)(x)&0x3FFFU) << 0U)
-#define DPU_FRAMEGEN_HTCFG2_Hsbp(x) (((uint32_t)(x)&0x3FFFU) << 16U)
-#define DPU_FRAMEGEN_HTCFG2_HsEn_MASK (1U << 31U)
+#define DPU_FRAMEGEN_HTCFG1_Hact(x)   (((uint32_t)(x)&0x3FFFU) << 0U)
+#define DPU_FRAMEGEN_HTCFG2_Hsync(x)  (((uint32_t)(x)&0x3FFFU) << 0U)
+#define DPU_FRAMEGEN_HTCFG2_Hsbp(x)   (((uint32_t)(x)&0x3FFFU) << 16U)
+#define DPU_FRAMEGEN_HTCFG2_HsEn_MASK (1UL << 31U)
 #define DPU_FRAMEGEN_VTCFG1_Vtotal(x) (((uint32_t)(x)&0x3FFFU) << 16U)
-#define DPU_FRAMEGEN_VTCFG1_Vact(x) (((uint32_t)(x)&0x3FFFU) << 0U)
-#define DPU_FRAMEGEN_VTCFG2_Vsync(x) (((uint32_t)(x)&0x3FFFU) << 0U)
-#define DPU_FRAMEGEN_VTCFG2_Vsbp(x) (((uint32_t)(x)&0x3FFFU) << 16U)
-#define DPU_FRAMEGEN_VTCFG2_VsEn_MASK (1U << 31U)
+#define DPU_FRAMEGEN_VTCFG1_Vact(x)   (((uint32_t)(x)&0x3FFFU) << 0U)
+#define DPU_FRAMEGEN_VTCFG2_Vsync(x)  (((uint32_t)(x)&0x3FFFU) << 0U)
+#define DPU_FRAMEGEN_VTCFG2_Vsbp(x)   (((uint32_t)(x)&0x3FFFU) << 16U)
+#define DPU_FRAMEGEN_VTCFG2_VsEn_MASK (1UL << 31U)
 
-#define DPU_FRAMEGEN_PKICKCONFIG_PKickRow(x) (((uint32_t)(x)&0x3FFFU) << 16U)
-#define DPU_FRAMEGEN_PKICKCONFIG_PKickCol(x) (((uint32_t)(x)&0x3FFFU) << 0U)
-#define DPU_FRAMEGEN_PKICKCONFIG_PKickEn_MASK (1U << 31U)
-#define DPU_FRAMEGEN_SKICKCONFIG_SKickRow(x) (((uint32_t)(x)&0x3FFFU) << 16U)
-#define DPU_FRAMEGEN_SKICKCONFIG_SKickCol(x) (((uint32_t)(x)&0x3FFFU) << 0U)
-#define DPU_FRAMEGEN_SKICKCONFIG_SKickEn_MASK (1U << 31U)
+#define DPU_FRAMEGEN_PKICKCONFIG_PKickRow(x)  (((uint32_t)(x)&0x3FFFU) << 16U)
+#define DPU_FRAMEGEN_PKICKCONFIG_PKickCol(x)  (((uint32_t)(x)&0x3FFFU) << 0U)
+#define DPU_FRAMEGEN_PKICKCONFIG_PKickEn_MASK (1UL << 31U)
+#define DPU_FRAMEGEN_SKICKCONFIG_SKickRow(x)  (((uint32_t)(x)&0x3FFFU) << 16U)
+#define DPU_FRAMEGEN_SKICKCONFIG_SKickCol(x)  (((uint32_t)(x)&0x3FFFU) << 0U)
+#define DPU_FRAMEGEN_SKICKCONFIG_SKickEn_MASK (1UL << 31U)
 
-#define DPU_FRAMEGEN_PACFG_Pstartx(x) (((uint32_t)(x)&0x3FFFU) << 0U)
-#define DPU_FRAMEGEN_PACFG_Pstarty(x) (((uint32_t)(x)&0x3FFFU) << 16U)
-#define DPU_FRAMEGEN_SACFG_Sstartx(x) (((uint32_t)(x)&0x3FFFU) << 0U)
-#define DPU_FRAMEGEN_SACFG_Sstarty(x) (((uint32_t)(x)&0x3FFFU) << 16U)
-#define DPU_FRAMEGEN_FGINCTRL_FgDm(x) ((uint32_t)(x)&0x07U)
-#define DPU_FRAMEGEN_FGINCTRL_EnSecAlpha_MASK (1U << 4U)
-#define DPU_FRAMEGEN_FGINCTRL_EnPrimAlpha_MASK (1U << 3U)
+#define DPU_FRAMEGEN_PACFG_Pstartx(x)          (((uint32_t)(x)&0x3FFFU) << 0U)
+#define DPU_FRAMEGEN_PACFG_Pstarty(x)          (((uint32_t)(x)&0x3FFFU) << 16U)
+#define DPU_FRAMEGEN_SACFG_Sstartx(x)          (((uint32_t)(x)&0x3FFFU) << 0U)
+#define DPU_FRAMEGEN_SACFG_Sstarty(x)          (((uint32_t)(x)&0x3FFFU) << 16U)
+#define DPU_FRAMEGEN_FGINCTRL_FgDm(x)          ((uint32_t)(x)&0x07U)
+#define DPU_FRAMEGEN_FGINCTRL_EnSecAlpha_MASK  (1UL << 4U)
+#define DPU_FRAMEGEN_FGINCTRL_EnPrimAlpha_MASK (1UL << 3U)
 
-#define DPU_FRAMEGEN_FGCCR_CcBlue(x) (((uint32_t)(x)&0x3FFU) << 0U)
+#define DPU_FRAMEGEN_FGCCR_CcBlue(x)  (((uint32_t)(x)&0x3FFU) << 0U)
 #define DPU_FRAMEGEN_FGCCR_CcGreen(x) (((uint32_t)(x)&0x3FFU) << 10U)
-#define DPU_FRAMEGEN_FGCCR_CcRed(x) (((uint32_t)(x)&0x3FFU) << 20U)
+#define DPU_FRAMEGEN_FGCCR_CcRed(x)   (((uint32_t)(x)&0x3FFU) << 20U)
 #define DPU_FRAMEGEN_FGCCR_CcAlpha(x) (((uint32_t)(x)&0x1U) << 30U)
 
-#define DPU_FRAMEGEN_FGSLR_ShdTokGen_MASK (1U << 0U)
-#define DPU_FRAMEGEN_FGENABLE_FgEn_MASK (1U << 0U)
+#define DPU_FRAMEGEN_FGSLR_ShdTokGen_MASK (1UL << 0U)
+#define DPU_FRAMEGEN_FGENABLE_FgEn_MASK   (1UL << 0U)
 
-#define DPU_SIG_STATICCONTROL_ErrThres_SHIFT 16U
+#define DPU_SIG_STATICCONTROL_ErrThres_SHIFT      16U
 #define DPU_SIG_STATICCONTROL_ErrThresReset_SHIFT 24U
-#define DPU_SIG_STATICCONTROL_ShdEn_MASK (1U << 0U)
-#define DPU_SIG_PANICCOLOR_PanicRed_SHIFT 24U
-#define DPU_SIG_PANICCOLOR_PanicGreen_SHIFT 16U
-#define DPU_SIG_PANICCOLOR_PanicBlue_SHIFT 8U
-#define DPU_SIG_PANICCOLOR_PanicAlpha_MASK (1U << 7U)
-#define DPU_SIG_CONTINUOUSMODE_EnCont_MASK (1U << 0U)
+#define DPU_SIG_STATICCONTROL_ShdEn_MASK          (1UL << 0U)
+#define DPU_SIG_PANICCOLOR_PanicRed_SHIFT         24U
+#define DPU_SIG_PANICCOLOR_PanicGreen_SHIFT       16U
+#define DPU_SIG_PANICCOLOR_PanicBlue_SHIFT        8U
+#define DPU_SIG_PANICCOLOR_PanicAlpha_MASK        (1UL << 7U)
+#define DPU_SIG_CONTINUOUSMODE_EnCont_MASK        (1UL << 0U)
 
 #endif /* DPU_USE_GENERATE_HEADER */
 
@@ -1006,7 +1007,7 @@ static const clock_ip_name_t s_dpuClock[] = DPU_CLOCKS;
 uint32_t DPU_GetInstance(IRIS_MVPL_Type *base)
 {
     uint32_t instance;
-    uint32_t dpuArrayCount = ARRAY_SIZE(s_dpuBases);
+    const uint32_t dpuArrayCount = ARRAY_SIZE(s_dpuBases);
 
     /* Find the instance index from base address mappings. */
     for (instance = 0; instance < dpuArrayCount; instance++)
@@ -1026,6 +1027,7 @@ static bool DPU_CheckBufferAlignment(uint8_t bitsPerPixel, uint32_t baseAddr, ui
 {
     uint32_t mask = 0U;
     uint32_t i;
+    bool ret;
 
     /*
      * Frame buffer alignment restrictions:
@@ -1048,14 +1050,16 @@ static bool DPU_CheckBufferAlignment(uint8_t bitsPerPixel, uint32_t baseAddr, ui
         }
     }
 
-    if ((baseAddr & mask) | (strideBytes & mask))
+    if (0U != ((baseAddr & mask) | (strideBytes & mask)))
     {
-        return false;
+        ret = false;
     }
     else
     {
-        return true;
+        ret = true;
     }
+
+    return ret;
 }
 
 static uint32_t DPU_GetDynamicRegOffset(dpu_unit_t unit)
@@ -1081,12 +1085,12 @@ static DPU_SUBLAYER_CONTROL_Type *DPU_GetSubLayer(IRIS_MVPL_Type *base, dpu_unit
     uint32_t offset;
 
     /* If the fetch unit does not support sublayer, then configure sublayer 0. */
-    if (!((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrSubLayer)))
+    if (0U == ((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrSubLayer)))
     {
         sublayer = 0;
     }
 
-    if (kDPU_FetchDecode == DPU_GET_UNIT_TYPE(unit))
+    if ((uint32_t)kDPU_FetchDecode == DPU_GET_UNIT_TYPE(unit))
     {
         offset = DPU_FETCHDECODE_SUBLAYER_CONTROL_OFFSET;
     }
@@ -1102,17 +1106,19 @@ static DPU_SUBLAYER_CONTROL_Type *DPU_GetSubLayer(IRIS_MVPL_Type *base, dpu_unit
 static uint32_t DPU_ConvertFloat(float floatValue, uint8_t intBits, uint8_t fracBits)
 {
     /* One bit reserved for sign bit. */
-    assert(intBits + fracBits < 32);
+    assert(intBits + fracBits < 32U);
 
     u32_f32_t u32_f32;
     uint32_t ret;
+    uint32_t expBits;
 
     u32_f32.f32        = floatValue;
     uint32_t floatBits = u32_f32.u32;
-    int32_t expValue   = (int32_t)((floatBits & 0x7F800000U) >> 23U) - 127;
+    expBits            = (floatBits & 0x7F800000U) >> 23U;
+    int32_t expValue   = (int32_t)expBits - 127;
 
     ret = (floatBits & 0x007FFFFFU) | 0x00800000U;
-    expValue += fracBits;
+    expValue += (int32_t)fracBits;
 
     if (expValue < 0)
     {
@@ -1122,17 +1128,17 @@ static uint32_t DPU_ConvertFloat(float floatValue, uint8_t intBits, uint8_t frac
     {
         /* should not exceed 31-bit when left shift. */
         assert((expValue - 23) <= 7);
-        ret <<= (expValue - 23);
+        ret <<= ((uint32_t)expValue - 23UL);
     }
     else
     {
-        ret >>= (23 - expValue);
+        ret >>= (23UL - (uint32_t)expValue);
     }
 
     /* Set the sign bit. */
-    if (floatBits & 0x80000000U)
+    if (0U != (floatBits & 0x80000000UL))
     {
-        ret = ((~ret) + 1U) & ~(((uint32_t)-1) << (intBits + fracBits + 1));
+        ret = ((~ret) + 1U) & ~(((uint32_t)-1) << (intBits + fracBits + 1U));
     }
 
     return ret;
@@ -1150,7 +1156,7 @@ void DPU_Init(IRIS_MVPL_Type *base)
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Enable dpu clock */
-    CLOCK_EnableClock(s_dpuClock[DPU_GetInstance(base)]);
+    (void)CLOCK_EnableClock(s_dpuClock[DPU_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -1163,7 +1169,7 @@ void DPU_Init(IRIS_MVPL_Type *base)
  */
 void DPU_Deinit(IRIS_MVPL_Type *base)
 {
-    uint32_t i;
+    uint8_t i;
 
     /* Disable display output. */
     for (i = 0U; i < DPU_DISPLAY_COUNT; i++)
@@ -1179,7 +1185,7 @@ void DPU_Deinit(IRIS_MVPL_Type *base)
     DPU_DeinitPipeline(base, kDPU_PipelineStore9);
 
     /* Clear all pending interrupts. */
-    for (i = 0; i < DPU_INT_GROUP_NUM; i++)
+    for (i = 0U; i < DPU_INT_GROUP_NUM; i++)
     {
         DPU_DisableInterrupts(base, i, 0xFFFFFFFFU);
         DPU_DisableUserInterrupts(base, i, 0xFFFFFFFFU);
@@ -1189,7 +1195,7 @@ void DPU_Deinit(IRIS_MVPL_Type *base)
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Disable dpu clock */
-    CLOCK_DisableClock(s_dpuClock[DPU_GetInstance(base)]);
+    (void)CLOCK_DisableClock(s_dpuClock[DPU_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -1211,7 +1217,7 @@ void DPU_PreparePathConfig(IRIS_MVPL_Type *base)
     /* Disable shadow for all pipelines. */
     for (uint32_t i = 0; i < ARRAY_SIZE(dpuPipeLines); i++)
     {
-        DPU_EnableShadowLoad(base, dpuPipeLines[i], false);
+        (void)DPU_EnableShadowLoad(base, dpuPipeLines[i], false);
     }
 
     /* Set all pixel engine unit source to NULL. */
@@ -1281,21 +1287,7 @@ void DPU_DisableInterrupts(IRIS_MVPL_Type *base, uint8_t group, uint32_t mask)
 /*!
  * brief Get the DPU interrupts pending status.
  *
- * The pending status are returned as mask. For example, to check the Store9
- * shadow load interrupt and Store9 frame complete interrupt pending status,
- * use like this.
- *
- * code
-   uint32_t pendingStatus = DPU_GetInterruptsPendingFlags(DPU, 0);
-   if (pendingStatus & kDPU_Group0Store9ShadowLoadInterrupt)
-   {
-       // Store9 shadow load interrupt occurs, handle it.
-   }
-   if (pendingStatus & kDPU_Group0Store9FrameCompleteInterrupt)
-   {
-       // Store9 frame complete interrupt occurs, handle it.
-   }
-   endcode
+ * The pending status are returned as mask.
  *
  * param base DPU peripheral base address.
  * param group Interrupt group index.
@@ -1353,18 +1345,23 @@ void DPU_SetInterruptsPendingFlags(IRIS_MVPL_Type *base, uint8_t group, uint32_t
     ((DPU_COMCTRL_Type *)((uint32_t)base + DPU_COMCTRL_OFFSET))->INTERRUPTPRESET[group] = mask;
 }
 
-void DPU_SetUserInterruptsMask(IRIS_MVPL_Type *base, uint8_t group, uint32_t mask)
+/*!
+ * brief Mask the selected DPU user interrupts.
+ *
+ * The only difference between DPU user interrupt and normal interrupt is user
+ * interrupts could be masked by @ref DPU_MaskUserInterrupts. All other APIs
+ * useage are the same.
+ *
+ * param base DPU peripheral base address.
+ * param group Interrupt group index.
+ * param mask The interrupts to mask, this is a logical OR of members in
+ *             _dpu_interrupt.
+ */
+void DPU_MaskUserInterrupts(IRIS_MVPL_Type *base, uint8_t group, uint32_t mask)
 {
     assert(group < DPU_INT_GROUP_NUM);
 
-    ((DPU_COMCTRL_Type *)((uint32_t)base + DPU_COMCTRL_OFFSET))->USERINTERRUPTMASK[group] |= mask;
-}
-
-void DPU_ClearUserInterruptsMask(IRIS_MVPL_Type *base, uint8_t group, uint32_t mask)
-{
-    assert(group < DPU_INT_GROUP_NUM);
-
-    ((DPU_COMCTRL_Type *)((uint32_t)base + DPU_COMCTRL_OFFSET))->USERINTERRUPTMASK[group] &= ~mask;
+    ((DPU_COMCTRL_Type *)((uint32_t)base + DPU_COMCTRL_OFFSET))->USERINTERRUPTMASK[group] = mask;
 }
 
 /*!
@@ -1459,9 +1456,8 @@ void DPU_SetUserInterruptsPendingFlags(IRIS_MVPL_Type *base, uint8_t group, uint
 /*!
  * brief Enable or disable the register shadowing for the DPU process units.
  *
- * For example:
+ * For example, to enable the shadowing of all RWS registers of the pipeline with endpoint Store9.
  * code
-   // To enable the shadowing of all RWS registers of the pipeline with endpoint Store9.
    DPU_EnableShadowLoad(DPU, kDPU_PipelineStore9, true);
    endcode
  *
@@ -1477,7 +1473,7 @@ status_t DPU_EnableShadowLoad(IRIS_MVPL_Type *base, dpu_unit_t unit, bool enable
     uint32_t staticRegOffset;
     status_t status;
 
-    if ((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrNoShdow))
+    if (0U != ((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrNoShdow)))
     {
         status = kStatus_InvalidArgument;
     }
@@ -1508,7 +1504,7 @@ status_t DPU_EnableShadowLoad(IRIS_MVPL_Type *base, dpu_unit_t unit, bool enable
  */
 void DPU_InitPipeline(IRIS_MVPL_Type *base, dpu_unit_t unit)
 {
-    assert(kDPU_Pipeline == DPU_GET_UNIT_TYPE(unit));
+    assert((uint32_t)kDPU_Pipeline == DPU_GET_UNIT_TYPE(unit));
 
     DPU_PIPELINE_Type *pipeline = (DPU_PIPELINE_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -1526,7 +1522,7 @@ void DPU_InitPipeline(IRIS_MVPL_Type *base, dpu_unit_t unit)
  */
 void DPU_DeinitPipeline(IRIS_MVPL_Type *base, dpu_unit_t unit)
 {
-    assert(kDPU_Pipeline == DPU_GET_UNIT_TYPE(unit));
+    assert((uint32_t)kDPU_Pipeline == DPU_GET_UNIT_TYPE(unit));
 
     DPU_PIPELINE_Type *pipeline = (DPU_PIPELINE_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -1544,7 +1540,7 @@ void DPU_DeinitPipeline(IRIS_MVPL_Type *base, dpu_unit_t unit)
  */
 void DPU_TriggerPipelineShadowLoad(IRIS_MVPL_Type *base, dpu_unit_t unit)
 {
-    assert(kDPU_Pipeline == DPU_GET_UNIT_TYPE(unit));
+    assert((uint32_t)kDPU_Pipeline == DPU_GET_UNIT_TYPE(unit));
 
     DPU_PIPELINE_Type *pipeline = (DPU_PIPELINE_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -1565,7 +1561,7 @@ void DPU_TriggerPipelineShadowLoad(IRIS_MVPL_Type *base, dpu_unit_t unit)
  */
 void DPU_TriggerPipelineCompleteInterrupt(IRIS_MVPL_Type *base, dpu_unit_t unit)
 {
-    assert(kDPU_Pipeline == DPU_GET_UNIT_TYPE(unit));
+    assert((uint32_t)kDPU_Pipeline == DPU_GET_UNIT_TYPE(unit));
 
     DPU_PIPELINE_Type *pipeline = (DPU_PIPELINE_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -1589,7 +1585,7 @@ void DPU_TriggerPipelineCompleteInterrupt(IRIS_MVPL_Type *base, dpu_unit_t unit)
  */
 void DPU_SetUnitSrc(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t srcReg)
 {
-    assert((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrHasSrc));
+    assert(0U != ((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrHasSrc)));
 
     uint32_t reg;
     uint32_t offset = DPU_GetDynamicRegOffset(unit);
@@ -1614,9 +1610,9 @@ status_t DPU_SetColorPaletteIndexWidth(IRIS_MVPL_Type *base, dpu_unit_t unit, ui
 {
     uint32_t offset;
     uint32_t reg;
-    uint8_t type = DPU_GET_UNIT_TYPE(unit);
+    uint32_t type = DPU_GET_UNIT_TYPE(unit);
 
-    if ((kDPU_FetchLayer != type) && (kDPU_FetchDecode != type))
+    if (((uint32_t)kDPU_FetchLayer != type) && ((uint32_t)kDPU_FetchDecode != type))
     {
         return kStatus_InvalidArgument;
     }
@@ -1624,16 +1620,16 @@ status_t DPU_SetColorPaletteIndexWidth(IRIS_MVPL_Type *base, dpu_unit_t unit, ui
     offset = ((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit);
 
     /* Set index width. */
-    if (type == kDPU_FetchLayer)
+    if (type == (uint32_t)kDPU_FetchLayer)
     {
         reg = ((DPU_FETCHLAYER_Type *)offset)->CONTROL;
-        reg = (reg & ~DPU_FETCH_CONTROL_PALETTEIDXWIDTH_MASK) | DPU_FETCH_CONTROL_PALETTEIDXWIDTH(indexWidth - 1U);
+        reg = (reg & ~DPU_FETCH_CONTROL_PALETTEIDXWIDTH_MASK) | DPU_FETCH_CONTROL_PALETTEIDXWIDTH(indexWidth - 1UL);
         ((DPU_FETCHLAYER_Type *)offset)->CONTROL = reg;
     }
     else
     {
         reg = ((DPU_FETCHDECODER_Type *)offset)->CONTROL;
-        reg = (reg & ~DPU_FETCH_CONTROL_PALETTEIDXWIDTH_MASK) | DPU_FETCH_CONTROL_PALETTEIDXWIDTH(indexWidth - 1U);
+        reg = (reg & ~DPU_FETCH_CONTROL_PALETTEIDXWIDTH_MASK) | DPU_FETCH_CONTROL_PALETTEIDXWIDTH(indexWidth - 1UL);
         ((DPU_FETCHDECODER_Type *)offset)->CONTROL = reg;
     }
 
@@ -1658,8 +1654,9 @@ status_t DPU_SetColorPaletteIndexWidth(IRIS_MVPL_Type *base, dpu_unit_t unit, ui
 status_t DPU_UpdateColorPalette(
     IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t startIndex, const uint32_t *palette, uint32_t count)
 {
-    assert(palette);
-    assert((kDPU_FetchLayer == DPU_GET_UNIT_TYPE(unit)) || (kDPU_FetchDecode == DPU_GET_UNIT_TYPE(unit)));
+    assert(NULL != palette);
+    assert(((uint32_t)kDPU_FetchLayer == DPU_GET_UNIT_TYPE(unit)) ||
+           ((uint32_t)kDPU_FetchDecode == DPU_GET_UNIT_TYPE(unit)));
 
     uint32_t offset;
     uint32_t i;
@@ -1691,7 +1688,8 @@ status_t DPU_UpdateColorPalette(
  */
 void DPU_EnableColorPalette(IRIS_MVPL_Type *base, dpu_unit_t unit, uint8_t sublayer, bool enable)
 {
-    assert((kDPU_FetchLayer == DPU_GET_UNIT_TYPE(unit)) || (kDPU_FetchDecode == DPU_GET_UNIT_TYPE(unit)));
+    assert(((uint32_t)kDPU_FetchLayer == DPU_GET_UNIT_TYPE(unit)) ||
+           ((uint32_t)kDPU_FetchDecode == DPU_GET_UNIT_TYPE(unit)));
 
     DPU_SUBLAYER_CONTROL_Type *control = DPU_GetSubLayer(base, unit, sublayer);
 
@@ -1719,10 +1717,10 @@ void DPU_EnableColorPalette(IRIS_MVPL_Type *base, dpu_unit_t unit, uint8_t subla
  */
 void DPU_FetchUnitGetDefaultConfig(dpu_fetch_unit_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->srcReg      = 0U;
     config->frameHeight = 320U;
@@ -1750,8 +1748,8 @@ void DPU_FetchUnitGetDefaultConfig(dpu_fetch_unit_config_t *config)
  */
 void DPU_InitFetchUnit(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_fetch_unit_config_t *config)
 {
-    assert(config);
-    assert((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrIsFetch));
+    assert(NULL != config);
+    assert(0U != ((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrIsFetch)));
 
     uint32_t reg;
     uint32_t offset;
@@ -1794,7 +1792,7 @@ void DPU_InitFetchUnit(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_fetch_un
      * Set <unit>_StaticControl
      * If the fetch unit supports sublayer, set the ShdLdReqSticky.
      */
-    if ((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrSubLayer))
+    if (0U != ((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrSubLayer)))
     {
         DPU_REG(base, offset + DPU_STATIC_CONTROL_OFFSET) =
             DPU_UNIT_SHDEN_MASK | DPU_FETCH_STATICCONTROL_SHDLDREQSTICKY_MASK;
@@ -1805,12 +1803,12 @@ void DPU_InitFetchUnit(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_fetch_un
     }
 
     /* Set input source. */
-    if ((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrHasSrc))
+    if (0U != ((uint32_t)unit & DPU_MAKE_UNIT_ATTR(kDPU_UnitAttrHasSrc)))
     {
         DPU_SetUnitSrc(base, unit, config->srcReg);
     }
 
-    if (kDPU_FetchDecode == type)
+    if ((uint32_t)kDPU_FetchDecode == type)
     {
         /* Disable ring buffer. */
         ((DPU_FETCHDECODER_Type *)((uint32_t)base + offset))->RINGBUFSTARTADDR0 = 0U;
@@ -1819,10 +1817,11 @@ void DPU_InitFetchUnit(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_fetch_un
 
     /* AXI burst management. */
     DPU_REG(base, offset + DPU_FETCHUNIT_BURSTBUFFERMANAGEMENT_OFFSET) =
-        DPU_BURSTBUFFERMANAGEMENT_SETNUMBUFFERS(16) | DPU_BURSTBUFFERMANAGEMENT_SETBURSTLENGTH(16);
+        DPU_BURSTBUFFERMANAGEMENT_SETNUMBUFFERS(16) |
+        DPU_BURSTBUFFERMANAGEMENT_SETBURSTLENGTH(DPU_FETCH_UNIT_BURST_LENGTH);
 
     /* Set <unit>_FrameDimensions. */
-    DPU_REG(base, offset + dimensionOffset) = DPU_MAKE_DIMENSION(config->frameHeight - 1, config->frameWidth - 1);
+    DPU_REG(base, offset + dimensionOffset) = DPU_MAKE_DIMENSION(config->frameHeight - 1UL, config->frameWidth - 1UL);
 
     /* Set <unit>_Control. */
     reg = DPU_REG(base, offset + controlOffset) &
@@ -1861,10 +1860,10 @@ void DPU_InitFetchUnit(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_fetch_un
  */
 void DPU_FetcUnitGetDefaultWarpConfig(dpu_warp_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->srcReg                = 0U;
     config->frameHeight           = 320U;
@@ -1898,12 +1897,12 @@ void DPU_FetcUnitGetDefaultWarpConfig(dpu_warp_config_t *config)
  */
 status_t DPU_InitFetchUnitWarp(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_warp_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     uint32_t reg;
     DPU_FETCHWARP_Type *fetchWarp;
 
-    if (kDPU_FetchWarp != DPU_GET_UNIT_TYPE(unit))
+    if ((uint32_t)kDPU_FetchWarp != DPU_GET_UNIT_TYPE(unit))
     {
         return kStatus_InvalidArgument;
     }
@@ -1920,7 +1919,7 @@ status_t DPU_InitFetchUnitWarp(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_
     DPU_SetUnitSrc(base, unit, config->srcReg);
 
     /* Set <unit>_FrameDimensions. */
-    fetchWarp->FRAMEDIMENSIONS = DPU_MAKE_DIMENSION(config->frameHeight - 1, config->frameWidth - 1);
+    fetchWarp->FRAMEDIMENSIONS = DPU_MAKE_DIMENSION(config->frameHeight - 1UL, config->frameWidth - 1UL);
 
     /* Set resampling. */
     fetchWarp->FRAMERESAMPLING = DPU_MAKE_FETCH_RESAMPLING(0, 4, 4, 0, 0);
@@ -1936,8 +1935,8 @@ status_t DPU_InitFetchUnitWarp(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_
         DPU_FETCHWARP_ARBDELTA_ArbDeltaXX(config->arbDeltaXX) | DPU_FETCHWARP_ARBDELTA_ArbDeltaXY(config->arbDeltaXY) |
         DPU_FETCHWARP_ARBDELTA_ArbDeltaYX(config->arbDeltaYX) | DPU_FETCHWARP_ARBDELTA_ArbDeltaYY(config->arbDeltaYY);
 
-    fetchWarp->BURSTBUFFERMANAGEMENT =
-        DPU_BURSTBUFFERMANAGEMENT_SETNUMBUFFERS(16) | DPU_BURSTBUFFERMANAGEMENT_SETBURSTLENGTH(16);
+    fetchWarp->BURSTBUFFERMANAGEMENT = DPU_BURSTBUFFERMANAGEMENT_SETNUMBUFFERS(16) |
+                                       DPU_BURSTBUFFERMANAGEMENT_SETBURSTLENGTH(DPU_FETCH_UNIT_BURST_LENGTH);
 
     /* Set <unit>_Control. */
     reg = fetchWarp->CONTROL & ~(DPU_FETCH_CONTROL_YUV422UPSAMPLINGMODE_MASK | DPU_FETCH_CONTROL_RASTERMODE_MASK |
@@ -1965,10 +1964,10 @@ status_t DPU_InitFetchUnitWarp(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_
  */
 void DPU_CorrdinatesGetDefaultConfig(dpu_coordinates_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->bitsPerPixel = 0U;
     config->strideBytes  = 0x500U;
@@ -1991,7 +1990,7 @@ void DPU_CorrdinatesGetDefaultConfig(dpu_coordinates_config_t *config)
  */
 status_t DPU_InitWarpCoordinates(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_coordinates_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     DPU_FETCHECO_Type *fetchEco;
     uint32_t dimension;
@@ -2004,7 +2003,7 @@ status_t DPU_InitWarpCoordinates(IRIS_MVPL_Type *base, dpu_unit_t unit, const dp
 
     fetchEco = (DPU_FETCHECO_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
-    dimension = DPU_MAKE_DIMENSION(config->frameHeight - 1U, config->frameWidth - 1U);
+    dimension = DPU_MAKE_DIMENSION(config->frameHeight - 1UL, config->frameWidth - 1UL);
 
     fetchEco->STATICCONTROL = DPU_UNIT_SHDEN_MASK;
 
@@ -2018,8 +2017,8 @@ status_t DPU_InitWarpCoordinates(IRIS_MVPL_Type *base, dpu_unit_t unit, const dp
     fetchEco->LAYER[0].LAYERPROPERTY |= DPU_LAYERPROPERTY_SOURCEBUFFERENABLE_MASK;
     fetchEco->FRAMEDIMENSIONS = dimension;
 
-    fetchEco->BURSTBUFFERMANAGEMENT =
-        DPU_BURSTBUFFERMANAGEMENT_SETNUMBUFFERS(16) | DPU_BURSTBUFFERMANAGEMENT_SETBURSTLENGTH(16);
+    fetchEco->BURSTBUFFERMANAGEMENT = DPU_BURSTBUFFERMANAGEMENT_SETNUMBUFFERS(16) |
+                                      DPU_BURSTBUFFERMANAGEMENT_SETBURSTLENGTH(DPU_FETCH_UNIT_BURST_LENGTH);
 
     /* Enable Control.RawPixel. */
     reg = fetchEco->CONTROL & ~(DPU_FETCH_CONTROL_YUV422UPSAMPLINGMODE_MASK | DPU_FETCH_CONTROL_RASTERMODE_MASK);
@@ -2048,10 +2047,10 @@ status_t DPU_InitWarpCoordinates(IRIS_MVPL_Type *base, dpu_unit_t unit, const dp
  */
 void DPU_SrcBufferGetDefaultConfig(dpu_src_buffer_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->baseAddr     = 0U;
     config->strideBytes  = 0x500U;
@@ -2077,7 +2076,7 @@ status_t DPU_SetFetchUnitSrcBufferConfig(IRIS_MVPL_Type *base,
                                          uint8_t sublayer,
                                          const dpu_src_buffer_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     DPU_SUBLAYER_CONTROL_Type *control;
 
@@ -2091,7 +2090,7 @@ status_t DPU_SetFetchUnitSrcBufferConfig(IRIS_MVPL_Type *base,
 
     control->BASEADDRESS            = config->baseAddr;
     control->SOURCEBUFFERATTRIBUTES = DPU_MAKE_SOURCEBUFFERATTRIBUTES(config->bitsPerPixel, config->strideBytes);
-    control->SOURCEBUFFERDIMENSION  = DPU_MAKE_DIMENSION(config->bufferHeight - 1U, config->bufferWidth - 1U);
+    control->SOURCEBUFFERDIMENSION  = DPU_MAKE_DIMENSION(config->bufferHeight - 1UL, config->bufferWidth - 1UL);
     control->COLORCOMPONENTBITS     = s_dpuColorComponentFormats[config->pixelFormat][0];
     control->COLORCOMPONENTSHIFT    = s_dpuColorComponentFormats[config->pixelFormat][1];
     control->CONSTANTCOLOR          = config->constColor;
@@ -2151,7 +2150,7 @@ void DPU_SetFetchUnitFrameSize(IRIS_MVPL_Type *base, dpu_unit_t unit, uint16_t h
     }
 
     /* Set <unit>_FrameDimensions. */
-    DPU_REG(base, offset + dimensionOffset) = DPU_MAKE_DIMENSION(height - 1, width - 1);
+    DPU_REG(base, offset + dimensionOffset) = DPU_MAKE_DIMENSION(height - 1UL, width - 1UL);
 }
 
 /*!
@@ -2207,10 +2206,10 @@ void DPU_EnableFetchUnitSrcBuffer(IRIS_MVPL_Type *base, dpu_unit_t unit, uint8_t
  */
 void DPU_ClipWindowGetDefaultConfig(dpu_clip_window_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->windowOffsetX = 0U;
     config->windowOffsetY = 0U;
@@ -2231,7 +2230,7 @@ void DPU_SetFetchUnitClipWindowConfig(IRIS_MVPL_Type *base,
                                       uint8_t sublayer,
                                       const dpu_clip_window_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     DPU_SUBLAYER_CONTROL_Type *control = DPU_GetSubLayer(base, unit, sublayer);
 
@@ -2344,7 +2343,7 @@ void DPU_InitExtDst(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t srcReg)
 {
     DPU_EXTDST_Type *extDst;
 
-    assert(kDPU_ExtDst == DPU_GET_UNIT_TYPE(unit));
+    assert((uint32_t)kDPU_ExtDst == DPU_GET_UNIT_TYPE(unit));
 
     extDst = (DPU_EXTDST_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -2377,7 +2376,7 @@ void DPU_InitStore(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t srcReg)
 {
     DPU_STORE_Type *store;
 
-    assert(kDPU_Store == DPU_GET_UNIT_TYPE(unit));
+    assert((uint32_t)kDPU_Store == DPU_GET_UNIT_TYPE(unit));
 
     store = (DPU_STORE_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -2406,7 +2405,7 @@ void DPU_InitStore(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t srcReg)
  */
 status_t DPU_SetStoreDstBufferConfig(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_dst_buffer_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Buffer should be aligned. */
     if (!(DPU_CheckBufferAlignment(config->bitsPerPixel, config->baseAddr, config->strideBytes)))
@@ -2419,7 +2418,7 @@ status_t DPU_SetStoreDstBufferConfig(IRIS_MVPL_Type *base, dpu_unit_t unit, cons
     store->BASEADDRESS = config->baseAddr;
     store->DESTINATIONBUFFERATTRIBUTES =
         DPU_MAKE_DESTINATIONBUFFERATTRIBUTES(config->bitsPerPixel, config->strideBytes);
-    store->DESTINATIONBUFFERDIMENSION = DPU_MAKE_DIMENSION(config->bufferHeight - 1U, config->bufferWidth - 1U);
+    store->DESTINATIONBUFFERDIMENSION = DPU_MAKE_DIMENSION(config->bufferHeight - 1UL, config->bufferWidth - 1UL);
     store->COLORCOMPONENTBITS         = s_dpuColorComponentFormats[config->pixelFormat][0];
     store->COLORCOMPONENTSHIFT        = s_dpuColorComponentFormats[config->pixelFormat][1];
 
@@ -2442,10 +2441,10 @@ status_t DPU_SetStoreDstBufferConfig(IRIS_MVPL_Type *base, dpu_unit_t unit, cons
  */
 void DPU_DstBufferGetDefaultConfig(dpu_dst_buffer_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->baseAddr     = 0U;
     config->strideBytes  = 0x500U;
@@ -2479,7 +2478,7 @@ void DPU_SetStoreDstBufferAddr(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t b
  * param offsetX Horizontal offset.
  * param offsetY Vertical offset.
  * note The horizontal offset has limitations for some formats. It must be a multiple of
-   - 8 for 1 bpp buffers
+ *   - 8 for 1 bpp buffers
  *   - 4 for 2 bpp and 18 bpp buffers
  *   - 2 for 4 bpp buffers
  */
@@ -2496,39 +2495,6 @@ void DPU_SetStoreOffset(IRIS_MVPL_Type *base, dpu_unit_t unit, uint16_t offsetX,
  * This function starts the Store unit to save the frame to output buffer. When
  * the frame store completed, the interrupt flag ref kDPU_Group0Store9FrameCompleteInterrupt
  * asserts.
- *
- * This is an example shows how to use Store unit:
- *
- * code
- * // Initialize the Store unit, use FetchDecode9 output as its input.
-   DPU_InitStore(DPU, kDPU_Store9, DPU_MAKE_SRC_REG1(kDPU_UnitSrcFetchDecode9));
-
-   // Configure the Store unit output buffer.
-   DPU_SetStoreDstBufferConfig(DPU, kDPU_Store9, &DstBufferConfig);
-
-   // Configure FetchDecode9 unit, including source buffer setting and so on.
-   //
-   // CODE FOR FETCHDECODE9
-   //
-
-   // Initialize the Store9 pipeline
-   DPU_InitPipeline(DPU, kDPU_PipelineStore9);
-
-   DPU_ClearUserInterruptsPendingFlags(DPU, kDPU_Group0Store9ShadowLoadInterrupt);
-
-   // Trigger the shadow load
-   DPU_TriggerPipelineShadowLoad(DPU, kDPU_PipelineStore9);
-
-   DPU_ClearUserInterruptsPendingFlags(DPU, kDPU_Group0Store9FrameCompleteInterrupt);
-
-   // Start the Store9 to convert and output.
-   DPU_StartStore(DPU, kDPU_Store9);
-
-   // Wait for Store 9 completed, this could also be monitored by interrupt.
-   while (!(kDPU_Group0Store9FrameCompleteInterrupt & DPU_GetUserInterruptsPendingFlags(DPU, 0))
-   {
-   }
-   endcode
  *
  * For better performance, it is allowed to set next operation while current is still in progress.
  * Upper layer could set next operation immediately after shadow load finished.
@@ -2561,10 +2527,10 @@ void DPU_StartStore(IRIS_MVPL_Type *base, dpu_unit_t unit)
  */
 void DPU_LayerBlendGetDefaultConfig(dpu_layer_blend_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->constAlpha         = 0U;
     config->secAlphaBlendMode  = kDPU_BlendOne;
@@ -2620,7 +2586,7 @@ void DPU_InitLayerBlend(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t srcReg)
 {
     DPU_LAYERBLEND_Type *layerBlend;
 
-    assert(kDPU_LayerBlend == DPU_GET_UNIT_TYPE(unit));
+    assert((uint32_t)kDPU_LayerBlend == DPU_GET_UNIT_TYPE(unit));
 
     layerBlend = (DPU_LAYERBLEND_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -2656,7 +2622,7 @@ void DPU_InitLayerBlend(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t srcReg)
  */
 void DPU_SetLayerBlendConfig(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_layer_blend_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     DPU_LAYERBLEND_Type *layerBlend;
 
@@ -2722,7 +2688,7 @@ void DPU_EnableLayerBlend(IRIS_MVPL_Type *base, dpu_unit_t unit, bool enable)
  */
 void DPU_InitRop(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t srcReg)
 {
-    assert(kDPU_Rop == DPU_GET_UNIT_TYPE(unit));
+    assert((uint32_t)kDPU_Rop == DPU_GET_UNIT_TYPE(unit));
 
     DPU_ROP_Type *rop = (DPU_ROP_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -2747,10 +2713,10 @@ void DPU_InitRop(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t srcReg)
  */
 void DPU_RopGetDefaultConfig(dpu_rop_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->controlFlags = 0U;
     config->alphaIndex   = 0U;
@@ -2768,7 +2734,7 @@ void DPU_RopGetDefaultConfig(dpu_rop_config_t *config)
  */
 void DPU_SetRopConfig(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_rop_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     DPU_ROP_Type *rop = (DPU_ROP_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -2821,7 +2787,7 @@ void DPU_EnableRop(IRIS_MVPL_Type *base, dpu_unit_t unit, bool enable)
  */
 void DPU_InitBlitBlend(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t srcReg)
 {
-    assert(kDPU_BlitBlend == DPU_GET_UNIT_TYPE(unit));
+    assert((uint32_t)kDPU_BlitBlend == DPU_GET_UNIT_TYPE(unit));
 
     DPU_BLITBLEND_Type *blitBlend = (DPU_BLITBLEND_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -2856,10 +2822,10 @@ void DPU_InitBlitBlend(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t srcReg)
  */
 void DPU_BlitBlendGetDefaultConfig(dpu_blit_blend_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->neutralBorderRightPixels = 0U;
     config->neutralBorderLeftPixels  = 0U;
@@ -2890,7 +2856,7 @@ void DPU_BlitBlendGetDefaultConfig(dpu_blit_blend_config_t *config)
  */
 void DPU_SetBlitBlendConfig(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_blit_blend_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     DPU_BLITBLEND_Type *blitBlend = (DPU_BLITBLEND_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -2944,7 +2910,7 @@ void DPU_EnableBlitBlend(IRIS_MVPL_Type *base, dpu_unit_t unit, bool enable)
  */
 void DPU_InitConstFrame(IRIS_MVPL_Type *base, dpu_unit_t unit)
 {
-    assert(kDPU_ConstFrame == DPU_GET_UNIT_TYPE(unit));
+    assert((uint32_t)kDPU_ConstFrame == DPU_GET_UNIT_TYPE(unit));
 
     DPU_CONSTFRAME_Type *constFrame = (DPU_CONSTFRAME_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
@@ -2965,10 +2931,10 @@ void DPU_InitConstFrame(IRIS_MVPL_Type *base, dpu_unit_t unit)
  */
 void DPU_ConstFrameGetDefaultConfig(dpu_const_frame_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->frameHeight = 320U;
     config->frameWidth  = 480U;
@@ -2984,11 +2950,11 @@ void DPU_ConstFrameGetDefaultConfig(dpu_const_frame_config_t *config)
  */
 void DPU_SetConstFrameConfig(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_const_frame_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     DPU_CONSTFRAME_Type *constFrame = (DPU_CONSTFRAME_Type *)(((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit));
 
-    constFrame->FRAMEDIMENSIONS = DPU_MAKE_DIMENSION(config->frameHeight - 1U, config->frameWidth - 1U);
+    constFrame->FRAMEDIMENSIONS = DPU_MAKE_DIMENSION(config->frameHeight - 1UL, config->frameWidth - 1UL);
     constFrame->CONSTANTCOLOR   = config->constColor;
 }
 
@@ -3000,9 +2966,10 @@ void DPU_SetConstFrameConfig(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_co
  */
 void DPU_InitScaler(IRIS_MVPL_Type *base, dpu_unit_t unit)
 {
-    assert((kDPU_VScaler == DPU_GET_UNIT_TYPE(unit)) || ((kDPU_HScaler == DPU_GET_UNIT_TYPE(unit))));
+    assert(((uint32_t)kDPU_VScaler == DPU_GET_UNIT_TYPE(unit)) ||
+           (((uint32_t)kDPU_HScaler == DPU_GET_UNIT_TYPE(unit))));
 
-    DPU_EnableShadowLoad(base, unit, true);
+    (void)DPU_EnableShadowLoad(base, unit, true);
 }
 
 /*!
@@ -3019,10 +2986,10 @@ void DPU_InitScaler(IRIS_MVPL_Type *base, dpu_unit_t unit)
  */
 void DPU_ScalerGetDefaultConfig(dpu_scaler_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->srcReg     = 0U;
     config->inputSize  = 0U;
@@ -3053,14 +3020,14 @@ void DPU_ScalerGetDefaultConfig(dpu_scaler_config_t *config)
  */
 void DPU_SetScalerConfig(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_scaler_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     float scaleFact;
     uint32_t control;
     uint32_t setup1;
     uint32_t offset = ((uint32_t)base) + DPU_GET_UNIT_OFFSET(unit);
 
-    control = DPU_SCALER_CONTROL_OUTPUTSIZE(config->outputSize - 1U) | DPU_SCALER_CONTROL_FILTERMODE_MASK |
+    control = DPU_SCALER_CONTROL_OUTPUTSIZE(config->outputSize - 1UL) | DPU_SCALER_CONTROL_FILTERMODE_MASK |
               DPU_SCALER_CONTROL_MODE_MASK;
 
     if (config->inputSize > config->outputSize)
@@ -3090,11 +3057,12 @@ void DPU_SetScalerConfig(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_scaler
     }
     else
     {
+        /* MISRA 15.7 */
     }
 
     ((DPU_VSCALER_Type *)offset)->SETUP1 = setup1;
 
-    if (kDPU_VScaler == DPU_GET_UNIT_TYPE(unit))
+    if ((uint32_t)kDPU_VScaler == DPU_GET_UNIT_TYPE(unit))
     {
         ((DPU_VSCALER_Type *)offset)->CONTROL = control;
     }
@@ -3126,12 +3094,12 @@ void DPU_SetScalerConfig(IRIS_MVPL_Type *base, dpu_unit_t unit, const dpu_scaler
  */
 void DPU_DisplayTimingGetDefaultConfig(dpu_display_timing_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
-    config->flags  = kDPU_DisplayDataEnableActiveHigh;
+    config->flags  = (uint16_t)kDPU_DisplayDataEnableActiveHigh;
     config->width  = 320U;
     config->hsw    = 32U;
     config->hfp    = 8U;
@@ -3161,24 +3129,26 @@ void DPU_InitDisplayTiming(IRIS_MVPL_Type *base, uint8_t displayIndex, const dpu
     display->FRAMEGEN.FGSTCTRL |= DPU_UNIT_SHDEN_MASK;
 
     /* Set signal polarity. */
-    reg = config->flags & (kDPU_DisplayPixelActiveLow | kDPU_DisplayDataEnableActiveHigh | kDPU_DisplayHsyncActiveHigh |
-                           kDPU_DisplayVsyncActiveHigh);
+    reg = config->flags & ((uint32_t)kDPU_DisplayPixelActiveLow | (uint32_t)kDPU_DisplayDataEnableActiveHigh |
+                           (uint32_t)kDPU_DisplayHsyncActiveHigh | (uint32_t)kDPU_DisplayVsyncActiveHigh);
 
     diseng->DISPLAY[displayIndex].POLARITYCTRL = reg;
 
     /* Set timing. */
     vtotal = config->height + config->vfp + config->vbp + config->vsw - 1U;
     display->FRAMEGEN.HTCFG1 =
-        DPU_FRAMEGEN_HTCFG1_Htotal(config->width + config->hfp + config->hbp + config->hsw - 1U) |
+        DPU_FRAMEGEN_HTCFG1_Htotal((uint32_t)config->width + config->hfp + config->hbp + config->hsw - 1UL) |
         DPU_FRAMEGEN_HTCFG1_Hact(config->width);
 
-    display->FRAMEGEN.HTCFG2 = DPU_FRAMEGEN_HTCFG2_Hsync(config->hsw - 1U) |
-                               DPU_FRAMEGEN_HTCFG2_Hsbp(config->hbp + config->hsw - 1U) | DPU_FRAMEGEN_HTCFG2_HsEn_MASK;
+    display->FRAMEGEN.HTCFG2 = DPU_FRAMEGEN_HTCFG2_Hsync(config->hsw - 1UL) |
+                               DPU_FRAMEGEN_HTCFG2_Hsbp((uint32_t)config->hbp + config->hsw - 1UL) |
+                               DPU_FRAMEGEN_HTCFG2_HsEn_MASK;
 
     display->FRAMEGEN.VTCFG1 = DPU_FRAMEGEN_VTCFG1_Vtotal(vtotal) | DPU_FRAMEGEN_VTCFG1_Vact(config->height);
 
-    display->FRAMEGEN.VTCFG2 = DPU_FRAMEGEN_VTCFG2_Vsync(config->vsw - 1U) |
-                               DPU_FRAMEGEN_VTCFG2_Vsbp(config->vbp + config->vsw - 1U) | DPU_FRAMEGEN_VTCFG2_VsEn_MASK;
+    display->FRAMEGEN.VTCFG2 = DPU_FRAMEGEN_VTCFG2_Vsync(config->vsw - 1UL) |
+                               DPU_FRAMEGEN_VTCFG2_Vsbp((uint32_t)config->vbp + config->vsw - 1UL) |
+                               DPU_FRAMEGEN_VTCFG2_VsEn_MASK;
 
     /* Set TCON for the signal mapping. */
     display->TCON.TCON_CTRL   = display->TCON.TCON_CTRL & ~DPU_TCON_TCON_CTRL_Bypass_MASK;
@@ -3193,16 +3163,17 @@ void DPU_InitDisplayTiming(IRIS_MVPL_Type *base, uint8_t displayIndex, const dpu
     display->TCON.MAPBIT34_32 = 0x00222120U;
 
     /* Set TCON for the SYNC signals. */
-    display->TCON.SPG[0].SPGPOSON   = DPU_TCON_SPGPOSON_SPGPSON_X(config->width + config->hfp);
-    display->TCON.SPG[0].SPGMASKON  = DPU_TCON_SPGPOSON_SPGPSON_Y_MASK;
-    display->TCON.SPG[0].SPGPOSOFF  = DPU_TCON_SPGPOSOFF_SPGPSOFF_X(config->width + config->hfp + config->hsw);
+    display->TCON.SPG[0].SPGPOSON  = DPU_TCON_SPGPOSON_SPGPSON_X((uint32_t)config->width + config->hfp);
+    display->TCON.SPG[0].SPGMASKON = DPU_TCON_SPGPOSON_SPGPSON_Y_MASK;
+    display->TCON.SPG[0].SPGPOSOFF = DPU_TCON_SPGPOSOFF_SPGPSOFF_X((uint32_t)config->width + config->hfp + config->hsw);
     display->TCON.SPG[0].SPGMASKOFF = DPU_TCON_SPGPOSOFF_SPGPSOFF_Y_MASK;
 
-    display->TCON.SPG[1].SPGPOSON = DPU_TCON_SPGPOSON_SPGPSON_X(config->width + config->hfp) |
-                                    DPU_TCON_SPGPOSON_SPGPSON_Y(config->height + config->vfp - 1);
+    display->TCON.SPG[1].SPGPOSON = DPU_TCON_SPGPOSON_SPGPSON_X((uint32_t)config->width + config->hfp) |
+                                    DPU_TCON_SPGPOSON_SPGPSON_Y((uint32_t)config->height + config->vfp - 1UL);
     display->TCON.SPG[1].SPGMASKON = 0;
-    display->TCON.SPG[1].SPGPOSOFF = DPU_TCON_SPGPOSOFF_SPGPSOFF_X(config->width + config->hfp) |
-                                     DPU_TCON_SPGPOSOFF_SPGPSOFF_Y(config->height + config->vfp + config->vsw - 1);
+    display->TCON.SPG[1].SPGPOSOFF =
+        DPU_TCON_SPGPOSOFF_SPGPSOFF_X((uint32_t)config->width + config->hfp) |
+        DPU_TCON_SPGPOSOFF_SPGPSOFF_Y((uint32_t)config->height + config->vfp + config->vsw - 1UL);
     display->TCON.SPG[1].SPGMASKOFF = 0;
 
     display->TCON.SPG[2].SPGPOSON   = DPU_TCON_SPGPOSON_SPGPSON_X(0U);
@@ -3238,11 +3209,11 @@ void DPU_InitDisplayTiming(IRIS_MVPL_Type *base, uint8_t displayIndex, const dpu
 
     /* KICK signal set to start of last vertical blanking line. */
     display->FRAMEGEN.PKICKCONFIG = DPU_FRAMEGEN_PKICKCONFIG_PKickRow(config->height) |
-                                    DPU_FRAMEGEN_PKICKCONFIG_PKickCol(config->width + 1) |
+                                    DPU_FRAMEGEN_PKICKCONFIG_PKickCol(config->width + 1UL) |
                                     DPU_FRAMEGEN_PKICKCONFIG_PKickEn_MASK;
 
     display->FRAMEGEN.SKICKCONFIG = DPU_FRAMEGEN_SKICKCONFIG_SKickRow(config->height) |
-                                    DPU_FRAMEGEN_SKICKCONFIG_SKickCol(config->width + 1) |
+                                    DPU_FRAMEGEN_SKICKCONFIG_SKickCol(config->width + 1UL) |
                                     DPU_FRAMEGEN_SKICKCONFIG_SKickEn_MASK;
 }
 
@@ -3271,10 +3242,10 @@ void DPU_InitDisplayTiming(IRIS_MVPL_Type *base, uint8_t displayIndex, const dpu
  */
 void DPU_DisplayGetDefaultConfig(dpu_display_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->enablePrimAlpha        = false;
     config->enableSecAlpha         = false;
@@ -3435,10 +3406,10 @@ void DPU_TriggerDisplayShadowLoad(IRIS_MVPL_Type *base, uint8_t displayIndex)
  */
 void DPU_SignatureGetDefaultConfig(dpu_signature_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->errorThreshold      = 0U;
     config->errorResetThreshold = 8U;
@@ -3496,10 +3467,10 @@ void DPU_InitSignature(IRIS_MVPL_Type *base, uint8_t displayIndex, const dpu_sig
  */
 void DPU_SignatureWindowGetDefaultConfig(dpu_signature_window_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->controlFlags = 0U;
     config->upperLeftX   = 0U;
@@ -3646,7 +3617,7 @@ void DPU_GetSignatureWindowCrc(IRIS_MVPL_Type *base,
 
    if (kDPU_SignatureValid & status)
    {
-       // signature measure finished, could read the value.
+       signature measure finished, could read the value.
        DPU_GetSignatureWindowCrc(...);
    }
    endcode
@@ -3659,12 +3630,12 @@ void DPU_GetSignatureWindowCrc(IRIS_MVPL_Type *base,
 
    if ((1<<3) & status)
    {
-       // Window 3 error detected.
+       Window 3 error detected.
    }
 
    if ((1<<5) & status)
    {
-       // Window 5 error detected.
+       Window 5 error detected.
    }
 
    endcode

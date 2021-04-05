@@ -19,8 +19,8 @@ auto-negotiation when phy is in loop back mode. However, the auto-negotiation fa
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -28,12 +28,13 @@ Hardware requirements
 - i.MX8QM MEK CPU Board
 - J-Link Debug Probe
 - 12V power supply
-- Network cable RJ45 standard
+- Loopback network cable RJ45 standard
+- Network switch
 - Personal Computer
 
 Board settings
 ==============
-J6 connected with PC through RJ45 network cable.
+J14 connected with network switch through RJ45 network cable.
 
 #### Please note this application can't support running with Linux BSP! ####
 This example aims to show the basic usage of the IP's function, some of the used Pads/Resources are also used by Cortex-A core.
@@ -48,9 +49,24 @@ Prepare the Demo
     - No parity
     - One stop bit
     - No flow control
-4.  Insert Cable to Ethernet RJ45 port and connect it to your PC.
+4.  Insert loopback network cable into network switch device(support loopback frames) and connect switch to board's Ethernet RJ45 port.
 5.  Download the program to the target board (Please refer "Getting Started with MCUXpresso SDK for i.MX 8QuadMax.pdf" for how to run different targets).
 6.  Launch the debugger in your IDE to begin running the example.
+
+Make loopback network cable:
+      Standard 1	     Standard 2
+J1    orange+white       green+white
+J2    orange             green
+J3    green+white        orange+white
+J4    blue               brown+white
+J5    blue+white         brown
+J6    green              orange
+J7	  brown+white        blue
+J8    brown              blue+white
+
+Connect J1 => J3, J2 => J6, J4 => J7, J5 => J8. 10/100M transfer only requires J1, J2, J3, J6, and 1G transfer requires all 8 pins.
+Check your net cable color order and refer to the sheet above. If your cable's color order is not showed in the list,
+please connect J1~J8 based on your situation.
 
 Running the demo
 ================
@@ -62,57 +78,9 @@ The frame received from the ring 0, 1, 2 is 1, 0, 0 now!
 The 1 frame transmitted from the ring 1 !
 The frame received from the ring 0, 1, 2 is 1, 0, 1 now!
 The 1 frame transmitted from the ring 2 !
-The frame received from the ring 0, 1, 2 is 1, 1, 1 now!
-The 1 frame transmitted from the ring 0 !
-The frame received from the ring 0, 1, 2 is 2, 1, 1 now!
-The 2 frame transmitted from the ring 1 !
-The frame received from the ring 0, 1, 2 is 2, 1, 2 now!
-The 2 frame transmitted from the ring 2 !
-The frame received from the ring 0, 1, 2 is 2, 2, 2 now!
-The 2 frame transmitted from the ring 0 !
-The frame received from the ring 0, 1, 2 is 3, 2, 2 now!
-The 3 frame transmitted from the ring 1 !
-The frame received from the ring 0, 1, 2 is 3, 2, 3 now!
-The 3 frame transmitted from the ring 2 !
-The frame received from the ring 0, 1, 2 is 3, 3, 3 now!
-The 3 frame transmitted from the ring 0 !
-The frame received from the ring 0, 1, 2 is 4, 3, 3 now!
-The 4 frame transmitted from the ring 1 !
-The frame received from the ring 0, 1, 2 is 4, 3, 4 now!
-The 4 frame transmitted from the ring 2 !
-The frame received from the ring 0, 1, 2 is 4, 4, 4 now!
-The 4 frame transmitted from the ring 0 !
-The frame received from the ring 0, 1, 2 is 5, 4, 4 now!
-The 5 frame transmitted from the ring 1 !
-The frame received from the ring 0, 1, 2 is 5, 4, 5 now!
-The 5 frame transmitted from the ring 2 !
-The frame received from the ring 0, 1, 2 is 5, 5, 5 now!
-The 5 frame transmitted from the ring 0 !
-The frame received from the ring 0, 1, 2 is 6, 5, 5 now!
-The 6 frame transmitted from the ring 1 !
-The frame received from the ring 0, 1, 2 is 6, 5, 6 now!
-The 6 frame transmitted from the ring 2 !
-The frame received from the ring 0, 1, 2 is 6, 6, 6 now!
-The 6 frame transmitted from the ring 0 !
-The frame received from the ring 0, 1, 2 is 7, 6, 6 now!
-The 7 frame transmitted from the ring 1 !
-The frame received from the ring 0, 1, 2 is 7, 6, 7 now!
-The 7 frame transmitted from the ring 2 !
-The frame received from the ring 0, 1, 2 is 7, 7, 7 now!
-The 7 frame transmitted from the ring 0 !
-The frame received from the ring 0, 1, 2 is 8, 7, 7 now!
-The 8 frame transmitted from the ring 1 !
-The frame received from the ring 0, 1, 2 is 8, 7, 8 now!
-The 8 frame transmitted from the ring 2 !
-The frame received from the ring 0, 1, 2 is 8, 8, 8 now!
-The 8 frame transmitted from the ring 0 !
-The frame received from the ring 0, 1, 2 is 9, 8, 8 now!
-The 9 frame transmitted from the ring 1 !
-The frame received from the ring 0, 1, 2 is 9, 8, 9 now!
-The 9 frame transmitted from the ring 2 !
-The frame received from the ring 0, 1, 2 is 9, 9, 9 now!
-The 9 frame transmitted from the ring 0 !
-The frame received from the ring 0, 1, 2 is 10, 9, 9 now!
+
+......
+
 The 10 frame transmitted from the ring 1 !
 The frame received from the ring 0, 1, 2 is 10, 9, 10 now!
 The 10 frame transmitted from the ring 2 !
@@ -122,7 +90,4 @@ The frame received from the ring 0, 1, 2 is 10, 10, 10 now!
 10 frame successfully received from the ring 1!
 10 frame successfully received from the ring 2!
 
-
-Customization options
-=====================
 

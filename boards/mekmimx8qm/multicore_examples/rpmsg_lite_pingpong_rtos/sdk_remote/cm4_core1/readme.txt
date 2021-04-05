@@ -16,8 +16,8 @@ address is then exported from the linker to the application.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -83,5 +83,3 @@ Sending pong...
 Ping pong done, deinitializing...
 Looping forever...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================

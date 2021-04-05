@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,11 +22,11 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_SAI_DRIVER_VERSION (MAKE_VERSION(2, 2, 0)) /*!< Version 2.2.0 */
+#define FSL_SAI_DRIVER_VERSION (MAKE_VERSION(2, 3, 2)) /*!< Version 2.3.2 */
 /*@}*/
 
-/*! @brief SAI return status*/
-enum _sai_status_t
+/*! @brief _sai_status_t, SAI return status.*/
+enum
 {
     kStatus_SAI_TxBusy    = MAKE_STATUS(kStatusGroup_SAI, 0), /*!< SAI Tx is busy. */
     kStatus_SAI_RxBusy    = MAKE_STATUS(kStatusGroup_SAI, 1), /*!< SAI Rx is busy. */
@@ -37,8 +37,8 @@ enum _sai_status_t
     kStatus_SAI_RxIdle    = MAKE_STATUS(kStatusGroup_SAI, 6)  /*!< SAI Rx is idle */
 };
 
-/*< sai channel mask value, actual channel numbers is depend soc specific */
-enum _sai_channel_mask
+/*! @brief _sai_channel_mask,.sai channel mask value, actual channel numbers is depend soc specific */
+enum
 {
     kSAI_Channel0Mask = 1 << 0U, /*!< channel 0 mask value */
     kSAI_Channel1Mask = 1 << 1U, /*!< channel 1 mask value */
@@ -87,10 +87,10 @@ typedef enum _sai_data_order
 /*! @brief SAI clock polarity, active high or low */
 typedef enum _sai_clock_polarity
 {
-    kSAI_PolarityActiveHigh = 0x0U,  /*!< Drive outputs on rising edge */
-    kSAI_PolarityActiveLow,          /*!< Drive outputs on falling edge */
+    kSAI_PolarityActiveHigh  = 0x0U, /*!< Drive outputs on rising edge */
+    kSAI_PolarityActiveLow   = 0x1U, /*!< Drive outputs on falling edge */
     kSAI_SampleOnFallingEdge = 0x0U, /*!< Sample inputs on falling edge */
-    kSAI_SampleOnRisingEdge          /*!< Sample inputs on rising edge */
+    kSAI_SampleOnRisingEdge  = 0x1U, /*!< Sample inputs on rising edge */
 } sai_clock_polarity_t;
 
 /*! @brief Synchronous or asynchronous mode */
@@ -129,8 +129,8 @@ typedef enum _sai_bclk_source
     kSAI_BclkSourceOtherSai1 = 0x3U  /*!< Bit clock from other SAI device */
 } sai_bclk_source_t;
 
-/*! @brief The SAI interrupt enable flag */
-enum _sai_interrupt_enable_t
+/*! @brief _sai_interrupt_enable_t, The SAI interrupt enable flag */
+enum
 {
     kSAI_WordStartInterruptEnable =
         I2S_TCSR_WSIE_MASK, /*!< Word start flag, means the first word in a frame detected */
@@ -142,8 +142,8 @@ enum _sai_interrupt_enable_t
 #endif                                                    /* FSL_FEATURE_SAI_FIFO_COUNT */
 };
 
-/*! @brief The DMA request sources */
-enum _sai_dma_enable_t
+/*! @brief _sai_dma_enable_t, The DMA request sources */
+enum
 {
     kSAI_FIFOWarningDMAEnable = I2S_TCSR_FWDE_MASK, /*!< FIFO warning caused by the DMA request */
 #if defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1)
@@ -151,8 +151,8 @@ enum _sai_dma_enable_t
 #endif                                              /* FSL_FEATURE_SAI_FIFO_COUNT */
 };
 
-/*! @brief The SAI status flag */
-enum _sai_flags
+/*! @brief _sai_flags, The SAI status flag */
+enum
 {
     kSAI_WordStartFlag = I2S_TCSR_WSF_MASK, /*!< Word start flag, means the first word in a frame detected */
     kSAI_SyncErrorFlag = I2S_TCSR_SEF_MASK, /*!< Sync error flag, means the sync error is detected */
@@ -201,7 +201,7 @@ typedef struct _sai_config
 
 #ifndef SAI_XFER_QUEUE_SIZE
 /*!@brief SAI transfer queue size, user can refine it according to use case. */
-#define SAI_XFER_QUEUE_SIZE (4)
+#define SAI_XFER_QUEUE_SIZE (4U)
 #endif
 
 /*! @brief Audio sample rate */
@@ -308,13 +308,25 @@ typedef struct _sai_master_clock
 #endif
 #endif
 
-#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
+#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
+    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
     uint32_t mclkHz;          /*!< target mclk frequency */
     uint32_t mclkSourceClkHz; /*!< mclk source frequency*/
 #endif
 } sai_master_clock_t;
 #endif
 
+/*! @brief sai fifo feature*/
+#if (defined(FSL_FEATURE_SAI_HAS_FIFO_FUNCTION_AFTER_ERROR) && FSL_FEATURE_SAI_HAS_FIFO_FUNCTION_AFTER_ERROR) || \
+    (defined(FSL_FEATURE_SAI_HAS_FIFO_FUNCTION_COMBINE) && FSL_FEATURE_SAI_HAS_FIFO_FUNCTION_COMBINE) ||         \
+    (defined(FSL_FEATURE_SAI_HAS_FIFO_PACKING) && FSL_FEATURE_SAI_HAS_FIFO_PACKING) ||                           \
+    (defined(FSL_FEATURE_SAI_FIFO_COUNT) && (FSL_FEATURE_SAI_FIFO_COUNT > 1))
+#define FSL_SAI_HAS_FIFO_EXTEND_FEATURE 1
+#else
+#define FSL_SAI_HAS_FIFO_EXTEND_FEATURE 0
+#endif
+
+#if FSL_SAI_HAS_FIFO_EXTEND_FEATURE
 /*! @brief sai fifo configurations */
 typedef struct _sai_fifo
 {
@@ -333,6 +345,7 @@ typedef struct _sai_fifo
     uint8_t fifoWatermark; /*!< fifo watermark */
 #endif
 } sai_fifo_t;
+#endif
 
 /*! @brief sai bit clock configurations */
 typedef struct _sai_bit_clock
@@ -383,8 +396,9 @@ typedef struct _sai_transceiver
     sai_serial_data_t serialData; /*!< serial data configurations */
     sai_frame_sync_t frameSync;   /*!< ws configurations */
     sai_bit_clock_t bitClock;     /*!< bit clock configurations */
-    sai_fifo_t fifo;              /*!< fifo configurations */
-
+#if FSL_SAI_HAS_FIFO_EXTEND_FEATURE
+    sai_fifo_t fifo; /*!< fifo configurations */
+#endif
     sai_master_slave_t masterSlave; /*!< transceiver is master or slave */
 
     sai_sync_mode_t syncMode; /*!< transceiver sync mode */
@@ -488,8 +502,9 @@ void SAI_RxInit(I2S_Type *base, const sai_config_t *config);
 
 /*!
  * @brief  Sets the SAI Tx configuration structure to default values.
- * @deprecated Do not use this function.  It has been superceded by @ref
- * SAI_GetClassicI2SConfig/SAI_GetLeftJustifiedConfig/SAI_GetRightJustifiedConfig/SAI_GetDSPConfig/SAI_GetTDMConfig
+ * @deprecated Do not use this function.  It has been superceded by
+ * @ref SAI_GetClassicI2SConfig, @ref SAI_GetLeftJustifiedConfig , @ref SAI_GetRightJustifiedConfig, @ref
+ SAI_GetDSPConfig, @ref SAI_GetTDMConfig
  *
  * This API initializes the configuration structure for use in SAI_TxConfig().
  * The initialized structure can remain unchanged in SAI_TxConfig(), or it can be modified
@@ -506,8 +521,9 @@ void SAI_TxGetDefaultConfig(sai_config_t *config);
 
 /*!
  * @brief  Sets the SAI Rx configuration structure to default values.
- * @deprecated Do not use this function.  It has been superceded by @ref
- * SAI_GetClassicI2SConfig/SAI_GetLeftJustifiedConfig/SAI_GetRightJustifiedConfig/SAI_GetDSPConfig/SAI_GetTDMConfig
+ * @deprecated Do not use this function.  It has been superceded by
+ * @ref SAI_GetClassicI2SConfig, @ref SAI_GetLeftJustifiedConfig , @ref SAI_GetRightJustifiedConfig, @ref
+ SAI_GetDSPConfig, @ref SAI_GetTDMConfig
  *
  * This API initializes the configuration structure for use in SAI_RxConfig().
  * The initialized structure can remain unchanged in SAI_RxConfig() or it can be modified
@@ -659,10 +675,10 @@ static inline void SAI_TxSetFrameSyncDirection(I2S_Type *base, sai_master_slave_
  * @brief Transmitter bit clock rate configurations.
  *
  * @param base SAI base pointer.
- * @param sourceClockHz, bit clock source frequency.
- * @param sampleRate audio data sample rate.
- * @param bitWidth, audio data bitWidth.
- * @param channelNumbers, audio channel numbers.
+ * @param sourceClockHz Bit clock source frequency.
+ * @param sampleRate Audio data sample rate.
+ * @param bitWidth Audio data bitWidth.
+ * @param channelNumbers Audio channel numbers.
  */
 void SAI_TxSetBitClockRate(
     I2S_Type *base, uint32_t sourceClockHz, uint32_t sampleRate, uint32_t bitWidth, uint32_t channelNumbers);
@@ -671,10 +687,10 @@ void SAI_TxSetBitClockRate(
  * @brief Receiver bit clock rate configurations.
  *
  * @param base SAI base pointer.
- * @param sourceClockHz, bit clock source frequency.
- * @param sampleRate audio data sample rate.
- * @param bitWidth, audio data bitWidth.
- * @param channelNumbers, audio channel numbers.
+ * @param sourceClockHz Bit clock source frequency.
+ * @param sampleRate Audio data sample rate.
+ * @param bitWidth Audio data bitWidth.
+ * @param channelNumbers Audio channel numbers.
  */
 void SAI_RxSetBitClockRate(
     I2S_Type *base, uint32_t sourceClockHz, uint32_t sampleRate, uint32_t bitWidth, uint32_t channelNumbers);
@@ -708,6 +724,7 @@ void SAI_RxSetBitclockConfig(I2S_Type *base, sai_master_slave_t masterSlave, sai
 void SAI_SetMasterClockConfig(I2S_Type *base, sai_master_clock_t *config);
 #endif
 
+#if FSL_SAI_HAS_FIFO_EXTEND_FEATURE
 /*!
  * @brief SAI transmitter fifo configurations.
  *
@@ -723,6 +740,7 @@ void SAI_TxSetFifoConfig(I2S_Type *base, sai_fifo_t *config);
  * @param config fifo configurations.
  */
 void SAI_RxSetFifoConfig(I2S_Type *base, sai_fifo_t *config);
+#endif
 
 /*!
  * @brief SAI transmitter Frame sync configurations.
@@ -830,6 +848,20 @@ void SAI_GetTDMConfig(sai_transceiver_t *config,
 
 /*!
  * @brief Get DSP mode configurations.
+ *
+ * @note DSP mode is also called PCM mode which support MODE A and MODE B,
+ * DSP/PCM MODE A configuration flow. RX is similiar but uses SAI_RxSetConfig instead of SAI_TxSetConfig:
+ * @code
+ * SAI_GetDSPConfig(config, kSAI_FrameSyncLenOneBitClk, bitWidth, kSAI_Stereo, channelMask)
+ * config->frameSync.frameSyncEarly    = true;
+ * SAI_TxSetConfig(base, config)
+ * @endcode
+ *
+ * DSP/PCM MODE B configuration flow for TX. RX is similiar but uses SAI_RxSetConfig instead of SAI_TxSetConfig:
+ * @code
+ * SAI_GetDSPConfig(config, kSAI_FrameSyncLenOneBitClk, bitWidth, kSAI_Stereo, channelMask)
+ * SAI_TxSetConfig(base, config)
+ * @endcode
  *
  * @param config transceiver configurations.
  * @param frameSyncWidth length of frame sync.
@@ -963,7 +995,7 @@ void SAI_RxSetDataOrder(I2S_Type *base, sai_data_order_t order);
  * @brief Set the Tx data order.
  *
  * @param base SAI base pointer
- * @param order Data order MSB or LSB
+ * @param polarity
  */
 void SAI_TxSetBitClockPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
 
@@ -971,7 +1003,7 @@ void SAI_TxSetBitClockPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
  * @brief Set the Rx data order.
  *
  * @param base SAI base pointer
- * @param order Data order MSB or LSB
+ * @param polarity
  */
 void SAI_RxSetBitClockPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
 
@@ -979,7 +1011,7 @@ void SAI_RxSetBitClockPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
  * @brief Set the Tx data order.
  *
  * @param base SAI base pointer
- * @param order Data order MSB or LSB
+ * @param polarity
  */
 void SAI_TxSetFrameSyncPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
 
@@ -987,7 +1019,7 @@ void SAI_TxSetFrameSyncPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
  * @brief Set the Rx data order.
  *
  * @param base SAI base pointer
- * @param order Data order MSB or LSB
+ * @param polarity
  */
 void SAI_RxSetFrameSyncPolarity(I2S_Type *base, sai_clock_polarity_t polarity);
 
@@ -1387,7 +1419,7 @@ void SAI_TransferRxSetConfig(I2S_Type *base, sai_handle_t *handle, sai_transceiv
 
 /*!
  * @brief Configures the SAI Tx audio format.
- * @deprecated Do not use this function.  It has been superceded by @ref SAI_TxSetTransferConfig
+ * @deprecated Do not use this function.  It has been superceded by @ref SAI_TransferTxSetConfig
  *
  * The audio format can be changed at run-time. This function configures the sample rate and audio data
  * format to be transferred.
@@ -1408,7 +1440,7 @@ status_t SAI_TransferTxSetFormat(I2S_Type *base,
 
 /*!
  * @brief Configures the SAI Rx audio format.
- * @deprecated Do not use this function.  It has been superceded by @ref SAI_RxSetTransferConfig
+ * @deprecated Do not use this function.  It has been superceded by @ref SAI_TransferRxSetConfig
  *
  * The audio format can be changed at run-time. This function configures the sample rate and audio data
  * format to be transferred.

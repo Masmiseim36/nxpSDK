@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2018, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -36,38 +36,38 @@
 #if (DPU_EXAMPLE_DI == DPU_DI_MIPI)
 
 #if (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE)
-#define BOARD_Display_I2C_Init BOARD_Display0_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display0_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display0_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display0_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display0_I2C_Receive
-#define MIPI_DSI_RSRC SC_R_MIPI_0
+#define MIPI_DSI_RSRC             SC_R_MIPI_0
 #else /* (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE) */
-#define BOARD_Display_I2C_Init BOARD_Display1_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display1_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display1_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display1_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display1_I2C_Receive
-#define MIPI_DSI_RSRC SC_R_MIPI_1
+#define MIPI_DSI_RSRC             SC_R_MIPI_1
 #endif /* (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE) */
 
 #elif (DPU_EXAMPLE_DI == DPU_DI_LVDS)
 
 #if (APP_LDB_BASE == DI_LVDS_0__LDB_BASE)
 #if (APP_LDB_CH == 0)
-#define BOARD_Display_I2C_Init BOARD_Display2_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display2_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display2_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display2_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display2_I2C_Receive
 #else
-#define BOARD_Display_I2C_Init BOARD_Display3_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display3_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display3_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display3_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display3_I2C_Receive
 #endif
 #define LDB_RSRC SC_R_LVDS_0
 #else /* APP_LDB_BASE == DI_LVDS_0__LDB_BASE) */
 #if (APP_LDB_CH == 0)
-#define BOARD_Display_I2C_Init BOARD_Display4_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display4_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display4_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display4_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display4_I2C_Receive
 #else
-#define BOARD_Display_I2C_Init BOARD_Display5_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display5_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display5_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display5_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display5_I2C_Receive
 #endif
 #define LDB_RSRC SC_R_LVDS_1
@@ -77,7 +77,11 @@
 
 #if (APP_DPU_BASE == DC_0__IRIS_MVPL_BASE)
 
-#define DC_RSRC SC_R_DC_0
+#define DC_RSRC        SC_R_DC_0
+#define DC_RSRC_VIDEO0 SC_R_DC_0_VIDEO0
+#define DC_RSRC_VIDEO1 SC_R_DC_0_VIDEO1
+#define DC_RSRC_FRAC0  SC_R_DC_0_FRAC0
+#define DC_RSRC_WARP   SC_R_DC_0_WARP
 
 #if (0 == APP_DPU_DISPLAY_INDEX)
 #define DC_PLL_RSRC SC_R_DC_0_PLL_0
@@ -87,7 +91,11 @@
 
 #else /* (APP_DPU_BASE == DC_0__IRIS_MVPL_BASE) */
 
-#define DC_RSRC SC_R_DC_1
+#define DC_RSRC        SC_R_DC_1
+#define DC_RSRC_VIDEO0 SC_R_DC_1_VIDEO0
+#define DC_RSRC_VIDEO1 SC_R_DC_1_VIDEO1
+#define DC_RSRC_FRAC0  SC_R_DC_1_FRAC0
+#define DC_RSRC_WARP   SC_R_DC_1_WARP
 
 #if (0 == APP_DPU_DISPLAY_INDEX)
 #define DC_PLL_RSRC SC_R_DC_1_PLL_0
@@ -107,7 +115,7 @@
 
 #if !APP_DISPLAY_EXTERNAL_CONVERTOR
 #define RM67191_RESET_GPIO LSIO__GPIO1
-#define RM67191_RESET_PIN 7U
+#define RM67191_RESET_PIN  7U
 #endif
 
 /* Pixel Link address */
@@ -122,7 +130,7 @@ typedef struct _dpu_mipi_pl_addr
 #elif (DPU_EXAMPLE_DI == DPU_DI_LVDS)
 
 #define IT6263_RESET_GPIO LSIO__GPIO1
-#define IT6263_RESET_PIN 6U
+#define IT6263_RESET_PIN  6U
 
 /* Pixel Link address */
 typedef struct _dpu_ldb_pl_addr
@@ -156,12 +164,14 @@ static void IT6263_PullResetPin(bool pullUp);
 #if (DPU_EXAMPLE_DI == DPU_DI_MIPI)
 
 #if !APP_DISPLAY_EXTERNAL_CONVERTOR
+
+static mipi_dsi_device_t dsiDevice = {
+    .virtualChannel = 0,
+    .xferFunc       = RM67191_DSI_Transfer,
+};
+
 static const rm67191_resource_t rm67191Resource = {
-    .dsiDevice =
-        {
-            .virtualChannel = 0,
-            .xferFunc       = RM67191_DSI_Transfer,
-        },
+    .dsiDevice    = &dsiDevice,
     .pullResetPin = RM67191_PullResetPin,
 };
 
@@ -606,6 +616,45 @@ void BOARD_PrepareDisplay(void)
         assert(false);
     }
 
+    /*
+     * Assign the display kachuck signal to fetch unit, the relationship between
+     * resource and fetch unit is:
+     *
+     * SC_R_DC_0_FRAC0 : fetchLayer0
+     * SC_R_DC_0_VIDEO0 : fetchDecode0, fetchEco0
+     * SC_R_DC_0_VIDEO1 : fetchDecode1, fetchEco1
+     * SC_R_DC_0_WARP0 : fetchWarp2, fetchEco2
+     *
+     * The kachuck signal should be assigned according to application requirement,
+     * for example, if fetchDecode0 is used by display 0 and fetchDecode1 is used by
+     * display 1, then SC_R_DC_0_VIDEO0 kachucksel should be set to 0, and
+     * SC_R_DC_0_VIDEO1 should be set to 1. In the driver example, only one display
+     * stream is used, so set all resource to this display stream.
+     */
+    err = sc_misc_set_control(ipc, DC_RSRC_VIDEO0, SC_C_KACHUNK_SEL, APP_DPU_DISPLAY_INDEX);
+    if (SC_ERR_NONE != err)
+    {
+        assert(false);
+    }
+
+    err = sc_misc_set_control(ipc, DC_RSRC_VIDEO1, SC_C_KACHUNK_SEL, APP_DPU_DISPLAY_INDEX);
+    if (SC_ERR_NONE != err)
+    {
+        assert(false);
+    }
+
+    err = sc_misc_set_control(ipc, DC_RSRC_FRAC0, SC_C_KACHUNK_SEL, APP_DPU_DISPLAY_INDEX);
+    if (SC_ERR_NONE != err)
+    {
+        assert(false);
+    }
+
+    err = sc_misc_set_control(ipc, DC_RSRC_WARP, SC_C_KACHUNK_SEL, APP_DPU_DISPLAY_INDEX);
+    if (SC_ERR_NONE != err)
+    {
+        assert(false);
+    }
+
 #if (DPU_EXAMPLE_DI == DPU_DI_MIPI)
 
     /* Power up MIPI DSI subsystem. */
@@ -668,7 +717,7 @@ void BOARD_PrepareDisplay(void)
 
     /* DPHY reference clock is enabled by default, 27MHz. */
     mipiDsiDphyRefClkFreq_Hz = 27000000U;
-    err = sc_pm_clock_enable(ipc, MIPI_DSI_RSRC, SC_PM_CLK_PHY, true, false);
+    err                      = sc_pm_clock_enable(ipc, MIPI_DSI_RSRC, SC_PM_CLK_PHY, true, false);
     if (SC_ERR_NONE != err)
     {
         assert(false);

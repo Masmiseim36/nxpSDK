@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, NXP
+ * Copyright 2018, NXP
  * All rights reserved.
  *
  *
@@ -27,11 +27,11 @@
  ******************************************************************************/
 /* Protocol definition */
 #define SRTM_I2C_CATEGORY (0x9U)
-#define SRTM_I2C_VERSION (0x0100U)
+#define SRTM_I2C_VERSION  (0x0100U)
 // #define SRTM_I2C_VERSION (0x0001U)
 
-#define SRTM_I2C_RETURN_CODE_SUCEESS (0x0U)
-#define SRTM_I2C_RETURN_CODE_FAIL (0x1U)
+#define SRTM_I2C_RETURN_CODE_SUCEESS     (0x0U)
+#define SRTM_I2C_RETURN_CODE_FAIL        (0x1U)
 #define SRTM_I2C_RETURN_CODE_UNSUPPORTED (0x2U)
 
 typedef struct _srtm_i2c_service
@@ -86,7 +86,7 @@ static srtm_status_t SRTM_I2CService_ReadBus(
         switch_channel = targetBus->switch_channel;
         if (switch_inst->cur_channel != switch_channel)
         {
-            status                   = adapter->switchchannel(adapter, base_addr, type, switch_addr, switch_channel);
+            (void)adapter->switchchannel(adapter, base_addr, type, switch_addr, switch_channel);
             switch_inst->cur_channel = switch_channel;
         }
     }
@@ -125,7 +125,7 @@ static srtm_status_t SRTM_I2CService_WriteBus(
         switch_channel = targetBus->switch_channel;
         if (switch_inst->cur_channel != switch_channel)
         {
-            status                   = adapter->switchchannel(adapter, base_addr, type, switch_addr, switch_channel);
+            (void)adapter->switchchannel(adapter, base_addr, type, switch_addr, switch_channel);
             switch_inst->cur_channel = switch_channel;
         }
     }

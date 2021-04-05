@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v8.0
 processor: MIMX8QM6xxxFF
 package_id: MIMX8QM6AVUFF
 mcu_data: ksdk2_0
@@ -281,10 +281,10 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 LPUART4_InitPinsEx:
-- options: {callFromInitBoot: 'false', coreID: cm4_1}
+- options: {callFromInitBoot: 'false', coreID: cm4_core1}
 - pin_list:
-  - {pin_num: AU45, peripheral: DMA__UART2, signal: uart_rx, pin_signal: UART0_RTS_B, sw_config: sw_config_0}
-  - {pin_num: AW49, peripheral: DMA__UART2, signal: uart_tx, pin_signal: UART0_CTS_B, sw_config: sw_config_0}
+  - {pin_num: AU45, peripheral: DMA__UART2, signal: uart_rx, pin_signal: UART0_RTS_B, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AW49, peripheral: DMA__UART2, signal: uart_tx, pin_signal: UART0_CTS_B, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -294,7 +294,7 @@ LPUART4_InitPinsEx:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void LPUART4_InitPinsEx(sc_ipc_t ipc)                      /*!< Function assigned for the core: Cortex-M4F[cm4_1] */
+void LPUART4_InitPinsEx(sc_ipc_t ipc)                      /*!< Function assigned for the core: Cortex-M4F[cm4_core1] */
 {
   sc_err_t err = SC_ERR_NONE;
 
@@ -314,10 +314,10 @@ void LPUART4_InitPinsEx(sc_ipc_t ipc)                      /*!< Function assigne
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 LPUART4_DeinitPinsEx:
-- options: {callFromInitBoot: 'false', coreID: cm4_1}
+- options: {callFromInitBoot: 'false', coreID: cm4_core1}
 - pin_list:
-  - {pin_num: AW49, peripheral: LSIO__GPIO0, signal: 'gpio_io, 23', pin_signal: UART0_CTS_B, direction: INPUT, sw_config: sw_config_0}
-  - {pin_num: AU45, peripheral: LSIO__GPIO0, signal: 'gpio_io, 22', pin_signal: UART0_RTS_B, direction: INPUT, sw_config: sw_config_0}
+  - {pin_num: AW49, peripheral: LSIO__GPIO0, signal: 'gpio_io, 23', pin_signal: UART0_CTS_B, direction: INPUT, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AU45, peripheral: LSIO__GPIO0, signal: 'gpio_io, 22', pin_signal: UART0_RTS_B, direction: INPUT, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -327,7 +327,7 @@ LPUART4_DeinitPinsEx:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void LPUART4_DeinitPinsEx(sc_ipc_t ipc)                    /*!< Function assigned for the core: Cortex-M4F[cm4_1] */
+void LPUART4_DeinitPinsEx(sc_ipc_t ipc)                    /*!< Function assigned for the core: Cortex-M4F[cm4_core1] */
 {
   sc_err_t err = SC_ERR_NONE;
 

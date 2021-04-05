@@ -94,8 +94,8 @@ The DPU path is configured like this:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -158,6 +158,3 @@ When the example runs successfully, you can see screen output described in overv
 
 NOTE: Before load and run the project, press SW1 until D3/D5 are off, then press
 SW1 until D3/D5 are on. This perform a whole reset.
-Customization options
-=====================
-

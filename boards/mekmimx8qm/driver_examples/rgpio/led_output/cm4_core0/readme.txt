@@ -8,8 +8,8 @@ example take turns to shine the LED.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -46,6 +46,3 @@ Since no LED connected to the RGPIO. Please use oscilloscope probe to the pin to
  RGPIO Driver example
  The LED is taking turns to shine.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

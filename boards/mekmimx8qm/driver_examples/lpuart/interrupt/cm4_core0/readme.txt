@@ -8,8 +8,8 @@ send back all characters that PC send to the board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -51,6 +51,3 @@ Board receives characters then sends them out
 
 Now please input:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

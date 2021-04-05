@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,71 +9,80 @@
 #include "task.h"
 #include "timers.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_asmc.h"
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
-#include "fsl_flexcan.h"
 #include "fsl_irqsteer.h"
 #include "fsl_lpit.h"
 #include "lpm.h"
 #include "fsl_wdog32.h"
 #include "power_mode_switch.h"
-#include "app_srtm.h"
 #include "fsl_sc_event.h"
 
 #include "misc/misc_api.h"
 #include "svc/pad/pad_api.h"
 #include "imx8qm_pads.h"
-#include "clock_config.h"
 #include "fsl_lpi2c.h"
 #include "fsl_lpuart.h"
+#include "fsl_flexcan.h"
 #include "fsl_rgpio.h"
-#include "pin_mux.h"
+#include "app_srtm.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/* Demo configuration macro */
+#define APP_USE_CAN_AS_WAKEUP (1U)
+
 /* LPIT related macro*/
-#define APP_LPIT_BASE CM4_1__LPIT
-#define APP_LPIT_IRQn M4_1_LPIT_IRQn
+#define APP_LPIT_BASE       CM4_1__LPIT
+#define APP_LPIT_IRQn       M4_1_LPIT_IRQn
 #define APP_LPIT_IRQHandler M4_1_LPIT_IRQHandler
-#define LPIT_SOURCECLOCK CLOCK_GetIpFreq(kCLOCK_M4_1_Lpit)
-#define APP_LPIT_IRQ_PRIO (5U)
+#define APP_LPIT_RSRC       SC_R_M4_1_PIT
+#define APP_LPIT_CLK_NAME   kCLOCK_M4_1_Lpit
+#define LPIT_SOURCECLOCK    CLOCK_GetIpFreq(kCLOCK_M4_1_Lpit)
+#define APP_LPIT_IRQ_PRIO   (5U)
 
 /* CAN Transceiver config related */
-#define APP_IOEXP_I2C CM4_1__LPI2C
-#define APP_IOEXP_I2C_ADDR (0x20U)
-#define APP_IOEXP_CAN_EN_MASK (0x8U)
+#define APP_IOEXP_I2C          CM4_1__LPI2C
+#define APP_IOEXP_I2C_ADDR     (0x20U)
+#define APP_IOEXP_CAN_EN_MASK  (0x8U)
 #define APP_IOEXP_CAN_STB_MASK (0x20U)
-#define I2C_RELEASE_SCL_GPIO CM4_1__RGPIO
-#define I2C_RELEASE_SDA_GPIO CM4_1__RGPIO
-#define I2C_RELEASE_SCL_PIN (2U)
-#define I2C_RELEASE_SDA_PIN (3U)
+#define I2C_RELEASE_SCL_GPIO   CM4_1__RGPIO
+#define I2C_RELEASE_SDA_GPIO   CM4_1__RGPIO
+#define I2C_RELEASE_SCL_PIN    (2U)
+#define I2C_RELEASE_SDA_PIN    (3U)
 
 /* PCA6416 I2C Register Map */
-#define PCA6416_REG_INPUT_PORT_0 (0x0)
-#define PCA6416_REG_INPUT_PORT_1 (0x1)
-#define PCA6416_REG_OUTPUT_PORT_0 (0x2)
-#define PCA6416_REG_OUTPUT_PORT_1 (0x3)
+#define PCA6416_REG_INPUT_PORT_0              (0x0)
+#define PCA6416_REG_INPUT_PORT_1              (0x1)
+#define PCA6416_REG_OUTPUT_PORT_0             (0x2)
+#define PCA6416_REG_OUTPUT_PORT_1             (0x3)
 #define PCA6416_REG_POLARITY_INVERSION_PORT_0 (0x4)
 #define PCA6416_REG_POLARITY_INVERSION_PORT_1 (0x5)
-#define PCA6416_REG_CONFIGURATION_PORT_0 (0x6)
-#define PCA6416_REG_CONFIGURATION_PORT_1 (0x7)
+#define PCA6416_REG_CONFIGURATION_PORT_0      (0x6)
+#define PCA6416_REG_CONFIGURATION_PORT_1      (0x7)
 
 /* FlexCAN */
 #define APP_WAKEUP_CAN_NAME "FlexCAN0"
+#define APP_CAN             DMA__CAN0
+#define APP_CAN_RSRC        SC_R_CAN_0
+#define APP_CAN_CLK_FREQ    CLOCK_GetIpFreq(kCLOCK_DMA_Can0)
+#define APP_CAN_IRQn        DMA_FLEXCAN0_INT_IRQn
+#define APP_CAN_IRQ_PRIO    (4U)
+#define SET_CAN_QUANTUM     1
+#define PSEG1               3
+#define PSEG2               2
+#define PROPSEG             3
+/* FlexCAN message buffer */
+#define RX_MESSAGE_BUFFER_NUM (9)
+#define TX_MESSAGE_BUFFER_NUM (8)
+
 #define APP_WAKEUP_BUTTON_NAME "SW1 ON/OFF"
-#define APP_WAKEUP_PAD_NAME "UART RX Pad"
-#define APP_WAKEUP_PAD SC_P_UART0_RTS_B
-#define APP_CAN DMA__CAN0
-#define APP_CAN_RSRC SC_R_CAN_0
-#define APP_CAN_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_DMA_Can0)
-#define APP_CAN_IRQn DMA_FLEXCAN0_INT_IRQn
-#define APP_CAN_IRQ_PRIO (4U)
-#define SET_CAN_QUANTUM 1
-#define PSEG1 3
-#define PSEG2 2
-#define PROPSEG 3
+#define APP_WAKEUP_PAD_NAME    "UART RX Pad"
+#define APP_WAKEUP_PAD         SC_P_UART0_RTS_B
 
 #define APP_WDOG CM4_1__WDOG
 
@@ -83,21 +92,17 @@
 /* IPC MU */
 #define APP_IPC_MU_RSRC SC_R_M4_1_MU_1A
 
+/* Get the NVIC IRQn of given IRQSTEER IRQn */
+#define GET_IRQSTEER_MASTER_IRQn(IRQn) \
+    (IRQn_Type)(IRQSTEER_0_IRQn + (IRQn - FSL_FEATURE_IRQSTEER_IRQ_START_INDEX) / 64U)
+
 #define RTN_ERR(X)                        \
     if ((X) != SC_ERR_NONE)               \
     {                                     \
         assert("Error in SCFW API call"); \
     }
-/* FlexCAN message buffer */
-#define RX_MESSAGE_BUFFER_NUM (9)
-#define TX_MESSAGE_BUFFER_NUM (8)
-
 /* WDOG reset timeout */
 #define WDOG_TIMEOUT (32768 / 2) /*0.5s*/
-
-/* Get the NVIC IRQn of given IRQSTEER IRQn */
-#define GET_IRQSTEER_MASTER_IRQn(IRQn) \
-    (IRQn_Type)(IRQSTEER_0_IRQn + (IRQn - FSL_FEATURE_IRQSTEER_IRQ_START_INDEX) / 64U)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -106,6 +111,14 @@ void APP_InitDebugConsole(void);
 bool APP_PowerPreSwitchHook(asmc_power_state_t originPowerState, lpm_power_mode_t targetMode);
 /* Hook function called after power mode switch. */
 void APP_PowerPostSwitchHook(asmc_power_state_t originPowerState, lpm_power_mode_t targetMode, bool result);
+/* Init CAN Event Task. */
+void APP_InitCANEventTask(void);
+/* Configure CAN wakeup source. */
+void APP_ConfigCanWakeupSrc(void);
+/* CAN event handler */
+void CanEventHandleTask(void *pvParameters);
+/* Handler function for A core reboot. */
+void APP_PeerCoreRebootHandler(void);
 /* FreeRTOS implemented Malloc failed hook. */
 extern void vApplicationMallocFailedHook(void);
 
@@ -114,20 +127,22 @@ void APP_InitInternalWakeupSrc(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-sc_ipc_t ipc;
-
-static sc_rm_pt_t a_pt;                 /* Partition ID of A core         */
-static sc_pad_wakeup_t s_uartWakeup;    /* UART Pad wakeup configuration  */
-static uint8_t s_wakeupTimeout;         /* Wakeup timeout. (Unit: Second) */
-static SemaphoreHandle_t s_wakeupSig;   /* Wakeup signal                  */
+#if (defined(APP_USE_CAN_AS_WAKEUP) && APP_USE_CAN_AS_WAKEUP)
 static SemaphoreHandle_t s_rxFinishSig; /* CAN receive finished signal    */
-
-app_wakeup_source_t g_wakeupSource; /* Wakeup source.                 */
 flexcan_handle_t flexcanHandle;
 flexcan_mb_transfer_t txXfer, rxXfer;
 flexcan_frame_t frame;
 uint32_t txIdentifier = 0x123;
 uint32_t rxIdentifier = 0x321;
+#endif /* APP_USE_CAN_AS_WAKEUP */
+sc_ipc_t ipc;
+
+static sc_rm_pt_t a_pt;              /* Partition ID of A core         */
+static sc_pad_wakeup_t s_uartWakeup; /* UART Pad wakeup configuration  */
+static uint8_t s_wakeupTimeout;      /* Wakeup timeout. (Unit: Second) */
+SemaphoreHandle_t s_wakeupSig;       /* Wakeup signal                  */
+
+app_wakeup_source_t g_wakeupSource; /* Wakeup source.                 */
 
 static const char *s_modeNames[] = {"RUN", "WAIT", "STOP", "VLPR", "VLPW", "VLPS", "LLS", "VLLS"};
 /*******************************************************************************
@@ -141,6 +156,8 @@ static void APP_Resume(lpm_power_mode_t targetMode, bool result)
         BOARD_InitMemory();
     }
 
+    RTN_ERR(sc_pm_set_resource_power_mode(ipc, SC_R_MU_6B, SC_PM_PW_MODE_ON));
+    RTN_ERR(sc_pm_set_resource_power_mode(ipc, SC_R_MU_7B, SC_PM_PW_MODE_ON));
     RTN_ERR(sc_pm_set_resource_power_mode(ipc, SC_R_IRQSTR_M4_1, SC_PM_PW_MODE_ON));
 
     /* If CAN wake up interrupt pending, clear the CAN IPG_STOP signal. */
@@ -171,8 +188,10 @@ static bool APP_Suspend(void)
     }
     RTN_ERR(sc_pm_set_resource_power_mode(ipc, SC_R_M4_1_I2C, SC_PM_PW_MODE_OFF));
 
-    /* Prepare peripherals into low power mode, keep IRQSTEER STBY to respond RPMSG. */
-    RTN_ERR(sc_pm_set_resource_power_mode(ipc, SC_R_IRQSTR_M4_1, SC_PM_PW_MODE_STBY));
+    /* Prepare peripherals into low power mode. */
+    RTN_ERR(sc_pm_set_resource_power_mode(ipc, SC_R_IRQSTR_M4_1, SC_PM_PW_MODE_OFF));
+    RTN_ERR(sc_pm_set_resource_power_mode(ipc, SC_R_MU_6B, SC_PM_PW_MODE_OFF));
+    RTN_ERR(sc_pm_set_resource_power_mode(ipc, SC_R_MU_7B, SC_PM_PW_MODE_OFF));
 
     if (kAPP_WakeupSourceLpit == g_wakeupSource)
     {
@@ -322,6 +341,144 @@ static void BOARD_ConfigureIOExpander(void)
     /* Don't power off I2C as it will be used by audio codec. */
 }
 
+
+/* Handler function for A core reboot. */
+void APP_PeerCoreRebootHandler(void)
+{
+    APP_SRTM_PeerCoreRebootHandler();
+}
+
+#if (defined(APP_USE_CAN_AS_WAKEUP) && APP_USE_CAN_AS_WAKEUP)
+/*!
+ * @brief FlexCAN Call Back function
+ */
+static void flexcan_callback(CAN_Type *base, flexcan_handle_t *handle, status_t status, uint32_t result, void *userData)
+{
+    BaseType_t reschedule = 0;
+
+    switch (status)
+    {
+        case kStatus_FLEXCAN_RxIdle:
+            if (RX_MESSAGE_BUFFER_NUM == result)
+            {
+                xSemaphoreGiveFromISR(s_rxFinishSig, &reschedule);
+                portYIELD_FROM_ISR(reschedule);
+            }
+            break;
+
+        case kStatus_FLEXCAN_TxIdle:
+            if (TX_MESSAGE_BUFFER_NUM == result)
+            {
+                xSemaphoreGiveFromISR(s_wakeupSig, &reschedule);
+                portYIELD_FROM_ISR(reschedule);
+            }
+            break;
+        /* Handle selfwake. */
+        case kStatus_FLEXCAN_WakeUp:
+            /* Disable CAN Wakeup interrupt, start receive data through Rx Message Buffer. */
+            FLEXCAN_DisableInterrupts(APP_CAN, kFLEXCAN_WakeUpInterruptEnable);
+            rxXfer.mbIdx = (uint8_t)RX_MESSAGE_BUFFER_NUM;
+            rxXfer.frame = &frame;
+            FLEXCAN_TransferReceiveNonBlocking(APP_CAN, &flexcanHandle, &rxXfer);
+            break;
+
+        default:
+            break;
+    }
+}
+
+void APP_ConfigCanWakeupSrc(void)
+{
+    RTN_ERR(sc_pm_set_resource_power_mode(ipc, SC_R_CAN_0, SC_PM_PW_MODE_ON));
+    /* Set Peripheral clock frequency. */
+    if (CLOCK_SetIpFreq(kCLOCK_DMA_Can0, SC_24MHZ) == 0)
+    {
+        PRINTF("Error: Failed to set FLEXCAN frequency\r\n");
+    }
+
+    flexcan_config_t flexcanConfig;
+    flexcan_rx_mb_config_t mbConfig;
+
+    /* Get FlexCAN module default Configuration. */
+    /*
+     * flexcanConfig.clkSrc                 = kFLEXCAN_ClkSrc0;
+     * flexcanConfig.baudRate               = 1000000U;
+     * flexcanConfig.maxMbNum               = 16;
+     * flexcanConfig.enableLoopBack         = false;
+     * flexcanConfig.enableSelfWakeup       = false;
+     * flexcanConfig.enableIndividMask      = false;
+     * flexcanConfig.disableSelfReception   = false;
+     * flexcanConfig.enableListenOnlyMode   = false;
+     * flexcanConfig.enableDoze             = false;
+     */
+    FLEXCAN_GetDefaultConfig(&flexcanConfig);
+    /* Init FlexCAN module. */
+    flexcanConfig.enableSelfWakeup = true;
+    flexcanConfig.baudRate         = 500000U;
+#if (defined(SET_CAN_QUANTUM) && SET_CAN_QUANTUM)
+    flexcanConfig.timingConfig.phaseSeg1 = PSEG1;
+    flexcanConfig.timingConfig.phaseSeg2 = PSEG2;
+    flexcanConfig.timingConfig.propSeg   = PROPSEG;
+#endif
+    FLEXCAN_Init(APP_CAN, &flexcanConfig, APP_CAN_CLK_FREQ);
+    /* Create FlexCAN handle structure and set call back function. */
+    FLEXCAN_TransferCreateHandle(APP_CAN, &flexcanHandle, flexcan_callback, NULL);
+
+    /* Set Rx Masking mechanism. */
+    FLEXCAN_SetRxMbGlobalMask(APP_CAN, FLEXCAN_RX_MB_STD_MASK(rxIdentifier, 0, 0));
+
+    /* Setup Rx Message Buffer. */
+    mbConfig.format = kFLEXCAN_FrameFormatStandard;
+    mbConfig.type   = kFLEXCAN_FrameTypeData;
+    mbConfig.id     = FLEXCAN_ID_STD(rxIdentifier);
+    FLEXCAN_SetRxMbConfig(APP_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
+    /* Setup Tx Message Buffer. */
+    FLEXCAN_SetTxMbConfig(APP_CAN, TX_MESSAGE_BUFFER_NUM, true);
+
+    NVIC_SetPriority(GET_IRQSTEER_MASTER_IRQn(APP_CAN_IRQn), APP_CAN_IRQ_PRIO);
+    IRQSTEER_EnableInterrupt(IRQSTEER, APP_CAN_IRQn);
+
+    /*
+     * CAN STOP sequence:
+     * 1.  Config CAN to enable self wake mode(MCR[SLFWAK]),  enable self wake interrupt.
+     * 2.  Assert IPG_STOP signal using SCFW API for CAN. Wait the MCR[LPMACK] set, to ensure the CAN going stop.
+     * 3.  Wait CAN wakeup and then clear the IPG_STOP signal using SCFW API. (Done in APP_PowerPostSwitchHook())
+     */
+    /* 1. Self wake configured during CAN initialize, so enable self wake interrupt, and assert STOP signal using
+     * SCFW API for CAN. */
+    FLEXCAN_EnableInterrupts(APP_CAN, kFLEXCAN_WakeUpInterruptEnable);
+    RTN_ERR(sc_misc_set_control(ipc, APP_CAN_RSRC, SC_C_IPG_STOP, 1U));
+    /* 2. Wait the CAN acknowleged the STOP */
+    while (!(APP_CAN->MCR & CAN_MCR_LPMACK_MASK))
+    {
+    }
+}
+
+/*
+ * Handle CAN event in task.
+ * NOTE: THE SCFW API CAN NOT BE CALLED IN INTERRUPT CONTEXT FOR RTOS ENVIRONMENT.
+ */
+void CanEventHandleTask(void *pvParameters)
+{
+    for (;;)
+    {
+        /* Wait RX completed, and send the received message back. */
+        xSemaphoreTake(s_rxFinishSig, portMAX_DELAY);
+        PRINTF("CAN Rx MB ID: 0x%3x, Rx MB data: 0x%x\r\n", frame.id >> CAN_ID_STD_SHIFT, frame.dataByte0);
+
+        frame.id     = FLEXCAN_ID_STD(txIdentifier);
+        txXfer.mbIdx = (uint8_t)TX_MESSAGE_BUFFER_NUM;
+        txXfer.frame = &frame;
+        FLEXCAN_TransferSendNonBlocking(APP_CAN, &flexcanHandle, &txXfer);
+    }
+}
+
+void APP_InitCANEventTask(void)
+{
+    s_rxFinishSig = xSemaphoreCreateBinary();
+    xTaskCreate(CanEventHandleTask, "CAN Event Task", 512U, NULL, tskIDLE_PRIORITY + 3U, NULL);
+}
+#endif /* APP_USE_CAN_AS_WAKEUP */
 void vApplicationMallocFailedHook(void)
 {
     PRINTF("Malloc Failed!!!\r\n");
@@ -355,44 +512,6 @@ void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
     }
 
     EnableGlobalIRQ(irqMask);
-}
-
-/*!
- * @brief FlexCAN Call Back function
- */
-static void flexcan_callback(CAN_Type *base, flexcan_handle_t *handle, status_t status, uint32_t result, void *userData)
-{
-    BaseType_t reschedule;
-
-    switch (status)
-    {
-        case kStatus_FLEXCAN_RxIdle:
-            if (RX_MESSAGE_BUFFER_NUM == result)
-            {
-                xSemaphoreGiveFromISR(s_rxFinishSig, &reschedule);
-                portYIELD_FROM_ISR(reschedule);
-            }
-            break;
-
-        case kStatus_FLEXCAN_TxIdle:
-            if (TX_MESSAGE_BUFFER_NUM == result)
-            {
-                xSemaphoreGiveFromISR(s_wakeupSig, &reschedule);
-                portYIELD_FROM_ISR(reschedule);
-            }
-            break;
-        /* Handle selfwake. */
-        case kStatus_FLEXCAN_WakeUp:
-            /* Disable CAN Wakeup interrupt, start receive data through Rx Message Buffer. */
-            FLEXCAN_DisableInterrupts(APP_CAN, kFLEXCAN_WakeUpInterruptEnable);
-            rxXfer.mbIdx = RX_MESSAGE_BUFFER_NUM;
-            rxXfer.frame = &frame;
-            FLEXCAN_TransferReceiveNonBlocking(APP_CAN, &flexcanHandle, &rxXfer);
-            break;
-
-        default:
-            break;
-    }
 }
 
 void APP_LPIT_IRQHandler(void)
@@ -440,9 +559,9 @@ static void APP_ConfigWDOG32Reset(uint16_t timeout)
  */
 static void APP_InitLpitWakeupSrc()
 {
-    RTN_ERR(sc_pm_set_resource_power_mode(ipc, SC_R_M4_1_PIT, SC_PM_PW_MODE_ON));
-    RTN_ERR(sc_pm_clock_enable(ipc, SC_R_M4_1_PIT, SC_PM_CLK_PER, true, false));
-    if (CLOCK_SetIpFreq(kCLOCK_M4_1_Lpit, SC_24MHZ) == 0)
+    RTN_ERR(sc_pm_set_resource_power_mode(ipc, APP_LPIT_RSRC, SC_PM_PW_MODE_ON));
+    RTN_ERR(sc_pm_clock_enable(ipc, APP_LPIT_RSRC, SC_PM_CLK_PER, true, false));
+    if (CLOCK_SetIpFreq(APP_LPIT_CLK_NAME, SC_24MHZ) == 0)
     {
         PRINTF("Error: Failed to set LPIT frequency\r\n");
     }
@@ -472,57 +591,6 @@ static void APP_InitLpitWakeupSrc()
 
     NVIC_SetPriority(APP_LPIT_IRQn, APP_LPIT_IRQ_PRIO);
     EnableIRQ(APP_LPIT_IRQn);
-}
-
-static void APP_InitCanWakeupSrc()
-{
-    RTN_ERR(sc_pm_set_resource_power_mode(ipc, SC_R_CAN_0, SC_PM_PW_MODE_ON));
-    /* Set Peripheral clock frequency. */
-    if (CLOCK_SetIpFreq(kCLOCK_DMA_Can0, SC_24MHZ) == 0)
-    {
-        PRINTF("Error: Failed to set FLEXCAN frequency\r\n");
-    }
-
-    flexcan_config_t flexcanConfig;
-    flexcan_rx_mb_config_t mbConfig;
-
-    /* Get FlexCAN module default Configuration. */
-    /*
-     * flexcanConfig.clkSrc = kFLEXCAN_ClkSrcOsc;
-     * flexcanConfig.baudRate = 1000000U;
-     * flexcanConfig.maxMbNum = 16;
-     * flexcanConfig.enableLoopBack = false;
-     * flexcanConfig.enableSelfWakeup = false;
-     * flexcanConfig.enableIndividMask = false;
-     * flexcanConfig.enableDoze = false;
-     * flexcanConfig.timingConfig = timingConfig;
-     */
-    FLEXCAN_GetDefaultConfig(&flexcanConfig);
-    /* Init FlexCAN module. */
-    flexcanConfig.enableSelfWakeup = true;
-    flexcanConfig.baudRate         = 500000U;
-#if (defined(SET_CAN_QUANTUM) && SET_CAN_QUANTUM)
-    flexcanConfig.timingConfig.phaseSeg1 = PSEG1;
-    flexcanConfig.timingConfig.phaseSeg2 = PSEG2;
-    flexcanConfig.timingConfig.propSeg   = PROPSEG;
-#endif
-    FLEXCAN_Init(APP_CAN, &flexcanConfig, APP_CAN_CLK_FREQ);
-    /* Create FlexCAN handle structure and set call back function. */
-    FLEXCAN_TransferCreateHandle(APP_CAN, &flexcanHandle, flexcan_callback, NULL);
-
-    /* Set Rx Masking mechanism. */
-    FLEXCAN_SetRxMbGlobalMask(APP_CAN, FLEXCAN_RX_MB_STD_MASK(rxIdentifier, 0, 0));
-
-    /* Setup Rx Message Buffer. */
-    mbConfig.format = kFLEXCAN_FrameFormatStandard;
-    mbConfig.type   = kFLEXCAN_FrameTypeData;
-    mbConfig.id     = FLEXCAN_ID_STD(rxIdentifier);
-    FLEXCAN_SetRxMbConfig(APP_CAN, RX_MESSAGE_BUFFER_NUM, &mbConfig, true);
-    /* Setup Tx Message Buffer. */
-    FLEXCAN_SetTxMbConfig(APP_CAN, TX_MESSAGE_BUFFER_NUM, true);
-
-    NVIC_SetPriority(GET_IRQSTEER_MASTER_IRQn(APP_CAN_IRQn), APP_CAN_IRQ_PRIO);
-    IRQSTEER_EnableInterrupt(IRQSTEER, APP_CAN_IRQn);
 }
 
 /*!
@@ -561,7 +629,9 @@ static app_wakeup_source_t APP_GetWakeupSource(void)
         PRINTF("Select the wake up source:\r\n");
         PRINTF("Press T for LPIT - Low Power Timer\r\n");
         PRINTF("Press S for switch/button %s. \r\n", APP_WAKEUP_BUTTON_NAME);
+#if (defined(APP_USE_CAN_AS_WAKEUP) && APP_USE_CAN_AS_WAKEUP)
         PRINTF("Press C for CAN - %s. \r\n", APP_WAKEUP_CAN_NAME);
+#endif /* APP_USE_CAN_AS_WAKEUP */
         PRINTF("Press P for PAD - %s. \r\n", APP_WAKEUP_PAD_NAME);
 
         PRINTF("\r\nWaiting for key press..\r\n\r\n");
@@ -630,7 +700,10 @@ static void APP_GetWakeupConfig(lpm_power_mode_t targetMode)
     }
     else
     {
+        /* All cases handled. */
+#if (defined(APP_USE_CAN_AS_WAKEUP) && APP_USE_CAN_AS_WAKEUP)
         PRINTF("Send a CAN message to %s to wake up.\r\n", APP_WAKEUP_CAN_NAME);
+#endif /* APP_USE_CAN_AS_WAKEUP */
     }
 }
 
@@ -664,21 +737,9 @@ static void APP_SetWakeupConfig(lpm_power_mode_t targetMode)
     }
     else
     {
-        APP_InitCanWakeupSrc();
-        /*
-         * CAN STOP sequence:
-         * 1.  Config CAN to enable self wake mode(MCR[SLFWAK]),  enable self wake interrupt.
-         * 2.  Assert IPG_STOP signal using SCFW API for CAN. Wait the MCR[LPMACK] set, to ensure the CAN going stop.
-         * 3.  Wait CAN wakeup and then clear the IPG_STOP signal using SCFW API. (Done in APP_PowerPostSwitchHook())
-         */
-        /* 1. Self wake configured during CAN initialize, so enable self wake interrupt, and assert STOP signal using
-         * SCFW API for CAN. */
-        FLEXCAN_EnableInterrupts(APP_CAN, kFLEXCAN_WakeUpInterruptEnable);
-        RTN_ERR(sc_misc_set_control(ipc, APP_CAN_RSRC, SC_C_IPG_STOP, 1U));
-        /* 2. Wait the CAN acknowleged the STOP */
-        while (!(APP_CAN->MCR & CAN_MCR_LPMACK_MASK))
-        {
-        }
+#if (defined(APP_USE_CAN_AS_WAKEUP) && APP_USE_CAN_AS_WAKEUP)
+        APP_ConfigCanWakeupSrc();
+#endif /* APP_USE_CAN_AS_WAKEUP */
     }
 }
 
@@ -792,28 +853,10 @@ void APP_SCEvent_PtRebootHandler(uint32_t status, void *data)
     /* Handle SRTM Peer Core Reset.*/
     if (status & (0x1U << a_pt))
     {
-        APP_SRTM_PeerCoreRebootHandler();
+        APP_PeerCoreRebootHandler();
     }
 }
 
-/*
- * Handle CAN event in task.
- * NOTE: THE SCFW API CAN NOT BE CALLED IN INTERRUPT CONTEXT FOR RTOS ENVIRONMENT.
- */
-static void CanEventHandleTask(void *pvParameters)
-{
-    for (;;)
-    {
-        /* Wait RX completed, and send the received message back. */
-        xSemaphoreTake(s_rxFinishSig, portMAX_DELAY);
-        PRINTF("CAN Rx MB ID: 0x%3x, Rx MB data: 0x%x\r\n", frame.id >> CAN_ID_STD_SHIFT, frame.dataByte0);
-
-        frame.id     = FLEXCAN_ID_STD(txIdentifier);
-        txXfer.mbIdx = TX_MESSAGE_BUFFER_NUM;
-        txXfer.frame = &frame;
-        FLEXCAN_TransferSendNonBlocking(APP_CAN, &flexcanHandle, &txXfer);
-    }
-}
 /*!
  * @brief simulating working task.
  */
@@ -888,8 +931,9 @@ static void PowerModeSwitchTask(void *pvParameters)
 
     const char *errorMsg;
 
-    s_rxFinishSig = xSemaphoreCreateBinary();
-    xTaskCreate(CanEventHandleTask, "CAN Event Task", 512U, NULL, tskIDLE_PRIORITY + 3U, NULL);
+#if (defined(APP_USE_CAN_AS_WAKEUP) && APP_USE_CAN_AS_WAKEUP)
+    APP_InitCANEventTask();
+#endif /* APP_USE_CAN_AS_WAKEUP */
 
     resetSrc = ASMC_GetSystemResetStatusFlags(BBS_SIM);
     PRINTF("\r\nMCU wakeup source 0x%x...\r\n", resetSrc);
@@ -1030,7 +1074,7 @@ int main(void)
 
     /* Config system interface HPM, LPM */
     RTN_ERR(sc_pm_req_sys_if_power_mode(ipc, SC_R_M4_1_PID0, SC_PM_SYS_IF_DDR, SC_PM_PW_MODE_ON, SC_PM_PW_MODE_OFF));
-    RTN_ERR(sc_pm_req_sys_if_power_mode(ipc, SC_R_M4_1_PID0, SC_PM_SYS_IF_OCMEM, SC_PM_PW_MODE_OFF, SC_PM_PW_MODE_OFF));
+    RTN_ERR(sc_pm_req_sys_if_power_mode(ipc, SC_R_M4_1_PID0, SC_PM_SYS_IF_OCMEM, SC_PM_PW_MODE_ON, SC_PM_PW_MODE_OFF));
     RTN_ERR(sc_pm_req_sys_if_power_mode(ipc, SC_R_M4_1_PID0, SC_PM_SYS_IF_MU, SC_PM_PW_MODE_OFF, SC_PM_PW_MODE_OFF));
     RTN_ERR(sc_pm_req_sys_if_power_mode(ipc, SC_R_M4_1_PID0, SC_PM_SYS_IF_INTERCONNECT, SC_PM_PW_MODE_ON,
                                         SC_PM_PW_MODE_OFF));

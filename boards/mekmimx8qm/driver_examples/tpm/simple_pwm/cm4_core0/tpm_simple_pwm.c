@@ -7,25 +7,25 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_tpm.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* define instance */
 #define BOARD_TPM_BASEADDR CM4_0__TPM
-#define BOARD_TPM_CHANNEL 0U
+#define BOARD_TPM_CHANNEL  0U
 
 /* Interrupt to enable and flag to read; depends on the TPM channel used */
 #define TPM_CHANNEL_INTERRUPT_ENABLE kTPM_Chnl0InterruptEnable
-#define TPM_CHANNEL_FLAG kTPM_Chnl0Flag
+#define TPM_CHANNEL_FLAG             kTPM_Chnl0Flag
 
 /* Interrupt number and interrupt handler for the TPM instance used */
 #define TPM_INTERRUPT_NUMBER M4_0_TPM_IRQn
-#define TPM_LED_HANDLER M4_0_TPM_IRQHandler
+#define TPM_LED_HANDLER      M4_0_TPM_IRQHandler
 
 /* Get source clock for TPM driver */
 #define TPM_SOURCE_CLOCK (CLOCK_GetIpFreq(kCLOCK_M4_0_Tpm))

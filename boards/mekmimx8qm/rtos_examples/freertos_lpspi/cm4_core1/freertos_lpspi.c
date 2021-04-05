@@ -17,10 +17,10 @@
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
 #include "fsl_lpspi_freertos.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
@@ -28,21 +28,21 @@
 /*Master related*/
 /* LPSPI FreeRTOS board to board example */
 #define EXAMPLE_CONNECT_SPI BOARD_TO_BOARD
-#define SPI_MASTER_SLAVE isSLAVE /* Change to isSLAVE to run as slave. */
+#define SPI_MASTER_SLAVE    isSLAVE /* Change to isSLAVE to run as slave. */
 
-#define EXAMPLE_LPSPI_MASTER_BASEADDR DMA__LPSPI2
-#define EXAMPLE_LPSPI_MASTER_IRQN IRQSTEER_3_IRQn /* LPSPI2 interrupt is connected to IRQSteer Master 3 */
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT kLPSPI_Pcs0
+#define EXAMPLE_LPSPI_MASTER_BASEADDR         DMA__LPSPI2
+#define EXAMPLE_LPSPI_MASTER_IRQN             IRQSTEER_3_IRQn /* LPSPI2 interrupt is connected to IRQSteer Master 3 */
+#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT     kLPSPI_Pcs0
 #define EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER kLPSPI_MasterPcs0
 
 #define EXAMPLE_LPSPI_MASTER_CLOCK_FREQ (CLOCK_GetIpFreq(kCLOCK_DMA_Lpspi2))
 
 /*Slave related*/
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR DMA__LPSPI2
-#define EXAMPLE_LPSPI_SLAVE_IRQN IRQSTEER_3_IRQn
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT kLPSPI_Pcs0
+#define EXAMPLE_LPSPI_SLAVE_BASEADDR         DMA__LPSPI2
+#define EXAMPLE_LPSPI_SLAVE_IRQN             IRQSTEER_3_IRQn
+#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     kLPSPI_Pcs0
 #define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER kLPSPI_SlavePcs0
-#define SINGLE_BOARD 0
+#define SINGLE_BOARD   0
 #define BOARD_TO_BOARD 1
 
 #ifndef EXAMPLE_CONNECT_SPI
@@ -51,13 +51,13 @@
 
 #if (EXAMPLE_CONNECT_SPI == BOARD_TO_BOARD)
 #define isMASTER 0
-#define isSLAVE 1
+#define isSLAVE  1
 #ifndef SPI_MASTER_SLAVE
 #define SPI_MASTER_SLAVE isMASTER
 #endif /* SPI_MASTER_SLAVE */
 #endif /* EXAMPLE_CONNECT_SPI */
 
-#define TRANSFER_SIZE (512U)        /*! Transfer dataSize.*/
+#define TRANSFER_SIZE     (512U)    /*! Transfer dataSize.*/
 #define TRANSFER_BAUDRATE (500000U) /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -82,7 +82,7 @@ SemaphoreHandle_t lpspi_sem;
  * Definitions
  ******************************************************************************/
 /* Task priorities. */
-#define slave_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define slave_task_PRIORITY  (configMAX_PRIORITIES - 2)
 #define master_task_PRIORITY (configMAX_PRIORITIES - 1)
 
 /*******************************************************************************
@@ -167,7 +167,8 @@ int main(void)
         slaveReceiveBuffer[i] = 0;
     }
 
-    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 64, NULL, slave_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 100, NULL, slave_task_PRIORITY, NULL) !=
+        pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
@@ -191,7 +192,7 @@ typedef struct _callback_message_t
 void LPSPI_SlaveUserCallback(LPSPI_Type *base, lpspi_slave_handle_t *handle, status_t status, void *userData)
 {
     callback_message_t *cb_msg = (callback_message_t *)userData;
-    BaseType_t reschedule;
+    BaseType_t reschedule      = 0;
 
     cb_msg->async_status = status;
     xSemaphoreGiveFromISR(cb_msg->sem, &reschedule);
@@ -247,7 +248,7 @@ static void slave_task(void *pvParameters)
 #endif /* (SPI_MASTER_SLAVE == isSLAVE) || (EXAMPLE_CONNECT_SPI == SINGLE_BOARD) */
 
 #if ((SPI_MASTER_SLAVE == isMASTER) || (EXAMPLE_CONNECT_SPI == SINGLE_BOARD))
-    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 64, NULL, master_task_PRIORITY, NULL) !=
+    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 100, NULL, master_task_PRIORITY, NULL) !=
         pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");

@@ -1,15 +1,40 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * o Redistributions of source code must retain the above copyright notice, this list
+ *   of conditions and the following disclaimer.
+ *
+ * o Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
+ *
+ * o Neither the name of the copyright holder nor the names of its
+ *   contributors may be used to endorse or promote products derived from this
+ *   software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 /*!
  * Header file containing the public API for the System Controller (SC)
  * Pad Control (PAD) function.
  *
- * @addtogroup PAD_SVC (SVC) Pad Service
+ * @addtogroup PAD_SVC PAD: Pad Service
  *
  * Module for the Pad Control (PAD) service.
  *
@@ -43,7 +68,7 @@
  *
  * Pads are managed as a resource by the Resource Manager (RM).  They have
  * assigned owners and only the owners can configure the pads. Some of the
- * pads are reserved for use by the SCFW itself and this can be overriden
+ * pads are reserved for use by the SCFW itself and this can be overridden
  * with the implementation of board_config_sc(). Additionally, pads may
  * be assigned to various other partitions via the implementation of
  * board_system_config().
@@ -160,7 +185,7 @@ typedef uint8_t sc_pad_config_t;
  * This type is used to declare a pad low-power isolation config.
  * ISO_LATE is the most common setting. ISO_EARLY is only used when
  * an output pad is directly determined by another input pad. The
- * other two are only used when SW wants to directly contol isolation.
+ * other two are only used when SW wants to directly control isolation.
  */
 typedef uint8_t sc_pad_iso_t;
 
@@ -412,6 +437,26 @@ sc_err_t sc_pad_set(sc_ipc_t ipc, sc_pad_t pad, uint32_t val);
  * Refer to the SoC [Pad List](@ref PADS) for valid pad values.
  */
 sc_err_t sc_pad_get(sc_ipc_t ipc, sc_pad_t pad, uint32_t *val);
+
+/*!
+ * This function writes a configuration register. This setting is SoC
+ * specific.
+ *
+ * @param[in]     ipc         IPC handle
+ * @param[in]     pad         pad to configure
+ * @param[in]     val         value to set
+ *
+ * Use to configure various HSIC and NAND congiruation settings.
+ *
+ * @return Returns an error code (SC_ERR_NONE = success).
+ *
+ * Return errors:
+ * - SC_PARM if arguments out of range or invalid,
+ * - SC_ERR_NOACCESS if caller's partition is not the pad owner
+ *
+ * Refer to the SoC [Pad List](@ref PADS) for valid pad values.
+ */
+sc_err_t sc_pad_config(sc_ipc_t ipc, sc_pad_t pad, uint32_t val);
 
 /* @} */
 

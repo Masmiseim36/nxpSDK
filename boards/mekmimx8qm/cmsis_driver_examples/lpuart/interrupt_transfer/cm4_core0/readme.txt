@@ -14,8 +14,8 @@ Note: The example echo every 8 characters, so input 8 characters every time.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -53,6 +53,3 @@ USART CMSIS interrupt example
 Board receives 8 characters then sends them out
 Now please input:
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

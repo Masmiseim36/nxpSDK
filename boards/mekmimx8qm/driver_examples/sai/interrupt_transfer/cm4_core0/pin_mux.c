@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v8.0
 processor: MIMX8QM6xxxFF
 package_id: MIMX8QM6AVUFF
 mcu_data: ksdk2_0
@@ -281,14 +281,14 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'false', coreID: cm4_0}
+- options: {callFromInitBoot: 'false', coreID: cm4_core0}
 - pin_list:
-  - {pin_num: AM44, peripheral: M40__UART0, signal: uart_rx, pin_signal: M40_I2C0_SCL, sw_config: sw_config_0}
-  - {pin_num: AU51, peripheral: M40__UART0, signal: uart_tx, pin_signal: M40_I2C0_SDA, sw_config: sw_config_0}
-  - {pin_num: AU5, peripheral: AUD__SAI1, signal: sai_txc, pin_signal: SAI1_TXC, sw_config: sw_config_0}
-  - {pin_num: AU1, peripheral: AUD__SAI1, signal: sai_txd, pin_signal: SAI1_TXD, sw_config: sw_config_0}
-  - {pin_num: AV2, peripheral: AUD__SAI1, signal: sai_txfs, pin_signal: SAI1_TXFS, sw_config: sw_config_0}
-  - {pin_num: BD4, peripheral: AUD__ACM, signal: 'acm_mclk_out, 0', pin_signal: MCLK_OUT0, sw_config: sw_config_0}
+  - {pin_num: AM44, peripheral: M40__UART0, signal: uart_rx, pin_signal: M40_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AU51, peripheral: M40__UART0, signal: uart_tx, pin_signal: M40_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AU5, peripheral: AUD__SAI1, signal: sai_txc, pin_signal: SAI1_TXC, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AU1, peripheral: AUD__SAI1, signal: sai_txd, pin_signal: SAI1_TXD, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AV2, peripheral: AUD__SAI1, signal: sai_txfs, pin_signal: SAI1_TXFS, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: BD4, peripheral: AUD__ACM, signal: 'acm_mclk_out, 0', pin_signal: MCLK_OUT0, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -298,7 +298,7 @@ BOARD_InitPins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 
@@ -338,10 +338,10 @@ void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigne
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_I2C_ConfigurePins:
-- options: {callFromInitBoot: 'false', coreID: cm4_0}
+- options: {callFromInitBoot: 'false', coreID: cm4_core0}
 - pin_list:
-  - {pin_num: AY52, peripheral: DMA__I2C1, signal: i2c_scl, pin_signal: GPT0_CLK, sw_config: sw_config_2}
-  - {pin_num: AV52, peripheral: DMA__I2C1, signal: i2c_sda, pin_signal: GPT0_CAPTURE, sw_config: sw_config_2}
+  - {pin_num: AY52, peripheral: DMA__I2C1, signal: i2c_scl, pin_signal: GPT0_CLK, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AV52, peripheral: DMA__I2C1, signal: i2c_sda, pin_signal: GPT0_CAPTURE, PULL: PULL_0, sw_config: sw_config_2}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -351,7 +351,7 @@ BOARD_I2C_ConfigurePins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_I2C_ConfigurePins(sc_ipc_t ipc)                 /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void BOARD_I2C_ConfigurePins(sc_ipc_t ipc)                 /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,7 +17,7 @@
  * Definitations
  ******************************************************************************/
 /* Used for 32byte aligned */
-#define STCD_ADDR(address) (edma_tcd_t *)(((uint32_t)address + 32) & ~0x1FU)
+#define STCD_ADDR(address) (edma_tcd_t *)(((uint32_t)(address) + 32U) & ~0x1FU)
 
 /*<! Structure definition for uart_edma_private_handle_t. The structure is private. */
 typedef struct _esai_edma_private_handle
@@ -26,7 +26,8 @@ typedef struct _esai_edma_private_handle
     esai_edma_handle_t *handle;
 } esai_edma_private_handle_t;
 
-enum _esai_edma_transfer_state
+/*!@brief _esai_edma_transfer_state */
+enum
 {
     kESAI_Busy = 0x0U, /*!< ESAI is busy */
     kESAI_Idle,        /*!< Transfer is done. */
@@ -38,15 +39,6 @@ static esai_edma_private_handle_t s_edmaPrivateHandle[FSL_FEATURE_SOC_ESAI_COUNT
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-/*!
- * @brief Get the instance number for ESAI.
- *
- * @param base ESAI base pointer.
- */
-extern uint32_t ESAI_GetInstance(ESAI_Type *base);
-
-extern void ESAI_AnalysisSlot(esai_slot_format_t slotFormat, uint8_t *slotLen, uint8_t *dataLen);
-
 /*!
  * @brief ESAI EDMA callback for send.
  *
@@ -76,9 +68,9 @@ static void ESAI_TxEDMACallback(edma_handle_t *handle, void *userData, bool done
     esai_edma_handle_t *esaiHandle         = privHandle->handle;
 
     /* If finished a block, call the callback function */
-    memset(&esaiHandle->esaiQueue[esaiHandle->queueDriver], 0, sizeof(esai_transfer_t));
-    esaiHandle->queueDriver = (esaiHandle->queueDriver + 1) % ESAI_XFER_QUEUE_SIZE;
-    if (esaiHandle->callback)
+    (void)memset(&esaiHandle->esaiQueue[esaiHandle->queueDriver], 0, sizeof(esai_transfer_t));
+    esaiHandle->queueDriver = (esaiHandle->queueDriver + 1U) % ESAI_XFER_QUEUE_SIZE;
+    if (esaiHandle->callback != NULL)
     {
         (esaiHandle->callback)(privHandle->base, esaiHandle, kStatus_ESAI_TxIdle, esaiHandle->userData);
     }
@@ -96,9 +88,9 @@ static void ESAI_RxEDMACallback(edma_handle_t *handle, void *userData, bool done
     esai_edma_handle_t *esaiHandle         = privHandle->handle;
 
     /* If finished a block, call the callback function */
-    memset(&esaiHandle->esaiQueue[esaiHandle->queueDriver], 0, sizeof(esai_transfer_t));
-    esaiHandle->queueDriver = (esaiHandle->queueDriver + 1) % ESAI_XFER_QUEUE_SIZE;
-    if (esaiHandle->callback)
+    (void)memset(&esaiHandle->esaiQueue[esaiHandle->queueDriver], 0, sizeof(esai_transfer_t));
+    esaiHandle->queueDriver = (esaiHandle->queueDriver + 1U) % ESAI_XFER_QUEUE_SIZE;
+    if (esaiHandle->callback != NULL)
     {
         (esaiHandle->callback)(privHandle->base, esaiHandle, kStatus_ESAI_RxIdle, esaiHandle->userData);
     }
@@ -129,12 +121,12 @@ void ESAI_TransferTxCreateHandleEDMA(ESAI_Type *base,
                                      void *userData,
                                      edma_handle_t *dmaHandle)
 {
-    assert(handle && dmaHandle);
+    assert((handle != NULL) && (dmaHandle != NULL));
 
     uint32_t instance = ESAI_GetInstance(base);
 
     /* Zero the handle */
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
     /* Set esai base to handle */
     handle->dmaHandle = dmaHandle;
@@ -142,7 +134,7 @@ void ESAI_TransferTxCreateHandleEDMA(ESAI_Type *base,
     handle->userData  = userData;
 
     /* Set ESAI state to idle */
-    handle->state = kESAI_Idle;
+    handle->state = (uint32_t)kESAI_Idle;
 
     s_edmaPrivateHandle[instance][0].base   = base;
     s_edmaPrivateHandle[instance][0].handle = handle;
@@ -173,12 +165,12 @@ void ESAI_TransferRxCreateHandleEDMA(ESAI_Type *base,
                                      void *userData,
                                      edma_handle_t *dmaHandle)
 {
-    assert(handle && dmaHandle);
+    assert((handle != NULL) && (dmaHandle != NULL));
 
     uint32_t instance = ESAI_GetInstance(base);
 
     /* Zero the handle */
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
     /* Set esai base to handle */
     handle->dmaHandle = dmaHandle;
@@ -186,7 +178,7 @@ void ESAI_TransferRxCreateHandleEDMA(ESAI_Type *base,
     handle->userData  = userData;
 
     /* Set ESAI state to idle */
-    handle->state = kESAI_Idle;
+    handle->state = (uint32_t)kESAI_Idle;
 
     s_edmaPrivateHandle[instance][1].base   = base;
     s_edmaPrivateHandle[instance][1].handle = handle;
@@ -215,7 +207,7 @@ void ESAI_TransferRxCreateHandleEDMA(ESAI_Type *base,
 void ESAI_TransferTxSetFormatEDMA(
     ESAI_Type *base, esai_edma_handle_t *handle, esai_format_t *format, uint32_t hckClockHz, uint32_t hclkSourceClockHz)
 {
-    assert(handle && format);
+    assert((handle != NULL) && (format != NULL));
 
     /* Configure the audio format to ESAI registers */
     ESAI_TxSetFormat(base, format, hckClockHz, hclkSourceClockHz);
@@ -225,7 +217,8 @@ void ESAI_TransferTxSetFormatEDMA(
     handle->sectionMap = format->sectionMap;
 
     /* Update the data channel ESAI used */
-    handle->count = FSL_FEATURE_ESAI_FIFO_SIZEn(base) - ((base->TFCR & ESAI_TFCR_TFWM_MASK) >> ESAI_TFCR_TFWM_SHIFT);
+    handle->count = (uint8_t)FSL_FEATURE_ESAI_FIFO_SIZEn(base) -
+                    (uint8_t)((base->TFCR & ESAI_TFCR_TFWM_MASK) >> ESAI_TFCR_TFWM_SHIFT);
 }
 
 /*!
@@ -245,7 +238,7 @@ void ESAI_TransferTxSetFormatEDMA(
 void ESAI_TransferRxSetFormatEDMA(
     ESAI_Type *base, esai_edma_handle_t *handle, esai_format_t *format, uint32_t hckClockHz, uint32_t hclkSourceClockHz)
 {
-    assert(handle && format);
+    assert((handle != NULL) && (format != NULL));
 
     /* Configure the audio format to ESAI registers */
     ESAI_RxSetFormat(base, format, hckClockHz, hclkSourceClockHz);
@@ -255,7 +248,7 @@ void ESAI_TransferRxSetFormatEDMA(
     handle->sectionMap = format->sectionMap;
 
     /* Update the data channel ESAI used */
-    handle->count = ((base->TFCR & ESAI_TFCR_TFWM_MASK) >> ESAI_TFCR_TFWM_SHIFT);
+    handle->count = (uint8_t)((base->TFCR & ESAI_TFCR_TFWM_MASK) >> ESAI_TFCR_TFWM_SHIFT);
 }
 
 /*!
@@ -273,7 +266,7 @@ void ESAI_TransferRxSetFormatEDMA(
  */
 status_t ESAI_TransferSendEDMA(ESAI_Type *base, esai_edma_handle_t *handle, esai_transfer_t *xfer)
 {
-    assert(handle && xfer);
+    assert((handle != NULL) && (xfer != NULL));
 
     edma_transfer_config_t config = {0};
     uint32_t destAddr             = ESAI_TxGetDataRegisterAddress(base);
@@ -284,28 +277,29 @@ status_t ESAI_TransferSendEDMA(ESAI_Type *base, esai_edma_handle_t *handle, esai
         return kStatus_InvalidArgument;
     }
 
-    if (handle->esaiQueue[handle->queueUser].data)
+    if (handle->esaiQueue[handle->queueUser].data != NULL)
     {
         return kStatus_ESAI_QueueFull;
     }
 
     /* Change the state of handle */
-    handle->state = kESAI_Busy;
+    handle->state = (uint32_t)kESAI_Busy;
 
     /* Update the queue state */
     handle->transferSize[handle->queueUser]       = xfer->dataSize;
     handle->esaiQueue[handle->queueUser].data     = xfer->data;
     handle->esaiQueue[handle->queueUser].dataSize = xfer->dataSize;
-    handle->queueUser                             = (handle->queueUser + 1) % ESAI_XFER_QUEUE_SIZE;
+    handle->queueUser                             = (handle->queueUser + 1U) % ESAI_XFER_QUEUE_SIZE;
 
     /* Prepare edma configure */
-    EDMA_PrepareTransfer(&config, xfer->data, handle->bitWidth / 8U, (void *)destAddr, handle->bitWidth / 8U,
-                         handle->count * handle->bitWidth / 8U, xfer->dataSize, kEDMA_MemoryToPeripheral);
+    EDMA_PrepareTransfer(&config, xfer->data, handle->bitWidth / 8UL, (void *)(uint32_t *)destAddr,
+                         handle->bitWidth / 8UL, (uint32_t)handle->count * handle->bitWidth / 8U, xfer->dataSize,
+                         kEDMA_MemoryToPeripheral);
 
     /* Store the initially configured eDMA minor byte transfer count into the ESAI handle */
     handle->nbytes = handle->count * handle->bitWidth / 8U;
 
-    EDMA_SubmitTransfer(handle->dmaHandle, &config);
+    (void)EDMA_SubmitTransfer(handle->dmaHandle, &config);
 
     /* Start DMA transfer */
     EDMA_StartTransfer(handle->dmaHandle);
@@ -331,7 +325,7 @@ status_t ESAI_TransferSendEDMA(ESAI_Type *base, esai_edma_handle_t *handle, esai
  */
 status_t ESAI_TransferReceiveEDMA(ESAI_Type *base, esai_edma_handle_t *handle, esai_transfer_t *xfer)
 {
-    assert(handle && xfer);
+    assert((handle != NULL) && (xfer != NULL));
 
     edma_transfer_config_t config = {0};
     uint32_t srcAddr              = ESAI_RxGetDataRegisterAddress(base);
@@ -342,28 +336,29 @@ status_t ESAI_TransferReceiveEDMA(ESAI_Type *base, esai_edma_handle_t *handle, e
         return kStatus_InvalidArgument;
     }
 
-    if (handle->esaiQueue[handle->queueUser].data)
+    if (handle->esaiQueue[handle->queueUser].data != NULL)
     {
         return kStatus_ESAI_QueueFull;
     }
 
     /* Change the state of handle */
-    handle->state = kESAI_Busy;
+    handle->state = (uint32_t)kESAI_Busy;
 
     /* Update queue state  */
     handle->transferSize[handle->queueUser]       = xfer->dataSize;
     handle->esaiQueue[handle->queueUser].data     = xfer->data;
     handle->esaiQueue[handle->queueUser].dataSize = xfer->dataSize;
-    handle->queueUser                             = (handle->queueUser + 1) % ESAI_XFER_QUEUE_SIZE;
+    handle->queueUser                             = (handle->queueUser + 1U) % ESAI_XFER_QUEUE_SIZE;
 
     /* Prepare edma configure */
-    EDMA_PrepareTransfer(&config, (void *)srcAddr, handle->bitWidth / 8U, xfer->data, handle->bitWidth / 8U,
-                         handle->count * handle->bitWidth / 8U, xfer->dataSize, kEDMA_PeripheralToMemory);
+    EDMA_PrepareTransfer(&config, (void *)(uint32_t *)srcAddr, handle->bitWidth / 8UL, xfer->data,
+                         handle->bitWidth / 8UL, (uint32_t)handle->count * handle->bitWidth / 8U, xfer->dataSize,
+                         kEDMA_PeripheralToMemory);
 
     /* Store the initially configured eDMA minor byte transfer count into the ESAI handle */
     handle->nbytes = handle->count * handle->bitWidth / 8U;
 
-    EDMA_SubmitTransfer(handle->dmaHandle, &config);
+    (void)EDMA_SubmitTransfer(handle->dmaHandle, &config);
 
     /* Start DMA transfer */
     EDMA_StartTransfer(handle->dmaHandle);
@@ -382,7 +377,7 @@ status_t ESAI_TransferReceiveEDMA(ESAI_Type *base, esai_edma_handle_t *handle, e
  */
 void ESAI_TransferAbortSendEDMA(ESAI_Type *base, esai_edma_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Disable dma */
     EDMA_AbortTransfer(handle->dmaHandle);
@@ -391,7 +386,7 @@ void ESAI_TransferAbortSendEDMA(ESAI_Type *base, esai_edma_handle_t *handle)
     ESAI_TxEnable(base, 0x0);
 
     /* Set the handle state */
-    handle->state = kESAI_Idle;
+    handle->state = (uint32_t)kESAI_Idle;
 }
 
 /*!
@@ -402,7 +397,7 @@ void ESAI_TransferAbortSendEDMA(ESAI_Type *base, esai_edma_handle_t *handle)
  */
 void ESAI_TransferAbortReceiveEDMA(ESAI_Type *base, esai_edma_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Disable dma */
     EDMA_AbortTransfer(handle->dmaHandle);
@@ -411,7 +406,7 @@ void ESAI_TransferAbortReceiveEDMA(ESAI_Type *base, esai_edma_handle_t *handle)
     ESAI_RxEnable(base, 0x0);
 
     /* Set the handle state */
-    handle->state = kESAI_Idle;
+    handle->state = (uint32_t)kESAI_Idle;
 }
 
 /*!
@@ -425,11 +420,11 @@ void ESAI_TransferAbortReceiveEDMA(ESAI_Type *base, esai_edma_handle_t *handle)
  */
 status_t ESAI_TransferGetSendCountEDMA(ESAI_Type *base, esai_edma_handle_t *handle, size_t *count)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     status_t status = kStatus_Success;
 
-    if (handle->state != kESAI_Busy)
+    if (handle->state != (uint32_t)kESAI_Busy)
     {
         status = kStatus_NoTransferInProgress;
     }
@@ -454,11 +449,11 @@ status_t ESAI_TransferGetSendCountEDMA(ESAI_Type *base, esai_edma_handle_t *hand
  */
 status_t ESAI_TransferGetReceiveCountEDMA(ESAI_Type *base, esai_edma_handle_t *handle, size_t *count)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     status_t status = kStatus_Success;
 
-    if (handle->state != kESAI_Busy)
+    if (handle->state != (uint32_t)kESAI_Busy)
     {
         status = kStatus_NoTransferInProgress;
     }

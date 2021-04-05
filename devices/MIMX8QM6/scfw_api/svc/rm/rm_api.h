@@ -1,8 +1,35 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * o Redistributions of source code must retain the above copyright notice, this list
+ *   of conditions and the following disclaimer.
+ *
+ * o Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
+ *
+ * o Neither the name of the copyright holder nor the names of its
+ *   contributors may be used to endorse or promote products derived from this
+ *   software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 /*!
@@ -10,7 +37,7 @@
  * Resource Management (RM) function. This includes functions for
  * partitioning resources, pads, and memory regions.
  *
- * @addtogroup RM_SVC (SVC) Resource Management Service
+ * @addtogroup RM_SVC RM: Resource Management Service
  *
  * Module for the Resource Management (RM) service.
  *
@@ -38,6 +65,8 @@
 #define SC_RM_SID_W         6U      /*!< Width of sc_rm_sid_t */
 #define SC_RM_SPA_W         2U      /*!< Width of sc_rm_spa_t */
 #define SC_RM_PERM_W        3U      /*!< Width of sc_rm_perm_t */
+#define SC_RM_DET_W         1U      /*!< Width of sc_rm_det_t */
+#define SC_RM_RMSG_W        4U      /*!< Width of sc_rm_rmsg_t */
 /*@}*/
 
 /*!
@@ -106,6 +135,18 @@ typedef uint8_t sc_rm_spa_t;
  */
 typedef uint8_t sc_rm_perm_t;
 
+/*!
+ * This type is used to indicate memory region transactions should detour
+ * to the IEE.
+ */
+typedef uint8_t sc_rm_det_t;
+
+/*!
+ * This type is used to assign an RMSG value to a memory region. This value
+ * is sent to the IEE.
+ */
+typedef uint8_t sc_rm_rmsg_t;
+
 /* Functions */
 
 /*!
@@ -117,14 +158,15 @@ typedef uint8_t sc_rm_perm_t;
  * This function requests that the SC create a new resource partition.
  *
  * @param[in]     ipc          IPC handle
- * @param[out]    pt           return handle for partition; used for subsequent function
+ * @param[out]    pt           return handle for partition;
+                               used for subsequent function
  *                             calls associated with this partition
- * @param[in]     secure       boolean indicating if this partition should be secure; only
- *                             valid if caller is secure
+ * @param[in]     secure       boolean indicating if this partition should be secure;
+                               only valid if caller is secure
  * @param[in]     isolated     boolean indicating if this partition should be HW isolated
  *                             via XRDC; set SC_TRUE if new DID is desired
- * @param[in]     restricted   boolean indicating if this partition should be restricted; set
- *                             SC_TRUE if masters in this partition cannot create new partitions
+ * @param[in]     restricted   boolean indicating if this partition should be restricted;
+ *                             set SC_TRUE if masters in this partition cannot create new partitions
  * @param[in]     grant        boolean indicating if this partition should always grant
  *                             access and control to the parent
  * @param[in]     coherent     boolean indicating if this partition is coherent;
@@ -140,12 +182,21 @@ typedef uint8_t sc_rm_perm_t;
  * - SC_ERR_UNAVAILABLE if partition table is full (no more allocation space)
  *
  * Marking as non-secure prevents subsequent functions from configuring masters in this
- * partition to assert the secure signal. If restricted then the new partition is limited
- * in what functions it can call, especially those associated with managing partitions.
+ * partition to assert the secure signal. Basically, if TrustZone SW is used, the Cortex-A
+ * cores and peripherals the TZ SW will use should be in a secure partition. Almost all
+ * other partitions (for a non-secure OS or M4 cores) should be in non-secure partitions.
+ *
+ * Isolated should be true for almost all partitions. The exception is the non-secure
+ * partition for a Cortex-A core used to run a non-secure OS. This isn't isolated by
+ * domain but is instead isolated by the TZ security hardware.
+ *
+ * If restricted then the new partition is limited in what functions it can call,
+ * especially those associated with managing partitions.
  *
  * The grant option is usually used to isolate a bus master's traffic to specific
  * memory without isolating the peripheral interface of the master or the API
- * controls of that master.
+ * controls of that master. This is only used when creating a sub-partition with
+ * no CPU. It's useful to separate out a master and the memory it uses.
  */
 sc_err_t sc_rm_partition_alloc(sc_ipc_t ipc, sc_rm_pt_t *pt, sc_bool_t secure,
     sc_bool_t isolated, sc_bool_t restricted, sc_bool_t grant, sc_bool_t coherent);
@@ -257,8 +308,7 @@ sc_err_t sc_rm_get_partition(sc_ipc_t ipc, sc_rm_pt_t *pt);
  * This function sets a new parent for a partition.
  *
  * @param[in]     ipc         IPC handle
- * @param[in]     pt          handle of partition for which parent is to be
- *                            changed
+ * @param[in]     pt          handle of partition for which parent is to be changed
  * @param[in]     pt_parent   handle of partition to set as parent
  *
  * @return Returns an error code (SC_ERR_NONE = success).
@@ -279,10 +329,8 @@ sc_err_t sc_rm_set_parent(sc_ipc_t ipc, sc_rm_pt_t pt,
  * new partition.
  *
  * @param[in]     ipc         IPC handle
- * @param[in]     pt_src      handle of partition from which resources should
- *                            be moved from
- * @param[in]     pt_dst      handle of partition to which resources should be
- *                            moved to
+ * @param[in]     pt_src      handle of partition from which resources should be moved from
+ * @param[in]     pt_dst      handle of partition to which resources should be moved to
  * @param[in]     move_rsrc   boolean to indicate if resources should be moved
  * @param[in]     move_pads   boolean to indicate if pads should be moved
  *
@@ -313,15 +361,20 @@ sc_err_t sc_rm_move_all(sc_ipc_t ipc, sc_rm_pt_t pt_src, sc_rm_pt_t pt_dst,
  * This function assigns ownership of a resource to a partition.
  *
  * @param[in]     ipc         IPC handle
- * @param[in]     pt          handle of partition to which resource should be
- *                            assigned
+ * @param[in]     pt          handle of partition to which resource should be assigned
  * @param[in]     resource    resource to assign
+ *
+ * This function assigned a resource to a partition. This partition is then
+ * the owner. All resources always have an owner (one owner). The owner
+ * has various rights to make API calls affecting the resource. Ownership
+ * does not imply access to the peripheral itself (that is based on access
+ * rights).
  *
  * @return Returns an error code (SC_ERR_NONE = success).
  *
  * This action resets the resource's master and peripheral attributes.
  * Privilege attribute will be PASSTHRU, security attribute will be
- * ASSERT if the partition si secure and NEGATE if it is not, and
+ * ASSERT if the partition is secure and NEGATE if it is not, and
  * masters will defaulted to SMMU bypass. Access permissions will reset
  * to SEC_RW for the owning partition only for secure partitions, FULL for
  * non-secure. Default is no access by other partitions.
@@ -339,10 +392,10 @@ sc_err_t sc_rm_assign_resource(sc_ipc_t ipc, sc_rm_pt_t pt,
 /*!
  * This function flags resources as movable or not.
  *
- * @param[in]     ipc          IPC handle
- * @param[in]     resource_fst first resource for which flag should be set
- * @param[in]     resource_lst last resource for which flag should be set
- * @param[in]     movable      movable flag (SC_TRUE is movable)
+ * @param[in]     ipc           IPC handle
+ * @param[in]     resource_fst  first resource for which flag should be set
+ * @param[in]     resource_lst  last resource for which flag should be set
+ * @param[in]     movable       movable flag (SC_TRUE is movable)
  *
  * @return Returns an error code (SC_ERR_NONE = success).
  *
@@ -367,6 +420,12 @@ sc_err_t sc_rm_set_resource_movable(sc_ipc_t ipc, sc_rsrc_t resource_fst,
  * @param[in]     resource    resource to use to identify subsystem
  * @param[in]     movable     movable flag (SC_TRUE is movable)
  *
+ * A subsystem is a physical grouping within the chip of related resources;
+ * this is SoC specific. This function is used to optimize moving resource
+ * for these groupings, for instance, an M4 core and its associated resources.
+ * The list of subsystems and associated resources can be found in the
+ * SoC-specific API document [Resources](@ref RESOURCES) chapter.
+ *
  * @return Returns an error code (SC_ERR_NONE = success).
  *
  * Return errors:
@@ -382,11 +441,11 @@ sc_err_t sc_rm_set_subsys_rsrc_movable(sc_ipc_t ipc, sc_rsrc_t resource,
  * This function sets attributes for a resource which is a bus master (i.e.
  * capable of DMA).
  *
- * @param[in]     ipc         IPC handle
- * @param[in]     resource    master resource for which attributes should apply
- * @param[in]     sa          security attribute
- * @param[in]     pa          privilege attribute
- * @param[in]     smmu_bypass SMMU bypass mode
+ * @param[in]     ipc          IPC handle
+ * @param[in]     resource     master resource for which attributes should apply
+ * @param[in]     sa           security attribute
+ * @param[in]     pa           privilege attribute
+ * @param[in]     smmu_bypass  SMMU bypass mode
  *
  * @return Returns an error code (SC_ERR_NONE = success).
  *
@@ -396,9 +455,13 @@ sc_err_t sc_rm_set_subsys_rsrc_movable(sc_ipc_t ipc, sc_rsrc_t resource,
  * - SC_ERR_NOACCESS if caller's partition is not a parent of the resource owner,
  * - SC_ERR_LOCKED if the owning partition is locked
  *
- * This function configures how the HW isolation will see bus transactions
- * from the specified master. Note the security attribute will only be
- * changed if the caller's partition is secure.
+ * Masters are IP blocks that generate bus transactions. This function configures
+ * how the isolation HW will define these bus transactions from the specified master.
+ * Note the security attribute will only be changed if the caller's partition is
+ * secure.
+ *
+ * Note an IP block can be both a master and peripheral (have both a programming model
+ * and generate bus transactions).
  */
 sc_err_t sc_rm_set_master_attributes(sc_ipc_t ipc, sc_rsrc_t resource,
     sc_rm_spa_t sa, sc_rm_spa_t pa, sc_bool_t smmu_bypass);
@@ -444,9 +507,15 @@ sc_err_t sc_rm_set_master_sid(sc_ipc_t ipc, sc_rsrc_t resource,
  * - SC_ERR_LOCKED if the owning partition is locked
  * - SC_ERR_LOCKED if the \a pt is confidential and the caller isn't \a pt
  *
- * This function configures how the HW isolation will restrict access to a
+ * Peripherals are IP blocks that have a programming model that can be
+ * accessed.
+ *
+ * This function configures how the isolation HW will restrict access to a
  * peripheral based on the attributes of a transaction from bus master. It
  * also allows the access permissions of SC_R_SYSTEM to be set.
+ *
+ * Note an IP block can be both a master and peripheral (have both a programming
+ * model and generate bus transactions).
  */
 sc_err_t sc_rm_set_peripheral_permissions(sc_ipc_t ipc, sc_rsrc_t resource,
     sc_rm_pt_t pt, sc_rm_perm_t perm);
@@ -486,6 +555,10 @@ sc_err_t sc_rm_get_resource_owner(sc_ipc_t ipc, sc_rsrc_t resource,
  * @param[in]     ipc         IPC handle
  * @param[in]     resource    resource to check
  *
+ * Masters are IP blocks that generate bus transactions. Note an IP block
+ * can be both a master and peripheral (have both a programming model
+ * and generate bus transactions).
+ *
  * @return Returns a boolean (SC_TRUE if the resource is a bus master).
  *
  * If \a resource is out of range then SC_FALSE is returned.
@@ -497,6 +570,10 @@ sc_bool_t sc_rm_is_resource_master(sc_ipc_t ipc, sc_rsrc_t resource);
  *
  * @param[in]     ipc         IPC handle
  * @param[in]     resource    resource to check
+ *
+ * Peripherals are IP blocks that have a programming model that can be
+ * accessed. Note an IP block can be both a master and peripheral (have
+ * both a programming model and generate bus transactions)
  *
  * @return Returns a boolean (SC_TRUE if the resource is a peripheral).
  *
@@ -530,8 +607,8 @@ sc_err_t sc_rm_get_resource_info(sc_ipc_t ipc, sc_rsrc_t resource,
  * This function requests that the SC create a new memory region.
  *
  * @param[in]     ipc         IPC handle
- * @param[out]    mr          return handle for region; used for
- *                            subsequent function calls
+ * @param[out]    mr          return handle for region;
+                              used for subsequent function calls
  *                            associated with this region
  * @param[in]     addr_start  start address of region (physical)
  * @param[in]     addr_end    end address of region (physical)
@@ -547,20 +624,23 @@ sc_err_t sc_rm_get_resource_info(sc_ipc_t ipc, sc_rsrc_t resource,
  * - SC_ERR_UNAVAILABLE if memory region table is full (no more allocation
  *   space)
  *
- * The area covered by the memory region must currently be owned by the caller.
- * By default, the new region will have access permission set to allow the
- * caller to access.
+ * This function will create a new memory region. The area covered by the
+ * new region must already exist in a memory region owned by the caller. The
+ * result will be two memory regions, the new one overlapping the existing
+ * one. The new region has higher priority. See the XRDC2 MRC documentation
+ * for how it resolves access permissions in this case. By default,
+ * permissions will mirror the parent region.
  */
 sc_err_t sc_rm_memreg_alloc(sc_ipc_t ipc, sc_rm_mr_t *mr,
     sc_faddr_t addr_start, sc_faddr_t addr_end);
 
 /*!
- * This function requests that the SC split a memory region.
+ * This function requests that the SC split an existing memory region.
  *
  * @param[in]     ipc         IPC handle
  * @param[in]     mr          handle of memory region to split
- * @param[out]    mr_ret      return handle for new region; used for
- *                            subsequent function calls
+ * @param[out]    mr_ret      return handle for new region;
+                              used for subsequent function calls
  *                            associated with this region
  * @param[in]     addr_start  start address of region (physical)
  * @param[in]     addr_end    end address of region (physical)
@@ -573,10 +653,13 @@ sc_err_t sc_rm_memreg_alloc(sc_ipc_t ipc, sc_rm_mr_t *mr,
  * - SC_ERR_PARM if the new memory region spans multiple existing regions,
  * - SC_ERR_NOACCESS if caller's partition does not own the memory containing
  *   the new region,
+ * - SC_ERR_BUSY if the region is coincident with another region,
  * - SC_ERR_UNAVAILABLE if memory region table is full (no more allocation
  *   space)
  *
- * Note the new region must start or end on the split region.
+ * This function will take an existing region and split it into two,
+ * non-overlapping regions. Note the new region must start or end on the
+ * split region. Permissions will mirror the parent region.
  */
 sc_err_t sc_rm_memreg_split(sc_ipc_t ipc, sc_rm_mr_t mr,
     sc_rm_mr_t *mr_ret, sc_faddr_t addr_start, sc_faddr_t addr_end);
@@ -585,8 +668,8 @@ sc_err_t sc_rm_memreg_split(sc_ipc_t ipc, sc_rm_mr_t mr,
  * This function requests that the SC fragment a memory region.
  *
  * @param[in]     ipc         IPC handle
- * @param[out]    mr_ret      return handle for new region; used for
- *                            subsequent function calls
+ * @param[out]    mr_ret      return handle for new region;
+                              used for subsequent function calls
  *                            associated with this region
  * @param[in]     addr_start  start address of region (physical)
  * @param[in]     addr_end    end address of region (physical)
@@ -598,11 +681,14 @@ sc_err_t sc_rm_memreg_split(sc_ipc_t ipc, sc_rm_mr_t mr,
  * - SC_ERR_PARM if the new memory region spans multiple existing regions,
  * - SC_ERR_NOACCESS if caller's partition does not own the memory containing
  *   the new region,
+ * - SC_ERR_BUSY if the region is coincident with another region,
  * - SC_ERR_UNAVAILABLE if memory region table is full (no more allocation
  *   space)
  *
  * This function finds the memory region containing the address range.
- * It then splits it as required and returns the extracted region.
+ * It then splits it as required and returns the extracted region. The
+ * result is 2-3 non-overlapping regions, depending on how the new region
+ * aligns with existing regions. Permissions will mirror the parent region.
  */
 sc_err_t sc_rm_memreg_frag(sc_ipc_t ipc, sc_rm_mr_t *mr_ret,
     sc_faddr_t addr_start, sc_faddr_t addr_end);
@@ -631,8 +717,8 @@ sc_err_t sc_rm_memreg_free(sc_ipc_t ipc, sc_rm_mr_t mr);
  * This function finds a memory region.
  *
  * @param[in]     ipc         IPC handle
- * @param[out]    mr          return handle for region; used for
- *                            subsequent function calls
+ * @param[out]    mr          return handle for region;
+                              used for subsequent function calls
  *                            associated with this region
  * @param[in]     addr_start  start address of region to search for
  * @param[in]     addr_end    end address of region to search for
@@ -652,11 +738,17 @@ sc_err_t sc_rm_find_memreg(sc_ipc_t ipc, sc_rm_mr_t *mr,
  * This function assigns ownership of a memory region.
  *
  * @param[in]     ipc         IPC handle
- * @param[in]     pt          handle of partition to which memory region
- *                            should be assigned
+ * @param[in]     pt          handle of partition
+                              to which memory region should be assigned
  * @param[in]     mr          handle of memory region to assign
  *
  * @return Returns an error code (SC_ERR_NONE = success).
+ *
+ * This function assigns a memory region to a partition. This partition is then
+ * the owner. All regions always have an owner (one owner). The owner
+ * has various rights to make API calls affecting the region. Ownership
+ * does not imply access to the memory itself (that is based on access
+ * rights).
  *
  * Return errors:
  * - SC_PARM if arguments out of range or invalid,
@@ -670,11 +762,15 @@ sc_err_t sc_rm_assign_memreg(sc_ipc_t ipc, sc_rm_pt_t pt, sc_rm_mr_t mr);
  * This function sets access permissions for a memory region.
  *
  * @param[in]     ipc         IPC handle
- * @param[in]     mr          handle of memory region for which permissions
- *                            should apply
+ * @param[in]     mr          handle of memory region
+                              for which permissions should apply
  * @param[in]     pt          handle of partition \a perm should by
  *                            applied for
  * @param[in]     perm        permissions to apply to \a mr for \a pt
+ *
+ * This operates on the memory region specified. If SC_RM_PT_ALL is specified
+ * then it operates on all the regions owned by the caller that exist at the
+ * time of the call.
  *
  * @return Returns an error code (SC_ERR_NONE = success).
  *
@@ -690,6 +786,29 @@ sc_err_t sc_rm_assign_memreg(sc_ipc_t ipc, sc_rm_pt_t pt, sc_rm_mr_t mr);
  */
 sc_err_t sc_rm_set_memreg_permissions(sc_ipc_t ipc, sc_rm_mr_t mr,
     sc_rm_pt_t pt, sc_rm_perm_t perm);
+
+/*!
+ * This function configures the IEE parameters for a memory region.
+ *
+ * @param[in]     ipc         IPC handle
+ * @param[in]     mr          handle of memory region to check
+ * @param[in]     det         0 = normal, 1 = encrypted
+ * @param[in]     rmsg        IEE region (0-7)
+ *
+ * Caller must own SC_R_IEE_Rn where n is rmsg.
+ *
+ * @return Returns an error code (SC_ERR_NONE = success).
+ *
+ * Return errors:
+ * - SC_PARM if arguments out of range or invalid,
+ * - SC_ERR_LOCKED if the owning partition is locked
+ * - SC_ERR_NOACCESS if caller's partition is not the region owner or parent
+ *   of the owner
+ * - SC_ERR_UNAVAILABLE if caller's partition is not the IEE region resource
+ *   owner
+ */
+sc_err_t sc_rm_set_memreg_iee(sc_ipc_t ipc, sc_rm_mr_t mr,
+    sc_rm_det_t det, sc_rm_rmsg_t rmsg);
 
 /*!
  * This function gets ownership status of a memory region.
@@ -731,8 +850,8 @@ sc_err_t sc_rm_get_memreg_info(sc_ipc_t ipc, sc_rm_mr_t mr,
  * This function assigns ownership of a pad to a partition.
  *
  * @param[in]     ipc         IPC handle
- * @param[in]     pt          handle of partition to which pad should
- *                            be assigned
+ * @param[in]     pt          handle of partition
+                              to which pad should be assigned
  * @param[in]     pad         pad to assign
  *
  * @return Returns an error code (SC_ERR_NONE = success).
@@ -753,6 +872,10 @@ sc_err_t sc_rm_assign_pad(sc_ipc_t ipc, sc_rm_pt_t pt, sc_pad_t pad);
  * @param[in]     pad_fst     first pad for which flag should be set
  * @param[in]     pad_lst     last pad for which flag should be set
  * @param[in]     movable     movable flag (SC_TRUE is movable)
+ *
+ * This function assigned a pad to a partition. This partition is then
+ * the owner. All pads always have an owner (one owner). The owner
+ * has various rights to make API calls affecting the pad.
  *
  * @return Returns an error code (SC_ERR_NONE = success).
  *

@@ -6,8 +6,8 @@ In the example, you can send characters to the console back and they will be pri
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -49,6 +49,3 @@ Now please input:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you input 8 characters, system will echo it by LPUART and them would be seen on the terminal.
-Customization options
-=====================
-

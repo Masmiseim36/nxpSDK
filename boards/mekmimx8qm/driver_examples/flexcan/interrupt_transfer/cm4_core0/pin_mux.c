@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v8.0
 processor: MIMX8QM6xxxFF
 package_id: MIMX8QM6AVUFF
 mcu_data: ksdk2_0
-processor_version: 5.0.0
+processor_version: 0.0.0
 board: MIMX8QM-MEK-REV-B
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -40,7 +40,7 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'false', prefix: BOARD_, coreID: cm4_0}
+- options: {callFromInitBoot: 'false', prefix: BOARD_, coreID: cm4_core0}
 - pin_list:
   - {pin_num: C5, peripheral: DMA__FLEXCAN0, signal: flexcan_rx, pin_signal: FLEXCAN0_RX}
   - {pin_num: H6, peripheral: DMA__FLEXCAN0, signal: flexcan_tx, pin_signal: FLEXCAN0_TX}
@@ -55,7 +55,7 @@ BOARD_InitPins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 
@@ -85,7 +85,7 @@ void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigne
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_I2C_ConfigurePins:
-- options: {callFromInitBoot: 'false', prefix: BOARD_, coreID: cm4_0}
+- options: {callFromInitBoot: 'false', prefix: BOARD_, coreID: cm4_core0}
 - pin_list:
   - {pin_num: AR45, peripheral: M41__I2C0, signal: i2c_scl, pin_signal: M41_I2C0_SCL}
   - {pin_num: AU49, peripheral: M41__I2C0, signal: i2c_sda, pin_signal: M41_I2C0_SDA}
@@ -98,7 +98,7 @@ BOARD_I2C_ConfigurePins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_I2C_ConfigurePins(sc_ipc_t ipc)                 /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void BOARD_I2C_ConfigurePins(sc_ipc_t ipc)                 /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 
@@ -118,7 +118,7 @@ void BOARD_I2C_ConfigurePins(sc_ipc_t ipc)                 /*!< Function assigne
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_GPIO_ConfigurePins:
-- options: {callFromInitBoot: 'false', prefix: BOARD_, coreID: cm4_0}
+- options: {callFromInitBoot: 'false', prefix: BOARD_, coreID: cm4_core0}
 - pin_list:
   - {pin_num: AU49, peripheral: M41__GPIO0, signal: 'gpio_io, 03', pin_signal: M41_I2C0_SDA, identifier: ''}
   - {pin_num: AR45, peripheral: M41__GPIO0, signal: 'gpio_io, 02', pin_signal: M41_I2C0_SCL, identifier: ''}
@@ -131,7 +131,7 @@ BOARD_GPIO_ConfigurePins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_GPIO_ConfigurePins(sc_ipc_t ipc)                /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void BOARD_GPIO_ConfigurePins(sc_ipc_t ipc)                /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 
@@ -150,4 +150,3 @@ void BOARD_GPIO_ConfigurePins(sc_ipc_t ipc)                /*!< Function assigne
 /***********************************************************************************************************************
  * EOF
  **********************************************************************************************************************/
-

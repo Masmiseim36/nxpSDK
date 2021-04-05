@@ -4,11 +4,11 @@
 ;            MIMX8QM6_cm4_core1
 ;  @version: 4.0
 ;  @date:    2018-8-30
-;  @build:   b180831
+;  @build:   b200630
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2018 NXP
+; Copyright 2016-2020 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -34,6 +34,8 @@
         SECTION CSTACK:DATA:NOROOT(3)
         SECTION HEAP:DATA:NOROOT(3)
         SECTION RW:DATA:NOROOT(2)
+        SECTION QACCESS_CODE_VAR:DATA:NOROOT(3)
+        SECTION QACCESS_DATA_VAR:DATA:NOROOT(3)
 
         SECTION .intvec:CODE:NOROOT(2)
 
@@ -46,6 +48,9 @@
         PUBLIC  __Vectors_Size
 
         DATA
+
+__iar_init$$done:              ; The vector table is not needed
+                      ; until after copy initialization is done
 
 __vector_table
         DCD     sfe(CSTACK)
@@ -717,7 +722,7 @@ Reset_Handler
         BLX     R0
 ;
 ; Add RW / stack / heap initializaiton
-; TCM controller must perform a read-modify-write for any access < 32-bit to keep the ECC updated.  
+; TCM controller must perform a read-modify-write for any access < 32-bit to keep the ECC updated.
 ; The Software must ensure the TCM is ECC clean by initializing all memories that have the potential to be accessed as < 32-bit.
         MOV    R0, #0
         LDR    R1, =SFB(RW)
@@ -744,6 +749,25 @@ Reset_Handler
         ITT     LT
         STRLT   R0, [R1], #4
         BLT     .LC4
+
+#if defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE) && FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE
+        LDR     R1, =SFB(QACCESS_CODE_VAR)
+        LDR     R2, =SFE(QACCESS_CODE_VAR)
+.LC5:
+        CMP     R1, R2
+        ITT     LT
+        STRLT   R0, [R1], #4
+        BLT     .LC5
+
+        LDR     R1, =SFB(QACCESS_DATA_VAR)
+        LDR     R2, =SFE(QACCESS_DATA_VAR)
+.LC6:
+        CMP     R1, R2
+        ITT     LT
+        STRLT   R0, [R1], #4
+        BLT     .LC6
+#endif
+
 ; End RW / stack / heap initialization
 ;
         CPSIE   I               ; Unmask interrupts
@@ -998,7 +1022,19 @@ IRQSTEER_7_IRQHandler
         PUBWEAK LVDS0_INT_OUT_IRQHandler
         PUBWEAK LVDS1_INT_OUT_IRQHandler
         PUBWEAK MIPI_DSI0_INT_OUT_IRQHandler
+        PUBWEAK MIPI_DSI0_INT_OUT_DriverIRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(2)
+MIPI_DSI0_INT_OUT_IRQHandler
+        LDR     R0, =MIPI_DSI0_INT_OUT_DriverIRQHandler
+        BX      R0
+
         PUBWEAK MIPI_DSI1_INT_OUT_IRQHandler
+        PUBWEAK MIPI_DSI1_INT_OUT_DriverIRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(2)
+MIPI_DSI1_INT_OUT_IRQHandler
+        LDR     R0, =MIPI_DSI1_INT_OUT_DriverIRQHandler
+        BX      R0
+
         PUBWEAK HDMI_TX_INT_OUT_IRQHandler
         PUBWEAK Reserved161_IRQHandler
         PUBWEAK Reserved162_IRQHandler
@@ -2640,8 +2676,8 @@ Reserved154_IRQHandler
 Reserved155_IRQHandler
 LVDS0_INT_OUT_IRQHandler
 LVDS1_INT_OUT_IRQHandler
-MIPI_DSI0_INT_OUT_IRQHandler
-MIPI_DSI1_INT_OUT_IRQHandler
+MIPI_DSI0_INT_OUT_DriverIRQHandler
+MIPI_DSI1_INT_OUT_DriverIRQHandler
 HDMI_TX_INT_OUT_IRQHandler
 Reserved161_IRQHandler
 Reserved162_IRQHandler

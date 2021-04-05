@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v8.0
 processor: MIMX8QM6xxxFF
 package_id: MIMX8QM6AVUFF
 mcu_data: ksdk2_0
@@ -281,11 +281,11 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'false', coreID: cm4_0}
+- options: {callFromInitBoot: 'false', coreID: cm4_core0}
 - pin_list:
-  - {pin_num: AM44, peripheral: M40__UART0, signal: uart_rx, pin_signal: M40_I2C0_SCL, sw_config: sw_config_0}
-  - {pin_num: AU51, peripheral: M40__UART0, signal: uart_tx, pin_signal: M40_I2C0_SDA, sw_config: sw_config_0}
-  - {pin_num: AP10, peripheral: DMA__ADC, signal: 'adc_in, 0', pin_signal: ADC_IN0, sw_config: sw_config_0}
+  - {pin_num: AM44, peripheral: M40__UART0, signal: uart_rx, pin_signal: M40_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_0, PDRV: PDRV_0}
+  - {pin_num: AU51, peripheral: M40__UART0, signal: uart_tx, pin_signal: M40_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_0, PDRV: PDRV_0}
+  - {pin_num: AP10, peripheral: DMA__ADC, signal: 'adc_in, 0', pin_signal: ADC_IN0, PULL: PULL_0, sw_config: sw_config_0, DSE: DSE_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -295,7 +295,7 @@ BOARD_InitPins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 

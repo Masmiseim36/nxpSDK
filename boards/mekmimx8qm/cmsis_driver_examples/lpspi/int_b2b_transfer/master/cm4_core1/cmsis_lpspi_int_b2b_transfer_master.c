@@ -8,19 +8,19 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi_cmsis.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /*Master related*/
 #define EXAMPLE_LPSPI_MASTER_DMA_BASEADDR DMA__EDMA0
-#define DRIVER_MASTER_SPI Driver_SPI2
-#define EXAMPLE_LPSPI_DEALY_COUNT 0xfffffU
-#define TRANSFER_SIZE 64U         /*! Transfer dataSize */
+#define DRIVER_MASTER_SPI                 Driver_SPI2
+#define EXAMPLE_LPSPI_DEALY_COUNT         0xfffffU
+#define TRANSFER_SIZE     64U     /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -35,9 +35,10 @@ void LPSPI_MasterSignalEvent_t(uint32_t event);
 uint8_t masterRxData[TRANSFER_SIZE] = {0U};
 uint8_t masterTxData[TRANSFER_SIZE] = {0U};
 
-volatile bool isTransferCompleted = false;
-volatile bool isMasterOnTransmit  = false;
-volatile bool isMasterOnReceive   = false;
+volatile bool isTransferCompleted  = false;
+volatile bool isMasterOnTransmit   = false;
+volatile bool isMasterOnReceive    = false;
+volatile uint32_t g_systickCounter = 20U;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -75,6 +76,14 @@ uint32_t LPSPI3_GetFreq(void)
 {
     return CLOCK_GetIpFreq(kCLOCK_DMA_Lpspi3);
 }
+void SysTick_Handler(void)
+{
+    if (g_systickCounter != 0U)
+    {
+        g_systickCounter--;
+    }
+}
+
 void LPSPI_MasterSignalEvent_t(uint32_t event)
 {
     if (true == isMasterOnReceive)
@@ -180,9 +189,16 @@ int main(void)
         }
 
         /* Delay to wait slave is ready */
-        for (i = 0; i < EXAMPLE_LPSPI_DEALY_COUNT; i++)
+        if (SysTick_Config(SystemCoreClock / 1000U))
         {
-            __NOP();
+            while (1)
+            {
+            }
+        }
+        /* Delay 20 ms */
+        g_systickCounter = 20U;
+        while (g_systickCounter != 0U)
+        {
         }
 
         isTransferCompleted = false;

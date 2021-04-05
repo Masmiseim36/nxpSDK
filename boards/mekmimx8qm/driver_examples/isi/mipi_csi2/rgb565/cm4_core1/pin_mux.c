@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v8.0
 processor: MIMX8QM6xxxFF
 package_id: MIMX8QM6AVUFF
 mcu_data: ksdk2_0
@@ -281,30 +281,34 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'false', coreID: cm4_1}
+- options: {callFromInitBoot: 'false', coreID: cm4_core1}
 - pin_list:
-  - {pin_num: AU45, peripheral: DMA__UART2, signal: uart_rx, pin_signal: UART0_RTS_B, sw_config: sw_config_0}
-  - {pin_num: AW49, peripheral: DMA__UART2, signal: uart_tx, pin_signal: UART0_CTS_B, sw_config: sw_config_0}
-  - {pin_num: BE29, peripheral: MIPI_DSI0__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI0_I2C0_SCL, sw_config: sw_config_2}
-  - {pin_num: BE31, peripheral: MIPI_DSI0__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI0_I2C0_SDA, sw_config: sw_config_2}
-  - {pin_num: BE27, peripheral: MIPI_DSI1__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI1_I2C0_SCL, sw_config: sw_config_2}
-  - {pin_num: BG25, peripheral: MIPI_DSI1__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI1_I2C0_SDA, sw_config: sw_config_2}
-  - {pin_num: BJ23, peripheral: MIPI_CSI0__ACM, signal: mclk_out, pin_signal: MIPI_CSI0_MCLK_OUT, sw_config: sw_config_0}
-  - {pin_num: BL23, peripheral: MIPI_CSI0__GPIO0, signal: 'gpio_io, 00', pin_signal: MIPI_CSI0_GPIO0_00, direction: OUTPUT, sw_config: sw_config_0}
-  - {pin_num: BM22, peripheral: MIPI_CSI0__GPIO0, signal: 'gpio_io, 01', pin_signal: MIPI_CSI0_GPIO0_01, direction: OUTPUT, sw_config: sw_config_0}
-  - {pin_num: BH24, peripheral: MIPI_CSI0__I2C0, signal: i2c_scl, pin_signal: MIPI_CSI0_I2C0_SCL, sw_config: sw_config_2}
-  - {pin_num: BN19, peripheral: MIPI_CSI0__I2C0, signal: i2c_sda, pin_signal: MIPI_CSI0_I2C0_SDA, sw_config: sw_config_2}
-  - {pin_num: BN23, peripheral: MIPI_CSI1__ACM, signal: mclk_out, pin_signal: MIPI_CSI1_MCLK_OUT, sw_config: sw_config_0}
-  - {pin_num: BN15, peripheral: MIPI_CSI1__GPIO0, signal: 'gpio_io, 00', pin_signal: MIPI_CSI1_GPIO0_00, direction: OUTPUT, sw_config: sw_config_0}
-  - {pin_num: BN13, peripheral: MIPI_CSI1__GPIO0, signal: 'gpio_io, 01', pin_signal: MIPI_CSI1_GPIO0_01, direction: OUTPUT, sw_config: sw_config_0}
-  - {pin_num: BN17, peripheral: MIPI_CSI1__I2C0, signal: i2c_scl, pin_signal: MIPI_CSI1_I2C0_SCL, sw_config: sw_config_2}
-  - {pin_num: BE15, peripheral: MIPI_CSI1__I2C0, signal: i2c_sda, pin_signal: MIPI_CSI1_I2C0_SDA, sw_config: sw_config_2}
+  - {pin_num: AU45, peripheral: DMA__UART2, signal: uart_rx, pin_signal: UART0_RTS_B, PULL: PULL_0, sw_config: sw_config_0, PDRV: PDRV_0}
+  - {pin_num: AW49, peripheral: DMA__UART2, signal: uart_tx, pin_signal: UART0_CTS_B, PULL: PULL_0, sw_config: sw_config_0, PDRV: PDRV_0}
+  - {pin_num: BE29, peripheral: MIPI_DSI0__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI0_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_2, PDRV: PDRV_0}
+  - {pin_num: BE31, peripheral: MIPI_DSI0__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI0_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_2, PDRV: PDRV_0}
+  - {pin_num: BE27, peripheral: MIPI_DSI1__I2C0, signal: i2c_scl, pin_signal: MIPI_DSI1_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_2, PDRV: PDRV_0}
+  - {pin_num: BG25, peripheral: MIPI_DSI1__I2C0, signal: i2c_sda, pin_signal: MIPI_DSI1_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_2, PDRV: PDRV_0}
+  - {pin_num: BJ23, peripheral: MIPI_CSI0__ACM, signal: mclk_out, pin_signal: MIPI_CSI0_MCLK_OUT, PULL: PULL_0, sw_config: sw_config_0, DSE: DSE_0}
+  - {pin_num: BL23, peripheral: MIPI_CSI0__GPIO0, signal: 'gpio_io, 00', pin_signal: MIPI_CSI0_GPIO0_00, direction: OUTPUT, PULL: PULL_0, sw_config: sw_config_0,
+    DSE: DSE_0}
+  - {pin_num: BM22, peripheral: MIPI_CSI0__GPIO0, signal: 'gpio_io, 01', pin_signal: MIPI_CSI0_GPIO0_01, direction: OUTPUT, PULL: PULL_0, sw_config: sw_config_0,
+    DSE: DSE_0}
+  - {pin_num: BH24, peripheral: MIPI_CSI0__I2C0, signal: i2c_scl, pin_signal: MIPI_CSI0_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_2, DSE: DSE_0}
+  - {pin_num: BN19, peripheral: MIPI_CSI0__I2C0, signal: i2c_sda, pin_signal: MIPI_CSI0_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_2, DSE: DSE_0}
+  - {pin_num: BN23, peripheral: MIPI_CSI1__ACM, signal: mclk_out, pin_signal: MIPI_CSI1_MCLK_OUT, PULL: PULL_0, sw_config: sw_config_0, DSE: DSE_0}
+  - {pin_num: BN15, peripheral: MIPI_CSI1__GPIO0, signal: 'gpio_io, 00', pin_signal: MIPI_CSI1_GPIO0_00, direction: OUTPUT, PULL: PULL_0, sw_config: sw_config_0,
+    DSE: DSE_0}
+  - {pin_num: BN13, peripheral: MIPI_CSI1__GPIO0, signal: 'gpio_io, 01', pin_signal: MIPI_CSI1_GPIO0_01, direction: OUTPUT, PULL: PULL_0, sw_config: sw_config_0,
+    DSE: DSE_0}
+  - {pin_num: BN17, peripheral: MIPI_CSI1__I2C0, signal: i2c_scl, pin_signal: MIPI_CSI1_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_2, DSE: DSE_0}
+  - {pin_num: BE15, peripheral: MIPI_CSI1__I2C0, signal: i2c_sda, pin_signal: MIPI_CSI1_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_2, DSE: DSE_0}
   - {pin_num: BD36, peripheral: LSIO__GPIO1, signal: 'gpio_io, 07', pin_signal: LVDS0_I2C0_SDA, direction: OUTPUT, PULL: PULL_1, sw_config: sw_config_0, PDRV: PDRV_1}
   - {pin_num: BD38, peripheral: LSIO__GPIO1, signal: 'gpio_io, 06', pin_signal: LVDS0_I2C0_SCL, direction: OUTPUT, PULL: PULL_1, sw_config: sw_config_0, PDRV: PDRV_1}
-  - {pin_num: BE37, peripheral: LVDS0__I2C1, signal: i2c_scl, pin_signal: LVDS0_I2C1_SCL, sw_config: sw_config_2}
-  - {pin_num: BE35, peripheral: LVDS0__I2C1, signal: i2c_sda, pin_signal: LVDS0_I2C1_SDA, sw_config: sw_config_2}
-  - {pin_num: BD32, peripheral: LVDS1__I2C1, signal: i2c_scl, pin_signal: LVDS1_I2C1_SCL, sw_config: sw_config_2}
-  - {pin_num: BN35, peripheral: LVDS1__I2C1, signal: i2c_sda, pin_signal: LVDS1_I2C1_SDA, sw_config: sw_config_2}
+  - {pin_num: BE37, peripheral: LVDS0__I2C1, signal: i2c_scl, pin_signal: LVDS0_I2C1_SCL, PULL: PULL_0, sw_config: sw_config_2, PDRV: PDRV_0}
+  - {pin_num: BE35, peripheral: LVDS0__I2C1, signal: i2c_sda, pin_signal: LVDS0_I2C1_SDA, PULL: PULL_0, sw_config: sw_config_2, PDRV: PDRV_0}
+  - {pin_num: BD32, peripheral: LVDS1__I2C1, signal: i2c_scl, pin_signal: LVDS1_I2C1_SCL, PULL: PULL_0, sw_config: sw_config_2, PDRV: PDRV_0}
+  - {pin_num: BN35, peripheral: LVDS1__I2C1, signal: i2c_sda, pin_signal: LVDS1_I2C1_SDA, PULL: PULL_0, sw_config: sw_config_2, PDRV: PDRV_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -314,7 +318,7 @@ BOARD_InitPins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_1] */
+void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_core1] */
 {
   sc_err_t err = SC_ERR_NONE;
 

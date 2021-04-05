@@ -1,15 +1,40 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * o Redistributions of source code must retain the above copyright notice, this list
+ *   of conditions and the following disclaimer.
+ *
+ * o Redistributions in binary form must reproduce the above copyright notice, this
+ *   list of conditions and the following disclaimer in the documentation and/or
+ *   other materials provided with the distribution.
+ *
+ * o Neither the name of the copyright holder nor the names of its
+ *   contributors may be used to endorse or promote products derived from this
+ *   software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 /*!
  * Header file containing the public API for the System Controller (SC)
  * Timer function.
  *
- * @addtogroup TIMER_SVC (SVC) Timer Service
+ * @addtogroup TIMER_SVC TIMER: Timer Service
  *
  * Module for the Timer service. This includes support for the watchdog, RTC,
  * and system counter. Note every resource partition has a watchdog it can
@@ -61,7 +86,7 @@ typedef uint32_t sc_timer_wdog_time_t;
 /* Functions */
 
 /*!
- * @name Wathdog Functions
+ * @name Watchdog Functions
  * @{
  */
 
@@ -84,8 +109,8 @@ sc_err_t sc_timer_set_wdog_timeout(sc_ipc_t ipc,
  * set then the pre-timeout defaults to the max. Once locked this value
  * cannot be changed.
  *
- * @param[in]     ipc         IPC handle
- * @param[in]     pre_timeout pre-timeout period for the watchdog
+ * @param[in]     ipc          IPC handle
+ * @param[in]     pre_timeout  pre-timeout period for the watchdog
  *
  * When the pre-timout expires an IRQ will be generated. Note this timeout
  * clears when the IRQ is triggered. An IRQ is generated for the failing
@@ -97,6 +122,23 @@ sc_err_t sc_timer_set_wdog_pre_timeout(sc_ipc_t ipc,
     sc_timer_wdog_time_t pre_timeout);
 
 /*!
+ * This function sets the watchdog window in milliseconds. If not
+ * set then the window defaults to the 0. Once locked this value
+ * cannot be changed.
+ *
+ * @param[in]     ipc         IPC handle
+ * @param[in]     window      window period for the watchdog
+ *
+ * @return Returns an error code (SC_ERR_NONE = success, SC_ERR_LOCKED
+ *         = locked).
+ *
+ * Calling sc_timer_ping_wdog() before the window time has expired will
+ * result in the watchdog action being taken.
+ */
+sc_err_t sc_timer_set_wdog_window(sc_ipc_t ipc,
+    sc_timer_wdog_time_t window);
+
+/*!
  * This function starts the watchdog.
  *
  * @param[in]     ipc         IPC handle
@@ -104,8 +146,16 @@ sc_err_t sc_timer_set_wdog_pre_timeout(sc_ipc_t ipc,
  *
  * @return Returns an error code (SC_ERR_NONE = success).
  *
+ * Return errors:
+ * - SC_ERR_NOACCESS if caller's partition is not isolated,
+ * - SC_ERR_BUSY if already started
+ *
  * If \a lock is set then the watchdog cannot be stopped or the timeout
  * period changed.
+ *
+ * If the calling partition is not isolated then the wdog cannot be used.
+ * This is always the case if a non-secure partition is running on the same
+ * CPU as a secure partition (e.g. Linux under TZ). See sc_rm_partition_alloc().
  */
 sc_err_t sc_timer_start_wdog(sc_ipc_t ipc, sc_bool_t lock);
 
@@ -230,7 +280,7 @@ sc_err_t sc_timer_get_rtc_time(sc_ipc_t ipc, uint16_t *year, uint8_t *mon,
  * This function gets the RTC time in seconds since 1/1/1970.
  *
  * @param[in]     ipc         IPC handle
- * @param[out]    sec         pointer to return second
+ * @param[out]    sec         pointer to return seconds
  *
  * @return Returns an error code (SC_ERR_NONE = success).
  */
@@ -293,11 +343,11 @@ sc_err_t sc_timer_cancel_rtc_alarm(sc_ipc_t ipc);
  * calibration.
  *
  * @param[in]     ipc         IPC handle
- * @param[in]     count       calbration count (-16 to 15)
+ * @param[in]     count       calibration count (-16 to 15)
  *
  * The calibration value is a 5-bit value including the sign bit, which is
  * implemented in 2's complement. It is added or subtracted from the RTC on
- * a perdiodic basis, once per 32768 cycles of the RTC clock.
+ * a periodic basis, once per 32768 cycles of the RTC clock.
  *
  * @return Returns an error code (SC_ERR_NONE = success).
  */

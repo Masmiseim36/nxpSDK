@@ -9,17 +9,17 @@
 #include "fsl_common.h"
 #include "fsl_mu.h"
 #include "fsl_gpio.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_lpuart.h"
 #include "fsl_debug_console.h"
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_MU CM4_0__MU0_A0
+#define APP_MU            CM4_0__MU0_A0
 #define APP_MU_IRQHandler M4_0_INT_OUT0_IRQHandler
 
 /* No usable LED on board. */
@@ -98,11 +98,7 @@ void APP_MU_IRQHandler(void)
             MU_DisableInterrupts(APP_MU, kMU_Tx0EmptyInterruptEnable);
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

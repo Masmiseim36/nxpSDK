@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -57,21 +57,21 @@ static uint32_t GPT_GetInstance(GPT_Type *base)
  */
 void GPT_Init(GPT_Type *base, const gpt_config_t *initConfig)
 {
-    assert(initConfig);
+    assert(NULL != initConfig);
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Ungate the GPT clock*/
-    CLOCK_EnableClock(s_gptClocks[GPT_GetInstance(base)]);
+    (void)CLOCK_EnableClock(s_gptClocks[GPT_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
     base->CR = 0U;
 
     GPT_SoftwareReset(base);
 
     base->CR =
-        (initConfig->enableFreeRun ? GPT_CR_FRR_MASK : 0U) | (initConfig->enableRunInWait ? GPT_CR_WAITEN_MASK : 0U) |
-        (initConfig->enableRunInStop ? GPT_CR_STOPEN_MASK : 0U) |
-        (initConfig->enableRunInDoze ? GPT_CR_DOZEEN_MASK : 0U) |
-        (initConfig->enableRunInDbg ? GPT_CR_DBGEN_MASK : 0U) | (initConfig->enableMode ? GPT_CR_ENMOD_MASK : 0U);
+        (initConfig->enableFreeRun ? GPT_CR_FRR_MASK : 0UL) | (initConfig->enableRunInWait ? GPT_CR_WAITEN_MASK : 0UL) |
+        (initConfig->enableRunInStop ? GPT_CR_STOPEN_MASK : 0UL) |
+        (initConfig->enableRunInDoze ? GPT_CR_DOZEEN_MASK : 0UL) |
+        (initConfig->enableRunInDbg ? GPT_CR_DBGEN_MASK : 0UL) | (initConfig->enableMode ? GPT_CR_ENMOD_MASK : 0UL);
 
     GPT_SetClockSource(base, initConfig->clockSource);
     GPT_SetClockDivider(base, initConfig->divider);
@@ -89,7 +89,7 @@ void GPT_Deinit(GPT_Type *base)
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Gate the GPT clock*/
-    CLOCK_DisableClock(s_gptClocks[GPT_GetInstance(base)]);
+    (void)CLOCK_DisableClock(s_gptClocks[GPT_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -104,17 +104,17 @@ void GPT_Deinit(GPT_Type *base)
  *    config->enableRunInWait = true;
  *    config->enableRunInDoze = false;
  *    config->enableRunInDbg = false;
- *    config->enableFreeRun = true;
+ *    config->enableFreeRun = false;
  *    config->enableMode  = true;
  * endcode
  * param config Pointer to the user configuration structure.
  */
 void GPT_GetDefaultConfig(gpt_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->clockSource     = kGPT_ClockSource_Periph;
     config->divider         = 1U;

@@ -10,8 +10,8 @@ In this example:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -36,9 +36,6 @@ Prepare the demo
     - No flow control
 4.  Download the program to the target board (Please refer "Getting Started with MCUXpresso SDK for i.MX 8QuadMax.pdf" for how to run different targets).
 5.  Launch the debugger in your IDE to begin running the example.
-
-Prepare the Demo
-================
 
 Running the demo
 ================
@@ -82,6 +79,3 @@ Send: 30. Receive 30
 Send: 31. Receive 31
 MU example run succeed!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -9,8 +9,8 @@ The file 'cmsis_lpspi_edma_b2b_transfer_slave.c' includes the LPSPI slave code.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -74,6 +74,3 @@ This is LPSPI slave edma transfer completed callback.
 
  Slave example is running...
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

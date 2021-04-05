@@ -18,10 +18,10 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_lpuart.h"
 /*******************************************************************************
  * Definitions
@@ -154,7 +154,10 @@ static void log_task(void *pvParameters)
     char log[MAX_LOG_LENGTH + 1];
     while (1)
     {
-        xQueueReceive(log_queue, log, portMAX_DELAY);
+        if (xQueueReceive(log_queue, log, portMAX_DELAY) != pdTRUE)
+        {
+            PRINTF("Failed to receive queue.\r\n");
+        }
         PRINTF("Log %d: %s\r\n", counter, log);
         counter++;
     }

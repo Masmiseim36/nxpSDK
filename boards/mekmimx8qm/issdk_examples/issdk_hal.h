@@ -23,9 +23,9 @@
 #include "fsl_lpuart_cmsis.h"
 
 // Pin mapping and driver information for default BB I2C on board.
-#define I2C_S_SCL_PIN I2C_BB_SCL_PIN
-#define I2C_S_SDA_PIN I2C_BB_SDA_PIN
-#define I2C_S_DRIVER I2C_BB_DRIVER
+#define I2C_S_SCL_PIN      I2C_BB_SCL_PIN
+#define I2C_S_SDA_PIN      I2C_BB_SDA_PIN
+#define I2C_S_DRIVER       I2C_BB_DRIVER
 #define I2C_S_SIGNAL_EVENT I2C_BB_SIGNAL_EVENT
 #define I2C_S_DEVICE_INDEX I2C_BB_DEVICE_INDEX
 

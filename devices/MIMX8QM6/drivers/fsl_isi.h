@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,7 +11,7 @@
 
 #include "fsl_common.h"
 
-#define ISI_ROI_NUM 4 /* The Number of "Region Of Interest (ROI)" */
+#define ISI_ROI_NUM 4U /* The Number of "Region Of Interest (ROI)" */
 
 /*!
  * @addtogroup isi
@@ -383,7 +383,7 @@ static inline uint32_t ISI_DisableInterrupts(ISI_Type *base, uint32_t mask)
    uint32_t mask = ISI_GetInterruptStatus(ISI);
    if (mask & kISI_MemReadCompletedInterrupt)
    {
-       // memory read completed
+       memory read completed
    }
    @endcode
  *
@@ -427,7 +427,7 @@ static inline void ISI_ClearInterruptStatus(ISI_Type *base, uint32_t mask)
  */
 static inline uint8_t ISI_GetOverflowBytes(ISI_Type *base)
 {
-    return base->CHNL_STS & ISI_CHNL_STS_OFLW_BYTES_MASK;
+    return (uint8_t)(base->CHNL_STS & ISI_CHNL_STS_OFLW_BYTES_MASK);
 }
 
 /*!

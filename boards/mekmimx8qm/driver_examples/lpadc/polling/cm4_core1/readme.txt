@@ -14,8 +14,8 @@ the configuration structure's setting in application to fit the special requirem
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -54,6 +54,3 @@ ADC value: 4079
 ADC value: 4080
 ...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

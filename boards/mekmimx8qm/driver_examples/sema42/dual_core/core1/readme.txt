@@ -14,8 +14,8 @@ after it received the flag.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -71,6 +71,3 @@ Wait for core 1 lock the semaphore
 
 Sema42 example succeed!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

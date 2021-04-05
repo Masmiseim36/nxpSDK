@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -33,15 +33,6 @@
 static uint32_t EDMA_GetInstance(DMA_Type *base);
 
 /*!
- * @brief Push content of TCD structure into hardware TCD register.
- *
- * @param base EDMA peripheral base address.
- * @param channel EDMA channel number.
- * @param tcd Point to TCD structure.
- */
-static void EDMA_InstallTCD(DMA_Type *base, uint32_t channel, edma_tcd_t *tcd);
-
-/*!
  * @brief Configure tcd contents accroding to the configure.
  *
  * @param handle edma handle pointer.
@@ -62,8 +53,7 @@ static void EDMA_HandleTransferConfig(edma_handle_t *handle,
 static DMA_Type *const s_edmaBases[] = DMA_BASE_PTRS;
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-#if (defined FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE) && (FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE)
-#else
+#if !(defined(FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE) && (FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE))
 /*! @brief Array to map EDMA instance number to clock name. */
 static const clock_ip_name_t s_edmaClockName[] = EDMA_CLOCKS;
 #endif /* FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE */
@@ -75,8 +65,7 @@ static const IRQn_Type s_edmaIRQNumber[][FSL_FEATURE_EDMA_MODULE_CHANNEL] = DMA_
 static edma_handle_t *s_EDMAHandle[FSL_FEATURE_EDMA_MODULE_CHANNEL * FSL_FEATURE_SOC_EDMA_COUNT];
 
 /*! @brief EDMA enabled channel. */
-static bool s_EDMAEnabledChannel[FSL_FEATURE_SOC_EDMA_COUNT][FSL_FEATURE_EDMA_MODULE_CHANNEL] = {false};
-
+static bool s_EDMAEnabledChannel[FSL_FEATURE_SOC_EDMA_COUNT][FSL_FEATURE_EDMA_MODULE_CHANNEL];
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -99,11 +88,11 @@ static uint32_t EDMA_GetInstance(DMA_Type *base)
     return instance;
 }
 
-static void EDMA_InstallTCD(DMA_Type *base, uint32_t channel, edma_tcd_t *tcd)
+void EDMA_InstallTCD(DMA_Type *base, uint32_t channel, edma_tcd_t *tcd)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
     assert(tcd != NULL);
-    assert(((uint32_t)tcd & 0x1FU) == 0);
+    assert(((uint32_t)tcd & 0x1FU) == 0U);
 
     /* Push tcd into hardware TCD register */
     base->CH[channel].TCD_SADDR          = tcd->SADDR;
@@ -150,6 +139,12 @@ void EDMA_Init(DMA_Type *base, const edma_config_t *config)
 {
     assert(config != NULL);
 
+#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+#if !(defined(FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE) && (FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE))
+    CLOCK_EnableClock(s_edmaClockName[EDMA_GetInstance(base)]);
+#endif /* FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE */
+#endif /* FSL_FEATURE_EDMA_HAS_CLOCK_GATE */
+
 #if defined(FSL_FEATURE_HAVE_DMA_CONTROL_REGISTER_ACCESS_PERMISSION) && \
     FSL_FEATURE_HAVE_DMA_CONTROL_REGISTER_ACCESS_PERMISSION
     uint32_t tmpreg;
@@ -181,14 +176,13 @@ void EDMA_Init(DMA_Type *base, const edma_config_t *config)
 void EDMA_Deinit(DMA_Type *base)
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-#if (defined FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE) && (FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE)
-#else
+#if !(defined(FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE) && (FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE))
     /* Gate EDMA periphral clock */
     CLOCK_DisableClock(s_edmaClockName[EDMA_GetInstance(base)]);
 #endif /* FSL_FEATURE_EDMA_CHANNEL_HAS_OWN_CLOCK_GATE */
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
     /* reset all the enabled channel status */
-    memset(s_EDMAEnabledChannel, 0U, sizeof(s_EDMAEnabledChannel));
+    (void)memset(s_EDMAEnabledChannel, 0, sizeof(s_EDMAEnabledChannel));
 }
 
 /*!
@@ -211,7 +205,7 @@ void EDMA_GetDefaultConfig(edma_config_t *config)
     assert(config != NULL);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->enableMasterIdReplication = true;
 
@@ -237,7 +231,7 @@ void EDMA_GetDefaultConfig(edma_config_t *config)
  */
 void EDMA_ResetChannel(DMA_Type *base, uint32_t channel)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
     /* Clear DONE bit and ERR bit */
     base->CH[channel].CH_ES |= DMA_CH_ES_ERR_MASK;
@@ -286,11 +280,11 @@ void EDMA_ResetChannel(DMA_Type *base, uint32_t channel)
  */
 void EDMA_SetTransferConfig(DMA_Type *base, uint32_t channel, const edma_transfer_config_t *config, edma_tcd_t *nextTcd)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
     assert(config != NULL);
-    assert(((uint32_t)nextTcd & 0x1FU) == 0);
+    assert(((uint32_t)nextTcd & 0x1FU) == 0U);
 
-    EDMA_TcdSetTransferConfig((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020), config, nextTcd);
+    EDMA_TcdSetTransferConfig((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020U), config, nextTcd);
 }
 
 /*!
@@ -306,10 +300,10 @@ void EDMA_SetTransferConfig(DMA_Type *base, uint32_t channel, const edma_transfe
  */
 void EDMA_SetMinorOffsetConfig(DMA_Type *base, uint32_t channel, const edma_minor_offset_config_t *config)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
     assert(config != NULL);
 
-    EDMA_TcdSetMinorOffsetConfig((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020), config);
+    EDMA_TcdSetMinorOffsetConfig((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020U), config);
 }
 
 /*!
@@ -333,10 +327,10 @@ void EDMA_SetMinorOffsetConfig(DMA_Type *base, uint32_t channel, const edma_mino
  */
 void EDMA_SetChannelLink(DMA_Type *base, uint32_t channel, edma_channel_link_type_t type, uint32_t linkedChannel)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
-    assert(linkedChannel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(linkedChannel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
-    EDMA_TcdSetChannelLink((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020), type, linkedChannel);
+    EDMA_TcdSetChannelLink((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020U), type, linkedChannel);
 }
 
 /*!
@@ -358,9 +352,10 @@ void EDMA_SetChannelLink(DMA_Type *base, uint32_t channel, edma_channel_link_typ
  */
 void EDMA_SetBandWidth(DMA_Type *base, uint32_t channel, edma_bandwidth_t bandWidth)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
-    base->CH[channel].TCD_CSR = (base->CH[channel].TCD_CSR & (~DMA_TCD_CSR_BWC_MASK)) | DMA_TCD_CSR_BWC(bandWidth);
+    base->CH[channel].TCD_CSR =
+        (uint16_t)((base->CH[channel].TCD_CSR & (~DMA_TCD_CSR_BWC_MASK)) | DMA_TCD_CSR_BWC(bandWidth));
 }
 
 /*!
@@ -380,9 +375,9 @@ void EDMA_SetBandWidth(DMA_Type *base, uint32_t channel, edma_bandwidth_t bandWi
  */
 void EDMA_SetModulo(DMA_Type *base, uint32_t channel, edma_modulo_t srcModulo, edma_modulo_t destModulo)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
-    EDMA_TcdSetModulo((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020), srcModulo, destModulo);
+    EDMA_TcdSetModulo((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020U), srcModulo, destModulo);
 }
 
 /*!
@@ -395,10 +390,10 @@ void EDMA_SetModulo(DMA_Type *base, uint32_t channel, edma_modulo_t srcModulo, e
  */
 void EDMA_EnableChannelInterrupts(DMA_Type *base, uint32_t channel, uint32_t mask)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
     /* Enable error interrupt */
-    if (mask & kEDMA_ErrorInterruptEnable)
+    if ((mask & (uint32_t)kEDMA_ErrorInterruptEnable) != 0U)
     {
         base->CH[channel].CH_CSR = (base->CH[channel].CH_CSR & (~DMA_CH_CSR_DONE_MASK)) | DMA_CH_CSR_EEI_MASK;
     }
@@ -406,7 +401,7 @@ void EDMA_EnableChannelInterrupts(DMA_Type *base, uint32_t channel, uint32_t mas
     /* Enable Major interrupt or Half major interrupt */
     else
     {
-        EDMA_TcdEnableInterrupts((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020), mask);
+        EDMA_TcdEnableInterrupts((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020U), mask);
     }
 }
 
@@ -420,10 +415,10 @@ void EDMA_EnableChannelInterrupts(DMA_Type *base, uint32_t channel, uint32_t mas
  */
 void EDMA_DisableChannelInterrupts(DMA_Type *base, uint32_t channel, uint32_t mask)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
     /* Disable error interrupt */
-    if (mask & kEDMA_ErrorInterruptEnable)
+    if ((mask & (uint32_t)kEDMA_ErrorInterruptEnable) != 0U)
     {
         base->CH[channel].CH_CSR = (base->CH[channel].CH_CSR & (~DMA_CH_CSR_DONE_MASK)) & ~DMA_CH_CSR_EEI_MASK;
     }
@@ -431,7 +426,7 @@ void EDMA_DisableChannelInterrupts(DMA_Type *base, uint32_t channel, uint32_t ma
     /* Disable Major interrupt or Half major interrupt */
     else
     {
-        EDMA_TcdDisableInterrupts((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020), mask);
+        EDMA_TcdDisableInterrupts((edma_tcd_t *)((uint32_t)&base->CH[channel] + 0x00000020U), mask);
     }
 }
 
@@ -446,7 +441,7 @@ void EDMA_DisableChannelInterrupts(DMA_Type *base, uint32_t channel, uint32_t ma
 void EDMA_TcdReset(edma_tcd_t *tcd)
 {
     assert(tcd != NULL);
-    assert(((uint32_t)tcd & 0x1FU) == 0);
+    assert(((uint32_t)tcd & 0x1FU) == 0U);
 
     /* Reset channel TCD */
     tcd->SADDR     = 0U;
@@ -496,9 +491,11 @@ void EDMA_TcdReset(edma_tcd_t *tcd)
 void EDMA_TcdSetTransferConfig(edma_tcd_t *tcd, const edma_transfer_config_t *config, edma_tcd_t *nextTcd)
 {
     assert(tcd != NULL);
-    assert(((uint32_t)tcd & 0x1FU) == 0);
+    assert(((uint32_t)tcd & 0x1FU) == 0U);
     assert(config != NULL);
-    assert(((uint32_t)nextTcd & 0x1FU) == 0);
+    assert(((uint32_t)nextTcd & 0x1FU) == 0U);
+    assert((config->srcAddr % (1UL << (uint32_t)config->srcTransferSize)) == 0U);
+    assert((config->destAddr % (1UL << (uint32_t)config->destTransferSize)) == 0U);
 
 /* source address */
 #if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
@@ -513,15 +510,15 @@ void EDMA_TcdSetTransferConfig(edma_tcd_t *tcd, const edma_transfer_config_t *co
     /* Source data and destination data transfer size */
     tcd->ATTR = DMA_TCD_ATTR_SSIZE(config->srcTransferSize) | DMA_TCD_ATTR_DSIZE(config->destTransferSize);
     /* Source address signed offset */
-    tcd->SOFF = config->srcOffset;
+    tcd->SOFF = (uint16_t)config->srcOffset;
     /* Destination address signed offset */
-    tcd->DOFF = config->destOffset;
+    tcd->DOFF = (uint16_t)config->destOffset;
     /* Minor byte transfer count */
     tcd->NBYTES = config->minorLoopBytes;
     /* Current major iteration count */
-    tcd->CITER = config->majorLoopCounts;
+    tcd->CITER = (uint16_t)config->majorLoopCounts;
     /* Starting major iteration count */
-    tcd->BITER = config->majorLoopCounts;
+    tcd->BITER = (uint16_t)config->majorLoopCounts;
     /* Enable scatter/gather processing */
     if (nextTcd != NULL)
     {
@@ -539,7 +536,7 @@ void EDMA_TcdSetTransferConfig(edma_tcd_t *tcd, const edma_transfer_config_t *co
             previous transfer is not the last transfer, and channel request should
             be enabled at the next transfer(the next TCD).
         */
-        tcd->CSR = (tcd->CSR | DMA_TCD_CSR_ESG_MASK) & ~DMA_TCD_CSR_DREQ_MASK;
+        tcd->CSR = (tcd->CSR | (uint16_t)DMA_TCD_CSR_ESG_MASK) & ~(uint16_t)DMA_TCD_CSR_DREQ_MASK;
     }
 }
 
@@ -556,7 +553,7 @@ void EDMA_TcdSetTransferConfig(edma_tcd_t *tcd, const edma_transfer_config_t *co
 void EDMA_TcdSetMinorOffsetConfig(edma_tcd_t *tcd, const edma_minor_offset_config_t *config)
 {
     assert(tcd != NULL);
-    assert(((uint32_t)tcd & 0x1FU) == 0);
+    assert(((uint32_t)tcd & 0x1FU) == 0U);
 
     uint32_t tmpreg;
 
@@ -590,39 +587,39 @@ void EDMA_TcdSetMinorOffsetConfig(edma_tcd_t *tcd, const edma_minor_offset_confi
 void EDMA_TcdSetChannelLink(edma_tcd_t *tcd, edma_channel_link_type_t type, uint32_t linkedChannel)
 {
     assert(tcd != NULL);
-    assert(((uint32_t)tcd & 0x1FU) == 0);
-    assert(linkedChannel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(((uint32_t)tcd & 0x1FU) == 0U);
+    assert(linkedChannel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
     if (type == kEDMA_MinorLink) /* Minor link config */
     {
-        uint32_t tmpreg;
+        uint16_t tmpreg;
 
         /* Enable minor link */
         tcd->CITER |= DMA_TCD_CITER_ELINKYES_ELINK_MASK;
         tcd->BITER |= DMA_TCD_BITER_ELINKYES_ELINK_MASK;
         /* Set likned channel */
-        tmpreg = tcd->CITER & (~DMA_TCD_CITER_ELINKYES_LINKCH_MASK);
+        tmpreg = tcd->CITER & (~(uint16_t)DMA_TCD_CITER_ELINKYES_LINKCH_MASK);
         tmpreg |= DMA_TCD_CITER_ELINKYES_LINKCH(linkedChannel);
         tcd->CITER = tmpreg;
-        tmpreg     = tcd->BITER & (~DMA_TCD_BITER_ELINKYES_LINKCH_MASK);
+        tmpreg     = tcd->BITER & (~(uint16_t)DMA_TCD_BITER_ELINKYES_LINKCH_MASK);
         tmpreg |= DMA_TCD_BITER_ELINKYES_LINKCH(linkedChannel);
         tcd->BITER = tmpreg;
     }
     else if (type == kEDMA_MajorLink) /* Major link config */
     {
-        uint32_t tmpreg;
+        uint16_t tmpreg;
 
         /* Enable major link */
         tcd->CSR |= DMA_TCD_CSR_MAJORELINK_MASK;
         /* Set major linked channel */
-        tmpreg   = tcd->CSR & (~DMA_TCD_CSR_MAJORLINKCH_MASK);
+        tmpreg   = tcd->CSR & (~(uint16_t)DMA_TCD_CSR_MAJORLINKCH_MASK);
         tcd->CSR = tmpreg | DMA_TCD_CSR_MAJORLINKCH(linkedChannel);
     }
     else /* Link none */
     {
-        tcd->CITER &= ~DMA_TCD_CITER_ELINKYES_ELINK_MASK;
-        tcd->BITER &= ~DMA_TCD_BITER_ELINKYES_ELINK_MASK;
-        tcd->CSR &= ~DMA_TCD_CSR_MAJORELINK_MASK;
+        tcd->CITER &= ~(uint16_t)DMA_TCD_CITER_ELINKYES_ELINK_MASK;
+        tcd->BITER &= ~(uint16_t)DMA_TCD_BITER_ELINKYES_ELINK_MASK;
+        tcd->CSR &= ~(uint16_t)DMA_TCD_CSR_MAJORELINK_MASK;
     }
 }
 
@@ -642,11 +639,11 @@ void EDMA_TcdSetChannelLink(edma_tcd_t *tcd, edma_channel_link_type_t type, uint
 void EDMA_TcdSetModulo(edma_tcd_t *tcd, edma_modulo_t srcModulo, edma_modulo_t destModulo)
 {
     assert(tcd != NULL);
-    assert(((uint32_t)tcd & 0x1FU) == 0);
+    assert(((uint32_t)tcd & 0x1FU) == 0U);
 
-    uint32_t tmpreg;
+    uint16_t tmpreg;
 
-    tmpreg    = tcd->ATTR & (~(DMA_TCD_ATTR_SMOD_MASK | DMA_TCD_ATTR_DMOD_MASK));
+    tmpreg    = tcd->ATTR & (~(uint16_t)(DMA_TCD_ATTR_SMOD_MASK | DMA_TCD_ATTR_DMOD_MASK));
     tcd->ATTR = tmpreg | DMA_TCD_ATTR_DMOD(destModulo) | DMA_TCD_ATTR_SMOD(srcModulo);
 }
 
@@ -662,13 +659,13 @@ void EDMA_TcdEnableInterrupts(edma_tcd_t *tcd, uint32_t mask)
     assert(tcd != NULL);
 
     /* Enable Major interrupt */
-    if (mask & kEDMA_MajorInterruptEnable)
+    if ((mask & (uint32_t)kEDMA_MajorInterruptEnable) != 0U)
     {
         tcd->CSR |= DMA_TCD_CSR_INTMAJOR_MASK;
     }
 
     /* Enable Half major interrupt */
-    if (mask & kEDMA_HalfInterruptEnable)
+    if ((mask & (uint32_t)kEDMA_HalfInterruptEnable) != 0U)
     {
         tcd->CSR |= DMA_TCD_CSR_INTHALF_MASK;
     }
@@ -686,15 +683,15 @@ void EDMA_TcdDisableInterrupts(edma_tcd_t *tcd, uint32_t mask)
     assert(tcd != NULL);
 
     /* Disable Major interrupt */
-    if (mask & kEDMA_MajorInterruptEnable)
+    if ((mask & (uint32_t)kEDMA_MajorInterruptEnable) != 0U)
     {
-        tcd->CSR &= ~DMA_TCD_CSR_INTMAJOR_MASK;
+        tcd->CSR &= ~(uint16_t)DMA_TCD_CSR_INTMAJOR_MASK;
     }
 
     /* Disable Half major interrupt */
-    if (mask & kEDMA_HalfInterruptEnable)
+    if ((mask & (uint32_t)kEDMA_HalfInterruptEnable) != 0U)
     {
-        tcd->CSR &= ~DMA_TCD_CSR_INTHALF_MASK;
+        tcd->CSR &= ~(uint16_t)DMA_TCD_CSR_INTHALF_MASK;
     }
 }
 
@@ -731,25 +728,25 @@ void EDMA_TcdDisableInterrupts(edma_tcd_t *tcd, uint32_t mask)
  */
 uint32_t EDMA_GetRemainingMajorLoopCount(DMA_Type *base, uint32_t channel)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
     uint32_t remainingCount = 0;
 
-    if (DMA_CH_CSR_DONE_MASK & base->CH[channel].CH_CSR)
+    if ((DMA_CH_CSR_DONE_MASK & base->CH[channel].CH_CSR) != 0U)
     {
         remainingCount = 0;
     }
     else
     {
         /* Calculate the unfinished bytes */
-        if (base->CH[channel].TCD_CITER_ELINKNO & DMA_TCD_CITER_ELINKNO_ELINK_MASK)
+        if ((base->CH[channel].TCD_CITER_ELINKNO & DMA_TCD_CITER_ELINKNO_ELINK_MASK) != 0U)
         {
-            remainingCount = (base->CH[channel].TCD_CITER_ELINKNO & DMA_TCD_CITER_ELINKYES_CITER_MASK) >>
+            remainingCount = ((uint32_t)(base->CH[channel].TCD_CITER_ELINKNO) & DMA_TCD_CITER_ELINKYES_CITER_MASK) >>
                              DMA_TCD_CITER_ELINKYES_CITER_SHIFT;
         }
         else
         {
-            remainingCount = (base->CH[channel].TCD_CITER_ELINKNO & DMA_TCD_CITER_ELINKNO_CITER_MASK) >>
+            remainingCount = ((uint32_t)(base->CH[channel].TCD_CITER_ELINKNO) & DMA_TCD_CITER_ELINKNO_CITER_MASK) >>
                              DMA_TCD_CITER_ELINKNO_CITER_SHIFT;
         }
     }
@@ -767,7 +764,7 @@ uint32_t EDMA_GetRemainingMajorLoopCount(DMA_Type *base, uint32_t channel)
  */
 uint32_t EDMA_GetChannelStatusFlags(DMA_Type *base, uint32_t channel)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
     uint32_t retval = 0;
 
@@ -791,20 +788,20 @@ uint32_t EDMA_GetChannelStatusFlags(DMA_Type *base, uint32_t channel)
  */
 void EDMA_ClearChannelStatusFlags(DMA_Type *base, uint32_t channel, uint32_t mask)
 {
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
     /* Clear DONE bit flag */
-    if (mask & kEDMA_DoneFlag)
+    if ((mask & (uint32_t)kEDMA_DoneFlag) != 0U)
     {
         base->CH[channel].CH_CSR |= DMA_CH_CSR_DONE_MASK;
     }
     /* Clear ERROR bit flag */
-    if (mask & kEDMA_ErrorFlag)
+    if ((mask & (uint32_t)kEDMA_ErrorFlag) != 0U)
     {
         base->CH[channel].CH_ES |= DMA_CH_ES_ERR_MASK;
     }
     /* Clear INT bit flag */
-    if (mask & kEDMA_InterruptFlag)
+    if ((mask & (uint32_t)kEDMA_InterruptFlag) != 0U)
     {
         base->CH[channel].CH_INT |= DMA_CH_INT_INT_MASK;
     }
@@ -826,21 +823,21 @@ void EDMA_ClearChannelStatusFlags(DMA_Type *base, uint32_t channel, uint32_t mas
 void EDMA_CreateHandle(edma_handle_t *handle, DMA_Type *base, uint32_t channel)
 {
     assert(handle != NULL);
-    assert(channel < FSL_FEATURE_EDMA_MODULE_CHANNEL);
+    assert(channel < (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL);
 
     uint32_t edmaInstance;
     uint32_t channelIndex;
 
     handle->base    = base;
-    handle->channel = channel;
+    handle->channel = (uint8_t)channel;
     /* Get the DMA instance number */
     edmaInstance               = EDMA_GetInstance(base);
-    channelIndex               = (edmaInstance * FSL_FEATURE_EDMA_MODULE_CHANNEL) + channel;
+    channelIndex               = (edmaInstance * (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL) + channel;
     s_EDMAHandle[channelIndex] = handle;
     /* record enabled channel */
     s_EDMAEnabledChannel[edmaInstance][channel] = true;
     /* Enable NVIC interrupt */
-    EnableIRQ(s_edmaIRQNumber[edmaInstance][channel]);
+    (void)EnableIRQ(s_edmaIRQNumber[edmaInstance][channel]);
 
     /*
        Reset TCD registers to zero. Unlike the EDMA_TcdReset(DREQ will be set),
@@ -863,13 +860,13 @@ void EDMA_CreateHandle(edma_handle_t *handle, DMA_Type *base, uint32_t channel)
 void EDMA_InstallTCDMemory(edma_handle_t *handle, edma_tcd_t *tcdPool, uint32_t tcdSize)
 {
     assert(handle != NULL);
-    assert(((uint32_t)tcdPool & 0x1FU) == 0);
+    assert(((uint32_t)tcdPool & 0x1FU) == 0U);
 
     /* Initialize tcd queue attibute. */
     handle->header  = 0;
     handle->tail    = 0;
     handle->tcdUsed = 0;
-    handle->tcdSize = tcdSize;
+    handle->tcdSize = (int8_t)tcdSize;
     handle->flags   = 0;
     handle->tcdPool = tcdPool;
 }
@@ -891,6 +888,118 @@ void EDMA_SetCallback(edma_handle_t *handle, edma_callback callback, void *userD
 
     handle->callback = callback;
     handle->userData = userData;
+}
+
+/*!
+ * brief Prepares the eDMA transfer structure configurations.
+ *
+ * This function prepares the transfer configuration structure according to the
+ * user input.
+ *
+ * param config The user configuration structure of type edma_transfer_config_t.
+ * param srcAddr eDMA transfer source address.
+ * param srcWidth eDMA transfer source address width(bytes).
+ * param srcOffset eDMA transfer source address offset
+ * param destAddr eDMA transfer destination address.
+ * param destWidth eDMA transfer destination address width(bytes).
+ * param destOffset eDMA transfer destination address offset
+ * param bytesEachRequest eDMA transfer bytes per channel request.
+ * param transferBytes eDMA transfer bytes to be transferred.
+ *
+ * note The data address and the data width must be consistent. For example, if
+ * the SRC is 4 bytes, the source address must be 4 bytes aligned, or it results
+ * in source address error (SAE).
+ */
+void EDMA_PrepareTransferConfig(edma_transfer_config_t *config,
+                                void *srcAddr,
+                                uint32_t srcWidth,
+                                int16_t srcOffset,
+                                void *destAddr,
+                                uint32_t destWidth,
+                                int16_t destOffset,
+                                uint32_t bytesEachRequest,
+                                uint32_t transferBytes)
+{
+    assert(config != NULL);
+    assert(srcAddr != NULL);
+    assert(destAddr != NULL);
+    assert((srcWidth == 1U) || (srcWidth == 2U) || (srcWidth == 4U) || (srcWidth == 8U) || (srcWidth == 16U) ||
+           (srcWidth == 32U));
+    assert((destWidth == 1U) || (destWidth == 2U) || (destWidth == 4U) || (destWidth == 8U) || (destWidth == 16U) ||
+           (destWidth == 32U));
+    assert(transferBytes % bytesEachRequest == 0U);
+    assert(((uint32_t)(uint32_t *)srcAddr % srcWidth) == 0U);
+    assert(((uint32_t)(uint32_t *)destAddr % destWidth) == 0U);
+
+    /* Initializes the configure structure to zero. */
+    (void)memset(config, 0, sizeof(*config));
+#if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
+    config->srcAddr  = MEMORY_ConvertMemoryMapAddress((uint32_t)(uint32_t *)srcAddr, kMEMORY_Local2DMA);
+    config->destAddr = MEMORY_ConvertMemoryMapAddress((uint32_t)(uint32_t *)destAddr, kMEMORY_Local2DMA);
+#else
+    config->destAddr = (uint32_t)destAddr;
+    config->srcAddr  = (uint32_t)srcAddr;
+#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
+
+    config->minorLoopBytes  = bytesEachRequest;
+    config->majorLoopCounts = transferBytes / bytesEachRequest;
+    switch (srcWidth)
+    {
+        case 1U:
+            config->srcTransferSize = kEDMA_TransferSize1Bytes;
+            break;
+        case 2U:
+            config->srcTransferSize = kEDMA_TransferSize2Bytes;
+            break;
+        case 4U:
+            config->srcTransferSize = kEDMA_TransferSize4Bytes;
+            break;
+        case 8U:
+            config->srcTransferSize = kEDMA_TransferSize8Bytes;
+            break;
+        case 16U:
+            config->srcTransferSize = kEDMA_TransferSize16Bytes;
+            break;
+        case 32U:
+            config->srcTransferSize = kEDMA_TransferSize32Bytes;
+            break;
+        case 64U:
+            config->srcTransferSize = kEDMA_TransferSize64Bytes;
+            break;
+        default:
+            assert(false);
+            break;
+    }
+    switch (destWidth)
+    {
+        case 1U:
+            config->destTransferSize = kEDMA_TransferSize1Bytes;
+            break;
+        case 2U:
+            config->destTransferSize = kEDMA_TransferSize2Bytes;
+            break;
+        case 8U:
+            config->destTransferSize = kEDMA_TransferSize8Bytes;
+            break;
+        case 4U:
+            config->destTransferSize = kEDMA_TransferSize4Bytes;
+            break;
+        case 16U:
+            config->destTransferSize = kEDMA_TransferSize16Bytes;
+            break;
+        case 32U:
+            config->destTransferSize = kEDMA_TransferSize32Bytes;
+            break;
+        case 64U:
+            config->destTransferSize = kEDMA_TransferSize64Bytes;
+            break;
+        default:
+            assert(false);
+            break;
+    }
+
+    config->destOffset = destOffset;
+    config->srcOffset  = srcOffset;
 }
 
 /*!
@@ -923,87 +1032,31 @@ void EDMA_PrepareTransfer(edma_transfer_config_t *config,
                           edma_transfer_type_t type)
 {
     assert(config != NULL);
-    assert(srcAddr != NULL);
-    assert(destAddr != NULL);
-    assert((srcWidth == 1U) || (srcWidth == 2U) || (srcWidth == 4U) || (srcWidth == 16U) || (srcWidth == 32U));
-    assert((destWidth == 1U) || (destWidth == 2U) || (destWidth == 4U) || (destWidth == 16U) || (destWidth == 32U));
-    assert(transferBytes % bytesEachRequest == 0);
 
-    /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
-#if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
-    config->srcAddr  = MEMORY_ConvertMemoryMapAddress((uint32_t)srcAddr, kMEMORY_Local2DMA);
-    config->destAddr = MEMORY_ConvertMemoryMapAddress((uint32_t)destAddr, kMEMORY_Local2DMA);
-#else
-    config->destAddr = (uint32_t)destAddr;
-    config->srcAddr  = (uint32_t)srcAddr;
-#endif /* FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET */
+    int16_t srcOffset = 0, destOffset = 0;
 
-    config->minorLoopBytes  = bytesEachRequest;
-    config->majorLoopCounts = transferBytes / bytesEachRequest;
-    switch (srcWidth)
-    {
-        case 1U:
-            config->srcTransferSize = kEDMA_TransferSize1Bytes;
-            break;
-        case 2U:
-            config->srcTransferSize = kEDMA_TransferSize2Bytes;
-            break;
-        case 4U:
-            config->srcTransferSize = kEDMA_TransferSize4Bytes;
-            break;
-        case 16U:
-            config->srcTransferSize = kEDMA_TransferSize16Bytes;
-            break;
-        case 32U:
-            config->srcTransferSize = kEDMA_TransferSize32Bytes;
-            break;
-        case 64U:
-            config->srcTransferSize = kEDMA_TransferSize64Bytes;
-            break;
-        default:
-            break;
-    }
-    switch (destWidth)
-    {
-        case 1U:
-            config->destTransferSize = kEDMA_TransferSize1Bytes;
-            break;
-        case 2U:
-            config->destTransferSize = kEDMA_TransferSize2Bytes;
-            break;
-        case 4U:
-            config->destTransferSize = kEDMA_TransferSize4Bytes;
-            break;
-        case 16U:
-            config->destTransferSize = kEDMA_TransferSize16Bytes;
-            break;
-        case 32U:
-            config->destTransferSize = kEDMA_TransferSize32Bytes;
-            break;
-        case 64U:
-            config->destTransferSize = kEDMA_TransferSize64Bytes;
-            break;
-        default:
-            break;
-    }
     switch (type)
     {
         case kEDMA_MemoryToMemory:
-            config->destOffset = destWidth;
-            config->srcOffset  = srcWidth;
+            destOffset = (int16_t)destWidth;
+            srcOffset  = (int16_t)srcWidth;
             break;
         case kEDMA_MemoryToPeripheral:
-            config->destOffset = 0U;
-            config->srcOffset  = srcWidth;
+            destOffset = 0;
+            srcOffset  = (int16_t)srcWidth;
             break;
         case kEDMA_PeripheralToMemory:
-            config->destOffset = destWidth;
-            config->srcOffset  = 0U;
+            destOffset = (int16_t)destWidth;
+            srcOffset  = 0;
             break;
         default:
+            /* All the cases have been listed above, the default clause should not be reached. */
+            assert(false);
             break;
     }
+
+    EDMA_PrepareTransferConfig(config, srcAddr, srcWidth, srcOffset, destAddr, destWidth, destOffset, bytesEachRequest,
+                               transferBytes);
 }
 
 /*!
@@ -1028,18 +1081,14 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
     assert(handle != NULL);
     assert(config != NULL);
 
-    edma_tcd_t *tcdRegs = (edma_tcd_t *)((uint32_t)&handle->base->CH[handle->channel] + 0x00000020);
+    edma_tcd_t *tcdRegs = (edma_tcd_t *)((uint32_t)&handle->base->CH[handle->channel] + 0x00000020U);
 
     if (handle->tcdPool == NULL)
     {
         /*
-            Check if EDMA is busy: if the given channel started transfer, CSR will
-           be not zero. Because
-            if it is the last transfer, DREQ will be set. If not, ESG will be set.
-           So in order to suit
-            this check mechanism, EDMA_CreatHandle will clear CSR register.
+            Check if EDMA is busy: if major loop count is not zero, then the channel is busying transfer
         */
-        if ((tcdRegs->CSR != 0) && ((handle->base->CH[handle->channel].CH_CSR & DMA_CH_CSR_DONE_MASK) == 0))
+        if (EDMA_GetRemainingMajorLoopCount(handle->base, handle->channel) != 0U)
         {
             return kStatus_EDMA_Busy;
         }
@@ -1057,7 +1106,7 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
     else /* Use the TCD queue. */
     {
         uint32_t primask;
-        uint32_t csr;
+        uint16_t csr;
         int8_t currentTcd;
         int8_t previousTcd;
         int8_t nextTcd;
@@ -1074,16 +1123,16 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
         currentTcd = handle->tail;
         handle->tcdUsed++;
         /* Calculate index of next TCD */
-        nextTcd = currentTcd + 1U;
+        nextTcd = currentTcd + 1;
         if (nextTcd == handle->tcdSize)
         {
-            nextTcd = 0U;
+            nextTcd = 0;
         }
         /* Advance queue tail index */
         handle->tail = nextTcd;
         EnableGlobalIRQ(primask);
         /* Calculate index of previous TCD */
-        previousTcd = currentTcd ? currentTcd - 1U : handle->tcdSize - 1U;
+        previousTcd = currentTcd != 0 ? currentTcd - 1 : handle->tcdSize - 1;
         /* Configure current TCD block. */
         EDMA_TcdReset(&handle->tcdPool[currentTcd]);
 
@@ -1103,7 +1152,8 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
         if (currentTcd != previousTcd)
         {
             /* Enable scatter/gather feature in the previous TCD block. */
-            csr = (handle->tcdPool[previousTcd].CSR | DMA_TCD_CSR_ESG_MASK) & ~DMA_TCD_CSR_DREQ_MASK;
+            csr =
+                (handle->tcdPool[previousTcd].CSR | (uint16_t)DMA_TCD_CSR_ESG_MASK) & ~(uint16_t)DMA_TCD_CSR_DREQ_MASK;
             handle->tcdPool[previousTcd].CSR = csr;
 /*
     Check if the TCD block in the registers is the previous one (points to
@@ -1122,7 +1172,7 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
             if (tcdRegs->DLAST_SGA == temp)
             {
                 /* Enable scatter/gather also in the TCD registers. */
-                csr = (tcdRegs->CSR | DMA_TCD_CSR_ESG_MASK) & ~DMA_TCD_CSR_DREQ_MASK;
+                csr = (tcdRegs->CSR | (uint16_t)DMA_TCD_CSR_ESG_MASK) & ~(uint16_t)DMA_TCD_CSR_DREQ_MASK;
                 /* Must write the CSR register one-time, because the transfer maybe
                  * finished anytime. */
                 tcdRegs->CSR = csr;
@@ -1142,7 +1192,7 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
                    notfinished, so TCD dynamic
                     link succeed.
                 */
-                if (tcdRegs->CSR & DMA_TCD_CSR_ESG_MASK)
+                if ((tcdRegs->CSR & DMA_TCD_CSR_ESG_MASK) != 0U)
                 {
                     return kStatus_Success;
                 }
@@ -1168,7 +1218,7 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
                     So shall configure TCD registers.
                 */
             }
-            else if (tcdRegs->DLAST_SGA != 0)
+            else if (tcdRegs->DLAST_SGA != 0U)
             {
                 /* The current TCD block has been linked successfully. */
                 return kStatus_Success;
@@ -1186,7 +1236,7 @@ status_t EDMA_SubmitTransfer(edma_handle_t *handle, const edma_transfer_config_t
          */
         EDMA_InstallTCD(handle->base, handle->channel, &handle->tcdPool[currentTcd]);
         /* Enable channel request again. */
-        if (handle->flags & EDMA_TRANSFER_ENABLED_MASK)
+        if ((handle->flags & EDMA_TRANSFER_ENABLED_MASK) != 0U)
         {
             handle->base->CH[handle->channel].CH_CSR =
                 (handle->base->CH[handle->channel].CH_CSR & (~DMA_CH_CSR_DONE_MASK)) | DMA_CH_CSR_ERQ_MASK;
@@ -1217,7 +1267,7 @@ void EDMA_StartTransfer(edma_handle_t *handle)
     else /* Use the TCD queue. */
     {
         uint32_t primask;
-        edma_tcd_t *tcdRegs = (edma_tcd_t *)((uint32_t)&handle->base->CH[handle->channel] + 0x00000020);
+        edma_tcd_t *tcdRegs = (edma_tcd_t *)((uint32_t)&handle->base->CH[handle->channel] + 0x00000020U);
 
         handle->flags |= EDMA_TRANSFER_ENABLED_MASK;
 
@@ -1230,8 +1280,8 @@ void EDMA_StartTransfer(edma_handle_t *handle)
             if ((handle->base->CH[handle->channel].CH_CSR & DMA_CH_CSR_ERQ_MASK & (1U << handle->channel)) == 0U)
             {
                 /* Check if transfer is paused. */
-                if ((!(handle->base->CH[handle->channel].CH_CSR & DMA_CH_CSR_DONE_MASK)) ||
-                    (tcdRegs->CSR & DMA_TCD_CSR_ESG_MASK))
+                if ((!((handle->base->CH[handle->channel].CH_CSR & DMA_CH_CSR_DONE_MASK) != 0U)) ||
+                    ((tcdRegs->CSR & DMA_TCD_CSR_ESG_MASK) != 0u))
                 {
                     /*
                         Re-enable channel request must be as soon as possible, so must put
@@ -1261,7 +1311,7 @@ void EDMA_StopTransfer(edma_handle_t *handle)
 {
     assert(handle != NULL);
 
-    handle->flags &= (~EDMA_TRANSFER_ENABLED_MASK);
+    handle->flags &= (uint8_t)(~EDMA_TRANSFER_ENABLED_MASK);
     handle->base->CH[handle->channel].CH_CSR =
         (handle->base->CH[handle->channel].CH_CSR & (~DMA_CH_CSR_DONE_MASK)) & ~DMA_CH_CSR_ERQ_MASK;
 }
@@ -1302,11 +1352,20 @@ void EDMA_HandleIRQ(edma_handle_t *handle)
 {
     assert(handle != NULL);
 
+    bool transfer_done;
+
+    /* Check if transfer is already finished. */
+    transfer_done = ((handle->base->CH[handle->channel].CH_CSR & DMA_CH_CSR_DONE_MASK) != 0U);
+
     /* Clear EDMA interrupt flag */
     handle->base->CH[handle->channel].CH_INT |= DMA_CH_INT_INT_MASK;
-    if ((handle->tcdPool == NULL) && (handle->callback != NULL))
+
+    if (handle->tcdPool == NULL)
     {
-        (handle->callback)(handle, handle->userData, true, 0);
+        if (handle->callback != NULL)
+        {
+            (handle->callback)(handle, handle->userData, transfer_done, 0);
+        }
     }
     else /* Use the TCD queue. */
     {
@@ -1314,11 +1373,8 @@ void EDMA_HandleIRQ(edma_handle_t *handle)
         uint32_t sga_index;
         int32_t tcds_done;
         uint8_t new_header;
-        bool transfer_done;
         uint32_t temp = 0;
 
-        /* Check if transfer is already finished. */
-        transfer_done = ((handle->base->CH[handle->channel].CH_CSR & DMA_CH_CSR_DONE_MASK) != 0);
 /* Get the offset of the current transfer TCD blocks. */
 #if defined FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET && FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET
         temp = MEMORY_ConvertMemoryMapAddress((uint32_t)handle->tcdPool, kMEMORY_Local2DMA);
@@ -1333,15 +1389,15 @@ void EDMA_HandleIRQ(edma_handle_t *handle)
         {
             /* New header shall point to the next TCD (current one is already
              * finished) */
-            new_header = sga_index;
+            new_header = (uint8_t)sga_index;
         }
         else
         {
             /* New header shall point to this descriptor (not finished yet) */
-            new_header = sga_index ? sga_index - 1U : handle->tcdSize - 1U;
+            new_header = sga_index != 0U ? (uint8_t)sga_index - 1U : (uint8_t)handle->tcdSize - 1U;
         }
         /* Calculate the number of finished TCDs */
-        if (new_header == handle->header)
+        if (new_header == (uint8_t)handle->header)
         {
             if (handle->tcdUsed == handle->tcdSize)
             {
@@ -1355,25 +1411,39 @@ void EDMA_HandleIRQ(edma_handle_t *handle)
         }
         else
         {
-            tcds_done = new_header - handle->header;
+            tcds_done = (int32_t)new_header - (int32_t)handle->header;
             if (tcds_done < 0)
             {
                 tcds_done += handle->tcdSize;
             }
         }
         /* Advance header to the point beyond the last finished TCD block. */
-        handle->header = new_header;
+        handle->header = (int8_t)new_header;
         /* Release TCD blocks. */
-        handle->tcdUsed -= tcds_done;
+        handle->tcdUsed -= (int8_t)tcds_done;
         /* Invoke callback function. */
-        if (handle->callback)
+        if (handle->callback != NULL)
         {
             (handle->callback)(handle, handle->userData, transfer_done, tcds_done);
+        }
+
+        /* clear the DONE bit here is meaningful for below cases:
+         *1.A new TCD has been loaded to EDMA already:
+         * need to clear the DONE bit in the IRQ handler to avoid TCD in EDMA been overwritten
+         * if peripheral request isn't coming before next transfer request.
+         *2.A new TCD has not been loaded to EDMA:
+         * for the case that transfer request occur in the privious edma callback, this is a case that doesn't
+         * need scatter gather, so keep DONE bit during the next transfer request will re-install the TCD.
+         */
+        if (transfer_done)
+        {
+            handle->base->CH[handle->channel].CH_CSR |= DMA_CH_CSR_DONE_MASK;
         }
     }
 }
 
 #ifdef DMA0
+void DMA0_DriverIRQHandler(void);
 void DMA0_DriverIRQHandler(void)
 {
     uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
@@ -1395,253 +1465,275 @@ void DMA0_DriverIRQHandler(void)
             }
         }
     }
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate
-  overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #ifdef ADMA__EDMA0
+void ADMA_EDMA0_INT_DriverIRQHandler(void);
 void ADMA_EDMA0_INT_DriverIRQHandler(void)
 {
     uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
     uint32_t i           = 0;
-    uint32_t instance    = EDMA_GetInstance(ADMA__EDMA0);
-    uint32_t prevChannel = FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
+    DMA_Type *base       = ADMA__EDMA0;
+    uint32_t instance    = EDMA_GetInstance(base);
+    uint32_t prevChannel = (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
 
 #if defined FSL_FEATURE_EDMA_INSTANCE_CHANNELn
-    channel = FSL_FEATURE_EDMA_INSTANCE_CHANNELn(ADMA__EDMA0);
+    channel = (uint32_t)FSL_FEATURE_EDMA_INSTANCE_CHANNELn(base);
 #endif
 
     for (i = 0; i < channel; i++)
     {
         if (s_EDMAEnabledChannel[instance][i])
         {
-            if ((EDMA_GetChannelStatusFlags(ADMA__EDMA0, i) & kEDMA_InterruptFlag) != 0U)
+            if ((EDMA_GetChannelStatusFlags(base, i) & (uint32_t)kEDMA_InterruptFlag) != 0U)
             {
                 EDMA_HandleIRQ(s_EDMAHandle[prevChannel + i]);
             }
         }
     }
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate
-  overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #ifdef ADMA__EDMA1
+void ADMA_EDMA1_INT_DriverIRQHandler(void);
 void ADMA_EDMA1_INT_DriverIRQHandler(void)
 {
     uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
     uint32_t i           = 0;
-    uint32_t instance    = EDMA_GetInstance(ADMA__EDMA1);
-    uint32_t prevChannel = FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
+    DMA_Type *base       = ADMA__EDMA1;
+    uint32_t instance    = EDMA_GetInstance(base);
+    uint32_t prevChannel = (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
 
 #if defined FSL_FEATURE_EDMA_INSTANCE_CHANNELn
-    channel = FSL_FEATURE_EDMA_INSTANCE_CHANNELn(ADMA__EDMA1);
+    channel = (uint32_t)FSL_FEATURE_EDMA_INSTANCE_CHANNELn(base);
 #endif
 
     for (i = 0; i < channel; i++)
     {
         if (s_EDMAEnabledChannel[instance][i])
         {
-            if ((EDMA_GetChannelStatusFlags(ADMA__EDMA1, i) & kEDMA_InterruptFlag) != 0U)
+            if ((EDMA_GetChannelStatusFlags(base, i) & (uint32_t)kEDMA_InterruptFlag) != 0U)
             {
                 EDMA_HandleIRQ(s_EDMAHandle[prevChannel + i]);
             }
         }
     }
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate
-  overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #ifdef ADMA__EDMA2
+void ADMA_EDMA2_INT_DriverIRQHandler(void);
 void ADMA_EDMA2_INT_DriverIRQHandler(void)
 {
     uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
     uint32_t i           = 0;
-    uint32_t instance    = EDMA_GetInstance(ADMA__EDMA2);
-    uint32_t prevChannel = FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
+    DMA_Type *base       = ADMA__EDMA2;
+    uint32_t instance    = EDMA_GetInstance(base);
+    uint32_t prevChannel = (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
 
 #if defined FSL_FEATURE_EDMA_INSTANCE_CHANNELn
-    channel = FSL_FEATURE_EDMA_INSTANCE_CHANNELn(ADMA__EDMA2);
+    channel = (uint32_t)FSL_FEATURE_EDMA_INSTANCE_CHANNELn(base);
 #endif
 
     for (i = 0; i < channel; i++)
     {
         if (s_EDMAEnabledChannel[instance][i])
         {
-            if ((EDMA_GetChannelStatusFlags(ADMA__EDMA2, i) & kEDMA_InterruptFlag) != 0U)
+            if ((EDMA_GetChannelStatusFlags(base, i) & (uint32_t)kEDMA_InterruptFlag) != 0U)
             {
                 EDMA_HandleIRQ(s_EDMAHandle[prevChannel + i]);
             }
         }
     }
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate
-  overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #ifdef ADMA__EDMA3
+void ADMA_EDMA3_INT_DriverIRQHandler(void);
 void ADMA_EDMA3_INT_DriverIRQHandler(void)
 {
     uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
     uint32_t i           = 0;
-    uint32_t instance    = EDMA_GetInstance(ADMA__EDMA3);
-    uint32_t prevChannel = FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
+    DMA_Type *base       = ADMA__EDMA3;
+    uint32_t instance    = EDMA_GetInstance(base);
+    uint32_t prevChannel = (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
 
 #if defined FSL_FEATURE_EDMA_INSTANCE_CHANNELn
-    channel = FSL_FEATURE_EDMA_INSTANCE_CHANNELn(ADMA__EDMA3);
+    channel = (uint32_t)FSL_FEATURE_EDMA_INSTANCE_CHANNELn(base);
 #endif
 
     for (i = 0; i < channel; i++)
     {
         if (s_EDMAEnabledChannel[instance][i])
         {
-            if ((EDMA_GetChannelStatusFlags(ADMA__EDMA3, i) & kEDMA_InterruptFlag) != 0U)
+            if ((EDMA_GetChannelStatusFlags(base, i) & (uint32_t)kEDMA_InterruptFlag) != 0U)
             {
                 EDMA_HandleIRQ(s_EDMAHandle[prevChannel + i]);
             }
         }
     }
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate
-  overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #ifdef AUDIO__EDMA0
+void AUDIO_EDMA0_INT_DriverIRQHandler(void);
 void AUDIO_EDMA0_INT_DriverIRQHandler(void)
 {
     uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
     uint32_t i           = 0;
-    uint32_t instance    = EDMA_GetInstance(AUDIO__EDMA0);
-    uint32_t prevChannel = FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
+    DMA_Type *base       = AUDIO__EDMA0;
+    uint32_t instance    = EDMA_GetInstance(base);
+    uint32_t prevChannel = (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
 
 #if defined FSL_FEATURE_EDMA_INSTANCE_CHANNELn
-    channel = FSL_FEATURE_EDMA_INSTANCE_CHANNELn(AUDIO__EDMA0);
+    channel = (uint32_t)FSL_FEATURE_EDMA_INSTANCE_CHANNELn(base);
 #endif
     for (i = 0; i < channel; i++)
     {
         if (s_EDMAEnabledChannel[instance][i])
         {
-            if ((EDMA_GetChannelStatusFlags(AUDIO__EDMA0, i) & kEDMA_InterruptFlag) != 0U)
+            if ((EDMA_GetChannelStatusFlags(AUDIO__EDMA0, i) & (uint32_t)kEDMA_InterruptFlag) != 0U)
             {
                 EDMA_HandleIRQ(s_EDMAHandle[prevChannel + i]);
             }
         }
     }
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate
-  overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #ifdef AUDIO__EDMA1
+void AUDIO_EDMA1_INT_DriverIRQHandler(void);
 void AUDIO_EDMA1_INT_DriverIRQHandler(void)
 {
     uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
     uint32_t i           = 0;
-    uint32_t instance    = EDMA_GetInstance(AUDIO__EDMA1);
-    uint32_t prevChannel = FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
+    DMA_Type *base       = AUDIO__EDMA1;
+    uint32_t instance    = EDMA_GetInstance(base);
+    uint32_t prevChannel = (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
 
 #if defined FSL_FEATURE_EDMA_INSTANCE_CHANNELn
-    channel = FSL_FEATURE_EDMA_INSTANCE_CHANNELn(AUDIO__EDMA1);
+    channel = (uint32_t)FSL_FEATURE_EDMA_INSTANCE_CHANNELn(base);
 #endif
     for (i = 0; i < channel; i++)
     {
         if (s_EDMAEnabledChannel[instance][i])
         {
-            if ((EDMA_GetChannelStatusFlags(AUDIO__EDMA1, i) & kEDMA_InterruptFlag) != 0U)
+            if ((EDMA_GetChannelStatusFlags(AUDIO__EDMA1, i) & (uint32_t)kEDMA_InterruptFlag) != 0U)
             {
                 EDMA_HandleIRQ(s_EDMAHandle[prevChannel + i]);
             }
         }
     }
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate
-  overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #ifdef DMA__EDMA0
+void DMA_EDMA0_INT_DriverIRQHandler(void);
 void DMA_EDMA0_INT_DriverIRQHandler(void)
 {
     uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
     uint32_t i           = 0;
-    uint32_t instance    = EDMA_GetInstance(DMA__EDMA0);
-    uint32_t prevChannel = FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
+    DMA_Type *base       = DMA__EDMA0;
+    uint32_t instance    = EDMA_GetInstance(base);
+    uint32_t prevChannel = (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
 
 #if defined FSL_FEATURE_EDMA_INSTANCE_CHANNELn
-    channel = FSL_FEATURE_EDMA_INSTANCE_CHANNELn(DMA__EDMA0);
+    channel = (uint32_t)FSL_FEATURE_EDMA_INSTANCE_CHANNELn(base);
 #endif
     for (i = 0; i < channel; i++)
     {
         if (s_EDMAEnabledChannel[instance][i])
         {
-            if ((EDMA_GetChannelStatusFlags(DMA__EDMA0, i) & kEDMA_InterruptFlag) != 0U)
+            if ((EDMA_GetChannelStatusFlags(DMA__EDMA0, i) & (uint32_t)kEDMA_InterruptFlag) != 0U)
             {
                 EDMA_HandleIRQ(s_EDMAHandle[prevChannel + i]);
             }
         }
     }
-
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate
-  overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #ifdef DMA__EDMA1
+void DMA_EDMA1_INT_DriverIRQHandler(void);
 void DMA_EDMA1_INT_DriverIRQHandler(void)
 {
     uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
     uint32_t i           = 0;
-    uint32_t instance    = EDMA_GetInstance(DMA__EDMA1);
-    uint32_t prevChannel = FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
+    DMA_Type *base       = DMA__EDMA1;
+    uint32_t instance    = EDMA_GetInstance(base);
+    uint32_t prevChannel = (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
 
 #if defined FSL_FEATURE_EDMA_INSTANCE_CHANNELn
-    channel = FSL_FEATURE_EDMA_INSTANCE_CHANNELn(DMA__EDMA1);
+    channel = (uint32_t)FSL_FEATURE_EDMA_INSTANCE_CHANNELn(base);
 #endif
     for (i = 0; i < channel; i++)
     {
         if (s_EDMAEnabledChannel[instance][i])
         {
-            if ((EDMA_GetChannelStatusFlags(DMA__EDMA1, i) & kEDMA_InterruptFlag) != 0U)
+            if ((EDMA_GetChannelStatusFlags(DMA__EDMA1, i) & (uint32_t)kEDMA_InterruptFlag) != 0U)
+            {
+                EDMA_HandleIRQ(s_EDMAHandle[prevChannel + i]);
+            }
+        }
+    }
+    SDK_ISR_EXIT_BARRIER;
+}
+#endif
+
+#ifdef CONNECTIVITY__EDMA
+void CONNECTIVITY__EDMA_INT_DriverIRQHandler(void);
+void CONNECTIVITY__EDMA_INT_DriverIRQHandler(void)
+{
+    uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
+    uint32_t i           = 0;
+    DMA_Type *base       = CONNECTIVITY__EDMA;
+    uint32_t instance    = EDMA_GetInstance(base);
+    uint32_t prevChannel = (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
+
+#if defined FSL_FEATURE_EDMA_INSTANCE_CHANNELn
+    channel = (uint32_t)FSL_FEATURE_EDMA_INSTANCE_CHANNELn(base);
+#endif
+    for (i = 0; i < channel; i++)
+    {
+        if (s_EDMAEnabledChannel[instance][i])
+        {
+            if ((EDMA_GetChannelStatusFlags(base, i) & (uint32_t)kEDMA_InterruptFlag) != 0U)
+            {
+                EDMA_HandleIRQ(s_EDMAHandle[prevChannel + i]);
+            }
+        }
+    }
+}
+#endif
+
+#ifdef EDMA1
+void EDMA1_0_15_DriverIRQHandler(void);
+void EDMA1_0_15_DriverIRQHandler(void)
+{
+    uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
+    uint32_t i           = 0;
+    DMA_Type *base       = EDMA1;
+    uint32_t instance    = EDMA_GetInstance(base);
+    uint32_t prevChannel = (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
+
+#if defined FSL_FEATURE_EDMA_INSTANCE_CHANNELn
+    channel = (uint32_t)FSL_FEATURE_EDMA_INSTANCE_CHANNELn(base);
+#endif
+
+    for (i = 0; i < channel; i++)
+    {
+        if (s_EDMAEnabledChannel[instance][i])
+        {
+            if ((EDMA_GetChannelStatusFlags(base, i) & (uint32_t)kEDMA_InterruptFlag) != 0U)
             {
                 EDMA_HandleIRQ(s_EDMAHandle[prevChannel + i]);
             }
@@ -1655,28 +1747,36 @@ void DMA_EDMA1_INT_DriverIRQHandler(void)
     __DSB();
 #endif
 }
-#endif
 
-#ifdef CONNECTIVITY__EDMA
-void CONNECTIVITY__EDMA_INT_DriverIRQHandler(void)
+void EDMA1_16_31_DriverIRQHandler(void);
+void EDMA1_16_31_DriverIRQHandler(void)
 {
     uint32_t channel     = FSL_FEATURE_EDMA_MODULE_CHANNEL;
     uint32_t i           = 0;
-    uint32_t instance    = EDMA_GetInstance(CONNECTIVITY__EDMA);
-    uint32_t prevChannel = FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
+    DMA_Type *base       = EDMA1;
+    uint32_t instance    = EDMA_GetInstance(base);
+    uint32_t prevChannel = (uint32_t)FSL_FEATURE_EDMA_MODULE_CHANNEL * instance;
 
 #if defined FSL_FEATURE_EDMA_INSTANCE_CHANNELn
-    channel = FSL_FEATURE_EDMA_INSTANCE_CHANNELn(CONNECTIVITY__EDMA);
+    channel = (uint32_t)FSL_FEATURE_EDMA_INSTANCE_CHANNELn(base);
 #endif
+
     for (i = 0; i < channel; i++)
     {
         if (s_EDMAEnabledChannel[instance][i])
         {
-            if ((EDMA_GetChannelStatusFlags(CONNECTIVITY__EDMA, i) & kEDMA_InterruptFlag) != 0U)
+            if ((EDMA_GetChannelStatusFlags(base, i) & (uint32_t)kEDMA_InterruptFlag) != 0U)
             {
                 EDMA_HandleIRQ(s_EDMAHandle[prevChannel + i]);
             }
         }
     }
+
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate
+  overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 #endif

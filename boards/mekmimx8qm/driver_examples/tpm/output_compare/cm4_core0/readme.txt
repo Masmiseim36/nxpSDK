@@ -6,8 +6,8 @@ should probe the TPM output with a oscilloscope to see the signal toggling.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -45,6 +45,3 @@ TPM example for output compare
 You will see the output signal toggle
 Probe the signal using an oscilloscope
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

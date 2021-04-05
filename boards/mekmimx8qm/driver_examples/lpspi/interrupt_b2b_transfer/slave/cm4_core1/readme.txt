@@ -10,8 +10,8 @@ This example uses the transactional API in LPSPI driver.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -76,6 +76,3 @@ It's a successful transfer.
 
  Slave example is running...
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

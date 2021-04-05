@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -15,52 +15,58 @@
  **********************************************************************************************************************/
 
 /* M40_I2C0_SCL (number AM44), FTDI_M40_UART0_RX */
-#define BOARD_INITPINSEX_FTDI_M40_UART0_RX_PERIPHERAL                 M40__UART0   /*!< Device name: M40__UART0 */
-#define BOARD_INITPINSEX_FTDI_M40_UART0_RX_SIGNAL                        uart_rx   /*!< M40__UART0 signal: uart_rx */
-#define BOARD_INITPINSEX_FTDI_M40_UART0_RX_PIN_NAME                 M40_I2C0_SCL   /*!< Pin name */
+/* Routed pin properties */
+#define BOARD_INITPINSEX_FTDI_M40_UART0_RX_PERIPHERAL                 M40__UART0   /*!< Peripheral name */
+#define BOARD_INITPINSEX_FTDI_M40_UART0_RX_SIGNAL                        uart_rx   /*!< Signal name */
+#define BOARD_INITPINSEX_FTDI_M40_UART0_RX_PIN_NAME                 M40_I2C0_SCL   /*!< Routed pin name */
 #define BOARD_INITPINSEX_FTDI_M40_UART0_RX_PIN_FUNCTION_ID     SC_P_M40_I2C0_SCL   /*!< Pin function id */
 #define BOARD_INITPINSEX_FTDI_M40_UART0_RX_LABEL             "FTDI_M40_UART0_RX"   /*!< Label */
-#define BOARD_INITPINSEX_FTDI_M40_UART0_RX_NAME              "FTDI_M40_UART0_RX"   /*!< Identifier name */
+#define BOARD_INITPINSEX_FTDI_M40_UART0_RX_NAME              "FTDI_M40_UART0_RX"   /*!< Identifier */
 
 /* M40_I2C0_SDA (number AU51), FTDI_M40_UART0_TX */
-#define BOARD_INITPINSEX_FTDI_M40_UART0_TX_PERIPHERAL                 M40__UART0   /*!< Device name: M40__UART0 */
-#define BOARD_INITPINSEX_FTDI_M40_UART0_TX_SIGNAL                        uart_tx   /*!< M40__UART0 signal: uart_tx */
-#define BOARD_INITPINSEX_FTDI_M40_UART0_TX_PIN_NAME                 M40_I2C0_SDA   /*!< Pin name */
+/* Routed pin properties */
+#define BOARD_INITPINSEX_FTDI_M40_UART0_TX_PERIPHERAL                 M40__UART0   /*!< Peripheral name */
+#define BOARD_INITPINSEX_FTDI_M40_UART0_TX_SIGNAL                        uart_tx   /*!< Signal name */
+#define BOARD_INITPINSEX_FTDI_M40_UART0_TX_PIN_NAME                 M40_I2C0_SDA   /*!< Routed pin name */
 #define BOARD_INITPINSEX_FTDI_M40_UART0_TX_PIN_FUNCTION_ID     SC_P_M40_I2C0_SDA   /*!< Pin function id */
 #define BOARD_INITPINSEX_FTDI_M40_UART0_TX_LABEL             "FTDI_M40_UART0_TX"   /*!< Label */
-#define BOARD_INITPINSEX_FTDI_M40_UART0_TX_NAME              "FTDI_M40_UART0_TX"   /*!< Identifier name */
+#define BOARD_INITPINSEX_FTDI_M40_UART0_TX_NAME              "FTDI_M40_UART0_TX"   /*!< Identifier */
 
 /* HDMI_TX0_TS_SCL (number BN9), I2C0_3V3_SCL */
-#define LPI2C2_INITPINSEX_I2C0_3V3_SCL_PERIPHERAL                      DMA__I2C0   /*!< Device name: DMA__I2C0 */
-#define LPI2C2_INITPINSEX_I2C0_3V3_SCL_SIGNAL                            i2c_scl   /*!< DMA__I2C0 signal: i2c_scl */
-#define LPI2C2_INITPINSEX_I2C0_3V3_SCL_PIN_NAME                  HDMI_TX0_TS_SCL   /*!< Pin name */
+/* Routed pin properties */
+#define LPI2C2_INITPINSEX_I2C0_3V3_SCL_PERIPHERAL                      DMA__I2C0   /*!< Peripheral name */
+#define LPI2C2_INITPINSEX_I2C0_3V3_SCL_SIGNAL                            i2c_scl   /*!< Signal name */
+#define LPI2C2_INITPINSEX_I2C0_3V3_SCL_PIN_NAME                  HDMI_TX0_TS_SCL   /*!< Routed pin name */
 #define LPI2C2_INITPINSEX_I2C0_3V3_SCL_PIN_FUNCTION_ID      SC_P_HDMI_TX0_TS_SCL   /*!< Pin function id */
 #define LPI2C2_INITPINSEX_I2C0_3V3_SCL_LABEL                      "I2C0_3V3_SCL"   /*!< Label */
-#define LPI2C2_INITPINSEX_I2C0_3V3_SCL_NAME                       "I2C0_3V3_SCL"   /*!< Identifier name */
+#define LPI2C2_INITPINSEX_I2C0_3V3_SCL_NAME                       "I2C0_3V3_SCL"   /*!< Identifier */
 
 /* HDMI_TX0_TS_SDA (number BN7), I2C0_3V3_SDA */
-#define LPI2C2_INITPINSEX_I2C0_3V3_SDA_PERIPHERAL                      DMA__I2C0   /*!< Device name: DMA__I2C0 */
-#define LPI2C2_INITPINSEX_I2C0_3V3_SDA_SIGNAL                            i2c_sda   /*!< DMA__I2C0 signal: i2c_sda */
-#define LPI2C2_INITPINSEX_I2C0_3V3_SDA_PIN_NAME                  HDMI_TX0_TS_SDA   /*!< Pin name */
+/* Routed pin properties */
+#define LPI2C2_INITPINSEX_I2C0_3V3_SDA_PERIPHERAL                      DMA__I2C0   /*!< Peripheral name */
+#define LPI2C2_INITPINSEX_I2C0_3V3_SDA_SIGNAL                            i2c_sda   /*!< Signal name */
+#define LPI2C2_INITPINSEX_I2C0_3V3_SDA_PIN_NAME                  HDMI_TX0_TS_SDA   /*!< Routed pin name */
 #define LPI2C2_INITPINSEX_I2C0_3V3_SDA_PIN_FUNCTION_ID      SC_P_HDMI_TX0_TS_SDA   /*!< Pin function id */
 #define LPI2C2_INITPINSEX_I2C0_3V3_SDA_LABEL                      "I2C0_3V3_SDA"   /*!< Label */
-#define LPI2C2_INITPINSEX_I2C0_3V3_SDA_NAME                       "I2C0_3V3_SDA"   /*!< Identifier name */
+#define LPI2C2_INITPINSEX_I2C0_3V3_SDA_NAME                       "I2C0_3V3_SDA"   /*!< Identifier */
 
 /* HDMI_TX0_TS_SCL (number BN9), I2C0_3V3_SCL */
-#define LPI2C2_DEINITPINSEX_I2C0_3V3_SCL_PERIPHERAL               HDMI_TX0__I2C0   /*!< Device name: HDMI_TX0__I2C0 */
-#define LPI2C2_DEINITPINSEX_I2C0_3V3_SCL_SIGNAL                          i2c_scl   /*!< HDMI_TX0__I2C0 signal: i2c_scl */
-#define LPI2C2_DEINITPINSEX_I2C0_3V3_SCL_PIN_NAME                HDMI_TX0_TS_SCL   /*!< Pin name */
+/* Routed pin properties */
+#define LPI2C2_DEINITPINSEX_I2C0_3V3_SCL_PERIPHERAL               HDMI_TX0__I2C0   /*!< Peripheral name */
+#define LPI2C2_DEINITPINSEX_I2C0_3V3_SCL_SIGNAL                          i2c_scl   /*!< Signal name */
+#define LPI2C2_DEINITPINSEX_I2C0_3V3_SCL_PIN_NAME                HDMI_TX0_TS_SCL   /*!< Routed pin name */
 #define LPI2C2_DEINITPINSEX_I2C0_3V3_SCL_PIN_FUNCTION_ID    SC_P_HDMI_TX0_TS_SCL   /*!< Pin function id */
 #define LPI2C2_DEINITPINSEX_I2C0_3V3_SCL_LABEL                    "I2C0_3V3_SCL"   /*!< Label */
-#define LPI2C2_DEINITPINSEX_I2C0_3V3_SCL_NAME                     "I2C0_3V3_SCL"   /*!< Identifier name */
+#define LPI2C2_DEINITPINSEX_I2C0_3V3_SCL_NAME                     "I2C0_3V3_SCL"   /*!< Identifier */
 
 /* HDMI_TX0_TS_SDA (number BN7), I2C0_3V3_SDA */
-#define LPI2C2_DEINITPINSEX_I2C0_3V3_SDA_PERIPHERAL               HDMI_TX0__I2C0   /*!< Device name: HDMI_TX0__I2C0 */
-#define LPI2C2_DEINITPINSEX_I2C0_3V3_SDA_SIGNAL                          i2c_sda   /*!< HDMI_TX0__I2C0 signal: i2c_sda */
-#define LPI2C2_DEINITPINSEX_I2C0_3V3_SDA_PIN_NAME                HDMI_TX0_TS_SDA   /*!< Pin name */
+/* Routed pin properties */
+#define LPI2C2_DEINITPINSEX_I2C0_3V3_SDA_PERIPHERAL               HDMI_TX0__I2C0   /*!< Peripheral name */
+#define LPI2C2_DEINITPINSEX_I2C0_3V3_SDA_SIGNAL                          i2c_sda   /*!< Signal name */
+#define LPI2C2_DEINITPINSEX_I2C0_3V3_SDA_PIN_NAME                HDMI_TX0_TS_SDA   /*!< Routed pin name */
 #define LPI2C2_DEINITPINSEX_I2C0_3V3_SDA_PIN_FUNCTION_ID    SC_P_HDMI_TX0_TS_SDA   /*!< Pin function id */
 #define LPI2C2_DEINITPINSEX_I2C0_3V3_SDA_LABEL                    "I2C0_3V3_SDA"   /*!< Label */
-#define LPI2C2_DEINITPINSEX_I2C0_3V3_SDA_NAME                     "I2C0_3V3_SDA"   /*!< Identifier name */
+#define LPI2C2_DEINITPINSEX_I2C0_3V3_SDA_NAME                     "I2C0_3V3_SDA"   /*!< Identifier */
 
 /*!
  * @addtogroup pin_mux
@@ -87,21 +93,21 @@ void BOARD_InitBootPins(void);
  * @param ipc scfw ipchandle.
  *
  */
-void BOARD_InitPinsEx(sc_ipc_t ipc);                       /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void BOARD_InitPinsEx(sc_ipc_t ipc);                       /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  * @param ipc scfw ipchandle.
  *
  */
-void LPI2C2_InitPinsEx(sc_ipc_t ipc);                      /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void LPI2C2_InitPinsEx(sc_ipc_t ipc);                      /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  * @param ipc scfw ipchandle.
  *
  */
-void LPI2C2_DeinitPinsEx(sc_ipc_t ipc);                    /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void LPI2C2_DeinitPinsEx(sc_ipc_t ipc);                    /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 
 #if defined(__cplusplus)
 }

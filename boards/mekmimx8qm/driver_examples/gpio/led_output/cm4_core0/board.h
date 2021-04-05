@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,6 +16,7 @@
 #include "svc/pm/pm_api.h"
 #include "svc/irq/irq_api.h"
 #include "svc/timer/timer_api.h"
+#include "svc/misc/misc_api.h"
 
 #if defined(SDK_I2C_BASED_COMPONENT_USED) && SDK_I2C_BASED_COMPONENT_USED
 #include "fsl_lpi2c.h"
@@ -28,23 +29,25 @@
 #define BOARD_NAME "MEK-MIMX8QM"
 
 /* The UART to use for debug messages. */
-#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
+#define BOARD_DEBUG_UART_TYPE     kSerialPort_Uart
 #define BOARD_DEBUG_UART_BAUDRATE 115200u
 
 #if defined(MIMX8QM_CM4_CORE0)
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) CM4_0__LPUART
 #define BOARD_DEBUG_UART_INSTANCE 0U
-#define BOARD_DEBUG_UART_SC_RSRC SC_R_M4_0_UART
-#define BOARD_DEBUG_UART_CLKSRC kCLOCK_M4_0_Lpuart
-#define BOARD_UART_IRQ M4_0_LPUART_IRQn
-#define BOARD_UART_IRQ_HANDLER M4_0_LPUART_IRQHandler
+#define BOARD_DEBUG_UART_SC_RSRC  SC_R_M4_0_UART
+#define BOARD_DEBUG_UART_CLKSRC   kCLOCK_M4_0_Lpuart
+#define BOARD_UART_IRQ            M4_0_LPUART_IRQn
+#define BOARD_UART_IRQ_HANDLER    M4_0_LPUART_IRQHandler
+#define BOARD_M4_CPU_RSRC         SC_R_M4_0_PID0
 #elif defined(MIMX8QM_CM4_CORE1)
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) DMA__LPUART2
 #define BOARD_DEBUG_UART_INSTANCE 4U
-#define BOARD_DEBUG_UART_SC_RSRC SC_R_UART_2
-#define BOARD_DEBUG_UART_CLKSRC kCLOCK_DMA_Lpuart2
-#define BOARD_UART_IRQ DMA_UART2_INT_IRQn
-#define BOARD_UART_IRQ_HANDLER DMA_UART2_INT_IRQHandler
+#define BOARD_DEBUG_UART_SC_RSRC  SC_R_UART_2
+#define BOARD_DEBUG_UART_CLKSRC   kCLOCK_DMA_Lpuart2
+#define BOARD_UART_IRQ            DMA_UART2_INT_IRQn
+#define BOARD_UART_IRQ_HANDLER    DMA_UART2_INT_IRQHandler
+#define BOARD_M4_CPU_RSRC         SC_R_M4_1_PID0
 #else
 #error "No valid BOARD_DEBUG_UART_BASEADDR defined."
 #endif
@@ -53,40 +56,56 @@
 
 /* DISPLAY 0: MIPI DSI0. */
 #define BOARD_DISPLAY0_I2C_BASEADDR DI_MIPI_0__LPI2C0
-#define BOARD_DISPLAY0_I2C_RSRC SC_R_MIPI_0_I2C_0
+#define BOARD_DISPLAY0_I2C_RSRC     SC_R_MIPI_0_I2C_0
 
 /* DISPLAY 1: MIPI DSI1. */
 #define BOARD_DISPLAY1_I2C_BASEADDR DI_MIPI_1__LPI2C0
-#define BOARD_DISPLAY1_I2C_RSRC SC_R_MIPI_1_I2C_0
+#define BOARD_DISPLAY1_I2C_RSRC     SC_R_MIPI_1_I2C_0
 
 /* DISPLAY 2: LVDS0 CH0. */
 #define BOARD_DISPLAY2_I2C_BASEADDR DI_LVDS_0__LPI2C1
-#define BOARD_DISPLAY2_I2C_RSRC SC_R_LVDS_0_I2C_0 /* LPI2C0 & LPI2C1 share one resource. */
+#define BOARD_DISPLAY2_I2C_RSRC     SC_R_LVDS_0_I2C_0 /* LPI2C0 & LPI2C1 share one resource. */
 
 /* DISPLAY 3: LVDS0 CH1. */
 #define BOARD_DISPLAY3_I2C_BASEADDR DI_LVDS_0__LPI2C1
-#define BOARD_DISPLAY3_I2C_RSRC SC_R_LVDS_0_I2C_0 /* LPI2C0 & LPI2C1 share one resource. */
+#define BOARD_DISPLAY3_I2C_RSRC     SC_R_LVDS_0_I2C_0 /* LPI2C0 & LPI2C1 share one resource. */
 
 /* DISPLAY 4: LVDS1 CH0. */
 #define BOARD_DISPLAY4_I2C_BASEADDR DI_LVDS_1__LPI2C1
-#define BOARD_DISPLAY4_I2C_RSRC SC_R_LVDS_1_I2C_0 /* LPI2C0 & LPI2C1 share one resource. */
+#define BOARD_DISPLAY4_I2C_RSRC     SC_R_LVDS_1_I2C_0 /* LPI2C0 & LPI2C1 share one resource. */
 
 /* DISPLAY 5: LVDS1 CH1. */
 #define BOARD_DISPLAY5_I2C_BASEADDR DI_LVDS_1__LPI2C1
-#define BOARD_DISPLAY5_I2C_RSRC SC_R_LVDS_1_I2C_0 /* LPI2C0 & LPI2C1 share one resource. */
+#define BOARD_DISPLAY5_I2C_RSRC     SC_R_LVDS_1_I2C_0 /* LPI2C0 & LPI2C1 share one resource. */
 
 /* CAMERA 0: MIPI CSI 0. */
 #define BOARD_CAMERA0_I2C_BASEADDR MIPI_CSI_0__LPI2C
-#define BOARD_CAMERA0_I2C_RSRC SC_R_CSI_0_I2C_0
+#define BOARD_CAMERA0_I2C_RSRC     SC_R_CSI_0_I2C_0
 
 /* CAMERA 1: MIPI CSI 1. */
 #define BOARD_CAMERA1_I2C_BASEADDR MIPI_CSI_1__LPI2C
-#define BOARD_CAMERA1_I2C_RSRC SC_R_CSI_1_I2C_0
+#define BOARD_CAMERA1_I2C_RSRC     SC_R_CSI_1_I2C_0
 
-#define BOARD_CODEC_I2C_BASEADDR DMA__LPI2C1
+#define BOARD_CODEC_I2C_BASEADDR   DMA__LPI2C1
 #define BOARD_CODEC_I2C_CLOCK_FREQ CLOCK_GetIpFreq(kCLOCK_DMA_Lpi2c1)
+#define BOARD_CODEC_I2C_INSTANCE   12U /* Codec I2C on CPU board: DMA__LPI2C1. */
+#define BOARD_CS42888_I2C_ADDR     0x48
+#define BOARD_CS42888_I2C_INSTANCE 1U /* Codec I2C on AUDIO card: CM4_1__LPI2C1. */
 
-#define BOARD_CS42888_I2C_ADDR 0x48
+/* VRING used for communicate with Linux */
+#if defined(MIMX8QM_CM4_CORE0)
+#define VDEV0_VRING_BASE (0x90000000U)
+#define VDEV1_VRING_BASE (0x90010000U)
+#elif defined(MIMX8QM_CM4_CORE1)
+#define VDEV0_VRING_BASE (0x90100000U)
+#define VDEV1_VRING_BASE (0x90110000U)
+#else
+#error "No valid VDEVn_VRING_BASE defined."
+#endif
+#define RESOURCE_TABLE_OFFSET (0xFF000)
+
+/* VRING used for communicate between M40 and M41 */
+#define M40_M41_VRING_BASE (0x90200000U)
 
 #if defined(__cplusplus)
 extern "C" {
@@ -109,16 +128,24 @@ status_t BOARD_LPI2C_Send(LPI2C_Type *base,
                           uint8_t subaddressSize,
                           uint8_t *txBuff,
                           uint8_t txBuffSize);
-status_t BOARD_LPI2C_SendWithoutSubAddr(
-    LPI2C_Type *base, uint8_t deviceAddress, uint8_t *txBuff, uint8_t txBuffSize, uint8_t needStop);
+status_t BOARD_LPI2C_SendWithoutSubAddr(LPI2C_Type *base,
+                                        uint32_t baudRate_Hz,
+                                        uint8_t deviceAddress,
+                                        uint8_t *txBuff,
+                                        uint8_t txBuffSize,
+                                        uint8_t needStop);
 status_t BOARD_LPI2C_Receive(LPI2C_Type *base,
                              uint8_t deviceAddress,
                              uint32_t subAddress,
                              uint8_t subaddressSize,
                              uint8_t *rxBuff,
                              uint8_t rxBuffSize);
-status_t BOARD_LPI2C_ReceiveWithoutSubAddr(
-    LPI2C_Type *base, uint8_t deviceAddress, uint8_t *txBuff, uint8_t txBuffSize, uint8_t needStop);
+status_t BOARD_LPI2C_ReceiveWithoutSubAddr(LPI2C_Type *base,
+                                           uint32_t baudRate_Hz,
+                                           uint8_t deviceAddress,
+                                           uint8_t *txBuff,
+                                           uint8_t txBuffSize,
+                                           uint8_t needStop);
 status_t BOARD_LPI2C_SendSCCB(LPI2C_Type *base,
                               uint8_t deviceAddress,
                               uint32_t subAddress,

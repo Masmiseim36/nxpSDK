@@ -16,10 +16,10 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_lpuart.h"
 /*******************************************************************************
  * Definitions
@@ -54,21 +54,21 @@ int main(void)
     BOARD_InitMemory();
     BOARD_InitDebugConsole();
     event_group = xEventGroupCreate();
-    if (xTaskCreate(write_task_1, "WRITE_TASK_1", configMINIMAL_STACK_SIZE + 38, NULL, tskIDLE_PRIORITY + 1, NULL) !=
+    if (xTaskCreate(write_task_1, "WRITE_TASK_1", configMINIMAL_STACK_SIZE + 100, NULL, tskIDLE_PRIORITY + 1, NULL) !=
         pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
             ;
     }
-    if (xTaskCreate(write_task_2, "WRITE_TASK_2", configMINIMAL_STACK_SIZE + 38, NULL, tskIDLE_PRIORITY + 1, NULL) !=
+    if (xTaskCreate(write_task_2, "WRITE_TASK_2", configMINIMAL_STACK_SIZE + 100, NULL, tskIDLE_PRIORITY + 1, NULL) !=
         pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
             ;
     }
-    if (xTaskCreate(read_task, "READ_TASK", configMINIMAL_STACK_SIZE + 38, NULL, tskIDLE_PRIORITY + 2, NULL) != pdPASS)
+    if (xTaskCreate(read_task, "READ_TASK", configMINIMAL_STACK_SIZE + 100, NULL, tskIDLE_PRIORITY + 2, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
@@ -112,7 +112,7 @@ static void read_task(void *pvParameters)
     {
         event_bits = xEventGroupWaitBits(event_group,    /* The event group handle. */
                                          B0 | B1,        /* The bit pattern the event group is waiting for. */
-                                         pdTRUE,         /* BIT_0 and BIT_4 will be cleared automatically. */
+                                         pdTRUE,         /* B0 and B1 will be cleared automatically. */
                                          pdFALSE,        /* Don't wait for both bits, either bit unblock task. */
                                          portMAX_DELAY); /* Block indefinitely to wait for the condition to be met. */
 

@@ -46,7 +46,7 @@ typedef struct
  ******************************************************************************/
 static volatile bool s_irq; /* MU interrupt status. */
 
-static uint32_t s_irqEnabled[SC_IRQ_NUM_GROUP] = {0};
+static uint32_t s_irqEnabled[SC_IRQ_NUM_GROUP] = {0U};
 static sc_event_list_t s_registeredHandler;
 static sc_ipc_t ipc; /* ipc handle */
 
@@ -56,6 +56,7 @@ static sc_event_list_t s_freeHandlerPool;
 static void *s_sem                      = NULL;
 static sc_event_sema4_post_t s_postFunc = NULL;
 
+void SCEvent_MU_IRQHandler(void);
 /*!
  * @brief Initialize SC Event Handler list head.
  *
@@ -121,20 +122,20 @@ static inline void SCEvent_List_Remove(sc_event_list_t *node)
  *
  * @return allocated memory address.
  */
-void *SCEvent_Pool_Alloc(uint32_t size)
+static void *SCEvent_Pool_Alloc(uint32_t size)
 {
     uint32_t i;
     void *buf;
     uint32_t primask;
 
-    if (!s_freeHandlerPool.next)
+    if (s_freeHandlerPool.next == NULL)
     {
         primask = DisableGlobalIRQ();
-        if (!s_freeHandlerPool.next)
+        if (s_freeHandlerPool.next == NULL)
         {
             /* Handler list not initialized, initialize now. */
             SCEvent_List_Init(&s_freeHandlerPool);
-            for (i = 0; i < sizeof(s_handlerBuf) / sizeof(sc_event_handler_buf_t); i++)
+            for (i = 0U; i < sizeof(s_handlerBuf) / sizeof(sc_event_handler_buf_t); i++)
             {
                 SCEvent_List_AddTail(&s_freeHandlerPool, &s_handlerBuf[i].node);
             }
@@ -169,13 +170,13 @@ void *SCEvent_Pool_Alloc(uint32_t size)
  *
  * @param buf the address of the allocated memory
  */
-void SCEvent_Pool_Free(void *buf)
+static void SCEvent_Pool_Free(void *buf)
 {
     sc_event_handler_t hBuf;
     uint32_t primask;
 
     /* buffer locates in handler pool */
-    assert(((uint32_t)buf - (uint32_t)&s_handlerBuf[0]) % sizeof(sc_event_handler_buf_t) == 0);
+    assert(((uint32_t)((sc_event_handler_buf_t*)buf) - (uint32_t)&s_handlerBuf[0]) % sizeof(sc_event_handler_buf_t) == 0U);
     hBuf    = (sc_event_handler_t)buf;
     primask = DisableGlobalIRQ();
     SCEvent_List_AddTail(&s_freeHandlerPool, &hBuf->node);
@@ -186,7 +187,7 @@ void SCEvent_Init(uint8_t priority)
 {
     ipc = SystemGetScfwIpcHandle();
     NVIC_SetPriority(IPC_MU_IRQn, priority);
-    EnableIRQ(IPC_MU_IRQn);
+    (void)EnableIRQ(IPC_MU_IRQn);
     MU_EnableInterrupts(IPC_MU, MU_SR_GIPn_MASK);
 
     SCEvent_List_Init(&s_registeredHandler);
@@ -207,22 +208,24 @@ void SCEvent_Deinit(void)
     }
 
     MU_DisableInterrupts(IPC_MU, MU_SR_GIPn_MASK);
-    DisableIRQ(IPC_MU_IRQn);
+    (void)DisableIRQ(IPC_MU_IRQn);
 }
 
 status_t SCEvent_Config(sc_event_t event, bool enable, uint32_t pt)
 {
     uint32_t status;
+    sc_err_t err;
     uint32_t mask = SC_EVENT_GET_IRQ(event);
-    uint8_t group = SC_EVENT_GET_IRQ_GROUP(event);
+    uint8_t group = (uint8_t)SC_EVENT_GET_IRQ_GROUP(event);
 
     /*
      * The SCFW IRQ pending flags will be set even the IRQ not enabled. If it's the first IRQ to be enabled in the
      * group, clear the group's pending IRQ status in case some IRQ has already pending.
      */
-    if (!s_irqEnabled[group] && enable)
+    if ((s_irqEnabled[group] == 0U) && enable)
     {
-        if (sc_irq_status(ipc, IPC_MU_RSRC, group, &status) != SC_ERR_NONE)
+        err = sc_irq_status(ipc, IPC_MU_RSRC, group, &status);
+        if (err != SC_ERR_NONE)
         {
             return kStatus_Fail;
         }
@@ -230,24 +233,26 @@ status_t SCEvent_Config(sc_event_t event, bool enable, uint32_t pt)
 
     if (mask == SC_EVENT_IRQ_DUMMY)
     {
-        if (sc_irq_enable(ipc, IPC_MU_RSRC, group, (0x1U << pt), enable) != SC_ERR_NONE)
+        err = sc_irq_enable(ipc, IPC_MU_RSRC, group, (0x1UL << pt), enable);
+        if (err != SC_ERR_NONE)
         {
             return kStatus_Fail;
         }
 
         if (enable)
         {
-            s_irqEnabled[group] |= 0x1U << pt;
+            s_irqEnabled[group] |= 0x1UL << pt;
         }
         else
         {
             /* Clear the flag if IRQ disabled. */
-            s_irqEnabled[group] &= (~(0x1U << pt)) & SC_EVENT_IRQ_DUMMY;
+            s_irqEnabled[group] &= (~(0x1UL << pt)) & SC_EVENT_IRQ_DUMMY;
         }
     }
     else
     {
-        if (sc_irq_enable(ipc, IPC_MU_RSRC, group, mask, enable) != SC_ERR_NONE)
+        err = sc_irq_enable(ipc, IPC_MU_RSRC, group, mask, enable);
+        if (err != SC_ERR_NONE)
         {
             return kStatus_Fail;
         }
@@ -270,13 +275,13 @@ sc_event_handler_t SCEvent_RegisterEventHandler(sc_event_t event, sc_event_callb
     uint32_t primask;
     sc_event_handler_t handler = (sc_event_handler_t)SCEvent_Pool_Alloc(sizeof(sc_event_handler_buf_t));
 
-    if (!handler)
+    if (handler == NULL)
     {
         return NULL;
     }
     else
     {
-        memset(handler, 0, sizeof(sc_event_handler_buf_t));
+        (void)memset(handler, 0, sizeof(sc_event_handler_buf_t));
         /* clear node */
         SCEvent_List_Init(&handler->node);
 
@@ -306,9 +311,10 @@ void SCEvent_UnregisterEventHandler(sc_event_handler_t handler)
 
 void SCEvent_Process(void)
 {
+    sc_err_t err;
     uint32_t mask; /* Enabled IRQ mask. */
     uint8_t group; /* Event group. */
-    uint32_t irqStatus[SC_IRQ_NUM_GROUP] = {0};
+    uint32_t irqStatus[SC_IRQ_NUM_GROUP] = {0U};
 
     sc_event_list_t *list;
     sc_event_handler_t handler;
@@ -320,21 +326,26 @@ void SCEvent_Process(void)
             handler = SC_EVENT_LIST_OBJ(sc_event_handler_t, node, list);
 
             mask  = SC_EVENT_GET_IRQ(handler->event);
-            group = SC_EVENT_GET_IRQ_GROUP(handler->event);
+            group = (uint8_t)SC_EVENT_GET_IRQ_GROUP(handler->event);
             /* Only read and clear status once for a group. */
-            if (!irqStatus[group])
+            if (irqStatus[group] == 0U)
             {
-                sc_irq_status(ipc, IPC_MU_RSRC, group, &irqStatus[group]);
+                err = sc_irq_status(ipc, IPC_MU_RSRC, group, &irqStatus[group]);
+                if (err != SC_ERR_NONE)
+                {
+                    continue;
+                }
+
             }
             /* If there's event pending and the event IRQ enabled, call the handler. */
-            if (irqStatus[group] & mask & s_irqEnabled[group])
+            if ((irqStatus[group] & mask & s_irqEnabled[group]) != 0U)
             {
                 handler->callback(irqStatus[group], handler->data);
             }
         }
 
         /* Clean up the status. */
-        memset(irqStatus, 0, sizeof(irqStatus));
+        (void)memset(irqStatus, 0, sizeof(irqStatus));
 
         s_irq = false;
     }
@@ -373,7 +384,7 @@ void SCEvent_MU_IRQHandler(void)
     /* Clear interrupt flag */
     MU_ClearStatusFlags(IPC_MU, MU_SR_GIPn_MASK);
 
-    if (s_postFunc)
+    if (s_postFunc != NULL)
     {
         s_postFunc(s_sem);
     }

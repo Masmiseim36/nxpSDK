@@ -24,7 +24,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief Group interrupt driver version for SDK */
-#define FSL_SC_EVENT_DRIVER_VERSION (MAKE_VERSION(2, 0, 0)) /*!< Version 2.0.0. */
+#define FSL_SC_EVENT_DRIVER_VERSION (MAKE_VERSION(2, 0, 1)) /*!< Version 2.0.1. */
 /*@}*/
 
 /*! @brief The SC Event handler memory pool size in bytes. */
@@ -41,14 +41,14 @@
 #endif
 
 #define SC_EVENT_IRQ_DUMMY (0xFFFFFFFU)                         /* Dummy mask. */
-#define SC_EVENT_TYPE_TUPLE(group, irq) ((group << 28) | (irq)) /* Marco to compose SC Event type. */
-#define SC_EVENT_GET_IRQ_GROUP(type) ((type >> 28) & 0xFU)      /* Marco to get SC IRQ group. */
-#define SC_EVENT_GET_IRQ(type) (type & 0xFFFFFFFU)              /* Marco to get SC IRQ mask. */
+#define SC_EVENT_TYPE_TUPLE(group, irq) (((group) << 28) | (irq)) /* Marco to compose SC Event type. */
+#define SC_EVENT_GET_IRQ_GROUP(type) (((uint32_t)(type) >> 28) & 0xFU)      /* Marco to get SC IRQ group. */
+#define SC_EVENT_GET_IRQ(type) ((uint32_t)(type) & 0xFFFFFFFU)              /* Marco to get SC IRQ mask. */
 
 /*!
  * @brief Get SC Event list object structure pointer.
  */
-#define SC_EVENT_LIST_OBJ(type, field, list) (type)((uint32_t)list - (uint32_t)(&((type)0)->field))
+#define SC_EVENT_LIST_OBJ(type, field, list) (type)((uint32_t)(list) - (uint32_t)(&((type)0)->field))
 
 /*! @brief SC Event type. */
 typedef enum _sc_event
@@ -199,7 +199,7 @@ void SCEvent_Deinit(void);
  * @param callback The callback function. This function will be called from SCEvent_process.
  * @param userData User defined callback function parameter.
  *
- * @retval none.
+ * @retval SC Event handler.
  */
 sc_event_handler_t SCEvent_RegisterEventHandler(sc_event_t event, sc_event_callback_t callback, void *userData);
 
@@ -208,8 +208,7 @@ sc_event_handler_t SCEvent_RegisterEventHandler(sc_event_t event, sc_event_callb
 
  * This function unregister and delete the given event handler.
  *
- * @param event The event to unregister.
- * @param callback The callback function. This function will be called from SCEvent_process.
+ * @param handler The SC Event handler to unregister.
  *
  * @retval none.
  */
@@ -251,11 +250,12 @@ void SCEvent_Process(void);
  *
  * @param wait Semaphore wait function.
  * @param post Semaphore post function.
- * @param Semaphore Semaphore.
+ * @param sem Semaphore.
+ * @param timeout timeout.
  *
  * @retval kStatus_Success if succeed, kStatus_Timeout if timeout.
  */
-status_t SCEvent_WaitEvent(sc_event_sema4_wait_t wait, sc_event_sema4_post_t post, void *sema, uint32_t timeout);
+status_t SCEvent_WaitEvent(sc_event_sema4_wait_t wait, sc_event_sema4_post_t post, void *sem, uint32_t timeout);
 
 #ifdef __cplusplus
 }

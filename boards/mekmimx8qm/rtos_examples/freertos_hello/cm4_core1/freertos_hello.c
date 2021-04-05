@@ -15,10 +15,10 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_lpuart.h"
 /*******************************************************************************
  * Definitions
@@ -46,7 +46,8 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitMemory();
     BOARD_InitDebugConsole();
-    if (xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 10, NULL, hello_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(hello_task, "Hello_task", configMINIMAL_STACK_SIZE + 100, NULL, hello_task_PRIORITY, NULL) !=
+        pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)

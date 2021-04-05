@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v8.0
 processor: MIMX8QM6xxxFF
 package_id: MIMX8QM6AVUFF
 mcu_data: ksdk2_0
@@ -281,11 +281,11 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'false', coreID: cm4_0}
+- options: {callFromInitBoot: 'false', coreID: cm4_core0}
 - pin_list:
-  - {pin_num: AM44, peripheral: M40__UART0, signal: uart_rx, pin_signal: M40_I2C0_SCL, sw_config: sw_config_0}
-  - {pin_num: AU51, peripheral: M40__UART0, signal: uart_tx, pin_signal: M40_I2C0_SDA, sw_config: sw_config_0}
-  - {pin_num: D14, peripheral: LSIO__GPIO4, signal: 'gpio_io, 25', pin_signal: QSPI1A_DATA1, direction: OUTPUT, sw_config: sw_config_0}
+  - {pin_num: AM44, peripheral: M40__UART0, signal: uart_rx, pin_signal: M40_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AU51, peripheral: M40__UART0, signal: uart_tx, pin_signal: M40_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: D14, peripheral: LSIO__GPIO4, signal: 'gpio_io, 25', pin_signal: QSPI1A_DATA1, direction: OUTPUT, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -295,7 +295,7 @@ BOARD_InitPins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 
@@ -320,10 +320,10 @@ void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigne
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_I2C_ConfigurePins:
-- options: {callFromInitBoot: 'false', coreID: cm4_0}
+- options: {callFromInitBoot: 'false', coreID: cm4_core0}
 - pin_list:
-  - {pin_num: AR45, peripheral: M41__I2C0, signal: i2c_scl, pin_signal: M41_I2C0_SCL, sw_config: sw_config_2}
-  - {pin_num: AU49, peripheral: M41__I2C0, signal: i2c_sda, pin_signal: M41_I2C0_SDA, sw_config: sw_config_2}
+  - {pin_num: AR45, peripheral: M41__I2C0, signal: i2c_scl, pin_signal: M41_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: AU49, peripheral: M41__I2C0, signal: i2c_sda, pin_signal: M41_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_2}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -333,7 +333,7 @@ BOARD_I2C_ConfigurePins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_I2C_ConfigurePins(sc_ipc_t ipc)                 /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void BOARD_I2C_ConfigurePins(sc_ipc_t ipc)                 /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 
@@ -353,15 +353,15 @@ void BOARD_I2C_ConfigurePins(sc_ipc_t ipc)                 /*!< Function assigne
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_ESAI_ConfigurePins:
-- options: {callFromInitBoot: 'false', coreID: cm4_0}
+- options: {callFromInitBoot: 'false', coreID: cm4_core0}
 - pin_list:
-  - {pin_num: AW9, peripheral: AUD__ESAI0, signal: esai_fsr, pin_signal: ESAI0_FSR, sw_config: sw_config_0}
-  - {pin_num: BG9, peripheral: AUD__ESAI0, signal: esai_fst, pin_signal: ESAI0_FST, sw_config: sw_config_0}
-  - {pin_num: BB8, peripheral: AUD__ESAI0, signal: esai_sckr, pin_signal: ESAI0_SCKR, sw_config: sw_config_0}
-  - {pin_num: AY8, peripheral: AUD__ESAI0, signal: esai_sckt, pin_signal: ESAI0_SCKT, sw_config: sw_config_0}
-  - {pin_num: BA9, peripheral: AUD__ESAI0, signal: 'esai_tx, 0', pin_signal: ESAI0_TX0, sw_config: sw_config_0}
-  - {pin_num: AU7, peripheral: AUD__ESAI0, signal: 'esai_tx5_rx, 0', pin_signal: ESAI0_TX5_RX0, sw_config: sw_config_0}
-  - {pin_num: BD4, peripheral: AUD__ESAI0, signal: esai_tx_hf_clk, pin_signal: MCLK_OUT0, sw_config: sw_config_0}
+  - {pin_num: AW9, peripheral: AUD__ESAI0, signal: esai_fsr, pin_signal: ESAI0_FSR, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: BG9, peripheral: AUD__ESAI0, signal: esai_fst, pin_signal: ESAI0_FST, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: BB8, peripheral: AUD__ESAI0, signal: esai_sckr, pin_signal: ESAI0_SCKR, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AY8, peripheral: AUD__ESAI0, signal: esai_sckt, pin_signal: ESAI0_SCKT, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: BA9, peripheral: AUD__ESAI0, signal: 'esai_tx, 0', pin_signal: ESAI0_TX0, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AU7, peripheral: AUD__ESAI0, signal: 'esai_tx5_rx, 0', pin_signal: ESAI0_TX5_RX0, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: BD4, peripheral: AUD__ESAI0, signal: esai_tx_hf_clk, pin_signal: MCLK_OUT0, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -371,7 +371,7 @@ BOARD_ESAI_ConfigurePins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_ESAI_ConfigurePins(sc_ipc_t ipc)                /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void BOARD_ESAI_ConfigurePins(sc_ipc_t ipc)                /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 

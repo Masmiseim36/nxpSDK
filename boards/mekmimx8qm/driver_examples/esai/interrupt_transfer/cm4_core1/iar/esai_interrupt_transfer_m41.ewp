@@ -184,6 +184,7 @@
           <state>CPU_MIMX8QM6AVUFF_cm4_core1</state>
           <state>MIMX8QM_CM4_CORE1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -260,7 +261,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -312,14 +313,16 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../cm4_core1</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/pad</state>
@@ -327,22 +330,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1174,6 +1166,7 @@
           <state>CPU_MIMX8QM6AVUFF_cm4_core1</state>
           <state>MIMX8QM_CM4_CORE1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1250,7 +1243,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -1302,14 +1295,16 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../cm4_core1</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/pad</state>
@@ -1317,22 +1312,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2165,6 +2149,7 @@
           <state>CPU_MIMX8QM6AVUFF_cm4_core1</state>
           <state>MIMX8QM_CM4_CORE1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2241,7 +2226,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -2293,14 +2278,16 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../cm4_core1</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/pad</state>
@@ -2308,22 +2295,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3155,6 +3131,7 @@
           <state>CPU_MIMX8QM6AVUFF_cm4_core1</state>
           <state>MIMX8QM_CM4_CORE1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3283,14 +3260,16 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../cm4_core1</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/pad</state>
@@ -3298,22 +3277,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4145,6 +4113,7 @@
           <state>CPU_MIMX8QM6AVUFF_cm4_core1</state>
           <state>MIMX8QM_CM4_CORE1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4273,14 +4242,16 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../cm4_core1</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/pad</state>
@@ -4288,22 +4259,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5135,6 +5095,7 @@
           <state>CPU_MIMX8QM6AVUFF_cm4_core1</state>
           <state>MIMX8QM_CM4_CORE1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>CODEC_CS42888_ENABLE</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5263,14 +5224,16 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../cm4_core1</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/pad</state>
@@ -5278,22 +5241,11 @@
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5969,6 +5921,12 @@
     </file>
   </group>
   <group>
+    <name>source</name>
+    <file>
+      <name>$PROJ_DIR$/../esai_interrupt_transfer.c</name>
+    </file>
+  </group>
+  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers/fsl_irqsteer.h</name>
@@ -5989,6 +5947,12 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers/fsl_gpio.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers/fsl_common.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers/fsl_clock.h</name>
     </file>
     <file>
@@ -5999,12 +5963,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers/fsl_esai.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/drivers/fsl_lpuart.h</name>
@@ -6027,6 +5985,60 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../../components/codec/fsl_codec_common.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/codec/port/cs42888/fsl_codec_adapter.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/codec/port/cs42888/fsl_codec_adapter.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
+    </file>
+  </group>
+  <group>
+    <name>component</name>
+    <group>
+      <name>i2c</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/i2c/fsl_adapter_i2c.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/i2c/fsl_adapter_lpi2c.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console_lite/fsl_debug_console.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console_lite/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
   </group>
   <group>
     <name>device</name>
@@ -6039,18 +6051,21 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/MIMX8QM6_cm4_core1_features.h</name>
     </file>
+  </group>
+  <group>
+    <name>MIMX8QM6</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/system_MIMX8QM6_cm4_core1.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/system_MIMX8QM6_cm4_core1.h</name>
     </file>
-  </group>
-  <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/iar/startup_MIMX8QM6_cm4_core1.s</name>
-    </file>
+    <group>
+      <name>iar</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/iar/startup_MIMX8QM6_cm4_core1.s</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>scfw_api</name>
@@ -6164,72 +6179,21 @@
     </group>
   </group>
   <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/fsl_assert.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MIMX8QM6/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/uart/uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/uart/lpuart_adapter.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/lists/generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../../components/lists/generic_list.c</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_cm4.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_gcc.h</name>
@@ -6241,13 +6205,7 @@
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_armv8mml.h</name>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_common_tables.h</name>
@@ -6257,18 +6215,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/mpu_armv8.h</name>
-    </file>
-  </group>
-  <group>
-    <name>source</name>
-    <file>
-      <name>$PROJ_DIR$/../esai_interrupt_transfer.c</name>
     </file>
   </group>
 </project>

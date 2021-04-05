@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 2.0, 2017-05-04
-**     Build:               b180801
+**     Build:               b200603
 **
 **     Abstract:
 **         Chip specific module features.
@@ -130,14 +130,32 @@
 
 /* ENET module features */
 
-/* @brief ENET Interrupt Coalesce into one. */
+/* @brief Support Interrupt Coalesce */
 #define FSL_FEATURE_ENET_HAS_INTERRUPT_COALESCE (1)
-/* @brief ENET Queue Size. */
+/* @brief Queue Size. */
 #define FSL_FEATURE_ENET_QUEUE (3)
-/* @brief ENET has AVB Support. */
+/* @brief Has AVB Support. */
 #define FSL_FEATURE_ENET_HAS_AVB (1)
-/* @brief ENET has Extend MDIO Support. */
+/* @brief Has Timer Pulse Width control. */
+#define FSL_FEATURE_ENET_HAS_TIMER_PWCONTROL (0)
+/* @brief Has Extend MDIO Support. */
 #define FSL_FEATURE_ENET_HAS_EXTEND_MDIO (1)
+/* @brief Has Additional 1588 Timer Channel Interrupt. */
+#define FSL_FEATURE_ENET_HAS_ADD_1588_TIMER_CHN_INT (0)
+/* @brief Support Interrupt Coalesce for each instance */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_INTERRUPT_COALESCEn(x) (0)
+/* @brief Queue Size for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_QUEUEn(x) (3)
+/* @brief Has AVB Support for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_AVBn(x) (1)
+/* @brief Has Timer Pulse Width control for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_TIMER_PWCONTROLn(x) (0)
+/* @brief Has Extend MDIO Support for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_EXTEND_MDIOn(x) (1)
+/* @brief Has Additional 1588 Timer Channel Interrupt for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_ADD_1588_TIMER_CHN_INTn(x) (0)
+/* @brief Has threshold for the number of frames in the receive FIFO (register bit field RSEM[STAT_SECTION_EMPTY]). */
+#define FSL_FEATURE_ENET_HAS_RECEIVE_STATUS_THRESHOLD (1)
 
 /* FLEXCAN module features */
 
@@ -158,9 +176,9 @@
 /* @brief Instance has a receive FIFO DMA feature (register bit field MCR[DMA]). */
 #define FSL_FEATURE_FLEXCAN_INSTANCE_HAS_RX_FIFO_DMAn(x) (1)
 /* @brief Remove CAN Engine Clock Source Selection from unsupported part. */
-#define FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE (0)
+#define FSL_FEATURE_FLEXCAN_SUPPORT_ENGINE_CLK_SEL_REMOVE (1)
 /* @brief Instance remove CAN Engine Clock Source Selection from unsupported part. */
-#define FSL_FEATURE_FLEXCAN_INSTANCE_SUPPORT_ENGINE_CLK_SEL_REMOVEn(x) (0)
+#define FSL_FEATURE_FLEXCAN_INSTANCE_SUPPORT_ENGINE_CLK_SEL_REMOVEn(x) (1)
 /* @brief Is affected by errata with ID 5641 (Module does not transmit a message that is enabled to be transmitted at a specific moment during the arbitration process). */
 #define FSL_FEATURE_FLEXCAN_HAS_ERRATA_5641 (1)
 /* @brief Has CAN with Flexible Data rate (CAN FD) protocol. */
@@ -169,6 +187,8 @@
 #define FSL_FEATURE_FLEXCAN_INSTANCE_HAS_FLEXIBLE_DATA_RATEn(x) (1)
 /* @brief Has extra MB interrupt or common one. */
 #define FSL_FEATURE_FLEXCAN_HAS_EXTRA_MB_INT (0)
+/* @brief Has memory error control (register MECR). */
+#define FSL_FEATURE_FLEXCAN_HAS_MEMORY_ERROR_CONTROL (0)
 
 /* FLEXSPI module features */
 
@@ -202,8 +222,6 @@
 
 /* RGPIO module features */
 
-/* @brief Has port input disable register (PIDR). */
-#define FSL_FEATURE_RGPIO_HAS_INPUT_DISABLE (0)
 /* @brief Has GPIO attribute checker register  (GACR). */
 #define FSL_FEATURE_RGPIO_HAS_ATTRIBUTE_CHECKER (0)
 
@@ -304,8 +322,7 @@
 #define FSL_FEATURE_LPIT_TIMER_COUNT (4)
 /* @brief Has lifetime timer (related to existence of registers LTMR64L and LTMR64H). */
 #define FSL_FEATURE_LPIT_HAS_LIFETIME_TIMER (0)
-/* @brief Has chain mode (related to existence of register bit field TCTRLn[CHN]). */
-#define FSL_FEATURE_LPIT_HAS_CHAIN_MODE (0)
+
 /* @brief Has shared interrupt handler (has not individual interrupt handler for each channel). */
 #define FSL_FEATURE_LPIT_HAS_SHARED_IRQ_HANDLER (1)
 
@@ -502,6 +519,10 @@
 #define FSL_FEATURE_USDHC_HAS_SDR50_MODE (0)
 /* @brief Has SDR104 support (HOST_CTRL_CAP[SDR104_SUPPORT]) */
 #define FSL_FEATURE_USDHC_HAS_SDR104_MODE (0)
+/* @brief USDHC has reset control */
+#define FSL_FEATURE_USDHC_HAS_RESET (0)
+/* @brief USDHC has no bitfield WTMK_LVL[WR_BRST_LEN] and WTMK_LVL[RD_BRST_LEN] */
+#define FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN (1)
 
 /* TSTMR module features */
 

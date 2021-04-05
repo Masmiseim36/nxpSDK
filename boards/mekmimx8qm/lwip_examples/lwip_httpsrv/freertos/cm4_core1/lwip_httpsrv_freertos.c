@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -19,6 +19,12 @@
 #include <stdarg.h>
 #include <ctype.h>
 
+#include "enet_ethernetif.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
+#include "fsl_phy.h"
+
 #include "lwip/netif.h"
 #include "lwip/sys.h"
 #include "lwip/arch.h"
@@ -29,17 +35,14 @@
 #include "lwip/sockets.h"
 #include "netif/etharp.h"
 
-#include "ethernetif.h"
-#include "board.h"
-
 #include "httpsrv.h"
-#include "mdns.h"
+#include "lwip/apps/mdns.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_lpuart.h"
 #include "fsl_debug_console.h"
 #include "fsl_irqsteer.h"
+#include "fsl_phyar8031.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -76,8 +79,19 @@
 #define ENET_PRIORITY (6U)
 #endif
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CONECTIVITY_AhbClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyar8031_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CONECTIVITY_AhbClk)
+
+#ifndef EXAMPLE_NETIF_INIT_FN
+/*! @brief Network interface initialization function. */
+#define EXAMPLE_NETIF_INIT_FN ethernetif0_init
+#endif /* EXAMPLE_NETIF_INIT_FN */
 
 #ifndef HTTPD_DEBUG
 #define HTTPD_DEBUG LWIP_DBG_ON
@@ -109,7 +123,14 @@ static bool cgi_get_varval(char *var_str, char *var_name, char *var_val, uint32_
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-static struct netif fsl_netif0;
+
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
+static struct netif netif;
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+static mem_range_t non_dma_memory[] = NON_DMA_MEMORY_ARRAY;
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
 /* FS data.*/
 extern const HTTPSRV_FS_DIR_ENTRY httpsrv_fs_data[];
 
@@ -257,7 +278,7 @@ static bool cgi_get_varval(char *src, char *var_name, char *dst, uint32_t length
 
     n_length = strlen(var_name);
 
-    while ((name = strstr(name, var_name)) != 0)
+    while ((name != NULL) && ((name = strstr(name, var_name)) != NULL))
     {
         if (name[n_length] == '=')
         {
@@ -304,7 +325,7 @@ static void cgi_urldecode(char *url)
 
     while (*src != '\0')
     {
-        if ((*src == '%') && (isxdigit((int)*(src + 1))) && (isxdigit((int)*(src + 2))))
+        if ((*src == '%') && (isxdigit((unsigned char)*(src + 1))) && (isxdigit((unsigned char)*(src + 2))))
         {
             *src       = *(src + 1);
             *(src + 1) = *(src + 2);
@@ -386,39 +407,43 @@ static void http_srv_txt(struct mdns_service *service, void *txt_userdata)
  */
 static void stack_init(void)
 {
-    ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
-    ethernetif_config_t fsl_enet_config0 = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName  = EXAMPLE_CLOCK_NAME,
+    ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
+    ethernetif_config_t enet_config = {
+        .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
+#if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
+        .non_dma_memory = non_dma_memory,
+#endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     };
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     tcpip_init(NULL, NULL);
 
-    IP4_ADDR(&fsl_netif0_ipaddr, configIP_ADDR0, configIP_ADDR1, configIP_ADDR2, configIP_ADDR3);
-    IP4_ADDR(&fsl_netif0_netmask, configNET_MASK0, configNET_MASK1, configNET_MASK2, configNET_MASK3);
-    IP4_ADDR(&fsl_netif0_gw, configGW_ADDR0, configGW_ADDR1, configGW_ADDR2, configGW_ADDR3);
+    IP4_ADDR(&netif_ipaddr, configIP_ADDR0, configIP_ADDR1, configIP_ADDR2, configIP_ADDR3);
+    IP4_ADDR(&netif_netmask, configNET_MASK0, configNET_MASK1, configNET_MASK2, configNET_MASK3);
+    IP4_ADDR(&netif_gw, configGW_ADDR0, configGW_ADDR1, configGW_ADDR2, configGW_ADDR3);
 
-    netifapi_netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, &fsl_enet_config0,
-                       ethernetif0_init, tcpip_input);
-    netifapi_netif_set_default(&fsl_netif0);
-    netifapi_netif_set_up(&fsl_netif0);
+    netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,
+                       tcpip_input);
+    netifapi_netif_set_default(&netif);
+    netifapi_netif_set_up(&netif);
 
+    LOCK_TCPIP_CORE();
     mdns_resp_init();
-    mdns_resp_add_netif(&fsl_netif0, MDNS_HOSTNAME, 60);
-    mdns_resp_add_service(&fsl_netif0, MDNS_HOSTNAME, "_http", DNSSD_PROTO_TCP, 80, 300, http_srv_txt, NULL);
+    mdns_resp_add_netif(&netif, MDNS_HOSTNAME);
+    mdns_resp_add_service(&netif, MDNS_HOSTNAME, "_http", DNSSD_PROTO_TCP, 80, http_srv_txt, NULL);
+    UNLOCK_TCPIP_CORE();
 
     LWIP_PLATFORM_DIAG(("\r\n************************************************"));
     LWIP_PLATFORM_DIAG((" HTTP Server example"));
     LWIP_PLATFORM_DIAG(("************************************************"));
-    LWIP_PLATFORM_DIAG((" IPv4 Address     : %u.%u.%u.%u", ((u8_t *)&fsl_netif0_ipaddr)[0],
-                        ((u8_t *)&fsl_netif0_ipaddr)[1], ((u8_t *)&fsl_netif0_ipaddr)[2],
-                        ((u8_t *)&fsl_netif0_ipaddr)[3]));
-    LWIP_PLATFORM_DIAG((" IPv4 Subnet mask : %u.%u.%u.%u", ((u8_t *)&fsl_netif0_netmask)[0],
-                        ((u8_t *)&fsl_netif0_netmask)[1], ((u8_t *)&fsl_netif0_netmask)[2],
-                        ((u8_t *)&fsl_netif0_netmask)[3]));
-    LWIP_PLATFORM_DIAG((" IPv4 Gateway     : %u.%u.%u.%u", ((u8_t *)&fsl_netif0_gw)[0], ((u8_t *)&fsl_netif0_gw)[1],
-                        ((u8_t *)&fsl_netif0_gw)[2], ((u8_t *)&fsl_netif0_gw)[3]));
+    LWIP_PLATFORM_DIAG((" IPv4 Address     : %u.%u.%u.%u", ((u8_t *)&netif_ipaddr)[0], ((u8_t *)&netif_ipaddr)[1],
+                        ((u8_t *)&netif_ipaddr)[2], ((u8_t *)&netif_ipaddr)[3]));
+    LWIP_PLATFORM_DIAG((" IPv4 Subnet mask : %u.%u.%u.%u", ((u8_t *)&netif_netmask)[0], ((u8_t *)&netif_netmask)[1],
+                        ((u8_t *)&netif_netmask)[2], ((u8_t *)&netif_netmask)[3]));
+    LWIP_PLATFORM_DIAG((" IPv4 Gateway     : %u.%u.%u.%u", ((u8_t *)&netif_gw)[0], ((u8_t *)&netif_gw)[1],
+                        ((u8_t *)&netif_gw)[2], ((u8_t *)&netif_gw)[3]));
     LWIP_PLATFORM_DIAG((" mDNS hostname    : %s", MDNS_HOSTNAME));
     LWIP_PLATFORM_DIAG(("************************************************"));
 }
@@ -506,6 +531,8 @@ int main(void)
 
     /* Set ENET IRQ priority. Used in FreeRTOS. All ENET IRQ routed to IRQSTEER master 4. */
     NVIC_SetPriority(IRQSTEER_4_IRQn, ENET_PRIORITY);
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     /* create server thread in RTOS */
     if (sys_thread_new("main", main_thread, NULL, HTTPD_STACKSIZE, HTTPD_PRIORITY) == NULL)

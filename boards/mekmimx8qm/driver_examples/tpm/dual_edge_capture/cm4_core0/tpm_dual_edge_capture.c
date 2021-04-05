@@ -7,11 +7,11 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_tpm.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -22,13 +22,13 @@
 #define BOARD_TPM_INPUT_CAPTURE_CHANNEL_PAIR kTPM_Chnl_0
 
 /* Interrupt to enable and flag to read; depends on the TPM channel used */
-#define TPM_FIRST_CHANNEL_INTERRUPT_ENABLE kTPM_Chnl0InterruptEnable
-#define TPM_FIRST_CHANNEL_FLAG kTPM_Chnl0Flag
+#define TPM_FIRST_CHANNEL_INTERRUPT_ENABLE  kTPM_Chnl0InterruptEnable
+#define TPM_FIRST_CHANNEL_FLAG              kTPM_Chnl0Flag
 #define TPM_SECOND_CHANNEL_INTERRUPT_ENABLE kTPM_Chnl1InterruptEnable
-#define TPM_SECOND_CHANNEL_FLAG kTPM_Chnl1Flag
+#define TPM_SECOND_CHANNEL_FLAG             kTPM_Chnl1Flag
 
 /* Interrupt number and interrupt handler for the TPM instance used */
-#define TPM_INTERRUPT_NUMBER M4_0_TPM_IRQn
+#define TPM_INTERRUPT_NUMBER      M4_0_TPM_IRQn
 #define TPM_INPUT_CAPTURE_HANDLER M4_0_TPM_IRQHandler
 
 /* Get source clock for TPM driver */
@@ -98,7 +98,8 @@ int main(void)
 {
     tpm_config_t tpmInfo;
     tpm_dual_edge_capture_param_t edgeParam;
-    uint32_t pulseWidth = 0;
+    uint32_t tpm_source_clock_ms = 0;
+    uint32_t pulseWidth          = 0;
 
     /* Board pin, clock, debug console init */
     sc_ipc_t ipc;
@@ -175,9 +176,11 @@ int main(void)
     /* TPM clock source is not prescaled and is
      * divided by 1000000 as the output is printed in microseconds
      */
+    tpm_source_clock_ms = TPM_SOURCE_CLOCK / 1000000;
+    assert(0 != tpm_source_clock_ms);
     pulseWidth =
         (((g_secondChannelOverflowCount - g_firstChannelOverflowCount) * 65536 + capture2Val - capture1Val) + 1) /
-        (TPM_SOURCE_CLOCK / 1000000);
+        tpm_source_clock_ms;
 
     PRINTF("\r\nInput signals pulse width=%d us\r\n", pulseWidth);
     while (1)

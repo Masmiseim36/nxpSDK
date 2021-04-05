@@ -8,8 +8,8 @@ page back to the PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -71,7 +71,4 @@ Running the demo
 
 		More information about lwIP can be found at the lwIP homepage at http://savannah.nongnu.org/projects/lwip/ or at
 		the lwIP wiki at http://lwip.wikia.com/.
-
-Customization options
-=====================
 

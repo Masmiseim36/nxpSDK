@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v8.0
 processor: MIMX8QM6xxxFF
 package_id: MIMX8QM6AVUFF
 mcu_data: ksdk2_0
@@ -281,10 +281,10 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'false', coreID: cm4_0}
+- options: {callFromInitBoot: 'false', coreID: cm4_core0}
 - pin_list:
-  - {pin_num: AM44, peripheral: M40__UART0, signal: uart_rx, pin_signal: M40_I2C0_SCL, sw_config: sw_config_0}
-  - {pin_num: AU51, peripheral: M40__UART0, signal: uart_tx, pin_signal: M40_I2C0_SDA, sw_config: sw_config_0}
+  - {pin_num: AM44, peripheral: M40__UART0, signal: uart_rx, pin_signal: M40_I2C0_SCL, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: AU51, peripheral: M40__UART0, signal: uart_tx, pin_signal: M40_I2C0_SDA, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -294,7 +294,7 @@ BOARD_InitPins:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 
@@ -314,10 +314,10 @@ void BOARD_InitPins(sc_ipc_t ipc)                          /*!< Function assigne
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 LPI2C2_InitPinsEx:
-- options: {callFromInitBoot: 'false', coreID: cm4_0}
+- options: {callFromInitBoot: 'false', coreID: cm4_core0}
 - pin_list:
-  - {pin_num: BN9, peripheral: DMA__I2C0, signal: i2c_scl, pin_signal: HDMI_TX0_TS_SCL, sw_config: sw_config_2}
-  - {pin_num: BN7, peripheral: DMA__I2C0, signal: i2c_sda, pin_signal: HDMI_TX0_TS_SDA, sw_config: sw_config_2}
+  - {pin_num: BN9, peripheral: DMA__I2C0, signal: i2c_scl, pin_signal: HDMI_TX0_TS_SCL, PULL: PULL_0, sw_config: sw_config_2}
+  - {pin_num: BN7, peripheral: DMA__I2C0, signal: i2c_sda, pin_signal: HDMI_TX0_TS_SDA, PULL: PULL_0, sw_config: sw_config_2}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -327,7 +327,7 @@ LPI2C2_InitPinsEx:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void LPI2C2_InitPinsEx(sc_ipc_t ipc)                       /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void LPI2C2_InitPinsEx(sc_ipc_t ipc)                       /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 
@@ -347,10 +347,10 @@ void LPI2C2_InitPinsEx(sc_ipc_t ipc)                       /*!< Function assigne
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 LPI2C2_DeinitPinsEx:
-- options: {callFromInitBoot: 'false', coreID: cm4_0}
+- options: {callFromInitBoot: 'false', coreID: cm4_core0}
 - pin_list:
-  - {pin_num: BN9, peripheral: LSIO__GPIO2, signal: 'gpio_io, 02', pin_signal: HDMI_TX0_TS_SCL, sw_config: sw_config_0}
-  - {pin_num: BN7, peripheral: LSIO__GPIO2, signal: 'gpio_io, 03', pin_signal: HDMI_TX0_TS_SDA, sw_config: sw_config_0}
+  - {pin_num: BN9, peripheral: LSIO__GPIO2, signal: 'gpio_io, 02', pin_signal: HDMI_TX0_TS_SCL, PULL: PULL_0, sw_config: sw_config_0}
+  - {pin_num: BN7, peripheral: LSIO__GPIO2, signal: 'gpio_io, 03', pin_signal: HDMI_TX0_TS_SDA, PULL: PULL_0, sw_config: sw_config_0}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -360,7 +360,7 @@ LPI2C2_DeinitPinsEx:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
-void LPI2C2_DeinitPinsEx(sc_ipc_t ipc)                     /*!< Function assigned for the core: Cortex-M4F[cm4_0] */
+void LPI2C2_DeinitPinsEx(sc_ipc_t ipc)                     /*!< Function assigned for the core: Cortex-M4F[cm4_core0] */
 {
   sc_err_t err = SC_ERR_NONE;
 

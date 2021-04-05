@@ -8,8 +8,8 @@ packets from the PC, which can be used to test whether a TCP connection is avail
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -64,7 +64,4 @@ Running the demo
 		Reply from 192.168.0.102:7, time 0 ms OK
 
 		Statistics: Received=5, Corrupted=0
-
-Customization options
-=====================
 

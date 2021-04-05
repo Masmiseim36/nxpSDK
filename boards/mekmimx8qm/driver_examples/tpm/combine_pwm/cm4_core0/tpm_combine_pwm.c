@@ -7,11 +7,11 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_tpm.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -22,7 +22,7 @@
 
 /* Interrupt to enable and flag to read; depends on the TPM channel pair used */
 #define TPM_CHANNEL_INTERRUPT_ENABLE kTPM_Chnl0InterruptEnable
-#define TPM_CHANNEL_FLAG kTPM_Chnl0Flag
+#define TPM_CHANNEL_FLAG             kTPM_Chnl0Flag
 
 /* Interrupt number and interrupt handler for the TPM instance used */
 #define BOARD_TPM_IRQ_NUM M4_0_TPM_IRQn

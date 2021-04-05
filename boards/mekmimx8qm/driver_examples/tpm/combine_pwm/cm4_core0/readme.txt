@@ -9,8 +9,8 @@ And if the board do not support LEDs to show, the outputs can be observed by osc
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -59,6 +59,3 @@ Note: The range of value is 1 to 9.
 For example: If enter '5', the duty cycle will be set to 50 percent.
 Value:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -23,8 +23,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LDB driver version 2.0.0. */
-#define FSL_LDB_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief LDB driver version. */
+#define FSL_LDB_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*! @brief LDB output bus format. */

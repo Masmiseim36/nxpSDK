@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2018, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -54,23 +54,23 @@
  * Power Down Pin: MIPI_CSI1_GPIO0_01
  */
 #if (APP_MIPI_CSI2_BASE == MIPI_CSI_0__MIPI_CSI2RX_BASE)
-#define BOARD_Camera_I2C_Init BOARD_Camera0_I2C_Init
-#define BOARD_Camera_I2C_Deinit BOARD_Camera0_I2C_Deinit
-#define BOARD_Camera_I2C_SendSCCB BOARD_Camera0_I2C_SendSCCB
+#define BOARD_Camera_I2C_Init        BOARD_Camera0_I2C_Init
+#define BOARD_Camera_I2C_Deinit      BOARD_Camera0_I2C_Deinit
+#define BOARD_Camera_I2C_SendSCCB    BOARD_Camera0_I2C_SendSCCB
 #define BOARD_Camera_I2C_ReceiveSCCB BOARD_Camera0_I2C_ReceiveSCCB
-#define MIPI_CSI_RSRC SC_R_CSI_0
-#define CAMERA_GPIO MIPI_CSI_0__GPIO
-#define CAMERA_RST_PIN_IDX 0
-#define CAMERA_PD_PIN_IDX 1
+#define MIPI_CSI_RSRC                SC_R_CSI_0
+#define CAMERA_GPIO                  MIPI_CSI_0__GPIO
+#define CAMERA_RST_PIN_IDX           0
+#define CAMERA_PD_PIN_IDX            1
 #else
-#define BOARD_Camera_I2C_Init BOARD_Camera1_I2C_Init
-#define BOARD_Camera_I2C_Deinit BOARD_Camera1_I2C_Deinit
-#define BOARD_Camera_I2C_SendSCCB BOARD_Camera1_I2C_SendSCCB
+#define BOARD_Camera_I2C_Init        BOARD_Camera1_I2C_Init
+#define BOARD_Camera_I2C_Deinit      BOARD_Camera1_I2C_Deinit
+#define BOARD_Camera_I2C_SendSCCB    BOARD_Camera1_I2C_SendSCCB
 #define BOARD_Camera_I2C_ReceiveSCCB BOARD_Camera1_I2C_ReceiveSCCB
-#define MIPI_CSI_RSRC SC_R_CSI_1
-#define CAMERA_GPIO MIPI_CSI_1__GPIO
-#define CAMERA_RST_PIN_IDX 0
-#define CAMERA_PD_PIN_IDX 1
+#define MIPI_CSI_RSRC                SC_R_CSI_1
+#define CAMERA_GPIO                  MIPI_CSI_1__GPIO
+#define CAMERA_RST_PIN_IDX           0
+#define CAMERA_PD_PIN_IDX            1
 #endif
 
 #if (DPU_EXAMPLE_DI == DPU_DI_LVDS) && (!APP_DISPLAY_EXTERNAL_CONVERTOR)
@@ -80,38 +80,38 @@
 #if (DPU_EXAMPLE_DI == DPU_DI_MIPI)
 
 #if (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE)
-#define BOARD_Display_I2C_Init BOARD_Display0_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display0_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display0_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display0_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display0_I2C_Receive
-#define MIPI_DSI_RSRC SC_R_MIPI_0
+#define MIPI_DSI_RSRC             SC_R_MIPI_0
 #else /* (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE) */
-#define BOARD_Display_I2C_Init BOARD_Display1_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display1_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display1_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display1_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display1_I2C_Receive
-#define MIPI_DSI_RSRC SC_R_MIPI_1
+#define MIPI_DSI_RSRC             SC_R_MIPI_1
 #endif /* (APP_MIPI_DSI_BASE == MIPI_DSI_HOST0_BASE) */
 
 #elif (DPU_EXAMPLE_DI == DPU_DI_LVDS)
 
 #if (APP_LDB_BASE == DI_LVDS_0__LDB_BASE)
 #if (APP_LDB_CH == 0)
-#define BOARD_Display_I2C_Init BOARD_Display2_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display2_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display2_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display2_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display2_I2C_Receive
 #else
-#define BOARD_Display_I2C_Init BOARD_Display3_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display3_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display3_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display3_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display3_I2C_Receive
 #endif
 #define LDB_RSRC SC_R_LVDS_0
 #else /* APP_LDB_BASE == DI_LVDS_0__LDB_BASE) */
 #if (APP_LDB_CH == 0)
-#define BOARD_Display_I2C_Init BOARD_Display4_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display4_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display4_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display4_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display4_I2C_Receive
 #else
-#define BOARD_Display_I2C_Init BOARD_Display5_I2C_Init
-#define BOARD_Display_I2C_Send BOARD_Display5_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display5_I2C_Init
+#define BOARD_Display_I2C_Send    BOARD_Display5_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display5_I2C_Receive
 #endif
 #define LDB_RSRC SC_R_LVDS_1
@@ -148,43 +148,43 @@
 #endif /* (0 == APP_DPU_DISPLAY_INDEX) */
 
 #if (APP_ISI_BASE == IMAGING__ISI0_BASE)
-#define ISI_RSRC SC_R_ISI_CH0
-#define APP_ISI_IRQn IMAGING_PDMA_STREAM0_INT_IRQn
+#define ISI_RSRC           SC_R_ISI_CH0
+#define APP_ISI_IRQn       IMAGING_PDMA_STREAM0_INT_IRQn
 #define APP_ISI_IRQHandler IMAGING_PDMA_STREAM0_INT_IRQHandler
 #elif (APP_ISI_BASE == IMAGING__ISI1_BASE)
-#define ISI_RSRC SC_R_ISI_CH1
-#define APP_ISI_IRQn IMAGING_PDMA_STREAM1_INT_IRQn
+#define ISI_RSRC           SC_R_ISI_CH1
+#define APP_ISI_IRQn       IMAGING_PDMA_STREAM1_INT_IRQn
 #define APP_ISI_IRQHandler IMAGING_PDMA_STREAM1_INT_IRQHandler
 #elif (APP_ISI_BASE == IMAGING__ISI2_BASE)
-#define ISI_RSRC SC_R_ISI_CH2
-#define APP_ISI_IRQn IMAGING_PDMA_STREAM2_INT_IRQn
+#define ISI_RSRC           SC_R_ISI_CH2
+#define APP_ISI_IRQn       IMAGING_PDMA_STREAM2_INT_IRQn
 #define APP_ISI_IRQHandler IMAGING_PDMA_STREAM2_INT_IRQHandler
 #elif (APP_ISI_BASE == IMAGING__ISI3_BASE)
-#define ISI_RSRC SC_R_ISI_CH3
-#define APP_ISI_IRQn IMAGING_PDMA_STREAM3_INT_IRQn
+#define ISI_RSRC           SC_R_ISI_CH3
+#define APP_ISI_IRQn       IMAGING_PDMA_STREAM3_INT_IRQn
 #define APP_ISI_IRQHandler IMAGING_PDMA_STREAM3_INT_IRQHandler
 #elif (APP_ISI_BASE == IMAGING__ISI4_BASE)
-#define ISI_RSRC SC_R_ISI_CH4
-#define APP_ISI_IRQn IMAGING_PDMA_STREAM4_INT_IRQn
+#define ISI_RSRC           SC_R_ISI_CH4
+#define APP_ISI_IRQn       IMAGING_PDMA_STREAM4_INT_IRQn
 #define APP_ISI_IRQHandler IMAGING_PDMA_STREAM4_INT_IRQHandler
 #elif (APP_ISI_BASE == IMAGING__ISI5_BASE)
-#define ISI_RSRC SC_R_ISI_CH5
-#define APP_ISI_IRQn IMAGING_PDMA_STREAM5_INT_IRQn
+#define ISI_RSRC           SC_R_ISI_CH5
+#define APP_ISI_IRQn       IMAGING_PDMA_STREAM5_INT_IRQn
 #define APP_ISI_IRQHandler IMAGING_PDMA_STREAM5_INT_IRQHandler
 #elif (APP_ISI_BASE == IMAGING__ISI6_BASE)
-#define ISI_RSRC SC_R_ISI_CH6
-#define APP_ISI_IRQn IMAGING_PDMA_STREAM6_INT_IRQn
+#define ISI_RSRC           SC_R_ISI_CH6
+#define APP_ISI_IRQn       IMAGING_PDMA_STREAM6_INT_IRQn
 #define APP_ISI_IRQHandler IMAGING_PDMA_STREAM6_INT_IRQHandler
 #else
-#define ISI_RSRC SC_R_ISI_CH7
-#define APP_ISI_IRQn IMAGING_PDMA_STREAM7_INT_IRQn
+#define ISI_RSRC           SC_R_ISI_CH7
+#define APP_ISI_IRQn       IMAGING_PDMA_STREAM7_INT_IRQn
 #define APP_ISI_IRQHandler IMAGING_PDMA_STREAM7_INT_IRQHandler
 #endif
 #if (DPU_EXAMPLE_DI == DPU_DI_MIPI)
 
 #if !APP_DISPLAY_EXTERNAL_CONVERTOR
 #define RM67191_RESET_GPIO LSIO__GPIO1
-#define RM67191_RESET_PIN 7U
+#define RM67191_RESET_PIN  7U
 #endif
 
 /* Pixel Link address */
@@ -199,7 +199,7 @@ typedef struct _dpu_mipi_pl_addr
 #elif (DPU_EXAMPLE_DI == DPU_DI_LVDS)
 
 #define IT6263_RESET_GPIO LSIO__GPIO1
-#define IT6263_RESET_PIN 6U
+#define IT6263_RESET_PIN  6U
 
 /* Pixel Link address */
 typedef struct _dpu_ldb_pl_addr
@@ -290,12 +290,14 @@ camera_device_handle_t cameraDevice = {
 #if (DPU_EXAMPLE_DI == DPU_DI_MIPI)
 
 #if !APP_DISPLAY_EXTERNAL_CONVERTOR
+
+static mipi_dsi_device_t dsiDevice = {
+    .virtualChannel = 0,
+    .xferFunc       = RM67191_DSI_Transfer,
+};
+
 static const rm67191_resource_t rm67191Resource = {
-    .dsiDevice =
-        {
-            .virtualChannel = 0,
-            .xferFunc       = RM67191_DSI_Transfer,
-        },
+    .dsiDevice    = &dsiDevice,
     .pullResetPin = RM67191_PullResetPin,
 };
 
@@ -747,6 +749,23 @@ void BOARD_PrepareDisplay(void)
         assert(false);
     }
 
+    /*
+     * Assign the display kachuck signal to fetch unit, the relationship between
+     * resource and fetch unit is:
+     *
+     * SC_R_DC_0_FRAC0 : fetchLayer0
+     * SC_R_DC_0_VIDEO0 : fetchDecode0, fetchEco0
+     * SC_R_DC_0_VIDEO1 : fetchDecode1, fetchEco1
+     * SC_R_DC_0_WARP0 : fetchWarp2, fetchEco2
+     *
+     * In ISI examples, the fetchDecode0 is used.
+     */
+    err = sc_misc_set_control(ipc, DC_RSRC_VIDEO0, SC_C_KACHUNK_SEL, APP_DPU_DISPLAY_INDEX);
+    if (SC_ERR_NONE != err)
+    {
+        assert(false);
+    }
+
 #if (DPU_EXAMPLE_DI == DPU_DI_MIPI)
 
     /* Power up MIPI DSI subsystem. */
@@ -809,7 +828,7 @@ void BOARD_PrepareDisplay(void)
 
     /* DPHY reference clock is enabled by default, 27MHz. */
     mipiDsiDphyRefClkFreq_Hz = 27000000U;
-    err = sc_pm_clock_enable(ipc, MIPI_DSI_RSRC, SC_PM_CLK_PHY, true, false);
+    err                      = sc_pm_clock_enable(ipc, MIPI_DSI_RSRC, SC_PM_CLK_PHY, true, false);
     if (SC_ERR_NONE != err)
     {
         assert(false);
@@ -1328,64 +1347,64 @@ void BOARD_InitCameraInterface(void)
      *
      *    Resolution  |  frame rate  |  T_HS_SETTLE
      *  =============================================
-     *     720P       |     30       |     0x10
+     *     720P       |     30       |     0x12
      *  ---------------------------------------------
-     *     720P       |     15       |     0x15
+     *     720P       |     15       |     0x17
      *  ---------------------------------------------
-     *      VGA       |     30       |     0x1D
+     *      VGA       |     30       |     0x1F
      *  ---------------------------------------------
-     *      VGA       |     15       |     0x22
+     *      VGA       |     15       |     0x24
      *  ---------------------------------------------
-     *     QVGA       |     30       |     0x1D
+     *     QVGA       |     30       |     0x1F
      *  ---------------------------------------------
-     *     QVGA       |     15       |     0x22
+     *     QVGA       |     15       |     0x24
      *  ---------------------------------------------
      */
     static uint32_t csi2rxHsSettle[][3] = {
         {
             kVIDEO_Resolution1080P,
             30,
-            0x0A,
+            0x0C,
         },
         {
             kVIDEO_Resolution1080P,
             15,
-            0x0F,
+            0x11,
         },
         {
             kVIDEO_Resolution720P,
             30,
-            0x10,
+            0x12,
         },
         {
             kVIDEO_Resolution720P,
             15,
-            0x15,
+            0x17,
         },
         {
             kVIDEO_ResolutionVGA,
             30,
-            0x1D,
+            0x1F,
         },
         {
             kVIDEO_ResolutionVGA,
             15,
-            0x22,
+            0x24,
         },
         {
             kVIDEO_ResolutionQVGA,
             30,
-            0x1D,
+            0x1F,
         },
         {
             kVIDEO_ResolutionQVGA,
             15,
-            0x22,
+            0x24,
         },
     };
 
     csi2rxConfig.laneNum          = APP_MIPI_CSI_LANES;
-    csi2rxConfig.tHsSettle_EscClk = 0x10;
+    csi2rxConfig.tHsSettle_EscClk = 0x12;
 
     for (uint8_t i = 0; i < ARRAY_SIZE(csi2rxHsSettle); i++)
     {

@@ -6,23 +6,23 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lpuart_edma.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
 #endif
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART DMA__LPUART2
-#define DEMO_LPUART_CLKSRC kCLOCK_DMA_Lpuart2
+#define DEMO_LPUART          DMA__LPUART2
+#define DEMO_LPUART_CLKSRC   kCLOCK_DMA_Lpuart2
 #define DEMO_LPUART_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_DMA_Lpuart2)
 
-#define LPUART_TX_DMA_CHANNEL 17U
-#define LPUART_RX_DMA_CHANNEL 16U
+#define LPUART_TX_DMA_CHANNEL       17U
+#define LPUART_RX_DMA_CHANNEL       16U
 #define EXAMPLE_LPUART_DMA_BASEADDR DMA__EDMA0
 #define ECHO_BUFFER_LENGTH 8
 
@@ -150,7 +150,10 @@ int main(void)
     EDMA_Init(EXAMPLE_LPUART_DMA_BASEADDR, &config);
     EDMA_CreateHandle(&g_lpuartTxEdmaHandle, EXAMPLE_LPUART_DMA_BASEADDR, LPUART_TX_DMA_CHANNEL);
     EDMA_CreateHandle(&g_lpuartRxEdmaHandle, EXAMPLE_LPUART_DMA_BASEADDR, LPUART_RX_DMA_CHANNEL);
-
+#if defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && FSL_FEATURE_EDMA_HAS_CHANNEL_MUX
+    EDMA_SetChannelMux(EXAMPLE_LPUART_DMA_BASEADDR, LPUART_TX_DMA_CHANNEL, DEMO_LPUART_TX_EDMA_CHANNEL);
+    EDMA_SetChannelMux(EXAMPLE_LPUART_DMA_BASEADDR, LPUART_RX_DMA_CHANNEL, DEMO_LPUART_RX_EDMA_CHANNEL);
+#endif
     /* Create LPUART DMA handle. */
     LPUART_TransferCreateHandleEDMA(DEMO_LPUART, &g_lpuartEdmaHandle, LPUART_UserCallback, NULL, &g_lpuartTxEdmaHandle,
                                     &g_lpuartRxEdmaHandle);

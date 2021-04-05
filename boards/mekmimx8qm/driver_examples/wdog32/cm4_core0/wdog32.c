@@ -1,38 +1,36 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_wdog32.h"
 #if defined(FSL_FEATURE_SOC_RCM_COUNT) && (FSL_FEATURE_SOC_RCM_COUNT)
 #include "fsl_rcm.h"
-#endif
-#if defined(FSL_FEATURE_SOC_SMC_COUNT) && (FSL_FEATURE_SOC_SMC_COUNT > 1)
+#elif defined(FSL_FEATURE_SOC_SMC_COUNT) && (FSL_FEATURE_SOC_SMC_COUNT > 1) /* MSMC */
 #include "fsl_msmc.h"
-#endif
-#if defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT)
+#elif defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT) /* ASMC */
 #include "fsl_asmc.h"
+#elif defined(FSL_FEATURE_SOC_CMC_COUNT) && (FSL_FEATURE_SOC_CMC_COUNT) /* CMC */
+#include "fsl_cmc.h"
 #endif
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* RESET_CHECK_FLAG is a RAM variable
  * make sure this variable's location is proper that it will not be affected by watchdog reset
  */
-#define RESET_CHECK_FLAG (*((uint32_t *)0x20002000))
+#define RESET_CHECK_FLAG       (*((uint32_t *)0x20002000))
 #define RESET_CHECK_INIT_VALUE 0x0D0D
-#define EXAMPLE_WDOG_BASE CM4_0__WDOG
-#define EXAMPLE_ASMC_BASE BBS_SIM
-#define DELAY_TIME 10000U
-
-#define WDOG_WCT_INSTRUCITON_COUNT (128U)
+#define EXAMPLE_WDOG_BASE      CM4_0__WDOG
+#define EXAMPLE_ASMC_BASE      BBS_SIM
+#define DELAY_TIME             10000U
 
 /*******************************************************************************
  * Prototypes
@@ -51,22 +49,6 @@ AT_QUICKACCESS_SECTION_DATA(static wdog32_config_t config);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-/*!
- * @brief Wait until the WCT is closed.
- *
- * This function is used to wait until the WCT window is closed, WCT time is 128 bus cycles
- *
- * @param base WDOG32 peripheral base address
- */
-static void WaitWctClose(WDOG_Type *base)
-{
-    /* Accessing register by bus clock */
-    for (uint32_t i = 0; i < WDOG_WCT_INSTRUCITON_COUNT; i++)
-    {
-        (void)base->CNT;
-    }
-}
 
 /*!
  * @brief Get current test mode.
@@ -88,11 +70,7 @@ void WDOG_IRQHandler(void)
     WDOG32_ClearStatusFlags(wdog32_base, kWDOG32_InterruptFlag);
 
     RESET_CHECK_FLAG++;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif /* FSL_FEATURE_SOC_ASMC_COUNT */
 
@@ -129,7 +107,7 @@ void Wdog32FastTesting(void)
 
     config.enableInterrupt = true;
     config.timeoutValue    = 0xf0f0U;
-    current_test_mode = GetTestMode(wdog32_base);
+    current_test_mode      = GetTestMode(wdog32_base);
 
     if (current_test_mode == kWDOG32_TestModeDisabled)
     {
@@ -160,6 +138,8 @@ void Wdog32FastTesting(void)
             || ((SMC_GetPreviousResetSources(EXAMPLE_MSMC_BASE) & kSMC_SourceWdog) == 0)
 #elif defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT)   /* ASMC */
             || ((ASMC_GetSystemResetStatusFlags(EXAMPLE_ASMC_BASE) & kASMC_WatchdogResetFlag) == 0)
+#elif defined(FSL_FEATURE_SOC_CMC_COUNT) && (FSL_FEATURE_SOC_CMC_COUNT)     /* CMC */
+            || ((CMC_GetSystemResetStatus(EXAMPLE_CMC_BASE) & kCMC_Watchdog0Reset) == 0)
 #endif
         )
         {
@@ -187,6 +167,8 @@ void Wdog32FastTesting(void)
             || ((SMC_GetPreviousResetSources(EXAMPLE_MSMC_BASE) & kSMC_SourceWdog) == 0)
 #elif defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT)   /* ASMC */
             || ((ASMC_GetSystemResetStatusFlags(EXAMPLE_ASMC_BASE) & kASMC_WatchdogResetFlag) == 0)
+#elif defined(FSL_FEATURE_SOC_CMC_COUNT) && (FSL_FEATURE_SOC_CMC_COUNT)     /* CMC */
+            || ((CMC_GetSystemResetStatus(EXAMPLE_CMC_BASE) & kCMC_Watchdog0Reset) == 0)
 #endif
         )
         {
@@ -200,7 +182,6 @@ void Wdog32FastTesting(void)
             config.enableWdog32 = false;
 
             WDOG32_Init(wdog32_base, &config);
-            WaitWctClose(wdog32_base);
         }
     }
     else
@@ -215,6 +196,8 @@ void Wdog32FastTesting(void)
  */
 void Wdog32RefreshTest(void)
 {
+    uint32_t primaskValue = 0U;
+
     /*
      * config.enableWdog32 = true;
      * config.clockSource = kWDOG32_ClockSource1;
@@ -256,9 +239,11 @@ void Wdog32RefreshTest(void)
             }
         }
     }
+    /* Disable the global interrupt to protect refresh sequence */
+    primaskValue = DisableGlobalIRQ();
     WDOG32_Unlock(wdog32_base);
     WDOG32_Disable(wdog32_base);
-    WaitWctClose(wdog32_base);
+    EnableGlobalIRQ(primaskValue);
     /* Refresh test in window mode */
     PRINTF("----- Window mode -----\r\n");
 
@@ -275,15 +260,6 @@ void Wdog32RefreshTest(void)
     config.prescaler = kWDOG32_ClockPrescalerDivide1;
 
     WDOG32_Init(wdog32_base, &config);
-    /* When switching clock sources during reconfiguration, the watchdog hardware holds the counter at
-       zero for 2.5 periods of the previous clock source and 2.5 periods of the new clock source
-       after the configuration time period (128 bus clocks) ends */
-    while (WDOG32_GetCounterValue(wdog32_base) != 0)
-    {
-    }
-    while (WDOG32_GetCounterValue(wdog32_base) == 0)
-    {
-    }
     for (int i = 6; i < 9; i++)
     {
         for (;;)
@@ -302,7 +278,6 @@ void Wdog32RefreshTest(void)
     config.testMode     = kWDOG32_TestModeDisabled;
 
     WDOG32_Init(wdog32_base, &config);
-    WaitWctClose(wdog32_base);
 
     PRINTF("----- Refresh test success  -----\r\n\r\n");
 }
@@ -319,6 +294,11 @@ int main(void)
 
 #if defined(FSL_FEATURE_SOC_ASMC_COUNT) && (FSL_FEATURE_SOC_ASMC_COUNT)
     if ((ASMC_GetSystemResetStatusFlags(EXAMPLE_ASMC_BASE) & kASMC_WatchdogResetFlag))
+    {
+        RESET_CHECK_FLAG++;
+    }
+#elif defined(FSL_FEATURE_SOC_CMC_COUNT) && (FSL_FEATURE_SOC_CMC_COUNT)
+    if ((CMC_GetSystemResetStatus(EXAMPLE_CMC_BASE) & kCMC_Watchdog0Reset))
     {
         RESET_CHECK_FLAG++;
     }

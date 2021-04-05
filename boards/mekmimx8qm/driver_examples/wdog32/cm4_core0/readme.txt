@@ -10,8 +10,8 @@ after chip emerges from reset.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -27,9 +27,12 @@ No special settings are required.
 
 #### Note! ####
 1. The M4 WDOG will reboot the partition that contains the M4 cores. The Partition need correctly configured for the M4 cores.
-   When using imx-mkimage build the bootable image, add "-px" where "x" can be 1,3,4 to configure the partition for M4 cores.
-   Such as the availabe targets in imx-mkimage: flash_b0_cm4_0, flash_b0_cm4_1, flash_linux_m4.
-   (1) If only boot one of the M4 cores, use -p1 for the M4 image. Such as flash_b0_cm4_0, flash_b0_cm4_1.
+   When using imx-mkimage build the bootable image, add "-flags 0x200000" for the first container and add "-p3" for M40, "-p4" for M41 to configure the partition for M4 cores.
+   (1) If only boot one of the M4 cores, use "-p3" for the M40 image, "-p4" for the M41 image. For example,
+     flash_m4: $(MKIMG) $(AHAB_IMG) scfw_tcm.bin m4_image.bin
+     ./$(MKIMG) -soc QM -rev B0 -dcd skip -append $(AHAB_IMG) -c -flags 0x200000 -scfw scfw_tcm.bin -p3 -m4 m4_image.bin 0 0x34FE0000 -out flash.bin
+     flash_m41: $(MKIMG) $(AHAB_IMG) scfw_tcm.bin m4_1_image.bin
+     ./$(MKIMG) -soc QM -rev B0 -dcd skip -append $(AHAB_IMG) -c -flags 0x200000 -scfw scfw_tcm.bin -p4 -m4 m4_1_image.bin 1 0x38FE0000 -out flash.bin
    (2) If boot more than one M4 cores, use -p3 for M4 core0, -p4 for M4 core1 image. And add -flags 0x200000 for the first container. Such as flash_linux_m4.
    
    For more information about the reset, please refer to System Controller Firmware Porting Guide.
@@ -76,7 +79,4 @@ Refresh wdog32 2 time
 
 ----- End of WDOG32 example  -----
 ~~~~~~~~~~~~~~~~~~~~~
-
-Customization options
-=====================
 

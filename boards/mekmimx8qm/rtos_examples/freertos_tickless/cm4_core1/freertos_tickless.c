@@ -13,14 +13,14 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if defined(FSL_FEATURE_SOC_PORT_COUNT) && (FSL_FEATURE_SOC_PORT_COUNT > 0)
 #include "fsl_port.h"
 #endif
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_lpuart.h"
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
 #include "fsl_lpit.h"
 #endif
 /*******************************************************************************
@@ -54,6 +54,7 @@ SemaphoreHandle_t xSWSemaphore = NULL;
  * Code
  ******************************************************************************/
 
+#if configUSE_TICKLESS_IDLE == 2
 /*!
  * @brief Interrupt service fuction of LPT timer.
  *
@@ -85,6 +86,7 @@ IRQn_Type vPortGetLpitIrqn(void)
 {
     return M4_1_LPIT_IRQn;
 }
+#endif
 /*!
  * @brief Main function
  */
@@ -101,7 +103,7 @@ int main(void)
     };
 #endif
     sc_ipc_t ipc;
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
     lpit_config_t lpitConfig;
     lpit_chnl_params_t lpitChannelConfig;
 #endif
@@ -113,7 +115,7 @@ int main(void)
     BOARD_InitMemory();
     BOARD_InitDebugConsole();
 
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
     /* Power on Peripherals. */
     if (sc_pm_set_resource_power_mode(ipc, SC_R_M4_1_PIT, SC_PM_PW_MODE_ON) != SC_ERR_NONE)
     {

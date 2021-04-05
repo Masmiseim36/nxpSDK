@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,11 +16,11 @@
 #include "srtm_dispatcher.h"
 #include "srtm_peercore.h"
 #include "srtm_message.h"
-#include "srtm_auto_service.h"
 #include "srtm_rpmsg_endpoint.h"
 
 #include "board.h"
 #include "app_srtm.h"
+#include "rsc_table.h"
 
 /*******************************************************************************
  * Definitions
@@ -38,36 +38,6 @@ typedef enum
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-static srtm_status_t APP_SRTM_Auto_RegisterEvent(srtm_auto_adapter_t adapter,
-                                                 uint32_t clientId,
-                                                 uint8_t *reqData,
-                                                 uint32_t reqLen,
-                                                 uint8_t *respData,
-                                                 uint32_t respLen);
-static srtm_status_t APP_SRTM_Auto_UnregisterEvent(srtm_auto_adapter_t adapter,
-                                                   uint32_t clientId,
-                                                   uint8_t *reqData,
-                                                   uint32_t reqLen,
-                                                   uint8_t *respData,
-                                                   uint32_t respLen);
-static srtm_status_t APP_SRTM_Auto_Control(srtm_auto_adapter_t adapter,
-                                           uint32_t clientId,
-                                           uint8_t *reqData,
-                                           uint32_t reqLen,
-                                           uint8_t *respData,
-                                           uint32_t respLen);
-static srtm_status_t APP_SRTM_Auto_PowerReport(srtm_auto_adapter_t adapter,
-                                               uint32_t clientId,
-                                               uint8_t *reqData,
-                                               uint32_t reqLen,
-                                               uint8_t *respData,
-                                               uint32_t respLen);
-static srtm_status_t APP_SRTM_Auto_GetInfo(srtm_auto_adapter_t adapter,
-                                           uint32_t clientId,
-                                           uint8_t *reqData,
-                                           uint32_t reqLen,
-                                           uint8_t *respData,
-                                           uint32_t respLen);
 static srtm_status_t APP_SRTM_I2C_Read(srtm_i2c_adapter_t adapter,
                                        uint32_t base_addr,
                                        srtm_i2c_type_t type,
@@ -87,19 +57,13 @@ static srtm_status_t APP_SRTM_I2C_Write(srtm_i2c_adapter_t adapter,
  ******************************************************************************/
 static srtm_dispatcher_t disp;
 static srtm_peercore_t core;
-static srtm_service_t autoService;
 static SemaphoreHandle_t monSig;
 static volatile app_srtm_state_t srtmState;
 static struct rpmsg_lite_instance *rpmsgHandle;
 static app_rpmsg_monitor_t rpmsgMonitor;
 static void *rpmsgMonitorParam;
 static TimerHandle_t linkupTimer;
-static struct _srtm_auto_adapter autoAdapter = {.registerEvent   = APP_SRTM_Auto_RegisterEvent,
-                                                .unregisterEvent = APP_SRTM_Auto_UnregisterEvent,
-                                                .control         = APP_SRTM_Auto_Control,
-                                                .powerReport     = APP_SRTM_Auto_PowerReport,
-                                                .getInfo         = APP_SRTM_Auto_GetInfo};
-static struct _i2c_bus qm_i2c_buses[]        = {
+static struct _i2c_bus qm_i2c_buses[] = {
     {.bus_id         = 1,
      .base_addr      = CM4_1__LPI2C_BASE,
      .type           = SRTM_I2C_TYPE_LPI2C,
@@ -116,9 +80,6 @@ static struct _srtm_i2c_adapter qm_i2c_adapter = {.read          = APP_SRTM_I2C_
                                                       .switch_num = 0,
                                                   }};
 static srtm_service_t i2cService;
-
-static app_auto_register_handler_t appRegHandler;
-static void *appRegParam;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -143,7 +104,8 @@ static srtm_status_t APP_SRTM_I2C_Write(srtm_i2c_adapter_t adapter,
     switch (type)
     {
         case SRTM_I2C_TYPE_LPI2C:
-            retVal = BOARD_LPI2C_SendWithoutSubAddr((LPI2C_Type *)base_addr, slaveAddr, buf, len, needStop);
+            retVal = BOARD_LPI2C_SendWithoutSubAddr((LPI2C_Type *)base_addr, APP_LPI2C_BAUDRATE, slaveAddr, buf, len,
+                                                    needStop);
             break;
         default:
             break;
@@ -167,7 +129,8 @@ static srtm_status_t APP_SRTM_I2C_Read(srtm_i2c_adapter_t adapter,
     switch (type)
     {
         case SRTM_I2C_TYPE_LPI2C:
-            retVal = BOARD_LPI2C_ReceiveWithoutSubAddr((LPI2C_Type *)base_addr, slaveAddr, buf, len, needStop);
+            retVal = BOARD_LPI2C_ReceiveWithoutSubAddr((LPI2C_Type *)base_addr, APP_LPI2C_BAUDRATE, slaveAddr, buf, len,
+                                                       needStop);
             break;
         default:
             break;
@@ -228,22 +191,19 @@ static void APP_SRTM_Linkup(void)
     rpmsgConfig.peerAddr    = RL_ADDR_ANY;
     rpmsgConfig.rpmsgHandle = rpmsgHandle;
 
-    /* Create and add SRTM AUTO channel to peer core */
-    rpmsgConfig.epName = APP_SRTM_AUTO_CHANNEL_NAME;
-    chan               = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
-    SRTM_PeerCore_AddChannel(core, chan);
-
     /* Create and add SRTM I2C channel to peer core*/
     rpmsgConfig.epName = APP_SRTM_I2C_CHANNEL_NAME;
     chan               = SRTM_RPMsgEndpoint_Create(&rpmsgConfig);
     SRTM_PeerCore_AddChannel(core, chan);
 
-    PRINTF("app_srtm: AUTO and I2C service registered\r\n");
+    PRINTF("app_srtm: I2C service registered\r\n");
     SRTM_Dispatcher_AddPeerCore(disp, core);
 }
 
 static void APP_SRTM_InitPeerCore(void)
 {
+    copyResourceTable();
+
     rpmsgHandle = rpmsg_lite_remote_init((void *)RPMSG_LITE_SRTM_SHMEM_BASE, RPMSG_LITE_SRTM_LINK_ID, RL_NO_FLAGS);
     assert(rpmsgHandle);
 
@@ -293,82 +253,6 @@ static void APP_SRTM_DeinitPeerCore(void)
     }
 }
 
-static srtm_status_t APP_SRTM_Auto_RegisterEvent(srtm_auto_adapter_t adapter,
-                                                 uint32_t clientId,
-                                                 uint8_t *reqData,
-                                                 uint32_t reqLen,
-                                                 uint8_t *respData,
-                                                 uint32_t respLen)
-{
-    srtm_status_t status = SRTM_Status_Success;
-
-    if (appRegHandler)
-    {
-        status = appRegHandler(clientId, true, appRegParam, reqData, reqLen, respData, respLen) ? SRTM_Status_Success :
-                                                                                                  SRTM_Status_Error;
-    }
-
-    return status;
-}
-
-static srtm_status_t APP_SRTM_Auto_UnregisterEvent(srtm_auto_adapter_t adapter,
-                                                   uint32_t clientId,
-                                                   uint8_t *reqData,
-                                                   uint32_t reqLen,
-                                                   uint8_t *respData,
-                                                   uint32_t respLen)
-{
-    srtm_status_t status = SRTM_Status_Success;
-
-    if (appRegHandler)
-    {
-        status = appRegHandler(clientId, false, appRegParam, reqData, reqLen, respData, respLen) ? SRTM_Status_Success :
-                                                                                                   SRTM_Status_Error;
-    }
-
-    return status;
-}
-
-static srtm_status_t APP_SRTM_Auto_Control(srtm_auto_adapter_t adapter,
-                                           uint32_t clientId,
-                                           uint8_t *reqData,
-                                           uint32_t reqLen,
-                                           uint8_t *respData,
-                                           uint32_t respLen)
-{
-    /* Not implemented. */
-    return SRTM_Status_ServiceNotFound;
-}
-
-static srtm_status_t APP_SRTM_Auto_PowerReport(srtm_auto_adapter_t adapter,
-                                               uint32_t clientId,
-                                               uint8_t *reqData,
-                                               uint32_t reqLen,
-                                               uint8_t *respData,
-                                               uint32_t respLen)
-{
-    /* Not implemented. */
-    return SRTM_Status_ServiceNotFound;
-}
-
-static srtm_status_t APP_SRTM_Auto_GetInfo(srtm_auto_adapter_t adapter,
-                                           uint32_t clientId,
-                                           uint8_t *reqData,
-                                           uint32_t reqLen,
-                                           uint8_t *respData,
-                                           uint32_t respLen)
-{
-    /* Not implemented. */
-    return SRTM_Status_ServiceNotFound;
-}
-
-static void APP_SRTM_InitAutoService(void)
-{
-    /* Create and register Sensor service */
-    autoService = SRTM_AutoService_Create(&autoAdapter);
-    SRTM_Dispatcher_RegisterService(disp, autoService);
-}
-
 static void APP_SRTM_InitI2CDevice(void)
 {
     lpi2c_master_config_t masterConfig;
@@ -392,7 +276,6 @@ static void APP_SRTM_InitI2CService(void)
 static void APP_SRTM_InitServices(void)
 {
     APP_SRTM_InitI2CService();
-    APP_SRTM_InitAutoService();
 }
 
 static void SRTM_MonitorTask(void *pvParameters)
@@ -490,31 +373,6 @@ void APP_SRTM_StartCommunication(void)
 {
     srtmState = APP_SRTM_StateRun;
     xSemaphoreGive(monSig);
-}
-
-void APP_SRTM_SetAutoRegisterHandler(app_auto_register_handler_t handler, void *param)
-{
-    appRegHandler = handler;
-    appRegParam   = param;
-}
-
-bool APP_SRTM_SendAutoCommand(uint32_t clientId,
-                              srtm_auto_cmd_t cmd,
-                              uint8_t *cmdParam,
-                              uint32_t paramLen,
-                              uint8_t *result,
-                              uint32_t resultLen,
-                              uint32_t timeout)
-{
-    assert(autoService);
-
-    if (SRTM_AutoService_SendCommand(autoService, clientId, cmd, cmdParam, paramLen, result, resultLen, timeout) ==
-        SRTM_Status_Success)
-    {
-        return true;
-    }
-
-    return false;
 }
 
 void APP_SRTM_PeerCoreRebootHandler(void)

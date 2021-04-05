@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,7 +21,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_LPIT_DRIVER_VERSION (MAKE_VERSION(2, 0, 0)) /*!< Version 2.0.0 */
+#define FSL_LPIT_DRIVER_VERSION (MAKE_VERSION(2, 0, 2)) /*!< Version 2.0.2 */
                                                         /*@{*/
 
 /*!
@@ -296,7 +296,8 @@ static inline void LPIT_ClearStatusFlags(LPIT_Type *base, uint32_t mask)
  */
 static inline void LPIT_SetTimerPeriod(LPIT_Type *base, lpit_chnl_t channel, uint32_t ticks)
 {
-    base->CHANNEL[channel].TVAL = ticks;
+    assert(ticks > 2U);
+    base->CHANNEL[channel].TVAL = ticks - 1U;
 }
 
 /*!
@@ -335,9 +336,10 @@ static inline uint32_t LPIT_GetCurrentTimerCount(LPIT_Type *base, lpit_chnl_t ch
  */
 static inline void LPIT_StartTimer(LPIT_Type *base, lpit_chnl_t channel)
 {
-    base->SETTEN |= (LPIT_SETTEN_SET_T_EN_0_MASK << channel);
-}
+    uint32_t shift = LPIT_SETTEN_SET_T_EN_0_MASK;
 
+    base->SETTEN |= shift << ((uint32_t)channel);
+}
 /*!
  * @brief Stops the timer counting.
  *
@@ -346,7 +348,9 @@ static inline void LPIT_StartTimer(LPIT_Type *base, lpit_chnl_t channel)
  */
 static inline void LPIT_StopTimer(LPIT_Type *base, lpit_chnl_t channel)
 {
-    base->CLRTEN |= (LPIT_CLRTEN_CLR_T_EN_0_MASK << channel);
+    uint32_t shift = LPIT_CLRTEN_CLR_T_EN_0_MASK;
+
+    base->CLRTEN |= shift << ((uint32_t)channel);
 }
 
 /*! @}*/

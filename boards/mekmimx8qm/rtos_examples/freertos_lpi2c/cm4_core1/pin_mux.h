@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -15,52 +15,58 @@
  **********************************************************************************************************************/
 
 /* HDMI_TX0_TS_SCL (number BN9), I2C0_3V3_SCL */
-#define BOARD_INITPINS_I2C0_3V3_SCL_PERIPHERAL                         DMA__I2C0   /*!< Device name: DMA__I2C0 */
-#define BOARD_INITPINS_I2C0_3V3_SCL_SIGNAL                               i2c_scl   /*!< DMA__I2C0 signal: i2c_scl */
-#define BOARD_INITPINS_I2C0_3V3_SCL_PIN_NAME                     HDMI_TX0_TS_SCL   /*!< Pin name */
+/* Routed pin properties */
+#define BOARD_INITPINS_I2C0_3V3_SCL_PERIPHERAL                         DMA__I2C0   /*!< Peripheral name */
+#define BOARD_INITPINS_I2C0_3V3_SCL_SIGNAL                               i2c_scl   /*!< Signal name */
+#define BOARD_INITPINS_I2C0_3V3_SCL_PIN_NAME                     HDMI_TX0_TS_SCL   /*!< Routed pin name */
 #define BOARD_INITPINS_I2C0_3V3_SCL_PIN_FUNCTION_ID         SC_P_HDMI_TX0_TS_SCL   /*!< Pin function id */
 #define BOARD_INITPINS_I2C0_3V3_SCL_LABEL                         "I2C0_3V3_SCL"   /*!< Label */
-#define BOARD_INITPINS_I2C0_3V3_SCL_NAME                          "I2C0_3V3_SCL"   /*!< Identifier name */
+#define BOARD_INITPINS_I2C0_3V3_SCL_NAME                          "I2C0_3V3_SCL"   /*!< Identifier */
 
 /* HDMI_TX0_TS_SDA (number BN7), I2C0_3V3_SDA */
-#define BOARD_INITPINS_I2C0_3V3_SDA_PERIPHERAL                         DMA__I2C0   /*!< Device name: DMA__I2C0 */
-#define BOARD_INITPINS_I2C0_3V3_SDA_SIGNAL                               i2c_sda   /*!< DMA__I2C0 signal: i2c_sda */
-#define BOARD_INITPINS_I2C0_3V3_SDA_PIN_NAME                     HDMI_TX0_TS_SDA   /*!< Pin name */
+/* Routed pin properties */
+#define BOARD_INITPINS_I2C0_3V3_SDA_PERIPHERAL                         DMA__I2C0   /*!< Peripheral name */
+#define BOARD_INITPINS_I2C0_3V3_SDA_SIGNAL                               i2c_sda   /*!< Signal name */
+#define BOARD_INITPINS_I2C0_3V3_SDA_PIN_NAME                     HDMI_TX0_TS_SDA   /*!< Routed pin name */
 #define BOARD_INITPINS_I2C0_3V3_SDA_PIN_FUNCTION_ID         SC_P_HDMI_TX0_TS_SDA   /*!< Pin function id */
 #define BOARD_INITPINS_I2C0_3V3_SDA_LABEL                         "I2C0_3V3_SDA"   /*!< Label */
-#define BOARD_INITPINS_I2C0_3V3_SDA_NAME                          "I2C0_3V3_SDA"   /*!< Identifier name */
+#define BOARD_INITPINS_I2C0_3V3_SDA_NAME                          "I2C0_3V3_SDA"   /*!< Identifier */
 
 /* ENET1_MDC (coord A13), I2C4_3V3_SCL */
-#define BOARD_INITPINS_I2C4_3V3_SCL_PERIPHERAL                         DMA__I2C4   /*!< Device name: DMA__I2C4 */
-#define BOARD_INITPINS_I2C4_3V3_SCL_SIGNAL                               i2c_scl   /*!< DMA__I2C4 signal: i2c_scl */
-#define BOARD_INITPINS_I2C4_3V3_SCL_PIN_NAME                           ENET1_MDC   /*!< Pin name */
+/* Routed pin properties */
+#define BOARD_INITPINS_I2C4_3V3_SCL_PERIPHERAL                         DMA__I2C4   /*!< Peripheral name */
+#define BOARD_INITPINS_I2C4_3V3_SCL_SIGNAL                               i2c_scl   /*!< Signal name */
+#define BOARD_INITPINS_I2C4_3V3_SCL_PIN_NAME                           ENET1_MDC   /*!< Routed pin name */
 #define BOARD_INITPINS_I2C4_3V3_SCL_PIN_FUNCTION_ID               SC_P_ENET1_MDC   /*!< Pin function id */
 #define BOARD_INITPINS_I2C4_3V3_SCL_LABEL                         "I2C4_3V3_SCL"   /*!< Label */
-#define BOARD_INITPINS_I2C4_3V3_SCL_NAME                          "I2C4_3V3_SCL"   /*!< Identifier name */
+#define BOARD_INITPINS_I2C4_3V3_SCL_NAME                          "I2C4_3V3_SCL"   /*!< Identifier */
 
 /* ENET1_MDIO (coord C13), I2C4_3V3_SDA */
-#define BOARD_INITPINS_I2C4_3V3_SDA_PERIPHERAL                         DMA__I2C4   /*!< Device name: DMA__I2C4 */
-#define BOARD_INITPINS_I2C4_3V3_SDA_SIGNAL                               i2c_sda   /*!< DMA__I2C4 signal: i2c_sda */
-#define BOARD_INITPINS_I2C4_3V3_SDA_PIN_NAME                          ENET1_MDIO   /*!< Pin name */
+/* Routed pin properties */
+#define BOARD_INITPINS_I2C4_3V3_SDA_PERIPHERAL                         DMA__I2C4   /*!< Peripheral name */
+#define BOARD_INITPINS_I2C4_3V3_SDA_SIGNAL                               i2c_sda   /*!< Signal name */
+#define BOARD_INITPINS_I2C4_3V3_SDA_PIN_NAME                          ENET1_MDIO   /*!< Routed pin name */
 #define BOARD_INITPINS_I2C4_3V3_SDA_PIN_FUNCTION_ID              SC_P_ENET1_MDIO   /*!< Pin function id */
 #define BOARD_INITPINS_I2C4_3V3_SDA_LABEL                         "I2C4_3V3_SDA"   /*!< Label */
-#define BOARD_INITPINS_I2C4_3V3_SDA_NAME                          "I2C4_3V3_SDA"   /*!< Identifier name */
+#define BOARD_INITPINS_I2C4_3V3_SDA_NAME                          "I2C4_3V3_SDA"   /*!< Identifier */
 
 /* UART0_RTS_B (number AU45), BB_UART2_RX/J20A[28] */
-#define BOARD_INITPINS_BB_UART2_RX_PERIPHERAL                         DMA__UART2   /*!< Device name: DMA__UART2 */
-#define BOARD_INITPINS_BB_UART2_RX_SIGNAL                                uart_rx   /*!< DMA__UART2 signal: uart_rx */
-#define BOARD_INITPINS_BB_UART2_RX_PIN_NAME                          UART0_RTS_B   /*!< Pin name */
+/* Routed pin properties */
+#define BOARD_INITPINS_BB_UART2_RX_PERIPHERAL                         DMA__UART2   /*!< Peripheral name */
+#define BOARD_INITPINS_BB_UART2_RX_SIGNAL                                uart_rx   /*!< Signal name */
+#define BOARD_INITPINS_BB_UART2_RX_PIN_NAME                          UART0_RTS_B   /*!< Routed pin name */
 #define BOARD_INITPINS_BB_UART2_RX_PIN_FUNCTION_ID              SC_P_UART0_RTS_B   /*!< Pin function id */
 #define BOARD_INITPINS_BB_UART2_RX_LABEL                  "BB_UART2_RX/J20A[28]"   /*!< Label */
-#define BOARD_INITPINS_BB_UART2_RX_NAME                            "BB_UART2_RX"   /*!< Identifier name */
+#define BOARD_INITPINS_BB_UART2_RX_NAME                            "BB_UART2_RX"   /*!< Identifier */
 
 /* UART0_CTS_B (number AW49), BB_UART2_TX/J20A[29] */
-#define BOARD_INITPINS_BB_UART2_TX_PERIPHERAL                         DMA__UART2   /*!< Device name: DMA__UART2 */
-#define BOARD_INITPINS_BB_UART2_TX_SIGNAL                                uart_tx   /*!< DMA__UART2 signal: uart_tx */
-#define BOARD_INITPINS_BB_UART2_TX_PIN_NAME                          UART0_CTS_B   /*!< Pin name */
+/* Routed pin properties */
+#define BOARD_INITPINS_BB_UART2_TX_PERIPHERAL                         DMA__UART2   /*!< Peripheral name */
+#define BOARD_INITPINS_BB_UART2_TX_SIGNAL                                uart_tx   /*!< Signal name */
+#define BOARD_INITPINS_BB_UART2_TX_PIN_NAME                          UART0_CTS_B   /*!< Routed pin name */
 #define BOARD_INITPINS_BB_UART2_TX_PIN_FUNCTION_ID              SC_P_UART0_CTS_B   /*!< Pin function id */
 #define BOARD_INITPINS_BB_UART2_TX_LABEL                  "BB_UART2_TX/J20A[29]"   /*!< Label */
-#define BOARD_INITPINS_BB_UART2_TX_NAME                            "BB_UART2_TX"   /*!< Identifier name */
+#define BOARD_INITPINS_BB_UART2_TX_NAME                            "BB_UART2_TX"   /*!< Identifier */
 
 /*!
  * @addtogroup pin_mux
@@ -87,7 +93,7 @@ void BOARD_InitBootPins(void);
  * @param ipc scfw ipchandle.
  *
  */
-void BOARD_InitPins(sc_ipc_t ipc);                         /*!< Function assigned for the core: Cortex-M4F[cm4_1] */
+void BOARD_InitPins(sc_ipc_t ipc);                         /*!< Function assigned for the core: Cortex-M4F[cm4_core1] */
 
 #if defined(__cplusplus)
 }

@@ -6,8 +6,8 @@ In the example, you can send characters to the console back and they will be pri
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -45,6 +45,3 @@ LPUART EDMA example
 Send back received data
 Echo every 8 characters
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

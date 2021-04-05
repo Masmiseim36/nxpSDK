@@ -16,8 +16,8 @@ address is then exported from the linker to the application.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.1
-- GCC ARM Embedded  7.3.1
+- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  8.50.9
 
 Hardware requirements
 =====================
@@ -96,5 +96,3 @@ get 3 (src: 0x1e)
 get 99 (src: 0x1e)
 get 101 (src: 0x1e)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================

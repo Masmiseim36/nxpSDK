@@ -10,8 +10,8 @@ This example uses the transactional API in ECSPI driver.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -72,6 +72,8 @@ ECSPI_master -- ECSPI_slave
  21 22 23 24 25 26 27 28 29 2A 2B 2C 2D 2E 2F 30
  31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F 40
  
+Start receive data from slave.
+
 ECSPI transfer all data matched! 
 
  Master received:
@@ -83,6 +85,3 @@ ECSPI transfer all data matched!
 
  Press any key to run again
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,7 +15,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DPR_ALIGN_UP(x, align) ((((x)-1U) | ((align)-1U)) + 1U)
+#define DPR_ALIGN_UP(x, align) ((((uint32_t)(x)-1U) | ((align)-1U)) + 1U)
 
 /*******************************************************************************
  * Prototypes

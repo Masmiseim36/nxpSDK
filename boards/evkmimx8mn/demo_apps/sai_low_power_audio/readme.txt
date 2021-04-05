@@ -9,8 +9,8 @@ If there is no audio palyback, M core will enter the STOP mode, and the whole SO
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -44,12 +44,10 @@ Prepare the Demo
 ******************
 NOTE
 ******************
-1.  The 16/32bit for PCM Music stream are supported.
+1.  The 16/24/32bits for PCM Music stream are supported.
 2.  Since the music files are typically large, users could create a new large size patition in the SD card to place the music files.
-3.  After M core running, please make sure the linux kernel is boot up, then press "s" or "S" to start the demo.
-4.  If there is no audio playback, the M core will enter the STOP mode.
-5.  The M core can be waked up when A core begins to playback using "aplay" command.
-6.  Please make sure there exists xxx.wav file in the SD card.
+3.  After M core running, please boot the linux kernel to create the rpmsg channel between A core and M core.
+4.  Please make sure there exists xxx.wav file in the SD card.
     If the music file is placed at the Windows FAT32 paritions, after the linux kernel boots up and logs on as root,
     using the "mount /dev/mmcblk1p1 /mnt" and then go to "/mnt" folder to playabck the music using the playback command.
     If the music file is placed at the Linux paritions, eg "/home", could playback the music directly using the playback command. 
@@ -57,17 +55,29 @@ NOTE
 ******************
 Playback command
 ******************
+Note:
+1. Please use the command "cat /proc/asound/cards" to check the wm8524 sound card number.
+E.g: Type command:
+        ~# cat /proc/asound/cards
+     The available sound cards can be shown:
+     0 [wm8524audio    ]: wm8524-audio - wm8524-audio
+                          wm8524-audio
+     1 [imxspdif       ]: imx-spdif - imx-spdif
+                          imx-spdif
+     2 [imxaudiomicfil ]: imx-audio-micfi - imx-audio-micfil
+                          imx-audio-micfil
+
+Then the wm8524 sound number is 0.
+
 When playback the .wav file:
-1.  If want to test free run, could use command: 
-    aplay xxx.wav &;
-2.  If want to test pause command, could use command: 
-    aplay -Dhw:0 -i xxx.wav -N;
+1.  If want to playabck with pause/resume command, could use command: 
+      "aplay -Dhw:0 -i xxx.wav -N";
     press space key on the keyboard to pause, and press the space key again to resume.
-3.  If want to test play back with specified period-size, could use command:
-    "aplay -Dhw:0 --buffer-size=xxx --period-size=xxx xxx.wav -N &" or
-    "aplay -Dhw:0 --buffer-time=xxx --period-time=xxx xxx.wav -N &".
+2.  If want to playback with low power mode and specified period-size, could use command:
+      "aplay -Dhw:0 --buffer-size=xxx --period-size=xxx xxx.wav -N &" or
+      "aplay -Dhw:0 --buffer-time=xxx --period-time=xxx xxx.wav -N &".
     E.g: aplay -Dhw:0 --period-time=500000 --buffer-time=10000000 xxx.wav -N &
-4.  Support music playabck when A core enters suspend,using "echo mem > /sys/power/state" command.
+    Now please use "echo mem > /sys/power/state" command to make A core enter suspend mode and the playabck work normally.
 
 Running the demo
 ================
@@ -75,18 +85,14 @@ When the demo runs successfully, the log would be seen on the terminal like:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ####################  LOW POWER AUDIO TASK ####################
 
-    Build Time: Sep 17 2018--09:32:59 
+    Build Time: Apr  8 2020--15:27:22 
 ********************************
-Please:
-  1) Boot A53 kernel first to create the link between M core and A core;
-  2) Then press "s" or "S" to start the demo.
+ Wait the Linux kernel boot up to create the link between M core and A core.
+
 ********************************
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 M core is running now, please boot the linux kernel and use the command to playback music.
 
 
 
-
-Customization options
-=====================
 

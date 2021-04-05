@@ -6,8 +6,8 @@ this example will print the capture value.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -44,6 +44,3 @@ When the example runs successfully, following information can be seen on the ter
 GPT input capture example
 Once the input signal is received the input capture value is printed
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

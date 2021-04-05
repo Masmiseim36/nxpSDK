@@ -21,6 +21,13 @@
 
         THUMB
 
+LPM_ConfigDDRAlias
+        LDR     R0, =0xE0080030
+        MOVS    R1, #0x7E
+        STR     R1, [R0]
+        ISB
+        BX      LR
+
 LPM_Suspend
         ; Primask has been set before entering this function
         PUSH    {R4-R11, LR}                 ; Save task return context
@@ -51,6 +58,11 @@ LPM_Suspend
 
 LPM_Resume
         CPSID   I
+
+#ifdef __STARTUP_CONFIG_DDR_ALIAS
+        LDR     R1, =LPM_ConfigDDRAlias
+        BLX     R1
+#endif
 
         LDR     R0, =0x1FFE0000
         LDR     R1, =__BACKUP_REGION_START
@@ -89,6 +101,11 @@ LPM_Resume
 
 LPM_ResumeWithBackup
         CPSID   I
+
+#ifdef __STARTUP_CONFIG_DDR_ALIAS
+        LDR     R1, =LPM_ConfigDDRAlias
+        BLX     R1
+#endif
 
         ;Disable WDOG to avoid WDOG expire during Mem resume.
         LDR    R0, =0x41420000               ;WDOG base

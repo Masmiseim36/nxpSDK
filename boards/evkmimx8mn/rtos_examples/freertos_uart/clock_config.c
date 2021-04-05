@@ -74,13 +74,18 @@ void BOARD_BootClockRUN(void)
     /* switch AHB NOC root to 24M first in order to configure the SYSTEM PLL1. */
     CLOCK_SetRootMux(kCLOCK_RootAhb, kCLOCK_AhbRootmuxOsc24M);
 
-    /* switch AXI M7 root to 24M first in order to configure the SYSTEM PLL2. */
+    /* switch AXI M7 root to 24M first in order to configure the SYSTEM PLL3. */
     CLOCK_SetRootMux(kCLOCK_RootM7, kCLOCK_M7RootmuxOsc24M);
 
     /* Init Audio PLL1/Audio PLL2 */
     CLOCK_InitAudioPll1(&g_audioPll1Config); /* init AUDIO PLL1 run at 393215996HZ */
     CLOCK_InitAudioPll2(&g_audioPll2Config); /* init AUDIO PLL2 run at 361267197HZ */
 
+    /* As ROM not enables PLL3 by default, enable PLL3 to 600M if A core not set it. */
+    if (CLOCK_IsPllBypassed(CCM_ANALOG, kCLOCK_SysPll3InternalPll1BypassCtrl) == 1)
+    {
+        CLOCK_InitSysPll3(&g_sysPll3Config);
+    }
     CLOCK_SetRootDivider(kCLOCK_RootM7, 1U, 1U);              /* Set M7 root clock freq to 600M / 1 = 600M */
     CLOCK_SetRootMux(kCLOCK_RootM7, kCLOCK_M7RootmuxSysPll3); /* switch cortex-m7 to SYSTEM PLL3 */
 

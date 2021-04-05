@@ -25,6 +25,14 @@
         .extern  LPM_SystemResume
         .extern  __BACKUP_REGION_START
 
+.type LPM_ConfigDDRAlias, %function
+LPM_ConfigDDRAlias:
+        LDR     R0, =0xE0080030
+        MOVS    R1, #0x7E
+        STR     R1, [R0]
+        ISB
+        BX      LR
+
 .type LPM_Suspend, %function      
 LPM_Suspend:
         /* Primask has been set before entering this function */
@@ -58,6 +66,10 @@ LPM_Suspend:
 LPM_Resume:
         CPSID   I
 
+#ifdef __STARTUP_CONFIG_DDR_ALIAS
+        LDR     R1, =LPM_ConfigDDRAlias
+        BLX     R1
+#endif
         LDR     R0, =0x1FFE0000
         LDR     R1, =__BACKUP_REGION_START
         LDMIA   R1, {R4-R11}
@@ -95,6 +107,10 @@ LPM_Resume:
 .type LPM_ResumeWithBackup, %function
 LPM_ResumeWithBackup:
         CPSID   I
+#ifdef __STARTUP_CONFIG_DDR_ALIAS
+        LDR     R1, =LPM_ConfigDDRAlias
+        BLX     R1
+#endif
 
         /* Disable WDOG */
         LDR    R0, =0x41420000               /* WDOG base */

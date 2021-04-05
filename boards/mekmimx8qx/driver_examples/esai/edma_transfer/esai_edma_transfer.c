@@ -4,14 +4,14 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_esai_edma.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 #include "fsl_codec_common.h"
 #include "fsl_cs42888.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_lpuart.h"
 #include "fsl_irqsteer.h"
 #include "fsl_gpio.h"
@@ -19,34 +19,34 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_ESAI ADMA__ESAI0
+#define EXAMPLE_ESAI           ADMA__ESAI0
 #define ESAI_SOURCE_CLOCK_FREQ (49152000)
-#define ESAI_MASTER_CLOCK_FREQ (1228800000)
-#define EXAMPLE_I2C (CM4__LPI2C)                                 /*Should change to MIPI_CSI_I2C0*/
-#define I2C_SOURCE_CLOCK_FREQ CLOCK_GetIpFreq(kCLOCK_M4_0_Lpi2c) /*MIPI_CSI*/
-#define EXAMPLE_DMA (ADMA__EDMA0)
-#define EXAMPLE_TX_CHANNEL (7)
-#define EXAMPLE_RX_CHANNEL (6)
-#define CODEC_CS42888 (1)
-#define ESAI_TX_CHANNEL (2)
+#define ESAI_MASTER_CLOCK_FREQ (12288000)
+#define EXAMPLE_I2C            (CM4__LPI2C)                       /*Should change to MIPI_CSI_I2C0*/
+#define I2C_SOURCE_CLOCK_FREQ  CLOCK_GetIpFreq(kCLOCK_M4_0_Lpi2c) /*MIPI_CSI*/
+#define EXAMPLE_DMA            (ADMA__EDMA0)
+#define EXAMPLE_TX_CHANNEL     (7)
+#define EXAMPLE_RX_CHANNEL     (6)
+#define CODEC_CS42888          (1)
+#define ESAI_TX_CHANNEL        (2)
 
-#define EXAMPLE_IOEXP_LPI2C_BAUDRATE (400000)
+#define EXAMPLE_IOEXP_LPI2C_BAUDRATE               (400000)
 #define EXAMPLE_IOEXP_LPI2C_MASTER_CLOCK_FREQUENCY SC_133MHZ
-#define EXAMPLE_IOEXP_LPI2C_MASTER ADMA__LPI2C1
-#define EXAMPLE_I2C_EXPANSION_B_ADDR (0x1D)
+#define EXAMPLE_IOEXP_LPI2C_MASTER                 ADMA__LPI2C1
+#define EXAMPLE_I2C_EXPANSION_B_ADDR               (0x1D)
 
 /*! @brief PCA9557 Registers address definition. */
-#define PCA9557_REG_INTPUT_PORT (0x00)
-#define PCA9557_REG_OUTPUT_PORT (0x01)
+#define PCA9557_REG_INTPUT_PORT        (0x00)
+#define PCA9557_REG_OUTPUT_PORT        (0x01)
 #define PCA9557_REG_POLARITY_INVERSION (0x02)
-#define PCA9557_REG_CONFIGURATION (0x03)
+#define PCA9557_REG_CONFIGURATION      (0x03)
 
 #define EXAMPLE_I2C_SWITCH_ADDR (0x71)
 #define OVER_SAMPLE_RATE (256U)
-#define SAMPLE_RATE (kESAI_SampleRate48KHz)
-#define BUFFER_SIZE (1024)
-#define BUFFER_NUM (4)
-#define PLAY_COUNT (5000)
+#define SAMPLE_RATE      (kESAI_SampleRate48KHz)
+#define BUFFER_SIZE      (1024)
+#define BUFFER_NUM       (4)
+#define PLAY_COUNT       (5000)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

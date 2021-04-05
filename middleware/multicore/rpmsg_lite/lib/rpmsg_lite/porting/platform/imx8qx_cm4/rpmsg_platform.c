@@ -22,8 +22,8 @@
 
 #define APP_MU_IRQ_PRIORITY (3U)
 
-#define APP_M4_MU LSIO__MU5_B
-#define APP_M4_MU_IRQn LSIO_MU5_INT_B_IRQn
+#define APP_M4_MU           LSIO__MU5_B
+#define APP_M4_MU_IRQn      LSIO_MU5_INT_B_IRQn
 #define APP_M4_MU_NVIC_IRQn IRQSTEER_3_IRQn
 
 /* NVIC IRQn that correspond to the LSIO MU IRQn is obtained with the following

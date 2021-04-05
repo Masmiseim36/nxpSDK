@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, 2019 NXP
+ * Copyright 2017, 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,7 +21,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief CI_PI driver version. */
-#define FSL_CI_PI_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+#define FSL_CI_PI_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*!
@@ -153,7 +153,7 @@ static inline void CI_PI_Reset(CI_PI_CSR_Type *base)
     base->CSI_CTRL_REG.SET = CI_PI_CSR_CSI_CTRL_REG_SOFTRST_MASK;
 
     i = 0x10;
-    while (i--)
+    while (0U != (i--))
     {
         __NOP();
     }

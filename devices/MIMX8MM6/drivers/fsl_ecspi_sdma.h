@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -19,8 +19,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief ECSPI FreeRTOS driver version 2.0.1. */
-#define FSL_ECSPI_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief ECSPI FreeRTOS driver version. */
+#define FSL_ECSPI_FREERTOS_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*@}*/
 
 typedef struct _ecspi_sdma_handle ecspi_sdma_handle_t;

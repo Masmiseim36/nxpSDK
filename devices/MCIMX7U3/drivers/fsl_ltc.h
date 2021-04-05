@@ -20,9 +20,9 @@
  */
 /*! @name Driver version */
 /*@{*/
-/*! @brief LTC driver version. Version 2.0.12.
+/*! @brief LTC driver version. Version 2.0.15.
  *
- * Current version: 2.0.12
+ * Current version: 2.0.14
  *
  * Change log:
  * - Version 2.0.1
@@ -61,8 +61,16 @@
  * - Version 2.0.12
  *   - Fix AES Decrypt in CBC modes fail when used kLTC_DecryptKey.
  *
+ * - Version 2.0.13
+ *   - Add feature macro FSL_FEATURE_LTC_HAS_NO_CLOCK_CONTROL_BIT into LTC_Init function.
+ *
+ * - Version 2.0.14
+ *   - Add feature macro FSL_FEATURE_LTC_HAS_NO_CLOCK_CONTROL_BIT into LTC_Deinit function.
+ *
+ * - Version 2.0.15
+ *   - Fix MISRA-2012 issues
  */
-#define FSL_LTC_DRIVER_VERSION (MAKE_VERSION(2, 0, 12))
+#define FSL_LTC_DRIVER_VERSION (MAKE_VERSION(2, 0, 15))
 /*@}*/
 /*! @} */
 

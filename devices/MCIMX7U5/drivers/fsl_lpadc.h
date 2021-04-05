@@ -23,8 +23,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPADC driver version 2.2.2. */
-#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 2, 2))
+/*! @brief LPADC driver version 2.3.0. */
+#define FSL_LPADC_DRIVER_VERSION (MAKE_VERSION(2, 3, 0))
 /*@}*/
 
 /*!
@@ -832,19 +832,6 @@ void LPADC_DoOffsetCalibration(ADC_Type *base);
 void LPADC_DoAutoCalibration(ADC_Type *base);
 #endif /* FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ */
 #endif /* FSL_FEATURE_LPADC_HAS_CTRL_CALOFS */
-
-#if defined(FSL_FEATURE_LPADC_HAS_INTERNAL_TEMP_SENSOR) && FSL_FEATURE_LPADC_HAS_INTERNAL_TEMP_SENSOR
-/*!
- * brief Measure the temperature.
- *
- * param base  LPADC peripheral base address.
- * param commandId ID for command in command buffer. Typically, the available value range is 1 - 15.
- * param index Result FIFO index.
- *
- * @return Temperature value.
- */
-float LPADC_MeasureTemperature(ADC_Type *base, uint32_t commandId, uint32_t index);
-#endif /* FSL_FEATURE_LPADC_HAS_INTERNAL_TEMP_SENSOR */
 
 /* @} */
 

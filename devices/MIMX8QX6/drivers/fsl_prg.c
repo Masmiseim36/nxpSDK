@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -56,9 +56,9 @@ void PRG_SetBufferConfig(PRG_Type *base, const prg_buffer_config_t *config)
 {
     assert(config != NULL);
 
-    base->PRG_HEIGHT.RW = config->height - 1U;
-    base->PRG_WIDTH.RW  = config->width - 1U;
-    base->PRG_STRIDE.RW = config->strideBytes - 1U;
+    base->PRG_HEIGHT.RW = (uint32_t)config->height - 1U;
+    base->PRG_WIDTH.RW  = (uint32_t)config->width - 1U;
+    base->PRG_STRIDE.RW = (uint32_t)config->strideBytes - 1U;
     base->PRG_OFFSET.RW = 0U;
     base->PRG_CTRL.RW   = (base->PRG_CTRL.RW & ~PRG_PRG_CTRL_DES_DATA_TYPE_MASK) |
                         (PRG_PRG_CTRL_DES_DATA_TYPE(config->dataType) | PRG_PRG_CTRL_SHADOW_LOAD_MODE_MASK);

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -24,8 +24,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LTC EDMA driver version. Version 2.0.10. */
-#define FSL_LTC_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 10))
+/*! @brief LTC EDMA driver version. Version 2.0.15. */
+#define FSL_LTC_EDMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 15))
 /*@}*/
 
 /* @brief The LTC eDMA handle type. */

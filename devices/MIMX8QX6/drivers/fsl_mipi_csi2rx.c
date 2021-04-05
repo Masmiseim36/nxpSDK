@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, 2019 NXP
+ * Copyright 2017, 2019-2020 NXP
  * All rights reserved.
  *
  *
@@ -28,8 +28,8 @@
 #endif
 
 #if (defined(FSL_FEATURE_CSI2RX_CSR_OFFSET) && FSL_FEATURE_CSI2RX_CSR_OFFSET)
-#define CSI2RX_GET_CSR(csi_base) (MIPI_CSI_CSR_Type *)((uint32_t)(csi_base)-FSL_FEATURE_CSI2RX_CSR_OFFSET)
-#define MIPI_CSI2RX_HAS_CSR 1
+#define CSI2RX_GET_CSR(csi_base) (MIPI_CSI_CSR_Type *)((uint32_t)(csi_base) - (uint32_t)FSL_FEATURE_CSI2RX_CSR_OFFSET)
+#define MIPI_CSI2RX_HAS_CSR      1
 #else
 #define MIPI_CSI2RX_HAS_CSR 0
 #include "fsl_soc_mipi_csi2rx.h"
@@ -143,7 +143,7 @@ static void MIPI_CSI2RX_InitInterface(MIPI_CSI2RX_Type *base, uint8_t tHsSettle_
                     MIPI_CSI_CSR_PHY_CTRL_PD_MASK | MIPI_CSI_CSR_PHY_CTRL_DDRCLK_EN_MASK | /* Enable the DDR clock. */
                     MIPI_CSI_CSR_PHY_CTRL_CONTI_CLK_MODE_MASK |                            /* Continue clock. */
                     MIPI_CSI_CSR_PHY_CTRL_RTERM_SEL_MASK | /*  LPRX voltage level enable HS termination */
-                    MIPI_CSI_CSR_PHY_CTRL_PRG_RXHS_SETTLE(tHsSettle_EscClk - 1U); /* T(HS-SETTLE) */
+                    MIPI_CSI_CSR_PHY_CTRL_PRG_RXHS_SETTLE(tHsSettle_EscClk - 1UL); /* T(HS-SETTLE) */
 
     /* Don't support interlace currently. */
     csr->VC_INTERLACED = 0U;
@@ -164,7 +164,7 @@ static void MIPI_CSI2RX_InitInterface(MIPI_CSI2RX_Type *base, uint8_t tHsSettle_
 
 #if defined(MIPI_CSI_CSR_PLM_CTRL_PL_CLOCK_RUNNING_MASK)
     /* Wait for PL clock active. */
-    while (0 != (csr->PLM_CTRL & MIPI_CSI_CSR_PLM_CTRL_PL_CLOCK_RUNNING_MASK))
+    while (0UL != (csr->PLM_CTRL & MIPI_CSI_CSR_PLM_CTRL_PL_CLOCK_RUNNING_MASK))
     {
     }
 #endif
@@ -219,25 +219,25 @@ uint32_t CSI2RX_GetInstance(MIPI_CSI2RX_Type *base)
  */
 void CSI2RX_Init(MIPI_CSI2RX_Type *base, const csi2rx_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* un-gate clock */
-    CLOCK_EnableClock(s_csi2rxClocks[CSI2RX_GetInstance(base)]);
+    (void)CLOCK_EnableClock(s_csi2rxClocks[CSI2RX_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
     MIPI_CSI2RX_SoftwareReset(base, false);
 
-    base->CSI2RX_CFG_NUM_LANES = config->laneNum - 1;
-    base->CSI2RX_CFG_DISABLE_DATA_LANES =
-        MIPI_CSI2RX_CSI2RX_CFG_NUM_LANES_csi2rx_cfg_num_lanes_MASK & ~((1U << (uint32_t)config->laneNum) - 1);
+    CSI2RX_REG_CFG_NUM_LANES(base) = config->laneNum - 1UL;
+    CSI2RX_REG_CFG_DISABLE_DATA_LANES(base) =
+        MIPI_CSI2RX_CSI2RX_CFG_NUM_LANES_csi2rx_cfg_num_lanes_MASK & ~((1UL << (uint32_t)config->laneNum) - 1UL);
 
     /* Don't disable data types. */
-    base->CSI2RX_CFG_DISABLE_PAYLOAD_0 = 0;
-    base->CSI2RX_CFG_DISABLE_PAYLOAD_1 = 0;
+    CSI2RX_REG_CFG_DISABLE_PAYLOAD_0(base) = 0;
+    CSI2RX_REG_CFG_DISABLE_PAYLOAD_1(base) = 0;
 
     /* Disable all interrupts. */
-    base->CSI2RX_IRQ_MASK = MIPI_CSI2RX_CSI2RX_IRQ_MASK_csi2rx_irq_mask_MASK;
+    CSI2RX_REG_IRQ_MASK(base) = MIPI_CSI2RX_CSI2RX_IRQ_MASK_csi2rx_irq_mask_MASK;
 
     MIPI_CSI2RX_InitInterface(base, config->tHsSettle_EscClk);
 }
@@ -255,6 +255,6 @@ void CSI2RX_Deinit(MIPI_CSI2RX_Type *base)
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* gate clock */
-    CLOCK_DisableClock(s_csi2rxClocks[CSI2RX_GetInstance(base)]);
+    (void)CLOCK_DisableClock(s_csi2rxClocks[CSI2RX_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }

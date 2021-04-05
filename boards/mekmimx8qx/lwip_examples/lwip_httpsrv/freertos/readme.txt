@@ -8,8 +8,8 @@ page back to the PC.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -61,10 +61,10 @@ Running the demo
 
 Modifying content of static web pages
 To modify content available through the web server you must complete following steps:
-  1. Modify, add or delete files in folder "middleware\lwip\src\apps\httpsrv\mkfs\web_pages".
+  1. Modify, add or delete files in folder "boards\<board_name>\lwip_examples\lwip_httpsrv_freertos\webpage".
   2. Run the script file "middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl <directory name>" to generate new "httpsrv_fs_data.c".
-	 For example:
-		C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs> mkfs.pl webpage
+     Make sure to execute it from a folder where the file "httpsrv_fs_data.c" is. For example:
+        C:\sdk\boards\<board_name>\lwip_examples\lwip_httpsrv_freertos> C:\sdk\middleware\lwip\src\apps\httpsrv\mkfs\mkfs.pl webpage
 		Processing file webpage/auth.html
 		Processing file webpage/cgi.html
 		Processing file webpage/favicon.ico
@@ -77,8 +77,5 @@ To modify content available through the web server you must complete following s
 		Processing file webpage/ssi.shtml
 		Processing file webpage/welcome.html
 		Done.
-  3. Overwrite the middleware\lwip\src\apps\httpsrv\httpsrv_fs_data.c file by the new generated middleware\lwip\src\apps\httpsrv\mkfs\httpsrv_fs_data.c file.
-  4. Re-compile the HTTP server application example and download it to your board. 
-Customization options
-=====================
-
+  3. Make sure the "httpsrv_fs_data.c" file has been overwritten with the newly generated content.
+  4. Re-compile the HTTP server application example and download it to your board.

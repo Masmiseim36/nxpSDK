@@ -6,13 +6,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_pdm.h"
 #include "fsl_sai.h"
 #include "fsl_debug_console.h"
 #include "fsl_codec_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 #include "fsl_gpio.h"
 #include "fsl_wm8524.h"
@@ -20,39 +20,40 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDM PDM
-#define DEMO_PDM_CLK_FREQ (24576000U)
-#define DEMO_PDM_FIFO_WATERMARK (4U)
-#define DEMO_PDM_QUALITY_MODE kPDM_QualityModeHigh
-#define DEMO_PDM_CIC_OVERSAMPLE_RATE (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_LEFT (0U)
+#define DEMO_PDM                      PDM
+#define DEMO_PDM_CLK_FREQ             (24576000U)
+#define DEMO_PDM_FIFO_WATERMARK       (4U)
+#define DEMO_PDM_QUALITY_MODE         kPDM_QualityModeHigh
+#define DEMO_PDM_CIC_OVERSAMPLE_RATE  (0U)
+#define DEMO_PDM_ENABLE_CHANNEL_LEFT  (0U)
 #define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
-#define DEMO_PDM_SAMPLE_CLOCK_RATE (1536000U * 4U) /* 6.144MHZ */
+#define DEMO_PDM_SAMPLE_CLOCK_RATE    (1536000U * 4U) /* 6.144MHZ */
+#define DEMO_PDM_HWVAD_SIGNAL_GAIN    0
 
-#define DEMO_SAI (I2S3)
-#define DEMO_SAI_CLK_FREQ (24576000U)
+#define DEMO_SAI                 (I2S3)
+#define DEMO_SAI_CLK_FREQ        (24576000U)
 #define DEMO_SAI_FIFO_WATER_MARK (FSL_FEATURE_SAI_FIFO_COUNT / 2U)
-#define DEMO_SAI_CLOCK_SOURCE (1U)
+#define DEMO_SAI_CLOCK_SOURCE    (kSAI_BclkSourceMclkDiv)
+#define DEMO_SAI_MASTER_SLAVE    kSAI_Master
+#define DEMO_SAI_CHANNEL         0U
 
-#define DEMO_CODEC_WM8524 1
-#define DEMO_CODEC_BUS_PIN (NULL)
-#define DEMO_CODEC_BUS_PIN_NUM (0)
-#define DEMO_CODEC_MUTE_PIN (GPIO5)
+#define DEMO_CODEC_WM8524       1
+#define DEMO_CODEC_BUS_PIN      (NULL)
+#define DEMO_CODEC_BUS_PIN_NUM  (0)
+#define DEMO_CODEC_MUTE_PIN     (GPIO5)
 #define DEMO_CODEC_MUTE_PIN_NUM (21)
-#define BUFFER_SIZE (DEMO_PDM_FIFO_WATERMARK * 4)
-#define BUFFER_NUMBER (1024)
-/* demo audio sample rate */
-#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate48KHz)
-/* demo audio master clock */
+
+#define DEMO_AUDIO_SAMPLE_RATE  (kSAI_SampleRate48KHz)
 #define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
-/* demo audio data channel */
 #define DEMO_AUDIO_DATA_CHANNEL (2U)
-/* demo audio bit width */
-#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
+#define DEMO_AUDIO_BIT_WIDTH    kSAI_WordWidth16bits
+#define BUFFER_SIZE   (1024U)
+#define BUFFER_NUMBER (4U)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 void BOARD_WM8524_Mute_GPIO(uint32_t output);
+void BOARD_MasterClockConfig(void);
 static void saiCallback(I2S_Type *base, sai_handle_t *handle, status_t status, void *userData);
 /*******************************************************************************
  * Variables
@@ -63,7 +64,7 @@ static wm8524_config_t wm8524Config = {
     .protocol    = kWM8524_ProtocolI2S,
 };
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8524, .codecDevConfig = &wm8524Config};
-
+sai_master_clock_t mclkConfig;
 static sai_handle_t s_saiTxHandle = {0};
 static pdm_handle_t s_pdmHandle;
 SDK_ALIGN(static uint8_t s_buffer[BUFFER_SIZE * BUFFER_NUMBER], 4);
@@ -80,17 +81,7 @@ static pdm_channel_config_t channelConfig = {
     .cutOffFreq = kPDM_DcRemoverCutOff152Hz,
     .gain       = kPDM_DfOutputGain7,
 };
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-sai_master_clock_t mclkConfig = {
-#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
-    .mclkOutputEnable = true,
-#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
-    .mclkSource = kSAI_MclkSourceSysclk,
-#endif
-#endif
-};
-#endif
+
 codec_handle_t codecHandle;
 
 extern codec_config_t boardCodecConfig;
@@ -103,6 +94,12 @@ void BOARD_WM8524_Mute_GPIO(uint32_t output)
     GPIO_PinWrite(DEMO_CODEC_MUTE_PIN, DEMO_CODEC_MUTE_PIN_NUM, output);
 }
 
+void BOARD_MasterClockConfig(void)
+{
+    mclkConfig.mclkOutputEnable = true, mclkConfig.mclkHz = DEMO_AUDIO_MASTER_CLOCK;
+    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
+    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
+}
 static void saiCallback(I2S_Type *base, sai_handle_t *handle, status_t status, void *userData)
 {
     if (kStatus_SAI_TxError == status)
@@ -117,34 +114,17 @@ static void saiCallback(I2S_Type *base, sai_handle_t *handle, status_t status, v
 
 static void pdmCallback(PDM_Type *base, pdm_handle_t *handle, status_t status, void *userData)
 {
-    if (status == kStatus_PDM_FIFO_ERROR)
+    if ((status == kStatus_PDM_FIFO_ERROR) || (status == kStatus_PDM_Output_ERROR) || (status == kStatus_PDM_CLK_LOW))
     {
         /* handle error */
     }
-    else if (status == kStatus_PDM_CLK_LOW)
-    {
-        /* handle low frequency */
-    }
     else
     {
-        s_bufferValidBlock--;
+        if (s_bufferValidBlock)
+        {
+            s_bufferValidBlock--;
+        }
     }
-}
-
-void PDM_ERROR_IRQHandler(void)
-{
-    uint32_t fifoStatus = 0U;
-    if (PDM_GetStatus(DEMO_PDM) & PDM_STAT_LOWFREQF_MASK)
-    {
-        PDM_ClearStatus(DEMO_PDM, PDM_STAT_LOWFREQF_MASK);
-    }
-
-    fifoStatus = PDM_GetFifoStatus(DEMO_PDM);
-    if (fifoStatus)
-    {
-        PDM_ClearFIFOStatus(DEMO_PDM, fifoStatus);
-    }
-    __DSB();
 }
 
 /*!
@@ -181,11 +161,10 @@ int main(void)
     SAI_Init(DEMO_SAI);
     SAI_TransferTxCreateHandle(DEMO_SAI, &s_saiTxHandle, saiCallback, NULL);
     /* I2S mode configurations */
-    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
+    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
 
-#if defined DEMO_SAI_CLOCK_SOURCE
-    config.bitClock.bclkSource = (sai_bclk_source_t)DEMO_SAI_CLOCK_SOURCE;
-#endif
+    config.bitClock.bclkSource = DEMO_SAI_CLOCK_SOURCE;
+    config.masterSlave         = DEMO_SAI_MASTER_SLAVE;
 
     SAI_TransferTxSetConfig(DEMO_SAI, &s_saiTxHandle, &config);
 
@@ -194,28 +173,26 @@ int main(void)
                           DEMO_AUDIO_DATA_CHANNEL);
 
     /* master clock configurations */
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
-    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
-    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
-#endif
-    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
-#endif
+    BOARD_MasterClockConfig();
 
-    CODEC_Init(&codecHandle, &boardCodecConfig);
+    if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
+    {
+        assert(false);
+    }
 
     /* Set up pdm */
     PDM_Init(DEMO_PDM, &pdmConfig);
-    PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_LEFT, &channelConfig);
-    PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_RIGHT, &channelConfig);
     if (PDM_SetSampleRateConfig(DEMO_PDM, DEMO_PDM_CLK_FREQ, DEMO_AUDIO_SAMPLE_RATE) != kStatus_Success)
     {
         PRINTF("PDM configure sample rate failed.\r\n");
         return -1;
     }
-    PDM_Reset(DEMO_PDM);
     PDM_TransferCreateHandle(DEMO_PDM, &s_pdmHandle, pdmCallback, NULL);
+    PDM_TransferSetChannelConfig(DEMO_PDM, &s_pdmHandle, DEMO_PDM_ENABLE_CHANNEL_LEFT, &channelConfig,
+                                 FSL_FEATURE_PDM_FIFO_WIDTH);
+    PDM_TransferSetChannelConfig(DEMO_PDM, &s_pdmHandle, DEMO_PDM_ENABLE_CHANNEL_RIGHT, &channelConfig,
+                                 FSL_FEATURE_PDM_FIFO_WIDTH);
+    PDM_Reset(DEMO_PDM);
 
     while (1)
     {

@@ -10,6 +10,8 @@
 #include "task.h"
 #include "timers.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_asmc.h"
 #include "fsl_common.h"
@@ -27,72 +29,70 @@
 #include "svc/pad/pad_api.h"
 #include "imx8qx_pads.h"
 #include "app_srtm.h"
-#include "clock_config.h"
 #include "fsl_lpi2c.h"
 #include "fsl_lpuart.h"
-#include "pin_mux.h"
 #include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* LPIT related macro*/
-#define APP_LPIT_BASE CM4__LPIT
-#define APP_LPIT_IRQn M4_LPIT_IRQn
+#define APP_LPIT_BASE       CM4__LPIT
+#define APP_LPIT_IRQn       M4_LPIT_IRQn
 #define APP_LPIT_IRQHandler M4_LPIT_IRQHandler
-#define LPIT_SOURCECLOCK CLOCK_GetIpFreq(kCLOCK_M4_0_Lpit)
-#define APP_LPIT_IRQ_PRIO (5U)
+#define LPIT_SOURCECLOCK    CLOCK_GetIpFreq(kCLOCK_M4_0_Lpit)
+#define APP_LPIT_IRQ_PRIO   (5U)
 
 /*
  * ADMA_I2C1 is used to control PCA9646, PCA9557 to handle the RST pin for PCA6416
  * M4_I2C is used to control PCA6416 to handle the RST and STB pin for CAN XCVR TJA1043
  */
 #define APP_LPI2C_BAUDRATE (400000) /*in i2c example it is 100000*/
-#define APP_LPI2C_A ADMA__LPI2C1
-#define APP_LPI2C_B CM4__LPI2C
+#define APP_LPI2C_A        ADMA__LPI2C1
+#define APP_LPI2C_B        CM4__LPI2C
 
 /*PCA6416 I2C Register Map*/
-#define PCA6416_REG_INPUT_PORT_0 (0x0)
-#define PCA6416_REG_INPUT_PORT_1 (0x1)
-#define PCA6416_REG_OUTPUT_PORT_0 (0x2)
-#define PCA6416_REG_OUTPUT_PORT_1 (0x3)
+#define PCA6416_REG_INPUT_PORT_0              (0x0)
+#define PCA6416_REG_INPUT_PORT_1              (0x1)
+#define PCA6416_REG_OUTPUT_PORT_0             (0x2)
+#define PCA6416_REG_OUTPUT_PORT_1             (0x3)
 #define PCA6416_REG_POLARITY_INVERSION_PORT_0 (0x4)
 #define PCA6416_REG_POLARITY_INVERSION_PORT_1 (0x5)
-#define PCA6416_REG_CONFIGURATION_PORT_0 (0x6)
-#define PCA6416_REG_CONFIGURATION_PORT_1 (0x7)
+#define PCA6416_REG_CONFIGURATION_PORT_0      (0x6)
+#define PCA6416_REG_CONFIGURATION_PORT_1      (0x7)
 
 /*PCA9557 I2C Register Map*/
-#define PCA9557_REG_INTPUT_PORT (0x00)
-#define PCA9557_REG_OUTPUT_PORT (0x01)
+#define PCA9557_REG_INTPUT_PORT        (0x00)
+#define PCA9557_REG_OUTPUT_PORT        (0x01)
 #define PCA9557_REG_POLARITY_INVERSION (0x02)
-#define PCA9557_REG_CONFIGURATION (0x03)
+#define PCA9557_REG_CONFIGURATION      (0x03)
 
 /*Board I2C Addresses*/
 #define APP_I2C_EXPANSION_CAN_ADDR (0x20)
-#define APP_I2C_EXPANSION_A_ADDR (0x1A)
-#define APP_I2C_SWITCH_ADDR (0x71)
+#define APP_I2C_EXPANSION_A_ADDR   (0x1A)
+#define APP_I2C_SWITCH_ADDR        (0x71)
 
 /*GPIO used*/
 #define PCA9557_RST_GPIO LSIO__GPIO1 /*SPI2_SDO, GPIO1, IO1, ALT4*/
-#define PCA9557_RST_PIN 1
+#define PCA9557_RST_PIN  1
 
 #define BOARD_RESET_DELAY_CYCLE 1500000
 
 /* FlexCAN */
-#define APP_WAKEUP_CAN_NAME "FlexCAN0"
+#define APP_WAKEUP_CAN_NAME    "FlexCAN0"
 #define APP_WAKEUP_BUTTON_NAME "SW3 PWR ON"
-#define APP_WAKEUP_PAD_NAME "UART RX Pad"
-#define APP_WAKEUP_PAD SC_P_ADC_IN2
+#define APP_WAKEUP_PAD_NAME    "UART RX Pad"
+#define APP_WAKEUP_PAD         SC_P_ADC_IN2
 
-#define APP_CAN ADMA__CAN0
-#define APP_CAN_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_DMA_Can0)
-#define APP_CAN_IRQn ADMA_FLEXCAN0_INT_IRQn
-#define APP_CAN_IRQ_PRIO (4U)
+#define APP_CAN                ADMA__CAN0
+#define APP_CAN_CLK_FREQ       CLOCK_GetIpFreq(kCLOCK_DMA_Can0)
+#define APP_CAN_IRQn           ADMA_FLEXCAN0_INT_IRQn
+#define APP_CAN_IRQ_PRIO       (4U)
 #define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc0)
 
 #define SET_CAN_QUANTUM 1
-#define PSEG1 3
-#define PSEG2 2
-#define PROPSEG 3
+#define PSEG1           3
+#define PSEG2           2
+#define PROPSEG         3
 
 #define RTN_ERR(X)                        \
     if ((X) != SC_ERR_NONE)               \
@@ -113,7 +113,7 @@ static const char *s_modeNames[] = {"RUN", "WAIT", "STOP", "VLPR", "VLPW", "VLPS
  * We use 32KHz Clk divided by 256 as WDOG Clock Source
  */
 #define WDOG_TIMEOUT_1S (32768 / 256)
-#define WDOG_TIMEOUT (5 * WDOG_TIMEOUT_1S)
+#define WDOG_TIMEOUT    (5 * WDOG_TIMEOUT_1S)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -207,8 +207,7 @@ static void BOARD_ConfigureIOExpander(void)
          * Open Channel 3 on PCA9646
          */
         txBuffer[0] = 0x8;
-        BOARD_LPI2C_SendWithoutSubAddr(APP_LPI2C_A, APP_I2C_SWITCH_ADDR, txBuffer, 1, false);
-
+        BOARD_LPI2C_SendWithoutSubAddr(APP_LPI2C_A, APP_LPI2C_BAUDRATE, APP_I2C_SWITCH_ADDR, txBuffer, 1, false);
         /*
          * Opereate on PCA9557 IO03 to reset PCA6416
          *  - Set IO03 as output

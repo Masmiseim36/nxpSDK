@@ -18,9 +18,9 @@
 #define QSPI_CLK_FREQ                                                                      \
     CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootQspi)) / \
         (CLOCK_GetRootPostDivider(kCLOCK_RootQspi)) / 8 /* SYSTEM PLL1 DIV8 */
-#define FLASH_PAGE_SIZE 256U
-#define FLASH_SECTORE_SIZE 0x10000
-#define FLASH_SIZE 0x10000000U
+#define FLASH_PAGE_SIZE        256U
+#define FLASH_SECTORE_SIZE     0x10000
+#define FLASH_SIZE             0x10000000U
 #define QSPI_ERASE_ADDR_OFFSET 0x40000U
 /*${macro:end}*/
 

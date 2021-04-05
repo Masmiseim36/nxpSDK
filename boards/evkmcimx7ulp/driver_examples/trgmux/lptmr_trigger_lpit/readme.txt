@@ -8,8 +8,8 @@ A message would be printed on the serial terminal.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -58,6 +58,3 @@ LPIT interrupt No.12
 LPIT interrupt No.13 
 ......
 ~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

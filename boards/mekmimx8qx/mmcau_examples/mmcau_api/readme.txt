@@ -8,8 +8,8 @@ data using AES-CBC, DES3-CBC and Hash algorithms MD5, SHA1 and SHA256.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -110,6 +110,3 @@ Computed MD5 at speed 17.437075 MB/s:
 
 .............. THE  END  OF  THE  MMCAU  DRIVER  EXAMPLE ................................
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

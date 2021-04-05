@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -14,6 +14,11 @@
 
 #if LWIP_IPV4 && LWIP_RAW && LWIP_NETCONN && LWIP_DHCP && LWIP_DNS
 
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
+#include "fsl_phy.h"
+
 #include "lwip/api.h"
 #include "lwip/apps/mqtt.h"
 #include "lwip/dhcp.h"
@@ -24,16 +29,16 @@
 #include "lwip/timeouts.h"
 #include "netif/ethernet.h"
 #include "enet_ethernetif.h"
+#include "lwip_mqtt_id.h"
 
 #include "ctype.h"
+#include "stdio.h"
 
-#include "board.h"
-
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_lpuart.h"
 #include "fsl_debug_console.h"
 #include "fsl_irqsteer.h"
+#include "fsl_phyar8031.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -47,8 +52,14 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CONECTIVITY_AhbClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyar8031_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CONECTIVITY_AhbClk)
 
 /* ENET IRQ priority. Used in FreeRTOS. */
 #ifndef ENET_PRIORITY
@@ -60,11 +71,8 @@
 #define EXAMPLE_NETIF_INIT_FN ethernetif0_init
 #endif /* EXAMPLE_NETIF_INIT_FN */
 
-/*! @brief MQTT client ID. */
-#define EXAMPLE_MQTT_CLIENT_ID "lwip_client-123"
-
 /*! @brief MQTT server host name or IP address. */
-#define EXAMPLE_MQTT_SERVER_HOST "test.mosquitto.org"
+#define EXAMPLE_MQTT_SERVER_HOST "broker.hivemq.com"
 
 /*! @brief MQTT server port number. */
 #define EXAMPLE_MQTT_SERVER_PORT 1883
@@ -85,12 +93,18 @@ static void connect_to_mqtt(void *ctx);
  * Variables
  ******************************************************************************/
 
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
 /*! @brief MQTT client data. */
 static mqtt_client_t *mqtt_client;
 
+/*! @brief MQTT client ID string. */
+static char client_id[40];
+
 /*! @brief MQTT client information. */
 static const struct mqtt_connect_client_info_t mqtt_client_info = {
-    .client_id   = EXAMPLE_MQTT_CLIENT_ID,
+    .client_id   = (const char *)&client_id[0],
     .client_user = NULL,
     .client_pass = NULL,
     .keep_alive  = 100,
@@ -369,6 +383,24 @@ static void app_thread(void *arg)
     vTaskDelete(NULL);
 }
 
+static void generate_client_id(void)
+{
+    uint32_t mqtt_id[MQTT_ID_SIZE];
+    int res;
+
+    get_mqtt_id(&mqtt_id[0]);
+
+    res = snprintf(client_id, sizeof(client_id), "nxp_%08lx%08lx%08lx%08lx", mqtt_id[3], mqtt_id[2], mqtt_id[1],
+                   mqtt_id[0]);
+    if ((res < 0) || (res >= sizeof(client_id)))
+    {
+        PRINTF("snprintf failed: %d\r\n", res);
+        while (1)
+        {
+        }
+    }
+}
+
 /*!
  * @brief Main function
  */
@@ -380,8 +412,7 @@ int main(void)
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName  = EXAMPLE_CLOCK_NAME,
+        .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
         .non_dma_memory = non_dma_memory,
@@ -422,6 +453,9 @@ int main(void)
 
     /* Set ENET IRQ priority. Used in FreeRTOS. All ENET IRQ routed to IRQSTEER master 4. */
     NVIC_SetPriority(IRQSTEER_4_IRQn, ENET_PRIORITY);
+    generate_client_id();
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     IP4_ADDR(&netif_ipaddr, 0U, 0U, 0U, 0U);
     IP4_ADDR(&netif_netmask, 0U, 0U, 0U, 0U);
@@ -433,7 +467,9 @@ int main(void)
     if (mqtt_client == NULL)
     {
         PRINTF("mqtt_client_new() failed.\r\n");
-        return 1;
+        while (1)
+        {
+        }
     }
 
     netifapi_netif_add(&netif, &netif_ipaddr, &netif_netmask, &netif_gw, &enet_config, EXAMPLE_NETIF_INIT_FN,

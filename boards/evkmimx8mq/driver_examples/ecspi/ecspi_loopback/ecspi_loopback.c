@@ -8,16 +8,16 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_ecspi.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define ECSPI_TRANSFER_SIZE 64
+#define ECSPI_TRANSFER_SIZE     64
 #define ECSPI_TRANSFER_BAUDRATE 500000U
-#define ECSPI_MASTER_BASEADDR ECSPI1
+#define ECSPI_MASTER_BASEADDR   ECSPI1
 #define ECSPI_MASTER_CLK_FREQ                                                                \
     CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootEcspi1)) / \
         (CLOCK_GetRootPostDivider(kCLOCK_RootEcspi1))

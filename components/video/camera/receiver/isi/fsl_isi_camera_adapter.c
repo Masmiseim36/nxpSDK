@@ -1,5 +1,5 @@
 /*
- * Copyright  2017 NXP
+ * Copyright 2017, 2020 NXP
  * All rights reserved.
  *
  *
@@ -43,7 +43,7 @@ static status_t ISI_ADAPTER_GetFullBuffer(camera_receiver_handle_t *handle, uint
 
 static status_t ISI_ADAPTER_InitExt(camera_receiver_handle_t *handle,
                                     const camera_config_t *config,
-                                    const void *specialConfig,
+                                    const void *extConfig,
                                     camera_receiver_callback_t callback,
                                     void *userData);
 
@@ -130,7 +130,7 @@ static status_t ISI_ADAPTER_Deinit(camera_receiver_handle_t *handle)
 static status_t ISI_ADAPTER_Start(camera_receiver_handle_t *handle)
 {
     uint32_t buffer;
-    uint32_t i;
+    uint8_t i;
 
     ISI_Type *isiBase = ((isi_resource_t *)(handle->resource))->isiBase;
 
@@ -155,13 +155,13 @@ static status_t ISI_ADAPTER_Start(camera_receiver_handle_t *handle)
 
     for (i = 0; i < ISI_MAX_ACTIVE_BUF; i++)
     {
-        if (privateData->activeBufSaveCnt > 0)
+        if (privateData->activeBufSaveCnt > 0U)
         {
             buffer = privateData->activeBufSave[--privateData->activeBufSaveCnt];
         }
         else
         {
-            VIDEO_RINGBUF_Get(&(privateData->emptyRingBuf), (void **)(&buffer));
+            (void)VIDEO_RINGBUF_Get(&(privateData->emptyRingBuf), (void **)(&buffer));
         }
         privateData->activeBuf[i] = buffer;
         ISI_SetOutputBufferAddr(isiBase, i, buffer, 0, 0);
@@ -169,8 +169,8 @@ static status_t ISI_ADAPTER_Start(camera_receiver_handle_t *handle)
 
     privateData->isTransferStarted = true;
 
-    ISI_ClearInterruptStatus(isiBase, kISI_FrameReceivedInterrupt);
-    ISI_EnableInterrupts(isiBase, kISI_FrameReceivedInterrupt);
+    ISI_ClearInterruptStatus(isiBase, (uint32_t)kISI_FrameReceivedInterrupt);
+    (void)ISI_EnableInterrupts(isiBase, (uint32_t)kISI_FrameReceivedInterrupt);
     ISI_Start(isiBase);
 
     return kStatus_Success;
@@ -183,14 +183,14 @@ static status_t ISI_ADAPTER_Stop(camera_receiver_handle_t *handle)
     isi_private_data_t *privateData = (isi_private_data_t *)(handle->privateData);
 
     ISI_Stop(isiBase);
-    ISI_DisableInterrupts(isiBase, kISI_FrameReceivedInterrupt);
-    ISI_ClearInterruptStatus(isiBase, kISI_FrameReceivedInterrupt);
+    (void)ISI_DisableInterrupts(isiBase, (uint32_t)kISI_FrameReceivedInterrupt);
+    ISI_ClearInterruptStatus(isiBase, (uint32_t)kISI_FrameReceivedInterrupt);
 
     /* Save current active buffer address. */
     privateData->activeBufSaveCnt = 0;
     for (i = 0; i < ISI_MAX_ACTIVE_BUF; i++)
     {
-        if ((0 != privateData->activeBuf[i]) && (privateData->dropFrame != privateData->activeBuf[i]))
+        if ((0U != privateData->activeBuf[i]) && (privateData->dropFrame != privateData->activeBuf[i]))
         {
             privateData->activeBufSave[privateData->activeBufSaveCnt++] = privateData->activeBuf[i];
         }
@@ -213,21 +213,21 @@ static status_t ISI_ADAPTER_SubmitEmptyBuffer(camera_receiver_handle_t *handle, 
      * There must be buffer to save the droped frame, so the first submit buffer
      * is used as droped frame buffer.
      */
-    if (0 == privateData->dropFrame)
+    if (0U == privateData->dropFrame)
     {
         privateData->dropFrame = buffer;
     }
     else
     {
         /* Disable the interrupt to protect the index information in handle. */
-        interrupts = ISI_DisableInterrupts(isiBase, kISI_FrameReceivedInterrupt);
+        interrupts = ISI_DisableInterrupts(isiBase, (uint32_t)kISI_FrameReceivedInterrupt);
 
         /* Put the empty buffer to empty buffer queue. */
-        status = VIDEO_RINGBUF_Put(&privateData->emptyRingBuf, (void *)buffer);
+        status = VIDEO_RINGBUF_Put(&privateData->emptyRingBuf, (uint8_t *)buffer);
 
-        if (interrupts & kISI_FrameReceivedInterrupt)
+        if (0UL != (interrupts & (uint32_t)kISI_FrameReceivedInterrupt))
         {
-            ISI_EnableInterrupts(isiBase, kISI_FrameReceivedInterrupt);
+            (void)ISI_EnableInterrupts(isiBase, (uint32_t)kISI_FrameReceivedInterrupt);
         }
     }
 
@@ -238,17 +238,17 @@ static status_t ISI_ADAPTER_GetFullBuffer(camera_receiver_handle_t *handle, uint
 {
     status_t status;
     uint32_t interrupts;
-    ISI_Type *isiBase               = ((isi_resource_t *)(handle->resource))->isiBase;
+    ISI_Type *isiBase               = ((const isi_resource_t *)(handle->resource))->isiBase;
     isi_private_data_t *privateData = (isi_private_data_t *)(handle->privateData);
 
     /* Disable the interrupt to protect the index information in handle. */
-    interrupts = ISI_DisableInterrupts(isiBase, kISI_FrameReceivedInterrupt);
+    interrupts = ISI_DisableInterrupts(isiBase, (uint32_t)kISI_FrameReceivedInterrupt);
 
     status = VIDEO_RINGBUF_Get(&(privateData->fullRingBuf), (void **)buffer);
 
-    if (interrupts & kISI_FrameReceivedInterrupt)
+    if (0UL != (interrupts & (uint32_t)kISI_FrameReceivedInterrupt))
     {
-        ISI_EnableInterrupts(isiBase, kISI_FrameReceivedInterrupt);
+        (void)ISI_EnableInterrupts(isiBase, (uint32_t)kISI_FrameReceivedInterrupt);
     }
 
     return status;
@@ -265,8 +265,9 @@ static status_t ISI_ADAPTER_InitExt(camera_receiver_handle_t *handle,
     isi_output_format_t isiOutputFormat;
     isi_private_data_t *privateData;
     isi_resource_t *resource;
-    isi_flip_mode_t flipMode       = kISI_FlipDisable;
-    isi_ext_config_t *isiExtConfig = (isi_ext_config_t *)extConfig;
+    isi_flip_mode_t flipMode = kISI_FlipDisable;
+    uint32_t flipFlag;
+    const isi_ext_config_t *isiExtConfig = (const isi_ext_config_t *)extConfig;
 
     static const isi_csc_config_t cscConfigYUV2RGB = {
         .mode = kISI_CscYCbCr2RGB,
@@ -354,23 +355,33 @@ static status_t ISI_ADAPTER_InitExt(camera_receiver_handle_t *handle,
     }
 
     /* flip. */
-    if (isiExtConfig->flags & kCAMERA_ISI_FlipHorizontal)
+    flipFlag = isiExtConfig->flags & ((uint32_t)kCAMERA_ISI_FlipHorizontal | (uint32_t)kCAMERA_ISI_FlipVertical);
+    switch (flipFlag)
     {
-        flipMode |= kISI_FlipHorizontal;
-    }
+        case (uint32_t)kCAMERA_ISI_FlipHorizontal:
+            flipMode = kISI_FlipHorizontal;
+            break;
 
-    if (isiExtConfig->flags & kCAMERA_ISI_FlipVertical)
-    {
-        flipMode |= kISI_FlipVertical;
+        case (uint32_t)kCAMERA_ISI_FlipVertical:
+            flipMode = kISI_FlipVertical;
+            break;
+
+        case (uint32_t)kCAMERA_ISI_FlipVertical | (uint32_t)kCAMERA_ISI_FlipHorizontal:
+            flipMode = kISI_FlipBoth;
+            break;
+
+        default:
+            flipMode = kISI_FlipDisable;
+            break;
     }
 
     ISI_SetFlipMode(resource->isiBase, flipMode);
 
     privateData = (isi_private_data_t *)(handle->privateData);
-    memset(privateData, 0, sizeof(*privateData));
+    (void)memset(privateData, 0, sizeof(*privateData));
 
-    VIDEO_RINGBUF_Init(&(privateData->fullRingBuf), privateData->fullRingBufMem, ISI_CAMERA_ACTUAL_QUEUE_SIZE);
-    VIDEO_RINGBUF_Init(&(privateData->emptyRingBuf), privateData->emptyRingBufMem, ISI_CAMERA_ACTUAL_QUEUE_SIZE);
+    (void)VIDEO_RINGBUF_Init(&(privateData->fullRingBuf), privateData->fullRingBufMem, ISI_CAMERA_ACTUAL_QUEUE_SIZE);
+    (void)VIDEO_RINGBUF_Init(&(privateData->emptyRingBuf), privateData->emptyRingBufMem, ISI_CAMERA_ACTUAL_QUEUE_SIZE);
 
     privateData->outputBufIdx      = 0;
     privateData->isTransferStarted = false;
@@ -394,7 +405,7 @@ void ISI_ADAPTER_IRQHandler(camera_receiver_handle_t *handle)
     ISI_ClearInterruptStatus(isiBase, intStatus);
 
     /* If frame received interrupt does not happen, return directly. */
-    if (kISI_FrameReceivedInterrupt != (kISI_FrameReceivedInterrupt & intStatus))
+    if ((uint32_t)kISI_FrameReceivedInterrupt != ((uint32_t)kISI_FrameReceivedInterrupt & intStatus))
     {
         return;
     }
@@ -404,13 +415,13 @@ void ISI_ADAPTER_IRQHandler(camera_receiver_handle_t *handle)
     /* If current finished frame is not droped frame, then submit it to full buffer queue. */
     if (buf != privateData->dropFrame)
     {
-        status = VIDEO_RINGBUF_Put(&privateData->fullRingBuf, (void *)buf);
+        status = VIDEO_RINGBUF_Put(&privateData->fullRingBuf, (uint8_t *)buf);
 
         /* If the full buffer queue is not full. */
         if (kStatus_Success == status)
         {
             fullBufferReject = false;
-            if (privateData->callback)
+            if (NULL != privateData->callback)
             {
                 privateData->callback(handle, kStatus_Success, privateData->userData);
             }
@@ -448,5 +459,5 @@ void ISI_ADAPTER_IRQHandler(camera_receiver_handle_t *handle)
         }
     }
 
-    privateData->outputBufIdx ^= 1;
+    privateData->outputBufIdx ^= 1U;
 }

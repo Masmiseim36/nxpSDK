@@ -10,8 +10,8 @@ the virtual serial port on board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -69,6 +69,3 @@ status_reg = 0xff , x =    67 , y =   -60 , z =  2111
 
 End of I2C example .
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

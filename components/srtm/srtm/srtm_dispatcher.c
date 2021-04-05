@@ -56,6 +56,10 @@ static void SRTM_DumpMessage(srtm_message_t msg)
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "  -- Callback 0x%08x, param 0x%x, 0x%x\r\n", msg->procMsg.cb,
                            msg->procMsg.param1, msg->procMsg.param2);
     }
+    else
+    {
+        /* Do nothing */
+    }
 #endif
 }
 
@@ -90,7 +94,7 @@ static void SRTM_Dispatcher_QueueMessage(srtm_dispatcher_t disp, srtm_message_t 
     SRTM_Dispatcher_InsertOrderedMessage(disp, msg);
     EnableGlobalIRQ(primask);
 
-    SRTM_Sem_Post(disp->queueSig);
+    (void)SRTM_Sem_Post(disp->queueSig);
 }
 
 /* Dequeue message might detach message from messageQ, peer core's pendingQ or waitingReqs */
@@ -99,15 +103,15 @@ static srtm_status_t SRTM_Dispatcher_DequeueMessage(srtm_dispatcher_t disp, srtm
     uint32_t primask;
     srtm_status_t status = SRTM_Status_ListRemoveFailed;
 
-    SRTM_Mutex_Lock(disp->mutex); /* Protect waitingReqs */
-    primask = DisableGlobalIRQ(); /* Protect messageQ */
+    (void)SRTM_Mutex_Lock(disp->mutex); /* Protect waitingReqs */
+    primask = DisableGlobalIRQ();       /* Protect messageQ */
     if (!SRTM_List_IsEmpty(&msg->node))
     {
         SRTM_List_Remove(&msg->node);
         status = SRTM_Status_Success;
     }
     EnableGlobalIRQ(primask);
-    SRTM_Mutex_Unlock(disp->mutex);
+    (void)SRTM_Mutex_Unlock(disp->mutex);
 
     return status;
 }
@@ -136,11 +140,11 @@ static void SRTM_Dispatcher_FreeRequest(srtm_dispatcher_t disp, srtm_request_t r
     if (req->reqMsg.isSyncReq)
     {
         /* Synchronous request will be freed by user. Here just wakeup user's task. */
-        SRTM_Sem_Post(req->reqMsg.sync.sig);
+        (void)SRTM_Sem_Post(req->reqMsg.sync.sig);
     }
     else
     {
-        if (req->reqMsg.async.cb)
+        if (req->reqMsg.async.cb != NULL)
         {
             req->reqMsg.async.cb(disp, req, NULL, req->reqMsg.async.param);
         }
@@ -200,11 +204,11 @@ srtm_dispatcher_t SRTM_Dispatcher_Create(void)
     srtm_sem_t startSig    = SRTM_Sem_Create(1U, 0U);
     srtm_sem_t stopSig     = SRTM_Sem_Create(1U, 0U);
     /* Assume same maximum message number of local and remote in messageQ */
-    srtm_sem_t queueSig = SRTM_Sem_Create(SRTM_DISPATCHER_CONFIG_RX_MSG_NUMBER * 2, 0U);
+    srtm_sem_t queueSig = SRTM_Sem_Create(SRTM_DISPATCHER_CONFIG_RX_MSG_NUMBER * 2U, 0U);
     srtm_message_t msg;
     uint32_t i;
 
-    assert(disp && mutex && startSig && stopSig && queueSig);
+    assert((disp != NULL) && (mutex != NULL) && (startSig != NULL) && (stopSig != NULL) && (queueSig != NULL));
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
@@ -293,7 +297,7 @@ srtm_status_t SRTM_Dispatcher_Start(srtm_dispatcher_t disp)
 
     disp->stopReq = false;
     disp->started = true;
-    SRTM_Sem_Post(disp->startSig);
+    (void)SRTM_Sem_Post(disp->startSig);
 
     return SRTM_Status_Success;
 }
@@ -309,9 +313,9 @@ srtm_status_t SRTM_Dispatcher_Stop(srtm_dispatcher_t disp)
 
     disp->stopReq = true;
     /* Wakeup dispatcher to do stop operations */
-    SRTM_Sem_Post(disp->queueSig);
+    (void)SRTM_Sem_Post(disp->queueSig);
     /* Wait for dispatcher stopped */
-    SRTM_Sem_Wait(disp->stopSig, SRTM_WAIT_FOR_EVER);
+    (void)SRTM_Sem_Wait(disp->stopSig, SRTM_WAIT_FOR_EVER);
 
     disp->started = false;
 
@@ -331,23 +335,23 @@ void SRTM_Dispatcher_Run(srtm_dispatcher_t disp)
     while (true)
     {
         /* Wait for start */
-        SRTM_Sem_Wait(disp->startSig, SRTM_WAIT_FOR_EVER);
+        (void)SRTM_Sem_Wait(disp->startSig, SRTM_WAIT_FOR_EVER);
 
         /* Start peer cores */
         for (list = disp->cores.next; list != &disp->cores; list = list->next)
         {
             core = SRTM_LIST_OBJ(srtm_peercore_t, node, list);
-            SRTM_PeerCore_Start(core);
+            (void)SRTM_PeerCore_Start(core);
         }
 
         while (!disp->stopReq)
         {
             /* Wait for message putting into Q */
-            SRTM_Sem_Wait(disp->queueSig, SRTM_WAIT_FOR_EVER);
+            (void)SRTM_Sem_Wait(disp->queueSig, SRTM_WAIT_FOR_EVER);
             /* Handle as many messages as possible */
             while ((message = SRTM_Dispatcher_RecvMessage(disp)) != NULL)
             {
-                SRTM_Dispatcher_ProcessMessage(disp, message);
+                (void)SRTM_Dispatcher_ProcessMessage(disp, message);
             }
         }
 
@@ -355,11 +359,11 @@ void SRTM_Dispatcher_Run(srtm_dispatcher_t disp)
         for (list = disp->cores.next; list != &disp->cores; list = list->next)
         {
             core = SRTM_LIST_OBJ(srtm_peercore_t, node, list);
-            SRTM_PeerCore_Stop(core);
+            (void)SRTM_PeerCore_Stop(core);
         }
 
         /* Signal dispatcher stopped */
-        SRTM_Sem_Post(disp->stopSig);
+        (void)SRTM_Sem_Post(disp->stopSig);
     }
 }
 
@@ -376,9 +380,9 @@ srtm_status_t SRTM_Dispatcher_AddPeerCore(srtm_dispatcher_t disp, srtm_peercore_
         return SRTM_Status_ListAddFailed;
     }
 
-    SRTM_Mutex_Lock(disp->mutex);
+    (void)SRTM_Mutex_Lock(disp->mutex);
     SRTM_List_AddTail(&disp->cores, &core->node);
-    SRTM_Mutex_Unlock(disp->mutex);
+    (void)SRTM_Mutex_Unlock(disp->mutex);
     core->dispatcher = disp;
 
     return SRTM_Status_Success;
@@ -402,9 +406,9 @@ srtm_status_t SRTM_Dispatcher_RemovePeerCore(srtm_dispatcher_t disp, srtm_peerco
         return SRTM_Status_ListRemoveFailed;
     }
 
-    SRTM_Mutex_Lock(disp->mutex);
+    (void)SRTM_Mutex_Lock(disp->mutex);
     SRTM_List_Remove(&core->node);
-    SRTM_Mutex_Unlock(disp->mutex);
+    (void)SRTM_Mutex_Unlock(disp->mutex);
     core->dispatcher = NULL;
 
     SRTM_List_Init(&listHead);
@@ -416,7 +420,7 @@ srtm_status_t SRTM_Dispatcher_RemovePeerCore(srtm_dispatcher_t disp, srtm_peerco
     {
         next    = list->next;
         message = SRTM_LIST_OBJ(srtm_message_t, node, list);
-        if (message->channel && message->channel->core == core)
+        if ((message->channel != NULL) && (message->channel->core == core))
         {
             SRTM_List_Remove(list);
             /* Add to temp list */
@@ -426,19 +430,19 @@ srtm_status_t SRTM_Dispatcher_RemovePeerCore(srtm_dispatcher_t disp, srtm_peerco
     EnableGlobalIRQ(primask);
 
     /* Next clean up messages in waitingReqs */
-    SRTM_Mutex_Lock(disp->mutex);
+    (void)SRTM_Mutex_Lock(disp->mutex);
     for (list = disp->waitingReqs.next; list != &disp->waitingReqs; list = next)
     {
         next    = list->next;
         message = SRTM_LIST_OBJ(srtm_message_t, node, list);
-        if (message->channel && message->channel->core == core)
+        if ((message->channel != NULL) && (message->channel->core == core))
         {
             SRTM_List_Remove(list);
             /* Add to temp list */
             SRTM_List_AddTail(&listHead, list);
         }
     }
-    SRTM_Mutex_Unlock(disp->mutex);
+    (void)SRTM_Mutex_Unlock(disp->mutex);
 
     /* Now free all the messages on temp list */
     while (!SRTM_List_IsEmpty(&listHead))
@@ -476,9 +480,9 @@ srtm_status_t SRTM_Dispatcher_RegisterService(srtm_dispatcher_t disp, srtm_servi
         return SRTM_Status_ListAddFailed;
     }
 
-    SRTM_Mutex_Lock(disp->mutex);
+    (void)SRTM_Mutex_Lock(disp->mutex);
     SRTM_List_AddTail(&disp->services, &service->node);
-    SRTM_Mutex_Unlock(disp->mutex);
+    (void)SRTM_Mutex_Unlock(disp->mutex);
 
     service->dispatcher = disp;
 
@@ -498,9 +502,9 @@ srtm_status_t SRTM_Dispatcher_UnregisterService(srtm_dispatcher_t disp, srtm_ser
         return SRTM_Status_ListRemoveFailed;
     }
 
-    SRTM_Mutex_Lock(disp->mutex);
+    (void)SRTM_Mutex_Lock(disp->mutex);
     SRTM_List_Remove(&service->node);
-    SRTM_Mutex_Unlock(disp->mutex);
+    (void)SRTM_Mutex_Unlock(disp->mutex);
 
     service->dispatcher = NULL;
 
@@ -522,7 +526,7 @@ srtm_status_t SRTM_Dispatcher_Request(srtm_dispatcher_t disp,
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "%s\r\n", __func__);
 
     signal = SRTM_Sem_Create(1U, 0U);
-    if (!signal)
+    if (signal == NULL)
     {
         return SRTM_Status_OutOfMemory;
     }
@@ -554,18 +558,18 @@ srtm_status_t SRTM_Dispatcher_Request(srtm_dispatcher_t disp,
     req->reqMsg.sync.sig = NULL;
 
     resp = req->reqMsg.sync.resp;
-    if (pResp)
+    if (pResp != NULL)
     {
         *pResp = resp; /* Now application gets response and will destroy it later */
     }
 
-    if (!resp) /* Failed to get response */
+    if (resp == NULL) /* Failed to get response */
     {
         status = status == SRTM_Status_Timeout ? SRTM_Status_TransferTimeout : req->error;
     }
     else
     {
-        if (!pResp) /* Response not needed by application */
+        if (pResp == NULL) /* Response not needed by application */
         {
             SRTM_Response_Destroy(resp);
         }
@@ -637,7 +641,7 @@ srtm_status_t SRTM_Dispatcher_DeliverMessages(srtm_dispatcher_t disp, srtm_list_
     }
     EnableGlobalIRQ(primask);
 
-    SRTM_Sem_Post(disp->queueSig);
+    (void)SRTM_Sem_Post(disp->queueSig);
 
     return SRTM_Status_Success;
 }
@@ -653,7 +657,7 @@ srtm_status_t SRTM_Dispatcher_CallProc(srtm_dispatcher_t disp, srtm_procedure_t 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "%s\r\n", __func__);
 
     signal = SRTM_Sem_Create(1U, 0U);
-    if (!signal)
+    if (signal == NULL)
     {
         return SRTM_Status_OutOfMemory;
     }
@@ -722,10 +726,10 @@ srtm_status_t SRTM_Dispatcher_PostRecvData(srtm_dispatcher_t disp, srtm_channel_
 
     assert(message); /* For debugging the shortage of RX buffer */
 
-    if (message)
+    if (message != NULL)
     {
         message->direct = SRTM_MessageDirectRx;
-        memcpy(message->data, buf, len);
+        (void)memcpy(message->data, buf, len);
         message->dataLen = len;
         message->channel = channel;
         message->error   = SRTM_Status_Success;
@@ -788,7 +792,7 @@ static srtm_status_t SRTM_Dispatcher_HandleResponse(srtm_dispatcher_t disp, srtm
     category = SRTM_CommMessage_GetCategory(msg);
     command  = SRTM_CommMessage_GetCommand(msg);
 
-    SRTM_Mutex_Lock(disp->mutex);
+    (void)SRTM_Mutex_Lock(disp->mutex);
     for (list = disp->waitingReqs.next; list != &disp->waitingReqs; list = list->next)
     {
         req = SRTM_LIST_OBJ(srtm_request_t, node, list);
@@ -799,18 +803,18 @@ static srtm_status_t SRTM_Dispatcher_HandleResponse(srtm_dispatcher_t disp, srtm
             break;
         }
     }
-    SRTM_Mutex_Unlock(disp->mutex);
+    (void)SRTM_Mutex_Unlock(disp->mutex);
 
-    if (req && list != &disp->waitingReqs) /* Find corresponding request */
+    if ((req != NULL) && (list != &disp->waitingReqs)) /* Find corresponding request */
     {
         if (req->reqMsg.isSyncReq)
         {
             resp = SRTM_Message_Duplicate(msg);
-            if (resp)
+            if (resp != NULL)
             {
-                if (msg->dataLen > 0)
+                if (msg->dataLen > 0U)
                 {
-                    memcpy(resp->data, msg->data, msg->dataLen);
+                    (void)memcpy(resp->data, msg->data, msg->dataLen);
                 }
                 /* Duplicated response will be freed by application */
                 req->reqMsg.sync.resp = resp;
@@ -819,11 +823,11 @@ static srtm_status_t SRTM_Dispatcher_HandleResponse(srtm_dispatcher_t disp, srtm
             {
                 req->error = SRTM_Status_OutOfMemory;
             }
-            SRTM_Sem_Post(req->reqMsg.sync.sig);
+            (void)SRTM_Sem_Post(req->reqMsg.sync.sig);
         }
         else
         {
-            if (req->reqMsg.async.cb)
+            if (req->reqMsg.async.cb != NULL)
             {
                 req->reqMsg.async.cb(disp, req, msg, req->reqMsg.async.param);
             }
@@ -855,9 +859,9 @@ static srtm_status_t SRTM_Dispatcher_SendMessage(srtm_dispatcher_t disp, srtm_me
             if (status == SRTM_Status_Success)
             {
                 /* Add request to waiting queue to wait for response */
-                SRTM_Mutex_Lock(disp->mutex);
+                (void)SRTM_Mutex_Lock(disp->mutex);
                 SRTM_List_AddTail(&disp->waitingReqs, &msg->node);
-                SRTM_Mutex_Unlock(disp->mutex);
+                (void)SRTM_Mutex_Unlock(disp->mutex);
             }
             else
             {
@@ -871,6 +875,7 @@ static srtm_status_t SRTM_Dispatcher_SendMessage(srtm_dispatcher_t disp, srtm_me
             SRTM_Notification_Destroy(msg);
             break;
         default:
+            /* Do nothing */
             break;
     }
 
@@ -913,7 +918,7 @@ static srtm_status_t SRTM_Dispatcher_HandleTxMessage(srtm_dispatcher_t disp, srt
                 list = core->pendingQ.next;
                 SRTM_List_Remove(list);
                 message = SRTM_LIST_OBJ(srtm_message_t, node, list);
-                SRTM_Dispatcher_SendMessage(disp, message);
+                (void)SRTM_Dispatcher_SendMessage(disp, message);
             }
             status = SRTM_Dispatcher_SendMessage(disp, msg);
             break;
@@ -970,10 +975,10 @@ srtm_status_t SRTM_Dispatcher_ProcessMessage(srtm_dispatcher_t disp, srtm_messag
                 SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "%s: Callback procedure 0x%08x\r\n", __func__,
                                    msg->procMsg.cb);
                 msg->procMsg.cb(disp, msg->procMsg.param1, msg->procMsg.param2);
-                if (msg->procMsg.sig) /* Called by SRTM_Dispatcher_CallProc() */
+                if (msg->procMsg.sig != NULL) /* Called by SRTM_Dispatcher_CallProc() */
                 {
                     /* Synchronous procedure message will be freed by user. Here just wakeup user's task. */
-                    SRTM_Sem_Post(msg->procMsg.sig);
+                    (void)SRTM_Sem_Post(msg->procMsg.sig);
                 }
                 else /* Called by SRTM_Dispatcher_PostProc() */
                 {

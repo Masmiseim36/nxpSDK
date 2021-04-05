@@ -49,6 +49,13 @@ SECTIONS
     . = ALIGN(4);
   } > m_interrupts
 
+  .resource_table :
+  {
+    . = ALIGN(8);
+    KEEP(*(.resource_table)) /* Resource table */
+    . = ALIGN(8);
+  } > m_text
+
   /* The program code and other data goes into internal RAM */
   .text :
   {

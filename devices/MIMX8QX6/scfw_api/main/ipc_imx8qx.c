@@ -13,14 +13,26 @@
 #include "task.h"
 #endif
 
+/*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.scfwapi"
+#endif
+
 /*----------------------------------------------------------------------*/
 /* RPC command/response                                                 */
 /*----------------------------------------------------------------------*/
 void sc_call_rpc(sc_ipc_t ipc, sc_rpc_msg_t *msg, sc_bool_t no_resp)
 {
 #ifdef FSL_RTOS_FREE_RTOS
-    /* Suspends the scheduler to make sure there's only one rpc call ongoing at a time. */
-    vTaskSuspendAll();
+    if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
+    {
+        /* Suspends the scheduler to make sure there's only one rpc call ongoing at a time. */
+        vTaskSuspendAll();
+    }
 #endif
     sc_ipc_write(ipc, msg);
     if (!no_resp)
@@ -28,7 +40,10 @@ void sc_call_rpc(sc_ipc_t ipc, sc_rpc_msg_t *msg, sc_bool_t no_resp)
         sc_ipc_read(ipc, msg);
     }
 #ifdef FSL_RTOS_FREE_RTOS
-    (void)xTaskResumeAll();
+    if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
+    {
+        (void)xTaskResumeAll();
+    }
 #endif
 }
 

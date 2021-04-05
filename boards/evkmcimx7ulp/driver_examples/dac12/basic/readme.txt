@@ -10,8 +10,8 @@ outputs the DAC12 output voltage through DAC12 output pin.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -52,6 +52,3 @@ Input value is 4095
 DAC out: 4095
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Then user can measure the DAC0 output pin(J11-8) to check responding voltage.
-Customization options
-=====================
-

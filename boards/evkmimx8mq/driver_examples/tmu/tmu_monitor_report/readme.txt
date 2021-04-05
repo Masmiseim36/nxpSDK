@@ -11,8 +11,8 @@ Note: Before monitoring the temperature, we must programming the calibration tab
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -54,6 +54,3 @@ site 0 immediate temperature is too high. 41°C
 site 1 immediate temperature is too high. 42°C
 ...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

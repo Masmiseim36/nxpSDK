@@ -57,7 +57,13 @@
 /*!
  * @brief CCM reg macros to get corresponding registers values.
  */
-#define CCM_ANALOG_REG_VAL(base, off) (*((volatile uint32_t *)((uint32_t)base + off)))
+#define CCM_ANALOG_REG_VAL(base, off) (*((volatile uint32_t *)((uint32_t)(base) + (off))))
+
+/*******************************************************************************
+ * Prototypes
+ ******************************************************************************/
+uint32_t GetFracPllFreq(const volatile uint32_t *base);
+uint32_t GetIntegerPllFreq(const volatile uint32_t *base);
 
 uint32_t GetFracPllFreq(const volatile uint32_t *base)
 {
@@ -67,18 +73,18 @@ uint32_t GetFracPllFreq(const volatile uint32_t *base)
     uint32_t refClkFreq = 0U;
     uint64_t fracClk    = 0U;
 
-    uint8_t refSel   = CCM_BIT_FIELD_VAL(fracCfg0, CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_MASK,
-                                       CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_SHIFT);
+    uint8_t refSel   = (uint8_t)CCM_BIT_FIELD_VAL(fracCfg0, CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_MASK,
+                                                CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_SHIFT);
     uint32_t mainDiv = CCM_BIT_FIELD_VAL(fracCfg1, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_MAIN_DIV_MASK,
                                          CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_MAIN_DIV_SHIFT);
-    uint8_t preDiv   = CCM_BIT_FIELD_VAL(fracCfg1, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_PRE_DIV_MASK,
-                                       CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_PRE_DIV_SHIFT);
-    uint8_t postDiv  = CCM_BIT_FIELD_VAL(fracCfg1, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_POST_DIV_MASK,
-                                        CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_POST_DIV_SHIFT);
+    uint8_t preDiv   = (uint8_t)CCM_BIT_FIELD_VAL(fracCfg1, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_PRE_DIV_MASK,
+                                                CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_PRE_DIV_SHIFT);
+    uint8_t postDiv  = (uint8_t)CCM_BIT_FIELD_VAL(fracCfg1, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_POST_DIV_MASK,
+                                                 CCM_ANALOG_AUDIO_PLL1_FDIV_CTL0_PLL_POST_DIV_SHIFT);
     uint32_t dsm     = CCM_BIT_FIELD_VAL(fracCfg2, CCM_ANALOG_AUDIO_PLL1_FDIV_CTL1_PLL_DSM_MASK,
                                      CCM_ANALOG_AUDIO_PLL1_FDIV_CTL1_PLL_DSM_SHIFT);
 
-    if (refSel == 0) /* OSC 24M Clock */
+    if (refSel == 0U) /* OSC 24M Clock */
     {
         refClkFreq = CPU_XTAL_SOSC_CLK_24MHZ;
     }
@@ -87,9 +93,10 @@ uint32_t GetFracPllFreq(const volatile uint32_t *base)
         refClkFreq = CLK_PAD_CLK; /* CLK_PAD_CLK Clock, please note that the value is 0hz by default, it could be set at
                                      system_MIMX8MNx_cm7.h :96 */
     }
-    fracClk = (uint64_t)refClkFreq * (mainDiv * 65536 + dsm) / (65536 * preDiv * (1 << postDiv));
+    fracClk = (uint64_t)refClkFreq * ((uint64_t)mainDiv * 65536UL + (uint64_t)dsm) /
+              ((uint64_t)65536UL * preDiv * (1UL << postDiv));
 
-    return fracClk;
+    return (uint32_t)fracClk;
 }
 
 uint32_t GetIntegerPllFreq(const volatile uint32_t *base)
@@ -99,18 +106,18 @@ uint32_t GetIntegerPllFreq(const volatile uint32_t *base)
     uint32_t refClkFreq  = 0U;
     uint64_t pllOutClock = 0U;
 
-    uint8_t pllBypass = CCM_BIT_FIELD_VAL(integerCfg0, CCM_ANALOG_SYS_PLL1_GEN_CTRL_PLL_BYPASS_MASK,
-                                          CCM_ANALOG_SYS_PLL1_GEN_CTRL_PLL_BYPASS_SHIFT);
-    uint8_t refSel    = CCM_BIT_FIELD_VAL(integerCfg0, CCM_ANALOG_SYS_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_MASK,
-                                       CCM_ANALOG_SYS_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_SHIFT);
+    uint8_t pllBypass = (uint8_t)CCM_BIT_FIELD_VAL(integerCfg0, CCM_ANALOG_SYS_PLL1_GEN_CTRL_PLL_BYPASS_MASK,
+                                                   CCM_ANALOG_SYS_PLL1_GEN_CTRL_PLL_BYPASS_SHIFT);
+    uint8_t refSel    = (uint8_t)CCM_BIT_FIELD_VAL(integerCfg0, CCM_ANALOG_SYS_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_MASK,
+                                                CCM_ANALOG_SYS_PLL1_GEN_CTRL_PLL_REF_CLK_SEL_SHIFT);
     uint32_t mainDiv  = CCM_BIT_FIELD_VAL(integerCfg1, CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_MAIN_DIV_MASK,
                                          CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_MAIN_DIV_SHIFT);
-    uint8_t preDiv    = CCM_BIT_FIELD_VAL(integerCfg1, CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_PRE_DIV_MASK,
-                                       CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_PRE_DIV_SHIFT);
-    uint8_t postDiv   = CCM_BIT_FIELD_VAL(integerCfg1, CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_POST_DIV_MASK,
-                                        CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_POST_DIV_SHIFT);
+    uint8_t preDiv    = (uint8_t)CCM_BIT_FIELD_VAL(integerCfg1, CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_PRE_DIV_MASK,
+                                                CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_PRE_DIV_SHIFT);
+    uint8_t postDiv   = (uint8_t)CCM_BIT_FIELD_VAL(integerCfg1, CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_POST_DIV_MASK,
+                                                 CCM_ANALOG_SYS_PLL1_FDIV_CTL0_PLL_POST_DIV_SHIFT);
 
-    if (refSel == 0) /* OSC 24M Clock */
+    if (refSel == 0U) /* OSC 24M Clock */
     {
         refClkFreq = CPU_XTAL_SOSC_CLK_24MHZ;
     }
@@ -120,7 +127,7 @@ uint32_t GetIntegerPllFreq(const volatile uint32_t *base)
                                      system_MIMX8MNx_cm7.h :96 */
     }
 
-    if (pllBypass)
+    if (pllBypass != 0U)
     {
         pllOutClock = refClkFreq;
     }
@@ -130,7 +137,7 @@ uint32_t GetIntegerPllFreq(const volatile uint32_t *base)
         pllOutClock = (uint64_t)refClkFreq * mainDiv / (((uint64_t)(1U) << postDiv) * preDiv);
     }
 
-    return pllOutClock;
+    return (uint32_t)pllOutClock;
 }
 
 /* ----------------------------------------------------------------------------
@@ -158,7 +165,7 @@ void SystemInit(void)
 
 void SystemCoreClockUpdate(void)
 {
-    volatile uint32_t *M7_ClockRoot = (uint32_t *)(&(CCM)->ROOT[1].TARGET_ROOT);
+    volatile uint32_t *M7_ClockRoot = (volatile uint32_t *)(&(CCM)->ROOT[1].TARGET_ROOT);
     uint32_t pre  = ((*M7_ClockRoot & CCM_TARGET_ROOT_PRE_PODF_MASK) >> CCM_TARGET_ROOT_PRE_PODF_SHIFT) + 1U;
     uint32_t post = ((*M7_ClockRoot & CCM_TARGET_ROOT_POST_PODF_MASK) >> CCM_TARGET_ROOT_POST_PODF_SHIFT) + 1U;
 
@@ -169,14 +176,14 @@ void SystemCoreClockUpdate(void)
         case 0U: /* OSC 24M Clock */
             freq = CPU_XTAL_SOSC_CLK_24MHZ;
             break;
-        case 1U:                                                            /* System PLL2 DIV5 */
-            freq = GetIntegerPllFreq(&(CCM_ANALOG->SYS_PLL2_GEN_CTRL)) / 5; /* Get System PLL2 DIV5 freq */
+        case 1U:                                                             /* System PLL2 DIV5 */
+            freq = GetIntegerPllFreq(&(CCM_ANALOG->SYS_PLL2_GEN_CTRL)) / 5U; /* Get System PLL2 DIV5 freq */
             break;
-        case 2U:                                                            /* System PLL2 DIV4 */
-            freq = GetIntegerPllFreq(&(CCM_ANALOG->SYS_PLL2_GEN_CTRL)) / 4; /* Get System PLL2 DIV4 freq */
+        case 2U:                                                             /* System PLL2 DIV4 */
+            freq = GetIntegerPllFreq(&(CCM_ANALOG->SYS_PLL2_GEN_CTRL)) / 4U; /* Get System PLL2 DIV4 freq */
             break;
-        case 3U:                                                            /* System PLL1 DIV3 */
-            freq = GetIntegerPllFreq(&(CCM_ANALOG->SYS_PLL1_GEN_CTRL)) / 3; /* Get System PLL1 DIV3 freq */
+        case 3U:                                                             /* System PLL1 DIV3 */
+            freq = GetIntegerPllFreq(&(CCM_ANALOG->SYS_PLL1_GEN_CTRL)) / 3U; /* Get System PLL1 DIV3 freq */
             break;
         case 4U:                                                        /* System PLL1 */
             freq = GetIntegerPllFreq(&(CCM_ANALOG->SYS_PLL1_GEN_CTRL)); /* Get System PLL1 freq */
@@ -191,6 +198,7 @@ void SystemCoreClockUpdate(void)
             freq = GetIntegerPllFreq(&(CCM_ANALOG->SYS_PLL3_GEN_CTRL)); /* Get System PLL3 freq */
             break;
         default:
+            freq = CPU_XTAL_SOSC_CLK_24MHZ;
             break;
     }
 

@@ -7,13 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_lpit.h"
 #include "fsl_lptmr.h"
 #include "fsl_trgmux.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
@@ -141,7 +141,7 @@ int main(void)
     LPIT_SetupChannel(LPIT0, kLPIT_Chnl_0, &lpitChannelConfig);
 
     /* Set timer period for channel 0 */
-    LPIT_SetTimerPeriod(LPIT0, kLPIT_Chnl_0, 1);
+    LPIT_SetTimerPeriod(LPIT0, kLPIT_Chnl_0, 3);
 
     /* Enable timer interrupts for channel 0 */
     LPIT_EnableInterrupts(LPIT0, kLPIT_Channel0TimerInterruptEnable);

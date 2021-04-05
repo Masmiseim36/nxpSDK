@@ -5,14 +5,14 @@
 **
 **     Compiler:            GNU C Compiler
 **     Reference manual:    IMX8DQXPRM, Rev. E, 6/2019
-**     Version:             rev. 3.0, 2018-08-22
-**     Build:               b191127
+**     Version:             rev. 4.0, 2020-06-19
+**     Build:               b201113
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -48,6 +48,13 @@ SECTIONS
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(8);
   } > m_interrupts
+
+  .resource_table :
+  {
+    . = ALIGN(8);
+    KEEP(*(.resource_table)) /* Resource table */
+    . = ALIGN(8);
+  } > m_text
 
   /* The program code and other data goes into internal RAM */
   .text :

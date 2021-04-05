@@ -12,8 +12,8 @@ via debug console utility and suspend itself.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -48,6 +48,3 @@ After the board is flashed the Tera Term will print "Hello world" message on ter
 
 Example output:
 Hello world.
-Customization options
-=====================
-

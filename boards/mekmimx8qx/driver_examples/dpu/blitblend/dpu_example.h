@@ -27,34 +27,34 @@
 
 /* Configuration for DPU. */
 #define APP_DPU_BASE DC__IRIS_MVPL_BASE
-#define APP_DPU ((IRIS_MVPL_Type *)APP_DPU_BASE)
+#define APP_DPU      ((IRIS_MVPL_Type *)APP_DPU_BASE)
 #define APP_DPU_TIMING_FLAGS                                                                      \
     (kDPU_DisplayHsyncActiveLow | kDPU_DisplayVsyncActiveLow | kDPU_DisplayDataEnableActiveHigh | \
      kDPU_DisplayPixelActiveHigh)
 
 #if !APP_DISPLAY_EXTERNAL_CONVERTOR
 #define APP_PANEL_HEIGHT 1920
-#define APP_PANEL_WIDTH 1080
-#define APP_HFP 8
-#define APP_HBP 8
-#define APP_HSW 4
-#define APP_VFP 7
-#define APP_VBP 7
-#define APP_VSW 2
+#define APP_PANEL_WIDTH  1080
+#define APP_HFP          8
+#define APP_HBP          8
+#define APP_HSW          4
+#define APP_VFP          7
+#define APP_VBP          7
+#define APP_VSW          2
 
 /* Pixel clock = ((APP_HFP + APP_HBP + APP_HSW) * (APP_VFP + APP_VBP + APP_VSW)) * frame rate */
 #define APP_PIXEL_CLOCK_HZ (108000000) /* 108MHz. */
 
 #else
 
-#define APP_PANEL_HEIGHT 1080
-#define APP_PANEL_WIDTH 1920
-#define APP_HFP 88
-#define APP_HBP 148
-#define APP_HSW 44
-#define APP_VFP 4
-#define APP_VBP 36
-#define APP_VSW 5
+#define APP_PANEL_HEIGHT   1080
+#define APP_PANEL_WIDTH    1920
+#define APP_HFP            88
+#define APP_HBP            148
+#define APP_HSW            44
+#define APP_VFP            4
+#define APP_VBP            36
+#define APP_VSW            5
 
 /*
  * Pixel clock = ((APP_HFP + APP_HBP + APP_HSW) * (APP_VFP + APP_VBP + APP_VSW)) * frame rate
@@ -65,8 +65,8 @@
 
 /* Configuration for display interface. */
 #if DPU_EXAMPLE_DI == DPU_DI_MIPI
-#define APP_MIPI_DSI_BASE DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE
-#define APP_MIPI_DSI ((MIPI_DSI_HOST_Type *)APP_MIPI_DSI_BASE)
+#define APP_MIPI_DSI_BASE     DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE
+#define APP_MIPI_DSI          ((MIPI_DSI_HOST_Type *)APP_MIPI_DSI_BASE)
 #define APP_MIPI_DSI_LANE_NUM 4 /* Lane number. */
 #if (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE)
 #define APP_DPU_DISPLAY_INDEX 0
@@ -75,8 +75,8 @@
 #endif
 #elif DPU_EXAMPLE_DI == DPU_DI_LVDS
 #define APP_LDB_BASE MIPI_DSI_LVDS_COMBO0_CSR_BASE
-#define APP_LDB ((LDB_Type *)APP_LDB_BASE)
-#define APP_LDB_CH 0
+#define APP_LDB      ((LDB_Type *)APP_LDB_BASE)
+#define APP_LDB_CH   0
 #if (APP_LDB_BASE == MIPI_DSI_LVDS_COMBO0_CSR_BASE)
 #define APP_DPU_DISPLAY_INDEX 0
 #else
@@ -88,59 +88,59 @@
  * Definitions
  ******************************************************************************/
 #if (0 == APP_DPU_DISPLAY_INDEX)
-#define APP_CONTENT_STREAM_PIPELINE kDPU_PipelineExtDst0
-#define APP_CONTENT_STREAM_EXTDST kDPU_ExtDst0
+#define APP_CONTENT_STREAM_PIPELINE   kDPU_PipelineExtDst0
+#define APP_CONTENT_STREAM_EXTDST     kDPU_ExtDst0
 #define APP_CONTENT_STREAM_INT_GROUP0 kDPU_Group0ExtDst0ShadowLoadInterrupt
 #define APP_CONTENT_STREAM_INT_GROUP1 0U
-#define APP_SAFETY_STREAM_PIPELINE kDPU_PipelineExtDst4
-#define APP_SAFETY_STREAM_EXTDST kDPU_ExtDst4
-#define APP_SAFETY_STREAM_INT_GROUP0 kDPU_Group0ExtDst4ShadowLoadInterrupt
-#define APP_SAFETY_STREAM_INT_GROUP1 0U
-#define APP_SIG_SHD_LD_INT_GROUP0 kDPU_Group0Sig0ShadowLoadInterrupt
-#define APP_SIG_SHD_LD_INT_GROUP1 0U
+#define APP_SAFETY_STREAM_PIPELINE    kDPU_PipelineExtDst4
+#define APP_SAFETY_STREAM_EXTDST      kDPU_ExtDst4
+#define APP_SAFETY_STREAM_INT_GROUP0  kDPU_Group0ExtDst4ShadowLoadInterrupt
+#define APP_SAFETY_STREAM_INT_GROUP1  0U
+#define APP_SIG_SHD_LD_INT_GROUP0     kDPU_Group0Sig0ShadowLoadInterrupt
+#define APP_SIG_SHD_LD_INT_GROUP1     0U
 #define APP_DISPLAY_STREAM_INT_GROUP0 kDPU_Group0Display0ShadowLoadInterrupt
 #define APP_DISPLAY_STREAM_INT_GROUP1 0U
 #else
-#define APP_CONTENT_STREAM_PIPELINE kDPU_PipelineExtDst1
-#define APP_CONTENT_STREAM_EXTDST kDPU_ExtDst1
+#define APP_CONTENT_STREAM_PIPELINE   kDPU_PipelineExtDst1
+#define APP_CONTENT_STREAM_EXTDST     kDPU_ExtDst1
 #define APP_CONTENT_STREAM_INT_GROUP0 kDPU_Group0ExtDst1ShadowLoadInterrupt
 #define APP_CONTENT_STREAM_INT_GROUP1 0U
-#define APP_SAFETY_STREAM_PIPELINE kDPU_PipelineExtDst5
-#define APP_SAFETY_STREAM_EXTDST kDPU_ExtDst5
-#define APP_SAFETY_STREAM_INT_GROUP0 kDPU_Group0ExtDst5ShadowLoadInterrupt
-#define APP_SAFETY_STREAM_INT_GROUP1 0U
-#define APP_SIG_SHD_LD_INT_GROUP0 0U
-#define APP_SIG_SHD_LD_INT_GROUP1 kDPU_Group1Sig1ShadowLoadInterrupt
+#define APP_SAFETY_STREAM_PIPELINE    kDPU_PipelineExtDst5
+#define APP_SAFETY_STREAM_EXTDST      kDPU_ExtDst5
+#define APP_SAFETY_STREAM_INT_GROUP0  kDPU_Group0ExtDst5ShadowLoadInterrupt
+#define APP_SAFETY_STREAM_INT_GROUP1  0U
+#define APP_SIG_SHD_LD_INT_GROUP0     0U
+#define APP_SIG_SHD_LD_INT_GROUP1     kDPU_Group1Sig1ShadowLoadInterrupt
 #define APP_DISPLAY_STREAM_INT_GROUP0 kDPU_Group0Display1ShadowLoadInterrupt
 #define APP_DISPLAY_STREAM_INT_GROUP1 0U
 #endif
 
 #define APP_BLIT_SHD_LD_INT_GROUP0 kDPU_Group0Store9ShadowLoadInterrupt
 #define APP_BLIT_SHD_LD_INT_GROUP1 0U
-#define APP_BLIT_SEQ_INT_GROUP0 kDPU_Group0Store9SeqCompleteInterrupt
-#define APP_BLIT_SEQ_INT_GROUP1 0U
-#define APP_BLIT_COM_INT_GROUP0 kDPU_Group0Store9FrameCompleteInterrupt
-#define APP_BLIT_COM_INT_GROUP1 0U
+#define APP_BLIT_SEQ_INT_GROUP0    kDPU_Group0Store9SeqCompleteInterrupt
+#define APP_BLIT_SEQ_INT_GROUP1    0U
+#define APP_BLIT_COM_INT_GROUP0    kDPU_Group0Store9FrameCompleteInterrupt
+#define APP_BLIT_COM_INT_GROUP1    0U
 
 #define APP_FETCH_DECODE9_PRG DC__PRG0
-#define APP_FETCH_WARP9_PRG DC__PRG1
-#define APP_FETCH_LAYER0_PRG DC__PRG2
+#define APP_FETCH_WARP9_PRG   DC__PRG1
+#define APP_FETCH_LAYER0_PRG  DC__PRG2
 #define APP_FETCH_DECODE0_PRG DC__PRG3
-#define APP_FETCH_ECO0_PRG DC__PRG4
+#define APP_FETCH_ECO0_PRG    DC__PRG4
 #define APP_FETCH_DECODE1_PRG DC__PRG5
-#define APP_FETCH_ECO1_PRG DC__PRG6
-#define APP_FETCH_WARP2_PRG DC__PRG7
-#define APP_FETCH_ECO2_PRG DC__PRG8
+#define APP_FETCH_ECO1_PRG    DC__PRG6
+#define APP_FETCH_WARP2_PRG   DC__PRG7
+#define APP_FETCH_ECO2_PRG    DC__PRG8
 
 #define APP_FETCH_DECODE9_DPR DC__DPR0_CH0
-#define APP_FETCH_WARP9_DPR DC__DPR0_CH1
-#define APP_FETCH_LAYER0_DPR DC__DPR0_CH2
+#define APP_FETCH_WARP9_DPR   DC__DPR0_CH1
+#define APP_FETCH_LAYER0_DPR  DC__DPR0_CH2
 #define APP_FETCH_DECODE0_DPR DC__DPR1_CH0
-#define APP_FETCH_ECO0_DPR DC__DPR1_CH0
+#define APP_FETCH_ECO0_DPR    DC__DPR1_CH0
 #define APP_FETCH_DECODE1_DPR DC__DPR1_CH1
-#define APP_FETCH_ECO1_DPR DC__DPR1_CH1
-#define APP_FETCH_WARP2_DPR DC__DPR1_CH2
-#define APP_FETCH_ECO2_DPR DC__DPR1_CH2
+#define APP_FETCH_ECO1_DPR    DC__DPR1_CH1
+#define APP_FETCH_WARP2_DPR   DC__DPR1_CH2
+#define APP_FETCH_ECO2_DPR    DC__DPR1_CH2
 
 #if DPU_EXAMPLE_DI == DPU_DI_MIPI
 extern uint32_t mipiDsiTxEscClkFreq_Hz;

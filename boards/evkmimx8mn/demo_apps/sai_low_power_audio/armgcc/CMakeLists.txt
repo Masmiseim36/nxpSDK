@@ -1,8 +1,6 @@
-INCLUDE(CMakeForceCompiler)
-
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -17,412 +15,22 @@ SET(CMAKE_STATIC_LIBRARY_SUFFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
- 
 # CURRENT DIRECTORY
 SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
+SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DDEBUG")
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -D__STARTUP_CLEAR_BSS")
+project(sai_low_power_audio)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DNO_CRP")
+set(MCUX_SDK_PROJECT_NAME sai_low_power_audio.elf)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -D__STARTUP_INITIALIZE_NONCACHEDATA")
+include(${ProjDirPath}/flags.cmake)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -g")
+include(${ProjDirPath}/config.cmake)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -Wall")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNO_CRP")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_DELAY_USE_DWT")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSRTM_DEBUG_MESSAGE_FUNC=DbgConsole_Printf")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSRTM_DEBUG_VERBOSE_LEVEL=SRTM_DEBUG_VERBOSE_WARN")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DNOT_CONFIG_CLK_ROOT=1")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DBOARD_USE_CODEC=1")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCODEC_WM8524_ENABLE")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFSL_RTOS_FREE_RTOS")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MMD")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-common")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_DELAY_USE_DWT")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSRTM_DEBUG_MESSAGE_FUNC=DbgConsole_Printf")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSRTM_DEBUG_VERBOSE_LEVEL=SRTM_DEBUG_VERBOSE_WARN")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNOT_CONFIG_CLK_ROOT=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOARD_USE_CODEC=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCODEC_WM8524_ENABLE")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFSL_RTOS_FREE_RTOS")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MMD")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MP")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MP")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-exceptions")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -g")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
-
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../..)
-
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../..)
-
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F)
-
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../..)
-
-include_directories(${ProjDirPath}/../../../../../CMSIS/Include)
-
-include_directories(${ProjDirPath}/../../../../../devices)
-
-include_directories(${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers)
-
-include_directories(${ProjDirPath}/../../../../../components/srtm/channels)
-
-include_directories(${ProjDirPath}/../../../../../components/srtm/services)
-
-include_directories(${ProjDirPath}/../../../../../components/codec)
-
-include_directories(${ProjDirPath}/../../../../../components/codec/port)
-
-include_directories(${ProjDirPath}/../../../../../components/codec/port/wm8524)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMX8MN6)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMX8MN6/utilities/str)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMX8MN6/utilities/debug_console)
-
-include_directories(${ProjDirPath}/../../../../../components/uart)
-
-include_directories(${ProjDirPath}/../../../../../components/serial_manager)
-
-include_directories(${ProjDirPath}/../../../../../components/lists)
-
-include_directories(${ProjDirPath}/../../../../../components/codec/wm8524)
-
-include_directories(${ProjDirPath}/../../../../../components/srtm/include)
-
-include_directories(${ProjDirPath}/../../../../../components/srtm/srtm)
-
-include_directories(${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8mn_m7)
-
-include_directories(${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include)
-
-include_directories(${ProjDirPath}/../../../../../devices/MIMX8MN6/utilities)
-
-add_executable(sai_low_power_audio.elf 
+add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../FreeRTOSConfig.h"
 "${ProjDirPath}/../rpmsg_config.h"
 "${ProjDirPath}/../lpm.c"
@@ -431,185 +39,136 @@ add_executable(sai_low_power_audio.elf
 "${ProjDirPath}/../sai_low_power_audio.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../rsc_table.c"
+"${ProjDirPath}/../rsc_table.h"
+"${ProjDirPath}/../remoteproc.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../fsl_iomuxc.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../app_srtm.c"
-"${ProjDirPath}/../../../app_srtm.h"
-"${ProjDirPath}/../../../../../components/srtm/channels/srtm_rpmsg_endpoint.c"
+"${ProjDirPath}/../app_srtm.c"
+"${ProjDirPath}/../app_srtm.h"
 "${ProjDirPath}/../../../../../components/srtm/channels/srtm_rpmsg_endpoint.h"
-"${ProjDirPath}/../../../../../components/srtm/services/srtm_audio_service.c"
+"${ProjDirPath}/../../../../../components/srtm/channels/srtm_rpmsg_endpoint.c"
 "${ProjDirPath}/../../../../../components/srtm/services/srtm_audio_service.h"
-"${ProjDirPath}/../../../../../components/srtm/services/srtm_sai_sdma_adapter.c"
+"${ProjDirPath}/../../../../../components/srtm/services/srtm_audio_service.c"
 "${ProjDirPath}/../../../../../components/srtm/services/srtm_sai_sdma_adapter.h"
-"${ProjDirPath}/../../../../../components/srtm/services/srtm_wm8524_adapter.c"
+"${ProjDirPath}/../../../../../components/srtm/services/srtm_sai_sdma_adapter.c"
 "${ProjDirPath}/../../../../../components/srtm/services/srtm_wm8524_adapter.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_uart.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_uart.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_gpc.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_gpc.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_gpt.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_gpt.h"
-"${ProjDirPath}/../../../../../components/codec/fsl_codec_common.c"
-"${ProjDirPath}/../../../../../components/codec/fsl_codec_common.h"
-"${ProjDirPath}/../../../../../components/codec/port/fsl_codec_adapter.h"
-"${ProjDirPath}/../../../../../components/codec/port/fsl_codec_adapter.c"
-"${ProjDirPath}/../../../../../components/codec/port/wm8524/fsl_wm8524_adapter.c"
-"${ProjDirPath}/../../../../../components/codec/port/wm8524/fsl_wm8524_adapter.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_sai.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_sai.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_sai_sdma.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_sai_sdma.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_rdc.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_rdc.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/MIMX8MN6_cm7.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/MIMX8MN6_cm7_features.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/fsl_device_registers.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/utilities/debug_console/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/utilities/debug_console/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../components/uart/iuart_adapter.c"
-"${ProjDirPath}/../../../../../components/uart/uart.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_manager.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_internal.h"
-"${ProjDirPath}/../../../../../components/lists/generic_list.c"
-"${ProjDirPath}/../../../../../components/lists/generic_list.h"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../components/serial_manager/serial_port_uart.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/gcc/startup_MIMX8MN6_cm7.S"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/system_MIMX8MN6_cm7.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/system_MIMX8MN6_cm7.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_cm7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_iccarm.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/mpu_armv8.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_common_tables.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_const_structs.h"
-"${ProjDirPath}/../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_sdma.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_sdma.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_sdma_script.h"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_mu.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers/fsl_mu.h"
-"${ProjDirPath}/../../../../../components/codec/wm8524/fsl_wm8524.c"
-"${ProjDirPath}/../../../../../components/codec/wm8524/fsl_wm8524.h"
-"${ProjDirPath}/../../../../../components/srtm/port/srtm_heap_freertos.c"
-"${ProjDirPath}/../../../../../components/srtm/port/srtm_mutex_freertos.c"
-"${ProjDirPath}/../../../../../components/srtm/port/srtm_sem_freertos.c"
-"${ProjDirPath}/../../../../../components/srtm/include/srtm_channel.h"
-"${ProjDirPath}/../../../../../components/srtm/include/srtm_defs.h"
-"${ProjDirPath}/../../../../../components/srtm/include/srtm_dispatcher.h"
-"${ProjDirPath}/../../../../../components/srtm/include/srtm_message.h"
-"${ProjDirPath}/../../../../../components/srtm/include/srtm_peercore.h"
-"${ProjDirPath}/../../../../../components/srtm/include/srtm_service.h"
-"${ProjDirPath}/../../../../../components/srtm/port/srtm_message_pool.c"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_channel.c"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_channel_struct.h"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_dispatcher.c"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_dispatcher_struct.h"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_heap.h"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_list.h"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_message.c"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_message_pool.h"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_message_struct.h"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_mutex.h"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_peercore.c"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_peercore_struct.h"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_sem.h"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_service.c"
-"${ProjDirPath}/../../../../../components/srtm/srtm/srtm_service_struct.h"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8mn_m7/rpmsg_platform.h"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imx8mn_m7/rpmsg_platform.c"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_ns.c"
-"${ProjDirPath}/../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/list.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/queue.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/timers.c"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h"
-"${ProjDirPath}/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c"
-"${ProjDirPath}/../../../../../devices/MIMX8MN6/utilities/fsl_sbrk.c"
+"${ProjDirPath}/../../../../../components/srtm/services/srtm_wm8524_adapter.c"
 )
 
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${ProjDirPath}/.. debug
+    ${ProjDirPath}/../../.. debug
+    ${ProjDirPath}/../../..
+    ${ProjDirPath}/..
+    ${ProjDirPath}/../../../../../components/srtm/channels
+    ${ProjDirPath}/../../../../../components/srtm/services
+)
 
-set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -T${ProjDirPath}/MIMX8MN6xxxxx_cm7_lpa_ram.ld -static")
+set(CMAKE_MODULE_PATH
+    ${ProjDirPath}/../../../../../devices/MIMX8MN6/drivers
+    ${ProjDirPath}/../../../../../components/codec
+    ${ProjDirPath}/../../../../../components/codec/port
+    ${ProjDirPath}/../../../../../devices/MIMX8MN6
+    ${ProjDirPath}/../../../../../devices/MIMX8MN6/utilities
+    ${ProjDirPath}/../../../../../components/uart
+    ${ProjDirPath}/../../../../../components/serial_manager
+    ${ProjDirPath}/../../../../../components/lists
+    ${ProjDirPath}/../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../components/codec/wm8524
+    ${ProjDirPath}/../../../../../components/srtm/port
+    ${ProjDirPath}/../../../../../components/srtm
+    ${ProjDirPath}/../../../../../middleware/multicore
+    ${ProjDirPath}/../../../../../rtos/freertos
+)
 
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -T${ProjDirPath}/MIMX8MN6xxxxx_cm7_lpa_ram.ld -static")
+# include modules
+include(driver_igpio_MIMX8MN6)
 
-TARGET_LINK_LIBRARIES(sai_low_power_audio.elf -Wl,--start-group)
-target_link_libraries(sai_low_power_audio.elf debug m)
+include(driver_iuart_MIMX8MN6)
 
-target_link_libraries(sai_low_power_audio.elf debug c)
+include(driver_gpc_2_MIMX8MN6)
 
-target_link_libraries(sai_low_power_audio.elf debug gcc)
+include(driver_gpt_MIMX8MN6)
 
-target_link_libraries(sai_low_power_audio.elf debug nosys)
+include(driver_codec_MIMX8MN6)
 
-target_link_libraries(sai_low_power_audio.elf optimized m)
+include(driver_common_MIMX8MN6)
 
-target_link_libraries(sai_low_power_audio.elf optimized c)
+include(component_codec_wm8524_adapter_MIMX8MN6)
 
-target_link_libraries(sai_low_power_audio.elf optimized gcc)
+include(driver_clock_MIMX8MN6)
 
-target_link_libraries(sai_low_power_audio.elf optimized nosys)
+include(driver_sai_MIMX8MN6)
 
-TARGET_LINK_LIBRARIES(sai_low_power_audio.elf -Wl,--end-group)
+include(driver_sai_sdma_MIMX8MN6)
 
-ADD_CUSTOM_COMMAND(TARGET sai_low_power_audio.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
--Obinary ${EXECUTABLE_OUTPUT_PATH}/sai_low_power_audio.elf ${EXECUTABLE_OUTPUT_PATH}/sai_low_power_audio.bin)
+include(driver_rdc_MIMX8MN6)
+
+include(device_MIMX8MN6_CMSIS_MIMX8MN6)
+
+include(utility_debug_console_MIMX8MN6)
+
+include(component_iuart_adapter_MIMX8MN6)
+
+include(component_serial_manager_MIMX8MN6)
+
+include(component_lists_MIMX8MN6)
+
+include(component_serial_manager_uart_MIMX8MN6)
+
+include(device_MIMX8MN6_startup_MIMX8MN6)
+
+include(utility_assert_MIMX8MN6)
+
+include(CMSIS_Include_core_cm7_MIMX8MN6)
+
+include(CMSIS_Include_common_MIMX8MN6)
+
+include(CMSIS_Include_dsp_MIMX8MN6)
+
+include(driver_sdma_MIMX8MN6)
+
+include(driver_memory_MIMX8MN6)
+
+include(driver_mu_MIMX8MN6)
+
+include(driver_wm8524_MIMX8MN6)
+
+include(driver_srtm_freertos_MIMX8MN6)
+
+include(driver_srtm_MIMX8MN6)
+
+include(middleware_multicore_rpmsg_lite_imx8mn_m7_freertos_MIMX8MN6)
+
+include(middleware_multicore_rpmsg_lite_MIMX8MN6)
+
+include(middleware_freertos-kernel_MIMX8MN6)
+
+include(middleware_freertos-kernel_extension_MIMX8MN6)
+
+include(middleware_freertos-kernel_heap_4_MIMX8MN6)
+
+include(utilities_misc_utilities_MIMX8MN6)
+
+include(device_MIMX8MN6_system_MIMX8MN6)
+
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
+
+ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/sai_low_power_audio.bin)
 

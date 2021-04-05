@@ -17,21 +17,21 @@
 #include "fsl_debug_console.h"
 #include "fsl_ecspi.h"
 #include "fsl_ecspi_freertos.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define ECSPI_TRANSFER_SIZE 64
+#define ECSPI_TRANSFER_SIZE     64
 #define ECSPI_TRANSFER_BAUDRATE 500000U
-#define ECSPI_MASTER_BASEADDR ECSPI2
+#define ECSPI_MASTER_BASEADDR   ECSPI2
 #define ECSPI_MASTER_CLK_FREQ                                                                 \
     (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootEcspi2)) / \
      (CLOCK_GetRootPostDivider(kCLOCK_RootEcspi2)))
 #define ECSPI_MASTER_TRANSFER_CHANNEL kECSPI_Channel0
-#define EXAMPLE_ECSPI_MASTER_IRQN ECSPI2_IRQn
+#define EXAMPLE_ECSPI_MASTER_IRQN     ECSPI2_IRQn
 
 /* Task priorities. */
 #define ecspi_task_PRIORITY (configMAX_PRIORITIES - 2)
@@ -55,7 +55,7 @@ int main(void)
     /* Board specific RDC settings */
     BOARD_RdcInit();
 
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     BOARD_InitMemory();

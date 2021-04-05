@@ -8,11 +8,11 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_flexcan.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
-#include "pin_mux.h"
 #include "fsl_irqsteer.h"
-#include "clock_config.h"
 #include "fsl_lpi2c.h"
 #include "fsl_gpio.h"
 /*******************************************************************************
@@ -24,7 +24,7 @@
  * If other frequency wanted, please use CLK_SRC=0 and set the working frequency for SC_R_CAN_0.
  */
 #define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)
-#define EXAMPLE_CAN_CLK_FREQ (SC_160MHZ)
+#define EXAMPLE_CAN_CLK_FREQ   (SC_160MHZ)
 /* Considering that the first valid MB must be used as Reserved TX MB for ERR005641,
  * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default as zero,
  * the first valid TX MB Number shall be 8;
@@ -38,51 +38,50 @@
  * ADMA_I2C1 is used to control PCA9646, PCA9557 to handle the RST pin for PCA6416
  * M4_I2C is used to control PCA6416 to handle the RST and STB pin for CAN XCVR TJA1043
  */
-#define EXAMPLE_IOEXP_LPI2C_BAUDRATE (400000) /*in i2c example it is 100000*/
+#define EXAMPLE_IOEXP_LPI2C_BAUDRATE               (400000) /*in i2c example it is 100000*/
 #define EXAMPLE_IOEXP_LPI2C_MASTER_CLOCK_FREQUENCY SC_133MHZ
-#define EXAMPLE_IOEXP_LPI2C_MASTER ADMA__LPI2C1
+#define EXAMPLE_IOEXP_LPI2C_MASTER                 ADMA__LPI2C1
 
-#define EXAMPLE_IOEXP_BASE_LPI2C_BAUDRATE (400000) /*in i2c example it is 100000*/
+#define EXAMPLE_IOEXP_BASE_LPI2C_BAUDRATE               (400000) /*in i2c example it is 100000*/
 #define EXAMPLE_IOEXP_BASE_LPI2C_MASTER_CLOCK_FREQUENCY SC_133MHZ
-#define EXAMPLE_IOEXP_BASE_LPI2C_MASTER CM4__LPI2C
+#define EXAMPLE_IOEXP_BASE_LPI2C_MASTER                 CM4__LPI2C
 
 /*PCA6416 I2C Register Map*/
-#define PCA6416_REG_INPUT_PORT_0 (0x0)
-#define PCA6416_REG_INPUT_PORT_1 (0x1)
-#define PCA6416_REG_OUTPUT_PORT_0 (0x2)
-#define PCA6416_REG_OUTPUT_PORT_1 (0x3)
+#define PCA6416_REG_INPUT_PORT_0              (0x0)
+#define PCA6416_REG_INPUT_PORT_1              (0x1)
+#define PCA6416_REG_OUTPUT_PORT_0             (0x2)
+#define PCA6416_REG_OUTPUT_PORT_1             (0x3)
 #define PCA6416_REG_POLARITY_INVERSION_PORT_0 (0x4)
 #define PCA6416_REG_POLARITY_INVERSION_PORT_1 (0x5)
-#define PCA6416_REG_CONFIGURATION_PORT_0 (0x6)
-#define PCA6416_REG_CONFIGURATION_PORT_1 (0x7)
+#define PCA6416_REG_CONFIGURATION_PORT_0      (0x6)
+#define PCA6416_REG_CONFIGURATION_PORT_1      (0x7)
 
 /*PCA9557 I2C Register Map*/
-#define PCA9557_REG_INTPUT_PORT (0x00)
-#define PCA9557_REG_OUTPUT_PORT (0x01)
+#define PCA9557_REG_INTPUT_PORT        (0x00)
+#define PCA9557_REG_OUTPUT_PORT        (0x01)
 #define PCA9557_REG_POLARITY_INVERSION (0x02)
-#define PCA9557_REG_CONFIGURATION (0x03)
+#define PCA9557_REG_CONFIGURATION      (0x03)
 
 /*Board I2C Addresses*/
 #define EXAMPLE_I2C_EXPANSION_CAN_ADDR (0x20)
-#define EXAMPLE_I2C_EXPANSION_A_ADDR (0x1A)
-#define EXAMPLE_I2C_SWITCH_ADDR (0x71)
+#define EXAMPLE_I2C_EXPANSION_A_ADDR   (0x1A)
+#define EXAMPLE_I2C_SWITCH_ADDR        (0x71)
 
 #define DLC (8)
 
-/* To get most precise baud rate under some circumstances, users need to set
-   quantum which is composed of PSEG1/PSEG2/PROPSEG. Because CAN clock prescaler
-   = source clock/(baud rate * quantum), for e.g. 84M clock and 1M baud rate, the
-   quantum should be .e.g 14=(6+3+1)+4, so prescaler is 6. By default, quantum
-   is set to 10=(3+2+1)+4, because for most platforms e.g. 120M source clock/(1M
-   baud rate * 10) is an integer. Remember users must ensure the calculated
-   prescaler an integer thus to get precise baud rate. */
+/* The CAN clock prescaler = CAN source clock/(baud rate * quantum), and the prescaler must be an integer.
+   The quantum default value is set to 10=(3+2+1)+4, because for most platforms the CAN clock frequency is
+   a multiple of 10. e.g. 120M CAN source clock/(1M baud rate * 10) is an integer. If the CAN clock frequency
+   is not a multiple of 10, users need to set SET_CAN_QUANTUM and define the PSEG1/PSEG2/PROPSEG (classical CAN)
+   and FPSEG1/FPSEG2/FPROPSEG (CANFD) vaule. Or can set USE_IMPROVED_TIMING_CONFIG macro to use driver api to
+   calculates the improved timing values. */
 #define SET_CAN_QUANTUM 1
-#define PSEG1 6
-#define PSEG2 4
-#define PROPSEG 6
-#define FPSEG1 6
-#define FPSEG2 4
-#define FPROPSEG 7
+#define PSEG1           6
+#define PSEG2           4
+#define PROPSEG         6
+#define FPSEG1          6
+#define FPSEG2          4
+#define FPROPSEG        7
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 /*******************************************************************************
@@ -308,7 +307,12 @@ int main(void)
     BOARD_InitDebugConsole();
     BOARD_InitMemory();
 
-    /* Power on Peripherals. */
+    /*
+     * Power on Peripherals.
+     * CAN1/CAN2 share the clock from CAN0, and their power domain is the child domain of CAN0's.
+     *
+     * Note : If other CAN instances are used, SC_R_CAN_0 should still be powered.
+     */
     if (sc_pm_set_resource_power_mode(ipc, SC_R_CAN_0, SC_PM_PW_MODE_ON) != SC_ERR_NONE)
     {
         PRINTF("Error: Failed to power on FLEXCAN\r\n");

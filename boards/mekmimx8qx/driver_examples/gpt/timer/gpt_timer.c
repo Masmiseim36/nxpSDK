@@ -7,19 +7,19 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_gpt.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define GPT_IRQ_ID LSIO_GPT0_INT_IRQn
-#define EXAMPLE_GPT LSIO__GPT0
-#define EXAMPLE_GPT_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_LSIO_Gpt0)
+#define GPT_IRQ_ID             LSIO_GPT0_INT_IRQn
+#define EXAMPLE_GPT            LSIO__GPT0
+#define EXAMPLE_GPT_CLK_FREQ   CLOCK_GetIpFreq(kCLOCK_LSIO_Gpt0)
 #define EXAMPLE_GPT_IRQHandler LSIO_GPT0_INT_IRQHandler
 
 /*******************************************************************************

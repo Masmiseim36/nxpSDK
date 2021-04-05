@@ -8,8 +8,8 @@
 **                          Keil ARM C/C++ Compiler
 **
 **     Reference manual:    IMX8DQXPRM, Rev. E, 6/2019
-**     Version:             rev. 4.0, 2018-08-22
-**     Build:               b191126
+**     Version:             rev. 4.0, 2020-06-19
+**     Build:               b200806
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -17,7 +17,7 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -32,7 +32,7 @@
 **         RevA Header EAR
 **     - rev. 3.0 (2018-08-22)
 **         RevB Header EAR
-**     - rev. 4.0 (2018-08-22)
+**     - rev. 4.0 (2020-06-19)
 **         RevC Header RFP
 **
 ** ###################################################################
@@ -41,7 +41,7 @@
 /*!
  * @file MIMX8QX6_cm4
  * @version 1.0
- * @date 261119
+ * @date 060820
  * @brief Device specific configuration file for MIMX8QX6_cm4 (header file)
  *
  * Provides a system configuration function and a global variable that contains

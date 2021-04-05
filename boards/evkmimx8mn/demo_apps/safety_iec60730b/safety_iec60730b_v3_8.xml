@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="middleware.safety.MIMX8MN6"/>
+    <definition extID="platform.drivers.clock.MIMX8MN6"/>
+    <definition extID="platform.drivers.common.MIMX8MN6"/>
+    <definition extID="platform.drivers.rdc.MIMX8MN6"/>
+    <definition extID="device.MIMX8MN6_CMSIS.MIMX8MN6"/>
+    <definition extID="utility.debug_console.MIMX8MN6"/>
+    <definition extID="component.iuart_adapter.MIMX8MN6"/>
+    <definition extID="component.serial_manager.MIMX8MN6"/>
+    <definition extID="component.lists.MIMX8MN6"/>
+    <definition extID="component.serial_manager_uart.MIMX8MN6"/>
+    <definition extID="platform.drivers.iuart.MIMX8MN6"/>
+    <definition extID="platform.utilities.assert.MIMX8MN6"/>
+    <definition extID="platform.drivers.iomuxc.MIMX8MN6"/>
+    <definition extID="platform.drivers.igpio.MIMX8MN6"/>
+    <definition extID="platform.utilities.misc_utilities.MIMX8MN6"/>
+    <definition extID="platform.Include_core_cm7.MIMX8MN6"/>
+    <definition extID="platform.Include_common.MIMX8MN6"/>
+    <definition extID="platform.Include_dsp.MIMX8MN6"/>
+    <definition extID="iar"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+    <definition extID="mdk"/>
+  </externalDefinitions>
+  <example id="evkmimx8mn_safety_iec60730b" name="safety_iec60730b" dependency="middleware.safety.MIMX8MN6 platform.drivers.clock.MIMX8MN6 platform.drivers.common.MIMX8MN6 platform.drivers.rdc.MIMX8MN6 device.MIMX8MN6_CMSIS.MIMX8MN6 utility.debug_console.MIMX8MN6 component.iuart_adapter.MIMX8MN6 component.serial_manager.MIMX8MN6 component.lists.MIMX8MN6 component.serial_manager_uart.MIMX8MN6 platform.drivers.iuart.MIMX8MN6 platform.utilities.assert.MIMX8MN6 platform.drivers.iomuxc.MIMX8MN6 platform.drivers.igpio.MIMX8MN6 platform.utilities.misc_utilities.MIMX8MN6 platform.Include_core_cm7.MIMX8MN6 platform.Include_common.MIMX8MN6 platform.Include_dsp.MIMX8MN6" category="demo_apps">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MIMX8MN6DVTJZ</value>
+          <value>FLASH_TARGET</value>
+          <value>SERIAL_PORT_TYPE_UART=1</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv5sp.hard</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7" project_relative_path="." type="c_include"/>
+      <include_path path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="source" type="c_include"/>
+      <include_path path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="board" type="c_include"/>
+      <include_path path="middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7" project_relative_path="." type="asm_include"/>
+    </include_paths>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b/iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="safety_iec60730b.ewp"/>
+      <files mask="safety_iec60730b.ewd"/>
+      <files mask="safety_iec60730b.eww"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="source" type="c_include">
+      <files mask="freemaster_cfg.h"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="doc" type="doc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="middleware/safety_iec60730b/tools/crc" project_relative_path="linker" type="script" toolchain="mdk">
+      <files mask="crc_hex.bat"/>
+    </source>
+    <source path="tools/srecord" project_relative_path="tools/srecord" type="other" toolchain="mdk">
+      <files mask="srec_cat.exe" hidden="true"/>
+    </source>
+    <source path="tools/srecord" project_relative_path="tools/srecord" type="archive">
+      <files mask="srecord-1.64.zip"/>
+    </source>
+    <source path="middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7" project_relative_path="startup" type="src">
+      <files mask="start.c"/>
+    </source>
+    <source path="middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7" project_relative_path="startup" type="src" toolchain="iar">
+      <files mask="startup_iar.c"/>
+      <files mask="vectors_iar.c"/>
+    </source>
+    <source path="middleware/safety_iec60730b/boards/common/cm4_cm7/startup/cm7" project_relative_path="startup" type="c_include" toolchain="iar">
+      <files mask="vectors_iar.h"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="board" type="src">
+      <files mask="clock_config.c"/>
+      <files mask="board.c"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="board" type="c_include">
+      <files mask="clock_config.h"/>
+      <files mask="board.h"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b/iar/linker" project_relative_path="linker" type="linker" toolchain="iar">
+      <files mask="evkmimx8mn_safety.icf"/>
+    </source>
+    <source path="middleware/safety_iec60730b/boards/evkmimx8mn/linker/iar" project_relative_path="linker" type="script" toolchain="iar">
+      <files mask="crc_iar.bat"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="source" type="c_include">
+      <files mask="safety_test_items.h"/>
+      <files mask="isr.h"/>
+      <files mask="safety_config.h"/>
+      <files mask="project_setup_evkmimx8mn.h"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="source" type="src">
+      <files mask="safety_test_items.c"/>
+      <files mask="project_setup_evkmimx8mn.c"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="source" type="src">
+      <files mask="safety_cm4_cm7_imx8m.c"/>
+      <files mask="main_imx8m.c"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b" project_relative_path="source" type="c_include">
+      <files mask="safety_cm4_cm7_imx8m.h"/>
+    </source>
+    <source path="boards/evkmimx8mn/demo_apps/safety_iec60730b/GUI" project_relative_path="GUI" type="other">
+      <files mask="safety.pmp"/>
+    </source>
+  </example>
+</ksdk:examples>

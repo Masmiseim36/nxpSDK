@@ -15,12 +15,12 @@
 #define FSL_COMPONENT_ID "platform.drivers.clock"
 #endif
 
-#define FracPLL_GNRL_CTL_Offset (0U)
+#define FracPLL_GNRL_CTL_Offset  (0U)
 #define FracPLL_FDIV_CTL0_Offset (4U)
 #define FracPLL_FDIV_CTL1_Offset (8U)
 
 #define IntegerPLL_GNRL_CTL_Offset (0U)
-#define IntegerPLL_DIV_CTL_Offset (4U)
+#define IntegerPLL_DIV_CTL_Offset  (4U)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -108,7 +108,7 @@ uint32_t CLOCK_GetCoreM4Freq(void)
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll3Ctrl);
             break;
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -153,7 +153,7 @@ uint32_t CLOCK_GetAxiFreq(void)
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl);
             break;
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -198,7 +198,7 @@ uint32_t CLOCK_GetAhbFreq(void)
             freq = CLOCK_GetPllFreq(kCLOCK_VideoPll1Ctrl);
             break;
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -239,7 +239,7 @@ uint32_t CLOCK_GetPllRefClkFreq(clock_pll_ctrl_t ctrl)
             break;
 
         default:
-            assert(false);
+            refClkFreq = 0U;
             break;
     }
 
@@ -297,7 +297,7 @@ uint32_t CLOCK_GetPllFreq(clock_pll_ctrl_t pll)
             fracPllBypass = CLOCK_IsPllBypassed(CCM_ANALOG, kCLOCK_DramPllInternalPll1BypassCtrl);
             break;
         default:
-            assert(false);
+            fracPllBypass = false;
             break;
     }
     if (pll < kCLOCK_GpuPllCtrl)
@@ -337,7 +337,7 @@ uint32_t CLOCK_GetPllFreq(clock_pll_ctrl_t pll)
  */
 void CLOCK_InitArmPll(const ccm_analog_integer_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* Integer PLL configuration */
     CLOCK_InitIntegerPll(CCM_ANALOG, config, kCLOCK_ArmPllCtrl);
@@ -370,7 +370,7 @@ void CLOCK_DeinitArmPll(void)
  */
 void CLOCK_InitAudioPll1(const ccm_analog_frac_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* Disable PLL bypass */
     CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_AudioPll1BypassCtrl, false);
@@ -403,7 +403,7 @@ void CLOCK_DeinitAudioPll1(void)
  */
 void CLOCK_InitAudioPll2(const ccm_analog_frac_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* Disable PLL bypass */
     CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_AudioPll2BypassCtrl, false);
@@ -434,7 +434,7 @@ void CLOCK_DeinitAudioPll2(void)
  */
 void CLOCK_InitVideoPll1(const ccm_analog_frac_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* Disable PLL bypass */
     CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_VideoPll1BypassCtrl, false);
@@ -467,7 +467,7 @@ void CLOCK_DeinitVideoPll1(void)
  */
 void CLOCK_InitSysPll1(const ccm_analog_integer_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* Integer PLL configuration */
     CLOCK_InitIntegerPll(CCM_ANALOG, config, kCLOCK_SystemPll1Ctrl);
@@ -500,7 +500,7 @@ void CLOCK_DeinitSysPll1(void)
  */
 void CLOCK_InitSysPll2(const ccm_analog_integer_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* Integer PLL configuration */
     CLOCK_InitIntegerPll(CCM_ANALOG, config, kCLOCK_SystemPll2Ctrl);
@@ -533,7 +533,7 @@ void CLOCK_DeinitSysPll2(void)
  */
 void CLOCK_InitSysPll3(const ccm_analog_integer_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* Integer PLL configuration */
     CLOCK_InitIntegerPll(CCM_ANALOG, config, kCLOCK_SystemPll3Ctrl);
@@ -566,7 +566,7 @@ void CLOCK_DeinitSysPll3(void)
  */
 void CLOCK_InitFracPll(CCM_ANALOG_Type *base, const ccm_analog_frac_pll_config_t *config, clock_pll_ctrl_t type)
 {
-    assert(config);
+    assert(config != NULL);
     assert((config->mainDiv >= 64U) && (config->mainDiv <= 1023U));
     assert((config->preDiv >= 1U) && (config->preDiv <= 63U));
     assert(config->postDiv <= 6U);
@@ -639,7 +639,7 @@ uint32_t CLOCK_GetFracPllFreq(CCM_ANALOG_Type *base, clock_pll_ctrl_t type, uint
  */
 void CLOCK_InitIntegerPll(CCM_ANALOG_Type *base, const ccm_analog_integer_pll_config_t *config, clock_pll_ctrl_t type)
 {
-    assert(config);
+    assert(config != NULL);
     assert((config->mainDiv >= 64U) && (config->mainDiv <= 1023U));
     assert((config->preDiv >= 1U) && (config->preDiv <= 63U));
     assert(config->postDiv <= 6U);

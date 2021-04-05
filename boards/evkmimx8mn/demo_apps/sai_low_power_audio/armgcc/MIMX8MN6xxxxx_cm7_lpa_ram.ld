@@ -45,10 +45,18 @@ SECTIONS
   .interrupts :
   {
     __VECTOR_TABLE = .;
+    __Vectors = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
   } > m_interrupts
+
+  .resource_table :
+  {
+    . = ALIGN(8);
+    KEEP(*(.resource_table)) /* Resource table */
+    . = ALIGN(8);
+  } > m_text
 
     /* The program code and other data goes into internal RAM */
   .text :

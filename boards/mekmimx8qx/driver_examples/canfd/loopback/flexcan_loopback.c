@@ -8,11 +8,11 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_flexcan.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
-#include "pin_mux.h"
 #include "fsl_irqsteer.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -22,7 +22,7 @@
  * If other frequency wanted, please use CLK_SRC=0 and set the working frequency for SC_R_CAN_0.
  */
 #define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)
-#define EXAMPLE_CAN_CLK_FREQ (SC_160MHZ)
+#define EXAMPLE_CAN_CLK_FREQ   (SC_160MHZ)
 /* Considering that the first valid MB must be used as Reserved TX MB for ERR005641,
  * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default as zero,
  * the first valid TX MB Number shall be 8;
@@ -32,9 +32,9 @@
  */
 #define RX_MESSAGE_BUFFER_NUM (9)
 #define TX_MESSAGE_BUFFER_NUM (8)
-#define USE_CANFD (1)
+#define USE_CANFD             (1)
 
-#define EXAMPLE_FLEXCAN_IRQn ADMA_FLEXCAN0_INT_IRQn
+#define EXAMPLE_FLEXCAN_IRQn       ADMA_FLEXCAN0_INT_IRQn
 #define EXAMPLE_FLEXCAN_IRQHandler ADMA_FLEXCAN0_INT_IRQHandler
 /*
  *    DWORD_IN_MB    DLC    BYTES_IN_MB             Maximum MBs
@@ -47,7 +47,7 @@
  * and the Message Buffers are limited corresponding to each payload configuration:
  */
 #define DWORD_IN_MB (8)
-#define DLC (13)
+#define DLC         (13)
 #define BYTES_IN_MB kFLEXCAN_32BperMB
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
@@ -87,11 +87,7 @@ void EXAMPLE_FLEXCAN_IRQHandler(void)
 #endif
         rxComplete = true;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

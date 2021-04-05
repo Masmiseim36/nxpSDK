@@ -6,8 +6,8 @@ When the TPM interrupt is triggered a message a printed on the UART terminal.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -46,6 +46,3 @@ TPM example to simulate a timer
 You will see a "-" or "|" in terminal every 1 second:
 -|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

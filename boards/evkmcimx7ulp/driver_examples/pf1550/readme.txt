@@ -14,8 +14,8 @@ and make sure that the battery is not over-charged.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -71,6 +71,3 @@ LDO3's range        : Fixed to 1800mV.
 The Setting Regulator Output Voltage function of this example is used to demonstrate
 the usage of SDK PF1550 bare-bone driver, user need to adjust the regulator output
 according to specific board design.
-Customization options
-=====================
-

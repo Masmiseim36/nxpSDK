@@ -103,7 +103,7 @@ srtm_status_t SRTM_KeypadService_RegisterKey(srtm_service_t service,
  * @param keyIdx Keypad key index.
  * @return SRTM_Status_Success on success and others on failure.
  */
-srtm_status_t SRTM_KeypadService_UnregisterPin(srtm_service_t service, uint8_t keyIdx);
+srtm_status_t SRTM_KeypadService_UnregisterKey(srtm_service_t service, uint8_t keyIdx);
 
 /*!
  * @brief Notify keypad event to peer core. This function must be called by application after peer core configured

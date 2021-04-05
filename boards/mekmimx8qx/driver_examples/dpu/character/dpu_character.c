@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, 2019 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,6 +8,7 @@
 #include "fsl_dpu.h"
 #include "dpu_example.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
@@ -16,7 +17,6 @@
 #endif
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  *******************************************************************************/
@@ -28,16 +28,16 @@
 #define APP_MAKE_COLOR(red, green, blue, alpha) \
     ((((uint32_t)(alpha)) << 24U) | (((uint32_t)(red)) << 16U) | (((uint32_t)(green)) << 8U) | ((uint32_t)(blue)))
 
-#define APP_COLOR_BLUE APP_MAKE_COLOR(0, 0, 0xFF, 0xFF)
-#define APP_COLOR_GREEN APP_MAKE_COLOR(0, 0xFF, 0, 0xFF)
-#define APP_COLOR_RED APP_MAKE_COLOR(0xFF, 0, 0, 0xFF)
-#define APP_COLOR_YELLOW APP_MAKE_COLOR(0xFF, 0xFF, 0, 0xFF)
-#define APP_COLOR_CYAN APP_MAKE_COLOR(0, 0xFF, 0xFF, 0xFF)
+#define APP_COLOR_BLUE    APP_MAKE_COLOR(0, 0, 0xFF, 0xFF)
+#define APP_COLOR_GREEN   APP_MAKE_COLOR(0, 0xFF, 0, 0xFF)
+#define APP_COLOR_RED     APP_MAKE_COLOR(0xFF, 0, 0, 0xFF)
+#define APP_COLOR_YELLOW  APP_MAKE_COLOR(0xFF, 0xFF, 0, 0xFF)
+#define APP_COLOR_CYAN    APP_MAKE_COLOR(0, 0xFF, 0xFF, 0xFF)
 #define APP_COLOR_MAGENTA APP_MAKE_COLOR(0xFF, 0, 0xFF, 0xFF)
-#define APP_COLOR_BLACK APP_MAKE_COLOR(0, 0, 0, 0xFF)
-#define APP_COLOR_WHITE APP_MAKE_COLOR(0xFF, 0xFF, 0xFF, 0xFF)
-#define APP_COLOR_SILVER APP_MAKE_COLOR(0xC0, 0xC0, 0xC0, 0xFF)
-#define APP_COLOR_GRAY APP_MAKE_COLOR(0x80, 0x80, 0x80, 0xFF)
+#define APP_COLOR_BLACK   APP_MAKE_COLOR(0, 0, 0, 0xFF)
+#define APP_COLOR_WHITE   APP_MAKE_COLOR(0xFF, 0xFF, 0xFF, 0xFF)
+#define APP_COLOR_SILVER  APP_MAKE_COLOR(0xC0, 0xC0, 0xC0, 0xFF)
+#define APP_COLOR_GRAY    APP_MAKE_COLOR(0x80, 0x80, 0x80, 0xFF)
 
 #define APP_BOARDER 8
 
@@ -51,18 +51,18 @@
 #define APP_SAFETY_STREAM_PRG APP_FETCH_DECODE1_PRG
 #endif
 
-#define APP_FB_WIDTH APP_PANEL_WIDTH
+#define APP_FB_WIDTH  APP_PANEL_WIDTH
 #define APP_FB_HEIGHT APP_PANEL_HEIGHT
 
 #if (defined(APP_DPU_USE_PREFETCH) && APP_DPU_USE_PREFETCH)
-#define APP_FB_ADDR_ALIGN_BYTE DPU_FETCH_UNIT_BURST_SIZE
+#define APP_FB_ADDR_ALIGN_BYTE   DPU_FETCH_UNIT_BURST_SIZE
 #define APP_FB_STRIDE_ALIGN_BYTE DPU_FETCH_UNIT_BURST_SIZE
 #else
-#define APP_FB_ADDR_ALIGN (32U)
+#define APP_FB_ADDR_ALIGN_BYTE   (32U)
 #define APP_FB_STRIDE_ALIGN_BYTE APP_BPP
 #endif
 
-#define APP_FB_STRIDE_BYTE (SDK_SIZEALIGN(APP_BPP * APP_FB_WIDTH, APP_FB_STRIDE_ALIGN_BYTE))
+#define APP_FB_STRIDE_BYTE  (SDK_SIZEALIGN(APP_BPP * APP_FB_WIDTH, APP_FB_STRIDE_ALIGN_BYTE))
 #define APP_FB_STRIDE_PIXEL (APP_FB_STRIDE_BYTE / APP_BPP)
 
 /*******************************************************************************

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,7 +19,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Driver version. */
-#define FSL_DPR_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+#define FSL_DPR_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 
 /*!
  * @brief Data type of the frame buffer.
@@ -53,7 +53,6 @@ extern "C" {
  * @brief Enables and configures the DPR peripheral module.
  *
  * @param base DPR peripheral address.
- * @param config DPR module configuration structure.
  */
 void DPR_Init(DPR_Type *base);
 
@@ -81,7 +80,7 @@ void DPR_SetBufferConfig(DPR_Type *base, const dpr_buffer_config_t *config);
     config->height = 1920U;
     config->strideBytes = 4U * 1080U;
     config->dataType = kDPR_DataType32Bpp;
-    @code
+   @endcode
  *
  * @param config Pointer to the configuration.
  */

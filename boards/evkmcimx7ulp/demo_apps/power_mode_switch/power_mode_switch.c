@@ -19,12 +19,12 @@
 #include "fsl_mu.h"
 #include "fsl_debug_console.h"
 
+#include "pin_mux.h"
 #include "board.h"
 #include "lpm.h"
 #include "app_srtm.h"
 #include "power_mode_switch.h"
 
-#include "pin_mux.h"
 #include "fsl_iomuxc.h"
 #include "fsl_lpuart.h"
 /*******************************************************************************
@@ -811,6 +811,7 @@ static void APP_SetPmicRegister(void)
 static void APP_PowerTestMode(void)
 {
     uint32_t cmd;
+    uint32_t value;
 
     for (;;)
     {
@@ -828,9 +829,11 @@ static void APP_PowerTestMode(void)
         PRINTF("   - Just for showing minimum board leakage. \r\n");
         /* Have impact on debug feature during suspend/resume. */
         PRINTF("3: %s JTAG pins in VLLS\r\n", disableJtagPinsInVLLS ? "Enable" : "Disable");
+        /* May have risk in M4 running during PMIC standby mode. */
+        PRINTF("4: Toggle PMIC LDO3 low power mode in VLLS.\r\n");
         PRINTF("Selection:");
         cmd = APP_GetInputNumWithEcho(1U, true);
-        if (3 >= cmd)
+        if (4 >= cmd)
         {
             break;
         }
@@ -849,9 +852,22 @@ static void APP_PowerTestMode(void)
     {
         disableWirelessPinsInVLLS = !disableWirelessPinsInVLLS;
     }
-    else
+    else if (cmd == 3)
     {
         disableJtagPinsInVLLS = !disableJtagPinsInVLLS;
+    }
+    else
+    {
+        value = APP_SRTM_GetPmicReg(0x53U);
+        if ((value & 0x8U) == 0)
+        {
+            value |= 0x8U; /* Enable low power mode */
+        }
+        else
+        {
+            value &= ~0x8U; /* Disable low power mode */
+        }
+        APP_SRTM_SetPmicReg(0x53U, value);
     }
 
     PRINTF("Press Any Key to Home Page...");

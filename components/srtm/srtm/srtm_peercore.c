@@ -36,7 +36,7 @@ srtm_peercore_t SRTM_PeerCore_Create(uint32_t id)
     srtm_peercore_t core = (srtm_peercore_t)SRTM_Heap_Malloc(sizeof(struct _srtm_peercore));
     srtm_mutex_t mutex   = SRTM_Mutex_Create();
 
-    assert(core && mutex);
+    assert((core != NULL) && (mutex != NULL));
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
     SRTM_List_Init(&core->node);
@@ -147,7 +147,7 @@ srtm_status_t SRTM_PeerCore_Activate(srtm_peercore_t core)
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
-    if (core->wakeupFunc)
+    if (core->wakeupFunc != NULL)
     {
         status = core->wakeupFunc(core, core->wakeupParam);
     }
@@ -193,9 +193,9 @@ srtm_status_t SRTM_PeerCore_AddChannel(srtm_peercore_t core, srtm_channel_t chan
         return SRTM_Status_ListAddFailed;
     }
 
-    SRTM_Mutex_Lock(core->mutex);
+    (void)SRTM_Mutex_Lock(core->mutex);
     SRTM_List_AddTail(&core->channels, &channel->node);
-    SRTM_Mutex_Unlock(core->mutex);
+    (void)SRTM_Mutex_Unlock(core->mutex);
     channel->core = core;
 
     return SRTM_Status_Success;
@@ -214,9 +214,9 @@ srtm_status_t SRTM_PeerCore_RemoveChannel(srtm_peercore_t core, srtm_channel_t c
         return SRTM_Status_ListRemoveFailed;
     }
 
-    SRTM_Mutex_Lock(core->mutex);
+    (void)SRTM_Mutex_Lock(core->mutex);
     SRTM_List_Remove(&channel->node);
-    SRTM_Mutex_Unlock(core->mutex);
+    (void)SRTM_Mutex_Unlock(core->mutex);
     channel->core = NULL;
 
     return SRTM_Status_Success;

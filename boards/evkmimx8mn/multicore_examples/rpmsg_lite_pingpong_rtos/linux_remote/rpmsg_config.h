@@ -2,14 +2,14 @@
  * Copyright (c) 2014, Mentor Graphics Corporation
  * Copyright (c) 2015 Xilinx, Inc.
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef _RPMSG_CONFIG_H
-#define _RPMSG_CONFIG_H
+#ifndef RPMSG_CONFIG_H_
+#define RPMSG_CONFIG_H_
 
 /*!
  * @addtogroup config
@@ -77,14 +77,6 @@
 //!
 //! Do not use in RPMsg-Lite to Linux configuration
 #define RL_DEBUG_CHECK_BUFFERS (0)
-
-#define RL_ASSERT(x)  \
-    do                \
-    {                 \
-        if (!(x))     \
-            while (1) \
-                ;     \
-    } while (0);
 //@}
 
-#endif /* _RPMSG_CONFIG_H */
+#endif /* RPMSG_CONFIG_H_ */

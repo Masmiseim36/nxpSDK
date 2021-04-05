@@ -13,12 +13,12 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if defined(FSL_FEATURE_SOC_PORT_COUNT) && (FSL_FEATURE_SOC_PORT_COUNT > 0)
 #include "fsl_port.h"
 #endif
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_uart.h"
 #if configUSE_TICKLESS_IDLE == 2
 #include "fsl_gpt.h"
@@ -108,11 +108,13 @@ int main(void)
     /* Board specific RDC settings */
     BOARD_RdcInit();
 
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     BOARD_InitMemory();
 #if configUSE_TICKLESS_IDLE == 2
+    CLOCK_SetRootMux(kCLOCK_RootGpt1, kCLOCK_GptRootmuxSysPll1Div20); /* Set GPT1 source to SysPLL1 Div20 40MHZ */
+    CLOCK_SetRootDivider(kCLOCK_RootGpt1, 1U, 5U);                    /* Set root clock to 40MHZ / 5 = 8MHZ */
     GPT_GetDefaultConfig(&gptConfig);
 
     /* Initialize GPT module */

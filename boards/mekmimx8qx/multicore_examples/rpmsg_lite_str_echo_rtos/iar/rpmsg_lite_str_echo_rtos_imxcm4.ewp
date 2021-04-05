@@ -185,8 +185,8 @@
           <state>BOARD_USE_SCFW_IRQ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42888_ENABLE</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -315,14 +315,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../srtm/channels</state>
+          <state>$PROJ_DIR$/../srtm/services</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
@@ -330,26 +341,12 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../srtm/channels</state>
-          <state>$PROJ_DIR$/../srtm/services</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/srtm</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -613,7 +610,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -643,11 +639,11 @@
         </option>
         <option>
           <name>OCOutputOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state/>
+          <state>rpmsg_lite_str_echo_rtos.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1185,8 +1181,8 @@
           <state>BOARD_USE_SCFW_IRQ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42888_ENABLE</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1315,14 +1311,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../srtm/channels</state>
+          <state>$PROJ_DIR$/../srtm/services</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
@@ -1330,26 +1337,12 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../srtm/channels</state>
-          <state>$PROJ_DIR$/../srtm/services</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/srtm</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1613,7 +1606,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1643,11 +1635,11 @@
         </option>
         <option>
           <name>OCOutputOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state/>
+          <state>rpmsg_lite_str_echo_rtos.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -2185,8 +2177,8 @@
           <state>BOARD_USE_SCFW_IRQ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42888_ENABLE</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -2315,14 +2307,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../srtm/channels</state>
+          <state>$PROJ_DIR$/../srtm/services</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
@@ -2330,26 +2333,12 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../srtm/channels</state>
-          <state>$PROJ_DIR$/../srtm/services</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/srtm</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2516,6 +2505,7 @@
         <option>
           <name>ADefines</name>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>__STARTUP_CONFIG_DDR_ALIAS=1</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
         </option>
         <option>
@@ -2613,7 +2603,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -2643,11 +2632,11 @@
         </option>
         <option>
           <name>OCOutputOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state/>
+          <state>rpmsg_lite_str_echo_rtos.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -2734,6 +2723,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__STARTUP_CONFIG_DDR_ALIAS=1</state>
           <state>__stack_size__=0x400</state>
           <state>__heap_size__=0x400</state>
         </option>
@@ -3185,8 +3175,8 @@
           <state>BOARD_USE_SCFW_IRQ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42888_ENABLE</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -3315,14 +3305,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../srtm/channels</state>
+          <state>$PROJ_DIR$/../srtm/services</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
@@ -3330,26 +3331,12 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../srtm/channels</state>
-          <state>$PROJ_DIR$/../srtm/services</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/srtm</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -3613,7 +3600,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -3643,11 +3629,11 @@
         </option>
         <option>
           <name>OCOutputOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state/>
+          <state>rpmsg_lite_str_echo_rtos.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -4185,8 +4171,8 @@
           <state>BOARD_USE_SCFW_IRQ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42888_ENABLE</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -4315,14 +4301,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../srtm/channels</state>
+          <state>$PROJ_DIR$/../srtm/services</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
@@ -4330,26 +4327,12 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../srtm/channels</state>
-          <state>$PROJ_DIR$/../srtm/services</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/srtm</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -4613,7 +4596,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -4643,11 +4625,11 @@
         </option>
         <option>
           <name>OCOutputOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state/>
+          <state>rpmsg_lite_str_echo_rtos.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -5185,8 +5167,8 @@
           <state>BOARD_USE_SCFW_IRQ</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
           <state>CODEC_CS42888_ENABLE</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -5315,14 +5297,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../srtm/channels</state>
+          <state>$PROJ_DIR$/../srtm/services</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
+          <state>$PROJ_DIR$/../../../../../components/codec</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/port/cs42888</state>
+          <state>$PROJ_DIR$/../../../../../components/i2c</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
+          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include</state>
+          <state>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
+          <state>$PROJ_DIR$/../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
+          <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/main</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/irq</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/misc</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/pad</state>
@@ -5330,26 +5323,12 @@
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/rm</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/seco</state>
           <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc/timer</state>
-          <state>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include</state>
-          <state>$PROJ_DIR$/../srtm/channels</state>
-          <state>$PROJ_DIR$/../srtm/services</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/cs42888</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers</state>
-          <state>$PROJ_DIR$/../../../../../components/codec</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/port</state>
-          <state>$PROJ_DIR$/../../../../../components/i2c</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/platform/imx8qx_cm4</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api</state>
+          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/scfw_api/svc</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/include</state>
           <state>$PROJ_DIR$/../../../../../components/srtm/srtm</state>
-          <state>$PROJ_DIR$/../../../../../components/codec/i2c</state>
-          <state>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -5516,6 +5495,7 @@
         <option>
           <name>ADefines</name>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
+          <state>__STARTUP_CONFIG_DDR_ALIAS=1</state>
           <state>__STARTUP_INITIALIZE_NONCACHEDATA</state>
         </option>
         <option>
@@ -5613,7 +5593,6 @@
         <option>
           <name>AUserIncludes</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -5643,11 +5622,11 @@
         </option>
         <option>
           <name>OCOutputOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>OOCOutputFile</name>
-          <state/>
+          <state>rpmsg_lite_str_echo_rtos.bin</state>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -5734,6 +5713,7 @@
         </option>
         <option>
           <name>IlinkConfigDefines</name>
+          <state>__STARTUP_CONFIG_DDR_ALIAS=1</state>
           <state>__stack_size__=0x400</state>
           <state>__heap_size__=0x400</state>
         </option>
@@ -6009,12 +5989,6 @@
     <file>
       <name>$PROJ_DIR$/../FreeRTOSConfig.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../app_srtm.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../app_srtm.h</name>
-    </file>
   </group>
   <group>
     <name>board</name>
@@ -6041,9 +6015,30 @@
     </file>
   </group>
   <group>
+    <name>remoteproc</name>
+    <file>
+      <name>$PROJ_DIR$/../rsc_table.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../rsc_table.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../remoteproc.h</name>
+    </file>
+  </group>
+  <group>
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
+    </file>
+  </group>
+  <group>
+    <name>mekmimx8qx</name>
+    <file>
+      <name>$PROJ_DIR$/../app_srtm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../app_srtm.h</name>
     </file>
   </group>
   <group>
@@ -6051,37 +6046,25 @@
     <group>
       <name>channels</name>
       <file>
-        <name>$PROJ_DIR$/../srtm/channels/srtm_mu_endpoint.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../srtm/channels/srtm_mu_endpoint.h</name>
+        <name>$PROJ_DIR$/../srtm/channels/srtm_rpmsg_endpoint.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../srtm/channels/srtm_rpmsg_endpoint.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../srtm/channels/srtm_rpmsg_endpoint.h</name>
+        <name>$PROJ_DIR$/../srtm/channels/srtm_mu_endpoint.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../srtm/channels/srtm_mu_endpoint.c</name>
       </file>
     </group>
     <group>
       <name>services</name>
       <file>
-        <name>$PROJ_DIR$/../srtm/services/srtm_audio_service.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../srtm/services/srtm_audio_service.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../srtm/services/srtm_auto_service.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../srtm/services/srtm_auto_service.h</name>
+        <name>$PROJ_DIR$/../srtm/services/srtm_i2c_service.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../srtm/services/srtm_i2c_service.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../srtm/services/srtm_i2c_service.h</name>
       </file>
     </group>
     <group>
@@ -6135,22 +6118,10 @@
         <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_dispatcher_struct.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_heap.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_list.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_message.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_message_pool.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_message_struct.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_mutex.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_peercore.c</name>
@@ -6159,50 +6130,62 @@
         <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_peercore_struct.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_sem.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_service.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_service_struct.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_heap.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_message_pool.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_mutex.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/srtm/srtm/srtm_sem.h</name>
       </file>
     </group>
   </group>
   <group>
     <name>codec</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/codec/cs42888/fsl_cs42888.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../components/codec/cs42888/fsl_cs42888.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/codec/fsl_codec_common.c</name>
+      <name>$PROJ_DIR$/../../../../../components/codec/cs42888/fsl_cs42888.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/codec/fsl_codec_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/codec/port/fsl_codec_adapter.h</name>
+      <name>$PROJ_DIR$/../../../../../components/codec/fsl_codec_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/codec/port/cs42888/fsl_codec_adapter.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
+      <name>$PROJ_DIR$/../../../../../components/codec/port/cs42888/fsl_codec_adapter.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../components/codec/i2c/fsl_codec_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../components/codec/i2c/fsl_codec_i2c.c</name>
     </file>
   </group>
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_irqsteer.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_lpi2c.c</name>
@@ -6211,65 +6194,68 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_lpi2c.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_mu.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_mu.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_common.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_common.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_mu.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_lpuart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_lpuart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_edma.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_edma.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_edma.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_memory.h</name>
+    </file>
     <group>
       <name>freertos</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_lpi2c_freertos.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_lpi2c_freertos.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_lpi2c_freertos.c</name>
+      </file>
     </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_sai_edma.c</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_sai_edma.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_sai.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_sai_edma.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_sai.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/drivers/fsl_sai.c</name>
+    </file>
   </group>
   <group>
-    <name>amazon-freertos</name>
+    <name>freertos</name>
     <group>
       <name>freertos_kernel</name>
       <group>
@@ -6277,10 +6263,10 @@
         <group>
           <name>MemMang</name>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</name>
           </file>
           <file>
-            <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
+            <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</name>
           </file>
         </group>
         <group>
@@ -6288,91 +6274,100 @@
           <group>
             <name>ARM_CM4F</name>
             <file>
-              <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F/port.c</name>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/port.c</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F/portasm.s</name>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portasm.s</name>
             </file>
             <file>
-              <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
+              <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/IAR/ARM_CM4F/portmacro.h</name>
             </file>
           </group>
         </group>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/event_groups.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/croutine.c</name>
       </file>
       <group>
         <name>include</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/croutine.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/atomic.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/list.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/portable.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/queue.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/semphr.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/task.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/timers.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</name>
         </file>
       </group>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/list.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/list.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/queue.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/tasks.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</name>
+        <name>$PROJ_DIR$/../../../../../rtos/freertos/freertos_kernel/timers.c</name>
       </file>
     </group>
   </group>
@@ -6381,46 +6376,46 @@
     <group>
       <name>i2c</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/i2c/i2c.h</name>
+        <name>$PROJ_DIR$/../../../../../components/i2c/fsl_adapter_i2c.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/i2c/lpi2c_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../components/i2c/fsl_adapter_lpi2c.c</name>
       </file>
     </group>
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -6435,36 +6430,6 @@
         <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/platform/imx8qx_cm4/rpmsg_platform.c</name>
       </file>
     </group>
-    <group>
-      <name>env</name>
-      <group>
-        <name>freertos</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</name>
-        </file>
-      </group>
-    </group>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_lite.h</name>
     </file>
@@ -6472,10 +6437,22 @@
       <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_ns.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/llist.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_default_config.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/virtio_ring.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/virtqueue.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_compiler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/common/llist.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_lite.c</name>
@@ -6486,17 +6463,35 @@
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/virtio/virtqueue.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_env.h</name>
+    </file>
+    <group>
+      <name>env</name>
+      <group>
+        <name>freertos</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/porting/environment/rpmsg_env_freertos.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/rpmsg_lite/rpmsg_queue.c</name>
+        </file>
+      </group>
+    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/multicore/rpmsg_lite/lib/include/rpmsg_queue.h</name>
+    </file>
   </group>
   <group>
     <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/fsl_device_registers.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/MIMX8QX6_cm4.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/MIMX8QX6_cm4_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/system_MIMX8QX6_cm4.c</name>
@@ -6508,6 +6503,12 @@
   <group>
     <name>utilities</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -6517,20 +6518,17 @@
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/utilities/fsl_assert.c</name>
     </file>
   </group>
   <group>
-    <name>startup</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/iar/startup_MIMX8QX6_cm4.s</name>
-    </file>
+    <name>MIMX8QX6</name>
+    <group>
+      <name>iar</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../devices/MIMX8QX6/iar/startup_MIMX8QX6_cm4.s</name>
+      </file>
+    </group>
   </group>
   <group>
     <name>scfw_api</name>
@@ -6649,6 +6647,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
@@ -6658,31 +6659,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

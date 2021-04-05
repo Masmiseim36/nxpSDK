@@ -18,7 +18,7 @@ static void ECSPI_RTOS_Callback(ECSPI_Type *base, ecspi_master_handle_t *drv_han
     ecspi_rtos_handle_t *handle = (ecspi_rtos_handle_t *)userData;
     BaseType_t reschedule;
     handle->async_status = status;
-    xSemaphoreGiveFromISR(handle->event, &reschedule);
+    (void)xSemaphoreGiveFromISR(handle->event, &reschedule);
     portYIELD_FROM_ISR(reschedule);
 }
 
@@ -48,7 +48,7 @@ status_t ECSPI_RTOS_Init(ecspi_rtos_handle_t *handle,
         return kStatus_InvalidArgument;
     }
 
-    memset(handle, 0, sizeof(ecspi_rtos_handle_t));
+    (void)memset(handle, 0, sizeof(ecspi_rtos_handle_t));
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->mutex = xSemaphoreCreateMutexStatic(&handle->mutexBuffer);
 #else
@@ -116,7 +116,7 @@ status_t ECSPI_RTOS_Transfer(ecspi_rtos_handle_t *handle, ecspi_transfer_t *tran
     status = ECSPI_MasterTransferNonBlocking(handle->base, &handle->drv_handle, transfer);
     if (status != kStatus_Success)
     {
-        xSemaphoreGive(handle->mutex);
+        (void)xSemaphoreGive(handle->mutex);
         return status;
     }
 
@@ -127,7 +127,7 @@ status_t ECSPI_RTOS_Transfer(ecspi_rtos_handle_t *handle, ecspi_transfer_t *tran
     }
 
     /* Unlock resource mutex */
-    xSemaphoreGive(handle->mutex);
+    (void)xSemaphoreGive(handle->mutex);
 
     /* Return status captured by callback function */
     return handle->async_status;

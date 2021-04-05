@@ -10,25 +10,25 @@
 #include "fsl_debug_console.h"
 #include "fsl_flexcan.h"
 #include "fsl_flexcan_edma.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
 #endif
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_CAN ADMA__CAN0
-#define EXAMPLE_CAN_DMA ADMA__EDMA3
+#define EXAMPLE_CAN             ADMA__CAN0
+#define EXAMPLE_CAN_DMA         ADMA__EDMA3
 #define EXAMPLE_CAN_DMA_CHANNEL (12)
 /*
  * When CLK_SRC=1, the protocol engine works at fixed frequency of 160M.
  * If other frequency wanted, please use CLK_SRC=0 and set the working frequency for SC_R_CAN_0.
  */
 #define EXAMPLE_CAN_CLK_SOURCE (kFLEXCAN_ClkSrc1)
-#define EXAMPLE_CAN_CLK_FREQ (SC_160MHZ)
+#define EXAMPLE_CAN_CLK_FREQ   (SC_160MHZ)
 /* Considering that the first valid MB must be used as Reserved TX MB for ERR005641,
  * if RX FIFO enables (RFEN bit in MCE set as 1) and RFFN in CTRL2 is set default as zero,
  * the first valid TX MB Number shall be 8;
@@ -37,7 +37,7 @@
  * if RX FIFO disables (RFEN bit in MCE set as 0) , the first valid MB number would be zero.
  */
 #define TX_MESSAGE_BUFFER_NUM (9)
-#define EXAMPLE_CAN_DMAMUX DMAMUX0
+#define EXAMPLE_CAN_DMAMUX    DMAMUX0
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 /*******************************************************************************

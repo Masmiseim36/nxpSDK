@@ -6,8 +6,8 @@ AES-CBC algorithm.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -74,6 +74,3 @@ Decrypted string :
            and nothing more.
 
 .............. THE  END  OF  THE  LTC (AES EDMA)  DRIVER  EXAMPLE .............
-Customization options
-=====================
-

@@ -33,15 +33,15 @@ srtm_message_t SRTM_Message_Create(uint32_t len)
     srtm_message_t msg;
 
     msg = (srtm_message_t)SRTM_MessagePool_Alloc(sizeof(struct _srtm_message) + len);
-    if (msg)
+    if (msg != NULL)
     {
 #ifdef SRTM_ZEROIZE_MESSAGE_DATA
-        memset(msg, 0, sizeof(struct _srtm_message) + len);
+        (void)memset(msg, 0, sizeof(struct _srtm_message) + len);
 #else
-        memset(msg, 0, sizeof(struct _srtm_message));
+        (void)memset(msg, 0, sizeof(struct _srtm_message));
 #endif
         msg->dataLen = len;
-        if (len) /* Data exists */
+        if (len > 0UL) /* Data exists */
         {
             msg->data = msg + 1;
         }
@@ -59,10 +59,10 @@ srtm_message_t SRTM_Message_Duplicate(srtm_message_t msg)
 
     dup = (srtm_message_t)SRTM_MessagePool_Alloc(sizeof(struct _srtm_message) + msg->dataLen);
 
-    if (dup)
+    if (dup != NULL)
     {
-        memcpy(dup, msg, sizeof(struct _srtm_message));
-        if (msg->dataLen) /* Data exists */
+        (void)memcpy(dup, msg, sizeof(struct _srtm_message));
+        if (msg->dataLen != 0UL) /* Data exists */
         {
             dup->data = dup + 1;
         }
@@ -76,7 +76,7 @@ void SRTM_Message_Destroy(srtm_message_t message)
 {
     assert(message);
 
-    if (message->free)
+    if (message->free != NULL)
     {
         message->free(message, message->freeParam);
     }
@@ -96,11 +96,11 @@ static srtm_message_t SRTM_CommMessage_Create(srtm_message_type_t type,
 {
     srtm_message_t msg;
     srtm_packet_head_t *head;
-    uint32_t dataLen = sizeof(struct _srtm_packet_head) + payloadLen;
+    uint32_t dataLen = (uint32_t)sizeof(struct _srtm_packet_head) + payloadLen;
 
     msg = SRTM_Message_Create(dataLen);
 
-    if (msg)
+    if (msg != NULL)
     {
         msg->type    = type;
         msg->direct  = direct;
@@ -108,8 +108,8 @@ static srtm_message_t SRTM_CommMessage_Create(srtm_message_type_t type,
 
         head               = (srtm_packet_head_t *)(msg->data);
         head->category     = category;
-        head->majorVersion = SRTM_MESSAGE_MAJOR_VERSION(version);
-        head->minorVersion = SRTM_MESSAGE_MINOR_VERSION(version);
+        head->majorVersion = (uint8_t)SRTM_MESSAGE_MAJOR_VERSION(version);
+        head->minorVersion = (uint8_t)SRTM_MESSAGE_MINOR_VERSION(version);
         head->type         = (uint8_t)type;
         head->command      = command;
         head->priority     = msg->priority;
@@ -139,7 +139,7 @@ srtm_procedure_t SRTM_Procedure_Create(srtm_message_proc_cb_t procedure, void *p
 {
     srtm_message_t msg = SRTM_Message_Create(0);
 
-    if (msg)
+    if (msg != NULL)
     {
         msg->type           = SRTM_MessageTypeProcedure;
         msg->direct         = SRTM_MessageDirectNone;
@@ -162,7 +162,7 @@ srtm_rawdata_t SRTM_RawData_Create(srtm_channel_t channel, uint32_t dataLen)
 
     msg = SRTM_Message_Create(dataLen);
 
-    if (msg)
+    if (msg != NULL)
     {
         msg->type    = SRTM_MessageTypeRawData;
         msg->direct  = SRTM_MessageDirectTx;

@@ -5,16 +5,21 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef __RTE_DEVICE_H
-#define __RTE_DEVICE_H
+#ifndef _RTE_DEVICE_H
+#define _RTE_DEVICE_H
+
+extern void ECSPI1_InitPins();
+extern void ECSPI1_DeinitPins();
 
 /* Driver name mapping. */
-#define RTE_SPI1 1
-#define RTE_SPI1_DMA_EN 0
+/* User needs to provide the implementation of ECSPIX_GetFreq/ECSPIX_InitPins/ECSPIX_DeinitPins for the enabled ECSPI
+ * instance. */
+#define RTE_SPI1            1
+#define RTE_SPI1_PIN_INIT   ECSPI1_InitPins
+#define RTE_SPI1_PIN_DEINIT ECSPI1_DeinitPins
+#define RTE_SPI1_DMA_EN     0
 
 /* ECSPI configuration. */
 #define RTE_SPI1_TRANSFER_CHANNEL kECSPI_Channel0
-#define RTE_SPI2_TRANSFER_CHANNEL kECSPI_Channel0
-#define RTE_SPI3_TRANSFER_CHANNEL kECSPI_Channel0
 
-#endif /* __RTE_DEVICE_H */
+#endif /* _RTE_DEVICE_H */

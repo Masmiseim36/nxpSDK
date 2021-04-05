@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, 2019 NXP
+ * Copyright 2017, 2019-2020 NXP
  * All rights reserved.
  *
  *
@@ -23,8 +23,64 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief CSI2RX driver version. */
-#define FSL_CSI2RX_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+#define FSL_CSI2RX_DRIVER_VERSION (MAKE_VERSION(2, 0, 4))
 /*@}*/
+
+#if (defined(FSL_FEATURE_CSI2RX_HAS_NO_REG_PREFIX) && FSL_FEATURE_CSI2RX_HAS_NO_REG_PREFIX)
+
+#define CSI2RX_REG_CFG_NUM_LANES(base)             (base)->CFG_NUM_LANES
+#define CSI2RX_REG_CFG_DISABLE_DATA_LANES(base)    (base)->CFG_DISABLE_DATA_LANES
+#define CSI2RX_REG_BIT_ERR(base)                   (base)->BIT_ERR
+#define CSI2RX_REG_IRQ_STATUS(base)                (base)->IRQ_STATUS
+#define CSI2RX_REG_IRQ_MASK(base)                  (base)->IRQ_MASK
+#define CSI2RX_REG_ULPS_STATUS(base)               (base)->ULPS_STATUS
+#define CSI2RX_REG_PPI_ERRSOT_HS(base)             (base)->PPI_ERRSOT_HS
+#define CSI2RX_REG_PPI_ERRSOTSYNC_HS(base)         (base)->PPI_ERRSOTSYNC_HS
+#define CSI2RX_REG_PPI_ERRESC(base)                (base)->PPI_ERRESC
+#define CSI2RX_REG_PPI_ERRSYNCESC(base)            (base)->PPI_ERRSYNCESC
+#define CSI2RX_REG_PPI_ERRCONTROL(base)            (base)->PPI_ERRCONTROL
+#define CSI2RX_REG_CFG_DISABLE_PAYLOAD_0(base)     (base)->CFG_DISABLE_PAYLOAD_0
+#define CSI2RX_REG_CFG_DISABLE_PAYLOAD_1(base)     (base)->CFG_DISABLE_PAYLOAD_1
+#define CSI2RX_REG_CFG_IGNORE_VC(base)             (base)->CFG_IGNORE_VC
+#define CSI2RX_REG_CFG_VID_VC(base)                (base)->CFG_VID_VC
+#define CSI2RX_REG_CFG_VID_P_FIFO_SEND_LEVEL(base) (base)->CFG_VID_P_FIFO_SEND_LEVEL
+#define CSI2RX_REG_CFG_VID_VSYNC(base)             (base)->CFG_VID_VSYNC
+#define CSI2RX_REG_CFG_VID_HSYNC_FP(base)          (base)->CFG_VID_HSYNC_FP
+#define CSI2RX_REG_CFG_VID_HSYNC(base)             (base)->CFG_VID_HSYNC
+#define CSI2RX_REG_CFG_VID_HSYNC_BP(base)          (base)->CFG_VID_HSYNC_BP
+
+#else
+
+#define CSI2RX_REG_CFG_NUM_LANES(base)             (base)->CSI2RX_CFG_NUM_LANES
+#define CSI2RX_REG_CFG_DISABLE_DATA_LANES(base)    (base)->CSI2RX_CFG_DISABLE_DATA_LANES
+#define CSI2RX_REG_BIT_ERR(base)                   (base)->CSI2RX_BIT_ERR
+#define CSI2RX_REG_IRQ_STATUS(base)                (base)->CSI2RX_IRQ_STATUS
+#define CSI2RX_REG_IRQ_MASK(base)                  (base)->CSI2RX_IRQ_MASK
+#define CSI2RX_REG_ULPS_STATUS(base)               (base)->CSI2RX_ULPS_STATUS
+#define CSI2RX_REG_PPI_ERRSOT_HS(base)             (base)->CSI2RX_PPI_ERRSOT_HS
+#define CSI2RX_REG_PPI_ERRSOTSYNC_HS(base)         (base)->CSI2RX_PPI_ERRSOTSYNC_HS
+#define CSI2RX_REG_PPI_ERRESC(base)                (base)->CSI2RX_PPI_ERRESC
+#define CSI2RX_REG_PPI_ERRSYNCESC(base)            (base)->CSI2RX_PPI_ERRSYNCESC
+#define CSI2RX_REG_PPI_ERRCONTROL(base)            (base)->CSI2RX_PPI_ERRCONTROL
+#define CSI2RX_REG_CFG_DISABLE_PAYLOAD_0(base)     (base)->CSI2RX_CFG_DISABLE_PAYLOAD_0
+#define CSI2RX_REG_CFG_DISABLE_PAYLOAD_1(base)     (base)->CSI2RX_CFG_DISABLE_PAYLOAD_1
+#define CSI2RX_REG_CFG_IGNORE_VC(base)             (base)->CSI2RX_CFG_IGNORE_VC
+#define CSI2RX_REG_CFG_VID_VC(base)                (base)->CSI2RX_CFG_VID_VC
+#define CSI2RX_REG_CFG_VID_P_FIFO_SEND_LEVEL(base) (base)->CSI2RX_CFG_VID_P_FIFO_SEND_LEVEL
+#define CSI2RX_REG_CFG_VID_VSYNC(base)             (base)->CSI2RX_CFG_VID_VSYNC
+#define CSI2RX_REG_CFG_VID_HSYNC_FP(base)          (base)->CSI2RX_CFG_VID_HSYNC_FP
+#define CSI2RX_REG_CFG_VID_HSYNC(base)             (base)->CSI2RX_CFG_VID_HSYNC
+#define CSI2RX_REG_CFG_VID_HSYNC_BP(base)          (base)->CSI2RX_CFG_VID_HSYNC_BP
+
+#endif
+
+#ifndef MIPI_CSI2RX_CSI2RX_CFG_NUM_LANES_csi2rx_cfg_num_lanes_MASK
+#define MIPI_CSI2RX_CSI2RX_CFG_NUM_LANES_csi2rx_cfg_num_lanes_MASK MIPI_CSI2RX_CFG_NUM_LANES_CFG_NUM_LANES_MASK
+#endif
+
+#ifndef MIPI_CSI2RX_CSI2RX_IRQ_MASK_csi2rx_irq_mask_MASK
+#define MIPI_CSI2RX_CSI2RX_IRQ_MASK_csi2rx_irq_mask_MASK MIPI_CSI2RX_IRQ_MASK_IRQ_MASK_MASK
+#endif
 
 /*! @brief CSI2RX data lanes.  */
 enum _csi2rx_data_lane
@@ -155,16 +211,15 @@ void CSI2RX_Deinit(MIPI_CSI2RX_Type *base);
     uint32_t bitError;
     uint32_t bitErrorPosition;
 
-    // Get the bit errors.
     bitError = CSI2RX_GetBitError(MIPI_CSI2RX);
 
     if (kCSI2RX_BitErrorEccTwoBit & bitError)
     {
-        // Two bits error;
+        Two bits error;
     }
     else if (kCSI2RX_BitErrorEccOneBit & bitError)
     {
-        // One bits error;
+        One bits error;
         bitErrorPosition = CSI2RX_GetEccBitErrorPosition(bitError);
     }
    @endcode
@@ -174,7 +229,7 @@ void CSI2RX_Deinit(MIPI_CSI2RX_Type *base);
  */
 static inline uint32_t CSI2RX_GetBitError(MIPI_CSI2RX_Type *base)
 {
-    return base->CSI2RX_BIT_ERR;
+    return CSI2RX_REG_BIT_ERR(base);
 }
 
 /*!
@@ -194,14 +249,13 @@ static inline uint32_t CSI2RX_GetEccBitErrorPosition(uint32_t bitError)
 /*!
  * @brief Gets the MIPI CSI2RX D-PHY ULPS status.
  *
- * Example:
+ * Example to check whether data lane 0 is in ULPS status.
  * @code
-   // Check whether data lane 0 is in ULPS status.
    uint32_t status = CSI2RX_GetUlpsStatus(MIPI_CSI2RX);
 
    if (kCSI2RX_DataLane0Ulps & status)
    {
-       // Data lane 0 is in ULPS status.
+       Data lane 0 is in ULPS status.
    }
    @endcode
  *
@@ -210,7 +264,7 @@ static inline uint32_t CSI2RX_GetEccBitErrorPosition(uint32_t bitError)
  */
 static inline uint32_t CSI2RX_GetUlpsStatus(MIPI_CSI2RX_Type *base)
 {
-    return base->CSI2RX_ULPS_STATUS;
+    return CSI2RX_REG_ULPS_STATUS(base);
 }
 
 /*!
@@ -225,12 +279,12 @@ static inline uint32_t CSI2RX_GetUlpsStatus(MIPI_CSI2RX_Type *base)
 
    if (kCSI2RX_DataLane0 & errorDataLanes)
    {
-       // ErrSotHS occurred on data lane 0.
+       ErrSotHS occurred on data lane 0.
    }
 
    if (kCSI2RX_DataLane1 & errorDataLanes)
    {
-       // ErrSotHS occurred on data lane 1.
+       ErrSotHS occurred on data lane 1.
    }
    @endcode
  *
@@ -244,23 +298,23 @@ static inline uint32_t CSI2RX_GetPpiErrorDataLanes(MIPI_CSI2RX_Type *base, csi2r
 
     if (kCSI2RX_PpiErrorSotHs == errorType)
     {
-        errorLanes = base->CSI2RX_PPI_ERRSOT_HS;
+        errorLanes = CSI2RX_REG_PPI_ERRSOT_HS(base);
     }
     else if (kCSI2RX_PpiErrorSotSyncHs == errorType)
     {
-        errorLanes = base->CSI2RX_PPI_ERRSOTSYNC_HS;
+        errorLanes = CSI2RX_REG_PPI_ERRSOTSYNC_HS(base);
     }
     else if (kCSI2RX_PpiErrorEsc == errorType)
     {
-        errorLanes = base->CSI2RX_PPI_ERRESC;
+        errorLanes = CSI2RX_REG_PPI_ERRESC(base);
     }
     else if (kCSI2RX_PpiErrorSyncEsc == errorType)
     {
-        errorLanes = base->CSI2RX_PPI_ERRSYNCESC;
+        errorLanes = CSI2RX_REG_PPI_ERRSYNCESC(base);
     }
     else
     {
-        errorLanes = base->CSI2RX_PPI_ERRCONTROL;
+        errorLanes = CSI2RX_REG_PPI_ERRCONTROL(base);
     }
 
     return errorLanes;
@@ -282,7 +336,7 @@ static inline uint32_t CSI2RX_GetPpiErrorDataLanes(MIPI_CSI2RX_Type *base, csi2r
  */
 static inline void CSI2RX_EnableInterrupts(MIPI_CSI2RX_Type *base, uint32_t mask)
 {
-    base->CSI2RX_IRQ_MASK &= ~mask;
+    CSI2RX_REG_IRQ_MASK(base) &= ~mask;
 }
 
 /*!
@@ -301,7 +355,7 @@ static inline void CSI2RX_EnableInterrupts(MIPI_CSI2RX_Type *base, uint32_t mask
  */
 static inline void CSI2RX_DisableInterrupts(MIPI_CSI2RX_Type *base, uint32_t mask)
 {
-    base->CSI2RX_IRQ_MASK |= mask;
+    CSI2RX_REG_IRQ_MASK(base) |= mask;
 }
 
 /*!
@@ -315,7 +369,7 @@ static inline void CSI2RX_DisableInterrupts(MIPI_CSI2RX_Type *base, uint32_t mas
  */
 static inline uint32_t CSI2RX_GetInterruptStatus(MIPI_CSI2RX_Type *base)
 {
-    return base->CSI2RX_IRQ_STATUS;
+    return CSI2RX_REG_IRQ_STATUS(base);
 }
 
 #if defined(__cplusplus)

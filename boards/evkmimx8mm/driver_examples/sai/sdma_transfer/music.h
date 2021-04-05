@@ -8,6 +8,8 @@
 #ifndef _MUSIC_H_
 #define _MUSIC_H_
 
+#include "fsl_common.h"
+
 #if defined(__GNUC__) /* GNU Compiler */
 #ifndef __ALIGN_END
 #define __ALIGN_END __attribute__((aligned(4)))
@@ -35,10 +37,14 @@ __ALIGN_BEGIN int a __ALIGN_END;
 
 #define MUSIC_LEN (48000)
 
+#if defined DEMO_AUDIO_DATA_PUT_INTO_SECTION
+DEMO_AUDIO_DATA_PUT_INTO_SECTION(uint8_t music[], 4U) =
+#else
 #if defined FSL_FEATURE_SOC_MMDC_COUNT && FSL_FEATURE_SOC_MMDC_COUNT
 AT_NONCACHEABLE_SECTION_ALIGN_INIT(uint8_t music[], 4) =
 #else
 __ALIGN_BEGIN const uint8_t music[] __ALIGN_END =
+#endif
 #endif
     {
         0x2F, 0x00, 0x2F, 0x00, 0x93, 0x08, 0x93, 0x08, 0x1D, 0x14, 0x1D, 0x14, 0xA3, 0x1E, 0xA3, 0x1E, 0x77, 0x29,

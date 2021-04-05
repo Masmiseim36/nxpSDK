@@ -28,13 +28,16 @@ HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0400;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
 RSTACK_SIZE = DEFINED(__resume_stack_size__) ? __resume_stack_size__ : 0x0400;
 
+/* Reserved for PFU fetches, which is six 16-bit Thumb instructions */
+SAFE_BOUNDARY_LEN = 12;
+
 /* Specify the memory areas */
 /* M4 always start up from TCM. The SCU will copy the first 32 bytes of the binary to TCM
 if the start address is not TCM. The TCM region [0x1FFE0000-0x1FFE001F] is reserved for this purpose. */
 MEMORY
 {
-  m_interrupts          (RX)  : ORIGIN = 0x88000000, LENGTH = 0x00000A00
-  m_text                (RX)  : ORIGIN = 0x88000A00, LENGTH = 0x001FF600
+  m_interrupts          (RX)  : ORIGIN = DEFINED(__STARTUP_CONFIG_DDR_ALIAS)?0x08000000:0x88000000, LENGTH = 0x00000A00
+  m_text                (RX)  : ORIGIN = DEFINED(__STARTUP_CONFIG_DDR_ALIAS)?0x08000A00:0x88000A00, LENGTH = 0x001FF600
   m_data                (RW)  : ORIGIN = 0x88200000, LENGTH = 0x00100000
   m_resume              (RX)  : ORIGIN = 0x88300000, LENGTH = 0x00100000
   m_data2               (RW)  : ORIGIN = 0x88400000, LENGTH = 0x07C00000
@@ -52,6 +55,13 @@ SECTIONS
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
   } > m_interrupts
+
+  .resource_table :
+  {
+    . = ALIGN(8);
+    KEEP(*(.resource_table)) /* Resource table */
+    . = ALIGN(8);
+  } > m_text
 
   /* The program code and other data goes into internal RAM */
   .text :
@@ -160,6 +170,7 @@ SECTIONS
     __quickaccess_start__ = .;
     . = ALIGN(32);
     *(CodeQuickAccess)
+    . += SAFE_BOUNDARY_LEN;
     *(DataQuickAccess)
     . = ALIGN(128);
     __quickaccess_end__ = .;
@@ -177,8 +188,8 @@ SECTIONS
 	__resume_mem_end__ = .;    /* create a global symbol at resume mem end */
   }
   
-  __CACHE_REGION_START = ORIGIN(m_interrupts);
-  __CACHE_REGION_SIZE  = LENGTH(m_interrupts) + LENGTH(m_text) + LENGTH(m_data)+LENGTH(m_resume);
+  __CACHE_REGION_START = DEFINED(__STARTUP_CONFIG_DDR_ALIAS) ? ORIGIN(m_data) : ORIGIN(m_interrupts);
+  __CACHE_REGION_SIZE  = DEFINED(__STARTUP_CONFIG_DDR_ALIAS) ? LENGTH(m_data) + LENGTH(m_resume) : LENGTH(m_interrupts) + LENGTH(m_text) + LENGTH(m_data) + LENGTH(m_resume);
   __BACKUP_REGION_START = ORIGIN(m_resume); /* Symbol used in lpm_asm.s for TCM backup */
   __NDATA_ROM = __RDATA_ROM + SIZEOF(.resume); /* Symbol is used by startup for ncache data initialization */
 

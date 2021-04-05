@@ -58,7 +58,7 @@ static void RTC_SetSeconds(SNVS_Type *base, uint32_t seconds)
     base->LPSRTCLR = (uint32_t)(seconds << 15U);
 
     /* reenable SRTC in case that it was enabled before */
-    if (tmp & SNVS_LPCR_SRTC_ENV_MASK)
+    if ((tmp & SNVS_LPCR_SRTC_ENV_MASK) != 0UL)
     {
         SNVS_LP_SRTC_StartTimer(base);
     }
@@ -79,7 +79,7 @@ static srtm_status_t RTC_SetAlarm(SNVS_Type *base, uint32_t seconds)
 
     /* disable SRTC alarm interrupt */
     base->LPCR &= ~SNVS_LPCR_LPTA_EN_MASK;
-    while (base->LPCR & SNVS_LPCR_LPTA_EN_MASK)
+    while ((base->LPCR & SNVS_LPCR_LPTA_EN_MASK) != 0UL)
     {
     }
 
@@ -94,7 +94,7 @@ static srtm_status_t RTC_SetAlarm(SNVS_Type *base, uint32_t seconds)
 
 static srtm_status_t SRTM_SnvsLpRtcAdapter_GetTime(srtm_rtc_adapter_t adapter, uint32_t *pSeconds)
 {
-    srtm_snvs_lp_rtc_adapter_t handle = (srtm_snvs_lp_rtc_adapter_t)adapter;
+    srtm_snvs_lp_rtc_adapter_t handle = (srtm_snvs_lp_rtc_adapter_t)(void *)adapter;
 
     assert(handle->base);
     assert(pSeconds);

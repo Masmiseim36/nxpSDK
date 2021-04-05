@@ -6,8 +6,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "fsl_ak4497.h"
 #include "fsl_codec_adapter.h"
+#include "fsl_codec_common.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -19,7 +20,9 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-
+static const codec_capability_t s_ak4497_capability = {
+    .codecModuleCapability = kCODEC_SupportModuleI2SInSwitchInterface,
+};
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -30,20 +33,19 @@
  * param config codec configuration.
  * return kStatus_Success is success, else initial failed.
  */
-status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
+status_t HAL_CODEC_Init(void *handle, void *config)
 {
     assert((config != NULL) && (handle != NULL));
-    assert(CODEC_HANDLE_SIZE >= (sizeof(codec_handle_t) + sizeof(ak4497_handle_t)) + HAL_I2C_MASTER_HANDLE_SIZE);
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
-    ak4497_config_t *ak4497Config = (ak4497_config_t *)(codecConfig->codecDevConfig);
-    ak4497_handle_t *ak4497Handle = (ak4497_handle_t *)((uint32_t) & (handle->codecDevHandle));
+    ak4497_config_t *devConfig = (ak4497_config_t *)(codecConfig->codecDevConfig);
+    ak4497_handle_t *devHandle = (ak4497_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
 
-    handle->codecCapability.codecModuleCapability = kCODEC_SupportModuleI2SInSwitchInterface;
+    ((codec_handle_t *)handle)->codecCapability = &s_ak4497_capability;
 
     /* codec device initialization */
-    return AK4497_Init(ak4497Handle, ak4497Config);
+    return AK4497_Init(devHandle, devConfig);
 }
 
 /*!
@@ -52,11 +54,11 @@ status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
  * param handle codec handle.
  * return kStatus_Success is success, else de-initial failed.
  */
-status_t HAL_CODEC_Deinit(codec_handle_t *handle)
+status_t HAL_CODEC_Deinit(void *handle)
 {
     assert(handle != NULL);
 
-    return AK4497_Deinit((ak4497_handle_t *)((uint32_t) & (handle->codecDevHandle)));
+    return AK4497_Deinit((ak4497_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)));
 }
 
 /*!
@@ -68,12 +70,12 @@ status_t HAL_CODEC_Deinit(codec_handle_t *handle)
  * param bitWidth bit width.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
+status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
 {
     assert(handle != NULL);
 
-    return AK4497_ConfigDataFormat((ak4497_handle_t *)((uint32_t) & (handle->codecDevHandle)), mclk, sampleRate,
-                                   bitWidth);
+    return AK4497_ConfigDataFormat((ak4497_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), mclk,
+                                   sampleRate, bitWidth);
 }
 
 /*!
@@ -84,7 +86,7 @@ status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sam
  * param volume volume value, support 0 ~ 100, 0 is mute, 100 is the maximum volume value.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint32_t volume)
+status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -97,7 +99,7 @@ status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint3
  * param isMute true is mute, false is unmute.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool isMute)
+status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -110,7 +112,7 @@ status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool is
  * param powerOn true is power on, false is power down.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool powerOn)
+status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -123,7 +125,7 @@ status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool 
  *
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
+status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -139,7 +141,7 @@ status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
 
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
+status_t HAL_CODEC_SetRecordChannel(void *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -152,7 +154,7 @@ status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordC
  *
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
+status_t HAL_CODEC_SetPlay(void *handle, uint32_t playSource)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -166,10 +168,10 @@ status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
  *  codec specific driver for detail configurations.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_ModuleControl(codec_handle_t *handle, codec_module_ctrl_cmd_t cmd, uint32_t data)
+status_t HAL_CODEC_ModuleControl(void *handle, uint32_t cmd, uint32_t data)
 {
-    assert(cmd == kCODEC_ModuleSwitchI2SInInterface);
+    assert(cmd == (uint32_t)kCODEC_ModuleSwitchI2SInInterface);
 
-    return AK4497_ModuleControl((ak4497_handle_t *)((uint32_t) & (handle->codecDevHandle)),
+    return AK4497_ModuleControl((ak4497_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)),
                                 (ak4497_module_ctrl_cmd_t)cmd, data);
 }

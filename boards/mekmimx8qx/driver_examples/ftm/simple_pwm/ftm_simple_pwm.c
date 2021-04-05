@@ -7,27 +7,27 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_ftm.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* The Flextimer base address/channel used for board */
 #define BOARD_FTM_BASEADDR ADMA__FTM0
-#define BOARD_FTM_CHANNEL kFTM_Chnl_2
+#define BOARD_FTM_CHANNEL  kFTM_Chnl_2
 
 /* Interrupt number and interrupt handler for the FTM base address used */
 #define FTM_INTERRUPT_NUMBER IRQSTEER_4_IRQn
-#define FTM_LED_HANDLER ADMA_FTM0_INT_IRQHandler
+#define FTM_LED_HANDLER      ADMA_FTM0_INT_IRQHandler
 
 /* Interrupt to enable and flag to read */
 #define FTM_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl2InterruptEnable
-#define FTM_CHANNEL_FLAG kFTM_Chnl2Flag
+#define FTM_CHANNEL_FLAG             kFTM_Chnl2Flag
 
 /* System clock source for FTM driver is bus clock fixed to 160M, if user
    selects external clock source, then CLOCK_SetIpFreq(kCLOCK_DMA_Ftm0, xxx)
@@ -85,11 +85,9 @@ void FTM_LED_HANDLER(void)
         }
     }
 
-    if ((FTM_GetStatusFlags(BOARD_FTM_BASEADDR) & FTM_CHANNEL_FLAG) == FTM_CHANNEL_FLAG)
-    {
-        /* Clear interrupt flag.*/
-        FTM_ClearStatusFlags(BOARD_FTM_BASEADDR, FTM_CHANNEL_FLAG);
-    }
+    /* Clear interrupt flag.*/
+    FTM_ClearStatusFlags(BOARD_FTM_BASEADDR, FTM_GetStatusFlags(BOARD_FTM_BASEADDR));
+
     __DSB();
 }
 
@@ -107,6 +105,7 @@ int main(void)
     ftmParam.level                 = pwmLevel;
     ftmParam.dutyCyclePercent      = updatedDutycycle;
     ftmParam.firstEdgeDelayPercent = 0U;
+    ftmParam.enableComplementary   = false;
     ftmParam.enableDeadtime        = false;
 
     /* Board pin, clock, debug console init */
@@ -132,8 +131,8 @@ int main(void)
 
     /* Print a note to terminal */
     PRINTF("\r\nFTM example to output center-aligned PWM signal\r\n");
-    PRINTF("\r\nYou will see a change in LED brightness if an LED is connected to the FTM pin");
-    PRINTF("\r\nIf no LED is connected to the FTM pin, then probe the signal using an oscilloscope");
+    PRINTF("You will see a change in LED brightness if an LED is connected to the FTM pin\r\n");
+    PRINTF("If no LED is connected to the FTM pin, then probe the signal using an oscilloscope\r\n");
 
     FTM_GetDefaultConfig(&ftmInfo);
     /* Initialize FTM module */

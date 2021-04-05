@@ -1,5 +1,5 @@
 /*
- * Copyright  2018 NXP
+ * Copyright 2018, 2020 NXP
  * All rights reserved.
  *
  *
@@ -15,44 +15,44 @@
  * Definitions
  ******************************************************************************/
 #ifndef MAX9271_RETRY
-#define MAX9271_RETRY 20
+#define MAX9271_RETRY 20U
 #endif
 
 #ifndef OV10635_RETRY
-#define OV10635_RETRY 20
+#define OV10635_RETRY 20U
 #endif
 
-#define I2C_ADDR_MAX9286 0x6A
-#define I2C_ADDR_MAX9271 0x40
-#define I2C_ADDR_OV10635 0x30
+#define I2C_ADDR_MAX9286 0x6AU
+#define I2C_ADDR_MAX9271 0x40U
+#define I2C_ADDR_OV10635 0x30U
 /*
  * 0: Initial value
  * 1-4: Address for each camera
  * 5: Broadcast address
  */
-#define I2C_ADDR_MAX9271_N(n) (I2C_ADDR_MAX9271 + n)
+#define I2C_ADDR_MAX9271_N(n) (I2C_ADDR_MAX9271 + (uint8_t)(n))
 
-#define I2C_ADDR_OV10635_N(n) (I2C_ADDR_OV10635 + n)
+#define I2C_ADDR_OV10635_N(n) (I2C_ADDR_OV10635 + (uint8_t)(n))
 
-#define MAX9271_MAX_COUNT 4 /* 4 MAX9271 at most. */
+#define MAX9271_MAX_COUNT 4U /* 4 MAX9271 at most. */
 
-#define MAX9286_Write(handle, reg, value)                                                     \
-    VIDEO_I2C_WriteReg(I2C_ADDR_MAX9286, kVIDEO_RegAddr8Bit, reg, kVIDEO_RegWidth8Bit, value, \
-                       ((max9286_resource_t *)(handle->resource))->i2cSendFunc)
+#define MAX9286_Write(handle, reg, value)                                                         \
+    VIDEO_I2C_WriteReg(I2C_ADDR_MAX9286, kVIDEO_RegAddr8Bit, (reg), kVIDEO_RegWidth8Bit, (value), \
+                       ((const max9286_resource_t *)((handle)->resource))->i2cSendFunc)
 
-#define MAX9286_Read(handle, reg, value)                                                     \
-    VIDEO_I2C_ReadReg(I2C_ADDR_MAX9286, kVIDEO_RegAddr8Bit, reg, kVIDEO_RegWidth8Bit, value, \
-                      ((max9286_resource_t *)(handle->resource))->i2cReceiveFunc)
+#define MAX9286_Read(handle, reg, value)                                                         \
+    VIDEO_I2C_ReadReg(I2C_ADDR_MAX9286, kVIDEO_RegAddr8Bit, (reg), kVIDEO_RegWidth8Bit, (value), \
+                      ((const max9286_resource_t *)((handle)->resource))->i2cReceiveFunc)
 
-#define OV10635_REG_PID 0x300A
-#define OV10635_REG_VER 0x300B
-#define OV10635_PID 0xA6
-#define OV10635_VER 0x35
+#define OV10635_REG_PID 0x300AU
+#define OV10635_REG_VER 0x300BU
+#define OV10635_PID     0xA6U
+#define OV10635_VER     0x35U
 
-#define MAX9286_REG_ID 0x1E
-#define MAX9286_ID 0x40
+#define MAX9286_REG_ID 0x1EU
+#define MAX9286_ID     0x40U
 
-#define OV10635_RESOLUTION_CONFIG_REG_NUM 9
+#define OV10635_RESOLUTION_CONFIG_REG_NUM 9U
 
 typedef struct _ov10635_reg
 {
@@ -75,7 +75,7 @@ status_t MAX9286_Deinit(camera_device_handle_t *handle);
 status_t MAX9286_Start(camera_device_handle_t *handle);
 status_t MAX9286_Stop(camera_device_handle_t *handle);
 status_t MAX9286_Control(camera_device_handle_t *handle, camera_device_cmd_t cmd, int32_t arg);
-status_t MAX9286_InitExt(camera_device_handle_t *handle, const camera_config_t *config, const void *specialConfig);
+status_t MAX9286_InitExt(camera_device_handle_t *handle, const camera_config_t *config, const void *extConfig);
 
 /*******************************************************************************
  * Variables
@@ -368,7 +368,7 @@ static const ov10635_reg_t ov10635Firmware[] = {
 };
 
 static const ov10635_resolution_config_t s_ov10635ResolutionConfigs[] = {{.framePerSec = 30,
-                                                                          .resolution  = kVIDEO_ResolutionWXGA,
+                                                                          .resolution = (uint32_t)kVIDEO_ResolutionWXGA,
                                                                           .regs =
                                                                               {
                                                                                   {0x3024, 0x01},
@@ -382,8 +382,8 @@ static const ov10635_resolution_config_t s_ov10635ResolutionConfigs[] = {{.frame
                                                                                   {0x380b, 0x20},
                                                                               }},
                                                                          {.framePerSec = 30,
-                                                                          .resolution  = kVIDEO_Resolution720P,
-                                                                          .regs        = {
+                                                                          .resolution = (uint32_t)kVIDEO_Resolution720P,
+                                                                          .regs       = {
                                                                               {0x3024, 0x01},
                                                                               {0x3003, 0x20},
                                                                               {0x3004, 0x21},
@@ -399,12 +399,12 @@ static const ov10635_resolution_config_t s_ov10635ResolutionConfigs[] = {{.frame
  * Code
  ******************************************************************************/
 
-static status_t MAX9271_Write(camera_device_handle_t *handle, uint32_t i2cAddr, uint32_t reg, uint8_t value)
+static status_t MAX9271_Write(camera_device_handle_t *handle, uint8_t i2cAddr, uint32_t reg, uint8_t value)
 {
     uint32_t retry  = MAX9271_RETRY;
     status_t status = kStatus_Fail;
 
-    while (retry--)
+    while (0U != (retry--))
     {
         status = VIDEO_I2C_WriteReg(i2cAddr, kVIDEO_RegAddr8Bit, reg, kVIDEO_RegWidth8Bit, value,
                                     ((max9286_resource_t *)(handle->resource))->i2cSendFunc);
@@ -418,12 +418,12 @@ static status_t MAX9271_Write(camera_device_handle_t *handle, uint32_t i2cAddr, 
     return status;
 }
 
-static status_t OV10635_Write(camera_device_handle_t *handle, uint32_t i2cAddr, uint32_t reg, uint8_t value)
+static status_t OV10635_Write(camera_device_handle_t *handle, uint8_t i2cAddr, uint32_t reg, uint8_t value)
 {
     uint32_t retry  = OV10635_RETRY;
     status_t status = kStatus_Fail;
 
-    while (retry--)
+    while (0U != (retry--))
     {
         status = VIDEO_I2C_WriteReg(i2cAddr, kVIDEO_RegAddr16Bit, reg, kVIDEO_RegWidth8Bit, value,
                                     ((max9286_resource_t *)(handle->resource))->i2cSendFunc);
@@ -437,12 +437,12 @@ static status_t OV10635_Write(camera_device_handle_t *handle, uint32_t i2cAddr, 
     return status;
 }
 
-static status_t OV10635_Read(camera_device_handle_t *handle, uint32_t i2cAddr, uint32_t reg, uint8_t *value)
+static status_t OV10635_Read(camera_device_handle_t *handle, uint8_t i2cAddr, uint32_t reg, uint8_t *value)
 {
     uint32_t retry  = OV10635_RETRY;
     status_t status = kStatus_Fail;
 
-    while (retry--)
+    while (0U != (retry--))
     {
         status = VIDEO_I2C_ReadReg(i2cAddr, kVIDEO_RegAddr16Bit, reg, kVIDEO_RegWidth8Bit, value,
                                    ((max9286_resource_t *)(handle->resource))->i2cReceiveFunc);
@@ -480,7 +480,7 @@ static status_t OV10635_SetResolutionConfig(camera_device_handle_t *handle,
 {
     uint32_t i;
     status_t status;
-    uint32_t i2cAddr = I2C_ADDR_OV10635_N(index);
+    uint8_t i2cAddr = I2C_ADDR_OV10635_N(index);
 
     for (i = 0; i < OV10635_RESOLUTION_CONFIG_REG_NUM; i++)
     {
@@ -503,16 +503,16 @@ static status_t MAX9286_ReorderVC(camera_device_handle_t *handle, uint8_t linkAv
 
     for (i = 0; i < MAX9271_MAX_COUNT; i++)
     {
-        if (linkAvailableMask & (1U << i))
+        if (0U != (linkAvailableMask & (1U << i)))
         {
             /* Link available. */
-            reg |= (availableVC << (2 * i));
+            reg |= (availableVC << (2U * i));
             availableVC++;
         }
         else
         {
             /* Link not available. */
-            reg |= (unavailableVC << (2 * i));
+            reg |= (unavailableVC << (2U * i));
             unavailableVC--;
         }
     }
@@ -524,8 +524,8 @@ static status_t OV10635_Init(camera_device_handle_t *handle, uint8_t index)
 {
     uint32_t i;
     status_t status;
-    uint32_t i2cAddr = I2C_ADDR_OV10635_N(index);
-    uint8_t reg;
+    uint8_t i2cAddr = I2C_ADDR_OV10635_N(index);
+    uint8_t reg     = 0U;
 
     /* Verify the camera ID. */
     status = OV10635_Read(handle, i2cAddr, OV10635_REG_PID, &reg);
@@ -568,16 +568,23 @@ static status_t MAX9286_InitHardware(camera_device_handle_t *handle,
         return kStatus_InvalidArgument;
     }
 
+    /* Disable CSI output. */
+    (void)MAX9286_Write(handle, 0x15, 0x03);
+
+    /* Enable PRBS test. */
+    (void)MAX9286_Write(handle, 0x0E, 0x5F);
+    VIDEO_DelayMs(10);
+
     /* Enable Custom Reverse Channel & First Pulse Length*/
-    MAX9286_Write(handle, 0x3F, 0x4F);
+    (void)MAX9286_Write(handle, 0x3F, 0x4F);
     VIDEO_DelayMs(2);
 
     /* First pulse length rise time changed from 300ns to 200ns */
-    MAX9286_Write(handle, 0x3B, 0x1E);
+    (void)MAX9286_Write(handle, 0x3B, 0x1E);
     VIDEO_DelayMs(2);
 
     /* Optional - Enable configuration link */
-    MAX9271_Write(handle, I2C_ADDR_MAX9271_N(0), 0x04, 0x43);
+    (void)MAX9271_Write(handle, I2C_ADDR_MAX9271_N(0), 0x04, 0x43);
     VIDEO_DelayMs(5);
 
     /* Enable high threshold for reverse channel input
@@ -585,119 +592,125 @@ static status_t MAX9286_InitHardware(camera_device_handle_t *handle,
      * noise when the coaxial link is used for power as
      * well as signal.
      */
-    MAX9271_Write(handle, I2C_ADDR_MAX9271_N(0), 0x08, 0x01);
+    (void)MAX9271_Write(handle, I2C_ADDR_MAX9271_N(0), 0x08, 0x01);
     VIDEO_DelayMs(2);
 
     /* Increase reverse amplitude from 100mV to 170mV. */
-    MAX9286_Write(handle, 0x3B, 0x19);
-    VIDEO_DelayMs(2);
-
-    /* Disable CSI output. */
-    MAX9286_Write(handle, 0x15, 0x03);
+    (void)MAX9286_Write(handle, 0x3B, 0x19);
+    VIDEO_DelayMs(10);
 
     /*
      * CSI-2 Output uses YUV 422 8-bit.
      * Use double input mode.
      * Enable CSI data lanes D0-D3.
      */
-    MAX9286_Write(handle, 0x12, 0xF3);
+    (void)MAX9286_Write(handle, 0x12, 0xF3);
 
     /* Internal frame sync uses automatic mode */
-    MAX9286_Write(handle, 0x01, 0x02);
+    (void)MAX9286_Write(handle, 0x01, 0x02);
 
     /*
      * Auto detect link used for CSI clock source.
      * Disable Internal VSYNC generation.
      * Enable all input link
      */
-    MAX9286_Write(handle, 0x00, 0xEF);
-
+    (void)MAX9286_Write(handle, 0x00, 0xEF);
     VIDEO_DelayMs(2);
+
+    /* Frame Sync, Automatic mode. */
+    (void)MAX9286_Write(handle, 0x01, 0x02);
+    VIDEO_DelayMs(200);
 
     /*
      * Detect available link.
      */
-    MAX9286_Read(handle, 0x49, &enabledLink);
+    (void)MAX9286_Read(handle, 0x49, &enabledLink);
 
     enabledLink = (enabledLink | (enabledLink >> 4)) & 0x0FU;
 
     enabledLink &= enableCameraMask;
 
     /* The camera not valid. */
-    if (0 == enabledLink)
+    if (0U == enabledLink)
     {
         /* No valid link. */
         return kStatus_Fail;
     }
 
-    /* Select the first valid. */
-    enabledLink = (~(enabledLink - 1)) & enabledLink;
+    /* Disable PRBS test. */
+    (void)MAX9286_Write(handle, 0x0E, 0x50);
 
-    MAX9286_ReorderVC(handle, enabledLink);
+    /* Select the first valid. */
+    enabledLink = (~(enabledLink - 1U)) & enabledLink;
+
+    (void)MAX9286_ReorderVC(handle, enabledLink);
 
     /* Enable available links. */
-    MAX9286_Write(handle, 0x00, 0xE0 | enabledLink);
+    (void)MAX9286_Write(handle, 0x00, 0xE0UL | enabledLink);
 
     /*
      * Enable DBL
      * Set Edge Select 1=Rise / 0=Fall
      * Enable HS/VS encoding
      */
-    MAX9271_Write(handle, I2C_ADDR_MAX9271_N(0), 0x07, 0x84);
+    (void)MAX9271_Write(handle, I2C_ADDR_MAX9271_N(0), 0x07, 0x84);
 
     /* Setup the links. */
     for (i = 1; i <= MAX9271_MAX_COUNT; i++)
     {
-        if ((enabledLink & (1U << (i - 1))) == 0U)
+        if ((enabledLink & (1U << (i - 1U))) == 0U)
         {
             continue;
         }
 
         /* Enable Link i Reverse Channel. */
-        MAX9286_Write(handle, 0x0A, (0x11 << (i - 1)));
+        (void)MAX9286_Write(handle, 0x0A, (0x11UL << (i - 1U)));
+        VIDEO_DelayMs(2);
 
         /* Change serializer slave address. */
-        MAX9271_Write(handle, I2C_ADDR_MAX9271_N(0), 0x00, I2C_ADDR_MAX9271_N(i) << 1);
+        (void)MAX9271_Write(handle, I2C_ADDR_MAX9271_N(0), 0x00, I2C_ADDR_MAX9271_N(i) << 1);
+        VIDEO_DelayMs(2);
 
         /* Deserializer device address. */
-        MAX9271_Write(handle, I2C_ADDR_MAX9271_N(0), 0x01, I2C_ADDR_MAX9286 << 1);
+        (void)MAX9271_Write(handle, I2C_ADDR_MAX9271_N(0), 0x01, I2C_ADDR_MAX9286 << 1);
 
         VIDEO_DelayMs(2);
 
         /* Unique Link i image sensor slave address */
-        MAX9271_Write(handle, I2C_ADDR_MAX9271_N(i), 0x09, I2C_ADDR_OV10635_N(i) << 1);
+        (void)MAX9271_Write(handle, I2C_ADDR_MAX9271_N(i), 0x09, I2C_ADDR_OV10635_N(i) << 1);
 
         /* Link i image sensor slave address */
-        MAX9271_Write(handle, I2C_ADDR_MAX9271_N(i), 0x0A, I2C_ADDR_OV10635_N(0) << 1);
+        (void)MAX9271_Write(handle, I2C_ADDR_MAX9271_N(i), 0x0A, I2C_ADDR_OV10635_N(0) << 1);
 
         /* Serializer broadcast address */
-        MAX9271_Write(handle, I2C_ADDR_MAX9271_N(i), 0x0B, I2C_ADDR_MAX9271_N(5) << 1);
+        (void)MAX9271_Write(handle, I2C_ADDR_MAX9271_N(i), 0x0B, I2C_ADDR_MAX9271_N(5) << 1);
 
         /* Link i serializer address */
-        MAX9271_Write(handle, I2C_ADDR_MAX9271_N(i), 0x0C, I2C_ADDR_MAX9271_N(i) << 1);
+        (void)MAX9271_Write(handle, I2C_ADDR_MAX9271_N(i), 0x0C, I2C_ADDR_MAX9271_N(i) << 1);
+        VIDEO_DelayMs(1);
     }
 
     /* Enable Link Reverse Channel. */
-    MAX9286_Write(handle, 0x0A, enabledLink | (enabledLink << 4U));
+    (void)MAX9286_Write(handle, 0x0A, (uint32_t)enabledLink | ((uint32_t)enabledLink << 4U));
 
     /* Disable auto acknowledge. */
-    MAX9286_Write(handle, 0x34, 0x36);
+    (void)MAX9286_Write(handle, 0x34, 0x36);
 
     for (i = 1; i <= MAX9271_MAX_COUNT; i++)
     {
-        if ((enabledLink & (1U << (i - 1))) == 0U)
+        if ((enabledLink & (1U << (i - 1U))) == 0U)
         {
             continue;
         }
 
-        status = OV10635_Init(handle, i);
+        status = OV10635_Init(handle, (uint8_t)i);
 
         if (status != kStatus_Success)
         {
             return status;
         }
 
-        status = OV10635_SetResolutionConfig(handle, i, resolutionConfig);
+        status = OV10635_SetResolutionConfig(handle, (uint8_t)i, resolutionConfig);
 
         if (status != kStatus_Success)
         {
@@ -706,11 +719,15 @@ static status_t MAX9286_InitHardware(camera_device_handle_t *handle,
     }
 
     /* Enable auto acknowledge. */
-    MAX9286_Write(handle, 0x34, 0xB6);
+    (void)MAX9286_Write(handle, 0x34, 0xB6);
 
     /* Enable all serial links */
-    MAX9271_Write(handle, I2C_ADDR_MAX9271_N(5), 0x04, 0x83);
+    (void)MAX9271_Write(handle, I2C_ADDR_MAX9271_N(5), 0x04, 0x83);
     VIDEO_DelayMs(5);
+
+    /* Enable CSI output. */
+    (void)MAX9286_Write(handle, 0x15, 0x9B);
+    VIDEO_DelayMs(10);
 
     return kStatus_Success;
 }
@@ -729,15 +746,15 @@ status_t MAX9286_InitExt(camera_device_handle_t *handle, const camera_config_t *
     uint8_t reg = 0;
     uint8_t enableCameraMask;
 
-    max9286_resource_t *resource = (max9286_resource_t *)(handle->resource);
+    const max9286_resource_t *resource = (const max9286_resource_t *)(handle->resource);
 
-    if (extConfig)
+    if (NULL != extConfig)
     {
-        enableCameraMask = ((max9286_ext_config_t *)extConfig)->enableCameraMask & 0x0F;
+        enableCameraMask = ((const max9286_ext_config_t *)extConfig)->enableCameraMask & 0x0FU;
     }
     else
     {
-        enableCameraMask = 0xFF;
+        enableCameraMask = 0xFFU;
     }
 
     if (kCAMERA_InterfaceMIPI != config->interface)

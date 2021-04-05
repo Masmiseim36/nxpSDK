@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -37,7 +37,7 @@ status_t WM8524_Init(wm8524_handle_t *handle, wm8524_config_t *config)
 
     handle->config = config;
 
-    if (wm8524Config->setProtocol)
+    if ((wm8524Config->setProtocol) != NULL)
     {
         /* set format */
         WM8524_ConfigFormat(handle, wm8524Config->protocol);
@@ -52,7 +52,6 @@ status_t WM8524_Init(wm8524_handle_t *handle, wm8524_config_t *config)
 /*!
  * brief Configure WM8524 audio protocol.
  *
- * deprecated Do not use this function.  It has been superceded by @ref WM8524_ConfigDataProtocol
  * param handle WM8524 handle structure.
  * param protocol WM8524 configuration structure.
  */

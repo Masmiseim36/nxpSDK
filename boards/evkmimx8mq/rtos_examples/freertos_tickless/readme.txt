@@ -7,8 +7,8 @@ user defined button.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -68,6 +68,3 @@ of time.
 While the CPU is in sleep mode and the user defined button is pressed, the CPU is woken up
 by the external interrupt and continues to sleep after the interrupt is handled.
 The period of time delay is not changed after the external interrupt occurs.
-Customization options
-=====================
-

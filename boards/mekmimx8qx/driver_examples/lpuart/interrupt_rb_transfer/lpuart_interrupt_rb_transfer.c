@@ -6,21 +6,21 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lpuart.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_debug_console.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART CM4__LPUART
-#define DEMO_LPUART_CLKSRC kCLOCK_M4_0_Lpuart
+#define DEMO_LPUART          CM4__LPUART
+#define DEMO_LPUART_CLKSRC   kCLOCK_M4_0_Lpuart
 #define DEMO_LPUART_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_M4_0_Lpuart)
 
 #define RX_RING_BUFFER_SIZE 20U
-#define ECHO_BUFFER_SIZE 8U
+#define ECHO_BUFFER_SIZE    8U
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/

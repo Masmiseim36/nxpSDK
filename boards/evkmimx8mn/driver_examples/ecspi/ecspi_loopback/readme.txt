@@ -8,8 +8,8 @@ and the input pins are ignored.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -50,6 +50,3 @@ So, there is no need to connect the MOSI and MISO pins.
 
 ECSPI loopback test pass!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

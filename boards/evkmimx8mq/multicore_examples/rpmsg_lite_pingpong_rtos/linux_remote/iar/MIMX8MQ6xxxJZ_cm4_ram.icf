@@ -4,13 +4,14 @@
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
 **     Reference manual:    IMX8MDQLQRM, Rev. 0, Jan. 2018
 **     Version:             rev. 4.0, 2018-01-26
-**     Build:               b180820
+**     Build:               b200331
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **
@@ -65,7 +66,10 @@ define block NCACHE_VAR { section NonCacheable , section NonCacheable.init };
 initialize by copy { readwrite, section .textrw };
 do not initialize  { section .noinit };
 
+keep{section .resource_table};
+
 place at address mem: m_interrupts_start    { readonly section .intvec };
+".resource_table": place at address mem: m_text_start {section .resource_table};
 place in TEXT_region                        { readonly };
 place in DATA_region                        { block RW };
 place in DATA_region                        { block ZI };

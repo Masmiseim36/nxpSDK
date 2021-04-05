@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -21,13 +21,16 @@
 #include "netif/ethernet.h"
 #include "enet_ethernetif.h"
 
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+#include "fsl_phy.h"
+
 #include "fsl_lpuart.h"
 #include "fsl_debug_console.h"
 #include "fsl_irqsteer.h"
+#include "fsl_phyar8031.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -59,8 +62,14 @@
 /* Address of PHY interface. */
 #define EXAMPLE_PHY_ADDRESS BOARD_ENET0_PHY_ADDRESS
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CONECTIVITY_AhbClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyar8031_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CONECTIVITY_AhbClk)
 
 #ifndef EXAMPLE_NETIF_INIT_FN
 /*! @brief Network interface initialization function. */
@@ -82,6 +91,8 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
 /*******************************************************************************
  * Code
@@ -119,7 +130,7 @@ static void lwiperf_report(void *arg,
                            u16_t local_port,
                            const ip_addr_t *remote_addr,
                            u16_t remote_port,
-                           u32_t bytes_transferred,
+                           u64_t bytes_transferred,
                            u32_t ms_duration,
                            u32_t bandwidth_kbitpsec)
 {
@@ -134,10 +145,10 @@ static void lwiperf_report(void *arg,
             PRINTF(" Port %d \r\n", local_port);
             PRINTF(" Remote address : %u.%u.%u.%u ", ((u8_t *)remote_addr)[0], ((u8_t *)remote_addr)[1],
                    ((u8_t *)remote_addr)[2], ((u8_t *)remote_addr)[3]);
-            PRINTF(" Port %d \r\n", remote_port);
-            PRINTF(" Bytes Transferred %d \r\n", bytes_transferred);
-            PRINTF(" Duration (ms) %d \r\n", ms_duration);
-            PRINTF(" Bandwidth (kbitpsec) %d \r\n", bandwidth_kbitpsec);
+            PRINTF(" Port %u \r\n", remote_port);
+            PRINTF(" Bytes Transferred %llu \r\n", bytes_transferred);
+            PRINTF(" Duration (ms) %u \r\n", ms_duration);
+            PRINTF(" Bandwidth (kbitpsec) %u \r\n", bandwidth_kbitpsec);
         }
     }
     else
@@ -155,14 +166,18 @@ static void select_mode(bool *server_mode, bool *tcp, enum lwiperf_client_type *
     while (true)
     {
         PRINTF("Please select one of the following modes to run IPERF with:\r\n\r\n");
-        PRINTF("    1: TCP server mode (RX only test)\r\n");
-        PRINTF("    2: TCP client mode (TX only test)\r\n");
-        PRINTF("    3: TCP client dual mode (TX and RX in parallel)\r\n");
-        PRINTF("    4: TCP client tradeoff mode (TX and RX sequentially)\r\n");
-        PRINTF("    5: UDP server mode (RX only test)\r\n");
-        PRINTF("    6: UDP client mode (TX only test)\r\n");
-        PRINTF("    7: UDP client dual mode (TX and RX in parallel)\r\n");
-        PRINTF("    8: UDP client tradeoff mode (TX and RX sequentially)\r\n\r\n");
+        //        PRINTF("    1: TCP server mode (RX only test)\r\n");
+        //        PRINTF("    2: TCP client mode (TX only test)\r\n");
+        //        PRINTF("    3: TCP client dual mode (TX and RX in parallel)\r\n");
+        //        PRINTF("    4: TCP client tradeoff mode (TX and RX sequentially)\r\n");
+        //        PRINTF("    5: UDP server mode (RX only test)\r\n");
+        //        PRINTF("    6: UDP client mode (TX only test)\r\n");
+        //        PRINTF("    7: UDP client dual mode (TX and RX in parallel)\r\n");
+        //        PRINTF("    8: UDP client tradeoff mode (TX and RX sequentially)\r\n\r\n");
+        PRINTF("    1: TCP server mode (RX test)\r\n");
+        PRINTF("    2: TCP client mode (TX test)\r\n");
+        PRINTF("    3: UDP server mode (RX test)\r\n");
+        PRINTF("    4: UDP client mode (TX test)\r\n\r\n");
         PRINTF("Enter mode number: ");
 
         option = GETCHAR();
@@ -181,36 +196,36 @@ static void select_mode(bool *server_mode, bool *tcp, enum lwiperf_client_type *
                 *tcp         = true;
                 *client_type = LWIPERF_CLIENT;
                 return;
+                //            case '3':
+                //                *server_mode = false;
+                //                *tcp         = true;
+                //                *client_type = LWIPERF_DUAL;
+                //                return;
+                //            case '4':
+                //                *server_mode = false;
+                //                *tcp         = true;
+                //                *client_type = LWIPERF_TRADEOFF;
+                //                return;
             case '3':
-                *server_mode = false;
-                *tcp         = true;
-                *client_type = LWIPERF_DUAL;
-                return;
-            case '4':
-                *server_mode = false;
-                *tcp         = true;
-                *client_type = LWIPERF_TRADEOFF;
-                return;
-            case '5':
                 *server_mode = true;
                 *tcp         = false;
                 *client_type = LWIPERF_CLIENT;
                 return;
-            case '6':
+            case '4':
                 *server_mode = false;
                 *tcp         = false;
                 *client_type = LWIPERF_CLIENT;
                 return;
-            case '7':
-                *server_mode = false;
-                *tcp         = false;
-                *client_type = LWIPERF_DUAL;
-                return;
-            case '8':
-                *server_mode = false;
-                *tcp         = false;
-                *client_type = LWIPERF_TRADEOFF;
-                return;
+                //            case '7':
+                //                *server_mode = false;
+                //                *tcp         = false;
+                //                *client_type = LWIPERF_DUAL;
+                //                return;
+                //            case '8':
+                //                *server_mode = false;
+                //                *tcp         = false;
+                //                *client_type = LWIPERF_TRADEOFF;
+                //                return;
         }
     }
 }
@@ -277,8 +292,7 @@ int main(void)
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName  = EXAMPLE_CLOCK_NAME,
+        .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
         .non_dma_memory = non_dma_memory,
@@ -317,6 +331,8 @@ int main(void)
     IRQSTEER_EnableInterrupt(IRQSTEER, CONNECTIVITY_ENET0_FRAME2_INT_IRQn);
     IRQSTEER_EnableInterrupt(IRQSTEER, CONNECTIVITY_ENET0_FRAME0_EVENT_INT_IRQn);
     IRQSTEER_EnableInterrupt(IRQSTEER, CONNECTIVITY_ENET0_TIMER_INT_IRQn);
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     time_init();
 

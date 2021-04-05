@@ -31,10 +31,10 @@ extern "C" {
 /*!
  * @brief Create PF1550 adapter.
  *
- * @param handle PF1550 driver handle.
+ * @param driver PF1550 driver handle.
  * @return SRTM PMIC adapter on success or NULL on failure.
  */
-srtm_pmic_adapter_t SRTM_Pf1550Adapter_Create(pf1550_handle_t *handle);
+srtm_pmic_adapter_t SRTM_Pf1550Adapter_Create(pf1550_handle_t *driver);
 
 /*!
  * @brief Destroy PF1550 adapter.

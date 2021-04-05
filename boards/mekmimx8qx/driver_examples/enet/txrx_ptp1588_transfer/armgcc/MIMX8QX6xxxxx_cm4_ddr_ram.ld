@@ -5,14 +5,14 @@
 **
 **     Compiler:            GNU C Compiler
 **     Reference manual:    IMX8DQXPRM, Rev. E, 6/2019
-**     Version:             rev. 3.0, 2018-08-22
-**     Build:               b191127
+**     Version:             rev. 4.0, 2020-06-19
+**     Build:               b201113
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -29,13 +29,16 @@ ENTRY(Reset_Handler)
 HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x1000;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x1000;
 
+/* Reserved for PFU fetches, which is six 16-bit Thumb instructions */
+SAFE_BOUNDARY_LEN = 12;
+
 /* Specify the memory areas */
 /* M4 always start up from TCM. The SCU will copy the first 32 bytes of the binary to TCM
 if the start address is not TCM. The TCM region [0x1FFE0000-0x1FFE001F] is reserved for this purpose. */
 MEMORY
 {
-  m_interrupts          (RX)  : ORIGIN = 0x88000000, LENGTH = 0x00000A00
-  m_text                (RX)  : ORIGIN = 0x88000A00, LENGTH = 0x001FF600
+  m_interrupts          (RX)  : ORIGIN = DEFINED(__STARTUP_CONFIG_DDR_ALIAS)?0x08000000:0x88000000, LENGTH = 0x00000A00
+  m_text                (RX)  : ORIGIN = DEFINED(__STARTUP_CONFIG_DDR_ALIAS)?0x08000A00:0x88000A00, LENGTH = 0x001FF600
   m_data                (RW)  : ORIGIN = 0x88200000, LENGTH = 0x00200000
   m_data2               (RW)  : ORIGIN = 0x88400000, LENGTH = 0x07C00000
   m_tcml                (RW)  : ORIGIN = 0x1FFE0020, LENGTH = 0x0001FFE0
@@ -52,6 +55,13 @@ SECTIONS
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
   } > m_interrupts
+
+  .resource_table :
+  {
+    . = ALIGN(8);
+    KEEP(*(.resource_table)) /* Resource table */
+    . = ALIGN(8);
+  } > m_text
 
   /* The program code and other data goes into internal RAM */
   .text :
@@ -160,13 +170,16 @@ SECTIONS
     __quickaccess_start__ = .;
     . = ALIGN(32);
     *(CodeQuickAccess)
+    . += SAFE_BOUNDARY_LEN;
     *(DataQuickAccess)
     . = ALIGN(128);
     __quickaccess_end__ = .;
   } > m_tcml
 
-  __CACHE_REGION_START = ORIGIN(m_interrupts);
-  __CACHE_REGION_SIZE  = LENGTH(m_interrupts) + LENGTH(m_text) + LENGTH(m_data);
+  __CACHE_REGION_START = DEFINED(__STARTUP_CONFIG_DDR_ALIAS) ? ORIGIN(m_data) : ORIGIN(m_interrupts);
+  __CACHE_REGION_SIZE = DEFINED(__STARTUP_CONFIG_DDR_ALIAS) ? LENGTH(m_data) : LENGTH(m_interrupts) + LENGTH(m_text) + LENGTH(m_data);
+
+
   __NDATA_ROM = __TDATA_ROM + SIZEOF(.quickaccess); /* Symbol is used by startup for ncache data initialization */
 
   .ncache.init : AT(__NDATA_ROM)

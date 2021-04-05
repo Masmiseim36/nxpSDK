@@ -11,8 +11,8 @@ periodically executed and text “Tick.” is printed to terminal.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -49,6 +49,3 @@ Example output:
 Tick.
 Tick.
 Tick.
-Customization options
-=====================
-

@@ -2,7 +2,7 @@ Overview
 ========
 The freertos_i2c example shows an application using RTOS tasks with I2C driver:
 
-The example supports 2 different connections:
+The example may support 2 different connections (it depends on the specific board): 
 On board connection and board to board connection.
 
 With one board connection, 2 I2C instances of the same board are used. One i2c instance used as I2C master and another I2C instance used as I2C slave .
@@ -25,8 +25,8 @@ With board to board connection, one I2C instance on one board is used as I2C mas
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -38,9 +38,8 @@ Hardware requirements
 
 Board settings
 ==============
-I2C one board:
-  + Transfer data from MASTER_BOARD to SLAVE_BOARD of I2C interface, I2C2 pins of MASTER_BOARD are connected with
-    I2C2 pins of SLAVE_BOARD
+Please note only board to board connection is supported, on board connection is not supported.
+Transfer data from MASTER_BOARD to SLAVE_BOARD of I2C interface, I2C2 pins of MASTER_BOARD are connected with I2C2 pins of SLAVE_BOARD.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 SLAVE_BOARD        CONNECTS TO          MASTER_BOARD
 Pin Name   Board Location     Pin Name   Board Location
@@ -193,6 +192,3 @@ Slave received data :
 
 
 End of FreeRTOS I2C example.
-Customization options
-=====================
-

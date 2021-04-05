@@ -14,15 +14,15 @@
 #include "isi_example.h"
 #include "fsl_debug_console.h"
 
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define APP_FRAME_BUFFER_COUNT 4
-#define APP_BPP 2 /* In this exaple, the camera pixel format is RGB565. */
+#define APP_BPP                2 /* In this exaple, the camera pixel format is RGB565. */
 
 #ifndef APP_FB_STRIDE_ALIGN_BYTE
 #define APP_FB_STRIDE_ALIGN_BYTE APP_BPP

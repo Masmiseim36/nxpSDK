@@ -15,19 +15,19 @@
  * Definitions
  ******************************************************************************/
 #ifdef FSL_RTOS_FREE_RTOS
-#define SYSTICK_BASE LSIO__GPT4
-#define SYSTICK_IRQn LSIO_GPT4_INT_IRQn
+#define SYSTICK_BASE    LSIO__GPT4
+#define SYSTICK_IRQn    LSIO_GPT4_INT_IRQn
 #define SYSTICK_HANDLER LSIO_GPT4_INT_IRQHandler
-#define SYSTICK_CLOCK kCLOCK_LSIO_Gpt4
-#define SYSTICK_RSRC SC_R_GPT_4
+#define SYSTICK_CLOCK   kCLOCK_LSIO_Gpt4
+#define SYSTICK_RSRC    SC_R_GPT_4
 #endif /* FSL_RTOS_FREE_RTOS */
 
-#define IPC_MU CM4__MU1_A
+#define IPC_MU            CM4__MU1_A
 #define IPC_MU_IRQHandler M4_MU1_A_IRQHandler
-#define IPC_MU_IRQn M4_MU1_A_IRQn
-#define IPC_MU_RSRC SC_R_M4_0_MU_1A
-#define CPU_RSRC SC_R_M4_0_PID0
-#define IRQSTEER_RSRC SC_R_IRQSTR_M4_0
+#define IPC_MU_IRQn       M4_MU1_A_IRQn
+#define IPC_MU_RSRC       SC_R_M4_0_MU_1A
+#define CPU_RSRC          SC_R_M4_0_PID0
+#define IRQSTEER_RSRC     SC_R_IRQSTR_M4_0
 
 #define RTN_ERR(X)                        \
     if ((X) != SC_ERR_NONE)               \

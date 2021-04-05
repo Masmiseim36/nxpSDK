@@ -54,15 +54,15 @@ srtm_codec_adapter_t SRTM_Wm8524Adapter_Create(codec_handle_t *driver, srtm_wm85
 {
     srtm_wm8524_adapter_t handle;
 
-    assert(driver && config);
+    assert((driver != NULL) && (config != NULL));
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
     handle = (srtm_wm8524_adapter_t)SRTM_Heap_Malloc(sizeof(struct _srtm_wm8524_adapter));
-    assert(handle);
+    assert(handle != NULL);
 
     handle->driver = driver;
-    memcpy(&handle->config, config, sizeof(struct _srtm_wm8524_config));
+    (void)memcpy(&handle->config, config, sizeof(struct _srtm_wm8524_config));
 
     /* Adapter interfaces. */
     handle->adapter.setParam = SRTM_CodecAdapter_SetParam;
@@ -74,9 +74,9 @@ srtm_codec_adapter_t SRTM_Wm8524Adapter_Create(codec_handle_t *driver, srtm_wm85
 
 void SRTM_Wm8524Adapter_Destroy(srtm_codec_adapter_t adapter)
 {
-    srtm_wm8524_adapter_t handle = (srtm_wm8524_adapter_t)adapter;
+    srtm_wm8524_adapter_t handle = (srtm_wm8524_adapter_t)(void *)adapter;
 
-    assert(adapter);
+    assert(adapter != NULL);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 

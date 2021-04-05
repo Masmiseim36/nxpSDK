@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 - 2019 NXP
+ * Copyright 2017 - 2020, NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,8 +25,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.3.1. */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 3, 1))
+/*! @brief CLOCK driver version 2.3.3. */
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 3, 3))
 /*@}*/
 
 /* Definition for delay API in clock driver, users can redefine it to the real application. */
@@ -79,9 +79,15 @@
     }
 
 /*! @brief Clock ip name array for IOMUX. */
-#define IOMUX_CLOCKS                                                                    \
-    {                                                                                   \
-        kCLOCK_Iomuxc0, kCLOCK_Iomuxc1, kCLOCK_Iomuxc2, kCLOCK_Iomuxc3, kCLOCK_Iomuxc4, \
+#define IOMUX_CLOCKS  \
+    {                 \
+        kCLOCK_Iomux, \
+    }
+
+/*! @brief Clock ip name array for IPMUX. */
+#define IPMUX_CLOCKS                                                \
+    {                                                               \
+        kCLOCK_Ipmux1, kCLOCK_Ipmux2, kCLOCK_Ipmux3, kCLOCK_Ipmux4, \
     }
 
 /*! @brief Clock ip name array for PWM. */
@@ -159,9 +165,9 @@
  * @brief CCM reg macros to map corresponding registers.
  */
 #define CCM_REG_OFF(root, off) (*((volatile uint32_t *)((uint32_t)(root) + (off))))
-#define CCM_REG(root) CCM_REG_OFF(root, 0U)
-#define CCM_REG_SET(root) CCM_REG_OFF(root, 4U)
-#define CCM_REG_CLR(root) CCM_REG_OFF(root, 8U)
+#define CCM_REG(root)          CCM_REG_OFF(root, 0U)
+#define CCM_REG_SET(root)      CCM_REG_OFF(root, 4U)
+#define CCM_REG_CLR(root)      CCM_REG_OFF(root, 8U)
 
 /*!
  * @brief CCM Analog registers offset.
@@ -169,20 +175,20 @@
 #define AUDIO_PLL1_CFG0_OFFSET 0x00
 #define AUDIO_PLL2_CFG0_OFFSET 0x08
 #define VIDEO_PLL1_CFG0_OFFSET 0x10
-#define GPU_PLL_CFG0_OFFSET 0x18
-#define VPU_PLL_CFG0_OFFSET 0x20
-#define ARM_PLL_CFG0_OFFSET 0x28
-#define SYS_PLL1_CFG0_OFFSET 0x30
-#define SYS_PLL2_CFG0_OFFSET 0x3C
-#define SYS_PLL3_CFG0_OFFSET 0x48
+#define GPU_PLL_CFG0_OFFSET    0x18
+#define VPU_PLL_CFG0_OFFSET    0x20
+#define ARM_PLL_CFG0_OFFSET    0x28
+#define SYS_PLL1_CFG0_OFFSET   0x30
+#define SYS_PLL2_CFG0_OFFSET   0x3C
+#define SYS_PLL3_CFG0_OFFSET   0x48
 #define VIDEO_PLL2_CFG0_OFFSET 0x54
-#define DRAM_PLL_CFG0_OFFSET 0x60
-#define OSC_MISC_CFG_OFFSET 0x70
+#define DRAM_PLL_CFG0_OFFSET   0x60
+#define OSC_MISC_CFG_OFFSET    0x70
 
 /*!
  * @brief CCM ANALOG tuple macros to map corresponding registers and bit fields.
  */
-#define CCM_ANALOG_TUPLE(reg, shift) ((((reg)&0xFFFFU) << 16U) | (shift))
+#define CCM_ANALOG_TUPLE(reg, shift)  ((((reg)&0xFFFFU) << 16U) | (shift))
 #define CCM_ANALOG_TUPLE_SHIFT(tuple) (((uint32_t)(tuple)) & 0x1FU)
 #define CCM_ANALOG_TUPLE_REG_OFF(base, tuple, off) \
     (*((volatile uint32_t *)((uint32_t)(base) + (((uint32_t)(tuple) >> 16U) & 0xFFFFU) + (off))))
@@ -207,7 +213,7 @@ typedef enum _clock_name
     /* -------------------------------- Other clock --------------------------*/
 } clock_name_t;
 
-#define kCLOCK_CoreSysClk kCLOCK_CoreM4Clk          /*!< For compatible with other platforms without CCM. */
+#define kCLOCK_CoreSysClk       kCLOCK_CoreM4Clk    /*!< For compatible with other platforms without CCM. */
 #define CLOCK_GetCoreSysClkFreq CLOCK_GetCoreM4Freq /*!< For compatible with other platforms without CCM. */
 
 /*! @brief CCM CCGR gate control. */
@@ -241,11 +247,11 @@ typedef enum _clock_ip_name
     kCLOCK_I2c3 = CCM_TUPLE(25U, 92U), /*!< I2C3 Clock Gate.*/
     kCLOCK_I2c4 = CCM_TUPLE(26U, 93U), /*!< I2C4 Clock Gate.*/
 
-    kCLOCK_Iomux0 = CCM_TUPLE(27U, 33U), /*!< IOMUX Clock Gate.*/
-    kCLOCK_Iomux1 = CCM_TUPLE(28U, 33U), /*!< IOMUX Clock Gate.*/
-    kCLOCK_Iomux2 = CCM_TUPLE(29U, 33U), /*!< IOMUX Clock Gate.*/
-    kCLOCK_Iomux3 = CCM_TUPLE(30U, 33U), /*!< IOMUX Clock Gate.*/
-    kCLOCK_Iomux4 = CCM_TUPLE(31U, 33U), /*!< IOMUX Clock Gate.*/
+    kCLOCK_Iomux  = CCM_TUPLE(27U, 33U), /*!< IOMUX Clock Gate.*/
+    kCLOCK_Ipmux1 = CCM_TUPLE(28U, 33U), /*!< IPMUX1 Clock Gate.*/
+    kCLOCK_Ipmux2 = CCM_TUPLE(29U, 33U), /*!< IPMUX2 Clock Gate.*/
+    kCLOCK_Ipmux3 = CCM_TUPLE(30U, 33U), /*!< IPMUX3 Clock Gate.*/
+    kCLOCK_Ipmux4 = CCM_TUPLE(31U, 33U), /*!< IPMUX4 Clock Gate.*/
 
     kCLOCK_M4 = CCM_TUPLE(32U, 1U), /*!< M4 Clock Gate.*/
 
@@ -786,7 +792,7 @@ extern "C" {
  * description in the reference manual.
  *
  * @param rootClk Root clock control (see @ref clock_root_control_t enumeration).
- * @param mux Root mux value (see @ref _ccm_rootmux_xxx enumeration).
+ * @param mux Root mux value (see _ccm_rootmux_xxx enumeration).
  */
 static inline void CLOCK_SetRootMux(clock_root_control_t rootClk, uint32_t mux)
 {
@@ -799,7 +805,7 @@ static inline void CLOCK_SetRootMux(clock_root_control_t rootClk, uint32_t mux)
  * ROOT's mux value to obtain the final clock source of root.
  *
  * @param rootClk Root clock control (see @ref clock_root_control_t enumeration).
- * @return Root mux value (see @ref _ccm_rootmux_xxx enumeration).
+ * @return Root mux value (see _ccm_rootmux_xxx enumeration).
  */
 static inline uint32_t CLOCK_GetRootMux(clock_root_control_t rootClk)
 {
@@ -809,7 +815,6 @@ static inline uint32_t CLOCK_GetRootMux(clock_root_control_t rootClk)
 /*!
  * @brief Enable clock root
  *
- * @param base CCM base pointer.
  * @param rootClk Root clock control (see @ref clock_root_control_t enumeration)
  */
 static inline void CLOCK_EnableRoot(clock_root_control_t rootClk)
@@ -820,7 +825,6 @@ static inline void CLOCK_EnableRoot(clock_root_control_t rootClk)
 /*!
  * @brief Disable clock root
  *
- * @param base CCM base pointer.
  * @param rootClk Root control (see @ref clock_root_control_t enumeration)
  */
 static inline void CLOCK_DisableRoot(clock_root_control_t rootClk)
@@ -831,7 +835,6 @@ static inline void CLOCK_DisableRoot(clock_root_control_t rootClk)
 /*!
  * @brief Check whether clock root is enabled
  *
- * @param base CCM base pointer.
  * @param rootClk Root control (see @ref clock_root_control_t enumeration)
  * @return CCM root enabled or not.
  *         - true: Clock root is enabled.
@@ -847,7 +850,7 @@ static inline bool CLOCK_IsRootEnabled(clock_root_control_t rootClk)
  * Note: The PRE and POST dividers in this function are the actually divider, software will map it to register value
  *
  * @param ccmRootClk Root control (see @ref clock_root_control_t enumeration)
- * @param root mux value (see @ref _ccm_rootmux_xxx enumeration)
+ * @param mux root mux value (see _ccm_rootmux_xxx enumeration)
  * @param pre Pre divider value (0-7, divider=n+1)
  * @param post Post divider value (0-63, divider=n+1)
  */
@@ -896,7 +899,7 @@ static inline uint32_t CLOCK_GetRootPostDivider(clock_root_control_t rootClk)
 /*!
  * @brief OSC25M init
  *
- * @param config osc configuration
+ * @param config osc configuration.
  */
 void CLOCK_InitOSC25M(const osc_config_t *config);
 
@@ -908,6 +911,7 @@ void CLOCK_DeinitOSC25M(void);
 
 /*!
  * @brief OSC27M init
+ * @param config osc configuration.
  *
  */
 void CLOCK_InitOSC27M(const osc_config_t *config);
@@ -915,7 +919,6 @@ void CLOCK_InitOSC27M(const osc_config_t *config);
 /*!
  * @brief OSC27M deinit
  *
- * @param config osc configuration
  */
 void CLOCK_DeinitOSC27M(void);
 
@@ -934,9 +937,8 @@ static inline void CLOCK_SwitchOSC32Src(osc32_src_t sel)
  */
 
 /*!
- * lockrief Set PLL or CCGR gate control
+ * @brief Set PLL or CCGR gate control
  *
- * @lockram base CCM base pointer.
  * @param ccmGate Gate control (see @ref clock_pll_gate_t and @ref clock_ip_name_t enumeration)
  * @param control Gate control value (see @ref clock_gate_value_t)
  */
@@ -998,7 +1000,7 @@ static inline void CLOCK_PowerDownPll(CCM_ANALOG_Type *base, clock_pll_ctrl_t pl
  * @brief PLL bypass setting
  *
  * @param base CCM_ANALOG base pointer.
- * @param pllControl PLL control name (see @ref ccm_analog_pll_control_t enumeration)
+ * @param pllControl PLL control name (see ccm_analog_pll_control_t enumeration)
  * @param bypass Bypass the PLL.
  *               - true: Bypass the PLL.
  *               - false: Do not bypass the PLL.
@@ -1019,7 +1021,7 @@ static inline void CLOCK_SetPllBypass(CCM_ANALOG_Type *base, clock_pll_bypass_ct
  * @brief Check if PLL is bypassed
  *
  * @param base CCM_ANALOG base pointer.
- * @param pllControl PLL control name (see @ref ccm_analog_pll_control_t enumeration)
+ * @param pllControl PLL control name (see ccm_analog_pll_control_t enumeration)
  * @return PLL bypass status.
  *         - true: The PLL is bypassed.
  *         - false: The PLL is not bypassed.
@@ -1047,7 +1049,7 @@ static inline bool CLOCK_IsPllLocked(CCM_ANALOG_Type *base, clock_pll_ctrl_t pll
  * @brief Enable PLL clock
  *
  * @param base CCM_ANALOG base pointer.
- * @param pllClock PLL clock name (see @ref ccm_analog_pll_clock_t enumeration)
+ * @param pllClock PLL clock name (see ccm_analog_pll_clock_t enumeration)
  */
 static inline void CLOCK_EnableAnalogClock(CCM_ANALOG_Type *base, clock_pll_clke_t pllClock)
 {
@@ -1058,7 +1060,7 @@ static inline void CLOCK_EnableAnalogClock(CCM_ANALOG_Type *base, clock_pll_clke
  * @brief Disable PLL clock
  *
  * @param base CCM_ANALOG base pointer.
- * @param pllClock PLL clock name (see @ref ccm_analog_pll_clock_t enumeration)
+ * @param pllClock PLL clock name (see ccm_analog_pll_clock_t enumeration)
  */
 static inline void CLOCK_DisableAnalogClock(CCM_ANALOG_Type *base, clock_pll_clke_t pllClock)
 {
@@ -1255,6 +1257,7 @@ void CLOCK_InitSSCGPll(CCM_ANALOG_Type *base, const ccm_analog_sscg_pll_config_t
  *
  * @param base CCM ANALOG base address.
  * @param type sscg pll type
+ * @param refClkFreq reference clock frequency
  * @param pll1Bypass pll1 bypass flag
  *
  * @return  Clock frequency
@@ -1276,7 +1279,7 @@ void CLOCK_InitFracPll(CCM_ANALOG_Type *base, const ccm_analog_frac_pll_config_t
  *
  * @param base CCM_ANALOG base pointer.
  * @param type fractional pll type.
- * @param fractional pll reference clock frequency
+ * @param refClkFreq reference clock frequency
  *
  * @return  Clock frequency
  */
@@ -1285,7 +1288,7 @@ uint32_t CLOCK_GetFracPllFreq(CCM_ANALOG_Type *base, clock_pll_ctrl_t type, uint
 /*!
  * @brief Gets PLL clock frequency.
  *
- * @param type fractional pll type.
+ * @param pll fractional pll type.
 
  * @return  Clock frequency
  */
@@ -1294,7 +1297,7 @@ uint32_t CLOCK_GetPllFreq(clock_pll_ctrl_t pll);
 /*!
  * @brief Gets PLL reference clock frequency.
  *
- * @param type fractional pll type.
+ * @param ctrl fractional pll type.
 
  * @return  Clock frequency
  */

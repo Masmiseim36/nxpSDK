@@ -38,7 +38,7 @@ static const pf1550_module_t pf1550ModuleMap[] = {
  ******************************************************************************/
 static srtm_status_t SRTM_Pf1550Adapter_Enable(srtm_pmic_adapter_t adapter, uint8_t regulator)
 {
-    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)adapter;
+    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)(void *)adapter;
 
     assert(handle->driver);
 
@@ -56,7 +56,7 @@ static srtm_status_t SRTM_Pf1550Adapter_Enable(srtm_pmic_adapter_t adapter, uint
 
 static srtm_status_t SRTM_Pf1550Adapter_Disable(srtm_pmic_adapter_t adapter, uint8_t regulator)
 {
-    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)adapter;
+    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)(void *)adapter;
 
     assert(handle->driver);
 
@@ -74,7 +74,7 @@ static srtm_status_t SRTM_Pf1550Adapter_Disable(srtm_pmic_adapter_t adapter, uin
 
 static bool SRTM_Pf1550Adapter_IsEnabled(srtm_pmic_adapter_t adapter, uint8_t regulator)
 {
-    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)adapter;
+    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)(void *)adapter;
 
     assert(handle->driver);
 
@@ -90,7 +90,7 @@ static bool SRTM_Pf1550Adapter_IsEnabled(srtm_pmic_adapter_t adapter, uint8_t re
 
 static srtm_status_t SRTM_Pf1550Adapter_SetVoltage(srtm_pmic_adapter_t adapter, uint8_t regulator, uint32_t volt)
 {
-    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)adapter;
+    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)(void *)adapter;
 
     assert(handle->driver);
 
@@ -108,7 +108,7 @@ static srtm_status_t SRTM_Pf1550Adapter_SetVoltage(srtm_pmic_adapter_t adapter, 
 
 static srtm_status_t SRTM_Pf1550Adapter_GetVoltage(srtm_pmic_adapter_t adapter, uint8_t regulator, uint32_t *pVolt)
 {
-    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)adapter;
+    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)(void *)adapter;
 
     assert(handle->driver);
     assert(pVolt);
@@ -127,7 +127,7 @@ static srtm_status_t SRTM_Pf1550Adapter_GetVoltage(srtm_pmic_adapter_t adapter, 
 
 static srtm_status_t SRTM_Pf1550Adapter_SetRegister(srtm_pmic_adapter_t adapter, uint8_t reg, uint32_t value)
 {
-    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)adapter;
+    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)(void *)adapter;
 
     assert(handle->driver);
 
@@ -138,7 +138,7 @@ static srtm_status_t SRTM_Pf1550Adapter_SetRegister(srtm_pmic_adapter_t adapter,
 
 static srtm_status_t SRTM_Pf1550Adapter_GetRegister(srtm_pmic_adapter_t adapter, uint8_t reg, uint32_t *pValue)
 {
-    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)adapter;
+    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)(void *)adapter;
 
     assert(handle->driver);
     assert(pValue);
@@ -150,7 +150,7 @@ static srtm_status_t SRTM_Pf1550Adapter_GetRegister(srtm_pmic_adapter_t adapter,
 
 static srtm_status_t SRTM_Pf1550Adapter_SetStandbyVoltage(srtm_pmic_adapter_t adapter, uint8_t regulator, uint32_t volt)
 {
-    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)adapter;
+    srtm_pf1550_adapter_t handle = (srtm_pf1550_adapter_t)(void *)adapter;
 
     assert(handle->driver);
 

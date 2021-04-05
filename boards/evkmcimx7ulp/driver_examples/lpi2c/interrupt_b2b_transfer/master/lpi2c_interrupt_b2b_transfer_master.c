@@ -8,12 +8,12 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -38,6 +38,7 @@ uint8_t g_master_txBuff[I2C_DATA_LENGTH];
 uint8_t g_master_rxBuff[I2C_DATA_LENGTH];
 lpi2c_master_handle_t g_m_handle;
 volatile bool g_MasterCompletionFlag = false;
+volatile bool g_MasterNackFlag       = false;
 
 /*******************************************************************************
  * Code
@@ -45,11 +46,18 @@ volatile bool g_MasterCompletionFlag = false;
 
 static void lpi2c_master_callback(LPI2C_Type *base, lpi2c_master_handle_t *handle, status_t status, void *userData)
 {
-    g_MasterCompletionFlag = true;
-    /* Display failure information when status is not success. */
-    if (status != kStatus_Success)
+    if (status == kStatus_LPI2C_Nak)
     {
-        PRINTF("Master transfer failed with status %d: \r\n", (uint32_t)status);
+        g_MasterNackFlag = true;
+    }
+    else
+    {
+        g_MasterCompletionFlag = true;
+        /* Display failure information when status is not success. */
+        if (status != kStatus_Success)
+        {
+            PRINTF("Error occured during transfer!");
+        }
     }
 }
 
@@ -130,8 +138,13 @@ int main(void)
         return -1;
     }
     /*  Wait for transfer completed. */
-    while (!g_MasterCompletionFlag)
+    while ((!g_MasterCompletionFlag) && (!g_MasterNackFlag))
     {
+    }
+    if (g_MasterNackFlag)
+    {
+        PRINTF("Master nacked by slave!");
+        g_MasterNackFlag = false;
     }
     g_MasterCompletionFlag = false;
 
@@ -154,8 +167,13 @@ int main(void)
     }
 
     /*  Wait for transfer completed. */
-    while (!g_MasterCompletionFlag)
+    while ((!g_MasterCompletionFlag) && (!g_MasterNackFlag))
     {
+    }
+    if (g_MasterNackFlag)
+    {
+        PRINTF("Master nacked by slave!");
+        g_MasterNackFlag = false;
     }
     g_MasterCompletionFlag = false;
 

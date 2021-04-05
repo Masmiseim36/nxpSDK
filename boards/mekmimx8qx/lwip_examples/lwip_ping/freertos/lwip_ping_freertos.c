@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -20,13 +20,16 @@
 #include "netif/ethernet.h"
 #include "enet_ethernetif.h"
 
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+#include "fsl_phy.h"
+
 #include "fsl_lpuart.h"
 #include "fsl_debug_console.h"
 #include "fsl_irqsteer.h"
+#include "fsl_phyar8031.h"
+#include "fsl_enet_mdio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -63,8 +66,14 @@
 #define ENET_PRIORITY (6U)
 #endif
 
-/* System clock name. */
-#define EXAMPLE_CLOCK_NAME kCLOCK_CONECTIVITY_AhbClk
+/* MDIO operations. */
+#define EXAMPLE_MDIO_OPS enet_ops
+
+/* PHY operations. */
+#define EXAMPLE_PHY_OPS phyar8031_ops
+
+/* ENET clock frequency. */
+#define EXAMPLE_CLOCK_FREQ CLOCK_GetFreq(kCLOCK_CONECTIVITY_AhbClk)
 
 #ifndef EXAMPLE_NETIF_INIT_FN
 /*! @brief Network interface initialization function. */
@@ -85,6 +94,9 @@
  * Variables
  ******************************************************************************/
 
+static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
+static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -100,8 +112,7 @@ static void stack_init(void *arg)
 #endif /* FSL_FEATURE_SOC_LPC_ENET_COUNT */
     ip4_addr_t netif_ipaddr, netif_netmask, netif_gw;
     ethernetif_config_t enet_config = {
-        .phyAddress = EXAMPLE_PHY_ADDRESS,
-        .clockName  = EXAMPLE_CLOCK_NAME,
+        .phyHandle  = &phyHandle,
         .macAddress = configMAC_ADDR,
 #if defined(FSL_FEATURE_SOC_LPC_ENET_COUNT) && (FSL_FEATURE_SOC_LPC_ENET_COUNT > 0)
         .non_dma_memory = non_dma_memory,
@@ -109,6 +120,7 @@ static void stack_init(void *arg)
     };
 
     LWIP_UNUSED_ARG(arg);
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     IP4_ADDR(&netif_ipaddr, configIP_ADDR0, configIP_ADDR1, configIP_ADDR2, configIP_ADDR3);
     IP4_ADDR(&netif_netmask, configNET_MASK0, configNET_MASK1, configNET_MASK2, configNET_MASK3);
@@ -177,6 +189,8 @@ int main(void)
 
     /* Set ENET IRQ priority. Used in FreeRTOS. All ENET IRQ routed to IRQSTEER master 4. */
     NVIC_SetPriority(IRQSTEER_4_IRQn, ENET_PRIORITY);
+
+    mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;
 
     /* Initialize lwIP from thread */
     if (sys_thread_new("main", stack_init, NULL, INIT_THREAD_STACKSIZE, INIT_THREAD_PRIO) == NULL)

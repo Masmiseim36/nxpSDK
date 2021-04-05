@@ -62,7 +62,7 @@ typedef struct _srtm_pmic_service
 static srtm_status_t SRTM_PmicService_Request(srtm_service_t service, srtm_request_t request)
 {
     srtm_status_t status;
-    srtm_pmic_service_t handle  = (srtm_pmic_service_t)service;
+    srtm_pmic_service_t handle  = (srtm_pmic_service_t)(void *)service;
     srtm_pmic_adapter_t adapter = handle->adapter;
     srtm_channel_t channel;
     uint8_t command;
@@ -78,23 +78,23 @@ static srtm_status_t SRTM_PmicService_Request(srtm_service_t service, srtm_reque
 
     channel    = SRTM_CommMessage_GetChannel(request);
     command    = SRTM_CommMessage_GetCommand(request);
-    pmicReq    = (struct _srtm_pmic_payload *)SRTM_CommMessage_GetPayload(request);
+    pmicReq    = (struct _srtm_pmic_payload *)(void *)SRTM_CommMessage_GetPayload(request);
     payloadLen = SRTM_CommMessage_GetPayloadLen(request);
 
     response = SRTM_Response_Create(channel, SRTM_PMIC_CATEGORY, SRTM_PMIC_VERSION, command,
                                     sizeof(struct _srtm_pmic_payload));
-    if (!response)
+    if (response == NULL)
     {
         return SRTM_Status_OutOfMemory;
     }
 
-    pmicResp = (struct _srtm_pmic_payload *)SRTM_CommMessage_GetPayload(response);
+    pmicResp = (struct _srtm_pmic_payload *)(void *)SRTM_CommMessage_GetPayload(response);
 
     status = SRTM_Service_CheckVersion(service, request, SRTM_PMIC_VERSION);
-    if (status != SRTM_Status_Success || !pmicReq || payloadLen != sizeof(struct _srtm_pmic_payload))
+    if ((status != SRTM_Status_Success) || (pmicReq == NULL) || (payloadLen != sizeof(struct _srtm_pmic_payload)))
     {
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s format error!\r\n", __func__);
-        pmicResp->reg     = pmicReq ? pmicReq->reg : 0;
+        pmicResp->reg     = (pmicReq != NULL) ? pmicReq->reg : 0U;
         pmicResp->retCode = SRTM_PMIC_RETURN_CODE_UNSUPPORTED;
     }
     else
@@ -191,7 +191,7 @@ srtm_service_t SRTM_PmicService_Create(srtm_pmic_adapter_t adapter)
 
 void SRTM_PmicService_Destroy(srtm_service_t service)
 {
-    srtm_pmic_service_t handle = (srtm_pmic_service_t)service;
+    srtm_pmic_service_t handle = (srtm_pmic_service_t)(void *)service;
 
     assert(service);
 

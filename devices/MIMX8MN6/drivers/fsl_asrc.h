@@ -21,17 +21,17 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_ASRC_DRIVER_VERSION (MAKE_VERSION(2, 0, 1)) /*!< Version 2.0.1 */
+#define FSL_ASRC_DRIVER_VERSION (MAKE_VERSION(2, 0, 3)) /*!< Version 2.0.3 */
 /*@}*/
 
 /*! @brief ASRC fifo depth */
-#define FSL_ASRC_INPUT_FIFO_DEPTH (128U)
+#define FSL_ASRC_INPUT_FIFO_DEPTH  (128U)
 #define FSL_ASRC_OUTPUT_FIFO_DEPTH (64U)
 /*! @brief ASRC support maximum channel number of context */
 #define ASRC_SUPPORT_MAXIMUM_CONTEXT_PROCESSOR_NUMBER 4U
 
-/*! @brief ASRC return status*/
-enum _asrc_status
+/*! @brief ASRC return status, _asrc_status*/
+enum
 {
     kStatus_ASRCIdle                     = MAKE_STATUS(kStatusGroup_ASRC, 0),  /*!< ASRC  is idle. */
     kStatus_ASRCBusy                     = MAKE_STATUS(kStatusGroup_ASRC, 1),  /*!< ASRC  is busy. */
@@ -55,8 +55,8 @@ typedef enum _asrc_context
     kASRC_Context3 = 3, /*!< Context 3 value */
 } asrc_context_t;
 
-/*! @brief The ASRC interrupt enable flag */
-enum _asrc_interrupt_mask
+/*! @brief The ASRC interrupt enable flag, _asrc_interrupt_mask*/
+enum
 {
     kASRC_Context0InputFifoOverflow = 1U,       /*!< context 0 input fifo overflow */
     kASRC_Context1InputFifoOverflow = 1U << 1U, /*!< context 1 input fifo overflow */
@@ -75,8 +75,8 @@ enum _asrc_interrupt_mask
     kASRC_ContextAllInterruptStatus = 0xFFFU,    /*!< all the context interrupt status */
 };
 
-/*! @brief ASRC fifo status */
-enum _asrc_fifo_status
+/*! @brief ASRC fifo status, _asrc_fifo_status*/
+enum
 {
     kASRC_FifoStatusInputFifoWatermarkFlag =
         ASRC_SAMPLE_FIFO_STATUS_INFIFO_WTMK_MASK, /*!< input water mark flag raised */
@@ -146,8 +146,8 @@ typedef enum _asrc_resampler_taps
     kASRC_ResamplerTaps_128 = 128U, /*!< resampler taps 128 */
 } asrc_resampler_taps_t;
 
-/*! @brief ASRC support sample rate */
-enum _asrc_sample_rate
+/*! @brief ASRC support sample rate, _asrc_sample_rate */
+enum
 {
     kASRC_SampleRate_8000   = 8000,   /*!< 8K sample rate */
     kASRC_SampleRate_11025  = 11025,  /*!< 11025 sample rate */
@@ -427,7 +427,7 @@ static inline void ASRC_EnableContextOutDMA(ASRC_Type *base, asrc_context_t cont
 
 /*!
  * @brief ASRC prefilter bypass mode
- * This function enable\disable the ASRC prefilter bypass mode.
+ * This function enable or disable the ASRC prefilter bypass mode.
  *
  * @param base ASRC peripheral base address.
  * @param context context processor number.
@@ -449,7 +449,7 @@ static inline void ASRC_EnablePreFilterBypass(ASRC_Type *base, asrc_context_t co
 
 /*!
  * @brief ASRC resampler bypass mode
- * This function enable\disable the ASRC resampler bypass mode.
+ * This function enable or disable the ASRC resampler bypass mode.
  *
  * @param base ASRC peripheral base address.
  * @param context context processor number.
@@ -506,7 +506,7 @@ uint32_t ASRC_GetContextOutSampleSize(
  * This function enable the ASRC interrupt with the provided mask.
  *
  * @param base ASRC peripheral base address.
- * @param mask The interrupts to enable. Logical OR of @ref _asrc_interrupt_mask.
+ * @param mask The interrupts to enable. Logical OR of _asrc_interrupt_mask.
  */
 static inline void ASRC_EnableInterrupt(ASRC_Type *base, uint32_t mask)
 {
@@ -518,7 +518,7 @@ static inline void ASRC_EnableInterrupt(ASRC_Type *base, uint32_t mask)
  * This function disable the ASRC interrupt with the provided mask.
  *
  * @param base ASRC peripheral base address.
- * @param mask The interrupts to disable. Logical OR of @ref _asrc_interrupt_mask.
+ * @param mask The interrupts to disable. Logical OR of _asrc_interrupt_mask.
  */
 static inline void ASRC_DisableInterrupt(ASRC_Type *base, uint32_t mask)
 {
@@ -557,6 +557,7 @@ static inline void ASRC_ClearInterruptStatus(ASRC_Type *base, uint32_t status)
  * @brief Gets the ASRC fifo status flag.
  *
  * @param base ASRC base pointer
+ * @param context context id
  */
 static inline uint32_t ASRC_GetFifoStatus(ASRC_Type *base, asrc_context_t context)
 {

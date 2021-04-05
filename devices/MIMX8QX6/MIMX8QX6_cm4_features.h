@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 3.0, 2019-11-05
-**     Build:               b191128
+**     Build:               b200603
 **
 **     Abstract:
 **         Chip specific module features.
@@ -400,8 +400,7 @@
 #define FSL_FEATURE_LPIT_TIMER_COUNT (4)
 /* @brief Has lifetime timer (related to existence of registers LTMR64L and LTMR64H). */
 #define FSL_FEATURE_LPIT_HAS_LIFETIME_TIMER (0)
-/* @brief Has chain mode (related to existence of register bit field TCTRLn[CHN]). */
-#define FSL_FEATURE_LPIT_HAS_CHAIN_MODE (0)
+
 /* @brief Has shared interrupt handler (has not individual interrupt handler for each channel). */
 #define FSL_FEATURE_LPIT_HAS_SHARED_IRQ_HANDLER (1)
 
@@ -503,6 +502,20 @@
 #define FSL_FEATURE_ENET_HAS_EXTEND_MDIO (1)
 /* @brief Has Additional 1588 Timer Channel Interrupt. */
 #define FSL_FEATURE_ENET_HAS_ADD_1588_TIMER_CHN_INT (0)
+/* @brief Support Interrupt Coalesce for each instance */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_INTERRUPT_COALESCEn(x) (0)
+/* @brief Queue Size for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_QUEUEn(x) (3)
+/* @brief Has AVB Support for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_AVBn(x) (1)
+/* @brief Has Timer Pulse Width control for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_TIMER_PWCONTROLn(x) (1)
+/* @brief Has Extend MDIO Support for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_EXTEND_MDIOn(x) (1)
+/* @brief Has Additional 1588 Timer Channel Interrupt for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_ADD_1588_TIMER_CHN_INTn(x) (0)
+/* @brief Has threshold for the number of frames in the receive FIFO (register bit field RSEM[STAT_SECTION_EMPTY]). */
+#define FSL_FEATURE_ENET_HAS_RECEIVE_STATUS_THRESHOLD (1)
 /* @brief ENET need workaround for ERRATA_007885. */
 #define FSL_FEATURE_ENET_HAS_ERRATA_007885 (1)
 
@@ -567,7 +580,7 @@
 /* MIPI_CSI2RX module features */
 
 /* @brief Offset between MIPI CSI controller and CSR in the MIPI CSI subsystem. */
-#define FSL_FEATURE_CSI2RX_CSR_OFFSET (0x6100)
+#define FSL_FEATURE_CSI2RX_CSR_OFFSET (0x6000)
 
 #endif /* _MIMX8QX6_cm4_FEATURES_H_ */
 

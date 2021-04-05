@@ -8,8 +8,8 @@ In this example, it would output a time stamp information when the application i
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -50,6 +50,3 @@ When the demo runs successfully, will get the similar messages on the terminal.
 
  End time = 02bfbd3
 ~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

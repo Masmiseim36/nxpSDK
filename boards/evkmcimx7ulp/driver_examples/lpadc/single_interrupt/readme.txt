@@ -12,8 +12,8 @@ be printed when the execution return to the main function.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -51,6 +51,3 @@ ADC Full Range: XXXX
 Please press any key to get user channel's ADC value.
 ADC value: 2714
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

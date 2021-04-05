@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -177,9 +177,12 @@ static bool UART_TransferIsRxRingBufferFull(uart_handle_t *handle)
  *  uartConfig.stopBitCount = kUART_OneStopBit;
  *  uartConfig.txFifoWatermark = 2;
  *  uartConfig.rxFifoWatermark = 1;
+ *  uartConfig.rxRTSWatermark = 16;
  *  uartConfig.enableAutoBaudrate = false;
  *  uartConfig.enableTx = true;
  *  uartConfig.enableRx = true;
+ *  uartConfig.enableRxRTS = false;
+ *  uartConfig.enableTxCTS = false;
  *  UART_Init(UART1, &uartConfig, 24000000U);
  * endcode
  *
@@ -222,7 +225,8 @@ status_t UART_Init(UART_Type *base, const uart_config_t *config, uint32_t srcClo
     base->UCR2 |=
         ((uint32_t)UART_UCR2_WS(config->dataBitsCount) | (uint32_t)UART_UCR2_STPB(config->stopBitCount) |
          (((uint32_t)(config->parityMode) << UART_UCR2_PROE_SHIFT) & (UART_UCR2_PREN_MASK | UART_UCR2_PROE_MASK)) |
-         (uint32_t)UART_UCR2_TXEN(config->enableTx) | (uint32_t)UART_UCR2_RXEN(config->enableRx) | UART_UCR2_IRTS_MASK);
+         (uint32_t)UART_UCR2_TXEN(config->enableTx) | (uint32_t)UART_UCR2_RXEN(config->enableRx) |
+         (uint32_t)UART_UCR2_IRTS(!config->enableTxCTS) | (uint32_t)UART_UCR2_CTSC(config->enableRxRTS));
 
 #if (defined(FSL_FEATURE_IUART_RXDMUXSEL) && FSL_FEATURE_IUART_RXDMUXSEL)
     /* For imx family device, UARTs are used in MUXED mode, so that this bit should always be set.*/
@@ -232,6 +236,7 @@ status_t UART_Init(UART_Type *base, const uart_config_t *config, uint32_t srcClo
     /* Set TX/RX fifo water mark */
     UART_SetTxFifoWatermark(base, config->txFifoWatermark);
     UART_SetRxFifoWatermark(base, config->rxFifoWatermark);
+    UART_SetRxRTSWatermark(base, config->rxRTSWatermark);
 
     if (config->enableAutoBaudRate)
     {
@@ -293,9 +298,12 @@ void UART_Deinit(UART_Type *base)
  *   uartConfig->stopBitCount = kUART_OneStopBit;
  *   uartConfig->txFifoWatermark = 2;
  *   uartConfig->rxFifoWatermark = 1;
+ *   uartConfig->rxRTSWatermark = 16;
  *   uartConfig->enableAutoBaudrate = flase;
  *   uartConfig->enableTx = false;
  *   uartConfig->enableRx = false;
+ *   uartConfig->enableRxRTS = false;
+ *   uartConfig->enableTxCTS = false;
  *
  * param config Pointer to a configuration structure.
  */
@@ -312,9 +320,12 @@ void UART_GetDefaultConfig(uart_config_t *config)
     config->stopBitCount       = kUART_OneStopBit;
     config->txFifoWatermark    = 2;
     config->rxFifoWatermark    = 1;
+    config->rxRTSWatermark     = 16;
     config->enableAutoBaudRate = false;
     config->enableTx           = false;
     config->enableRx           = false;
+    config->enableRxRTS        = false;
+    config->enableTxCTS        = false;
 }
 
 /* This UART instantiation uses a slightly different baud rate calculation.
@@ -658,23 +669,6 @@ void UART_ClearStatusFlag(UART_Type *base, uint32_t flag)
     *uart_reg = uart_mask;
 }
 
-void UART_EnableDMA(UART_Type *base, uint32_t dmaSource, bool enable)
-{
-    volatile uint32_t *uart_reg = NULL;
-    uint32_t uart_mask          = 0;
-
-    uart_reg  = (uint32_t *)((uint32_t)base + (dmaSource >> 16));
-    uart_mask = (1UL << (dmaSource & 0x0000001FU));
-    if (enable)
-    {
-        *uart_reg |= uart_mask;
-    }
-    else
-    {
-        *uart_reg &= ~uart_mask;
-    }
-}
-
 /*!
  * brief Writes to the TX register using a blocking method.
  *
@@ -684,22 +678,50 @@ void UART_EnableDMA(UART_Type *base, uint32_t dmaSource, bool enable)
  * param base UART peripheral base address.
  * param data Start address of the data to write.
  * param length Size of the data to write.
+ * retval kStatus_UART_Timeout Transmission timed out and was aborted.
+ * retval kStatus_Success Successfully wrote all data.
  */
-void UART_WriteBlocking(UART_Type *base, const uint8_t *data, size_t length)
+status_t UART_WriteBlocking(UART_Type *base, const uint8_t *data, size_t length)
 {
     assert(data != NULL);
+#if UART_RETRY_TIMES
+    uint32_t waitTimes;
+#endif
 
     while (length-- != 0U)
     {
         /* Wait for TX fifo valid. */
+#if UART_RETRY_TIMES
+        waitTimes = UART_RETRY_TIMES;
+        while ((0U == (base->USR1 & UART_USR1_TRDY_MASK)) && (0U != --waitTimes))
+#else
         while (0U == (base->USR1 & UART_USR1_TRDY_MASK))
+#endif
         {
         }
+#if UART_RETRY_TIMES
+        if (0U == waitTimes)
+        {
+            return kStatus_UART_Timeout;
+        }
+#endif
         UART_WriteByte(base, *(data++));
     }
+#if UART_RETRY_TIMES
+    waitTimes = UART_RETRY_TIMES;
+    while ((0U == (base->USR2 & UART_USR2_TXDC_MASK)) && (0U != --waitTimes))
+#else
     while (0U == (base->USR2 & UART_USR2_TXDC_MASK))
+#endif
     {
     }
+#if UART_RETRY_TIMES
+    if (0U == waitTimes)
+    {
+        return kStatus_UART_Timeout;
+    }
+#endif
+    return kStatus_Success;
 }
 
 /*!
@@ -715,18 +737,32 @@ void UART_WriteBlocking(UART_Type *base, const uint8_t *data, size_t length)
  * retval kStatus_UART_NoiseError A noise error occurred while receiving data.
  * retval kStatus_UART_FramingError A framing error occurred while receiving data.
  * retval kStatus_UART_ParityError A parity error occurred while receiving data.
+ * retval kStatus_UART_Timeout Transmission timed out and was aborted.
  * retval kStatus_Success Successfully received all data.
  */
 status_t UART_ReadBlocking(UART_Type *base, uint8_t *data, size_t length)
 {
     assert(data != NULL);
     status_t status = kStatus_Success;
+#if UART_RETRY_TIMES
+    uint32_t waitTimes;
+#endif
 
     while (length-- != 0U)
     {
+#if UART_RETRY_TIMES
+        waitTimes = UART_RETRY_TIMES;
+#endif
         /* Wait for receive data in URXD register is ready */
         while ((base->USR2 & UART_USR2_RDR_MASK) == 0U)
         {
+#if UART_RETRY_TIMES
+            if (--waitTimes == 0U)
+            {
+                status = kStatus_UART_Timeout;
+                break;
+            }
+#endif
             /* Over run check for receiving character */
             if ((base->USR2 & UART_USR2_ORE_MASK) != 0U)
             {
@@ -1494,97 +1530,73 @@ void UART_TransferHandleIRQ(UART_Type *base, uart_handle_t *handle)
 }
 
 #if defined(UART1)
+void UART1_DriverIRQHandler(void);
 void UART1_DriverIRQHandler(void)
 {
     s_uartIsr(UART1, s_uartHandle[1]);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #if defined(UART2)
+void UART2_DriverIRQHandler(void);
 void UART2_DriverIRQHandler(void)
 {
     s_uartIsr(UART2, s_uartHandle[2]);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #if defined(UART3)
+void UART3_DriverIRQHandler(void);
 void UART3_DriverIRQHandler(void)
 {
     s_uartIsr(UART3, s_uartHandle[3]);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #if defined(UART4)
+void UART4_DriverIRQHandler(void);
 void UART4_DriverIRQHandler(void)
 {
     s_uartIsr(UART4, s_uartHandle[4]);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #if defined(UART5)
+void UART5_DriverIRQHandler(void);
 void UART5_DriverIRQHandler(void)
 {
     s_uartIsr(UART5, s_uartHandle[5]);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #if defined(UART6)
+void UART6_DriverIRQHandler(void);
 void UART6_DriverIRQHandler(void)
 {
     s_uartIsr(UART6, s_uartHandle[6]);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #if defined(UART7)
+void UART7_DriverIRQHandler(void);
 void UART7_DriverIRQHandler(void)
 {
     s_uartIsr(UART7, s_uartHandle[7]);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
 #if defined(UART8)
+void UART8_DriverIRQHandler(void);
 void UART8_DriverIRQHandler(void)
 {
     s_uartIsr(UART8, s_uartHandle[8]);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif

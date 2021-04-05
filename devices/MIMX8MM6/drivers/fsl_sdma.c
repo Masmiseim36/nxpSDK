@@ -22,35 +22,35 @@
 #endif
 
 /*! @brief SDMA P2P macro definition */
-#define SDMA_P2P_LOW_WATERMARK_MASK (0xFFU)
+#define SDMA_P2P_LOW_WATERMARK_MASK  (0xFFU)
 #define SDMA_P2P_LOW_WATERMARK_SHIFT (0U)
-#define SDMA_P2P_LOW_WATERMARK(val) ((uint32_t)(val)&SDMA_P2P_LOW_WATERMARK_MASK)
+#define SDMA_P2P_LOW_WATERMARK(val)  ((uint32_t)(val)&SDMA_P2P_LOW_WATERMARK_MASK)
 
 #define SDMA_P2P_HIGH_WATERMARK_SHIFT (16U)
-#define SDMA_P2P_HIGH_WATERMARK_MASK (0xFFUL << SDMA_P2P_HIGH_WATERMARK_SHIFT)
-#define SDMA_P2P_HIGH_WATERMARK(val) (((uint32_t)(val) << SDMA_P2P_HIGH_WATERMARK_SHIFT) & SDMA_P2P_HIGH_WATERMARK_MASK)
+#define SDMA_P2P_HIGH_WATERMARK_MASK  (0xFFUL << SDMA_P2P_HIGH_WATERMARK_SHIFT)
+#define SDMA_P2P_HIGH_WATERMARK(val)  (((uint32_t)(val) << SDMA_P2P_HIGH_WATERMARK_SHIFT) & SDMA_P2P_HIGH_WATERMARK_MASK)
 
-#define SDMA_P2P_SOURCE_SPBA_SHIFT (11U)
-#define SDMA_P2P_SOURCE_SPBA_MASK (1UL << SDMA_P2P_SOURCE_SPBA_SHIFT)
+#define SDMA_P2P_SOURCE_SPBA_SHIFT    (11U)
+#define SDMA_P2P_SOURCE_SPBA_MASK     (1UL << SDMA_P2P_SOURCE_SPBA_SHIFT)
 #define SDMA_P2P_SOURCE_SPBA_VAL(val) (((uint32_t)(val) << SDMA_P2P_SOURCE_SPBA_SHIFT) & SDMA_P2P_SOURCE_SPBA_MASK)
 
 #define SDMA_P2P_DEST_SPBA_SHIFT (12U)
-#define SDMA_P2P_DEST_SPBA_MASK (1UL << SDMA_P2P_DEST_SPBA_SHIFT)
-#define SDMA_P2P_DEST_SPBA(val) (((uint32_t)(val) << SDMA_P2P_DEST_SPBA_SHIFT) & SDMA_P2P_DEST_SPBA_MASK)
+#define SDMA_P2P_DEST_SPBA_MASK  (1UL << SDMA_P2P_DEST_SPBA_SHIFT)
+#define SDMA_P2P_DEST_SPBA(val)  (((uint32_t)(val) << SDMA_P2P_DEST_SPBA_SHIFT) & SDMA_P2P_DEST_SPBA_MASK)
 
 #define SDMA_P2P_LOWER_EVENT_REG_SHIFT (28U)
-#define SDMA_P2P_LOWER_EVENT_REG_MASK (1UL << SDMA_P2P_LOWER_EVENT_REG_SHIFT)
+#define SDMA_P2P_LOWER_EVENT_REG_MASK  (1UL << SDMA_P2P_LOWER_EVENT_REG_SHIFT)
 #define SDMA_P2P_LOWER_EVENT_REG(val) \
     (((uint32_t)(val) << SDMA_P2P_LOWER_EVENT_REG_SHIFT) & SDMA_P2P_LOWER_EVENT_REG_MASK)
 
 #define SDMA_P2P_HIGHER_EVENT_REG_SHIFT (29U)
-#define SDMA_P2P_HIGHER_EVENT_REG_MASK (1UL << SDMA_P2P_HIGHER_EVENT_REG_SHIFT)
+#define SDMA_P2P_HIGHER_EVENT_REG_MASK  (1UL << SDMA_P2P_HIGHER_EVENT_REG_SHIFT)
 #define SDMA_P2P_HIGHER_EVENT_REG(val) \
     (((uint32_t)(val) << SDMA_P2P_HIGHER_EVENT_REG_SHIFT) & SDMA_P2P_HIGHER_EVENT_REG_MASK)
 
 #define SDMA_P2P_CONT_SHIFT (31U)
-#define SDMA_P2P_CONT_MASK (1UL << SDMA_P2P_CONT_SHIFT)
-#define SDMA_P2P_CONT(val) (((uint32_t)(val) << SDMA_P2P_CONT_SHIFT) & SDMA_P2P_CONT_MASK)
+#define SDMA_P2P_CONT_MASK  (1UL << SDMA_P2P_CONT_SHIFT)
+#define SDMA_P2P_CONT(val)  (((uint32_t)(val) << SDMA_P2P_CONT_SHIFT) & SDMA_P2P_CONT_MASK)
 
 /*******************************************************************************
  * Prototypes
@@ -1002,11 +1002,6 @@ uint32_t SDMA_GetTransferredBytes(sdma_handle_t *handle)
 void SDMA_HandleIRQ(sdma_handle_t *handle)
 {
     assert(handle != NULL);
-    uint32_t status = 0;
-
-    /* Clear the status for all channels */
-    status = (SDMA_GetChannelInterruptStatus(handle->base) & 0xFFFFFFFEU);
-    SDMA_ClearChannelInterruptStatus(handle->base, status);
 
     /* Set the current BD address to the CCB */
     if (handle->BDPool != NULL)
@@ -1026,6 +1021,7 @@ void SDMA_HandleIRQ(sdma_handle_t *handle)
     }
 }
 #if defined(SDMAARM)
+void SDMA_DriverIRQHandler(void);
 void SDMA_DriverIRQHandler(void)
 {
     uint32_t i = 1U, val;
@@ -1038,6 +1034,7 @@ void SDMA_DriverIRQHandler(void)
     {
         if ((val & 0x1UL) != 0UL)
         {
+            SDMA_ClearChannelInterruptStatus(s_SDMAHandle[0][i]->base, 1UL << i);
             SDMA_HandleIRQ(s_SDMAHandle[0][i]);
         }
         i++;
@@ -1046,6 +1043,7 @@ void SDMA_DriverIRQHandler(void)
 }
 #endif
 #if defined(SDMAARM1)
+void SDMA1_DriverIRQHandler(void);
 void SDMA1_DriverIRQHandler(void)
 {
     uint32_t i = 1U, val;
@@ -1058,6 +1056,7 @@ void SDMA1_DriverIRQHandler(void)
     {
         if ((val & 0x1UL) != 0UL)
         {
+            SDMA_ClearChannelInterruptStatus(s_SDMAHandle[0][i]->base, 1UL << i);
             SDMA_HandleIRQ(s_SDMAHandle[0][i]);
         }
         i++;
@@ -1066,6 +1065,7 @@ void SDMA1_DriverIRQHandler(void)
 }
 #endif
 #if defined(SDMAARM2)
+void SDMA2_DriverIRQHandler(void);
 void SDMA2_DriverIRQHandler(void)
 {
     uint32_t i = 1U, val;
@@ -1078,6 +1078,7 @@ void SDMA2_DriverIRQHandler(void)
     {
         if ((val & 0x1UL) != 0UL)
         {
+            SDMA_ClearChannelInterruptStatus(s_SDMAHandle[1][i]->base, 1UL << i);
             SDMA_HandleIRQ(s_SDMAHandle[1][i]);
         }
         i++;
@@ -1087,6 +1088,7 @@ void SDMA2_DriverIRQHandler(void)
 #endif
 
 #if defined(SDMAARM3)
+void SDMA3_DriverIRQHandler(void);
 void SDMA3_DriverIRQHandler(void)
 {
     uint32_t i = 1U, val;
@@ -1099,6 +1101,7 @@ void SDMA3_DriverIRQHandler(void)
     {
         if ((val & 0x1UL) != 0UL)
         {
+            SDMA_ClearChannelInterruptStatus(s_SDMAHandle[2][i]->base, 1UL << i);
             SDMA_HandleIRQ(s_SDMAHandle[2][i]);
         }
         i++;

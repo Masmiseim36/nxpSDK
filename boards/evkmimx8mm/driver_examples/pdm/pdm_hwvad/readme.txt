@@ -5,8 +5,8 @@ The pdm hwvad example shows how to use pdm driver with hwvad:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -59,6 +59,3 @@ PDM hwvad example finished!
 ~~~~~~~~~~~~~~~~~~~
 
 Note: There is a variable in this example which initial as 50, once voice detected, it will decrease by one until 0, then example finish.
-Customization options
-=====================
-

@@ -12,12 +12,12 @@
 #include "timers.h"
 #include "fsl_debug_console.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "app_srtm.h"
 #include "fsl_wdog32.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "main/imx8qx_pads.h"
 #include "svc/pad/pad_api.h"
 #include "fsl_gpio.h"
@@ -25,19 +25,19 @@
 /*******************************************************************************
  * Struct Definitions
  ******************************************************************************/
-#define DEMO_ESAI ADMA__ESAI0
-#define ESAI_SOURCE_CLOCK_FREQ (49152000)
-#define EXAMPLE_LPI2C (CM4__LPI2C)                                      /*Should change to MIPI_CSI_I2C0*/
-#define EXAMPLE_LPI2C_BAUDRATE (400000)                                 /*in i2c example it is 100000*/
-#define I2C_SOURCE_CLOCK_FREQ_M4 CLOCK_GetIpFreq(kCLOCK_M4_0_Lpi2c)     /*M4_LPI2C*/
+#define DEMO_ESAI                    ADMA__ESAI0
+#define ESAI_SOURCE_CLOCK_FREQ       (49152000)
+#define EXAMPLE_LPI2C                (CM4__LPI2C)                       /*Should change to MIPI_CSI_I2C0*/
+#define EXAMPLE_LPI2C_BAUDRATE       (400000)                           /*in i2c example it is 100000*/
+#define I2C_SOURCE_CLOCK_FREQ_M4     CLOCK_GetIpFreq(kCLOCK_M4_0_Lpi2c) /*M4_LPI2C*/
 #define I2C_SOURCE_CLOCK_FREQ_LPI2C1 CLOCK_GetIpFreq(kCLOCK_DMA_Lpi2c1) /*ADMA_LPI2C1*/
-#define AUDIO_IRQHandler IRQSTEER_6_IRQHandler
-#define CODEC_CS42888 (1)
-#define ESAI_TX_CHANNEL (2)
+#define AUDIO_IRQHandler             IRQSTEER_6_IRQHandler
+#define CODEC_CS42888                (1)
+#define ESAI_TX_CHANNEL              (2)
 /* SAI and I2C instance and clock */
 #define DEMO_CODEC_WM8960
-#define DEMO_SAI ADMA__SAI1
-#define DEMO_SAI_CHANNEL (0)
+#define DEMO_SAI          ADMA__SAI1
+#define DEMO_SAI_CHANNEL  (0)
 #define DEMO_SAI_BITWIDTH (kSAI_WordWidth16bits)
 // #define DEMO_I2C CM4__LPI2C
 #define DEMO_SAI_CLK_FREQ (24576000U)
@@ -45,21 +45,21 @@
 #define CODEC_CYCLE (30000000)
 
 #define EXAMPLE_I2C_EXPANSION_B_ADDR (0x1D)
-#define PCA9557_RST_GPIO LSIO__GPIO1 /*SPI2_SDO, GPIO1, IO1, ALT4*/
-#define PCA9557_RST_PIN 1
+#define PCA9557_RST_GPIO             LSIO__GPIO1 /*SPI2_SDO, GPIO1, IO1, ALT4*/
+#define PCA9557_RST_PIN              1
 
 /*! @brief PCA9557 Registers address definition. */
-#define PCA9557_REG_INTPUT_PORT (0x00)
-#define PCA9557_REG_OUTPUT_PORT (0x01)
+#define PCA9557_REG_INTPUT_PORT        (0x00)
+#define PCA9557_REG_OUTPUT_PORT        (0x01)
 #define PCA9557_REG_POLARITY_INVERSION (0x02)
-#define PCA9557_REG_CONFIGURATION (0x03)
+#define PCA9557_REG_CONFIGURATION      (0x03)
 
 // #define EXAMPLE_I2C_SWITCH_ADDR (0x71)
 /*
  * We use 32KHz Clk divided by 256 as WDOG Clock Source
  */
 #define WDOG_TIMEOUT_1S (32768 / 256)
-#define WDOG_TIMEOUT (5 * WDOG_TIMEOUT_1S)
+#define WDOG_TIMEOUT    (5 * WDOG_TIMEOUT_1S)
 /*******************************************************************************
  * Function Prototypes
  ******************************************************************************/

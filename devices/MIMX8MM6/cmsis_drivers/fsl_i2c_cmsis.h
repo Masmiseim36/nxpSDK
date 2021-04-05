@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2017 NXP. Not a Contribution.
+ * Copyright 2016-2020 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,29 +25,29 @@
 #include "RTE_Device.h"
 #include "fsl_i2c.h"
 
-#if defined(I2C0)
+#if defined(I2C0) && defined(RTE_I2C0) && RTE_I2C0
 extern ARM_DRIVER_I2C Driver_I2C0;
 #endif
 
-#if defined(I2C1)
+#if defined(I2C1) && defined(RTE_I2C1) && RTE_I2C1
 extern ARM_DRIVER_I2C Driver_I2C1;
 #endif
 
-#if defined(I2C2)
+#if defined(I2C2) && defined(RTE_I2C2) && RTE_I2C2
 extern ARM_DRIVER_I2C Driver_I2C2;
 #endif
 
-#if defined(I2C3)
+#if defined(I2C3) && defined(RTE_I2C3) && RTE_I2C3
 extern ARM_DRIVER_I2C Driver_I2C3;
 #endif
 
-#if defined(I2C4)
+#if defined(I2C4) && defined(RTE_I2C4) && RTE_I2C4
 extern ARM_DRIVER_I2C Driver_I2C4;
 #endif
 
 /* I2C Driver state flags */
-#define I2C_FLAG_UNINIT (0)
-#define I2C_FLAG_INIT (1 << 0)
-#define I2C_FLAG_POWER (1 << 1)
+#define I2C_FLAG_UNINIT (0UL)
+#define I2C_FLAG_INIT   (1UL << 0)
+#define I2C_FLAG_POWER  (1UL << 1)
 
 #endif

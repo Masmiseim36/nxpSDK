@@ -5,6 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_sai_sdma.h"
@@ -14,61 +16,49 @@
 #include "fsl_asrc.h"
 
 #include "fsl_wm8524.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 #include "fsl_gpio.h"
 #include "fsl_codec_adapter.h"
+#include "fsl_sai.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_SAI (I2S3)
+#define DEMO_SAI  (I2S3)
 #define DEMO_ASRC ASRC
 #define DEMO_SAI_CLK_FREQ                                                                  \
     (CLOCK_GetPllFreq(kCLOCK_AudioPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootSai3)) / \
      (CLOCK_GetRootPostDivider(kCLOCK_RootSai3)))
-#define DEMO_CODEC_WM8524 (1)
-#define DEMO_CODEC_BUS_PIN (NULL)
-#define DEMO_CODEC_BUS_PIN_NUM (0)
-#define DEMO_CODEC_MUTE_PIN (GPIO5)
-#define DEMO_CODEC_MUTE_PIN_NUM (21)
-#define DEMO_IRQn I2S3_IRQn
-#define DEMO_DMA SDMAARM2
-#define DEMO_SAI_SDMA_CHANNEL (1)
-#define DEMO_ASRC_IN_SDMA_CHANNEL 2
+#define DEMO_CODEC_WM8524          (1)
+#define DEMO_CODEC_BUS_PIN         (NULL)
+#define DEMO_CODEC_BUS_PIN_NUM     (0)
+#define DEMO_CODEC_MUTE_PIN        (GPIO5)
+#define DEMO_CODEC_MUTE_PIN_NUM    (21)
+#define DEMO_IRQn                  I2S3_IRQn
+#define DEMO_DMA                   SDMAARM2
+#define DEMO_SAI_SDMA_CHANNEL      (1)
+#define DEMO_ASRC_IN_SDMA_CHANNEL  2
 #define DEMO_ASRC_OUT_SDMA_CHANNEL 3
-#define DEMO_ASRC_IN_SDMA_SOURCE 16
-#define DEMO_ASRC_OUT_SDMA_SOURCE 17
-#define DEMO_ASRC_CONTEXT kASRC_Context0
-#define DEMO_SAI_TX_SOURCE (5)
+#define DEMO_ASRC_IN_SDMA_SOURCE   16
+#define DEMO_ASRC_OUT_SDMA_SOURCE  17
+#define DEMO_ASRC_CONTEXT          kASRC_Context0
+#define DEMO_SAI_TX_SOURCE         (5)
+#define DEMO_AUDIO_BIT_WIDTH       kSAI_WordWidth16bits
+#define DEMO_AUDIO_DATA_CHANNEL    (2U)
+#define DEMO_AUDIO_MASTER_CLOCK    DEMO_SAI_CLK_FREQ
 /*set Bclk source to Mclk clock*/
-#define DEMO_SAI_CLOCK_SOURCE (1U)
-#define SDMA_FREQ_EQUALS_ARM (1U)
-#define DEMO_ASRC_IN_SAMPLE_RATE 44100
+#define DEMO_SAI_CLOCK_SOURCE     (1U)
+#define SDMA_FREQ_EQUALS_ARM      (1U)
+#define DEMO_ASRC_IN_SAMPLE_RATE  44100
 #define DEMO_ASRC_OUT_SAMPLE_RATE 16000
-#define OVER_SAMPLE_RATE (384U)
-/* demo audio sample rate */
-#define DEMO_AUDIO_SAMPLE_RATE (kSAI_SampleRate16KHz)
-#define DEMO_AUDIO_CONVERT_SAMPLE_RATE (kSAI_SampleRate48KHz)
-/* demo audio master clock */
-#if (defined FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER && FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) || \
-    (defined FSL_FEATURE_PCC_HAS_SAI_DIVIDER && FSL_FEATURE_PCC_HAS_SAI_DIVIDER)
-#define DEMO_AUDIO_MASTER_CLOCK OVER_SAMPLE_RATE *DEMO_AUDIO_SAMPLE_RATE
-#else
-#define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
-#endif
-/* demo audio data channel */
-#define DEMO_AUDIO_DATA_CHANNEL (2U)
-/* demo audio bit width */
-#define DEMO_AUDIO_BIT_WIDTH kSAI_WordWidth16bits
 /* convert buffer size, please note that the maximum size  of once transfer that SDMA can support is 64k */
 #define DEMO_AUDIO_BUFFER_SIZE (16000U)
-#define DEMO_AUDIO_SAMPLES (MUSIC_LEN / 2U)
+#define DEMO_AUDIO_SAMPLES     (MUSIC_LEN / 2U)
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 void BOARD_WM8524_Mute_GPIO(uint32_t output);
+void BOARD_MASTER_CLOCK_CONFIG(void);
 static void saiCallback(I2S_Type *base, sai_sdma_handle_t *handle, status_t status, void *userData);
 static void saiPlayAudio(uint8_t *data, uint32_t dataSize);
 static void asrcConvertAudio(void *in, void *out, uint32_t dataSize);
@@ -82,6 +72,7 @@ static wm8524_config_t wm8524Config = {
     .protocol    = kWM8524_ProtocolI2S,
 };
 codec_config_t boardCodecConfig = {.codecDevType = kCODEC_WM8524, .codecDevConfig = &wm8524Config};
+sai_master_clock_t mclkConfig;
 
 AT_NONCACHEABLE_SECTION_ALIGN(sai_sdma_handle_t txHandle, 4);
 AT_NONCACHEABLE_SECTION_ALIGN(sdma_handle_t dmaHandle, 4);
@@ -89,17 +80,6 @@ AT_NONCACHEABLE_SECTION_ALIGN(sdma_context_data_t s_saiContext, 4);
 volatile uint8_t isSaiFinishedCount = 0;
 volatile bool isConvertFinished     = false;
 extern codec_config_t boardCodecConfig;
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-sai_master_clock_t mclkConfig = {
-#if defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)
-    .mclkOutputEnable = true,
-#if !(defined(FSL_FEATURE_SAI_HAS_NO_MCR_MICS) && (FSL_FEATURE_SAI_HAS_NO_MCR_MICS))
-    .mclkSource = kSAI_MclkSourceSysclk,
-#endif
-#endif
-};
-#endif
 codec_handle_t codecHandle;
 /*! @brief ASRC sdma handle */
 AT_NONCACHEABLE_SECTION_ALIGN(static asrc_sdma_handle_t s_asrcHandle, 4U);
@@ -118,6 +98,13 @@ static asrc_context_config_t s_asrcContextConfig;
 void BOARD_WM8524_Mute_GPIO(uint32_t output)
 {
     GPIO_PinWrite(DEMO_CODEC_MUTE_PIN, DEMO_CODEC_MUTE_PIN_NUM, output);
+}
+
+void BOARD_MASTER_CLOCK_CONFIG(void)
+{
+    mclkConfig.mclkOutputEnable = true, mclkConfig.mclkHz = DEMO_AUDIO_MASTER_CLOCK;
+    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
+    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
 }
 
 static void saiCallback(I2S_Type *base, sai_sdma_handle_t *handle, status_t status, void *userData)
@@ -184,11 +171,7 @@ int main(void)
     SAI_TransferTxCreateHandleSDMA(DEMO_SAI, &txHandle, saiCallback, NULL, &dmaHandle, DEMO_SAI_TX_SOURCE);
     /* I2S mode configurations */
     SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, kSAI_Channel0Mask);
-
-#if defined DEMO_SAI_CLOCK_SOURCE
     config.bitClock.bclkSource = (sai_bclk_source_t)DEMO_SAI_CLOCK_SOURCE;
-#endif
-
     SAI_TransferTxSetConfigSDMA(DEMO_SAI, &txHandle, &config);
 
     /* set bit clock divider */
@@ -196,14 +179,7 @@ int main(void)
                           DEMO_AUDIO_DATA_CHANNEL);
 
     /* master clock configurations */
-#if (defined(FSL_FEATURE_SAI_HAS_MCR) && (FSL_FEATURE_SAI_HAS_MCR)) || \
-    (defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER))
-#if defined(FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER) && (FSL_FEATURE_SAI_HAS_MCLKDIV_REGISTER)
-    mclkConfig.mclkHz          = DEMO_AUDIO_MASTER_CLOCK;
-    mclkConfig.mclkSourceClkHz = DEMO_SAI_CLK_FREQ;
-#endif
-    SAI_SetMasterClockConfig(DEMO_SAI, &mclkConfig);
-#endif
+    BOARD_MASTER_CLOCK_CONFIG();
 
     /* Enable SAI interrupt to clear the FIFO error */
     EnableIRQ(DEMO_IRQn);
@@ -229,21 +205,29 @@ int main(void)
     }
 
     /* Use default setting to init codec */
-    CODEC_Init(&codecHandle, &boardCodecConfig);
+    if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
+    {
+        assert(false);
+    }
 
-    PRINTF("Playback original 44.1K audio data.\n\r");
+    PRINTF("Playback original 48K audio data.\n\r");
     saiPlayAudio(temp, MUSIC_LEN);
 
     /* reconfigure the sai bit clock*/
     SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_ASRC_OUT_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
                           DEMO_AUDIO_DATA_CHANNEL);
+    if (CODEC_SetFormat(&codecHandle, DEMO_AUDIO_MASTER_CLOCK, DEMO_ASRC_OUT_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH) !=
+        kStatus_Success)
+    {
+        assert(false);
+    }
 
     PRINTF("Playback converted 16K audio data.\n\r");
     asrcConvertAudio(temp, s_asrcOutBuffer, MUSIC_LEN);
     saiPlayAudio((uint8_t *)s_asrcOutBuffer,
                  ASRC_GetContextOutSampleSize(DEMO_ASRC_IN_SAMPLE_RATE, MUSIC_LEN, 2, DEMO_ASRC_OUT_SAMPLE_RATE, 2));
 
-    PRINTF("\n\r ASRC memory to memory SDMA example finished.\n\r ");
+    PRINTF("ASRC memory to memory SDMA example finished.\n\r ");
     while (1)
     {
     }

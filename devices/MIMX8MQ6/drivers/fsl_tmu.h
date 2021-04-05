@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019, NXP
+ * Copyright 2017-2020, NXP
  * All rights reserved.
  *
  *
@@ -206,7 +206,7 @@ static inline void TMU_Enable(TMU_Type *base, bool enable)
 /*!
  * @brief Enable the TMU interrupts.
  *
- * @param bas TMU peripheral base address.
+ * @param base TMU peripheral base address.
  * @param mask The interrupt mask. Refer to "_tmu_interrupt_enable" enumeration.
  */
 static inline void TMU_EnableInterrupts(TMU_Type *base, uint32_t mask)
@@ -217,7 +217,7 @@ static inline void TMU_EnableInterrupts(TMU_Type *base, uint32_t mask)
 /*!
  * @brief Disable the TMU interrupts.
  *
- * @param bas TMU peripheral base address.
+ * @param base TMU peripheral base address.
  * @param mask The interrupt mask. Refer to "_tmu_interrupt_enable" enumeration.
  */
 static inline void TMU_DisableInterrupts(TMU_Type *base, uint32_t mask)
@@ -238,14 +238,14 @@ void TMU_GetInterruptStatusFlags(TMU_Type *base, tmu_interrupt_status_t *status)
  * @brief Clear interrupt status flags and corresponding interrupt critical site capture register.
  *
  * @param base TMU peripheral base address.
- * @param The mask of interrupt status flags. Refer to "_tmu_interrupt_status_flags" enumeration.
+ * @param mask The mask of interrupt status flags. Refer to "_tmu_interrupt_status_flags" enumeration.
  */
 void TMU_ClearInterruptStatusFlags(TMU_Type *base, uint32_t mask);
 
 /*!
  * @brief Get TMU status flags.
  *
- * @param TMU peripheral base address.
+ * @param base TMU peripheral base address.
  *
  * @return The mask of status flags. Refer to "_tmu_status_flags" enumeration.
  */
@@ -323,5 +323,7 @@ void TMU_SetHighTemperatureThresold(TMU_Type *base, const tmu_thresold_config_t 
 #if defined(__cplusplus)
 }
 #endif
+
+/* @} */
 
 #endif /* __FSL_TMU_H__ */

@@ -45,7 +45,7 @@
 #define FSL_MEM_M7_OCRAMS_END 0x20187FFFU
 
 /* System level ITCM memory address = CM7 subsystem local ITCM address + FSL_FEATURE_ITCM_OFFSET */
-#define FSL_MEM_M7_ITCM_OFFSET (0x7E0000)
+#define FSL_MEM_M7_ITCM_OFFSET (0x7E0000U)
 /* System level DTCM memory address = CM7 subsystem local DTCM address - FSL_FEATURE_DTCM_OFFSET */
 #define FSL_MEM_M7_DTCM_OFFSET 0x1F800000U
 /* System level OCRAM memory address = CM7 subsystem local OCRAM address - FSL_MEM_M7_OCRAM_OFFSET */

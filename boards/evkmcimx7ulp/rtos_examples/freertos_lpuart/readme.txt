@@ -6,8 +6,8 @@ After every 4B received, these are sent back on LPUART.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -47,6 +47,3 @@ When the example runs successfully, the following message is displayed in the te
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 FreeRTOS LPUART driver example!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, 2019 NXP
+ * Copyright 2017, 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -68,7 +68,7 @@ void CI_PI_Init(CI_PI_CSR_Type *base, const ci_pi_config_t *config)
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Enable cipi clock */
-    CLOCK_EnableClock(s_cipiClock[CI_PI_GetInstance(base)]);
+    (void)CLOCK_EnableClock(s_cipiClock[CI_PI_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
     CI_PI_Reset(base);
@@ -90,7 +90,7 @@ void CI_PI_Init(CI_PI_CSR_Type *base, const ci_pi_config_t *config)
                | CI_PI_CSR_CSI_CTRL_REG_CCIR_ECC_ERR_CORRECT_EN_MASK                   /* Enable ECC correction. */
                | CI_PI_CSR_CSI_CTRL_REG_HSYNC_PULSE(config->hsyncWidth)                /* Set HSYNC pulse. */
                | CI_PI_CSR_CSI_CTRL_REG_DATA_TYPE_IN(config->inputFormat)              /* CSI data format. */
-               | config->workMode;                                                     /* CSI work mode. */
+               | (uint32_t)config->workMode;                                           /* CSI work mode. */
 
     if (config->useExtVsync)
     {
@@ -105,9 +105,9 @@ void CI_PI_Init(CI_PI_CSR_Type *base, const ci_pi_config_t *config)
     base->CSI_CTRL_REG.RW = csiCtrl0;
 
     /* CSI_CTRL_REG1[VSYNC_PULSE] means the pixel clock count of VSYNC. */
-    base->CSI_CTRL_REG1.RW =
-        CI_PI_CSR_CSI_CTRL_REG1_VSYNC_PULSE(config->vsyncWidth * (config->width + config->hsyncWidth)) |
-        CI_PI_CSR_CSI_CTRL_REG1_PIXEL_WIDTH(config->width - 1);
+    base->CSI_CTRL_REG1.RW = CI_PI_CSR_CSI_CTRL_REG1_VSYNC_PULSE(
+                                 config->vsyncWidth * ((uint32_t)config->width + (uint32_t)config->hsyncWidth)) |
+                             CI_PI_CSR_CSI_CTRL_REG1_PIXEL_WIDTH((uint32_t)config->width - 1U);
 }
 
 /*!
@@ -122,7 +122,7 @@ void CI_PI_Deinit(CI_PI_CSR_Type *base)
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Enable cipi clock */
-    CLOCK_EnableClock(s_cipiClock[CI_PI_GetInstance(base)]);
+    (void)CLOCK_EnableClock(s_cipiClock[CI_PI_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -150,7 +150,7 @@ void CI_PI_GetDefaultConfig(ci_pi_config_t *config)
     assert(config);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->width         = 0;
     config->vsyncWidth    = 3U;

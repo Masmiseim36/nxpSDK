@@ -12,13 +12,13 @@
 #include "rpmsg_lite.h"
 #include "rpmsg_queue.h"
 #include "rpmsg_ns.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "app_srtm.h"
 /*******************************************************************************
  * Definitions

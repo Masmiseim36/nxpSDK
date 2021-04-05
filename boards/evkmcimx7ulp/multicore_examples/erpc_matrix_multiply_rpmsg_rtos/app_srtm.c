@@ -844,9 +844,9 @@ static void APP_SRTM_PollSensor(srtm_dispatcher_t dispatcher, void *param1, void
                 return;
             }
 
-            accel[0] = (((int16_t)readBuffer[0] << 8) | readBuffer[1]) / 4;
-            accel[1] = (((int16_t)readBuffer[2] << 8) | readBuffer[3]) / 4;
-            accel[2] = (((int16_t)readBuffer[4] << 8) | readBuffer[5]) / 4;
+            accel[0] = (int16_t)((readBuffer[0] << 8) | readBuffer[1]) / 4;
+            accel[1] = (int16_t)((readBuffer[2] << 8) | readBuffer[3]) / 4;
+            accel[2] = (int16_t)((readBuffer[4] << 8) | readBuffer[5]) / 4;
 
             events = KeynetikHandleIncomingEvent(accel[0], accel[1], accel[2]);
             if (pedometer.stateEnabled && (events & KEYNETIK_STEP))
@@ -1664,6 +1664,19 @@ static void APP_SRTM_InitPmicService(void)
     pf1550Config.I2C_SendFunc    = PMIC_I2C_SendFunc;
     pf1550Config.I2C_ReceiveFunc = PMIC_I2C_ReceiveFunc;
     PF1550_Init(&pf1550Handle, &pf1550Config);
+
+    /* Let PF1550 LDOs and SWs enter low power mode in sleep and standby modes. */
+    /* SW1 */
+    PF1550_ModifyReg(&pf1550Handle, PF1550_SW1_CTRL, 0x08U, 0x08U);
+    /* SW2 */
+    PF1550_ModifyReg(&pf1550Handle, PF1550_SW2_CTRL, 0x08U, 0x08U);
+    /* SW3 */
+    PF1550_ModifyReg(&pf1550Handle, PF1550_SW3_CTRL, 0x08U, 0x08U);
+    /* LDO1 */
+    PF1550_ModifyReg(&pf1550Handle, PF1550_LDO1_CTRL, 0x08U, 0x08U);
+    /* LDO2 */
+    PF1550_ModifyReg(&pf1550Handle, PF1550_LDO2_CTRL, 0x08U, 0x08U);
+    /* LDO3 is controlled by APP_PowerTestMode(command 'Z'). */
 
     /* Set DPM to 4.3V from default 4.5V to work around the PMIC reset issue when power
      * switchng between power adaptor and USB supply.

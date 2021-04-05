@@ -11,8 +11,8 @@ the messages will be displayed on board UART terminal or the text area of the mo
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -80,6 +80,3 @@ Note the following information shows on M4 core terminal.
 gAdvertisingStateChanged_c
 gConnEvtConnected_c
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

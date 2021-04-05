@@ -9,19 +9,19 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_ecspi.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_ECSPI_MASTER_BASEADDR ECSPI2
-#define EXAMPLE_ECSPI_DEALY_COUNT 1000000U
+#define EXAMPLE_ECSPI_DEALY_COUNT     1000000U
 #define ECSPI_MASTER_CLK_FREQ                                                                 \
     (CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootEcspi2)) / \
      (CLOCK_GetRootPostDivider(kCLOCK_RootEcspi2)))
-#define TRANSFER_SIZE 64U         /*! Transfer dataSize */
+#define TRANSFER_SIZE     64U     /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -29,7 +29,7 @@
  ******************************************************************************/
 uint32_t masterRxData[TRANSFER_SIZE] = {0U};
 uint32_t masterTxData[TRANSFER_SIZE] = {0U};
-
+volatile uint32_t g_systickCounter   = 20U;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -37,6 +37,13 @@ uint32_t masterTxData[TRANSFER_SIZE] = {0U};
 /*******************************************************************************
  * Code
  ******************************************************************************/
+void SysTick_Handler(void)
+{
+    if (g_systickCounter != 0U)
+    {
+        g_systickCounter--;
+    }
+}
 
 int main(void)
 {
@@ -113,9 +120,16 @@ int main(void)
         ECSPI_MasterTransferBlocking(EXAMPLE_ECSPI_MASTER_BASEADDR, &masterXfer);
 
         /* Delay to wait slave is ready */
-        for (i = 0U; i < EXAMPLE_ECSPI_DEALY_COUNT; i++)
+        if (SysTick_Config(SystemCoreClock / 1000U))
         {
-            __NOP();
+            while (1)
+            {
+            }
+        }
+        /* Delay 20 ms */
+        g_systickCounter = 20U;
+        while (g_systickCounter != 0U)
+        {
         }
 
         /* Start master transfer, receive data from slave */
@@ -123,6 +137,7 @@ int main(void)
         masterXfer.rxData   = masterRxData;
         masterXfer.dataSize = TRANSFER_SIZE;
         masterXfer.channel  = kECSPI_Channel0;
+        PRINTF("Start receive data from slave.\r\n");
         ECSPI_MasterTransferBlocking(EXAMPLE_ECSPI_MASTER_BASEADDR, &masterXfer);
 
         errorCount = 0U;

@@ -7,8 +7,8 @@ send to the board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -46,6 +46,3 @@ When the demo runs successfully, the log would be seen on the debug terminal lik
 Uart polling example
 Board will send back received characters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

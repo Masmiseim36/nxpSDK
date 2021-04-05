@@ -100,10 +100,10 @@ static srtm_status_t SRTM_RtcService_Request(srtm_service_t service, srtm_reques
         handle->channel = channel;
     }
 
-    rtcResp = (struct _srtm_rtc_payload *)SRTM_CommMessage_GetPayload(response);
+    rtcResp = (struct _srtm_rtc_payload *)(void *)SRTM_CommMessage_GetPayload(response);
 
     status = SRTM_Service_CheckVersion(service, request, SRTM_RTC_VERSION);
-    if (status != SRTM_Status_Success || !rtcReq || payloadLen != sizeof(struct _srtm_rtc_payload))
+    if ((status != SRTM_Status_Success) || (rtcReq == NULL) || (payloadLen != sizeof(struct _srtm_rtc_payload)))
     {
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s format error %d!\r\n", __func__, payloadLen);
         rtcResp->retCode = SRTM_RTC_RETURN_CODE_UNSUPPORTED;
@@ -164,10 +164,10 @@ static srtm_status_t SRTM_RtcService_Notify(srtm_service_t service, srtm_notific
 static srtm_status_t SRTM_RtcService_NotifyAlarm(srtm_service_t service)
 {
     srtm_status_t status      = SRTM_Status_Success;
-    srtm_rtc_service_t handle = (srtm_rtc_service_t)service;
+    srtm_rtc_service_t handle = (srtm_rtc_service_t)(void *)service;
 
     /* If service is still serving and no pending alarm */
-    if (service->dispatcher && handle->notif && handle->channel)
+    if ((service->dispatcher != NULL) && (handle->notif != NULL) && (handle->channel != NULL))
     {
         handle->notif->channel = handle->channel;
         status                 = SRTM_Dispatcher_DeliverNotification(service->dispatcher, handle->notif);
@@ -207,7 +207,7 @@ srtm_service_t SRTM_RtcService_Create(srtm_rtc_adapter_t adapter)
 
 void SRTM_RtcService_Destroy(srtm_service_t service)
 {
-    srtm_rtc_service_t handle = (srtm_rtc_service_t)service;
+    srtm_rtc_service_t handle = (srtm_rtc_service_t)(void *)service;
 
     assert(service);
 
@@ -216,7 +216,7 @@ void SRTM_RtcService_Destroy(srtm_service_t service)
     /* Service must be unregistered from dispatcher before destroy */
     assert(SRTM_List_IsEmpty(&service->node));
 
-    if (handle->notif)
+    if (handle->notif != NULL)
     {
         SRTM_Message_SetFreeFunc(handle->notif, NULL, NULL);
         SRTM_Message_Destroy(handle->notif);
@@ -227,13 +227,13 @@ void SRTM_RtcService_Destroy(srtm_service_t service)
 
 void SRTM_RtcService_Reset(srtm_service_t service, srtm_peercore_t core)
 {
-    srtm_rtc_service_t handle = (srtm_rtc_service_t)service;
+    srtm_rtc_service_t handle = (srtm_rtc_service_t)(void *)service;
 
     assert(service);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
     /* Currently assume just one peer core, need to reset the service. */
-    handle->adapter->enableAlarm(handle->adapter, false);
+    (void)handle->adapter->enableAlarm(handle->adapter, false);
     handle->channel = NULL;
 }

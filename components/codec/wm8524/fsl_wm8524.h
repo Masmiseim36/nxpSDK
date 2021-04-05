@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,8 +20,8 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief WM8524 driver version 2.1.0. */
-#define FSL_WM8524_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*! @brief WM8524 driver version 2.1.1. */
+#define FSL_WM8524_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 /*!< mute control io function pointer */
@@ -37,7 +37,7 @@ typedef enum _wm8524_protocol
     kWM8524_ProtocolRightJustified = 0x2, /*!< Right justified mode */
 } wm8524_protocol_t;
 
-/*!< @brief wm8524 mute operation */
+/*! @brief wm8524 mute operation */
 enum _wm8524_mute_control
 {
     kWM8524_Mute   = 0U, /*!< mute left and right channel DAC */
@@ -76,19 +76,10 @@ status_t WM8524_Init(wm8524_handle_t *handle, wm8524_config_t *config);
 /*!
  * @brief Configure WM8524 audio protocol.
  *
- * @deprecated Do not use this function.  It has been superceded by @ref WM8524_SetAudioProtocol
  * @param handle WM8524 handle structure.
  * @param protocol WM8524 configuration structure.
  */
 void WM8524_ConfigFormat(wm8524_handle_t *handle, wm8524_protocol_t protocol);
-
-/*!
- * @brief Configure WM8524 audio protocol.
- *
- * @param handle WM8524 handle structure.
- * @param protocol wm8524_protocol_t.
- */
-status_t WM8524_ConfigDataProtocol(wm8524_handle_t *handle, wm8524_protocol_t protocol);
 
 /*!
  * @brief Sets the codec mute state.

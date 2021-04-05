@@ -1,5 +1,5 @@
 /*
- * Copyright  2017 NXP
+ * Copyright 2017, 2020 NXP
  * All rights reserved.
  *
  *
@@ -10,6 +10,16 @@
 #define _FSL_ISI_CAMERA_ADAPTER_H_
 
 #include "fsl_common.h"
+
+/*
+ * Change log:
+ *
+ *   1.0.1
+ *     - Fix MISRA-C 2012 issues.
+ *
+ *   1.0.0
+ *     - Initial version
+ */
 
 /*******************************************************************************
  * Definitions
@@ -22,12 +32,12 @@
 #error The ISI camera queue size should not be less than 3
 #endif
 
-#define ISI_MAX_ACTIVE_BUF 2
+#define ISI_MAX_ACTIVE_BUF 2U
 
 /*
  * One empty room reserved to distinguish whether the queue is full or empty.
  */
-#define ISI_CAMERA_ACTUAL_QUEUE_SIZE (ISI_CAMERA_QUEUE_SIZE + 1)
+#define ISI_CAMERA_ACTUAL_QUEUE_SIZE (ISI_CAMERA_QUEUE_SIZE + 1U)
 
 /*! @brief The private data used by the ISI camera receiver. */
 typedef struct _isi_private_data

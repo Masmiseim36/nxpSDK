@@ -6,8 +6,8 @@ data using AES-CBC, AES-CCM, and XCBC-MAC algorithm.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -102,7 +102,4 @@ Computed hash:
 9e c 5a 5a 10 bb 96 67 9f 98 3 29 94 f8 6f 9f
 
 .............. THE  END  OF  THE  LTC (AES)  DRIVER  EXAMPLE ................................
-
-Customization options
-=====================
 

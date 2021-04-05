@@ -16,16 +16,16 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_lpuart.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-#define TASK_PRIO (configMAX_PRIORITIES - 1)
+#define TASK_PRIO          (configMAX_PRIORITIES - 1)
 #define CONSUMER_LINE_SIZE 3
 SemaphoreHandle_t xSemaphore_producer;
 SemaphoreHandle_t xSemaphore_consumer;

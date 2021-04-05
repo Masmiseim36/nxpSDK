@@ -12,8 +12,8 @@ Note: The example echo every 8 characters, so input 8 characters every time.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -50,6 +50,3 @@ UART RX ring buffer example
 Send back received data
 Echo every 8 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

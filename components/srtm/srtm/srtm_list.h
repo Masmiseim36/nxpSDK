@@ -22,7 +22,7 @@
 /**
  * @brief Get SRTM list object structure pointer.
  */
-#define SRTM_LIST_OBJ(type, field, list) (type)((uint32_t)list - (uint32_t)(&((type)0)->field))
+#define SRTM_LIST_OBJ(type, field, list) (type)((uint32_t)(list) - (uint32_t)(&((type)0)->field))
 
 /**
  * @brief SRTM list fields

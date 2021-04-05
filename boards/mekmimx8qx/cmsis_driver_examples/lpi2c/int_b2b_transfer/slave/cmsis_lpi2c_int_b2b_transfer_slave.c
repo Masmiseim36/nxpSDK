@@ -8,13 +8,13 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 #include "fsl_lpi2c_cmsis.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_irqsteer.h"
 #include "fsl_gpio.h"
 /*******************************************************************************
@@ -22,15 +22,15 @@
  ******************************************************************************/
 #define EXAMPLE_I2C_SLAVE Driver_I2C2
 
-#define EXAMPLE_IOEXP_LPI2C_BAUDRATE (400000)
+#define EXAMPLE_IOEXP_LPI2C_BAUDRATE               (400000)
 #define EXAMPLE_IOEXP_LPI2C_MASTER_CLOCK_FREQUENCY SC_133MHZ
-#define EXAMPLE_IOEXP_LPI2C_MASTER ADMA__LPI2C1
-#define EXAMPLE_I2C_EXPANSION_A_ADDR (0x1A)
-#define PCA9557_RST_GPIO LSIO__GPIO1 /*SPI2_SDO, GPIO1, IO1, ALT4*/
-#define PCA9557_RST_PIN 1
-#define EXAMPLE_I2C_SWITCH_ADDR (0x71)
+#define EXAMPLE_IOEXP_LPI2C_MASTER                 ADMA__LPI2C1
+#define EXAMPLE_I2C_EXPANSION_A_ADDR               (0x1A)
+#define PCA9557_RST_GPIO                           LSIO__GPIO1 /*SPI2_SDO, GPIO1, IO1, ALT4*/
+#define PCA9557_RST_PIN                            1
+#define EXAMPLE_I2C_SWITCH_ADDR                    (0x71)
 #define I2C_MASTER_SLAVE_ADDR_7BIT (0x7EU)
-#define I2C_DATA_LENGTH (32) /* MAX is 256 */
+#define I2C_DATA_LENGTH            (32) /* MAX is 256 */
 
 /*******************************************************************************
  * Prototypes

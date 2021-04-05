@@ -9,8 +9,8 @@ The outputs can be observed by oscilloscope.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -47,7 +47,4 @@ These instructions are displayed/shown on the terminal window:
 PWM driver example.
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-
-Customization options
-=====================
 

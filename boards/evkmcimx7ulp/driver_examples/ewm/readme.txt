@@ -9,8 +9,8 @@ Note: In flash boot mode, if you want to use the IDE reset program, please use s
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -51,6 +51,3 @@ Press VOL+ to expire EWM
 EWM interrupt is occurred
 Press VOL+ to expire EWM again
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

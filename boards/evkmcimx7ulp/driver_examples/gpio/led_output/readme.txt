@@ -8,8 +8,8 @@ example take turns to shine the LED.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -48,6 +48,3 @@ If no LED is connected to the pin on the board, please use oscilloscope probe to
 
  The LED is blinking.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -30,7 +30,7 @@
 #endif
 
 #define SRTM_MU_NOTIFY_CHANNEL 1
-#define SRTM_MU_IRQ_CHANNEL 3
+#define SRTM_MU_IRQ_CHANNEL    3
 /* Get the NVIC IRQn of given IRQSTEER IRQn */
 #define GET_IRQSTEER_MASTER_IRQn(IRQn) \
     (IRQn_Type)(IRQSTEER_0_IRQn + (IRQn - FSL_FEATURE_IRQSTEER_IRQ_START_INDEX) / 64U)
@@ -57,7 +57,7 @@ static srtm_mu_endpoint_t handle;
  ******************************************************************************/
 static void SRTM_MUEndpoint_NotifyPeerCore(srtm_channel_t channel)
 {
-    srtm_mu_endpoint_t handle = (srtm_mu_endpoint_t)channel;
+    srtm_mu_endpoint_t handle = (srtm_mu_endpoint_t)(void *)channel;
     MU_Type *targetMu         = handle->config.mu;
     MU_SendMsgNonBlocking(targetMu, SRTM_MU_NOTIFY_CHANNEL, SRTM_MU_MSG_READY_B);
     /*
@@ -85,7 +85,7 @@ void SRTM_MUEndpoint_Handler(void)
 
 #if SRTM_DEBUG_COMMUNICATION
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_ERROR, "%s: MU indicate payload: \r\n\t", __func__);
-    for (uint32_t i = 0; i < payload_len; i++)
+    for (uint32_t i = 0U; i < payload_len; i++)
     {
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_ERROR, "%x ", ((uint8_t *)payload)[i]);
     }
@@ -120,10 +120,10 @@ void SRTM_MUEndpoint_Handler(void)
 
 static srtm_status_t SRTM_MUEndpoint_Start(srtm_channel_t channel)
 {
-    srtm_mu_endpoint_t handle = (srtm_mu_endpoint_t)channel;
+    srtm_mu_endpoint_t handle = (srtm_mu_endpoint_t)(void *)channel;
     srtm_status_t status      = SRTM_Status_Success;
 
-    assert(handle);
+    assert(handle != NULL);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
@@ -134,10 +134,10 @@ static srtm_status_t SRTM_MUEndpoint_Start(srtm_channel_t channel)
 
 static srtm_status_t SRTM_MUEndpoint_Stop(srtm_channel_t channel)
 {
-    srtm_mu_endpoint_t handle = (srtm_mu_endpoint_t)channel;
+    srtm_mu_endpoint_t handle = (srtm_mu_endpoint_t)(void *)channel;
     srtm_status_t status      = SRTM_Status_Success;
 
-    assert(handle);
+    assert(handle != NULL);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
@@ -169,10 +169,10 @@ static srtm_status_t srtm_mu_sendmessage(srtm_mu_endpoint_t handle, void *data, 
 
 static srtm_status_t SRTM_MUEndpoint_SendData(srtm_channel_t channel, void *data, uint32_t len)
 {
-    srtm_mu_endpoint_t handle = (srtm_mu_endpoint_t)channel;
+    srtm_mu_endpoint_t handle = (srtm_mu_endpoint_t)(void *)channel;
     srtm_status_t status      = SRTM_Status_InvalidState;
 
-    assert(handle);
+    assert(handle != NULL);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "%s: len %d\r\n", __func__, len);
 
@@ -206,12 +206,12 @@ static srtm_status_t SRTM_MUEndpoint_SendData(srtm_channel_t channel, void *data
 
 srtm_channel_t SRTM_MUEndpoint_Create(srtm_mu_endpoint_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
     handle = (srtm_mu_endpoint_t)SRTM_Heap_Malloc(sizeof(struct _srtm_mu_endpoint));
-    assert(handle);
+    assert(handle != NULL);
 
     handle->started = false;
     handle->payload = NULL;
@@ -237,10 +237,10 @@ srtm_channel_t SRTM_MUEndpoint_Create(srtm_mu_endpoint_config_t *config)
 
 void SRTM_MUEndpoint_Destroy(srtm_channel_t channel)
 {
-    srtm_mu_endpoint_t handle = (srtm_mu_endpoint_t)channel;
+    srtm_mu_endpoint_t handle = (srtm_mu_endpoint_t)(void *)channel;
 
-    assert(channel);
-    assert(!channel->core);                    /* Channel must be removed from core before destroy */
+    assert(channel != NULL);
+    assert(channel->core == NULL);             /* Channel must be removed from core before destroy */
     assert(SRTM_List_IsEmpty(&channel->node)); /* Channel must not on any list */
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  *
@@ -29,16 +29,17 @@
 #define BOARD_NAME "MEKMIMX8QX6"
 
 /* The UART to use for debug messages. */
-#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
-#define BOARD_DEBUG_UART_BAUDRATE 115200u
-#define BOARD_DEBUG_UART_BASEADDR (uint32_t) CM4__LPUART
-#define BOARD_DEBUG_UART_INSTANCE 4U
-#define BOARD_DEBUG_UART_SC_RSRC SC_R_M4_0_UART
-#define BOARD_DEBUG_UART_CLK_FREQ 6000000u
-#define BOARD_UART_IRQ M4_LPUART_IRQn
-#define BOARD_UART_IRQ_HANDLER LPUART0_IRQHandler
-#define BOARD_DEBUG_UART_CLKSRC kCLOCK_M4_0_Lpuart
-#define BOARD_BASEBOARD_PWR_GPIO LSIO_GPIO5
+#define BOARD_DEBUG_UART_TYPE        kSerialPort_Uart
+#define BOARD_DEBUG_UART_BAUDRATE    115200u
+#define BOARD_DEBUG_UART_BASEADDR    (uint32_t) CM4__LPUART
+#define BOARD_DEBUG_UART_INSTANCE    4U
+#define BOARD_DEBUG_UART_SC_RSRC     SC_R_M4_0_UART
+#define BOARD_DEBUG_UART_CLK_FREQ    6000000u
+#define BOARD_UART_IRQ               M4_LPUART_IRQn
+#define BOARD_UART_IRQ_HANDLER       LPUART0_IRQHandler
+#define BOARD_DEBUG_UART_CLKSRC      kCLOCK_M4_0_Lpuart
+#define BOARD_M4_CPU_RSRC            SC_R_M4_0_PID0
+#define BOARD_BASEBOARD_PWR_GPIO     LSIO_GPIO5
 #define BOARD_BASEBOARD_PWR_GPIO_PIN 9U
 
 #define BOARD_ENET0_PHY_ADDRESS (0x00)
@@ -51,24 +52,28 @@
 
 /* CAMERA 0: MIPI CSI */
 #define BOARD_CAMERA0_I2C_BASEADDR MIPI_CSI__LPI2C
-#define BOARD_CAMERA0_I2C_RSRC SC_R_CSI_0_I2C_0
+#define BOARD_CAMERA0_I2C_RSRC     SC_R_CSI_0_I2C_0
 
 /* CAMERA 1: CI_PI */
 #define BOARD_CAMERA1_I2C_BASEADDR CM4__LPI2C
-#define BOARD_CAMERA1_I2C_RSRC SC_R_M4_0_I2C
+#define BOARD_CAMERA1_I2C_RSRC     SC_R_M4_0_I2C
 
-#define BOARD_CODEC_I2C_BASEADDR CM4__LPI2C
+#define BOARD_CODEC_I2C_BASEADDR   CM4__LPI2C
 #define BOARD_CODEC_I2C_CLOCK_FREQ CLOCK_GetIpFreq(kCLOCK_M4_0_Lpi2c)
-#define BOARD_CODEC_I2C_INSTANCE (5U)
+#define BOARD_CODEC_I2C_INSTANCE   (5U)
 
 /*
  * Handling of IRQ from SCFW
  */
-#define IPC_MU CM4__MU1_A
-#define IPC_MU_IRQn M4_MU1_A_IRQn
-#define IPC_MU_RSRC SC_R_M4_0_MU_1A
+#define IPC_MU                       CM4__MU1_A
+#define IPC_MU_IRQn                  M4_MU1_A_IRQn
+#define IPC_MU_RSRC                  SC_R_M4_0_MU_1A
 #define SC_RPC_MU_INTERRUPT_PRIORITY (configLIBRARY_LOWEST_INTERRUPT_PRIORITY - 1U)
-#define BOARD_MU_IRQHandler M4_MU1_A_IRQHandler
+#define BOARD_MU_IRQHandler          M4_MU1_A_IRQHandler
+
+#define VDEV0_VRING_BASE      (0x90000000U)
+#define VDEV1_VRING_BASE      (0x90010000U)
+#define RESOURCE_TABLE_OFFSET (0xFF000)
 
 #ifdef BOARD_USE_SCFW_IRQ
 /*
@@ -121,15 +126,19 @@ status_t BOARD_LPI2C_Send(LPI2C_Type *base,
                           uint8_t *txBuff,
                           uint32_t txSize);
 status_t BOARD_LPI2C_SendWithoutSubAddr(
-    LPI2C_Type *base, uint8_t deviceAddress, uint8_t *txBuff, uint8_t txBuffSize, bool needStop);
+    LPI2C_Type *base, uint32_t baudRate_Hz, uint8_t deviceAddress, uint8_t *txBuff, uint8_t txBuffSize, bool needStop);
 status_t BOARD_LPI2C_Receive(LPI2C_Type *base,
                              uint8_t deviceAddress,
                              uint32_t subAddress,
                              uint8_t subaddressSize,
                              uint8_t *rxBuff,
                              uint8_t rxBuffSize);
-status_t BOARD_LPI2C_ReceiveWithoutSubAddr(
-    LPI2C_Type *base, uint8_t deviceAddress, uint8_t *txBuff, uint8_t txBuffSize, uint8_t needStop);
+status_t BOARD_LPI2C_ReceiveWithoutSubAddr(LPI2C_Type *base,
+                                           uint32_t baudRate_Hz,
+                                           uint8_t deviceAddress,
+                                           uint8_t *txBuff,
+                                           uint8_t txBuffSize,
+                                           uint8_t needStop);
 
 status_t BOARD_LPI2C_SendSCCB(LPI2C_Type *base,
                               uint8_t deviceAddress,

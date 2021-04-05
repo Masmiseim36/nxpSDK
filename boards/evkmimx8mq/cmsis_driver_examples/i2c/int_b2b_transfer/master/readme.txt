@@ -14,8 +14,8 @@ slave is correct.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -70,6 +70,3 @@ Receive sent data from slave :
 
 
 End of I2C example .
-Customization options
-=====================
-

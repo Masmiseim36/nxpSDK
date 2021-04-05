@@ -9,8 +9,8 @@ In this example , one lpi2c instance used as lpi2c master and another lpi2c inst
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -76,6 +76,3 @@ Master received data :
 
 End of LPI2C example .
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

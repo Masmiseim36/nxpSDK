@@ -791,13 +791,13 @@ void LPM_SystemSuspend(uint32_t psp)
     SIM->SIM_DGO_CTRL0 =
         (SIM->SIM_DGO_CTRL0 & ~(SIM_SIM_DGO_CTRL0_UPDATE_DGO_GP1_MASK | mask0)) | SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP1_MASK;
 
-    /* Request PMIC to standby mode */
-    SIM->SOPT1 |= SIM_SOPT1_PMIC_STBY_REQ_MASK;
-
     LPM_DisableSOSC();
     /* Save data which will be updated by ROM resume. */
     memcpy(s_suspendMem, ROM_RESERVED_MEM, sizeof(s_suspendMem));
     memcpy(ROM_HEADER_MEM, ROM_RESERVED_MEM + sizeof(s_suspendMem), ROM_HEADER_SIZE);
+
+    /* Request PMIC to standby mode */
+    SIM->SOPT1 |= SIM_SOPT1_PMIC_STBY_REQ_MASK;
     SMC_SetPowerModeVlls(MSMC0);
     LPM_EnableSOSC();
 }
@@ -805,6 +805,9 @@ void LPM_SystemSuspend(uint32_t psp)
 uint32_t LPM_SystemResume(bool resume)
 {
     uint32_t mask0;
+
+    /* Clear PMIC standby request */
+    SIM->SOPT1 &= ~SIM_SOPT1_PMIC_STBY_REQ_MASK;
 
     mask0 = SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP6_MASK | SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP5_MASK |
             SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP4_MASK | SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP3_MASK |
@@ -822,9 +825,6 @@ uint32_t LPM_SystemResume(bool resume)
     /* Clear DGO GP1 ACK and UPDATE bits */
     SIM->SIM_DGO_CTRL0 =
         (SIM->SIM_DGO_CTRL0 & ~(SIM_SIM_DGO_CTRL0_UPDATE_DGO_GP1_MASK | mask0)) | SIM_SIM_DGO_CTRL0_WR_ACK_DGO_GP1_MASK;
-
-    /* Clear PMIC standby request */
-    SIM->SOPT1 &= ~SIM_SOPT1_PMIC_STBY_REQ_MASK;
 
     /* Restore data. */
     memcpy(ROM_RESERVED_MEM, s_suspendMem, sizeof(s_suspendMem));

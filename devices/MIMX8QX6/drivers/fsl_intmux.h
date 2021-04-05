@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,8 +22,7 @@
 
 /*! @name Driver version */
 /*@{*/
-/*!< Version 2.0.2. */
-#define FSL_INTMUX_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+#define FSL_INTMUX_DRIVER_VERSION (MAKE_VERSION(2, 0, 4))
 /*@}*/
 
 /*! @brief INTMUX channel logic mode. */
@@ -75,7 +74,7 @@ void INTMUX_Deinit(INTMUX_Type *base);
  */
 static inline void INTMUX_ResetChannel(INTMUX_Type *base, uint32_t channel)
 {
-    assert(channel < FSL_FEATURE_INTMUX_CHANNEL_COUNT);
+    assert(channel < (uint32_t)FSL_FEATURE_INTMUX_CHANNEL_COUNT);
 
     base->CHANNEL[channel].CHn_CSR |= INTMUX_CHn_CSR_RST_MASK;
 }
@@ -95,7 +94,7 @@ static inline void INTMUX_ResetChannel(INTMUX_Type *base, uint32_t channel)
  */
 static inline void INTMUX_SetChannelMode(INTMUX_Type *base, uint32_t channel, intmux_channel_logic_mode_t logic)
 {
-    assert(channel < FSL_FEATURE_INTMUX_CHANNEL_COUNT);
+    assert(channel < (uint32_t)FSL_FEATURE_INTMUX_CHANNEL_COUNT);
 
     base->CHANNEL[channel].CHn_CSR = INTMUX_CHn_CSR_AND(logic);
 }
@@ -113,8 +112,8 @@ static inline void INTMUX_SetChannelMode(INTMUX_Type *base, uint32_t channel, in
  */
 static inline void INTMUX_EnableInterrupt(INTMUX_Type *base, uint32_t channel, IRQn_Type irq)
 {
-    assert(channel < FSL_FEATURE_INTMUX_CHANNEL_COUNT);
-    assert(irq >= FSL_FEATURE_INTMUX_IRQ_START_INDEX);
+    assert(channel < (uint32_t)FSL_FEATURE_INTMUX_CHANNEL_COUNT);
+    assert((uint32_t)irq >= (uint32_t)FSL_FEATURE_INTMUX_IRQ_START_INDEX);
 
     base->CHANNEL[channel].CHn_IER_31_0 |= (1UL << ((uint32_t)irq - (uint32_t)FSL_FEATURE_INTMUX_IRQ_START_INDEX));
 }
@@ -128,8 +127,8 @@ static inline void INTMUX_EnableInterrupt(INTMUX_Type *base, uint32_t channel, I
  */
 static inline void INTMUX_DisableInterrupt(INTMUX_Type *base, uint32_t channel, IRQn_Type irq)
 {
-    assert(channel < FSL_FEATURE_INTMUX_CHANNEL_COUNT);
-    assert(irq >= FSL_FEATURE_INTMUX_IRQ_START_INDEX);
+    assert(channel < (uint32_t)FSL_FEATURE_INTMUX_CHANNEL_COUNT);
+    assert((uint32_t)irq >= (uint32_t)FSL_FEATURE_INTMUX_IRQ_START_INDEX);
 
     base->CHANNEL[channel].CHn_IER_31_0 &= ~(1UL << ((uint32_t)irq - (uint32_t)FSL_FEATURE_INTMUX_IRQ_START_INDEX));
 }
@@ -147,7 +146,7 @@ static inline void INTMUX_DisableInterrupt(INTMUX_Type *base, uint32_t channel, 
  */
 static inline uint32_t INTMUX_GetChannelPendingSources(INTMUX_Type *base, uint32_t channel)
 {
-    assert(channel < FSL_FEATURE_INTMUX_CHANNEL_COUNT);
+    assert(channel < (uint32_t)FSL_FEATURE_INTMUX_CHANNEL_COUNT);
 
     return base->CHANNEL[channel].CHn_IPR_31_0;
 }

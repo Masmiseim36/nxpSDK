@@ -16,10 +16,10 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -54,7 +54,7 @@ int main(void)
     /* Board specific RDC settings */
     BOARD_RdcInit();
 
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     event_group = xEventGroupCreate();
@@ -116,7 +116,7 @@ static void read_task(void *pvParameters)
     {
         event_bits = xEventGroupWaitBits(event_group,    /* The event group handle. */
                                          B0 | B1,        /* The bit pattern the event group is waiting for. */
-                                         pdTRUE,         /* BIT_0 and BIT_4 will be cleared automatically. */
+                                         pdTRUE,         /* B0 and B1 will be cleared automatically. */
                                          pdFALSE,        /* Don't wait for both bits, either bit unblock task. */
                                          portMAX_DELAY); /* Block indefinitely to wait for the condition to be met. */
 

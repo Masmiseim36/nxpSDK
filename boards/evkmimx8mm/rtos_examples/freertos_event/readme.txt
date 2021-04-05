@@ -17,8 +17,8 @@ Bit B1 is set.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -57,6 +57,3 @@ Bit B0 is set.
 Bit B1 is set.
 Bit B0 is set.
 Bit B1 is set
-Customization options
-=====================
-

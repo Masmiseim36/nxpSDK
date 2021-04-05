@@ -8,8 +8,8 @@ Once the interface is being bound to an IP address obtained from DHCP server, ad
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -58,7 +58,4 @@ Initializing PHY...
  IPv4 Address     : 192.168.0.4
  IPv4 Subnet mask : 255.255.255.0
  IPv4 Gateway     : 192.168.0.1
-
-Customization options
-=====================
 

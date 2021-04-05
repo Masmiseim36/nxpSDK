@@ -22,7 +22,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_ASRC_SDMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 0)) /*!< Version 2.0.0 */
+#define FSL_ASRC_SDMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 3)) /*!< Version 2.0.3 */
 /*@}*/
 /*! @brief ASRC xfer queue size */
 #ifndef ASRC_XFER_IN_QUEUE_SIZE
@@ -146,8 +146,7 @@ void ASRC_TransferInCreateHandleSDMA(ASRC_Type *base,
  *
  * @param base ASRC base pointer.
  * @param handle ASRC SDMA handle pointer.
- * @param callback, ASRC outcallback.
- * @param base ASRC peripheral base address.
+ * @param callback ASRC outcallback.
  * @param dmaHandle SDMA handle pointer, this handle shall be static allocated by users.
  * @param eventSource ASRC output event source.
  * @param context ASRC context number.

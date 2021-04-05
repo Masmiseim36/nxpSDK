@@ -11,8 +11,8 @@ Meanwhile it continues to receive messages published to the subscribed topics fr
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  8.3.1
-- IAR embedded Workbench  8.40.2
+- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  8.50.9
 
 Hardware requirements
 =====================
@@ -59,9 +59,9 @@ IPv4 Address     : 192.168.0.102
 IPv4 Subnet mask : 255.255.255.0
 IPv4 Gateway     : 192.168.0.100
 
-Resolving "test.mosquitto.org"...
-Connecting to MQTT broker at 37.187.106.16...
-MQTT client "lwip_client-123" connected.
+Resolving "broker.hivemq.com"...
+Connecting to MQTT broker at 18.185.216.165...
+MQTT client "nxp_f50003c25757bd58aa6d0ce50102f020" connected.
 Subscribing to the topic "lwip_topic/#" with QoS 0...
 Subscribing to the topic "lwip_other/#" with QoS 1...
 Subscribed to the topic "lwip_topic/#".
@@ -81,6 +81,3 @@ Received 18 bytes from the topic "lwip_topic/100": "message from board"
 Going to publish to the topic "lwip_topic/100"...
 Published to the topic "lwip_topic/100".
 Received 18 bytes from the topic "lwip_topic/100": "message from board"
-Customization options
-=====================
-

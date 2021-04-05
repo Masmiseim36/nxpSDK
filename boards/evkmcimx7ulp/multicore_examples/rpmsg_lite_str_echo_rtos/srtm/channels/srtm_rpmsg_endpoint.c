@@ -49,13 +49,13 @@ typedef struct _srtm_rpmsg_endpoint
  ******************************************************************************/
 static int32_t SRTM_RPMsgEndpoint_RxHandler(void *payload, uint32_t payload_len, uint32_t src, void *priv)
 {
-    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)priv;
+    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)(void *)priv;
 
-    assert(handle);
+    assert(handle != NULL);
 
 #if SRTM_DEBUG_COMMUNICATION
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_ERROR, "%s: RPMsg recv: \r\n\t", __func__);
-    for (uint32_t i = 0; i < payload_len; i++)
+    for (uint32_t i = 0U; i < payload_len; i++)
     {
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_ERROR, "%x ", ((uint8_t *)payload)[i]);
     }
@@ -69,7 +69,7 @@ static int32_t SRTM_RPMsgEndpoint_RxHandler(void *payload, uint32_t payload_len,
 
     if (handle->started)
     {
-        if (handle->rxCallback)
+        if (handle->rxCallback != NULL)
         {
             return handle->rxCallback(&handle->channel, payload, payload_len, src, handle->rxCallbackParam);
         }
@@ -77,7 +77,7 @@ static int32_t SRTM_RPMsgEndpoint_RxHandler(void *payload, uint32_t payload_len,
         assert(handle->channel.core);
         assert(handle->channel.core->dispatcher);
 
-        SRTM_Dispatcher_PostRecvData(handle->channel.core->dispatcher, &handle->channel, payload, payload_len);
+        (void)SRTM_Dispatcher_PostRecvData(handle->channel.core->dispatcher, &handle->channel, payload, payload_len);
     }
     else
     {
@@ -89,10 +89,10 @@ static int32_t SRTM_RPMsgEndpoint_RxHandler(void *payload, uint32_t payload_len,
 
 static srtm_status_t SRTM_RPMsgEndpoint_Start(srtm_channel_t channel)
 {
-    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)channel;
+    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)(void *)channel;
     srtm_status_t status         = SRTM_Status_Success;
 
-    assert(handle);
+    assert(handle != NULL);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
@@ -103,10 +103,10 @@ static srtm_status_t SRTM_RPMsgEndpoint_Start(srtm_channel_t channel)
 
 static srtm_status_t SRTM_RPMsgEndpoint_Stop(srtm_channel_t channel)
 {
-    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)channel;
+    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)(void *)channel;
     srtm_status_t status         = SRTM_Status_Success;
 
-    assert(handle);
+    assert(handle != NULL);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
@@ -117,12 +117,12 @@ static srtm_status_t SRTM_RPMsgEndpoint_Stop(srtm_channel_t channel)
 
 static srtm_status_t SRTM_RPMsgEndpoint_SendData(srtm_channel_t channel, void *data, uint32_t len)
 {
-    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)channel;
+    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)(void *)channel;
     srtm_status_t status         = SRTM_Status_InvalidState;
 
-    assert(handle);
-    assert(handle->config.rpmsgHandle);
-    assert(handle->rpmsgEndpoint);
+    assert(handle != NULL);
+    assert(handle->config.rpmsgHandle != NULL);
+    assert(handle->rpmsgEndpoint != NULL);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_DEBUG, "%s: len %d\r\n", __func__, len);
 
@@ -130,7 +130,7 @@ static srtm_status_t SRTM_RPMsgEndpoint_SendData(srtm_channel_t channel, void *d
     {
 #if SRTM_DEBUG_COMMUNICATION
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_ERROR, "%s: RPMsg send: \r\n\t", __func__);
-        for (uint32_t i = 0; i < len; i++)
+        for (uint32_t i = 0U; i < len; i++)
         {
             SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_ERROR, "%x ", ((uint8_t *)data)[i]);
         }
@@ -159,8 +159,8 @@ srtm_channel_t SRTM_RPMsgEndpoint_Create(srtm_rpmsg_endpoint_config_t *config)
 {
     srtm_rpmsg_endpoint_t handle;
 
-    assert(config);
-    assert(config->rpmsgHandle);
+    assert(config != NULL);
+    assert(config->rpmsgHandle != NULL);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
@@ -187,9 +187,9 @@ srtm_channel_t SRTM_RPMsgEndpoint_Create(srtm_rpmsg_endpoint_config_t *config)
     handle->channel.stop     = SRTM_RPMsgEndpoint_Stop;
     handle->channel.sendData = SRTM_RPMsgEndpoint_SendData;
 
-    if (config->epName)
+    if (config->epName != NULL)
     {
-        if (rpmsg_ns_announce(config->rpmsgHandle, handle->rpmsgEndpoint, (char *)config->epName, RL_NS_CREATE) !=
+        if (rpmsg_ns_announce(config->rpmsgHandle, handle->rpmsgEndpoint, config->epName, (uint32_t)RL_NS_CREATE) !=
             RL_SUCCESS)
         {
             assert(false);
@@ -201,10 +201,10 @@ srtm_channel_t SRTM_RPMsgEndpoint_Create(srtm_rpmsg_endpoint_config_t *config)
 
 void SRTM_RPMsgEndpoint_Destroy(srtm_channel_t channel)
 {
-    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)channel;
+    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)(void *)channel;
 
-    assert(channel);
-    assert(!channel->core);                    /* Channel must be removed from core before destroy */
+    assert(channel != NULL);
+    assert(channel->core == NULL);             /* Channel must be removed from core before destroy */
     assert(SRTM_List_IsEmpty(&channel->node)); /* Channel must not on any list */
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
@@ -218,9 +218,9 @@ srtm_status_t SRTM_RPMsgEndpoint_OverrideRxHandler(srtm_channel_t channel,
                                                    srtm_rpmsg_endpoint_rx_cb_t callback,
                                                    void *param)
 {
-    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)channel;
+    srtm_rpmsg_endpoint_t handle = (srtm_rpmsg_endpoint_t)(void *)channel;
 
-    assert(handle);
+    assert(handle != NULL);
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 

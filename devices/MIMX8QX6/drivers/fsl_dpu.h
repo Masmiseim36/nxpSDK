@@ -1,5 +1,5 @@
 /*
- * Copyright 2017, 2019 NXP
+ * Copyright 2017, 2019-2020 NXP
  * All rights reserved.
  *
  *
@@ -23,11 +23,11 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief Driver version. */
-#define FSL_DPU_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+#define FSL_DPU_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 /*! @brief DPU palette entery number. */
-#define DPU_PALETTE_ENTRY_NUM (256)
+#define DPU_PALETTE_ENTRY_NUM (256U)
 
 /*! @brief DPU fetch unit burst length, should be less than 16. */
 #ifndef DPU_FETCH_UNIT_BURST_LENGTH
@@ -93,19 +93,19 @@
  * attr: Unit attribute, OR'ed value of _dpu_unit_attr.
  * offset: Control block register offset in DPU memory map.
  */
-#define DPU_UNIT_TYPE_SHIFT (24U)
-#define DPU_UNIT_TYPE_MASK (0xFF000000U)
-#define DPU_UNIT_ATTR_SHIFT (20U)
-#define DPU_UNIT_ATTR_MASK (0x00F00000U)
+#define DPU_UNIT_TYPE_SHIFT   (24U)
+#define DPU_UNIT_TYPE_MASK    (0xFF000000U)
+#define DPU_UNIT_ATTR_SHIFT   (20U)
+#define DPU_UNIT_ATTR_MASK    (0x00F00000U)
 #define DPU_UNIT_OFFSET_SHIFT (0U)
-#define DPU_UNIT_OFFSET_MASK (0x0001FFFFU)
+#define DPU_UNIT_OFFSET_MASK  (0x0001FFFFU)
 
-#define DPU_MAKE_UNIT_TYPE(type) (((uint32_t)(type)) << DPU_UNIT_TYPE_SHIFT)
-#define DPU_MAKE_UNIT_ATTR(attr) (((uint32_t)(attr)) << DPU_UNIT_ATTR_SHIFT)
+#define DPU_MAKE_UNIT_TYPE(type)     (((uint32_t)(type)) << DPU_UNIT_TYPE_SHIFT)
+#define DPU_MAKE_UNIT_ATTR(attr)     (((uint32_t)(attr)) << DPU_UNIT_ATTR_SHIFT)
 #define DPU_MAKE_UNIT_OFFSET(offset) (((uint32_t)(offset)) << DPU_UNIT_OFFSET_SHIFT)
 
-#define DPU_GET_UNIT_TYPE(unit) ((((uint32_t)(unit)) & DPU_UNIT_TYPE_MASK) >> DPU_UNIT_TYPE_SHIFT)
-#define DPU_GET_UNIT_ATTR(unit) ((((uint32_t)(unit)) & DPU_UNIT_ATTR_MASK) >> DPU_UNIT_ATTR_SHIFT)
+#define DPU_GET_UNIT_TYPE(unit)   ((((uint32_t)(unit)) & DPU_UNIT_TYPE_MASK) >> DPU_UNIT_TYPE_SHIFT)
+#define DPU_GET_UNIT_ATTR(unit)   ((((uint32_t)(unit)) & DPU_UNIT_ATTR_MASK) >> DPU_UNIT_ATTR_SHIFT)
 #define DPU_GET_UNIT_OFFSET(unit) ((((uint32_t)(unit)) & DPU_UNIT_OFFSET_MASK) >> DPU_UNIT_OFFSET_SHIFT)
 
 #define DPU_MAKE_UNIT(type, attr, offset) \
@@ -114,129 +114,129 @@
 /* DPU init offset definitions, these offset are for driver internal use only. */
 #define DPU_UNIT_OFFSET(unit) (uint32_t)(&((IRIS_MVPL_Type *)0)->unit)
 #if DPU_USE_GENERATE_HEADER
-#define DPU_FETCH_ECO9_OFFSET DPU_UNIT_OFFSET(FETCHECO9)
-#define DPU_FETCH_DECODE9_OFFSET DPU_UNIT_OFFSET(FETCHDECODE9)
-#define DPU_FETCH_WARP9_OFFSET DPU_UNIT_OFFSET(FETCHWARP9)
-#define DPU_BLITBLEND9_OFFSET DPU_UNIT_OFFSET(BLITBLEND9)
-#define DPU_ROP9_OFFSET DPU_UNIT_OFFSET(ROP9)
-#define DPU_STORE9_OFFSET DPU_UNIT_OFFSET(STORE9)
-#define DPU_H_SCALER9_OFFSET DPU_UNIT_OFFSET(H_SCALER9)
-#define DPU_V_SCALER9_OFFSET DPU_UNIT_OFFSET(V_SCALER9)
-#define DPU_CONST_FRAME0_OFFSET DPU_UNIT_OFFSET(CONSTFRAME0)
-#define DPU_EXT_DST0_OFFSET DPU_UNIT_OFFSET(EXTDST0)
-#define DPU_CONST_FRAME4_OFFSET DPU_UNIT_OFFSET(CONSTFRAME4)
-#define DPU_EXT_DST4_OFFSET DPU_UNIT_OFFSET(EXTDST4)
-#define DPU_CONST_FRAME1_OFFSET DPU_UNIT_OFFSET(CONSTFRAME1)
-#define DPU_EXT_DST1_OFFSET DPU_UNIT_OFFSET(EXTDST1)
-#define DPU_CONST_FRAME5_OFFSET DPU_UNIT_OFFSET(CONSTFRAME5)
-#define DPU_EXT_DST5_OFFSET DPU_UNIT_OFFSET(EXTDST5)
-#define DPU_FETCH_WARP2_OFFSET DPU_UNIT_OFFSET(FETCHWARP2)
-#define DPU_FETCH_ECO2_OFFSET DPU_UNIT_OFFSET(FETCHECO2)
-#define DPU_FETCH_DECODE0_OFFSET DPU_UNIT_OFFSET(FETCHDECODE0)
-#define DPU_FETCH_ECO0_OFFSET DPU_UNIT_OFFSET(FETCHECO0)
-#define DPU_FETCH_DECODE1_OFFSET DPU_UNIT_OFFSET(FETCHDECODE1)
-#define DPU_FETCH_ECO1_OFFSET DPU_UNIT_OFFSET(FETCHECO1)
-#define DPU_FETCH_LAYER0_OFFSET DPU_UNIT_OFFSET(FETCHLAYER0)
-#define DPU_H_SCALER4_OFFSET DPU_UNIT_OFFSET(H_SCALER4)
-#define DPU_V_SCALER4_OFFSET DPU_UNIT_OFFSET(V_SCALER4)
-#define DPU_H_SCALER5_OFFSET DPU_UNIT_OFFSET(HSCALER5)
-#define DPU_V_SCALER5_OFFSET DPU_UNIT_OFFSET(V_SCALER5)
-#define DPU_LAYER_BLEND0_OFFSET DPU_UNIT_OFFSET(LAYERBLEND0)
-#define DPU_LAYER_BLEND1_OFFSET DPU_UNIT_OFFSET(LAYERBLEND1)
-#define DPU_LAYER_BLEND2_OFFSET DPU_UNIT_OFFSET(LAYERBLEND2)
-#define DPU_LAYER_BLEND3_OFFSET DPU_UNIT_OFFSET(LAYERBLEND3)
-#define DPU_FRAME_GEN0_OFFSET DPU_UNIT_OFFSET(FRAMEGEN0)
-#define DPU_TCON0_OFFSET DPU_UNIT_OFFSET(TCON0)
-#define DPU_SIG0_OFFSET DPU_UNIT_OFFSET(SIG0)
-#define DPU_FRAME_GEN1_OFFSET DPU_UNIT_OFFSET(FRAMEGEN1)
-#define DPU_TCON1_OFFSET DPU_UNIT_OFFSET(TCON1)
-#define DPU_SIG1_OFFSET DPU_UNIT_OFFSET(SIG1)
+#define DPU_FETCH_ECO9_OFFSET       DPU_UNIT_OFFSET(FETCHECO9)
+#define DPU_FETCH_DECODE9_OFFSET    DPU_UNIT_OFFSET(FETCHDECODE9)
+#define DPU_FETCH_WARP9_OFFSET      DPU_UNIT_OFFSET(FETCHWARP9)
+#define DPU_BLITBLEND9_OFFSET       DPU_UNIT_OFFSET(BLITBLEND9)
+#define DPU_ROP9_OFFSET             DPU_UNIT_OFFSET(ROP9)
+#define DPU_STORE9_OFFSET           DPU_UNIT_OFFSET(STORE9)
+#define DPU_H_SCALER9_OFFSET        DPU_UNIT_OFFSET(H_SCALER9)
+#define DPU_V_SCALER9_OFFSET        DPU_UNIT_OFFSET(V_SCALER9)
+#define DPU_CONST_FRAME0_OFFSET     DPU_UNIT_OFFSET(CONSTFRAME0)
+#define DPU_EXT_DST0_OFFSET         DPU_UNIT_OFFSET(EXTDST0)
+#define DPU_CONST_FRAME4_OFFSET     DPU_UNIT_OFFSET(CONSTFRAME4)
+#define DPU_EXT_DST4_OFFSET         DPU_UNIT_OFFSET(EXTDST4)
+#define DPU_CONST_FRAME1_OFFSET     DPU_UNIT_OFFSET(CONSTFRAME1)
+#define DPU_EXT_DST1_OFFSET         DPU_UNIT_OFFSET(EXTDST1)
+#define DPU_CONST_FRAME5_OFFSET     DPU_UNIT_OFFSET(CONSTFRAME5)
+#define DPU_EXT_DST5_OFFSET         DPU_UNIT_OFFSET(EXTDST5)
+#define DPU_FETCH_WARP2_OFFSET      DPU_UNIT_OFFSET(FETCHWARP2)
+#define DPU_FETCH_ECO2_OFFSET       DPU_UNIT_OFFSET(FETCHECO2)
+#define DPU_FETCH_DECODE0_OFFSET    DPU_UNIT_OFFSET(FETCHDECODE0)
+#define DPU_FETCH_ECO0_OFFSET       DPU_UNIT_OFFSET(FETCHECO0)
+#define DPU_FETCH_DECODE1_OFFSET    DPU_UNIT_OFFSET(FETCHDECODE1)
+#define DPU_FETCH_ECO1_OFFSET       DPU_UNIT_OFFSET(FETCHECO1)
+#define DPU_FETCH_LAYER0_OFFSET     DPU_UNIT_OFFSET(FETCHLAYER0)
+#define DPU_H_SCALER4_OFFSET        DPU_UNIT_OFFSET(H_SCALER4)
+#define DPU_V_SCALER4_OFFSET        DPU_UNIT_OFFSET(V_SCALER4)
+#define DPU_H_SCALER5_OFFSET        DPU_UNIT_OFFSET(HSCALER5)
+#define DPU_V_SCALER5_OFFSET        DPU_UNIT_OFFSET(V_SCALER5)
+#define DPU_LAYER_BLEND0_OFFSET     DPU_UNIT_OFFSET(LAYERBLEND0)
+#define DPU_LAYER_BLEND1_OFFSET     DPU_UNIT_OFFSET(LAYERBLEND1)
+#define DPU_LAYER_BLEND2_OFFSET     DPU_UNIT_OFFSET(LAYERBLEND2)
+#define DPU_LAYER_BLEND3_OFFSET     DPU_UNIT_OFFSET(LAYERBLEND3)
+#define DPU_FRAME_GEN0_OFFSET       DPU_UNIT_OFFSET(FRAMEGEN0)
+#define DPU_TCON0_OFFSET            DPU_UNIT_OFFSET(TCON0)
+#define DPU_SIG0_OFFSET             DPU_UNIT_OFFSET(SIG0)
+#define DPU_FRAME_GEN1_OFFSET       DPU_UNIT_OFFSET(FRAMEGEN1)
+#define DPU_TCON1_OFFSET            DPU_UNIT_OFFSET(TCON1)
+#define DPU_SIG1_OFFSET             DPU_UNIT_OFFSET(SIG1)
 #define DPU_PIPELINE_EXTDST0_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.EXTDST0_LOCKUNLOCK)
 #define DPU_PIPELINE_EXTDST1_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.EXTDST1_LOCKUNLOCK)
 #define DPU_PIPELINE_EXTDST4_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.EXTDST4_LOCKUNLOCK)
 #define DPU_PIPELINE_EXTDST5_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.EXTDST5_LOCKUNLOCK)
-#define DPU_PIPELINE_STORE9_OFFSET DPU_UNIT_OFFSET(PIXENGCFG.STORE9_LOCKUNLOCK)
+#define DPU_PIPELINE_STORE9_OFFSET  DPU_UNIT_OFFSET(PIXENGCFG.STORE9_LOCKUNLOCK)
 #else
-#define DPU_COMCTRL_OFFSET 0x0000U
-#define DPU_FETCH_DECODE9_OFFSET 0x1000U
-#define DPU_FETCH_WARP9_OFFSET 0x1800U
-#define DPU_FETCH_ECO9_OFFSET 0x1C00U
-#define DPU_ROP9_OFFSET 0x2000U
-#define DPU_H_SCALER9_OFFSET 0x3000U
-#define DPU_V_SCALER9_OFFSET 0x3400U
-#define DPU_BLITBLEND9_OFFSET 0x3C00U
-#define DPU_STORE9_OFFSET 0x4000U
-#define DPU_CONST_FRAME0_OFFSET 0x4400U
-#define DPU_EXT_DST0_OFFSET 0x4800U
-#define DPU_CONST_FRAME4_OFFSET 0x4c00U
-#define DPU_EXT_DST4_OFFSET 0x5000U
-#define DPU_CONST_FRAME1_OFFSET 0x5400U
-#define DPU_EXT_DST1_OFFSET 0x5800U
-#define DPU_CONST_FRAME5_OFFSET 0x5c00U
-#define DPU_EXT_DST5_OFFSET 0x6000U
-#define DPU_FETCH_WARP2_OFFSET 0x6400U
-#define DPU_FETCH_ECO2_OFFSET 0x6800U
-#define DPU_FETCH_DECODE0_OFFSET 0x6c00U
-#define DPU_FETCH_ECO0_OFFSET 0x7400U
-#define DPU_FETCH_DECODE1_OFFSET 0x7800U
-#define DPU_FETCH_ECO1_OFFSET 0x8000U
-#define DPU_FETCH_LAYER0_OFFSET 0x8400U
-#define DPU_H_SCALER4_OFFSET 0x9000
-#define DPU_V_SCALER4_OFFSET 0x9400
-#define DPU_H_SCALER5_OFFSET 0x9c00
-#define DPU_V_SCALER5_OFFSET 0xa000
-#define DPU_LAYER_BLEND0_OFFSET 0xa400
-#define DPU_LAYER_BLEND1_OFFSET 0xa800
-#define DPU_LAYER_BLEND2_OFFSET 0xac00
-#define DPU_LAYER_BLEND3_OFFSET 0xb000
-#define DPU_DISENGCONF_OFFSET 0xb400
-#define DPU_FRAME_GEN0_OFFSET 0xb800
-#define DPU_TCON0_OFFSET 0xc800
-#define DPU_SIG0_OFFSET 0xd000
-#define DPU_FRAME_GEN1_OFFSET 0xd400
-#define DPU_TCON1_OFFSET 0xe400
-#define DPU_SIG1_OFFSET 0xec00
-#define DPU_PIPELINE_EXTDST0_OFFSET 0x0980
-#define DPU_PIPELINE_EXTDST1_OFFSET 0x0a00
-#define DPU_PIPELINE_EXTDST4_OFFSET 0x09C0
-#define DPU_PIPELINE_EXTDST5_OFFSET 0x0a40
-#define DPU_PIPELINE_STORE9_OFFSET 0x0940
+#define DPU_COMCTRL_OFFSET          0x0000U
+#define DPU_FETCH_DECODE9_OFFSET    0x1000U
+#define DPU_FETCH_WARP9_OFFSET      0x1800U
+#define DPU_FETCH_ECO9_OFFSET       0x1C00U
+#define DPU_ROP9_OFFSET             0x2000U
+#define DPU_H_SCALER9_OFFSET        0x3000U
+#define DPU_V_SCALER9_OFFSET        0x3400U
+#define DPU_BLITBLEND9_OFFSET       0x3C00U
+#define DPU_STORE9_OFFSET           0x4000U
+#define DPU_CONST_FRAME0_OFFSET     0x4400U
+#define DPU_EXT_DST0_OFFSET         0x4800U
+#define DPU_CONST_FRAME4_OFFSET     0x4c00U
+#define DPU_EXT_DST4_OFFSET         0x5000U
+#define DPU_CONST_FRAME1_OFFSET     0x5400U
+#define DPU_EXT_DST1_OFFSET         0x5800U
+#define DPU_CONST_FRAME5_OFFSET     0x5c00U
+#define DPU_EXT_DST5_OFFSET         0x6000U
+#define DPU_FETCH_WARP2_OFFSET      0x6400U
+#define DPU_FETCH_ECO2_OFFSET       0x6800U
+#define DPU_FETCH_DECODE0_OFFSET    0x6c00U
+#define DPU_FETCH_ECO0_OFFSET       0x7400U
+#define DPU_FETCH_DECODE1_OFFSET    0x7800U
+#define DPU_FETCH_ECO1_OFFSET       0x8000U
+#define DPU_FETCH_LAYER0_OFFSET     0x8400U
+#define DPU_H_SCALER4_OFFSET        0x9000U
+#define DPU_V_SCALER4_OFFSET        0x9400U
+#define DPU_H_SCALER5_OFFSET        0x9c00U
+#define DPU_V_SCALER5_OFFSET        0xa000U
+#define DPU_LAYER_BLEND0_OFFSET     0xa400U
+#define DPU_LAYER_BLEND1_OFFSET     0xa800U
+#define DPU_LAYER_BLEND2_OFFSET     0xac00U
+#define DPU_LAYER_BLEND3_OFFSET     0xb000U
+#define DPU_DISENGCONF_OFFSET       0xb400U
+#define DPU_FRAME_GEN0_OFFSET       0xb800U
+#define DPU_TCON0_OFFSET            0xc800U
+#define DPU_SIG0_OFFSET             0xd000U
+#define DPU_FRAME_GEN1_OFFSET       0xd400U
+#define DPU_TCON1_OFFSET            0xe400U
+#define DPU_SIG1_OFFSET             0xec00U
+#define DPU_PIPELINE_EXTDST0_OFFSET 0x0980U
+#define DPU_PIPELINE_EXTDST1_OFFSET 0x0a00U
+#define DPU_PIPELINE_EXTDST4_OFFSET 0x09C0U
+#define DPU_PIPELINE_EXTDST5_OFFSET 0x0a40U
+#define DPU_PIPELINE_STORE9_OFFSET  0x0940U
 
-#define DPU_ROP_CONTROL_Mode_MASK (1U << 0U)
-#define DPU_ROP_CONTROL_RedMode_MASK (1U << 7U)
+#define DPU_ROP_CONTROL_Mode_MASK      (1U << 0U)
+#define DPU_ROP_CONTROL_RedMode_MASK   (1U << 7U)
 #define DPU_ROP_CONTROL_GreenMode_MASK (1U << 6U)
-#define DPU_ROP_CONTROL_BlueMode_MASK (1U << 5U)
+#define DPU_ROP_CONTROL_BlueMode_MASK  (1U << 5U)
 #define DPU_ROP_CONTROL_AlphaMode_MASK (1U << 4U)
-#define DPU_ROP_CONTROL_TertDiv2_MASK (1U << 10U)
-#define DPU_ROP_CONTROL_SecDiv2_MASK (1U << 9U)
-#define DPU_ROP_CONTROL_PrimDiv2_MASK (1U << 8U)
+#define DPU_ROP_CONTROL_TertDiv2_MASK  (1U << 10U)
+#define DPU_ROP_CONTROL_SecDiv2_MASK   (1U << 9U)
+#define DPU_ROP_CONTROL_PrimDiv2_MASK  (1U << 8U)
 
 #define DPU_DISENGCONF_POLARITYCTRL_PixInv_MASK (1U << 3U)
-#define DPU_DISENGCONF_POLARITYCTRL_PolEn_MASK (1U << 2U)
-#define DPU_DISENGCONF_POLARITYCTRL_PolVs_MASK (1U << 1U)
-#define DPU_DISENGCONF_POLARITYCTRL_PolHs_MASK (1U << 0U)
+#define DPU_DISENGCONF_POLARITYCTRL_PolEn_MASK  (1U << 2U)
+#define DPU_DISENGCONF_POLARITYCTRL_PolVs_MASK  (1U << 1U)
+#define DPU_DISENGCONF_POLARITYCTRL_PolHs_MASK  (1U << 0U)
 
 #define DPU_SIG_EVALCONTROL_EnGlobalPanic_MASK (1U << 17U)
-#define DPU_SIG_EVALCONTROL_EnLocalPanic_MASK (1U << 16U)
-#define DPU_SIG_EVALCONTROL_AlphaInv_MASK (1U << 9U)
-#define DPU_SIG_EVALCONTROL_AlphaMask_MASK (1U << 8U)
-#define DPU_SIG_EVALCONTROL_EnCRC_MASK (1U << 1U)
-#define DPU_SIG_EVALCONTROL_EnEvalWin_MASK (1U << 0U)
+#define DPU_SIG_EVALCONTROL_EnLocalPanic_MASK  (1U << 16U)
+#define DPU_SIG_EVALCONTROL_AlphaInv_MASK      (1U << 9U)
+#define DPU_SIG_EVALCONTROL_AlphaMask_MASK     (1U << 8U)
+#define DPU_SIG_EVALCONTROL_EnCRC_MASK         (1U << 1U)
+#define DPU_SIG_EVALCONTROL_EnEvalWin_MASK     (1U << 0U)
 
-#define DPU_SIG_STATUS_StsSigIdle_MASK (1U << 20U)
+#define DPU_SIG_STATUS_StsSigIdle_MASK  (1U << 20U)
 #define DPU_SIG_STATUS_StsSigValid_MASK (1U << 16U)
 #define DPU_SIG_STATUS_StsSigError_MASK (0xFU << 0U)
 
-#define DPU_SIG_EVALUPPERLEFT_XEvalUpperLeft_SHIFT (0U)
-#define DPU_SIG_EVALUPPERLEFT_YEvalUpperLeft_SHIFT (16U)
-#define DPU_SIG_EVALLOWERRIGHT_XEvalLowerRight_SHIFT (0U)
+#define DPU_SIG_EVALUPPERLEFT_XEvalUpperLeft_SHIFT    (0U)
+#define DPU_SIG_EVALUPPERLEFT_YEvalUpperLeft_SHIFT    (16U)
+#define DPU_SIG_EVALLOWERRIGHT_XEvalLowerRight_SHIFT  (0U)
 #define DPU_SIG0_EVALLOWERRIGHT_YEvalLowerRight_SHIFT (16U)
 
 #define DPU_SIG_SHADOWLOAD_ShdLdReq_MASK (0xFFU)
 #endif
 
-/* DPU unit type, internal used for DPU_MAKE_UNIT. */
-enum _dpu_unit_type
+/* DPU unit type, internal used for DPU_MAKE_UNIT, _dpu_unit_type. */
+enum
 {
     kDPU_Pipeline,
     kDPU_BlitBlend,
@@ -253,8 +253,8 @@ enum _dpu_unit_type
     kDPU_Store,
 };
 
-/* DPU unit attribute, internal used for DPU_MAKE_UNIT. */
-enum _dpu_unit_attr
+/* DPU unit attribute, internal used for DPU_MAKE_UNIT, _dpu_unit_attr. */
+enum
 {
     kDPU_UnitAttrIsFetch  = (1U << 0U), /* Is fetch unit.              */
     kDPU_UnitAttrHasSrc   = (1U << 1U), /* Has input source selection. */
@@ -901,11 +901,11 @@ void DPU_DisableInterrupts(IRIS_MVPL_Type *base, uint8_t group, uint32_t mask);
    uint32_t pendingStatus = DPU_GetInterruptsPendingFlags(DPU, 0);
    if (pendingStatus & kDPU_Group0Store9ShadowLoadInterrupt)
    {
-       // Store9 shadow load interrupt occurs, handle it.
+       Store9 shadow load interrupt occurs, handle it.
    }
    if (pendingStatus & kDPU_Group0Store9FrameCompleteInterrupt)
    {
-       // Store9 frame complete interrupt occurs, handle it.
+       Store9 frame complete interrupt occurs, handle it.
    }
    @endcode
  *
@@ -1038,9 +1038,8 @@ void DPU_SetUserInterruptsPendingFlags(IRIS_MVPL_Type *base, uint8_t group, uint
 /*!
  * @brief Enable or disable the register shadowing for the DPU process units.
  *
- * For example:
+ * For example, to enable the shadowing of all RWS registers of the pipeline with endpoint Store9.
  * @code
-   // To enable the shadowing of all RWS registers of the pipeline with endpoint Store9.
    DPU_EnableShadowLoad(DPU, kDPU_PipelineStore9, true);
    @endcode
  *
@@ -1555,7 +1554,7 @@ void DPU_SetStoreDstBufferAddr(IRIS_MVPL_Type *base, dpu_unit_t unit, uint32_t b
  * @param offsetX Horizontal offset.
  * @param offsetY Vertical offset.
  * @note The horizontal offset has limitations for some formats. It must be a multiple of
-   - 8 for 1 bpp buffers
+ *   - 8 for 1 bpp buffers
  *   - 4 for 2 bpp and 18 bpp buffers
  *   - 2 for 4 bpp buffers
  */
@@ -1571,31 +1570,29 @@ void DPU_SetStoreOffset(IRIS_MVPL_Type *base, dpu_unit_t unit, uint16_t offsetX,
  * This is an example shows how to use Store unit:
  *
  * @code
- * // Initialize the Store unit, use FetchDecode9 output as its input.
+   Initialize the Store unit, use FetchDecode9 output as its input.
    DPU_InitStore(DPU, kDPU_Store9, DPU_MAKE_SRC_REG1(kDPU_UnitSrcFetchDecode9));
 
-   // Configure the Store unit output buffer.
+   Configure the Store unit output buffer.
    DPU_SetStoreDstBufferConfig(DPU, kDPU_Store9, &DstBufferConfig);
 
-   // Configure FetchDecode9 unit, including source buffer setting and so on.
-   //
-   // CODE FOR FETCHDECODE9
-   //
+   Configure FetchDecode9 unit, including source buffer setting and so on.
+   ...
 
-   // Initialize the Store9 pipeline
+   Initialize the Store9 pipeline
    DPU_InitPipeline(DPU, kDPU_PipelineStore9);
 
    DPU_ClearUserInterruptsPendingFlags(DPU, kDPU_Group0Store9ShadowLoadInterrupt);
 
-   // Trigger the shadow load
+   Trigger the shadow load
    DPU_TriggerPipelineShadowLoad(DPU, kDPU_PipelineStore9);
 
    DPU_ClearUserInterruptsPendingFlags(DPU, kDPU_Group0Store9FrameCompleteInterrupt);
 
-   // Start the Store9 to convert and output.
+   Start the Store9 to convert and output.
    DPU_StartStore(DPU, kDPU_Store9);
 
-   // Wait for Store 9 completed, this could also be monitored by interrupt.
+   Wait for Store 9 completed, this could also be monitored by interrupt.
    while (!(kDPU_Group0Store9FrameCompleteInterrupt & DPU_GetUserInterruptsPendingFlags(DPU, 0))
    {
    }
@@ -2110,11 +2107,11 @@ void DPU_TriggerDisplayShadowLoad(IRIS_MVPL_Type *base, uint8_t displayIndex);
      |                                                |
      |                                                |
      |    +-------------------+                       |
-     |    | Window 0 /////////|                       |
-     |    |///////////////////|                       |
-     |    |////////+-------------------------------+  |
-     |    |////////|  Window 1 (Skipped)           |  |
-     |    |////////|                               |  |
+     |    | Window 0 xxxxxxxxx|                       |
+     |    |xxxxxxxxxxxxxxxxxxx|                       |
+     |    |xxxxxxxx+-------------------------------+  |
+     |    |xxxxxxxx|  Window 1 (Skipped)           |  |
+     |    |xxxxxxxx|                               |  |
      |    +--------|                               |  |
      |             |                               |  |
      |             +-------------------------------+  |
@@ -2255,7 +2252,6 @@ void DPU_SetSignatureWindowRefCrc(IRIS_MVPL_Type *base,
 
    if (kDPU_SignatureValid & status)
    {
-       // signature measure finished, could read the value.
        DPU_GetSignatureWindowCrc(...);
    }
    @endcode
@@ -2268,12 +2264,12 @@ void DPU_SetSignatureWindowRefCrc(IRIS_MVPL_Type *base,
 
    if ((1<<3) & status)
    {
-       // Window 3 error detected.
+       Window 3 error detected.
    }
 
    if ((1<<5) & status)
    {
-       // Window 5 error detected.
+       Window 5 error detected.
    }
 
    @endcode

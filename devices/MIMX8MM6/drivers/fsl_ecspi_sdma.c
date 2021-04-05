@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -76,8 +76,8 @@ static void SDMA_EcspiMasterCallback(sdma_handle_t *sdmaHandle,
                                      bool transferDone,
                                      uint32_t tcds)
 {
-    assert(sdmaHandle);
-    assert(g_ecspiSdmaPrivateHandle);
+    assert(sdmaHandle != NULL);
+    assert(g_ecspiSdmaPrivateHandle != NULL);
 
     ecspi_master_sdma_private_handle_t *ecspiSdmaPrivateHandle;
 
@@ -91,7 +91,7 @@ static void SDMA_EcspiMasterCallback(sdma_handle_t *sdmaHandle,
         SDMA_AbortTransfer(sdmaHandle);
     }
     /* if channel is Rx channel, disable Rx channel SDMA enable*/
-    else if (sdmaHandle->channel == ecspiSdmaPrivateHandle->handle->ChannelRx)
+    else
     {
         ECSPI_EnableDMA((ecspiSdmaPrivateHandle->base), kECSPI_RxDmaEnable, false);
         ecspiSdmaPrivateHandle->handle->rxInProgress = false;
@@ -103,12 +103,12 @@ static void SDMA_EcspiMasterCallback(sdma_handle_t *sdmaHandle,
         (ecspiSdmaPrivateHandle->handle->rxInProgress == false))
     {
         ECSPI_MasterTransferAbortSDMA(ecspiSdmaPrivateHandle->base, ecspiSdmaPrivateHandle->handle);
-        if (ecspiSdmaPrivateHandle->handle->callback)
+        if (ecspiSdmaPrivateHandle->handle->callback != NULL)
         {
             ecspiSdmaPrivateHandle->handle->callback(ecspiSdmaPrivateHandle->base, ecspiSdmaPrivateHandle->handle,
                                                      kStatus_Success, ecspiSdmaPrivateHandle->handle->userData);
         }
-        ecspiSdmaPrivateHandle->handle->state = kECSPI_Idle;
+        ecspiSdmaPrivateHandle->handle->state = (uint32_t)kECSPI_Idle;
     }
 }
 
@@ -120,7 +120,7 @@ static void SDMA_EcspiMasterCallback(sdma_handle_t *sdmaHandle,
  */
 void ECSPI_MasterTransferAbortSDMA(ECSPI_Type *base, ecspi_sdma_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     ECSPI_Enable(base, false);
 
@@ -129,7 +129,7 @@ void ECSPI_MasterTransferAbortSDMA(ECSPI_Type *base, ecspi_sdma_handle_t *handle
     SDMA_AbortTransfer(handle->rxSdmaHandle);
     SDMA_AbortTransfer(handle->txSdmaHandle);
 
-    handle->state = kECSPI_Idle;
+    handle->state = (uint32_t)kECSPI_Idle;
 }
 
 static void SDMA_EcspiSlaveCallback(sdma_handle_t *sdmaHandle,
@@ -137,8 +137,8 @@ static void SDMA_EcspiSlaveCallback(sdma_handle_t *sdmaHandle,
                                     bool transferDone,
                                     uint32_t tcds)
 {
-    assert(sdmaHandle);
-    assert(g_ecspiSdmaPrivateHandle);
+    assert(sdmaHandle != NULL);
+    assert(g_ecspiSdmaPrivateHandle != NULL);
 
     ecspi_slave_sdma_private_handle_t *ecspiSdmaPrivateHandle;
 
@@ -152,7 +152,7 @@ static void SDMA_EcspiSlaveCallback(sdma_handle_t *sdmaHandle,
         SDMA_AbortTransfer(sdmaHandle);
     }
     /* if channel is Rx channel, disable Rx channel SDMA enable*/
-    else if (sdmaHandle->channel == ecspiSdmaPrivateHandle->handle->ChannelRx)
+    else
     {
         ECSPI_EnableDMA((ecspiSdmaPrivateHandle->base), kECSPI_RxDmaEnable, false);
         ecspiSdmaPrivateHandle->handle->rxInProgress = false;
@@ -164,12 +164,12 @@ static void SDMA_EcspiSlaveCallback(sdma_handle_t *sdmaHandle,
         (ecspiSdmaPrivateHandle->handle->rxInProgress == false))
     {
         ECSPI_MasterTransferAbortSDMA(ecspiSdmaPrivateHandle->base, ecspiSdmaPrivateHandle->handle);
-        if (ecspiSdmaPrivateHandle->handle->callback)
+        if (ecspiSdmaPrivateHandle->handle->callback != NULL)
         {
             ecspiSdmaPrivateHandle->handle->callback(ecspiSdmaPrivateHandle->base, ecspiSdmaPrivateHandle->handle,
                                                      kStatus_Success, ecspiSdmaPrivateHandle->handle->userData);
         }
-        ecspiSdmaPrivateHandle->handle->state = kECSPI_Idle;
+        ecspiSdmaPrivateHandle->handle->state = (uint32_t)kECSPI_Idle;
     }
 }
 
@@ -181,7 +181,7 @@ static void SDMA_EcspiSlaveCallback(sdma_handle_t *sdmaHandle,
  */
 void ECSPI_SlaveTransferAbortSDMA(ECSPI_Type *base, ecspi_sdma_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     ECSPI_Enable(base, false);
 
@@ -191,7 +191,7 @@ void ECSPI_SlaveTransferAbortSDMA(ECSPI_Type *base, ecspi_sdma_handle_t *handle)
     SDMA_AbortTransfer(handle->rxSdmaHandle);
     SDMA_AbortTransfer(handle->txSdmaHandle);
 
-    handle->state = kECSPI_Idle;
+    handle->state = (uint32_t)kECSPI_Idle;
 }
 
 /*!
@@ -222,13 +222,13 @@ void ECSPI_MasterTransferCreateHandleSDMA(ECSPI_Type *base,
                                           uint32_t TxChannel,
                                           uint32_t RxChannel)
 {
-    assert(handle);
-    assert(txHandle);
-    assert(rxHandle);
+    assert(handle != NULL);
+    assert(txHandle != NULL);
+    assert(rxHandle != NULL);
     uint32_t instance = ECSPI_GetInstance(base);
 
     /* Zero the handle */
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
     /* Set ECSPI base to handle */
     rxHandle->eventSource = eventSourceRx;
@@ -241,7 +241,7 @@ void ECSPI_MasterTransferCreateHandleSDMA(ECSPI_Type *base,
     handle->userData      = userData;
 
     /* Set ECSPI state to idle */
-    handle->state = kECSPI_Idle;
+    handle->state = (uint32_t)kECSPI_Idle;
 
     /* Set handle to global state */
     s_ecspiMasterSdmaPrivateHandle[instance].base   = base;
@@ -280,13 +280,13 @@ void ECSPI_SlaveTransferCreateHandleSDMA(ECSPI_Type *base,
                                          uint32_t TxChannel,
                                          uint32_t RxChannel)
 {
-    assert(handle);
-    assert(txHandle);
-    assert(rxHandle);
+    assert(handle != NULL);
+    assert(txHandle != NULL);
+    assert(rxHandle != NULL);
     uint32_t instance = ECSPI_GetInstance(base);
 
     /* Zero the handle */
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
     /* Set ECSPI base to handle */
     rxHandle->eventSource = eventSourceRx;
@@ -299,7 +299,7 @@ void ECSPI_SlaveTransferCreateHandleSDMA(ECSPI_Type *base,
     handle->userData      = userData;
 
     /* Set ECSPI state to idle */
-    handle->state = kECSPI_Idle;
+    handle->state = (uint32_t)kECSPI_Idle;
 
     /* Set handle to global state */
     s_ecspiSlaveSdmaPrivateHandle[instance].base   = base;
@@ -324,13 +324,13 @@ void ECSPI_SlaveTransferCreateHandleSDMA(ECSPI_Type *base,
  */
 status_t ECSPI_MasterTransferSDMA(ECSPI_Type *base, ecspi_sdma_handle_t *handle, ecspi_transfer_t *xfer)
 {
-    assert(base && handle && xfer);
+    assert((base != NULL) && (handle != NULL) && (xfer != NULL));
 
     sdma_transfer_config_t xferConfig = {0U};
     sdma_peripheral_t perType         = kSDMA_PeripheralNormal;
 
     /* Check if ECSPI is busy */
-    if (handle->state == kECSPI_Busy)
+    if (handle->state == (uint32_t)kECSPI_Busy)
     {
         return kStatus_ECSPI_Busy;
     }
@@ -341,7 +341,7 @@ status_t ECSPI_MasterTransferSDMA(ECSPI_Type *base, ecspi_sdma_handle_t *handle,
         return kStatus_InvalidArgument;
     }
     ECSPI_Enable(base, true);
-    handle->state = kECSPI_Busy;
+    handle->state = (uint32_t)kECSPI_Busy;
 
     ECSPI_SetChannelSelect(base, xfer->channel);
 
@@ -395,13 +395,13 @@ status_t ECSPI_MasterTransferSDMA(ECSPI_Type *base, ecspi_sdma_handle_t *handle,
  */
 status_t ECSPI_SlaveTransferSDMA(ECSPI_Type *base, ecspi_sdma_handle_t *handle, ecspi_transfer_t *xfer)
 {
-    assert(base && handle && xfer);
+    assert((base != NULL) && (handle != NULL) && (xfer != NULL));
 
     sdma_transfer_config_t xferConfig;
     sdma_peripheral_t perType = kSDMA_PeripheralNormal;
 
     /* Check if ECSPI is busy */
-    if (handle->state == kECSPI_Busy)
+    if (handle->state == (uint32_t)kECSPI_Busy)
     {
         return kStatus_ECSPI_Busy;
     }
@@ -412,7 +412,7 @@ status_t ECSPI_SlaveTransferSDMA(ECSPI_Type *base, ecspi_sdma_handle_t *handle, 
         return kStatus_InvalidArgument;
     }
     ECSPI_Enable(base, true);
-    handle->state = kECSPI_Busy;
+    handle->state = (uint32_t)kECSPI_Busy;
 
     ECSPI_SetChannelSelect(base, xfer->channel);
 

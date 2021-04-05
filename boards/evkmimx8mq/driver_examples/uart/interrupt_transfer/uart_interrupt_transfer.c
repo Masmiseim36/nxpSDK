@@ -6,15 +6,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_uart.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_UART UART2
+#define DEMO_UART          UART2
 #define DEMO_UART_CLK_FREQ BOARD_DEBUG_UART_CLK_FREQ
 
 #define ECHO_BUFFER_LENGTH 8

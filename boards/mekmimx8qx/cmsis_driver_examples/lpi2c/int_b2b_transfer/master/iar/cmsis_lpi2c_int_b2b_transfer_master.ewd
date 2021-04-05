@@ -855,7 +855,7 @@
         </option>
         <option>
           <name>CCJLinkInterfaceRadio</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCJLinkResetList</name>
@@ -1610,11 +1610,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state/>
+          <state>$PROJ_DIR$/mekmimx8qx_ddr_xip_init.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -2433,7 +2433,7 @@
         </option>
         <option>
           <name>CCJLinkInterfaceRadio</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCJLinkResetList</name>
@@ -4011,7 +4011,7 @@
         </option>
         <option>
           <name>CCJLinkInterfaceRadio</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCJLinkResetList</name>
@@ -4766,11 +4766,11 @@
         </option>
         <option>
           <name>MacOverride</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>MacFile</name>
-          <state/>
+          <state>$PROJ_DIR$/mekmimx8qx_ddr_xip_init.mac</state>
         </option>
         <option>
           <name>MemOverride</name>
@@ -5589,7 +5589,7 @@
         </option>
         <option>
           <name>CCJLinkInterfaceRadio</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCJLinkResetList</name>
@@ -7167,7 +7167,7 @@
         </option>
         <option>
           <name>CCJLinkInterfaceRadio</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCJLinkResetList</name>
@@ -8745,7 +8745,7 @@
         </option>
         <option>
           <name>CCJLinkInterfaceRadio</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCJLinkResetList</name>
@@ -10323,7 +10323,7 @@
         </option>
         <option>
           <name>CCJLinkInterfaceRadio</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCJLinkResetList</name>
@@ -11901,7 +11901,7 @@
         </option>
         <option>
           <name>CCJLinkInterfaceRadio</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCJLinkResetList</name>
@@ -13479,7 +13479,7 @@
         </option>
         <option>
           <name>CCJLinkInterfaceRadio</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCJLinkResetList</name>

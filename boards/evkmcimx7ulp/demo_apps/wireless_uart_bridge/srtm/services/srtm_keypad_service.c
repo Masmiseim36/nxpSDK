@@ -37,13 +37,16 @@
 
 #define SRTM_KEYPAD_NTF_KEYPAD_EVENT (0x00U)
 
+/* Consider press and release in short time, we need 2 events per key */
+#define SRTM_KEYPAD_NTF_NUM_PER_KEY (0x2U)
+
 /* keypad key list node */
 typedef struct _srtm_keypad_key
 {
     srtm_list_t node;
     uint8_t keyIdx;
     srtm_channel_t channel;
-    srtm_notification_t notif; /* SRTM notification message for keypad event */
+    srtm_notification_t notif[SRTM_KEYPAD_NTF_NUM_PER_KEY]; /* SRTM notification message for keypad event */
     srtm_keypad_service_conf_t confKEvent;
     void *param;
 } * srtm_keypad_key_t;
@@ -68,32 +71,53 @@ typedef struct _srtm_keypad_service
  ******************************************************************************/
 static void SRTM_KeypadService_FreeKey(srtm_keypad_key_t key)
 {
-    SRTM_Notification_Destroy(key->notif);
+    uint32_t i;
+
+    for (i = 0U; i < SRTM_KEYPAD_NTF_NUM_PER_KEY; i++)
+    {
+        SRTM_Notification_Destroy(key->notif[i]);
+    }
     SRTM_Heap_Free(key);
+}
+
+static uint32_t SRTM_KeypadService_GetKeyNotifIndex(srtm_keypad_key_t key)
+{
+    uint32_t i;
+
+    for (i = 0U; i < SRTM_KEYPAD_NTF_NUM_PER_KEY; i++)
+    {
+        if (key->notif[i] != NULL)
+        {
+            break;
+        }
+    }
+
+    return i;
 }
 
 static void SRTM_KeypadService_RecycleMessage(srtm_message_t msg, void *param)
 {
     uint32_t primask;
-    srtm_keypad_key_t key = (srtm_keypad_key_t)param;
+    srtm_notification_t *pNotif = (srtm_notification_t *)param;
 
-    assert(key);
-    assert(key->notif == NULL);
+    assert(pNotif != NULL);
+    assert(*pNotif == NULL);
 
     primask = DisableGlobalIRQ();
     /* Return msg to key */
-    key->notif = msg;
+    *pNotif = msg;
     EnableGlobalIRQ(primask);
 }
 
 static srtm_keypad_key_t SRTM_KeypadService_FindKey(
-    srtm_keypad_service_t handle, uint8_t keyIdx, bool remove, bool notify, srtm_keypad_value_t value)
+    srtm_keypad_service_t handle, uint8_t keyIdx, bool rm, bool notify, srtm_keypad_value_t value)
 {
     srtm_keypad_key_t key = NULL;
     srtm_list_t *list;
     srtm_notification_t notif = NULL;
     uint32_t primask;
     uint8_t *payload;
+    uint32_t i;
 
     primask = DisableGlobalIRQ();
     for (list = handle->keys.next; list != &handle->keys; list = list->next)
@@ -101,14 +125,18 @@ static srtm_keypad_key_t SRTM_KeypadService_FindKey(
         key = SRTM_LIST_OBJ(srtm_keypad_key_t, node, list);
         if (key->keyIdx == keyIdx)
         {
-            if (remove)
+            if (rm)
             {
                 SRTM_List_Remove(list);
             }
             if (notify)
             {
-                notif      = key->notif;
-                key->notif = NULL;
+                i = SRTM_KeypadService_GetKeyNotifIndex(key);
+                if (i != SRTM_KEYPAD_NTF_NUM_PER_KEY)
+                {
+                    notif         = key->notif[i];
+                    key->notif[i] = NULL;
+                }
             }
             break;
         }
@@ -123,6 +151,14 @@ static srtm_keypad_key_t SRTM_KeypadService_FindKey(
         payload        = SRTM_CommMessage_GetPayload(notif);
         *(payload + 1) = (uint8_t)value;
         SRTM_Dispatcher_DeliverNotification(handle->service.dispatcher, notif);
+    }
+    else if (notify && key->channel)
+    {
+        SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "Keypad event lost\r\n");
+    }
+    else
+    {
+        /* Do nothing */
     }
 
     return list == &handle->keys ? NULL : key;
@@ -281,6 +317,7 @@ srtm_status_t SRTM_KeypadService_RegisterKey(srtm_service_t service,
     srtm_keypad_key_t key;
     uint8_t *payload;
     uint32_t primask;
+    uint32_t i;
 
     assert(service);
     /* Key must be registered before service registration. */
@@ -304,13 +341,16 @@ srtm_status_t SRTM_KeypadService_RegisterKey(srtm_service_t service,
     key->keyIdx     = keyIdx;
     key->confKEvent = confKEvent;
     key->param      = param;
-    key->notif =
-        SRTM_Notification_Create(NULL, SRTM_KEYPAD_CATEGORY, SRTM_KEYPAD_VERSION, SRTM_KEYPAD_NTF_KEYPAD_EVENT, 2U);
-    assert(key->notif);
-    SRTM_Message_SetFreeFunc(key->notif, SRTM_KeypadService_RecycleMessage, key);
-    payload = (uint8_t *)SRTM_CommMessage_GetPayload(key->notif);
-    /* Little endian keypad key ID */
-    *payload = keyIdx;
+    for (i = 0U; i < SRTM_KEYPAD_NTF_NUM_PER_KEY; i++)
+    {
+        key->notif[i] =
+            SRTM_Notification_Create(NULL, SRTM_KEYPAD_CATEGORY, SRTM_KEYPAD_VERSION, SRTM_KEYPAD_NTF_KEYPAD_EVENT, 2U);
+        assert(key->notif[i]);
+        SRTM_Message_SetFreeFunc(key->notif[i], SRTM_KeypadService_RecycleMessage, &key->notif[i]);
+        payload = (uint8_t *)SRTM_CommMessage_GetPayload(key->notif[i]);
+        /* Little endian keypad key ID */
+        *payload = keyIdx;
+    }
 
     primask = DisableGlobalIRQ();
     SRTM_List_AddTail(&handle->keys, &key->node);

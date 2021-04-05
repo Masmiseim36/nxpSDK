@@ -17,8 +17,8 @@ camera frame will be shown.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -97,6 +97,3 @@ When the example runs successfully, camera input frame in the screen.
 
 NOTE: Before load and run the project, press SW3 until D3 is off, then press
 SW3 until D3 is on. This perform a clean power on.
-Customization options
-=====================
-

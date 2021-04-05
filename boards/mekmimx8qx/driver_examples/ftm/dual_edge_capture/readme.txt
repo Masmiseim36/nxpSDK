@@ -7,8 +7,8 @@ this example will print the capture values and period of the input signal on the
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -53,6 +53,3 @@ Capture value C(n+1)V=5a8
 
 Input signals pulse width=24 us
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

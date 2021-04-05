@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -7,12 +8,12 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_dac12.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -59,6 +60,9 @@ int main(void)
      */
     DAC12_GetDefaultConfig(&dacConfigStruct);
     dacConfigStruct.fifoWatermarkLevel = 4U;
+#if defined(DEMO_DAC12_VREF_SOURCE)
+    dacConfigStruct.referenceVoltageSource = DEMO_DAC12_VREF_SOURCE;
+#endif /* DEMO_DAC12_VREF_SOURCE */
     DAC12_Init(DEMO_DAC12_BASE, &dacConfigStruct);
     DAC12_Enable(DEMO_DAC12_BASE, true); /* Enable output. */
     /* The fifo is not enabled, so the read pointer can not move automatically. */

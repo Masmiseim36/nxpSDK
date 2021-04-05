@@ -60,10 +60,10 @@ void *SRTM_MessagePool_Alloc(uint32_t size)
     void *buf;
     uint32_t primask;
 
-    if (!srtmMsgList.next)
+    if (srtmMsgList.next == NULL)
     {
         primask = DisableGlobalIRQ();
-        if (!srtmMsgList.next)
+        if (srtmMsgList.next == NULL)
         {
             /* Message list not initialized, initialize now */
             SRTM_List_Init(&srtmMsgList);
@@ -119,11 +119,10 @@ void SRTM_MessagePool_Free(void *buf)
     srtm_message_buf_t *msgBuf;
     uint32_t primask;
 
-    if ((uint32_t *)buf >= (uint32_t *)&srtmMsgs[0] &&
-        (uint32_t *)buf < (uint32_t *)&srtmMsgs[sizeof(srtmMsgs) / sizeof(srtm_message_buf_t)])
+    if ((buf >= (void *)&srtmMsgs[0]) && (buf < (void *)(&srtmMsgs[sizeof(srtmMsgs) / sizeof(srtm_message_buf_t)])))
     {
         /* buffer locates in message pool */
-        assert(((uint32_t)buf - (uint32_t)&srtmMsgs[0]) % sizeof(srtm_message_buf_t) == 0);
+        assert(((uint32_t)(uint8_t *)(buf) - (uint32_t)&srtmMsgs[0]) % sizeof(srtm_message_buf_t) == 0U);
         msgBuf  = (srtm_message_buf_t *)buf;
         primask = DisableGlobalIRQ();
         SRTM_List_AddTail(&srtmMsgList, &msgBuf->node);

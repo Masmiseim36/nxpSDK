@@ -7,8 +7,8 @@ debugging and further development.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -50,7 +50,4 @@ EDMA memory to memory transfer example finish.
 Destination Buffer:
 1       2       3       4
 ~~~~~~~~~~~~~~~~~~~~~
-
-Customization options
-=====================
 

@@ -44,8 +44,8 @@ struct _srtm_pmic_adapter
     bool (*isEnabled)(srtm_pmic_adapter_t adapter, uint8_t regulator);
     srtm_status_t (*setVoltage)(srtm_pmic_adapter_t adapter, uint8_t regulator, uint32_t volt);
     srtm_status_t (*getVoltage)(srtm_pmic_adapter_t adapter, uint8_t regulator, uint32_t *pVolt);
-    srtm_status_t (*setRegister)(srtm_pmic_adapter_t adapter, uint8_t register, uint32_t value);
-    srtm_status_t (*getRegister)(srtm_pmic_adapter_t adapter, uint8_t register, uint32_t *pValue);
+    srtm_status_t (*setRegister)(srtm_pmic_adapter_t adapter, uint8_t reg, uint32_t value);
+    srtm_status_t (*getRegister)(srtm_pmic_adapter_t adapter, uint8_t reg, uint32_t *pValue);
     srtm_status_t (*setStandbyVoltage)(srtm_pmic_adapter_t adapter, uint8_t regulator, uint32_t volt);
 };
 

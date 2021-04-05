@@ -1,19 +1,19 @@
 /*
 ** ###################################################################
-**     Processors:          MCIMX7U5CVP05
-**                          MCIMX7U5DVK08
-**                          MCIMX7U5DVP08
+**     Processors:          MCIMX7U5CVP06
+**                          MCIMX7U5DVK07
+**                          MCIMX7U5DVP07
 **
 **     Compiler:            GNU C Compiler
-**     Reference manual:    i.MX7ULPRMV2, Rev. A, Dec. 2017
-**     Version:             rev. 5.0, 2017-12-22
-**     Build:               b180117
+**     Reference manual:    IMX7ULPRM, Rev. 0, Nov. 2018
+**     Version:             rev. 7.0, 2018-11-05
+**     Build:               b200331
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause

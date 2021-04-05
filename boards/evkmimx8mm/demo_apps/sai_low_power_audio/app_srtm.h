@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, NXP
+ * Copyright 2018-2020, NXP
  * All rights reserved.
  *
  *
@@ -10,36 +10,43 @@
 #define _APP_SRTM_H_
 
 #include "rpmsg_lite.h"
+#include "rsc_table.h"
 
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+typedef enum
+{
+    APP_SRTM_StateRun = 0x0U,
+    APP_SRTM_StateLinkedUp,
+} app_srtm_state_t;
+
 #define APP_SRTM_CODEC_WM8524_USED (0U)
 #define APP_SRTM_CODEC_AK4497_USED (1U)
 
 #if APP_SRTM_CODEC_AK4497_USED
 
-#define APP_SRTM_I2C I2C3
-#define APP_SRTM_I2C_IRQn I2C3_IRQn
-#define APP_SRTM_I2C_IRQ_PRIO (5U)
-#define APP_SRTM_I2C_DELAY (100U)
-#define APP_SRTM_I2C_BAUDRATE (100000U)
+#define APP_SRTM_I2C           I2C3
+#define APP_SRTM_I2C_IRQn      I2C3_IRQn
+#define APP_SRTM_I2C_IRQ_PRIO  (5U)
+#define APP_SRTM_I2C_DELAY     (100U)
+#define APP_SRTM_I2C_BAUDRATE  (100000U)
 #define APP_CODEC_I2C_INSTANCE (3U)
 #define APP_SRTM_I2C_CLOCK_FREQ                                                            \
     CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootI2c3)) / \
         (CLOCK_GetRootPostDivider(kCLOCK_RootI2c3)) / 5
 
 #define APP_AUDIO_I2C_SCL_GPIO GPIO5
-#define APP_AUDIO_I2C_SCL_PIN (18U)
+#define APP_AUDIO_I2C_SCL_PIN  (18U)
 #define APP_AUDIO_I2C_SDA_GPIO GPIO5
-#define APP_AUDIO_I2C_SDA_PIN (19U)
+#define APP_AUDIO_I2C_SDA_PIN  (19U)
 #endif
 
 #if APP_SRTM_CODEC_WM8524_USED
-#define APP_SRTM_SAI (I2S3)
+#define APP_SRTM_SAI      (I2S3)
 #define APP_SRTM_SAI_IRQn I2S3_IRQn
 #else
-#define APP_SRTM_SAI (I2S1)
+#define APP_SRTM_SAI      (I2S1)
 #define APP_SRTM_SAI_IRQn I2S1_IRQn
 #endif
 /* The MCLK of the SAI is 24576000Hz by default which can be changed when playback the music. */
@@ -48,18 +55,18 @@
 #define APP_AUDIO_PLL1_FREQ (393216000U)
 #define APP_AUDIO_PLL2_FREQ (361267200U)
 
-#define APP_SRTM_DMA SDMAARM3
+#define APP_SRTM_DMA      SDMAARM3
 #define APP_SRTM_DMA_IRQn SDMA3_IRQn
 /* IRQ handler priority definition, bigger number stands for lower priority */
 #define APP_SAI_TX_DMA_IRQ_PRIO (5U)
 #define APP_SAI_RX_DMA_IRQ_PRIO (5U)
-#define APP_SAI_IRQ_PRIO (5U)
+#define APP_SAI_IRQ_PRIO        (5U)
 /* Task priority definition, bigger number stands for higher priority */
-#define APP_SRTM_MONITOR_TASK_PRIO (4U)
+#define APP_SRTM_MONITOR_TASK_PRIO    (4U)
 #define APP_SRTM_DISPATCHER_TASK_PRIO (3U)
 /* SAI SDMA channel */
 #define APP_SAI_TX_DMA_CHANNEL (1U)
-#define APP_SAI_RX_DMA_CHANNEL (0U)
+#define APP_SAI_RX_DMA_CHANNEL (2U)
 
 #if APP_SRTM_CODEC_WM8524_USED
 #define APP_SAI_RX_DMA_SOURCE (4U)
@@ -74,16 +81,16 @@
 
 #if APP_SRTM_CODEC_WM8524_USED
 /* WM8524 Pin Set*/
-#define APP_CODEC_BUS_PIN (NULL)
-#define APP_CODEC_BUS_PIN_NUM (0)
-#define APP_CODEC_MUTE_PIN (GPIO5)
+#define APP_CODEC_BUS_PIN      (NULL)
+#define APP_CODEC_BUS_PIN_NUM  (0)
+#define APP_CODEC_MUTE_PIN     (GPIO5)
 #define APP_CODEC_MUTE_PIN_NUM (21)
 #endif
 /* Define the timeout ms to polling the CA7 link up status */
 #define APP_LINKUP_TIMER_PERIOD_MS (10U)
 
-#define RPMSG_LITE_SRTM_SHMEM_BASE (0xB8000000U)
-#define RPMSG_LITE_SRTM_LINK_ID (0U)
+#define RPMSG_LITE_SRTM_SHMEM_BASE (VDEV0_VRING_BASE)
+#define RPMSG_LITE_SRTM_LINK_ID    (0U)
 
 #define APP_SRTM_AUDIO_CHANNEL_NAME "rpmsg-audio-channel"
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018, NXP
+ * Copyright 2018-2020, NXP
  * All rights reserved.
  *
  *
@@ -19,6 +19,7 @@
 #include "srtm_message.h"
 #include "srtm_audio_service.h"
 #include "app_srtm.h"
+#include "board.h"
 #include "lpm.h"
 #include "srtm_sai_sdma_adapter.h"
 #include "srtm_rpmsg_endpoint.h"
@@ -38,7 +39,7 @@
  * Definitions
  ******************************************************************************/
 #define APP_MS2TICK(ms) ((ms + portTICK_PERIOD_MS - 1) / portTICK_PERIOD_MS)
-#define BUFFER_LEN (80 * 1024)
+#define BUFFER_LEN      (80 * 1024)
 uint8_t g_buffer[BUFFER_LEN];
 srtm_sai_sdma_local_buf_t g_local_buf = {
     .buf       = (uint8_t *)&g_buffer,
@@ -55,12 +56,6 @@ srtm_sai_sdma_local_buf_t g_local_buf = {
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-typedef enum
-{
-    APP_SRTM_StateRun = 0x0U,
-    APP_SRTM_StateLinkedUp,
-} app_srtm_state_t;
-
 app_rpmsg_monitor_t rpmsgMonitor;
 volatile app_srtm_state_t srtmState = APP_SRTM_StateRun;
 
@@ -106,19 +101,19 @@ bool APP_SRTM_ServiceIdle(void)
     }
 }
 #if APP_SRTM_CODEC_AK4497_USED
-static void APP_SRTM_DSD_SAI_SET(void)
+static void APP_SRTM_DsdSaiSet(void)
 {
     CLOCK_SetRootDivider(kCLOCK_RootSai1, 1U, 16U); /* DSD mode, to get 22.5792MHZ. */
     IOMUXC_SetPinMux(IOMUXC_SAI1_RXD7_SAI1_TX_DATA4, 0U);
 }
-static void APP_SRTM_PCM_SAI_SET(void)
+static void APP_SRTM_PcmSaiSet(void)
 {
     CLOCK_SetRootDivider(kCLOCK_RootSai1, 1U,
                          8U); /* To get 49.152MHZ which supports 768Khz sample frequency music stream. */
     IOMUXC_SetPinMux(IOMUXC_SAI1_RXD7_SAI1_TX_SYNC, 0U);
 }
 #endif
-static uint32_t APP_SRTM_SAI_CLK_SET(mclk_type_t type)
+static uint32_t APP_SRTM_SaiClockSet(mclk_type_t type)
 {
     uint32_t sai_source_clk = 0;
     if (type == SRTM_CLK22M)
@@ -153,6 +148,45 @@ static uint32_t APP_SRTM_SAI_CLK_SET(mclk_type_t type)
     }
     return sai_source_clk;
 }
+
+static void APP_SRTM_ClockGateControl(bool isEnable)
+{
+    if (isEnable)
+    {
+        /* Judge if the Audio PLL1/PLL2  are ON, if not, enable them. */
+        if ((CCM_ANALOG->AUDIO_PLL1_GEN_CTRL & CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_CLKE_MASK) == 0U)
+        {
+            *&(CCM_ANALOG->AUDIO_PLL1_GEN_CTRL) =
+                CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_RST_MASK | CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_CLKE_MASK;
+            while (!(CCM_ANALOG->AUDIO_PLL1_GEN_CTRL & CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_LOCK_MASK))
+            {
+            }
+        }
+
+        if ((CCM_ANALOG->AUDIO_PLL2_GEN_CTRL & CCM_ANALOG_AUDIO_PLL2_GEN_CTRL_PLL_CLKE_MASK) == 0U)
+        {
+            *&(CCM_ANALOG->AUDIO_PLL2_GEN_CTRL) =
+                CCM_ANALOG_AUDIO_PLL2_GEN_CTRL_PLL_RST_MASK | CCM_ANALOG_AUDIO_PLL2_GEN_CTRL_PLL_CLKE_MASK;
+            while (!(CCM_ANALOG->AUDIO_PLL2_GEN_CTRL & CCM_ANALOG_AUDIO_PLL2_GEN_CTRL_PLL_LOCK_MASK))
+            {
+            }
+        }
+    }
+    else
+    {
+        /* Judge if the Audio PLL1/PLL2  are OFF, if not, disable them. */
+        if (CCM_ANALOG->AUDIO_PLL1_GEN_CTRL & CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_CLKE_MASK)
+        {
+            *&(CCM_ANALOG->AUDIO_PLL1_GEN_CTRL) &= ~CCM_ANALOG_AUDIO_PLL1_GEN_CTRL_PLL_CLKE_MASK;
+        }
+
+        if (CCM_ANALOG->AUDIO_PLL2_GEN_CTRL & CCM_ANALOG_AUDIO_PLL2_GEN_CTRL_PLL_CLKE_MASK)
+        {
+            *&(CCM_ANALOG->AUDIO_PLL2_GEN_CTRL) &= ~CCM_ANALOG_AUDIO_PLL2_GEN_CTRL_PLL_CLKE_MASK;
+        }
+    }
+}
+
 #if APP_SRTM_CODEC_AK4497_USED
 static void i2c_release_bus_delay(void)
 {
@@ -260,11 +294,6 @@ static void APP_SRTM_InitI2C(I2C_Type *base, uint32_t baudrate, uint32_t clockra
     I2C_MasterInit(base, &masterConfig, clockrate);
 }
 
-static void APP_SRTM_DeinitI2C()
-{
-    I2C_MasterDeinit(APP_SRTM_I2C);
-}
-
 static status_t APP_SRTM_ReadCodecRegMap(void *handle, uint32_t reg, uint32_t *val)
 {
     status_t status = kStatus_Success;
@@ -353,6 +382,8 @@ static void APP_SRTM_Linkup(void)
 
 static void APP_SRTM_InitPeerCore(void)
 {
+    copyResourceTable();
+
     rpmsgHandle = rpmsg_lite_remote_init((void *)RPMSG_LITE_SRTM_SHMEM_BASE, RPMSG_LITE_SRTM_LINK_ID, RL_NO_FLAGS);
     assert(rpmsgHandle);
     if (rpmsg_lite_is_link_up(rpmsgHandle))
@@ -368,56 +399,47 @@ static void APP_SRTM_InitPeerCore(void)
     }
 }
 
-static void APP_SRTM_InitAudioDevice(void)
+static void APP_SRTM_InitAudioDevice(bool enable)
 {
-    sdma_config_t dmaConfig = {0};
-
-    /* Create SDMA handle */
-    SDMA_GetDefaultConfig(&dmaConfig);
-    dmaConfig.ratio = kSDMA_ARMClockFreq; /* SDMA2 & SDMA3 must set the clock ratio to 1:1. */
-    SDMA_Init(APP_SRTM_DMA, &dmaConfig);
-
-#if APP_SRTM_CODEC_AK4497_USED
-
-    APP_SRTM_InitI2C(APP_SRTM_I2C, APP_SRTM_I2C_BAUDRATE, APP_SRTM_I2C_CLOCK_FREQ);
-    if (!powerOnAudioBoard)
+    if (enable)
     {
-        uint32_t i = 0;
-        APP_SRTM_PowerOnAudioBoard();
-        powerOnAudioBoard = true;
-        /* After power up the audio board, need to wait for a while to make sure the codec on the audio board is stable
-         * and the I2C communication is ok.*/
-        while (i < 25000000)
+        sdma_config_t dmaConfig = {0};
+
+        /* Create SDMA handle */
+        SDMA_GetDefaultConfig(&dmaConfig);
+        dmaConfig.ratio = kSDMA_ARMClockFreq; /* SDMA2 & SDMA3 must set the clock ratio to 1:1. */
+        SDMA_Init(APP_SRTM_DMA, &dmaConfig);
+
+#if APP_SRTM_CODEC_AK4497_USED
+
+        APP_SRTM_InitI2C(APP_SRTM_I2C, APP_SRTM_I2C_BAUDRATE, APP_SRTM_I2C_CLOCK_FREQ);
+        if (!powerOnAudioBoard)
         {
-            __ASM("nop");
-            i++;
+            APP_SRTM_PowerOnAudioBoard();
+            powerOnAudioBoard = true;
+            /* After power up the audio board, need to wait for a while to make sure the codec on the audio board is
+             * stable and the I2C communication is ok.*/
+            SDK_DelayAtLeastUs(500000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
         }
-    }
 #endif
+    }
+    else
+    {
+        SDMA_Deinit(APP_SRTM_DMA);
+    }
 }
 
-static void APP_SRTM_DeinitAudioDevice(void)
-{
-#if APP_SRTM_CODEC_AK4497_USED
-    APP_SRTM_DeinitI2C();
-#endif
-    SDMA_Deinit(APP_SRTM_DMA);
-}
 static void APP_SRTM_InitAudioService(void)
 {
     srtm_sai_sdma_config_t saiTxConfig;
-    srtm_sai_sdma_config_t saiRxConfig;
-
-    APP_SRTM_InitAudioDevice();
 
     memset(&saiTxConfig, 0, sizeof(srtm_sai_sdma_config_t));
-    memset(&saiRxConfig, 0, sizeof(srtm_sai_sdma_config_t));
     /* Create SAI SDMA adapter */
     SAI_GetClassicI2SConfig(&saiTxConfig.config, kSAI_WordWidth16bits, kSAI_Stereo,
                             kSAI_Channel0Mask); /* SAI channel 0 used by default */
     saiTxConfig.dataLine1                  = 0U;
     saiTxConfig.dataLine2                  = 4U; /* SAI channel 4 is used as the another channel for the DSD stream */
-    saiTxConfig.config.fifo.fifoWatermark  = FSL_FEATURE_SAI_FIFO_COUNT - 1;
+    saiTxConfig.config.fifo.fifoWatermark  = FSL_FEATURE_SAI_FIFO_COUNT / 2U;
     saiTxConfig.mclkConfig.mclkSourceClkHz = APP_SAI_CLK_FREQ;
     saiTxConfig.mclkConfig.mclkHz =
         saiTxConfig.mclkConfig.mclkSourceClkHz;     /* Set the output mclk equal to its source clk by default */
@@ -427,36 +449,22 @@ static void APP_SRTM_InitAudioService(void)
     saiTxConfig.threshold     = 1U;   /* Under the threshold value would trigger periodDone message to A53 */
     saiTxConfig.guardTime =
         1000; /* Unit:ms. This is a lower limit that M core should reserve such time data to wakeup A core. */
-    saiTxConfig.dmaChannel      = APP_SAI_TX_DMA_CHANNEL;
-    saiTxConfig.ChannelPriority = APP_SAI_TX_DMA_CHANNEL_PRIORITY;
-    saiTxConfig.eventSource     = APP_SAI_TX_DMA_SOURCE;
+    saiTxConfig.dmaChannel                = APP_SAI_TX_DMA_CHANNEL;
+    saiTxConfig.ChannelPriority           = APP_SAI_TX_DMA_CHANNEL_PRIORITY;
+    saiTxConfig.eventSource               = APP_SAI_TX_DMA_SOURCE;
+    saiTxConfig.extendConfig.audioDevInit = APP_SRTM_InitAudioDevice;
 #if APP_SRTM_CODEC_AK4497_USED
-    saiTxConfig.extendConfig->dsdSaiSetting = APP_SRTM_DSD_SAI_SET;
-    saiTxConfig.extendConfig->pcmSaiSetting = APP_SRTM_PCM_SAI_SET;
+    saiTxConfig.extendConfig.dsdSaiSetting = APP_SRTM_DsdSaiSet;
+    saiTxConfig.extendConfig.pcmSaiSetting = APP_SRTM_PcmSaiSet;
 #endif
 #if APP_SRTM_CODEC_WM8524_USED
-    saiTxConfig.extendConfig->dsdSaiSetting = NULL;
-    saiTxConfig.extendConfig->pcmSaiSetting = NULL;
+    saiTxConfig.extendConfig.dsdSaiSetting = NULL;
+    saiTxConfig.extendConfig.pcmSaiSetting = NULL;
 #endif
-    saiTxConfig.extendConfig->clkSetting = APP_SRTM_SAI_CLK_SET;
+    saiTxConfig.extendConfig.clkSetting = APP_SRTM_SaiClockSet;
+    saiTxConfig.extendConfig.clkGate    = APP_SRTM_ClockGateControl;
 
-    SAI_GetClassicI2SConfig(&saiRxConfig.config, kSAI_WordWidth16bits, kSAI_Stereo,
-                            kSAI_Channel0Mask);            /* SAI channel 0 used by default */
-    saiRxConfig.config.syncMode           = kSAI_ModeSync; /* Rx in sync mode */
-    saiRxConfig.dataLine1                 = 0U;
-    saiRxConfig.config.fifo.fifoWatermark = 1U;
-
-    saiRxConfig.mclkConfig.mclkSourceClkHz = APP_SAI_CLK_FREQ;
-    saiRxConfig.mclkConfig.mclkHz =
-        saiRxConfig.mclkConfig.mclkSourceClkHz; /* Set the output mclk equal to its source clk by default */
-    saiRxConfig.mclkConfig.mclkOutputEnable = true;
-    saiRxConfig.threshold                   = UINT32_MAX; /* Under the threshold value would trigger
-                                                             periodDone message to A53. */
-    saiRxConfig.dmaChannel      = APP_SAI_RX_DMA_CHANNEL;
-    saiRxConfig.ChannelPriority = APP_SAI_RX_DMA_CHANNEL_PRIORITY;
-    saiRxConfig.eventSource     = APP_SAI_RX_DMA_SOURCE;
-
-    saiAdapter = SRTM_SaiSdmaAdapter_Create(APP_SRTM_SAI, APP_SRTM_DMA, &saiTxConfig, &saiRxConfig);
+    saiAdapter = SRTM_SaiSdmaAdapter_Create(APP_SRTM_SAI, APP_SRTM_DMA, &saiTxConfig, NULL);
     assert(saiAdapter);
 #if APP_SRTM_CODEC_AK4497_USED
     AK4497_DefaultConfig(&ak4497Config);
@@ -569,12 +577,13 @@ void APP_SRTM_Init(void)
             ;
     }
 }
+
 void APP_SRTM_Suspend(void)
 {
-    APP_SRTM_DeinitAudioDevice();
+    /* For user use. */
 }
 
 void APP_SRTM_Resume(void)
 {
-    APP_SRTM_InitAudioDevice();
+    /* For user use. */
 }

@@ -11,8 +11,8 @@ at last.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -63,6 +63,3 @@ Receive Msg4 from FIFO: word0 = 0x44444444, word1 = 0x44444444, ID Filter Hit2.
 ==FlexCAN loopback EDMA example -- Finish.==
 
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

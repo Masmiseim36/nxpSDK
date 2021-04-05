@@ -6,8 +6,8 @@ In this example, a flexio simulated i2c master connect to a LPI2C slave
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -62,6 +62,3 @@ Slave received data :
 0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17
 0x18  0x19  0x1A  0x1B  0x1C  0x1D  0x1E  0x1F
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

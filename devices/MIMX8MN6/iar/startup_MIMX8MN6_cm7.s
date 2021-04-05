@@ -4,11 +4,11 @@
 ;            MIMX8MN6_cm7
 ;  @version: 2.0
 ;  @date:    2019-9-23
-;  @build:   b190830
+;  @build:   b200319
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2019 NXP
+; Copyright 2016-2020 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -44,6 +44,9 @@
         PUBLIC  __Vectors_Size
 
         DATA
+
+__iar_init$$done:              ; The vector table is not needed
+                      ; until after copy initialization is done
 
 __vector_table
         DCD     sfe(CSTACK)
@@ -187,7 +190,7 @@ __vector_table_0x1c
         DCD     ENET_MAC0_Rx_Tx_Done1_IRQHandler              ;MAC 0 Receive / Trasmit Frame / Buffer Done
         DCD     ENET_MAC0_Rx_Tx_Done2_IRQHandler              ;MAC 0 Receive / Trasmit Frame / Buffer Done
         DCD     ENET_IRQHandler                               ;MAC 0 IRQ
-        DCD     ENET_1588_IRQHandler                          ;MAC 0 1588 Timer Interrupt - synchronous
+        DCD     ENET_1588_IRQHandler                          ;MAC 0 1588 Timer Interrupt-synchronous
         DCD     ASRC_IRQHandler                               ;ASRC Interrupt
         DCD     Reserved139_IRQHandler                        ;Reserved Interrupt
         DCD     Reserved140_IRQHandler                        ;Reserved Interrupt

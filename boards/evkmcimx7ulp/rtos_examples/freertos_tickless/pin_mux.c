@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2020 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,9 +15,9 @@
 !!GlobalInfo
 product: Pins v8.0
 processor: MCIMX7U5xxxxx
-package_id: MCIMX7U5CVP05
+package_id: MCIMX7U5DVP07
 mcu_data: ksdk2_0
-processor_version: 0.8.5
+processor_version: 8.0.1
 board: MCIMX7ULP-EVK-REV-B
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */

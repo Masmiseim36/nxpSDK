@@ -7,8 +7,8 @@ pulse PWM on 2 channel to control the LED brightness.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -46,6 +46,3 @@ You will see a change in LED brightness if an LED is connected to the FTM pin
 
 If no LED is connected to the FTM pin, then probe the signal using an oscilloscope
 ~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

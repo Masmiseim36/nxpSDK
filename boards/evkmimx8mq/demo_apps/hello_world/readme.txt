@@ -9,8 +9,8 @@ just define DEBUG_CONSOLE_TRANSFER_NON_BLOCKING in your project to use the advan
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  8.50.9
 
 Hardware requirements
 =====================
@@ -45,6 +45,3 @@ The log below shows the output of the hello world demo in the terminal window:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 hello world.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

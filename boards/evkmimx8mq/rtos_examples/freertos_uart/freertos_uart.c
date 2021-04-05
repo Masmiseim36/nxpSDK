@@ -15,19 +15,19 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_uart_freertos.h"
 #include "fsl_uart.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_UART UART2
+#define DEMO_UART          UART2
 #define DEMO_UART_CLK_FREQ BOARD_DEBUG_UART_CLK_FREQ
-#define DEMO_IRQn UART2_IRQn
+#define DEMO_IRQn          UART2_IRQn
 /* Task priorities. */
 #define uart_task_PRIORITY (configMAX_PRIORITIES - 1)
 /*******************************************************************************
@@ -38,9 +38,9 @@ static void uart_task(void *pvParameters);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-const char *to_send               = "FreeRTOS UART driver example!\r\n";
-const char *send_ring_overrun     = "\r\nRing buffer overrun!\r\n";
-const char *send_hardware_overrun = "\r\nHardware buffer overrun!\r\n";
+char *to_send               = "FreeRTOS UART driver example!\r\n";
+char *send_ring_overrun     = "\r\nRing buffer overrun!\r\n";
+char *send_hardware_overrun = "\r\nHardware buffer overrun!\r\n";
 uint8_t background_buffer[32];
 uint8_t recv_buffer[4];
 
@@ -67,7 +67,7 @@ int main(void)
     /* Board specific RDC settings */
     BOARD_RdcInit();
 
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
     BOARD_InitMemory();
@@ -94,13 +94,13 @@ static void uart_task(void *pvParameters)
     uart_config.srcclk = DEMO_UART_CLK_FREQ;
     uart_config.base   = DEMO_UART;
 
-    if (0 > UART_RTOS_Init(&handle, &t_handle, &uart_config))
+    if (kStatus_Success != UART_RTOS_Init(&handle, &t_handle, &uart_config))
     {
         vTaskSuspend(NULL);
     }
 
     /* Send introduction message. */
-    if (0 > UART_RTOS_Send(&handle, (uint8_t *)to_send, strlen(to_send)))
+    if (kStatus_Success != UART_RTOS_Send(&handle, (uint8_t *)to_send, strlen(to_send)))
     {
         vTaskSuspend(NULL);
     }
@@ -129,7 +129,7 @@ static void uart_task(void *pvParameters)
         if (n > 0)
         {
             /* send back the received data */
-            UART_RTOS_Send(&handle, (uint8_t *)recv_buffer, n);
+            UART_RTOS_Send(&handle, recv_buffer, n);
         }
     } while (kStatus_Success == error);
 

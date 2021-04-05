@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,24 +22,25 @@
 
 /*! @name Driver version */
 /*@{*/
-/*!< Version 2.0.1. */
-#define FSL_IRQSTEER_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*!< Version 2.0.2. */
+#define FSL_IRQSTEER_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
 /*@}*/
 
 /*! @brief IRQSTEER interrupt source register width. */
 #define IRQSTEER_INT_SRC_REG_WIDTH 32U
 
 /*! @brief IRQSTEER interrupt source mapping register index. */
-#define IRQSTEER_INT_SRC_REG_INDEX(irq)           \
-    ((FSL_FEATURE_IRQSTEER_CHn_MASK_COUNT - 1U) - \
-     ((irq - FSL_FEATURE_IRQSTEER_IRQ_START_INDEX) / IRQSTEER_INT_SRC_REG_WIDTH))
+#define IRQSTEER_INT_SRC_REG_INDEX(irq)                     \
+    (((uint32_t)FSL_FEATURE_IRQSTEER_CHn_MASK_COUNT - 1U) - \
+     ((irq - (uint32_t)FSL_FEATURE_IRQSTEER_IRQ_START_INDEX) / IRQSTEER_INT_SRC_REG_WIDTH))
 
 /*! @brief IRQSTEER interrupt source mapping bit offset. */
-#define IRQSTEER_INT_SRC_BIT_OFFSET(irq) ((irq - FSL_FEATURE_IRQSTEER_IRQ_START_INDEX) % IRQSTEER_INT_SRC_REG_WIDTH)
+#define IRQSTEER_INT_SRC_BIT_OFFSET(irq) \
+    ((irq - (uint32_t)FSL_FEATURE_IRQSTEER_IRQ_START_INDEX) % IRQSTEER_INT_SRC_REG_WIDTH)
 
 /*! @brief IRQSTEER interrupt source number. */
 #define IRQSTEER_INT_SRC_NUM(regIndex, bitOffset) \
-    (((FSL_FEATURE_IRQSTEER_CHn_MASK_COUNT - 1U - (regIndex)) * IRQSTEER_INT_SRC_REG_WIDTH) + (bitOffset))
+    ((((uint32_t)FSL_FEATURE_IRQSTEER_CHn_MASK_COUNT - 1U - (regIndex)) * (IRQSTEER_INT_SRC_REG_WIDTH)) + (bitOffset))
 
 /*! @brief IRQSTEER interrupt groups. */
 typedef enum _irqsteer_int_group
@@ -117,44 +118,48 @@ void IRQSTEER_Deinit(IRQSTEER_Type *base);
  */
 static inline void IRQSTEER_EnableInterrupt(IRQSTEER_Type *base, IRQn_Type irq)
 {
-    assert(irq >= FSL_FEATURE_IRQSTEER_IRQ_START_INDEX);
+    assert((uint32_t)irq >= (uint32_t)FSL_FEATURE_IRQSTEER_IRQ_START_INDEX);
 
-    base->CHn_MASK[IRQSTEER_INT_SRC_REG_INDEX(irq)] |= (1U << ((uint32_t)IRQSTEER_INT_SRC_BIT_OFFSET(irq)));
+    base->CHn_MASK[((uint32_t)IRQSTEER_INT_SRC_REG_INDEX(((uint32_t)irq)))] |=
+        (1UL << ((uint32_t)IRQSTEER_INT_SRC_BIT_OFFSET(((uint32_t)irq))));
 }
 
 /*!
  * @brief Disables an interrupt source.
  *
  * @param base IRQSTEER peripheral base address.
- * @param intSrc Interrupt source number. The interrupt must be an IRQSTEER source.
+ * @param irq Interrupt source number. The interrupt must be an IRQSTEER source.
  */
 static inline void IRQSTEER_DisableInterrupt(IRQSTEER_Type *base, IRQn_Type irq)
 {
-    assert(irq >= FSL_FEATURE_IRQSTEER_IRQ_START_INDEX);
+    assert(((uint32_t)irq) >= ((uint32_t)FSL_FEATURE_IRQSTEER_IRQ_START_INDEX));
 
-    base->CHn_MASK[IRQSTEER_INT_SRC_REG_INDEX(irq)] &= ~(1U << ((uint32_t)IRQSTEER_INT_SRC_BIT_OFFSET(irq)));
+    base->CHn_MASK[(IRQSTEER_INT_SRC_REG_INDEX(((uint32_t)irq)))] &=
+        ~(1UL << ((uint32_t)IRQSTEER_INT_SRC_BIT_OFFSET(((uint32_t)irq))));
 }
 
 /*!
  * @brief Sets/Forces an interrupt.
  *
  * @param base IRQSTEER peripheral base address.
- * @param intSrc Interrupt to be set/forced. The interrupt must be an IRQSTEER source.
+ * @param irq Interrupt to be set/forced. The interrupt must be an IRQSTEER source.
  * @param set Switcher of the interrupt set/force function. "true" means to set. "false" means not (normal operation).
  * @note This function is not affected by the function @ref IRQSTEER_DisableInterrupt
  * and @ref IRQSTEER_EnableInterrupt.
  */
 static inline void IRQSTEER_SetInterrupt(IRQSTEER_Type *base, IRQn_Type irq, bool set)
 {
-    assert(irq >= FSL_FEATURE_IRQSTEER_IRQ_START_INDEX);
+    assert(((uint32_t)irq) >= ((uint32_t)FSL_FEATURE_IRQSTEER_IRQ_START_INDEX));
 
     if (set)
     {
-        base->CHn_SET[IRQSTEER_INT_SRC_REG_INDEX(irq)] |= (1U << ((uint32_t)IRQSTEER_INT_SRC_BIT_OFFSET(irq)));
+        base->CHn_SET[((uint32_t)IRQSTEER_INT_SRC_REG_INDEX(((uint32_t)irq)))] |=
+            (1UL << ((uint32_t)IRQSTEER_INT_SRC_BIT_OFFSET(((uint32_t)irq))));
     }
     else
     {
-        base->CHn_SET[IRQSTEER_INT_SRC_REG_INDEX(irq)] &= ~(1U << ((uint32_t)IRQSTEER_INT_SRC_BIT_OFFSET(irq)));
+        base->CHn_SET[((uint32_t)IRQSTEER_INT_SRC_REG_INDEX(((uint32_t)irq)))] &=
+            ~(1UL << ((uint32_t)IRQSTEER_INT_SRC_BIT_OFFSET(((uint32_t)irq))));
     }
 }
 
@@ -162,7 +167,8 @@ static inline void IRQSTEER_SetInterrupt(IRQSTEER_Type *base, IRQn_Type irq, boo
  * @brief Enables a master interrupt. By default, all the master interrupts are enabled.
  *
  * @param base IRQSTEER peripheral base address.
- * @param intMasterIndex Master index of interrupt sources to be routed. @ref "irqsteer_int_master_t".
+ * @param intMasterIndex Master index of interrupt sources to be routed, options available in enumeration
+ * ::irqsteer_int_master_t.
  *
  * For example, to enable the interrupt sources of master 1:
  * @code
@@ -171,14 +177,15 @@ static inline void IRQSTEER_SetInterrupt(IRQSTEER_Type *base, IRQn_Type irq, boo
  */
 static inline void IRQSTEER_EnableMasterInterrupt(IRQSTEER_Type *base, irqsteer_int_master_t intMasterIndex)
 {
-    base->CHn_MINTDIS &= ~(1U << ((uint32_t)intMasterIndex));
+    base->CHn_MINTDIS &= ~(1UL << ((uint32_t)intMasterIndex));
 }
 
 /*!
  * @brief Disables a master interrupt.
  *
  * @param base IRQSTEER peripheral base address.
- * @param intMasterIndex Master index of interrupt sources to be disabled. @ref "irqsteer_int_master_t".
+ * @param intMasterIndex Master index of interrupt sources to be disabled, options available in enumeration
+ * ::irqsteer_int_master_t.
  *
  * For example, to disable the interrupt sources of master 1:
  * @code
@@ -187,7 +194,7 @@ static inline void IRQSTEER_EnableMasterInterrupt(IRQSTEER_Type *base, irqsteer_
  */
 static inline void IRQSTEER_DisableMasterInterrupt(IRQSTEER_Type *base, irqsteer_int_master_t intMasterIndex)
 {
-    base->CHn_MINTDIS |= (1U << ((uint32_t)intMasterIndex));
+    base->CHn_MINTDIS |= (1UL << ((uint32_t)intMasterIndex));
 }
 
 /*@}*/
@@ -199,7 +206,7 @@ static inline void IRQSTEER_DisableMasterInterrupt(IRQSTEER_Type *base, irqsteer
  * @brief Checks the status of one specific IRQSTEER interrupt.
  *
  * @param base IRQSTEER peripheral base address.
- * @param intSrc Interrupt source status to be checked. The interrupt must be an IRQSTEER source.
+ * @param irq Interrupt source status to be checked. The interrupt must be an IRQSTEER source.
  * @return The interrupt status. "true" means interrupt set. "false" means not.
  *
  * For example, to check whether interrupt from output 0 of Display 1 is set:
@@ -212,10 +219,10 @@ static inline void IRQSTEER_DisableMasterInterrupt(IRQSTEER_Type *base, irqsteer
  */
 static inline bool IRQSTEER_IsInterruptSet(IRQSTEER_Type *base, IRQn_Type irq)
 {
-    assert(irq >= FSL_FEATURE_IRQSTEER_IRQ_START_INDEX);
+    assert(((uint32_t)irq) >= ((uint32_t)FSL_FEATURE_IRQSTEER_IRQ_START_INDEX));
 
-    return (bool)(base->CHn_STATUS[IRQSTEER_INT_SRC_REG_INDEX(irq)] &
-                  (1U << ((uint32_t)IRQSTEER_INT_SRC_BIT_OFFSET(irq))));
+    return (bool)(base->CHn_STATUS[((uint32_t)(IRQSTEER_INT_SRC_REG_INDEX(((uint32_t)irq))))] &
+                  (1UL << ((uint32_t)(IRQSTEER_INT_SRC_BIT_OFFSET(((uint32_t)irq))))));
 }
 
 /*!
@@ -250,7 +257,7 @@ static inline uint32_t IRQSTEER_GetGroupInterruptStatus(IRQSTEER_Type *base, irq
  * @brief Gets the next interrupt source (currently set) of one specific master.
  *
  * @param base IRQSTEER peripheral base address.
- * @param intMasterIndex Master index of interrupt sources. @ref "irqsteer_int_master_t".
+ * @param intMasterIndex Master index of interrupt sources, options available in enumeration ::irqsteer_int_master_t.
  * @return The current set next interrupt source number of one specific master.
  *         Return IRQSTEER_INT_Invalid if no interrupt set.
  */

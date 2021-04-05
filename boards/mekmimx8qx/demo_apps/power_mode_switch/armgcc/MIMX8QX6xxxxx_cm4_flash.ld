@@ -28,6 +28,9 @@ HEAP_SIZE  = DEFINED(__heap_size__)  ? __heap_size__  : 0x0400;
 STACK_SIZE = DEFINED(__stack_size__) ? __stack_size__ : 0x0400;
 RSTACK_SIZE = DEFINED(__resume_stack_size__) ? __resume_stack_size__ : 0x0400;
 
+/* Reserved for PFU fetches, which is six 16-bit Thumb instructions */
+SAFE_BOUNDARY_LEN = 12;
+
 /* Specify the memory areas */
 /* M4 always start up from TCM. The SCU will copy the first 32 bytes of the binary to TCM
 if the start address is not TCM. The TCM region [0x1FFE0000-0x1FFE001F] is reserved for this purpose. */
@@ -51,6 +54,13 @@ SECTIONS
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(8);
   } > m_interrupts
+
+  .resource_table :
+  {
+    . = ALIGN(8);
+    KEEP(*(.resource_table)) /* Resource table */
+    . = ALIGN(8);
+  } > m_text
 
   /* The program code and other data goes into internal RAM */
   .text :
@@ -159,6 +169,7 @@ SECTIONS
     __quickaccess_start__ = .;
     . = ALIGN(32);
     *(CodeQuickAccess)
+    . += SAFE_BOUNDARY_LEN;
     *(DataQuickAccess)
     . = ALIGN(128);
     __quickaccess_end__ = .;

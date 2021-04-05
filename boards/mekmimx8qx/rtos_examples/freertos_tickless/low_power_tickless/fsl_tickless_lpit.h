@@ -17,6 +17,8 @@
 #define configLPIT_CLOCK_HZ CLOCK_GetIpFreq(kCLOCK_M4_0_Lpit)
 #elif defined(CPU_MIMX8QX6AVLFZ)
 #define configLPIT_CLOCK_HZ CLOCK_GetIpFreq(kCLOCK_M4_0_Lpit)
+#elif defined(CPU_MIMX8DL1AVNFZ)
+#define configLPIT_CLOCK_HZ CLOCK_GetIpFreq(kCLOCK_M4_0_Lpit)
 #endif
 /* The LPIT is a 32-bit counter. */
 #define portMAX_32_BIT_NUMBER (0xffffffffUL)

@@ -7,38 +7,38 @@
  */
 
 /*  SDK Included Files */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LPI2C_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_DMA_Lpi2c1)
+#define LPI2C_CLOCK_FREQUENCY    CLOCK_GetIpFreq(kCLOCK_DMA_Lpi2c1)
 #define BOARD_ACCEL_I2C_BASEADDR ADMA__LPI2C1
 
-#define EXAMPLE_IOEXP_LPI2C_BAUDRATE (400000) /*in i2c example it is 100000*/
+#define EXAMPLE_IOEXP_LPI2C_BAUDRATE               (400000) /*in i2c example it is 100000*/
 #define EXAMPLE_IOEXP_LPI2C_MASTER_CLOCK_FREQUENCY SC_133MHZ
-#define EXAMPLE_IOEXP_LPI2C_MASTER ADMA__LPI2C1
-#define EXAMPLE_I2C_EXPANSION_A_ADDR (0x1A)
+#define EXAMPLE_IOEXP_LPI2C_MASTER                 ADMA__LPI2C1
+#define EXAMPLE_I2C_EXPANSION_A_ADDR               (0x1A)
 
 /*! @brief PCA9557 Registers address definition. */
-#define PCA9557_REG_INTPUT_PORT (0x00)
-#define PCA9557_REG_OUTPUT_PORT (0x01)
+#define PCA9557_REG_INTPUT_PORT        (0x00)
+#define PCA9557_REG_OUTPUT_PORT        (0x01)
 #define PCA9557_REG_POLARITY_INVERSION (0x02)
-#define PCA9557_REG_CONFIGURATION (0x03)
+#define PCA9557_REG_CONFIGURATION      (0x03)
 
 #define EXAMPLE_I2C_SWITCH_ADDR (0x71)
-#define I2C_BAUDRATE 100000U
-#define FXOS8700_WHOAMI 0xC7U
-#define MMA8451_WHOAMI 0x1AU
-#define ACCEL_STATUS 0x00U
+#define I2C_BAUDRATE       100000U
+#define FXOS8700_WHOAMI    0xC7U
+#define MMA8451_WHOAMI     0x1AU
+#define ACCEL_STATUS       0x00U
 #define ACCEL_XYZ_DATA_CFG 0x0EU
-#define ACCEL_CTRL_REG1 0x2AU
+#define ACCEL_CTRL_REG1    0x2AU
 /* FXOS8700 and MMA8451 have the same who_am_i register address. */
 #define ACCEL_WHOAMI_REG 0x0DU
 #define ACCEL_READ_TIMES 10U
@@ -207,7 +207,7 @@ static bool LPI2C_ReadAccelWhoAmI(void)
     uint8_t who_am_i_value        = 0x00;
     uint8_t accel_addr_array_size = 0x00;
     bool result                   = false;
-    uint8_t i                     = 0;
+    uint8_t i                     = 0U;
     status_t reVal                = kStatus_Fail;
 
     lpi2c_master_transfer_t masterXfer;
@@ -241,14 +241,17 @@ static bool LPI2C_ReadAccelWhoAmI(void)
 
         if (completionFlag == true)
         {
-            completionFlag     = false;
             g_accel_addr_found = masterXfer.slaveAddress;
             break;
         }
+
+        /* Delay at least one clock cycle to make sure the bus is idle. */
+        SDK_DelayAtLeastUs(1000000UL / I2C_BAUDRATE, SystemCoreClock); 
     }
 
-    if (reVal == kStatus_Success)
+    if (completionFlag)
     {
+        completionFlag     = false;
         if (who_am_i_value == FXOS8700_WHOAMI)
         {
             PRINTF("Found an FXOS8700 on board , the device address is 0x%x . \r\n", masterXfer.slaveAddress);

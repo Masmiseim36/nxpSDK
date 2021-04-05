@@ -6,8 +6,9 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "fsl_wm8524.h"
 #include "fsl_codec_adapter.h"
+#include "fsl_codec_common.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -30,19 +31,19 @@ static const codec_capability_t s_wm8524_capability;
  * param config codec configuration.
  * return kStatus_Success is success, else initial failed.
  */
-status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
+status_t HAL_CODEC_Init(void *handle, void *config)
 {
     assert((config != NULL) && (handle != NULL));
 
     codec_config_t *codecConfig = (codec_config_t *)config;
 
-    wm8524_config_t *wm8524Config = (wm8524_config_t *)(codecConfig->codecDevConfig);
-    wm8524_handle_t *wm8524Handle = (wm8524_handle_t *)((uint32_t)(handle->codecDevHandle));
+    wm8524_config_t *devConfig = (wm8524_config_t *)(codecConfig->codecDevConfig);
+    wm8524_handle_t *devHandle = (wm8524_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle));
 
-    handle->codecCapability = &s_wm8524_capability;
+    ((codec_handle_t *)handle)->codecCapability = &s_wm8524_capability;
 
     /* codec device initialization */
-    return WM8524_Init(wm8524Handle, wm8524Config);
+    return WM8524_Init(devHandle, devConfig);
 }
 
 /*!
@@ -51,7 +52,7 @@ status_t HAL_CODEC_Init(codec_handle_t *handle, void *config)
  * param handle codec handle.
  * return kStatus_Success is success, else de-initial failed.
  */
-status_t HAL_CODEC_Deinit(codec_handle_t *handle)
+status_t HAL_CODEC_Deinit(void *handle)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -65,9 +66,15 @@ status_t HAL_CODEC_Deinit(codec_handle_t *handle)
  * param bitWidth bit width.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
+status_t HAL_CODEC_SetFormat(void *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
 {
-    return kStatus_CODEC_NotSupport;
+    /* wm8524 support sample rate range:8K~192k */
+    if ((sampleRate < 8000U) || ((sampleRate > 192000U)))
+    {
+        return kStatus_CODEC_NotSupport;
+    }
+
+    return kStatus_Success;
 }
 
 /*!
@@ -78,7 +85,7 @@ status_t HAL_CODEC_SetFormat(codec_handle_t *handle, uint32_t mclk, uint32_t sam
  * param volume volume value, support 0 ~ 100, 0 is mute, 100 is the maximum volume value.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint32_t volume)
+status_t HAL_CODEC_SetVolume(void *handle, uint32_t playChannel, uint32_t volume)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -91,11 +98,11 @@ status_t HAL_CODEC_SetVolume(codec_handle_t *handle, uint32_t playChannel, uint3
  * param isMute true is mute, false is unmute.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool isMute)
+status_t HAL_CODEC_SetMute(void *handle, uint32_t playChannel, bool isMute)
 {
     assert(handle != NULL);
 
-    WM8524_SetMute((wm8524_handle_t *)((uint32_t)(handle->codecDevHandle)), isMute);
+    WM8524_SetMute((wm8524_handle_t *)((uint32_t)(((codec_handle_t *)handle)->codecDevHandle)), isMute);
 
     return kStatus_Success;
 }
@@ -108,7 +115,7 @@ status_t HAL_CODEC_SetMute(codec_handle_t *handle, uint32_t playChannel, bool is
  * param powerOn true is power on, false is power down.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool powerOn)
+status_t HAL_CODEC_SetPower(void *handle, uint32_t module, bool powerOn)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -124,7 +131,7 @@ status_t HAL_CODEC_SetPower(codec_handle_t *handle, codec_module_t module, bool 
 
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
+status_t HAL_CODEC_SetRecordChannel(void *handle, uint32_t leftRecordChannel, uint32_t rightRecordChannel)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -137,7 +144,7 @@ status_t HAL_CODEC_SetRecordChannel(codec_handle_t *handle, uint32_t leftRecordC
  *
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
+status_t HAL_CODEC_SetRecord(void *handle, uint32_t recordSource)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -150,7 +157,7 @@ status_t HAL_CODEC_SetRecord(codec_handle_t *handle, uint32_t recordSource)
  *
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
+status_t HAL_CODEC_SetPlay(void *handle, uint32_t playSource)
 {
     return kStatus_CODEC_NotSupport;
 }
@@ -165,7 +172,7 @@ status_t HAL_CODEC_SetPlay(codec_handle_t *handle, uint32_t playSource)
  *  codec specific driver for detail configurations.
  * return kStatus_Success is success, else configure failed.
  */
-status_t HAL_CODEC_ModuleControl(codec_handle_t *handle, codec_module_ctrl_cmd_t cmd, uint32_t data)
+status_t HAL_CODEC_ModuleControl(void *handle, uint32_t cmd, uint32_t data)
 {
     return kStatus_CODEC_NotSupport;
 }

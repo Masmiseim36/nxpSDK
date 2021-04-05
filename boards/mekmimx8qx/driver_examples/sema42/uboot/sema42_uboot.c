@@ -8,20 +8,20 @@
 
 #include "fsl_common.h"
 #include "fsl_sema42.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_lpuart.h"
 #include "main/imx8qx_pads.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_SEMA42 CM4__SEMA42
-#define APP_SEMA42_GATE 0
-#define APP_CORTEX_M_DID 3
-#define APP_CORTEX_A_DID 0
+#define APP_SEMA42           CM4__SEMA42
+#define APP_SEMA42_GATE      0
+#define APP_CORTEX_M_DID     3
+#define APP_CORTEX_A_DID     0
 #define APP_SEMA42_GATE_ADDR 0x371b0003 /* Remote address of the SEMA42 gate. */
 
 

@@ -10,7 +10,7 @@
 
 /* Component ID definition, used by tools. */
 #ifndef FSL_COMPONENT_ID
-#define FSL_COMPONENT_ID "platform.drivers.asrc"
+#define FSL_COMPONENT_ID "platform.drivers.easrc"
 #endif
 
 /*******************************************************************************
@@ -44,9 +44,11 @@ typedef enum _asrc_samplerate_ratio_format
 #define ASRC_GET_SLOT1_CHANNEL_NUMBER(context)                                          \
     ((base->PROC_CTRL_SLOT1_R0[context] & ASRC_PROC_CTRL_SLOT1_R0_SLOT1_NUM_CH_MASK) >> \
      ASRC_PROC_CTRL_SLOT1_R0_SLOT1_NUM_CH_SHIFT)
-#define ASRC_IS_CONTEXT_ENABLED(index) (base->CTX_CTRL[index] & ASRC_CTX_CTRL_RUN_EN_MASK)
-#define ASRC_IS_SLOT0_ENABLED(context) (base->PROC_CTRL_SLOT0_R0[context] & ASRC_PROC_CTRL_SLOT0_R0_SLOT0_EN_MASK)
-#define ASRC_IS_SLOT1_ENABLED(context) (base->PROC_CTRL_SLOT1_R0[context] & ASRC_PROC_CTRL_SLOT1_R0_SLOT1_EN_MASK)
+#define ASRC_IS_CONTEXT_ENABLED(index) ((base->CTX_CTRL[index] & ASRC_CTX_CTRL_RUN_EN_MASK) != 0U)
+#define ASRC_IS_SLOT0_ENABLED(context) \
+    ((base->PROC_CTRL_SLOT0_R0[context] & ASRC_PROC_CTRL_SLOT0_R0_SLOT0_EN_MASK) != 0U)
+#define ASRC_IS_SLOT1_ENABLED(context) \
+    ((base->PROC_CTRL_SLOT1_R0[context] & ASRC_PROC_CTRL_SLOT1_R0_SLOT1_EN_MASK) != 0U)
 
 /*******************************************************************************
  * Prototypes
@@ -223,7 +225,7 @@ static uint32_t ASRC_GetSampleRateGCD(uint32_t inputSampleRate, uint32_t outputS
 {
     uint32_t temp = 0U, gcd = inputSampleRate;
 
-    while (outputSampleRate != 0)
+    while (outputSampleRate != 0U)
     {
         temp             = outputSampleRate;
         outputSampleRate = gcd % outputSampleRate;
@@ -244,7 +246,7 @@ static void ASRC_GetAvalibleContextSlot(ASRC_Type *base,
     if (ASRC_IS_SLOT0_ENABLED(contextProcessor))
     {
         contextIndex = ASRC_GET_SLOT0_CONTEXT_INDEX(contextProcessor);
-        if (ASRC_IS_CONTEXT_ENABLED(contextIndex) != 0U)
+        if (ASRC_IS_CONTEXT_ENABLED(contextIndex))
         {
             *slot0UsedChannel = ASRC_GET_SLOT0_CHANNEL_NUMBER(contextProcessor);
         }
@@ -253,7 +255,7 @@ static void ASRC_GetAvalibleContextSlot(ASRC_Type *base,
     if (ASRC_IS_SLOT1_ENABLED(contextProcessor))
     {
         contextIndex = ASRC_GET_SLOT1_CONTEXT_INDEX(contextProcessor);
-        if (ASRC_IS_CONTEXT_ENABLED(contextIndex) != 0U)
+        if (ASRC_IS_CONTEXT_ENABLED(contextIndex))
         {
             *slot1UsedChannel = ASRC_GET_SLOT1_CHANNEL_NUMBER(contextProcessor);
         }
@@ -273,14 +275,16 @@ static void ASRC_EnableContextSlot(ASRC_Type *base,
     {
         base->PROC_CTRL_SLOT0_R0[contextProcessor] =
             ASRC_PROC_CTRL_SLOT0_R0_SLOT0_EN_MASK | ASRC_PROC_CTRL_SLOT0_R0_SLOT0_CTX_NUM(runingContext) |
-            ASRC_PROC_CTRL_SLOT0_R0_SLOT0_NUM_CH(channelNums - 1) | ASRC_PROC_CTRL_SLOT0_R0_SLOT0_MIN_CH(startChannel) |
+            ASRC_PROC_CTRL_SLOT0_R0_SLOT0_NUM_CH(channelNums - 1U) |
+            ASRC_PROC_CTRL_SLOT0_R0_SLOT0_MIN_CH(startChannel) |
             ASRC_PROC_CTRL_SLOT0_R0_SLOT0_MAX_CH(startChannel + channelNums - 1U);
     }
     else
     {
         base->PROC_CTRL_SLOT1_R0[contextProcessor] =
             ASRC_PROC_CTRL_SLOT1_R0_SLOT1_EN_MASK | ASRC_PROC_CTRL_SLOT1_R0_SLOT1_CTX_NUM(runingContext) |
-            ASRC_PROC_CTRL_SLOT1_R0_SLOT1_NUM_CH(channelNums - 1) | ASRC_PROC_CTRL_SLOT1_R0_SLOT1_MIN_CH(startChannel) |
+            ASRC_PROC_CTRL_SLOT1_R0_SLOT1_NUM_CH(channelNums - 1U) |
+            ASRC_PROC_CTRL_SLOT1_R0_SLOT1_MIN_CH(startChannel) |
             ASRC_PROC_CTRL_SLOT1_R0_SLOT1_MAX_CH(startChannel + channelNums - 1U);
     }
 }
@@ -302,7 +306,7 @@ static status_t ASRC_SetSampleRateRatioConfig(ASRC_Type *base,
     {
         fracBits = 39U;
     }
-    else if (kASRC_SampleRateRatio6Int38Frac)
+    else if (format == kASRC_SampleRateRatio6Int38Frac)
     {
         fracBits = 38U;
     }
@@ -313,8 +317,8 @@ static status_t ASRC_SetSampleRateRatioConfig(ASRC_Type *base,
 
     ratio = ((uint64_t)inRate << fracBits) / outRate;
 
-    base->RS_RATIO_LOW[context].RS_RATIO_LOW  = ratio & 0xFFFFFFFFU;
-    base->RS_RATIO_LOW[context].RS_RATIO_HIGH = (ratio >> 32U) & 0xFFFFFFFFU;
+    base->RS_RATIO_LOW[context].RS_RATIO_LOW  = (uint32_t)ratio & 0xFFFFFFFFU;
+    base->RS_RATIO_LOW[context].RS_RATIO_HIGH = ((uint32_t)(ratio >> 32U)) & 0xFFFFFFFFU;
 
     return kStatus_Success;
 }
@@ -383,7 +387,7 @@ static status_t ASRC_GetResamplerConfig(asrc_context_resampler_config_t *config,
             return kStatus_InvalidArgument;
         }
 
-        if (firmware[offset + ASRC_FILTER_INTERPOLATION_TAP_INDEX] == (interpolationTap + 1U))
+        if (firmware[offset + ASRC_FILTER_INTERPOLATION_TAP_INDEX] == ((uint32_t)interpolationTap + 1U))
         {
             config->filterPhases = firmware[offset + ASRC_FILTER_INTERPOLATION_PHASE_INDEX];
             config->filterCenterTap =
@@ -432,11 +436,11 @@ static status_t ASRC_SetPrefilterConfig(ASRC_Type *base,
                   ASRC_CTX_CTRL_EXT1_PF_STOP_MODE(config->stopMode) |
                   ASRC_CTX_CTRL_EXT1_PF_EXPANSION_FACTOR(config->filterSt1Exp - 1U) |
                   ASRC_CTX_CTRL_EXT1_PF_ST1_WB_FLOAT(config->stage1Result) |
-                  ASRC_CTX_CTRL_EXT1_PF_TWO_STAGE_EN(config->filterSt2Taps ? 1U : 0U);
+                  ASRC_CTX_CTRL_EXT1_PF_TWO_STAGE_EN(config->filterSt2Taps != 0U ? 1U : 0U);
 
     base->CTX_CTRL_EXT1[context] = contextReg;
-    base->CTX_CTRL_EXT2[context] = ASRC_CTX_CTRL_EXT2_ST1_NUM_TAPS(config->filterSt1Taps - 1) |
-                                   ASRC_CTX_CTRL_EXT2_ST2_NUM_TAPS(config->filterSt2Taps - 1);
+    base->CTX_CTRL_EXT2[context] = ASRC_CTX_CTRL_EXT2_ST1_NUM_TAPS(config->filterSt1Taps - 1U) |
+                                   ASRC_CTX_CTRL_EXT2_ST2_NUM_TAPS(config->filterSt2Taps - 1U);
 
     /* reset prefilter coefficient memory */
     ASRC_SetPrefilterCoeffMemReset(base, context);
@@ -449,7 +453,7 @@ static status_t ASRC_SetPrefilterConfig(ASRC_Type *base,
     /* reset prefilter coefficient memory */
     ASRC_SetPrefilterCoeffMemReset(base, context);
     /* load stage2 */
-    if (config->filterSt2Taps)
+    if (config->filterSt2Taps != 0U)
     {
         base->CTX_CTRL_EXT1[context] |= ASRC_CTX_CTRL_EXT1_PF_COEFF_STAGE_WR_MASK;
         for (j = 0; j < ((config->filterSt2Taps + 1U) / 2U) * 2U; j++)
@@ -474,8 +478,8 @@ static status_t ASRC_SetResamplerConfig(ASRC_Type *base,
     base->CTX_CTRL_EXT1[context] = contextReg;
 
     /* center tap */
-    base->RS_CT_LOW  = config->filterCenterTap & 0xFFFFFFFFU;
-    base->RS_CT_HIGH = (config->filterCenterTap >> 32U) & 0xFFFFFFFFU;
+    base->RS_CT_LOW  = (uint32_t)config->filterCenterTap & 0xFFFFFFFFU;
+    base->RS_CT_HIGH = (uint32_t)(config->filterCenterTap >> 32U) & 0xFFFFFFFFU;
 
     /* resampler taps */
     contextReg = base->CTX_RS_COEFF_CTRL;
@@ -540,14 +544,14 @@ static status_t ASRC_SetSlotConfig(ASRC_Type *base,
             avalibleContext = i;
         }
         /* context slot 0 is busy, slot 1 is idle */
-        if ((slot0UsedChannel != 0U) && (slot1UsedChannel == 0U))
+        else if (slot0UsedChannel != 0U)
         {
             avalibleSlot    = 1U;
             avalibleChannel = ASRC_SUPPORT_MAXIMUM_CHANNEL_NUMBER - slot0UsedChannel;
             avalibleContext = i;
         }
-        /* context slot0 is idle, slot 1 is busy */
-        if ((slot0UsedChannel == 0U) && (slot1UsedChannel != 0U))
+        /* context slot0 is idle, slot 1 is busy, ((slot0UsedChannel == 0U) && (slot1UsedChannel != 0U))*/
+        else
         {
             avalibleSlot    = 0U;
             avalibleChannel = ASRC_SUPPORT_MAXIMUM_CHANNEL_NUMBER - slot1UsedChannel;
@@ -561,7 +565,7 @@ static status_t ASRC_SetSlotConfig(ASRC_Type *base,
 
         if (avalibleSlot == 0U)
         {
-            if (config->filterSt2Taps)
+            if (config->filterSt2Taps != 0U)
             {
                 stage1Exp     = (config->filterSt1Exp - 1U) * avalibleChannel;
                 stage1MemSize = (config->filterSt1Taps - 1U) * config->filterSt1Exp * avalibleChannel + avalibleChannel;
@@ -583,7 +587,7 @@ static status_t ASRC_SetSlotConfig(ASRC_Type *base,
         }
         else
         {
-            if (config->filterSt2Taps)
+            if (config->filterSt2Taps != 0U)
             {
                 stage1Exp     = (config->filterSt1Exp - 1U) * avalibleChannel;
                 stage1MemSize = (config->filterSt1Taps - 1U) * config->filterSt1Exp * avalibleChannel + avalibleChannel;
@@ -630,6 +634,9 @@ static status_t ASRC_SetContextProcessorConfig(ASRC_Type *base, asrc_context_t c
     }
     else
     {
+        /* ensure resampler is not bypassed */
+        ASRC_EnableResamplerBypass(base, context, false);
+
         if (config->contextResampler.filterCoeffAddress == NULL)
         {
             if (ASRC_GetResamplerConfig(&config->contextResampler, config->contextResampler.tap) != kStatus_Success)
@@ -652,11 +659,13 @@ static status_t ASRC_SetContextProcessorConfig(ASRC_Type *base, asrc_context_t c
     }
     else
     {
+        /* ensure prefilter not in bypass mode */
+        ASRC_EnablePreFilterBypass(base, context, false);
         /* load default configuration if not assigned by application */
         if (config->contextPrefilter.filterCoeffAddress == NULL)
         {
             if (ASRC_GetPrefiterConfig(&config->contextPrefilter, config->contextInput.sampleRate,
-                                       config->contextOutput.sampleRate))
+                                       config->contextOutput.sampleRate) == kStatus_InvalidArgument)
             {
                 return kStatus_InvalidArgument;
             }
@@ -773,19 +782,21 @@ status_t ASRC_SetContextOutputConfig(ASRC_Type *base, asrc_context_t context, as
 
     if (config->enableIEC60958)
     {
-        switch (config->dataFormat.dataWidth)
+        if (config->dataFormat.dataWidth == kASRC_DataWidth16Bit)
         {
-            case kASRC_DataWidth16Bit:
-                samplePosition = 12U;
-                break;
-            case kASRC_DataWidth24Bit:
-                samplePosition = 8U;
-                break;
-            case kASRC_DataWidth32Bit:
-                samplePosition = 4U;
-                break;
-            default:
-                return kStatus_InvalidArgument;
+            samplePosition = 12U;
+        }
+        else if (config->dataFormat.dataWidth == kASRC_DataWidth24Bit)
+        {
+            samplePosition = 8U;
+        }
+        else if (config->dataFormat.dataWidth == kASRC_DataWidth32Bit)
+        {
+            samplePosition = 4U;
+        }
+        else
+        {
+            return kStatus_InvalidArgument;
         }
 
         contextReg |= ASRC_CTX_OUT_CTRL_IEC_V_DATA_MASK;
@@ -823,13 +834,13 @@ void ASRC_GetContextDefaultConfig(asrc_context_config_t *config,
 {
     assert(config != NULL);
 
-    memset(config, 0U, sizeof(asrc_context_config_t));
+    (void)memset(config, 0, sizeof(asrc_context_config_t));
 
-    config->contextChannelNums = channels;
+    config->contextChannelNums = (uint8_t)channels;
 
     /* input configuration */
     config->contextInput.sampleRate                  = inSampleRate;
-    config->contextInput.watermark                   = FSL_ASRC_INPUT_FIFO_DEPTH / 2;
+    config->contextInput.watermark                   = FSL_ASRC_INPUT_FIFO_DEPTH / 2U;
     config->contextInput.accessCtrl.accessIterations = 1;
     config->contextInput.accessCtrl.accessGroupLen   = 2;
     config->contextInput.accessCtrl.accessLen        = 2;
@@ -840,7 +851,7 @@ void ASRC_GetContextDefaultConfig(asrc_context_config_t *config,
     config->contextInput.dataFormat.dataSign         = kASRC_DataSigned;
     /* output configuration */
     config->contextOutput.sampleRate                  = outSampleRate;
-    config->contextOutput.watermark                   = FSL_ASRC_OUTPUT_FIFO_DEPTH / 8;
+    config->contextOutput.watermark                   = FSL_ASRC_OUTPUT_FIFO_DEPTH / 8U;
     config->contextOutput.accessCtrl.accessIterations = 1;
     config->contextOutput.accessCtrl.accessGroupLen   = 2;
     config->contextOutput.accessCtrl.accessLen        = 2;
@@ -880,17 +891,17 @@ status_t ASRC_SetContextConfig(ASRC_Type *base, asrc_context_t context, asrc_con
         return kStatus_InvalidArgument;
     }
 
-    if (((config->contextInput.sampleRate < kASRC_SampleRate_8000) &&
-         (config->contextInput.sampleRate > kASRC_SampleRate_768000)) ||
-        ((config->contextOutput.sampleRate < kASRC_SampleRate_8000) &&
-         (config->contextOutput.sampleRate > kASRC_SampleRate_768000)))
+    if (((config->contextInput.sampleRate < (uint32_t)kASRC_SampleRate_8000) ||
+         (config->contextInput.sampleRate > (uint32_t)kASRC_SampleRate_768000)) ||
+        ((config->contextOutput.sampleRate < (uint32_t)kASRC_SampleRate_8000) ||
+         (config->contextOutput.sampleRate > (uint32_t)kASRC_SampleRate_768000)))
     {
         return kStatus_InvalidArgument;
     }
 
     /* sampel ratio configure */
     if (ASRC_SetSampleRateRatioConfig(base, context, config->contextInput.sampleRate, config->contextOutput.sampleRate,
-                                      (asrc_samplerate_ratio_format_t)config->contextResampler.tap))
+                                      (asrc_samplerate_ratio_format_t)config->contextResampler.tap) != kStatus_Success)
     {
         return kStatus_ASRCConfigureFailed;
     }
@@ -929,8 +940,8 @@ status_t ASRC_SetContextConfig(ASRC_Type *base, asrc_context_t context, asrc_con
 uint32_t ASRC_GetContextOutSampleSize(
     uint32_t inSampleRate, uint32_t inSamplesSize, uint32_t inWidth, uint32_t outSampleRate, uint32_t outWidth)
 {
-    uint32_t reminder = ((uint64_t)(inSamplesSize / inWidth) * outSampleRate % inSampleRate) == 0U ? 0U : 1U;
-    uint32_t quotient = (uint32_t)((uint64_t)(inSamplesSize / inWidth) * outSampleRate / inSampleRate);
+    uint32_t reminder = (((uint64_t)inSamplesSize / inWidth) * outSampleRate % inSampleRate) == 0U ? 0U : 1U;
+    uint32_t quotient = (uint32_t)(((uint64_t)inSamplesSize / inWidth) * outSampleRate / inSampleRate);
 
     return (reminder + quotient) * outWidth;
 }
@@ -968,7 +979,7 @@ uint32_t ASRC_ReadFIFORemainedSample(
     for (i = 0U; i < sizeToRead; i++)
     {
         *outAddr = ASRC_ReadContextFifo(base, context);
-        outAddr  = (uint32_t *)((uint32_t)outAddr + outWidth);
+        outAddr  = (uint32_t *)((size_t)outAddr + outWidth);
     }
 
     return sizeToRead;
@@ -995,7 +1006,7 @@ uint32_t ASRC_ReadFIFORemainedSample(
  */
 status_t ASRC_TransferBlocking(ASRC_Type *base, asrc_context_t context, asrc_transfer_t *xfer)
 {
-    assert((xfer->inDataAddr) && (xfer->outDataAddr));
+    assert((xfer->inDataAddr != NULL) && (xfer->outDataAddr != NULL));
     assert(xfer->inDataSize % sizeof(uint32_t) == 0U);
 
     uint32_t inWatermarkSamples =
@@ -1005,19 +1016,22 @@ status_t ASRC_TransferBlocking(ASRC_Type *base, asrc_context_t context, asrc_tra
         (((base->CTX_OUT_CTRL[context] & ASRC_CTX_OUT_CTRL_FIFO_WTMK_MASK) >> ASRC_CTX_OUT_CTRL_FIFO_WTMK_SHIFT) + 1U) *
         ((base->CTX_CTRL[context] & ASRC_CTX_CTRL_NUM_CH_EN_MASK) + 1U);
     uint32_t inWidth =
-        ((base->CTX_CTRL[context] & ASRC_CTX_CTRL_BITS_PER_SAMPLE_MASK) >> ASRC_CTX_CTRL_FIFO_WTMK_SHIFT);
-    uint32_t outWidth =
-        ((base->CTX_OUT_CTRL[context] & ASRC_CTX_OUT_CTRL_BITS_PER_SAMPLE_MASK) >> ASRC_CTX_OUT_CTRL_FIFO_WTMK_SHIFT);
+        ((base->CTX_CTRL[context] & ASRC_CTX_CTRL_BITS_PER_SAMPLE_MASK) >> ASRC_CTX_CTRL_BITS_PER_SAMPLE_SHIFT);
+    uint32_t outWidth = ((base->CTX_OUT_CTRL[context] & ASRC_CTX_OUT_CTRL_BITS_PER_SAMPLE_MASK) >>
+                         ASRC_CTX_OUT_CTRL_BITS_PER_SAMPLE_SHIFT);
     uint32_t inMask =
-        (inWidth == kASRC_DataWidth32Bit ?
-             0xFFFFFFFFFU :
-             inWidth == kASRC_DataWidth24Bit ? 0xFFFFFFU : inWidth == kASRC_DataWidth20Bit ? 0xFFFFF : 0xFFFFU);
-    inWidth                = (inWidth == kASRC_DataWidth32Bit ?
-                   4U :
-                   inWidth == kASRC_DataWidth24Bit ? 3U : inWidth == kASRC_DataWidth20Bit ? 3U : 2U);
-    outWidth               = (outWidth == kASRC_DataWidth32Bit ?
-                    4U :
-                    outWidth == kASRC_DataWidth24Bit ? 3U : outWidth == kASRC_DataWidth20Bit ? 3U : 2U);
+        (inWidth == (uint32_t)kASRC_DataWidth32Bit ? 0xFFFFFFFFU :
+                                                     inWidth == (uint32_t)kASRC_DataWidth24Bit ?
+                                                     0xFFFFFFU :
+                                                     inWidth == (uint32_t)kASRC_DataWidth20Bit ? 0xFFFFFU : 0xFFFFU);
+    inWidth =
+        (inWidth == (uint32_t)kASRC_DataWidth32Bit ?
+             4U :
+             inWidth == (uint32_t)kASRC_DataWidth24Bit ? 3U : inWidth == (uint32_t)kASRC_DataWidth20Bit ? 3U : 2U);
+    outWidth =
+        (outWidth == (uint32_t)kASRC_DataWidth32Bit ?
+             4U :
+             outWidth == (uint32_t)kASRC_DataWidth24Bit ? 3U : outWidth == (uint32_t)kASRC_DataWidth20Bit ? 3U : 2U);
     uint32_t inSamples     = xfer->inDataSize / inWidth;
     uint32_t outSamples    = xfer->outDataSize / outWidth;
     uint32_t *writePointer = xfer->inDataAddr;
@@ -1028,9 +1042,9 @@ status_t ASRC_TransferBlocking(ASRC_Type *base, asrc_context_t context, asrc_tra
     ASRC_EnableContextRun(base, context, true);
     ASRC_EnableContextRunStop(base, context, false);
 
-    while (inSamples || outSamples)
+    while ((inSamples != 0U) || (outSamples != 0U))
     {
-        if (inSamples)
+        if (inSamples != 0U)
         {
             if (inSamples < inWatermarkSamples)
             {
@@ -1041,12 +1055,12 @@ status_t ASRC_TransferBlocking(ASRC_Type *base, asrc_context_t context, asrc_tra
                 writtenSamples = inWatermarkSamples;
             }
 
-            if (ASRC_GetFifoStatus(base, context) & kASRC_FifoStatusInputFifoWatermarkFlag)
+            if ((ASRC_GetFifoStatus(base, context) & (uint32_t)kASRC_FifoStatusInputFifoWatermarkFlag) != 0U)
             {
                 for (i = 0U; i < writtenSamples; i++)
                 {
                     ASRC_WriteContextFifo(base, context, *writePointer & inMask);
-                    writePointer = (uint32_t *)((uint32_t)writePointer + inWidth);
+                    writePointer = (uint32_t *)((size_t)writePointer + inWidth);
                 }
 
                 inSamples -= writtenSamples;
@@ -1064,12 +1078,12 @@ status_t ASRC_TransferBlocking(ASRC_Type *base, asrc_context_t context, asrc_tra
             readSamples = outWatermarkSamples;
         }
 
-        if (ASRC_GetFifoStatus(base, context) & kASRC_FifoStatusOutputFifoWatermarkFlag)
+        if ((ASRC_GetFifoStatus(base, context) & (uint32_t)kASRC_FifoStatusOutputFifoWatermarkFlag) != 0U)
         {
             for (j = 0U; j < readSamples; j++)
             {
                 *readPointer = ASRC_ReadContextFifo(base, context);
-                readPointer  = (uint32_t *)((uint32_t)readPointer + outWidth);
+                readPointer  = (uint32_t *)((size_t)readPointer + outWidth);
             }
             outSamples -= readSamples;
         }

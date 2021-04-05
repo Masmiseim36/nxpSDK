@@ -1,5 +1,5 @@
 /*
- * Copyright  2018 NXP
+ * Copyright 2018, 2020 NXP
  * All rights reserved.
  *
  *
@@ -12,6 +12,22 @@
 #include "fsl_common.h"
 #include "fsl_camera_device.h"
 #include "fsl_video_i2c.h"
+
+/*
+ * Change Log:
+ *
+ * 1.0.2:
+ *   - Bug Fixes:
+ *     - Fix MISRA 2012 issues.
+ *
+ * 1.0.1:
+ *   - Bug Fixes:
+ *     - Fixed the bug that camera does not work after warm reset.
+ *
+ * 1.0.0:
+ *   - Initial version.
+ *
+ */
 
 /*
  * The MAX9286 supports 4 camera output. Currently the driver only support

@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 7.0, 2018-11-05
-**     Build:               b200409
+**     Build:               b200927
 **
 **     Abstract:
 **         Chip specific module features.
@@ -154,8 +154,6 @@
 #define FSL_FEATURE_LPADC_HAS_CMDL_CTYPE (0)
 /* @brief Has conversion resolution select  (bitfield CMDLn[MODE]). */
 #define FSL_FEATURE_LPADC_HAS_CMDL_MODE (0)
-/* @brief Has compare function enable (bitfield CMDHn[CMPEN]). */
-#define FSL_FEATURE_LPADC_HAS_CMDH_CMPEN (1)
 /* @brief Has Wait for trigger assertion before execution (bitfield CMDHn[WAIT_TRIG]). */
 #define FSL_FEATURE_LPADC_HAS_CMDH_WAIT_TRIG (0)
 /* @brief Has offset calibration (bitfield CTRL[CALOFS]). */
@@ -221,7 +219,7 @@
 /* @brief Number of DMA channels (related to number of register CHCFGn). */
 #define FSL_FEATURE_DMAMUX_MODULE_CHANNEL (32)
 /* @brief Total number of DMA channels on all modules. */
-#define FSL_FEATURE_DMAMUX_DMAMUX_CHANNELS (FSL_FEATURE_SOC_DMAMUX_COUNT * 32)
+#define FSL_FEATURE_DMAMUX_DMAMUX_CHANNELS (64)
 /* @brief Has the periodic trigger capability for the triggered DMA channel (register bit CHCFG0[TRIG]). */
 #define FSL_FEATURE_DMAMUX_HAS_TRIG (1)
 /* @brief Has DMA Channel Always ON function (register bit CHCFG0[A_ON]). */
@@ -629,10 +627,6 @@
     (((x) == LPUART5) ? (8) : \
     (((x) == LPUART6) ? (8) : \
     (((x) == LPUART7) ? (8) : (-1)))))))))
-/* @brief Maximal data width without parity bit. */
-#define FSL_FEATURE_LPUART_MAX_DATA_WIDTH_WITH_NO_PARITY (10)
-/* @brief Maximal data width with parity bit. */
-#define FSL_FEATURE_LPUART_MAX_DATA_WIDTH_WITH_PARITY (9)
 /* @brief Supports two match addresses to filter incoming frames. */
 #define FSL_FEATURE_LPUART_HAS_ADDRESS_MATCHING (1)
 /* @brief Has transmitter/receiver DMA enable bits C5[TDMAE]/C5[RDMAE] (or BAUD[TDMAE]/BAUD[RDMAE] if the registers are 32-bit wide). */
@@ -873,18 +867,26 @@
 #define FSL_FEATURE_SCG_HAS_SOSC_RANGE (0)
 /* @brief Has CLKOUT configure register SCG_CLKOUTCNFG. */
 #define FSL_FEATURE_SCG_HAS_CLKOUTCNFG (1)
+/* @brief Has SCG_SOSCDIV[SOSCDIV1]. */
+#define FSL_FEATURE_SCG_HAS_SOSCDIV1 (1)
 /* @brief Has SCG_SOSCDIV[SOSCDIV3]. */
 #define FSL_FEATURE_SCG_HAS_SOSCDIV3 (1)
+/* @brief Has SCG_SIRCDIV[SIRCDIV1]. */
+#define FSL_FEATURE_SCG_HAS_SIRCDIV1 (1)
 /* @brief Has SCG_SIRCDIV[SIRCDIV3]. */
 #define FSL_FEATURE_SCG_HAS_SIRCDIV3 (1)
 /* @brief Has SCG_SIRCCSR[LPOPO]. */
 #define FSL_FEATURE_SCG_HAS_SIRC_LPOPO (1)
+/* @brief Has SCG_FIRCDIV[FIRCDIV1]. */
+#define FSL_FEATURE_SCG_HAS_FIRCDIV1 (1)
 /* @brief Has SCG_FIRCDIV[FIRCDIV3]. */
 #define FSL_FEATURE_SCG_HAS_FIRCDIV3 (1)
 /* @brief Has SCG_FIRCCSR[FIRCLPEN]. */
 #define FSL_FEATURE_SCG_HAS_FIRCLPEN (1)
 /* @brief Has SCG_FIRCCSR[FIRCREGOFF]. */
 #define FSL_FEATURE_SCG_HAS_FIRCREGOFF (0)
+/* @brief Has SCG_SPLLDIV[SPLLDIV1]. */
+#define FSL_FEATURE_SCG_HAS_SPLLDIV1 (1)
 /* @brief Has SCG_SPLLDIV[SPLLDIV3]. */
 #define FSL_FEATURE_SCG_HAS_SPLLDIV3 (1)
 /* @brief Has SCG_SPLLCFG[PLLPOSTDIV1]. */
@@ -899,6 +901,8 @@
 #define FSL_FEATURE_SCG_HAS_SPLL_PFDSEL (1)
 /* @brief Has SCG_SPLLCSR[SPLLCM]. */
 #define FSL_FEATURE_SCG_HAS_SPLL_MONITOR (0)
+/* @brief Has SCG_LPFLLDIV[FLLDIV1]. */
+#define FSL_FEATURE_SCG_HAS_FLLDIV1 (0)
 /* @brief Has SCG_LPFLLDIV[FLLDIV3]. */
 #define FSL_FEATURE_SCG_HAS_FLLDIV3 (0)
 /* @brief Has low power FLL, SCG_LPFLLCSR. */
@@ -1311,6 +1315,10 @@
 
 /* @brief USBPHY contain DCD analog module */
 #define FSL_FEATURE_USBPHY_HAS_DCD_ANALOG (0)
+/* @brief USBPHY has register TRIM_OVERRIDE_EN */
+#define FSL_FEATURE_USBPHY_HAS_TRIM_OVERRIDE_EN (1)
+/* @brief USBPHY is 28FDSOI */
+#define FSL_FEATURE_USBPHY_28FDSOI (0)
 
 /* WDOG module features */
 

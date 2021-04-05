@@ -84,7 +84,7 @@ void LPIT_Init(LPIT_Type *base, const lpit_config_t *config)
     uint32_t instance = LPIT_GetInstance(base);
 
     /* Enable the clock */
-    CLOCK_EnableClock(s_lpitClock[instance]);
+    (void)CLOCK_EnableClock(s_lpitClock[instance]);
 #if defined(LPIT_PERIPH_CLOCKS)
     CLOCK_EnableClock(s_lpitPeriphClocks[instance]);
 #endif
@@ -113,7 +113,7 @@ void LPIT_Deinit(LPIT_Type *base)
     uint32_t instance = LPIT_GetInstance(base);
 
     /* Disable the clock */
-    CLOCK_DisableClock(s_lpitClock[instance]);
+    (void)CLOCK_DisableClock(s_lpitClock[instance]);
 #if defined(LPIT_PERIPH_CLOCKS)
     CLOCK_DisableClock(s_lpitPeriphClocks[instance]);
 #endif

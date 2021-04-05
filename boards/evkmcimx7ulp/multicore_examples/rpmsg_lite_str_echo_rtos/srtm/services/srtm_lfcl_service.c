@@ -82,7 +82,7 @@ static srtm_status_t SRTM_LfclService_NotifySubscribers(srtm_lfcl_service_t hand
     srtm_lfcl_callback_t cb;
     srtm_list_t *list;
 
-    SRTM_Mutex_Lock(handle->mutex);
+    (void)SRTM_Mutex_Lock(handle->mutex);
     for (list = handle->subscribers.next; list != &handle->subscribers; list = list->next)
     {
         cb     = SRTM_LIST_OBJ(srtm_lfcl_callback_t, node, list);
@@ -92,7 +92,7 @@ static srtm_status_t SRTM_LfclService_NotifySubscribers(srtm_lfcl_service_t hand
             break;
         }
     }
-    SRTM_Mutex_Unlock(handle->mutex);
+    (void)SRTM_Mutex_Unlock(handle->mutex);
 
     return status;
 }
@@ -108,7 +108,7 @@ static void SRTM_LfclService_DeactivatePeerCore(srtm_dispatcher_t disp, void *pa
 {
     srtm_peercore_t core = (srtm_peercore_t)param2;
 
-    SRTM_PeerCore_Deactivate(core, SRTM_LfclService_WakeupPeerCore, param1);
+    (void)SRTM_PeerCore_Deactivate(core, SRTM_LfclService_WakeupPeerCore, param1);
 }
 
 static srtm_status_t SRTM_LfclService_ChangePowerMode(
@@ -124,7 +124,7 @@ static srtm_status_t SRTM_LfclService_ChangePowerMode(
             status = SRTM_LfclService_NotifySubscribers(handle, core, SRTM_Lfcl_Event_Running, NULL);
             if (status == SRTM_Status_Success)
             {
-                SRTM_PeerCore_SetState(core, SRTM_PeerCore_State_Activated);
+                (void)SRTM_PeerCore_SetState(core, SRTM_PeerCore_State_Activated);
             }
             break;
 
@@ -133,7 +133,7 @@ static srtm_status_t SRTM_LfclService_ChangePowerMode(
             if (status == SRTM_Status_Success)
             {
                 *pPost = SRTM_Procedure_Create(SRTM_LfclService_DeactivatePeerCore, handle, core);
-                if (!(*pPost))
+                if ((*pPost) == NULL)
                 {
                     status = SRTM_Status_OutOfMemory;
                 }
@@ -142,12 +142,12 @@ static srtm_status_t SRTM_LfclService_ChangePowerMode(
 
         case SRTM_LFCL_POWER_MODE_REBOOT:
             status = SRTM_LfclService_NotifySubscribers(handle, core, SRTM_Lfcl_Event_RebootReq, NULL);
-            SRTM_PeerCore_SetState(core, SRTM_PeerCore_State_Inactive);
+            (void)SRTM_PeerCore_SetState(core, SRTM_PeerCore_State_Inactive);
             break;
 
         case SRTM_LFCL_POWER_MODE_SHUTDOWN:
             status = SRTM_LfclService_NotifySubscribers(handle, core, SRTM_Lfcl_Event_ShutdownReq, NULL);
-            SRTM_PeerCore_SetState(core, SRTM_PeerCore_State_Inactive);
+            (void)SRTM_PeerCore_SetState(core, SRTM_PeerCore_State_Inactive);
             break;
         default:
             SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s: error mode\r\n", __func__);
@@ -160,7 +160,7 @@ static srtm_status_t SRTM_LfclService_ChangePowerMode(
 
 static srtm_status_t SRTM_LfclService_EnableHeartBeat(srtm_lfcl_service_t handle, srtm_peercore_t core, uint8_t enable)
 {
-    srtm_lfcl_event_t event = enable ? SRTM_Lfcl_Event_HeartBeatEnable : SRTM_Lfcl_Event_HeartBeatDisable;
+    srtm_lfcl_event_t event = (enable != 0U) ? SRTM_Lfcl_Event_HeartBeatEnable : SRTM_Lfcl_Event_HeartBeatDisable;
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s: %d\r\n", __func__, enable);
 
@@ -178,7 +178,7 @@ static srtm_status_t SRTM_LfclService_HeartBeat(srtm_lfcl_service_t handle, srtm
 static srtm_status_t SRTM_LfclService_Request(srtm_service_t service, srtm_request_t request)
 {
     srtm_status_t status;
-    srtm_lfcl_service_t handle = (srtm_lfcl_service_t)service;
+    srtm_lfcl_service_t handle = (srtm_lfcl_service_t)(void *)service;
     srtm_channel_t channel;
     uint8_t command, retCode;
     uint8_t *payload;
@@ -196,7 +196,7 @@ static srtm_status_t SRTM_LfclService_Request(srtm_service_t service, srtm_reque
     payload = SRTM_CommMessage_GetPayload(request);
 
     status = SRTM_Service_CheckVersion(service, request, SRTM_LFCL_VERSION);
-    if (status != SRTM_Status_Success || !payload)
+    if ((status != SRTM_Status_Success) || (payload == NULL))
     {
         /* Either version mismatch or empty payload is not supported */
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s: format error!\r\n", __func__);
@@ -228,13 +228,13 @@ static srtm_status_t SRTM_LfclService_Request(srtm_service_t service, srtm_reque
     }
 
     response = SRTM_Response_Create(channel, SRTM_LFCL_CATEGORY, SRTM_LFCL_VERSION, command, 1U);
-    if (!response)
+    if (response == NULL)
     {
-        if (pre)
+        if (pre != NULL)
         {
             SRTM_Procedure_Destroy(pre);
         }
-        if (post)
+        if (post != NULL)
         {
             SRTM_Procedure_Destroy(post);
         }
@@ -246,15 +246,15 @@ static srtm_status_t SRTM_LfclService_Request(srtm_service_t service, srtm_reque
 
     /* Now the response is ready */
     /* If there's procedure combination, use message list to deliver */
-    if (pre || post)
+    if ((pre != NULL) || (post != NULL))
     {
         SRTM_List_Init(&listHead);
-        if (pre)
+        if (pre != NULL)
         {
             SRTM_List_AddTail(&listHead, &pre->node);
         }
         SRTM_List_AddTail(&listHead, &response->node);
-        if (post)
+        if (post != NULL)
         {
             SRTM_List_AddTail(&listHead, &post->node);
         }
@@ -268,7 +268,7 @@ static srtm_status_t SRTM_LfclService_Request(srtm_service_t service, srtm_reque
 static srtm_status_t SRTM_LfclService_Notify(srtm_service_t service, srtm_notification_t notif)
 {
     srtm_status_t status;
-    srtm_lfcl_service_t handle = (srtm_lfcl_service_t)service;
+    srtm_lfcl_service_t handle = (srtm_lfcl_service_t)(void *)service;
     srtm_channel_t channel;
     uint8_t command;
 
@@ -324,7 +324,7 @@ srtm_service_t SRTM_LfclService_Create(void)
 
 void SRTM_LfclService_Destroy(srtm_service_t service)
 {
-    srtm_lfcl_service_t handle = (srtm_lfcl_service_t)service;
+    srtm_lfcl_service_t handle = (srtm_lfcl_service_t)(void *)service;
     srtm_list_t *list;
     srtm_lfcl_callback_t cb;
 
@@ -348,7 +348,7 @@ void SRTM_LfclService_Destroy(srtm_service_t service)
 
 srtm_status_t SRTM_LfclService_Subscribe(srtm_service_t service, srtm_lfcl_service_cb_t callback, void *param)
 {
-    srtm_lfcl_service_t handle = (srtm_lfcl_service_t)service;
+    srtm_lfcl_service_t handle = (srtm_lfcl_service_t)(void *)service;
     srtm_lfcl_callback_t cb;
 
     assert(service);
@@ -365,16 +365,16 @@ srtm_status_t SRTM_LfclService_Subscribe(srtm_service_t service, srtm_lfcl_servi
     cb->callback = callback;
     cb->param    = param;
 
-    SRTM_Mutex_Lock(handle->mutex);
+    (void)SRTM_Mutex_Lock(handle->mutex);
     SRTM_List_AddTail(&handle->subscribers, &cb->node);
-    SRTM_Mutex_Unlock(handle->mutex);
+    (void)SRTM_Mutex_Unlock(handle->mutex);
 
     return SRTM_Status_Success;
 }
 
 srtm_status_t SRTM_LfclService_Unsubscribe(srtm_service_t service, srtm_lfcl_service_cb_t callback, void *param)
 {
-    srtm_lfcl_service_t handle = (srtm_lfcl_service_t)service;
+    srtm_lfcl_service_t handle = (srtm_lfcl_service_t)(void *)service;
     srtm_lfcl_callback_t cb    = NULL;
     srtm_list_t *list;
 
@@ -383,7 +383,7 @@ srtm_status_t SRTM_LfclService_Unsubscribe(srtm_service_t service, srtm_lfcl_ser
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
-    SRTM_Mutex_Lock(handle->mutex);
+    (void)SRTM_Mutex_Lock(handle->mutex);
     for (list = handle->subscribers.next; list != &handle->subscribers; list = list->next)
     {
         cb = SRTM_LIST_OBJ(srtm_lfcl_callback_t, node, list);
@@ -393,7 +393,7 @@ srtm_status_t SRTM_LfclService_Unsubscribe(srtm_service_t service, srtm_lfcl_ser
             break;
         }
     }
-    SRTM_Mutex_Unlock(handle->mutex);
+    (void)SRTM_Mutex_Unlock(handle->mutex);
 
     if (list == &handle->subscribers)
     {

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,7 +26,7 @@ status_t ASMC_SetPowerModeRun(ASMC_Type *base)
     reg = base->PMCTRL;
     /* configure Normal RUN mode */
     reg &= ~ASMC_PMCTRL_RUNM_MASK;
-    reg |= (kASMC_RunNormal << ASMC_PMCTRL_RUNM_SHIFT);
+    reg |= ((uint32_t)kASMC_RunNormal << ASMC_PMCTRL_RUNM_SHIFT);
     base->PMCTRL = reg;
 
     return kStatus_Success;
@@ -90,7 +90,7 @@ status_t ASMC_SetPowerModeStop(ASMC_Type *base, asmc_partial_stop_option_t optio
     /* configure Normal Stop mode */
     reg = base->PMCTRL;
     reg &= ~ASMC_PMCTRL_STOPM_MASK;
-    reg |= (kASMC_StopNormal << ASMC_PMCTRL_STOPM_SHIFT);
+    reg |= ((uint32_t)kASMC_StopNormal << ASMC_PMCTRL_STOPM_SHIFT);
     base->PMCTRL = reg;
 
     /* Set the SLEEPDEEP bit to enable deep sleep mode (stop mode) */
@@ -119,7 +119,7 @@ status_t ASMC_SetPowerModeVlpr(ASMC_Type *base)
 
     /* configure VLPR mode */
     reg &= ~ASMC_PMCTRL_RUNM_MASK;
-    reg |= (kASMC_RunVlpr << ASMC_PMCTRL_RUNM_SHIFT);
+    reg |= ((uint32_t)kASMC_RunVlpr << ASMC_PMCTRL_RUNM_SHIFT);
     base->PMCTRL = reg;
 
     return kStatus_Success;
@@ -156,7 +156,7 @@ status_t ASMC_SetPowerModeVlps(ASMC_Type *base)
     /* configure VLPS mode */
     reg = base->PMCTRL;
     reg &= ~ASMC_PMCTRL_STOPM_MASK;
-    reg |= (kASMC_StopVlps << ASMC_PMCTRL_STOPM_SHIFT);
+    reg |= ((uint32_t)kASMC_StopVlps << ASMC_PMCTRL_STOPM_SHIFT);
     base->PMCTRL = reg;
 
     /* Set the SLEEPDEEP bit to enable deep sleep mode */
@@ -184,7 +184,7 @@ status_t ASMC_SetPowerModeLls(ASMC_Type *base)
     /* configure to LLS mode */
     reg = base->PMCTRL;
     reg &= ~ASMC_PMCTRL_STOPM_MASK;
-    reg |= (kASMC_StopLls << ASMC_PMCTRL_STOPM_SHIFT);
+    reg |= ((uint32_t)kASMC_StopLls << ASMC_PMCTRL_STOPM_SHIFT);
     base->PMCTRL = reg;
 
     /* Set the SLEEPDEEP bit to enable deep sleep mode */
@@ -212,7 +212,7 @@ status_t ASMC_SetPowerModeVlls(ASMC_Type *base)
     /* configure to VLLS mode */
     reg = base->PMCTRL;
     reg &= ~ASMC_PMCTRL_STOPM_MASK;
-    reg |= (kASMC_StopVlls << ASMC_PMCTRL_STOPM_SHIFT);
+    reg |= ((uint32_t)kASMC_StopVlls << ASMC_PMCTRL_STOPM_SHIFT);
     base->PMCTRL = reg;
 
     /* Set the SLEEPDEEP bit to enable deep sleep mode */

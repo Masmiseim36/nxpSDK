@@ -7,8 +7,8 @@ It uses LPI2C to access the on board accelerometer sensor to read the Accelerome
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -68,6 +68,3 @@ Enter VLPS mode aborted!
 X:    2,  Y: -148,  Z: 2107
 X:   -2,  Y:  -97,  Z: 2086
 ~~~~~~~~~~~~
-Customization options
-=====================
-

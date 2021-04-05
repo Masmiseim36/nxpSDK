@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,9 +21,14 @@
  ******************************************************************************/
 /*! @name Driver version */
 /*@{*/
-/*! @brief UART driver version 2.0.2. */
-#define FSL_UART_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+/*! @brief UART driver version. */
+#define FSL_UART_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 /*@}*/
+
+/*! @brief Retry times for waiting flag. */
+#ifndef UART_RETRY_TIMES
+#define UART_RETRY_TIMES 0U /* Defining to zero means to keep waiting for the flag until it is assert/deassert. */
+#endif
 
 /*! @brief Error codes for the UART driver. */
 enum
@@ -45,6 +50,7 @@ enum
     kStatus_UART_BaudrateNotSupport =
         MAKE_STATUS(kStatusGroup_IUART, 13), /*!< Baudrate is not support in current clock source */
     kStatus_UART_BreakDetect = MAKE_STATUS(kStatusGroup_IUART, 14), /*!< Receiver detect BREAK signal */
+    kStatus_UART_Timeout     = MAKE_STATUS(kStatusGroup_IUART, 15), /*!< UART times out. */
 };
 
 /*! @brief UART data bits count. */
@@ -121,7 +127,7 @@ enum _uart_interrupt_enable
  *
  * This provides constants for the UART status flags for use in the UART functions.
  */
-enum _uart_flags
+enum
 {
     kUART_RxCharReadyFlag         = 0x0000000FU, /*!< Rx Character Ready Flag. */
     kUART_RxErrorFlag             = 0x0000000EU, /*!< Rx Error Detect Flag. */
@@ -169,9 +175,12 @@ typedef struct _uart_config
     uart_stop_bit_count_t stopBitCount; /*!< Number of stop bits in one frame. */
     uint8_t txFifoWatermark;            /*!< TX FIFO watermark */
     uint8_t rxFifoWatermark;            /*!< RX FIFO watermark */
-    bool enableAutoBaudRate;            /*!< Enable automatic baud rate detection */
-    bool enableTx;                      /*!< Enable TX */
-    bool enableRx;                      /*!< Enable RX */
+    uint8_t rxRTSWatermark; /*!< RX RTS watermark, RX FIFO data count being larger than this triggers RTS deassertion */
+    bool enableAutoBaudRate; /*!< Enable automatic baud rate detection */
+    bool enableTx;           /*!< Enable TX */
+    bool enableRx;           /*!< Enable RX */
+    bool enableRxRTS;        /*!< RX RTS enable */
+    bool enableTxCTS;        /*!< TX CTS enable */
 } uart_config_t;
 
 /*! @brief UART transfer structure. */
@@ -338,7 +347,7 @@ static inline void UART_Enable(UART_Type *base)
  * @brief This function is used to configure the IDLE line condition.
  *
  * @param base UART base pointer.
- * @param condition IDLE line detect condition of the enumerators in @ref _uart_idle_condition.
+ * @param condition IDLE line detect condition of the enumerators in @ref uart_idle_condition_t.
  */
 static inline void UART_SetIdleCondition(UART_Type *base, uart_idle_condition_t condition)
 {
@@ -365,7 +374,7 @@ static inline void UART_Disable(UART_Type *base)
 /*!
  * @brief This function is used to get the current status of specific
  *        UART status flag(including interrupt flag). The available
- *        status flag can be select from @ref uart_status_flag_t enumeration.
+ *        status flag can be select from uart_status_flag_t enumeration.
  *
  * @param base UART base pointer.
  * @param flag Status flag to check.
@@ -376,7 +385,7 @@ bool UART_GetStatusFlag(UART_Type *base, uint32_t flag);
 /*!
  * @brief This function is used to clear the current status
  *        of specific UART status flag. The available status
- *        flag can be select from @ref uart_status_flag_t enumeration.
+ *        flag can be select from uart_status_flag_t enumeration.
  *
  * @param base UART base pointer.
  * @param flag Status flag to clear.
@@ -528,8 +537,10 @@ static inline uint8_t UART_ReadByte(UART_Type *base)
  * @param base UART peripheral base address.
  * @param data Start address of the data to write.
  * @param length Size of the data to write.
+ * @retval kStatus_UART_Timeout Transmission timed out and was aborted.
+ * @retval kStatus_Success Successfully wrote all data.
  */
-void UART_WriteBlocking(UART_Type *base, const uint8_t *data, size_t length);
+status_t UART_WriteBlocking(UART_Type *base, const uint8_t *data, size_t length);
 
 /*!
  * @brief Read RX data register using a blocking method.
@@ -544,6 +555,7 @@ void UART_WriteBlocking(UART_Type *base, const uint8_t *data, size_t length);
  * @retval kStatus_UART_NoiseError A noise error occurred while receiving data.
  * @retval kStatus_UART_FramingError A framing error occurred while receiving data.
  * @retval kStatus_UART_ParityError A parity error occurred while receiving data.
+ * @retval kStatus_UART_Timeout Transmission timed out and was aborted.
  * @retval kStatus_Success Successfully received all data.
  */
 status_t UART_ReadBlocking(UART_Type *base, uint8_t *data, size_t length);
@@ -794,8 +806,23 @@ static inline void UART_EnableRxDMA(UART_Type *base, bool enable)
  */
 static inline void UART_SetTxFifoWatermark(UART_Type *base, uint8_t watermark)
 {
-    assert((watermark >= 2U) && (watermark <= FSL_FEATURE_IUART_FIFO_SIZEn(base)));
+    assert((watermark >= 2U) && ((int32_t)watermark <= (int32_t)FSL_FEATURE_IUART_FIFO_SIZEn(base)));
     base->UFCR = (base->UFCR & ~UART_UFCR_TXTL_MASK) | UART_UFCR_TXTL(watermark);
+}
+
+/*!
+ * @brief This function is used to set the watermark of UART RTS deassertion.
+ *
+ * The RTS signal deasserts whenever the data count in RxFIFO reaches the Rx
+ * RTS watermark.
+ *
+ * @param base UART base pointer.
+ * @param watermark The Rx RTS watermark.
+ */
+static inline void UART_SetRxRTSWatermark(UART_Type *base, uint8_t watermark)
+{
+    assert((int32_t)watermark <= (int32_t)FSL_FEATURE_IUART_FIFO_SIZEn(base));
+    base->UCR4 = (base->UCR4 & ~UART_UCR4_CTSTL_MASK) | UART_UCR4_CTSTL(watermark);
 }
 
 /*!
@@ -808,7 +835,7 @@ static inline void UART_SetTxFifoWatermark(UART_Type *base, uint8_t watermark)
  */
 static inline void UART_SetRxFifoWatermark(UART_Type *base, uint8_t watermark)
 {
-    assert(watermark <= FSL_FEATURE_IUART_FIFO_SIZEn(base));
+    assert((int32_t)watermark <= (int32_t)FSL_FEATURE_IUART_FIFO_SIZEn(base));
     base->UFCR = (base->UFCR & ~UART_UFCR_RXTL_MASK) | UART_UFCR_RXTL(watermark);
 }
 

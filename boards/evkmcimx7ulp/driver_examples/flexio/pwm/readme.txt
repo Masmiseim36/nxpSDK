@@ -6,8 +6,8 @@ and dynamic duty from 99 to 1 to one of the FLEXIO pin.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -45,6 +45,3 @@ And these messages are displayed/shown on the terminal window:
 ~~~~~~~~~~~~
 FLEXIO_PWM demo start.
 ~~~~~~~~~~~~
-Customization options
-=====================
-

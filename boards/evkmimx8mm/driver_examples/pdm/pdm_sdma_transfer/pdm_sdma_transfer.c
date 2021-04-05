@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_pdm.h"
 #include "fsl_debug_console.h"
 #include "fsl_pdm_sdma.h"
 #include "fsl_sdma.h"
 #include "fsl_sdma_script.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
@@ -21,14 +21,16 @@
 #define DEMO_PDM PDM
 #define DEMO_PDM_CLK_FREQ \
     (24000000U) / (CLOCK_GetRootPreDivider(kCLOCK_RootPdm)) / (CLOCK_GetRootPostDivider(kCLOCK_RootPdm))
-#define DEMO_PDM_FIFO_WATERMARK (4U)
-#define DEMO_PDM_QUALITY_MODE kPDM_QualityModeHigh
-#define DEMO_PDM_CIC_OVERSAMPLE_RATE (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_LEFT (0U)
+#define DEMO_PDM_FIFO_WATERMARK       (4U)
+#define DEMO_PDM_QUALITY_MODE         kPDM_QualityModeHigh
+#define DEMO_PDM_CIC_OVERSAMPLE_RATE  (0U)
+#define DEMO_PDM_ENABLE_CHANNEL_LEFT  (0U)
 #define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
-#define DEMO_PDM_SAMPLE_CLOCK_RATE (640000U) /* 640KHZ */
-#define DEMO_PDM_DMA_REQUEST_SOURCE (24U)
-#define DEMO_DMA SDMAARM2
+#define DEMO_PDM_SAMPLE_CLOCK_RATE    (640000U) /* 640KHZ */
+#define DEMO_PDM_DMA_REQUEST_SOURCE   (24U)
+#define DEMO_PDM_HWVAD_SIGNAL_GAIN    0
+
+#define DEMO_DMA         SDMAARM2
 #define DEMO_DMA_CHANNEL (1U)
 #define BUFFER_SIZE (256)
 /*******************************************************************************
@@ -68,19 +70,34 @@ static void pdmSdmallback(PDM_Type *base, pdm_sdma_handle_t *handle, status_t st
 
 void PDM_ERROR_IRQHandler(void)
 {
-    uint32_t fifoStatus = 0U;
+    uint32_t status = 0U;
     if (PDM_GetStatus(DEMO_PDM) & PDM_STAT_LOWFREQF_MASK)
     {
         PDM_ClearStatus(DEMO_PDM, PDM_STAT_LOWFREQF_MASK);
         s_lowFreqFlag = true;
     }
 
-    fifoStatus = PDM_GetFifoStatus(DEMO_PDM);
-    if (fifoStatus)
+    status = PDM_GetFifoStatus(DEMO_PDM);
+    if (status)
     {
-        PDM_ClearFIFOStatus(DEMO_PDM, fifoStatus);
+        PDM_ClearFIFOStatus(DEMO_PDM, status);
         s_fifoErrorFlag = true;
     }
+
+#if defined(FSL_FEATURE_PDM_HAS_RANGE_CTRL) && FSL_FEATURE_PDM_HAS_RANGE_CTRL
+    status = PDM_GetRangeStatus(DEMO_PDM);
+    if (status != 0U)
+    {
+        PDM_ClearRangeStatus(DEMO_PDM, status);
+    }
+#else
+    status = PDM_GetOutputStatus(DEMO_PDM);
+    if (status != 0U)
+    {
+        PDM_ClearOutputStatus(DEMO_PDM, status);
+    }
+#endif
+
     __DSB();
 }
 
@@ -140,7 +157,7 @@ int main(void)
     PRINTF("PDM recieve two channel data:\n\r");
     for (i = 0U; i < BUFFER_SIZE; i++)
     {
-        PRINTF("%4d ", rxBuff[i]);
+        PRINTF("%6x ", rxBuff[i]);
         if (++j > 32U)
         {
             j = 0U;

@@ -12,8 +12,8 @@ via debug console utility and suspend itself.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -49,6 +49,3 @@ When the example runs successfully, the following message is displayed in the te
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Hello world.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -33,13 +33,6 @@ static pdm_sdma_private_handle_t s_sdmaPrivateHandle[ARRAY_SIZE(s_pdmBases)];
  * Prototypes
  ******************************************************************************/
 /*!
- * @brief Get the instance number for PDM.
- *
- * @param base PDM base pointer.
- */
-extern uint32_t PDM_GetInstance(PDM_Type *base);
-
-/*!
  * @brief PDM SDMA callback for send.
  *
  * @param handle pointer to pdm_sdma_handle_t structure which stores the transfer state.
@@ -92,7 +85,7 @@ void PDM_TransferCreateHandleSDMA(PDM_Type *base,
                                   sdma_handle_t *dmaHandle,
                                   uint32_t eventSource)
 {
-    assert(handle && dmaHandle);
+    assert((handle != NULL) && (dmaHandle != NULL));
 
     uint32_t instance = PDM_GetInstance(base);
 
@@ -160,7 +153,7 @@ void PDM_SetChannelConfigSDMA(PDM_Type *base,
  */
 status_t PDM_TransferReceiveSDMA(PDM_Type *base, pdm_sdma_handle_t *handle, pdm_transfer_t *xfer)
 {
-    assert(handle && xfer);
+    assert((handle != NULL) && (xfer != NULL));
 
     sdma_transfer_config_t config = {0};
     uint32_t startAddr =
@@ -235,7 +228,7 @@ status_t PDM_TransferReceiveSDMA(PDM_Type *base, pdm_sdma_handle_t *handle, pdm_
  */
 void PDM_TransferAbortReceiveSDMA(PDM_Type *base, pdm_sdma_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Disable dma */
     SDMA_AbortTransfer(handle->dmaHandle);

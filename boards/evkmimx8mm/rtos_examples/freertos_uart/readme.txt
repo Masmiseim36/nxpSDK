@@ -6,8 +6,8 @@ After every 4B received, these are sent back on UART.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -41,5 +41,3 @@ Running the demo
 You will see the welcome string printed out on the console.
 You can send characters to the console back and they will be printed out onto console in a group of 4 characters.
 
-Customization options
-=====================

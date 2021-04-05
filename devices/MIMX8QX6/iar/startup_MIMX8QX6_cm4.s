@@ -3,12 +3,12 @@
 ;  @purpose: CMSIS Cortex-M4 Core Device Startup File
 ;            MIMX8QX6_cm4
 ;  @version: 4.0
-;  @date:    2018-8-22
-;  @build:   b191126
+;  @date:    2020-6-19
+;  @build:   b201113
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2019 NXP
+; Copyright 2016-2020 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -49,9 +49,16 @@
 
         DATA
 
+__iar_init$$done:              ; The vector table is not needed
+                      ; until after copy initialization is done
+
 __vector_table
         DCD     sfe(CSTACK)
+#ifdef __STARTUP_CONFIG_DDR_ALIAS
+        DCD     Reset_Handler+0x80000000
+#else
         DCD     Reset_Handler
+#endif
 
         DCD     NMI_Handler                                   ;NMI Handler
         DCD     HardFault_Handler                             ;Hard Fault Handler
@@ -153,8 +160,8 @@ __vector_table_0x1c
         DCD     Reserved96_IRQHandler                         ;xxx Interrupt 96
         DCD     Reserved97_IRQHandler                         ;xxx Interrupt 97
         DCD     Reserved98_IRQHandler                         ;xxx Interrupt 98
-        DCD     A35_NEXTERRIRQ_IRQHandler                     ;Shared Int Source nEXTERRIRQ from A35 Sub-System
         DCD     A35_NINTERRIRQ_IRQHandler                     ;Shared Int Source nINTERRIRQ from A35 Sub-System
+        DCD     A35_NEXTERRIRQ_IRQHandler                     ;Shared Int Source nEXTERRIRQ from A35 Sub-System
         DCD     Reserved101_IRQHandler                        ;xxx Interrupt 101
         DCD     Reserved102_IRQHandler                        ;xxx Interrupt 102
         DCD     Reserved103_IRQHandler                        ;xxx Interrupt 103
@@ -377,7 +384,7 @@ __vector_table_0x1c
         DCD     ADMA_I2C1_INT_IRQHandler                      ;Shared Int Source I2C1_INT from ADMA Sub-System
         DCD     ADMA_I2C2_INT_IRQHandler                      ;Shared Int Source I2C2_INT from ADMA Sub-System
         DCD     ADMA_I2C3_INT_IRQHandler                      ;Shared Int Source I2C3_INT from ADMA Sub-System
-        DCD     ADMA_I2C4_INT_IRQHandler                      ;Shared Int Source I2C4_INT from ADMA Sub-System
+        DCD     Reserved323_IRQHandler                        ;xxx Interrupt 323
         DCD     ADMA_UART0_INT_IRQHandler                     ;Shared Int Source UART0_INT from ADMA Sub-System
         DCD     ADMA_UART1_INT_IRQHandler                     ;Shared Int Source UART1_INT from ADMA Sub-System
         DCD     ADMA_UART2_INT_IRQHandler                     ;Shared Int Source UART2_INT from ADMA Sub-System
@@ -518,7 +525,7 @@ __vector_table_0x1c
         DCD     ADMA_FTM0_DMA_INT_IRQHandler                  ;Shared Int Source FTM0_DMA_INT from ADMA Sub-System
         DCD     ADMA_FTM1_DMA_INT_IRQHandler                  ;Shared Int Source FTM1_DMA_INT from ADMA Sub-System
         DCD     ADMA_ADC0_DMA_INT_IRQHandler                  ;Shared Int Source ADC0_DMA_INT from ADMA Sub-System
-        DCD     ADMA_ADC1_DMA_INT_IRQHandler                  ;Shared Int Source ADC1_DMA_INT from ADMA Sub-System
+        DCD     Reserved464_IRQHandler                        ;xxx Interrupt 464
         DCD     Reserved465_IRQHandler                        ;xxx Interrupt 465
         DCD     Reserved466_IRQHandler                        ;xxx Interrupt 466
         DCD     ADMA_EDMA0_INT_IRQHandler                     ;Shared Int Source eDMA0_INT from ADMA Sub-System
@@ -709,6 +716,15 @@ __Vectors_Size  EQU   __Vectors_End - __Vectors
         PUBWEAK Reset_Handler
         SECTION .text:CODE:REORDER:NOROOT(2)
 Reset_Handler
+#ifdef __STARTUP_CONFIG_DDR_ALIAS
+        LDR     R0, =0xE0080030
+        MOV     R1, #0x7E
+        STR     R1, [R0]
+        ISB
+        LDR     R0, =alias_start
+        MOV     PC, R0
+alias_start:
+#endif
         CPSID   I               ; Mask interrupts
         LDR     R0, =0xE000ED08
         LDR     R1, =__vector_table
@@ -959,8 +975,8 @@ IRQSTEER_7_IRQHandler
         PUBWEAK Reserved96_IRQHandler
         PUBWEAK Reserved97_IRQHandler
         PUBWEAK Reserved98_IRQHandler
-        PUBWEAK A35_NEXTERRIRQ_IRQHandler
         PUBWEAK A35_NINTERRIRQ_IRQHandler
+        PUBWEAK A35_NEXTERRIRQ_IRQHandler
         PUBWEAK Reserved101_IRQHandler
         PUBWEAK Reserved102_IRQHandler
         PUBWEAK Reserved103_IRQHandler
@@ -1019,7 +1035,19 @@ IRQSTEER_7_IRQHandler
         PUBWEAK Reserved156_IRQHandler
         PUBWEAK Reserved157_IRQHandler
         PUBWEAK MIPI_DSI0_INT_OUT_IRQHandler
+        PUBWEAK MIPI_DSI0_INT_OUT_DriverIRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(2)
+MIPI_DSI0_INT_OUT_IRQHandler
+        LDR     R0, =MIPI_DSI0_INT_OUT_DriverIRQHandler
+        BX      R0
+
         PUBWEAK MIPI_DSI1_INT_OUT_IRQHandler
+        PUBWEAK MIPI_DSI1_INT_OUT_DriverIRQHandler
+        SECTION .text:CODE:REORDER:NOROOT(2)
+MIPI_DSI1_INT_OUT_IRQHandler
+        LDR     R0, =MIPI_DSI1_INT_OUT_DriverIRQHandler
+        BX      R0
+
         PUBWEAK Reserved160_IRQHandler
         PUBWEAK LCD_MOD_INT_IRQHandler
         PUBWEAK LCD_PWM_INT_IRQHandler
@@ -1271,13 +1299,7 @@ ADMA_I2C3_INT_IRQHandler
         LDR     R0, =ADMA_I2C3_INT_DriverIRQHandler
         BX      R0
 
-        PUBWEAK ADMA_I2C4_INT_IRQHandler
-        PUBWEAK ADMA_I2C4_INT_DriverIRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(2)
-ADMA_I2C4_INT_IRQHandler
-        LDR     R0, =ADMA_I2C4_INT_DriverIRQHandler
-        BX      R0
-
+        PUBWEAK Reserved323_IRQHandler
         PUBWEAK ADMA_UART0_INT_IRQHandler
         PUBWEAK ADMA_UART0_INT_DriverIRQHandler
         SECTION .text:CODE:REORDER:NOROOT(2)
@@ -1845,12 +1867,7 @@ ADMA_ADC0_DMA_INT_IRQHandler
         LDR     R0, =ADMA_EDMA3_INT_DriverIRQHandler
         BX      R0
 
-        PUBWEAK ADMA_ADC1_DMA_INT_IRQHandler
-        SECTION .text:CODE:REORDER:NOROOT(2)
-ADMA_ADC1_DMA_INT_IRQHandler
-        LDR     R0, =ADMA_EDMA3_INT_DriverIRQHandler
-        BX      R0
-
+        PUBWEAK Reserved464_IRQHandler
         PUBWEAK Reserved465_IRQHandler
         PUBWEAK Reserved466_IRQHandler
         PUBWEAK ADMA_EDMA0_INT_IRQHandler
@@ -2477,8 +2494,8 @@ Reserved95_IRQHandler
 Reserved96_IRQHandler
 Reserved97_IRQHandler
 Reserved98_IRQHandler
-A35_NEXTERRIRQ_IRQHandler
 A35_NINTERRIRQ_IRQHandler
+A35_NEXTERRIRQ_IRQHandler
 Reserved101_IRQHandler
 Reserved102_IRQHandler
 Reserved103_IRQHandler
@@ -2536,8 +2553,8 @@ Reserved154_IRQHandler
 Reserved155_IRQHandler
 Reserved156_IRQHandler
 Reserved157_IRQHandler
-MIPI_DSI0_INT_OUT_IRQHandler
-MIPI_DSI1_INT_OUT_IRQHandler
+MIPI_DSI0_INT_OUT_DriverIRQHandler
+MIPI_DSI1_INT_OUT_DriverIRQHandler
 Reserved160_IRQHandler
 LCD_MOD_INT_IRQHandler
 LCD_PWM_INT_IRQHandler
@@ -2699,7 +2716,7 @@ ADMA_I2C0_INT_DriverIRQHandler
 ADMA_I2C1_INT_DriverIRQHandler
 ADMA_I2C2_INT_DriverIRQHandler
 ADMA_I2C3_INT_DriverIRQHandler
-ADMA_I2C4_INT_DriverIRQHandler
+Reserved323_IRQHandler
 ADMA_UART0_INT_DriverIRQHandler
 ADMA_UART1_INT_DriverIRQHandler
 ADMA_UART2_INT_DriverIRQHandler
@@ -2823,6 +2840,7 @@ ADMA_FTM0_MOD_INT_DriverIRQHandler
 ADMA_FTM1_MOD_INT_DriverIRQHandler
 ADMA_ADC0_MOD_INT_DriverIRQHandler
 Reserved457_IRQHandler
+Reserved464_IRQHandler
 Reserved465_IRQHandler
 Reserved466_IRQHandler
 ADMA_ASRC0_INT1_DriverIRQHandler

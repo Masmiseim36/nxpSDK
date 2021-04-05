@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -35,12 +35,13 @@ processor_version: 0.0.0
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void)
 {
+    BOARD_InitPins();
 }
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'false', coreID: m4}
+- options: {callFromInitBoot: 'true', coreID: m4}
 - pin_list:
   - {pin_num: F19, peripheral: UART4, signal: uart_rx, pin_signal: UART4_RXD, PE: Disabled, PUE: Disabled, DSE: X6_0}
   - {pin_num: F18, peripheral: UART4, signal: uart_tx, pin_signal: UART4_TXD, PE: Disabled, PUE: Disabled, DSE: X6_0}
@@ -55,11 +56,11 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {                                /*!< Function assigned for the core: Cortex-M4[m4] */
     IOMUXC_SetPinMux(IOMUXC_UART4_RXD_UART4_RX, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_UART4_RXD_UART4_RX, 
+    IOMUXC_SetPinConfig(IOMUXC_UART4_RXD_UART4_RX,
                         IOMUXC_SW_PAD_CTL_PAD_DSE(6U) |
                         IOMUXC_SW_PAD_CTL_PAD_FSEL(2U));
     IOMUXC_SetPinMux(IOMUXC_UART4_TXD_UART4_TX, 0U);
-    IOMUXC_SetPinConfig(IOMUXC_UART4_TXD_UART4_TX, 
+    IOMUXC_SetPinConfig(IOMUXC_UART4_TXD_UART4_TX,
                         IOMUXC_SW_PAD_CTL_PAD_DSE(6U) |
                         IOMUXC_SW_PAD_CTL_PAD_FSEL(2U));
 }

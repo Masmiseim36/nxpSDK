@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,14 +16,16 @@
 #define FSL_COMPONENT_ID "platform.drivers.ldb_combo_phy"
 #endif
 
-#define LDB_CH_COUNT 2
+#define LDB_CH_COUNT 2U
 
-#define LDB_DPI_24BIT 5
+#define LDB_DPI_24BIT 5U
 
-#define LDB_PM_CTRL_REG_CH_MODE_MASK(ch) (MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH0_MODE_MASK << ((ch)*2))
-#define LDB_PM_CTRL_REG_CH_DATA_WIDTH_MASK(ch) (MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH0_DATA_WIDTH_MASK << ((ch)*2))
-#define LDB_PM_CTRL_REG_CH_BIT_MAPPING_MASK(ch) (MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH0_BIT_MAPPING_MASK << ((ch)*2))
-#define LDB_PM_CTRL_REG_DI_VS_POLARITY_MASK(di) (MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_DI0_VS_POLARITY_MASK << (di))
+#define LDB_PM_CTRL_REG_CH_MODE_MASK(ch) ((uint32_t)MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH0_MODE_MASK << ((ch)*2U))
+#define LDB_PM_CTRL_REG_CH_DATA_WIDTH_MASK(ch) \
+    ((uint32_t)MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH0_DATA_WIDTH_MASK << ((ch)*2U))
+#define LDB_PM_CTRL_REG_CH_BIT_MAPPING_MASK(ch) \
+    ((uint32_t)MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH0_BIT_MAPPING_MASK << ((ch)*2U))
+#define LDB_PM_CTRL_REG_DI_VS_POLARITY_MASK(di) ((uint32_t)MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_DI0_VS_POLARITY_MASK << (di))
 
 #define LDB_PM_CTRL_REG_CH_MASK(ch)                                              \
     (LDB_PM_CTRL_REG_CH_MODE_MASK(ch) | LDB_PM_CTRL_REG_CH_DATA_WIDTH_MASK(ch) | \
@@ -31,17 +33,17 @@
 
 #define LDB_PM_CTRL_REG_DI_MASK(di) (LDB_PM_CTRL_REG_DI_VS_POLARITY_MASK(di))
 
-#define LDB_SS_CTRL_CH_VSYNC_POL_MASK(ch) (MIPI_DSI_LVDS_COMBO_CSR_SS_CRTL_CH0_VSYNC_POL_MASK << (ch * 2))
-#define LDB_SS_CTRL_CH_HSYNC_POL_MASK(ch) (MIPI_DSI_LVDS_COMBO_CSR_SS_CRTL_CH0_HSYNC_POL_MASK << (ch * 2))
+#define LDB_SS_CTRL_CH_VSYNC_POL_MASK(ch) ((uint32_t)MIPI_DSI_LVDS_COMBO_CSR_SS_CRTL_CH0_VSYNC_POL_MASK << ((ch)*2U))
+#define LDB_SS_CTRL_CH_HSYNC_POL_MASK(ch) ((uint32_t)MIPI_DSI_LVDS_COMBO_CSR_SS_CRTL_CH0_HSYNC_POL_MASK << ((ch)*2U))
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 
 /*! @brief Pointers to LDB PHY control blocks. */
-MIPI_DSI_HOST_Type *const s_ldbPhyBases[] = MIPI_DSI_HOST_BASE_PTRS;
+static MIPI_DSI_HOST_Type *const s_ldbPhyBases[] = MIPI_DSI_HOST_BASE_PTRS;
 /*! @brief Pointers to ldb bases for each instance. */
-LDB_Type *const s_ldbBases[] = MIPI_DSI_LVDS_COMBO_CSR_BASE_PTRS;
+static LDB_Type *const s_ldbBases[] = MIPI_DSI_LVDS_COMBO_CSR_BASE_PTRS;
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
 /*! @brief Pointers to LDB clocks for each instance. */
@@ -85,7 +87,7 @@ static uint32_t LDB_GetInstance(LDB_Type *base)
     uint32_t instance;
 
     /* Find the instance index from base address mappings. */
-    for (instance = 0; instance < ARRAY_SIZE(s_ldbBases); instance++)
+    for (instance = 0U; instance < ARRAY_SIZE(s_ldbBases); instance++)
     {
         if (s_ldbBases[instance] == base)
         {
@@ -100,7 +102,7 @@ static uint32_t LDB_GetInstance(LDB_Type *base)
 
 static uint32_t LDB_GetPixelMapConfig(ldb_output_bus_t outputBus, uint8_t ch)
 {
-    return outputBus << (ch * 2);
+    return (uint32_t)outputBus << (ch * 2U);
 }
 
 static MIPI_DSI_HOST_Type *LDB_GetPhyControlBlock(LDB_Type *base)
@@ -116,7 +118,7 @@ static MIPI_DSI_HOST_Type *LDB_GetPhyControlBlock(LDB_Type *base)
 void LDB_Init(LDB_Type *base)
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-    CLOCK_EnableClock(s_ldbClocks[LDB_GetInstance(base)]);
+    (void)CLOCK_EnableClock(s_ldbClocks[LDB_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
     base->SS_CRTL = 0U;
@@ -142,7 +144,7 @@ void LDB_Deinit(LDB_Type *base)
     base->LVDS_PHY_CTRL = 0U;
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
-    CLOCK_DisableClock(s_ldbClocks[LDB_GetInstance(base)]);
+    (void)CLOCK_DisableClock(s_ldbClocks[LDB_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -166,12 +168,12 @@ status_t LDB_InitChannel(LDB_Type *base, uint8_t channel, const ldb_channel_conf
 
     reg = base->SS_CRTL & ~(LDB_SS_CTRL_CH_VSYNC_POL_MASK(channel) | LDB_SS_CTRL_CH_HSYNC_POL_MASK(channel));
 
-    if (config->inputFlag & kLDB_InputVsyncActiveHigh)
+    if (0U != (config->inputFlag & (uint32_t)kLDB_InputVsyncActiveHigh))
     {
         reg |= LDB_SS_CTRL_CH_VSYNC_POL_MASK(channel);
     }
 
-    if (config->inputFlag & kLDB_InputHsyncActiveHigh)
+    if (0U != (config->inputFlag & (uint32_t)kLDB_InputHsyncActiveHigh))
     {
         reg |= LDB_SS_CTRL_CH_HSYNC_POL_MASK(channel);
     }
@@ -183,18 +185,18 @@ status_t LDB_InitChannel(LDB_Type *base, uint8_t channel, const ldb_channel_conf
 
     reg |= LDB_GetPixelMapConfig(config->outputBus, channel);
 
-    if (config->inputFlag & kLDB_InputVsyncActiveHigh)
+    if (0U != (config->inputFlag & (uint32_t)kLDB_InputVsyncActiveHigh))
     {
         reg |= LDB_PM_CTRL_REG_DI_VS_POLARITY_MASK(channel);
     }
 
-    if (channel == 0)
+    if (channel == 0U)
     {
-        reg |= (1U << MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH0_MODE_SHIFT);
+        reg |= (1UL << MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH0_MODE_SHIFT);
     }
     else
     {
-        reg |= (3U << MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH1_MODE_SHIFT);
+        reg |= (3UL << MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH1_MODE_SHIFT);
     }
 
     reg |= MIPI_DSI_LVDS_COMBO_CSR_PM_CTRL_CH_SEL(channel);
@@ -220,30 +222,30 @@ status_t LDB_InitChannel(LDB_Type *base, uint8_t channel, const ldb_channel_conf
      *
      * Current driver only supports NB=0 (7bit).
      */
-    pixelClock_MHz = config->pixelClock_Hz / 1000000;
-    if (pixelClock_MHz <= 45)
+    pixelClock_MHz = config->pixelClock_Hz / 1000000U;
+    if (pixelClock_MHz <= 45U)
     {
-        reg_m = 2;
+        reg_m = 2U;
     }
-    else if (pixelClock_MHz <= 92)
+    else if (pixelClock_MHz <= 92U)
     {
-        reg_m = 1;
+        reg_m = 1U;
     }
     else
     {
-        reg_m = 0;
+        reg_m = 0U;
     }
 
-    if (kLDB_InputDataLatchOnRisingEdge & config->inputFlag)
+    if (0U != ((uint32_t)kLDB_InputDataLatchOnRisingEdge & config->inputFlag))
     {
         reg |= MIPI_DSI_LVDS_COMBO_CSR_LVDS_PHY_CTRL_RFB_MASK;
     }
 
     base->LVDS_PHY_CTRL = reg;
-    phy->DPHY_PD_PLL    = 0;
-    phy->DPHY_PD_TX     = 0;
+    phy->DPHY_PD_PLL    = 0U;
+    phy->DPHY_PD_TX     = 0U;
     phy->DPHY_CO        = reg_m;
-    base->ULPS_CTRL     = 0;
+    base->ULPS_CTRL     = 0U;
     base->LVDS_PHY_CTRL = reg | MIPI_DSI_LVDS_COMBO_CSR_LVDS_PHY_CTRL_LVDS_EN_MASK;
 
     return kStatus_Success;

@@ -6,8 +6,8 @@ a message a printed on the UART terminal and an LED is toggled on the board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -47,6 +47,3 @@ LPTMR interrupt No.3
 ....................
 ....................
 ~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  *
@@ -39,7 +39,7 @@
  * please make LPM_SYSTICK_COUNTER_FREQ divisible by 8000000, and times of
  * configTICK_RATE_HZ.
  */
-#define SYSTICK_COUNTER_FREQ (SC_8MHZ)
+#define SYSTICK_COUNTER_FREQ          (SC_8MHZ)
 #define SYSTICK_TICKLESS_COUNTER_FREQ (SC_8MHZ)
 /* Define the count per tick of the systick in run mode. For accuracy purpose,
  * please make SYSTICK_SOURCE_CLOCK times of configTICK_RATE_HZ.
@@ -54,9 +54,9 @@
     (IRQn_Type)(IRQSTEER_0_IRQn + (IRQn - FSL_FEATURE_IRQSTEER_IRQ_START_INDEX) / 64U)
 #endif /* FSL_RTOS_FREE_RTOS */
 
-#define TSTMR_BASE CM4__TSTMR
+#define TSTMR_BASE           CM4__TSTMR
 #define M4_LANDING_ZONE_SIZE (32U)
-#define SC_RPC_MU_GIPn 0x1U /* The GIPn used for SCU MU broadcast IRQ */
+#define SC_RPC_MU_GIPn       0x1U /* The GIPn used for SCU MU broadcast IRQ */
 /* The IPC MU interrupt priority. Once waken up by SCU, the MU interrtup will be handled.
 And the FreeRTOS software timer runs, users can handle SCU MU broadcast in the timer callback function. */
 #define SC_RPC_MU_INTERRUPT_PRIORITY (configLIBRARY_LOWEST_INTERRUPT_PRIORITY - 1U)
@@ -694,6 +694,9 @@ uint32_t LPM_SystemResume(bool resume)
 {
     /* Recover ECC/Parity config */
     *lmpecrReg = s_lmpecr;
+
+    /* Recover resume address */
+    sc_pm_set_cpu_resume_addr((sc_ipc_t)IPC_MU, CPU_RSRC, 0ULL);
 
     ASMC_SetPowerModeProtection(CM4__ASMC, kASMC_AllowPowerModeAll);
 

@@ -7,8 +7,8 @@ the uboot runs on the Cortex-A core.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -48,6 +48,3 @@ Unlock sema4 gate in uboot using:
  > mw.b 0x30ac0000 0 1
 SEMA4 uboot example success
 ~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

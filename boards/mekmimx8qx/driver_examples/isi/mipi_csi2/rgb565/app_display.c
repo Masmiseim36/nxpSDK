@@ -42,14 +42,14 @@ typedef struct
 #if (APP_CAMERA_WIDTH < APP_FRAME_WIDTH)
 /* FETCHDECODE ->VSCALER -> HSCALER -> LAYERBLEND. */
 #define APP_LAYERBLEND_SECOND_SRC kDPU_UnitSrcHScaler4
-#define APP_VSCALER_SRC kDPU_UnitSrcFetchDecode0
-#define APP_HSCALER_SRC kDPU_UnitSrcVScaler4
+#define APP_VSCALER_SRC           kDPU_UnitSrcFetchDecode0
+#define APP_HSCALER_SRC           kDPU_UnitSrcVScaler4
 
 #else
 /* FETCHDECODE ->HSCALER -> VSCALER -> LAYERBLEND. */
 #define APP_LAYERBLEND_SECOND_SRC kDPU_UnitSrcVScaler4
-#define APP_VSCALER_SRC kDPU_UnitSrcHScaler4
-#define APP_HSCALER_SRC kDPU_UnitSrcFetchDecode0
+#define APP_VSCALER_SRC           kDPU_UnitSrcHScaler4
+#define APP_HSCALER_SRC           kDPU_UnitSrcFetchDecode0
 
 #endif
 

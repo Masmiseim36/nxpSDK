@@ -20,6 +20,7 @@
 #include "timers.h"
 #endif
 #include "svc/irq/irq_api.h"
+#include "svc/misc/misc_api.h"
 
 #ifdef BOARD_USE_SCFW_IRQ
 #include "fsl_mu.h"
@@ -64,6 +65,16 @@ sc_ipc_t BOARD_InitRpc(void)
     if (ipcHandle)
     {
         CLOCK_Init(ipcHandle);
+    }
+
+    /*
+     * Current core reports it is done to SCFW when early boot mode is enabled.
+     * This mode is used to minimize the time from POR to M4 execution for some specific fast-boot use-cases.
+     * Please refer to Boot Flow chapter of System Controller Firmware Porting Guide document for more information.
+     */
+    if (sc_misc_boot_done(ipcHandle, BOARD_M4_CPU_RSRC) != SC_ERR_NONE)
+    {
+        assert(0);
     }
     return ipcHandle;
 }
@@ -263,10 +274,17 @@ status_t BOARD_LPI2C_Send(LPI2C_Type *base,
 }
 
 status_t BOARD_LPI2C_SendWithoutSubAddr(
-    LPI2C_Type *base, uint8_t deviceAddress, uint8_t *txBuff, uint8_t txBuffSize, bool needStop)
+    LPI2C_Type *base, uint32_t baudRate_Hz, uint8_t deviceAddress, uint8_t *txBuff, uint8_t txBuffSize, bool needStop)
 {
     status_t reVal;
     size_t txCount = 0xFFU;
+    size_t txSize  = 0;
+
+    /*
+     * I2C SCLK cycle duration in us, get the next larger integer if can not be divided with no remainder to retain
+     * enough time
+     */
+    uint32_t delayUsPerSCLK = (1000000U + baudRate_Hz - 1U) / baudRate_Hz;
 
     /* Send master blocking data to slave */
     reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Write);
@@ -278,14 +296,40 @@ status_t BOARD_LPI2C_SendWithoutSubAddr(
         {
             LPI2C_MasterGetFifoCounts(base, NULL, &txCount);
         }
-
+        /*
+         * wait for 18 cycle to ensure the ack/nack cycle ends
+         *
+         * Note : In theory 9 cycles is enough for host to detect a slave NAK, however
+         * on board circut may cause SDA pull up slower than expected, result a delayed
+         * NAK signal. Here we increase the delay cycle twice of original for a
+         * safe NAK detection
+         */
+        SDK_DelayAtLeastUs(18 * delayUsPerSCLK, SystemCoreClock);
         /* Check communicate with slave successful or not */
         if (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
         {
             return kStatus_LPI2C_Nak;
         }
 
-        reVal = LPI2C_MasterSend(base, txBuff, txBuffSize);
+        /* Check each response from slave */
+        for (txSize = 0; txSize < txBuffSize; txSize++)
+        {
+            reVal = LPI2C_MasterSend(base, &txBuff[txSize], 1);
+            /* Check master tx FIFO empty or not */
+            LPI2C_MasterGetFifoCounts(base, NULL, &txCount);
+            while (txCount)
+            {
+                LPI2C_MasterGetFifoCounts(base, NULL, &txCount);
+            }
+            /* wait for 9 cycle to ensure the ack/nack cycle ends */
+            SDK_DelayAtLeastUs(9 * delayUsPerSCLK, SystemCoreClock);
+            /* Check communicate with slave successful or not */
+            if (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
+            {
+                return kStatus_LPI2C_Nak;
+            }
+        }
+
         if (reVal != kStatus_Success)
         {
             return reVal;
@@ -325,15 +369,27 @@ status_t BOARD_LPI2C_Receive(LPI2C_Type *base,
 }
 
 status_t BOARD_LPI2C_ReceiveWithoutSubAddr(
-    LPI2C_Type *base, uint8_t deviceAddress, uint8_t *rxBuff, uint8_t rxBuffSize, uint8_t flags)
+    LPI2C_Type *base, uint32_t baudRate_Hz, uint8_t deviceAddress, uint8_t *rxBuff, uint8_t rxBuffSize, uint8_t flags)
 {
     status_t reVal;
+    size_t txCount = 0xFFU;
+    /*
+     * I2C SCLK cycle duration in us, get the next larger integer if can not be divided with no remainder to retain
+     * enough time
+     */
+    uint32_t delayUsPerSCLK = (1000000U + baudRate_Hz - 1U) / baudRate_Hz;
 
     reVal = LPI2C_MasterStart(base, deviceAddress, kLPI2C_Read);
     if (kStatus_Success == reVal)
     {
-        /*Can't do FIFO check here because data may reach the FIFO eariler in read operation*/
-
+        /* Check master tx FIFO empty or not */
+        LPI2C_MasterGetFifoCounts(base, NULL, &txCount);
+        while (txCount)
+        {
+            LPI2C_MasterGetFifoCounts(base, NULL, &txCount);
+        }
+        /* wait for 9 cycle to ensure the ack/nack cycle ends */
+        SDK_DelayAtLeastUs(9 * delayUsPerSCLK, SystemCoreClock);
         /* Check communicate with slave successful or not */
         if (LPI2C_MasterGetStatusFlags(base) & kLPI2C_MasterNackDetectFlag)
         {
@@ -524,7 +580,20 @@ void BOARD_Camera0_I2C_Init(void)
         assert(false);
     }
 
-    BOARD_LPI2C_Init(BOARD_CAMERA0_I2C_BASEADDR, lpi2cClkFreq_Hz);
+    lpi2c_master_config_t lpi2cConfig = {0};
+    /*
+     * lpi2cConfig.debugEnable = false;
+     * lpi2cConfig.ignoreAck = false;
+     * lpi2cConfig.pinConfig = kLPI2C_2PinOpenDrain;
+     * lpi2cConfig.baudRate_Hz = 100000U;
+     * lpi2cConfig.busIdleTimeout_ns = 0;
+     * lpi2cConfig.pinLowTimeout_ns = 0;
+     * lpi2cConfig.sdaGlitchFilterWidth_ns = 0;
+     * lpi2cConfig.sclGlitchFilterWidth_ns = 0;
+     */
+    LPI2C_MasterGetDefaultConfig(&lpi2cConfig);
+    lpi2cConfig.baudRate_Hz = 400000U;
+    LPI2C_MasterInit(BOARD_CAMERA0_I2C_BASEADDR, &lpi2cConfig, lpi2cClkFreq_Hz);
 }
 
 void BOARD_Camera1_I2C_Init(void)

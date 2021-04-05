@@ -6,17 +6,17 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_rgpio.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_lpuart.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_LED_RGPIO CM4__RGPIO
+#define BOARD_LED_RGPIO     CM4__RGPIO
 #define BOARD_LED_RGPIO_PIN 0U
 
 /*******************************************************************************
@@ -34,14 +34,6 @@ void delay(void);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void delay(void)
-{
-    volatile uint32_t i = 0;
-    for (i = 0; i < 400000; ++i)
-    {
-        __asm("NOP"); /* delay */
-    }
-}
 
 /*!
  * @brief Main function
@@ -78,7 +70,7 @@ int main(void)
 
     while (1)
     {
-        delay();
+        SDK_DelayAtLeastUs(10000U, SystemCoreClock);
         RGPIO_PortToggle(BOARD_LED_RGPIO, 1u << BOARD_LED_RGPIO_PIN);
     }
 }

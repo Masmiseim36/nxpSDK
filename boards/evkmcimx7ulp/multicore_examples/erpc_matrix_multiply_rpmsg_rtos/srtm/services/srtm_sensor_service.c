@@ -65,24 +65,24 @@ static srtm_status_t SRTM_SensorService_UpdateState(srtm_service_t service, srtm
 {
     srtm_notification_t notif;
     struct _srtm_sensor_payload *payload;
-    srtm_sensor_service_t handle = (srtm_sensor_service_t)service;
+    srtm_sensor_service_t handle = (srtm_sensor_service_t)(void *)service;
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 
     /* First allocate a notification and send to peer core */
     notif = SRTM_Notification_Create(handle->channel, SRTM_SENSOR_CATEGORY, SRTM_SENSOR_VERSION,
                                      SRTM_SENSOR_NTF_STATE_CHANGED, sizeof(struct _srtm_sensor_payload));
-    if (!notif)
+    if (notif == NULL)
     {
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_ERROR, "%s: alloc notification failed.\r\n", __func__);
         return SRTM_Status_OutOfMemory;
     }
 
-    payload        = (struct _srtm_sensor_payload *)SRTM_CommMessage_GetPayload(notif);
+    payload        = (struct _srtm_sensor_payload *)(void *)SRTM_CommMessage_GetPayload(notif);
     payload->type  = (uint8_t)type;
     payload->index = index;
 
-    SRTM_Dispatcher_DeliverNotification(handle->service.dispatcher, notif);
+    (void)SRTM_Dispatcher_DeliverNotification(handle->service.dispatcher, notif);
 
     return SRTM_Status_Success;
 }
@@ -92,7 +92,7 @@ static srtm_status_t SRTM_SensorService_ReportData(
 {
     srtm_notification_t notif;
     struct _srtm_sensor_payload *payload;
-    srtm_sensor_service_t handle = (srtm_sensor_service_t)service;
+    srtm_sensor_service_t handle = (srtm_sensor_service_t)(void *)service;
 
     SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_INFO, "%s\r\n", __func__);
 

@@ -8,12 +8,12 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -117,12 +117,20 @@ int main(void)
         reVal = LPI2C_MasterSend(EXAMPLE_I2C_MASTER, &deviceAddress, 1);
         if (reVal != kStatus_Success)
         {
+            if (reVal == kStatus_LPI2C_Nak)
+            {
+                LPI2C_MasterStop(EXAMPLE_I2C_MASTER);
+            }
             return -1;
         }
 
         reVal = LPI2C_MasterSend(EXAMPLE_I2C_MASTER, g_master_txBuff, LPI2C_DATA_LENGTH);
         if (reVal != kStatus_Success)
         {
+            if (reVal == kStatus_LPI2C_Nak)
+            {
+                LPI2C_MasterStop(EXAMPLE_I2C_MASTER);
+            }
             return -1;
         }
 
@@ -155,13 +163,18 @@ int main(void)
             LPI2C_MasterGetFifoCounts(EXAMPLE_I2C_MASTER, NULL, &txCount);
         }
         /* Check communicate with slave successful or not */
-        while (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
+        if (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
         {
+            return kStatus_LPI2C_Nak;
         }
 
         reVal = LPI2C_MasterSend(EXAMPLE_I2C_MASTER, &deviceAddress, 1);
         if (reVal != kStatus_Success)
         {
+            if (reVal == kStatus_LPI2C_Nak)
+            {
+                LPI2C_MasterStop(EXAMPLE_I2C_MASTER);
+            }
             return -1;
         }
 
@@ -174,6 +187,10 @@ int main(void)
         reVal = LPI2C_MasterReceive(EXAMPLE_I2C_MASTER, g_master_rxBuff, LPI2C_DATA_LENGTH - 1);
         if (reVal != kStatus_Success)
         {
+            if (reVal == kStatus_LPI2C_Nak)
+            {
+                LPI2C_MasterStop(EXAMPLE_I2C_MASTER);
+            }
             return -1;
         }
 

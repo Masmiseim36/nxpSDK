@@ -27,11 +27,11 @@
  ******************************************************************************/
 /* Protocol definition */
 #define SRTM_I2C_CATEGORY (0x9U)
-#define SRTM_I2C_VERSION (0x0100U)
+#define SRTM_I2C_VERSION  (0x0100U)
 // #define SRTM_I2C_VERSION (0x0001U)
 
-#define SRTM_I2C_RETURN_CODE_SUCEESS (0x0U)
-#define SRTM_I2C_RETURN_CODE_FAIL (0x1U)
+#define SRTM_I2C_RETURN_CODE_SUCEESS     (0x0U)
+#define SRTM_I2C_RETURN_CODE_FAIL        (0x1U)
 #define SRTM_I2C_RETURN_CODE_UNSUPPORTED (0x2U)
 
 typedef struct _srtm_i2c_service

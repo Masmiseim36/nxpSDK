@@ -7,10 +7,10 @@
 
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
-#include "board.h"
 #include "fsl_rdc.h"
 #include "fsl_iomuxc.h"
 #include "pin_mux.h"
+#include "board.h"
 #include "fsl_clock.h"
 /*******************************************************************************
  * Variables

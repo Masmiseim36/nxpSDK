@@ -56,14 +56,14 @@
  * Reset Pin: MIPI_CSI0_GPIO0_00
  * Power Down Pin: MIPI_CSI0_GPIO0_01
  */
-#define BOARD_Camera_I2C_Init BOARD_Camera0_I2C_Init
-#define BOARD_Camera_I2C_Deinit BOARD_Camera0_I2C_Deinit
-#define BOARD_Camera_I2C_SendSCCB BOARD_Camera0_I2C_SendSCCB
+#define BOARD_Camera_I2C_Init        BOARD_Camera0_I2C_Init
+#define BOARD_Camera_I2C_Deinit      BOARD_Camera0_I2C_Deinit
+#define BOARD_Camera_I2C_SendSCCB    BOARD_Camera0_I2C_SendSCCB
 #define BOARD_Camera_I2C_ReceiveSCCB BOARD_Camera0_I2C_ReceiveSCCB
-#define MIPI_CSI_RSRC SC_R_CSI_0
-#define CAMERA_GPIO MIPI_CSI__GPIO
-#define CAMERA_RST_PIN_IDX 0
-#define CAMERA_PD_PIN_IDX 1
+#define MIPI_CSI_RSRC                SC_R_CSI_0
+#define CAMERA_GPIO                  MIPI_CSI__GPIO
+#define CAMERA_RST_PIN_IDX           0
+#define CAMERA_PD_PIN_IDX            1
 
 #elif ISI_EXAMPLE_CI == ISI_CI_PI
 /*
@@ -73,14 +73,14 @@
  * Reset Pin: LSIO__GPIO3_03
  * Power Down Pin: Not used.
  */
-#define BOARD_Camera_I2C_Init BOARD_Camera1_I2C_Init
-#define BOARD_Camera_I2C_Deinit BOARD_Camera1_I2C_Deinit
-#define BOARD_Camera_I2C_SendSCCB BOARD_Camera1_I2C_SendSCCB
+#define BOARD_Camera_I2C_Init        BOARD_Camera1_I2C_Init
+#define BOARD_Camera_I2C_Deinit      BOARD_Camera1_I2C_Deinit
+#define BOARD_Camera_I2C_SendSCCB    BOARD_Camera1_I2C_SendSCCB
 #define BOARD_Camera_I2C_ReceiveSCCB BOARD_Camera1_I2C_ReceiveSCCB
-#define CI_PI_RSRC SC_R_PI_0
-#define CI_PI_PLL_RSRC SC_R_PI_0_PLL
-#define CAMERA_GPIO LSIO__GPIO3
-#define CAMERA_RST_PIN_IDX 3
+#define CI_PI_RSRC                   SC_R_PI_0
+#define CI_PI_PLL_RSRC               SC_R_PI_0_PLL
+#define CAMERA_GPIO                  LSIO__GPIO3
+#define CAMERA_RST_PIN_IDX           3
 #else
 #error Camera interface not supported
 #endif
@@ -92,35 +92,35 @@
 #if (DPU_EXAMPLE_DI == DPU_DI_MIPI)
 
 #if (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE)
-#define BOARD_Display_I2C_Init BOARD_Display0_I2C_Init
-#define BOARD_Display_I2C_Deinit BOARD_Display0_I2C_Deinit
-#define BOARD_Display_I2C_Send BOARD_Display0_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display0_I2C_Init
+#define BOARD_Display_I2C_Deinit  BOARD_Display0_I2C_Deinit
+#define BOARD_Display_I2C_Send    BOARD_Display0_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display0_I2C_Receive
-#define MIPI_DSI_RSRC SC_R_MIPI_0
+#define MIPI_DSI_RSRC             SC_R_MIPI_0
 #else /* (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE) */
-#define BOARD_Display_I2C_Init BOARD_Display1_I2C_Init
-#define BOARD_Display_I2C_Deinit BOARD_Display1_I2C_Deinit
-#define BOARD_Display_I2C_Send BOARD_Display1_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display1_I2C_Init
+#define BOARD_Display_I2C_Deinit  BOARD_Display1_I2C_Deinit
+#define BOARD_Display_I2C_Send    BOARD_Display1_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display1_I2C_Receive
-#define MIPI_DSI_RSRC SC_R_MIPI_1
+#define MIPI_DSI_RSRC             SC_R_MIPI_1
 #endif /* (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE) */
 
 #elif (DPU_EXAMPLE_DI == DPU_DI_LVDS)
 
 #if (APP_LDB_BASE == MIPI_DSI_LVDS_COMBO0_CSR_BASE)
-#define BOARD_Display_I2C_Init BOARD_Display0_I2C_Init
-#define BOARD_Display_I2C_Deinit BOARD_Display0_I2C_Deinit
-#define BOARD_Display_I2C_Send BOARD_Display0_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display0_I2C_Init
+#define BOARD_Display_I2C_Deinit  BOARD_Display0_I2C_Deinit
+#define BOARD_Display_I2C_Send    BOARD_Display0_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display0_I2C_Receive
-#define LDB_RSRC SC_R_LVDS_0
-#define MIPI_DSI_RSRC SC_R_MIPI_0
+#define LDB_RSRC                  SC_R_LVDS_0
+#define MIPI_DSI_RSRC             SC_R_MIPI_0
 #else /* (APP_LDB_BASE == MIPI_DSI_LVDS_COMBO0_CSR_BASE) */
-#define BOARD_Display_I2C_Init BOARD_Display1_I2C_Init
-#define BOARD_Display_I2C_Deinit BOARD_Display1_I2C_Deinit
-#define BOARD_Display_I2C_Send BOARD_Display1_I2C_Send
+#define BOARD_Display_I2C_Init    BOARD_Display1_I2C_Init
+#define BOARD_Display_I2C_Deinit  BOARD_Display1_I2C_Deinit
+#define BOARD_Display_I2C_Send    BOARD_Display1_I2C_Send
 #define BOARD_Display_I2C_Receive BOARD_Display1_I2C_Receive
-#define LDB_RSRC SC_R_LVDS_1
-#define MIPI_DSI_RSRC SC_R_MIPI_1
+#define LDB_RSRC                  SC_R_LVDS_1
+#define MIPI_DSI_RSRC             SC_R_MIPI_1
 #endif /* (APP_LDB_BASE == MIPI_DSI_LVDS_COMBO0_CSR_BASE) */
 
 #endif /*DPU_EXAMPLE_DI */
@@ -128,32 +128,32 @@
 #define DC_RSRC SC_R_DC_0
 
 #if (0 == APP_DPU_DISPLAY_INDEX)
-#define DC_PLL_RSRC SC_R_DC_0_PLL_0
+#define DC_PLL_RSRC      SC_R_DC_0_PLL_0
 #define DC_DISPLAY_CLOCK SC_PM_CLK_MISC0
 #else /* (0 == APP_DPU_DISPLAY_INDEX) */
-#define DC_PLL_RSRC SC_R_DC_0_PLL_1
+#define DC_PLL_RSRC      SC_R_DC_0_PLL_1
 #define DC_DISPLAY_CLOCK SC_PM_CLK_MISC1
 #endif /* (0 == APP_DPU_DISPLAY_INDEX) */
 
 #if (!APP_DISPLAY_EXTERNAL_CONVERTOR) || (DPU_EXAMPLE_DI == DPU_DI_LVDS)
 
-#define IOEXP_I2C ADMA__LPI2C1
+#define IOEXP_I2C      ADMA__LPI2C1
 #define IOEXP_I2C_RSRC SC_R_I2C_1
 
 #define SWITCH_I2C_ADDR 0x71
 
 #if (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE) || (APP_LDB_BASE == MIPI_DSI_LVDS_COMBO0_CSR_BASE)
-#define IOEXP_I2C_ADDR 0x1A
+#define IOEXP_I2C_ADDR     0x1A
 #define IOEXP_MIPI_DSI_PIN 6
 #else
-#define IOEXP_I2C_ADDR 0x1D
+#define IOEXP_I2C_ADDR     0x1D
 #define IOEXP_MIPI_DSI_PIN 7
 #endif /* (APP_MIPI_DSI_BASE == DI_MIPI_DSI_LVDS_0__MIPI_DSI_HOST_BASE) */
 
-#define PCA9557_REG_INTPUT_PORT (0x00)
-#define PCA9557_REG_OUTPUT_PORT (0x01)
+#define PCA9557_REG_INTPUT_PORT        (0x00)
+#define PCA9557_REG_OUTPUT_PORT        (0x01)
 #define PCA9557_REG_POLARITY_INVERSION (0x02)
-#define PCA9557_REG_CONFIGURATION (0x03)
+#define PCA9557_REG_CONFIGURATION      (0x03)
 
 #endif /* APP_DISPLAY_EXTERNAL_CONVERTOR */
 
@@ -170,7 +170,7 @@ typedef struct _dpu_mipi_pl_addr
 #elif (DPU_EXAMPLE_DI == DPU_DI_LVDS)
 
 #define IT6263_RESET_GPIO LSIO__GPIO1
-#define IT6263_RESET_PIN 6U
+#define IT6263_RESET_PIN  6U
 
 /* Pixel Link address */
 typedef struct _dpu_ldb_pl_addr
@@ -263,12 +263,14 @@ camera_device_handle_t cameraDevice = {
 #if (DPU_EXAMPLE_DI == DPU_DI_MIPI)
 
 #if !APP_DISPLAY_EXTERNAL_CONVERTOR
+
+static mipi_dsi_device_t dsiDevice = {
+    .virtualChannel = 0,
+    .xferFunc       = RM67191_DSI_Transfer,
+};
+
 static const rm67191_resource_t rm67191Resource = {
-    .dsiDevice =
-        {
-            .virtualChannel = 0,
-            .xferFunc       = RM67191_DSI_Transfer,
-        },
+    .dsiDevice    = &dsiDevice,
     .pullResetPin = RM67191_PullResetPin,
 };
 

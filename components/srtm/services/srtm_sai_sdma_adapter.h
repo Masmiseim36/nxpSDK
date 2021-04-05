@@ -19,9 +19,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SRTM_SAI_SDMA_MAX_LOCAL_BUF_PERIODS (4)
-#define SRTM_SAI_SDMA_MAX_LOCAL_PERIOD_ALIGNMENT (4U)
-#define SRTM_SAI_SDMA_MAX_LOCAL_PERIOD_ALIGNMENT_MASK (SRTM_SAI_SDMA_MAX_LOCAL_PERIOD_ALIGNMENT - 1)
+#define SRTM_SAI_SDMA_MAX_LOCAL_BUF_PERIODS           (4U)
+#define SRTM_SAI_SDMA_MAX_LOCAL_PERIOD_ALIGNMENT      (4U)
+#define SRTM_SAI_SDMA_MAX_LOCAL_PERIOD_ALIGNMENT_MASK (SRTM_SAI_SDMA_MAX_LOCAL_PERIOD_ALIGNMENT - 1U)
 /*!< @brief select the mclk based of sai  */
 typedef enum _sai_mclk_type
 {
@@ -34,13 +34,19 @@ typedef void (*dsd_saiSetting)(void);
 typedef void (*pcm_saiSetting)(void);
 /*!< reconfig the sai clock  */
 typedef uint32_t (*sai_clkSetting)(mclk_type_t type);
+/*!< clock gate operation  */
+typedef void (*clockEnable)(bool isEnable);
+/*!< init audio devices  */
+typedef void (*initDev)(bool enable);
 
-typedef struct _reconfig_sai
+typedef struct _audio_misc_set
 {
     dsd_saiSetting dsdSaiSetting;
     pcm_saiSetting pcmSaiSetting;
-    sai_clkSetting clkSetting;
-} reconfig_sai_t;
+    sai_clkSetting clkSetting; /* Set the MCLK of SAI per the requirement of different sample rate music stream. */
+    clockEnable clkGate;
+    initDev audioDevInit;
+} audio_misc_set_t;
 typedef struct _srtm_sai_sdma_config
 {
     sai_transceiver_t config;
@@ -57,7 +63,7 @@ typedef struct _srtm_sai_sdma_config
     uint32_t threshold; /* threshold: under which will trigger periodDone notification. */
     sdma_context_data_t txcontext;
     sdma_context_data_t rxcontext;
-    reconfig_sai_t *extendConfig;
+    audio_misc_set_t extendConfig;
 } srtm_sai_sdma_config_t;
 
 typedef struct _srtm_sai_sdma_local_buf

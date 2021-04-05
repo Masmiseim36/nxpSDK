@@ -6,19 +6,19 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lpuart.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_debug_console.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART CM4__LPUART
-#define DEMO_LPUART_CLKSRC kCLOCK_M4_0_Lpuart
-#define DEMO_LPUART_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_M4_0_Lpuart)
-#define DEMO_LPUART_IRQn M4_LPUART_IRQn
+#define DEMO_LPUART            CM4__LPUART
+#define DEMO_LPUART_CLKSRC     kCLOCK_M4_0_Lpuart
+#define DEMO_LPUART_CLK_FREQ   CLOCK_GetIpFreq(kCLOCK_M4_0_Lpuart)
+#define DEMO_LPUART_IRQn       M4_LPUART_IRQn
 #define DEMO_LPUART_IRQHandler M4_LPUART_IRQHandler
 
 /*! @brief Ring buffer size (Unit: Byte). */
@@ -71,11 +71,7 @@ void DEMO_LPUART_IRQHandler(void)
             rxIndex %= DEMO_RING_BUFFER_SIZE;
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

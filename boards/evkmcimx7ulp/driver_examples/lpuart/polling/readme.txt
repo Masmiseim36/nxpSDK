@@ -8,8 +8,8 @@ because the LPUART uses simple polling way for receiving.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -46,6 +46,3 @@ When the example runs successfully, you can see the similar information from the
 Lpuart polling example
 Board will send back received characters
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

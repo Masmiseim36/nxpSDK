@@ -6,8 +6,8 @@ In this example, one esai instance playbacks the audio data recorded by the same
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -53,6 +53,3 @@ After a while, the example finish with the following message
 ~~~~~~~~~~~~~~~~~~~~~
 ESAI EDMA example succeed!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

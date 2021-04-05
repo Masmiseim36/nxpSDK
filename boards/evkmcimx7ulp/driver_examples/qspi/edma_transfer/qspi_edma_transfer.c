@@ -5,6 +5,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_qspi_edma.h"
 #include "fsl_dmamux.h"
@@ -12,7 +13,6 @@
 
 #include "fsl_qspi.h"
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

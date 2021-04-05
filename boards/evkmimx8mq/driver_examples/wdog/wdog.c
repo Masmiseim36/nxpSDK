@@ -7,17 +7,17 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_wdog.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_WDOG_BASE WDOG1
-#define DEMO_WDOG_IRQHandler WDOG1_IRQHandler
+#define DEMO_WDOG_BASE                      WDOG1
+#define DEMO_WDOG_IRQHandler                WDOG1_IRQHandler
 #define EXAMPLE_DISABLE_WDOG_RESET_FUNCTION 1
 
 /*******************************************************************************

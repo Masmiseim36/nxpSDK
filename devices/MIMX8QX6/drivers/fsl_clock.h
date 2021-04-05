@@ -49,15 +49,16 @@
 #endif
 
 /*! @brief Clock ip name array for MU. */
-#define MU_CLOCKS                                                                                                     \
-    {                                                                                                                 \
-        kCLOCK_M4_0_Mu0B, kCLOCK_M4_0_Mu0B, kCLOCK_M4_0_Mu0B, kCLOCK_M4_0_Mu0B, kCLOCK_M4_0_Mu0A0, kCLOCK_M4_0_Mu0A1, \
-            kCLOCK_M4_0_Mu0A2, kCLOCK_M4_0_Mu0A3, kCLOCK_M4_0_Mu1A, kCLOCK_LSIO_Mu0A, kCLOCK_LSIO_Mu1A,               \
-            kCLOCK_LSIO_Mu2A, kCLOCK_LSIO_Mu3A, kCLOCK_LSIO_Mu4A, kCLOCK_LSIO_Mu5A, kCLOCK_LSIO_Mu6A,                 \
-            kCLOCK_LSIO_Mu7A, kCLOCK_LSIO_Mu8A, kCLOCK_LSIO_Mu9A, kCLOCK_LSIO_Mu10A, kCLOCK_LSIO_Mu11A,               \
-            kCLOCK_LSIO_Mu12A, kCLOCK_LSIO_Mu13A, kCLOCK_LSIO_Mu5B, kCLOCK_LSIO_Mu6B, kCLOCK_LSIO_Mu7B,               \
-            kCLOCK_LSIO_Mu8B, kCLOCK_LSIO_Mu9B, kCLOCK_LSIO_Mu10B, kCLOCK_LSIO_Mu11B, kCLOCK_LSIO_Mu12B,              \
-            kCLOCK_LSIO_Mu13B,                                                                                        \
+#define MU_CLOCKS                                                                                                  \
+    {                                                                                                              \
+        kCLOCK_M4_0_Mu0A0, kCLOCK_M4_0_Mu0A1, kCLOCK_M4_0_Mu0A2, kCLOCK_M4_0_Mu0A3, kCLOCK_M4_0_Mu0B,              \
+            kCLOCK_M4_0_Mu0B, kCLOCK_M4_0_Mu0B, kCLOCK_M4_0_Mu0B, kCLOCK_M4_0_Mu1A, kCLOCK_LSIO_Mu0A,              \
+            kCLOCK_LSIO_Mu1A, kCLOCK_LSIO_Mu2A, kCLOCK_LSIO_Mu3A, kCLOCK_LSIO_Mu4A, kCLOCK_LSIO_Mu5A,              \
+            kCLOCK_LSIO_Mu5B, kCLOCK_LSIO_Mu6A, kCLOCK_LSIO_Mu6B, kCLOCK_LSIO_Mu7A, kCLOCK_LSIO_Mu7B,              \
+            kCLOCK_LSIO_Mu8A, kCLOCK_LSIO_Mu8B, kCLOCK_LSIO_Mu9A, kCLOCK_LSIO_Mu9B, kCLOCK_LSIO_Mu10A,             \
+            kCLOCK_LSIO_Mu10B, kCLOCK_LSIO_Mu11A, kCLOCK_LSIO_Mu11B, kCLOCK_LSIO_Mu12A, kCLOCK_LSIO_Mu12B,         \
+            kCLOCK_LSIO_Mu13A, kCLOCK_LSIO_Mu13B, kCLOCK_SCU_Mu0A0, kCLOCK_SCU_Mu0A1, kCLOCK_SCU_Mu0A2,            \
+            kCLOCK_SCU_Mu0A3, kCLOCK_SCU_Mu0B, kCLOCK_SCU_Mu0B, kCLOCK_SCU_Mu0B, kCLOCK_SCU_Mu0B, kCLOCK_SCU_Mu1A, \
     }
 
 /*! @brief Clock ip name array for GPIO. */
@@ -96,7 +97,7 @@
 /*! @brief Clock ip name array for FLEXCAN. */
 #define FLEXCAN_CLOCKS                                     \
     {                                                      \
-        kCLOCK_DMA_Can0, kCLOCK_DMA_Can1, kCLOCK_DMA_Can2, \
+        kCLOCK_DMA_Can0, kCLOCK_DMA_Can0, kCLOCK_DMA_Can0, \
     }
 
 /*! @brief Clock ip name array for LPUART. */
@@ -113,9 +114,9 @@
     }
 
 /*! @brief Clock ip name array for INTMUX. */
-#define INTMUX_CLOCKS       \
-    {                       \
-        kCLOCK_M4_0_Intmux, \
+#define INTMUX_CLOCKS                          \
+    {                                          \
+        kCLOCK_M4_0_Intmux, kCLOCK_SCU_Intmux, \
     }
 
 /*! @brief Clock ip name array for SAI. */
@@ -157,6 +158,7 @@
         kCLOCK_DMA_Lpspi0, kCLOCK_DMA_Lpspi1, kCLOCK_DMA_Lpspi2, kCLOCK_DMA_Lpspi3, \
     }
 
+/*! @brief Clock ip name array for IRQSTEER */
 #define IRQSTEER_CLOCKS       \
     {                         \
         kCLOCK_M4_0_Irqsteer, \
@@ -178,7 +180,7 @@
 #define ISI_CLOCKS                                                                                               \
     {                                                                                                            \
         kCLOCK_IMAGING_Isi0, kCLOCK_IMAGING_Isi1, kCLOCK_IMAGING_Isi2, kCLOCK_IMAGING_Isi3, kCLOCK_IMAGING_Isi4, \
-            kCLOCK_IMAGING_Isi5, kCLOCK_IMAGING_Isi6, kCLOCK_IMAGING_Isi7,                                       \
+            kCLOCK_IMAGING_Isi5,                                                                                 \
     }
 
 /*! @brief Clock ip name array for MIPI CSI2 RX. */
@@ -334,6 +336,12 @@ typedef enum _clock_ip_name
     kCLOCK_LSIO_Mu11B           = LPCG_TUPLE(SC_R_MU_11B, LSIO__LPCG_MU11_DSP_BASE),
     kCLOCK_LSIO_Mu12B           = LPCG_TUPLE(SC_R_MU_12B, LSIO__LPCG_MU12_DSP_BASE),
     kCLOCK_LSIO_Mu13B           = LPCG_TUPLE(SC_R_MU_13B, LSIO__LPCG_MU13_DSP_BASE),
+    kCLOCK_SCU_Mu0B             = LPCG_TUPLE(SC_R_SC_MU_0B, NV),
+    kCLOCK_SCU_Mu0A0            = LPCG_TUPLE(SC_R_SC_MU_0A0, NV),
+    kCLOCK_SCU_Mu0A1            = LPCG_TUPLE(SC_R_SC_MU_0A1, NV),
+    kCLOCK_SCU_Mu0A2            = LPCG_TUPLE(SC_R_SC_MU_0A2, NV),
+    kCLOCK_SCU_Mu0A3            = LPCG_TUPLE(SC_R_SC_MU_0A3, NV),
+    kCLOCK_SCU_Mu1A             = LPCG_TUPLE(SC_R_SC_MU_1A, NV),
     kCLOCK_LSIO_Flexspi0        = LPCG_TUPLE(SC_R_FSPI_0, LSIO__LPCG_QSPI0_BASE),
     kCLOCK_LSIO_Flexspi1        = LPCG_TUPLE(SC_R_FSPI_1, LSIO__LPCG_QSPI1_BASE),
     kCLOCK_M4_0_Rgpio           = LPCG_TUPLE(SC_R_M4_0_RGPIO, NV),
@@ -355,6 +363,7 @@ typedef enum _clock_ip_name
     kCLOCK_SCU_Sema42           = LPCG_TUPLE(SC_R_SC_SEMA42, NV),
     kCLOCK_SCU_Lpit             = LPCG_TUPLE(SC_R_SC_PIT, SCU__LPCG_LPIT_BASE),
     kCLOCK_SCU_Tpm              = LPCG_TUPLE(SC_R_SC_TPM, SCU__LPCG_TPM_BASE),
+    kCLOCK_SCU_Intmux           = LPCG_TUPLE(SC_R_LAST, NV),
     kCLOCK_AUDIO_Sai0           = LPCG_TUPLE(SC_R_SAI_0, ADMA__LPCG_SAI0_IPG_CLK_BASE),
     kCLOCK_AUDIO_Sai1           = LPCG_TUPLE(SC_R_SAI_1, ADMA__LPCG_SAI1_IPG_CLK_BASE),
     kCLOCK_AUDIO_Sai2           = LPCG_TUPLE(SC_R_SAI_2, ADMA__LPCG_SAI2_IPG_CLK_BASE),
@@ -369,8 +378,6 @@ typedef enum _clock_ip_name
     kCLOCK_IMAGING_Isi3         = LPCG_TUPLE(SC_R_ISI_CH3, NV),
     kCLOCK_IMAGING_Isi4         = LPCG_TUPLE(SC_R_ISI_CH4, NV),
     kCLOCK_IMAGING_Isi5         = LPCG_TUPLE(SC_R_ISI_CH5, NV),
-    kCLOCK_IMAGING_Isi6         = LPCG_TUPLE(SC_R_ISI_CH6, NV),
-    kCLOCK_IMAGING_Isi7         = LPCG_TUPLE(SC_R_ISI_CH7, NV),
     kCLOCK_MipiCsi2Rx0          = LPCG_TUPLE(SC_R_CSI_0, NV),
     kCLOCK_MipiCsi2Rx1          = LPCG_TUPLE(SC_R_CSI_1, NV),
     kCLOCK_DiMiPiDsiLvds0Lpi2c0 = LPCG_TUPLE(SC_R_MIPI_0_I2C_0, DI_MIPI_DSI_LVDS_0__LPCG_LIS_IPG_CLK_BASE),
@@ -415,7 +422,7 @@ extern "C" {
 /*!
  * @brief Initialize Clock module.
  *
- * @param ipc  IPC handle for communication with SCU, see \ref sc_ipc_t.
+ * @param ipc  IPC handle for communication with SCU.
  */
 void CLOCK_Init(sc_ipc_t ipc);
 
@@ -479,7 +486,7 @@ uint32_t CLOCK_GetIpFreq(clock_ip_name_t name);
  * This function checks the current clock configurations and then calculates
  * the clock frequency for a specific clock name defined in clock_name_t.
  *
- * @param clockName Clock names defined in clock_name_t
+ * @param name Clock names defined in clock_name_t
  * @return Clock frequency value in hertz
  */
 uint32_t CLOCK_GetFreq(clock_name_t name);

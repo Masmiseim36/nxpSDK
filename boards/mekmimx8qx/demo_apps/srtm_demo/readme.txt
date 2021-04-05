@@ -10,8 +10,8 @@ The demo also demonstrate support for multiple partition reset.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -88,6 +88,3 @@ kernel is running. WDOG timout will trigger a M4 partition reset in about 5 seco
 Linux kernel, you will observed this event is handled.
 
 Virtual I2C service should still work fine after either kernel or M4 partition reboot.
-Customization options
-=====================
-

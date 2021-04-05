@@ -6,23 +6,23 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_uart.h"
 #include "fsl_uart_sdma.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_rdc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_UART_DMA_BASEADDR SDMAARM1
-#define DEMO_UART UART4
-#define DEMO_UART_CLK_FREQ BOARD_DEBUG_UART_CLK_FREQ
-#define UART_RX_DMA_CHANNEL 1U
-#define UART_TX_DMA_CHANNEL 2U
-#define UART_RX_DMA_REQUEST (28)
-#define UART_TX_DMA_REQUEST (29)
+#define DEMO_UART                 UART4
+#define DEMO_UART_CLK_FREQ        BOARD_DEBUG_UART_CLK_FREQ
+#define UART_RX_DMA_CHANNEL       1U
+#define UART_TX_DMA_CHANNEL       2U
+#define UART_RX_DMA_REQUEST       (28)
+#define UART_TX_DMA_REQUEST       (29)
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************

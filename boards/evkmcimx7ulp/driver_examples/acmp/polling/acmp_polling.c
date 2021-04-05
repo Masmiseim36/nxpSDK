@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright (c) 2015,2020, Freescale Semiconductor, Inc.
  * All rights reserved.
  *
  *
@@ -8,11 +8,11 @@
 
 #include "fsl_acmp.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -73,8 +73,12 @@ int main(void)
     ACMP_SetChannelConfig(DEMO_ACMP_BASEADDR, &channelConfigStruct);
 
     /* Configure DAC. */
+#if (defined(DEMO_CMP_USE_VIN1) && DEMO_CMP_USE_VIN1)
     dacConfigStruct.referenceVoltageSource = kACMP_VrefSourceVin1;
-    dacConfigStruct.DACValue               = 0x7FU; /* Half of referene voltage. */
+#else
+    dacConfigStruct.referenceVoltageSource = kACMP_VrefSourceVin2;
+#endif                                /* DEMO_CMP_USE_VIN1 */
+    dacConfigStruct.DACValue = 0x7FU; /* Half of referene voltage. */
 #if defined(FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT) && (FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT == 1U)
     dacConfigStruct.enableOutput = true;
 #endif /* FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT */

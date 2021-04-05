@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -93,11 +93,7 @@ static void INTMUX_CommonIRQHandler(INTMUX_Type *intmuxBase, uint32_t channel)
         uint32_t isr = *(uint32_t *)(SCB->VTOR + pendingIrqOffset);
         ((void (*)(void))isr)();
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif /* FSL_FEATURE_INTMUX_DIRECTION_OUT */
 
@@ -117,7 +113,7 @@ void INTMUX_Init(INTMUX_Type *base)
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Enable clock gate. */
-    CLOCK_EnableClock(s_intmuxClockName[instance]);
+    (void)CLOCK_EnableClock(s_intmuxClockName[instance]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
     /* Reset all channels and enable NVIC vectors for all INTMUX channels. */
     for (channel = 0; channel < (uint32_t)FSL_FEATURE_INTMUX_CHANNEL_COUNT; channel++)
@@ -143,7 +139,7 @@ void INTMUX_Deinit(INTMUX_Type *base)
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Disable clock gate. */
-    CLOCK_DisableClock(s_intmuxClockName[instance]);
+    (void)CLOCK_DisableClock(s_intmuxClockName[instance]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
     /* Disable NVIC vectors for all of the INTMUX channels. */
     for (channel = 0; channel < (uint32_t)FSL_FEATURE_INTMUX_CHANNEL_COUNT; channel++)
@@ -156,42 +152,50 @@ void INTMUX_Deinit(INTMUX_Type *base)
 
 #if !(defined(FSL_FEATURE_INTMUX_DIRECTION_OUT) && FSL_FEATURE_INTMUX_DIRECTION_OUT)
 #if defined(INTMUX0)
+void INTMUX0_0_DriverIRQHandler(void);
 void INTMUX0_0_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX0, 0);
 }
 
+void INTMUX0_1_DriverIRQHandler(void);
 void INTMUX0_1_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX0, 1);
 }
 
+void INTMUX0_2_DriverIRQHandler(void);
 void INTMUX0_2_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX0, 2);
 }
 
+void INTMUX0_3_DriverIRQHandler(void);
 void INTMUX0_3_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX0, 3);
 }
 
 #if defined(FSL_FEATURE_INTMUX_CHANNEL_COUNT) && (FSL_FEATURE_INTMUX_CHANNEL_COUNT > 4U)
+void INTMUX0_4_DriverIRQHandler(void);
 void INTMUX0_4_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX0, 4);
 }
 
+void INTMUX0_5_DriverIRQHandler(void);
 void INTMUX0_5_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX0, 5);
 }
 
+void INTMUX0_6_DriverIRQHandler(void);
 void INTMUX0_6_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX0, 6);
 }
 
+void INTMUX0_7_DriverIRQHandler(void);
 void INTMUX0_7_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX0, 7);
@@ -201,42 +205,50 @@ void INTMUX0_7_DriverIRQHandler(void)
 #endif
 
 #if defined(INTMUX1)
+void INTMUX1_0_DriverIRQHandler(void);
 void INTMUX1_0_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX1, 0);
 }
 
+void INTMUX1_1_DriverIRQHandler(void);
 void INTMUX1_1_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX1, 1);
 }
 
+void INTMUX1_2_DriverIRQHandler(void);
 void INTMUX1_2_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX1, 2);
 }
 
+void INTMUX1_3_DriverIRQHandler(void);
 void INTMUX1_3_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX1, 3);
 }
 
 #if defined(FSL_FEATURE_INTMUX_CHANNEL_COUNT) && (FSL_FEATURE_INTMUX_CHANNEL_COUNT > 4U)
+void INTMUX1_4_DriverIRQHandler(void);
 void INTMUX1_4_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX1, 4);
 }
 
+void INTMUX1_5_DriverIRQHandler(void);
 void INTMUX1_5_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX1, 5);
 }
 
+void INTMUX1_6_DriverIRQHandler(void);
 void INTMUX1_6_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX1, 6);
 }
 
+void INTMUX1_7_DriverIRQHandler(void);
 void INTMUX1_7_DriverIRQHandler(void)
 {
     INTMUX_CommonIRQHandler(INTMUX1, 7);

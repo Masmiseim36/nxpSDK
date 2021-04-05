@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 2.0, 2019-09-23
-**     Build:               b190830
+**     Build:               b200519
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -112,7 +112,7 @@
 /* ENET module features */
 
 /* @brief Support Interrupt Coalesce */
-#define FSL_FEATURE_ENET_HAS_INTERRUPT_COALESCE (0)
+#define FSL_FEATURE_ENET_HAS_INTERRUPT_COALESCE (1)
 /* @brief Queue Size. */
 #define FSL_FEATURE_ENET_QUEUE (3)
 /* @brief Has AVB Support. */
@@ -123,6 +123,20 @@
 #define FSL_FEATURE_ENET_HAS_EXTEND_MDIO (1)
 /* @brief Has Additional 1588 Timer Channel Interrupt. */
 #define FSL_FEATURE_ENET_HAS_ADD_1588_TIMER_CHN_INT (1)
+/* @brief Support Interrupt Coalesce for each instance */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_INTERRUPT_COALESCEn(x) (0)
+/* @brief Queue Size for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_QUEUEn(x) (3)
+/* @brief Has AVB Support for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_AVBn(x) (1)
+/* @brief Has Timer Pulse Width control for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_TIMER_PWCONTROLn(x) (0)
+/* @brief Has Extend MDIO Support for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_EXTEND_MDIOn(x) (1)
+/* @brief Has Additional 1588 Timer Channel Interrupt for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_ADD_1588_TIMER_CHN_INTn(x) (1)
+/* @brief Has threshold for the number of frames in the receive FIFO (register bit field RSEM[STAT_SECTION_EMPTY]). */
+#define FSL_FEATURE_ENET_HAS_RECEIVE_STATUS_THRESHOLD (1)
 
 /* GPC module features */
 

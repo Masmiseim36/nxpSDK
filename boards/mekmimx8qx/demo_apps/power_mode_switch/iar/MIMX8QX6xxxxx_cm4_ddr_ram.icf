@@ -23,11 +23,19 @@
 
 /* DDR Memory region [0x88000000-0x887FFFFF] 8MB is allocated for CM4_0 */
 
-define symbol m_interrupts_start       = 0x88000000;
-define symbol m_interrupts_end         = 0x880009FF;
+if (isdefinedsymbol(__STARTUP_CONFIG_DDR_ALIAS)) {
+    define symbol m_interrupts_start       = 0x08000000;
+    define symbol m_interrupts_end         = 0x080009FF;
 
-define symbol m_text_start             = 0x88000A00;
-define symbol m_text_end               = 0x881FFFFF;
+    define symbol m_text_start             = 0x08000A00;
+    define symbol m_text_end               = 0x081FFFFF;
+} else {
+    define symbol m_interrupts_start       = 0x88000000;
+    define symbol m_interrupts_end         = 0x880009FF;
+
+    define symbol m_text_start             = 0x88000A00;
+    define symbol m_text_end               = 0x881FFFFF;
+}
 
 define symbol m_data_start             = 0x88200000;
 define symbol m_data_end               = 0x882FFFFF;
@@ -72,8 +80,13 @@ if (isdefinedsymbol(__tcm_mem_size__)) {
   define symbol __size_tcm__         = 0x40000;
 }
 
-define exported symbol __CACHE_REGION_START   = m_interrupts_start;
-define exported symbol __CACHE_REGION_SIZE    = m_resume_end - m_interrupts_start + 1 ;
+if (isdefinedsymbol(__STARTUP_CONFIG_DDR_ALIAS)) {
+    define exported symbol __CACHE_REGION_START   = m_data_start;
+    define exported symbol __CACHE_REGION_SIZE    = m_resume_end - m_data_start + 1 ;
+} else {
+    define exported symbol __CACHE_REGION_START   = m_interrupts_start;
+    define exported symbol __CACHE_REGION_SIZE    = m_resume_end - m_interrupts_start + 1 ;
+}
 define exported symbol __BACKUP_REGION_START  = m_resume_start; /* Symbol used in lpm_asm.s for TCM backup */
 
 define memory mem with size = 4G;
@@ -93,15 +106,20 @@ define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block RW        { readwrite };
 define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
-define block QACCESS_CODE_VAR   with alignment = 32 { section CodeQuickAccess };
+/*12 bytes are reserved for PFU fetches, which is six 16-bit Thumb instructions */
+define block PREFETCH_PADDING   with size = 12 {};
+define block QACCESS_CODE_VAR   with alignment = 32, fixed order{ section CodeQuickAccess, block PREFETCH_PADDING };
 define block QACCESS_DATA_VAR   with alignment = 32 { section DataQuickAccess };
 define block LPM_TEXT_VAR   with alignment = 8 { section TextLpm };
 define block LPM_DATA_VAR   with alignment = 8 { section DataLpm };
 
 initialize by copy { readwrite, section .textrw, section DataQuickAccess, section CodeQuickAccess, section TextLpm, section DataLpm };
 do not initialize  { section .noinit };
+keep{section .resource_table};
+keep{block PREFETCH_PADDING};
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
+".resource_table": place at address mem: m_text_start {section .resource_table};
 place in TEXT_region                        { readonly };
 place in DATA_region                        { block RW };
 place in DATA_region                        { block ZI };

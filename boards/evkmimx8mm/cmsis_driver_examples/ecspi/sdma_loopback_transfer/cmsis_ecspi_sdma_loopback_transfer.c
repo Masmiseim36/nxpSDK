@@ -7,18 +7,18 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_ecspi_cmsis.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DRIVER_MASTER_SPI Driver_SPI2
+#define DRIVER_MASTER_SPI          Driver_SPI2
 #define DRIVER_MASTER_SPI_DMA_BASE SDMAARM1
-#define EXAMPLE_MASTER_SPI_BASE ECSPI2
-#define TRANSFER_SIZE 64U         /*! Transfer dataSize */
+#define EXAMPLE_MASTER_SPI_BASE    ECSPI2
+#define TRANSFER_SIZE     64U     /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************

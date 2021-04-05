@@ -41,13 +41,13 @@
 #include "timers.h"
 #include "semphr.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "ApplMain.h"
 #include "app_config.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "ble_general.h"
 /*******************************************************************************
  * Definitions

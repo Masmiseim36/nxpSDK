@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -69,7 +69,7 @@ void LPADC_Init(ADC_Type *base, const lpadc_config_t *config)
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Enable the clock for LPADC instance. */
-    CLOCK_EnableClock(s_lpadcClocks[LPADC_GetInstance(base)]);
+    (void)CLOCK_EnableClock(s_lpadcClocks[LPADC_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
     /* Reset the module. */
@@ -209,7 +209,7 @@ void LPADC_Deinit(ADC_Type *base)
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Gate the clock. */
-    CLOCK_DisableClock(s_lpadcClocks[LPADC_GetInstance(base)]);
+    (void)CLOCK_DisableClock(s_lpadcClocks[LPADC_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -480,7 +480,7 @@ void LPADC_GetDefaultConvCommandConfig(lpadc_conv_command_config_t *config)
  * OFSTRIM field. The OFSTRIM field is used in normal operation for offset correction.
  *
  * param base LPADC peripheral base address.
- * bool enable switcher to the calibration function.
+ * param enable switcher to the calibration function.
  */
 void LPADC_EnableCalibration(ADC_Type *base, bool enable)
 {
@@ -542,7 +542,7 @@ void LPADC_DoAutoCalibration(ADC_Type *base)
     {
     }
     /* The valid bits of data are bits 14:3 in the RESFIFO register. */
-    LPADC_SetOffsetValue(base, (mLpadcResultConfigStruct.convValue) >> 3U);
+    LPADC_SetOffsetValue(base, (uint32_t)(mLpadcResultConfigStruct.convValue) >> 3UL);
     /* Disable the calibration function. */
     LPADC_EnableCalibration(base, false);
 
@@ -610,50 +610,3 @@ void LPADC_DoAutoCalibration(ADC_Type *base)
 }
 #endif /* FSL_FEATURE_LPADC_HAS_CTRL_CAL_REQ */
 #endif /* FSL_FEATURE_LPADC_HAS_CFG_CALOFS */
-
-#if defined(FSL_FEATURE_LPADC_HAS_INTERNAL_TEMP_SENSOR) && FSL_FEATURE_LPADC_HAS_INTERNAL_TEMP_SENSOR
-/*!
- * brief Measure the temperature.
- *
- * param base  LPADC peripheral base address.
- * param commandId ID for command in command buffer. Typically, the available value range is 1 - 15.
- * param index Result FIFO index.
- *
- * @return Temperature value.
- */
-float LPADC_MeasureTemperature(ADC_Type *base, uint32_t commandId, uint32_t index)
-{
-    lpadc_conv_result_t convResultStruct;
-    uint16_t Vbe1            = 0U;
-    uint16_t Vbe8            = 0U;
-    uint32_t convResultShift = 0U;
-    float parameterSlope     = FSL_FEATURE_LPADC_TEMP_PARAMETER_A;
-    float parameterOffset    = FSL_FEATURE_LPADC_TEMP_PARAMETER_B;
-    float parameterAlpha     = FSL_FEATURE_LPADC_TEMP_PARAMETER_ALPHA;
-    float temperature        = -273.15; /* Absolute zero degree as the incorrect return value. */
-
-#if defined(FSL_FEATURE_LPADC_HAS_CMDL_MODE) && FSL_FEATURE_LPADC_HAS_CMDL_MODE
-    /* Get valid result data width in different resolution mode. */
-    if (kLPADC_ConversionResolutionStandard ==
-        ((base->CMD[commandId - 1].CMDL & ADC_CMDL_MODE_MASK) >> ADC_CMDL_MODE_SHIFT))
-    {
-        convResultShift = 3U;
-    }
-#endif /* FSL_FEATURE_LPADC_HAS_CMDL_MODE */
-
-    /* Read the 2 temperature sensor result. */
-    if (true == LPADC_GetConvResult(base, &convResultStruct, index))
-    {
-        Vbe1 = convResultStruct.convValue >> convResultShift;
-        if (true == LPADC_GetConvResult(base, &convResultStruct, index))
-        {
-            Vbe8 = convResultStruct.convValue >> convResultShift;
-            /* Final temperature = A*[alpha*(Vbe8-Vbe1)/(Vbe8 + alpha*(Vbe8-Vbe1))] - B. */
-            temperature = parameterSlope * (parameterAlpha * (Vbe8 - Vbe1) / (Vbe8 + parameterAlpha * (Vbe8 - Vbe1))) -
-                          parameterOffset;
-        }
-    }
-
-    return temperature;
-}
-#endif /* FSL_FEATURE_LPADC_HAS_INTERNAL_TEMP_SENSOR */

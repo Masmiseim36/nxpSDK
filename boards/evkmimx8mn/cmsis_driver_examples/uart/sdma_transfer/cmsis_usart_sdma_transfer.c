@@ -5,16 +5,16 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_rdc.h"
 #include "fsl_uart_cmsis.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_USART Driver_USART4
+#define DEMO_USART                Driver_USART4
 #define EXAMPLE_UART_DMA_BASEADDR SDMAARM1
 #define ECHO_BUFFER_LENGTH 8
 

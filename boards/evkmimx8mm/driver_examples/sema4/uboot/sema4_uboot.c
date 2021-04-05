@@ -8,20 +8,20 @@
 #include "fsl_common.h"
 #include "fsl_sema4.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_SEMA4 SEMA4
-#define APP_PROC_NUM 1
-#define APP_OTHER_PROC_NUM 0
-#define APP_SEMA4_GATE 0
-#define APP_SEMA4_GATE_ADDR ((uint32_t)(&(APP_SEMA4->Gate00)))
-#define SEMA4_IRQHandler HS_CP1_IRQHandler
-#define SOC_EnableSEMA4Intterrupt() NVIC_EnableIRQ(HS_CP1_IRQn)
+#define APP_SEMA4                    SEMA4
+#define APP_PROC_NUM                 1
+#define APP_OTHER_PROC_NUM           0
+#define APP_SEMA4_GATE               0
+#define APP_SEMA4_GATE_ADDR          ((uint32_t)(&(APP_SEMA4->Gate00)))
+#define SEMA4_IRQHandler             HS_CP1_IRQHandler
+#define SOC_EnableSEMA4Intterrupt()  NVIC_EnableIRQ(HS_CP1_IRQn)
 #define SOC_DisableSEMA4Intterrupt() NVIC_DisableIRQ(HS_CP1_IRQn)
 #define APP_ASSERT(x)                \
     if (!(x))                        \

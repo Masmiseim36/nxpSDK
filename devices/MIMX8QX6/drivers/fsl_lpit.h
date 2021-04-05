@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,7 +21,7 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_LPIT_DRIVER_VERSION (MAKE_VERSION(2, 0, 1)) /*!< Version 2.0.1 */
+#define FSL_LPIT_DRIVER_VERSION (MAKE_VERSION(2, 0, 2)) /*!< Version 2.0.2 */
                                                         /*@{*/
 
 /*!
@@ -296,7 +296,8 @@ static inline void LPIT_ClearStatusFlags(LPIT_Type *base, uint32_t mask)
  */
 static inline void LPIT_SetTimerPeriod(LPIT_Type *base, lpit_chnl_t channel, uint32_t ticks)
 {
-    base->CHANNEL[channel].TVAL = ticks;
+    assert(ticks > 2U);
+    base->CHANNEL[channel].TVAL = ticks - 1U;
 }
 
 /*!

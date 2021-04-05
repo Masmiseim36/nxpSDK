@@ -146,7 +146,7 @@
 /*! @brief SDMA script code ram start address */
 #define FSL_SDMA_SCRIPT_CODE_START_ADDR 6144
 /*! @brief SDMA script code size */
-#define FSL_SDMA_SCRIPT_CODE_SIZE 1325 * sizeof(short)
+#define FSL_SDMA_SCRIPT_CODE_SIZE 1325U * sizeof(short)
 
 #define FSL_SDMA_MULTI_FIFO_SCRIPT                                                                                  \
     {                                                                                                               \

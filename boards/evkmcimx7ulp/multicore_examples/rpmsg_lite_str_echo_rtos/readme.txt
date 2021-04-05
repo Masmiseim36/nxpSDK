@@ -20,8 +20,8 @@ address is then exported from the linker to the application.
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  9.2.1
-- IAR embedded Workbench  8.50.1
+- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  8.50.9
 
 Hardware requirements
 =====================
@@ -79,6 +79,3 @@ On the M4 terminal, the received string content and its length is output, as sho
 Get Message From Master Side : "test" [len : 4]
 Get New Line From Master Side
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 4.0, 2018-01-26
-**     Build:               b190711
+**     Build:               b200922
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -43,6 +43,8 @@
 #define FSL_FEATURE_SOC_CCM_COUNT (1)
 /* @brief CCM_ANALOG availability on the SoC. */
 #define FSL_FEATURE_SOC_CCM_ANALOG_COUNT (1)
+/* @brief DDRC availability on the SoC. */
+#define FSL_FEATURE_SOC_DDRC_COUNT (1)
 /* @brief ECSPI availability on the SoC. */
 #define FSL_FEATURE_SOC_ECSPI_COUNT (3)
 /* @brief ENET availability on the SoC. */
@@ -67,6 +69,8 @@
 #define FSL_FEATURE_SOC_IOMUXC_GPR_COUNT (1)
 /* @brief IPWM availability on the SoC. */
 #define FSL_FEATURE_SOC_IPWM_COUNT (4)
+/* @brief IRQSTEER availability on the SoC. */
+#define FSL_FEATURE_SOC_IRQSTEER_COUNT (1)
 /* @brief IUART availability on the SoC. */
 #define FSL_FEATURE_SOC_IUART_COUNT (4)
 /* @brief LCDIF availability on the SoC. */
@@ -108,6 +112,11 @@
 /* @brief XTALOSC availability on the SoC. */
 #define FSL_FEATURE_SOC_XTALOSC_COUNT (1)
 
+/* CCM module features */
+
+/* @brief Is affected by errata with ID 50235 (Incorrect clock setting for CAN affects by LPUART clock gate). */
+#define FSL_FEATURE_CCM_HAS_ERRATA_50235 (0)
+
 /* ECSPI module features */
 
 /* @brief ECSPI Tx FIFO Size. */
@@ -116,7 +125,7 @@
 /* ENET module features */
 
 /* @brief Support Interrupt Coalesce */
-#define FSL_FEATURE_ENET_HAS_INTERRUPT_COALESCE (0)
+#define FSL_FEATURE_ENET_HAS_INTERRUPT_COALESCE (1)
 /* @brief Queue Size. */
 #define FSL_FEATURE_ENET_QUEUE (3)
 /* @brief Has AVB Support. */
@@ -127,6 +136,20 @@
 #define FSL_FEATURE_ENET_HAS_EXTEND_MDIO (1)
 /* @brief Has Additional 1588 Timer Channel Interrupt. */
 #define FSL_FEATURE_ENET_HAS_ADD_1588_TIMER_CHN_INT (1)
+/* @brief Support Interrupt Coalesce for each instance */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_INTERRUPT_COALESCEn(x) (0)
+/* @brief Queue Size for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_QUEUEn(x) (3)
+/* @brief Has AVB Support for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_AVBn(x) (1)
+/* @brief Has Timer Pulse Width control for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_TIMER_PWCONTROLn(x) (0)
+/* @brief Has Extend MDIO Support for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_EXTEND_MDIOn(x) (1)
+/* @brief Has Additional 1588 Timer Channel Interrupt for each instance. */
+#define FSL_FEATURE_ENET_INSTANCE_HAS_ADD_1588_TIMER_CHN_INTn(x) (1)
+/* @brief Has threshold for the number of frames in the receive FIFO (register bit field RSEM[STAT_SECTION_EMPTY]). */
+#define FSL_FEATURE_ENET_HAS_RECEIVE_STATUS_THRESHOLD (1)
 
 /* GPC module features */
 
@@ -215,20 +238,26 @@
 #define FSL_FEATURE_MU_HAS_RESET_INT (0)
 /* @brief MU Has register SR[MURIP] */
 #define FSL_FEATURE_MU_HAS_SR_MURIP (0)
-/* @brief brief MU Has register SR[HRIP] */
+/* @brief MU Has register SR[HRIP] */
 #define FSL_FEATURE_MU_HAS_SR_HRIP (0)
-/* @brief brief MU does not support enable clock of the other core, CR[CLKE] or CCR[CLKE]. */
+/* @brief MU does not support enable clock of the other core, CR[CLKE] or CCR[CLKE]. */
 #define FSL_FEATURE_MU_NO_CLKE (1)
-/* @brief brief MU does not support NMI, CR[NMI]. */
+/* @brief MU does not support NMI, CR[NMI]. */
 #define FSL_FEATURE_MU_NO_NMI (1)
-/* @brief brief MU does not support hold the other core reset. CR[RSTH] or CCR[RSTH]. */
+/* @brief MU does not support hold the other core reset. CR[RSTH] or CCR[RSTH]. */
 #define FSL_FEATURE_MU_NO_RSTH (1)
-/* @brief brief MU does not supports MU reset, CR[MUR]. */
+/* @brief MU does not supports MU reset, CR[MUR]. */
 #define FSL_FEATURE_MU_NO_MUR (1)
-/* @brief brief MU does not supports hardware reset, CR[HR] or CCR[HR]. */
+/* @brief MU does not supports hardware reset, CR[HR] or CCR[HR]. */
 #define FSL_FEATURE_MU_NO_HR (1)
-/* @brief brief MU supports mask the hardware reset. CR[HRM] or CCR[HRM]. */
+/* @brief MU supports mask the hardware reset. CR[HRM] or CCR[HRM]. */
 #define FSL_FEATURE_MU_HAS_HRM (1)
+/* @brief MU does not support check the other core power mode. SR[PM]. */
+#define FSL_FEATURE_MU_NO_PM (1)
+/* @brief MU supports reset assert interrupt. CR[RAIE] or BCR[RAIE]. */
+#define FSL_FEATURE_MU_HAS_RESET_ASSERT_INT (0)
+/* @brief MU supports reset de-assert interrupt. CR[RDIE] or BCR[RDIE]. */
+#define FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT (0)
 
 /* interrupt module features */
 
@@ -348,6 +377,12 @@
 #define FSL_FEATURE_USDHC_HAS_RESET (0)
 /* @brief USDHC has no bitfield WTMK_LVL[WR_BRST_LEN] and WTMK_LVL[RD_BRST_LEN] */
 #define FSL_FEATURE_USDHC_HAS_NO_RW_BURST_LEN (0)
+/* @brief If USDHC instance support 8 bit width */
+#define FSL_FEATURE_USDHC_INSTANCE_SUPPORT_8_BIT_WIDTHn(x) (1)
+/* @brief If USDHC instance support HS400 mode */
+#define FSL_FEATURE_USDHC_INSTANCE_SUPPORT_HS400_MODEn(x) (0)
+/* @brief If USDHC instance support 1v8 signal */
+#define FSL_FEATURE_USDHC_INSTANCE_SUPPORT_1V8_SIGNALn(x) (1)
 
 #endif /* _MIMX8MQ6_cm4_FEATURES_H_ */
 

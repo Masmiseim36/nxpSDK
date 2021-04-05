@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -64,14 +64,6 @@ static void UART_SendSDMACallback(sdma_handle_t *handle, void *param, bool trans
  * @param param Callback function parameter.
  */
 static void UART_ReceiveSDMACallback(sdma_handle_t *handle, void *param, bool transferDone, uint32_t tcds);
-
-/*!
- * @brief Get the UART instance from peripheral base address.
- *
- * @param base UART peripheral base address.
- * @return UART instance.
- */
-extern uint32_t UART_GetInstance(UART_Type *base);
 
 /*******************************************************************************
  * Code

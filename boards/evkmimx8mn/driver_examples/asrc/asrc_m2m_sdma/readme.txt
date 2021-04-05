@@ -8,8 +8,8 @@ In this example, one asrc instance convert the audio data stored in flash/SRAM/D
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -54,7 +54,4 @@ Playback original 44.1K audio data.
 Playback converted 16K audio data.
 ASRC memory to memory SDMA example finished.
  ~~~~~~~~~~~~~~~~~~~
-
-Customization options
-=====================
 

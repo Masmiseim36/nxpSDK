@@ -36,27 +36,27 @@
 
 typedef enum
 {
-    SRTM_AudioDirRx = 0,
-    SRTM_AudioDirTx = 1,
+    SRTM_AudioDirRx = 0U,
+    SRTM_AudioDirTx = 1U,
 } srtm_audio_dir_t;
 
 typedef enum
 {
-    SRTM_AudioStateClosed = 0,
-    SRTM_AudioStateOpened,
-    SRTM_AudioStateStarted,
-    SRTM_AudioStatePaused,
+    SRTM_AudioStateClosed  = 0U,
+    SRTM_AudioStateOpened  = 1U,
+    SRTM_AudioStateStarted = 2U,
+    SRTM_AudioStatePaused  = 3U,
 } srtm_audio_state_t;
 
 /*!@brief Define the format info which aligned with Linux side in the SRTM Audio service. */
 typedef enum
 {
-    SRTM_Audio_Stereo16Bits = 0,
-    SRTM_Audio_Stereo24Bits = 1,
-    SRTM_Audio_Stereo32Bits = 2,
-    SRTM_Audio_DSD8bits     = 48,
-    SRTM_Audio_DSD16bits    = 49,
-    SRTM_Audio_DSD32bits    = 50,
+    SRTM_Audio_Stereo16Bits = 0U,
+    SRTM_Audio_Stereo24Bits = 1U,
+    SRTM_Audio_Stereo32Bits = 2U,
+    SRTM_Audio_DSD8bits     = 48U,
+    SRTM_Audio_DSD16bits    = 49U,
+    SRTM_Audio_DSD32bits    = 50U,
 } srtm_audio_format_type_t;
 
 typedef struct _audio_format

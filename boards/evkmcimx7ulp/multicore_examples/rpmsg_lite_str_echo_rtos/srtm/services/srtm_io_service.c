@@ -90,7 +90,7 @@ static void SRTM_IoService_RecycleMessage(srtm_message_t msg, void *param)
     EnableGlobalIRQ(primask);
 }
 
-static srtm_io_pin_t SRTM_IoService_FindPin(srtm_io_service_t handle, uint16_t ioId, bool remove, bool notify)
+static srtm_io_pin_t SRTM_IoService_FindPin(srtm_io_service_t handle, uint16_t ioId, bool rm, bool notify)
 {
     srtm_io_pin_t pin = NULL;
     srtm_list_t *list;
@@ -103,7 +103,7 @@ static srtm_io_pin_t SRTM_IoService_FindPin(srtm_io_service_t handle, uint16_t i
         pin = SRTM_LIST_OBJ(srtm_io_pin_t, node, list);
         if (pin->ioId == ioId)
         {
-            if (remove)
+            if (rm)
             {
                 SRTM_List_Remove(list);
             }
@@ -153,7 +153,7 @@ static srtm_status_t SRTM_IoService_Request(srtm_service_t service, srtm_request
     len     = SRTM_CommMessage_GetPayloadLen(request);
 
     status = SRTM_Service_CheckVersion(service, request, SRTM_IO_VERSION);
-    if (status != SRTM_Status_Success || !payload || len < 2)
+    if ((status != SRTM_Status_Success) || (payload == NULL) || (len < 2U))
     {
         /* Either version mismatch or empty payload is not supported */
         SRTM_DEBUG_MESSAGE(SRTM_DEBUG_VERBOSE_WARN, "%s: format error, len %d!\r\n", __func__, len);
@@ -175,7 +175,7 @@ static srtm_status_t SRTM_IoService_Request(srtm_service_t service, srtm_request
             switch (command)
             {
                 case SRTM_IO_CMD_CONF_INPUT_EVENT:
-                    if (len >= 4 && pin->confIEvent)
+                    if ((len >= 4U) && (pin->confIEvent != NULL))
                     {
                         status = pin->confIEvent(service, channel->core, ioId, (srtm_io_event_t)(*(payload + 2)),
                                                  (bool)(*(payload + 3)));
@@ -191,7 +191,7 @@ static srtm_status_t SRTM_IoService_Request(srtm_service_t service, srtm_request
                     }
                     break;
                 case SRTM_IO_CMD_SET_OUTPUT:
-                    if (len >= 3 && pin->setOutput)
+                    if ((len >= 3U) && (pin->setOutput != NULL))
                     {
                         status = pin->setOutput(service, channel->core, ioId, (srtm_io_value_t)(*(payload + 2)));
                         retCode =
@@ -233,8 +233,8 @@ static srtm_status_t SRTM_IoService_Request(srtm_service_t service, srtm_request
     }
 
     payload        = SRTM_CommMessage_GetPayload(response);
-    *payload       = ioId;
-    *(payload + 1) = ioId >> 8U;
+    *payload       = (uint8_t)ioId;
+    *(payload + 1) = (uint8_t)(ioId >> 8U);
     *(payload + 2) = retCode;
     *(payload + 3) = (uint8_t)value; /* Only used in SRTM_IO_CMD_GET_INPUT */
 
@@ -353,8 +353,8 @@ srtm_status_t SRTM_IoService_RegisterPin(srtm_service_t service,
     SRTM_Message_SetFreeFunc(pin->notif, SRTM_IoService_RecycleMessage, pin);
     payload = (uint8_t *)SRTM_CommMessage_GetPayload(pin->notif);
     /* Little endian IO pin ID */
-    *payload       = ioId;
-    *(payload + 1) = ioId >> 8U;
+    *payload       = (uint8_t)ioId;
+    *(payload + 1) = (uint8_t)(ioId >> 8U);
 
     primask = DisableGlobalIRQ();
     SRTM_List_AddTail(&handle->pins, &pin->node);

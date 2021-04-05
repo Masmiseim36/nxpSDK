@@ -8,31 +8,31 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER_BASE ADMA__LPI2C1
+#define EXAMPLE_I2C_MASTER_BASE      ADMA__LPI2C1
 #define LPI2C_MASTER_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_DMA_Lpi2c1)
 
-#define EXAMPLE_IOEXP_LPI2C_BAUDRATE (400000)
+#define EXAMPLE_IOEXP_LPI2C_BAUDRATE               (400000)
 #define EXAMPLE_IOEXP_LPI2C_MASTER_CLOCK_FREQUENCY SC_133MHZ
-#define EXAMPLE_IOEXP_LPI2C_MASTER ADMA__LPI2C1
-#define EXAMPLE_I2C_EXPANSION_A_ADDR (0x1A)
-#define EXAMPLE_I2C_SWITCH_ADDR (0x71)
-#define WAIT_TIME 10U
+#define EXAMPLE_IOEXP_LPI2C_MASTER                 ADMA__LPI2C1
+#define EXAMPLE_I2C_EXPANSION_A_ADDR               (0x1A)
+#define EXAMPLE_I2C_SWITCH_ADDR                    (0x71)
+#define WAIT_TIME                                  10U
 
 #define EXAMPLE_I2C_MASTER ((LPI2C_Type *)EXAMPLE_I2C_MASTER_BASE)
 
 #define LPI2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define LPI2C_BAUDRATE 100000U
-#define LPI2C_DATA_LENGTH 33U
+#define LPI2C_BAUDRATE               100000U
+#define LPI2C_DATA_LENGTH            33U
 
 /*******************************************************************************
  * Prototypes
@@ -198,12 +198,20 @@ int main(void)
         reVal = LPI2C_MasterSend(EXAMPLE_I2C_MASTER, &deviceAddress, 1);
         if (reVal != kStatus_Success)
         {
+            if (reVal == kStatus_LPI2C_Nak)
+            {
+                LPI2C_MasterStop(EXAMPLE_I2C_MASTER);
+            }
             return -1;
         }
 
         reVal = LPI2C_MasterSend(EXAMPLE_I2C_MASTER, g_master_txBuff, LPI2C_DATA_LENGTH);
         if (reVal != kStatus_Success)
         {
+            if (reVal == kStatus_LPI2C_Nak)
+            {
+                LPI2C_MasterStop(EXAMPLE_I2C_MASTER);
+            }
             return -1;
         }
 
@@ -236,13 +244,18 @@ int main(void)
             LPI2C_MasterGetFifoCounts(EXAMPLE_I2C_MASTER, NULL, &txCount);
         }
         /* Check communicate with slave successful or not */
-        while (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
+        if (LPI2C_MasterGetStatusFlags(EXAMPLE_I2C_MASTER) & kLPI2C_MasterNackDetectFlag)
         {
+            return kStatus_LPI2C_Nak;
         }
 
         reVal = LPI2C_MasterSend(EXAMPLE_I2C_MASTER, &deviceAddress, 1);
         if (reVal != kStatus_Success)
         {
+            if (reVal == kStatus_LPI2C_Nak)
+            {
+                LPI2C_MasterStop(EXAMPLE_I2C_MASTER);
+            }
             return -1;
         }
 
@@ -255,6 +268,10 @@ int main(void)
         reVal = LPI2C_MasterReceive(EXAMPLE_I2C_MASTER, g_master_rxBuff, LPI2C_DATA_LENGTH - 1);
         if (reVal != kStatus_Success)
         {
+            if (reVal == kStatus_LPI2C_Nak)
+            {
+                LPI2C_MasterStop(EXAMPLE_I2C_MASTER);
+            }
             return -1;
         }
 

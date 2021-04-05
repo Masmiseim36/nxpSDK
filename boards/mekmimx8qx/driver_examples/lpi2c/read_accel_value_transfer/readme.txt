@@ -10,8 +10,8 @@ the virtual serial port on board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -71,6 +71,3 @@ status_reg = 0xff , x =    56 , y =   -79 , z =  2093
 
 End of LPI2C example .
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

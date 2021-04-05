@@ -8,8 +8,8 @@ In this example, a flexio simulated master connect to a lpspi slave .
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -89,6 +89,3 @@ FLEXIO SPI master <-> LPSPI slave transfer all data matched!
 End of example.
 
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -295,7 +295,7 @@ static status_t ltc_process_message_in_sessions_ctr_EDMA(LTC_Type *base, ltc_edm
                         retval = ltc_symmetric_process_data(base, input, handle->lastSize, output);
                         if (kStatus_Success == retval)
                         {
-                            if (0U != handle->szLeft)
+                            if (NULL != handle->szLeft)
                             {
                                 *handle->szLeft = 16U - handle->lastSize;
                             }
@@ -1554,7 +1554,7 @@ static void LTC_OutputFifoEDMACallback(edma_handle_t *handle, void *param, bool 
 
         if (NULL != ltcPrivateHandle->handle->state_machine)
         {
-            ltcPrivateHandle->handle->state_machine(ltcPrivateHandle->base, ltcPrivateHandle->handle);
+            (void)ltcPrivateHandle->handle->state_machine(ltcPrivateHandle->base, ltcPrivateHandle->handle);
         }
     }
 }

@@ -7,18 +7,18 @@
 
 #include "fsl_tmu.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_TMU_BASE TMU
+#define DEMO_TMU_BASE               TMU
 #define DEMO_TMU_IMMEDIATE_THRESOLD 0U
-#define DEMO_TMU_INTERVAL_VALUE 8U
-#define DEMO_TMU_IRQ TEMPMON_IRQn
-#define DEMO_TMU_IRQ_HANDLER_FUNC TEMPMON_IRQHandler
+#define DEMO_TMU_INTERVAL_VALUE     8U
+#define DEMO_TMU_IRQ                TEMPMON_IRQn
+#define DEMO_TMU_IRQ_HANDLER_FUNC   TEMPMON_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -47,13 +47,13 @@ void DEMO_TMU_IRQ_HANDLER_FUNC(void)
         if (0U != (g_tmuInterruptStausStruct.immediateInterruptsSiteMask & kTMU_MonitorSite0))
         {
             TMU_GetImmediateTemperature(TMU, 0U, &temp);
-            PRINTF("site 0 immediate temperature is too high. %d°„C\r\n", temp);
+            PRINTF("site 0 immediate temperature is too high. %d celsius degree\r\n", temp);
         }
         /* For site1. */
         if (0U != (g_tmuInterruptStausStruct.immediateInterruptsSiteMask & kTMU_MonitorSite1))
         {
             TMU_GetImmediateTemperature(TMU, 1U, &temp);
-            PRINTF("site 1 immediate temperature is too high. %d°„C\r\n", temp);
+            PRINTF("site 1 immediate temperature is too high. %d celsius degree\r\n", temp);
         }
     }
     __DSB();

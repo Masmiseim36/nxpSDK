@@ -9,8 +9,8 @@ Note: The example echo every 8 characters, so input 8 characters every time.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -48,7 +48,4 @@ Board receives 8 characters then sends them out
 Now please input:
 
 When you input 8 characters, system will echo it by UART and them would be seen on the terminal.
-
-Customization options
-=====================
 

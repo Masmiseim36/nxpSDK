@@ -13,10 +13,10 @@
 #endif
 
 /*! @brief TEMPMON calibration data mask. */
-#define TMU_ROOMTEMPMASK 0xFFU
+#define TMU_ROOMTEMPMASK  0xFFU
 #define TMU_ROOMTEMPSHIFT 0x00U
-#define TMU_HOTTEMPMASK 0xFF00U
-#define TMU_HOTTEMPSHIFT 0x08U
+#define TMU_HOTTEMPMASK   0xFF00U
+#define TMU_HOTTEMPSHIFT  0x08U
 
 /*******************************************************************************
  * Prototypes
@@ -74,8 +74,9 @@ void TMU_Init(TMU_Type *base, const tmu_config_t *config)
     TMU_Enable(base, false);
 
     /* Clear interrupt relevant register. */
-    TMU_ClearInterruptStatusFlags(base, kTMU_ImmediateTemperatureStatusFlags | kTMU_AverageTemperatureStatusFlags |
-                                            kTMU_AverageTemperatureCriticalStatusFlags);
+    TMU_ClearInterruptStatusFlags(base, (uint32_t)kTMU_ImmediateTemperatureStatusFlags |
+                                            (uint32_t)kTMU_AverageTemperatureStatusFlags |
+                                            (uint32_t)kTMU_AverageTemperatureCriticalStatusFlags);
 
     /* Configure TER register. */
     base->TER = TMU_TER_ALPF(config->averageLPF);
@@ -108,17 +109,17 @@ void TMU_GetInterruptStatusFlags(TMU_Type *base, tmu_interrupt_status_t *status)
 void TMU_ClearInterruptStatusFlags(TMU_Type *base, uint32_t mask)
 {
     /* For immediate temperature threshold interrupt. */
-    if (0U != (kTMU_ImmediateTemperatureStatusFlags & mask))
+    if (0U != ((uint32_t)kTMU_ImmediateTemperatureStatusFlags & mask))
     {
         base->TIER = TMU_TIER_ITTEIE_MASK; /* Clear interrupt detect register. */
     }
     /* For average temperature threshold interrupt. */
-    if (0U != (kTMU_AverageTemperatureStatusFlags & mask))
+    if (0U != ((uint32_t)kTMU_AverageTemperatureStatusFlags & mask))
     {
         base->TIER = TMU_TIER_ATTEIE_MASK; /* Clear interrupt detect register. */
     }
     /* For Average temperature critical threshold interrupt. */
-    if (0U != (kTMU_AverageTemperatureCriticalStatusFlags & mask))
+    if (0U != ((uint32_t)kTMU_AverageTemperatureCriticalStatusFlags & mask))
     {
         base->TIER = TMU_TIER_ATCTEIE_MASK; /* Clear interrupt detect register. */
     }
@@ -127,31 +128,35 @@ void TMU_ClearInterruptStatusFlags(TMU_Type *base, uint32_t mask)
 status_t TMU_GetImmediateTemperature(TMU_Type *base, uint32_t *temperature)
 {
     assert(NULL != temperature);
+    status_t status = kStatus_Success;
 
     if (0U == (TMU_TRITSR_V_MASK & base->TRITSR))
     {
-        return kStatus_Fail;
+        status = kStatus_Fail;
     }
     else
     {
         *temperature = (TMU_TRITSR_TEMP_MASK & base->TRITSR) >> TMU_TRITSR_TEMP_SHIFT;
-        return kStatus_Success;
     }
+
+    return status;
 }
 
 status_t TMU_GetAverageTemperature(TMU_Type *base, uint32_t *temperature)
 {
     assert(NULL != temperature);
+    status_t status = kStatus_Success;
 
     if (0U == (TMU_TRATSR_V_MASK & base->TRATSR))
     {
-        return kStatus_Fail;
+        status = kStatus_Fail;
     }
     else
     {
         *temperature = (TMU_TRATSR_TEMP_MASK & base->TRATSR) >> TMU_TRATSR_TEMP_SHIFT;
-        return kStatus_Success;
     }
+
+    return status;
 }
 
 void TMU_SetHighTemperatureThresold(TMU_Type *base, const tmu_thresold_config_t *config)

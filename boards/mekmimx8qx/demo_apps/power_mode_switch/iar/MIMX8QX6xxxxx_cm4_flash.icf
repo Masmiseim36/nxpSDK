@@ -92,15 +92,20 @@ define block HEAP      with alignment = 8, size = __size_heap__     { };
 define block RW        { readwrite };
 define block ZI        { zi };
 define block NCACHE_VAR    { section NonCacheable , section NonCacheable.init };
-define block QACCESS_CODE_VAR   with alignment = 32 { section CodeQuickAccess };
+/*12 bytes are reserved for PFU fetches, which is six 16-bit Thumb instructions */
+define block PREFETCH_PADDING   with size = 12 {};
+define block QACCESS_CODE_VAR   with alignment = 32, fixed order{ section CodeQuickAccess, block PREFETCH_PADDING };
 define block QACCESS_DATA_VAR   with alignment = 32 { section DataQuickAccess };
 define block LPM_TEXT_VAR   with alignment = 8 { section TextLpm };
 define block LPM_DATA_VAR   with alignment = 8 { section DataLpm };
 
 initialize by copy { readwrite, section .textrw, section DataQuickAccess, section CodeQuickAccess, section TextLpm, section DataLpm };
 do not initialize  { section .noinit };
+keep{section .resource_table};
+keep{block PREFETCH_PADDING};
 
 place at address mem: m_interrupts_start    { readonly section .intvec };
+".resource_table": place at address mem: m_text_start {section .resource_table};
 place in TEXT_region                        { readonly };
 place in DATA_region                        { block RW };
 place in DATA_region                        { block ZI };

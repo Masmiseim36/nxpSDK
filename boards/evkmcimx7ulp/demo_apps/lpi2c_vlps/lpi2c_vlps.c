@@ -14,9 +14,9 @@
 #include "fsl_dmamux.h"
 #include "fsl_lpit.h"
 #include "fsl_port.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_common.h"
-#include "pin_mux.h"
 #include "fsl_msmc.h"
 /*******************************************************************************
  * Definitions

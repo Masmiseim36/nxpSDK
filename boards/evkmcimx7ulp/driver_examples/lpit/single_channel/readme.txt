@@ -7,8 +7,8 @@ a message a printed on the serial terminal and an LED is toggled on the board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -51,6 +51,3 @@ Starting channel No.0 ...
  Channel No.0 interrupt is occurred !
  ........................
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

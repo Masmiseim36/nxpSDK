@@ -8,6 +8,8 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
@@ -18,8 +20,6 @@
 #include "fsl_pf1550_charger.h"
 #include "fsl_iomuxc.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

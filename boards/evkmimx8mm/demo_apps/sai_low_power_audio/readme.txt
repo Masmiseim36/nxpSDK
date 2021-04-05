@@ -9,8 +9,8 @@ If there is no audio palyback, M core will enter the STOP mode, and the whole SO
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -48,10 +48,8 @@ NOTE
 2.  The wm8524 codec on the EVK board and the ak4497 codec on the audio board are both supported,
     but please note that only one codec can be used at the same time which is determained by the macro "APP_SRTM_CODEC_WM8524_USED" and "APP_SRTM_CODEC_AK4497_USED" in app_srtm.h.
 3.  Since the  DSD files are typically large, users could create a new large size patition in the SD card to place the music files.
-4.  After M core running, please make sure the linux kernel is boot up, then press "s" or "S" to start the demo.
-5.  If there is no audio playback, the M core will enter the STOP mode, then the whole system would enter DSM mode once A53 suspend.
-    Press the ON/OFF button on the EVK board, could wakeup A53 core;
-6.  Please make sure here exists xxx.wav file in the SD card.
+4.  After M core running, please boot the linux kernel to create the rpmsg channel between A core and M core.
+5.  Please make sure here exists xxx.wav file in the SD card.
     If the music file is placed at the Windows FAT32 paritions, after the linux kernel boot up and logged as root,
     using the "mount /dev/mmcblk1p1 /mnt" and then go to "/mnt" folder to playabck the music using the playback command.
     If the music file is placed at the Linux paritions, eg "/home", could playback the music dirctly using the playback command. 
@@ -59,17 +57,32 @@ NOTE
 ******************
 Playback command
 ******************
+Note:
+1. Please use the command "cat /proc/asound/cards" to check the ak4497 sound card number.
+E.g: Type command:
+        ~# cat /proc/asound/cards
+    The available sound cards can be shown:
+     0 [imxspdif       ]: imx-spdif - imx-spdif
+                          mx-spdif
+     1 [imxaudiomicfil ]: imx-audio-micfi - imx-audio-micfil
+                          imx-audio-micfil
+     2 [btscoaudio     ]: bt-sco-audio - bt-sco-audio
+                          bt-sco-audio
+     3 [ak4497audio    ]: ak4497-audio - ak4497-audio
+                          ak4497-audio
+Then the ak4497 sound number is 3.
+2. If use the WM8524 codec, still use the ak4497 sound card number.
+
 When playback the .wav file:
-1.  If want to test free run, could use command: 
-    aplay -Dhw:0 xxx.wav;
-2.  If want to test pause command, could use command: 
-    aplay -Dhw:0 -i xxx.wav -N;
+1.  If want to playabck with pause/resume command, could use command: 
+      "aplay -Dhw:3 -i xxx.wav -N";
     press space key on the keyboard to pause, and press the space key again to resume.
-3.  If want to test play back with specified period-size, could use command:
-    "aplay -Dhw:0 --buffer-size=xxx --period-size=xxx xxx.wav -N &" or
-    "aplay -Dhw:0 --buffer-time=xxx --period-time=xxx xxx.wav -N &".
-    E.g: aplay -Dhw:0 --period-time=500000 --buffer-time=5000000 xxx.wav -N &
-4.  Support music playabck when A core enters suspend.
+2.  If want to playback with low power mode and specified period-size, could use command:
+      "aplay -Dhw:3 --buffer-size=xxx --period-size=xxx xxx.wav -N &" or
+      "aplay -Dhw:3 --buffer-time=xxx --period-time=xxx xxx.wav -N &".
+    E.g: aplay -Dhw:3 --period-time=500000 --buffer-time=10000000 xxx.wav -N &
+    Now please use "echo mem > /sys/power/state" command to make A core enter suspend mode and the playabck work normally.
+
     
 When playback the .dsd/.dff file (only supported by AK4497 codec): 
 1.  Enter folder where the DSD execution procedure exists, using command:
@@ -86,19 +99,13 @@ When the demo runs successfully, the log would be seen on the terminal like:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ####################  LOW POWER AUDIO TASK ####################
 
-    Build Time: Oct 11 2019--12:37:28 
+    Build Time: Apr  8 2020--15:27:22 
 ********************************
-Please follow:
-  (1) Boot Linux kernel first to create the link between M core and A core;
-  (2) If want to make the M core enter STOP mode when there is no audio playback, press "s" or "S" first;
-  (3) Audio playback is allowed even skip the step 2 using the playback command.
+ Wait the Linux kernel boot up to create the link between M core and A core.
 ********************************
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 M core is running now, please boot the linux kernel and use the command to playback music.
 
 
 
-
-Customization options
-=====================
 

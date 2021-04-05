@@ -6,24 +6,26 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_pdm.h"
 #include "fsl_debug_console.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDM PDM
-#define DEMO_PDM_CLK_FREQ 24576000U
-#define DEMO_PDM_FIFO_WATERMARK (7U)
-#define DEMO_PDM_QUALITY_MODE kPDM_QualityModeMedium
-#define DEMO_PDM_CIC_OVERSAMPLE_RATE (0U)
-#define DEMO_PDM_ENABLE_CHANNEL_LEFT (0U)
+#define DEMO_PDM                      PDM
+#define DEMO_PDM_CLK_FREQ             24576000U
+#define DEMO_PDM_FIFO_WATERMARK       (7U)
+#define DEMO_PDM_QUALITY_MODE         kPDM_QualityModeMedium
+#define DEMO_PDM_CIC_OVERSAMPLE_RATE  (0U)
+#define DEMO_PDM_ENABLE_CHANNEL_LEFT  (0U)
 #define DEMO_PDM_ENABLE_CHANNEL_RIGHT (1U)
-#define DEMO_AUDIO_SAMPLE_RATE (48000)
-#define PDM_HWVAD_SIGNAL_GAIN (0)
+#define DEMO_AUDIO_SAMPLE_RATE        (48000)
+#define DEMO_PDM_HWVAD_SIGNAL_GAIN    0
+#define DEMO_AUDIO_SAMPLE_RATE        (48000)
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -42,11 +44,11 @@ static const pdm_config_t pdmConfig    = {
 };
 
 static const pdm_channel_config_t channelConfig = {
-    .cutOffFreq = kPDM_DcRemoverCutOff21Hz,
-    .gain       = kPDM_DfOutputGain1,
+    .cutOffFreq = kPDM_DcRemoverCutOff83Hz,
+    .gain       = kPDM_DfOutputGain7,
 };
 
-static const pdm_hwvad_config_t hwavdConfig = {
+static const pdm_hwvad_config_t hwvadConfig = {
     .channel           = DEMO_PDM_ENABLE_CHANNEL_LEFT,
     .initializeTime    = 10U,
     .cicOverSampleRate = 0U,
@@ -63,7 +65,7 @@ static const pdm_hwvad_noise_filter_t noiseFilterConfig = {
     .enableNoiseDecimation = true,
     .noiseFilterAdjustment = 0U,
     .noiseGain             = 7U,
-    .enableNoiseDetectOR   = false,
+    .enableNoiseDetectOR   = true,
 };
 
 /*******************************************************************************
@@ -76,20 +78,26 @@ void PDM_HWVAD_EVENT_IRQHandler(void)
         s_hwvadFlag = true;
         PDM_ClearHwvadInterruptStatusFlags(DEMO_PDM, kPDM_HwvadStatusVoiceDetectFlag);
     }
+#if (defined FSL_FEATURE_PDM_HAS_NO_INDEPENDENT_ERROR_IRQ && FSL_FEATURE_PDM_HAS_NO_INDEPENDENT_ERROR_IRQ)
+    else
+    {
+        PDM_ClearHwvadInterruptStatusFlags(DEMO_PDM, kPDM_HwvadStatusInputSaturation);
+    }
+#endif
 }
 
+#if !(defined FSL_FEATURE_PDM_HAS_NO_INDEPENDENT_ERROR_IRQ && FSL_FEATURE_PDM_HAS_NO_INDEPENDENT_ERROR_IRQ)
 void PDM_HWVAD_ERROR_IRQHandler(void)
 {
     PDM_ClearHwvadInterruptStatusFlags(DEMO_PDM, kPDM_HwvadStatusInputSaturation);
 }
+#endif
 
 /*!
  * @brief Main function
  */
 int main(void)
 {
-    volatile uint32_t i = 0U;
-
     /* M7 has its local cache and enabled by default,
      * need to set smart subsystems (0x28000000 ~ 0x3FFFFFFF)
      * non-cacheable before accessing this address region */
@@ -116,36 +124,15 @@ int main(void)
         PRINTF("PDM configure sample rate failed.\r\n");
         return -1;
     }
-
-    PDM_SetHwvadConfig(DEMO_PDM, &hwavdConfig);
+    /* envelope based mode */
+    PDM_SetHwvadInEnvelopeBasedMode(DEMO_PDM, &hwvadConfig, &noiseFilterConfig, NULL, DEMO_PDM_HWVAD_SIGNAL_GAIN);
     PDM_EnableHwvadInterrupts(DEMO_PDM, kPDM_HwvadErrorInterruptEnable | kPDM_HwvadInterruptEnable);
-    PDM_ResetHwvad(DEMO_PDM);
-    PDM_EnableHwvad(DEMO_PDM, true);
-
-    PDM_SetHwvadSignalFilterConfig(DEMO_PDM, true, PDM_HWVAD_SIGNAL_GAIN);
-    PDM_SetHwvadNoiseFilterConfig(DEMO_PDM, &noiseFilterConfig);
-
-    PDM_Reset(DEMO_PDM);
-    PDM_Enable(DEMO_PDM, true);
-
-    /* wait HWVAD being initialized flag */
-    while (PDM_GetHwvadInitialFlag(DEMO_PDM))
-    {
-    }
-
-    for (i = 0; i < 3U; i++)
-    {
-        /* set HWVAD interal filter stauts initial */
-        PDM_SetHwvadInternalFilterStatus(DEMO_PDM, kPDM_HwvadInternalFilterInitial);
-    }
-
-    /* set HWVAD interal filter normal operation */
-    PDM_SetHwvadInternalFilterStatus(DEMO_PDM, kPDM_HwvadInternalFilterNormalOperation);
-
     NVIC_ClearPendingIRQ(PDM_HWVAD_EVENT_IRQn);
+#if !(defined FSL_FEATURE_PDM_HAS_NO_INDEPENDENT_ERROR_IRQ && FSL_FEATURE_PDM_HAS_NO_INDEPENDENT_ERROR_IRQ)
     NVIC_ClearPendingIRQ(PDM_HWVAD_ERROR_IRQn);
-    EnableIRQ(PDM_HWVAD_EVENT_IRQn);
     EnableIRQ(PDM_HWVAD_ERROR_IRQn);
+#endif
+    EnableIRQ(PDM_HWVAD_EVENT_IRQn);
 
     while (s_detectTimes)
     {

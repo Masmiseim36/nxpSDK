@@ -7,17 +7,17 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_pwm.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PWM_BASEADDR PWM3
-#define DEMO_PWM_IRQn PWM3_IRQn
+#define DEMO_PWM_BASEADDR   PWM3
+#define DEMO_PWM_IRQn       PWM3_IRQn
 #define DEMO_PWM_IRQHandler PWM3_IRQHandler
 /*! @brief PWM period value. PWMO (Hz) = PCLK(Hz) / (period +2) */
 #define PWM_PERIOD_VALUE 30
@@ -63,11 +63,7 @@ void DEMO_PWM_IRQHandler(void)
         /* Clear kPWM_FIFOEmptyFlag */
         PWM_clearStatusFlags(DEMO_PWM_BASEADDR, kPWM_FIFOEmptyFlag);
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

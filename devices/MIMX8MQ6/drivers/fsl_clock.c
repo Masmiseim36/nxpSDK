@@ -99,7 +99,7 @@ uint32_t CLOCK_GetCoreM4Freq(void)
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll3Ctrl);
             break;
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -144,7 +144,7 @@ uint32_t CLOCK_GetAxiFreq(void)
             freq = CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl);
             break;
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -189,7 +189,7 @@ uint32_t CLOCK_GetAhbFreq(void)
             freq = CLOCK_GetPllFreq(kCLOCK_VideoPll1Ctrl);
             break;
         default:
-            assert(false);
+            freq = 0U;
             break;
     }
 
@@ -243,7 +243,7 @@ uint32_t CLOCK_GetPllRefClkFreq(clock_pll_ctrl_t ctrl)
             refClkFreq = CLKPN_FREQ;
             break;
         default:
-            assert(false);
+            refClkFreq = 0U;
             break;
     }
 
@@ -309,7 +309,7 @@ uint32_t CLOCK_GetPllFreq(clock_pll_ctrl_t pll)
             fracPllBypass = CLOCK_IsPllBypassed(CCM_ANALOG, kCLOCK_ArmPllPwrBypassCtrl);
             break;
         default:
-            assert(false);
+            fracPllBypass = false;
             break;
     }
     if (pll <= kCLOCK_ArmPllCtrl)
@@ -349,7 +349,7 @@ uint32_t CLOCK_GetPllFreq(clock_pll_ctrl_t pll)
  */
 void CLOCK_InitArmPll(const ccm_analog_frac_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* Disable PLL bypass */
     CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_ArmPllPwrBypassCtrl, false);
@@ -382,7 +382,7 @@ void CLOCK_DeinitArmPll(void)
  */
 void CLOCK_InitAudioPll1(const ccm_analog_frac_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* Disable PLL bypass */
     CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_AudioPll1BypassCtrl, false);
@@ -415,7 +415,7 @@ void CLOCK_DeinitAudioPll1(void)
  */
 void CLOCK_InitAudioPll2(const ccm_analog_frac_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* Disable PLL bypass */
     CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_AudioPll2BypassCtrl, false);
@@ -446,7 +446,7 @@ void CLOCK_DeinitAudioPll2(void)
  */
 void CLOCK_InitVideoPll1(const ccm_analog_frac_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* Disable PLL bypass */
     CLOCK_SetPllBypass(CCM_ANALOG, kCLOCK_VideoPll1BypassCtrl, false);
@@ -479,7 +479,7 @@ void CLOCK_DeinitVideoPll1(void)
  */
 void CLOCK_InitSysPll1(const ccm_analog_sscg_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* SSCG PLL configuration */
     CLOCK_InitSSCGPll(CCM_ANALOG, config, kCLOCK_SystemPll1Ctrl);
@@ -513,7 +513,7 @@ void CLOCK_DeinitSysPll1(void)
  */
 void CLOCK_InitSysPll2(const ccm_analog_sscg_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* SSCG PLL configuration */
     CLOCK_InitSSCGPll(CCM_ANALOG, config, kCLOCK_SystemPll2Ctrl);
@@ -547,7 +547,7 @@ void CLOCK_DeinitSysPll2(void)
  */
 void CLOCK_InitSysPll3(const ccm_analog_sscg_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* SSCG PLL configuration */
     CLOCK_InitSSCGPll(CCM_ANALOG, config, kCLOCK_SystemPll3Ctrl);
@@ -581,7 +581,7 @@ void CLOCK_DeinitSysPll3(void)
  */
 void CLOCK_InitDramPll(const ccm_analog_sscg_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* init SSCG pll */
     CLOCK_InitSSCGPll(CCM_ANALOG, config, kCLOCK_DramPllCtrl);
@@ -623,7 +623,7 @@ void CLOCK_DeinitDramPll(void)
  */
 void CLOCK_InitVideoPll2(const ccm_analog_sscg_pll_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
 
     /* init SSCG pll */
     CLOCK_InitSSCGPll(CCM_ANALOG, config, kCLOCK_VideoPll2Ctrl);
@@ -658,9 +658,9 @@ void CLOCK_DeinitVideoPll2(void)
  */
 void CLOCK_InitFracPll(CCM_ANALOG_Type *base, const ccm_analog_frac_pll_config_t *config, clock_pll_ctrl_t type)
 {
-    assert(config);
+    assert(config != NULL);
     assert((config->refDiv != 0U) && (config->outDiv != 0U));
-    assert((config->outDiv % 2) == 0U);
+    assert((config->outDiv % 2U) == 0U);
     assert(type <= kCLOCK_ArmPllCtrl);
 
     uint32_t fracCfg0 = CCM_ANALOG_TUPLE_REG_OFF(base, type, 0U) | CCM_ANALOG_AUDIO_PLL1_CFG0_PLL_PD_MASK;
@@ -737,7 +737,7 @@ uint32_t CLOCK_GetFracPllFreq(CCM_ANALOG_Type *base, clock_pll_ctrl_t type, uint
  */
 void CLOCK_InitSSCGPll(CCM_ANALOG_Type *base, const ccm_analog_sscg_pll_config_t *config, clock_pll_ctrl_t type)
 {
-    assert(config);
+    assert(config != NULL);
     assert(config->refDiv1 != 0U);
     assert(config->refDiv2 != 0U);
     assert(config->outDiv != 0U);
@@ -874,7 +874,7 @@ void CLOCK_UpdateRoot(clock_root_control_t ccmRootClk, uint32_t mux, uint32_t pr
  */
 void CLOCK_InitOSC25M(const osc_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
     assert(config->oscDiv != 0U);
 
     XTALOSC->OSC25M_CTL_CFG =
@@ -900,7 +900,7 @@ void CLOCK_DeinitOSC25M(void)
  */
 void CLOCK_InitOSC27M(const osc_config_t *config)
 {
-    assert(config);
+    assert(config != NULL);
     assert(config->oscDiv != 0U);
 
     XTALOSC->OSC27M_CTL_CFG =

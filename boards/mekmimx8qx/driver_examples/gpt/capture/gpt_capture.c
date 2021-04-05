@@ -7,11 +7,11 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_gpt.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 #include "fsl_irqsteer.h"
 /*******************************************************************************
@@ -22,9 +22,9 @@
 /* GPT channel used for input capture */
 #define BOARD_GPT_INPUT_CAPTURE_CHANNEL kGPT_InputCapture_Channel1
 /* Interrupt to enable and flag to read; depends on the GPT channel used */
-#define EXAMPLE_GPT_CAPTURE_IRQHandler LSIO_GPT0_INT_IRQHandler
+#define EXAMPLE_GPT_CAPTURE_IRQHandler     LSIO_GPT0_INT_IRQHandler
 #define BOARD_GPT_CHANNEL_INTERRUPT_ENABLE kGPT_InputCapture1InterruptEnable
-#define BOARD_GPT_CHANNEL_FLAG kGPT_InputCapture1Flag
+#define BOARD_GPT_CHANNEL_FLAG             kGPT_InputCapture1Flag
 
 /*******************************************************************************
  * Prototypes

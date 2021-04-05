@@ -1,8 +1,6 @@
-INCLUDE(CMakeForceCompiler)
-
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -17,678 +15,22 @@ SET(CMAKE_STATIC_LIBRARY_SUFFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
- 
 # CURRENT DIRECTORY
 SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
+SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DDEBUG")
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -D__STARTUP_CLEAR_BSS")
+project(pdm_sai_sdma)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -D__STARTUP_INITIALIZE_NONCACHEDATA")
+set(MCUX_SDK_PROJECT_NAME pdm_sai_sdma.elf)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -g")
+include(${ProjDirPath}/flags.cmake)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mcpu=cortex-m7")
+include(${ProjDirPath}/config.cmake)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -Wall")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -D__STARTUP_CLEAR_BSS")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -D__STARTUP_INITIALIZE_NONCACHEDATA")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -g")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -Wall")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_DDR_DEBUG "${CMAKE_ASM_FLAGS_DDR_DEBUG} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -D__STARTUP_CLEAR_BSS")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -D__STARTUP_INITIALIZE_NONCACHEDATA")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -Wall")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_DDR_RELEASE "${CMAKE_ASM_FLAGS_DDR_RELEASE} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_DELAY_USE_DWT")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DBOARD_USE_CODEC=1")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCODEC_WM8524_ENABLE")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MMD")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-common")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_DELAY_USE_DWT")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DBOARD_USE_CODEC=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCODEC_WM8524_ENABLE")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MMD")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MP")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -DSDK_DELAY_USE_DWT")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -DBOARD_USE_CODEC=1")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -DCODEC_WM8524_ENABLE")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -g")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -O0")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -Wall")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -mthumb")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -MMD")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -MP")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -fno-common")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -mapcs")
-
-SET(CMAKE_C_FLAGS_DDR_DEBUG "${CMAKE_C_FLAGS_DDR_DEBUG} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -DSDK_DELAY_USE_DWT")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -DSDK_I2C_BASED_COMPONENT_USED=1")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -DBOARD_USE_CODEC=1")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -DCODEC_WM8524_ENABLE")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -Os")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -Wall")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -mthumb")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -MMD")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -MP")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -fno-common")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -mapcs")
-
-SET(CMAKE_C_FLAGS_DDR_RELEASE "${CMAKE_C_FLAGS_DDR_RELEASE} -std=gnu99")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MP")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -g")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -O0")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -Wall")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -MMD")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -MP")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_DDR_DEBUG "${CMAKE_CXX_FLAGS_DDR_DEBUG} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -DCPU_MIMX8MN6DVTJZ")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -DSERIAL_PORT_TYPE_UART=1")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -Os")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -Wall")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -MP")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_DDR_RELEASE "${CMAKE_CXX_FLAGS_DDR_RELEASE} -fno-exceptions")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -g")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -g")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -mcpu=cortex-m7")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -Map=output.map")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -mcpu=cortex-m7")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -mfpu=fpv5-sp-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -Map=output.map")
-
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../..)
-
-include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
-
-include_directories(${ProjDirPath}/../../../../../../devices)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers)
-
-include_directories(${ProjDirPath}/../../../../../../components/codec/wm8524)
-
-include_directories(${ProjDirPath}/../../../../../../components/codec)
-
-include_directories(${ProjDirPath}/../../../../../../components/codec/port)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMX8MN6)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities/str)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities/debug_console)
-
-include_directories(${ProjDirPath}/../../../../../../components/uart)
-
-include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
-
-include_directories(${ProjDirPath}/../../../../../../components/lists)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities)
-
-add_executable(pdm_sai_sdma.elf 
+add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../pdm_sai_sdma.c"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
@@ -697,119 +39,92 @@ add_executable(pdm_sai_sdma.elf
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../fsl_iomuxc.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_i2c.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_i2c.h"
-"${ProjDirPath}/../../../../../../components/codec/wm8524/fsl_wm8524.c"
-"${ProjDirPath}/../../../../../../components/codec/wm8524/fsl_wm8524.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_pdm_sdma.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_pdm_sdma.h"
-"${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.c"
-"${ProjDirPath}/../../../../../../components/codec/fsl_codec_common.h"
-"${ProjDirPath}/../../../../../../components/codec/port/fsl_codec_adapter.h"
-"${ProjDirPath}/../../../../../../components/codec/port/wm8524/fsl_codec_adapter.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_sdma.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_sdma.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_sdma_script.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_pdm.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_pdm.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_sai_sdma.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_sai_sdma.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_sai.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_sai.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_rdc.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_rdc.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/MIMX8MN6_cm7.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/MIMX8MN6_cm7_features.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/fsl_device_registers.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities/debug_console/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities/debug_console/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../../components/uart/iuart_adapter.c"
-"${ProjDirPath}/../../../../../../components/uart/uart.h"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.h"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_internal.h"
-"${ProjDirPath}/../../../../../../components/lists/generic_list.c"
-"${ProjDirPath}/../../../../../../components/lists/generic_list.h"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../../components/serial_manager/serial_port_uart.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_uart.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers/fsl_uart.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/gcc/startup_MIMX8MN6_cm7.S"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/system_MIMX8MN6_cm7.c"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/system_MIMX8MN6_cm7.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities/fsl_sbrk.c"
+"${ProjDirPath}/../empty_rsc_table.c"
 )
 
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${ProjDirPath}/..
+)
 
-set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -T${ProjDirPath}/MIMX8MN6xxxxx_cm7_ram.ld -static")
+set(CMAKE_MODULE_PATH
+    ${ProjDirPath}/../../../../../../devices/MIMX8MN6/drivers
+    ${ProjDirPath}/../../../../../../components/codec/wm8524
+    ${ProjDirPath}/../../../../../../components/codec
+    ${ProjDirPath}/../../../../../../components/codec/port/wm8524
+    ${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities/debug_console_lite
+    ${ProjDirPath}/../../../../../../devices/MIMX8MN6
+    ${ProjDirPath}/../../../../../../components/uart
+    ${ProjDirPath}/../../../../../../components/lists
+    ${ProjDirPath}/../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../devices/MIMX8MN6/utilities
+)
 
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -T${ProjDirPath}/MIMX8MN6xxxxx_cm7_ram.ld -static")
+# include modules
+include(driver_igpio_MIMX8MN6)
 
-set(CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DDR_DEBUG} -T${ProjDirPath}/MIMX8MN6xxxxx_cm7_ddr_ram.ld -static")
+include(driver_ii2c_MIMX8MN6)
 
-set(CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE "${CMAKE_EXE_LINKER_FLAGS_DDR_RELEASE} -T${ProjDirPath}/MIMX8MN6xxxxx_cm7_ddr_ram.ld -static")
+include(driver_wm8524_MIMX8MN6)
 
-TARGET_LINK_LIBRARIES(pdm_sai_sdma.elf -Wl,--start-group)
-target_link_libraries(pdm_sai_sdma.elf debug m)
+include(driver_pdm_sdma_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf debug c)
+include(driver_codec_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf debug gcc)
+include(driver_common_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf debug nosys)
+include(component_wm8524_adapter_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized m)
+include(utility_debug_console_lite_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized c)
+include(utility_assert_lite_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized gcc)
+include(driver_clock_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized nosys)
+include(driver_sdma_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized m)
+include(driver_pdm_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized c)
+include(driver_sai_sdma_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized gcc)
+include(driver_sai_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized nosys)
+include(driver_rdc_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized m)
+include(device_MIMX8MN6_CMSIS_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized c)
+include(component_iuart_adapter_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized gcc)
+include(component_lists_MIMX8MN6)
 
-target_link_libraries(pdm_sai_sdma.elf optimized nosys)
+include(driver_iuart_MIMX8MN6)
 
-TARGET_LINK_LIBRARIES(pdm_sai_sdma.elf -Wl,--end-group)
+include(device_MIMX8MN6_startup_MIMX8MN6)
 
-ADD_CUSTOM_COMMAND(TARGET pdm_sai_sdma.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
--Obinary ${EXECUTABLE_OUTPUT_PATH}/pdm_sai_sdma.elf ${EXECUTABLE_OUTPUT_PATH}/pdm_sai_sdma.bin)
+include(CMSIS_Include_core_cm7_MIMX8MN6)
+
+include(CMSIS_Include_common_MIMX8MN6)
+
+include(CMSIS_Include_dsp_MIMX8MN6)
+
+include(driver_memory_MIMX8MN6)
+
+include(utilities_misc_utilities_MIMX8MN6)
+
+include(device_MIMX8MN6_system_MIMX8MN6)
+
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
+
+ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/pdm_sai_sdma.bin)
 

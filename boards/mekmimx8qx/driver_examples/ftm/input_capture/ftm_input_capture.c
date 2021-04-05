@@ -7,27 +7,27 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_ftm.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* The Flextimer base address/channel used for board */
-#define BOARD_FTM_BASEADDR ADMA__FTM0
+#define BOARD_FTM_BASEADDR              ADMA__FTM0
 #define BOARD_FTM_INPUT_CAPTURE_CHANNEL kFTM_Chnl_2
 
 /* Interrupt number and interrupt handler for the FTM base address used */
-#define FTM_INTERRUPT_NUMBER ADMA_FTM0_INT_IRQn
+#define FTM_INTERRUPT_NUMBER      ADMA_FTM0_INT_IRQn
 #define FTM_INPUT_CAPTURE_HANDLER ADMA_FTM0_INT_IRQHandler
 
 /* Interrupt to enable and flag to read */
 #define FTM_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl2InterruptEnable
-#define FTM_CHANNEL_FLAG kFTM_Chnl2Flag
+#define FTM_CHANNEL_FLAG             kFTM_Chnl2Flag
 
 /* System clock source for FTM driver is bus clock fixed to 160M, if user
    selects external clock source, then CLOCK_SetIpFreq(kCLOCK_DMA_Ftm0, xxx)

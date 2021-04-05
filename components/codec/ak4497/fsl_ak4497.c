@@ -25,7 +25,7 @@
 static void Delay(void)
 {
     uint32_t i;
-    for (i = 0; i < 1000; i++)
+    for (i = 0; i < 1000U; i++)
     {
         __NOP();
     }
@@ -52,123 +52,127 @@ status_t AK4497_Init(ak4497_handle_t *handle, ak4497_config_t *config)
 {
     assert(handle != NULL);
     assert(config != NULL);
+    status_t ret = kStatus_Success;
 
     handle->config = config;
 
     /* i2c bus initialization */
     if (CODEC_I2C_Init(handle->i2cHandle, config->i2cConfig.codecI2CInstance, AK4497_I2C_BITRATE,
-                       config->i2cConfig.codecI2CSourceClock) != kStatus_HAL_I2cSuccess)
+                       config->i2cConfig.codecI2CSourceClock) != (status_t)kStatus_HAL_I2cSuccess)
     {
         return kStatus_Fail;
     }
 
-    AK4497_ModifyReg(handle, AK4497_CONTROL2, AK4497_CONTROL2_SMUTE_MASK,
-                     1U << AK4497_CONTROL2_SMUTE_SHIFT); /* Soft ware mute */
+    ret = AK4497_ModifyReg(handle, AK4497_CONTROL2, AK4497_CONTROL2_SMUTE_MASK,
+                           1U << AK4497_CONTROL2_SMUTE_SHIFT); /* Soft ware mute */
 
-    AK4497_ModifyReg(handle, AK4497_CONTROL1,
-                     AK4497_CONTROL1_DIF0_MASK | AK4497_CONTROL1_DIF1_MASK | AK4497_CONTROL1_DIF2_MASK,
-                     config->pcmConfig.pcmSdataFormat << AK4497_CONTROL1_DIF0_SHIFT);
-    AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_SELLR_MASK,
-                     config->dataChannelMode << AK4497_CONTROL3_SELLR_SHIFT);
+    ret = AK4497_ModifyReg(handle, AK4497_CONTROL1,
+                           AK4497_CONTROL1_DIF0_MASK | AK4497_CONTROL1_DIF1_MASK | AK4497_CONTROL1_DIF2_MASK,
+                           (uint8_t)config->pcmConfig.pcmSdataFormat << AK4497_CONTROL1_DIF0_SHIFT);
+    ret = AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_SELLR_MASK,
+                           (uint8_t)config->dataChannelMode << AK4497_CONTROL3_SELLR_SHIFT);
     if (config->ak4497Mode == kAK4497_PcmMode) /* PCM mode*/
     {
         if (config->pcmConfig.pcmSampleFreqMode != kAK4497_ManualSettingMode)
         {
             if (config->pcmConfig.pcmSampleFreqMode == kAK4497_AutoSettingMode)
             {
-                AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_AFSD_MASK,
-                                 0U << AK4497_CONTROL1_AFSD_SHIFT); /*Auto setting mode*/
-                AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_ACKS_MASK, 1U << AK4497_CONTROL1_ACKS_SHIFT);
+                ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_AFSD_MASK,
+                                       0U << AK4497_CONTROL1_AFSD_SHIFT); /*Auto setting mode*/
+                ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_ACKS_MASK,
+                                       1U << AK4497_CONTROL1_ACKS_SHIFT);
             }
             else
             {
-                AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_AFSD_MASK,
-                                 1U << AK4497_CONTROL1_AFSD_SHIFT); /* Auto Detect mode*/
-                AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_ACKS_MASK, 0U << AK4497_CONTROL1_ACKS_SHIFT);
+                ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_AFSD_MASK,
+                                       1U << AK4497_CONTROL1_AFSD_SHIFT); /* Auto Detect mode*/
+                ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_ACKS_MASK,
+                                       0U << AK4497_CONTROL1_ACKS_SHIFT);
             }
         }
-        AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_TDM0_MASK | AK4497_CONTROL7_TDM1_MASK,
-                         config->pcmConfig.pcmTdmMode << AK4497_CONTROL7_TDM0_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL8, AK4497_CONTROL8_SDS0_MASK,
-                         (config->pcmConfig.pcmSdsSlot & 0x1) << AK4497_CONTROL8_SDS0_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_SDS1_MASK,
-                         ((config->pcmConfig.pcmSdsSlot & 0x2) >> 1U) << AK4497_CONTROL7_SDS1_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_SDS2_MASK,
-                         ((config->pcmConfig.pcmSdsSlot & 0x4) >> 2U) << AK4497_CONTROL7_SDS2_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_TDM0_MASK | AK4497_CONTROL7_TDM1_MASK,
+                               (uint8_t)config->pcmConfig.pcmTdmMode << AK4497_CONTROL7_TDM0_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL8, AK4497_CONTROL8_SDS0_MASK,
+                               ((uint8_t)config->pcmConfig.pcmSdsSlot & 0x1U) << AK4497_CONTROL8_SDS0_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_SDS1_MASK,
+                               (((uint8_t)config->pcmConfig.pcmSdsSlot & 0x2U) >> 1U) << AK4497_CONTROL7_SDS1_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_SDS2_MASK,
+                               (((uint8_t)config->pcmConfig.pcmSdsSlot & 0x4U) >> 2U) << AK4497_CONTROL7_SDS2_SHIFT);
     }
 
     else if (config->ak4497Mode == kAK4497_DsdMode) /*DSD mode*/
     {
-        AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_EXDF_MASK, 0U << AK4497_CONTROL1_EXDF_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DP_MASK, 1U << AK4497_CONTROL3_DP_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DCKS_MASK,
-                         config->dsdConfig.dsdMclk << AK4497_CONTROL3_DCKS_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_DSD2, AK4497_DSD2_DSDPATH_MASK,
-                         config->dsdConfig.dsdPath << AK4497_DSD2_DSDPATH_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_DSD1, AK4497_DSD1_DSDD_MASK,
-                         config->dsdConfig.dsdPlaybackPath << AK4497_DSD1_DSDD_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_DSD1, AK4497_DSD1_DDM_MASK,
-                         config->dsdConfig.dsdDataMute << AK4497_DSD1_DDM_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DCKB_MASK,
-                         config->dsdConfig.dsdDclkPolarity << AK4497_CONTROL3_DCKB_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_EXDF_MASK, 0U << AK4497_CONTROL1_EXDF_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DP_MASK, 1U << AK4497_CONTROL3_DP_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DCKS_MASK,
+                               (uint8_t)config->dsdConfig.dsdMclk << AK4497_CONTROL3_DCKS_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_DSD2, AK4497_DSD2_DSDPATH_MASK,
+                               (uint8_t)config->dsdConfig.dsdPath << AK4497_DSD2_DSDPATH_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_DSD1, AK4497_DSD1_DSDD_MASK,
+                               (uint8_t)config->dsdConfig.dsdPlaybackPath << AK4497_DSD1_DSDD_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_DSD1, AK4497_DSD1_DDM_MASK,
+                               (uint8_t)config->dsdConfig.dsdDataMute << AK4497_DSD1_DDM_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DCKB_MASK,
+                               (uint8_t)config->dsdConfig.dsdDclkPolarity << AK4497_CONTROL3_DCKB_SHIFT);
     }
     else /* EXDF mode*/
     {
-        AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_EXDF_MASK, 1U << AK4497_CONTROL1_EXDF_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DP_MASK, 0U << AK4497_CONTROL3_DP_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_EXDF_MASK, 1U << AK4497_CONTROL1_EXDF_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DP_MASK, 0U << AK4497_CONTROL3_DP_SHIFT);
     }
 
-    AK4497_ModifyReg(handle, AK4497_CONTROL2, AK4497_CONTROL2_SMUTE_MASK,
-                     0U << AK4497_CONTROL2_SMUTE_SHIFT); /* Normal Operation */
+    ret = AK4497_ModifyReg(handle, AK4497_CONTROL2, AK4497_CONTROL2_SMUTE_MASK,
+                           0U << AK4497_CONTROL2_SMUTE_SHIFT); /* Normal Operation */
 
-    AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_RSTN_MASK,
-                     0U << AK4497_CONTROL1_RSTN_SHIFT); /* Rest the ak4497 */
+    ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_RSTN_MASK,
+                           0U << AK4497_CONTROL1_RSTN_SHIFT); /* Rest the ak4497 */
     Delay(); /* Need to wait to ensure the ak4497 has updated the above registers. */
-    AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_RSTN_MASK,
-                     1U << AK4497_CONTROL1_RSTN_SHIFT); /* Normal Operation */
+    ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_RSTN_MASK,
+                           1U << AK4497_CONTROL1_RSTN_SHIFT); /* Normal Operation */
     Delay();
 
-    return kStatus_Success;
+    return ret;
 }
 
 status_t AK4497_SetEncoding(ak4497_handle_t *handle, uint8_t format)
 {
     ak4497_config_t *config = (ak4497_config_t *)handle->config;
+    status_t ret            = kStatus_Success;
 
-    if (format == kAK4497_DsdMode)
+    if (format == (uint8_t)kAK4497_DsdMode)
     {
-        AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_EXDF_MASK, 0U << AK4497_CONTROL1_EXDF_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DP_MASK, 1U << AK4497_CONTROL3_DP_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DCKS_MASK,
-                         config->dsdConfig.dsdMclk << AK4497_CONTROL3_DCKS_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_DSD2, AK4497_DSD2_DSDPATH_MASK,
-                         config->dsdConfig.dsdPath << AK4497_DSD2_DSDPATH_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_DSD1, AK4497_DSD1_DSDD_MASK,
-                         config->dsdConfig.dsdPlaybackPath << AK4497_DSD1_DSDD_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_DSD1, AK4497_DSD1_DDM_MASK,
-                         config->dsdConfig.dsdDataMute << AK4497_DSD1_DDM_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DCKB_MASK,
-                         config->dsdConfig.dsdDclkPolarity << AK4497_CONTROL3_DCKB_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_EXDF_MASK, 0U << AK4497_CONTROL1_EXDF_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DP_MASK, 1U << AK4497_CONTROL3_DP_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DCKS_MASK,
+                               (uint8_t)config->dsdConfig.dsdMclk << AK4497_CONTROL3_DCKS_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_DSD2, AK4497_DSD2_DSDPATH_MASK,
+                               (uint8_t)config->dsdConfig.dsdPath << AK4497_DSD2_DSDPATH_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_DSD1, AK4497_DSD1_DSDD_MASK,
+                               (uint8_t)config->dsdConfig.dsdPlaybackPath << AK4497_DSD1_DSDD_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_DSD1, AK4497_DSD1_DDM_MASK,
+                               (uint8_t)config->dsdConfig.dsdDataMute << AK4497_DSD1_DDM_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DCKB_MASK,
+                               (uint8_t)config->dsdConfig.dsdDclkPolarity << AK4497_CONTROL3_DCKB_SHIFT);
         config->ak4497Mode = kAK4497_DsdMode;
     }
 
-    if (format == kAK4497_PcmMode)
+    if (format == (uint8_t)kAK4497_PcmMode)
     {
-        AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_TDM0_MASK | AK4497_CONTROL7_TDM1_MASK,
-                         config->pcmConfig.pcmTdmMode << AK4497_CONTROL7_TDM0_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL8, AK4497_CONTROL8_SDS0_MASK,
-                         (config->pcmConfig.pcmSdsSlot & 0x1) << AK4497_CONTROL8_SDS0_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_SDS1_MASK,
-                         ((config->pcmConfig.pcmSdsSlot & 0x2) >> 1U) << AK4497_CONTROL7_SDS1_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_SDS2_MASK,
-                         ((config->pcmConfig.pcmSdsSlot & 0x4) >> 2U) << AK4497_CONTROL7_SDS2_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_EXDF_MASK, 0U << AK4497_CONTROL1_EXDF_SHIFT);
-        AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DP_MASK, 0U << AK4497_CONTROL3_DP_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_TDM0_MASK | AK4497_CONTROL7_TDM1_MASK,
+                               (uint8_t)config->pcmConfig.pcmTdmMode << AK4497_CONTROL7_TDM0_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL8, AK4497_CONTROL8_SDS0_MASK,
+                               ((uint8_t)config->pcmConfig.pcmSdsSlot & 0x1U) << AK4497_CONTROL8_SDS0_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_SDS1_MASK,
+                               (((uint8_t)config->pcmConfig.pcmSdsSlot & 0x2U) >> 1U) << AK4497_CONTROL7_SDS1_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL7, AK4497_CONTROL7_SDS2_MASK,
+                               (((uint8_t)config->pcmConfig.pcmSdsSlot & 0x4U) >> 2U) << AK4497_CONTROL7_SDS2_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_EXDF_MASK, 0U << AK4497_CONTROL1_EXDF_SHIFT);
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL3, AK4497_CONTROL3_DP_MASK, 0U << AK4497_CONTROL3_DP_SHIFT);
 
         config->ak4497Mode = kAK4497_PcmMode;
     }
 
-    return kStatus_Success;
+    return ret;
 }
 
 status_t AK4497_ConfigDataFormat(ak4497_handle_t *handle, uint32_t mclk, uint32_t sampleRate, uint32_t bitWidth)
@@ -177,6 +181,8 @@ status_t AK4497_ConfigDataFormat(ak4497_handle_t *handle, uint32_t mclk, uint32_
     ak4497_dsd_dclk_t dsdsel;
     ak4497_pcm_sdata_format_t sdataFormat;
     ak4497_config_t *config = (ak4497_config_t *)handle->config;
+    status_t ret            = kStatus_Success;
+
     if (config->ak4497Mode == kAK4497_DsdMode)
     {
         switch (sampleRate * bitWidth)
@@ -202,12 +208,19 @@ status_t AK4497_ConfigDataFormat(ak4497_handle_t *handle, uint32_t mclk, uint32_
                 dsdsel = kAK4497_dclk512fs;
                 break;
             default:
-                return kStatus_Fail;
+                ret = kStatus_Fail;
+                break;
         }
-        AK4497_ModifyReg(handle, AK4497_DSD1, AK4497_DSD1_DSDSEL0_MASK,
-                         (dsdsel & 0x1) << AK4497_DSD1_DSDSEL0_SHIFT); /* Set DSDSEL0 */
-        AK4497_ModifyReg(handle, AK4497_DSD2, AK4497_DSD2_DSDSEL1_MASK,
-                         ((dsdsel & 0x2) >> 1U) << AK4497_DSD2_DSDSEL1_SHIFT); /* Set DSDSEL1 */
+
+        if (ret != kStatus_Success)
+        {
+            return ret;
+        }
+
+        ret = AK4497_ModifyReg(handle, AK4497_DSD1, AK4497_DSD1_DSDSEL0_MASK,
+                               ((uint8_t)dsdsel & 0x1U) << AK4497_DSD1_DSDSEL0_SHIFT); /* Set DSDSEL0 */
+        ret = AK4497_ModifyReg(handle, AK4497_DSD2, AK4497_DSD2_DSDSEL1_MASK,
+                               (((uint8_t)dsdsel & 0x2U) >> 1U) << AK4497_DSD2_DSDSEL1_SHIFT); /* Set DSDSEL1 */
     }
     else /* PCM mode */
     {
@@ -239,8 +252,15 @@ status_t AK4497_ConfigDataFormat(ak4497_handle_t *handle, uint32_t mclk, uint32_
                 samplefreq = kAK4497_HexSpeed;
                 break;
             default:
-                return kStatus_Fail;
+                ret = kStatus_Fail;
+                break;
         }
+
+        if (ret != kStatus_Success)
+        {
+            return ret;
+        }
+
         switch (bitWidth)
         {
             /* For PCM, only strero mode supported. */
@@ -252,27 +272,34 @@ status_t AK4497_ConfigDataFormat(ak4497_handle_t *handle, uint32_t mclk, uint32_
                 sdataFormat = kAK4497_32BitI2S;
                 break;
             default:
-                return kStatus_Fail;
+                ret = kStatus_Fail;
+                break;
         }
-        AK4497_ModifyReg(handle, AK4497_CONTROL2, AK4497_CONTROL2_DFS0_MASK | AK4497_CONTROL2_DFS1_MASK,
-                         (samplefreq & 0x3) << AK4497_CONTROL2_DFS0_SHIFT); /* Set DFS[1:0] */
-        AK4497_ModifyReg(handle, AK4497_CONTROL4, AK4497_CONTROL4_DFS2_MASK | AK4497_CONTROL4_DFS2_MASK,
-                         ((samplefreq & 0x4) >> 2U) << AK4497_CONTROL4_DFS2_SHIFT); /* Set DFS[2] */
-        AK4497_ModifyReg(handle, AK4497_CONTROL1,
-                         AK4497_CONTROL1_DIF0_MASK | AK4497_CONTROL1_DIF1_MASK | AK4497_CONTROL1_DIF2_MASK,
-                         sdataFormat << AK4497_CONTROL1_DIF0_SHIFT);
+
+        if (ret != kStatus_Success)
+        {
+            return ret;
+        }
+
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL2, AK4497_CONTROL2_DFS0_MASK | AK4497_CONTROL2_DFS1_MASK,
+                               ((uint8_t)samplefreq & 0x3U) << AK4497_CONTROL2_DFS0_SHIFT); /* Set DFS[1:0] */
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL4, AK4497_CONTROL4_DFS2_MASK | AK4497_CONTROL4_DFS2_MASK,
+                               (((uint8_t)samplefreq & 0x4U) >> 2U) << AK4497_CONTROL4_DFS2_SHIFT); /* Set DFS[2] */
+        ret = AK4497_ModifyReg(handle, AK4497_CONTROL1,
+                               AK4497_CONTROL1_DIF0_MASK | AK4497_CONTROL1_DIF1_MASK | AK4497_CONTROL1_DIF2_MASK,
+                               (uint8_t)sdataFormat << AK4497_CONTROL1_DIF0_SHIFT);
     }
 
-    AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_RSTN_MASK,
-                     0U << AK4497_CONTROL1_RSTN_SHIFT); /* Rest the ak4497 */
+    ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_RSTN_MASK,
+                           0U << AK4497_CONTROL1_RSTN_SHIFT); /* Rest the ak4497 */
 
     Delay();
 
-    AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_RSTN_MASK,
-                     1U << AK4497_CONTROL1_RSTN_SHIFT); /* Normal Operation */
+    ret = AK4497_ModifyReg(handle, AK4497_CONTROL1, AK4497_CONTROL1_RSTN_MASK,
+                           1U << AK4497_CONTROL1_RSTN_SHIFT); /* Normal Operation */
     Delay();
 
-    return kStatus_Success;
+    return ret;
 }
 
 status_t AK4497_SetVolume(ak4497_handle_t *handle, uint8_t value)
@@ -301,22 +328,27 @@ status_t AK4497_GetVolume(ak4497_handle_t *handle, uint8_t *value)
 
 status_t AK4497_Deinit(ak4497_handle_t *handle)
 {
-    AK4497_ModifyReg(handle, AK4497_CONTROL2, AK4497_CONTROL2_SMUTE_MASK,
-                     1U << AK4497_CONTROL2_SMUTE_SHIFT); /* Soft ware mute */
-    return CODEC_I2C_Deinit(handle->i2cHandle);
+    status_t ret = kStatus_Success;
+
+    ret = AK4497_ModifyReg(handle, AK4497_CONTROL2, AK4497_CONTROL2_SMUTE_MASK,
+                           1U << AK4497_CONTROL2_SMUTE_SHIFT); /* Soft ware mute */
+
+    ret = CODEC_I2C_Deinit(handle->i2cHandle);
+
+    return ret;
 }
 
 status_t AK4497_ModuleControl(ak4497_handle_t *handle, ak4497_module_ctrl_cmd_t cmd, uint32_t data)
 {
     status_t ret = kStatus_Success;
 
-    switch (cmd)
+    if (cmd == kAK4497_ModuleSwitchI2SInInterface)
     {
-        case kAK4497_ModuleSwitchI2SInInterface:
-            ret = AK4497_SetEncoding(handle, data);
-            break;
-        default:
-            return kStatus_InvalidArgument;
+        ret = AK4497_SetEncoding(handle, (uint8_t)data);
+    }
+    else
+    {
+        ret = kStatus_InvalidArgument;
     }
 
     return ret;
@@ -324,7 +356,7 @@ status_t AK4497_ModuleControl(ak4497_handle_t *handle, ak4497_module_ctrl_cmd_t 
 
 status_t AK4497_WriteReg(ak4497_handle_t *handle, uint8_t reg, uint8_t val)
 {
-    assert(handle->config);
+    assert(handle->config != NULL);
     assert(handle->config->slaveAddress != 0U);
 
     Delay(); /* Ensure the Codec I2C bus free before writing the slave. */
@@ -334,7 +366,7 @@ status_t AK4497_WriteReg(ak4497_handle_t *handle, uint8_t reg, uint8_t val)
 
 status_t AK4497_ReadReg(ak4497_handle_t *handle, uint8_t reg, uint8_t *val)
 {
-    assert(handle->config);
+    assert(handle->config != NULL);
     assert(handle->config->slaveAddress != 0U);
 
     Delay(); /* Ensure the Codec I2C bus free before reading the slave. */

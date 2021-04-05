@@ -13,7 +13,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SRTM_HEAP_STAT_COUNT_MASK (0x3F)
+#define SRTM_HEAP_STAT_COUNT_MASK (0x3FU)
 
 /*******************************************************************************
  * Prototypes
@@ -34,7 +34,7 @@ void *SRTM_Heap_Malloc(uint32_t size)
 #ifdef SRTM_DEBUG_MESSAGE_FUNC
     size_t freeSize, minFreeSize;
 
-    if (((++count) & SRTM_HEAP_STAT_COUNT_MASK) == 0)
+    if (((++count) & SRTM_HEAP_STAT_COUNT_MASK) == 0U)
     {
         freeSize    = xPortGetFreeHeapSize();
         minFreeSize = xPortGetMinimumEverFreeHeapSize();

@@ -13,58 +13,58 @@
  * Definitions
  ******************************************************************************/
 /* INT_CATEGORY bit-field. */
-#define PF1550_INT_CATEGORY_CHG_INT_MASK (0x01U)
-#define PF1550_INT_CATEGORY_SW1_INT_MASK (0x02U)
-#define PF1550_INT_CATEGORY_SW2_INT_MASK (0x04U)
-#define PF1550_INT_CATEGORY_SW3_INT_MASK (0x08U)
-#define PF1550_INT_CATEGORY_LDO_INT_MASK (0x10U)
+#define PF1550_INT_CATEGORY_CHG_INT_MASK   (0x01U)
+#define PF1550_INT_CATEGORY_SW1_INT_MASK   (0x02U)
+#define PF1550_INT_CATEGORY_SW2_INT_MASK   (0x04U)
+#define PF1550_INT_CATEGORY_SW3_INT_MASK   (0x08U)
+#define PF1550_INT_CATEGORY_LDO_INT_MASK   (0x10U)
 #define PF1550_INT_CATEGORY_ONKEY_INT_MASK (0x20U)
-#define PF1550_INT_CATEGORY_TEMP_INT_MASK (0x40U)
-#define PF1550_INT_CATEGORY_MISC_INT_MASK (0x80U)
+#define PF1550_INT_CATEGORY_TEMP_INT_MASK  (0x40U)
+#define PF1550_INT_CATEGORY_MISC_INT_MASK  (0x80U)
 /* REGULATOR_CTRL bit-field. */
-#define PF1550_REGULATOR_CTRL_EN_MASK (0x01U)
-#define PF1550_REGULATOR_CTRL_STBY_EN_MASK (0x02U)
-#define PF1550_REGULATOR_CTRL_OMODE_MASK (0x04U)
+#define PF1550_REGULATOR_CTRL_EN_MASK       (0x01U)
+#define PF1550_REGULATOR_CTRL_STBY_EN_MASK  (0x02U)
+#define PF1550_REGULATOR_CTRL_OMODE_MASK    (0x04U)
 #define PF1550_REGULATOR_CTRL_SYSON_EN_MASK (0x07U)
 /* SW_CTRL bit-field. */
-#define PF1550_SW_CTRL_LPWR_MASK (0x08U)
-#define PF1550_SW_CTRL_DVSSPEED_MASK (0x10U)
+#define PF1550_SW_CTRL_LPWR_MASK      (0x08U)
+#define PF1550_SW_CTRL_DVSSPEED_MASK  (0x10U)
 #define PF1550_SW_CTRL_DVSSPEED_SHIFT (4U)
 #define PF1550_SW_CTRL_DVSSPEED(x) \
     (((uint8_t)((uint8_t)(x) << PF1550_SW_CTRL_DVSSPEED_SHIFT)) & PF1550_SW_CTRL_DVSSPEED_MASK)
 #define PF1550_SW_CTRL_FPWM_IN_DVS_MASK (0x20U)
-#define PF1550_SW_CTRL_FPWM_MASK (0x40U)
-#define PF1550_SW_CTRL_RDIS_EN_MASK (0x80U)
+#define PF1550_SW_CTRL_FPWM_MASK        (0x40U)
+#define PF1550_SW_CTRL_RDIS_EN_MASK     (0x80U)
 /* LDO_CTRL bit-field. */
-#define PF1550_LDO_CTRL_LPWR_MASK (0x08U)
+#define PF1550_LDO_CTRL_LPWR_MASK  (0x08U)
 #define PF1550_LDO_CTRL_LS_EN_MASK (0x10U)
 /* COINCELL bit-field. */
 #define PF1550_COINCELL_CONTROL_COINCHEN_MASK (0x10U)
 /* VSNVS_CTRL bit-field. */
 #define PF1550_VSNVS_CTRL_LIBGDIS_MASK (0x20U)
 /* PWRCTRL0 bit-field. */
-#define PF1550_PWRCTRL0_STANDBYDLY_MASK (0x03U)
-#define PF1550_PWRCTRL0_STANDBYINV_MASK (0x04U)
+#define PF1550_PWRCTRL0_STANDBYDLY_MASK  (0x03U)
+#define PF1550_PWRCTRL0_STANDBYINV_MASK  (0x04U)
 #define PF1550_PWRCTRL0_STANDBYINV_SHIFT (2U)
 #define PF1550_PWRCTRL0_STANDBYINV(x) \
     (((uint8_t)((uint8_t)(x) << PF1550_PWRCTRL0_STANDBYINV_SHIFT)) & PF1550_PWRCTRL0_STANDBYINV_MASK)
-#define PF1550_PWRCTRL0_POR_DLY_MASK (0x38U)
+#define PF1550_PWRCTRL0_POR_DLY_MASK  (0x38U)
 #define PF1550_PWRCTRL0_POR_DLY_SHIFT (3U)
 #define PF1550_PWRCTRL0_POR_DLY(x) \
     (((uint8_t)((uint8_t)(x) << PF1550_PWRCTRL0_POR_DLY_SHIFT)) & PF1550_PWRCTRL0_POR_DLY_MASK)
-#define PF1550_PWRCTRL0_TGRESET_MASK (0xC0)
+#define PF1550_PWRCTRL0_TGRESET_MASK  (0xC0U)
 #define PF1550_PWRCTRL0_TGRESET_SHIFT (6U)
 #define PF1550_PWRCTRL0_TGRESET(x) \
     (((uint8_t)((uint8_t)(x) << PF1550_PWRCTRL0_TGRESET_SHIFT)) & PF1550_PWRCTRL0_TGRESET_MASK)
 /* PWRCTRL1 bit-field. */
-#define PF1550_PWRCTRL1_PWRONDBNC_MASK (0x03U)
+#define PF1550_PWRCTRL1_PWRONDBNC_MASK  (0x03U)
 #define PF1550_PWRCTRL1_PWRONRSTEN_MASK (0x10U)
-#define PF1550_PWRCTRL1_RESTARTEN_MASK (0x20U)
-#define PF1550_PWRCTRL1_ONKEYDBNC_MASK (0x0CU)
+#define PF1550_PWRCTRL1_RESTARTEN_MASK  (0x20U)
+#define PF1550_PWRCTRL1_ONKEYDBNC_MASK  (0x0CU)
 #define PF1550_PWRCTRL1_ONKEYDBNC_SHIFT (2U)
 #define PF1550_PWRCTRL1_ONKEYDBNC(x) \
     (((uint8_t)((uint8_t)(x) << PF1550_PWRCTRL1_ONKEYDBNC_SHIFT)) & PF1550_PWRCTRL1_ONKEYDBNC_MASK)
-#define PF1550_PWRCTRL1_REGSCPEN_MASK (0x40U)
+#define PF1550_PWRCTRL1_REGSCPEN_MASK     (0x40U)
 #define PF1550_PWRCTRL1_ONKEY_RST_EN_MASK (0x80U)
 /* PWRCTRL2 bit-field. */
 #define PF1550_PWRCTRL2_UVDET_MASK (0x03U)
@@ -74,22 +74,22 @@
 #define PF1550_OTP_SW2_SW3_OTP_SW2_DVS_ENB_MASK (0x08U)
 
 /* Regulator Control Helper Macros. */
-#define PF1550_SWX_SET_POINT_NUM (64U)
+#define PF1550_SWX_SET_POINT_NUM        (64U)
 #define PF1550_SWX_OUTPUT_LIMIT_LOW_DVS (600000U)
-#define PF1550_SWX_OUTPUT_STEP_DVS (12500U)
-#define PF1550_SWY_SET_POINT_NUM (16U)
-#define PF1550_SWY_OUTPUT_LIMIT_LOW (1800000U)
-#define PF1550_SWY_OUTPUT_STEP (100000U)
-#define PF1550_LDOX_SET_POINT_NUM (16U)
-#define PF1550_LDOX_OUTPUT_LIMIT_LOW (1800000U)
-#define PF1550_LDOX_OUTPUT_STEP (100000U)
-#define PF1550_LDOY_SET_POINT_NUM (32U)
-#define PF1550_LDOY_SET_POINT_LOW_NUM (16U)
-#define PF1550_LDOY_OUTPUT_LIMIT_LOW (750000U)
-#define PF1550_LDOY_OUTPUT_STEP_LOW (50000U)
-#define PF1550_LDOY_OUTPUT_LIMIT_MID (1800000U)
-#define PF1550_LDOY_OUTPUT_STEP_HIGH (100000U)
-#define PF1550_VSNVS_OUTPUT_VOLTAGE (3300000U)
+#define PF1550_SWX_OUTPUT_STEP_DVS      (12500U)
+#define PF1550_SWY_SET_POINT_NUM        (16U)
+#define PF1550_SWY_OUTPUT_LIMIT_LOW     (1800000U)
+#define PF1550_SWY_OUTPUT_STEP          (100000U)
+#define PF1550_LDOX_SET_POINT_NUM       (16U)
+#define PF1550_LDOX_OUTPUT_LIMIT_LOW    (1800000U)
+#define PF1550_LDOX_OUTPUT_STEP         (100000U)
+#define PF1550_LDOY_SET_POINT_NUM       (32U)
+#define PF1550_LDOY_SET_POINT_LOW_NUM   (16U)
+#define PF1550_LDOY_OUTPUT_LIMIT_LOW    (750000U)
+#define PF1550_LDOY_OUTPUT_STEP_LOW     (50000U)
+#define PF1550_LDOY_OUTPUT_LIMIT_MID    (1800000U)
+#define PF1550_LDOY_OUTPUT_STEP_HIGH    (100000U)
+#define PF1550_VSNVS_OUTPUT_VOLTAGE     (3300000U)
 
 /*******************************************************************************
  * Prototypes
@@ -171,7 +171,7 @@ static uint8_t PF1550_GetRegulatorSetPoint(pf1550_handle_t *handle, pf1550_modul
             {
                 if ((PF1550_SWX_OUTPUT_LIMIT_LOW_DVS + (PF1550_SWX_OUTPUT_STEP_DVS * index)) >= voltage)
                 {
-                    regulatorSetPoint = index;
+                    regulatorSetPoint = (uint8_t)index;
                     break;
                 }
             }
@@ -189,7 +189,7 @@ static uint8_t PF1550_GetRegulatorSetPoint(pf1550_handle_t *handle, pf1550_modul
             {
                 if ((PF1550_SWY_OUTPUT_LIMIT_LOW + (PF1550_SWY_OUTPUT_STEP * index)) >= voltage)
                 {
-                    regulatorSetPoint = index;
+                    regulatorSetPoint = (uint8_t)index;
                     break;
                 }
             }
@@ -206,7 +206,7 @@ static uint8_t PF1550_GetRegulatorSetPoint(pf1550_handle_t *handle, pf1550_modul
             {
                 if ((PF1550_LDOX_OUTPUT_LIMIT_LOW + (PF1550_LDOX_OUTPUT_STEP * index)) >= voltage)
                 {
-                    regulatorSetPoint = index;
+                    regulatorSetPoint = (uint8_t)index;
                     break;
                 }
             }
@@ -228,7 +228,7 @@ static uint8_t PF1550_GetRegulatorSetPoint(pf1550_handle_t *handle, pf1550_modul
                      ((PF1550_LDOY_OUTPUT_LIMIT_MID +
                        (PF1550_LDOY_OUTPUT_STEP_HIGH * (index - PF1550_LDOY_SET_POINT_LOW_NUM))) >= voltage)))
                 {
-                    regulatorSetPoint = index;
+                    regulatorSetPoint = (uint8_t)index;
                     break;
                 }
             }
@@ -240,6 +240,7 @@ static uint8_t PF1550_GetRegulatorSetPoint(pf1550_handle_t *handle, pf1550_modul
             break;
 
         default:
+            assert(false);
             break;
     }
 
@@ -263,7 +264,7 @@ static uint32_t PF1550_GetRegulatorOutputVolt(pf1550_handle_t *handle, pf1550_mo
             /* Get Set Point when Switch DVS feature is enabled. */
             if (true == PF1550_IsRegulatorSupportDvs(handle, module))
             {
-                voltage = PF1550_SWX_OUTPUT_LIMIT_LOW_DVS + PF1550_SWX_OUTPUT_STEP_DVS * voltRegContent;
+                voltage = PF1550_SWX_OUTPUT_LIMIT_LOW_DVS + (uint32_t)PF1550_SWX_OUTPUT_STEP_DVS * voltRegContent;
             }
             /* Get Set Point when Switch DVS feature is disable. */
             else
@@ -272,7 +273,7 @@ static uint32_t PF1550_GetRegulatorOutputVolt(pf1550_handle_t *handle, pf1550_mo
                 {
                     voltage = regulatorSwVoltSetPonitTab[(sizeof(regulatorSwVoltSetPonitTab) /
                                                           sizeof(regulatorSwVoltSetPonitTab[0])) -
-                                                         1];
+                                                         1U];
                 }
                 else
                 {
@@ -297,11 +298,11 @@ static uint32_t PF1550_GetRegulatorOutputVolt(pf1550_handle_t *handle, pf1550_mo
             if (PF1550_LDOY_SET_POINT_LOW_NUM <= voltRegContent)
             {
                 voltage = PF1550_LDOY_OUTPUT_LIMIT_MID +
-                          (PF1550_LDOY_OUTPUT_STEP_HIGH * (voltRegContent - PF1550_LDOY_SET_POINT_LOW_NUM));
+                          (PF1550_LDOY_OUTPUT_STEP_HIGH * ((uint32_t)voltRegContent - PF1550_LDOY_SET_POINT_LOW_NUM));
             }
             else
             {
-                voltage = PF1550_LDOY_OUTPUT_LIMIT_LOW + (PF1550_LDOY_OUTPUT_STEP_LOW * voltRegContent);
+                voltage = PF1550_LDOY_OUTPUT_LIMIT_LOW + (PF1550_LDOY_OUTPUT_STEP_LOW * (uint32_t)voltRegContent);
             }
             break;
 
@@ -344,12 +345,13 @@ void PF1550_Init(pf1550_handle_t *handle, const pf1550_config_t *config)
     handle->slaveAddress = config->slaveAddress;
 
     /* Set Vsys Under-Voltage Detection Threshold. */
-    PF1550_ModifyReg(handle, PF1550_PWRCTRL2, PF1550_PWRCTRL2_UVDET_MASK, config->threshold);
+    (void)PF1550_ModifyReg(handle, PF1550_PWRCTRL2, PF1550_PWRCTRL2_UVDET_MASK, (uint8_t)(config->threshold));
     /* Set Power Up Delay Time. */
-    PF1550_ModifyReg(handle, PF1550_PWRCTRL0, PF1550_PWRCTRL0_POR_DLY_MASK, PF1550_PWRCTRL0_POR_DLY(config->delay));
+    (void)PF1550_ModifyReg(handle, PF1550_PWRCTRL0, PF1550_PWRCTRL0_POR_DLY_MASK,
+                           PF1550_PWRCTRL0_POR_DLY(config->delay));
     /* Shuts down LDO if it enters a current limit fault. */
-    PF1550_ModifyReg(handle, PF1550_PWRCTRL1, PF1550_PWRCTRL1_REGSCPEN_MASK,
-                     config->shutDownLdoInCurrentFault ? PF1550_PWRCTRL1_REGSCPEN_MASK : 0x0U);
+    (void)PF1550_ModifyReg(handle, PF1550_PWRCTRL1, PF1550_PWRCTRL1_REGSCPEN_MASK,
+                           config->shutDownLdoInCurrentFault ? PF1550_PWRCTRL1_REGSCPEN_MASK : 0x0U);
 }
 
 bool PF1550_WriteReg(pf1550_handle_t *handle, uint8_t reg, uint8_t val)
@@ -371,8 +373,8 @@ bool PF1550_ReadReg(pf1550_handle_t *handle, uint8_t reg, uint8_t *val)
 
 bool PF1550_ModifyReg(pf1550_handle_t *handle, uint8_t reg, uint8_t mask, uint8_t val)
 {
-    bool result = false;
-    uint8_t regValue;
+    bool result      = false;
+    uint8_t regValue = 0U;
 
     assert(handle);
 
@@ -414,12 +416,12 @@ bool PF1550_DumpReg(pf1550_handle_t *handle, uint8_t reg, uint8_t *buffer, uint8
 
 uint32_t PF1550_GetInterruptCategory(pf1550_handle_t *handle)
 {
-    uint8_t category;
+    uint8_t category = 0U;
 
     assert(handle);
 
     /* It seems that PF1550 only support  */
-    PF1550_ReadReg(handle, PF1550_INT_CATEGORY, &category);
+    (void)PF1550_ReadReg(handle, PF1550_INT_CATEGORY, &category);
 
     return category;
 }
@@ -432,39 +434,40 @@ void PF1550_EnableInterrupts(pf1550_handle_t *handle, pf1550_interrupt_category_
     {
         case kPF1550_IntCategoryCharger:
             /* Enable Charger interrupts. */
-            PF1550_ModifyReg(handle, PF1550_CHG_INT_MASK, (source & 0xFFU), 0x0U);
+            (void)PF1550_ModifyReg(handle, PF1550_CHG_INT_MASK, (uint8_t)(source & 0xFFU), 0x0U);
             break;
 
         case kPF1550_IntCategorySwitch:
             /* Enable Switch low side current limit interrupts. */
-            PF1550_ModifyReg(handle, PF1550_SW_INT_MASK0, (source & 0xFFU), 0x0U);
+            (void)PF1550_ModifyReg(handle, PF1550_SW_INT_MASK0, (uint8_t)(source & 0xFFU), 0x0U);
             /* Enable Switch high side current limit interrupts. */
-            PF1550_ModifyReg(handle, PF1550_SW_INT_MASK1, ((source & 0xFF00U) >> 8U), 0x0U);
+            (void)PF1550_ModifyReg(handle, PF1550_SW_INT_MASK1, (uint8_t)((source & 0xFF00U) >> 8U), 0x0U);
             /* Enable Switch DVS complete interrupts. */
-            PF1550_ModifyReg(handle, PF1550_SW_INT_MASK2, ((source & 0xFF0000U) >> 16U), 0x0U);
+            (void)PF1550_ModifyReg(handle, PF1550_SW_INT_MASK2, (uint8_t)((source & 0xFF0000U) >> 16U), 0x0U);
             break;
 
         case kPF1550_IntCategoryLdo:
             /* Enable LDO current limit fault interrupts. */
-            PF1550_ModifyReg(handle, PF1550_LDO_INT_MASK0, (source & 0xFFU), 0x0U);
+            (void)PF1550_ModifyReg(handle, PF1550_LDO_INT_MASK0, (uint8_t)(source & 0xFFU), 0x0U);
             break;
 
         case kPF1550_IntCategoryOnkey:
             /* Enable ONKEY Press interrupts. */
-            PF1550_ModifyReg(handle, PF1550_ONKEY_INT_MASK0, (source & 0xFFU), 0x0U);
+            (void)PF1550_ModifyReg(handle, PF1550_ONKEY_INT_MASK0, (uint8_t)(source & 0xFFU), 0x0U);
             break;
 
         case kPF1550_IntCategoryTemp:
             /* Enable Die Temperature Cross interrupts. */
-            PF1550_ModifyReg(handle, PF1550_TEMP_INT_MASK0, (source & 0xFFU), 0x0U);
+            (void)PF1550_ModifyReg(handle, PF1550_TEMP_INT_MASK0, (uint8_t)(source & 0xFFU), 0x0U);
             break;
 
         case kPF1550_IntCategoryMisc:
             /* Enable Misc. interrupts. */
-            PF1550_ModifyReg(handle, PF1550_MISC_INT_MASK0, (source & 0xFFU), 0x0U);
+            (void)PF1550_ModifyReg(handle, PF1550_MISC_INT_MASK0, (uint8_t)(source & 0xFFU), 0x0U);
             break;
 
         default:
+            assert(false);
             break;
     }
 }
@@ -481,34 +484,35 @@ void PF1550_DisableInterrupts(pf1550_handle_t *handle, pf1550_interrupt_category
 
         case kPF1550_IntCategorySwitch:
             /* Disable Switch low side current limit interrupts. */
-            PF1550_ModifyReg(handle, PF1550_SW_INT_MASK0, 0x0U, (source & 0xFFU));
+            (void)PF1550_ModifyReg(handle, PF1550_SW_INT_MASK0, 0x0U, (uint8_t)(source & 0xFFU));
             /* Disable Switch high side current limit interrupts. */
-            PF1550_ModifyReg(handle, PF1550_SW_INT_MASK1, 0x0U, ((source & 0xFF00U) >> 8U));
+            (void)PF1550_ModifyReg(handle, PF1550_SW_INT_MASK1, 0x0U, (uint8_t)((source & 0xFF00U) >> 8U));
             /* Disable Switch DVS complete interrupts. */
-            PF1550_ModifyReg(handle, PF1550_SW_INT_MASK2, 0x0U, ((source & 0xFF0000U) >> 16U));
+            (void)PF1550_ModifyReg(handle, PF1550_SW_INT_MASK2, 0x0U, (uint8_t)((source & 0xFF0000U) >> 16U));
             break;
 
         case kPF1550_IntCategoryLdo:
             /* Disable LDO current limit fault interrupts. */
-            PF1550_ModifyReg(handle, PF1550_LDO_INT_MASK0, 0x0U, (source & 0xFFU));
+            (void)PF1550_ModifyReg(handle, PF1550_LDO_INT_MASK0, 0x0U, (uint8_t)(source & 0xFFU));
             break;
 
         case kPF1550_IntCategoryOnkey:
             /* Disable ONKEY Press interrupts. */
-            PF1550_ModifyReg(handle, PF1550_ONKEY_INT_MASK0, 0x0U, (source & 0xFFU));
+            (void)PF1550_ModifyReg(handle, PF1550_ONKEY_INT_MASK0, 0x0U, (uint8_t)(source & 0xFFU));
             break;
 
         case kPF1550_IntCategoryTemp:
             /* Disable Die Temperature Cross interrupts. */
-            PF1550_ModifyReg(handle, PF1550_TEMP_INT_MASK0, 0x0U, (source & 0xFFU));
+            (void)PF1550_ModifyReg(handle, PF1550_TEMP_INT_MASK0, 0x0U, (uint8_t)(source & 0xFFU));
             break;
 
         case kPF1550_IntCategoryMisc:
             /* Disable Misc. interrupts. */
-            PF1550_ModifyReg(handle, PF1550_MISC_INT_MASK0, 0x0U, (source & 0xFFU));
+            (void)PF1550_ModifyReg(handle, PF1550_MISC_INT_MASK0, 0x0U, (uint8_t)(source & 0xFFU));
             break;
 
         default:
+            assert(false);
             break;
     }
 }
@@ -516,7 +520,7 @@ void PF1550_DisableInterrupts(pf1550_handle_t *handle, pf1550_interrupt_category
 uint32_t PF1550_GetInterruptStatus(pf1550_handle_t *handle, pf1550_interrupt_category_t category)
 {
     uint32_t status = 0x0U;
-    uint8_t temp;
+    uint8_t temp    = 0U;
 
     assert(handle);
 
@@ -524,49 +528,50 @@ uint32_t PF1550_GetInterruptStatus(pf1550_handle_t *handle, pf1550_interrupt_cat
     {
         case kPF1550_IntCategoryCharger:
             /* Get Charger interrupt flags. */
-            PF1550_ReadReg(handle, PF1550_CHG_INT, &temp);
+            (void)PF1550_ReadReg(handle, PF1550_CHG_INT, &temp);
             status = temp;
             break;
 
         case kPF1550_IntCategorySwitch:
             /* Get Switch low side current limit interrupt flags. */
-            PF1550_ReadReg(handle, PF1550_SW_INT_STAT0, &temp);
+            (void)PF1550_ReadReg(handle, PF1550_SW_INT_STAT0, &temp);
             status = temp;
 
             /* Get Switch high side current limit interrupt flags. */
-            PF1550_ReadReg(handle, PF1550_SW_INT_STAT1, &temp);
+            (void)PF1550_ReadReg(handle, PF1550_SW_INT_STAT1, &temp);
             status |= (uint32_t)((uint32_t)temp << 8U);
 
             /* Get Switch DVS complete interrupt flags. */
-            PF1550_ReadReg(handle, PF1550_SW_INT_STAT2, &temp);
+            (void)PF1550_ReadReg(handle, PF1550_SW_INT_STAT2, &temp);
             status |= (uint32_t)((uint32_t)temp << 16U);
             break;
 
         case kPF1550_IntCategoryLdo:
             /* Get LDO current limit fault interrupt flags. */
-            PF1550_ReadReg(handle, PF1550_LDO_INT_STAT0, &temp);
+            (void)PF1550_ReadReg(handle, PF1550_LDO_INT_STAT0, &temp);
             status = temp;
             break;
 
         case kPF1550_IntCategoryOnkey:
             /* Get ONKEY Press interrupt flags. */
-            PF1550_ReadReg(handle, PF1550_ONKEY_INT_STAT0, &temp);
+            (void)PF1550_ReadReg(handle, PF1550_ONKEY_INT_STAT0, &temp);
             status = temp;
             break;
 
         case kPF1550_IntCategoryTemp:
             /* Get Die Temperature Cross interrupt flags. */
-            PF1550_ReadReg(handle, PF1550_TEMP_INT_STAT0, &temp);
+            (void)PF1550_ReadReg(handle, PF1550_TEMP_INT_STAT0, &temp);
             status = temp;
             break;
 
         case kPF1550_IntCategoryMisc:
             /* Get Misc. interrupt flags. */
-            PF1550_ReadReg(handle, PF1550_MISC_INT_STAT0, &temp);
+            (void)PF1550_ReadReg(handle, PF1550_MISC_INT_STAT0, &temp);
             status = temp;
             break;
 
         default:
+            assert(false);
             break;
     }
 
@@ -582,39 +587,40 @@ void PF1550_ClearInterruptStatus(pf1550_handle_t *handle, pf1550_interrupt_categ
     {
         case kPF1550_IntCategoryCharger:
             /* Clear Charger interrupts. */
-            PF1550_WriteReg(handle, PF1550_CHG_INT, (source & 0xFFU));
+            (void)PF1550_WriteReg(handle, PF1550_CHG_INT, (uint8_t)(source & 0xFFU));
             break;
 
         case kPF1550_IntCategorySwitch:
             /* Clear Switch low side current limit interrupts. */
-            PF1550_WriteReg(handle, PF1550_SW_INT_STAT0, (source & 0xFFU));
+            (void)PF1550_WriteReg(handle, PF1550_SW_INT_STAT0, (uint8_t)(source & 0xFFU));
             /* Clear Switch high side current limit interrupts. */
-            PF1550_WriteReg(handle, PF1550_SW_INT_STAT1, ((source & 0xFF00U) >> 8U));
+            (void)PF1550_WriteReg(handle, PF1550_SW_INT_STAT1, (uint8_t)((source & 0xFF00U) >> 8U));
             /* Clear Switch DVS complete interrupts. */
-            PF1550_WriteReg(handle, PF1550_SW_INT_STAT2, ((source & 0xFF0000U) >> 16U));
+            (void)PF1550_WriteReg(handle, PF1550_SW_INT_STAT2, (uint8_t)((source & 0xFF0000U) >> 16U));
             break;
 
         case kPF1550_IntCategoryLdo:
             /* Clear LDO current limit fault interrupts. */
-            PF1550_WriteReg(handle, PF1550_LDO_INT_STAT0, (source & 0xFFU));
+            (void)PF1550_WriteReg(handle, PF1550_LDO_INT_STAT0, (uint8_t)(source & 0xFFU));
             break;
 
         case kPF1550_IntCategoryOnkey:
             /* Clear ONKEY Press interrupts. */
-            PF1550_WriteReg(handle, PF1550_ONKEY_INT_STAT0, (source & 0xFFU));
+            (void)PF1550_WriteReg(handle, PF1550_ONKEY_INT_STAT0, (uint8_t)(source & 0xFFU));
             break;
 
         case kPF1550_IntCategoryTemp:
             /* Clear Die Temperature Cross interrupts. */
-            PF1550_WriteReg(handle, PF1550_TEMP_INT_STAT0, (source & 0xFFU));
+            (void)PF1550_WriteReg(handle, PF1550_TEMP_INT_STAT0, (uint8_t)(source & 0xFFU));
             break;
 
         case kPF1550_IntCategoryMisc:
             /* Clear Misc. interrupts. */
-            PF1550_WriteReg(handle, PF1550_MISC_INT_STAT0, (source & 0xFFU));
+            (void)PF1550_WriteReg(handle, PF1550_MISC_INT_STAT0, (uint8_t)(source & 0xFFU));
             break;
 
         default:
+            assert(false);
             break;
     }
 }
@@ -643,26 +649,27 @@ void PF1550_EnableRegulator(pf1550_handle_t *handle,
     switch (status)
     {
         case kPF1550_OperatingStatusRun:
-            PF1550_ModifyReg(handle, regulatorCtrlRegAddr, PF1550_REGULATOR_CTRL_EN_MASK,
-                             (enable ? PF1550_REGULATOR_CTRL_EN_MASK : 0x0U));
+            (void)PF1550_ModifyReg(handle, regulatorCtrlRegAddr, PF1550_REGULATOR_CTRL_EN_MASK,
+                                   (enable ? PF1550_REGULATOR_CTRL_EN_MASK : 0x0U));
             break;
 
         case kPF1550_OperatingStatusStandby:
-            PF1550_ModifyReg(handle, regulatorCtrlRegAddr, PF1550_REGULATOR_CTRL_STBY_EN_MASK,
-                             (enable ? PF1550_REGULATOR_CTRL_STBY_EN_MASK : 0x0U));
+            (void)PF1550_ModifyReg(handle, regulatorCtrlRegAddr, PF1550_REGULATOR_CTRL_STBY_EN_MASK,
+                                   (enable ? PF1550_REGULATOR_CTRL_STBY_EN_MASK : 0x0U));
             break;
 
         case kPF1550_OperatingStatusSleep:
-            PF1550_ModifyReg(handle, regulatorCtrlRegAddr, PF1550_REGULATOR_CTRL_OMODE_MASK,
-                             (enable ? PF1550_REGULATOR_CTRL_OMODE_MASK : 0x0U));
+            (void)PF1550_ModifyReg(handle, regulatorCtrlRegAddr, PF1550_REGULATOR_CTRL_OMODE_MASK,
+                                   (enable ? PF1550_REGULATOR_CTRL_OMODE_MASK : 0x0U));
             break;
 
         case kPF1550_OperatingStatusSystemOn:
-            PF1550_ModifyReg(handle, regulatorCtrlRegAddr, PF1550_REGULATOR_CTRL_SYSON_EN_MASK,
-                             (enable ? PF1550_REGULATOR_CTRL_SYSON_EN_MASK : 0x0U));
+            (void)PF1550_ModifyReg(handle, regulatorCtrlRegAddr, PF1550_REGULATOR_CTRL_SYSON_EN_MASK,
+                                   (enable ? PF1550_REGULATOR_CTRL_SYSON_EN_MASK : 0x0U));
             break;
 
         default:
+            assert(false);
             break;
     }
 }
@@ -671,7 +678,7 @@ bool PF1550_IsRegulatorEnabled(pf1550_handle_t *handle, pf1550_module_t module, 
 {
     bool result;
     uint8_t regulatorCtrlRegAddr;
-    uint8_t regulatorCtrlRegContent;
+    uint8_t regulatorCtrlRegContent = 0U;
 
     assert(handle);
     /* Regulators are only enabled in any of the System On Statues. */
@@ -681,37 +688,39 @@ bool PF1550_IsRegulatorEnabled(pf1550_handle_t *handle, pf1550_module_t module, 
     /* There is no enable/disable switch for Vsnvs. */
     if (kPF1550_ModuleVsnvs == module)
     {
-        return true;
+        result = true;
     }
-
-    /* Get Regulator Control Register Content. */
-    regulatorCtrlRegAddr = regulatorCtrlRegTab[module];
-    PF1550_ReadReg(handle, regulatorCtrlRegAddr, &regulatorCtrlRegContent);
-
-    switch (status)
+    else
     {
-        case kPF1550_OperatingStatusRun:
-            result = (regulatorCtrlRegContent & PF1550_REGULATOR_CTRL_EN_MASK) ? true : false;
-            break;
+        /* Get Regulator Control Register Content. */
+        regulatorCtrlRegAddr = regulatorCtrlRegTab[module];
+        (void)PF1550_ReadReg(handle, regulatorCtrlRegAddr, &regulatorCtrlRegContent);
 
-        case kPF1550_OperatingStatusStandby:
-            result = (regulatorCtrlRegContent & PF1550_REGULATOR_CTRL_STBY_EN_MASK) ? true : false;
-            break;
+        switch (status)
+        {
+            case kPF1550_OperatingStatusRun:
+                result = ((regulatorCtrlRegContent & PF1550_REGULATOR_CTRL_EN_MASK) != 0U) ? true : false;
+                break;
 
-        case kPF1550_OperatingStatusSleep:
-            result = (regulatorCtrlRegContent & PF1550_REGULATOR_CTRL_OMODE_MASK) ? true : false;
-            break;
+            case kPF1550_OperatingStatusStandby:
+                result = ((regulatorCtrlRegContent & PF1550_REGULATOR_CTRL_STBY_EN_MASK) != 0U) ? true : false;
+                break;
 
-        case kPF1550_OperatingStatusSystemOn:
-            result = ((regulatorCtrlRegContent & PF1550_REGULATOR_CTRL_SYSON_EN_MASK) ==
-                      PF1550_REGULATOR_CTRL_SYSON_EN_MASK) ?
-                         true :
-                         false;
-            break;
+            case kPF1550_OperatingStatusSleep:
+                result = ((regulatorCtrlRegContent & PF1550_REGULATOR_CTRL_OMODE_MASK) != 0U) ? true : false;
+                break;
 
-        default:
-            result = false;
-            break;
+            case kPF1550_OperatingStatusSystemOn:
+                result = ((regulatorCtrlRegContent & PF1550_REGULATOR_CTRL_SYSON_EN_MASK) ==
+                          PF1550_REGULATOR_CTRL_SYSON_EN_MASK) ?
+                             true :
+                             false;
+                break;
+
+            default:
+                result = false;
+                break;
+        }
     }
 
     return result;
@@ -730,51 +739,50 @@ void PF1550_SetRegulatorOutputVoltage(pf1550_handle_t *handle,
     assert((kPF1550_OperatingStatusRun == status) || (kPF1550_OperatingStatusStandby == status) ||
            (kPF1550_OperatingStatusSleep == status) || (kPF1550_OperatingStatusSystemOn == status));
 
-    /* Return if regulator does not support DVS feature. */
-    if (!PF1550_IsRegulatorSupportDvs(handle, module))
+    /* Return directly if regulator does not support DVS feature. */
+    if (PF1550_IsRegulatorSupportDvs(handle, module))
     {
-        return;
-    }
+        /* Get Regulator Output Set Point. */
+        regulatorVoltRegAddr    = regulatorVoltRegTab[module];
+        regulatorVoltRegContent = PF1550_GetRegulatorSetPoint(handle, module, voltage);
 
-    /* Get Regulator Output Set Point. */
-    regulatorVoltRegAddr    = regulatorVoltRegTab[module];
-    regulatorVoltRegContent = PF1550_GetRegulatorSetPoint(handle, module, voltage);
-
-    /* There is only one regulator output voltage control register for LDO.
-       So regulator output set for any operating status to LDO will affect
-       all operating status. */
-    if ((kPF1550_ModuleLdo1 == module) || (kPF1550_ModuleLdo2 == module) || (kPF1550_ModuleLdo3 == module))
-    {
-        PF1550_WriteReg(handle, regulatorVoltRegAddr, regulatorVoltRegContent);
-    }
-    else
-    {
-        switch (status)
+        /* There is only one regulator output voltage control register for LDO.
+           So regulator output set for any operating status to LDO will affect
+           all operating status. */
+        if ((kPF1550_ModuleLdo1 == module) || (kPF1550_ModuleLdo2 == module) || (kPF1550_ModuleLdo3 == module))
         {
-            case kPF1550_OperatingStatusRun:
-                PF1550_WriteReg(handle, regulatorVoltRegAddr, regulatorVoltRegContent);
-                break;
+            (void)PF1550_WriteReg(handle, regulatorVoltRegAddr, regulatorVoltRegContent);
+        }
+        else
+        {
+            switch (status)
+            {
+                case kPF1550_OperatingStatusRun:
+                    (void)PF1550_WriteReg(handle, regulatorVoltRegAddr, regulatorVoltRegContent);
+                    break;
 
-            case kPF1550_OperatingStatusStandby:
-                PF1550_WriteReg(handle, regulatorVoltRegAddr + (PF1550_SW1_STBY_VOLT - PF1550_SW1_VOLT),
-                                regulatorVoltRegContent);
-                break;
+                case kPF1550_OperatingStatusStandby:
+                    (void)PF1550_WriteReg(handle, regulatorVoltRegAddr + (PF1550_SW1_STBY_VOLT - PF1550_SW1_VOLT),
+                                          regulatorVoltRegContent);
+                    break;
 
-            case kPF1550_OperatingStatusSleep:
-                PF1550_WriteReg(handle, regulatorVoltRegAddr + (PF1550_SW1_SLP_VOLT - PF1550_SW1_VOLT),
-                                regulatorVoltRegContent);
-                break;
+                case kPF1550_OperatingStatusSleep:
+                    (void)PF1550_WriteReg(handle, regulatorVoltRegAddr + (PF1550_SW1_SLP_VOLT - PF1550_SW1_VOLT),
+                                          regulatorVoltRegContent);
+                    break;
 
-            case kPF1550_OperatingStatusSystemOn:
-                PF1550_WriteReg(handle, regulatorVoltRegAddr, regulatorVoltRegContent);
-                PF1550_WriteReg(handle, regulatorVoltRegAddr + (PF1550_SW1_STBY_VOLT - PF1550_SW1_VOLT),
-                                regulatorVoltRegContent);
-                PF1550_WriteReg(handle, regulatorVoltRegAddr + (PF1550_SW1_SLP_VOLT - PF1550_SW1_VOLT),
-                                regulatorVoltRegContent);
-                break;
+                case kPF1550_OperatingStatusSystemOn:
+                    (void)PF1550_WriteReg(handle, regulatorVoltRegAddr, regulatorVoltRegContent);
+                    (void)PF1550_WriteReg(handle, regulatorVoltRegAddr + (PF1550_SW1_STBY_VOLT - PF1550_SW1_VOLT),
+                                          regulatorVoltRegContent);
+                    (void)PF1550_WriteReg(handle, regulatorVoltRegAddr + (PF1550_SW1_SLP_VOLT - PF1550_SW1_VOLT),
+                                          regulatorVoltRegContent);
+                    break;
 
-            default:
-                break;
+                default:
+                    assert(false);
+                    break;
+            }
         }
     }
 }
@@ -784,8 +792,8 @@ uint32_t PF1550_GetRegulatorOutputVoltage(pf1550_handle_t *handle,
                                           pf1550_operating_status_t status)
 {
     uint8_t regulatorVoltRegAddr;
-    uint8_t regulatorVoltRegContent;
-    uint32_t voltage = 0U;
+    uint8_t regulatorVoltRegContent = 0U;
+    uint32_t voltage                = 0U;
 
     assert(handle);
     /* Regulators are only enabled in any of the System On Statues. */
@@ -800,7 +808,7 @@ uint32_t PF1550_GetRegulatorOutputVoltage(pf1550_handle_t *handle,
         case kPF1550_ModuleLdo3:
             /* Get Regulator Voltage Regulator. */
             regulatorVoltRegAddr = regulatorVoltRegTab[module];
-            PF1550_ReadReg(handle, regulatorVoltRegAddr, &regulatorVoltRegContent);
+            (void)PF1550_ReadReg(handle, regulatorVoltRegAddr, &regulatorVoltRegContent);
             voltage = PF1550_GetRegulatorOutputVolt(handle, module, regulatorVoltRegContent);
             break;
 
@@ -813,23 +821,24 @@ uint32_t PF1550_GetRegulatorOutputVoltage(pf1550_handle_t *handle,
             switch (status)
             {
                 case kPF1550_OperatingStatusRun:
-                    PF1550_ReadReg(handle, regulatorVoltRegAddr, &regulatorVoltRegContent);
+                    (void)PF1550_ReadReg(handle, regulatorVoltRegAddr, &regulatorVoltRegContent);
                     voltage = PF1550_GetRegulatorOutputVolt(handle, module, regulatorVoltRegContent);
                     break;
 
                 case kPF1550_OperatingStatusStandby:
-                    PF1550_ReadReg(handle, regulatorVoltRegAddr + (PF1550_SW1_STBY_VOLT - PF1550_SW1_VOLT),
-                                   &regulatorVoltRegContent);
+                    (void)PF1550_ReadReg(handle, regulatorVoltRegAddr + (PF1550_SW1_STBY_VOLT - PF1550_SW1_VOLT),
+                                         &regulatorVoltRegContent);
                     voltage = PF1550_GetRegulatorOutputVolt(handle, module, regulatorVoltRegContent);
                     break;
 
                 case kPF1550_OperatingStatusSleep:
-                    PF1550_ReadReg(handle, regulatorVoltRegAddr + (PF1550_SW1_SLP_VOLT - PF1550_SW1_VOLT),
-                                   &regulatorVoltRegContent);
+                    (void)PF1550_ReadReg(handle, regulatorVoltRegAddr + (PF1550_SW1_SLP_VOLT - PF1550_SW1_VOLT),
+                                         &regulatorVoltRegContent);
                     voltage = PF1550_GetRegulatorOutputVolt(handle, module, regulatorVoltRegContent);
                     break;
 
                 default:
+                    voltage = 0U;
                     break;
             }
             break;
@@ -841,6 +850,7 @@ uint32_t PF1550_GetRegulatorOutputVoltage(pf1550_handle_t *handle,
         /* Vref DDR = Vref DDR In / 2. */
         case kPF1550_ModuleVrefDdr:
         default:
+            voltage = 0U;
             break;
     }
 
@@ -868,29 +878,30 @@ void PF1550_SetSwitchAttribute(pf1550_handle_t *handle,
         temp |= (PF1550_SW_CTRL_DVSSPEED(attribute->dvsSpeed) |
                  (attribute->enableForcedPwmInDvs ? PF1550_SW_CTRL_FPWM_IN_DVS_MASK : 0U));
     }
-    PF1550_ModifyReg(handle, regulatorCtrlRegAddr,
-                     PF1550_SW_CTRL_RDIS_EN_MASK | PF1550_SW_CTRL_FPWM_MASK | PF1550_SW_CTRL_FPWM_IN_DVS_MASK |
-                         PF1550_SW_CTRL_DVSSPEED_MASK | PF1550_SW_CTRL_LPWR_MASK,
-                     temp);
+    (void)PF1550_ModifyReg(handle, regulatorCtrlRegAddr,
+                           PF1550_SW_CTRL_RDIS_EN_MASK | PF1550_SW_CTRL_FPWM_MASK | PF1550_SW_CTRL_FPWM_IN_DVS_MASK |
+                               PF1550_SW_CTRL_DVSSPEED_MASK | PF1550_SW_CTRL_LPWR_MASK,
+                           temp);
 
     /* Set Power Down Control Register. */
-    PF1550_WriteReg(handle, powerDownRegTab[module], attribute->powerDownSequence);
+    (void)PF1550_WriteReg(handle, powerDownRegTab[module], (uint8_t)attribute->powerDownSequence);
 
     switch (module)
     {
         case kPF1550_ModuleSwitch1:
-            PF1550_WriteReg(handle, PF1550_SW1_CTRL1, attribute->currentLimit);
+            (void)PF1550_WriteReg(handle, PF1550_SW1_CTRL1, (uint8_t)attribute->currentLimit);
             break;
 
         case kPF1550_ModuleSwitch2:
-            PF1550_WriteReg(handle, PF1550_SW2_CTRL1, attribute->currentLimit);
+            (void)PF1550_WriteReg(handle, PF1550_SW2_CTRL1, (uint8_t)attribute->currentLimit);
             break;
 
         case kPF1550_ModuleSwitch3:
-            PF1550_WriteReg(handle, PF1550_SW3_CTRL1, attribute->currentLimit);
+            (void)PF1550_WriteReg(handle, PF1550_SW3_CTRL1, (uint8_t)attribute->currentLimit);
             break;
 
         default:
+            assert(false);
             break;
     }
 }
@@ -902,30 +913,31 @@ void PF1550_SetLdoAttribute(pf1550_handle_t *handle, pf1550_module_t module, con
     assert((kPF1550_ModuleLdo1 == module) || (kPF1550_ModuleLdo2 == module) || (kPF1550_ModuleLdo3 == module));
 
     /* Set Power Down Control Register. */
-    PF1550_WriteReg(handle, powerDownRegTab[module], attribute->powerDownSequence);
+    (void)PF1550_WriteReg(handle, powerDownRegTab[module], (uint8_t)attribute->powerDownSequence);
 
     /* Set LDO to load switch mode. */
     switch (module)
     {
         case kPF1550_ModuleLdo1:
-            PF1550_ModifyReg(handle, PF1550_LDO1_CTRL, PF1550_LDO_CTRL_LPWR_MASK | PF1550_LDO_CTRL_LS_EN_MASK,
-                             (attribute->enableLowPowerMode ? PF1550_LDO_CTRL_LPWR_MASK : 0U) |
-                                 (attribute->enableLoadSwitch ? PF1550_LDO_CTRL_LS_EN_MASK : 0U));
+            (void)PF1550_ModifyReg(handle, PF1550_LDO1_CTRL, PF1550_LDO_CTRL_LPWR_MASK | PF1550_LDO_CTRL_LS_EN_MASK,
+                                   (attribute->enableLowPowerMode ? PF1550_LDO_CTRL_LPWR_MASK : 0U) |
+                                       (attribute->enableLoadSwitch ? PF1550_LDO_CTRL_LS_EN_MASK : 0U));
             break;
 
         case kPF1550_ModuleLdo2:
             /* LDO2 does not support Load Switch Mode. */
-            PF1550_ModifyReg(handle, PF1550_LDO2_CTRL, PF1550_LDO_CTRL_LPWR_MASK,
-                             (attribute->enableLowPowerMode ? PF1550_LDO_CTRL_LPWR_MASK : 0U));
+            (void)PF1550_ModifyReg(handle, PF1550_LDO2_CTRL, PF1550_LDO_CTRL_LPWR_MASK,
+                                   (attribute->enableLowPowerMode ? PF1550_LDO_CTRL_LPWR_MASK : 0U));
             break;
 
         case kPF1550_ModuleLdo3:
-            PF1550_ModifyReg(handle, PF1550_LDO3_CTRL, PF1550_LDO_CTRL_LPWR_MASK | PF1550_LDO_CTRL_LS_EN_MASK,
-                             (attribute->enableLowPowerMode ? PF1550_LDO_CTRL_LPWR_MASK : 0U) |
-                                 (attribute->enableLoadSwitch ? PF1550_LDO_CTRL_LS_EN_MASK : 0U));
+            (void)PF1550_ModifyReg(handle, PF1550_LDO3_CTRL, PF1550_LDO_CTRL_LPWR_MASK | PF1550_LDO_CTRL_LS_EN_MASK,
+                                   (attribute->enableLowPowerMode ? PF1550_LDO_CTRL_LPWR_MASK : 0U) |
+                                       (attribute->enableLoadSwitch ? PF1550_LDO_CTRL_LS_EN_MASK : 0U));
             break;
 
         default:
+            assert(false);
             break;
     }
 }
@@ -936,7 +948,7 @@ void PF1550_SetVrefDdrAttribute(pf1550_handle_t *handle, const pf1550_vrefddr_at
     assert(attribute);
 
     /* Set Power Down Control Register. */
-    PF1550_WriteReg(handle, powerDownRegTab[kPF1550_ModuleVrefDdr], attribute->powerDownSequence);
+    (void)PF1550_WriteReg(handle, powerDownRegTab[kPF1550_ModuleVrefDdr], (uint8_t)attribute->powerDownSequence);
 }
 
 void PF1550_SetVsnvsAttribute(pf1550_handle_t *handle, const pf1550_vsnvs_attribute_t *attribute)
@@ -945,13 +957,13 @@ void PF1550_SetVsnvsAttribute(pf1550_handle_t *handle, const pf1550_vsnvs_attrib
     assert(attribute);
 
     /* Set Coin Cell Control Register. */
-    PF1550_WriteReg(handle, PF1550_COINCELL_CONTROL,
-                    attribute->coinCellChargingVoltage |
-                        (attribute->enableCoinCellCharger ? PF1550_COINCELL_CONTROL_COINCHEN_MASK : 0U));
+    (void)PF1550_WriteReg(handle, PF1550_COINCELL_CONTROL,
+                          (uint8_t)attribute->coinCellChargingVoltage |
+                              (attribute->enableCoinCellCharger ? PF1550_COINCELL_CONTROL_COINCHEN_MASK : 0U));
 
     /* Set Vsnvs Control Register. */
-    PF1550_ModifyReg(handle, PF1550_VSNVS_CTRL, PF1550_VSNVS_CTRL_LIBGDIS_MASK,
-                     attribute->enableLocalBandgapInCoinCellMode ? PF1550_VSNVS_CTRL_LIBGDIS_MASK : 0U);
+    (void)PF1550_ModifyReg(handle, PF1550_VSNVS_CTRL, PF1550_VSNVS_CTRL_LIBGDIS_MASK,
+                           attribute->enableLocalBandgapInCoinCellMode ? PF1550_VSNVS_CTRL_LIBGDIS_MASK : 0U);
 }
 
 void PF1550_SetOnKeyPadAttibute(pf1550_handle_t *handle, const pf1550_onkey_attribute_t *attribute)
@@ -960,13 +972,13 @@ void PF1550_SetOnKeyPadAttibute(pf1550_handle_t *handle, const pf1550_onkey_attr
     assert(attribute);
 
     /* Set Power Control Register 1. */
-    PF1550_ModifyReg(handle, PF1550_PWRCTRL1, PF1550_PWRCTRL1_ONKEYDBNC_MASK | PF1550_PWRCTRL1_ONKEY_RST_EN_MASK,
-                     (PF1550_PWRCTRL1_ONKEYDBNC(attribute->debounce) |
-                      (attribute->enableTurnOffSystemViaOnkey ? PF1550_PWRCTRL1_ONKEY_RST_EN_MASK : 0U)));
+    (void)PF1550_ModifyReg(handle, PF1550_PWRCTRL1, PF1550_PWRCTRL1_ONKEYDBNC_MASK | PF1550_PWRCTRL1_ONKEY_RST_EN_MASK,
+                           (PF1550_PWRCTRL1_ONKEYDBNC(attribute->debounce) |
+                            (attribute->enableTurnOffSystemViaOnkey ? PF1550_PWRCTRL1_ONKEY_RST_EN_MASK : 0U)));
 
     /* Set Power Control Register 0. */
-    PF1550_ModifyReg(handle, PF1550_PWRCTRL0, PF1550_PWRCTRL0_TGRESET_MASK,
-                     PF1550_PWRCTRL0_TGRESET(attribute->pushTime));
+    (void)PF1550_ModifyReg(handle, PF1550_PWRCTRL0, PF1550_PWRCTRL0_TGRESET_MASK,
+                           (uint8_t)PF1550_PWRCTRL0_TGRESET(attribute->pushTime));
 }
 
 void PF1550_SetPwrOnPadAttibute(pf1550_handle_t *handle, const pf1550_power_on_attribute_t *attribute)
@@ -975,10 +987,11 @@ void PF1550_SetPwrOnPadAttibute(pf1550_handle_t *handle, const pf1550_power_on_a
     assert(attribute);
 
     /* Set Power Control Register 1. */
-    PF1550_ModifyReg(
+    (void)PF1550_ModifyReg(
         handle, PF1550_PWRCTRL1,
         PF1550_PWRCTRL1_PWRONDBNC_MASK | PF1550_PWRCTRL1_PWRONRSTEN_MASK | PF1550_PWRCTRL1_RESTARTEN_MASK,
-        (attribute->debounce | (attribute->longPressGoToRegsDisableOrSleep ? PF1550_PWRCTRL1_PWRONRSTEN_MASK : 0U) |
+        ((uint8_t)attribute->debounce |
+         (attribute->longPressGoToRegsDisableOrSleep ? PF1550_PWRCTRL1_PWRONRSTEN_MASK : 0U) |
          (attribute->longPressRestartToRunStauts ? PF1550_PWRCTRL1_RESTARTEN_MASK : 0U)));
 }
 
@@ -988,24 +1001,25 @@ void PF1550_SetStandbyPadAttibute(pf1550_handle_t *handle, const pf1550_standby_
     assert(attribute);
 
     /* Set Power Control Register 0. */
-    PF1550_ModifyReg(handle, PF1550_PWRCTRL0, PF1550_PWRCTRL0_STANDBYDLY_MASK | PF1550_PWRCTRL0_STANDBYINV_MASK,
-                     attribute->standbyDelay | PF1550_PWRCTRL0_STANDBYINV(attribute->standbyPolarity));
+    (void)PF1550_ModifyReg(
+        handle, PF1550_PWRCTRL0, PF1550_PWRCTRL0_STANDBYDLY_MASK | PF1550_PWRCTRL0_STANDBYINV_MASK,
+        (uint8_t)attribute->standbyDelay | (uint8_t)PF1550_PWRCTRL0_STANDBYINV(attribute->standbyPolarity));
 }
 
 pf1550_operating_status_t PF1550_GetOperatingStatus(pf1550_handle_t *handle)
 {
-    uint8_t operatingStatus;
+    uint8_t operatingStatus = 0U;
 
     assert(handle);
 
-    PF1550_ReadReg(handle, PF1550_STATE_INFO, &operatingStatus);
+    (void)PF1550_ReadReg(handle, PF1550_STATE_INFO, &operatingStatus);
 
-    return (pf1550_operating_status_t)(operatingStatus & 0x7U);
+    return (pf1550_operating_status_t)((uint8_t)(operatingStatus & 0x7U));
 }
 
 bool PF1550_IsRegulatorSupportDvs(pf1550_handle_t *handle, pf1550_module_t module)
 {
-    uint8_t registerContent;
+    uint8_t registerContent = 0U;
     bool result;
 
     assert(handle);
@@ -1014,14 +1028,14 @@ bool PF1550_IsRegulatorSupportDvs(pf1550_handle_t *handle, pf1550_module_t modul
     {
         /* Switch1 DVS is enabled/disabled in OPT Configuration. */
         case kPF1550_ModuleSwitch1:
-            PF1550_ReadOtp(handle, PF1550_OTP_SW1_SW2, &registerContent);
-            result = (PF1550_OTP_SW1_SW2_OTP_SW1_DVS_ENB_MASK & registerContent) ? false : true;
+            (void)PF1550_ReadOtp(handle, PF1550_OTP_SW1_SW2, &registerContent);
+            result = ((PF1550_OTP_SW1_SW2_OTP_SW1_DVS_ENB_MASK & registerContent) != 0U) ? false : true;
             break;
 
         /* Switch2 DVS is enabled/disabled in OPT Configuration. */
         case kPF1550_ModuleSwitch2:
-            PF1550_ReadOtp(handle, PF1550_OTP_SW2_SW3, &registerContent);
-            result = (PF1550_OTP_SW2_SW3_OTP_SW2_DVS_ENB_MASK & registerContent) ? false : true;
+            (void)PF1550_ReadOtp(handle, PF1550_OTP_SW2_SW3, &registerContent);
+            result = ((PF1550_OTP_SW2_SW3_OTP_SW2_DVS_ENB_MASK & registerContent) != 0U) ? false : true;
             break;
 
         /* LDOs always support DVS feature. */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,7 +19,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief Driver version. */
-#define FSL_PRG_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+#define FSL_PRG_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 
 /*!
  * @brief Data type of the frame buffer.
@@ -55,7 +55,6 @@ extern "C" {
  * @brief Enables and configures the PRG peripheral module.
  *
  * @param base PRG peripheral address.
- * @param config PRG module configuration structure.
  */
 void PRG_Init(PRG_Type *base);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2018-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,29 +8,33 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
-#include "board.h"
 #include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 #include "app_srtm.h"
 #include "fsl_gpc.h"
 #include "sai_low_power_audio.h"
 #include "lpm.h"
 #include "fsl_debug_console.h"
-#include "clock_config.h"
 #include "fsl_rdc.h"
 #include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define RDC_DISABLE_A53_ACCESS 0xFC
-#define RDC_DISABLE_M4_ACCESS 0xF3
+#define RDC_DISABLE_M4_ACCESS  0xF3
 static LPM_POWER_STATUS_M4 m4_lpm_state = LPM_M4_STATE_RUN;
-/* Using SRC_GPR9 register as the communication address with A core. */
+/* Using SRC_GPR9 register to sync the tasks status with A core */
 #define ServiceFlagAddr SRC->GPR9
+/* The flags,ServiceBusy and ServiceIdle, shows if the service task is running or not.
+ * If the task is runing, A core should not put DDR in self-refresh mode after A core enters supsend.
+ */
 #define ServiceBusy (0x5555U)
 #define ServiceIdle (0x0U)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+extern volatile app_srtm_state_t srtmState;
 
 /*******************************************************************************
  * Code
@@ -61,25 +65,12 @@ void Peripheral_RdcSetting(void)
     RDC_SetPeriphAccessConfig(RDC, &periphConfig);
     periphConfig.periph = kRDC_Periph_SAI3_LPM;
     RDC_SetPeriphAccessConfig(RDC, &periphConfig);
+    /* Remove the SAI2 power control in RDC from M4 to avoid A53 hang when it touches SAI2 under M core enters STOP
+     * mode.*/
+    periphConfig.policy = RDC_DISABLE_M4_ACCESS;
+    periphConfig.periph = kRDC_Periph_SAI2_LPM;
+    RDC_SetPeriphAccessConfig(RDC, &periphConfig);
 }
-/*
- * Give readable string of current M4 lpm state
- */
-const char *LPM_MCORE_GetPowerStatusString(void)
-{
-    switch (m4_lpm_state)
-    {
-        case LPM_M4_STATE_RUN:
-            return "RUN";
-        case LPM_M4_STATE_WAIT:
-            return "WAIT";
-        case LPM_M4_STATE_STOP:
-            return "STOP";
-        default:
-            return "UNKNOWN";
-    }
-}
-
 void LPM_MCORE_ChangeM4Clock(LPM_M4_CLOCK_SPEED target)
 {
     /* Change CCM Root to change M4 clock*/
@@ -127,8 +118,6 @@ void LPM_MCORE_SetPowerStatus(GPC_Type *base, LPM_POWER_STATUS_M4 targetPowerMod
         default:
             break;
     }
-
-    m4_lpm_state = targetPowerMode;
 }
 void PreSleepProcessing(void)
 {
@@ -143,14 +132,56 @@ void PostSleepProcessing(void)
                     BOARD_DEBUG_UART_CLK_FREQ);
 }
 
+void ShowMCoreStatus(void)
+{
+    if (m4_lpm_state == LPM_M4_STATE_STOP)
+    {
+        PRINTF("\r\nNo audio playback, M core enters STOP mode!\r\n");
+    }
+    else if (m4_lpm_state == LPM_M4_STATE_RUN)
+    {
+        PRINTF("\r\nPlayback is running, M core enters RUN mode!\r\n");
+    }
+    else
+    {
+        ; /* For MISRA C-2012 rule 15.7. */
+    }
+}
+
+void UpdateTargetPowerStatus(void)
+{
+    /*
+     * The m4_lpm_state merely indicates what the power state the M core finally should be.
+     * In this demo, if there is no audio playback, M core will be set to STOP mode finally.
+     */
+    LPM_POWER_STATUS_M4 m4_target_lpm;
+
+    if (APP_SRTM_ServiceIdle())
+    {
+        m4_target_lpm = LPM_M4_STATE_STOP;
+    }
+    else
+    {
+        m4_target_lpm = LPM_M4_STATE_RUN;
+    }
+
+    if (m4_target_lpm != m4_lpm_state)
+    {
+        m4_lpm_state = m4_target_lpm;
+        ShowMCoreStatus();
+    }
+}
+
 void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
 {
     uint32_t irqMask;
     uint64_t counter = 0;
     uint32_t timeoutTicks;
-    uint32_t timeoutMilliSec = (uint64_t)1000 * xExpectedIdleTime / configTICK_RATE_HZ;
+    uint32_t timeoutMilliSec = (uint32_t)((uint64_t)1000 * xExpectedIdleTime / configTICK_RATE_HZ);
 
     irqMask = DisableGlobalIRQ();
+
+    UpdateTargetPowerStatus();
 
     /* Only when no context switch is pending and no task is waiting for the scheduler
      * to be unsuspended then enter low power entry.
@@ -164,7 +195,6 @@ void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
             {
                 LPM_MCORE_ChangeM4Clock(LPM_M4_LOW_FREQ);
                 LPM_MCORE_SetPowerStatus(BOARD_GPC_BASEADDR, LPM_M4_STATE_STOP);
-                PRINTF("\r\nMode:%s\r\n", LPM_MCORE_GetPowerStatusString());
                 PreSleepProcessing();
                 ServiceFlagAddr = ServiceIdle;
                 __DSB();
@@ -174,7 +204,6 @@ void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
                 PostSleepProcessing();
                 LPM_MCORE_ChangeM4Clock(LPM_M4_HIGH_FREQ);
                 LPM_MCORE_SetPowerStatus(BOARD_GPC_BASEADDR, LPM_M4_STATE_RUN);
-                PRINTF("\r\nMode:%s\r\n", LPM_MCORE_GetPowerStatusString());
             }
             else
             {
@@ -190,8 +219,6 @@ void vPortSuppressTicksAndSleep(TickType_t xExpectedIdleTime)
 }
 void MainTask(void *pvParameters)
 {
-    uint8_t control_char;
-
     /* Treat M core as busy status by default.*/
     ServiceFlagAddr = ServiceBusy;
 
@@ -199,23 +226,13 @@ void MainTask(void *pvParameters)
      * Wait For A core Side Become Ready
      */
     PRINTF("********************************\r\n");
-    PRINTF("Please follow:\r\n");
-    PRINTF("  (1) Boot Linux kernel first to create the link between M core and A core;\r\n");
-    PRINTF(
-        "  (2) If want to make the M core enter STOP mode when there is no audio playback, press \"s\" or \"S\" "
-        "first;\r\n");
-    PRINTF("  (3) Audio playback is allowed even skip the step 2 using the playback command.\r\n");
+    PRINTF(" Wait the Linux kernel boot up to create the link between M core and A core.\r\n");
+    PRINTF("\r\n");
     PRINTF("********************************\r\n");
-
-    for (;;)
-    {
-        control_char = GETCHAR();
-        PRINTF("%c", control_char);
-        if ((control_char == 's') || (control_char == 'S'))
-        {
-            break;
-        }
-    }
+    while (srtmState != APP_SRTM_StateLinkedUp)
+        ;
+    PRINTF("The rpmsg channel between M core and A core created!\r\n");
+    PRINTF("********************************\r\n");
     PRINTF("\r\n");
 
     /* Configure GPC */

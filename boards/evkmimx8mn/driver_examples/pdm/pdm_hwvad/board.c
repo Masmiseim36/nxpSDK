@@ -7,10 +7,10 @@
 
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
-#include "board.h"
 #include "fsl_rdc.h"
 #include "fsl_iomuxc.h"
 #include "pin_mux.h"
+#include "board.h"
 #include "fsl_clock.h"
 
 /*******************************************************************************
@@ -131,27 +131,25 @@ void BOARD_RdcInit(void)
     RDC_SetMasterDomainAssignment(RDC, kRDC_Master_M7, &assignment);
 
     /*
-     *  The M7 core is running at domain 1, enable clock gate for Iomux to run at domain 1.
+     * The M7 core is running at domain 1, now enable the clock gate of the following IP/BUS/PLL in domain 1 in the CCM.
+     * In this way, to ensure the clock of the peripherals used by M core not be affected by A core which is running at
+     * domain 0.
      */
-    CLOCK_EnableClock(kCLOCK_Iomux0);
-    CLOCK_EnableClock(kCLOCK_Iomux1);
-    CLOCK_EnableClock(kCLOCK_Iomux2);
-    CLOCK_EnableClock(kCLOCK_Iomux3);
-    CLOCK_EnableClock(kCLOCK_Iomux4);
+    CLOCK_EnableClock(kCLOCK_Iomux);
 
-    /*
-     *  The M7 core is running at domain 1, enable the QSPI clock sources to domain 1 for flash target.
-     */
+    CLOCK_EnableClock(kCLOCK_Ipmux1);
+    CLOCK_EnableClock(kCLOCK_Ipmux2);
+    CLOCK_EnableClock(kCLOCK_Ipmux3);
+    CLOCK_EnableClock(kCLOCK_Ipmux4);
+
 #if defined(FLASH_TARGET)
     CLOCK_EnableClock(kCLOCK_Qspi);
 #endif
-    /*
-     *  The M7 core is running at domain 1, enable the PLL clock sources to domain 1.
-     */
-    CLOCK_ControlGate(kCLOCK_SysPll1Gate, kCLOCK_ClockNeededAll);   /* Enabel SysPLL1 to Domain 1 */
-    CLOCK_ControlGate(kCLOCK_SysPll2Gate, kCLOCK_ClockNeededAll);   /* Enable SysPLL2 to Domain 1 */
-    CLOCK_ControlGate(kCLOCK_SysPll3Gate, kCLOCK_ClockNeededAll);   /* Enable SysPLL3 to Domain 1 */
-    CLOCK_ControlGate(kCLOCK_AudioPll1Gate, kCLOCK_ClockNeededAll); /* Enable AudioPLL1 to Domain 1 */
-    CLOCK_ControlGate(kCLOCK_AudioPll2Gate, kCLOCK_ClockNeededAll); /* Enable AudioPLL2 to Domain 1 */
-    CLOCK_ControlGate(kCLOCK_VideoPll1Gate, kCLOCK_ClockNeededAll); /* Enable VideoPLL1 to Domain 1 */
+
+    CLOCK_ControlGate(kCLOCK_SysPll1Gate, kCLOCK_ClockNeededAll);   /* Enable the CCGR gate for SysPLL1 in Domain 1 */
+    CLOCK_ControlGate(kCLOCK_SysPll2Gate, kCLOCK_ClockNeededAll);   /* Enable the CCGR gate for SysPLL2 in Domain 1 */
+    CLOCK_ControlGate(kCLOCK_SysPll3Gate, kCLOCK_ClockNeededAll);   /* Enable the CCGR gate for SysPLL3 in Domain 1 */
+    CLOCK_ControlGate(kCLOCK_AudioPll1Gate, kCLOCK_ClockNeededAll); /* Enable the CCGR gate for AudioPLL1 in Domain 1 */
+    CLOCK_ControlGate(kCLOCK_AudioPll2Gate, kCLOCK_ClockNeededAll); /* Enable the CCGR gate for AudioPLL2 in Domain 1 */
+    CLOCK_ControlGate(kCLOCK_VideoPll1Gate, kCLOCK_ClockNeededAll); /* Enable the CCGR gate for VideoPLL1 in Domain 1 */
 }

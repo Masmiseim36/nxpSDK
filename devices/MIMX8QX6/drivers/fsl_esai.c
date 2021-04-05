@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,7 +16,8 @@
 /*******************************************************************************
  * Definitations
  ******************************************************************************/
-enum _esai_transfer_state
+/*!@brief _esai_transfer_state */
+enum
 {
     kESAI_Busy = 0x0U, /*!< ESAI is busy */
     kESAI_Idle,        /*!< Transfer is done. */
@@ -30,7 +31,7 @@ typedef void (*esai_tx_isr_t)(ESAI_Type *base, esai_handle_t *esaiHandle);
 typedef void (*esai_rx_isr_t)(ESAI_Type *base, esai_handle_t *esaiHandle);
 
 /*! @brief Slot number to slot mask number */
-#define SLOT_TO_MASK(slot) ((1 << slot) - 1)
+#define SLOT_TO_MASK(slot) ((1UL << (slot)) - 1U)
 
 /*******************************************************************************
  * Prototypes
@@ -48,24 +49,6 @@ static void ESAI_SetCustomerProtocol(ESAI_Type *base,
                                      esai_protocol_t fmt,
                                      esai_customer_protocol_t *protocol,
                                      bool isTx);
-
-/*!
- * @brief Get the data length and slot length from the input.
- *
- * This API sets the audio protocol defined by users.
- *
- * @param slotFormat Slot type.
- * @param slotLen Pointer to the return slot length value.
- * @param dataLen Pointer to the return data length in a slot.
- */
-void ESAI_AnalysisSlot(esai_slot_format_t slotFormat, uint8_t *slotLen, uint8_t *dataLen);
-
-/*!
- * @brief Get the instance number for ESAI.
- *
- * @param base ESAI base pointer.
- */
-uint32_t ESAI_GetInstance(ESAI_Type *base);
 
 /*!
  * @brief sends a piece of data in non-blocking way.
@@ -92,7 +75,7 @@ static void ESAI_ReadNonBlocking(ESAI_Type *base, uint32_t bitWidth, uint8_t *bu
  * Variables
  ******************************************************************************/
 /*!@brief ESAI handle pointer */
-esai_handle_t *s_esaiHandle[FSL_FEATURE_SOC_ESAI_COUNT][2];
+static esai_handle_t *s_esaiHandle[FSL_FEATURE_SOC_ESAI_COUNT][2];
 /* Base pointer array */
 static ESAI_Type *const s_esaiBases[] = ESAI_BASE_PTRS;
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
@@ -171,6 +154,7 @@ static void ESAI_SetCustomerProtocol(ESAI_Type *base,
             protocol->ifZeroPading   = true;
             break;
         default:
+            assert(false);
             break;
     }
 
@@ -184,7 +168,7 @@ static void ESAI_SetCustomerProtocol(ESAI_Type *base,
                      ESAI_TCR_TMOD(protocol->mode) | ESAI_TCR_TSHFD(protocol->shiftDirection);
 
         base->TCCR &= ~ESAI_TCCR_TDC_MASK;
-        base->TCCR |= ESAI_TCCR_TDC(protocol->slotNum - 1U);
+        base->TCCR |= ESAI_TCCR_TDC((uint32_t)protocol->slotNum - 1U);
 
         /* Set slot mask */
         ESAI_TxSetSlotMask(base, SLOT_TO_MASK(protocol->slotNum));
@@ -199,7 +183,7 @@ static void ESAI_SetCustomerProtocol(ESAI_Type *base,
                      ESAI_RCR_RSHFD(protocol->shiftDirection);
 
         base->RCCR &= ~ESAI_RCCR_RDC_MASK;
-        base->RCCR |= ESAI_RCCR_RDC(protocol->slotNum - 1U);
+        base->RCCR |= ESAI_RCCR_RDC(protocol->slotNum - 1UL);
 
         /* Set slot mask */
         EASI_RxSetSlotMask(base, SLOT_TO_MASK(protocol->slotNum));
@@ -208,7 +192,7 @@ static void ESAI_SetCustomerProtocol(ESAI_Type *base,
 
 void ESAI_AnalysisSlot(esai_slot_format_t slotFormat, uint8_t *slotLen, uint8_t *dataLen)
 {
-    assert(slotLen && dataLen);
+    assert((slotLen != NULL) && (dataLen != NULL));
 
     switch (slotFormat)
     {
@@ -285,6 +269,7 @@ void ESAI_AnalysisSlot(esai_slot_format_t slotFormat, uint8_t *slotLen, uint8_t 
             *dataLen = 24U;
             break;
         default:
+            assert(false);
             break;
     }
 }
@@ -294,7 +279,7 @@ uint32_t ESAI_GetInstance(ESAI_Type *base)
     uint32_t instance;
 
     /* Find the instance index from base address mappings. */
-    for (instance = 0; instance < FSL_FEATURE_SOC_ESAI_COUNT; instance++)
+    for (instance = 0; instance < (uint32_t)FSL_FEATURE_SOC_ESAI_COUNT; instance++)
     {
         if (s_esaiBases[instance] == base)
         {
@@ -302,7 +287,7 @@ uint32_t ESAI_GetInstance(ESAI_Type *base)
         }
     }
 
-    assert(instance < FSL_FEATURE_SOC_ESAI_COUNT);
+    assert(instance < (uint32_t)FSL_FEATURE_SOC_ESAI_COUNT);
 
     return instance;
 }
@@ -311,7 +296,7 @@ static void ESAI_WriteNonBlocking(ESAI_Type *base, uint32_t bitWidth, uint8_t *b
 {
     uint32_t i           = 0;
     uint8_t j            = 0;
-    uint8_t bytesPerWord = bitWidth / 8U;
+    uint8_t bytesPerWord = (uint8_t)(bitWidth / 8U);
     uint32_t data        = 0;
     uint32_t temp        = 0;
 
@@ -332,7 +317,7 @@ static void ESAI_ReadNonBlocking(ESAI_Type *base, uint32_t bitWidth, uint8_t *bu
 {
     uint32_t i           = 0;
     uint8_t j            = 0;
-    uint8_t bytesPerWord = bitWidth / 8U;
+    uint8_t bytesPerWord = (uint8_t)(bitWidth / 8U);
     uint32_t data        = 0;
 
     for (i = 0; i < size / bytesPerWord; i++)
@@ -340,7 +325,7 @@ static void ESAI_ReadNonBlocking(ESAI_Type *base, uint32_t bitWidth, uint8_t *bu
         data = base->ERDR;
         for (j = 0; j < bytesPerWord; j++)
         {
-            *buffer = (data >> (8U * j)) & 0xFF;
+            *buffer = (uint8_t)(data >> (8U * j)) & 0xFFU;
             buffer++;
         }
     }
@@ -364,7 +349,7 @@ void ESAI_Init(ESAI_Type *base, esai_config_t *config)
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Enable the clock. */
-    CLOCK_EnableClock(s_esaiClock[ESAI_GetInstance(base)]);
+    (void)CLOCK_EnableClock(s_esaiClock[ESAI_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
     /* Enable ESAI logic */
@@ -465,8 +450,8 @@ void ESAI_Init(ESAI_Type *base, esai_config_t *config)
  */
 void ESAI_Deinit(ESAI_Type *base)
 {
-    ESAI_TxEnable(base, false);
-    ESAI_RxEnable(base, false);
+    ESAI_TxEnable(base, 0U);
+    ESAI_RxEnable(base, 0U);
 
     /* Disconnect all pins */
     base->PCRC = 0U;
@@ -475,7 +460,7 @@ void ESAI_Deinit(ESAI_Type *base)
 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Disable the clock. */
-    CLOCK_DisableClock(s_esaiClock[ESAI_GetInstance(base)]);
+    (void)CLOCK_DisableClock(s_esaiClock[ESAI_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -490,7 +475,7 @@ void ESAI_Deinit(ESAI_Type *base)
  */
 void ESAI_GetDefaultConfig(esai_config_t *config)
 {
-    memset(config, 0, sizeof(esai_config_t));
+    (void)memset(config, 0, sizeof(esai_config_t));
 
     config->syncMode          = kESAI_ModeSync;
     config->txProtocol        = kESAI_BusLeftJustified;
@@ -592,9 +577,9 @@ void ESAI_TxEnable(ESAI_Type *base, uint8_t sectionMap)
     uint32_t val = 0;
 
     /* Wait for Tx initialized */
-    if (base->TFCR & ESAI_TFCR_TIEN_MASK)
+    if ((base->TFCR & ESAI_TFCR_TIEN_MASK) != 0U)
     {
-        while (base->ESR & ESAI_ESR_TINIT_MASK)
+        while ((base->ESR & ESAI_ESR_TINIT_MASK) != 0U)
         {
         }
     }
@@ -602,13 +587,13 @@ void ESAI_TxEnable(ESAI_Type *base, uint8_t sectionMap)
     /* Set TCR regsiter */
     val = base->TCR & ~(ESAI_TCR_TE5_MASK | ESAI_TCR_TE4_MASK | ESAI_TCR_TE3_MASK | ESAI_TCR_TE2_MASK |
                         ESAI_TCR_TE1_MASK | ESAI_TCR_TE0_MASK);
-    val |= (sectionMap & 0x3FU) << ESAI_TCR_TE0_SHIFT;
+    val |= (sectionMap & 0x3FUL) << ESAI_TCR_TE0_SHIFT;
     base->TCR = val;
 
     /* Set TFCR register */
     val = base->TFCR & ~(ESAI_TFCR_TE5_MASK | ESAI_TFCR_TE4_MASK | ESAI_TFCR_TE3_MASK | ESAI_TFCR_TE2_MASK |
                          ESAI_TFCR_TE1_MASK | ESAI_TFCR_TE0_MASK);
-    val |= ((sectionMap & 0x3FU) << ESAI_TFCR_TE0_SHIFT);
+    val |= ((sectionMap & 0x3FUL) << ESAI_TFCR_TE0_SHIFT);
     base->TFCR = val;
     base->TFCR |= ESAI_TFCR_TFE_MASK;
 }
@@ -626,12 +611,12 @@ void ESAI_RxEnable(ESAI_Type *base, uint8_t sectionMap)
 
     /* Set RCR register */
     val = base->RCR & ~(ESAI_RCR_RE3_MASK | ESAI_RCR_RE2_MASK | ESAI_RCR_RE1_MASK | ESAI_RCR_RE0_MASK);
-    val |= (sectionMap & 0xFU) << ESAI_RCR_RE0_SHIFT;
+    val |= (sectionMap & 0xFUL) << ESAI_RCR_RE0_SHIFT;
     base->RCR = val;
 
     /* Set RFCR regsiter */
     val = base->RFCR & ~(ESAI_RFCR_RE3_MASK | ESAI_RFCR_RE2_MASK | ESAI_RFCR_RE1_MASK | ESAI_RFCR_RE0_MASK);
-    val |= ((sectionMap & 0xFU) << ESAI_RFCR_RE0_SHIFT);
+    val |= ((sectionMap & 0xFUL) << ESAI_RFCR_RE0_SHIFT);
     base->RFCR = val;
     base->RFCR |= ESAI_RFCR_RFE_MASK;
 }
@@ -649,14 +634,14 @@ void ESAI_RxEnable(ESAI_Type *base, uint8_t sectionMap)
  */
 void ESAI_TxSetFormat(ESAI_Type *base, esai_format_t *format, uint32_t hckClockHz, uint32_t hckSourceClockHz)
 {
-    uint8_t slotNum = ((base->TCCR & ESAI_TCCR_TDC_MASK) >> ESAI_TCCR_TDC_SHIFT) + 1U;
+    uint8_t slotNum = (uint8_t)((base->TCCR & ESAI_TCCR_TDC_MASK) >> ESAI_TCCR_TDC_SHIFT) + 1U;
     uint8_t dataLen = 0U, slotLen = 0U;
     uint32_t sck  = 0U;
     uint32_t temp = hckSourceClockHz / (hckClockHz * 2U);
 
     /* Get ESAI slot length and data length */
     ESAI_AnalysisSlot(format->slotType, &slotLen, &dataLen);
-    sck = format->sampleRate_Hz * slotLen * slotNum;
+    sck = (uint32_t)format->sampleRate_Hz * slotLen * slotNum;
 
     /* Set MSB bit of the audio data */
     base->TCR &= ~ESAI_TCR_TSWS_MASK;
@@ -664,7 +649,7 @@ void ESAI_TxSetFormat(ESAI_Type *base, esai_format_t *format, uint32_t hckClockH
 
     /* Set word length and slot length */
     base->TFCR &= ~ESAI_TFCR_TWA_MASK;
-    base->TFCR |= ESAI_TFCR_TWA((32U - dataLen) / 4U);
+    base->TFCR |= ESAI_TFCR_TWA((32UL - dataLen) / 4UL);
 
     /* Set clock divider */
     base->TCCR &= ~(ESAI_TCCR_TFP_MASK | ESAI_TCCR_TPM_MASK);
@@ -697,14 +682,14 @@ void ESAI_TxSetFormat(ESAI_Type *base, esai_format_t *format, uint32_t hckClockH
 void ESAI_RxSetFormat(ESAI_Type *base, esai_format_t *format, uint32_t hckClockHz, uint32_t hckSourceClockHz)
 
 {
-    uint8_t slotNum = ((base->RCCR & ESAI_RCCR_RDC_MASK) >> ESAI_RCCR_RDC_SHIFT) + 1U;
+    uint8_t slotNum = (uint8_t)((base->RCCR & ESAI_RCCR_RDC_MASK) >> ESAI_RCCR_RDC_SHIFT) + 1U;
     uint8_t dataLen = 0U, slotLen = 0U;
     uint32_t sck  = 0U;
     uint32_t temp = hckSourceClockHz / (hckClockHz * 2U);
 
     /* Get ESAI slot length and data length */
     ESAI_AnalysisSlot(format->slotType, &slotLen, &dataLen);
-    sck = format->sampleRate_Hz * slotLen * slotNum;
+    sck = (uint32_t)format->sampleRate_Hz * slotLen * slotNum;
 
     /* MSB bit of the audio data */
     base->RCR &= ~ESAI_RCR_RSWS_MASK;
@@ -712,7 +697,7 @@ void ESAI_RxSetFormat(ESAI_Type *base, esai_format_t *format, uint32_t hckClockH
 
     /* Set word length and slot length */
     base->RFCR &= ~ESAI_RFCR_RWA_MASK;
-    base->RFCR |= ESAI_RFCR_RWA((32U - dataLen) / 4U);
+    base->RFCR |= ESAI_RFCR_RWA((32UL - dataLen) / 4UL);
 
     /* Only async mode needs to set the clock divider */
     if ((base->SAICR & ESAI_SAICR_SYN_MASK) == 0U)
@@ -748,22 +733,22 @@ void ESAI_RxSetFormat(ESAI_Type *base, esai_format_t *format, uint32_t hckClockH
 void ESAI_WriteBlocking(ESAI_Type *base, uint32_t bitWidth, uint8_t *buffer, uint32_t size)
 {
     uint32_t i           = 0;
-    uint8_t bytesPerWord = bitWidth / 8U;
+    uint8_t bytesPerWord = (uint8_t)bitWidth / 8U;
 
     while (i < size)
     {
         /* Wait until it can write data */
-        while ((ESAI_GetStatusFlag(base) & kESAI_TransmitFIFOEmptyFlag) == 0U)
+        while ((ESAI_GetStatusFlag(base) & (uint32_t)kESAI_TransmitFIFOEmptyFlag) == 0U)
         {
         }
 
         ESAI_WriteNonBlocking(base, bitWidth, buffer, bytesPerWord);
-        buffer += bytesPerWord;
+        buffer = (uint8_t *)((uint32_t)(buffer) + bytesPerWord);
         i += bytesPerWord;
     }
 
     /* Wait until the last data is sent */
-    while (!(base->SAISR & ESAI_SAISR_TDE_MASK))
+    while ((base->SAISR & ESAI_SAISR_TDE_MASK) == 0U)
     {
     }
 }
@@ -781,17 +766,17 @@ void ESAI_WriteBlocking(ESAI_Type *base, uint32_t bitWidth, uint8_t *buffer, uin
 void ESAI_ReadBlocking(ESAI_Type *base, uint32_t bitWidth, uint8_t *buffer, uint32_t size)
 {
     uint32_t i           = 0;
-    uint8_t bytesPerWord = bitWidth / 8U;
+    uint8_t bytesPerWord = (uint8_t)bitWidth / 8U;
 
     while (i < size)
     {
         /* Wait until data is received */
-        while ((ESAI_GetStatusFlag(base) & kESAI_ReceiveFIFOFullFlag) == 0U)
+        while ((ESAI_GetStatusFlag(base) & (uint32_t)kESAI_ReceiveFIFOFullFlag) == 0U)
         {
         }
 
         ESAI_ReadNonBlocking(base, bitWidth, buffer, bytesPerWord);
-        buffer += bytesPerWord;
+        buffer = (uint8_t *)((uint32_t)(buffer) + bytesPerWord);
         i += bytesPerWord;
     }
 }
@@ -812,22 +797,22 @@ void ESAI_TransferTxCreateHandle(ESAI_Type *base,
                                  esai_transfer_callback_t callback,
                                  void *userData)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Zero the handle */
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
     s_esaiHandle[ESAI_GetInstance(base)][0] = handle;
 
     handle->callback  = callback;
     handle->userData  = userData;
-    handle->watermark = (base->TFCR & ESAI_TFCR_TFWM_MASK) >> ESAI_TFCR_TFWM_SHIFT;
+    handle->watermark = (uint8_t)((base->TFCR & ESAI_TFCR_TFWM_MASK) >> ESAI_TFCR_TFWM_SHIFT);
 
     /* Set the isr pointer */
     s_esaiTxIsr = ESAI_TransferTxHandleIRQ;
 
     /* Enable Tx irq */
-    EnableIRQ(s_esaiTxIRQ[ESAI_GetInstance(base)]);
+    (void)EnableIRQ(s_esaiTxIRQ[ESAI_GetInstance(base)]);
 }
 
 /*!
@@ -846,22 +831,22 @@ void ESAI_TransferRxCreateHandle(ESAI_Type *base,
                                  esai_transfer_callback_t callback,
                                  void *userData)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Zero the handle */
-    memset(handle, 0, sizeof(*handle));
+    (void)memset(handle, 0, sizeof(*handle));
 
     s_esaiHandle[ESAI_GetInstance(base)][1] = handle;
 
     handle->callback  = callback;
     handle->userData  = userData;
-    handle->watermark = (base->RFCR & ESAI_RFCR_RFWM_MASK) >> ESAI_RFCR_RFWM_SHIFT;
+    handle->watermark = (uint8_t)((base->RFCR & ESAI_RFCR_RFWM_MASK) >> ESAI_RFCR_RFWM_SHIFT);
 
     /* Set the isr pointer */
     s_esaiRxIsr = ESAI_TransferRxHandleIRQ;
 
     /* Enable Rx irq */
-    EnableIRQ(s_esaiRxIRQ[ESAI_GetInstance(base)]);
+    (void)EnableIRQ(s_esaiRxIRQ[ESAI_GetInstance(base)]);
 }
 
 /*!
@@ -880,9 +865,9 @@ void ESAI_TransferRxCreateHandle(ESAI_Type *base,
 status_t ESAI_TransferTxSetFormat(
     ESAI_Type *base, esai_handle_t *handle, esai_format_t *format, uint32_t hckClockHz, uint32_t hckSourceClockHz)
 {
-    assert(handle);
+    assert(handle != NULL);
 
-    if ((hckClockHz < format->sampleRate_Hz) || (hckSourceClockHz < format->sampleRate_Hz))
+    if ((hckClockHz < (uint32_t)format->sampleRate_Hz) || (hckSourceClockHz < (uint32_t)format->sampleRate_Hz))
     {
         return kStatus_InvalidArgument;
     }
@@ -912,9 +897,9 @@ status_t ESAI_TransferTxSetFormat(
 status_t ESAI_TransferRxSetFormat(
     ESAI_Type *base, esai_handle_t *handle, esai_format_t *format, uint32_t hckClockHz, uint32_t hckSourceClockHz)
 {
-    assert(handle);
+    assert(handle != NULL);
 
-    if ((hckClockHz < format->sampleRate_Hz) || (hckSourceClockHz < format->sampleRate_Hz))
+    if ((hckClockHz < (uint32_t)format->sampleRate_Hz) || (hckSourceClockHz < (uint32_t)format->sampleRate_Hz))
     {
         return kStatus_InvalidArgument;
     }
@@ -945,12 +930,12 @@ status_t ESAI_TransferRxSetFormat(
  */
 status_t ESAI_TransferSendNonBlocking(ESAI_Type *base, esai_handle_t *handle, esai_transfer_t *xfer)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     uint32_t i = 0;
 
     /* Check if the queue is full */
-    if (handle->esaiQueue[handle->queueUser].data)
+    if (handle->esaiQueue[handle->queueUser].data != NULL)
     {
         return kStatus_ESAI_QueueFull;
     }
@@ -959,7 +944,7 @@ status_t ESAI_TransferSendNonBlocking(ESAI_Type *base, esai_handle_t *handle, es
     handle->transferSize[handle->queueUser]       = xfer->dataSize;
     handle->esaiQueue[handle->queueUser].data     = xfer->data;
     handle->esaiQueue[handle->queueUser].dataSize = xfer->dataSize;
-    handle->queueUser                             = (handle->queueUser + 1) % ESAI_XFER_QUEUE_SIZE;
+    handle->queueUser                             = (handle->queueUser + 1U) % ESAI_XFER_QUEUE_SIZE;
 
     /* Set the state to busy */
     handle->state = kESAI_Busy;
@@ -967,7 +952,7 @@ status_t ESAI_TransferSendNonBlocking(ESAI_Type *base, esai_handle_t *handle, es
     /* Use FIFO request interrupt and fifo error*/
     ESAI_TxEnableInterrupts(base, kESAI_TransmitInterruptEnable);
 
-    if ((base->TFSR & ESAI_TFSR_TFCNT_MASK) == 0)
+    if ((base->TFSR & ESAI_TFSR_TFCNT_MASK) == 0U)
     {
         /* Write first word for all channels*/
         for (i = 0; i < 12U; i++)
@@ -1000,10 +985,10 @@ status_t ESAI_TransferSendNonBlocking(ESAI_Type *base, esai_handle_t *handle, es
  */
 status_t ESAI_TransferReceiveNonBlocking(ESAI_Type *base, esai_handle_t *handle, esai_transfer_t *xfer)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Check if the queue is full */
-    if (handle->esaiQueue[handle->queueUser].data)
+    if (handle->esaiQueue[handle->queueUser].data != NULL)
     {
         return kStatus_ESAI_QueueFull;
     }
@@ -1012,7 +997,7 @@ status_t ESAI_TransferReceiveNonBlocking(ESAI_Type *base, esai_handle_t *handle,
     handle->transferSize[handle->queueUser]       = xfer->dataSize;
     handle->esaiQueue[handle->queueUser].data     = xfer->data;
     handle->esaiQueue[handle->queueUser].dataSize = xfer->dataSize;
-    handle->queueUser                             = (handle->queueUser + 1) % ESAI_XFER_QUEUE_SIZE;
+    handle->queueUser                             = (handle->queueUser + 1U) % ESAI_XFER_QUEUE_SIZE;
 
     /* Set state to busy */
     handle->state = kESAI_Busy;
@@ -1037,11 +1022,11 @@ status_t ESAI_TransferReceiveNonBlocking(ESAI_Type *base, esai_handle_t *handle,
  */
 status_t ESAI_TransferGetSendCount(ESAI_Type *base, esai_handle_t *handle, size_t *count)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     status_t status = kStatus_Success;
 
-    if (handle->state != kESAI_Busy)
+    if (handle->state != (uint32_t)kESAI_Busy)
     {
         status = kStatus_NoTransferInProgress;
     }
@@ -1064,11 +1049,11 @@ status_t ESAI_TransferGetSendCount(ESAI_Type *base, esai_handle_t *handle, size_
  */
 status_t ESAI_TransferGetReceiveCount(ESAI_Type *base, esai_handle_t *handle, size_t *count)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     status_t status = kStatus_Success;
 
-    if (handle->state != kESAI_Busy)
+    if (handle->state != (uint32_t)kESAI_Busy)
     {
         status = kStatus_NoTransferInProgress;
     }
@@ -1091,7 +1076,7 @@ status_t ESAI_TransferGetReceiveCount(ESAI_Type *base, esai_handle_t *handle, si
  */
 void ESAI_TransferAbortSend(ESAI_Type *base, esai_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Stop Tx transfer and disable interrupt */
     ESAI_TxEnable(base, 0U);
@@ -1102,7 +1087,7 @@ void ESAI_TransferAbortSend(ESAI_Type *base, esai_handle_t *handle)
     handle->state = kESAI_Idle;
 
     /* Clear the queue */
-    memset(handle->esaiQueue, 0, sizeof(esai_transfer_t) * ESAI_XFER_QUEUE_SIZE);
+    (void)memset(handle->esaiQueue, 0, sizeof(esai_transfer_t) * ESAI_XFER_QUEUE_SIZE);
     handle->queueDriver = 0;
     handle->queueUser   = 0;
 }
@@ -1118,7 +1103,7 @@ void ESAI_TransferAbortSend(ESAI_Type *base, esai_handle_t *handle)
  */
 void ESAI_TransferAbortReceive(ESAI_Type *base, esai_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Stop Tx transfer and disable interrupt */
     ESAI_RxEnable(base, 0U);
@@ -1129,7 +1114,7 @@ void ESAI_TransferAbortReceive(ESAI_Type *base, esai_handle_t *handle)
     handle->state = kESAI_Idle;
 
     /* Clear the queue */
-    memset(handle->esaiQueue, 0, sizeof(esai_transfer_t) * ESAI_XFER_QUEUE_SIZE);
+    (void)memset(handle->esaiQueue, 0, sizeof(esai_transfer_t) * ESAI_XFER_QUEUE_SIZE);
     handle->queueDriver = 0;
     handle->queueUser   = 0;
 }
@@ -1142,32 +1127,33 @@ void ESAI_TransferAbortReceive(ESAI_Type *base, esai_handle_t *handle)
  */
 void ESAI_TransferTxHandleIRQ(ESAI_Type *base, esai_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     uint8_t *buffer  = handle->esaiQueue[handle->queueDriver].data;
     uint8_t dataSize = handle->bitWidth / 8U;
 
     /* Handle transfer */
-    if (ESAI_GetStatusFlag(base) & kESAI_TransmitFIFOEmptyFlag)
+    if ((ESAI_GetStatusFlag(base) & (uint32_t)kESAI_TransmitFIFOEmptyFlag) != 0U)
     {
         /* Judge if the data need to transmit is less than space */
-        uint8_t size = MIN((handle->esaiQueue[handle->queueDriver].dataSize),
-                           (size_t)((FSL_FEATURE_ESAI_FIFO_SIZEn(base) - handle->watermark) * dataSize));
+        size_t size = MIN((handle->esaiQueue[handle->queueDriver].dataSize),
+                          (size_t)(((uint32_t)FSL_FEATURE_ESAI_FIFO_SIZEn(base) - handle->watermark) * dataSize));
 
         /* Copy the data from esai buffer to FIFO */
         ESAI_WriteNonBlocking(base, handle->bitWidth, buffer, size);
 
         /* Update the internal counter */
         handle->esaiQueue[handle->queueDriver].dataSize -= size;
-        handle->esaiQueue[handle->queueDriver].data += size;
+        handle->esaiQueue[handle->queueDriver].data =
+            (uint8_t *)((uint32_t)handle->esaiQueue[handle->queueDriver].data + size);
     }
 
     /* If finished a block, call the callback function */
     if (handle->esaiQueue[handle->queueDriver].dataSize == 0U)
     {
-        memset(&handle->esaiQueue[handle->queueDriver], 0, sizeof(esai_transfer_t));
-        handle->queueDriver = (handle->queueDriver + 1) % ESAI_XFER_QUEUE_SIZE;
-        if (handle->callback)
+        (void)memset(&handle->esaiQueue[handle->queueDriver], 0, sizeof(esai_transfer_t));
+        handle->queueDriver = (handle->queueDriver + 1U) % ESAI_XFER_QUEUE_SIZE;
+        if (handle->callback != NULL)
         {
             (handle->callback)(base, handle, kStatus_ESAI_TxIdle, handle->userData);
         }
@@ -1192,31 +1178,32 @@ void ESAI_TransferTxHandleIRQ(ESAI_Type *base, esai_handle_t *handle)
  */
 void ESAI_TransferRxHandleIRQ(ESAI_Type *base, esai_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     uint8_t *buffer  = handle->esaiQueue[handle->queueDriver].data;
     uint8_t dataSize = handle->bitWidth / 8U;
 
     /* Handle transfer */
-    if (ESAI_GetStatusFlag(base) & kESAI_ReceiveFIFOFullFlag)
+    if ((ESAI_GetStatusFlag(base) & (uint32_t)kESAI_ReceiveFIFOFullFlag) != 0U)
     {
         /* Judge if the data need to transmit is less than space */
-        uint8_t size = MIN((handle->esaiQueue[handle->queueDriver].dataSize), (handle->watermark * dataSize));
+        size_t size = MIN((handle->esaiQueue[handle->queueDriver].dataSize), (handle->watermark * (uint32_t)dataSize));
 
         /* Copy the data from esai buffer to FIFO */
         ESAI_ReadNonBlocking(base, handle->bitWidth, buffer, size);
 
         /* Update the internal counter */
         handle->esaiQueue[handle->queueDriver].dataSize -= size;
-        handle->esaiQueue[handle->queueDriver].data += size;
+        handle->esaiQueue[handle->queueDriver].data =
+            (uint8_t *)((uint32_t)handle->esaiQueue[handle->queueDriver].data + size);
     }
 
     /* If finished a block, call the callback function */
     if (handle->esaiQueue[handle->queueDriver].dataSize == 0U)
     {
-        memset(&handle->esaiQueue[handle->queueDriver], 0, sizeof(esai_transfer_t));
-        handle->queueDriver = (handle->queueDriver + 1) % ESAI_XFER_QUEUE_SIZE;
-        if (handle->callback)
+        (void)memset(&handle->esaiQueue[handle->queueDriver], 0, sizeof(esai_transfer_t));
+        handle->queueDriver = (handle->queueDriver + 1U) % ESAI_XFER_QUEUE_SIZE;
+        if (handle->callback != NULL)
         {
             (handle->callback)(base, handle, kStatus_ESAI_RxIdle, handle->userData);
         }
@@ -1237,24 +1224,23 @@ void ESAI_TransferRxHandleIRQ(ESAI_Type *base, esai_handle_t *handle)
 #endif
 #if defined(ESAI)
 #define ESAI_DriverIRQHandler AUDIO_ESAI0_INT_IRQHandler
+void ESAI_DriverIRQHandler(void);
 void ESAI_DriverIRQHandler(void)
 {
     /* Handle Rx operation */
-    if ((ESAI_GetStatusFlag(ESAI) & kESAI_ReceiveFIFOFullFlag) && (ESAI->RCR & kESAI_TransmitInterruptEnable))
+    if (((ESAI_GetStatusFlag(ESAI) & (uint32_t)kESAI_ReceiveFIFOFullFlag) != 0U) &&
+        ((ESAI->RCR & (uint32_t)kESAI_TransmitInterruptEnable) != 0U))
     {
         s_esaiRxIsr(ESAI, s_esaiHandle[0][1]);
     }
 
     /* Handle Tx operation */
-    if ((ESAI_GetStatusFlag(ESAI) & kESAI_TransmitFIFOEmptyFlag) && (ESAI->TCR & kESAI_TransmitInterruptEnable))
+    if (((ESAI_GetStatusFlag(ESAI) & (uint32_t)kESAI_TransmitFIFOEmptyFlag) != 0U) &&
+        ((ESAI->TCR & (uint32_t)kESAI_TransmitInterruptEnable) != 0U))
     {
         s_esaiTxIsr(ESAI, s_esaiHandle[0][0]);
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif
 
@@ -1263,20 +1249,18 @@ void ESAI_DriverIRQHandler(void)
 void AUDIO_ESAI1_INT_IRQHandler(void)
 {
     /* Handle Rx operation */
-    if ((ESAI_GetStatusFlag(ESAI1) & kESAI_ReceiveFIFOFullFlag) && (ESAI1->RCR & kESAI_TransmitInterruptEnable))
+    if (((ESAI_GetStatusFlag(ESAI1) & (uint32_t)kESAI_ReceiveFIFOFullFlag) != 0U) &&
+        ((ESAI1->RCR & (uint32_t)kESAI_TransmitInterruptEnable) != 0U))
     {
         s_esaiRxIsr(ESAI1, s_esaiHandle[1][1]);
     }
 
     /* Handle Tx operation */
-    if ((ESAI_GetStatusFlag(ESAI1) & kESAI_TransmitFIFOEmptyFlag) && (ESAI1->TCR & kESAI_TransmitInterruptEnable))
+    if (((ESAI_GetStatusFlag(ESAI1) & (uint32_t)kESAI_TransmitFIFOEmptyFlag) != 0U) &&
+        ((ESAI1->TCR & (uint32_t)kESAI_TransmitInterruptEnable) != 0U))
     {
         s_esaiTxIsr(ESAI1, s_esaiHandle[1][0]);
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 #endif

@@ -6,18 +6,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_edma.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_lpuart.h"
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA_CHANNEL 30U
+#define EXAMPLE_DMA_CHANNEL  30U
 #define EXAMPLE_DMA_BASEADDR ADMA__EDMA2
 
 #define BUFF_LENGTH 4U

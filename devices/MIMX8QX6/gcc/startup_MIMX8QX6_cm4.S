@@ -3,12 +3,12 @@
 /*  @purpose: CMSIS Cortex-M4 Core Device Startup File                       */
 /*            MIMX8QX6_cm4                                                   */
 /*  @version: 4.0                                                            */
-/*  @date:    2018-8-22                                                      */
-/*  @build:   b191126                                                        */
+/*  @date:    2020-6-19                                                      */
+/*  @build:   b201113                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
-/* Copyright 2016-2019 NXP                                                   */
+/* Copyright 2016-2020 NXP                                                   */
 /* All rights reserved.                                                      */
 /*                                                                           */
 /* SPDX-License-Identifier: BSD-3-Clause                                     */
@@ -23,7 +23,11 @@
     .globl __isr_vector
 __isr_vector:
     .long   __StackTop                                      /* Top of Stack */
+#ifdef __STARTUP_CONFIG_DDR_ALIAS
+    .long   Reset_Handler+0x80000000
+#else
     .long   Reset_Handler                                   /* Reset Handler */
+#endif
     .long   NMI_Handler                                     /* NMI Handler*/
     .long   HardFault_Handler                               /* Hard Fault Handler*/
     .long   MemManage_Handler                               /* MPU Fault Handler*/
@@ -123,8 +127,8 @@ __isr_vector:
     .long   Reserved96_IRQHandler                           /* xxx Interrupt 96*/
     .long   Reserved97_IRQHandler                           /* xxx Interrupt 97*/
     .long   Reserved98_IRQHandler                           /* xxx Interrupt 98*/
-    .long   A35_NEXTERRIRQ_IRQHandler                       /* Shared Int Source nEXTERRIRQ from A35 Sub-System*/
     .long   A35_NINTERRIRQ_IRQHandler                       /* Shared Int Source nINTERRIRQ from A35 Sub-System*/
+    .long   A35_NEXTERRIRQ_IRQHandler                       /* Shared Int Source nEXTERRIRQ from A35 Sub-System*/
     .long   Reserved101_IRQHandler                          /* xxx Interrupt 101*/
     .long   Reserved102_IRQHandler                          /* xxx Interrupt 102*/
     .long   Reserved103_IRQHandler                          /* xxx Interrupt 103*/
@@ -347,7 +351,7 @@ __isr_vector:
     .long   ADMA_I2C1_INT_IRQHandler                        /* Shared Int Source I2C1_INT from ADMA Sub-System*/
     .long   ADMA_I2C2_INT_IRQHandler                        /* Shared Int Source I2C2_INT from ADMA Sub-System*/
     .long   ADMA_I2C3_INT_IRQHandler                        /* Shared Int Source I2C3_INT from ADMA Sub-System*/
-    .long   ADMA_I2C4_INT_IRQHandler                        /* Shared Int Source I2C4_INT from ADMA Sub-System*/
+    .long   Reserved323_IRQHandler                          /* xxx Interrupt 323*/
     .long   ADMA_UART0_INT_IRQHandler                       /* Shared Int Source UART0_INT from ADMA Sub-System*/
     .long   ADMA_UART1_INT_IRQHandler                       /* Shared Int Source UART1_INT from ADMA Sub-System*/
     .long   ADMA_UART2_INT_IRQHandler                       /* Shared Int Source UART2_INT from ADMA Sub-System*/
@@ -488,7 +492,7 @@ __isr_vector:
     .long   ADMA_FTM0_DMA_INT_IRQHandler                    /* Shared Int Source FTM0_DMA_INT from ADMA Sub-System*/
     .long   ADMA_FTM1_DMA_INT_IRQHandler                    /* Shared Int Source FTM1_DMA_INT from ADMA Sub-System*/
     .long   ADMA_ADC0_DMA_INT_IRQHandler                    /* Shared Int Source ADC0_DMA_INT from ADMA Sub-System*/
-    .long   ADMA_ADC1_DMA_INT_IRQHandler                    /* Shared Int Source ADC1_DMA_INT from ADMA Sub-System*/
+    .long   Reserved464_IRQHandler                          /* xxx Interrupt 464*/
     .long   Reserved465_IRQHandler                          /* xxx Interrupt 465*/
     .long   Reserved466_IRQHandler                          /* xxx Interrupt 466*/
     .long   ADMA_EDMA0_INT_IRQHandler                       /* Shared Int Source eDMA0_INT from ADMA Sub-System*/
@@ -678,6 +682,16 @@ __isr_vector:
     .weak    Reset_Handler
     .type    Reset_Handler, %function
 Reset_Handler:
+#ifdef __STARTUP_CONFIG_DDR_ALIAS
+    .equ    _MCM_PID, 0xE0080030
+    ldr     r0, =_MCM_PID
+    movs    r1, 0x7E
+    str     r1, [r0]
+    isb
+    ldr     r0,=alias_start
+    mov     pc,r0
+alias_start:
+#endif
     cpsid   i               /* Mask interrupts */
     .equ    VTOR, 0xE000ED08
     ldr     r0, =VTOR
@@ -1005,6 +1019,24 @@ IRQSTEER_7_IRQHandler:
 
     .align 1
     .thumb_func
+    .weak MIPI_DSI0_INT_OUT_IRQHandler
+    .type MIPI_DSI0_INT_OUT_IRQHandler, %function
+MIPI_DSI0_INT_OUT_IRQHandler:
+    ldr   r0,=MIPI_DSI0_INT_OUT_DriverIRQHandler
+    bx    r0
+    .size MIPI_DSI0_INT_OUT_IRQHandler, . - MIPI_DSI0_INT_OUT_IRQHandler
+
+    .align 1
+    .thumb_func
+    .weak MIPI_DSI1_INT_OUT_IRQHandler
+    .type MIPI_DSI1_INT_OUT_IRQHandler, %function
+MIPI_DSI1_INT_OUT_IRQHandler:
+    ldr   r0,=MIPI_DSI1_INT_OUT_DriverIRQHandler
+    bx    r0
+    .size MIPI_DSI1_INT_OUT_IRQHandler, . - MIPI_DSI1_INT_OUT_IRQHandler
+
+    .align 1
+    .thumb_func
     .weak ADMA_EDMA2_INT_IRQHandler
     .type ADMA_EDMA2_INT_IRQHandler, %function
 ADMA_EDMA2_INT_IRQHandler:
@@ -1137,15 +1169,6 @@ ADMA_I2C3_INT_IRQHandler:
     ldr   r0,=ADMA_I2C3_INT_DriverIRQHandler
     bx    r0
     .size ADMA_I2C3_INT_IRQHandler, . - ADMA_I2C3_INT_IRQHandler
-
-    .align 1
-    .thumb_func
-    .weak ADMA_I2C4_INT_IRQHandler
-    .type ADMA_I2C4_INT_IRQHandler, %function
-ADMA_I2C4_INT_IRQHandler:
-    ldr   r0,=ADMA_I2C4_INT_DriverIRQHandler
-    bx    r0
-    .size ADMA_I2C4_INT_IRQHandler, . - ADMA_I2C4_INT_IRQHandler
 
     .align 1
     .thumb_func
@@ -1812,15 +1835,6 @@ ADMA_ADC0_DMA_INT_IRQHandler:
     ldr   r0,=ADMA_EDMA3_INT_DriverIRQHandler
     bx    r0
     .size ADMA_ADC0_DMA_INT_IRQHandler, . - ADMA_ADC0_DMA_INT_IRQHandler
-
-    .align 1
-    .thumb_func
-    .weak ADMA_ADC1_DMA_INT_IRQHandler
-    .type ADMA_ADC1_DMA_INT_IRQHandler, %function
-ADMA_ADC1_DMA_INT_IRQHandler:
-    ldr   r0,=ADMA_EDMA3_INT_DriverIRQHandler
-    bx    r0
-    .size ADMA_ADC1_DMA_INT_IRQHandler, . - ADMA_ADC1_DMA_INT_IRQHandler
 
     .align 1
     .thumb_func
@@ -2576,8 +2590,8 @@ M4_INTMUX_SOURCE_MU0_A0_IRQHandler:
     def_irq_handler    Reserved96_IRQHandler
     def_irq_handler    Reserved97_IRQHandler
     def_irq_handler    Reserved98_IRQHandler
-    def_irq_handler    A35_NEXTERRIRQ_IRQHandler
     def_irq_handler    A35_NINTERRIRQ_IRQHandler
+    def_irq_handler    A35_NEXTERRIRQ_IRQHandler
     def_irq_handler    Reserved101_IRQHandler
     def_irq_handler    Reserved102_IRQHandler
     def_irq_handler    Reserved103_IRQHandler
@@ -2635,8 +2649,8 @@ M4_INTMUX_SOURCE_MU0_A0_IRQHandler:
     def_irq_handler    Reserved155_IRQHandler
     def_irq_handler    Reserved156_IRQHandler
     def_irq_handler    Reserved157_IRQHandler
-    def_irq_handler    MIPI_DSI0_INT_OUT_IRQHandler
-    def_irq_handler    MIPI_DSI1_INT_OUT_IRQHandler
+    def_irq_handler    MIPI_DSI0_INT_OUT_DriverIRQHandler
+    def_irq_handler    MIPI_DSI1_INT_OUT_DriverIRQHandler
     def_irq_handler    Reserved160_IRQHandler
     def_irq_handler    LCD_MOD_INT_IRQHandler
     def_irq_handler    LCD_PWM_INT_IRQHandler
@@ -2798,7 +2812,7 @@ M4_INTMUX_SOURCE_MU0_A0_IRQHandler:
     def_irq_handler    ADMA_I2C1_INT_DriverIRQHandler
     def_irq_handler    ADMA_I2C2_INT_DriverIRQHandler
     def_irq_handler    ADMA_I2C3_INT_DriverIRQHandler
-    def_irq_handler    ADMA_I2C4_INT_DriverIRQHandler
+    def_irq_handler    Reserved323_IRQHandler
     def_irq_handler    ADMA_UART0_INT_DriverIRQHandler
     def_irq_handler    ADMA_UART1_INT_DriverIRQHandler
     def_irq_handler    ADMA_UART2_INT_DriverIRQHandler
@@ -2922,6 +2936,7 @@ M4_INTMUX_SOURCE_MU0_A0_IRQHandler:
     def_irq_handler    ADMA_FTM1_MOD_INT_DriverIRQHandler
     def_irq_handler    ADMA_ADC0_MOD_INT_DriverIRQHandler
     def_irq_handler    Reserved457_IRQHandler
+    def_irq_handler    Reserved464_IRQHandler
     def_irq_handler    Reserved465_IRQHandler
     def_irq_handler    Reserved466_IRQHandler
     def_irq_handler    ADMA_ASRC0_INT1_DriverIRQHandler

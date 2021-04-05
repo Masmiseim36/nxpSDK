@@ -6,8 +6,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef __RTE_DEVICE_H
-#define __RTE_DEVICE_H
+#ifndef _RTE_DEVICE_H
+#define _RTE_DEVICE_H
+
+extern void LPI2C2_InitPins();
+extern void LPI2C2_DeinitPins();
 
 /* LPI2C instance mapping */
 #define LPI2C0 CM4__LPI2C
@@ -17,45 +20,21 @@
 #define LPI2C4 ADMA__LPI2C3
 
 /* Driver name mapping. */
-#define RTE_I2C0 0
-#define RTE_I2C0_DMA_EN 0
-#define RTE_I2C1 0
-#define RTE_I2C1_DMA_EN 0
-#define RTE_I2C2 1
+/* User needs to provide the implementation of LPI2CX_GetFreq/LPI2CX_InitPins/LPI2CX_DeinitPins for the enabled LPI2C
+ * instance. */
+#define RTE_I2C2        1
 #define RTE_I2C2_DMA_EN 0
-#define RTE_I2C3 0
-#define RTE_I2C3_DMA_EN 0
-#define RTE_I2C4 0
-#define RTE_I2C4_DMA_EN 0
 
 /* LPI2C configuration. */
 /*Note: LPI2C0 not support DMA */
-#define RTE_I2C1_DMA_TX_CH 1
-#define RTE_I2C1_DMA_TX_PERI_SEL 1
-#define RTE_I2C1_DMA_TX_DMA_BASE ADMA__EDMA3
-#define RTE_I2C1_DMA_RX_CH 0
-#define RTE_I2C1_DMA_RX_PERI_SEL 0
-#define RTE_I2C1_DMA_RX_DMA_BASE ADMA__EDMA3
 
-#define RTE_I2C2_DMA_TX_CH 3
+#define RTE_I2C2_PIN_INIT        LPI2C2_InitPins
+#define RTE_I2C2_PIN_DEINIT      LPI2C2_DeinitPins
+#define RTE_I2C2_DMA_TX_CH       3
 #define RTE_I2C2_DMA_TX_PERI_SEL 3
 #define RTE_I2C2_DMA_TX_DMA_BASE ADMA__EDMA3
-#define RTE_I2C2_DMA_RX_CH 2
+#define RTE_I2C2_DMA_RX_CH       2
 #define RTE_I2C2_DMA_RX_PERI_SEL 2
 #define RTE_I2C2_DMA_RX_DMA_BASE ADMA__EDMA3
 
-#define RTE_I2C3_DMA_TX_CH 5
-#define RTE_I2C3_DMA_TX_PERI_SEL 5
-#define RTE_I2C3_DMA_TX_DMA_BASE ADMA__EDMA3
-#define RTE_I2C3_DMA_RX_CH 4
-#define RTE_I2C3_DMA_RX_PERI_SEL 4
-#define RTE_I2C3_DMA_RX_DMA_BASE ADMA__EDMA3
-
-#define RTE_I2C4_DMA_TX_CH 7
-#define RTE_I2C4_DMA_TX_PERI_SEL 7
-#define RTE_I2C4_DMA_TX_DMA_BASE ADMA__EDMA3
-#define RTE_I2C4_DMA_RX_CH 6
-#define RTE_I2C4_DMA_RX_PERI_SEL 6
-#define RTE_I2C4_DMA_RX_DMA_BASE ADMA__EDMA3
-
-#endif /* __RTE_DEVICE_H */
+#endif /* _RTE_DEVICE_H */

@@ -28,8 +28,8 @@ if (wakenUp)
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.40.2
-- GCC ARM Embedded  8.3.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -47,6 +47,10 @@ The connection should be set as follows:
 Between two boards:
 - J34-2(CANL) node A, J34-2(CANL) node B
 - J34-7(CANH) node A, J34-7(CANH) node B
+
+NOTE: This example refers to CAN0 usage on MIMX8QX. To change to use other CAN instances (CAN1, CAN2), user
+should still power on CAN0 along with the used CAN instance due to a SoC limitation where their power domain 
+is the child domain of CAN0's and CAN0 clock feeds all 3 CAN instances.
 
 Prepare the Demo
 ================
@@ -133,6 +137,3 @@ Rx MB ID: 0x321, Rx MB data: 0x1, Time stamp: 57276
 
 Wait Node A to trigger the next transmission!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -11,8 +11,8 @@ control request to PF1550 Local Service API calling and send response once PF155
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -65,6 +65,3 @@ Please select the PMIC example you want to run:
 [2]. Dumping Regulator Output Voltage
 [3]. Dumping Selected Register Content
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

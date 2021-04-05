@@ -13,8 +13,8 @@ program command uses quad mode, the write frequency is 48MHz * 4 = 192MHz.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -65,6 +65,3 @@ Program data finished!
 
 Program through QSPI polling succeed!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -1,5 +1,5 @@
 /*
- * Copyright  2017 NXP
+ * Copyright 2017, 2020 NXP
  * All rights reserved.
  *
  *
@@ -52,9 +52,9 @@ const display_operations_t rm67191_ops = {
 status_t RM67191_Init(display_handle_t *handle, const display_config_t *config)
 {
     uint32_t i;
-    status_t status              = kStatus_Success;
-    rm67191_resource_t *resource = (rm67191_resource_t *)(handle->resource);
-    mipi_dsi_device_t *dsiDevice = &(resource->dsiDevice);
+    status_t status                    = kStatus_Success;
+    const rm67191_resource_t *resource = (const rm67191_resource_t *)(handle->resource);
+    mipi_dsi_device_t *dsiDevice       = resource->dsiDevice;
 
     /* Perform reset. */
     resource->pullResetPin(true);
@@ -81,28 +81,52 @@ status_t RM67191_Init(display_handle_t *handle, const display_config_t *config)
 
     /* Change to send user command. */
     const uint8_t rm67191UserCmdEntry[] = {RM67191_WRMAUCCTR, 0x00};
-    MIPI_DSI_GenericWrite(dsiDevice, rm67191UserCmdEntry, ARRAY_SIZE(rm67191UserCmdEntry));
+    status = MIPI_DSI_GenericWrite(dsiDevice, rm67191UserCmdEntry, (int32_t)ARRAY_SIZE(rm67191UserCmdEntry));
+    if (kStatus_Success != status)
+    {
+        return status;
+    }
 
     /* Software reset */
-    MIPI_DSI_DCS_SoftReset(dsiDevice);
+    status = MIPI_DSI_DCS_SoftReset(dsiDevice);
+    if (kStatus_Success != status)
+    {
+        return status;
+    }
 
     RM67191_DelayMs(100);
 
     /* Set DSI mode */
     const uint8_t rm67191DsiMode[] = {RM67191_SETDSIMODE, 0x03};
-    MIPI_DSI_GenericWrite(dsiDevice, rm67191DsiMode, ARRAY_SIZE(rm67191DsiMode));
+    status = MIPI_DSI_GenericWrite(dsiDevice, rm67191DsiMode, (int32_t)ARRAY_SIZE(rm67191DsiMode));
+    if (kStatus_Success != status)
+    {
+        return status;
+    }
 
     /* Brightness. */
     const uint8_t rm67191Brightness[] = {RM67191_WRDISBV, 0xff};
-    MIPI_DSI_GenericWrite(dsiDevice, rm67191Brightness, ARRAY_SIZE(rm67191Brightness));
+    status = MIPI_DSI_GenericWrite(dsiDevice, rm67191Brightness, (int32_t)ARRAY_SIZE(rm67191Brightness));
+    if (kStatus_Success != status)
+    {
+        return status;
+    }
 
     /* Exit sleep mode */
-    MIPI_DSI_DCS_EnterSleepMode(dsiDevice, false);
+    status = MIPI_DSI_DCS_EnterSleepMode(dsiDevice, false);
+    if (kStatus_Success != status)
+    {
+        return status;
+    }
 
     RM67191_DelayMs(120);
 
     /* Set display on. */
-    MIPI_DSI_DCS_SetDisplayOn(dsiDevice, true);
+    status = MIPI_DSI_DCS_SetDisplayOn(dsiDevice, true);
+    if (kStatus_Success != status)
+    {
+        return status;
+    }
 
     RM67191_DelayMs(100);
 
@@ -111,10 +135,15 @@ status_t RM67191_Init(display_handle_t *handle, const display_config_t *config)
 
 status_t RM67191_Deinit(display_handle_t *handle)
 {
-    rm67191_resource_t *resource = (rm67191_resource_t *)(handle->resource);
-    mipi_dsi_device_t *dsiDevice = &(resource->dsiDevice);
+    status_t status;
+    const rm67191_resource_t *resource = (const rm67191_resource_t *)(handle->resource);
+    mipi_dsi_device_t *dsiDevice       = resource->dsiDevice;
 
-    MIPI_DSI_DCS_EnterSleepMode(dsiDevice, true);
+    status = MIPI_DSI_DCS_EnterSleepMode(dsiDevice, true);
+    if (kStatus_Success != status)
+    {
+        return status;
+    }
 
     resource->pullResetPin(false);
 
@@ -123,16 +152,16 @@ status_t RM67191_Deinit(display_handle_t *handle)
 
 status_t RM67191_Start(display_handle_t *handle)
 {
-    rm67191_resource_t *resource = (rm67191_resource_t *)(handle->resource);
-    mipi_dsi_device_t *dsiDevice = &(resource->dsiDevice);
+    const rm67191_resource_t *resource = (const rm67191_resource_t *)(handle->resource);
+    mipi_dsi_device_t *dsiDevice       = resource->dsiDevice;
 
     return MIPI_DSI_DCS_SetDisplayOn(dsiDevice, true);
 }
 
 status_t RM67191_Stop(display_handle_t *handle)
 {
-    rm67191_resource_t *resource = (rm67191_resource_t *)(handle->resource);
-    mipi_dsi_device_t *dsiDevice = &(resource->dsiDevice);
+    const rm67191_resource_t *resource = (const rm67191_resource_t *)(handle->resource);
+    mipi_dsi_device_t *dsiDevice       = resource->dsiDevice;
 
     return MIPI_DSI_DCS_SetDisplayOn(dsiDevice, false);
 }

@@ -906,7 +906,7 @@ static status_t ltc_symmetric_process_data_multiple(LTC_Type *base,
     }
     else
     {
-        fsm = (ltc_mode_algorithm_state_t)(
+        fsm = (ltc_mode_algorithm_state_t)(uint32_t)(
             modeReg &
             LTC_MD_AS_MASK); /* this will be either kLTC_ModeInit or kLTC_ModeUpdate, based on prior processing */
 
@@ -1067,8 +1067,10 @@ static status_t ltc_aes_process_tag(LTC_Type *base, uint8_t *tag, uint32_t tagSi
 void LTC_Init(LTC_Type *base)
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+#if !(defined(FSL_FEATURE_LTC_HAS_NO_CLOCK_CONTROL_BIT) && FSL_FEATURE_LTC_HAS_NO_CLOCK_CONTROL_BIT)
     /* ungate clock */
     CLOCK_EnableClock(kCLOCK_Ltc0);
+#endif /* FSL_FEATURE_LTC_HAS_NO_CLOCK_CONTROL_BIT */
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -1080,8 +1082,10 @@ void LTC_Init(LTC_Type *base)
 void LTC_Deinit(LTC_Type *base)
 {
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+#if !(defined(FSL_FEATURE_LTC_HAS_NO_CLOCK_CONTROL_BIT) && FSL_FEATURE_LTC_HAS_NO_CLOCK_CONTROL_BIT)
     /* gate clock */
     CLOCK_DisableClock(kCLOCK_Ltc0);
+#endif /* FSL_FEATURE_LTC_HAS_NO_CLOCK_CONTROL_BIT */
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 }
 
@@ -3092,6 +3096,7 @@ static uint32_t ltc_hash_algo2mode(ltc_hash_algo_t algo, ltc_mode_algorithm_stat
             break;
 #endif /* FSL_FEATURE_LTC_HAS_SHA */
         default:
+            /* All the cases have been listed above, the default clause should not be reached. */
             break;
     }
 
@@ -3889,6 +3894,7 @@ static void ltc_pkha_write_word(LTC_Type *base, ltc_pkha_reg_area_t reg, uint8_t
             break;
 
         default:
+            /* All the cases have been listed above, the default clause should not be reached. */
             break;
     }
 }

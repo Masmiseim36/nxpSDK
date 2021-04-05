@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_sai.h"
 #include "music.h"
 #include "fsl_codec_common.h"
 #include "fsl_wm8960.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_iomuxc.h"
 #include "fsl_codec_adapter.h"
@@ -48,7 +48,9 @@
 
 #define BOARD_MASTER_CLOCK_CONFIG()
 #define BOARD_SAI_RXCONFIG(config, mode)
-
+#ifndef DEMO_CODEC_INIT_DELAY_MS
+#define DEMO_CODEC_INIT_DELAY_MS (1000U)
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -168,12 +170,20 @@ void DEMO_SAITxIRQHandler(void)
     SDK_ISR_EXIT_BARRIER;
 }
 
+void DelayMS(uint32_t ms)
+{
+    for (uint32_t i = 0; i < ms; i++)
+    {
+        SDK_DelayAtLeastUs(1000, SystemCoreClock);
+    }
+}
+
 /*!
  * @brief Main function
  */
 int main(void)
 {
-    sai_transceiver_t config;
+    sai_transceiver_t saiConfig;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -191,21 +201,27 @@ int main(void)
     /* SAI init */
     SAI_Init(DEMO_SAI);
     /* I2S mode configurations */
-    SAI_GetClassicI2SConfig(&config, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
-    config.masterSlave = DEMO_SAI_MASTER_SLAVE;
-    config.syncMode    = DEMO_SAI_TX_SYNC_MODE;
-    SAI_TxSetConfig(DEMO_SAI, &config);
+    SAI_GetClassicI2SConfig(&saiConfig, DEMO_AUDIO_BIT_WIDTH, kSAI_Stereo, 1U << DEMO_SAI_CHANNEL);
+    saiConfig.masterSlave = DEMO_SAI_MASTER_SLAVE;
+    saiConfig.syncMode    = DEMO_SAI_TX_SYNC_MODE;
+    SAI_TxSetConfig(DEMO_SAI, &saiConfig);
     /* set bit clock divider */
     SAI_TxSetBitClockRate(DEMO_SAI, DEMO_AUDIO_MASTER_CLOCK, DEMO_AUDIO_SAMPLE_RATE, DEMO_AUDIO_BIT_WIDTH,
                           DEMO_AUDIO_DATA_CHANNEL);
 
     /* sai rx configurations */
-    BOARD_SAI_RXCONFIG(&config, DEMO_SAI_RX_SYNC_MODE);
+    BOARD_SAI_RXCONFIG(&saiConfig, DEMO_SAI_RX_SYNC_MODE);
     /* master clock configurations */
     BOARD_MASTER_CLOCK_CONFIG();
 
     /* Use default setting to init codec */
-    CODEC_Init(&codecHandle, &boardCodecConfig);
+    if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
+    {
+        assert(false);
+    }
+
+    /* delay for codec output stable */
+    DelayMS(DEMO_CODEC_INIT_DELAY_MS);
 
     /*  Enable interrupt */
     EnableIRQ(DEMO_SAI_IRQ);

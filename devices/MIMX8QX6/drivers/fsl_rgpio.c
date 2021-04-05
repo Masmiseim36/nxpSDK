@@ -244,6 +244,13 @@ void FGPIO_PinInit(FGPIO_Type *base, uint32_t pin, const rgpio_pin_config_t *con
 {
     assert(NULL != config);
 
+#if defined(FSL_FEATURE_PCC_HAS_FGPIO_CLOCK_GATE_CONTROL) && FSL_FEATURE_PCC_HAS_FGPIO_CLOCK_GATE_CONTROL
+#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
+    /* Ungate FGPIO periphral clock */
+    CLOCK_EnableClock(s_fgpioClockName[FGPIO_GetInstance(base)]);
+#endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
+#endif /* FSL_FEATURE_PCC_HAS_FGPIO_CLOCK_GATE_CONTROL */
+
     if (config->pinDirection == kRGPIO_DigitalInput)
     {
         base->PDDR &= ~(1UL << pin);

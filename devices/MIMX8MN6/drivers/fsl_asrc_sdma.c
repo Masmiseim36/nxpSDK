@@ -10,7 +10,7 @@
 
 /* Component ID definition, used by tools. */
 #ifndef FSL_COMPONENT_ID
-#define FSL_COMPONENT_ID "platform.drivers.asrc_sdma"
+#define FSL_COMPONENT_ID "platform.drivers.easrc_sdma"
 #endif
 
 /*******************************************************************************
@@ -100,7 +100,7 @@ static void ASRC_InSDMACallback(sdma_handle_t *handle, void *userData, bool tran
     /* If finished a block, call the callback function */
     asrcHandle->inDMAHandle.asrcQueue[asrcHandle->inDMAHandle.queueDriver] = NULL;
 
-    asrcHandle->inDMAHandle.queueDriver = (asrcHandle->inDMAHandle.queueDriver + 1) % ASRC_XFER_IN_QUEUE_SIZE;
+    asrcHandle->inDMAHandle.queueDriver = (asrcHandle->inDMAHandle.queueDriver + 1U) % ASRC_XFER_IN_QUEUE_SIZE;
 
     if (asrcHandle->inDMAHandle.asrcQueue[asrcHandle->inDMAHandle.queueDriver] == NULL)
     {
@@ -108,7 +108,7 @@ static void ASRC_InSDMACallback(sdma_handle_t *handle, void *userData, bool tran
         callbackStatus = kStatus_ASRCQueueIdle;
     }
 
-    if (asrcHandle->inDMAHandle.callback)
+    if (asrcHandle->inDMAHandle.callback != NULL)
     {
         (asrcHandle->inDMAHandle.callback)(privHandle->base, asrcHandle, callbackStatus,
                                            asrcHandle->inDMAHandle.userData);
@@ -124,7 +124,7 @@ static void ASRC_ReadFIFORemainedSampleSDMA(
 
     for (i = 0U; i < totalSize / outWidth; i++)
     {
-        ASRC_ReadFIFORemainedSample(base, context, addr, outWidth, 1U);
+        (void)ASRC_ReadFIFORemainedSample(base, context, addr, outWidth, 1U);
         addr = (uint32_t *)((uint32_t)addr + outWidth);
     }
 }
@@ -138,12 +138,12 @@ static void ASRC_OutSDMACallback(sdma_handle_t *handle, void *userData, bool tra
 
     /* If finished a block, call the callback function */
     asrcHandle->outDMAHandle.asrcQueue[queueDriverIndex] = NULL;
-    asrcHandle->outDMAHandle.queueDriver                 = (queueDriverIndex + 1) % ASRC_XFER_OUT_QUEUE_SIZE;
+    asrcHandle->outDMAHandle.queueDriver                 = (uint8_t)(queueDriverIndex + 1U) % ASRC_XFER_OUT_QUEUE_SIZE;
 
     /* If all data finished, just stop the transfer */
     if (asrcHandle->outDMAHandle.asrcQueue[asrcHandle->outDMAHandle.queueDriver] == NULL)
     {
-        if (asrcHandle->outDMAHandle.nonAlignSize)
+        if (asrcHandle->outDMAHandle.nonAlignSize != 0U)
         {
             /* please note that when read buffered samples, input sample will be ingored */
             ASRC_ReadFIFORemainedSampleSDMA(
@@ -156,7 +156,7 @@ static void ASRC_OutSDMACallback(sdma_handle_t *handle, void *userData, bool tra
         callbackStatus = kStatus_ASRCQueueIdle;
     }
 
-    if (asrcHandle->outDMAHandle.callback)
+    if (asrcHandle->outDMAHandle.callback != NULL)
     {
         (asrcHandle->outDMAHandle.callback)(privHandle->base, asrcHandle, callbackStatus,
                                             asrcHandle->outDMAHandle.userData);
@@ -188,12 +188,12 @@ void ASRC_TransferInCreateHandleSDMA(ASRC_Type *base,
                                      const asrc_p2p_sdma_config_t *periphConfig,
                                      void *userData)
 {
-    assert(handle && dmaHandle);
+    assert((handle != NULL) && (dmaHandle != NULL));
 
     uint32_t instance = ASRC_GetInstance(base);
 
     /* Zero the handle */
-    memset(&handle->inDMAHandle, 0, sizeof(asrc_sdma_in_handle_t));
+    (void)memset(&handle->inDMAHandle, 0, sizeof(asrc_sdma_in_handle_t));
 
     /* Set asrc base to handle */
     handle->inDMAHandle.sdmaHandle  = dmaHandle;
@@ -223,7 +223,6 @@ void ASRC_TransferInCreateHandleSDMA(ASRC_Type *base,
  * param base ASRC base pointer.
  * param handle ASRC SDMA handle pointer.
  * param callback, ASRC outcallback.
- * param base ASRC peripheral base address.
  * param dmaHandle SDMA handle pointer, this handle shall be static allocated by users.
  * param eventSource ASRC output event source.
  * param context ASRC context number.
@@ -239,12 +238,12 @@ void ASRC_TransferOutCreateHandleSDMA(ASRC_Type *base,
                                       const asrc_p2p_sdma_config_t *periphConfig,
                                       void *userData)
 {
-    assert(handle && dmaHandle);
+    assert((handle != NULL) && (dmaHandle != NULL));
 
     uint32_t instance = ASRC_GetInstance(base);
 
     /* Zero the handle */
-    memset(&handle->outDMAHandle, 0, sizeof(asrc_sdma_out_handle_t));
+    (void)memset(&handle->outDMAHandle, 0, sizeof(asrc_sdma_out_handle_t));
 
     /* Set asrc base to handle */
     handle->outDMAHandle.sdmaHandle       = dmaHandle;
@@ -276,7 +275,7 @@ status_t ASRC_TransferSetContextConfigSDMA(ASRC_Type *base,
                                            asrc_sdma_handle_t *handle,
                                            asrc_context_config_t *asrcConfig)
 {
-    assert(handle && asrcConfig);
+    assert((handle != NULL) && (asrcConfig != NULL));
 
     /* Configure the audio format to ASRC registers */
     if (ASRC_SetContextConfig(base, handle->context, asrcConfig) != kStatus_Success)
@@ -319,7 +318,7 @@ static status_t ASRC_TransferSubmitOutM2MSDMA(ASRC_Type *base,
     sdma_handle_t *outDMAHandle      = handle->outDMAHandle.sdmaHandle;
     uint32_t nonAlignSize            = 0U;
     uint32_t *nonAlignAddr           = NULL;
-    uint32_t outWaterMarkSize        = handle->outDMAHandle.asrcOutWatermark * handle->outDMAHandle.bytesPerSample;
+    uint32_t outWaterMarkSize = (uint32_t)handle->outDMAHandle.asrcOutWatermark * handle->outDMAHandle.bytesPerSample;
 
     if (handle->outDMAHandle.asrcQueue[handle->outDMAHandle.queueUser] != NULL)
     {
@@ -336,7 +335,7 @@ static status_t ASRC_TransferSubmitOutM2MSDMA(ASRC_Type *base,
     else
     {
         nonAlignSize = outDataSize % outWaterMarkSize;
-        nonAlignAddr = (void *)((uint32_t)outDataAddr + outDataSize - nonAlignSize);
+        nonAlignAddr = (void *)(uint32_t *)((uint32_t)outDataAddr + outDataSize - nonAlignSize);
     }
 
     if (handle->outDMAHandle.peripheralConfig == NULL)
@@ -344,31 +343,32 @@ static status_t ASRC_TransferSubmitOutM2MSDMA(ASRC_Type *base,
         /* since the ASRC output fifo will generate SDMA request only when output fifo sample number > output fifo
          * watermark, so part of data may need to polling out.
          */
-        if (handle->outDMAHandle.nonAlignSize != 0)
+        if (handle->outDMAHandle.nonAlignSize != 0U)
         {
-            SDMA_PrepareTransfer(&outConfig, (uint32_t)asrcOutAddr, (uint32_t)handle->outDMAHandle.nonAlignAddr,
+            SDMA_PrepareTransfer(&outConfig, (uint32_t)asrcOutAddr,
+                                 (uint32_t)(uint32_t *)handle->outDMAHandle.nonAlignAddr,
                                  handle->outDMAHandle.bytesPerSample, handle->outDMAHandle.bytesPerSample,
                                  outWaterMarkSize, handle->outDMAHandle.nonAlignSize, handle->outDMAHandle.eventSource,
                                  kSDMA_PeripheralASRCP2M, kSDMA_PeripheralToMemory);
 
             if (handle->outDMAHandle.queueUser == ASRC_XFER_OUT_QUEUE_SIZE - 1U)
             {
-                SDMA_ConfigBufferDescriptor(&outDMAHandle->BDPool[handle->outDMAHandle.queueUser],
-                                            (uint32_t)(asrcOutAddr), (uint32_t)handle->outDMAHandle.nonAlignAddr,
-                                            outConfig.destTransferSize, handle->outDMAHandle.nonAlignSize, false, true,
-                                            true, kSDMA_PeripheralToMemory);
+                SDMA_ConfigBufferDescriptor(
+                    &outDMAHandle->BDPool[handle->outDMAHandle.queueUser], (uint32_t)(asrcOutAddr),
+                    (uint32_t)(uint32_t *)handle->outDMAHandle.nonAlignAddr, outConfig.destTransferSize,
+                    handle->outDMAHandle.nonAlignSize, false, true, true, kSDMA_PeripheralToMemory);
             }
             else
             {
-                SDMA_ConfigBufferDescriptor(&outDMAHandle->BDPool[handle->outDMAHandle.queueUser],
-                                            (uint32_t)(asrcOutAddr), (uint32_t)handle->outDMAHandle.nonAlignAddr,
-                                            outConfig.destTransferSize, handle->outDMAHandle.nonAlignSize, false, true,
-                                            false, kSDMA_PeripheralToMemory);
+                SDMA_ConfigBufferDescriptor(
+                    &outDMAHandle->BDPool[handle->outDMAHandle.queueUser], (uint32_t)(asrcOutAddr),
+                    (uint32_t)(uint32_t *)handle->outDMAHandle.nonAlignAddr, outConfig.destTransferSize,
+                    handle->outDMAHandle.nonAlignSize, false, true, false, kSDMA_PeripheralToMemory);
             }
 
             handle->outDMAHandle.sdmaTransferSize[handle->outDMAHandle.queueUser] = handle->outDMAHandle.nonAlignSize;
             handle->outDMAHandle.asrcQueue[handle->outDMAHandle.queueUser]        = handle->outDMAHandle.nonAlignAddr;
-            handle->outDMAHandle.queueUser    = (handle->outDMAHandle.queueUser + 1) % ASRC_XFER_OUT_QUEUE_SIZE;
+            handle->outDMAHandle.queueUser    = (handle->outDMAHandle.queueUser + 1U) % ASRC_XFER_OUT_QUEUE_SIZE;
             handle->outDMAHandle.nonAlignSize = 0U;
             handle->outDMAHandle.nonAlignAddr = NULL;
 
@@ -403,9 +403,9 @@ static status_t ASRC_TransferSubmitOutM2MSDMA(ASRC_Type *base,
         handle->outDMAHandle.nonAlignSize                                     = nonAlignSize;
         handle->outDMAHandle.nonAlignAddr                                     = nonAlignAddr;
 
-        handle->outDMAHandle.queueUser = (handle->outDMAHandle.queueUser + 1) % ASRC_XFER_OUT_QUEUE_SIZE;
+        handle->outDMAHandle.queueUser = (handle->outDMAHandle.queueUser + 1U) % ASRC_XFER_OUT_QUEUE_SIZE;
 
-        if (handle->outDMAHandle.state != kStatus_ASRCBusy)
+        if (handle->outDMAHandle.state != (uint32_t)kStatus_ASRCBusy)
         {
             /* submit ASRC transfer firstly */
             SDMA_SubmitTransfer(outDMAHandle, &outConfig);
@@ -416,7 +416,7 @@ static status_t ASRC_TransferSubmitOutM2MSDMA(ASRC_Type *base,
             ASRC_EnableContextOutDMA(base, handle->context, true);
             ASRC_ClearInterruptStatus(base, kASRC_ContextAllInterruptStatus);
 
-            if ((handle->outDMAHandle.peripheralConfig) &&
+            if ((handle->outDMAHandle.peripheralConfig != NULL) &&
                 (handle->outDMAHandle.peripheralConfig->startPeripheral != NULL))
             {
                 /* start peripheral */
@@ -441,7 +441,7 @@ static status_t ASRC_TransferOutSDMA(ASRC_Type *base,
     sdma_p2p_config_t p2pConfig      = {0U};
 
     if ((handle->outDMAHandle.peripheralConfig != NULL) && (handle->outDMAHandle.peripheralConfig->enableContinuous) &&
-        (handle->outDMAHandle.state == kStatus_ASRCBusy))
+        (handle->outDMAHandle.state == (uint32_t)kStatus_ASRCBusy))
     {
         return kStatus_Success;
     }
@@ -459,7 +459,7 @@ static status_t ASRC_TransferOutSDMA(ASRC_Type *base,
         /* Prepare sdma configure */
         SDMA_PrepareP2PTransfer(&outConfig, (uint32_t)asrcOutAddr, (uint32_t)outDataAddr,
                                 handle->outDMAHandle.bytesPerSample, handle->outDMAHandle.bytesPerSample,
-                                handle->outDMAHandle.asrcOutWatermark * handle->outDMAHandle.bytesPerSample,
+                                (uint32_t)handle->outDMAHandle.asrcOutWatermark * handle->outDMAHandle.bytesPerSample,
                                 outDataSize, handle->outDMAHandle.eventSource,
                                 handle->outDMAHandle.peripheralConfig->eventSource, kSDMA_PeripheralASRCP2P,
                                 &p2pConfig);
@@ -480,9 +480,9 @@ static status_t ASRC_TransferOutSDMA(ASRC_Type *base,
                                         false, kSDMA_PeripheralToPeripheral);
         }
 
-        handle->outDMAHandle.queueUser = (handle->outDMAHandle.queueUser + 1) % ASRC_XFER_OUT_QUEUE_SIZE;
+        handle->outDMAHandle.queueUser = (handle->outDMAHandle.queueUser + 1U) % ASRC_XFER_OUT_QUEUE_SIZE;
 
-        if (handle->outDMAHandle.state != kStatus_ASRCBusy)
+        if (handle->outDMAHandle.state != (uint32_t)kStatus_ASRCBusy)
         {
             /* submit ASRC transfer firstly */
             SDMA_SubmitTransfer(outDMAHandle, &outConfig);
@@ -493,7 +493,7 @@ static status_t ASRC_TransferOutSDMA(ASRC_Type *base,
             ASRC_EnableContextOutDMA(base, handle->context, true);
             ASRC_ClearInterruptStatus(base, kASRC_ContextAllInterruptStatus);
 
-            if ((handle->outDMAHandle.peripheralConfig) &&
+            if ((handle->outDMAHandle.peripheralConfig != NULL) &&
                 (handle->outDMAHandle.peripheralConfig->startPeripheral != NULL))
             {
                 /* start peripheral */
@@ -522,7 +522,7 @@ static status_t ASRC_TransferInSDMA(ASRC_Type *base,
     sdma_p2p_config_t p2pConfig     = {0U};
 
     if ((handle->inDMAHandle.peripheralConfig != NULL) && (handle->inDMAHandle.peripheralConfig->enableContinuous) &&
-        (handle->inDMAHandle.state == kStatus_ASRCBusy))
+        (handle->inDMAHandle.state == (uint32_t)kStatus_ASRCBusy))
     {
         return kStatus_Success;
     }
@@ -541,16 +541,17 @@ static status_t ASRC_TransferInSDMA(ASRC_Type *base,
         /* Prepare sdma configure */
         SDMA_PrepareP2PTransfer(&inConfig, (uint32_t)inDataAddr, asrcInAddr,
                                 handle->inDMAHandle.peripheralConfig->fifoWidth, handle->inDMAHandle.bytesPerSample,
-                                handle->inDMAHandle.asrcInWatermark * handle->inDMAHandle.bytesPerSample, inDataSize,
-                                handle->inDMAHandle.peripheralConfig->eventSource, handle->inDMAHandle.eventSource,
-                                kSDMA_PeripheralASRCP2P, &p2pConfig);
+                                (uint32_t)handle->inDMAHandle.asrcInWatermark * handle->inDMAHandle.bytesPerSample,
+                                inDataSize, handle->inDMAHandle.peripheralConfig->eventSource,
+                                handle->inDMAHandle.eventSource, kSDMA_PeripheralASRCP2P, &p2pConfig);
     }
     else
     {
         SDMA_PrepareTransfer(&inConfig, (uint32_t)inDataAddr, asrcInAddr, handle->inDMAHandle.bytesPerSample,
                              handle->inDMAHandle.bytesPerSample,
-                             handle->inDMAHandle.asrcInWatermark * handle->inDMAHandle.bytesPerSample, inDataSize,
-                             handle->inDMAHandle.eventSource, kSDMA_PeripheralASRCM2P, kSDMA_MemoryToPeripheral);
+                             (uint32_t)handle->inDMAHandle.asrcInWatermark * handle->inDMAHandle.bytesPerSample,
+                             inDataSize, handle->inDMAHandle.eventSource, kSDMA_PeripheralASRCM2P,
+                             kSDMA_MemoryToPeripheral);
     }
 
     handle->inDMAHandle.sdmaTransferSize[handle->inDMAHandle.queueUser] = inDataSize;
@@ -569,9 +570,9 @@ static status_t ASRC_TransferInSDMA(ASRC_Type *base,
                                     kSDMA_MemoryToPeripheral);
     }
 
-    handle->inDMAHandle.queueUser = (handle->inDMAHandle.queueUser + 1) % ASRC_XFER_IN_QUEUE_SIZE;
+    handle->inDMAHandle.queueUser = (handle->inDMAHandle.queueUser + 1U) % ASRC_XFER_IN_QUEUE_SIZE;
 
-    if (handle->inDMAHandle.state != kStatus_ASRCBusy)
+    if (handle->inDMAHandle.state != (uint32_t)kStatus_ASRCBusy)
     {
         /* submit ASRC write transfer */
         SDMA_SubmitTransfer(inDMAHandle, &inConfig);
@@ -584,7 +585,8 @@ static status_t ASRC_TransferInSDMA(ASRC_Type *base,
         /* enable context run */
         ASRC_EnableContextRun(base, handle->context, true);
 
-        if ((handle->inDMAHandle.peripheralConfig) && (handle->inDMAHandle.peripheralConfig->startPeripheral != NULL))
+        if ((handle->inDMAHandle.peripheralConfig != NULL) &&
+            (handle->inDMAHandle.peripheralConfig->startPeripheral != NULL))
         {
             /* start peripheral */
             handle->inDMAHandle.peripheralConfig->startPeripheral(true);
@@ -614,13 +616,13 @@ status_t ASRC_TransferSDMA(ASRC_Type *base, asrc_sdma_handle_t *handle, asrc_tra
     uint32_t *inPtr = xfer->inDataAddr, *outPtr = xfer->outDataAddr;
     uint32_t inSize = xfer->inDataSize, inOneTimeSize = 0U;
     uint32_t outSize = xfer->outDataSize, outOneTimeSize = 0U;
-    uint32_t outWaterMarkSize = (handle->outDMAHandle.asrcOutWatermark * handle->outDMAHandle.bytesPerSample);
+    uint32_t outWaterMarkSize = ((uint32_t)handle->outDMAHandle.asrcOutWatermark * handle->outDMAHandle.bytesPerSample);
 
     while ((inSize != 0U) || (outSize != 0U))
     {
         if (outSize != 0U)
         {
-            outOneTimeSize = outSize > 64000 ? (64000 - 64000 % outWaterMarkSize) : outSize;
+            outOneTimeSize = outSize > 64000U ? (64000U - 64000U % outWaterMarkSize) : outSize;
             if (ASRC_TransferOutSDMA(base, handle, outPtr, outOneTimeSize) == kStatus_Success)
             {
                 outSize -= outOneTimeSize;
@@ -630,7 +632,7 @@ status_t ASRC_TransferSDMA(ASRC_Type *base, asrc_sdma_handle_t *handle, asrc_tra
 
         if (inSize != 0U)
         {
-            inOneTimeSize = inSize > 64000 ? 64000 : inSize;
+            inOneTimeSize = inSize > 64000U ? 64000U : inSize;
             if (ASRC_TransferInSDMA(base, handle, inPtr, inOneTimeSize) == kStatus_Success)
             {
                 inSize -= inOneTimeSize;
@@ -650,7 +652,7 @@ status_t ASRC_TransferSDMA(ASRC_Type *base, asrc_sdma_handle_t *handle, asrc_tra
  */
 void ASRC_TransferAbortInSDMA(ASRC_Type *base, asrc_sdma_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Disable dma */
     SDMA_AbortTransfer(handle->inDMAHandle.sdmaHandle);
@@ -658,7 +660,8 @@ void ASRC_TransferAbortInSDMA(ASRC_Type *base, asrc_sdma_handle_t *handle)
     /* enable context run */
     ASRC_EnableContextRunStop(base, handle->context, true);
     /* stop peripheral */
-    if ((handle->inDMAHandle.peripheralConfig) && (handle->inDMAHandle.peripheralConfig->startPeripheral != NULL))
+    if ((handle->inDMAHandle.peripheralConfig != NULL) &&
+        (handle->inDMAHandle.peripheralConfig->startPeripheral != NULL))
     {
         handle->inDMAHandle.peripheralConfig->startPeripheral(false);
     }
@@ -674,7 +677,7 @@ void ASRC_TransferAbortInSDMA(ASRC_Type *base, asrc_sdma_handle_t *handle)
  */
 void ASRC_TransferAbortOutSDMA(ASRC_Type *base, asrc_sdma_handle_t *handle)
 {
-    assert(handle);
+    assert(handle != NULL);
 
     /* Disable dma */
     SDMA_AbortTransfer(handle->outDMAHandle.sdmaHandle);
@@ -684,7 +687,8 @@ void ASRC_TransferAbortOutSDMA(ASRC_Type *base, asrc_sdma_handle_t *handle)
     ASRC_EnableContextRun(base, handle->context, false);
     ASRC_EnableContextRunStop(base, handle->context, false);
     /* stop peripheral */
-    if ((handle->outDMAHandle.peripheralConfig) && (handle->outDMAHandle.peripheralConfig->startPeripheral != NULL))
+    if ((handle->outDMAHandle.peripheralConfig != NULL) &&
+        (handle->outDMAHandle.peripheralConfig->startPeripheral != NULL))
     {
         handle->outDMAHandle.peripheralConfig->startPeripheral(false);
     }

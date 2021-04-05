@@ -10,14 +10,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include "fsl_common.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "app_flash.h"
 #include "fsl_debug_console.h"
-#include "serial_manager.h"
+#include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -510,11 +510,10 @@ int main(void)
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(flasherase));
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(flashwrite));
 
-#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
-    SHELL_Task(s_shellHandle);
-#endif
-
     while (1)
     {
+#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
+        SHELL_Task(s_shellHandle);
+#endif
     }
 }

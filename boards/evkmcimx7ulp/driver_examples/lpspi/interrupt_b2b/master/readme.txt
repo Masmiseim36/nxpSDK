@@ -10,8 +10,8 @@ This example does not use the transactional API in LPSPI driver. It's a demonstr
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -86,6 +86,3 @@ LPSPI transfer all data matched!
  30 31 32 33 34 35 36 37 38 39 3A 3B 3C 3D 3E 3F
 End of master example! 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

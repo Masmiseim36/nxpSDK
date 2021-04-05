@@ -7,16 +7,16 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_gpt.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define GPT_IRQ_ID GPT1_IRQn
+#define GPT_IRQ_ID  GPT1_IRQn
 #define EXAMPLE_GPT GPT1
 #define EXAMPLE_GPT_CLK_FREQ                                                               \
     CLOCK_GetPllFreq(kCLOCK_SystemPll1Ctrl) / (CLOCK_GetRootPreDivider(kCLOCK_RootGpt1)) / \

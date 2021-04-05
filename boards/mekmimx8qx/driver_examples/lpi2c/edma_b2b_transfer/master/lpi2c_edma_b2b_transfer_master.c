@@ -8,6 +8,8 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
@@ -17,30 +19,28 @@
 #include "fsl_dmamux.h"
 #endif
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_irqsteer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER_BASE ADMA__LPI2C1
-#define EXAMPLE_LPI2C_MASTER_DMA ADMA__EDMA3
-#define LPI2C_TRANSMIT_DMA_CHANNEL 3U
-#define LPI2C_RECEIVE_DMA_CHANNEL 2U
+#define EXAMPLE_I2C_MASTER_BASE      ADMA__LPI2C1
+#define EXAMPLE_LPI2C_MASTER_DMA     ADMA__EDMA3
+#define LPI2C_TRANSMIT_DMA_CHANNEL   3U
+#define LPI2C_RECEIVE_DMA_CHANNEL    2U
 #define LPI2C_MASTER_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_DMA_Lpi2c1)
 
-#define EXAMPLE_IOEXP_LPI2C_BAUDRATE (400000)
+#define EXAMPLE_IOEXP_LPI2C_BAUDRATE               (400000)
 #define EXAMPLE_IOEXP_LPI2C_MASTER_CLOCK_FREQUENCY SC_133MHZ
-#define EXAMPLE_IOEXP_LPI2C_MASTER ADMA__LPI2C1
-#define EXAMPLE_I2C_EXPANSION_A_ADDR (0x1A)
-#define EXAMPLE_I2C_SWITCH_ADDR (0x71)
+#define EXAMPLE_IOEXP_LPI2C_MASTER                 ADMA__LPI2C1
+#define EXAMPLE_I2C_EXPANSION_A_ADDR               (0x1A)
+#define EXAMPLE_I2C_SWITCH_ADDR                    (0x71)
 
 #define EXAMPLE_I2C_MASTER ((LPI2C_Type *)EXAMPLE_I2C_MASTER_BASE)
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define I2C_BAUDRATE 100000U
-#define I2C_DATA_LENGTH 33U
+#define I2C_BAUDRATE               100000U
+#define I2C_DATA_LENGTH            33U
 
 /*******************************************************************************
  * Prototypes
@@ -238,7 +238,10 @@ int main(void)
     /* Create the EDMA channel handles */
     EDMA_CreateHandle(&g_edmaTxHandle, EXAMPLE_LPI2C_MASTER_DMA, LPI2C_TRANSMIT_DMA_CHANNEL);
     EDMA_CreateHandle(&g_edmaRxHandle, EXAMPLE_LPI2C_MASTER_DMA, LPI2C_RECEIVE_DMA_CHANNEL);
-
+#if defined(FSL_FEATURE_EDMA_HAS_CHANNEL_MUX) && FSL_FEATURE_EDMA_HAS_CHANNEL_MUX
+    EDMA_SetChannelMux(EXAMPLE_LPI2C_MASTER_DMA, LPI2C_TRANSMIT_DMA_CHANNEL, DEMO_LPI2C_TRANSMIT_EDMA_CHANNEL);
+    EDMA_SetChannelMux(EXAMPLE_LPI2C_MASTER_DMA, LPI2C_RECEIVE_DMA_CHANNEL, DEMO_LPI2C_RECEIVE_EDMA_CHANNEL);
+#endif
     /* Create the LPI2C master DMA driver handle */
     LPI2C_MasterCreateEDMAHandle(EXAMPLE_I2C_MASTER, &g_m_edma_handle, &g_edmaRxHandle, &g_edmaTxHandle,
                                  lpi2c_master_callback, NULL);
@@ -281,9 +284,6 @@ int main(void)
 
     /* Receive non-blocking data from slave */
     reVal = LPI2C_MasterTransferEDMA(EXAMPLE_I2C_MASTER, &g_m_edma_handle, &masterXfer);
-
-    /*  Reset master completion flag to false. */
-    g_MasterCompletionFlag = false;
 
     if (reVal != kStatus_Success)
     {

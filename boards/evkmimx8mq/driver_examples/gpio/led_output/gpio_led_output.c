@@ -1,31 +1,26 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LED_GPIO GPIO1
+#define EXAMPLE_LED_GPIO     GPIO1
 #define EXAMPLE_LED_GPIO_PIN 13U
-#define EXAMPLE_DELAY_COUNT 400000U
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-/*!
- * @brief delay a while.
- */
-void delay(void);
 
 /*******************************************************************************
  * Variables
@@ -35,15 +30,6 @@ volatile bool g_pinSet = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void delay(void)
-{
-    volatile uint32_t i = 0;
-    for (i = 0; i < EXAMPLE_DELAY_COUNT; ++i)
-    {
-        __asm("NOP"); /* delay */
-    }
-}
-
 /*!
  * @brief Main function
  */

@@ -15,19 +15,19 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_lpuart_freertos.h"
 #include "fsl_lpuart.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART CM4__LPUART
-#define DEMO_LPUART_CLKSRC kCLOCK_M4_0_Lpuart
-#define DEMO_LPUART_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_M4_0_Lpuart)
+#define DEMO_LPUART            CM4__LPUART
+#define DEMO_LPUART_CLKSRC     kCLOCK_M4_0_Lpuart
+#define DEMO_LPUART_CLK_FREQ   CLOCK_GetIpFreq(kCLOCK_M4_0_Lpuart)
 #define DEMO_LPUART_RX_TX_IRQn M4_LPUART_IRQn
 /* Task priorities. */
 #define uart_task_PRIORITY (configMAX_PRIORITIES - 1)
@@ -39,9 +39,9 @@ static void uart_task(void *pvParameters);
 /*******************************************************************************
  * Code
  ******************************************************************************/
-const char *to_send               = "FreeRTOS LPUART driver example!\r\n";
-const char *send_ring_overrun     = "\r\nRing buffer overrun!\r\n";
-const char *send_hardware_overrun = "\r\nHardware buffer overrun!\r\n";
+char *to_send               = "FreeRTOS LPUART driver example!\r\n";
+char *send_ring_overrun     = "\r\nRing buffer overrun!\r\n";
+char *send_hardware_overrun = "\r\nHardware buffer overrun!\r\n";
 uint8_t background_buffer[32];
 uint8_t recv_buffer[4];
 
@@ -72,14 +72,14 @@ int main(void)
     /* Power on Local LPUART for M4. */
     if (sc_pm_set_resource_power_mode(ipc, SC_R_M4_0_UART, SC_PM_PW_MODE_ON) != SC_ERR_NONE)
     {
-        assert(false);
+        BOARD_InitPins(false);
     }
 
     /* Set clock Frequncy of Local LPUART for M4. */
     freq = CLOCK_SetIpFreq(DEMO_LPUART_CLKSRC, SC_133MHZ);
     if (freq == 0)
     {
-        assert(freq);
+        BOARD_InitPins(freq);
     }
 
     NVIC_SetPriority(DEMO_LPUART_RX_TX_IRQn, 5);
@@ -105,13 +105,13 @@ static void uart_task(void *pvParameters)
     lpuart_config.srcclk = DEMO_LPUART_CLK_FREQ;
     lpuart_config.base   = DEMO_LPUART;
 
-    if (0 > LPUART_RTOS_Init(&handle, &t_handle, &lpuart_config))
+    if (kStatus_Success != LPUART_RTOS_Init(&handle, &t_handle, &lpuart_config))
     {
         vTaskSuspend(NULL);
     }
 
     /* Send introduction message. */
-    if (0 > LPUART_RTOS_Send(&handle, (uint8_t *)to_send, strlen(to_send)))
+    if (kStatus_Success != LPUART_RTOS_Send(&handle, (uint8_t *)to_send, strlen(to_send)))
     {
         vTaskSuspend(NULL);
     }
@@ -140,7 +140,7 @@ static void uart_task(void *pvParameters)
         if (n > 0)
         {
             /* send back the received data */
-            if (kStatus_Success != LPUART_RTOS_Send(&handle, (uint8_t *)recv_buffer, n))
+            if (kStatus_Success != LPUART_RTOS_Send(&handle, recv_buffer, n))
             {
                 vTaskSuspend(NULL);
             }

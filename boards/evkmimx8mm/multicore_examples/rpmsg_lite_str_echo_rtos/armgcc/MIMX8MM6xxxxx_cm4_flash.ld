@@ -4,15 +4,15 @@
 **                          MIMX8MM6DVTLZ
 **
 **     Compiler:            GNU C Compiler
-**     Reference manual:    MX8MMRM, Rev. B, 10/2018
-**     Version:             rev. 3.0, 2018-10-24
-**     Build:               b181024
+**     Reference manual:    MX8MMRM, Rev. 0, 02/2019
+**     Version:             rev. 4.0, 2019-02-18
+**     Build:               b200330
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -46,12 +46,20 @@ SECTIONS
   .interrupts :
   {
     __VECTOR_TABLE = .;
+    __Vectors = .;
     . = ALIGN(4);
     KEEP(*(.isr_vector))     /* Startup code */
     . = ALIGN(4);
   } > m_interrupts
 
-    /* The program code and other data goes into internal RAM */
+  .resource_table :
+  {
+    . = ALIGN(8);
+    KEEP(*(.resource_table)) /* Resource table */
+    . = ALIGN(8);
+  } > m_text
+
+  /* The program code and other data goes into internal RAM */
   .text :
   {
     . = ALIGN(4);

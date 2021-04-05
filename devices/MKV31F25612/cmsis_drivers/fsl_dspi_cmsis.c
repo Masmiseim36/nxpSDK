@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2017 NXP. Not a Contribution.
+ * Copyright 2016-2017,2020 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,9 +25,10 @@
 #define FSL_COMPONENT_ID "platform.drivers.dspi_cmsis"
 #endif
 
-#if ((RTE_SPI0 && defined(DSPI0)) || (RTE_SPI1 && defined(DSPI1)) || (RTE_SPI2 && defined(DSPI2)))
+#if ((defined(RTE_SPI0) && RTE_SPI0 && defined(DSPI0)) || (defined(RTE_SPI1) && RTE_SPI1 && defined(DSPI1)) || \
+     (defined(RTE_SPI2) && RTE_SPI2 && defined(DSPI2)))
 
-#define ARM_DSPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 2) /* driver version */
+#define ARM_DSPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR((2), (3)) /* driver version */
 
 /*
  * ARMCC does not support split the data section automatically, so the driver
@@ -130,9 +131,9 @@ static int32_t DSPI_CommonControl(uint32_t control,
      defined(RTE_SPI0_BETWEEN_TRANSFER_DELAY))
     if (0U == resource->instance)
     {
-        masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = RTE_SPI0_PCS_TO_SCK_DELAY;
-        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI0_SCK_TO_PSC_DELAY;
-        masterConfig.ctarConfig.betweenTransferDelayInNanoSec = RTE_SPI0_BETWEEN_TRANSFER_DELAY;
+        masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = (uint32_t)RTE_SPI0_PCS_TO_SCK_DELAY;
+        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = (uint32_t)RTE_SPI0_SCK_TO_PSC_DELAY;
+        masterConfig.ctarConfig.betweenTransferDelayInNanoSec = (uint32_t)RTE_SPI0_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE DSPI0 trnafer delay time configure */
 
@@ -140,9 +141,9 @@ static int32_t DSPI_CommonControl(uint32_t control,
      defined(RTE_SPI1_BETWEEN_TRANSFER_DELAY))
     if (1U == resource->instance)
     {
-        masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = RTE_SPI1_PCS_TO_SCK_DELAY;
-        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI1_SCK_TO_PSC_DELAY;
-        masterConfig.ctarConfig.betweenTransferDelayInNanoSec = RTE_SPI1_BETWEEN_TRANSFER_DELAY;
+        masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = (uint32_t)RTE_SPI1_PCS_TO_SCK_DELAY;
+        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = (uint32_t)RTE_SPI1_SCK_TO_PSC_DELAY;
+        masterConfig.ctarConfig.betweenTransferDelayInNanoSec = (uint32_t)RTE_SPI1_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE DSPI1 trnafer delay time configure */
 
@@ -150,9 +151,9 @@ static int32_t DSPI_CommonControl(uint32_t control,
      defined(RTE_SPI2_BETWEEN_TRANSFER_DELAY))
     if (2U == resource->instance)
     {
-        masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = RTE_SPI2_PCS_TO_SCK_DELAY;
-        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = RTE_SPI2_SCK_TO_PSC_DELAY;
-        masterConfig.ctarConfig.betweenTransferDelayInNanoSec = RTE_SPI2_BETWEEN_TRANSFER_DELAY;
+        masterConfig.ctarConfig.pcsToSckDelayInNanoSec        = (uint32_t)RTE_SPI2_PCS_TO_SCK_DELAY;
+        masterConfig.ctarConfig.lastSckToPcsDelayInNanoSec    = (uint32_t)RTE_SPI2_SCK_TO_PSC_DELAY;
+        masterConfig.ctarConfig.betweenTransferDelayInNanoSec = (uint32_t)RTE_SPI2_BETWEEN_TRANSFER_DELAY;
     }
 #endif /*RTE DSPI2 trnafer delay time configure */
 
@@ -211,13 +212,14 @@ static int32_t DSPI_CommonControl(uint32_t control,
             break;
 
         default:
+            /* Avoid MISRA 16.4 violation */
             break;
     }
 
-    if (control & ARM_SPI_DATA_BITS_Msk) /* setting Number of Data bits */
+    if ((control & ARM_SPI_DATA_BITS_Msk) != 0U) /* setting Number of Data bits */
     {
-        if ((((control & ARM_SPI_DATA_BITS_Msk) >> ARM_SPI_DATA_BITS_Pos) >= 4) &&
-            (((control & ARM_SPI_DATA_BITS_Msk) >> ARM_SPI_DATA_BITS_Pos) <= 16))
+        if ((((control & ARM_SPI_DATA_BITS_Msk) >> ARM_SPI_DATA_BITS_Pos) >= 4U) &&
+            (((control & ARM_SPI_DATA_BITS_Msk) >> ARM_SPI_DATA_BITS_Pos) <= 16U))
         {
             if (DSPI_IsMaster(resource->base))
             {
@@ -251,6 +253,7 @@ static int32_t DSPI_CommonControl(uint32_t control,
             break;
 
         default:
+            /* Avoid MISRA 16.4 violation */
             break;
     }
 
@@ -268,6 +271,7 @@ static int32_t DSPI_CommonControl(uint32_t control,
             case ARM_SPI_SS_MASTER_HW_INPUT:
                 break;
             default:
+                /* Avoid MISRA 16.4 violation */
                 break;
         }
     }
@@ -281,26 +285,27 @@ static int32_t DSPI_CommonControl(uint32_t control,
             case ARM_SPI_SS_SLAVE_SW:
                 break;
             default:
+                /* Avoid MISRA 16.4 violation */
                 break;
         }
     }
     if (DSPI_IsMaster(resource->base))
     {
-        if ((*isConfigured) & SPI_FLAG_CONFIGURED)
+        if (((*isConfigured) & SPI_FLAG_CONFIGURED) != 0U)
         {
             DSPI_Deinit(resource->base);
         }
         DSPI_MasterInit(resource->base, &masterConfig, resource->GetFreq());
-        *isConfigured |= SPI_FLAG_CONFIGURED;
+        *isConfigured |= (uint8_t)SPI_FLAG_CONFIGURED;
     }
     else
     {
-        if ((*isConfigured) & SPI_FLAG_CONFIGURED)
+        if (((*isConfigured) & SPI_FLAG_CONFIGURED) != 0U)
         {
             DSPI_Deinit(resource->base);
         }
         DSPI_SlaveInit(resource->base, &slaveConfig);
-        *isConfigured |= SPI_FLAG_CONFIGURED;
+        *isConfigured |= (uint8_t)SPI_FLAG_CONFIGURED;
     }
 
     return ARM_DRIVER_OK;
@@ -322,11 +327,15 @@ static ARM_SPI_CAPABILITIES DSPIx_GetCapabilities(void)
 
 #endif
 
-#if (RTE_SPI0_DMA_EN || RTE_SPI1_DMA_EN || RTE_SPI2_DMA_EN)
+#if ((defined(RTE_SPI0_DMA_EN) && RTE_SPI0_DMA_EN) || (defined(RTE_SPI1_DMA_EN) && RTE_SPI1_DMA_EN) || \
+     (defined(RTE_SPI2_DMA_EN) && RTE_SPI2_DMA_EN))
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
 
-void KSDK_DSPI_MasterEdmaCallback(SPI_Type *base, dspi_master_edma_handle_t *handle, status_t status, void *userData)
+static void KSDK_DSPI_MasterEdmaCallback(SPI_Type *base,
+                                         dspi_master_edma_handle_t *handle,
+                                         status_t status,
+                                         void *userData)
 {
     uint32_t event = 0U;
 
@@ -340,12 +349,15 @@ void KSDK_DSPI_MasterEdmaCallback(SPI_Type *base, dspi_master_edma_handle_t *han
         event = ARM_SPI_EVENT_DATA_LOST;
     }
     /* User data is actually CMSIS driver callback. */
-    if ((0U != event) && (userData))
+    if ((0U != event) && (userData != NULL))
     {
         ((ARM_SPI_SignalEvent_t)userData)(event);
     }
 }
-void KSDK_DSPI_SlaveEdmaCallback(SPI_Type *base, dspi_slave_edma_handle_t *handle, status_t status, void *userData)
+static void KSDK_DSPI_SlaveEdmaCallback(SPI_Type *base,
+                                        dspi_slave_edma_handle_t *handle,
+                                        status_t status,
+                                        void *userData)
 {
     uint32_t event = 0U;
 
@@ -359,7 +371,7 @@ void KSDK_DSPI_SlaveEdmaCallback(SPI_Type *base, dspi_slave_edma_handle_t *handl
         event = ARM_SPI_EVENT_DATA_LOST;
     }
     /* User data is actually CMSIS driver callback. */
-    if ((0U != event) && (userData))
+    if ((0U != event) && (userData != NULL))
     {
         ((ARM_SPI_SignalEvent_t)userData)(event);
     }
@@ -367,54 +379,58 @@ void KSDK_DSPI_SlaveEdmaCallback(SPI_Type *base, dspi_slave_edma_handle_t *handl
 
 static int32_t DSPI_EdmaInitialize(ARM_SPI_SignalEvent_t cb_event, cmsis_dspi_edma_driver_state_t *dspi)
 {
-    if (!(dspi->flags & SPI_FLAG_INIT))
+    if (0U == (dspi->flags & (uint8_t)SPI_FLAG_INIT))
     {
         dspi->event = cb_event;
-        dspi->flags = SPI_FLAG_INIT;
+        dspi->flags = (uint8_t)SPI_FLAG_INIT;
     }
     return ARM_DRIVER_OK;
 }
 
 static int32_t DSPI_EdmaUninitialize(cmsis_dspi_edma_driver_state_t *dspi)
 {
-    dspi->flags = SPI_FLAG_UNINIT;
+    dspi->flags = (uint8_t)SPI_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
 static int32_t DSPI_EdmaPowerControl(ARM_POWER_STATE state, cmsis_dspi_edma_driver_state_t *dspi)
 {
+    int32_t result = ARM_DRIVER_OK;
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (dspi->flags & SPI_FLAG_POWER)
+            if ((dspi->flags & (uint8_t)SPI_FLAG_POWER) != 0U)
             {
                 DSPI_Deinit(dspi->resource->base);
                 DMAMUX_DisableChannel(dspi->dmaResource->rxDmamuxBase, dspi->dmaResource->rxEdmaChannel);
                 DMAMUX_DisableChannel(dspi->dmaResource->txDmamuxBase, dspi->dmaResource->txEdmaChannel);
-                dspi->flags = SPI_FLAG_INIT;
+                dspi->flags = (uint8_t)SPI_FLAG_INIT;
             }
             break;
         case ARM_POWER_LOW:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
         case ARM_POWER_FULL:
-            if (dspi->flags == SPI_FLAG_UNINIT)
+            if (dspi->flags == (uint8_t)SPI_FLAG_UNINIT)
             {
-                return ARM_DRIVER_ERROR;
+                result = ARM_DRIVER_ERROR;
+                break;
             }
 
-            if (dspi->flags & SPI_FLAG_POWER)
+            if ((dspi->flags & (uint8_t)SPI_FLAG_POWER) != 0U)
             {
                 /* Driver already powered */
                 break;
             }
             /* Enable Clock gate */
             CLOCK_EnableClock(s_dspiClock[dspi->resource->instance]);
-            dspi->flags |= SPI_FLAG_POWER;
+            dspi->flags |= (uint8_t)SPI_FLAG_POWER;
             break;
         default:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
     }
-    return ARM_DRIVER_OK;
+    return result;
 }
 
 static int32_t DSPI_EdmaSend(const void *data, uint32_t num, cmsis_dspi_edma_driver_state_t *dspi)
@@ -422,7 +438,8 @@ static int32_t DSPI_EdmaSend(const void *data, uint32_t num, cmsis_dspi_edma_dri
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
-    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
+    uint32_t datawidth =
+        (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & (uint32_t)SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.rxData   = NULL;
     xfer.txData   = (uint8_t *)data;
@@ -433,26 +450,26 @@ static int32_t DSPI_EdmaSend(const void *data, uint32_t num, cmsis_dspi_edma_dri
 #if (defined(RTE_SPI0_MASTER_PCS_PIN_SEL))
         if (0U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI0_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI0_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI0 PCS select configuration */
 #if (defined(RTE_SPI1_MASTER_PCS_PIN_SEL))
         if (1U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI1_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI1_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI1 PCS select configuration */
 #if (defined(RTE_SPI2_MASTER_PCS_PIN_SEL))
         if (2U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI2_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI2_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI2 PCS select configuration */
     }
     else
     {
         /* DSPI slave use Ctar0 setting and slave can only use PCS0. */
-        xfer.configFlags = kDSPI_SlaveCtar0;
+        xfer.configFlags = (uint32_t)kDSPI_SlaveCtar0;
     }
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -488,7 +505,8 @@ static int32_t DSPI_EdmaReceive(void *data, uint32_t num, cmsis_dspi_edma_driver
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
-    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
+    uint32_t datawidth =
+        (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & (uint32_t)SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.txData   = NULL;
     xfer.rxData   = (uint8_t *)data;
@@ -499,26 +517,26 @@ static int32_t DSPI_EdmaReceive(void *data, uint32_t num, cmsis_dspi_edma_driver
 #if (defined(RTE_SPI0_MASTER_PCS_PIN_SEL))
         if (0U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI0_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI0_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI0 PCS select configuration */
 #if (defined(RTE_SPI1_MASTER_PCS_PIN_SEL))
         if (1U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI1_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI1_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI1 PCS select configuration */
 #if (defined(RTE_SPI2_MASTER_PCS_PIN_SEL))
         if (2U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI2_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI2_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI2 PCS select configuration */
     }
     else
     {
         /* DSPI slave use Ctar0 setting and slave can only use PCS0. */
-        xfer.configFlags = kDSPI_SlaveCtar0;
+        xfer.configFlags = (uint32_t)kDSPI_SlaveCtar0;
     }
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -557,7 +575,8 @@ static int32_t DSPI_EdmaTransfer(const void *data_out,
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
-    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
+    uint32_t datawidth =
+        (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & (uint32_t)SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.txData   = (uint8_t *)data_out;
     xfer.rxData   = (uint8_t *)data_in;
@@ -568,26 +587,26 @@ static int32_t DSPI_EdmaTransfer(const void *data_out,
 #if (defined(RTE_SPI0_MASTER_PCS_PIN_SEL))
         if (0U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI0_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI0_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI0 PCS select configuration */
 #if (defined(RTE_SPI1_MASTER_PCS_PIN_SEL))
         if (1U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI1_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI1_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI1 PCS select configuration */
 #if (defined(RTE_SPI2_MASTER_PCS_PIN_SEL))
         if (2U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI2_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI2_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI2 PCS select configuration */
     }
     else
     {
         /* DSPI slave use Ctar0 setting and slave can only use PCS0. */
-        xfer.configFlags = kDSPI_SlaveCtar0;
+        xfer.configFlags = (uint32_t)kDSPI_SlaveCtar0;
     }
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -621,11 +640,12 @@ static uint32_t DSPI_EdmaGetCount(cmsis_dspi_edma_driver_state_t *dspi)
 {
     uint32_t cnt;
     size_t bytes;
-    uint32_t datawidth = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
+    uint32_t datawidth =
+        (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & (uint32_t)SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     if (DSPI_IsMaster(dspi->resource->base))
     {
-        if (dspi->handle->masterHandle.state != kDSPI_Idle)
+        if (dspi->handle->masterHandle.state != (uint8_t)kDSPI_Idle)
         {
             cnt = 0UL;
             return cnt;
@@ -636,7 +656,7 @@ static uint32_t DSPI_EdmaGetCount(cmsis_dspi_edma_driver_state_t *dspi)
     }
     else
     {
-        if (dspi->handle->slaveHandle.state != kDSPI_Idle)
+        if (dspi->handle->slaveHandle.state != (uint8_t)kDSPI_Idle)
         {
             cnt = 0UL;
             return cnt;
@@ -652,7 +672,9 @@ static uint32_t DSPI_EdmaGetCount(cmsis_dspi_edma_driver_state_t *dspi)
 
 static int32_t DSPI_EdmaControl(uint32_t control, uint32_t arg, cmsis_dspi_edma_driver_state_t *dspi)
 {
-    if (!(dspi->flags & SPI_FLAG_POWER))
+    int32_t result  = ARM_DRIVER_OK;
+    bool isContinue = false;
+    if (0U == (dspi->flags & (uint8_t)SPI_FLAG_POWER))
     {
         return ARM_DRIVER_ERROR;
     }
@@ -663,13 +685,14 @@ static int32_t DSPI_EdmaControl(uint32_t control, uint32_t arg, cmsis_dspi_edma_
     {
         case ARM_SPI_MODE_INACTIVE:
             DSPI_Enable(dspi->resource->base, false);
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         case ARM_SPI_MODE_MASTER: /* SPI Master (Output on SOUT, Input on SIN); arg = Bus Speed in bps */
             DSPI_SetMasterSlaveMode(dspi->resource->base, kDSPI_Master);
-            memset((dspi->edmaRxRegToRxDataHandle), 0, sizeof(edma_handle_t));
-            memset((dspi->edmaTxDataToIntermediaryHandle), 0, sizeof(edma_handle_t));
-            memset((dspi->edmaIntermediaryToTxRegHandle), 0, sizeof(edma_handle_t));
+            (void)memset((dspi->edmaRxRegToRxDataHandle), 0, sizeof(edma_handle_t));
+            (void)memset((dspi->edmaTxDataToIntermediaryHandle), 0, sizeof(edma_handle_t));
+            (void)memset((dspi->edmaIntermediaryToTxRegHandle), 0, sizeof(edma_handle_t));
 
             EDMA_CreateHandle(dspi->edmaRxRegToRxDataHandle, dmaResource->rxEdmaBase, dmaResource->rxEdmaChannel);
             DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxEdmaChannel, dmaResource->rxDmaRequest);
@@ -692,14 +715,14 @@ static int32_t DSPI_EdmaControl(uint32_t control, uint32_t arg, cmsis_dspi_edma_
                                                 (dspi->edmaIntermediaryToTxRegHandle));
 
             dspi->baudRate_Bps = arg;
-            dspi->flags |= SPI_FLAG_CONFIGURED;
-
+            dspi->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
+            isContinue = true;
             break;
 
         case ARM_SPI_MODE_SLAVE: /* SPI Slave  (Output on SOUT, Input on SIN) */
             DSPI_SetMasterSlaveMode(dspi->resource->base, kDSPI_Slave);
-            memset(dspi->edmaRxRegToRxDataHandle, 0, sizeof(edma_handle_t));
-            memset(dspi->edmaTxDataToTxRegHandle, 0, sizeof(edma_handle_t));
+            (void)memset(dspi->edmaRxRegToRxDataHandle, 0, sizeof(edma_handle_t));
+            (void)memset(dspi->edmaTxDataToTxRegHandle, 0, sizeof(edma_handle_t));
 
             EDMA_CreateHandle(dspi->edmaTxDataToTxRegHandle, dmaResource->txEdmaBase, dmaResource->txEdmaChannel);
             if (1 == FSL_FEATURE_DSPI_HAS_SEPARATE_DMA_RX_TX_REQn(dspi->resource->base))
@@ -716,33 +739,40 @@ static int32_t DSPI_EdmaControl(uint32_t control, uint32_t arg, cmsis_dspi_edma_
                                                KSDK_DSPI_SlaveEdmaCallback, (void *)dspi->event,
                                                (dspi->edmaRxRegToRxDataHandle), (dspi->edmaTxDataToTxRegHandle));
 
-            dspi->flags |= SPI_FLAG_CONFIGURED;
+            dspi->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
+            isContinue = true;
             break;
 
         case ARM_SPI_SET_BUS_SPEED: /* Set Bus Speed in bps; */
             if (!DSPI_IsMaster(dspi->resource->base))
             {
-                return ARM_DRIVER_ERROR_UNSUPPORTED;
+                result = ARM_DRIVER_ERROR_UNSUPPORTED;
+                break;
             }
 
-            if (0 == DSPI_MasterSetBaudRate(dspi->resource->base, kDSPI_Ctar0, arg, dspi->resource->GetFreq()))
+            if (0U == DSPI_MasterSetBaudRate(dspi->resource->base, kDSPI_Ctar0, arg, dspi->resource->GetFreq()))
             {
-                return ARM_DRIVER_ERROR;
+                result = ARM_DRIVER_ERROR;
+                break;
             }
 
-            dspi->baudRate_Bps = arg;
-            return ARM_DRIVER_OK;
+            dspi->baudRate_Bps = (uint32_t)arg;
+            result             = ARM_DRIVER_OK;
+            break;
 
         case ARM_SPI_GET_BUS_SPEED: /* Set Bus Speed in bps; arg = value */
             if (!DSPI_IsMaster(dspi->resource->base))
             {
-                return ARM_DRIVER_ERROR_UNSUPPORTED;
+                result = ARM_DRIVER_ERROR_UNSUPPORTED;
+                break;
             }
 
-            return dspi->baudRate_Bps;
+            result = (int32_t)dspi->baudRate_Bps;
+            break;
 
         case ARM_SPI_CONTROL_SS: /* Control Slave Select; arg = 0:inactive, 1:active  */
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
 
         case ARM_SPI_ABORT_TRANSFER: /* Abort current data transfer */
             if (DSPI_IsMaster(dspi->resource->base))
@@ -753,43 +783,54 @@ static int32_t DSPI_EdmaControl(uint32_t control, uint32_t arg, cmsis_dspi_edma_
             {
                 DSPI_SlaveTransferAbortEDMA(dspi->resource->base, &dspi->handle->slaveHandle);
             }
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         case ARM_SPI_SET_DEFAULT_TX_VALUE: /* Set default Transmit value; arg = value */
             DSPI_SetDummyData(dspi->resource->base, (uint8_t)arg);
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         case ARM_SPI_MODE_MASTER_SIMPLEX: /* SPI Master (Output/Input on MOSI); arg = Bus Speed in bps */
             /* Mode is not supported by current driver. */
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
 
         case ARM_SPI_MODE_SLAVE_SIMPLEX: /* SPI Slave  (Output/Input on MISO) */
             /* Mode is not supported by current driver. */
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
 
         default:
+            isContinue = true;
             break;
     }
 
-    return DSPI_CommonControl(control, dspi->baudRate_Bps, dspi->resource, &dspi->flags);
+    if (isContinue)
+    {
+        result = DSPI_CommonControl(control, dspi->baudRate_Bps, dspi->resource, &dspi->flags);
+    }
+    return result;
 }
 
-ARM_SPI_STATUS DSPI_EdmaGetStatus(cmsis_dspi_edma_driver_state_t *dspi)
+static ARM_SPI_STATUS DSPI_EdmaGetStatus(cmsis_dspi_edma_driver_state_t *dspi)
 {
     ARM_SPI_STATUS stat;
     uint32_t ksdk_dspi_status = DSPI_GetStatusFlags(dspi->resource->base);
 
     if (DSPI_IsMaster(dspi->resource->base))
     {
-        stat.busy = (kDSPI_Busy == dspi->handle->masterHandle.state) ? (1U) : (0U);
+        stat.busy = ((uint8_t)kDSPI_Busy == dspi->handle->masterHandle.state) ? (1U) : (0U);
     }
     else
     {
-        stat.busy = (kDSPI_Busy == dspi->handle->slaveHandle.state) ? (1U) : (0U);
+        stat.busy = ((uint8_t)kDSPI_Busy == dspi->handle->slaveHandle.state) ? (1U) : (0U);
     }
 
-    stat.data_lost =
-        ((ksdk_dspi_status & kDSPI_TxFifoUnderflowFlag) || (ksdk_dspi_status & kDSPI_RxFifoOverflowFlag)) ? (1U) : (0U);
+    stat.data_lost = (((ksdk_dspi_status & (uint32_t)kDSPI_TxFifoUnderflowFlag) != 0U) ||
+                      ((ksdk_dspi_status & (uint32_t)kDSPI_RxFifoOverflowFlag) != 0U)) ?
+                         (1U) :
+                         (0U);
     stat.mode_fault = 0U;
     stat.reserved   = 0U;
 
@@ -799,9 +840,14 @@ ARM_SPI_STATUS DSPI_EdmaGetStatus(cmsis_dspi_edma_driver_state_t *dspi)
 
 #endif
 
-#if ((RTE_SPI0 && !RTE_SPI0_DMA_EN) || (RTE_SPI1 && !RTE_SPI1_DMA_EN) || (RTE_SPI2 && !RTE_SPI2_DMA_EN))
+#if ((defined(RTE_SPI0) && RTE_SPI0 && !(defined(RTE_SPI0_DMA_EN) && RTE_SPI0_DMA_EN)) || \
+     (defined(RTE_SPI1) && RTE_SPI1 && !(defined(RTE_SPI1_DMA_EN) && RTE_SPI1_DMA_EN)) || \
+     (defined(RTE_SPI2) && RTE_SPI2 && !(defined(RTE_SPI2_DMA_EN) && RTE_SPI2_DMA_EN)))
 
-void KSDK_DSPI_MasterInterruptCallback(SPI_Type *base, dspi_master_handle_t *handle, status_t status, void *userData)
+static void KSDK_DSPI_MasterInterruptCallback(SPI_Type *base,
+                                              dspi_master_handle_t *handle,
+                                              status_t status,
+                                              void *userData)
 {
     uint32_t event = 0U;
 
@@ -815,12 +861,15 @@ void KSDK_DSPI_MasterInterruptCallback(SPI_Type *base, dspi_master_handle_t *han
         event = ARM_SPI_EVENT_DATA_LOST;
     }
     /* User data is actually CMSIS driver callback. */
-    if ((0U != event) && (userData))
+    if ((0U != event) && (userData != NULL))
     {
         ((ARM_SPI_SignalEvent_t)userData)(event);
     }
 }
-void KSDK_DSPI_SlaveInterruptCallback(SPI_Type *base, dspi_slave_handle_t *handle, status_t status, void *userData)
+static void KSDK_DSPI_SlaveInterruptCallback(SPI_Type *base,
+                                             dspi_slave_handle_t *handle,
+                                             status_t status,
+                                             void *userData)
 {
     uint32_t event = 0U;
 
@@ -834,7 +883,7 @@ void KSDK_DSPI_SlaveInterruptCallback(SPI_Type *base, dspi_slave_handle_t *handl
         event = ARM_SPI_EVENT_DATA_LOST;
     }
     /* User data is actually CMSIS driver callback. */
-    if ((0U != event) && (userData))
+    if ((0U != event) && (userData != NULL))
     {
         ((ARM_SPI_SignalEvent_t)userData)(event);
     }
@@ -842,55 +891,59 @@ void KSDK_DSPI_SlaveInterruptCallback(SPI_Type *base, dspi_slave_handle_t *handl
 
 static int32_t DSPI_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event, cmsis_dspi_interrupt_driver_state_t *dspi)
 {
-    if (!(dspi->flags & SPI_FLAG_INIT))
+    if (0U == (dspi->flags & (uint8_t)SPI_FLAG_INIT))
     {
         dspi->event = cb_event;
-        dspi->flags = SPI_FLAG_INIT;
+        dspi->flags = (uint8_t)SPI_FLAG_INIT;
     }
     return ARM_DRIVER_OK;
 }
 
 static int32_t DSPI_InterruptUninitialize(cmsis_dspi_interrupt_driver_state_t *dspi)
 {
-    dspi->flags = SPI_FLAG_UNINIT;
+    dspi->flags = (uint8_t)SPI_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
 static int32_t DSPI_InterruptPowerControl(ARM_POWER_STATE state, cmsis_dspi_interrupt_driver_state_t *dspi)
 {
+    int32_t result = ARM_DRIVER_OK;
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (dspi->flags & SPI_FLAG_POWER)
+            if ((dspi->flags & (uint8_t)SPI_FLAG_POWER) != 0U)
             {
                 DSPI_Deinit(dspi->resource->base);
-                dspi->flags = SPI_FLAG_INIT;
+                dspi->flags = (uint8_t)SPI_FLAG_INIT;
             }
             break;
 
         case ARM_POWER_LOW:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
 
         case ARM_POWER_FULL:
-            if (dspi->flags == SPI_FLAG_UNINIT)
+            if (dspi->flags == (uint8_t)SPI_FLAG_UNINIT)
             {
-                return ARM_DRIVER_ERROR;
+                result = ARM_DRIVER_ERROR;
+                break;
             }
 
-            if (dspi->flags & SPI_FLAG_POWER)
+            if ((dspi->flags & (uint8_t)SPI_FLAG_POWER) != 0U)
             {
                 /* Driver already powered */
                 break;
             }
 
             CLOCK_EnableClock(s_dspiClock[dspi->resource->instance]);
-            dspi->flags |= SPI_FLAG_POWER;
+            dspi->flags |= (uint8_t)SPI_FLAG_POWER;
 
             break;
         default:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
     }
-    return ARM_DRIVER_OK;
+    return result;
 }
 
 static int32_t DSPI_InterruptSend(const void *data, uint32_t num, cmsis_dspi_interrupt_driver_state_t *dspi)
@@ -898,7 +951,8 @@ static int32_t DSPI_InterruptSend(const void *data, uint32_t num, cmsis_dspi_int
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
-    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
+    uint32_t datawidth =
+        (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & (uint32_t)SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.rxData   = NULL;
     xfer.txData   = (uint8_t *)data;
@@ -909,26 +963,26 @@ static int32_t DSPI_InterruptSend(const void *data, uint32_t num, cmsis_dspi_int
 #if (defined(RTE_SPI0_MASTER_PCS_PIN_SEL))
         if (0U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI0_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI0_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI0 PCS select configuration */
 #if (defined(RTE_SPI1_MASTER_PCS_PIN_SEL))
         if (1U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI1_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI1_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI1 PCS select configuration */
 #if (defined(RTE_SPI2_MASTER_PCS_PIN_SEL))
         if (2U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI2_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI2_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI2 PCS select configuration */
     }
     else
     {
         /* DSPI slave use Ctar0 setting and slave can only use PCS0. */
-        xfer.configFlags = kDSPI_SlaveCtar0;
+        xfer.configFlags = (uint32_t)kDSPI_SlaveCtar0;
     }
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -964,7 +1018,8 @@ static int32_t DSPI_InterruptReceive(void *data, uint32_t num, cmsis_dspi_interr
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
-    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
+    uint32_t datawidth =
+        (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & (uint32_t)SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.txData   = NULL;
     xfer.rxData   = (uint8_t *)data;
@@ -975,26 +1030,26 @@ static int32_t DSPI_InterruptReceive(void *data, uint32_t num, cmsis_dspi_interr
 #if (defined(RTE_SPI0_MASTER_PCS_PIN_SEL))
         if (0U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI0_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI0_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI0 PCS select configuration */
 #if (defined(RTE_SPI1_MASTER_PCS_PIN_SEL))
         if (1U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI1_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI1_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI1 PCS select configuration */
 #if (defined(RTE_SPI2_MASTER_PCS_PIN_SEL))
         if (2U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI2_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI2_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI2 PCS select configuration */
     }
     else
     {
         /* DSPI slave use Ctar0 setting and slave can only use PCS0. */
-        xfer.configFlags = kDSPI_SlaveCtar0;
+        xfer.configFlags = (uint32_t)kDSPI_SlaveCtar0;
     }
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -1033,7 +1088,8 @@ static int32_t DSPI_InterruptTransfer(const void *data_out,
     int32_t ret;
     status_t status;
     dspi_transfer_t xfer = {0};
-    uint32_t datawidth   = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
+    uint32_t datawidth =
+        (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & (uint32_t)SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     xfer.txData   = (uint8_t *)data_out;
     xfer.rxData   = (uint8_t *)data_in;
@@ -1044,26 +1100,26 @@ static int32_t DSPI_InterruptTransfer(const void *data_out,
 #if (defined(RTE_SPI0_MASTER_PCS_PIN_SEL))
         if (0U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI0_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI0_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI0 PCS select configuration */
 #if (defined(RTE_SPI1_MASTER_PCS_PIN_SEL))
         if (1U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI1_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI1_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI1 PCS select configuration */
 #if (defined(RTE_SPI2_MASTER_PCS_PIN_SEL))
         if (2U == dspi->resource->instance)
         {
-            xfer.configFlags = kDSPI_MasterCtar0 | RTE_SPI2_MASTER_PCS_PIN_SEL;
+            xfer.configFlags = (uint32_t)kDSPI_MasterCtar0 | (uint32_t)RTE_SPI2_MASTER_PCS_PIN_SEL;
         }
 #endif /* DSPI2 PCS select configuration */
     }
     else
     {
         /* DSPI slave use Ctar0 setting and slave can only use PCS0. */
-        xfer.configFlags = kDSPI_SlaveCtar0;
+        xfer.configFlags = (uint32_t)kDSPI_SlaveCtar0;
     }
 
     if (DSPI_IsMaster(dspi->resource->base))
@@ -1095,8 +1151,9 @@ static int32_t DSPI_InterruptTransfer(const void *data_out,
 }
 static uint32_t DSPI_InterruptGetCount(cmsis_dspi_interrupt_driver_state_t *dspi)
 {
-    uint8_t cnt;
-    uint32_t datawidth = (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
+    uint32_t cnt;
+    uint32_t datawidth =
+        (dspi->resource->base->CTAR[kDSPI_MasterCtar0] & (uint32_t)SPI_CTAR_FMSZ_MASK) >> SPI_CTAR_FMSZ_SHIFT;
 
     if (DSPI_IsMaster(dspi->resource->base))
     {
@@ -1113,7 +1170,9 @@ static uint32_t DSPI_InterruptGetCount(cmsis_dspi_interrupt_driver_state_t *dspi
 
 static int32_t DSPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_dspi_interrupt_driver_state_t *dspi)
 {
-    if (!(dspi->flags & SPI_FLAG_POWER))
+    int32_t result  = ARM_DRIVER_OK;
+    bool isContinue = false;
+    if (0U == (dspi->flags & (uint8_t)SPI_FLAG_POWER))
     {
         return ARM_DRIVER_ERROR;
     }
@@ -1122,14 +1181,16 @@ static int32_t DSPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_dspi_
     {
         case ARM_SPI_MODE_INACTIVE:
             DSPI_Enable(dspi->resource->base, false);
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         case ARM_SPI_MODE_MASTER: /* SPI Master (Output on SOUT, Input on SIN); arg = Bus Speed in bps */
             DSPI_SetMasterSlaveMode(dspi->resource->base, kDSPI_Master);
             DSPI_MasterTransferCreateHandle(dspi->resource->base, &dspi->handle->masterHandle,
                                             KSDK_DSPI_MasterInterruptCallback, (void *)dspi->event);
             dspi->baudRate_Bps = arg;
-            dspi->flags |= SPI_FLAG_CONFIGURED;
+            dspi->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
+            isContinue = true;
             break;
 
         case ARM_SPI_MODE_SLAVE: /* SPI Slave  (Output on SOUT, Input on SIN) */
@@ -1137,32 +1198,38 @@ static int32_t DSPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_dspi_
             DSPI_SlaveTransferCreateHandle(dspi->resource->base, &dspi->handle->slaveHandle,
                                            KSDK_DSPI_SlaveInterruptCallback, (void *)dspi->event);
 
-            dspi->flags |= SPI_FLAG_CONFIGURED;
+            dspi->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
+            isContinue = true;
             break;
 
         case ARM_SPI_GET_BUS_SPEED: /* Get Bus Speed in bps */
             if (!DSPI_IsMaster(dspi->resource->base))
             {
-                return ARM_DRIVER_ERROR_UNSUPPORTED;
+                result = ARM_DRIVER_ERROR_UNSUPPORTED;
+                break;
             }
 
-            return dspi->baudRate_Bps;
+            result = (int32_t)dspi->baudRate_Bps;
+            break;
 
         case ARM_SPI_SET_BUS_SPEED: /* Set Bus Speed in bps; */
             if (!DSPI_IsMaster(dspi->resource->base))
             {
-                return ARM_DRIVER_ERROR_UNSUPPORTED;
+                result = ARM_DRIVER_ERROR_UNSUPPORTED;
+                break;
             }
-            if (0 == DSPI_MasterSetBaudRate(dspi->resource->base, kDSPI_Ctar0, arg, dspi->resource->GetFreq()))
+            if (0U == DSPI_MasterSetBaudRate(dspi->resource->base, kDSPI_Ctar0, arg, dspi->resource->GetFreq()))
             {
-                return ARM_DRIVER_ERROR;
+                result = ARM_DRIVER_ERROR;
+                break;
             }
 
             dspi->baudRate_Bps = arg;
-            return ARM_DRIVER_OK;
+            break;
 
         case ARM_SPI_CONTROL_SS: /* Control Slave Select; arg = 0:inactive, 1:active  */
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
 
         case ARM_SPI_ABORT_TRANSFER: /* Abort current data transfer */
             if (DSPI_IsMaster(dspi->resource->base))
@@ -1173,47 +1240,59 @@ static int32_t DSPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_dspi_
             {
                 DSPI_SlaveTransferAbort(dspi->resource->base, &dspi->handle->slaveHandle);
             }
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         case ARM_SPI_SET_DEFAULT_TX_VALUE: /* Set default Transmit value; arg = value */
             DSPI_SetDummyData(dspi->resource->base, (uint8_t)arg);
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         case ARM_SPI_MODE_MASTER_SIMPLEX: /* SPI Master (Output/Input on MOSI); arg = Bus Speed in bps */
             /* Mode is not supported by current driver. */
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
 
         case ARM_SPI_MODE_SLAVE_SIMPLEX: /* SPI Slave  (Output/Input on MISO) */
             /* Mode is not supported by current driver. */
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
 
         default:
+            isContinue = true;
             break;
     }
-    return DSPI_CommonControl(control, dspi->baudRate_Bps, dspi->resource, &dspi->flags);
+
+    if (isContinue)
+    {
+        result = DSPI_CommonControl(control, dspi->baudRate_Bps, dspi->resource, &dspi->flags);
+    }
+    return result;
 }
 
-ARM_SPI_STATUS DSPI_InterruptGetStatus(cmsis_dspi_interrupt_driver_state_t *dspi)
+static ARM_SPI_STATUS DSPI_InterruptGetStatus(cmsis_dspi_interrupt_driver_state_t *dspi)
 {
     ARM_SPI_STATUS stat;
     uint32_t ksdk_dspi_status = DSPI_GetStatusFlags(dspi->resource->base);
 
     if (DSPI_IsMaster(dspi->resource->base))
     {
-        stat.busy = ((dspi->handle->masterHandle.remainingSendByteCount > 0) ||
-                     (dspi->handle->masterHandle.remainingReceiveByteCount > 0)) ?
+        stat.busy = ((dspi->handle->masterHandle.remainingSendByteCount > 0U) ||
+                     (dspi->handle->masterHandle.remainingReceiveByteCount > 0U)) ?
                         (1U) :
                         (0U);
     }
     else
     {
-        stat.busy = ((dspi->handle->slaveHandle.remainingSendByteCount > 0) ||
-                     (dspi->handle->slaveHandle.remainingReceiveByteCount > 0)) ?
+        stat.busy = ((dspi->handle->slaveHandle.remainingSendByteCount > 0U) ||
+                     (dspi->handle->slaveHandle.remainingReceiveByteCount > 0U)) ?
                         (1U) :
                         (0U);
     }
-    stat.data_lost =
-        ((ksdk_dspi_status & kDSPI_TxFifoUnderflowFlag) || (ksdk_dspi_status & kDSPI_RxFifoOverflowFlag)) ? (1U) : (0U);
+    stat.data_lost = (((ksdk_dspi_status & (uint32_t)kDSPI_TxFifoUnderflowFlag) != 0U) ||
+                      ((ksdk_dspi_status & (uint32_t)kDSPI_RxFifoOverflowFlag) != 0U)) ?
+                         (1U) :
+                         (0U);
     stat.mode_fault = 0U;
     stat.reserved   = 0U;
 
@@ -1222,38 +1301,33 @@ ARM_SPI_STATUS DSPI_InterruptGetStatus(cmsis_dspi_interrupt_driver_state_t *dspi
 
 #endif
 
-#if defined(DSPI0) && RTE_SPI0
+#if defined(DSPI0) && defined(RTE_SPI0) && RTE_SPI0
 
 /* User needs to provide the implementation for DSPI0_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t DSPI0_GetFreq(void);
-extern void DSPI0_InitPins(void);
-extern void DSPI0_DeinitPins(void);
 
-cmsis_dspi_resource_t DSPI0_Resource = {DSPI0, 0, DSPI0_GetFreq};
+static cmsis_dspi_resource_t DSPI0_Resource = {DSPI0, 0, DSPI0_GetFreq};
 
-#if RTE_SPI0_DMA_EN
+#if defined(RTE_SPI0_DMA_EN) && RTE_SPI0_DMA_EN
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
-cmsis_dspi_edma_resource_t DSPI0_EdmaResource = {
+static cmsis_dspi_edma_resource_t DSPI0_EdmaResource = {
     RTE_SPI0_DMA_TX_DMA_BASE,   RTE_SPI0_DMA_TX_CH,  RTE_SPI0_DMA_TX_DMAMUX_BASE, RTE_SPI0_DMA_TX_PERI_SEL,
-
     RTE_SPI0_DMA_RX_DMA_BASE,   RTE_SPI0_DMA_RX_CH,  RTE_SPI0_DMA_RX_DMAMUX_BASE, RTE_SPI0_DMA_RX_PERI_SEL,
-
     RTE_SPI0_DMA_LINK_DMA_BASE, RTE_SPI0_DMA_LINK_CH};
+static cmsis_dspi_edma_handle_t DSPI0_EdmaHandle;
 
-cmsis_dspi_edma_handle_t DSPI0_EdmaHandle;
-
-edma_handle_t DSPI0_EdmaRxRegToRxDataHandle;
-edma_handle_t DSPI0_EedmaTxDataToIntermediaryHandle;
-edma_handle_t DSPI0_EedmaIntermediaryToTxRegHandle;
-edma_handle_t DSPI0_EedmaTxDataToTxRegHandle;
+static edma_handle_t DSPI0_EdmaRxRegToRxDataHandle;
+static edma_handle_t DSPI0_EedmaTxDataToIntermediaryHandle;
+static edma_handle_t DSPI0_EedmaIntermediaryToTxRegHandle;
+static edma_handle_t DSPI0_EedmaTxDataToTxRegHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi0_edma_driver_state")
-cmsis_dspi_edma_driver_state_t DSPI0_EdmaDriverState = {
+static cmsis_dspi_edma_driver_state_t DSPI0_EdmaDriverState = {
 #else
-cmsis_dspi_edma_driver_state_t DSPI0_EdmaDriverState = {
+static cmsis_dspi_edma_driver_state_t DSPI0_EdmaDriverState = {
 #endif
     &DSPI0_Resource,
     &DSPI0_EdmaResource,
@@ -1266,13 +1340,17 @@ cmsis_dspi_edma_driver_state_t DSPI0_EdmaDriverState = {
 
 static int32_t DSPI0_EdmaInitialize(ARM_SPI_SignalEvent_t cb_event)
 {
-    DSPI0_InitPins();
+#ifdef RTE_SPI0_PIN_INIT
+    RTE_SPI0_PIN_INIT();
+#endif
     return DSPI_EdmaInitialize(cb_event, &DSPI0_EdmaDriverState);
 }
 
 static int32_t DSPI0_EdmaUninitialize(void)
 {
-    DSPI0_DeinitPins();
+#ifdef RTE_SPI0_PIN_DEINIT
+    RTE_SPI0_PIN_DEINIT();
+#endif
     return DSPI_EdmaUninitialize(&DSPI0_EdmaDriverState);
 }
 
@@ -1314,13 +1392,13 @@ static ARM_SPI_STATUS DSPI0_EdmaGetStatus(void)
 #endif
 
 #else
-cmsis_dspi_handle_t DSPI0_Handle;
+static cmsis_dspi_handle_t DSPI0_Handle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi0_interrupt_driver_state")
-cmsis_dspi_interrupt_driver_state_t DSPI0_InterruptDriverState = {
+static cmsis_dspi_interrupt_driver_state_t DSPI0_InterruptDriverState = {
 #else
-cmsis_dspi_interrupt_driver_state_t DSPI0_InterruptDriverState = {
+static cmsis_dspi_interrupt_driver_state_t DSPI0_InterruptDriverState = {
 #endif
     &DSPI0_Resource,
     &DSPI0_Handle,
@@ -1328,13 +1406,17 @@ cmsis_dspi_interrupt_driver_state_t DSPI0_InterruptDriverState = {
 
 static int32_t DSPI0_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
 {
-    DSPI0_InitPins();
+#ifdef RTE_SPI0_PIN_INIT
+    RTE_SPI0_PIN_INIT();
+#endif
     return DSPI_InterruptInitialize(cb_event, &DSPI0_InterruptDriverState);
 }
 
 static int32_t DSPI0_InterruptUninitialize(void)
 {
-    DSPI0_DeinitPins();
+#ifdef RTE_SPI0_PIN_DEINIT
+    RTE_SPI0_PIN_DEINIT();
+#endif
     return DSPI_InterruptUninitialize(&DSPI0_InterruptDriverState);
 }
 
@@ -1376,7 +1458,7 @@ static ARM_SPI_STATUS DSPI0_InterruptGetStatus(void)
 #endif
 
 ARM_DRIVER_SPI Driver_SPI0 = {DSPIx_GetVersion,     DSPIx_GetCapabilities,
-#if RTE_SPI0_DMA_EN
+#if defined(RTE_SPI0_DMA_EN) && RTE_SPI0_DMA_EN
                               DSPI0_EdmaInitialize, DSPI0_EdmaUninitialize, DSPI0_EdmaPowerControl, DSPI0_EdmaSend,
                               DSPI0_EdmaReceive,    DSPI0_EdmaTransfer,     DSPI0_EdmaGetCount,     DSPI0_EdmaControl,
                               DSPI0_EdmaGetStatus
@@ -1395,38 +1477,33 @@ ARM_DRIVER_SPI Driver_SPI0 = {DSPIx_GetVersion,     DSPIx_GetCapabilities,
 
 #endif /*  DSPI0  */
 
-#if defined(DSPI1) && RTE_SPI1
+#if defined(DSPI1) && defined(RTE_SPI1) && RTE_SPI1
 
 /* User needs to provide the implementation for DSPI1_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t DSPI1_GetFreq(void);
-extern void DSPI1_InitPins(void);
-extern void DSPI1_DeinitPins(void);
 
-cmsis_dspi_resource_t DSPI1_Resource = {DSPI1, 1, DSPI1_GetFreq};
+static cmsis_dspi_resource_t DSPI1_Resource = {DSPI1, 1, DSPI1_GetFreq};
 
-#if RTE_SPI1_DMA_EN
+#if defined(RTE_SPI1_DMA_EN) && RTE_SPI1_DMA_EN
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
-cmsis_dspi_edma_resource_t DSPI1_EdmaResource = {
+static cmsis_dspi_edma_resource_t DSPI1_EdmaResource = {
     RTE_SPI1_DMA_TX_DMA_BASE,   RTE_SPI1_DMA_TX_CH,  RTE_SPI1_DMA_TX_DMAMUX_BASE, RTE_SPI1_DMA_TX_PERI_SEL,
-
     RTE_SPI1_DMA_RX_DMA_BASE,   RTE_SPI1_DMA_RX_CH,  RTE_SPI1_DMA_RX_DMAMUX_BASE, RTE_SPI1_DMA_RX_PERI_SEL,
-
     RTE_SPI1_DMA_LINK_DMA_BASE, RTE_SPI1_DMA_LINK_CH};
+static cmsis_dspi_edma_handle_t DSPI1_EdmaHandle;
 
-cmsis_dspi_edma_handle_t DSPI1_EdmaHandle;
-
-edma_handle_t DSPI1_EdmaRxRegToRxDataHandle;
-edma_handle_t DSPI1_EedmaTxDataToIntermediaryHandle;
-edma_handle_t DSPI1_EedmaIntermediaryToTxRegHandle;
-edma_handle_t DSPI1_EedmaTxDataToTxRegHandle;
+static edma_handle_t DSPI1_EdmaRxRegToRxDataHandle;
+static edma_handle_t DSPI1_EedmaTxDataToIntermediaryHandle;
+static edma_handle_t DSPI1_EedmaIntermediaryToTxRegHandle;
+static edma_handle_t DSPI1_EedmaTxDataToTxRegHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi1_edma_driver_state")
-cmsis_dspi_edma_driver_state_t DSPI1_EdmaDriverState = {
+static cmsis_dspi_edma_driver_state_t DSPI1_EdmaDriverState = {
 #else
-cmsis_dspi_edma_driver_state_t DSPI1_EdmaDriverState = {
+static cmsis_dspi_edma_driver_state_t DSPI1_EdmaDriverState = {
 #endif
     &DSPI1_Resource,
     &DSPI1_EdmaResource,
@@ -1439,13 +1516,17 @@ cmsis_dspi_edma_driver_state_t DSPI1_EdmaDriverState = {
 
 static int32_t DSPI1_EdmaInitialize(ARM_SPI_SignalEvent_t cb_event)
 {
-    DSPI1_InitPins();
+#ifdef RTE_SPI1_PIN_INIT
+    RTE_SPI1_PIN_INIT();
+#endif
     return DSPI_EdmaInitialize(cb_event, &DSPI1_EdmaDriverState);
 }
 
 static int32_t DSPI1_EdmaUninitialize(void)
 {
-    DSPI1_DeinitPins();
+#ifdef RTE_SPI1_PIN_DEINIT
+    RTE_SPI1_PIN_DEINIT();
+#endif
     return DSPI_EdmaUninitialize(&DSPI1_EdmaDriverState);
 }
 
@@ -1488,13 +1569,13 @@ static ARM_SPI_STATUS DSPI1_EdmaGetStatus(void)
 
 #else
 
-cmsis_dspi_handle_t DSPI1_Handle;
+static cmsis_dspi_handle_t DSPI1_Handle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi1_interrupt_driver_state")
-cmsis_dspi_interrupt_driver_state_t DSPI1_InterruptDriverState = {
+static cmsis_dspi_interrupt_driver_state_t DSPI1_InterruptDriverState = {
 #else
-cmsis_dspi_interrupt_driver_state_t DSPI1_InterruptDriverState = {
+static cmsis_dspi_interrupt_driver_state_t DSPI1_InterruptDriverState = {
 #endif
     &DSPI1_Resource,
     &DSPI1_Handle,
@@ -1502,13 +1583,17 @@ cmsis_dspi_interrupt_driver_state_t DSPI1_InterruptDriverState = {
 
 static int32_t DSPI1_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
 {
-    DSPI1_InitPins();
+#ifdef RTE_SPI1_PIN_INIT
+    RTE_SPI1_PIN_INIT();
+#endif
     return DSPI_InterruptInitialize(cb_event, &DSPI1_InterruptDriverState);
 }
 
 static int32_t DSPI1_InterruptUninitialize(void)
 {
-    DSPI1_DeinitPins();
+#ifdef RTE_SPI1_PIN_DEINIT
+    RTE_SPI1_PIN_DEINIT();
+#endif
     return DSPI_InterruptUninitialize(&DSPI1_InterruptDriverState);
 }
 
@@ -1550,7 +1635,7 @@ static ARM_SPI_STATUS DSPI1_InterruptGetStatus(void)
 #endif
 
 ARM_DRIVER_SPI Driver_SPI1 = {DSPIx_GetVersion,     DSPIx_GetCapabilities,
-#if RTE_SPI1_DMA_EN
+#if defined(RTE_SPI1_DMA_EN) && RTE_SPI1_DMA_EN
                               DSPI1_EdmaInitialize, DSPI1_EdmaUninitialize, DSPI1_EdmaPowerControl, DSPI1_EdmaSend,
                               DSPI1_EdmaReceive,    DSPI1_EdmaTransfer,     DSPI1_EdmaGetCount,     DSPI1_EdmaControl,
                               DSPI1_EdmaGetStatus
@@ -1569,38 +1654,36 @@ ARM_DRIVER_SPI Driver_SPI1 = {DSPIx_GetVersion,     DSPIx_GetCapabilities,
 
 #endif /*  DSPI1  */
 
-#if defined(DSPI2) && RTE_SPI2
+#if defined(DSPI2) && defined(RTE_SPI2) && RTE_SPI2
 
 /* User needs to provide the implementation for DSPI2_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t DSPI2_GetFreq(void);
-extern void DSPI2_InitPins(void);
-extern void DSPI2_DeinitPins(void);
 
-cmsis_dspi_resource_t DSPI2_Resource = {DSPI2, 2, DSPI2_GetFreq};
+static cmsis_dspi_resource_t DSPI2_Resource = {DSPI2, 2, DSPI2_GetFreq};
 
-#if RTE_SPI2_DMA_EN
+#if defined(RTE_SPI2_DMA_EN) && RTE_SPI2_DMA_EN
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
-cmsis_dspi_edma_resource_t DSPI2_EdmaResource = {
+static cmsis_dspi_edma_resource_t DSPI2_EdmaResource = {
     RTE_SPI2_DMA_TX_DMA_BASE,   RTE_SPI2_DMA_TX_CH,  RTE_SPI2_DMA_TX_DMAMUX_BASE, RTE_SPI2_DMA_TX_PERI_SEL,
 
     RTE_SPI2_DMA_RX_DMA_BASE,   RTE_SPI2_DMA_RX_CH,  RTE_SPI2_DMA_RX_DMAMUX_BASE, RTE_SPI2_DMA_RX_PERI_SEL,
 
     RTE_SPI2_DMA_LINK_DMA_BASE, RTE_SPI2_DMA_LINK_CH};
 
-cmsis_dspi_edma_handle_t DSPI2_EdmaHandle;
+static cmsis_dspi_edma_handle_t DSPI2_EdmaHandle;
 
-edma_handle_t DSPI2_EdmaRxRegToRxDataHandle;
-edma_handle_t DSPI2_EedmaTxDataToIntermediaryHandle;
-edma_handle_t DSPI2_EedmaIntermediaryToTxRegHandle;
-edma_handle_t DSPI2_EedmaTxDataToTxRegHandle;
+static edma_handle_t DSPI2_EdmaRxRegToRxDataHandle;
+static edma_handle_t DSPI2_EedmaTxDataToIntermediaryHandle;
+static edma_handle_t DSPI2_EedmaIntermediaryToTxRegHandle;
+static edma_handle_t DSPI2_EedmaTxDataToTxRegHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi2_edma_driver_state")
-cmsis_dspi_edma_driver_state_t DSPI2_EdmaDriverState = {
+static cmsis_dspi_edma_driver_state_t DSPI2_EdmaDriverState = {
 #else
-cmsis_dspi_edma_driver_state_t DSPI2_EdmaDriverState = {
+static cmsis_dspi_edma_driver_state_t DSPI2_EdmaDriverState = {
 #endif
     &DSPI2_Resource,
     &DSPI2_EdmaResource,
@@ -1613,13 +1696,17 @@ cmsis_dspi_edma_driver_state_t DSPI2_EdmaDriverState = {
 
 static int32_t DSPI2_EdmaInitialize(ARM_SPI_SignalEvent_t cb_event)
 {
-    DSPI2_InitPins();
+#ifdef RTE_SPI2_PIN_INIT
+    RTE_SPI2_PIN_INIT();
+#endif
     return DSPI_EdmaInitialize(cb_event, &DSPI2_EdmaDriverState);
 }
 
 static int32_t DSPI2_EdmaUninitialize(void)
 {
-    DSPI2_DeinitPins();
+#ifdef RTE_SPI2_PIN_DEINIT
+    RTE_SPI2_PIN_DEINIT();
+#endif
     return DSPI_EdmaUninitialize(&DSPI2_EdmaDriverState);
 }
 
@@ -1662,13 +1749,13 @@ static ARM_SPI_STATUS DSPI2_EdmaGetStatus(void)
 
 #else
 
-cmsis_dspi_handle_t DSPI2_Handle;
+static cmsis_dspi_handle_t DSPI2_Handle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("dspi2_interrupt_driver_state")
-cmsis_dspi_interrupt_driver_state_t DSPI2_InterruptDriverState = {
+static cmsis_dspi_interrupt_driver_state_t DSPI2_InterruptDriverState = {
 #else
-cmsis_dspi_interrupt_driver_state_t DSPI2_InterruptDriverState = {
+static cmsis_dspi_interrupt_driver_state_t DSPI2_InterruptDriverState = {
 #endif
     &DSPI2_Resource,
     &DSPI2_Handle,
@@ -1676,13 +1763,17 @@ cmsis_dspi_interrupt_driver_state_t DSPI2_InterruptDriverState = {
 
 static int32_t DSPI2_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
 {
-    DSPI2_InitPins();
+#ifdef RTE_SPI2_PIN_INIT
+    RTE_SPI2_PIN_INIT();
+#endif
     return DSPI_InterruptInitialize(cb_event, &DSPI2_InterruptDriverState);
 }
 
 static int32_t DSPI2_InterruptUninitialize(void)
 {
-    DSPI2_DeinitPins();
+#ifdef RTE_SPI2_PIN_DEINIT
+    RTE_SPI2_PIN_DEINIT();
+#endif
     return DSPI_InterruptUninitialize(&DSPI2_InterruptDriverState);
 }
 
@@ -1723,7 +1814,7 @@ static ARM_SPI_STATUS DSPI2_InterruptGetStatus(void)
 #endif
 
 ARM_DRIVER_SPI Driver_SPI2 = {DSPIx_GetVersion,     DSPIx_GetCapabilities,
-#if RTE_SPI2_DMA_EN
+#if defined(RTE_SPI2_DMA_EN) && RTE_SPI2_DMA_EN
                               DSPI2_EdmaInitialize, DSPI2_EdmaUninitialize, DSPI2_EdmaPowerControl, DSPI2_EdmaSend,
                               DSPI2_EdmaReceive,    DSPI2_EdmaTransfer,     DSPI2_EdmaGetCount,     DSPI2_EdmaControl,
                               DSPI2_EdmaGetStatus

@@ -13,10 +13,10 @@ the PDB, the buffer read pointer increases.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -69,6 +69,3 @@ DAC Buffer Index 13:
 DAC Buffer Index 14: WatermarkEvent
 DAC Buffer Index 15: ReadPointerBottomPositionEvent
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

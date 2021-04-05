@@ -6,10 +6,10 @@ this example will print the capture value.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -44,6 +44,3 @@ Once the input signal is received the input capture value is printed
 Capture value C(n)V=32c(*)
 ~~~~~~~~~~~~~~~~~~~~~~~
 (*) This value maybe difference, depend on input signal.
-Customization options
-=====================
-

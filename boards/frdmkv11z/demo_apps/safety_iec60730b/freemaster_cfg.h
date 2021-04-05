@@ -7,13 +7,12 @@
  * FreeMASTER Communication Driver - User Configuration File
  */
 
-#ifndef __FREEMASTER_CFG_H
-#define __FREEMASTER_CFG_H
+#ifndef FREEMASTER_CFG_H
+#define FREEMASTER_CFG_H
 
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
-#define FMSTR_DEBUG_TX 0
 
 #define FMSTR_PLATFORM_CORTEX_M 1   /* Cortex-M platform (see freemaster.h for list of all supported platforms) */
 
@@ -108,7 +107,7 @@
 // Even with this option, the hash must be generated from reasonably complex password to prevent dictionary attack.
 #define FMSTR_USE_HASHED_PASSWORDS  0  //!< When non-zero, the passwords above are specified as a pointer to 20-byte SHA1 hash of password text
 
-#endif /* __FREEMASTER_CFG_H */
+#endif /* FREEMASTER_CFG_H */
 
 ////////////////////////////////////////////////////////////////////////////////
 // EOF

@@ -8,10 +8,10 @@ so that user can see just a general counter is working with interrupt.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -57,6 +57,3 @@ Type any key into terminal to trigger the PDB and then trigger the ADC's convers
 PDB Interrupt Counter: 3
 ADC Conversion Interrupt Counter: 3
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

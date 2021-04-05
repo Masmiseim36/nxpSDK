@@ -314,32 +314,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/crc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/smc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/autobaud</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/autobaud</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/crc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/packet</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/property</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/smc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
         </option>
         <option>
@@ -602,6 +595,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -753,7 +747,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MKV31F512xxx12_application_0x0000.icf</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/linker/iar/MKV31F51212/MKV31F512xxx12_application_0x0000.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1298,32 +1292,25 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/crc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/smc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/autobaud</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/autobaud</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/crc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/packet</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/property</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/smc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
         </option>
         <option>
@@ -1586,6 +1573,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1737,7 +1725,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MKV31F512xxx12_application_0x0000.icf</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/linker/iar/MKV31F51212/MKV31F512xxx12_application_0x0000.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1970,24 +1958,30 @@
     </settings>
   </configuration>
   <group>
-    <name>drivers</name>
+    <name>board</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+  </group>
+  <group>
+    <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_flash.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_adapter.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_cache.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_utilities.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_cache.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_features.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_controller.c</name>
@@ -1996,13 +1990,16 @@
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_controller.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_features.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_flash.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_flash.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_cache.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_flexnvm.c</name>
@@ -2011,34 +2008,34 @@
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_flexnvm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_ftfx_utilities.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_uart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_flash.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_uart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_uart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_i2c.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_i2c.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_i2c.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_port.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_dspi.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_dspi.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_dspi.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_dspi.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_crc.c</name>
@@ -2047,14 +2044,17 @@
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_crc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_common.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_common.c</name>
     </file>
   </group>
   <group>
     <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/fsl_device_registers.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/MKV31F51212.h</name>
     </file>
@@ -2062,13 +2062,10 @@
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/MKV31F51212_features.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/fsl_device_registers.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/system_MKV31F51212.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/system_MKV31F51212.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/system_MKV31F51212.h</name>
     </file>
   </group>
   <group>
@@ -2100,25 +2097,7 @@
     <group>
       <name>bootloader</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_command.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_context.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_irq_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral_interface.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_user_entry.h</name>
@@ -2129,13 +2108,25 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bootloader.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_command.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_context.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_peripheral.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_shutdown_cleanup.h</name>
+      </file>
       <group>
         <name>src</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_user_entry.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_command.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_main.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_context.c</name>
@@ -2144,22 +2135,25 @@
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_exception_handler.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_main.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_tree_root.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_misc.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_command.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_shutdown_cleanup.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_tree_root.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_app_crc_check.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_user_entry.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_misc.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_reliable_update.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/scuart_peripheral_interface.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/dspi_peripheral_interface.c</name>
@@ -2167,10 +2161,13 @@
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/i2c_peripheral_interface.c</name>
         </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/scuart_peripheral_interface.c</name>
-        </file>
       </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_irq_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_app_crc_check.h</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/bl_reliable_update.h</name>
       </file>
@@ -2207,34 +2204,28 @@
       <group>
         <name>src</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/memory.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/normal_memory.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.s</name>
         </file>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/sram_init.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/flash_memory.c</name>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/flash_memory.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/flash_memory.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/sram_init_cm4.c</name>
@@ -2271,10 +2262,10 @@
     <group>
       <name>sbloader</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sb_file_format.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sbloader.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sbloader.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader/sb_file_format.h</name>
       </file>
       <group>
         <name>src</name>
@@ -2286,26 +2277,26 @@
     <group>
       <name>utilities</name>
       <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_rtos_abstraction.h</name>
+      </file>
+      <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_rtos_abstraction.h</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
       </file>
       <group>
         <name>src</name>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/debug_util.c</name>
-        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_assert.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_rtos_abstraction.c</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/debug_util.c</name>
+        </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
-      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/kinetis_family.h</name>
       </file>
@@ -2338,7 +2329,7 @@
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src/bootloader_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src/clock_config_MKV31F51212.c</name>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src/bl_clock_config_MKV31F51212.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src/hardware_init_MKV31F51212.c</name>
@@ -2347,13 +2338,16 @@
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src/memory_map_MKV31F51212.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src/peripherals_MKV31F51212.c</name>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src/bl_peripherals_MKV31F51212.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src/peripherals_pinmux.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV31F51212/src/target_config.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/src/pinmux_utility_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/src/bl_dspi_irq_config_common.c</name>
@@ -2364,9 +2358,6 @@
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/src/bl_uart_irq_config_common.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/src/pinmux_utility_common.c</name>
-    </file>
   </group>
   <group>
     <name>component</name>
@@ -2376,22 +2367,22 @@
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_config.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -2399,6 +2390,9 @@
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -2410,31 +2404,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

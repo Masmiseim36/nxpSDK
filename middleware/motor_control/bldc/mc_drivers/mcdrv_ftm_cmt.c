@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -34,8 +34,8 @@ bool_t MCDRV_FtmCmtGet(mcdrv_ftm_cmt_t *this)
     s_statusPass = TRUE;
 
     /* read actual values of counter and defined value register */
-    *this->pui16FtmCntAct   = this->pui32FtmBase->CNT;
-    *this->pui16FtmValueAct = this->pui32FtmBase->CONTROLS[this->ui16ChannelNum].CnV;
+    *this->pui16FtmCntAct   = (uint16_t)this->pui32FtmBase->CNT;
+    *this->pui16FtmValueAct = (uint16_t)this->pui32FtmBase->CONTROLS[this->ui16ChannelNum].CnV;
 
     return (s_statusPass);
 }

@@ -320,7 +320,7 @@
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -967,6 +967,15 @@
     </settings>
   </configuration>
   <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+  </group>
+  <group>
     <name>MKV58F24</name>
     <file>
       <name>$PROJ_DIR$/../main.c</name>
@@ -976,6 +985,30 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src/milliseconds_delay.c</name>
+    </file>
+  </group>
+  <group>
+    <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers/fsl_port.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers/fsl_clock.h</name>
     </file>
   </group>
   <group>
@@ -1023,6 +1056,9 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
@@ -1042,21 +1078,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

@@ -11,10 +11,10 @@ at last.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -64,6 +64,3 @@ Receive Msg4 from FIFO: word0 = 0x44444444, word1 = 0x44444444, ID Filter Hit2.
 
 ==FlexCAN loopback EDMA example -- Finish.==
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

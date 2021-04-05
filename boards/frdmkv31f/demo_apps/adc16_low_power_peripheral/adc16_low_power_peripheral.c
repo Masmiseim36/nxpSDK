@@ -9,9 +9,9 @@
 #include "fsl_debug_console.h"
 #include "fsl_smc.h"
 #include "fsl_pmc.h"
-#include "board.h"
-#include "peripherals.h"
 #include "pin_mux.h"
+#include "peripherals.h"
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

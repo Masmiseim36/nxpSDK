@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,9 +25,9 @@ extern void start(void);
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
-//        Address     Vector IRQ   Source module   Source description
-#define VECTOR_000      (pointer*)__BOOT_STACK_ADDRESS  //          ARM core        Initial Supervisor SP
-#define VECTOR_001      start     // 0x0000_0004 1 -          ARM core        Initial Program Counter
+//				Address     Vector IRQ   Source module   Source description
+#define VECTOR_000      (pointer*)__BOOT_STACK_ADDRESS	//          ARM core        Initial Supervisor SP
+#define VECTOR_001      start	    // 0x0000_0004 1 -          ARM core        Initial Program Counter
 #ifndef VECTOR_002
   #define VECTOR_002      NMI_isr         // 0x0000_0008 2 -          ARM core        Non-maskable Interrupt (NMI)
 #endif

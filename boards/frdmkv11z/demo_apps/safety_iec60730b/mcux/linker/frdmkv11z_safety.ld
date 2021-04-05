@@ -1,187 +1,200 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-INCLUDE "frdmkv11z_safety_library.ld"
-INCLUDE "frdmkv11z_safety_memory.ld"
+GROUP (
+  "libcr_semihost_nf.a"
+  "libcr_c.a"
+  "libcr_eabihelpers.a"
+  "libgcc.a"
+)
+
+/**************************************************************/
+/*    |            | --> data region                          */
+/*    |            |                                          */
+/*    |____________|                                          */
+/*    |____________| --> STACK_TEST_P_1     ....ADR           */
+/*    |____________|                        ....ADR + 0x4     */
+/*    |____________|                        ....ADR + 0x8     */
+/*    |____________| --> STACK_TEST_P_2     ....ADR + 0xC     */
+/*    |            |                                          */
+/*    |            |                                          */
+/*    |            |                                          */
+/*    |   STACK    |                                          */
+/*    |            |                                          */
+/*    |            |                                          */
+/*    |            |                                          */
+/*    |            |                                          */
+/*    |____________| --> __BOOT_STACK_ADDRESS                 */
+/*    |____________| --> STACK_TEST_P_3                       */
+/*    |____________|                                          */
+/*    |____________|                                          */
+/*    |____________| --> STACK_TEST_P_4                       */
+/*    |____________| --> SAFETY_ERROR_CODE                    */
+/*    |____________| --> PC_test_flag                         */
+/*    |            | --> WD_TEST_BACKUP                       */
+/*    |____________|                                          */
+/*    |            |                                          */
+/*    |            | --> RAM_TEST_BACKUP                      */
+/*    |____________|                                          */
+/**************************************************************/
+
+/* FLASH memory boundaries. */
+__ROM_start__     = 0x00000000;
+__ROM_end__       = 0x0001DFFF;
+
+/* RAM memory boundaries. */
+__RAM_start__     = 0x1FFFF410;
+__RAM_end__       = 0x20002EE7;
+
+/* Sizes of objects in RAM. */
+__size_cstack__       = 0x300;  /* Stack size. */
+stack_test_block_size = 0x10;   /* Safety stack test pattern. */
+ram_test_backup_size  = 0x20;   /* Safety RAM test backup size. */
+wd_test_backup_size   = 0x20;   /* Safety WDOG test data size. */
+
+
+/* Sizes of objects in FLASH. */
+__vector_table_size__ = 0x400;
+__PC_test_size        = 0x20;
+__size_flash_crc__    = 0x10;
+__flash_cfg_size      = 0x10;
+
+__VECTOR_TABLE   = __ROM_start__;
+__size_heap__    = 0x40;     /* 2x  heap and heap2stackfill */
+
+/******************************************************************************/
+/******************     SYMBOLS     *******************************************/
+/******************************************************************************/
+/* Assemble RAM addresses. */
+m_ram_test_backup     = (__RAM_end__ - ram_test_backup_size + 0x1);
+m_wd_test_backup      = (m_ram_test_backup - wd_test_backup_size);
+m_pc_test_flag        = (m_wd_test_backup - 0x4);
+m_safety_error_code   = (m_pc_test_flag - 0x4);
+m_stack_test_p_4      = (m_safety_error_code - 0x4);
+m_stack_test_p_3      = (m_stack_test_p_4 - stack_test_block_size +0x4);
+__BOOT_STACK_ADDRESS  = (m_stack_test_p_3 - 0x4);
+m_stack_test_p_2      = (__BOOT_STACK_ADDRESS - __size_cstack__);
+m_stack_test_p_1      = (m_stack_test_p_2 - stack_test_block_size + 0x4);
+
+m_safety_ram_start   =  __RAM_start__;
+
+/* Assemble FLASH addresses. */
+m_intvec_table_start = (__ROM_start__);
+m_intvec_table_end   = (m_intvec_table_start  + __vector_table_size__ - 0x1);
+m_flash_config_start = (m_intvec_table_end    + 0x1);
+m_flash_config_end   = (m_flash_config_start  + __flash_cfg_size - 0x1);
+__PC_test_start__    = (m_flash_config_end    + 0x1); 
+__PC_test_end__      = (__PC_test_start__ + __PC_test_size - 0x1);
+m_flash_start        = (__PC_test_end__   + 0x1);
+
+m_fs_flash_crc_end   = (__ROM_end__);
+m_fs_flash_crc_start = (m_fs_flash_crc_end - __size_flash_crc__ + 0x1);
+m_flash_end          = (m_fs_flash_crc_start - 0x1);
+
+MEMORY
+{
+  /* Define each memory region */
+  MEM_FLASH (rx) : ORIGIN = __ROM_start__, LENGTH = (__ROM_end__ - __ROM_start__ + 1)
+  MEM_RAM  (rwx) : ORIGIN = __RAM_start__, LENGTH = (__RAM_end__ - __RAM_start__ + 1)
+}
+  
 
 ENTRY(ResetISR)
 
 SECTIONS
 {
-    /* MAIN TEXT SECTION */
-    .text : ALIGN(4)
+    /* Safety-related code and read-only data section. */
+    .SEC_FS_ROM : ALIGN(4)
     {
         FILL(0xff)
-        __vectors_start__ = ABSOLUTE(.) ;
-        KEEP(*(.isr_vector))
-        /* Global Section Table */
-        . = ALIGN(4) ;
-        __section_table_start = .;
-        __data_section_table = .;
-        LONG(LOADADDR(.data));
-        LONG(    ADDR(.data));
-        LONG(  SIZEOF(.data));
-        LONG(LOADADDR(.data_RAM2));
-        LONG(    ADDR(.data_RAM2));
-        LONG(  SIZEOF(.data_RAM2));
-        __data_section_table_end = .;
-        __safety_ram_section_table = .;
-        LONG(LOADADDR(.safety_ram));
-        LONG(    ADDR(.safety_ram));
-        LONG(  SIZEOF(.safety_ram));
-        __safety_ram_section_table_end = .;
-        __bss_section_table = .;
-        LONG(    ADDR(.bss));
-        LONG(  SIZEOF(.bss));
-        LONG(    ADDR(.bss_RAM2));
-        LONG(  SIZEOF(.bss_RAM2));
-        __bss_section_table_end = .;
-        __section_table_end = . ;
-	    /* End of Global Section Table */
 
-        *(.after_vectors*)
+        /* The interrupt vector table. */
+        . = m_intvec_table_start;
+        KEEP(*(.intvec*))
 
+        /* Flash configuration table. */
+        . = m_flash_config_start;
+        KEEP(*(.flshcfg*))
 
-        /* Kinetis Flash Configuration data */
-        . = 0x400 ;
-        PROVIDE(__FLASH_CONFIG_START__ = .) ;
-        KEEP(*(.FlashConfig))
-        PROVIDE(__FLASH_CONFIG_END__ = .) ;
-        ASSERT(!(__FLASH_CONFIG_START__ == __FLASH_CONFIG_END__), "Linker Flash Config Support Enabled, but no .FlashConfig section provided within application");
-        /* End of Kinetis Flash Configuration data */
-        
+        /* PC test object. */
+        . = __PC_test_start__;
+        KEEP(*iec60730b_cm0_pc_object.o(.text*))
 
-    } >PROGRAM_FLASH
-
-    .pctest : 
-    {
-    . = ALIGN(4);
-    *iec60730b_cm0_pc_object.o
-    . = ALIGN(4);
-    } > PCTEST_region
-    
-
-    .text : ALIGN(4)
-    {
-     	*EXCLUDE_FILE(*iec60730b_cm0_pc_object.o )  /* .text and .text* sections (code) */
-        *(.text*)
-        
-        *(.rodata .rodata.* .constdata .constdata.*)
+        /* Safety-related FLASH code and RO data. */
+        . = m_flash_start;
+        *(.rodata*)
+        . = . + 1;
         . = ALIGN(4);
-    } > PROGRAM_FLASH
-    /*
-     * for exception handling/unwind - some Newlib functions (in common
-     * with C++ and STDC++) use this. 
-     */
-    .ARM.extab : ALIGN(4) 
-    {
-        *(.ARM.extab* .gnu.linkonce.armextab.*)
-    } > PROGRAM_FLASH
-    __exidx_start = .;
+    } >MEM_FLASH
 
-    .ARM.exidx : ALIGN(4)
+    /* The safety-related RAM. */
+    .SEC_FS_RAM m_safety_ram_start : AT (ADDR(.SEC_FS_ROM) + SIZEOF(.SEC_FS_ROM))
     {
-        *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-    } > PROGRAM_FLASH
-    __exidx_end = .;
+    	m_sec_fs_ram_load_start = LOADADDR(.SEC_FS_RAM);
+    	m_sec_fs_ram_start = .;
+    	*(.safety_ram*)
+        *main.o(.data*)
+        *safety_test_items.o(.data*)
+        . = . + 1;
+        . = ALIGN(4);
+        m_sec_fs_ram_load_end = LOADADDR (.SEC_FS_RAM) + SIZEOF(.SEC_FS_RAM);
+        m_sec_fs_ram_end = .;
 
-    _etext = .;
-    
+        /* The end of safety-related FLASH memory. */
+        m_safety_flash_end = LOADADDR (.SEC_FS_RAM) + SIZEOF(.SEC_FS_RAM);
+    } >MEM_RAM
 
-/************************************************************************/ 
-        
-/************************************************************************/
-/************************************************************************/ 
-    /* USB_RAM */
-    .m_usb_data (NOLOAD) :
+    /* The non-safety RW data. */
+    .SEC_RWRAM m_sec_fs_ram_end : AT (m_safety_flash_end)
     {
-        *(m_usb_bdt)
-    } > SRAM_UPPER
-    
-/************************************************************************/    
-    /* DATA section for SRAM_LOWER */
-    .data_RAM2 : ALIGN(4)
+       m_sec_rwram_load_start = LOADADDR(.SEC_RWRAM);
+       m_sec_rwram_start = .;
+       *(.data*)
+       . = . + 1;
+       . = ALIGN(4);
+       m_sec_rwram_load_end = LOADADDR(.SEC_RWRAM) + SIZEOF(.SEC_RWRAM);
+       m_sec_rwram_end = .;
+    } >MEM_RAM
+
+    /* The non-safety code and RO data. */
+    .SEC_ROM m_sec_rwram_load_end : ALIGN(4)
     {
         FILL(0xff)
-        PROVIDE(__start_data_RAM2 = .) ;
-        *(.ramfunc.$RAM2)
-        *(.ramfunc.$SRAM_LOWER)
-        *(.data.$RAM2*)
-        *(.data.$SRAM_LOWER*)
-        . = ALIGN(4) ;
-        PROVIDE(__end_data_RAM2 = .) ;
-     } > SRAM_LOWER AT>PROGRAM_FLASH
+        *(.text*)
+        KEEP(*(.rodata .rodata.* .constdata .constdata.*))
+        . = . + 1;
+        . = ALIGN(4);
+    } >MEM_FLASH
 
-/************************************************************************/
-    /* MAIN DATA SECTION */
-    .uninit_RESERVED : ALIGN(4)
+    /* The safety FLASH CRC. */
+    .SEC_CRC m_fs_flash_crc_start : ALIGN(4)
     {
-        KEEP(*(.bss.$RESERVED*))
-        . = ALIGN(4) ;
-        _end_uninit_RESERVED = .;
-    } > SRAM_UPPER
-    
-/************************************************************************/    
-    /* Main DATA section (SRAM_UPPER) */
-    .data : ALIGN(4)
-    {
-       FILL(0xff)
-       _data = . ;
-       *(vtable)
-       *(.ramfunc*)
-       *(.data*)
-       . = ALIGN(4) ;
-       _edata = . ;
-    } > SRAM_UPPER AT>PROGRAM_FLASH
-    
-/************************************************************************/    
-    /* BSS section for SRAM_LOWER */
-    .bss_RAM2 : ALIGN(4)
-    {
-       PROVIDE(__start_bss_RAM2 = .) ;
-       *(.bss.$RAM2*)
-       *(.bss.$SRAM_LOWER*)
-       . = ALIGN (. != 0 ? 4 : 1) ; /* avoid empty segment */
-       PROVIDE(__end_bss_RAM2 = .) ;
-    } > SRAM_LOWER 
-    
-/************************************************************************/    
-    /* MAIN BSS SECTION */
-    .bss : ALIGN(4)
-    {
-        _bss = .;
-        *(.bss*)
-        *(COMMON)
-        . = ALIGN(4) ;
-        _ebss = .;
-        PROVIDE(end = .);
-    } > SRAM_UPPER
-    
-/************************************************************************/    
-    /* NOINIT section for SRAM_LOWER */
-    .noinit_RAM2 (NOLOAD) : ALIGN(4)
-    {
-       *(.noinit.$RAM2*)
-       *(.noinit.$SRAM_LOWER*)
-       . = ALIGN(4) ;
-    } > SRAM_LOWER 
-    
-/************************************************************************/    
-   
-    /* DEFAULT NOINIT SECTION */
-    .noinit (NOLOAD): ALIGN(4)
-    {
-        _noinit = .;
-        *(.noinit*) 
-         . = ALIGN(4) ;
-        _end_noinit = .;
-    } > SRAM_UPPER
+        FILL(0xff)
+        KEEP(*(.flshcrc*))
+    } >MEM_FLASH
 
- /* Reserve and place Heap within memory map */
+    /* Stack memory. */
+    stack (__BOOT_STACK_ADDRESS - __size_cstack__) : ALIGN(4)
+    {
+        . = ALIGN(4);
+    } > MEM_RAM
+
+    /* The zero-initialized RW data. */
+    .SEC_BSS m_sec_rwram_end : ALIGN(4)
+    {
+       m_sec_bss_start = .;
+       *(.bss*)
+       *(COMMON)
+       . = . + 1;
+       . = ALIGN(4);
+       m_sec_bss_end = .;
+    } >MEM_RAM
+    
+    /* Reserve and place Heap within memory map */
     _HeapSize = __size_heap__;
     .heap :  ALIGN(4)
     {
@@ -189,24 +202,7 @@ SECTIONS
         . += _HeapSize;
         . = ALIGN(4);
         _pvHeapLimit = .;
-    } > SRAM_UPPER
-/************************************************************************/    
-   .safety_ram : ALIGN(4)    
-   {
-   _safety_ram = .;
-   *(.safety_ram*)
-   . = ALIGN(4);
-   _end_safety_ram = .;
-   } > SRAM_LOWER AT>PROGRAM_FLASH 
+    } > MEM_RAM
     
-/************************************************************************/    
- 
-/************************************************************************/
-	.stack __BOOT_STACK_ADDRESS - __size_cstack__ :  ALIGN(4)
-	{
-		_vStackBase = .;
-		. = ALIGN(4);		
-		_vStackTop = . + __size_cstack__;
-	} > SRAM_UPPER
 	
 }

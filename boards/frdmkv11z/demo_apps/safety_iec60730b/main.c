@@ -1,12 +1,14 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "safety_config.h"
-#include "freemaster.h"
+#if FMSTR_SERIAL_ENABLE
+    #include "freemaster.h"
+#endif
 #include "safety_test_items.h"
 
 /*******************************************************************************
@@ -29,50 +31,53 @@ volatile uint32_t counter = 0;
     #pragma section =  ".safety_ram"
     #pragma section = ".pctest"
 
-    safety_common_t g_sSafetyCommon @ ".safety_ram";
     wd_test_t g_sSafetyWdTest @ ".safety_ram";
-    flash_runtime_test_parameters_t g_sFlashCrc @ ".safety_ram";
-    flash_configuration_parameters_t g_sFlashConfig @ ".safety_ram";
-    ram_test_t g_sSafetyRamTest @ ".safety_ram";
-    ram_test_t g_sSafetyRamStackTest @ ".safety_ram";
-    clock_test_t g_sSafetyClockTest @ ".safety_ram";
+    safety_common_t g_sSafetyCommon @ ".safety_ram";
+    fs_flash_runtime_test_parameters_t g_sFlashCrc @ ".safety_ram";
+    fs_flash_configuration_parameters_t g_sFlashConfig @ ".safety_ram";
+    fs_ram_test_t g_sSafetyRamTest @ ".safety_ram";
+    fs_ram_test_t g_sSafetyRamStackTest @ ".safety_ram";
+    fs_clock_test_t g_sSafetyClockTest @ ".safety_ram";
 
 #elif (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* KEIL */
     #include "linker_config.h"
-
-    uint32_t stack_pointer_addr = (uint32_t)__BOOT_STACK_ADDRESS;
+		
+    /* The safety-related RAM border marker. */
+    extern uint32_t Image$$SafetyRam_region$$Limit;
+    
+		uint32_t stack_pointer_addr = (uint32_t)__BOOT_STACK_ADDRESS;
 
     uint16_t crcPostbuild; /* Checksum result calculated by srec_cat.exe in post-build phase */
 
     wd_test_t g_sSafetyWdTest __attribute__((section(".safety_ram")));
     safety_common_t g_sSafetyCommon __attribute__((section(".safety_ram")));
-    clock_test_t g_sSafetyClockTest __attribute__((section(".safety_ram")));
-    ram_test_t g_sSafetyRamTest __attribute__((section(".safety_ram")));
-    ram_test_t g_sSafetyRamStackTest __attribute__((section(".safety_ram")));
-    flash_runtime_test_parameters_t g_sFlashCrc __attribute__((section(".safety_ram")));
-    flash_configuration_parameters_t g_sFlashConfig __attribute__((section(".safety_ram")));
+    fs_clock_test_t g_sSafetyClockTest __attribute__((section(".safety_ram")));
+    fs_ram_test_t g_sSafetyRamTest __attribute__((section(".safety_ram")));
+    fs_ram_test_t g_sSafetyRamStackTest __attribute__((section(".safety_ram")));
+    fs_flash_runtime_test_parameters_t g_sFlashCrc __attribute__((section(".safety_ram")));
+    fs_flash_configuration_parameters_t g_sFlashConfig __attribute__((section(".safety_ram")));
 
 #else /* MCUXpresso */
-    #include <cr_section_macros.h>
+//    #include <cr_section_macros.h>
 
     uint16_t crcPostbuild; /* Checksum result calculated by srec_cat.exe in post-build phase */
 
     extern uint32_t __BOOT_STACK_ADDRESS; /* from Linker command file */
     uint32_t stack_pointer_addr = (uint32_t)&__BOOT_STACK_ADDRESS;
 
-    extern uint32_t _safety_ram; /* from Linker command file */
-    uint32_t psafetyRamSectionStart = (uint32_t)&_safety_ram;
+    extern uint32_t m_sec_fs_ram_start; /* from Linker command file */
+    uint32_t pui32SafetyRamSectionStart = (uint32_t)&m_sec_fs_ram_start;
 
-    extern uint32_t _end_safety_ram; /* from Linker command file */
-    uint32_t psafetyRamSectionEnd = (uint32_t)&_end_safety_ram;
+    extern uint32_t m_sec_fs_ram_end; /* from Linker command file */
+    uint32_t pui32SafetyRamSectionEnd = (uint32_t)&m_sec_fs_ram_end;
 
     wd_test_t g_sSafetyWdTest __attribute__((section(".safety_ram")));
     safety_common_t g_sSafetyCommon __attribute__((section(".safety_ram")));
-    clock_test_t g_sSafetyClockTest __attribute__((section(".safety_ram")));
-    ram_test_t g_sSafetyRamTest __attribute__((section(".safety_ram")));
-    ram_test_t g_sSafetyRamStackTest __attribute__((section(".safety_ram")));
-    flash_runtime_test_parameters_t g_sFlashCrc __attribute__((section(".safety_ram")));
-    flash_configuration_parameters_t g_sFlashConfig __attribute__((section(".safety_ram")));
+    fs_clock_test_t g_sSafetyClockTest __attribute__((section(".safety_ram")));
+    fs_ram_test_t g_sSafetyRamTest __attribute__((section(".safety_ram")));
+    fs_ram_test_t g_sSafetyRamStackTest __attribute__((section(".safety_ram")));
+    fs_flash_runtime_test_parameters_t g_sFlashCrc __attribute__((section(".safety_ram")));
+    fs_flash_configuration_parameters_t g_sFlashConfig __attribute__((section(".safety_ram")));
 #endif
 
 /*******************************************************************************
@@ -89,7 +94,10 @@ int32_t main(void)
 {
     /* Clock initialization */
     ClockInit();
-
+    
+#if WATCHDOG_ENABLED
+    Watchdog_refresh; /* refreshing the watchdog */
+#endif
     /* Watchdog test */
     SafetyWatchdogTest(&g_sSafetyCommon, &g_sSafetyWdTest);
 
@@ -98,14 +106,12 @@ int32_t main(void)
     uint32_t *safetyRamEnd = __section_end(".safety_ram");
 
 #elif (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* KEIL */
-    crcPostbuild = *((uint16_t *)CRC_VALUE_ADDR);
     uint32_t *safetyRamStart = (uint32_t *)m_safety_ram_start;
-    uint32_t *safetyRamEnd   = (uint32_t *)m_safety_ram_end;
+    uint32_t *safetyRamEnd   = (uint32_t *)&Image$$SafetyRam_region$$Limit;
 
 #else /* MCUXpresso */
-    crcPostbuild = *((uint16_t *)CRC_VALUE_ADDR); 
-    uint32_t *safetyRamStart = (uint32_t *)psafetyRamSectionStart;
-    uint32_t *safetyRamEnd = (uint32_t *)psafetyRamSectionEnd;
+    uint32_t *safetyRamStart = (uint32_t *)pui32SafetyRamSectionStart;
+    uint32_t *safetyRamEnd = (uint32_t *)pui32SafetyRamSectionEnd;
 #endif
 
 #if WATCHDOG_ENABLED
@@ -287,7 +293,7 @@ int32_t main(void)
     /* Enable interrupts */
     __asm("CPSIE i");
   
-    while(1)
+    while(TRUE)
     {
         /* Interruptable CPU registers test */
         SafetyCpuBackgroundTest(&g_sSafetyCommon);
@@ -363,6 +369,8 @@ int32_t main(void)
         
        FMSTR_Poll();  /* Freemaster cummunication */
 #endif
+       
+        development_test_terminate(); /* For example validation during development */
     }
 }
 

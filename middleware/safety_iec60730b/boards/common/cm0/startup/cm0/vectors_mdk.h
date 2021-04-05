@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,37 +32,37 @@ extern void start(void);
   #define VECTOR_002      NMI_isr         // 0x0000_0008 2 -          ARM core        Non-maskable Interrupt (NMI)
 #endif
 #ifndef VECTOR_003
-  #define VECTOR_003      DefaultISR     // 0x0000_000C 3 -          ARM core        Hard Fault
+  #define VECTOR_003      0     // 0x0000_000C 3 -          ARM core        Hard Fault
 #endif
 #ifndef VECTOR_004
-  #define VECTOR_004      DefaultISR     // 0x0000_0010 4 -
+  #define VECTOR_004      0     // 0x0000_0010 4 -
 #endif
 #ifndef VECTOR_005
-  #define VECTOR_005      DefaultISR     // 0x0000_0014 5 -          ARM core         Bus Fault
+  #define VECTOR_005      0     // 0x0000_0014 5 -          ARM core         Bus Fault
 #endif
 #ifndef VECTOR_006
-  #define VECTOR_006      DefaultISR     // 0x0000_0018 6 -          ARM core         Usage Fault
+  #define VECTOR_006      0     // 0x0000_0018 6 -          ARM core         Usage Fault
 #endif
 #ifndef VECTOR_007
-  #define VECTOR_007      DefaultISR     // 0x0000_001C 7 -
+  #define VECTOR_007      0     // 0x0000_001C 7 -
 #endif
 #ifndef VECTOR_008
-  #define VECTOR_008      DefaultISR     // 0x0000_0020 8 -
+  #define VECTOR_008      0     // 0x0000_0020 8 -
 #endif
 #ifndef VECTOR_009
-  #define VECTOR_009      DefaultISR     // 0x0000_0024 9 -
+  #define VECTOR_009      0     // 0x0000_0024 9 -
 #endif
 #ifndef VECTOR_010
-  #define VECTOR_010      DefaultISR     // 0x0000_0028 10 -
+  #define VECTOR_010      0     // 0x0000_0028 10 -
 #endif
 #ifndef VECTOR_011
   #define VECTOR_011      DefaultISR     // 0x0000_002C 11 -         ARM core         Supervisor call (SVCall)
 #endif
 #ifndef VECTOR_0012
-  #define VECTOR_012      DefaultISR     // 0x0000_0030 12 -         ARM core         Debug Monitor
+  #define VECTOR_012      0     // 0x0000_0030 12 -         ARM core         Debug Monitor
 #endif
 #ifndef VECTOR_013
-  #define VECTOR_013      DefaultISR     // 0x0000_0034 13 -
+  #define VECTOR_013      0     // 0x0000_0034 13 -
 #endif
 #ifndef VECTOR_014
   #define VECTOR_014      DefaultISR     // 0x0000_0038 14 -         ARM core         Pendable request for system service (PendableSrvReq)
@@ -297,15 +297,24 @@ extern void start(void);
 #define CONFIG_1  (uint32_t)0xFFFFFFFF 
 #define CONFIG_2  (uint32_t)0xFFFFFFFF 
 #define CONFIG_3  (uint32_t)0xFFFFFFFF
-#ifdef  _MKE15Z7_H_
- #define CONFIG_4 (uint32_t)0xFFFF7DFE
-#else
-  #ifdef MKE02Z2_H_
-    #define CONFIG_4 (uint32_t) 0xFFFEFFFF
+
+  #ifdef _MKE15Z7_H_
+   #define CONFIG_4 (uint32_t)0xFFFF7DFE
   #else
-    #define CONFIG_4 (uint32_t) 0xFFFFFFFE
+     #if defined(_K32L2A41A_H_)  /* L2 A A A */
+      #define CONFIG_4 (uint32_t)0xFFFF3DFE
+     #else
+       #if defined(_K32L2B31A_H_)  /* L2B B B */
+        #define CONFIG_4 (uint32_t)0xFFFF3FFE
+       #else
+          #ifdef _MKE02Z4_H_
+                  #define CONFIG_4 (uint32_t)0xFFFEFFFF
+          #else   /*Others MCU*/
+                  #define CONFIG_4 (uint32_t)0xFFFFFFFE
+          #endif
+       #endif
+     #endif
   #endif
-#endif  
 #endif
 
 #endif /* _VECTORS_H_ */

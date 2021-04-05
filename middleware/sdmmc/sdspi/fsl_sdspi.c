@@ -16,11 +16,11 @@
 /*! @brief Card command maximum retry times value */
 #define SDSPI_TRANSFER_RETRY_TIMES (20000U)
 /*! @brief define SDSPI command code length */
-#define SDSPI_COMMAND_CODE_BYTE_LEN (6U)
-#define SDSPI_COMMAND_FORMAT_GET_INDEX(command) ((command >> 8U) & 0xFFU)
-#define SDSPI_COMMAND_FORMAT_GET_RESPONSE_TYPE(command) (command & 0xFFU)
-#define SDSPI_COMMAND_IDLE_CRC (0x95U)
-#define SDSPI_COMMAND_SEND_INTERFACE_CRC (0x87U)
+#define SDSPI_COMMAND_CODE_BYTE_LEN                     (6U)
+#define SDSPI_COMMAND_FORMAT_GET_INDEX(command)         (((command) >> 8U) & 0xFFU)
+#define SDSPI_COMMAND_FORMAT_GET_RESPONSE_TYPE(command) ((command)&0xFFU)
+#define SDSPI_COMMAND_IDLE_CRC                          (0x95U)
+#define SDSPI_COMMAND_SEND_INTERFACE_CRC                (0x87U)
 /*! @brief Reverse byte sequence in uint32_t */
 #define SWAP_WORD_BYTE_SEQUENCE(x) (__REV(x))
 /*******************************************************************************
@@ -260,8 +260,8 @@ static status_t SDSPI_WaitReady(sdspi_host_t *host)
         {
             return kStatus_SDSPI_ExchangeFailed;
         }
-
-    } while ((response != 0xFFU) && (--retryCount));
+        retryCount--;
+    } while ((response != 0xFFU) && (retryCount != 0U));
 
     /* Response 0xFF means card is still busy. */
     if (response != 0xFFU)
@@ -280,7 +280,7 @@ static uint32_t SDSPI_GenerateCRC7(uint8_t *buffer, uint32_t length, uint32_t cr
     static const uint8_t crcTable[] = {0x00U, 0x09U, 0x12U, 0x1BU, 0x24U, 0x2DU, 0x36U, 0x3FU,
                                        0x48U, 0x41U, 0x5AU, 0x53U, 0x6CU, 0x65U, 0x7EU, 0x77U};
 
-    while (length)
+    while (length != 0U)
     {
         index = (((crc >> 3U) & 0x0FU) ^ ((*buffer) >> 4U));
         crc   = ((crc << 4U) ^ crcTable[index]);
@@ -297,7 +297,7 @@ static uint32_t SDSPI_GenerateCRC7(uint8_t *buffer, uint32_t length, uint32_t cr
 
 static uint16_t SDSPI_GenerateCRC16(uint8_t *buffer, uint32_t length, uint16_t crc)
 {
-    while (length)
+    while (length != 0U)
     {
         crc = (uint8_t)(crc >> 8U) | (crc << 8U);
         crc ^= *buffer++;
@@ -313,40 +313,44 @@ static uint16_t SDSPI_GenerateCRC16(uint8_t *buffer, uint32_t length, uint16_t c
 
 static status_t SDSPI_SendCommand(sdspi_host_t *host, uint32_t command, uint32_t arg, uint8_t *response)
 {
-    assert(host);
-    assert(response);
+    assert(host != NULL);
+    assert(response != NULL);
 
     uint32_t i;
     uint8_t timingByte = 0xFFU; /* The byte need to be sent as read/write data block timing requirement */
     uint8_t buffer[SDSPI_COMMAND_CODE_BYTE_LEN] = {0U};
     uint32_t responseType                       = SDSPI_COMMAND_FORMAT_GET_RESPONSE_TYPE(command);
-    uint8_t index                               = SDSPI_COMMAND_FORMAT_GET_INDEX(command);
+    uint8_t index                               = (uint8_t)SDSPI_COMMAND_FORMAT_GET_INDEX(command);
 
-    if ((kStatus_Success != SDSPI_WaitReady(host)) && (index != kSDMMC_GoIdleState))
+    if ((kStatus_Success != SDSPI_WaitReady(host)) && (index != (uint8_t)kSDMMC_GoIdleState))
     {
         return kStatus_SDSPI_WaitReadyFailed;
     }
 
     /* Send command. */
     buffer[0U] = (index | 0x40U);
-    buffer[1U] = ((arg >> 24U) & 0xFFU);
-    buffer[2U] = ((arg >> 16U) & 0xFFU);
-    buffer[3U] = ((arg >> 8U) & 0xFFU);
-    buffer[4U] = (arg & 0xFFU);
+    buffer[1U] = (uint8_t)((arg >> 24U) & 0xFFU);
+    buffer[2U] = (uint8_t)((arg >> 16U) & 0xFFU);
+    buffer[3U] = (uint8_t)((arg >> 8U) & 0xFFU);
+    buffer[4U] = (uint8_t)(arg & 0xFFU);
 #if SDSPI_CARD_CRC_PROTECTION_ENABLE
     buffer[5U] = ((SDSPI_GenerateCRC7(buffer, 5U, 0U) << 1U) | 1U);
 #else
-    if (index == kSDMMC_GoIdleState)
+    if (index == (uint8_t)kSDMMC_GoIdleState)
     {
         buffer[5U] = SDSPI_COMMAND_IDLE_CRC;
     }
-    else if (index == kSD_SendInterfaceCondition)
+    else if (index == (uint8_t)kSD_SendInterfaceCondition)
     {
         buffer[5U] = SDSPI_COMMAND_SEND_INTERFACE_CRC;
     }
+    else
+    {
+        /* Intentional empty */
+    }
 #endif
 
-    if (host->exchange(buffer, NULL, SDSPI_COMMAND_CODE_BYTE_LEN))
+    if (host->exchange(buffer, NULL, SDSPI_COMMAND_CODE_BYTE_LEN) != kStatus_Success)
     {
         return kStatus_SDSPI_ExchangeFailed;
     }
@@ -360,40 +364,44 @@ static status_t SDSPI_SendCommand(sdspi_host_t *host, uint32_t command, uint32_t
         }
 
         /* Check if response 0 coming. */
-        if (!(response[0U] & 0x80U))
+        if (0U == (response[0U] & 0x80U))
         {
             break;
         }
     }
 
-    if (response[0U] & 0x80U) /* Max index byte is high means response comming. */
+    if ((response[0U] & 0x80U) != 0U) /* Max index byte is high means response comming. */
     {
         return kStatus_SDSPI_ResponseError;
     }
 
-    if (responseType != kSDSPI_ResponseTypeR1)
+    if (responseType != (uint32_t)kSDSPI_ResponseTypeR1)
     {
-        if (responseType == kSDSPI_ResponseTypeR1b)
+        if (responseType == (uint32_t)kSDSPI_ResponseTypeR1b)
         {
             if (kStatus_Success != SDSPI_WaitReady(host))
             {
                 return kStatus_SDSPI_WaitReadyFailed;
             }
         }
-        else if (responseType == kSDSPI_ResponseTypeR2)
+        else if (responseType == (uint32_t)kSDSPI_ResponseTypeR2)
         {
             if (kStatus_Success != host->exchange(&timingByte, &(response[1U]), 1U))
             {
                 return kStatus_SDSPI_ExchangeFailed;
             }
         }
-        else if ((responseType == kSDSPI_ResponseTypeR3) || (responseType == kSDSPI_ResponseTypeR7))
+        else if ((responseType == (uint32_t)kSDSPI_ResponseTypeR3) || (responseType == (uint32_t)kSDSPI_ResponseTypeR7))
         {
             /* Left 4 bytes in response type R3 and R7(total 5 bytes in SPI mode) */
             if (kStatus_Success != host->exchange(&timingByte, &(response[1U]), 4U))
             {
                 return kStatus_SDSPI_ExchangeFailed;
             }
+        }
+        else
+        {
+            /* Intentional empty */
         }
     }
 
@@ -416,8 +424,8 @@ status_t SDSPI_CommandCrc(sdspi_card_t *card, bool enable)
 
 static status_t SDSPI_GoIdle(sdspi_card_t *card)
 {
-    assert(card);
-    assert(card->host);
+    assert(card != NULL);
+    assert(card->host != NULL);
 
     uint8_t response    = 0U;
     uint32_t retryCount = SDSPI_TRANSFER_RETRY_TIMES;
@@ -427,19 +435,19 @@ static status_t SDSPI_GoIdle(sdspi_card_t *card)
     do
     {
         if ((kStatus_Success == SDSPI_SendCommand(card->host, kSDSPI_CmdGoIdle, 0U, &response)) &&
-            (response == kSDSPI_R1InIdleStateFlag))
+            (response == (uint8_t)kSDSPI_R1InIdleStateFlag))
         {
-            break;
+            return kStatus_Success;
         }
-    } while (--retryCount);
+    } while (--retryCount != 0U);
 
-    return kStatus_Success;
+    return kStatus_SDSPI_SendCommandFailed;
 }
 
 static status_t SDSPI_SendInterfaceCondition(sdspi_card_t *card, uint32_t *flags)
 {
-    assert(card);
-    assert(card->host);
+    assert(card != NULL);
+    assert(card->host != NULL);
 
     uint8_t response[5U] = {0U};
     uint32_t i           = SDSPI_TRANSFER_RETRY_TIMES;
@@ -451,7 +459,7 @@ static status_t SDSPI_SendInterfaceCondition(sdspi_card_t *card, uint32_t *flags
         if (kStatus_Success == SDSPI_SendCommand(card->host, kSDSPI_CmdSendInterfaceCondition, 0x1AAU, response))
         {
             /* not support CMD8, clear hcs flag */
-            if (response[0U] & kSDSPI_R1IllegalCommandFlag)
+            if ((response[0U] & (uint8_t)kSDSPI_R1IllegalCommandFlag) != 0U)
             {
                 return kStatus_Success;
             }
@@ -466,20 +474,24 @@ static status_t SDSPI_SendInterfaceCondition(sdspi_card_t *card, uint32_t *flags
             {
                 return kStatus_SDSPI_InvalidVoltage;
             }
+            else
+            {
+                /* Intentional empty */
+            }
         }
         else
         {
             return kStatus_SDSPI_SendCommandFailed;
         }
-    } while (--i);
+    } while (--i != 0U);
 
     return kStatus_Fail;
 }
 
 static status_t SDSPI_SendApplicationCmd(sdspi_card_t *card)
 {
-    assert(card);
-    assert(card->host);
+    assert(card != NULL);
+    assert(card->host != NULL);
 
     uint8_t response = 0U;
 
@@ -488,7 +500,7 @@ static status_t SDSPI_SendApplicationCmd(sdspi_card_t *card)
         return kStatus_SDSPI_SendCommandFailed;
     }
 
-    if (response && (!(response & kSDSPI_R1InIdleStateFlag)))
+    if ((response != 0U) && (0U == (response & (uint8_t)kSDSPI_R1InIdleStateFlag)))
     {
         return kStatus_SDSPI_ResponseError;
     }
@@ -498,8 +510,8 @@ static status_t SDSPI_SendApplicationCmd(sdspi_card_t *card)
 
 static status_t SDSPI_ApplicationSendOperationCondition(sdspi_card_t *card, uint32_t argument)
 {
-    assert(card);
-    assert(card->host);
+    assert(card != NULL);
+    assert(card->host != NULL);
 
     uint8_t response = 0U;
     uint32_t i       = SDSPI_TRANSFER_RETRY_TIMES;
@@ -511,22 +523,22 @@ static status_t SDSPI_ApplicationSendOperationCondition(sdspi_card_t *card, uint
             if (kStatus_Success ==
                 SDSPI_SendCommand(card->host, kSDSPI_CmdAppSendOperationCondition, argument, &response))
             {
-                if ((response & kSDSPI_R1InIdleStateFlag) == 0U)
+                if ((response & (uint8_t)kSDSPI_R1InIdleStateFlag) == 0U)
                 {
                     return kStatus_Success;
                 }
             }
         }
 
-    } while (--i);
+    } while (--i != 0U);
 
     return kStatus_Fail;
 }
 
 static status_t SDSPI_ReadOcr(sdspi_card_t *card)
 {
-    assert(card);
-    assert(card->host);
+    assert(card != NULL);
+    assert(card->host != NULL);
 
     uint32_t i           = 0U;
     uint8_t response[5U] = {0U};
@@ -536,7 +548,7 @@ static status_t SDSPI_ReadOcr(sdspi_card_t *card)
         return kStatus_SDSPI_SendCommandFailed;
     }
 
-    if (response[0U])
+    if (response[0U] != 0U)
     {
         return kStatus_SDSPI_ResponseError;
     }
@@ -548,9 +560,9 @@ static status_t SDSPI_ReadOcr(sdspi_card_t *card)
         card->ocr |= (uint32_t)response[i] << ((4U - i) * 8U);
     }
 
-    if (card->ocr & SDMMC_MASK(kSD_OcrCardCapacitySupportFlag))
+    if ((card->ocr & SDMMC_MASK(kSD_OcrCardCapacitySupportFlag)) != 0U)
     {
-        card->flags |= kSDSPI_SupportHighCapacityFlag;
+        card->flags |= (uint32_t)kSDSPI_SupportHighCapacityFlag;
     }
 
     return kStatus_Success;
@@ -558,23 +570,27 @@ static status_t SDSPI_ReadOcr(sdspi_card_t *card)
 
 static status_t SDSPI_SetBlockSize(sdspi_card_t *card, uint32_t blockSize)
 {
-    assert(card);
-    assert(card->host);
+    assert(card != NULL);
+    assert(card->host != NULL);
 
     uint8_t response = 0U;
+    uint32_t i       = SDSPI_TRANSFER_RETRY_TIMES;
 
-    if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdSetBlockLength, blockSize, &response))
+    do
     {
-        return kStatus_SDSPI_SendCommandFailed;
-    }
+        if (kStatus_Success == SDSPI_SendCommand(card->host, kSDSPI_CmdSetBlockLength, blockSize, &response))
+        {
+            return kStatus_Success;
+        }
+    } while (--i != 0U);
 
-    return kStatus_Success;
+    return kStatus_Fail;
 }
 
 static void SDSPI_DecodeCsd(sdspi_card_t *card, uint8_t *rawCsd)
 {
-    assert(rawCsd);
-    assert(card);
+    assert(rawCsd != NULL);
+    assert(card != NULL);
 
     sd_csd_t *csd = &(card->csd);
 
@@ -582,23 +598,23 @@ static void SDSPI_DecodeCsd(sdspi_card_t *card, uint8_t *rawCsd)
     csd->dataReadAccessTime1 = rawCsd[1U];
     csd->dataReadAccessTime2 = rawCsd[2U];
     csd->transferSpeed       = rawCsd[3U];
-    csd->cardCommandClass    = (((uint32_t)rawCsd[4U] << 4U) | ((uint32_t)rawCsd[5U] >> 4U));
+    csd->cardCommandClass    = (uint16_t)(((uint32_t)rawCsd[4U] << 4U) | ((uint32_t)rawCsd[5U] >> 4U));
     csd->readBlockLength     = ((rawCsd)[5U] & 0xFU);
-    if (rawCsd[6U] & 0x80U)
+    if ((rawCsd[6U] & 0x80U) != 0U)
     {
-        csd->flags |= kSD_CsdReadBlockPartialFlag;
+        csd->flags |= (uint16_t)kSD_CsdReadBlockPartialFlag;
     }
-    if (rawCsd[6U] & 0x40U)
+    if ((rawCsd[6U] & 0x40U) != 0U)
     {
-        csd->flags |= kSD_CsdWriteBlockMisalignFlag;
+        csd->flags |= (uint16_t)kSD_CsdWriteBlockMisalignFlag;
     }
-    if (rawCsd[6U] & 0x20U)
+    if ((rawCsd[6U] & 0x20U) != 0U)
     {
-        csd->flags |= kSD_CsdReadBlockMisalignFlag;
+        csd->flags |= (uint16_t)kSD_CsdReadBlockMisalignFlag;
     }
-    if (rawCsd[6U] & 0x10U)
+    if ((rawCsd[6U] & 0x10U) != 0U)
     {
-        csd->flags |= kSD_CsdDsrImplementedFlag;
+        csd->flags |= (uint16_t)kSD_CsdDsrImplementedFlag;
     }
 
     /* Some fileds is different when csdStructure is different. */
@@ -613,7 +629,7 @@ static void SDSPI_DecodeCsd(sdspi_card_t *card, uint8_t *rawCsd)
         csd->deviceSizeMultiplier = (((rawCsd[9U] & 3U) << 1U) | (rawCsd[10U] >> 7U));
 
         card->blockCount = (csd->deviceSize + 1U) << (csd->deviceSizeMultiplier + 2U);
-        card->blockSize  = (1U << (csd->readBlockLength));
+        card->blockSize  = (1UL << (csd->readBlockLength));
 
         if (card->blockSize != FSL_SDSPI_DEFAULT_BLOCK_SIZE)
         {
@@ -622,7 +638,7 @@ static void SDSPI_DecodeCsd(sdspi_card_t *card, uint8_t *rawCsd)
             card->blockCount = (card->blockCount / card->blockSize);
         }
         /* CSD V1.0 support SDSC card only */
-        card->flags |= kSDSPI_SupportSdscFlag;
+        card->flags |= (uint32_t)kSDSPI_SupportSdscFlag;
     }
     else if (csd->csdStructure == 1U) /* Decode the bits when CSD structure is version 2.0 */
     {
@@ -631,57 +647,58 @@ static void SDSPI_DecodeCsd(sdspi_card_t *card, uint8_t *rawCsd)
             ((((uint32_t)rawCsd[7U] & 0x3FU) << 16U) | ((uint32_t)rawCsd[8U] << 8U) | ((uint32_t)rawCsd[9U]));
         if (csd->deviceSize >= 0xFFFFU)
         {
-            card->flags |= kSDSPI_SupportSdxcFlag;
+            card->flags |= (uint32_t)kSDSPI_SupportSdxcFlag;
         }
         else
         {
-            card->flags |= kSDSPI_SupportSdhcFlag;
+            card->flags |= (uint32_t)kSDSPI_SupportSdhcFlag;
         }
         card->blockCount = ((csd->deviceSize + 1U) * 1024U);
     }
     else
     {
+        /* Intentional empty */
     }
 
-    if ((rawCsd[10U] >> 6U) & 1U)
+    if (((rawCsd[10U] >> 6U) & 1U) != 0U)
     {
-        csd->flags |= kSD_CsdEraseBlockEnabledFlag;
+        csd->flags |= (uint16_t)kSD_CsdEraseBlockEnabledFlag;
     }
     csd->eraseSectorSize       = (((rawCsd[10U] & 0x3FU) << 1U) | (rawCsd[11U] >> 7U));
     csd->writeProtectGroupSize = (rawCsd[11U] & 0x7FU);
-    if (rawCsd[12U] >> 7U)
+    if ((rawCsd[12U] >> 7U) != 0U)
     {
-        csd->flags |= kSD_CsdWriteProtectGroupEnabledFlag;
+        csd->flags |= (uint16_t)kSD_CsdWriteProtectGroupEnabledFlag;
     }
     csd->writeSpeedFactor = ((rawCsd[12U] >> 2U) & 7U);
     csd->writeBlockLength = (((rawCsd[12U] & 3U) << 2U) | (rawCsd[13U] >> 6U));
-    if ((rawCsd[13U] >> 5U) & 1U)
+    if (((rawCsd[13U] >> 5U) & 1U) != 0U)
     {
-        csd->flags |= kSD_CsdWriteBlockPartialFlag;
+        csd->flags |= (uint16_t)kSD_CsdWriteBlockPartialFlag;
     }
-    if (rawCsd[14U] >> 7U)
+    if ((rawCsd[14U] >> 7U) != 0U)
     {
-        csd->flags |= kSD_CsdFileFormatGroupFlag;
+        csd->flags |= (uint16_t)kSD_CsdFileFormatGroupFlag;
     }
-    if ((rawCsd[14U] >> 6U) & 1U)
+    if (((rawCsd[14U] >> 6U) & 1U) != 0U)
     {
-        csd->flags |= kSD_CsdCopyFlag;
+        csd->flags |= (uint16_t)kSD_CsdCopyFlag;
     }
-    if ((rawCsd[14U] >> 5U) & 1U)
+    if (((rawCsd[14U] >> 5U) & 1U) != 0U)
     {
-        csd->flags |= kSD_CsdPermanentWriteProtectFlag;
+        csd->flags |= (uint16_t)kSD_CsdPermanentWriteProtectFlag;
     }
-    if ((rawCsd[14U] >> 4U) & 1U)
+    if (((rawCsd[14U] >> 4U) & 1U) != 0U)
     {
-        csd->flags |= kSD_CsdTemporaryWriteProtectFlag;
+        csd->flags |= (uint16_t)kSD_CsdTemporaryWriteProtectFlag;
     }
     csd->fileFormat = ((rawCsd[14U] >> 2U) & 3U);
 }
 
 static status_t SDSPI_SendCsd(sdspi_card_t *card)
 {
-    assert(card);
-    assert(card->host);
+    assert(card != NULL);
+    assert(card->host != NULL);
 
     uint8_t response = 0U;
 
@@ -690,70 +707,74 @@ static status_t SDSPI_SendCsd(sdspi_card_t *card)
         return kStatus_SDSPI_SendCommandFailed;
     }
 
-    if (kStatus_Success != SDSPI_Read(card->host, card->rawCsd, sizeof(card->rawCsd)))
+    (void)memset(card->internalBuffer, 0, 16U);
+
+    if (kStatus_Success != SDSPI_Read(card->host, card->internalBuffer, 16U))
     {
         return kStatus_SDSPI_ReadFailed;
     }
 
-    SDSPI_DecodeCsd(card, card->rawCsd);
+    SDSPI_DecodeCsd(card, card->internalBuffer);
 
     return kStatus_Success;
 }
 
 static void SDSPI_DecodeCid(sdspi_card_t *card, uint8_t *rawCid)
 {
-    assert(card);
-    assert(rawCid);
+    assert(card != NULL);
+    assert(rawCid != NULL);
 
     sd_cid_t *cid       = &(card->cid);
     cid->manufacturerID = rawCid[0U];
-    cid->applicationID  = (((uint32_t)rawCid[1U] << 8U) | (uint32_t)(rawCid[2U]));
-    memcpy(cid->productName, &rawCid[3U], SD_PRODUCT_NAME_BYTES);
+    cid->applicationID  = (uint16_t)(((uint32_t)rawCid[1U] << 8U) | (uint32_t)(rawCid[2U]));
+    (void)memcpy(cid->productName, &rawCid[3U], SD_PRODUCT_NAME_BYTES);
     cid->productVersion      = rawCid[8U];
     cid->productSerialNumber = (((uint32_t)rawCid[9U] << 24U) | ((uint32_t)rawCid[10U] << 16U) |
                                 ((uint32_t)rawCid[11U] << 8U) | ((uint32_t)rawCid[12U]));
-    cid->manufacturerData    = ((((uint32_t)rawCid[13U] & 0x0FU) << 8U) | ((uint32_t)rawCid[14U]));
+    cid->manufacturerData    = (uint16_t)((((uint32_t)rawCid[13U] & 0x0FU) << 8U) | ((uint32_t)rawCid[14U]));
 }
 
 status_t SDSPI_SendCid(sdspi_card_t *card)
 {
-    assert(card);
-    assert(card->host);
+    assert(card != NULL);
+    assert(card->host != NULL);
 
     uint8_t response = 0U;
+
+    (void)memset(card->internalBuffer, 0, 16U);
 
     if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdSendCid, 0U, &response))
     {
         return kStatus_SDSPI_SendCommandFailed;
     }
 
-    if (kStatus_Success != (SDSPI_Read(card->host, card->rawCid, sizeof(card->rawCid))))
+    if (kStatus_Success != (SDSPI_Read(card->host, card->internalBuffer, 16U)))
     {
         return kStatus_SDSPI_ReadFailed;
     }
 
-    SDSPI_DecodeCid(card, card->rawCid);
+    SDSPI_DecodeCid(card, card->internalBuffer);
 
     return kStatus_Success;
 }
 
 static void SDSPI_DecodeScr(sdspi_card_t *card, uint8_t *rawScr)
 {
-    assert(card);
-    assert(rawScr);
+    assert(card != NULL);
+    assert(rawScr != NULL);
 
     sd_scr_t *scr        = &(card->scr);
     scr->scrStructure    = ((rawScr[0U] & 0xF0U) >> 4U);
     scr->sdSpecification = (rawScr[0U] & 0x0FU);
-    if (rawScr[1U] & 0x80U)
+    if ((rawScr[1U] & 0x80U) != 0U)
     {
-        scr->flags |= kSD_ScrDataStatusAfterErase;
+        scr->flags |= (uint16_t)kSD_ScrDataStatusAfterErase;
     }
     scr->sdSecurity  = ((rawScr[1U] & 0x70U) >> 4U);
     scr->sdBusWidths = (rawScr[1U] & 0x0FU);
-    if (rawScr[2U] & 0x80U)
+    if ((rawScr[2U] & 0x80U) != 0U)
     {
-        scr->flags |= kSD_ScrSdSpecification3;
+        scr->flags |= (uint16_t)kSD_ScrSdSpecification3;
     }
     scr->extendedSecurity = ((rawScr[2U] & 0x78U) >> 3U);
     scr->commandSupport   = (rawScr[3U] & 0x03U);
@@ -761,10 +782,12 @@ static void SDSPI_DecodeScr(sdspi_card_t *card, uint8_t *rawScr)
 
 static status_t SDSPI_SendScr(sdspi_card_t *card)
 {
-    assert(card);
-    assert(card->host);
+    assert(card != NULL);
+    assert(card->host != NULL);
 
     uint8_t response = 0U;
+
+    (void)memset(card->internalBuffer, 0, 8U);
 
     if (kStatus_Success != SDSPI_SendApplicationCmd(card))
     {
@@ -776,12 +799,12 @@ static status_t SDSPI_SendScr(sdspi_card_t *card)
         return kStatus_SDSPI_SendCommandFailed;
     }
 
-    if (kStatus_Success != (SDSPI_Read(card->host, card->rawScr, sizeof(card->rawScr))))
+    if (kStatus_Success != (SDSPI_Read(card->host, card->internalBuffer, 8U)))
     {
         return kStatus_SDSPI_ReadFailed;
     }
 
-    SDSPI_DecodeScr(card, card->rawScr);
+    SDSPI_DecodeScr(card, card->internalBuffer);
 
     return kStatus_Success;
 }
@@ -800,8 +823,8 @@ static status_t SDSPI_StopTransmission(sdspi_card_t *card)
 
 static status_t SDSPI_Write(sdspi_host_t *host, uint8_t *buffer, uint32_t size, uint8_t token)
 {
-    assert(host);
-    assert(host->exchange);
+    assert(host != NULL);
+    assert(host->exchange != NULL);
 
     uint8_t response;
     uint16_t timingByte = 0xFFFFU; /* The byte need to be sent as read/write data block timing requirement */
@@ -812,16 +835,16 @@ static status_t SDSPI_Write(sdspi_host_t *host, uint8_t *buffer, uint32_t size, 
     }
 
     /* Write data token. */
-    if (host->exchange(&token, NULL, 1U))
+    if (host->exchange(&token, NULL, 1U) != kStatus_Success)
     {
         return kStatus_SDSPI_ExchangeFailed;
     }
-    if (token == kSDSPI_DataTokenStopTransfer)
+    if (token == (uint8_t)kSDSPI_DataTokenStopTransfer)
     {
         return kStatus_Success;
     }
 
-    if ((!size) || (!buffer))
+    if ((0U == size) || (NULL == buffer))
     {
         return kStatus_InvalidArgument;
     }
@@ -837,16 +860,16 @@ static status_t SDSPI_Write(sdspi_host_t *host, uint8_t *buffer, uint32_t size, 
 #endif
 
     /* Get the last two bytes CRC */
-    if (host->exchange((uint8_t *)&timingByte, NULL, 2U))
+    if (host->exchange((uint8_t *)&timingByte, NULL, 2U) != kStatus_Success)
     {
         return kStatus_SDSPI_ExchangeFailed;
     }
     /* Get the response token. */
-    if (host->exchange((uint8_t *)&timingByte, &response, 1U))
+    if (host->exchange((uint8_t *)&timingByte, &response, 1U) != kStatus_Success)
     {
         return kStatus_SDSPI_ExchangeFailed;
     }
-    if ((response & SDSPI_DATA_RESPONSE_TOKEN_MASK) != kSDSPI_DataResponseTokenAccepted)
+    if ((response & SDSPI_DATA_RESPONSE_TOKEN_MASK) != (uint8_t)kSDSPI_DataResponseTokenAccepted)
     {
         return kStatus_SDSPI_ResponseError;
     }
@@ -856,17 +879,21 @@ static status_t SDSPI_Write(sdspi_host_t *host, uint8_t *buffer, uint32_t size, 
 
 static status_t SDSPI_Read(sdspi_host_t *host, uint8_t *buffer, uint32_t size)
 {
-    assert(host);
-    assert(host->exchange);
-    assert(buffer);
-    assert(size);
+    assert(host != NULL);
+    assert(host->exchange != NULL);
+    assert(buffer != NULL);
 
     uint8_t response;
     uint32_t i          = SDSPI_TRANSFER_RETRY_TIMES;
     uint16_t timingByte = 0xFFFFU; /* The byte need to be sent as read/write data block timing requirement */
     uint16_t crc        = 0U;
 
-    memset(buffer, 0xFFU, size);
+    if (size == 0U)
+    {
+        return kStatus_InvalidArgument;
+    }
+
+    (void)memset(buffer, 0xFF, size);
 
     /* Wait data token comming */
     do
@@ -876,14 +903,16 @@ static status_t SDSPI_Read(sdspi_host_t *host, uint8_t *buffer, uint32_t size)
             return kStatus_SDSPI_ExchangeFailed;
         }
 
-    } while ((response == 0xFFU) && (--i));
+        i--;
+
+    } while ((response == 0xFFU) && (i != 0U));
 
     /* Check data token and exchange data. */
-    if (response != kSDSPI_DataTokenBlockRead)
+    if (response != (uint8_t)kSDSPI_DataTokenBlockRead)
     {
         return kStatus_SDSPI_ResponseError;
     }
-    if (host->exchange(buffer, buffer, size))
+    if (host->exchange(buffer, buffer, size) != kStatus_Success)
     {
         return kStatus_SDSPI_ExchangeFailed;
     }
@@ -899,8 +928,8 @@ static status_t SDSPI_Read(sdspi_host_t *host, uint8_t *buffer, uint32_t size)
 
 static status_t SDSPI_Erase(sdspi_card_t *card, uint32_t startBlock, uint32_t blockCount)
 {
-    assert(card);
-    assert(blockCount);
+    assert(card != NULL);
+    assert(blockCount != 0U);
 
     uint8_t response = 0U;
     uint32_t eraseBlockStart;
@@ -912,9 +941,10 @@ static status_t SDSPI_Erase(sdspi_card_t *card, uint32_t startBlock, uint32_t bl
     }
 
     eraseBlockStart =
-        (card->flags & kSDSPI_SupportHighCapacityFlag) == 0U ? (startBlock * card->blockSize) : startBlock;
-    eraseBlockEnd = eraseBlockStart +
-                    ((card->flags & kSDSPI_SupportHighCapacityFlag) == 0U ? card->blockSize : 1U) * (blockCount - 1U);
+        (card->flags & (uint32_t)kSDSPI_SupportHighCapacityFlag) == 0U ? (startBlock * card->blockSize) : startBlock;
+    eraseBlockEnd =
+        eraseBlockStart +
+        ((card->flags & (uint32_t)kSDSPI_SupportHighCapacityFlag) == 0U ? card->blockSize : 1U) * (blockCount - 1U);
 
     /* set erase start address */
     if (kStatus_Success != SDSPI_SendCommand(card->host, kSDSPI_CmdWrBlkEraseStart, eraseBlockStart, &response))
@@ -938,8 +968,8 @@ static status_t SDSPI_Erase(sdspi_card_t *card, uint32_t startBlock, uint32_t bl
 static status_t SDSPI_SwitchFunction(
     sdspi_card_t *card, uint32_t mode, uint32_t group, uint32_t number, uint32_t *status)
 {
-    assert(card);
-    assert(status);
+    assert(card != NULL);
+    assert(status != NULL);
 
     uint8_t response  = 0u;
     uint32_t argument = 0U;
@@ -963,20 +993,20 @@ static status_t SDSPI_SwitchFunction(
 
 static status_t SDSPI_SelectFunction(sdspi_card_t *card, uint32_t group, uint32_t function)
 {
-    assert(card);
+    assert(card != NULL);
 
     uint32_t functionStatus[16U]   = {0U};
     uint16_t functionGroupInfo[6U] = {0};
     uint32_t currentFunctionStatus = 0U;
 
     /* check if card support CMD6 */
-    if (!(card->csd.cardCommandClass & kSDMMC_CommandClassSwitch))
+    if (0U == (card->csd.cardCommandClass & (uint16_t)kSDMMC_CommandClassSwitch))
     {
         return kStatus_SDSPI_NotSupportYet;
     }
 
     /* Check if card support high speed mode. */
-    if (kStatus_Success != SDSPI_SwitchFunction(card, kSD_SwitchCheck, group, function, functionStatus))
+    if (kStatus_Success != SDSPI_SwitchFunction(card, (uint32_t)kSD_SwitchCheck, group, function, functionStatus))
     {
         return kStatus_SDSPI_ExchangeFailed;
     }
@@ -1007,14 +1037,14 @@ static status_t SDSPI_SelectFunction(sdspi_card_t *card, uint32_t group, uint32_
     currentFunctionStatus = ((functionStatus[3U] & 0xFFU) << 8U) | (functionStatus[4U] >> 24U);
 
     /* check if function is support */
-    if (((functionGroupInfo[group] & (1 << function)) == 0U) ||
+    if (((functionGroupInfo[group] & (uint16_t)(1UL << function)) == 0U) ||
         ((currentFunctionStatus >> (group * 4U)) & 0xFU) != function)
     {
         return kStatus_SDSPI_NotSupportYet;
     }
 
     /* Switch to high speed mode. */
-    if (kStatus_Success != SDSPI_SwitchFunction(card, kSD_SwitchSet, group, function, functionStatus))
+    if (kStatus_Success != SDSPI_SwitchFunction(card, (uint32_t)kSD_SwitchSet, group, function, functionStatus))
     {
         return kStatus_SDSPI_ExchangeFailed;
     }
@@ -1037,20 +1067,51 @@ static status_t SDSPI_SelectFunction(sdspi_card_t *card, uint32_t group, uint32_
     return kStatus_Success;
 }
 
+static status_t SDSPI_SendCardActive(sdspi_card_t *card)
+{
+    assert(card != NULL);
+
+    /* Send 80 clocks to active card */
+    (void)memset(card->internalBuffer, 0, 10U);
+
+    if (card->host->csActivePolarity != NULL)
+    {
+        card->host->csActivePolarity(kSDSPI_CsActivePolarityHigh);
+    }
+
+    if (kStatus_Success != card->host->exchange(NULL, card->internalBuffer, 10U))
+    {
+        return kStatus_SDSPI_ExchangeFailed;
+    }
+
+    if (card->host->csActivePolarity != NULL)
+    {
+        card->host->csActivePolarity(kSDSPI_CsActivePolarityLow);
+    }
+
+    return kStatus_Success;
+}
+
 status_t SDSPI_Init(sdspi_card_t *card)
 {
-    assert(card);
-    assert(card->host);
-    assert(card->host->setFrequency);
-    assert(card->host->exchange);
+    assert(card != NULL);
+    assert(card->host != NULL);
+    assert(card->host->setFrequency != NULL);
+    assert(card->host->exchange != NULL);
+    assert(card->host->init != NULL);
 
     uint32_t applicationCommand41Argument = 0U;
 
+    card->host->init();
+
     /* Card must be initialized in 400KHZ. */
-    if (card->host->setFrequency(SDMMC_CLOCK_400KHZ))
+    if (card->host->setFrequency(SDMMC_CLOCK_400KHZ) != kStatus_Success)
     {
         return kStatus_SDSPI_SetFrequencyFailed;
     }
+
+    /* send 80 clock to active card */
+    (void)SDSPI_SendCardActive(card);
 
     /* Reset the card by CMD0. */
     if (kStatus_Success != SDSPI_GoIdle(card))
@@ -1084,10 +1145,12 @@ status_t SDSPI_Init(sdspi_card_t *card)
     }
 
     /* Force to use 512-byte length block, no matter which version.  */
-    if (kStatus_Success != SDSPI_SetBlockSize(card, 512U))
+    if (kStatus_Success != SDSPI_SetBlockSize(card, FSL_SDSPI_DEFAULT_BLOCK_SIZE))
     {
         return kStatus_SDSPI_SetBlockSizeFailed;
     }
+
+    /* get csd */
     if (kStatus_Success != SDSPI_SendCsd(card))
     {
         return kStatus_SDSPI_SendCsdFailed;
@@ -1110,16 +1173,22 @@ status_t SDSPI_Init(sdspi_card_t *card)
 
 void SDSPI_Deinit(sdspi_card_t *card)
 {
-    assert(card);
+    assert(card != NULL);
 
-    memset(card, 0, sizeof(sdspi_card_t));
+    if (card->host->deinit != NULL)
+    {
+        card->host->deinit();
+    }
+
+    (void)memset(card, 0, sizeof(sdspi_card_t));
 }
 
 bool SDSPI_CheckReadOnly(sdspi_card_t *card)
 {
-    assert(card);
+    assert(card != NULL);
 
-    if ((card->csd.flags & kSD_CsdPermanentWriteProtectFlag) || (card->csd.flags & kSD_CsdTemporaryWriteProtectFlag))
+    if (((card->csd.flags & (uint16_t)kSD_CsdPermanentWriteProtectFlag) != 0U) ||
+        ((card->csd.flags & (uint16_t)kSD_CsdTemporaryWriteProtectFlag) != 0U))
     {
         return true;
     }
@@ -1129,10 +1198,10 @@ bool SDSPI_CheckReadOnly(sdspi_card_t *card)
 
 status_t SDSPI_ReadBlocks(sdspi_card_t *card, uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)
 {
-    assert(card);
-    assert(card->host);
-    assert(buffer);
-    assert(blockCount);
+    assert(card != NULL);
+    assert(card->host != NULL);
+    assert(buffer != NULL);
+    assert(blockCount != 0U);
 
     uint32_t i;
     uint8_t response = 0U;
@@ -1140,8 +1209,9 @@ status_t SDSPI_ReadBlocks(sdspi_card_t *card, uint8_t *buffer, uint32_t startBlo
     /* send command */
     if (kStatus_Success !=
         SDSPI_SendCommand(
-            card->host, blockCount == 1U ? kSDSPI_CmdReadSigleBlock : kSDSPI_CmdReadMultiBlock,
-            ((card->flags & kSDSPI_SupportHighCapacityFlag) == 0U ? (startBlock * card->blockSize) : startBlock),
+            card->host, blockCount == 1U ? (uint32_t)kSDSPI_CmdReadSigleBlock : (uint32_t)kSDSPI_CmdReadMultiBlock,
+            ((card->flags & (uint32_t)kSDSPI_SupportHighCapacityFlag) == 0U ? (startBlock * card->blockSize) :
+                                                                              startBlock),
             &response))
     {
         return kStatus_SDSPI_SendCommandFailed;
@@ -1153,7 +1223,7 @@ status_t SDSPI_ReadBlocks(sdspi_card_t *card, uint8_t *buffer, uint32_t startBlo
         {
             return kStatus_SDSPI_ReadFailed;
         }
-        buffer += card->blockSize;
+        buffer = (uint8_t *)((uint32_t)buffer + card->blockSize);
     }
 
     /* Write stop transmission command after the last data block. */
@@ -1170,10 +1240,10 @@ status_t SDSPI_ReadBlocks(sdspi_card_t *card, uint8_t *buffer, uint32_t startBlo
 
 status_t SDSPI_WriteBlocks(sdspi_card_t *card, uint8_t *buffer, uint32_t startBlock, uint32_t blockCount)
 {
-    assert(card);
-    assert(card->host);
-    assert(buffer);
-    assert(blockCount);
+    assert(card != NULL);
+    assert(card->host != NULL);
+    assert(buffer != NULL);
+    assert(blockCount != 0U);
 
     uint32_t i;
     uint8_t response = 0U;
@@ -1186,32 +1256,33 @@ status_t SDSPI_WriteBlocks(sdspi_card_t *card, uint8_t *buffer, uint32_t startBl
     /* send command */
     if (kStatus_Success !=
         SDSPI_SendCommand(
-            card->host, blockCount == 1U ? kSDSPI_CmdWriteSigleBlock : kSDSPI_CmdWriteMultiBlock,
-            ((card->flags & kSDSPI_SupportHighCapacityFlag) == 0U ? (startBlock * card->blockSize) : startBlock),
+            card->host, blockCount == 1U ? (uint32_t)kSDSPI_CmdWriteSigleBlock : (uint32_t)kSDSPI_CmdWriteMultiBlock,
+            ((card->flags & (uint32_t)kSDSPI_SupportHighCapacityFlag) == 0U ? (startBlock * card->blockSize) :
+                                                                              startBlock),
             &response))
     {
         return kStatus_SDSPI_SendCommandFailed;
     }
     /* check response */
-    if (response)
+    if (response != 0U)
     {
         return kStatus_SDSPI_ResponseError;
     }
     /* write data */
     for (i = 0U; i < blockCount; i++)
     {
-        if (kStatus_Success !=
-            SDSPI_Write(card->host, buffer, card->blockSize,
-                        blockCount == 1U ? kSDSPI_DataTokenSingleBlockWrite : kSDSPI_DataTokenMultipleBlockWrite))
+        if (kStatus_Success != SDSPI_Write(card->host, buffer, card->blockSize,
+                                           blockCount == 1U ? (uint8_t)kSDSPI_DataTokenSingleBlockWrite :
+                                                              (uint8_t)kSDSPI_DataTokenMultipleBlockWrite))
         {
             return kStatus_SDSPI_WriteFailed;
         }
-        buffer += card->blockSize;
+        buffer = (uint8_t *)((uint32_t)buffer + card->blockSize);
     }
     /* stop transfer */
     if (blockCount > 1U)
     {
-        if (kStatus_Success != SDSPI_Write(card->host, 0U, 0U, kSDSPI_DataTokenStopTransfer))
+        if (kStatus_Success != SDSPI_Write(card->host, NULL, 0U, (uint8_t)kSDSPI_DataTokenStopTransfer))
         {
             return kStatus_SDSPI_WriteFailed;
         }
@@ -1243,7 +1314,7 @@ status_t SDSPI_SendPreErase(sdspi_card_t *card, uint32_t blockCount)
         return kStatus_SDSPI_SendCommandFailed;
     }
 
-    if (response)
+    if (response != 0U)
     {
         return kStatus_SDSPI_ResponseError;
     }
@@ -1253,19 +1324,19 @@ status_t SDSPI_SendPreErase(sdspi_card_t *card, uint32_t blockCount)
 
 status_t SDSPI_EraseBlocks(sdspi_card_t *card, uint32_t startBlock, uint32_t blockCount)
 {
-    assert(card);
-    assert(blockCount);
+    assert(card != NULL);
+    assert(blockCount != 0U);
 
     uint32_t blockCountOneTime; /* The block count can be erased in one time sending ERASE_BLOCKS command. */
     uint32_t blockDone = 0U;    /* The block count has been erased. */
     uint32_t blockLeft;         /* Left block count to be erase. */
 
     blockLeft = blockCount;
-    while (blockLeft)
+    while (blockLeft != 0U)
     {
-        if (blockLeft > (card->csd.eraseSectorSize + 1U))
+        if (blockLeft > (card->csd.eraseSectorSize + 1UL))
         {
-            blockCountOneTime = card->csd.eraseSectorSize + 1U;
+            blockCountOneTime = card->csd.eraseSectorSize + 1UL;
             blockLeft         = blockLeft - blockCountOneTime;
         }
         else
@@ -1287,11 +1358,12 @@ status_t SDSPI_EraseBlocks(sdspi_card_t *card, uint32_t startBlock, uint32_t blo
 
 status_t SDSPI_SwitchToHighSpeed(sdspi_card_t *card)
 {
-    assert(card);
+    assert(card != NULL);
 
     if (SDSPI_SelectFunction(card, kSD_GroupTimingMode, kSD_FunctionSDR25HighSpeed) == kStatus_Success)
     {
-        card->host->setFrequency(SD_CLOCK_50MHZ > card->host->busBaudRate ? card->host->busBaudRate : SD_CLOCK_50MHZ);
+        (void)card->host->setFrequency(SD_CLOCK_50MHZ > card->host->busBaudRate ? card->host->busBaudRate :
+                                                                                  SD_CLOCK_50MHZ);
 
         return kStatus_Success;
     }

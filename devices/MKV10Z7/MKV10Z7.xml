@@ -6,7 +6,8 @@
   <series>Kinetis_V</series>
   <version>1.6</version>
   <description>MKV10Z7 NXP Microcontroller</description>
-  <licenseText>Redistribution and use in source and binary forms, with or without modification,\nare permitted provided that the following conditions are met:\n o Redistributions of source code must retain the above copyright notice, this list\n   of conditions and the following disclaimer.\n o Redistributions in binary form must reproduce the above copyright notice, this\n   list of conditions and the following disclaimer in the documentation and/or\n   other materials provided with the distribution.\n o Neither the name of the copyright holder nor the names of its\n   contributors may be used to endorse or promote products derived from this\n   software without specific prior written permission.\n THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND\n ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED\n WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\n DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR\n ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES\n (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;\n LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON\n ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT\n (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS\n SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</licenseText>
+  <licenseText>Copyright 2016-2018 NXP
+ SPDX-License-Identifier: BSD-3-Clause</licenseText>
   <cpu>
     <name>CM0PLUS</name>
     <revision>r0p0</revision>
@@ -3425,10 +3426,86 @@
               </enumeratedValues>
             </field>
             <field>
-              <name>PCSIS</name>
+              <name>PCSIS0</name>
               <description>Peripheral Chip Select x Inactive State</description>
               <bitOffset>16</bitOffset>
-              <bitWidth>5</bitWidth>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>The inactive state of PCSx is low.</description>
+                  <value>#00000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>The inactive state of PCSx is high.</description>
+                  <value>#00001</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PCSIS1</name>
+              <description>Peripheral Chip Select x Inactive State</description>
+              <bitOffset>17</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>The inactive state of PCSx is low.</description>
+                  <value>#00000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>The inactive state of PCSx is high.</description>
+                  <value>#00001</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PCSIS2</name>
+              <description>Peripheral Chip Select x Inactive State</description>
+              <bitOffset>18</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>The inactive state of PCSx is low.</description>
+                  <value>#00000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>The inactive state of PCSx is high.</description>
+                  <value>#00001</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PCSIS3</name>
+              <description>Peripheral Chip Select x Inactive State</description>
+              <bitOffset>19</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>The inactive state of PCSx is low.</description>
+                  <value>#00000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>The inactive state of PCSx is high.</description>
+                  <value>#00001</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PCSIS4</name>
+              <description>Peripheral Chip Select x Inactive State</description>
+              <bitOffset>20</bitOffset>
+              <bitWidth>1</bitWidth>
               <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
@@ -4224,10 +4301,86 @@
               <access>read-write</access>
             </field>
             <field>
-              <name>PCS</name>
+              <name>PCS0</name>
               <description>Select which PCS signals are to be asserted for the transfer</description>
               <bitOffset>16</bitOffset>
-              <bitWidth>5</bitWidth>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Negate the PCS[x] signal.</description>
+                  <value>#00000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Assert the PCS[x] signal.</description>
+                  <value>#00001</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PCS1</name>
+              <description>Select which PCS signals are to be asserted for the transfer</description>
+              <bitOffset>17</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Negate the PCS[x] signal.</description>
+                  <value>#00000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Assert the PCS[x] signal.</description>
+                  <value>#00001</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PCS2</name>
+              <description>Select which PCS signals are to be asserted for the transfer</description>
+              <bitOffset>18</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Negate the PCS[x] signal.</description>
+                  <value>#00000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Assert the PCS[x] signal.</description>
+                  <value>#00001</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PCS3</name>
+              <description>Select which PCS signals are to be asserted for the transfer</description>
+              <bitOffset>19</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Negate the PCS[x] signal.</description>
+                  <value>#00000</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Assert the PCS[x] signal.</description>
+                  <value>#00001</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>PCS4</name>
+              <description>Select which PCS signals are to be asserted for the transfer</description>
+              <bitOffset>20</bitOffset>
+              <bitWidth>1</bitWidth>
               <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
@@ -5407,10 +5560,10 @@
           <resetMask>0xFFFFFFFF</resetMask>
           <fields>
             <field>
-              <name>EN</name>
+              <name>EN0</name>
               <description>PDB Channel Pre-Trigger Enable</description>
               <bitOffset>0</bitOffset>
-              <bitWidth>8</bitWidth>
+              <bitWidth>1</bitWidth>
               <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
@@ -5426,10 +5579,143 @@
               </enumeratedValues>
             </field>
             <field>
-              <name>TOS</name>
+              <name>EN1</name>
+              <description>PDB Channel Pre-Trigger Enable</description>
+              <bitOffset>1</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>EN2</name>
+              <description>PDB Channel Pre-Trigger Enable</description>
+              <bitOffset>2</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>EN3</name>
+              <description>PDB Channel Pre-Trigger Enable</description>
+              <bitOffset>3</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>EN4</name>
+              <description>PDB Channel Pre-Trigger Enable</description>
+              <bitOffset>4</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>EN5</name>
+              <description>PDB Channel Pre-Trigger Enable</description>
+              <bitOffset>5</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>EN6</name>
+              <description>PDB Channel Pre-Trigger Enable</description>
+              <bitOffset>6</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>EN7</name>
+              <description>PDB Channel Pre-Trigger Enable</description>
+              <bitOffset>7</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>TOS0</name>
               <description>PDB Channel Pre-Trigger Output Select</description>
               <bitOffset>8</bitOffset>
-              <bitWidth>8</bitWidth>
+              <bitWidth>1</bitWidth>
               <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
@@ -5445,10 +5731,276 @@
               </enumeratedValues>
             </field>
             <field>
-              <name>BB</name>
+              <name>TOS1</name>
+              <description>PDB Channel Pre-Trigger Output Select</description>
+              <bitOffset>9</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger is in bypassed mode. The pre-trigger asserts one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SWTRIG is written with 1.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger asserts when the counter reaches the channel delay register and one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SETRIG is written with 1.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>TOS2</name>
+              <description>PDB Channel Pre-Trigger Output Select</description>
+              <bitOffset>10</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger is in bypassed mode. The pre-trigger asserts one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SWTRIG is written with 1.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger asserts when the counter reaches the channel delay register and one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SETRIG is written with 1.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>TOS3</name>
+              <description>PDB Channel Pre-Trigger Output Select</description>
+              <bitOffset>11</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger is in bypassed mode. The pre-trigger asserts one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SWTRIG is written with 1.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger asserts when the counter reaches the channel delay register and one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SETRIG is written with 1.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>TOS4</name>
+              <description>PDB Channel Pre-Trigger Output Select</description>
+              <bitOffset>12</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger is in bypassed mode. The pre-trigger asserts one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SWTRIG is written with 1.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger asserts when the counter reaches the channel delay register and one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SETRIG is written with 1.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>TOS5</name>
+              <description>PDB Channel Pre-Trigger Output Select</description>
+              <bitOffset>13</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger is in bypassed mode. The pre-trigger asserts one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SWTRIG is written with 1.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger asserts when the counter reaches the channel delay register and one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SETRIG is written with 1.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>TOS6</name>
+              <description>PDB Channel Pre-Trigger Output Select</description>
+              <bitOffset>14</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger is in bypassed mode. The pre-trigger asserts one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SWTRIG is written with 1.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger asserts when the counter reaches the channel delay register and one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SETRIG is written with 1.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>TOS7</name>
+              <description>PDB Channel Pre-Trigger Output Select</description>
+              <bitOffset>15</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger is in bypassed mode. The pre-trigger asserts one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SWTRIG is written with 1.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger asserts when the counter reaches the channel delay register and one peripheral clock cycle after a rising edge is detected on selected trigger input source or software trigger is selected and SETRIG is written with 1.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>BB0</name>
               <description>PDB Channel Pre-Trigger Back-to-Back Operation Enable</description>
               <bitOffset>16</bitOffset>
-              <bitWidth>8</bitWidth>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>BB1</name>
+              <description>PDB Channel Pre-Trigger Back-to-Back Operation Enable</description>
+              <bitOffset>17</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>BB2</name>
+              <description>PDB Channel Pre-Trigger Back-to-Back Operation Enable</description>
+              <bitOffset>18</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>BB3</name>
+              <description>PDB Channel Pre-Trigger Back-to-Back Operation Enable</description>
+              <bitOffset>19</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>BB4</name>
+              <description>PDB Channel Pre-Trigger Back-to-Back Operation Enable</description>
+              <bitOffset>20</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>BB5</name>
+              <description>PDB Channel Pre-Trigger Back-to-Back Operation Enable</description>
+              <bitOffset>21</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>BB6</name>
+              <description>PDB Channel Pre-Trigger Back-to-Back Operation Enable</description>
+              <bitOffset>22</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation disabled.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB channel&apos;s corresponding pre-trigger back-to-back operation enabled.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>BB7</name>
+              <description>PDB Channel Pre-Trigger Back-to-Back Operation Enable</description>
+              <bitOffset>23</bitOffset>
+              <bitWidth>1</bitWidth>
               <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
@@ -5478,10 +6030,143 @@
           <resetMask>0xFFFFFFFF</resetMask>
           <fields>
             <field>
-              <name>ERR</name>
+              <name>ERR0</name>
               <description>PDB Channel Sequence Error Flags</description>
               <bitOffset>0</bitOffset>
-              <bitWidth>8</bitWidth>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Sequence error not detected on PDB channel&apos;s corresponding pre-trigger.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Sequence error detected on PDB channel&apos;s corresponding pre-trigger. ADCn block can be triggered for a conversion by one pre-trigger from PDB channel n. When one conversion, which is triggered by one of the pre-triggers from PDB channel n, is in progress, new trigger from PDB channel&apos;s corresponding pre-trigger m cannot be accepted by ADCn, and ERR[m] is set. Writing 0&apos;s to clear the sequence error flags.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ERR1</name>
+              <description>PDB Channel Sequence Error Flags</description>
+              <bitOffset>1</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Sequence error not detected on PDB channel&apos;s corresponding pre-trigger.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Sequence error detected on PDB channel&apos;s corresponding pre-trigger. ADCn block can be triggered for a conversion by one pre-trigger from PDB channel n. When one conversion, which is triggered by one of the pre-triggers from PDB channel n, is in progress, new trigger from PDB channel&apos;s corresponding pre-trigger m cannot be accepted by ADCn, and ERR[m] is set. Writing 0&apos;s to clear the sequence error flags.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ERR2</name>
+              <description>PDB Channel Sequence Error Flags</description>
+              <bitOffset>2</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Sequence error not detected on PDB channel&apos;s corresponding pre-trigger.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Sequence error detected on PDB channel&apos;s corresponding pre-trigger. ADCn block can be triggered for a conversion by one pre-trigger from PDB channel n. When one conversion, which is triggered by one of the pre-triggers from PDB channel n, is in progress, new trigger from PDB channel&apos;s corresponding pre-trigger m cannot be accepted by ADCn, and ERR[m] is set. Writing 0&apos;s to clear the sequence error flags.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ERR3</name>
+              <description>PDB Channel Sequence Error Flags</description>
+              <bitOffset>3</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Sequence error not detected on PDB channel&apos;s corresponding pre-trigger.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Sequence error detected on PDB channel&apos;s corresponding pre-trigger. ADCn block can be triggered for a conversion by one pre-trigger from PDB channel n. When one conversion, which is triggered by one of the pre-triggers from PDB channel n, is in progress, new trigger from PDB channel&apos;s corresponding pre-trigger m cannot be accepted by ADCn, and ERR[m] is set. Writing 0&apos;s to clear the sequence error flags.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ERR4</name>
+              <description>PDB Channel Sequence Error Flags</description>
+              <bitOffset>4</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Sequence error not detected on PDB channel&apos;s corresponding pre-trigger.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Sequence error detected on PDB channel&apos;s corresponding pre-trigger. ADCn block can be triggered for a conversion by one pre-trigger from PDB channel n. When one conversion, which is triggered by one of the pre-triggers from PDB channel n, is in progress, new trigger from PDB channel&apos;s corresponding pre-trigger m cannot be accepted by ADCn, and ERR[m] is set. Writing 0&apos;s to clear the sequence error flags.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ERR5</name>
+              <description>PDB Channel Sequence Error Flags</description>
+              <bitOffset>5</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Sequence error not detected on PDB channel&apos;s corresponding pre-trigger.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Sequence error detected on PDB channel&apos;s corresponding pre-trigger. ADCn block can be triggered for a conversion by one pre-trigger from PDB channel n. When one conversion, which is triggered by one of the pre-triggers from PDB channel n, is in progress, new trigger from PDB channel&apos;s corresponding pre-trigger m cannot be accepted by ADCn, and ERR[m] is set. Writing 0&apos;s to clear the sequence error flags.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ERR6</name>
+              <description>PDB Channel Sequence Error Flags</description>
+              <bitOffset>6</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>Sequence error not detected on PDB channel&apos;s corresponding pre-trigger.</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>Sequence error detected on PDB channel&apos;s corresponding pre-trigger. ADCn block can be triggered for a conversion by one pre-trigger from PDB channel n. When one conversion, which is triggered by one of the pre-triggers from PDB channel n, is in progress, new trigger from PDB channel&apos;s corresponding pre-trigger m cannot be accepted by ADCn, and ERR[m] is set. Writing 0&apos;s to clear the sequence error flags.</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>ERR7</name>
+              <description>PDB Channel Sequence Error Flags</description>
+              <bitOffset>7</bitOffset>
+              <bitWidth>1</bitWidth>
               <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
@@ -5624,10 +6309,143 @@
           <resetMask>0xFFFFFFFF</resetMask>
           <fields>
             <field>
-              <name>POEN</name>
+              <name>POEN0</name>
               <description>PDB Pulse-Out Enable</description>
               <bitOffset>0</bitOffset>
-              <bitWidth>8</bitWidth>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB Pulse-Out disabled</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB Pulse-Out enabled</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>POEN1</name>
+              <description>PDB Pulse-Out Enable</description>
+              <bitOffset>1</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB Pulse-Out disabled</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB Pulse-Out enabled</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>POEN2</name>
+              <description>PDB Pulse-Out Enable</description>
+              <bitOffset>2</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB Pulse-Out disabled</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB Pulse-Out enabled</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>POEN3</name>
+              <description>PDB Pulse-Out Enable</description>
+              <bitOffset>3</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB Pulse-Out disabled</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB Pulse-Out enabled</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>POEN4</name>
+              <description>PDB Pulse-Out Enable</description>
+              <bitOffset>4</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB Pulse-Out disabled</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB Pulse-Out enabled</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>POEN5</name>
+              <description>PDB Pulse-Out Enable</description>
+              <bitOffset>5</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB Pulse-Out disabled</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB Pulse-Out enabled</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>POEN6</name>
+              <description>PDB Pulse-Out Enable</description>
+              <bitOffset>6</bitOffset>
+              <bitWidth>1</bitWidth>
+              <access>read-write</access>
+              <enumeratedValues>
+                <enumeratedValue>
+                  <name>0</name>
+                  <description>PDB Pulse-Out disabled</description>
+                  <value>#0</value>
+                </enumeratedValue>
+                <enumeratedValue>
+                  <name>1</name>
+                  <description>PDB Pulse-Out enabled</description>
+                  <value>#1</value>
+                </enumeratedValue>
+              </enumeratedValues>
+            </field>
+            <field>
+              <name>POEN7</name>
+              <description>PDB Pulse-Out Enable</description>
+              <bitOffset>7</bitOffset>
+              <bitWidth>1</bitWidth>
               <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
@@ -5820,7 +6638,7 @@
               <description>Timer Overflow Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -5974,7 +6792,7 @@
               <description>Channel Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -7550,7 +8368,7 @@
               <description>Channel Trigger Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -7743,7 +8561,7 @@
               <description>Fault Detection Flag 0</description>
               <bitOffset>0</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -7762,7 +8580,7 @@
               <description>Fault Detection Flag 1</description>
               <bitOffset>1</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -7781,7 +8599,7 @@
               <description>Fault Detection Flag 2</description>
               <bitOffset>2</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -7800,7 +8618,7 @@
               <description>Fault Detection Flag 3</description>
               <bitOffset>3</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -7857,7 +8675,7 @@
               <description>Fault Detection Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -9423,7 +10241,7 @@
               <description>Timer Overflow Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -9577,7 +10395,7 @@
               <description>Channel Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -11153,7 +11971,7 @@
               <description>Channel Trigger Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -11346,7 +12164,7 @@
               <description>Fault Detection Flag 0</description>
               <bitOffset>0</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -11365,7 +12183,7 @@
               <description>Fault Detection Flag 1</description>
               <bitOffset>1</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -11384,7 +12202,7 @@
               <description>Fault Detection Flag 2</description>
               <bitOffset>2</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -11403,7 +12221,7 @@
               <description>Fault Detection Flag 3</description>
               <bitOffset>3</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -11460,7 +12278,7 @@
               <description>Fault Detection Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -13026,7 +13844,7 @@
               <description>Timer Overflow Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -13180,7 +13998,7 @@
               <description>Channel Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -14756,7 +15574,7 @@
               <description>Channel Trigger Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -14949,7 +15767,7 @@
               <description>Fault Detection Flag 0</description>
               <bitOffset>0</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -14968,7 +15786,7 @@
               <description>Fault Detection Flag 1</description>
               <bitOffset>1</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -14987,7 +15805,7 @@
               <description>Fault Detection Flag 2</description>
               <bitOffset>2</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -15006,7 +15824,7 @@
               <description>Fault Detection Flag 3</description>
               <bitOffset>3</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -15063,7 +15881,7 @@
               <description>Fault Detection Flag</description>
               <bitOffset>7</bitOffset>
               <bitWidth>1</bitWidth>
-              <access>read-only</access>
+              <access>read-write</access>
               <enumeratedValues>
                 <enumeratedValue>
                   <name>0</name>
@@ -26085,7 +26903,7 @@
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>1</name>
-                  <description>Overrun has occurred or the overrun flag has not been cleared since the last overrun occured.</description>
+                  <description>Overrun has occurred or the overrun flag has not been cleared since the last overrun occurred.</description>
                   <value>#1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -27722,7 +28540,7 @@
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>1</name>
-                  <description>Overrun has occurred or the overrun flag has not been cleared since the last overrun occured.</description>
+                  <description>Overrun has occurred or the overrun flag has not been cleared since the last overrun occurred.</description>
                   <value>#1</value>
                 </enumeratedValue>
               </enumeratedValues>

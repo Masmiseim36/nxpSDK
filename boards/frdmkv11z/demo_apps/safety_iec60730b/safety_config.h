@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,6 +12,7 @@
 
 #include "MKV11Z7.h"
 #include "iec60730b.h"
+#include "iec60730b_core.h"
 #include "project_setup_frdmkv11z.h"
 #include "safety_cm0_kinetis.h"
 
@@ -22,13 +23,18 @@
 #define SAFETY_ERROR_ACTION 1
 
 /* TEST SWITCHES - for debugging it is better to turn the flash test and watchdog OFF */
-#define ADC_TEST_ENABLED    1
-#define CLOCK_TEST_ENABLED  1
-#define DIO_TEST_ENABLED    1
-#define FLASH_TEST_ENABLED  0
-#define PC_TEST_ENABLED     1
-#define WATCHDOG_ENABLED    0
-#define FMSTR_SERIAL_ENABLE 1 
+#define ADC_TEST_ENABLED   1
+#define CLOCK_TEST_ENABLED 1
+#define DIO_TEST_ENABLED   1
+#define FLASH_TEST_ENABLED 1
+#define RAM_TEST_ENABLED   1 
+#define PC_TEST_ENABLED    1
+#define WATCHDOG_ENABLED   1
+#define FMSTR_SERIAL_ENABLE 1
+
+/*Macros for different reference timer setings*/
+#define CLOCK_TEST 1
+#define WDOG_TEST  2
 
 /* CLOCK test */
 #define LPTMR_USED                  LPTMR0
@@ -88,9 +94,8 @@
 /* Program Counter TEST */
 #define PC_TEST_PATTERN    0x20000000 /* test address for Program counter test (in RAM region) */
 
-/* SERIAL macros */
-#define SERIAL_BAUD_RATE 19200
-
+/* UART macros */
+#define UART_BAUD_RATE      9600
 
 /* FLASH test */
 #define HW_FLASH_TEST 1 /* HW=1, SW=0 */
@@ -101,13 +106,14 @@
 #endif
 
 #if defined(__GNUC__) ||(defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* KEIL */
-    #define FLASH_TEST_CONDITION_SEED 0x1D0F
-    /* This must be in consistence with setting in "User AFTER BUILD = srec_cat*/
-    #define FLASH_TEST_START_ADDRESS  0x410
-    #define FLASH_TEST_END_ADDRESS    0x4DFE
-    #define CRC_VALUE_ADDR            0x4DFE
+    #define FLASH_TEST_CONDITION_SEED 0x0000
 #endif
-
+#if defined(__GNUC__) || defined(__ARMCC_VERSION)
+    /*! @note The following flash test settings must be in consistence with
+              "User AFTER BUILD = srec_cat!*/
+    /* The CRC16 of safety-related FALSH memory. */
+    #define FS_CFG_FLASH_TST_CRC        (0xFFFFU)
+#endif
 /* RAM test */
 #define RAM_TEST_BLOCK_SIZE           0x4   /* size of block for runtime testing */
 #if defined(__IAR_SYSTEMS_ICC__) || (defined(__GNUC__) && ( __ARMCC_VERSION >= 6010050)) /* KEIL */

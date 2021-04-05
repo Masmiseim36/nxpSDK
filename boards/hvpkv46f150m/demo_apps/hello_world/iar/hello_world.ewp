@@ -316,12 +316,9 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/utilities/str</state>
@@ -329,10 +326,6 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/utilities</state>
         </option>
         <option>
@@ -1299,12 +1292,9 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/..</state>
           <state>$PROJ_DIR$/../../..</state>
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/utilities/str</state>
@@ -1312,10 +1302,6 @@
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV46F16/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV46F16/utilities</state>
         </option>
         <option>
@@ -2126,6 +2112,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
@@ -2145,21 +2134,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

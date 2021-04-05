@@ -1,0 +1,12 @@
+if(NOT DEVICE_MKV31F51212_STARTUP_MKV31F51212_INCLUDED)
+    
+    set(DEVICE_MKV31F51212_STARTUP_MKV31F51212_INCLUDED true CACHE BOOL "device_MKV31F51212_startup component is included.")
+
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/gcc/startup_MKV31F51212.S
+    )
+
+
+    include(device_MKV31F51212_system_MKV31F51212)
+
+endif()

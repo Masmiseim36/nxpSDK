@@ -7,10 +7,10 @@ If the core temperature is higher or lower than average, the LEDs change state r
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -56,6 +56,3 @@ ADC LOW POWER DEMO
 Note:
 - when the temperature is above the average: LED RED on, LED GREEN off.
 - when the temperature is below the average: LED GREEN on, LED RED off.
-Customization options
-=====================
-

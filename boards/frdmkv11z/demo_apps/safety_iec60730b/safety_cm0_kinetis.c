@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -49,6 +49,21 @@
 
     const uint32_t c_romStart = (uint32_t)__ROM_start__;/* symbol from Linker command file */
     const uint32_t c_romEnd = (uint32_t)__ROM_end__;/* symbol from Linker command file */
+		
+
+     /* The safety-related memory marker */
+    extern uint32_t Image$$ER_IROM3$$Limit;
+    extern uint32_t Load$$ER_IROM3$$Limit;
+
+    /* The safety-related FLASH CRC16 value. */
+    fs_crc_t c_sfsCRC __attribute__((used, section(".flshcrc"))) =
+    {
+        .ui16Start      = 0xA55AU,
+        .ui32FlashStart = (uint32_t)__ROM_start__,
+        .ui32FlashEnd   = (uint32_t)&Load$$ER_IROM3$$Limit,
+        .ui32CRC        = (uint32_t)FS_CFG_FLASH_TST_CRC,
+        .ui16End        = 0x5AA5U
+    };
 
 #else /* IAR + MCUXpresso */
     extern uint32_t m_wd_test_backup;   /* from Linker configuration file */
@@ -104,6 +119,20 @@
 
         extern uint32_t __ROM_end__  ; /* symbol from Linker command file */
         const uint32_t c_romEnd = (uint32_t)&__ROM_end__  ;
+
+        /* Safety-related FLASH boundaries. */
+        extern uint32_t m_safety_flash_end;
+
+        /* The safety-related FLASH CRC value. */
+        fs_crc_t c_sfsCRC __attribute__((used, section(".flshcrc"))) =
+        {
+            .ui16Start      = 0xA55AU,
+            .ui32FlashStart = (uint32_t)&__ROM_start__,
+            .ui32FlashEnd   = (uint32_t)&m_safety_flash_end,
+            .ui32CRC        = (uint32_t)FS_CFG_FLASH_TST_CRC,
+            .ui16End        = 0x5AA5U
+        };
+
     #endif
 #endif
 
@@ -112,6 +141,30 @@
     const fs_aio_limits_t FS_ADC_Limits[FS_CFG_AIO_CHANNELS_CNT] = FS_CFG_AIO_CHANNELS_LIMITS_INIT;
     const uint8_t FS_ADC_inputs[FS_CFG_AIO_CHANNELS_CNT] = FS_CFG_AIO_CHANNELS_INIT;
 #endif /* _K32W042S1M2_CM0PLUS_H_ */
+
+ /** This variable is used as flag for automatic "run" test during example development, 
+these test have a 3 return value: 
+1. All tests pass - wait until all after/reset and runtime test passed
+2. Safety errror - return from SafetyErrorHandling() function
+3. timeout - if case of that all tests are not finished until setted timeout */
+#define CLOCK_PASSED              (1<<0)
+#define INVARIABLE_RUNTIME_PASSED (1<<1)
+#define VARIABLE_RUNTIME_PASSED   (1<<2)
+#define ALL_RUNTIME_PASSED         0x07
+
+/***************************************************
+*                 BIT MASK 
+* b.0  - Clock test
+* b.1  - Invariable memory RunTime
+* b.2  - Variable memory Runtime
+***************************************************/
+uint32_t runtime_test_finish_flag = 0; /* no test performed */ 
+
+
+/* This function is only for development validation - 
+* indicate that runtime test run at leaset one. */
+static void test_end(void);
+
 
 /*******************************************************************************
  * Code
@@ -139,7 +192,6 @@ void SafetyWatchdogTest(safety_common_t *psSafetyCommon, wd_test_t *psSafetyWdTe
     uint32_t counterLimitHigh;
     uint32_t counterLimitLow;
     uint32_t runTestConditionSRS0;
-    uint32_t runTestConditionSRS1;
     uint32_t checkTestCondition;
   
     /* calculate counter limit values */
@@ -152,7 +204,7 @@ void SafetyWatchdogTest(safety_common_t *psSafetyCommon, wd_test_t *psSafetyWdTe
     counterLimitLow = psSafetyWdTest->wdTestLimitLow;
 
     runTestConditionSRS0 = WD_RUN_TEST_CONDITION_SRS0;
-    runTestConditionSRS1 = WD_RUN_TEST_CONDITION_SRS1;    
+   
     checkTestCondition = WD_CHECK_TEST_CONDITION;
     
     /*Library variables initialization*/
@@ -160,18 +212,6 @@ void SafetyWatchdogTest(safety_common_t *psSafetyCommon, wd_test_t *psSafetyWdTe
     WATCHDOG_TEST_VARIABLES->WdogBase = (uint32_t)USED_WDOG;
     WATCHDOG_TEST_VARIABLES->pResetDetectRegister = (uint32_t)(RESET_DETECT_REGISTER);
     WATCHDOG_TEST_VARIABLES->ResetDetectMask  = (uint32_t)RESET_DETECT_MASK;
-
-      PortInit( dio_safety_test_items[0]->gpio, dio_safety_test_items[0]->pcr, dio_safety_test_items[0]->pinNum, PIN_DIRECTION_OUT, PIN_MUX_GPIO);
-      PortInit( dio_safety_test_items[1]->gpio, dio_safety_test_items[1]->pcr, dio_safety_test_items[1]->pinNum, PIN_DIRECTION_OUT, PIN_MUX_GPIO);
-      int i;
-      for(i=0;i<10;i++)
-      {
-        ((GPIO_Type*)(dio_safety_test_items[0]->gpio))->PTOR |= (1U << dio_safety_test_items[0]->pinNum);
-        ((GPIO_Type*)(dio_safety_test_items[1]->gpio))->PTOR |= (1U << dio_safety_test_items[1]->pinNum);
- 
-      }
-        ((GPIO_Type*)(dio_safety_test_items[0]->gpio))->PCOR |= (1U << dio_safety_test_items[0]->pinNum);
-        ((GPIO_Type*)(dio_safety_test_items[1]->gpio))->PCOR |= (1U << dio_safety_test_items[1]->pinNum);
       
 #ifdef _MKE02Z4_H_
     RTC_Init();
@@ -188,7 +228,7 @@ void SafetyWatchdogTest(safety_common_t *psSafetyCommon, wd_test_t *psSafetyWdTe
     
 #if defined(_K32L2A41A_H_) |  defined(_MKE15Z7_H_)
 
-    LPTMRInit();
+    LPTMRInit(WDOG_TEST);
         
     if(*(RESET_DETECT_REGISTER) & runTestConditionSRS0) /* if non WD reset --- because of debugging--- in real it must be only after POR reset*/
     {
@@ -229,32 +269,20 @@ void SafetyWatchdogTest(safety_common_t *psSafetyCommon, wd_test_t *psSafetyWdTe
 #ifndef _K32L2A41A_H_
 #ifndef _MKE15Z7_H_
 #ifndef _K32W042S1M2_CM0PLUS_H_    
-      
-    LPTMRInit();
+   
+    uint32_t runTestConditionSRS1;
+    runTestConditionSRS1 = WD_RUN_TEST_CONDITION_SRS1; 
+       
+    LPTMRInit(WDOG_TEST);
 
     if((*(RESET_DETECT_REGISTER) & runTestConditionSRS0)|(RCM->SRS1 & runTestConditionSRS1)) /* if non WD reset --- because of debugging--- in real it must be only after POR reset*/
     {
-        ((GPIO_Type*)(dio_safety_test_items[0]->gpio))->PSOR |= (1U << dio_safety_test_items[0]->pinNum);
-        __asm("nop");
-        ((GPIO_Type*)(dio_safety_test_items[0]->gpio))->PCOR |= (1U << dio_safety_test_items[0]->pinNum);
-        ((GPIO_Type*)(dio_safety_test_items[0]->gpio))->PSOR |= (1U << dio_safety_test_items[0]->pinNum);
-        __asm("nop");
-        ((GPIO_Type*)(dio_safety_test_items[0]->gpio))->PCOR |= (1U << dio_safety_test_items[0]->pinNum);
-            
       *SAFETY_ERROR_CODE = 0;  /* clean the safety error code flag */
          FS_WDOG_Setup_LPTMR(WATCHDOG_TEST_VARIABLES, REFRESH_INDEX );
     }
     if(*(RESET_DETECT_REGISTER) & checkTestCondition)   /* if WD reset --- because of debugging--- in real it should be after every non-POR reset*/
     {
-          ((GPIO_Type*)(dio_safety_test_items[0]->gpio))->PSOR |= (1U << dio_safety_test_items[0]->pinNum);
-        __asm("nop");
-          ((GPIO_Type*)(dio_safety_test_items[0]->gpio))->PCOR |= (1U << dio_safety_test_items[0]->pinNum);
-          
          FS_WDOG_Check(counterLimitHigh, counterLimitLow, WATCHDOG_RESETS_LIMIT, ENDLESS_LOOP_ENABLE, WATCHDOG_TEST_VARIABLES, CLEAR_FLAG, REG_WIDE);
-       
-         ((GPIO_Type*)(dio_safety_test_items[0]->gpio))->PSOR |= (1U << dio_safety_test_items[0]->pinNum);
-        __asm("nop");
-        ((GPIO_Type*)(dio_safety_test_items[0]->gpio))->PCOR |= (1U << dio_safety_test_items[0]->pinNum);
     }
 
 #endif /* _MKE02Z4_H_ */ 
@@ -305,7 +333,7 @@ void SafetyWatchdogRuntimeRefresh(wd_test_t *psSafetyWdTest)
  *
  * @return  None
  */
-void SafetyClockTestInit(safety_common_t *psSafetyCommon, clock_test_t *psSafetyClockTest)
+void SafetyClockTestInit(safety_common_t *psSafetyCommon, fs_clock_test_t *psSafetyClockTest)
 {
     psSafetyCommon->mcgirclkFreq = REF_TIMER_CLOCK_FREQUENCY;
     psSafetyClockTest->clockTestExpected = psSafetyCommon->mcgirclkFreq / (uint32_t)ISR_FREQUENCY;
@@ -318,7 +346,7 @@ void SafetyClockTestInit(safety_common_t *psSafetyCommon, clock_test_t *psSafety
 #ifdef _MKE02Z4_H_
     RTC_Init();
 #else
-    LPTMRInit();
+    LPTMRInit(CLOCK_TEST);
 #endif
 }
 
@@ -332,12 +360,12 @@ void SafetyClockTestInit(safety_common_t *psSafetyCommon, clock_test_t *psSafety
  *
  * @return  None
  */
-void SafetyClockTestIsr(clock_test_t *psSafetyClockTest)
+void SafetyClockTestIsr(fs_clock_test_t *psSafetyClockTest)
 {
 #ifndef _MKE02Z4_H_
-    FS_CLK_LPTMR((uint32_t *)LPTMR_USED, (uint32_t *)&psSafetyClockTest->clockTestContext);
+    FS_CLK_LPTMR((fs_lptmr_t *)LPTMR_USED, (uint32_t *)&psSafetyClockTest->clockTestContext);
 #else
-    FS_CLK_RTC((uint32_t *)RTC, (uint32_t *)&psSafetyClockTest->clockTestContext); /* updates the control value (clockTestContext) for clock test */
+    FS_CLK_RTC((fs_rtc_t *)RTC, (uint32_t *)&psSafetyClockTest->clockTestContext); /* updates the control value (clockTestContext) for clock test */
 #endif
     psSafetyClockTest->clockTestStart |= 1;  /* to prevent checking of result before execution */
 }
@@ -356,7 +384,7 @@ void SafetyClockTestIsr(clock_test_t *psSafetyClockTest)
  *
  * @return  None
  */
-void SafetyClockTestCheck(safety_common_t *psSafetyCommon, clock_test_t *psSafetyClockTest)
+void SafetyClockTestCheck(safety_common_t *psSafetyCommon, fs_clock_test_t *psSafetyClockTest)
 {
     if (psSafetyClockTest->clockTestStart)  /* condition is valid after the first Systick interrupt */
     {
@@ -366,6 +394,7 @@ void SafetyClockTestCheck(safety_common_t *psSafetyCommon, clock_test_t *psSafet
             psSafetyCommon->safetyErrors |= CLOCK_TEST_ERROR;
             SafetyErrorHandling(psSafetyCommon);
         }
+        runtime_test_finish_flag |= CLOCK_PASSED;  /*Variable for development run test, useless for final application */
     }
 }
 
@@ -380,7 +409,7 @@ void SafetyClockTestCheck(safety_common_t *psSafetyCommon, clock_test_t *psSafet
  *
  * @return  None
  */
-void SafetyFlashTestInit(flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig)
+void SafetyFlashTestInit(fs_flash_runtime_test_parameters_t *psFlashCrc, fs_flash_configuration_parameters_t *psFlashConfig)
 {
 #if HW_FLASH_TEST
     #if USE_PCC
@@ -406,13 +435,13 @@ void SafetyFlashTestInit(flash_runtime_test_parameters_t *psFlashCrc, flash_conf
     psFlashConfig->checksum16 = __checksum;
 
 #else /* KEIL + MCUXpresso */
-    psFlashConfig->startAddress = (uint32_t)FLASH_TEST_START_ADDRESS;
-    psFlashConfig->endAddress = (uint32_t)FLASH_TEST_END_ADDRESS;
-    psFlashConfig->checksum16 = crcPostbuild;
+    psFlashConfig->startAddress = c_sfsCRC.ui32FlashStart;
+    psFlashConfig->endAddress = c_sfsCRC.ui32FlashEnd;
+    psFlashConfig->checksum16 =  (uint16_t)((c_sfsCRC.ui32CRC)&0x0000FFFF);
 #endif
 
     psFlashConfig->size = psFlashConfig->endAddress - psFlashConfig->startAddress;
-    psFlashConfig->blockSize = FLASH_TEST_BLOCK_SIZE;
+    psFlashConfig->blockSize =  FLASH_TEST_BLOCK_SIZE;
     psFlashConfig->startConditionSeed = (uint32_t)FLASH_TEST_CONDITION_SEED;
 
     psFlashCrc->actualAddress  = psFlashConfig->startAddress;    /* start address */
@@ -432,7 +461,7 @@ void SafetyFlashTestInit(flash_runtime_test_parameters_t *psFlashCrc, flash_conf
  *
  * @return  None
  */
-void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, flash_configuration_parameters_t *psFlashConfig)
+void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, fs_flash_configuration_parameters_t *psFlashConfig)
 {
 
     if((psFlashConfig->startAddress + psFlashConfig->size)< c_romEnd)  /* protection against hard fault */
@@ -466,7 +495,7 @@ void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, flash_configurat
  *
  * @return  None
  */
-void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon, flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig)
+void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon, fs_flash_runtime_test_parameters_t *psFlashCrc, fs_flash_configuration_parameters_t *psFlashConfig)
 {
     /* CRC calculation for a given block of Flash memory */
     if((psFlashCrc->actualAddress + psFlashCrc->blockSize)< c_romEnd)  /* protection against hard fault */
@@ -496,7 +525,7 @@ void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon, flash_runtime_test_
  *
  * @return  Result of the flash test: FS_ST_FLASH_FAIL or FS_ST_FLASH_PASS
  */
-uint32_t SafetyFlashTestHandling( flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig)
+uint32_t SafetyFlashTestHandling( fs_flash_runtime_test_parameters_t *psFlashCrc, fs_flash_configuration_parameters_t *psFlashConfig)
 {
     psFlashCrc->actualAddress += psFlashCrc->blockSize;    /* set the actual address for testing */
     if(psFlashCrc->actualAddress == psFlashConfig->endAddress)   /* if all the addresses were tested... */
@@ -506,6 +535,9 @@ uint32_t SafetyFlashTestHandling( flash_runtime_test_parameters_t *psFlashCrc, f
             psFlashCrc->partCrc = psFlashConfig->startConditionSeed; /* set start seed as input for CRC calculation */
             psFlashCrc->actualAddress = psFlashConfig->startAddress;         /* set start address */
             psFlashCrc->blockSize = psFlashConfig->blockSize; /* size of block for CRC testing */
+            
+            runtime_test_finish_flag |= INVARIABLE_RUNTIME_PASSED; /*Variable for development run test, useless for final application */
+            
             return FS_FLASH_PASS;
         }
         else
@@ -534,7 +566,7 @@ uint32_t SafetyFlashTestHandling( flash_runtime_test_parameters_t *psFlashCrc, f
  *
  * @return  None
  */
-void SafetyRamTestInit(ram_test_t *psSafetyRamTest, uint32_t *pSafetyRamStart, uint32_t *pSafetyRamEnd)
+void SafetyRamTestInit(fs_ram_test_t *psSafetyRamTest, uint32_t *pSafetyRamStart, uint32_t *pSafetyRamEnd)
 {
     psSafetyRamTest->ramTestStartAddress = (uint32_t)pSafetyRamStart;
     psSafetyRamTest->ramTestEndAddress =   (uint32_t)pSafetyRamEnd;
@@ -561,7 +593,7 @@ void SafetyRamTestInit(ram_test_t *psSafetyRamTest, uint32_t *pSafetyRamStart, u
  *
  * @return  None
  */
-void SafetyRamAfterResetTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest)
+void SafetyRamAfterResetTest(safety_common_t *psSafetyCommon, fs_ram_test_t *psSafetyRamTest)
 {
     /* protection against hardfault */
     if ((c_ramStart <= psSafetyRamTest->ramTestStartAddress)&&(c_ramStart <= psSafetyRamTest->backupAddress)&&(c_ramEnd > psSafetyRamTest->ramTestEndAddress)&&((c_ramEnd+1) >= (psSafetyRamTest->defaultBlockSize + psSafetyRamTest->backupAddress)))
@@ -599,7 +631,7 @@ void SafetyRamAfterResetTest(safety_common_t *psSafetyCommon, ram_test_t *psSafe
  *
  * @return  None
  */
-void SafetyRamRuntimeTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest)
+void SafetyRamRuntimeTest(safety_common_t *psSafetyCommon, fs_ram_test_t *psSafetyRamTest)
 {
     /* protection against hardfault */
     if ((c_ramStart <= psSafetyRamTest->ramTestStartAddress)&&(c_ramStart <= psSafetyRamTest->backupAddress)&&(c_ramEnd > psSafetyRamTest->ramTestEndAddress)&&(c_ramEnd > (psSafetyRamTest->blockSize + psSafetyRamTest->backupAddress)))
@@ -618,12 +650,17 @@ void SafetyRamRuntimeTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyR
         psSafetyCommon->safetyErrors |= RAM_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
-
+    
     if (psSafetyCommon->RAM_test_result == FS_FAIL_RAM)
     {
         psSafetyCommon->safetyErrors |= RAM_TEST_ERROR;
         SafetyErrorHandling(psSafetyCommon);
     }
+    
+    /* Test if whole RAM was tested, only for example validation */
+    if (psSafetyRamTest->ramTestStartAddress == psSafetyRamTest->actualAddress)
+    runtime_test_finish_flag |= VARIABLE_RUNTIME_PASSED; /*Variable for development run test, useless for final application */
+    
 }
 
 /*!
@@ -632,7 +669,7 @@ void SafetyRamRuntimeTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyR
 *          This function uses two addresses: first is defined in linker file (fs_cm0_pc_object.o),
 *          second address comes as function argument (must be RAM address).
 *          Both addresses must be defined by the developer and suitable to test all of the possible PC bits.
-*          This test can’t be interrupted.
+*          This test canï¿½t be interrupted.
 *          In case of incorrect PC test result, it updates the safetyErrors variable accordingly.
 *
 * @param   psSafetyCommon - The pointer of the Common Safety structure
@@ -989,11 +1026,11 @@ void SafetyAnalogTestInitialization(void)
 void SafetyAnalogTest(safety_common_t *psSafetyCommon)
 {
 #ifdef _MKE15Z7_H_
-    psSafetyCommon->AIO_test_result = FS_AIO_InputCheck_KE(&aio_Str, (uint32_t *)TESTED_ADC);
+    psSafetyCommon->AIO_test_result = FS_AIO_InputCheck_KE(&aio_Str, (fs_aio_ke_t *)TESTED_ADC);
     switch(psSafetyCommon->AIO_test_result)
     {
     case FS_AIO_START:  /* state START means that everything is ready to trigger the conversion */        
-        FS_AIO_InputSet(&aio_Str, (uint32_t *)TESTED_ADC);
+        FS_AIO_InputSet_KE(&aio_Str, (fs_aio_ke_t * )TESTED_ADC);
         break;
     case FS_FAIL_AIO:
         psSafetyCommon->safetyErrors |= AIO_TEST_ERROR;
@@ -1013,11 +1050,11 @@ void SafetyAnalogTest(safety_common_t *psSafetyCommon)
     
 #ifndef _K32W042S1M2_CM0PLUS_H_      
 #ifndef _MKE15Z7_H_    
-    psSafetyCommon->AIO_test_result = FS_AIO_InputCheck(&aio_Str, (uint32_t *)TESTED_ADC);
+    psSafetyCommon->AIO_test_result = FS_AIO_InputCheck(&aio_Str, (fs_aio_t *)TESTED_ADC);
     switch(psSafetyCommon->AIO_test_result)
     {
     case FS_AIO_START:  /* state START means that everything is ready to trigger the conversion */        
-        FS_AIO_InputSet(&aio_Str, (uint32_t *)TESTED_ADC);
+        FS_AIO_InputSet(&aio_Str, (fs_aio_t *)TESTED_ADC);
         break;
     case FS_FAIL_AIO:
         psSafetyCommon->safetyErrors |= AIO_TEST_ERROR;
@@ -1049,7 +1086,7 @@ void SafetyAnalogTest(safety_common_t *psSafetyCommon)
  *
  * @return  None
  */
-void SafetyIsrFunction(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest, ram_test_t *psSafetyRamStackTest)
+void SafetyIsrFunction(safety_common_t *psSafetyCommon, fs_ram_test_t *psSafetyRamTest, fs_ram_test_t *psSafetyRamStackTest)
 {
     switch(psSafetyCommon->fastIsrSafetySwitch){
     case 0:   /* CPU registers test that cannot be interrupted */
@@ -1138,12 +1175,12 @@ uint32_t SafetyTsiChanelTest(safety_common_t *psSafetyCommon, fs_tsi_t* pObj)
 {
     if(pObj->state == FS_TSI_PROGRESS_NONSTIM ) 
     {
-        FS_TSI_InputCheckNONStimulated(pObj, (uint32_t *)TSI); /*Periodically call for result check */
+        FS_TSI_InputCheckNONStimulated(pObj, (uint32_t )TSI); /*Periodically call for result check */
     }
 
     if (( pObj->state == FS_TSI_PASS_NONSTIM) || (pObj->state == FS_TSI_PROGRESS_STIM ) )
     { /*NON stimulated input check OK */
-        FS_TSI_InputCheckStimulated(pObj, (uint32_t *)TSI);
+        FS_TSI_InputCheckStimulated(pObj, (uint32_t )TSI);
     } 
  
     if((pObj->state == FS_PASS ) || (pObj->state == FS_TSI_INIT ))
@@ -1158,7 +1195,7 @@ uint32_t SafetyTsiChanelTest(safety_common_t *psSafetyCommon, fs_tsi_t* pObj)
             tsi_reg_backup(BACKUP);  
             Tsi0InitMutualCap(); /* TSI HW init in Mutual mode */ 
         }
-        FS_TSI_InputCheckNONStimulated(pObj, (uint32_t *)TSI);
+        FS_TSI_InputCheckNONStimulated(pObj, (uint32_t )TSI);
         psSafetyCommon->TSI_test_result = FS_TSI_INPROGRESS;   
     }      
     if (pObj->state == FS_TSI_PASS_STIM) /*Second part of test done => set PASS to all */
@@ -1177,6 +1214,29 @@ uint32_t SafetyTsiChanelTest(safety_common_t *psSafetyCommon, fs_tsi_t* pObj)
 }
 #endif
 
+/* Function for example validation during  development */
+void development_test_terminate(void)
+{
+  static uint8_t runtime_counter = 0;
+  if ( runtime_test_finish_flag == ALL_RUNTIME_PASSED)
+  {
+    runtime_test_finish_flag = 0;
+    runtime_counter++;
+    if(runtime_counter == 10)
+    {
+    test_end(); /* Mark that runtime test run */
+    }
+  
+  }
+
+}
+/* This function is only for example validation during development */
+static void test_end(void)
+{
+  __asm("nop");
+ 
+}
+
 /*!
  * @brief   Handling with a safety error.
  *
@@ -1190,8 +1250,10 @@ uint32_t SafetyTsiChanelTest(safety_common_t *psSafetyCommon, fs_tsi_t* pObj)
 void SafetyErrorHandling(safety_common_t *psSafetyCommon)
 {
     *SAFETY_ERROR_CODE = psSafetyCommon->safetyErrors;
+    test_end(); /* Only for example validation. Indicate that some error occured and test can be stoped */
 #if SAFETY_ERROR_ACTION
     __asm("CPSID i"); /* disable interrupts */
-    while(1);
+    while(TRUE);
 #endif
 }
+

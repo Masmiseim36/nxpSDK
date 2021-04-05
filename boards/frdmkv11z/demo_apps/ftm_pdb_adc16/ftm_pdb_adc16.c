@@ -7,13 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_pdb.h"
 #include "fsl_adc16.h"
 #include "fsl_ftm.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -195,22 +195,13 @@ static void DEMO_Init_FTM(void)
     ftmParam.firstEdgeDelayPercent = 20U;
     ftmParam.dutyCyclePercent      = 50U;
     ftmParam.level                 = kFTM_LowTrue;
-    ftmParam.enableDeadtime        = false;
+    ftmParam.enableComplementary   = true;
+    ftmParam.enableDeadtime        = true;
 
     /* Configure FTM0 channel ouput period is 16KHz complementary waveform (channel n and n+1) */
-    FTM_SetupPwm(DEMO_FTM_BASE, &ftmParam, 1U, kFTM_CombinedPwm, 16000U, FTM_SOURCE_CLOCK);
+    FTM_SetupPwm(DEMO_FTM_BASE, &ftmParam, 1U, kFTM_EdgeAlignedCombinedPwm, 16000U, FTM_SOURCE_CLOCK);
 
     FTM_StartTimer(DEMO_FTM_BASE, kFTM_SystemClock);
-    FTM_SetWriteProtection(DEMO_FTM_BASE, false);
-
-    /* Configure combine mode */
-    /* Enable complementary mode in a channel pair */
-    FTM_SetComplementaryEnable(DEMO_FTM_BASE, (ftm_chnl_t)0U, true);
-
-    /* Enable deadtime insertion in a channel pair. */
-    FTM_SetDeadTimeEnable(DEMO_FTM_BASE, (ftm_chnl_t)0U, true);
-
-    FTM_SetSoftwareTrigger(DEMO_FTM_BASE, true);
 
     /* Enable channel select in PWMLOAD register & Load FTM registers like MOD, CnV and INT */
     DEMO_FTM_BASE->PWMLOAD = 0x202;

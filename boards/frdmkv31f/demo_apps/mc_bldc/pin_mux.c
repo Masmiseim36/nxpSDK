@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,11 +15,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v7.0
+product: Pins v8.0
 processor: MKV31F512xxx12
 package_id: MKV31F512VLL12
 mcu_data: ksdk2_0
-processor_version: 0.7.1
+processor_version: 0.9.0
 board: FRDM-KV31F
 pin_labels:
 - {pin_num: '76', pin_signal: PTC4/LLWU_P8/SPI0_PCS0/UART1_TX/FTM0_CH3/FB_AD11/CMP1_OUT/LPUART0_TX, label: 'J3[9]/FTM0_CH3', identifier: FTM0_CH3}
@@ -41,37 +41,16 @@ pin_labels:
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void)
 {
-    BOARD_InitPins();
-}
-
-/* clang-format off */
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
-- pin_list: []
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-/* clang-format on */
-
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitPins
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitPins(void)
-{
-  PinTool_PWM();
-  PinTool_Misc();
-  PinTool_UART();
+    PinTool_PWM();
+    PinTool_Misc();
+    PinTool_UART();
 }
 
 /* clang-format off */
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 PinTool_PWM:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '71', peripheral: FTM0, signal: 'CH, 0', pin_signal: ADC0_SE15/PTC1/LLWU_P6/SPI0_PCS3/UART1_RTS_b/FTM0_CH0/FB_AD13/LPUART0_RTS_b, direction: OUTPUT}
   - {pin_num: '72', peripheral: FTM0, signal: 'CH, 1', pin_signal: ADC0_SE4b/CMP1_IN0/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/FB_AD12/LPUART0_CTS_b, direction: OUTPUT}
@@ -119,7 +98,7 @@ void PinTool_PWM(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 PinTool_Misc:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '38', peripheral: GPIOA, signal: 'GPIO, 4', pin_signal: PTA4/LLWU_P3/FTM0_CH1/FTM0_FLT3/NMI_b/EZP_CS_b, direction: INPUT, gpio_interrupt: kPORT_InterruptRisingEdge,
     slew_rate: fast, open_drain: disable, pull_select: up, pull_enable: enable, passive_filter: enable}
@@ -179,9 +158,6 @@ void PinTool_Misc(void)
                                    kPORT_UnlockRegister};
     /* PORTA4 (pin 38) is configured as PTA4 */
     PORT_SetPinConfig(PINTOOL_MISC_SW2_PORT, PINTOOL_MISC_SW2_PIN, &SW2);
-    
-    /* PORTA4 (pin 38) is configured as PTA4 */
-    PORT_SetPinMux(PINTOOL_MISC_SW2_PORT, PINTOOL_MISC_SW2_PIN, kPORT_MuxAsGpio);
 
     /* Interrupt configuration on PORTA4 (pin 38): Interrupt on rising edge */
     PORT_SetPinInterruptConfig(PINTOOL_MISC_SW2_PORT, PINTOOL_MISC_SW2_PIN, kPORT_InterruptRisingEdge);
@@ -197,7 +173,7 @@ void PinTool_Misc(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 PinTool_UART:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '62', peripheral: UART0, signal: RX, pin_signal: PTB16/SPI1_SOUT/UART0_RX/FTM_CLKIN0/FB_AD17/EWM_IN}
   - {pin_num: '63', peripheral: UART0, signal: TX, pin_signal: PTB17/SPI1_SIN/UART0_TX/FTM_CLKIN1/FB_AD16/EWM_OUT_b, direction: OUTPUT}

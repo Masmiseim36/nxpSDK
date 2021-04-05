@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -16,21 +16,21 @@
  * Definitions
  ******************************************************************************/
 
-#define MCDRV_CHAN_OFF (0x1F)
-#define MCDRV_TEMP (0x1A)
+#define MCDRV_CHAN_OFF (0x1FU)
+#define MCDRV_TEMP (0x1AU)
 
-#define MCDRV_ADC0_BEMFA (0)
-#define MCDRV_ADC1_BEMFA (1)
-#define MCDRV_ADC0_BEMFB (2)
-#define MCDRV_ADC1_BEMFB (3)
-#define MCDRV_ADC0_BEMFC (4)
-#define MCDRV_ADC1_BEMFC (5)
-#define MCDRV_ADC0_UDCB (6)
-#define MCDRV_ADC1_UDCB (7)
-#define MCDRV_ADC0_IDCB (8)
-#define MCDRV_ADC1_IDCB (9)
-#define MCDRV_ADC0_AUX (10)
-#define MCDRV_ADC1_AUX (11)
+#define MCDRV_ADC0_BEMFA (0U)
+#define MCDRV_ADC1_BEMFA (1U)
+#define MCDRV_ADC0_BEMFB (2U)
+#define MCDRV_ADC1_BEMFB (3U)
+#define MCDRV_ADC0_BEMFC (4U)
+#define MCDRV_ADC1_BEMFC (5U)
+#define MCDRV_ADC0_UDCB (6U)
+#define MCDRV_ADC1_UDCB (7U)
+#define MCDRV_ADC0_IDCB (8U)
+#define MCDRV_ADC1_IDCB (9U)
+#define MCDRV_ADC0_AUX (10U)
+#define MCDRV_ADC1_AUX (11U)
 
 /* init sensors/actuators pointers */
 #define M1_SET_PTR_U_DC_BUS(par1) (g_sM1AdcSensor.pf16UDcBus = &(par1))

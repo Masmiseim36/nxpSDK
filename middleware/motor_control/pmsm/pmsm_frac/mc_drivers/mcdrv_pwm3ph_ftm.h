@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -45,26 +45,26 @@ extern "C" {
  *
  * @param this Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_FtmPwm3PhSet(mcdrv_pwm3ph_ftm_t *this);
+void MCDRV_FtmPwm3PhSet(mcdrv_pwm3ph_ftm_t *this);
 
 /*!
  * @brief Function enables PWM outputs
  *
  * @param this Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_FtmPwm3PhOutEn(mcdrv_pwm3ph_ftm_t *this);
+void MCDRV_FtmPwm3PhOutEn(mcdrv_pwm3ph_ftm_t *this);
 /*!
  * @brief Function disables PWM outputs
  *
  * @param this Pointer to the current object
  *
- * @return boot_t true on success
+ * @return none
  */
-bool_t MCDRV_FtmPwm3PhOutDis(mcdrv_pwm3ph_ftm_t *this);
+void MCDRV_FtmPwm3PhOutDis(mcdrv_pwm3ph_ftm_t *this);
 
 /*!
  * @brief Function return actual value of over current flag

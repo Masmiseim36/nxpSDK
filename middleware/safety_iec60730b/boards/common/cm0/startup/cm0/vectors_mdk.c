@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -111,7 +111,7 @@ vector_entry __vector_table[] __attribute__((section("section_ivt"), used)) =
 };
 
 #if (!defined(_LPC845_H_) && !defined(_LPC824_H_) && !defined(_LPC804_H_) && !defined(_LPC802_H_))
-const uint32_t __memcfg_table[] __attribute__((section(".ARM.__at_0x400"),used)) = 
+const uint32_t __memcfg_table[] __attribute__((section(".FlashConfig"),used)) = 
 {    
    CONFIG_1,
    CONFIG_2,

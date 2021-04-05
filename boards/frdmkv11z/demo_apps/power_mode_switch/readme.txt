@@ -9,17 +9,17 @@ source by following the debug console prompts. The purpose of this demo is to sh
  This demo is to show how the various power mode can switch to each other. However, in actual low power use case, to save energy and reduce the consumption even more, many things can be done including:
  - Disable the clock for unnecessary module during low power mode. That means, programmer can disable the clocks before entering the low power mode and re-enable them after exiting the low power mode when necessary.
  - Disable the function for unnecessary part of a module when other part would keep working in low power mode. At the most time, more powerful function means more power consumption. For example, disable the digital function for the unnecessary pin mux, and so on.
- - Set the proper pin state (direction and logic level) according to the actual application hardware. Otherwise, the pin cirrent would be activied unexpectedly waste some energy.
+ - Set the proper pin state (direction and logic level) according to the actual application hardware. Otherwise, the pin current would be activated unexpectedly waste some energy.
  - Other low power consideration based on the actual application hardware.
  - Debug pins(e.g SWD_DIO) would consume addtional power, had better to disable related pins or disconnect them. 
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -69,6 +69,3 @@ Press  I for enter: VLLS3    - Very Low Leakage Stop 3 mode
 
 Waiting for power mode select..
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

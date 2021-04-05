@@ -366,8 +366,6 @@ include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/..)
 
-include_directories(${ProjDirPath}/../../../../../../platform/components/phyksz8041)
-
 include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../../../..)
@@ -376,7 +374,11 @@ include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../../components/phyksz8041)
+include_directories(${ProjDirPath}/../../../../../../components/phy/mdio/enet)
+
+include_directories(${ProjDirPath}/../../../../../../components/phy/device/phyksz8041)
+
+include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/apps)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/lwip/port)
 
@@ -384,19 +386,21 @@ include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src)
 
 include_directories(${ProjDirPath}/../../../../../../middleware/lwip/src/include)
 
-include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/drivers)
-
-include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/str)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/debug_console)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/drivers)
+
+include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24)
 
 include_directories(${ProjDirPath}/../../../../../../components/uart)
 
 include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
 
 include_directories(${ProjDirPath}/../../../../../../components/lists)
+
+include_directories(${ProjDirPath}/../../../../../../components/phy)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/utilities)
 
@@ -409,8 +413,10 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../../../../components/phyksz8041/fsl_phy.c"
-"${ProjDirPath}/../../../../../../components/phyksz8041/fsl_phy.h"
+"${ProjDirPath}/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c"
+"${ProjDirPath}/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h"
+"${ProjDirPath}/../../../../../../components/phy/device/phyksz8041/fsl_phyksz8041.c"
+"${ProjDirPath}/../../../../../../components/phy/device/phyksz8041/fsl_phyksz8041.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/apps/lwiperf/lwiperf.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/apps/lwiperf.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/port/arch/cc.h"
@@ -434,6 +440,7 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/inet_chksum.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/init.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ip.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/acd.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/autoip.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/dhcp.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/core/ipv4/etharp.c"
@@ -468,6 +475,7 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/netdb.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/posix/sys/socket.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/compat/stdc/errno.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/acd.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp_tcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/altcp_tls.h"
@@ -519,6 +527,7 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/sockets_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/tcp_priv.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/priv/tcpip_priv.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/acd.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/autoip.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/include/lwip/prot/dhcp6.h"
@@ -621,7 +630,15 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/ppp/vj.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/slipif.c"
 "${ProjDirPath}/../../../../../../middleware/lwip/src/netif/zepif.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console_conf.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/str/fsl_str.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/str/fsl_str.h"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.h"
 "${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_kinetis.c"
+"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_port.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_sim.c"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_sim.h"
@@ -632,11 +649,6 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../devices/MKV58F24/MKV58F24.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/MKV58F24_features.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/fsl_device_registers.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/str/fsl_str.h"
 "${ProjDirPath}/../../../../../../components/uart/uart.h"
 "${ProjDirPath}/../../../../../../components/uart/uart_adapter.c"
 "${ProjDirPath}/../../../../../../components/serial_manager/serial_manager.c"
@@ -656,9 +668,9 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_gpio.c"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_enet.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_enet.h"
+"${ProjDirPath}/../../../../../../components/phy/fsl_mdio.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -666,17 +678,12 @@ add_executable(lwip_iperf_bm.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.c"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif.h"
-"${ProjDirPath}/../../../../../../middleware/lwip/port/enet_ethernetif_priv.h"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_enet.c"
+"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_enet.h"
+"${ProjDirPath}/../../../../../../components/phy/fsl_phy.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/fsl_sbrk.c"
 )
 

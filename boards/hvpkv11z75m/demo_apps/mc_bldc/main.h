@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,13 +9,14 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
-#include "board.h"
 #include "mcdrv.h"
 #include "freemaster.h"
 #include "pin_mux.h"
+#include "peripherals.h"
 #include "m1_sm_ref_sol.h"
 #include "fsl_uart.h"
 #include "freemaster_serial_uart.h"
+#include "board.h"
 
 /*******************************************************************************
  * Definitions
@@ -28,12 +29,6 @@
         __ISB();      \
     }
 
-/*******************************************************************************
- * FreeMASTER communication constants
- ******************************************************************************/
-/*! @brief The UART to use for FreeMASTER communication */
-#define BOARD_FMSTR_UART_PORT UART1
-#define BOARD_FMSTR_UART_BAUDRATE 19200
 
 #define HVP_BOARD 1
 
@@ -55,7 +50,6 @@ extern "C" {
 void DemoSpeedStimulator(void);
 void BOARD_Init(void);
 void BOARD_InitSysTick(void);
-void BOARD_InitUART(uint32_t u32UClockSpeedinHz, uint32_t u32BaudRate);
 
 #if defined(__cplusplus)
 }

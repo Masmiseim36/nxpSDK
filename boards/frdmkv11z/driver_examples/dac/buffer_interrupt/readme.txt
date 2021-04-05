@@ -13,10 +13,10 @@ The terminal would also display the log that shows the current buffer pointer's 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -58,6 +58,3 @@ Buffer Index  1: ReadPointerBottomPositionEvent
 
 User can take a look at how the pointer is moved by trigger, user can also measure the DAC output
 pin J2-9(PTE30) to check corresponding voltage.
-Customization options
-=====================
-

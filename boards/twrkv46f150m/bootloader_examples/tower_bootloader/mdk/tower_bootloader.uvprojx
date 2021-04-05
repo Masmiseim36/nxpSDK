@@ -363,7 +363,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-null-dereference  -Wno-unknown-attributes  -Wno-expansion-to-defined  -Wno-invalid-noreturn</MiscControls>
               <Define>DEBUG, CPU_MKV46F256VLL16, TOWER, BL_TARGET_FLASH, TWR_KV46F150m, FSL_OSA_BM_TIMER_CONFIG=FSL_OSA_BM_TIMER_NONE</Define>
               <Undefine/>
-              <IncludePath>../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/targets/MKV46F16/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;..;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../components/osa;../../../../../devices/MKV46F16/drivers;../../../../../components/lists</IncludePath>
+              <IncludePath>../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/crc;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/memory;../../../../../middleware/mcu-boot/src/memory/src;../../../../../middleware/mcu-boot/src/packet;../../../../../middleware/mcu-boot/src/property;../../../../../middleware/mcu-boot/src/sbloader;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/src/security;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/targets/MKV46F16/src;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;..;../../../../../components/osa;../../../../../components/lists</IncludePath>
             </VariousControls>
             <v6Lang>3</v6Lang>
             <vShortEn>1</vShortEn>
@@ -384,7 +384,7 @@
               <MiscControls/>
               <Define>DEBUG, BL_HAS_BOOTLOADER_CONFIG=0</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>../../../../../middleware/mcu-boot/src/startup</IncludePath>
             </VariousControls>
             <uClangAs>1</uClangAs>
           </Aads>
@@ -401,7 +401,7 @@
             <ScatterFile>MKV46F256xxx16_application_0x0000.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.FlashConfig) --datacompressor off --predefine="-D__ram_vector_table__=1"</Misc>
+            <Misc>--remove --keep=*(.FlashConfig) --datacompressor off</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -409,6 +409,21 @@
       </TargetOption>
       <uAC6>1</uAC6>
       <Groups>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
@@ -593,9 +608,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MKV46F16.s</FileName>
+              <FileName>startup_MKV46F16.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/startup/arm/startup_MKV46F16.s</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/startup/arm/startup_MKV46F16.S</FilePath>
             </File>
             <File>
               <FileName>ar_asm_macros.h</FileName>
@@ -813,16 +828,6 @@
           <GroupName>source-memory-src</GroupName>
           <Files>
             <File>
-              <FileName>device_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>device_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</FilePath>
-            </File>
-            <File>
               <FileName>memory.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/memory/src/memory.c</FilePath>
@@ -843,9 +848,9 @@
               <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</FilePath>
             </File>
             <File>
-              <FileName>pattern_fill_gcc.S</FileName>
+              <FileName>pattern_fill_mdk.s</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill_gcc.S</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill_mdk.s</FilePath>
             </File>
             <File>
               <FileName>sram_init.h</FileName>
@@ -1003,14 +1008,19 @@
           <GroupName>MKV46F16</GroupName>
           <Files>
             <File>
+              <FileName>bl_clock_config_MKV46F16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/bl_clock_config_MKV46F16.c</FilePath>
+            </File>
+            <File>
+              <FileName>bl_peripherals_MKV46F16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/bl_peripherals_MKV46F16.c</FilePath>
+            </File>
+            <File>
               <FileName>bootloader_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/bootloader_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config_MKV46F16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/clock_config_MKV46F16.c</FilePath>
             </File>
             <File>
               <FileName>hardware_init_MKV46F16.c</FileName>
@@ -1021,11 +1031,6 @@
               <FileName>memory_map_MKV46F16.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/memory_map_MKV46F16.c</FilePath>
-            </File>
-            <File>
-              <FileName>peripherals_MKV46F16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/peripherals_MKV46F16.c</FilePath>
             </File>
             <File>
               <FileName>peripherals_pinmux.h</FileName>
@@ -1108,6 +1113,11 @@
               <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -1141,31 +1151,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1561,7 +1546,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-null-dereference  -Wno-unknown-attributes  -Wno-expansion-to-defined  -Wno-invalid-noreturn</MiscControls>
               <Define>NDEBUG, CPU_MKV46F256VLL16, TOWER, BL_TARGET_FLASH, TWR_KV46F150m, FSL_OSA_BM_TIMER_CONFIG=FSL_OSA_BM_TIMER_NONE</Define>
               <Undefine/>
-              <IncludePath>../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/targets/MKV46F16/src;../../../../../middleware/mcu-boot/src/autobaud;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;..;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../devices/MKV46F16/drivers;../../../../../components/osa;../../../../../devices/MKV46F16/drivers;../../../../../components/lists</IncludePath>
+              <IncludePath>../../../../../CMSIS/Include;../../../../../middleware/mcu-boot/src;../../../../../middleware/mcu-boot/src/bootloader;../../../../../middleware/mcu-boot/src/autobaud;../../../../../middleware/mcu-boot/src/crc;../../../../../middleware/mcu-boot/src/include;../../../../../middleware/mcu-boot/src/startup;../../../../../middleware/mcu-boot/src/utilities;../../../../../middleware/mcu-boot/src/memory;../../../../../middleware/mcu-boot/src/memory/src;../../../../../middleware/mcu-boot/src/packet;../../../../../middleware/mcu-boot/src/property;../../../../../middleware/mcu-boot/src/sbloader;../../../../../middleware/mcu-boot/src/drivers;../../../../../middleware/mcu-boot/src/drivers/crc;../../../../../middleware/mcu-boot/src/drivers/microseconds;../../../../../middleware/mcu-boot/src/drivers/smc;../../../../../middleware/mcu-boot/src/security;../../../../../middleware/mcu-boot/src/bm_usb;../../../../../middleware/mcu-boot/targets/MKV46F16/src;../../../../../devices/MKV46F16;../../../../../devices/MKV46F16/drivers;..;../../../../../components/osa;../../../../../components/lists</IncludePath>
             </VariousControls>
             <v6Lang>3</v6Lang>
             <vShortEn>1</vShortEn>
@@ -1582,7 +1567,7 @@
               <MiscControls/>
               <Define>NDEBUG, BL_HAS_BOOTLOADER_CONFIG=0</Define>
               <Undefine/>
-              <IncludePath/>
+              <IncludePath>../../../../../middleware/mcu-boot/src/startup</IncludePath>
             </VariousControls>
             <uClangAs>1</uClangAs>
           </Aads>
@@ -1599,7 +1584,7 @@
             <ScatterFile>MKV46F256xxx16_application_0x0000.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --keep=*(.FlashConfig) --datacompressor off --predefine="-D__ram_vector_table__=1"</Misc>
+            <Misc>--remove --keep=*(.FlashConfig) --datacompressor off</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1607,6 +1592,21 @@
       </TargetOption>
       <uAC6>1</uAC6>
       <Groups>
+        <Group>
+          <GroupName>board</GroupName>
+          <Files>
+            <File>
+              <FileName>pin_mux.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../pin_mux.c</FilePath>
+            </File>
+            <File>
+              <FileName>pin_mux.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../pin_mux.h</FilePath>
+            </File>
+          </Files>
+        </Group>
         <Group>
           <GroupName>drivers</GroupName>
           <Files>
@@ -1791,9 +1791,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MKV46F16.s</FileName>
+              <FileName>startup_MKV46F16.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/startup/arm/startup_MKV46F16.s</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/startup/arm/startup_MKV46F16.S</FilePath>
             </File>
             <File>
               <FileName>ar_asm_macros.h</FileName>
@@ -2011,16 +2011,6 @@
           <GroupName>source-memory-src</GroupName>
           <Files>
             <File>
-              <FileName>device_memory.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</FilePath>
-            </File>
-            <File>
-              <FileName>device_memory.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</FilePath>
-            </File>
-            <File>
               <FileName>memory.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/src/memory/src/memory.c</FilePath>
@@ -2041,9 +2031,9 @@
               <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill.h</FilePath>
             </File>
             <File>
-              <FileName>pattern_fill_gcc.S</FileName>
+              <FileName>pattern_fill_mdk.s</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill_gcc.S</FilePath>
+              <FilePath>../../../../../middleware/mcu-boot/src/memory/src/pattern_fill_mdk.s</FilePath>
             </File>
             <File>
               <FileName>sram_init.h</FileName>
@@ -2201,14 +2191,19 @@
           <GroupName>MKV46F16</GroupName>
           <Files>
             <File>
+              <FileName>bl_clock_config_MKV46F16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/bl_clock_config_MKV46F16.c</FilePath>
+            </File>
+            <File>
+              <FileName>bl_peripherals_MKV46F16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/bl_peripherals_MKV46F16.c</FilePath>
+            </File>
+            <File>
               <FileName>bootloader_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/bootloader_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config_MKV46F16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/clock_config_MKV46F16.c</FilePath>
             </File>
             <File>
               <FileName>hardware_init_MKV46F16.c</FileName>
@@ -2219,11 +2214,6 @@
               <FileName>memory_map_MKV46F16.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/memory_map_MKV46F16.c</FilePath>
-            </File>
-            <File>
-              <FileName>peripherals_MKV46F16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mcu-boot/targets/MKV46F16/src/peripherals_MKV46F16.c</FilePath>
             </File>
             <File>
               <FileName>peripherals_pinmux.h</FileName>
@@ -2306,6 +2296,11 @@
               <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
               <FileName>cmsis_armcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
@@ -2339,31 +2334,6 @@
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv81mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

@@ -342,8 +342,6 @@ include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../../components/timer)
-
 include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/drivers)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24)
@@ -368,10 +366,6 @@ add_executable(uart_edma_rb_transfer.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../../../../components/timer/lptmr_adapter.c"
-"${ProjDirPath}/../../../../../../components/timer/timer.h"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_lptmr.c"
-"${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_lptmr.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_port.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_edma.c"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_edma.h"
@@ -411,6 +405,7 @@ add_executable(uart_edma_rb_transfer.elf
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_gpio.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/fsl_assert.c"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -418,11 +413,6 @@ add_executable(uart_edma_rb_transfer.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"

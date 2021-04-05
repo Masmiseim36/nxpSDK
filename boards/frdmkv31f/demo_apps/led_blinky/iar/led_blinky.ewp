@@ -184,7 +184,6 @@
           <state>CPU_MKV31F512VLL12</state>
           <state>FRDM_KV31F</state>
           <state>FREEDOM</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -314,25 +313,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1166,7 +1152,6 @@
           <state>CPU_MKV31F512VLL12</state>
           <state>FRDM_KV31F</state>
           <state>FREEDOM</state>
-          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1296,25 +1281,12 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV31F51212</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1999,57 +1971,69 @@
     </file>
   </group>
   <group>
-    <name>drivers</name>
+    <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console_lite/fsl_debug_console.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+  </group>
+  <group>
+    <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_uart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_uart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_uart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_lpuart.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_lpuart.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_port.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_smc.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_smc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_smc.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/drivers/fsl_smc.c</name>
     </file>
   </group>
   <group>
     <name>device</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/fsl_device_registers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/MKV31F51212.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/MKV31F51212_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/system_MKV31F51212.c</name>
@@ -2059,62 +2043,23 @@
     </file>
   </group>
   <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV31F51212/utilities/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
     <name>component</name>
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart_adapter.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -2130,6 +2075,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
@@ -2139,31 +2087,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

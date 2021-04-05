@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -98,11 +98,11 @@ void ClockInit(void)
 *
 *          This function initializes the LPTMR. LPTMR is used for clock test.
 *
-* @param   void
+* @param   call_type - for demo compatibility - not used
 *
 * @return  None
 */
-void LPTMRInit(void)
+void LPTMRInit(uint8_t call_type)
 {
     /* enable clock for LPTMR */
     SIM->SCGC5 |= SIM_SCGC5_LPTMR_MASK; /* enable clock gate to LPTMR */
@@ -197,10 +197,11 @@ void AdcInit(void)
   PMC->REGSC |= PMC_REGSC_BGBE_MASK; /* enable bandgap buffer */
 }
 
-#if FMSTR_SERIAL_ENABLE
 /*!
 * @brief   Setup of UART
 */
+
+
 void SerialInit(void)
 {
     
@@ -208,7 +209,7 @@ void SerialInit(void)
      uart_config_t config;
 
     /*
-     * config.baudRate_Bps = SERIAL_BAUD_RATE;
+     * config.baudRate_Bps = UART_BAUD_RATE;
      * config.parityMode = kUART_ParityDisabled;
      * config.stopBitCount = kUART_OneStopBit;
      * config.txFifoWatermark = 0;
@@ -217,7 +218,7 @@ void SerialInit(void)
      * config.enableRx = false;
      */
     UART_GetDefaultConfig(&config);
-    config.baudRate_Bps = SERIAL_BAUD_RATE;
+    config.baudRate_Bps = UART_BAUD_RATE;
     config.enableTx = false;
     config.enableRx = false;
 
@@ -232,4 +233,3 @@ void SerialInit(void)
     EnableGlobalIRQ(0);
 #endif
 }
-#endif /* FMSTR_SERIAL_ENABLE */

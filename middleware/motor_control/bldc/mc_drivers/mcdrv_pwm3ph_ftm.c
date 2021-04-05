@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -43,18 +43,22 @@ bool_t MCDRV_FtmSetDutyCycle(mcdrv_pwm3ph_ftm_t *this, int16_t i16InpDuty)
 
     i16FirstEdge = -(this->ui16PwmModulo) / 4 - i16Duty;
     if (i16FirstEdge < (-(this->ui16PwmModulo) / 2))
+    {
         i16FirstEdge = -(this->ui16PwmModulo) / 2;
+    }
 
     i16SecondEdge = (this->ui16PwmModulo) / 4 + i16Duty;
     if (i16SecondEdge > ((this->ui16PwmModulo) / 2))
+    {
         i16SecondEdge = (this->ui16PwmModulo) / 2;
+    }
 
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhA].CnV     = i16FirstEdge;
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhA + 1].CnV = i16SecondEdge;
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhB].CnV     = i16FirstEdge;
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhB + 1].CnV = i16SecondEdge;
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhC].CnV     = i16FirstEdge;
-    this->pui32PwmBase->CONTROLS[this->ui16ChanPhC + 1].CnV = i16SecondEdge;
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhA].CnV     = (uint32_t)i16FirstEdge;
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhA + 1U].CnV = (uint32_t)i16SecondEdge;
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhB].CnV     = (uint32_t)i16FirstEdge;
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhB + 1U].CnV = (uint32_t)i16SecondEdge;
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhC].CnV     = (uint32_t)i16FirstEdge;
+    this->pui32PwmBase->CONTROLS[this->ui16ChanPhC + 1U].CnV = (uint32_t)i16SecondEdge;
 
     this->pui32PwmBase->PWMLOAD |= (FTM_PWMLOAD_LDOK_MASK);
 
@@ -90,10 +94,10 @@ bool_t MCDRV_FtmSetPwmOutput(mcdrv_pwm3ph_ftm_t *this, int16_t i16Sector)
 bool_t MCDRV_FtmPwm3PhFltGet(mcdrv_pwm3ph_ftm_t *this)
 {
     /* Read fixed-value over-current flag */
-    s_statusPass = this->pui32PwmBase->FMS & (1 << this->ui16FaultFixNum);
+    s_statusPass = this->pui32PwmBase->FMS & (1UL << this->ui16FaultFixNum);
 
     /* Clear fault flags */
-    this->pui32PwmBase->FMS &= ~(1 << FTM_FMS_FAULTF0_SHIFT);
+    this->pui32PwmBase->FMS &= ~(1UL << FTM_FMS_FAULTF0_SHIFT);
 
-    return ((s_statusPass > 0));
+    return (s_statusPass);
 }

@@ -15,10 +15,10 @@ detecting the output's falling edge.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -54,6 +54,3 @@ CMP interrupt Example
 Then change CMP analog input by pushing the SW2 button, and watch the change of LED.
     - CMP0_IN3 (J4-11) connected to VCC =3.3V (SW2 released): LED RED on
     - CMP0_IN3 (J4-11) connected to GND (SW2 pushed): LED RED off
-Customization options
-=====================
-

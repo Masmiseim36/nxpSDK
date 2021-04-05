@@ -119,7 +119,7 @@
 /* Sizes of objects in RAM. */
 #define __size_cstack__           (0x300)  /* Stack size. */
 #define __size_fs_ram_tst_bckp__  (0x20)   /* Safety RAM test backup size. */
-#define __size_fs_wdog_tst_data__ (0x20)   /* Safety WDOG test data size. */
+#define __size_fs_wdog_tst_data__ (0x1C)   /* Safety WDOG test data size. */
 #define __size_fs_stack_tst_p__   (0x10)   /* Safety stack test pattern. */
 
 /* Sizes of objects in FLASH. */

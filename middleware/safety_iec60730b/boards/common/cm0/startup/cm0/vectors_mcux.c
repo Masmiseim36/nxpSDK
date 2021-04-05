@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,7 +13,7 @@
 typedef void (*vector_entry)(void);
 extern void SYSTICK_Isr(void);
 
-__attribute__ ((used, section(".isr_vector")))
+__attribute__ ((used, section(".intvec")))
 const vector_entry  __vector_table[] =
 {
     VECTOR_000,           /* Initial SP           */
@@ -109,7 +109,7 @@ const vector_entry  __vector_table[] =
 };
 
 #if (!defined(_LPC845_H_) && !defined(_LPC824_H_) && !defined(_LPC804_H_) && !defined(_LPC802_H_))
-__attribute__ ((used,section(".FlashConfig")))
+__attribute__ ((used,section(".flshcfg")))
 const uint32_t __flash_config_table[] =
 {    
    CONFIG_1,

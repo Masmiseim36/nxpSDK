@@ -76,6 +76,8 @@ static void i2c_data_source(uint8_t *source_byte);
 static void i2c_set_glitch_filter_width(I2C_Type *base, uint32_t busClock_Hz, uint32_t glitchWidth_ns);
 static void i2c_SlaveIRQHandler(uint32_t instance);
 
+static void I2C_ResetHoldTime(I2C_Type *base);
+
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
 ////////////////////////////////////////////////////////////////////////////////
@@ -203,6 +205,16 @@ static void i2c_initial_data_sink(uint8_t sink_byte, uint32_t instance)
         s_i2c_app_data_sink_callback(sink_byte);
     }
 }
+/*FUNCTION**********************************************************************
+ *
+ * Function Name : I2C_ResetHoldTime
+ * Description   : Restore the I2Cx_F register 
+ *
+ *END**************************************************************************/
+static void I2C_ResetHoldTime(I2C_Type *base)
+{
+    base->F = 0;
+}
 
 /*FUNCTION**********************************************************************
  *
@@ -231,8 +243,15 @@ void i2c_peripheral_init(uint32_t instance)
         i2cSlaveConfig.slaveAddr = BL_SECONDARY_I2C_SLAVE_ADDRESS;
     }
 #endif // BL_FEATURE_SECONDARY_I2C_SLAVE_ADDRESS
-
+    
+    // set SBRC bot to be 1
+    i2cSlaveConfig.enableBaudRateCtl = true;
+      
     I2C_SlaveInit((I2C_Type *)baseAddr, &i2cSlaveConfig, get_bus_clock());
+    
+    // Restore the frequency divider register
+    I2C_ResetHoldTime((I2C_Type *)baseAddr);
+    
     I2C_Enable((I2C_Type *)baseAddr, true);
     I2C_EnableInterrupts((I2C_Type *)baseAddr, kI2C_GlobalInterruptEnable);
     i2c_set_glitch_filter_width((I2C_Type *)baseAddr, get_bus_clock(), kI2CGlitchFilterWidth_ns);

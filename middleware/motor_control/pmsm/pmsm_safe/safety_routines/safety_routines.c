@@ -12,17 +12,8 @@
 
 MISRAC_DISABLE /* MISRA check disabled (IAR IDE only). */
 
-#if (defined(__CORTEX_M) && (__CORTEX_M == 0U))
-
 #include "iec60730b.h"
-
-#elif (defined(__CORTEX_M) && (__CORTEX_M == 4U))
-
-#include "IEC60730_B_CM4_CM7.h"
-
-#else
-    #error "Unsupported core!"
-#endif
+#include "iec60730b_core.h"
 
 #include "freemaster_tsa_pmsm.h"
 
@@ -105,45 +96,36 @@ typedef void (*pfsfcn_void_t)(void);
     typedef  fs_wdog_test_t                      fs_wdog_reset_test_t;
 
 #elif (defined(__CORTEX_M) && (__CORTEX_M == 4U))
-    #define FS_CMn_CPU_Primask()                (IEC60730B_CM4_CM7_CPU_PrimaskTest())
-    #define FS_CMn_CPU_SPmain()                 (IEC60730B_CM4_CM7_CPU_SPmainTest())
-    #define FS_CMn_CPU_Register()               (IEC60730B_CM4_CM7_CPU_RegisterTest())
-    #define FS_CMn_CPU_NonStackedRegister()     (IEC60730B_CM4_CM7_CPU_NonStackedRegisterTest())
-    #define FS_CMn_CPU_Control()                (IEC60730B_CM4_CM7_CPU_ControlTest_fpu())
-    #define FS_CMn_CPU_SPprocess()              (IEC60730B_CM4_CM7_CPU_SPprocessTest())
-    #define FS_CMn_CPU_Float1()                 (IEC60730B_CM4_CM7_CPU_FloatTest1())
-    #define FS_CMn_CPU_Float2()                 (IEC60730B_CM4_CM7_CPU_FloatTest2())
-    #define FS_CMn_PC_Test(a,b,c)               (IEC60730B_CM7_PC_Test((a),(b),(unsigned long*)(c)))
-    #define FS_CMn_RAM_AfterReset(a,b,c,d,e)    (IEC60730B_CM4_CM7_RAM_AfterResetTest((a),(b),(c),(d),(e)))
-    #define FS_CMn_RAM_Runtime(a,b,c,d,e,f)     (IEC60730B_CM4_CM7_RAM_RuntimeTest((a),(b),(unsigned long*)(c),(d),(e),(f)))
-    #define FS_CMn_STACK_Init(a,b,c,d)          (IEC60730B_CM4_CM7_Stack_Init((a),(b),(c),(d)))
-    #define FS_CMn_STACK_Test(a,b,c,d)          (IEC60730B_CM4_CM7_Stack_Test((a),(b),(c),(d)))
-    #define FS_CMn_FLASH_HW16(a,b,c,d)          (IEC60730B_CM4_CM7_Flash_HWTest((a),(b),(c),(d)))
+    #define FS_CMn_CPU_Primask()                (FS_CM4_CM7_CPU_Primask())
+    #define FS_CMn_CPU_SPmain()                 (FS_CM4_CM7_CPU_SPmain())
+    #define FS_CMn_CPU_Register()               (FS_CM4_CM7_CPU_Register())
+    #define FS_CMn_CPU_NonStackedRegister()     (FS_CM4_CM7_CPU_NonStackedRegister())
+    #define FS_CMn_CPU_Control()                (FS_CM4_CM7_CPU_Control())
+    #define FS_CMn_CPU_SPprocess()              (FS_CM4_CM7_CPU_SPprocess())
+    #define FS_CMn_PC_Test(a,b,c)               (FS_CM4_CM7_PC_Test((a),(b),(c)))
+    #define FS_CMn_RAM_AfterReset(a,b,c,d,e)    (FS_CM4_CM7_RAM_AfterReset((a),(b),(c),(d),(e)))
+    #define FS_CMn_RAM_Runtime(a,b,c,d,e,f)     (FS_CM4_CM7_RAM_Runtime((a),(b),(c),(d),(e),(f)))
+    #define FS_CMn_STACK_Init(a,b,c,d)          (FS_CM4_CM7_STACK_Init((a),(b),(c),(d)))
+    #define FS_CMn_STACK_Test(a,b,c,d)          (FS_CM4_CM7_STACK_Test((a),(b),(c),(d)))
+    #define FS_CMn_FLASH_HW16(a,b,c,d)          (FS_CM4_CM7_FLASH_HW16((a),(b),(c),(d)))
 
-    #define FS_CMn_RAM_SegmentMarchX            (IEC60730B_CM4_CM7_RAM_SegmentMarchX)
-    #define FS_CMn_RAM_SegmentMarchC            (IEC60730B_CM4_CM7_RAM_SegmentMarchC)
+    #define FS_CMn_RAM_SegmentMarchX            (FS_CM4_CM7_RAM_SegmentMarchX)
+    #define FS_CMn_RAM_SegmentMarchC            (FS_CM4_CM7_RAM_SegmentMarchC)
 
-    #define FS_CMn_CLK_Init(a)                  (IEC60730B_CM4_CM7_CLK_SYNC_Init((unsigned long*)(a)))
-    #define FS_CMn_WDOG_Setup(a)                (IEC60730B_CM4_CM7_watchdog_test_setup((a)))
-    #define FS_CMn_WDOG_Check(a,b,c,d,e)        (IEC60730B_CM4_CM7_watchdog_test_check((a),(b),(c),(d),(e)))
-    #define FS_CMn_CLK_LPTMR(a,b)               (IEC60730B_CM4_CM7_CLK_SYNC_LPTMR_Isr((unsigned long*)(a),(unsigned long*)(b)))
-    #define FS_CMn_CLK_Check(a,b,c)             (IEC60730B_CM4_CM7_CLK_Check((a),(b),(c)))
-    #define FS_CMn_PC_Object                    (IEC60730B_PC_object)
-    #define FS_CMn_WDOG_MemInit(a)              (a)->resets = 0U
+    #define FS_CMn_CLK_Init(a)                  (FS_CLK_Init((a)))
+    #define FS_CMn_WDOG_Setup(a)                (FS_WDOG_Setup_LPTMR((a), (uint8_t)FS_KINETIS_WDOG))
+    #define FS_CMn_WDOG_Check(a,b,c,d,e)        (FS_WDOG_Check((a),(b),(c),(d),(e), 0U, (uint8_t)FS_WDOG_SRS_WIDE_8b))
+    #define FS_CMn_CLK_LPTMR(a,b)               (FS_CLK_LPTMR((a),(b)))
+    #define FS_CMn_CLK_Check(a,b,c)             (FS_CLK_Check((a),(b),(c)))
+    #define FS_CMn_PC_Object                    (FS_PC_Object)
+    #define FS_CMn_WDOG_MemInit(a)              (a)->resets = 0U;\
+                                                (a)->RefTimerBase = (uint32_t)LPTMR0;\
+                                                (a)->WdogBase = (uint32_t)WDOG;\
+                                                (a)->pResetDetectRegister = (uint32_t)(&(RCM->SRS0));\
+                                                (a)->ResetDetectMask  = (uint32_t)RCM_SRS0_WDOG_MASK
 
-    #define FS_PASS                             (0x0000)
-    #define FS_FAIL_CLK                         (IEC60730B_ST_CLK_FAIL)
+    typedef fs_wdog_test_t                      fs_wdog_reset_test_t;
 
-    /* Boolean data types */
-    typedef unsigned short                      bool_t;
-    typedef WD_Test_Str                         fs_wdog_reset_test_t;
-
-    #ifndef FALSE
-    #define FALSE    ((bool_t)0)
-    #endif
-    #ifndef TRUE
-    #define TRUE     ((bool_t)1)
-    #endif
 #else
     #error "Unsupported core!"
 #endif
@@ -222,7 +204,7 @@ typedef struct _fs_test_common
 
     struct  /*!< Safety Watchdog test structure. */
     {
-	/* Watchdog fast control loop refresh ratio. */
+        /* Watchdog fast control loop refresh ratio. */
         uint16_t ui16RefreshRatio;
         /* Number of resets. */
         uint16_t ui16Resets;
@@ -416,10 +398,11 @@ static void FS_fsWdogRefresh_FL(void);
     /*! @brief CRC structure containing information for the offline CRC calculation. */
     typedef struct _fs_crc
     {
-        uint32_t ui32Seed;
-        uint32_t ui32FlashStart;
-        uint32_t ui32FlashEnd;
-        uint32_t ui32CRC;
+        uint16_t ui16Start;
+        uint32_t ui32FlashStart __attribute__((packed));
+        uint32_t ui32FlashEnd   __attribute__((packed));
+        uint32_t ui32CRC        __attribute__((packed));
+        uint16_t ui16End        __attribute__((packed));
     } fs_crc_t;
 
     /* The safety-related RAM border marker. */
@@ -428,13 +411,14 @@ static void FS_fsWdogRefresh_FL(void);
     /* The safety-related FLASH end border marker. */
     extern uint32_t Load$$ER_FS_RAM$$Limit;
 
-    /* The safety-related FLASH CRC16 value. */
+    /* The safety-related FLASH CRC value. */
     const fs_crc_t c_sfsCRC __attribute__((used, section(".flshcrc"))) =
     {
-        .ui32Seed       = (((uint32_t)FS_CFG_FLASH_TST_CRC_SEED) << 16U) | 0xA55AUL,
+        .ui16Start      = 0xA55AU,
         .ui32FlashStart = (uint32_t)__ROM_start__,
         .ui32FlashEnd   = (uint32_t)&Load$$ER_FS_RAM$$Limit,
-        .ui32CRC        = (0x5AA50000UL | (uint32_t)FS_CFG_FLASH_TST_CRC)
+        .ui32CRC        = (uint32_t)FS_CFG_FLASH_TST_CRC,
+        .ui16End        = 0x5AA5U
     };
 
     /* Assemble the linker configuration structure. */
@@ -477,10 +461,11 @@ static void FS_fsWdogRefresh_FL(void);
     /*! @brief CRC structure containing information for the offline CRC calculation. */
     typedef struct _fs_crc
     {
-        uint32_t ui32Seed;
-        uint32_t ui32FlashStart;
-        uint32_t ui32FlashEnd;
-        uint32_t ui32CRC;
+        uint16_t ui16Start;
+        uint32_t ui32FlashStart __attribute__((packed));
+        uint32_t ui32FlashEnd   __attribute__((packed));
+        uint32_t ui32CRC        __attribute__((packed));
+        uint16_t ui16End        __attribute__((packed));
     } fs_crc_t;
 
     /* Get the address of the beginning and the end of the RAM memory. */
@@ -518,13 +503,14 @@ static void FS_fsWdogRefresh_FL(void);
     /* Safety-related FLASH boundaries. */
     extern uint32_t m_safety_flash_end;
 
-    /* The safety-related FLASH CRC16 value. */
+    /* The safety-related FLASH CRC value. */
     const fs_crc_t c_sfsCRC __attribute__((used, section(".flshcrc"))) =
     {
-        .ui32Seed       = (((uint32_t)FS_CFG_FLASH_TST_CRC_SEED) << 16U) | 0xA55AUL,
+        .ui16Start      = 0xA55AU,
         .ui32FlashStart = (uint32_t)&__ROM_start__,
         .ui32FlashEnd   = (uint32_t)&m_safety_flash_end,
-        .ui32CRC        = (0x5AA50000UL | (uint32_t)FS_CFG_FLASH_TST_CRC)
+        .ui32CRC        = (uint32_t)FS_CFG_FLASH_TST_CRC,
+        .ui16End        = 0x5AA5U
     };
     /* Assemble the linker configuration structure. */
     const lcf_setup_t __attribute__((used)) c_sfsLCFSetup =
@@ -812,7 +798,7 @@ void FS_fsCommonInit_AR(void)
 #if FS_CFG_ENABLE_TEST_FLASH
 
     /* Initialize CRC runtime calculation variable with the initial CRC seed. */
-    g_sfsSafetyTst.sFLASH.ui16PartialCRC = FS_CFG_FLASH_TST_CRC_SEED;
+    g_sfsSafetyTst.sFLASH.ui16PartialCRC = 0U;
 
     /* Flash test block initial address and size. */
     g_sfsSafetyTst.sFLASH.ui32TestBlockAddr = c_sfsLCFSetup.ui32FlashSafeStart;
@@ -1023,7 +1009,7 @@ void FS_fsClockTestIsr_SL(void)
 #if FS_CFG_ENABLE_TEST_CLOCK
 
     /* Capture the status of the independent timer. */
-    FS_CMn_CLK_LPTMR((uint32_t*)LPTMR0, &g_sfsSafetyTst.sClock.ui32TestContext);
+    FS_CMn_CLK_LPTMR((fs_lptmr_t*)LPTMR0, &g_sfsSafetyTst.sClock.ui32TestContext);
 
     /* Raise the start flag to allow the clock test evaluation. */
     g_sfsSafetyTst.sClock.ui16TestStartFlag++;
@@ -1086,8 +1072,7 @@ void FS_fsFlashTest_AR(void)
     ui32TstResult = FS_CMn_FLASH_HW16(c_sfsLCFSetup.ui32FlashSafeStart,
                                       c_sfsLCFSetup.ui32FlashSafeEnd -
                                       c_sfsLCFSetup.ui32FlashSafeStart,
-                                      CRC_BASE,
-                                      FS_CFG_FLASH_TST_CRC_SEED);
+                                      CRC_BASE, 0U);
 
 
     /* Compare the flash CRC with the expected value. */
@@ -1156,7 +1141,7 @@ void FS_fsFlashTest_BL(void)
         }
 
         /* Reset the CRC value to the original seed value. */
-        g_sfsSafetyTst.sFLASH.ui16PartialCRC = FS_CFG_FLASH_TST_CRC_SEED;
+        g_sfsSafetyTst.sFLASH.ui16PartialCRC = 0U;
 
         /* Reset the block address to the safety flash start. */
         g_sfsSafetyTst.sFLASH.ui32TestBlockAddr = c_sfsLCFSetup.ui32FlashSafeStart;
@@ -1366,7 +1351,7 @@ void FS_fsCpuTest_BL(void)
        during the test. */
     ui32PrimaskReg = __get_PRIMASK();
     __disable_irq();
-    ui32TstResult = FS_CMn_CPU_Float1();
+    ui32TstResult = FS_CM4_CM7_CPU_Float1();
     __set_PRIMASK(ui32PrimaskReg);
     if(((uint32_t)FS_PASS) != ui32TstResult)
     {
@@ -1378,7 +1363,7 @@ void FS_fsCpuTest_BL(void)
        during the test. */
     ui32PrimaskReg = __get_PRIMASK();
     __disable_irq();
-    ui32TstResult = FS_CMn_CPU_Float2();
+    ui32TstResult = FS_CM4_CM7_CPU_Float2();
     __set_PRIMASK(ui32PrimaskReg);
     if(((uint32_t)FS_PASS) != ui32TstResult)
     {
@@ -1587,7 +1572,7 @@ void FS_fsFlowCheck_FL(void)
     g_sfsFlowChkFL.ui32Correctness |= (g_sfsFlowChkFL.ui32Signature ^ FS_FLCK_FL_NODE_START);
 
 #if FS_CFG_ENABLE_TEST_FLOW
-    /* Check whether the software was executed correctly after the reset. */
+    /* Check whether the software was executed correctly. */
     if(0UL < g_sfsFlowChkFL.ui32Correctness)
     {
         /* Execute the safety error handling routine. */
@@ -1606,7 +1591,7 @@ void FS_fsFlowCheck_SL(void)
     g_sfsFlowChkSL.ui32Correctness |= (g_sfsFlowChkSL.ui32Signature ^ FS_FLCK_SL_NODE_START);
 
 #if FS_CFG_ENABLE_TEST_FLOW
-    /* Check whether the software was executed correctly after the reset. */
+    /* Check whether the software was executed correctly. */
     if(0UL < g_sfsFlowChkSL.ui32Correctness)
     {
         /* Execute the safety error handling routine. */

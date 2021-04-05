@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -43,62 +43,65 @@
 //    |            | --> RAM_TEST_BACKUP
 //    |____________|
 
-//     Processors:          MKV11Z128xxx7
-//     Version:             KV11P64M75RM
-
 /******************************************************************************/
 /******************     USER CONFIGURATION PART     ***************************/
 /******************************************************************************/
 #ifndef __LINKER_CONFIG__
-    #define __LINKER_CONFIG__
+#define __LINKER_CONFIG__
 
-#define __ROM_start__        0x00000000
-#define __ROM_end__          0x0001E000
+	/* FLASH memory boundaries. */
+	#define __ROM_start__        0x00000000
+	#define __ROM_end__          0x0001DFFF
 
-#define __RAM_start__        0x1ffff410
-#define __RAM_end__          0x20002ee7 //TODO
+	/* RAM memory boundaries. */
+	#define __RAM_start__        0x1FFFF410
+	#define __RAM_end__          0x20002EE7
 
-#define stack_test_block_size  0x10
-#define ram_test_backup_size   0x20
-#define __size_cstack__        0x400
+	/* Sizes of objects in RAM. */
+	#define __size_cstack__        0x400
+	#define stack_test_block_size  0x10
+	#define ram_test_backup_size   0x20
+	#define wd_test_backup_size    0x20
 
-    #define __FlashCRC_start__  0x6FF0 /* for placing a checksum */
-    #define __FlashCRC_end__    0x6FF0 /* for placing a checksum */
+	/* Sizes of objects in FLASH. */
+	#define __vector_table_size__  0x400
+	#undef  __VECTOR_TABLE
+	#define __VECTOR_TABLE   __ROM_start__
+	#define __PC_test_size       0x20
+	#define __size_flash_crc__   0x10 /*size of region for placing a checksum */
+	#define __flash_cfg_size     0x10
 
-    #define __vector_table_size__  0x400
-    #undef  __VECTOR_TABLE
-    #define __VECTOR_TABLE   __ROM_start__
-    #define SAFETY_RAM_SIZE  0x300
 
-/******************************************************************************/
-/******************     SYMBOLS     *******************************************/
-/******************************************************************************/
-#define m_flash_config_start     0x00000400
-#define m_flash_config_end       0x00000410
-#define m_flash_config_size      (m_flash_config_end - m_flash_config_start)
+	/******************************************************************************/
+	/******************     SYMBOLS     *******************************************/
+	/******************************************************************************/
+	/* Assemble RAM addresses. */
+	#define m_ram_test_backup     (__RAM_end__ - ram_test_backup_size + 0x1)
+	#define m_wd_test_backup      (m_ram_test_backup - wd_test_backup_size)
+	#define m_pc_test_flag        (m_wd_test_backup - 0x4)
+	#define m_safety_error_code   (m_pc_test_flag - 0x4)
+	#define m_stack_test_p_4      (m_safety_error_code - 0x4)
+	#define m_stack_test_p_3      (m_stack_test_p_4 - stack_test_block_size +0x4)
+	#define __BOOT_STACK_ADDRESS  (m_stack_test_p_3 - 0x4)
+	#define m_stack_test_p_2      (__BOOT_STACK_ADDRESS - __size_cstack__)
+	#define m_stack_test_p_1      (m_stack_test_p_2 - stack_test_block_size + 0x4)
 
-#define __PC_test_size 0x20
-#define __PC_test_end__ 		__ROM_end__
-#define __PC_test_start__ 	(__PC_test_end__ - __PC_test_size)
+	#define m_safety_ram_start    __RAM_start__
+	// NON SAFETY RELATED RAM continue exactly after safety related ram. 
 
-#define m_flash_end  				(__PC_test_start__ - 0x1)
+	
+	/* Assemble FLASH addresses. */
+	#define m_intvec_table_start (__ROM_start__)
+	#define m_intvec_table_end   (m_intvec_table_start  + __vector_table_size__ - 0x1)
+	#define m_flash_config_start (m_intvec_table_end    + 0x1)
+	#define m_flash_config_end   (m_flash_config_start  + __flash_cfg_size - 0x1)
+	#define __PC_test_start__    (m_flash_config_end    + 0x1) 
+	#define __PC_test_end__ 		 (__PC_test_start__ + __PC_test_size - 0x1)
+	#define m_flash_start        (__PC_test_end__   + 0x1)
 
-    #define _region_ROM_start__   (__ROM_start__ + 0x410)
-    #define m_data_start          __RAM_start__
+	#define m_fs_flash_crc_end   (__ROM_end__)
+	#define m_fs_flash_crc_start (m_fs_flash_crc_end - __size_flash_crc__ + 0x1)
+	#define m_flash_end          (m_fs_flash_crc_start - 0x1)
 
-#define m_ram_test_backup     (__RAM_end__ - ram_test_backup_size + 0x1)
-#define m_wd_test_backup      (m_ram_test_backup - 0x20)
-#define m_pc_test_flag        (m_wd_test_backup - 0x4)
-#define m_safety_error_code   (m_pc_test_flag - 0x4)
-#define m_stack_test_p_4      (m_safety_error_code - 0x4)
-#define m_stack_test_p_3      (m_stack_test_p_4 - stack_test_block_size +0x4)
-#define __BOOT_STACK_ADDRESS  (m_stack_test_p_3 - 0x4)
-#define m_stack_test_p_2      (__BOOT_STACK_ADDRESS - __size_cstack__)
-#define m_stack_test_p_1      (m_stack_test_p_2 - stack_test_block_size + 0x4)
-
-    #define m_safety_ram_end      (m_stack_test_p_1 - 0x1)
-    #define m_safety_ram_start    (m_safety_ram_end - SAFETY_RAM_SIZE + 0x01)  
-
-    #define m_data_end            (m_safety_ram_start - 0x01)
-    #define m_data_size           (m_data_end - m_data_start)
 #endif
+

@@ -21,7 +21,7 @@
  * Definitions
  *****************************************************************************/
 /*! @brief Driver version. */
-#define FSL_SDSPI_DRIVER_VERSION (MAKE_VERSION(2U, 1U, 4U)) /*2.1.4*/
+#define FSL_SDSPI_DRIVER_VERSION (MAKE_VERSION(2U, 2U, 1U)) /*2.2.1*/
 
 /*! @brief Default block size */
 #define FSL_SDSPI_DEFAULT_BLOCK_SIZE (512U)
@@ -52,8 +52,10 @@
 #define SDSPI_CARD_CRC_PROTECTION_ENABLE 0U
 #endif
 
-/*! @brief SDSPI API status */
-enum _sdspi_status
+/*! @brief SDSPI API status
+ * @anchor _sdspi_status
+ */
+enum
 {
     kStatus_SDSPI_SetFrequencyFailed = MAKE_STATUS(kStatusGroup_SDSPI, 0U), /*!< Set frequency failed */
     kStatus_SDSPI_ExchangeFailed     = MAKE_STATUS(kStatusGroup_SDSPI, 1U), /*!< Exchange data on SPI bus failed */
@@ -81,8 +83,10 @@ enum _sdspi_status
 
 };
 
-/*! @brief SDSPI card flag */
-enum _sdspi_card_flag
+/*! @brief SDSPI card flag
+ * @anchor _sdspi_card_flag
+ */
+enum
 {
     kSDSPI_SupportHighCapacityFlag = (1U << 0U), /*!< Card is high capacity */
     kSDSPI_SupportSdhcFlag         = (1U << 1U), /*!< Card is SDHC */
@@ -90,8 +94,10 @@ enum _sdspi_card_flag
     kSDSPI_SupportSdscFlag         = (1U << 3U), /*!< Card is SDSC */
 };
 
-/*! @brief SDSPI response type */
-enum _sdspi_response_type
+/*! @brief SDSPI response type
+ * @anchor _sdspi_response_type
+ */
+enum
 {
     kSDSPI_ResponseTypeR1  = 0U, /*!< Response 1 */
     kSDSPI_ResponseTypeR1b = 1U, /*!< Response 1 with busy */
@@ -100,8 +106,10 @@ enum _sdspi_response_type
     kSDSPI_ResponseTypeR7  = 4U, /*!< Response 7 */
 };
 
-/*! @brief SDSPI command type */
-enum _sdspi_cmd
+/*! @brief SDSPI command type
+ * @anchor _sdspi_cmd
+ */
+enum
 {
     kSDSPI_CmdGoIdle = kSDMMC_GoIdleState << 8U | kSDSPI_ResponseTypeR1, /*!< command go idle */
     kSDSPI_CmdCrc    = kSDSPI_CommandCrc << 8U | kSDSPI_ResponseTypeR1,  /*!< command crc protection */
@@ -129,6 +137,13 @@ enum _sdspi_cmd
 
 };
 
+/*!@brief cs active polarity */
+typedef enum _sdspi_cs_active_polarity
+{
+    kSDSPI_CsActivePolarityHigh = 0U, /*!< CS active polarity high */
+    kSDSPI_CsActivePolarityLow,       /*!< CS active polarity low */
+} sdspi_cs_active_polarity_t;
+
 /*! @brief SDSPI host state. */
 typedef struct _sdspi_host
 {
@@ -136,6 +151,9 @@ typedef struct _sdspi_host
 
     status_t (*setFrequency)(uint32_t frequency);                   /*!< Set frequency of SPI */
     status_t (*exchange)(uint8_t *in, uint8_t *out, uint32_t size); /*!< Exchange data over SPI */
+    void (*init)(void);                                             /*!< SPI initialization */
+    void (*deinit)(void);                                           /*!< SPI de-initialization */
+    void (*csActivePolarity)(sdspi_cs_active_polarity_t polarity);  /*!< SPI CS active polarity */
 } sdspi_host_t;
 
 /*!
@@ -145,18 +163,16 @@ typedef struct _sdspi_host
  */
 typedef struct _sdspi_card
 {
-    sdspi_host_t *host;       /*!< Host state information */
-    uint32_t relativeAddress; /*!< Relative address of the card */
-    uint32_t flags;           /*!< Flags defined in _sdspi_card_flag. */
-    uint8_t rawCid[16U];      /*!< Raw CID content */
-    uint8_t rawCsd[16U];      /*!< Raw CSD content */
-    uint8_t rawScr[8U];       /*!< Raw SCR content */
-    uint32_t ocr;             /*!< Raw OCR content */
-    sd_cid_t cid;             /*!< CID */
-    sd_csd_t csd;             /*!< CSD */
-    sd_scr_t scr;             /*!< SCR */
-    uint32_t blockCount;      /*!< Card total block number */
-    uint32_t blockSize;       /*!< Card block size */
+    sdspi_host_t *host;          /*!< Host state information */
+    uint32_t relativeAddress;    /*!< Relative address of the card */
+    uint32_t flags;              /*!< Flags defined in _sdspi_card_flag. */
+    uint8_t internalBuffer[16U]; /*!< internal buffer for card raw register content */
+    uint32_t ocr;                /*!< Raw OCR content */
+    sd_cid_t cid;                /*!< CID */
+    sd_csd_t csd;                /*!< CSD */
+    sd_scr_t scr;                /*!< SCR */
+    uint32_t blockCount;         /*!< Card total block number */
+    uint32_t blockSize;          /*!< Card block size */
 } sdspi_card_t;
 
 /*************************************************************************************************

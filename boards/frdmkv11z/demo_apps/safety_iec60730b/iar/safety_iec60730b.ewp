@@ -313,28 +313,22 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/boards/frdmkv11z</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV11Z7</state>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/dev/frdmkv11z</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/register</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/ram</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/flash</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/stack</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/programCounter</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/compiler</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/wdog</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/dio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/clock</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/aio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/tsi</state>
           <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/boards/common/cm0/startup/cm0</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV11Z7/iar</state>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/register</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/ram</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/flash</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/stack</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/programCounter</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/compiler</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/wdog</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/tsi</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/dio</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/clock</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/aio</state>
+          <state>$PROJ_DIR$/../../../../../devices/MKV11Z7</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV11Z7/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV11Z7/utilities/debug_console</state>
@@ -342,10 +336,10 @@
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/common</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
-          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
           <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV11Z7/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can</state>
+          <state>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -607,19 +601,21 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/register</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/ram</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/flash</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/stack</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/programCounter</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/compiler</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/wdog</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/dio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/clock</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/aio</state>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/tsi</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/boards/common/cm0/startup/cm0</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/register</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/ram</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/flash</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/stack</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/programCounter</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/compiler</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/wdog</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/tsi</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/dio</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/clock</state>
+          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/aio</state>
+          <state>$PROJ_DIR$/../../../../../devices/MKV11Z7</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -820,7 +816,6 @@
         </option>
         <option>
           <name>IlinkAdditionalLibs</name>
-          <state>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/IEC60730_CM0_Class_B_IAR_v4_0.a</state>
         </option>
         <option>
           <name>IlinkOverrideProgramEntryLabel</name>
@@ -1011,9 +1006,6 @@
   <group>
     <name>source</name>
     <file>
-      <name>$PROJ_DIR$/../main.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../freemaster_cfg.h</name>
     </file>
     <file>
@@ -1039,6 +1031,9 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../safety_cm0_kinetis.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../main.c</name>
     </file>
   </group>
   <group>
@@ -1071,44 +1066,14 @@
   <group>
     <name>tools</name>
     <group>
-      <name>srec</name>
+      <name>srecord</name>
       <file>
-        <name>$PROJ_DIR$/../srecord-1.64.zip</name>
+        <name>$PROJ_DIR$/../../../../../tools/srecord/srecord-1.64.zip</name>
       </file>
     </group>
   </group>
   <group>
-    <name>linker</name>
-    <file>
-      <name>$PROJ_DIR$/linker/frdmkv11z_safety.icf</name>
-    </file>
-  </group>
-  <group>
-    <name>GUI</name>
-    <file>
-      <name>$PROJ_DIR$/../GUI/safety.pmp</name>
-    </file>
-  </group>
-  <group>
-    <name>device</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/system_MKV11Z7.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/system_MKV11Z7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/MKV11Z7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/MKV11Z7_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/fsl_device_registers.h</name>
-    </file>
-  </group>
-  <group>
-    <name>cpu</name>
+    <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/boards/common/cm0/startup/cm0/start.c</name>
     </file>
@@ -1123,127 +1088,178 @@
     </file>
   </group>
   <group>
-    <name>IEC60730_Class_B</name>
-    <group>
-      <name>aio</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/aio/iec60730b_aio.h</name>
-      </file>
-    </group>
-    <group>
-      <name>clock</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/clock/iec60730b_clock.h</name>
-      </file>
-    </group>
-    <group>
-      <name>dio</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/dio/iec60730b_dio.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/dio/iec60730b_dio_ext.h</name>
-      </file>
-    </group>
-    <group>
-      <name>tsi</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/tsi/iec60730b_tsi.h</name>
-      </file>
-    </group>
-    <group>
-      <name>watchdog</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/wdog/iec60730b_wdog.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/common_test/wdog/iec60730b_wdog.h</name>
-      </file>
-    </group>
-    <group>
-      <name>compiler</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/compiler/asm_mac_common.h</name>
-      </file>
-    </group>
-    <group>
-      <name>flash</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/flash/iec60730b_cm0_flash.h</name>
-      </file>
-    </group>
+    <name>linker</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/iec60730b_core.h</name>
+      <name>$PROJ_DIR$/linker/frdmkv11z_safety.icf</name>
     </file>
-    <group>
-      <name>programCounter</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/programCounter/iec60730b_cm0_pc.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/programCounter/iec60730b_cm0_pc_object.S</name>
-      </file>
-    </group>
-    <group>
-      <name>ram</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/ram/iec60730b_cm0_ram.h</name>
-      </file>
-    </group>
-    <group>
-      <name>register</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/register/iec60730b_cm0_reg.h</name>
-      </file>
-    </group>
-    <group>
-      <name>stack</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/core_test/cm0/stack/iec60730b_cm0_stack.h</name>
-      </file>
-    </group>
+  </group>
+  <group>
+    <name>GUI</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_0/iec60730b.h</name>
+      <name>$PROJ_DIR$/../GUI/safety.pmp</name>
+    </file>
+  </group>
+  <group>
+    <name>safety</name>
+    <group>
+      <name>v4_1</name>
+      <group>
+        <name>register</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/register/iec60730b_cm0_reg.h</name>
+        </file>
+      </group>
+      <group>
+        <name>ram</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/ram/iec60730b_cm0_ram.h</name>
+        </file>
+      </group>
+      <group>
+        <name>flash</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/flash/iec60730b_cm0_flash.h</name>
+        </file>
+      </group>
+      <group>
+        <name>stack</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/stack/iec60730b_cm0_stack.h</name>
+        </file>
+      </group>
+      <group>
+        <name>programCounter</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/programCounter/iec60730b_cm0_pc.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/programCounter/iec60730b_cm0_pc_object.S</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/core_test/cm0/iec60730b_core.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/iec60730b.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/iec60730b_types.h</name>
+      </file>
+      <group>
+        <name>compiler</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/compiler/asm_mac_common.h</name>
+        </file>
+      </group>
+      <group>
+        <name>wdog</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/wdog/iec60730b_wdog.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/wdog/iec60730b_wdog.h</name>
+        </file>
+      </group>
+      <group>
+        <name>tsi</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/tsi/iec60730b_tsi.h</name>
+        </file>
+      </group>
+      <group>
+        <name>dio</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/dio/iec60730b_dio_ext.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/dio/iec60730b_dio.h</name>
+        </file>
+      </group>
+      <group>
+        <name>clock</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/clock/iec60730b_clock.h</name>
+        </file>
+      </group>
+      <group>
+        <name>aio</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/common_test/aio/iec60730b_aio.h</name>
+        </file>
+      </group>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/IEC60730B_M0_IAR_v4_1.a</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/safety_iec60730b/safety/v4_1/IEC60730B_M0_COM_IAR_v4_1.a</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>MKV11Z7</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/system_MKV11Z7.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/system_MKV11Z7.h</name>
     </file>
   </group>
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_clock.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_uart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_uart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_port.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_uart.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_smc.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_port.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_smc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_smc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_gpio.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_gpio.c</name>
+    </file>
+  </group>
+  <group>
+    <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/fsl_device_registers.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/MKV11Z7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/MKV11Z7_features.h</name>
+    </file>
   </group>
   <group>
     <name>utilities</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/utilities/str/fsl_str.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/utilities/debug_console/fsl_debug_console.c</name>
     </file>
@@ -1254,12 +1270,6 @@
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/utilities/fsl_assert.c</name>
     </file>
   </group>
@@ -1268,37 +1278,37 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.c</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -1311,16 +1321,7 @@
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_appcmd.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_can.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_can.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_defcfg.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_pdbdm.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_pipes.c</name>
@@ -1344,15 +1345,6 @@
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_scope.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_serial.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_serial.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_sha.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_tsa.c</name>
     </file>
     <file>
@@ -1370,76 +1362,85 @@
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_utils.h</name>
     </file>
-    <group>
-      <name>drivers</name>
-      <group>
-        <name>mcuxsdk</name>
-        <group>
-          <name>can</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.h</name>
-          </file>
-        </group>
-        <group>
-          <name>serial</name>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.h</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.c</name>
-          </file>
-          <file>
-            <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</name>
-          </file>
-        </group>
-      </group>
-    </group>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_can.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_can.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_sha.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_pdbdm.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_serial.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/common/freemaster_serial.h</name>
+    </file>
     <group>
       <name>platforms</name>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.h</name>
+      </file>
+    </group>
+    <group>
+      <name>drivers</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpsci.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usb.h</name>
       </file>
     </group>
   </group>
@@ -1461,16 +1462,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,22 +15,22 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v7.0
+product: Pins v8.0
 processor: MKV11Z128xxx7
 package_id: MKV11Z128VLF7
 mcu_data: ksdk2_0
-processor_version: 0.7.1
+processor_version: 0.9.0
 pin_labels:
-- {pin_num: '57', pin_signal: PTD0/LLWU_P12/SPI0_PCS0/UART0_CTS_b/FTM0_CH0/UART1_RX/FTM3_CH0, label: UART1_RX, identifier: UART1_RX}
-- {pin_num: '58', pin_signal: ADC0_SE2/PTD1/SPI0_SCK/UART0_RTS_b/FTM0_CH1/UART1_TX/FTM3_CH1, label: UART1_TX, identifier: UART1_TX}
-- {pin_num: '21', pin_signal: PTE25/LLWU_P21/CAN0_RX/FTM0_CH1/I2C0_SDA/EWM_IN, label: FTM0_CH1, identifier: FTM0_CH1}
-- {pin_num: '49', pin_signal: PTC4/LLWU_P8/SPI0_PCS0/UART1_TX/FTM0_CH3/CMP1_OUT, label: FTM0_CH3, identifier: FTM0_CH3}
-- {pin_num: '50', pin_signal: PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/CMP0_OUT/FTM0_CH2, label: FTM0_CH2, identifier: FTM0_CH2}
-- {pin_num: '61', pin_signal: PTD4/LLWU_P14/SPI0_PCS1/UART0_RTS_b/FTM0_CH4/FTM2_CH0/EWM_IN/SPI0_PCS0, label: FTM0_CH4, identifier: FTM0_CH4}
-- {pin_num: '62', pin_signal: ADC0_SE3/PTD5/SPI0_PCS2/UART0_CTS_b/FTM0_CH5/FTM2_CH1/EWM_OUT_b/SPI0_SCK, label: FTM0_CH5, identifier: FTM0_CH5}
-- {pin_num: '20', pin_signal: PTE24/CAN0_TX/FTM0_CH0/I2C0_SCL/EWM_OUT_b, label: FTM0_CH0, identifier: FTM0_CH0}
-- {pin_num: '32', pin_signal: EXTAL0/PTA18/FTM0_FLT2/FTM_CLKIN0/FTM3_CH2, label: Relay, identifier: Relay}
-- {pin_num: '59', pin_signal: PTD2/LLWU_P13/SPI0_SOUT/UART0_RX/FTM0_CH2/FTM3_CH2/I2C0_SCL, label: USER_LED, identifier: USER_LED}
+- {pin_num: '41', pin_signal: PTD0/LLWU_P12/SPI0_PCS0/UART0_CTS_b/FTM0_CH0/UART1_RX/FTM3_CH0, label: UART1_RX, identifier: UART1_RX}
+- {pin_num: '42', pin_signal: ADC0_SE2/PTD1/SPI0_SCK/UART0_RTS_b/FTM0_CH1/UART1_TX/FTM3_CH1, label: UART1_TX, identifier: UART1_TX}
+- {pin_num: '16', pin_signal: PTE25/LLWU_P21/CAN0_RX/FTM0_CH1/I2C0_SDA/EWM_IN, label: FTM0_CH1, identifier: FTM0_CH1}
+- {pin_num: '37', pin_signal: PTC4/LLWU_P8/SPI0_PCS0/UART1_TX/FTM0_CH3/CMP1_OUT, label: FTM0_CH3, identifier: FTM0_CH3}
+- {pin_num: '38', pin_signal: PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/CMP0_OUT/FTM0_CH2, label: FTM0_CH2, identifier: FTM0_CH2}
+- {pin_num: '45', pin_signal: PTD4/LLWU_P14/SPI0_PCS1/UART0_RTS_b/FTM0_CH4/FTM2_CH0/EWM_IN/SPI0_PCS0, label: FTM0_CH4, identifier: FTM0_CH4}
+- {pin_num: '46', pin_signal: ADC0_SE3/PTD5/SPI0_PCS2/UART0_CTS_b/FTM0_CH5/FTM2_CH1/EWM_OUT_b/SPI0_SCK, label: FTM0_CH5, identifier: FTM0_CH5}
+- {pin_num: '15', pin_signal: PTE24/CAN0_TX/FTM0_CH0/I2C0_SCL/EWM_OUT_b, label: FTM0_CH0, identifier: FTM0_CH0}
+- {pin_num: '24', pin_signal: EXTAL0/PTA18/FTM0_FLT2/FTM_CLKIN0/FTM3_CH2, label: Relay, identifier: Relay}
+- {pin_num: '43', pin_signal: PTD2/LLWU_P13/SPI0_SOUT/UART0_RX/FTM0_CH2/FTM3_CH2/I2C0_SCL, label: USER_LED, identifier: USER_LED}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -49,42 +49,22 @@ pin_labels:
 void BOARD_InitBootPins(void)
 {
     PinTool_FTM();
-    PinTool_UART();  
-    PinTool_Misc();    
-}
-
-/* clang-format off */
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
-- pin_list: []
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-/* clang-format on */
-
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitPins
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitPins(void)
-{
+    PinTool_UART();
+    PinTool_Misc();
 }
 
 /* clang-format off */
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 PinTool_FTM:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '21', peripheral: FTM0, signal: 'CH, 1', pin_signal: PTE25/LLWU_P21/CAN0_RX/FTM0_CH1/I2C0_SDA/EWM_IN, direction: OUTPUT}
-  - {pin_num: '49', peripheral: FTM0, signal: 'CH, 3', pin_signal: PTC4/LLWU_P8/SPI0_PCS0/UART1_TX/FTM0_CH3/CMP1_OUT, direction: OUTPUT}
-  - {pin_num: '50', peripheral: FTM0, signal: 'CH, 2', pin_signal: PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/CMP0_OUT/FTM0_CH2, direction: OUTPUT}
-  - {pin_num: '61', peripheral: FTM0, signal: 'CH, 4', pin_signal: PTD4/LLWU_P14/SPI0_PCS1/UART0_RTS_b/FTM0_CH4/FTM2_CH0/EWM_IN/SPI0_PCS0, direction: OUTPUT}
-  - {pin_num: '62', peripheral: FTM0, signal: 'CH, 5', pin_signal: ADC0_SE3/PTD5/SPI0_PCS2/UART0_CTS_b/FTM0_CH5/FTM2_CH1/EWM_OUT_b/SPI0_SCK, direction: OUTPUT}
-  - {pin_num: '20', peripheral: FTM0, signal: 'CH, 0', pin_signal: PTE24/CAN0_TX/FTM0_CH0/I2C0_SCL/EWM_OUT_b, direction: OUTPUT}
+  - {pin_num: '16', peripheral: FTM0, signal: 'CH, 1', pin_signal: PTE25/LLWU_P21/CAN0_RX/FTM0_CH1/I2C0_SDA/EWM_IN, direction: OUTPUT}
+  - {pin_num: '37', peripheral: FTM0, signal: 'CH, 3', pin_signal: PTC4/LLWU_P8/SPI0_PCS0/UART1_TX/FTM0_CH3/CMP1_OUT, direction: OUTPUT}
+  - {pin_num: '38', peripheral: FTM0, signal: 'CH, 2', pin_signal: PTC5/LLWU_P9/SPI0_SCK/LPTMR0_ALT2/CMP0_OUT/FTM0_CH2, direction: OUTPUT}
+  - {pin_num: '45', peripheral: FTM0, signal: 'CH, 4', pin_signal: PTD4/LLWU_P14/SPI0_PCS1/UART0_RTS_b/FTM0_CH4/FTM2_CH0/EWM_IN/SPI0_PCS0, direction: OUTPUT}
+  - {pin_num: '46', peripheral: FTM0, signal: 'CH, 5', pin_signal: ADC0_SE3/PTD5/SPI0_PCS2/UART0_CTS_b/FTM0_CH5/FTM2_CH1/EWM_OUT_b/SPI0_SCK, direction: OUTPUT}
+  - {pin_num: '15', peripheral: FTM0, signal: 'CH, 0', pin_signal: PTE24/CAN0_TX/FTM0_CH0/I2C0_SCL/EWM_OUT_b, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -104,22 +84,22 @@ void PinTool_FTM(void)
     /* Port E Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortE);
 
-    /* PORTC4 (pin 49) is configured as FTM0_CH3 */
+    /* PORTC4 (pin 37) is configured as FTM0_CH3 */
     PORT_SetPinMux(PINTOOL_FTM_FTM0_CH3_PORT, PINTOOL_FTM_FTM0_CH3_PIN, kPORT_MuxAlt4);
 
-    /* PORTC5 (pin 50) is configured as FTM0_CH2 */
+    /* PORTC5 (pin 38) is configured as FTM0_CH2 */
     PORT_SetPinMux(PINTOOL_FTM_FTM0_CH2_PORT, PINTOOL_FTM_FTM0_CH2_PIN, kPORT_MuxAlt7);
 
-    /* PORTD4 (pin 61) is configured as FTM0_CH4 */
+    /* PORTD4 (pin 45) is configured as FTM0_CH4 */
     PORT_SetPinMux(PINTOOL_FTM_FTM0_CH4_PORT, PINTOOL_FTM_FTM0_CH4_PIN, kPORT_MuxAlt4);
 
-    /* PORTD5 (pin 62) is configured as FTM0_CH5 */
+    /* PORTD5 (pin 46) is configured as FTM0_CH5 */
     PORT_SetPinMux(PINTOOL_FTM_FTM0_CH5_PORT, PINTOOL_FTM_FTM0_CH5_PIN, kPORT_MuxAlt4);
 
-    /* PORTE24 (pin 20) is configured as FTM0_CH0 */
+    /* PORTE24 (pin 15) is configured as FTM0_CH0 */
     PORT_SetPinMux(PINTOOL_FTM_FTM0_CH0_PORT, PINTOOL_FTM_FTM0_CH0_PIN, kPORT_MuxAlt3);
 
-    /* PORTE25 (pin 21) is configured as FTM0_CH1 */
+    /* PORTE25 (pin 16) is configured as FTM0_CH1 */
     PORT_SetPinMux(PINTOOL_FTM_FTM0_CH1_PORT, PINTOOL_FTM_FTM0_CH1_PIN, kPORT_MuxAlt3);
 
     SIM->SOPT8 =
@@ -156,10 +136,10 @@ void PinTool_FTM(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 PinTool_UART:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '57', peripheral: UART1, signal: RX, pin_signal: PTD0/LLWU_P12/SPI0_PCS0/UART0_CTS_b/FTM0_CH0/UART1_RX/FTM3_CH0}
-  - {pin_num: '58', peripheral: UART1, signal: TX, pin_signal: ADC0_SE2/PTD1/SPI0_SCK/UART0_RTS_b/FTM0_CH1/UART1_TX/FTM3_CH1, direction: OUTPUT}
+  - {pin_num: '41', peripheral: UART1, signal: RX, pin_signal: PTD0/LLWU_P12/SPI0_PCS0/UART0_CTS_b/FTM0_CH0/UART1_RX/FTM3_CH0}
+  - {pin_num: '42', peripheral: UART1, signal: TX, pin_signal: ADC0_SE2/PTD1/SPI0_SCK/UART0_RTS_b/FTM0_CH1/UART1_TX/FTM3_CH1, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -175,10 +155,10 @@ void PinTool_UART(void)
     /* Port D Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortD);
 
-    /* PORTD0 (pin 57) is configured as UART1_RX */
+    /* PORTD0 (pin 41) is configured as UART1_RX */
     PORT_SetPinMux(PINTOOL_UART_UART1_RX_PORT, PINTOOL_UART_UART1_RX_PIN, kPORT_MuxAlt5);
 
-    /* PORTD1 (pin 58) is configured as UART1_TX */
+    /* PORTD1 (pin 42) is configured as UART1_TX */
     PORT_SetPinMux(PINTOOL_UART_UART1_TX_PORT, PINTOOL_UART_UART1_TX_PIN, kPORT_MuxAlt5);
 
     SIM->SOPT5 = ((SIM->SOPT5 &
@@ -196,10 +176,10 @@ void PinTool_UART(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 PinTool_Misc:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '32', peripheral: GPIOA, signal: 'GPIO, 18', pin_signal: EXTAL0/PTA18/FTM0_FLT2/FTM_CLKIN0/FTM3_CH2, direction: OUTPUT}
-  - {pin_num: '59', peripheral: GPIOD, signal: 'GPIO, 2', pin_signal: PTD2/LLWU_P13/SPI0_SOUT/UART0_RX/FTM0_CH2/FTM3_CH2/I2C0_SCL, direction: OUTPUT}
+  - {pin_num: '24', peripheral: GPIOA, signal: 'GPIO, 18', pin_signal: EXTAL0/PTA18/FTM0_FLT2/FTM_CLKIN0/FTM3_CH2, direction: OUTPUT}
+  - {pin_num: '43', peripheral: GPIOD, signal: 'GPIO, 2', pin_signal: PTD2/LLWU_P13/SPI0_SOUT/UART0_RX/FTM0_CH2/FTM3_CH2/I2C0_SCL, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -221,20 +201,20 @@ void PinTool_Misc(void)
         .pinDirection = kGPIO_DigitalOutput,
         .outputLogic = 0U
     };
-    /* Initialize GPIO functionality on pin PTA18 (pin 32)  */
+    /* Initialize GPIO functionality on pin PTA18 (pin 24)  */
     GPIO_PinInit(PINTOOL_MISC_Relay_GPIO, PINTOOL_MISC_Relay_PIN, &Relay_config);
 
     gpio_pin_config_t USER_LED_config = {
         .pinDirection = kGPIO_DigitalOutput,
         .outputLogic = 0U
     };
-    /* Initialize GPIO functionality on pin PTD2 (pin 59)  */
+    /* Initialize GPIO functionality on pin PTD2 (pin 43)  */
     GPIO_PinInit(PINTOOL_MISC_USER_LED_GPIO, PINTOOL_MISC_USER_LED_PIN, &USER_LED_config);
 
-    /* PORTA18 (pin 32) is configured as PTA18 */
+    /* PORTA18 (pin 24) is configured as PTA18 */
     PORT_SetPinMux(PINTOOL_MISC_Relay_PORT, PINTOOL_MISC_Relay_PIN, kPORT_MuxAsGpio);
 
-    /* PORTD2 (pin 59) is configured as PTD2 */
+    /* PORTD2 (pin 43) is configured as PTD2 */
     PORT_SetPinMux(PINTOOL_MISC_USER_LED_PORT, PINTOOL_MISC_USER_LED_PIN, kPORT_MuxAsGpio);
 }
 /***********************************************************************************************************************

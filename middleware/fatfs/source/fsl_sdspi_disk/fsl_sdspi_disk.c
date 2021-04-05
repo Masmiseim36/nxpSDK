@@ -136,7 +136,6 @@ DSTATUS sdspi_disk_initialize(BYTE pdrv)
 {
     if (pdrv == SDSPIDISK)
     {
-        spi_init();
         sdspi_host_init();
         SDSPI_Init(&g_card);
         g_card.host = &g_host;
@@ -192,6 +191,18 @@ status_t spi_set_frequency(uint32_t frequency)
     return kStatus_Fail;
 }
 
+void spi_csActivePolarity(sdspi_cs_active_polarity_t polarity)
+{
+    if(polarity == kSDSPI_CsActivePolarityHigh)
+    {
+        DSPI_SetAllPcsPolarity((SPI_Type *)BOARD_SDSPI_SPI_BASE, 0U);
+    }
+    else
+    {
+        DSPI_SetAllPcsPolarity((SPI_Type *)BOARD_SDSPI_SPI_BASE, DSPI_MASTER_PCS_ACTIVE_LOW);
+    }
+}
+
 status_t spi_exchange(uint8_t *in, uint8_t *out, uint32_t size)
 {
     dspi_transfer_t masterTransfer;
@@ -210,6 +221,8 @@ void sdspi_host_init(void)
     g_host.busBaudRate = DSPI_BUS_BAUDRATE;
     g_host.setFrequency = spi_set_frequency;
     g_host.exchange = spi_exchange;
+    g_host.init     = spi_init;
+    g_host.csActivePolarity         = spi_csActivePolarity;
 
     /* Saves card state. */
     g_card.host = &g_host;

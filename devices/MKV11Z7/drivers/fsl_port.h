@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,8 +26,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! Version 2.1.0. */
-#define FSL_PORT_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*! Version 2.1.1. */
+#define FSL_PORT_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 #if defined(FSL_FEATURE_PORT_HAS_PULL_ENABLE) && FSL_FEATURE_PORT_HAS_PULL_ENABLE
@@ -244,7 +244,7 @@ static inline void PORT_SetPinConfig(PORT_Type *base, uint32_t pin, const port_p
 {
     assert(config);
     uint32_t addr                = (uint32_t)&base->PCR[pin];
-    *(volatile uint16_t *)(addr) = *((const uint16_t *)config);
+    *(volatile uint16_t *)(addr) = *((const uint16_t *)(const void *)config);
 }
 
 /*!
@@ -252,7 +252,7 @@ static inline void PORT_SetPinConfig(PORT_Type *base, uint32_t pin, const port_p
  *
  * This is an example to define input pins or output pins PCR configuration.
  * @code
- * // Define a digital input pin PCR configuration
+ * Define a digital input pin PCR configuration
  * port_pin_config_t config = {
  *      kPORT_PullUp ,
  *      kPORT_PullEnable,
@@ -273,13 +273,13 @@ static inline void PORT_SetMultiplePinsConfig(PORT_Type *base, uint32_t mask, co
 {
     assert(config);
 
-    uint16_t pcrl = *((const uint16_t *)config);
+    uint16_t pcrl = *((const uint16_t *)(const void *)config);
 
-    if (mask & 0xffffU)
+    if (0U != (mask & 0xffffU))
     {
         base->GPCLR = ((mask & 0xffffU) << 16) | pcrl;
     }
-    if (mask >> 16)
+    if (0U != (mask >> 16))
     {
         base->GPCHR = (mask & 0xffff0000U) | pcrl;
     }
@@ -313,12 +313,12 @@ static inline void PORT_SetMultipleInterruptPinsConfig(PORT_Type *base, uint32_t
 
     if (mask & 0xffffU)
     {
-        base->GICLR = (config << 16) | (mask & 0xffffU);
+        base->GICLR = ((uint32_t)(config << 16)) | (mask & 0xffffU);
     }
     mask = mask >> 16;
-    if (mask)
+    if (0U != mask)
     {
-        base->GICHR = (config << 16) | (mask & 0xffffU);
+        base->GICHR = ((uint32_t)(config << 16)) | (mask & 0xffffU);
     }
 }
 #endif

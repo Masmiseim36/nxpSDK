@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -42,4 +42,7 @@ void start(void)
     
     /* Jump to main process */
     main();
+
+    /* No actions to perform after this so wait forever */
+    while(TRUE);
 }

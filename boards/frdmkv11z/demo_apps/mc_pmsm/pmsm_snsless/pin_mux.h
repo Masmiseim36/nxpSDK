@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -33,47 +33,59 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
-/*!
- * @brief Configures pin routing and optionally pin electrical features.
- *
- */
-void BOARD_InitPins(void);
-
 /*! @name PORTC1 (number 44), J18[14]/J22[A40]/J500[9]/U2[3]/FTM0_CH0/LED0
   @{ */
-#define PINTOOL_FTM_LED_GREEN1_PORT PORTC /*!<@brief PORT device name: PORTC */
-#define PINTOOL_FTM_LED_GREEN1_PIN 1U     /*!<@brief PORTC pin index: 1 */
-                                          /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_FTM_LED_GREEN1_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_FTM_LED_GREEN1_PIN 1U                   /*!<@brief PORT pin number */
+#define PINTOOL_FTM_LED_GREEN1_PIN_MASK (1U << 1U)      /*!<@brief PORT pin mask */
+                                                        /* @} */
 
 /*! @name PORTC2 (number 45), J18[15]/J22[A39]/J24[15]/J500[11]/U2[4]/FTM0_CH1/LED1
   @{ */
-#define PINTOOL_FTM_LED_YELLOW1_PORT PORTC /*!<@brief PORT device name: PORTC */
-#define PINTOOL_FTM_LED_YELLOW1_PIN 2U     /*!<@brief PORTC pin index: 2 */
-                                           /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_FTM_LED_YELLOW1_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_FTM_LED_YELLOW1_PIN 2U                   /*!<@brief PORT pin number */
+#define PINTOOL_FTM_LED_YELLOW1_PIN_MASK (1U << 2U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
 
 /*! @name PORTC3 (number 46), J1[1]/J18[16]/J22[A38]/J24[16]/J500[30]/U2[5]/FTM0_CH2/LED2
   @{ */
-#define PINTOOL_FTM_LED_GREEN2_PORT PORTC /*!<@brief PORT device name: PORTC */
-#define PINTOOL_FTM_LED_GREEN2_PIN 3U     /*!<@brief PORTC pin index: 3 */
-                                          /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_FTM_LED_GREEN2_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_FTM_LED_GREEN2_PIN 3U                   /*!<@brief PORT pin number */
+#define PINTOOL_FTM_LED_GREEN2_PIN_MASK (1U << 3U)      /*!<@brief PORT pin mask */
+                                                        /* @} */
 
 /*! @name PORTC4 (number 49), J22[A37]/J24[17]/J500[32]/U2[6]/FTM0_CH3/LED3
   @{ */
-#define PINTOOL_FTM_LED_YELLOW2_PORT PORTC /*!<@brief PORT device name: PORTC */
-#define PINTOOL_FTM_LED_YELLOW2_PIN 4U     /*!<@brief PORTC pin index: 4 */
-                                           /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_FTM_LED_YELLOW2_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_FTM_LED_YELLOW2_PIN 4U                   /*!<@brief PORT pin number */
+#define PINTOOL_FTM_LED_YELLOW2_PIN_MASK (1U << 4U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
 
 /*! @name PORTD4 (number 61), J22[B40]/J24[25]/J500[34]/U2[7]/FTM0_CH4/LED4
   @{ */
-#define PINTOOL_FTM_LED_GREEN3_PORT PORTD /*!<@brief PORT device name: PORTD */
-#define PINTOOL_FTM_LED_GREEN3_PIN 4U     /*!<@brief PORTD pin index: 4 */
-                                          /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_FTM_LED_GREEN3_PORT PORTD               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_FTM_LED_GREEN3_PIN 4U                   /*!<@brief PORT pin number */
+#define PINTOOL_FTM_LED_GREEN3_PIN_MASK (1U << 4U)      /*!<@brief PORT pin mask */
+                                                        /* @} */
 
 /*! @name PORTD5 (number 62), J22[B39]/J24[26]/J500[36]/U2[8]/FTM0_CH5/LED5
   @{ */
-#define PINTOOL_FTM_LED_YELLOW3_PORT PORTD /*!<@brief PORT device name: PORTD */
-#define PINTOOL_FTM_LED_YELLOW3_PIN 5U     /*!<@brief PORTD pin index: 5 */
-                                           /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_FTM_LED_YELLOW3_PORT PORTD               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_FTM_LED_YELLOW3_PIN 5U                   /*!<@brief PORT pin number */
+#define PINTOOL_FTM_LED_YELLOW3_PIN_MASK (1U << 5U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -86,15 +98,21 @@ void PinTool_FTM(void);
 
 /*! @name PORTB16 (number 39), J24[9]/J500[7]/J506[2]/U512[2]/RXD0
   @{ */
-#define PINTOOL_UART_DEBUG_UART_RX_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define PINTOOL_UART_DEBUG_UART_RX_PIN 16U    /*!<@brief PORTB pin index: 16 */
-                                              /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_UART_DEBUG_UART_RX_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_UART_DEBUG_UART_RX_PIN 16U                   /*!<@brief PORT pin number */
+#define PINTOOL_UART_DEBUG_UART_RX_PIN_MASK (1U << 16U)      /*!<@brief PORT pin mask */
+                                                             /* @} */
 
 /*! @name PORTB17 (number 40), J24[10]/J500[5]/J505[2]/U513[4]/TXD0
   @{ */
-#define PINTOOL_UART_DEBUG_UART_TX_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define PINTOOL_UART_DEBUG_UART_TX_PIN 17U    /*!<@brief PORTB pin index: 17 */
-                                              /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_UART_DEBUG_UART_TX_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_UART_DEBUG_UART_TX_PIN 17U                   /*!<@brief PORT pin number */
+#define PINTOOL_UART_DEBUG_UART_TX_PIN_MASK (1U << 17U)      /*!<@brief PORT pin mask */
+                                                             /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -104,19 +122,31 @@ void PinTool_UART(void);
 
 /*! @name PORTD6 (number 63), J22[B33]/J22[D34]/J24[27]/J500[13]/U2[9]/FTM1_CH0/LED6
   @{ */
-#define PINTOOL_MISC_LED_ORANGE_FGPIO FGPIOD /*!<@brief FGPIO device name: FGPIOD */
-#define PINTOOL_MISC_LED_ORANGE_GPIO GPIOD /*!<@brief GPIO device name: GPIOD */
-#define PINTOOL_MISC_LED_ORANGE_PORT PORTD /*!<@brief PORT device name: PORTD */
-#define PINTOOL_MISC_LED_ORANGE_PIN 6U     /*!<@brief PORTD pin index: 6 */
-                                           /* @} */
+
+/* Symbols to be used with GPIO driver */
+#define PINTOOL_MISC_LED_ORANGE_FGPIO FGPIOD             /*!<@brief FGPIO peripheral base pointer */
+#define PINTOOL_MISC_LED_ORANGE_GPIO GPIOD               /*!<@brief GPIO peripheral base pointer */
+#define PINTOOL_MISC_LED_ORANGE_GPIO_PIN_MASK (1U << 6U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_MISC_LED_ORANGE_PORT PORTD               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_MISC_LED_ORANGE_PIN 6U                   /*!<@brief PORT pin number */
+#define PINTOOL_MISC_LED_ORANGE_PIN_MASK (1U << 6U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
 
 /*! @name PORTA4 (number 26), J24[7]/J500[14]/SW2
   @{ */
-#define PINTOOL_MISC_SW2_FGPIO FGPIOA /*!<@brief FGPIO device name: FGPIOA */
-#define PINTOOL_MISC_SW2_GPIO GPIOA /*!<@brief GPIO device name: GPIOA */
-#define PINTOOL_MISC_SW2_PORT PORTA /*!<@brief PORT device name: PORTA */
-#define PINTOOL_MISC_SW2_PIN 4U     /*!<@brief PORTA pin index: 4 */
-                                    /* @} */
+
+/* Symbols to be used with GPIO driver */
+#define PINTOOL_MISC_SW2_FGPIO FGPIOA             /*!<@brief FGPIO peripheral base pointer */
+#define PINTOOL_MISC_SW2_GPIO GPIOA               /*!<@brief GPIO peripheral base pointer */
+#define PINTOOL_MISC_SW2_GPIO_PIN_MASK (1U << 4U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_MISC_SW2_PORT PORTA               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_MISC_SW2_PIN 4U                   /*!<@brief PORT pin number */
+#define PINTOOL_MISC_SW2_PIN_MASK (1U << 4U)      /*!<@brief PORT pin mask */
+                                                  /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

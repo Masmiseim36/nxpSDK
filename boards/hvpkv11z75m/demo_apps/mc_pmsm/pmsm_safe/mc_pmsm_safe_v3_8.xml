@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="platform.drivers.clock.MKV11Z7"/>
+    <definition extID="middleware.rtcesl.cm0p.MKV11Z7"/>
+    <definition extID="middleware.motor_control-pmsm.safety.MKV11Z7"/>
+    <definition extID="middleware.motor_control-pmsm.safety_mc.MKV11Z7"/>
+    <definition extID="platform.drivers.common.MKV11Z7"/>
+    <definition extID="device.MKV11Z7_CMSIS.MKV11Z7"/>
+    <definition extID="platform.drivers.uart.MKV11Z7"/>
+    <definition extID="middleware.fmstr.MKV11Z7"/>
+    <definition extID="middleware.fmstr.platform_gen32le.MKV11Z7"/>
+    <definition extID="platform.utilities.misc_utilities.MKV11Z7"/>
+    <definition extID="platform.Include_core_cm0plus.MKV11Z7"/>
+    <definition extID="platform.Include_common.MKV11Z7"/>
+    <definition extID="platform.Include_dsp.MKV11Z7"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="armgcc"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+  </externalDefinitions>
+  <example id="hvpkv11z75m_mc_pmsm_safe" name="mc_pmsm_safe" dependency="platform.drivers.clock.MKV11Z7 middleware.rtcesl.cm0p.MKV11Z7 middleware.motor_control-pmsm.safety.MKV11Z7 middleware.motor_control-pmsm.safety_mc.MKV11Z7 platform.drivers.common.MKV11Z7 device.MKV11Z7_CMSIS.MKV11Z7 platform.drivers.uart.MKV11Z7 middleware.fmstr.MKV11Z7 middleware.fmstr.platform_gen32le.MKV11Z7 platform.utilities.misc_utilities.MKV11Z7 platform.Include_core_cm0plus.MKV11Z7 platform.Include_common.MKV11Z7 platform.Include_dsp.MKV11Z7" category="demo_apps">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>MISRAC_DISABLE=/**/</value>
+          <value>MISRAC_ENABLE=/**/</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
+          <value>__MTB_DISABLE=1</value>
+          <value>CPU_MKV11Z128VLF7</value>
+          <value>RTCESL_MMDVSQ_ON</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.none</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.none</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.none</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mdk/linker" project_relative_path="linker" toolchain="mdk" type="c_include"/>
+      <include_path path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/iar/startup" project_relative_path="startup" toolchain="iar" type="c_include"/>
+      <include_path path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mdk/startup" project_relative_path="startup" toolchain="mdk" type="c_include"/>
+      <include_path path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mcux/startup" project_relative_path="startup" toolchain="mcuxpresso armgcc" type="c_include"/>
+      <include_path path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe" project_relative_path="project-root-path" type="c_include"/>
+      <include_path path="middleware/motor_control/pmsm/pmsm_safe/mc_drivers" project_relative_path="mc_drivers" type="c_include"/>
+      <include_path path="devices/MKV11Z7" project_relative_path="MKV11Z7" type="c_include"/>
+      <include_path path="middleware/motor_control/pmsm/pmsm_safe/mc_state_machine" project_relative_path="mc_state_machine" type="c_include"/>
+      <include_path path="middleware/motor_control/pmsm/pmsm_safe" project_relative_path="source" type="c_include"/>
+      <include_path path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe" project_relative_path="source" type="c_include"/>
+      <include_path path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/periph_init" project_relative_path="periph_init" type="c_include"/>
+      <include_path path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe" project_relative_path="board" type="c_include"/>
+      <include_path path="devices/MKV11Z7" project_relative_path="MKV11Z7" type="asm_include"/>
+    </include_paths>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="mc_pmsm_safe.ewd"/>
+      <files mask="mc_pmsm_safe.ewp"/>
+      <files mask="mc_pmsm_safe.eww"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="mc_pmsm_safe.uvprojx"/>
+      <files mask="mc_pmsm_safe.uvoptx"/>
+      <files mask="pemicro_connection_settings.ini"/>
+      <files mask="mc_pmsm_safe.uvmpw"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="build_all.bat"/>
+      <files mask="build_all.sh"/>
+      <files mask="clean.bat"/>
+      <files mask="clean.sh"/>
+      <files mask="CMakeLists.txt"/>
+      <files mask="flags.cmake"/>
+      <files mask="build_debug.bat"/>
+      <files mask="build_debug.sh"/>
+      <files mask="build_release.bat"/>
+      <files mask="build_release.sh"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/iar/linker" project_relative_path="linker" type="linker" toolchain="iar">
+      <files mask="safety_hvpkv11z75m.icf"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mdk/linker" project_relative_path="linker" type="c_include" toolchain="mdk">
+      <files mask="linker_config.h"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mdk/linker" project_relative_path="linker" type="linker" toolchain="mdk">
+      <files mask="safety_hvpkv11z75m.sct"/>
+    </source>
+    <source path="middleware/safety_iec60730b/tools/crc" project_relative_path="middleware/safety_iec60730b/tools/crc" type="script" toolchain="mdk mcuxpresso">
+      <files mask="crc_hex.bat" hidden="true"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mdk" project_relative_path="motor_control/tools/crc" type="configuration" toolchain="mdk">
+      <files mask="load_debug.ini" hidden="true"/>
+      <files mask="load_release.ini" hidden="true"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/iar/startup" project_relative_path="startup" type="src" toolchain="iar">
+      <files mask="startup_iar.c"/>
+      <files mask="vectors_iar.c"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/iar/startup" project_relative_path="startup" type="c_include" toolchain="iar">
+      <files mask="vectors_iar.h"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mdk/startup" project_relative_path="startup" type="src" toolchain="mdk">
+      <files mask="startup_mdk.c"/>
+      <files mask="vectors_mdk.c"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mdk/startup" project_relative_path="startup" type="c_include" toolchain="mdk">
+      <files mask="vectors_mdk.h"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mcux/startup" project_relative_path="startup" type="src" toolchain="mcuxpresso armgcc">
+      <files mask="startup_mcux.c"/>
+      <files mask="vectors_mcux.c"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mcux/startup" project_relative_path="startup" type="c_include" toolchain="mcuxpresso armgcc">
+      <files mask="vectors_mcux.h"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe" project_relative_path="source" type="c_include">
+      <files mask="freemaster_cfg.h"/>
+      <files mask="hardware_cfg.h"/>
+      <files mask="safety_cfg.h"/>
+      <files mask="main.h"/>
+      <files mask="m1_pmsm_appconfig.h"/>
+      <files mask="m1_mcdrv.h"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_safe/mc_drivers" project_relative_path="mc_drivers" type="c_include">
+      <files mask="mcdrv_adc_adc16.h"/>
+      <files mask="mcdrv_pwm3ph_ftm.h"/>
+      <files mask="mcdrv_gpio.h"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_safe/mc_drivers" project_relative_path="mc_drivers" type="src">
+      <files mask="mcdrv_adc_adc16.c"/>
+      <files mask="mcdrv_pwm3ph_ftm.c"/>
+      <files mask="mcdrv_gpio.c"/>
+    </source>
+    <source path="MKV11Z7" project_relative_path="MKV11Z7" type="src">
+      <files mask="system_MKV11Z7.c"/>
+    </source>
+    <source path="MKV11Z7" project_relative_path="MKV11Z7" type="c_include">
+      <files mask="system_MKV11Z7.h"/>
+    </source>
+    <source path="middleware/motor_control/freemaster" project_relative_path="motor_control/freemaster" type="src">
+      <files mask="pmsm_safe.pmp"/>
+    </source>
+    <source path="tools/srecord" project_relative_path="tools/srecord" type="src" toolchain="mdk mcuxpresso">
+      <files mask="srec_cat.exe" hidden="true"/>
+      <files mask="srecord-1.64.zip" hidden="true"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_safe/mc_state_machine" project_relative_path="mc_state_machine" type="src">
+      <files mask="m1_state_machine.c"/>
+      <files mask="m1_state_routines.c"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_safe/mc_state_machine" project_relative_path="mc_state_machine" type="c_include">
+      <files mask="m1_state_machine.h"/>
+      <files mask="m1_state_routines.h"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_safe" project_relative_path="source" type="src">
+      <files mask="freemaster_tsa_pmsm.c"/>
+    </source>
+    <source path="middleware/motor_control/pmsm/pmsm_safe" project_relative_path="source" type="c_include">
+      <files mask="freemaster_tsa_pmsm.h"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe" project_relative_path="source" type="src">
+      <files mask="main.c"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/periph_init" project_relative_path="periph_init" type="src">
+      <files mask="safety_periph_init.c"/>
+      <files mask="app_periph_init.c"/>
+      <files mask="mcdrv_periph_init.c"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/periph_init" project_relative_path="periph_init" type="c_include">
+      <files mask="safety_periph_init.h"/>
+      <files mask="app_periph_init.h"/>
+      <files mask="mcdrv_periph_init.h"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe" project_relative_path="doc" type="doc">
+      <files mask="readme.txt"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mcux/linker" project_relative_path="linker" type="linker" toolchain="mcuxpresso">
+      <files mask="safety_hvpkv11z75m.ld"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/armgcc" project_relative_path="linker" type="linker" toolchain="armgcc">
+      <files mask="safety_hvpkv11z75m.ld"/>
+    </source>
+    <source path="boards/hvpkv11z75m/demo_apps/mc_pmsm/pmsm_safe/mdk" project_relative_path="motor_control/tools/crc" type="configuration" toolchain="mdk">
+      <files mask="load_debug.ini"/>
+      <files mask="load_release.ini"/>
+    </source>
+  </example>
+</ksdk:examples>

@@ -11,7 +11,7 @@
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright (c) 2015 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -22,11 +22,6 @@
 ** ###################################################################
 */
 
-#if (defined(__ram_vector_table__))
-  #define __ram_vector_table_size__    0x00000400
-#else
-  #define __ram_vector_table_size__    0x00000000
-#endif
 
 #define m_interrupts_start             0x10000000
 #define m_interrupts_size              0x00000400
@@ -38,7 +33,7 @@
 #define m_text_size                    0x000FFBF0
 
 #define m_interrupts_ram_start         0x00000000
-#define m_interrupts_ram_size          __ram_vector_table_size__
+#define m_interrupts_ram_size          0x0
 
 #define m_data_start                   0x20000000
 #define m_data_size                    0x00020000
@@ -83,10 +78,6 @@ LR_m_text m_text_start m_text_size {   ; load region size_region
 }
 
 LR_m_interrupts m_interrupts_start m_interrupts_size {
-#if (!defined(__ram_vector_table__))
-  VECTOR_RAM m_interrupts_start EMPTY 0 {
-  }
-#endif
   VECTOR_ROM m_interrupts_start m_interrupts_size { ; load address = execution address
     * (.isr_vector,+FIRST)
   }
@@ -98,10 +89,8 @@ LR_m_flash_config m_flash_config_start m_flash_config_size {
   }
 }
 
-#if (defined(__ram_vector_table__))
 LR_m_interrupts_ram m_interrupts_ram_start m_interrupts_ram_size {
   VECTOR_RAM m_interrupts_ram_start EMPTY m_interrupts_ram_size {
   }
 }
-#endif
 

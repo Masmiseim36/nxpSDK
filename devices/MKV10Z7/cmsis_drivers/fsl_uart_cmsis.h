@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
+ * Copyright 2016-2017,2020 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -14,34 +16,6 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #ifndef _FSL_UART_CMSIS_H_
@@ -61,28 +35,34 @@
 #include "fsl_uart_edma.h"
 #endif
 
-#if defined(UART0)
+#if defined(UART0) && defined(RTE_USART0) && RTE_USART0
 extern ARM_DRIVER_USART Driver_USART0;
 #endif /* UART0 */
 
-#if defined(UART1)
+#if defined(UART1) && defined(RTE_USART1) && RTE_USART1
 extern ARM_DRIVER_USART Driver_USART1;
 #endif /* UART1 */
 
-#if defined(UART2)
+#if defined(UART2) && defined(RTE_USART2) && RTE_USART2
 extern ARM_DRIVER_USART Driver_USART2;
 #endif /* UART2 */
 
-#if defined(UART3)
+#if defined(UART3) && defined(RTE_USART3) && RTE_USART3
 extern ARM_DRIVER_USART Driver_USART3;
 #endif /* UART3 */
 
-#if defined(UART4)
+#if defined(UART4) && defined(RTE_USART4) && RTE_USART4
 extern ARM_DRIVER_USART Driver_USART4;
 #endif /* UART4 */
 
-#if defined(UART5)
+#if defined(UART5) && defined(RTE_USART5) && RTE_USART5
 extern ARM_DRIVER_USART Driver_USART5;
 #endif /* UART5 */
+
+/* USART Driver state flags */
+#define USART_FLAG_UNINIT     (0UL)
+#define USART_FLAG_INIT       (1UL << 0)
+#define USART_FLAG_POWER      (1UL << 1)
+#define USART_FLAG_CONFIGURED (1UL << 2)
 
 #endif /* _FSL_UART_CMSIS_H_ */

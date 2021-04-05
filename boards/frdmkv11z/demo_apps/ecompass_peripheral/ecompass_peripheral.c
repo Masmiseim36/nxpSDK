@@ -7,14 +7,14 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_fxos.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "peripherals.h"
 #include "board.h"
 #include "math.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
-#include "peripherals.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

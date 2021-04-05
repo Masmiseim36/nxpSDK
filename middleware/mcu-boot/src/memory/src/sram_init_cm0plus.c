@@ -6,10 +6,10 @@
  */
 
 #include "bootloader_common.h"
-#include "bootloader/bl_context.h"
-#include "memory/memory.h"
+#include "bl_context.h"
+#include "memory.h"
 #include "fsl_device_registers.h"
-#include "utilities/fsl_assert.h"
+#include "fsl_assert.h"
 #include "sram_init.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -58,11 +58,7 @@ status_t sram_init(void)
             break;
     }
 #else
-#if defined (SIM_SDID_SRAMSIZE_MASK)
     uint32_t tmp = (SIM->SDID & SIM_SDID_SRAMSIZE_MASK) >> SIM_SDID_SRAMSIZE_SHIFT;
-#else
-    uint32_t tmp = (SIM->SDID & SIM_SDID_RAMSIZE_MASK) >> SIM_SDID_RAMSIZE_SHIFT;
-#endif
 
     // for KW41Z4, 1001 - 128KB; 0111 - 64 KB
     if (tmp <= kMaxRamIndex)
@@ -71,7 +67,7 @@ status_t sram_init(void)
     }
     else
     {
-        ram_size = kMinKlRamSize << (tmp - 1);
+        ram_size = kMinKlRamSize << (tmp - 1);              
     }
 #endif
 

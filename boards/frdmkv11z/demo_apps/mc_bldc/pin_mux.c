@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,11 +15,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v7.0
+product: Pins v8.0
 processor: MKV11Z128xxx7
 package_id: MKV11Z128VLH7
 mcu_data: ksdk2_0
-processor_version: 0.7.1
+processor_version: 0.9.0
 pin_labels:
 - {pin_num: '44', pin_signal: ADC1_SE3/PTC1/LLWU_P6/SPI0_PCS3/UART1_RTS_b/FTM0_CH0/FTM2_CH0, label: FTM0_CH0, identifier: FTM0_CH0}
 - {pin_num: '45', pin_signal: ADC0_SE11/CMP1_IN0/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/FTM2_CH1, label: FTM0_CH1, identifier: FTM0_CH1}
@@ -51,38 +51,17 @@ pin_labels:
  * END ****************************************************************************************************************/
 void BOARD_InitBootPins(void)
 {
-    BOARD_InitPins();
-}
-
-/* clang-format off */
-/*
- * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitPins:
-- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
-- pin_list: []
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
- */
-/* clang-format on */
-
-/* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitPins
- * Description   : Configures pin routing and optionally pin electrical features.
- *
- * END ****************************************************************************************************************/
-void BOARD_InitPins(void)
-{
-	PinTool_PWM();
-	PinTool_Misc();
-	PinTool_ADC();
-	PinTool_UART();
+    PinTool_PWM();
+    PinTool_Misc();
+    PinTool_ADC();
+    PinTool_UART();
 }
 
 /* clang-format off */
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 PinTool_PWM:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '44', peripheral: FTM0, signal: 'CH, 0', pin_signal: ADC1_SE3/PTC1/LLWU_P6/SPI0_PCS3/UART1_RTS_b/FTM0_CH0/FTM2_CH0, direction: OUTPUT}
   - {pin_num: '45', peripheral: FTM0, signal: 'CH, 1', pin_signal: ADC0_SE11/CMP1_IN0/PTC2/SPI0_PCS2/UART1_CTS_b/FTM0_CH1/FTM2_CH1, direction: OUTPUT}
@@ -159,7 +138,7 @@ void PinTool_PWM(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 PinTool_Misc:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '35', peripheral: GPIOB, signal: 'GPIO, 0', pin_signal: ADC0_SE8/ADC1_SE8/PTB0/LLWU_P5/I2C0_SCL/FTM1_CH0/FTM1_QD_PHA/UART0_RX, direction: INPUT, slew_rate: fast,
     drive_strength: low, pull_select: up, pull_enable: enable}
@@ -243,7 +222,7 @@ void PinTool_Misc(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 PinTool_ADC:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '18', peripheral: GPIOE, signal: 'GPIO, 30', pin_signal: ADC1_SE4/CMP1_IN4/DAC0_OUT/PTE30/FTM0_CH3/FTM_CLKIN1, direction: INPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
@@ -276,7 +255,7 @@ void PinTool_ADC(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 PinTool_UART:
-- options: {callFromInitBoot: 'false', coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '39', peripheral: UART0, signal: RX, pin_signal: PTB16/UART0_RX/FTM_CLKIN2/CAN0_TX/EWM_IN}
   - {pin_num: '40', peripheral: UART0, signal: TX, pin_signal: PTB17/UART0_TX/FTM_CLKIN1/CAN0_RX/EWM_OUT_b}

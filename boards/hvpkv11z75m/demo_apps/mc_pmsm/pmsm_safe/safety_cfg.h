@@ -66,15 +66,11 @@ MISRAC_ENABLE /* MISRA check enabled (IAR IDE only). */
 /* Size of tested flash block. */
 #define FS_CFG_FLASH_TST_BLOCK_SIZE     (0x20U)
 
-
-/* The Flash CRC calculation seed. */
-#define FS_CFG_FLASH_TST_CRC_SEED       (0x0000U)
-
 #if defined(__GNUC__) || defined(__ARMCC_VERSION)
     /*! @note The following flash test settings must be in consistence with
               "User AFTER BUILD = srec_cat!*/
     /* The CRC16 of safety-related FALSH memory. */
-    #define FS_CFG_FLASH_TST_CRC        (0xFFFFU)
+    #define FS_CFG_FLASH_TST_CRC        (0xFFFFUL)
 #endif
 
 /*                               RAM TEST                                     */

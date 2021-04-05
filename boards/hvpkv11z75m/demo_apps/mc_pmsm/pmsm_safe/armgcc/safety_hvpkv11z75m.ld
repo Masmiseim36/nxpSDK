@@ -125,7 +125,7 @@ __RAM_end__               = 0x20002FFF;
 /* Sizes of objects in RAM. */
 __size_cstack__           = 0x300;  /* Stack size. */
 __size_fs_ram_tst_bckp__  = 0x20;   /* Safety RAM test backup size. */
-__size_fs_wdog_tst_data__ = 0x20;   /* Safety WDOG test data size. */
+__size_fs_wdog_tst_data__ = 0x1C;   /* Safety WDOG test data size. */
 __size_fs_stack_tst_p__   = 0x10;   /* Safety stack test pattern. */
 
 /* Sizes of objects in FLASH. */

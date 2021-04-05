@@ -253,8 +253,8 @@ status_t flash_mem_write(uint32_t address, uint32_t length, const uint8_t *buffe
         }
         if ((status == kStatus_Success) && extraBytes)
         {
-            status = g_bootloaderContext.flashDriverInterface->flash_verify_program(
-                g_bootloaderContext.allFlashState, address + alignedLength, sizeof(extraData), (uint8_t *)extraData,
+                status = g_bootloaderContext.flashDriverInterface->flash_verify_program(
+                g_bootloaderContext.allFlashState, address + alignedLength, alignmentBaseUnit, (uint8_t *)extraData,
                 (ftfx_margin_value_t)g_bootloaderContext.propertyInterface->store->flashReadMargin, &failedAddress,
                 &failedData);
         }
@@ -761,6 +761,15 @@ status_t flash_check_access_before_programming(uint32_t address, uint32_t length
     uint32_t flashMemoryIndex = flash_get_instance(address, length);
     uint32_t alignmentBaseUnit = g_bootloaderContext.allFlashState->ftfxConfig[flashMemoryIndex].opsConfig.addrAligment.blockWriteUnitSize;
 
+    uint32_t actualLength = ALIGN_UP(length, alignmentBaseUnit);
+    
+    const memory_map_entry_t *mapEntry;
+    status = find_map_entry(address, actualLength, &mapEntry);
+    if (status != kStatus_Success)
+    {
+        return status; 
+    }     
+    
 #if !BL_FEATURE_FLASH_VERIFY_DISABLE
     *verifyWrites = g_bootloaderContext.propertyInterface->store->verifyWrites;
 #endif // BL_FEATURE_FLASH_VERIFY_DISABLE
@@ -769,8 +778,7 @@ status_t flash_check_access_before_programming(uint32_t address, uint32_t length
     // If a target flash location is in an execute-only protected segment, these program commands are not
     // allowed unless a Read 1s All Blocks command is executed and returns with a pass code
     flash_xacc_state_t access_state;
-
-    uint32_t actualLength = ALIGN_UP(length, alignmentBaseUnit);
+    
     flash_lock_acquire();
     status = flash_preprocess_execute_only_region(address, actualLength, &access_state);
     if (status != kStatus_Success)
@@ -800,7 +808,6 @@ status_t flash_check_access_before_programming(uint32_t address, uint32_t length
 #endif // FSL_FEATURE_FLASH_HAS_ACCESS_CONTROL
     if (isCumulativeCheckNeeded)
     {
-        uint32_t actualLength = ALIGN_UP(length, alignmentBaseUnit);
         if (!mem_is_erased(address, actualLength))
         {
             return kStatusMemoryCumulativeWrite;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -76,33 +76,33 @@ typedef struct _wd_test
 /*! @brief Safety Clock test */
 typedef struct _clock_test
 {
- uint32_t clockTestContext;
- uint32_t clockTestTolerance;
- uint32_t clockTestExpected;
- uint32_t clockTestLimitHigh;
- uint32_t clockTestLimitLow;
- uint32_t systickReloadValue;
- uint16_t clockTestStart;
-} clock_test_t;
+    uint32_t clockTestContext;
+    uint32_t clockTestTolerance;
+    uint32_t clockTestExpected;
+    uint32_t clockTestLimitHigh;
+    uint32_t clockTestLimitLow;
+    uint32_t systickReloadValue;
+    uint16_t clockTestStart;
+} fs_clock_test_t;
 
 /*! @brief Safety RAM test */
 typedef struct _ram_test
 {
- uint32_t ramTestStartAddress;
- uint32_t ramTestEndAddress;
- uint32_t blockSize;
- uint32_t actualAddress;
- uint32_t defaultBlockSize;
- uint32_t backupAddress;
-} ram_test_t;
+    uint32_t ramTestStartAddress;
+    uint32_t ramTestEndAddress;
+    uint32_t blockSize;
+    uint32_t actualAddress;
+    uint32_t defaultBlockSize;
+    uint32_t backupAddress;
+} fs_ram_test_t;
 
 /*! @brief Safety Flash test runtime */
 typedef struct _flash_runtime_test_parameters
 {
- uint32_t blockSize;         /* size of tested block */
- uint32_t actualAddress;     /* actual start address for crc module */
- uint32_t partCrc;           /* seed in begin, particular crc result in process, crc result in final*/
-} flash_runtime_test_parameters_t;
+    uint32_t blockSize;         /* size of tested block */
+    uint32_t actualAddress;     /* actual start address for crc module */
+    uint32_t partCrc;           /* seed in begin, particular crc result in process, crc result in final*/
+} fs_flash_runtime_test_parameters_t;
 
 /*! @brief Safety Flash test parameters */
 typedef struct _flash_configuration_parameters
@@ -113,33 +113,17 @@ typedef struct _flash_configuration_parameters
  uint32_t size;
  uint32_t blockSize;
  uint16_t checksum16;
- } flash_configuration_parameters_t;
+} fs_flash_configuration_parameters_t;
 
-/*! @brief Safety Program Counter test */
-typedef struct _pc_test
+/* CRC structure containing information for the offline CRC calculation. */
+typedef struct _fs_crc
 {
- uint32_t addrVal0;
- uint32_t addrVal1;
- uint32_t addrVal2;
- uint32_t addrVal3;
- uint32_t addrVal4;
- uint32_t addrVal5;
- uint32_t addrVal6;
- uint32_t addrVal7;
-} pc_test_t;
-
-/*! @brief Safety memory for Program Counter test */
-typedef struct _pc_test_memory
-{
- uint32_t address0; /* 0x1FFFFFF8*/
- uint32_t address1; /* 0x1FFFFFFC*/
- uint32_t address2; /* 0x20000000*/
- uint32_t address3; /* 0x20000004*/
- uint32_t address4; /* 0x20000008*/
- uint32_t address5; /* 0x2000000C*/
- uint32_t address6; /* 0x20000010*/
- uint32_t address7; /* 0x20000014*/
-} pc_test_memory_t;
+    uint16_t ui16Start;
+    uint32_t ui32FlashStart __attribute__((packed));
+    uint32_t ui32FlashEnd   __attribute__((packed));
+    uint32_t ui32CRC        __attribute__((packed));
+    uint16_t ui16End        __attribute__((packed));
+} fs_crc_t;
 
 #ifdef __cplusplus
 extern "C" {
@@ -155,17 +139,16 @@ extern "C" {
  ******************************************************************************/
 void SafetyWatchdogTest(safety_common_t *psSafetyCommon, wd_test_t *psSafetyWdTest);
 void SafetyWatchdogRuntimeRefresh(wd_test_t *psSafetyWdTest);
-void SafetyClockTestInit(safety_common_t *psSafetyCommon, clock_test_t *psSafetyClockTest);
-void SafetyClockTestIsr(clock_test_t *psSafetyClockTest);
-void SafetyClockTestCheck(safety_common_t *psSafetyCommon, clock_test_t *psSafetyClockTest);
-void SafetyFlashTestInit(flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig);
-void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, flash_configuration_parameters_t *psFlashConfig);
-void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon, flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig);
-uint32_t SafetyFlashTestHandling(flash_runtime_test_parameters_t *psFlashCrc, flash_configuration_parameters_t *psFlashConfig);
-void SafetyRamTestInit(ram_test_t *psSafetyRamTest, uint32_t *pSafetyRamStart, uint32_t *pSafetyRamEnd);
-void SafetyRamAfterResetTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest);
-void SafetyRamRuntimeTest(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest);
-void SafetyPcTestInit(pc_test_t *psSafetyPcTest, pc_test_memory_t *psSafetyPcMemory);
+void SafetyClockTestInit(safety_common_t *psSafetyCommon, fs_clock_test_t *psSafetyClockTest);
+void SafetyClockTestIsr(fs_clock_test_t *psSafetyClockTest);
+void SafetyClockTestCheck(safety_common_t *psSafetyCommon, fs_clock_test_t *psSafetyClockTest);
+void SafetyFlashTestInit(fs_flash_runtime_test_parameters_t *psFlashCrc, fs_flash_configuration_parameters_t *psFlashConfig);
+void SafetyFlashAfterResetTest(safety_common_t *psSafetyCommon, fs_flash_configuration_parameters_t *psFlashConfig);
+void SafetyFlashRuntimeTest(safety_common_t *psSafetyCommon, fs_flash_runtime_test_parameters_t *psFlashCrc, fs_flash_configuration_parameters_t *psFlashConfig);
+uint32_t SafetyFlashTestHandling( fs_flash_runtime_test_parameters_t *psFlashCrc, fs_flash_configuration_parameters_t *psFlashConfig);
+void SafetyRamTestInit(fs_ram_test_t *psSafetyRamTest, uint32_t *pSafetyRamStart, uint32_t *pSafetyRamEnd);
+void SafetyRamAfterResetTest(safety_common_t *psSafetyCommon, fs_ram_test_t *psSafetyRamTest);
+void SafetyRamRuntimeTest(safety_common_t *psSafetyCommon, fs_ram_test_t *psSafetyRamTest);
 void SafetyPcTest(safety_common_t *psSafetyCommon, uint32_t pattern);
 void SafetyCpuAfterResetTest(safety_common_t *psSafetyCommon);
 void SafetyCpuIsrTest(safety_common_t *psSafetyCommon);
@@ -189,7 +172,9 @@ void SafetyAnalogTest(safety_common_t *psSafetyCommon);
 void tsi_port_clock_enable(void);
 uint32_t SafetyTsiChanelTest(safety_common_t *psSafetyCommon, fs_tsi_t*pObj);
 
-void SafetyIsrFunction(safety_common_t *psSafetyCommon, ram_test_t *psSafetyRamTest, ram_test_t *psSafetyRamStackTest);
+void SafetyIsrFunction(safety_common_t *psSafetyCommon, fs_ram_test_t *psSafetyRamTest, fs_ram_test_t *psSafetyRamStackTest);
+
+void development_test_terminate(void);
 void SafetyErrorHandling(safety_common_t *psSafetyCommon);
 
 

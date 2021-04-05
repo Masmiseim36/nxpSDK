@@ -314,18 +314,14 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../flashloader/iar</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV11Z7/src</state>
+          <state>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MKV11Z7</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/crc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV11Z7/src</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV11Z7</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -740,7 +736,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MKV11Z128xxx7_flashloader_loader.icf</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/linker/iar/MKV11Z7/MKV11Z128xxx7_flashloader_loader.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -990,26 +986,29 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_clock.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_uart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_uart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_uart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_common.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/drivers/fsl_common.c</name>
+    </file>
   </group>
   <group>
     <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/fsl_device_registers.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/MKV11Z7.h</name>
     </file>
@@ -1017,13 +1016,10 @@
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/MKV11Z7_features.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/fsl_device_registers.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/system_MKV11Z7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/system_MKV11Z7.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MKV11Z7/system_MKV11Z7.h</name>
     </file>
   </group>
   <group>
@@ -1046,10 +1042,10 @@
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/flashloader_image.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_exception_handler.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_flashloader.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_flashloader.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_exception_handler.c</name>
       </file>
     </group>
     <group>
@@ -1066,15 +1062,15 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
+      </file>
       <group>
         <name>src</name>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_assert.c</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
-      </file>
     </group>
   </group>
   <group>
@@ -1095,16 +1091,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

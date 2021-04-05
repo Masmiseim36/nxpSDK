@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -222,51 +222,63 @@ bool_t MCDRV_AssignBemfChannel(mcdrv_adc16_t *this)
         case 0:
         case 3:
             if ((this->bldcAdcSelCfg[this->ui16Sector]) == ADC0)
+            {
                 /* Set ADC_SC1_ADCH bitfield */
                 this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] =
                     (this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] &
                      ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                     (ADC_SC1_ADCH(this->bldcAdc0SectorCfg[this->ui16Sector]));
+            }
             else
+            {
                 /* Set ADC_SC1_ADCH bitfield */
                 this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] =
                     (this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] &
                      ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                     (ADC_SC1_ADCH(this->bldcAdc1SectorCfg[this->ui16Sector]));
+            }
             break;
 
         /* BEMF phase B sensing */
         case 1:
         case 4:
             if ((this->bldcAdcSelCfg[this->ui16Sector]) == ADC0)
+            {
                 /* Set ADC_SC1_ADCH bitfield */
                 this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] =
                     (this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] &
                      ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                     (ADC_SC1_ADCH(this->bldcAdc0SectorCfg[this->ui16Sector]));
+            }
             else
+            {
                 /* Set ADC_SC1_ADCH bitfield */
                 this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] =
                     (this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] &
                      ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                     (ADC_SC1_ADCH(this->bldcAdc1SectorCfg[this->ui16Sector]));
+            }
             break;
 
         /* BEMF phase A sensing */
         case 2:
         case 5:
             if ((this->bldcAdcSelCfg[this->ui16Sector]) == ADC0)
+            {
                 /* Set ADC_SC1_ADCH bitfield */
                 this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] =
                     (this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] &
                      ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                     (ADC_SC1_ADCH(this->bldcAdc0SectorCfg[this->ui16Sector]));
+            }
             else
+            {
                 /* Set ADC_SC1_ADCH bitfield */
                 this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] =
                     (this->bldcAdcSelCfg[this->ui16Sector]->SC1[this->ui16IndexBemf] &
                      ~(ADC_SC1_ADCH(ADC_SC1_ADCH_MASK))) |
                     (ADC_SC1_ADCH(this->bldcAdc1SectorCfg[this->ui16Sector]));
+            }
             break;
 
         default:
@@ -296,27 +308,27 @@ bool_t MCDRV_BemfVoltageGet(mcdrv_adc16_t *this)
         case 0:
         case 3:
             *this->pf16BemfVoltage =
-                (frac16_t)(MLIB_ShLSat_F16((this->bldcAdcSelCfg[this->ui16Sector]->R[this->ui16IndexBemf]), 3));
+                (frac16_t)(MLIB_ShLSat_F16((frac16_t)(this->bldcAdcSelCfg[this->ui16Sector]->R[this->ui16IndexBemf]), 3U));
             break;
 
         /* BEMF phase B sensing */
         case 1:
         case 4:
             *this->pf16BemfVoltage =
-                (frac16_t)(MLIB_ShLSat_F16((this->bldcAdcSelCfg[this->ui16Sector]->R[this->ui16IndexBemf]), 3));
+                (frac16_t)(MLIB_ShLSat_F16((frac16_t)(this->bldcAdcSelCfg[this->ui16Sector]->R[this->ui16IndexBemf]), 3U));
             break;
 
         /* BEMF phase A sensing */
         case 2:
         case 5:
             *this->pf16BemfVoltage =
-                (frac16_t)(MLIB_ShLSat_F16((this->bldcAdcSelCfg[this->ui16Sector]->R[this->ui16IndexBemf]), 3));
+                (frac16_t)(MLIB_ShLSat_F16((frac16_t)(this->bldcAdcSelCfg[this->ui16Sector]->R[this->ui16IndexBemf]), 3U));
             break;
 
         /* default */
         default:
             *this->pf16BemfVoltage =
-                (frac16_t)(MLIB_ShLSat_F16((this->bldcAdcSelCfg[this->ui16Sector]->R[this->ui16IndexBemf]), 3));
+                (frac16_t)(MLIB_ShLSat_F16((frac16_t)(this->bldcAdcSelCfg[this->ui16Sector]->R[this->ui16IndexBemf]), 3U));
             break;
     }
 
@@ -337,7 +349,7 @@ bool_t MCDRV_VoltDcBusGet(mcdrv_adc16_t *this)
 {
     s_statusPass = TRUE;
     /* read DC-bus voltage sample from defined ADCx result register */
-    *this->pf16UDcBus = (frac16_t)(MLIB_ShLSat_F16((this->pui32UdcbAdcBase->R[this->ui16IndexUdcb]), 3));
+    *this->pf16UDcBus = (MLIB_ShLSat_F16((frac16_t)(this->pui32UdcbAdcBase->R[this->ui16IndexUdcb]), 3U));
     return (s_statusPass);
 }
 
@@ -355,8 +367,7 @@ bool_t MCDRV_CurrDcBusGet(mcdrv_adc16_t *this)
 {
     s_statusPass = TRUE;
     /* read DC-bus current channel sample from defined ADCx result register */
-    *this->pf16IDcBus =
-        (frac16_t)(MLIB_ShLSat_F16((this->pui32IdcbAdcBase->R[this->ui16IndexIdcb] - this->ui16OffsetDcCurr), 3));
+    *this->pf16IDcBus = (MLIB_ShLSat_F16((frac16_t)((uint16_t)this->pui32IdcbAdcBase->R[this->ui16IndexIdcb] - this->ui16OffsetDcCurr), 3U));
     return (s_statusPass);
 }
 
@@ -375,7 +386,7 @@ bool_t MCDRV_AuxValGet(mcdrv_adc16_t *this)
 {
     s_statusPass = TRUE;
     /* read auxiliary channel sample from defined ADCx result register */
-    *this->pui16AuxChan = (frac16_t)(MLIB_ShLSat_F16((this->pui32AuxAdcBase->R[this->ui16IndexAux]), 3));
+    *this->pui16AuxChan = (MLIB_ShLSat_F16((frac16_t)(this->pui32AuxAdcBase->R[this->ui16IndexAux]), 3U));
 
     return (s_statusPass);
 }
@@ -415,8 +426,7 @@ bool_t MCDRV_CurrOffsetCalib(mcdrv_adc16_t *this)
     s_statusPass = TRUE;
 
     /* sensing of DC Bus Current offset */
-    this->ui16CalibDcCurr =
-        GDFLIB_FilterMA_F16((frac16_t)this->pui32IdcbAdcBase->R[this->ui16IndexIdcb], &this->ui16FiltDcCurr);
+    this->ui16CalibDcCurr = (uint16_t)GDFLIB_FilterMA_F16((frac16_t)this->pui32IdcbAdcBase->R[this->ui16IndexIdcb], &this->ui16FiltDcCurr);
     return (s_statusPass);
 }
 

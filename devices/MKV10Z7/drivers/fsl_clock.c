@@ -1,32 +1,9 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright (c) 2016 - 2017 , NXP
+ * Copyright 2016 - 2019, NXP
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_clock.h"
@@ -34,6 +11,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.clock"
+#endif
 
 /* Macro definition remap workaround. */
 #if (defined(MCG_C2_EREFS_MASK) && !(defined(MCG_C2_EREFS0_MASK)))
@@ -65,11 +47,11 @@
 #define TRIM_SIRC_MIN (31250U)
 
 #define MCG_S_IRCST_VAL ((MCG->S & MCG_S_IRCST_MASK) >> MCG_S_IRCST_SHIFT)
-#define MCG_S_CLKST_VAL ((MCG->S & MCG_S_CLKST_MASK) >> MCG_S_CLKST_SHIFT)
-#define MCG_S_IREFST_VAL ((MCG->S & MCG_S_IREFST_MASK) >> MCG_S_IREFST_SHIFT)
+#define MCG_S_CLKST_VAL (((uint32_t)MCG->S & (uint32_t)MCG_S_CLKST_MASK) >> (uint32_t)MCG_S_CLKST_SHIFT)
+#define MCG_S_IREFST_VAL (((uint32_t)MCG->S & (uint32_t)MCG_S_IREFST_MASK) >> (uint32_t)MCG_S_IREFST_SHIFT)
 #define MCG_S_PLLST_VAL ((MCG->S & MCG_S_PLLST_MASK) >> MCG_S_PLLST_SHIFT)
 #define MCG_C1_FRDIV_VAL ((MCG->C1 & MCG_C1_FRDIV_MASK) >> MCG_C1_FRDIV_SHIFT)
-#define MCG_C2_LP_VAL ((MCG->C2 & MCG_C2_LP_MASK) >> MCG_C2_LP_SHIFT)
+#define MCG_C2_LP_VAL (((uint32_t)MCG->C2 & (uint32_t)MCG_C2_LP_MASK) >> (uint32_t)MCG_C2_LP_SHIFT)
 #define MCG_C2_RANGE_VAL ((MCG->C2 & MCG_C2_RANGE_MASK) >> MCG_C2_RANGE_SHIFT)
 #define MCG_SC_FCRDIV_VAL ((MCG->SC & MCG_SC_FCRDIV_MASK) >> MCG_SC_FCRDIV_SHIFT)
 #define MCG_S2_PLLCST_VAL ((MCG->S2 & MCG_S2_PLLCST_MASK) >> MCG_S2_PLLCST_SHIFT)
@@ -117,9 +99,9 @@ static uint32_t s_slowIrcFreq = 32768U;
 static uint32_t s_fastIrcFreq = 4000000U;
 
 /* External XTAL0 (OSC0) clock frequency. */
-uint32_t g_xtal0Freq;
+volatile uint32_t g_xtal0Freq;
 /* External XTAL32K clock frequency. */
-uint32_t g_xtal32Freq;
+volatile uint32_t g_xtal32Freq;
 
 /*******************************************************************************
  * Prototypes
@@ -178,10 +160,6 @@ static uint32_t CLOCK_GetInternalRefClkSelectFreq(void);
  */
 static uint8_t CLOCK_GetOscRangeFromFreq(uint32_t freq);
 
-/*******************************************************************************
- * Code
- ******************************************************************************/
-
 #ifndef MCG_USER_CONFIG_FLL_STABLE_DELAY_EN
 /*!
  * @brief Delay function to wait FLL stable.
@@ -189,14 +167,22 @@ static uint8_t CLOCK_GetOscRangeFromFreq(uint32_t freq);
  * Delay function to wait FLL stable in FEI mode or FEE mode, should wait at least
  * 1ms. Every time changes FLL setting, should wait this time for FLL stable.
  */
-void CLOCK_FllStableDelay(void)
+static void CLOCK_FllStableDelay(void);
+#endif
+
+/*******************************************************************************
+ * Code
+ ******************************************************************************/
+
+#ifndef MCG_USER_CONFIG_FLL_STABLE_DELAY_EN
+static void CLOCK_FllStableDelay(void)
 {
     /*
        Should wait at least 1ms. Because in these modes, the core clock is 100MHz
        at most, so this function could obtain the 1ms delay.
      */
     volatile uint32_t i = 30000U;
-    while (i--)
+    while (0U != (i--))
     {
         __NOP();
     }
@@ -204,7 +190,7 @@ void CLOCK_FllStableDelay(void)
 #else  /* With MCG_USER_CONFIG_FLL_STABLE_DELAY_EN defined. */
 /* Once user defines the MCG_USER_CONFIG_FLL_STABLE_DELAY_EN to use their own delay function, he has to
  * create his own CLOCK_FllStableDelay() function in application code. Since the clock functions in this
- * file would call the CLOCK_FllStableDelay() regardness how it is defined.
+ * file would call the CLOCK_FllStableDelay() regardless how it is defined.
  */
 extern void CLOCK_FllStableDelay(void);
 #endif /* MCG_USER_CONFIG_FLL_STABLE_DELAY_EN */
@@ -212,7 +198,7 @@ extern void CLOCK_FllStableDelay(void);
 static uint32_t CLOCK_GetMcgExtClkFreq(void)
 {
     /* Please call CLOCK_SetXtal0Freq base on board setting before using OSC0 clock. */
-    assert(g_xtal0Freq);
+    assert(0U != g_xtal0Freq);
     return g_xtal0Freq;
 }
 
@@ -224,7 +210,7 @@ static uint32_t CLOCK_GetFllExtRefClkFreq(void)
 
     uint32_t freq = CLOCK_GetMcgExtClkFreq();
 
-    if (!freq)
+    if (0U == freq)
     {
         return freq;
     }
@@ -270,7 +256,7 @@ static uint32_t CLOCK_GetFllExtRefClkFreq(void)
 
 static uint32_t CLOCK_GetInternalRefClkSelectFreq(void)
 {
-    if (kMCG_IrcSlow == MCG_S_IRCST_VAL)
+    if ((uint8_t)kMCG_IrcSlow == MCG_S_IRCST_VAL)
     {
         /* Slow internal reference clock selected*/
         return s_slowIrcFreq;
@@ -285,7 +271,7 @@ static uint32_t CLOCK_GetInternalRefClkSelectFreq(void)
 static uint32_t CLOCK_GetFllRefClkFreq(void)
 {
     /* If use external reference clock. */
-    if (kMCG_FllSrcExternal == MCG_S_IREFST_VAL)
+    if ((uint8_t)kMCG_FllSrcExternal == MCG_S_IREFST_VAL)
     {
         return CLOCK_GetFllExtRefClkFreq();
     }
@@ -316,6 +302,11 @@ static uint8_t CLOCK_GetOscRangeFromFreq(uint32_t freq)
     return range;
 }
 
+/*!
+ * brief Get the OSC0 external reference clock frequency (OSC0ERCLK).
+ *
+ * return Clock frequency in Hz.
+ */
 uint32_t CLOCK_GetOsc0ErClkFreq(void)
 {
     if (OSC0->CR & OSC_CR_ERCLKEN_MASK)
@@ -330,6 +321,11 @@ uint32_t CLOCK_GetOsc0ErClkFreq(void)
     }
 }
 
+/*!
+ * brief Get the external reference 32K clock frequency (ERCLK32K).
+ *
+ * return Clock frequency in Hz.
+ */
 uint32_t CLOCK_GetEr32kClkFreq(void)
 {
     uint32_t freq;
@@ -350,11 +346,21 @@ uint32_t CLOCK_GetEr32kClkFreq(void)
     return freq;
 }
 
+/*!
+ * brief Get the platform clock frequency.
+ *
+ * return Clock frequency in Hz.
+ */
 uint32_t CLOCK_GetPlatClkFreq(void)
 {
     return CLOCK_GetOutClkFreq() / (SIM_CLKDIV1_OUTDIV1_VAL + 1);
 }
 
+/*!
+ * brief Get the flash clock frequency.
+ *
+ * return Clock frequency in Hz.
+ */
 uint32_t CLOCK_GetFlashClkFreq(void)
 {
     uint32_t freq;
@@ -365,6 +371,11 @@ uint32_t CLOCK_GetFlashClkFreq(void)
     return freq;
 }
 
+/*!
+ * brief Get the bus clock frequency.
+ *
+ * return Clock frequency in Hz.
+ */
 uint32_t CLOCK_GetBusClkFreq(void)
 {
     uint32_t freq;
@@ -375,11 +386,26 @@ uint32_t CLOCK_GetBusClkFreq(void)
     return freq;
 }
 
+/*!
+ * brief Get the core clock or system clock frequency.
+ *
+ * return Clock frequency in Hz.
+ */
 uint32_t CLOCK_GetCoreSysClkFreq(void)
 {
     return CLOCK_GetOutClkFreq() / (SIM_CLKDIV1_OUTDIV1_VAL + 1);
 }
 
+/*!
+ * brief Gets the clock frequency for a specific clock name.
+ *
+ * This function checks the current clock configurations and then calculates
+ * the clock frequency for a specific clock name defined in clock_name_t.
+ * The MCG must be properly configured before using this function.
+ *
+ * param clockName Clock names defined in clock_name_t
+ * return Clock frequency value in Hertz
+ */
 uint32_t CLOCK_GetFreq(clock_name_t clockName)
 {
     uint32_t freq;
@@ -425,26 +451,41 @@ uint32_t CLOCK_GetFreq(clock_name_t clockName)
     return freq;
 }
 
+/*!
+ * brief Set the clock configure in SIM module.
+ *
+ * This function sets system layer clock settings in SIM module.
+ *
+ * param config Pointer to the configure structure.
+ */
 void CLOCK_SetSimConfig(sim_clock_config_t const *config)
 {
     SIM->CLKDIV1 = config->clkdiv1;
     CLOCK_SetEr32kClock(config->er32kSrc);
 }
 
+/*!
+ * brief Gets the MCG output clock (MCGOUTCLK) frequency.
+ *
+ * This function gets the MCG output clock frequency in Hz based on the current MCG
+ * register value.
+ *
+ * return The frequency of MCGOUTCLK.
+ */
 uint32_t CLOCK_GetOutClkFreq(void)
 {
     uint32_t mcgoutclk;
-    uint32_t clkst = MCG_S_CLKST_VAL;
+    uint32_t clkst = (uint32_t)MCG_S_CLKST_VAL;
 
     switch (clkst)
     {
-        case kMCG_ClkOutStatFll:
+        case (uint32_t)kMCG_ClkOutStatFll:
             mcgoutclk = CLOCK_GetFllFreq();
             break;
-        case kMCG_ClkOutStatInt:
+        case (uint32_t)kMCG_ClkOutStatInt:
             mcgoutclk = CLOCK_GetInternalRefClkSelectFreq();
             break;
-        case kMCG_ClkOutStatExt:
+        case (uint32_t)kMCG_ClkOutStatExt:
             mcgoutclk = CLOCK_GetMcgExtClkFreq();
             break;
         default:
@@ -454,6 +495,15 @@ uint32_t CLOCK_GetOutClkFreq(void)
     return mcgoutclk;
 }
 
+/*!
+ * brief Gets the MCG FLL clock (MCGFLLCLK) frequency.
+ *
+ * This function gets the MCG FLL clock frequency in Hz based on the current MCG
+ * register value. The FLL is enabled in FEI/FBI/FEE/FBE mode and
+ * disabled in low power state in other modes.
+ *
+ * return The frequency of MCGFLLCLK.
+ */
 uint32_t CLOCK_GetFllFreq(void)
 {
     static const uint16_t fllFactorTable[4][2] = {{640, 732}, {1280, 1464}, {1920, 2197}, {2560, 2929}};
@@ -462,28 +512,36 @@ uint32_t CLOCK_GetFllFreq(void)
     uint32_t freq;
 
     /* If FLL is not enabled currently, then return 0U. */
-    if ((MCG->C2 & MCG_C2_LP_MASK))
+    if (0U != (MCG->C2 & MCG_C2_LP_MASK))
     {
         return 0U;
     }
 
     /* Get FLL reference clock frequency. */
     freq = CLOCK_GetFllRefClkFreq();
-    if (!freq)
+    if (0U == freq)
     {
         return freq;
     }
 
-    drs = MCG_C4_DRST_DRS_VAL;
+    drs   = MCG_C4_DRST_DRS_VAL;
     dmx32 = MCG_C4_DMX32_VAL;
 
     return freq * fllFactorTable[drs][dmx32];
 }
 
+/*!
+ * brief Gets the MCG internal reference clock (MCGIRCLK) frequency.
+ *
+ * This function gets the MCG internal reference clock frequency in Hz based
+ * on the current MCG register value.
+ *
+ * return The frequency of MCGIRCLK.
+ */
 uint32_t CLOCK_GetInternalRefClkFreq(void)
 {
     /* If MCGIRCLK is gated. */
-    if (!(MCG->C1 & MCG_C1_IRCLKEN_MASK))
+    if (0U == (MCG->C1 & MCG_C1_IRCLKEN_MASK))
     {
         return 0U;
     }
@@ -491,12 +549,20 @@ uint32_t CLOCK_GetInternalRefClkFreq(void)
     return CLOCK_GetInternalRefClkSelectFreq();
 }
 
+/*!
+ * brief Gets the MCG fixed frequency clock (MCGFFCLK) frequency.
+ *
+ * This function gets the MCG fixed frequency clock frequency in Hz based
+ * on the current MCG register value.
+ *
+ * return The frequency of MCGFFCLK.
+ */
 uint32_t CLOCK_GetFixedFreqClkFreq(void)
 {
     uint32_t freq = CLOCK_GetFllRefClkFreq();
 
     /* MCGFFCLK must be no more than MCGOUTCLK/8. */
-    if ((freq) && (freq <= (CLOCK_GetOutClkFreq() / 8U)))
+    if ((freq <= (CLOCK_GetOutClkFreq() / 8U)) && (0U != freq))
     {
         return freq;
     }
@@ -506,6 +572,18 @@ uint32_t CLOCK_GetFixedFreqClkFreq(void)
     }
 }
 
+/*!
+ * brief Selects the MCG external reference clock.
+ *
+ * Selects the MCG external reference clock source, changes the MCG_C7[OSCSEL],
+ * and waits for the clock source to be stable. Because the external reference
+ * clock should not be changed in FEE/FBE/BLPE/PBE/PEE modes, do not call this function in these modes.
+ *
+ * param oscsel MCG external reference clock source, MCG_C7[OSCSEL].
+ * retval kStatus_MCG_SourceUsed Because the external reference clock is used as a clock source,
+ * the configuration should not be changed. Otherwise, a glitch occurs.
+ * retval kStatus_Success External reference clock set successfully.
+ */
 status_t CLOCK_SetExternalRefClkConfig(mcg_oscsel_t oscsel)
 {
 #if (defined(MCG_CONFIG_CHECK_PARAM) && MCG_CONFIG_CHECK_PARAM)
@@ -514,15 +592,31 @@ status_t CLOCK_SetExternalRefClkConfig(mcg_oscsel_t oscsel)
     return kStatus_Success;
 }
 
+/*!
+ * brief Configures the Internal Reference clock (MCGIRCLK).
+ *
+ * This function sets the \c MCGIRCLK base on parameters. It also selects the IRC
+ * source. If the fast IRC is used, this function sets the fast IRC divider.
+ * This function also sets whether the \c MCGIRCLK is enabled in stop mode.
+ * Calling this function in FBI/PBI/BLPI modes may change the system clock. As a result,
+ * using the function in these modes it is not allowed.
+ *
+ * param enableMode MCGIRCLK enable mode, OR'ed value of ref _mcg_irclk_enable_mode.
+ * param ircs       MCGIRCLK clock source, choose fast or slow.
+ * param fcrdiv     Fast IRC divider setting (\c FCRDIV).
+ * retval kStatus_MCG_SourceUsed Because the internal reference clock is used as a clock source,
+ * the configuration should not be changed. Otherwise, a glitch occurs.
+ * retval kStatus_Success MCGIRCLK configuration finished successfully.
+ */
 status_t CLOCK_SetInternalRefClkConfig(uint8_t enableMode, mcg_irc_mode_t ircs, uint8_t fcrdiv)
 {
-    uint32_t mcgOutClkState = MCG_S_CLKST_VAL;
-    mcg_irc_mode_t curIrcs = (mcg_irc_mode_t)MCG_S_IRCST_VAL;
-    uint8_t curFcrdiv = MCG_SC_FCRDIV_VAL;
+    uint32_t mcgOutClkState = (uint32_t)MCG_S_CLKST_VAL;
+    mcg_irc_mode_t curIrcs  = (mcg_irc_mode_t)MCG_S_IRCST_VAL;
+    uint8_t curFcrdiv       = MCG_SC_FCRDIV_VAL;
 
 #if (defined(MCG_CONFIG_CHECK_PARAM) && MCG_CONFIG_CHECK_PARAM)
     /* If MCGIRCLK is used as system clock source. */
-    if (kMCG_ClkOutStatInt == mcgOutClkState)
+    if ((uint32_t)kMCG_ClkOutStatInt == mcgOutClkState)
     {
         /* If need to change MCGIRCLK source or driver, return error. */
         if (((kMCG_IrcFast == curIrcs) && (fcrdiv != curFcrdiv)) || (ircs != curIrcs))
@@ -536,25 +630,27 @@ status_t CLOCK_SetInternalRefClkConfig(uint8_t enableMode, mcg_irc_mode_t ircs, 
     if (fcrdiv != curFcrdiv)
     {
         /* If fast IRC is in use currently, change to slow IRC. */
-        if ((kMCG_IrcFast == curIrcs) && ((mcgOutClkState == kMCG_ClkOutStatInt) || (MCG->C1 & MCG_C1_IRCLKEN_MASK)))
+        if (((0U != (MCG->C1 & MCG_C1_IRCLKEN_MASK)) || (mcgOutClkState == (uint32_t)kMCG_ClkOutStatInt)) &&
+            (kMCG_IrcFast == curIrcs))
         {
-            MCG->C2 = ((MCG->C2 & ~MCG_C2_IRCS_MASK) | (MCG_C2_IRCS(kMCG_IrcSlow)));
-            while (MCG_S_IRCST_VAL != kMCG_IrcSlow)
+            MCG->C2 = (uint8_t)((MCG->C2 & ~MCG_C2_IRCS_MASK) | (MCG_C2_IRCS(kMCG_IrcSlow)));
+            while (MCG_S_IRCST_VAL != (uint8_t)kMCG_IrcSlow)
             {
             }
         }
         /* Update FCRDIV. */
-        MCG->SC = (MCG->SC & ~(MCG_SC_FCRDIV_MASK | MCG_SC_ATMF_MASK | MCG_SC_LOCS0_MASK)) | MCG_SC_FCRDIV(fcrdiv);
+        MCG->SC =
+            (uint8_t)(MCG->SC & ~(MCG_SC_FCRDIV_MASK | MCG_SC_ATMF_MASK | MCG_SC_LOCS0_MASK)) | MCG_SC_FCRDIV(fcrdiv);
     }
 
     /* Set internal reference clock selection. */
-    MCG->C2 = (MCG->C2 & ~MCG_C2_IRCS_MASK) | (MCG_C2_IRCS(ircs));
-    MCG->C1 = (MCG->C1 & ~(MCG_C1_IRCLKEN_MASK | MCG_C1_IREFSTEN_MASK)) | (uint8_t)enableMode;
+    MCG->C2 = (uint8_t)((MCG->C2 & ~MCG_C2_IRCS_MASK) | (MCG_C2_IRCS(ircs)));
+    MCG->C1 = (uint8_t)((MCG->C1 & ~(MCG_C1_IRCLKEN_MASK | MCG_C1_IREFSTEN_MASK)) | (uint8_t)enableMode);
 
     /* If MCGIRCLK is used, need to wait for MCG_S_IRCST. */
-    if ((mcgOutClkState == kMCG_ClkOutStatInt) || (enableMode & kMCG_IrclkEnable))
+    if ((mcgOutClkState == (uint32_t)kMCG_ClkOutStatInt) || (0U != (enableMode & (uint32_t)kMCG_IrclkEnable)))
     {
-        while (MCG_S_IRCST_VAL != ircs)
+        while (MCG_S_IRCST_VAL != (uint8_t)ircs)
         {
         }
     }
@@ -562,20 +658,27 @@ status_t CLOCK_SetInternalRefClkConfig(uint8_t enableMode, mcg_irc_mode_t ircs, 
     return kStatus_Success;
 }
 
+/*!
+ * brief Sets the OSC0 clock monitor mode.
+ *
+ * This function sets the OSC0 clock monitor mode. See ref mcg_monitor_mode_t for details.
+ *
+ * param mode Monitor mode to set.
+ */
 void CLOCK_SetOsc0MonitorMode(mcg_monitor_mode_t mode)
 {
     /* Clear the previous flag, MCG_SC[LOCS0]. */
-    MCG->SC &= ~MCG_SC_ATMF_MASK;
+    MCG->SC &= ~(uint8_t)MCG_SC_ATMF_MASK;
 
     if (kMCG_MonitorNone == mode)
     {
-        MCG->C6 &= ~MCG_C6_CME0_MASK;
+        MCG->C6 &= ~(uint8_t)MCG_C6_CME0_MASK;
     }
     else
     {
         if (kMCG_MonitorInt == mode)
         {
-            MCG->C2 &= ~MCG_C2_LOCRE0_MASK;
+            MCG->C2 &= ~(uint8_t)MCG_C2_LOCRE0_MASK;
         }
         else
         {
@@ -585,22 +688,64 @@ void CLOCK_SetOsc0MonitorMode(mcg_monitor_mode_t mode)
     }
 }
 
+/*!
+ * brief Gets the MCG status flags.
+ *
+ * This function gets the MCG clock status flags. All status flags are
+ * returned as a logical OR of the enumeration ref _mcg_status_flags_t. To
+ * check a specific flag, compare the return value with the flag.
+ *
+ * Example:
+ * code
+ * To check the clock lost lock status of OSC0 and PLL0.
+ * uint32_t mcgFlags;
+ *
+ * mcgFlags = CLOCK_GetStatusFlags();
+ *
+ * if (mcgFlags & kMCG_Osc0LostFlag)
+ * {
+ *     OSC0 clock lock lost. Do something.
+ * }
+ * if (mcgFlags & kMCG_Pll0LostFlag)
+ * {
+ *     PLL0 clock lock lost. Do something.
+ * }
+ * endcode
+ *
+ * return  Logical OR value of the ref _mcg_status_flags_t.
+ */
 uint32_t CLOCK_GetStatusFlags(void)
 {
-    uint32_t ret = 0U;
+    uint32_t ret  = 0U;
     uint8_t mcg_s = MCG->S;
 
     if (MCG->SC & MCG_SC_LOCS0_MASK)
     {
-        ret |= kMCG_Osc0LostFlag;
+        ret |= (uint32_t)kMCG_Osc0LostFlag;
     }
     if (mcg_s & MCG_S_OSCINIT0_MASK)
     {
-        ret |= kMCG_Osc0InitFlag;
+        ret |= (uint32_t)kMCG_Osc0InitFlag;
     }
     return ret;
 }
 
+/*!
+ * brief Clears the MCG status flags.
+ *
+ * This function clears the MCG clock lock lost status. The parameter is a logical
+ * OR value of the flags to clear. See ref _mcg_status_flags_t.
+ *
+ * Example:
+ * code
+ * To clear the clock lost lock status flags of OSC0 and PLL0.
+ *
+ * CLOCK_ClearStatusFlags(kMCG_Osc0LostFlag | kMCG_Pll0LostFlag);
+ * endcode
+ *
+ * param mask The status flags to clear. This is a logical OR of members of the
+ *             enumeration ref _mcg_status_flags_t.
+ */
 void CLOCK_ClearStatusFlags(uint32_t mask)
 {
     if (mask & kMCG_Osc0LostFlag)
@@ -609,30 +754,80 @@ void CLOCK_ClearStatusFlags(uint32_t mask)
     }
 }
 
+/*!
+ * brief Initializes the OSC0.
+ *
+ * This function initializes the OSC0 according to the board configuration.
+ *
+ * param  config Pointer to the OSC0 configuration structure.
+ */
 void CLOCK_InitOsc0(osc_config_t const *config)
 {
     uint8_t range = CLOCK_GetOscRangeFromFreq(config->freq);
 
     OSC_SetCapLoad(OSC0, config->capLoad);
-    OSC_SetExtRefClkConfig(OSC0, &config->oscerConfig);
 
-    MCG->C2 = ((MCG->C2 & ~OSC_MODE_MASK) | MCG_C2_RANGE(range) | (uint8_t)config->workMode);
+    MCG->C2 = (uint8_t)((MCG->C2 & ~OSC_MODE_MASK) | MCG_C2_RANGE(range) | (uint8_t)config->workMode);
+    OSC_SetExtRefClkConfig(OSC0, &config->oscerConfig);
 
     if ((kOSC_ModeExt != config->workMode) && (OSC0->CR & OSC_CR_ERCLKEN_MASK))
     {
         /* Wait for stable. */
-        while (!(MCG->S & MCG_S_OSCINIT0_MASK))
+        while (0U == (MCG->S & MCG_S_OSCINIT0_MASK))
         {
         }
     }
 }
 
+/*!
+ * brief Deinitializes the OSC0.
+ *
+ * This function deinitializes the OSC0.
+ */
 void CLOCK_DeinitOsc0(void)
 {
     OSC0->CR = 0U;
-    MCG->C2 &= ~OSC_MODE_MASK;
+    MCG->C2 &= ~(uint8_t)OSC_MODE_MASK;
 }
 
+/*!
+ * brief Set the Slow IRC frequency based on the trimmed value
+ *
+ * param freq The Slow IRC frequency input clock frequency in Hz.
+ */
+void CLOCK_SetSlowIrcFreq(uint32_t freq)
+{
+    s_slowIrcFreq = freq;
+}
+
+/*!
+ * brief Set the Fast IRC frequency based on the trimmed value
+ *
+ * param freq The Fast IRC frequency input clock frequency in Hz.
+ */
+void CLOCK_SetFastIrcFreq(uint32_t freq)
+{
+    s_fastIrcFreq = freq;
+}
+
+/*!
+ * brief Auto trims the internal reference clock.
+ *
+ * This function trims the internal reference clock by using the external clock. If
+ * successful, it returns the kStatus_Success and the frequency after
+ * trimming is received in the parameter p actualFreq. If an error occurs,
+ * the error code is returned.
+ *
+ * param extFreq      External clock frequency, which should be a bus clock.
+ * param desireFreq   Frequency to trim to.
+ * param actualFreq   Actual frequency after trimming.
+ * param atms         Trim fast or slow internal reference clock.
+ * retval kStatus_Success ATM success.
+ * retval kStatus_MCG_AtmBusClockInvalid The bus clock is not in allowed range for the ATM.
+ * retval kStatus_MCG_AtmDesiredFreqInvalid MCGIRCLK could not be trimmed to the desired frequency.
+ * retval kStatus_MCG_AtmIrcUsed Could not trim because MCGIRCLK is used as a bus clock source.
+ * retval kStatus_MCG_AtmHardwareFail Hardware fails while trimming.
+ */
 status_t CLOCK_TrimInternalRefClk(uint32_t extFreq, uint32_t desireFreq, uint32_t *actualFreq, mcg_atm_select_t atms)
 {
     uint32_t multi; /* extFreq / desireFreq */
@@ -666,7 +861,7 @@ status_t CLOCK_TrimInternalRefClk(uint32_t extFreq, uint32_t desireFreq, uint32_
     }
 
     multi = extFreq / desireFreq;
-    actv = multi * 21U;
+    actv  = multi * 21U;
 
     if (kMCG_AtmSel4m == atms)
     {
@@ -678,17 +873,17 @@ status_t CLOCK_TrimInternalRefClk(uint32_t extFreq, uint32_t desireFreq, uint32_
     MCG->ATCVH = (uint8_t)(actv >> 8U);
 
     mcg_sc = MCG->SC;
-    mcg_sc &= ~(MCG_SC_ATMS_MASK | MCG_SC_LOCS0_MASK);
+    mcg_sc &= ~(uint8_t)(MCG_SC_ATMS_MASK | MCG_SC_LOCS0_MASK);
     mcg_sc |= (MCG_SC_ATMF_MASK | MCG_SC_ATMS(atms));
     MCG->SC = (mcg_sc | MCG_SC_ATME_MASK);
 
     /* Wait for finished. */
-    while (MCG->SC & MCG_SC_ATME_MASK)
+    while (0U != (MCG->SC & MCG_SC_ATME_MASK))
     {
     }
 
     /* Error occurs? */
-    if (MCG->SC & MCG_SC_ATMF_MASK)
+    if (0U != (MCG->SC & MCG_SC_ATMF_MASK))
     {
         /* Clear the failed flag. */
         MCG->SC = mcg_sc;
@@ -709,12 +904,19 @@ status_t CLOCK_TrimInternalRefClk(uint32_t extFreq, uint32_t desireFreq, uint32_
     return kStatus_Success;
 }
 
+/*!
+ * brief Gets the current MCG mode.
+ *
+ * This function checks the MCG registers and determines the current MCG mode.
+ *
+ * return Current MCG mode or error code; See ref mcg_mode_t.
+ */
 mcg_mode_t CLOCK_GetMode(void)
 {
     mcg_mode_t mode = kMCG_ModeError;
-    uint32_t clkst = MCG_S_CLKST_VAL;
-    uint32_t irefst = MCG_S_IREFST_VAL;
-    uint32_t lp = MCG_C2_LP_VAL;
+    uint32_t clkst  = (uint32_t)MCG_S_CLKST_VAL;
+    uint32_t irefst = (uint32_t)MCG_S_IREFST_VAL;
+    uint32_t lp     = (uint32_t)MCG_C2_LP_VAL;
 
     /*------------------------------------------------------------------
                            Mode and Registers
@@ -755,49 +957,66 @@ mcg_mode_t CLOCK_GetMode(void)
 
     ----------------------------------------------------------------------*/
 
-    switch (clkst)
+    if (clkst == (uint32_t)kMCG_ClkOutStatFll)
     {
-        case kMCG_ClkOutStatFll:
-            if (kMCG_FllSrcExternal == irefst)
+        if ((uint32_t)kMCG_FllSrcExternal == irefst)
+        {
+            mode = kMCG_ModeFEE;
+        }
+        else
+        {
+            mode = kMCG_ModeFEI;
+        }
+    }
+    else if (clkst == (uint32_t)kMCG_ClkOutStatInt)
+    {
+        if (0U != lp)
+        {
+            mode = kMCG_ModeBLPI;
+        }
+        else
+        {
             {
-                mode = kMCG_ModeFEE;
+                mode = kMCG_ModeFBI;
             }
-            else
+        }
+    }
+    else if (clkst == (uint32_t)kMCG_ClkOutStatExt)
+    {
+        if (0U != lp)
+        {
+            mode = kMCG_ModeBLPE;
+        }
+        else
+        {
             {
-                mode = kMCG_ModeFEI;
+                mode = kMCG_ModeFBE;
             }
-            break;
-        case kMCG_ClkOutStatInt:
-            if (lp)
-            {
-                mode = kMCG_ModeBLPI;
-            }
-            else
-            {
-                {
-                    mode = kMCG_ModeFBI;
-                }
-            }
-            break;
-        case kMCG_ClkOutStatExt:
-            if (lp)
-            {
-                mode = kMCG_ModeBLPE;
-            }
-            else
-            {
-                {
-                    mode = kMCG_ModeFBE;
-                }
-            }
-            break;
-        default:
-            break;
+        }
+    }
+    else
+    {
+        /*do nothing*/
     }
 
     return mode;
 }
 
+/*!
+ * brief Sets the MCG to FEI mode.
+ *
+ * This function sets the MCG to FEI mode. If setting to FEI mode fails
+ * from the current mode, this function returns an error.
+ *
+ * param       dmx32  DMX32 in FEI mode.
+ * param       drs The DCO range selection.
+ * param       fllStableDelay Delay function to  ensure that the FLL is stable. Passing
+ *              NULL does not cause a delay.
+ * retval kStatus_MCG_ModeUnreachable Could not switch to the target mode.
+ * retval kStatus_Success Switched to the target mode successfully.
+ * note If p dmx32 is set to kMCG_Dmx32Fine, the slow IRC must not be trimmed
+ * to a frequency above 32768 Hz.
+ */
 status_t CLOCK_SetFeiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDelay)(void))
 {
     uint8_t mcg_c4;
@@ -818,7 +1037,7 @@ status_t CLOCK_SetFeiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDela
        reference clock source changes, then reset to previous value after
        reference clock changes.
      */
-    if (kMCG_FllSrcExternal == MCG_S_IREFST_VAL)
+    if ((uint8_t)kMCG_FllSrcExternal == MCG_S_IREFST_VAL)
     {
         change_drs = true;
         /* Change the LSB of DRST_DRS. */
@@ -826,12 +1045,12 @@ status_t CLOCK_SetFeiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDela
     }
 
     /* Set CLKS and IREFS. */
-    MCG->C1 =
-        ((MCG->C1 & ~(MCG_C1_CLKS_MASK | MCG_C1_IREFS_MASK))) | (MCG_C1_CLKS(kMCG_ClkOutSrcOut)        /* CLKS = 0 */
-                                                                 | MCG_C1_IREFS(kMCG_FllSrcInternal)); /* IREFS = 1 */
+    MCG->C1 = (uint8_t)(((MCG->C1 & ~(MCG_C1_CLKS_MASK | MCG_C1_IREFS_MASK))) |
+                        (MCG_C1_CLKS(kMCG_ClkOutSrcOut)         /* CLKS = 0 */
+                         | MCG_C1_IREFS(kMCG_FllSrcInternal))); /* IREFS = 1 */
 
     /* Wait and check status. */
-    while (kMCG_FllSrcInternal != MCG_S_IREFST_VAL)
+    while ((uint8_t)kMCG_FllSrcInternal != MCG_S_IREFST_VAL)
     {
     }
 
@@ -842,15 +1061,16 @@ status_t CLOCK_SetFeiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDela
     }
 
     /* In FEI mode, the MCG_C4[DMX32] is set to 0U. */
-    MCG->C4 = (mcg_c4 & ~(MCG_C4_DMX32_MASK | MCG_C4_DRST_DRS_MASK)) | (MCG_C4_DMX32(dmx32) | MCG_C4_DRST_DRS(drs));
+    MCG->C4 = (uint8_t)((mcg_c4 & ~(MCG_C4_DMX32_MASK | MCG_C4_DRST_DRS_MASK)) |
+                        (MCG_C4_DMX32(dmx32) | MCG_C4_DRST_DRS(drs)));
 
     /* Check MCG_S[CLKST] */
-    while (kMCG_ClkOutStatFll != MCG_S_CLKST_VAL)
+    while ((uint8_t)kMCG_ClkOutStatFll != MCG_S_CLKST_VAL)
     {
     }
 
     /* Wait for FLL stable time. */
-    if (fllStableDelay)
+    if (NULL != fllStableDelay)
     {
         fllStableDelay();
     }
@@ -858,6 +1078,21 @@ status_t CLOCK_SetFeiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDela
     return kStatus_Success;
 }
 
+/*!
+ * brief Sets the MCG to FEE mode.
+ *
+ * This function sets the MCG to FEE mode. If setting to FEE mode fails
+ * from the current mode, this function returns an error.
+ *
+ * param   frdiv  FLL reference clock divider setting, FRDIV.
+ * param   dmx32  DMX32 in FEE mode.
+ * param   drs    The DCO range selection.
+ * param   fllStableDelay Delay function to make sure FLL is stable. Passing
+ *          NULL does not cause a delay.
+ *
+ * retval kStatus_MCG_ModeUnreachable Could not switch to the target mode.
+ * retval kStatus_Success Switched to the target mode successfully.
+ */
 status_t CLOCK_SetFeeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDelay)(void))
 {
     uint8_t mcg_c4;
@@ -878,7 +1113,7 @@ status_t CLOCK_SetFeeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void 
        reference clock source changes, then reset to previous value after
        reference clock changes.
      */
-    if (kMCG_FllSrcInternal == MCG_S_IREFST_VAL)
+    if ((uint8_t)kMCG_FllSrcInternal == MCG_S_IREFST_VAL)
     {
         change_drs = true;
         /* Change the LSB of DRST_DRS. */
@@ -886,23 +1121,23 @@ status_t CLOCK_SetFeeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void 
     }
 
     /* Set CLKS and IREFS. */
-    MCG->C1 = ((MCG->C1 & ~(MCG_C1_CLKS_MASK | MCG_C1_FRDIV_MASK | MCG_C1_IREFS_MASK)) |
-               (MCG_C1_CLKS(kMCG_ClkOutSrcOut)         /* CLKS = 0 */
-                | MCG_C1_FRDIV(frdiv)                  /* FRDIV */
-                | MCG_C1_IREFS(kMCG_FllSrcExternal))); /* IREFS = 0 */
+    MCG->C1 = (uint8_t)((MCG->C1 & ~(MCG_C1_CLKS_MASK | MCG_C1_FRDIV_MASK | MCG_C1_IREFS_MASK)) |
+                        (MCG_C1_CLKS(kMCG_ClkOutSrcOut)         /* CLKS = 0 */
+                         | MCG_C1_FRDIV(frdiv)                  /* FRDIV */
+                         | MCG_C1_IREFS(kMCG_FllSrcExternal))); /* IREFS = 0 */
 
     /* If use external crystal as clock source, wait for it stable. */
     {
-        if (MCG->C2 & MCG_C2_EREFS_MASK)
+        if (0U != (MCG->C2 & MCG_C2_EREFS_MASK))
         {
-            while (!(MCG->S & MCG_S_OSCINIT0_MASK))
+            while (0U == (MCG->S & MCG_S_OSCINIT0_MASK))
             {
             }
         }
     }
 
     /* Wait and check status. */
-    while (kMCG_FllSrcExternal != MCG_S_IREFST_VAL)
+    while ((uint8_t)kMCG_FllSrcExternal != MCG_S_IREFST_VAL)
     {
     }
 
@@ -913,7 +1148,8 @@ status_t CLOCK_SetFeeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void 
     }
 
     /* Set DRS and DMX32. */
-    mcg_c4 = ((mcg_c4 & ~(MCG_C4_DMX32_MASK | MCG_C4_DRST_DRS_MASK)) | (MCG_C4_DMX32(dmx32) | MCG_C4_DRST_DRS(drs)));
+    mcg_c4  = (uint8_t)((mcg_c4 & ~(MCG_C4_DMX32_MASK | MCG_C4_DRST_DRS_MASK)) |
+                       (MCG_C4_DMX32(dmx32) | MCG_C4_DRST_DRS(drs)));
     MCG->C4 = mcg_c4;
 
     /* Wait for DRST_DRS update. */
@@ -922,12 +1158,12 @@ status_t CLOCK_SetFeeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void 
     }
 
     /* Check MCG_S[CLKST] */
-    while (kMCG_ClkOutStatFll != MCG_S_CLKST_VAL)
+    while ((uint8_t)kMCG_ClkOutStatFll != MCG_S_CLKST_VAL)
     {
     }
 
     /* Wait for FLL stable time. */
-    if (fllStableDelay)
+    if (NULL != fllStableDelay)
     {
         fllStableDelay();
     }
@@ -935,6 +1171,22 @@ status_t CLOCK_SetFeeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void 
     return kStatus_Success;
 }
 
+/*!
+ * brief Sets the MCG to FBI mode.
+ *
+ * This function sets the MCG to FBI mode. If setting to FBI mode fails
+ * from the current mode, this function returns an error.
+ *
+ * param  dmx32  DMX32 in FBI mode.
+ * param  drs  The DCO range selection.
+ * param  fllStableDelay Delay function to make sure FLL is stable. If the FLL
+ *         is not used in FBI mode, this parameter can be NULL. Passing
+ *         NULL does not cause a delay.
+ * retval kStatus_MCG_ModeUnreachable Could not switch to the target mode.
+ * retval kStatus_Success Switched to the target mode successfully.
+ * note If p dmx32 is set to kMCG_Dmx32Fine, the slow IRC must not be trimmed
+ * to frequency above 32768 Hz.
+ */
 status_t CLOCK_SetFbiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDelay)(void))
 {
     uint8_t mcg_c4;
@@ -953,7 +1205,7 @@ status_t CLOCK_SetFbiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDela
 
     mcg_c4 = MCG->C4;
 
-    MCG->C2 &= ~MCG_C2_LP_MASK; /* Disable lowpower. */
+    MCG->C2 &= ~(uint8_t)MCG_C2_LP_MASK; /* Disable lowpower. */
 
     /*
        Errata: ERR007993
@@ -961,7 +1213,7 @@ status_t CLOCK_SetFbiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDela
        reference clock source changes, then reset to previous value after
        reference clock changes.
      */
-    if (kMCG_FllSrcExternal == MCG_S_IREFST_VAL)
+    if ((uint8_t)kMCG_FllSrcExternal == MCG_S_IREFST_VAL)
     {
         change_drs = true;
         /* Change the LSB of DRST_DRS. */
@@ -969,12 +1221,12 @@ status_t CLOCK_SetFbiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDela
     }
 
     /* Set CLKS and IREFS. */
-    MCG->C1 =
-        ((MCG->C1 & ~(MCG_C1_CLKS_MASK | MCG_C1_IREFS_MASK)) | (MCG_C1_CLKS(kMCG_ClkOutSrcInternal)    /* CLKS = 1 */
-                                                                | MCG_C1_IREFS(kMCG_FllSrcInternal))); /* IREFS = 1 */
+    MCG->C1 = (uint8_t)((MCG->C1 & ~(MCG_C1_CLKS_MASK | MCG_C1_IREFS_MASK)) |
+                        (MCG_C1_CLKS(kMCG_ClkOutSrcInternal)    /* CLKS = 1 */
+                         | MCG_C1_IREFS(kMCG_FllSrcInternal))); /* IREFS = 1 */
 
     /* Wait and check status. */
-    while (kMCG_FllSrcInternal != MCG_S_IREFST_VAL)
+    while ((uint8_t)kMCG_FllSrcInternal != MCG_S_IREFST_VAL)
     {
     }
 
@@ -984,14 +1236,15 @@ status_t CLOCK_SetFbiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDela
         MCG->C4 = mcg_c4;
     }
 
-    while (kMCG_ClkOutStatInt != MCG_S_CLKST_VAL)
+    while ((uint8_t)kMCG_ClkOutStatInt != MCG_S_CLKST_VAL)
     {
     }
 
-    MCG->C4 = (mcg_c4 & ~(MCG_C4_DMX32_MASK | MCG_C4_DRST_DRS_MASK)) | (MCG_C4_DMX32(dmx32) | MCG_C4_DRST_DRS(drs));
+    MCG->C4 = (uint8_t)((mcg_c4 & ~(MCG_C4_DMX32_MASK | MCG_C4_DRST_DRS_MASK)) |
+                        (MCG_C4_DMX32(dmx32) | MCG_C4_DRST_DRS(drs)));
 
     /* Wait for FLL stable time. */
-    if (fllStableDelay)
+    if (NULL != fllStableDelay)
     {
         fllStableDelay();
     }
@@ -999,6 +1252,21 @@ status_t CLOCK_SetFbiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDela
     return kStatus_Success;
 }
 
+/*!
+ * brief Sets the MCG to FBE mode.
+ *
+ * This function sets the MCG to FBE mode. If setting to FBE mode fails
+ * from the current mode, this function returns an error.
+ *
+ * param   frdiv  FLL reference clock divider setting, FRDIV.
+ * param   dmx32  DMX32 in FBE mode.
+ * param   drs    The DCO range selection.
+ * param   fllStableDelay Delay function to make sure FLL is stable. If the FLL
+ *          is not used in FBE mode, this parameter can be NULL. Passing NULL
+ *          does not cause a delay.
+ * retval kStatus_MCG_ModeUnreachable Could not switch to the target mode.
+ * retval kStatus_Success Switched to the target mode successfully.
+ */
 status_t CLOCK_SetFbeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDelay)(void))
 {
     uint8_t mcg_c4;
@@ -1014,7 +1282,7 @@ status_t CLOCK_SetFbeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void 
 #endif
 
     /* Set LP bit to enable the FLL */
-    MCG->C2 &= ~MCG_C2_LP_MASK;
+    MCG->C2 &= ~(uint8_t)MCG_C2_LP_MASK;
 
     mcg_c4 = MCG->C4;
 
@@ -1024,7 +1292,7 @@ status_t CLOCK_SetFbeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void 
        reference clock source changes, then reset to previous value after
        reference clock changes.
      */
-    if (kMCG_FllSrcInternal == MCG_S_IREFST_VAL)
+    if ((uint8_t)kMCG_FllSrcInternal == MCG_S_IREFST_VAL)
     {
         change_drs = true;
         /* Change the LSB of DRST_DRS. */
@@ -1032,23 +1300,23 @@ status_t CLOCK_SetFbeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void 
     }
 
     /* Set CLKS and IREFS. */
-    MCG->C1 = ((MCG->C1 & ~(MCG_C1_CLKS_MASK | MCG_C1_FRDIV_MASK | MCG_C1_IREFS_MASK)) |
-               (MCG_C1_CLKS(kMCG_ClkOutSrcExternal)    /* CLKS = 2 */
-                | MCG_C1_FRDIV(frdiv)                  /* FRDIV = frdiv */
-                | MCG_C1_IREFS(kMCG_FllSrcExternal))); /* IREFS = 0 */
+    MCG->C1 = (uint8_t)((MCG->C1 & ~(MCG_C1_CLKS_MASK | MCG_C1_FRDIV_MASK | MCG_C1_IREFS_MASK)) |
+                        (MCG_C1_CLKS(kMCG_ClkOutSrcExternal)    /* CLKS = 2 */
+                         | MCG_C1_FRDIV(frdiv)                  /* FRDIV = frdiv */
+                         | MCG_C1_IREFS(kMCG_FllSrcExternal))); /* IREFS = 0 */
 
     /* If use external crystal as clock source, wait for it stable. */
     {
-        if (MCG->C2 & MCG_C2_EREFS_MASK)
+        if (0U != (MCG->C2 & MCG_C2_EREFS_MASK))
         {
-            while (!(MCG->S & MCG_S_OSCINIT0_MASK))
+            while (0U == (MCG->S & MCG_S_OSCINIT0_MASK))
             {
             }
         }
     }
 
     /* Wait for Reference clock Status bit to clear */
-    while (kMCG_FllSrcExternal != MCG_S_IREFST_VAL)
+    while ((uint8_t)kMCG_FllSrcExternal != MCG_S_IREFST_VAL)
     {
     }
 
@@ -1059,15 +1327,16 @@ status_t CLOCK_SetFbeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void 
     }
 
     /* Set DRST_DRS and DMX32. */
-    mcg_c4 = ((mcg_c4 & ~(MCG_C4_DMX32_MASK | MCG_C4_DRST_DRS_MASK)) | (MCG_C4_DMX32(dmx32) | MCG_C4_DRST_DRS(drs)));
+    mcg_c4 = (uint8_t)((mcg_c4 & ~(MCG_C4_DMX32_MASK | MCG_C4_DRST_DRS_MASK)) |
+                       (MCG_C4_DMX32(dmx32) | MCG_C4_DRST_DRS(drs)));
 
     /* Wait for clock status bits to show clock source is ext ref clk */
-    while (kMCG_ClkOutStatExt != MCG_S_CLKST_VAL)
+    while ((uint8_t)kMCG_ClkOutStatExt != MCG_S_CLKST_VAL)
     {
     }
 
     /* Wait for fll stable time. */
-    if (fllStableDelay)
+    if (NULL != fllStableDelay)
     {
         fllStableDelay();
     }
@@ -1075,10 +1344,19 @@ status_t CLOCK_SetFbeMode(uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void 
     return kStatus_Success;
 }
 
+/*!
+ * brief Sets the MCG to BLPI mode.
+ *
+ * This function sets the MCG to BLPI mode. If setting to BLPI mode fails
+ * from the current mode, this function returns an error.
+ *
+ * retval kStatus_MCG_ModeUnreachable Could not switch to the target mode.
+ * retval kStatus_Success Switched to the target mode successfully.
+ */
 status_t CLOCK_SetBlpiMode(void)
 {
 #if (defined(MCG_CONFIG_CHECK_PARAM) && MCG_CONFIG_CHECK_PARAM)
-    if (MCG_S_CLKST_VAL != kMCG_ClkOutStatInt)
+    if (MCG_S_CLKST_VAL != (uint8_t)kMCG_ClkOutStatInt)
     {
         return kStatus_MCG_ModeUnreachable;
     }
@@ -1090,10 +1368,19 @@ status_t CLOCK_SetBlpiMode(void)
     return kStatus_Success;
 }
 
+/*!
+ * brief Sets the MCG to BLPE mode.
+ *
+ * This function sets the MCG to BLPE mode. If setting to BLPE mode fails
+ * from the current mode, this function returns an error.
+ *
+ * retval kStatus_MCG_ModeUnreachable Could not switch to the target mode.
+ * retval kStatus_Success Switched to the target mode successfully.
+ */
 status_t CLOCK_SetBlpeMode(void)
 {
 #if (defined(MCG_CONFIG_CHECK_PARAM) && MCG_CONFIG_CHECK_PARAM)
-    if (MCG_S_CLKST_VAL != kMCG_ClkOutStatExt)
+    if (MCG_S_CLKST_VAL != (uint8_t)kMCG_ClkOutStatExt)
     {
         return kStatus_MCG_ModeUnreachable;
     }
@@ -1105,6 +1392,22 @@ status_t CLOCK_SetBlpeMode(void)
     return kStatus_Success;
 }
 
+/*!
+ * brief Switches the MCG to FBE mode from the external mode.
+ *
+ * This function switches the MCG from external modes (PEE/PBE/BLPE/FEE) to the FBE mode quickly.
+ * The external clock is used as the system clock source and PLL is disabled. However,
+ * the FLL settings are not configured. This is a lite function with a small code size, which is useful
+ * during the mode switch. For example, to switch from PEE mode to FEI mode:
+ *
+ * code
+ * CLOCK_ExternalModeToFbeModeQuick();
+ * CLOCK_SetFeiMode(...);
+ * endcode
+ *
+ * retval kStatus_Success Switched successfully.
+ * retval kStatus_MCG_ModeInvalid If the current mode is not an external mode, do not call this function.
+ */
 status_t CLOCK_ExternalModeToFbeModeQuick(void)
 {
 #if (defined(MCG_CONFIG_CHECK_PARAM) && MCG_CONFIG_CHECK_PARAM)
@@ -1115,16 +1418,32 @@ status_t CLOCK_ExternalModeToFbeModeQuick(void)
 #endif /* MCG_CONFIG_CHECK_PARAM */
 
     /* Disable low power */
-    MCG->C2 &= ~MCG_C2_LP_MASK;
+    MCG->C2 &= ~(uint8_t)MCG_C2_LP_MASK;
 
-    MCG->C1 = ((MCG->C1 & ~MCG_C1_CLKS_MASK) | MCG_C1_CLKS(kMCG_ClkOutSrcExternal));
-    while (MCG_S_CLKST_VAL != kMCG_ClkOutStatExt)
+    MCG->C1 = (uint8_t)((MCG->C1 & ~MCG_C1_CLKS_MASK) | MCG_C1_CLKS(kMCG_ClkOutSrcExternal));
+    while (MCG_S_CLKST_VAL != (uint8_t)kMCG_ClkOutStatExt)
     {
     }
 
     return kStatus_Success;
 }
 
+/*!
+ * brief Switches the MCG to FBI mode from internal modes.
+ *
+ * This function switches the MCG from internal modes (PEI/PBI/BLPI/FEI) to the FBI mode quickly.
+ * The MCGIRCLK is used as the system clock source and PLL is disabled. However,
+ * FLL settings are not configured. This is a lite function with a small code size, which is useful
+ * during the mode switch. For example, to switch from PEI mode to FEE mode:
+ *
+ * code
+ * CLOCK_InternalModeToFbiModeQuick();
+ * CLOCK_SetFeeMode(...);
+ * endcode
+ *
+ * retval kStatus_Success Switched successfully.
+ * retval kStatus_MCG_ModeInvalid If the current mode is not an internal mode, do not call this function.
+ */
 status_t CLOCK_InternalModeToFbiModeQuick(void)
 {
 #if (defined(MCG_CONFIG_CHECK_PARAM) && MCG_CONFIG_CHECK_PARAM)
@@ -1135,37 +1454,80 @@ status_t CLOCK_InternalModeToFbiModeQuick(void)
 #endif
 
     /* Disable low power */
-    MCG->C2 &= ~MCG_C2_LP_MASK;
+    MCG->C2 &= ~(uint8_t)MCG_C2_LP_MASK;
 
-    MCG->C1 = ((MCG->C1 & ~MCG_C1_CLKS_MASK) | MCG_C1_CLKS(kMCG_ClkOutSrcInternal));
-    while (MCG_S_CLKST_VAL != kMCG_ClkOutStatInt)
+    MCG->C1 = (uint8_t)((MCG->C1 & ~MCG_C1_CLKS_MASK) | MCG_C1_CLKS(kMCG_ClkOutSrcInternal));
+    while (MCG_S_CLKST_VAL != (uint8_t)kMCG_ClkOutStatInt)
     {
     }
 
     return kStatus_Success;
 }
 
+/*!
+ * brief Sets the MCG to FEI mode during system boot up.
+ *
+ * This function sets the MCG to FEI mode from the reset mode. It can also be used to
+ * set up MCG during system boot up.
+ *
+ * param  dmx32  DMX32 in FEI mode.
+ * param  drs The DCO range selection.
+ * param  fllStableDelay Delay function to ensure that the FLL is stable.
+ *
+ * retval kStatus_MCG_ModeUnreachable Could not switch to the target mode.
+ * retval kStatus_Success Switched to the target mode successfully.
+ * note If p dmx32 is set to kMCG_Dmx32Fine, the slow IRC must not be trimmed
+ * to frequency above 32768 Hz.
+ */
 status_t CLOCK_BootToFeiMode(mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDelay)(void))
 {
     return CLOCK_SetFeiMode(dmx32, drs, fllStableDelay);
 }
 
+/*!
+ * brief Sets the MCG to FEE mode during system bootup.
+ *
+ * This function sets MCG to FEE mode from the reset mode. It can also be used to
+ * set up the MCG during system boot up.
+ *
+ * param   oscsel OSC clock select, OSCSEL.
+ * param   frdiv  FLL reference clock divider setting, FRDIV.
+ * param   dmx32  DMX32 in FEE mode.
+ * param   drs    The DCO range selection.
+ * param   fllStableDelay Delay function to ensure that the FLL is stable.
+ *
+ * retval kStatus_MCG_ModeUnreachable Could not switch to the target mode.
+ * retval kStatus_Success Switched to the target mode successfully.
+ */
 status_t CLOCK_BootToFeeMode(
     mcg_oscsel_t oscsel, uint8_t frdiv, mcg_dmx32_t dmx32, mcg_drs_t drs, void (*fllStableDelay)(void))
 {
-    CLOCK_SetExternalRefClkConfig(oscsel);
+    (void)CLOCK_SetExternalRefClkConfig(oscsel);
 
     return CLOCK_SetFeeMode(frdiv, dmx32, drs, fllStableDelay);
 }
 
+/*!
+ * brief Sets the MCG to BLPI mode during system boot up.
+ *
+ * This function sets the MCG to BLPI mode from the reset mode. It can also be used to
+ * set up the MCG during system boot up.
+ *
+ * param  fcrdiv Fast IRC divider, FCRDIV.
+ * param  ircs   The internal reference clock to select, IRCS.
+ * param  ircEnableMode  The MCGIRCLK enable mode, OR'ed value of ref _mcg_irclk_enable_mode.
+ *
+ * retval kStatus_MCG_SourceUsed Could not change MCGIRCLK setting.
+ * retval kStatus_Success Switched to the target mode successfully.
+ */
 status_t CLOCK_BootToBlpiMode(uint8_t fcrdiv, mcg_irc_mode_t ircs, uint8_t ircEnableMode)
 {
     /* If reset mode is FEI mode, set MCGIRCLK and always success. */
-    CLOCK_SetInternalRefClkConfig(ircEnableMode, ircs, fcrdiv);
+    (void)CLOCK_SetInternalRefClkConfig(ircEnableMode, ircs, fcrdiv);
 
     /* If reset mode is not BLPI, first enter FBI mode. */
-    MCG->C1 = (MCG->C1 & ~MCG_C1_CLKS_MASK) | MCG_C1_CLKS(kMCG_ClkOutSrcInternal);
-    while (MCG_S_CLKST_VAL != kMCG_ClkOutStatInt)
+    MCG->C1 = (uint8_t)((MCG->C1 & ~MCG_C1_CLKS_MASK) | MCG_C1_CLKS(kMCG_ClkOutSrcInternal));
+    while (MCG_S_CLKST_VAL != (uint8_t)kMCG_ClkOutStatInt)
     {
     }
 
@@ -1175,20 +1537,31 @@ status_t CLOCK_BootToBlpiMode(uint8_t fcrdiv, mcg_irc_mode_t ircs, uint8_t ircEn
     return kStatus_Success;
 }
 
+/*!
+ * brief Sets the MCG to BLPE mode during system boot up.
+ *
+ * This function sets the MCG to BLPE mode from the reset mode. It can also be used to
+ * set up the MCG during system boot up.
+ *
+ * param  oscsel OSC clock select, MCG_C7[OSCSEL].
+ *
+ * retval kStatus_MCG_ModeUnreachable Could not switch to the target mode.
+ * retval kStatus_Success Switched to the target mode successfully.
+ */
 status_t CLOCK_BootToBlpeMode(mcg_oscsel_t oscsel)
 {
-    CLOCK_SetExternalRefClkConfig(oscsel);
+    (void)CLOCK_SetExternalRefClkConfig(oscsel);
 
     /* Set to FBE mode. */
-    MCG->C1 =
-        ((MCG->C1 & ~(MCG_C1_CLKS_MASK | MCG_C1_IREFS_MASK)) | (MCG_C1_CLKS(kMCG_ClkOutSrcExternal)    /* CLKS = 2 */
-                                                                | MCG_C1_IREFS(kMCG_FllSrcExternal))); /* IREFS = 0 */
+    MCG->C1 = (uint8_t)((MCG->C1 & ~(MCG_C1_CLKS_MASK | MCG_C1_IREFS_MASK)) |
+                        (MCG_C1_CLKS(kMCG_ClkOutSrcExternal)    /* CLKS = 2 */
+                         | MCG_C1_IREFS(kMCG_FllSrcExternal))); /* IREFS = 0 */
 
     /* If use external crystal as clock source, wait for it stable. */
     {
-        if (MCG->C2 & MCG_C2_EREFS_MASK)
+        if (0U != (MCG->C2 & MCG_C2_EREFS_MASK))
         {
-            while (!(MCG->S & MCG_S_OSCINIT0_MASK))
+            while (0U == (MCG->S & MCG_S_OSCINIT0_MASK))
             {
             }
         }
@@ -1225,23 +1598,37 @@ static const mcg_mode_t mcgModeMatrix[6][6] = {
     /*      FEI           FBI           BLPI          FEE           FBE           BLPE      */
 };
 
+/*!
+ * brief Sets the MCG to a target mode.
+ *
+ * This function sets MCG to a target mode defined by the configuration
+ * structure. If switching to the target mode fails, this function
+ * chooses the correct path.
+ *
+ * param  config Pointer to the target MCG mode configuration structure.
+ * return Return kStatus_Success if switched successfully; Otherwise, it returns an error code #_mcg_status.
+ *
+ * note If the external clock is used in the target mode, ensure that it is
+ * enabled. For example, if the OSC0 is used, set up OSC0 correctly before calling this
+ * function.
+ */
 status_t CLOCK_SetMcgConfig(const mcg_config_t *config)
 {
     mcg_mode_t next_mode;
     status_t status = kStatus_Success;
 
     /* Re-configure MCGIRCLK, if MCGIRCLK is used as system clock source, then change to FEI/PEI first. */
-    if (MCG_S_CLKST_VAL == kMCG_ClkOutStatInt)
+    if (MCG_S_CLKST_VAL == (uint8_t)kMCG_ClkOutStatInt)
     {
-        MCG->C2 &= ~MCG_C2_LP_MASK; /* Disable lowpower. */
+        MCG->C2 &= ~(uint8_t)MCG_C2_LP_MASK; /* Disable lowpower. */
 
         {
-            CLOCK_SetFeiMode(config->dmx32, config->drs, CLOCK_FllStableDelay);
+            (void)CLOCK_SetFeiMode(config->dmx32, config->drs, CLOCK_FllStableDelay);
         }
     }
 
     /* Configure MCGIRCLK. */
-    CLOCK_SetInternalRefClkConfig(config->irclkEnableMode, config->ircs, config->fcrdiv);
+    (void)CLOCK_SetInternalRefClkConfig(config->irclkEnableMode, config->ircs, config->fcrdiv);
 
     next_mode = CLOCK_GetMode();
 
@@ -1258,10 +1645,10 @@ status_t CLOCK_SetMcgConfig(const mcg_config_t *config)
                 status = CLOCK_SetFeeMode(config->frdiv, config->dmx32, config->drs, CLOCK_FllStableDelay);
                 break;
             case kMCG_ModeFBI:
-                status = CLOCK_SetFbiMode(config->dmx32, config->drs, (void (*)(void))0);
+                status = CLOCK_SetFbiMode(config->dmx32, config->drs, NULL);
                 break;
             case kMCG_ModeFBE:
-                status = CLOCK_SetFbeMode(config->frdiv, config->dmx32, config->drs, (void (*)(void))0);
+                status = CLOCK_SetFbeMode(config->frdiv, config->dmx32, config->drs, NULL);
                 break;
             case kMCG_ModeBLPI:
                 status = CLOCK_SetBlpiMode();

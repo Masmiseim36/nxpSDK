@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -7,12 +7,22 @@
 
 #include "safety_config.h"
 
-extern uint32_t __data_section_table;
-extern uint32_t __data_section_table_end;   //before BSS
-extern uint32_t __safety_ram_section_table;
-extern uint32_t __safety_ram_section_table_end;
-extern uint32_t __bss_section_table;
-extern uint32_t __bss_section_table_end;
+/*******************************************************************************
+ * Variables
+ ******************************************************************************/
+/* The initialized part of non-safety RW data section SEC_RWRAM. */
+extern uint32_t m_sec_rwram_load_start;
+extern uint32_t m_sec_rwram_load_end;
+extern uint32_t m_sec_rwram_start;
+
+/* The zero-initialized part of non-safety RW data section SEC_RWRAM. */
+extern uint32_t m_sec_bss_start;
+extern uint32_t m_sec_bss_end;
+
+/* The safety-related RW data section SEC_BSS. */
+extern uint32_t m_sec_fs_ram_load_start;
+extern uint32_t m_sec_fs_ram_load_end;
+extern uint32_t m_sec_fs_ram_start ;
 
 /*******************************************************************************
 * Prototypes
@@ -36,66 +46,70 @@ void common_startup(void)
     SCB->CPACR |= ((3UL << 10*2) | (3UL << 11*2));    /* set CP10, CP11 Full Access */
 #endif
 
-    /* Declare a counter we'll use in all of the copy loops */
-    uint32_t  SectionLen;
-    uint32_t *data_ram;
-    uint32_t *data_rom;
+    uint32_t  ui32SrcAddr;   /* Address of the source memory. */
+    uint32_t  ui32EndAddr;   /* End of copied memory. */
+    uint32_t  ui32DestAddr;  /* Address of the destination memory. */
 
-    uint32_t *SectionTableAddr;
-    /* Load base address of Global Section Table*/
-    SectionTableAddr = &__data_section_table; /*This variables point to   Global Section Table defined in Safety_common_XX_Debug.ld, due to this, we will increment this pointer alter*/
-    /* This different approach is due to linker. We know only start, load  and end address of each section in linker. See "Safety_common_XX_Debug.ld  On lines 26 - 40.
-    * This is different from IAR linker, where we know start and end address of whole DATA section. in GCC linker we have for each region own section DATA and BSS, as you can see in files **_Debug.ld*/
+    /* Get the addresses for the SEC_RWRAM section (initialized data section). */
+    ui32SrcAddr  = (uint32_t)&m_sec_rwram_load_start;
+    ui32EndAddr  = (uint32_t)&m_sec_rwram_load_end;
+    ui32DestAddr = (uint32_t)&m_sec_rwram_start;
 
-    /* Copy the data sections from flash to SRAM.*/
-    while (SectionTableAddr < &__data_section_table_end)
-    {
-        data_rom = (uint32_t *)*SectionTableAddr++; /*Load address*/
-        data_ram = (uint32_t *)*SectionTableAddr++; /*Address*/
-        SectionLen = *SectionTableAddr++; /* Length - this case in BYTES*/
-        /*This wihle cycle ensures to read all region of data section, all data sections are described in **_Debug.ld file*/
-        for (uint32_t loop = 0; loop < SectionLen; loop = loop + 4)
-        {
-            *data_ram++ = *data_rom++;
+    /* Copy initialized data from ROM to RAM. */
+      while(ui32SrcAddr < ui32EndAddr)
+      {
+          /* Copy one byte. */
+          *((uint8_t*)ui32DestAddr) = *((uint8_t*)ui32SrcAddr);
+
+          /* Increment the destination and source pointers. */
+          ui32DestAddr++;
+          ui32SrcAddr++;
+
 #if WATCHDOG_ENABLED
             Watchdog_refresh;
 #endif
-        }
-    }
+      }
 
-    /* At this point, SectionTableAddr = &__safety_ram_section_table;*/
-    /* Copy the safety_ram section from flash to SRAM.*/
-    while (SectionTableAddr < &__safety_ram_section_table_end)
-    {
-        data_rom = (uint32_t *)*SectionTableAddr++; /*Load address*/
-        data_ram = (uint32_t *)*SectionTableAddr++; /*Address*/
-        SectionLen = *SectionTableAddr++; /* Length - this case in BYTES*/
-        /*This wihle cycle ensures to read all region of data section, all data sections are described in **_Debug.ld file*/
-        for (uint32_t loop = 0; loop < SectionLen; loop = loop + 4)
-        {
-            *data_ram++ = *data_rom++;
+
+/* Get the addresses for the SEC_FS_RAM section (initialized .safety_ram
+     section). */
+  ui32SrcAddr  = (uint32_t)&m_sec_fs_ram_load_start;
+  ui32EndAddr  = (uint32_t)&m_sec_fs_ram_load_end;
+  ui32DestAddr = (uint32_t)&m_sec_fs_ram_start;
+
+  /* Copy initialized data from ROM to RAM. */
+  while(ui32SrcAddr < ui32EndAddr)
+  {
+      /* Copy one byte. */
+      *((uint8_t*)ui32DestAddr) = *((uint8_t*)ui32SrcAddr);
+
+      /* Increment the destination and source pointers. */
+      ui32DestAddr++;
+      ui32SrcAddr++;
+
 #if WATCHDOG_ENABLED
             Watchdog_refresh;
 #endif
-        }
+
     }
 
-    /* Get the addresses for the .bss section (zero-initialized data) */
-    uint32_t *bss_start;
+    /* Get the addresses for the SEC_BSS section (zero-initialized data). */
+    ui32DestAddr = (uint32_t)&m_sec_bss_start;
+    ui32EndAddr  = (uint32_t)&m_sec_bss_end;
 
-    /* At this point, SectionTableAddr = &__bss_section_table;*/
-    /* This different approach due to linker. We know only start and end adress of each section in linker. See "Safety_common_XX_Debug.ld */
-    /* Zero fill the bss segment*/
-    while (SectionTableAddr < &__bss_section_table_end) {
-        bss_start = (uint32_t *)*SectionTableAddr++;
-        SectionLen = *SectionTableAddr++;
-        for (uint32_t loop = 0; loop < SectionLen; loop = loop + 4)
-        {   *bss_start++ = 0;
+    /* Reset the .bss section RAM. */
+    while(ui32DestAddr < ui32EndAddr)
+    {
+        /* Clear one byte. */
+        *((uint8_t*)ui32DestAddr) = 0U;
+
+        /* Increment the destination pointer. */
+        ui32DestAddr++;
 #if WATCHDOG_ENABLED
         Watchdog_refresh;
 #endif
-        }
     }
+
 
 #if WATCHDOG_ENABLED
     Watchdog_refresh;

@@ -313,14 +313,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV11Z7</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MKV11Z7/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/startup</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src</state>
           <state>$PROJ_DIR$/../../../../../../devices/MKV11Z7/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MKV11Z7</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/startup</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -734,7 +733,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MKV11Z128xxx7_application_0xA000.icf</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/common/linker/iar/MKV11Z7/MKV11Z128xxx7_application_0xA000.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -993,26 +992,29 @@
       <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/drivers/fsl_port.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/drivers/fsl_clock.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/drivers/fsl_clock.c</name>
+    </file>
   </group>
   <group>
     <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/fsl_device_registers.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/MKV11Z7.h</name>
     </file>
@@ -1020,13 +1022,10 @@
       <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/MKV11Z7_features.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/fsl_device_registers.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/system_MKV11Z7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/system_MKV11Z7.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MKV11Z7/system_MKV11Z7.h</name>
     </file>
   </group>
   <group>
@@ -1068,16 +1067,16 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

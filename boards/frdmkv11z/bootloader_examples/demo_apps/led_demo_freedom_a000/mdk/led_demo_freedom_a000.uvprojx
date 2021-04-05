@@ -361,7 +361,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb  -Wno-null-dereference  -Wno-unknown-attributes  -Wno-expansion-to-defined  -Wno-invalid-noreturn</MiscControls>
               <Define>NDEBUG, CPU_MKV11Z128VLH7, CPU_IS_ARM_CORTEX_M0P=1, FREEDOM, FRDM_KV11Z75M</Define>
               <Undefine/>
-              <IncludePath>../../../../../../CMSIS/Include;../../../../../../devices/MKV11Z7;../../../../../../middleware/mcu-boot/targets/MKV11Z7/src;../../../../../../middleware/mcu-boot/src/startup;../../../../../../middleware/mcu-boot/src/include;../../../../../../middleware/mcu-boot/apps/led_demo/src;..;../../../../../../devices/MKV11Z7/drivers</IncludePath>
+              <IncludePath>..;../../../../../../middleware/mcu-boot/apps/led_demo/src;../../../../../../devices/MKV11Z7/drivers;../../../../../../devices/MKV11Z7;../../../../../../middleware/mcu-boot/src/include;../../../../../../middleware/mcu-boot/src/startup;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
             <v6Lang>3</v6Lang>
             <vShortEn>1</vShortEn>
@@ -396,7 +396,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>MKV11Z128xxx7_application_0xa000.scf</ScatterFile>
+            <ScatterFile>../../../../../../middleware/mcu-boot/targets/common/linker/arm/MKV11Z7/MKV11Z128xxx7_application_0xa000.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>--remove --keep=*(.FlashConfig) --datacompressor off</Misc>
@@ -451,19 +451,14 @@
               <FilePath>../../../../../../devices/MKV11Z7/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MKV11Z7/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MKV11Z7/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MKV11Z7/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../devices/MKV11Z7/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -471,20 +466,30 @@
               <FilePath>../../../../../../devices/MKV11Z7/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MKV11Z7/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../devices/MKV11Z7/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MKV11Z7/drivers/fsl_clock.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MKV11Z7/drivers/fsl_clock.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MKV11Z7/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MKV11Z7.h</FileName>
               <FileType>5</FileType>
@@ -496,19 +501,14 @@
               <FilePath>../../../../../../devices/MKV11Z7/MKV11Z7_features.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_device_registers.h</FileName>
+              <FileName>system_MKV11Z7.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MKV11Z7/fsl_device_registers.h</FilePath>
+              <FilePath>../../../../../../devices/MKV11Z7/system_MKV11Z7.h</FilePath>
             </File>
             <File>
               <FileName>system_MKV11Z7.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MKV11Z7/system_MKV11Z7.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MKV11Z7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MKV11Z7/system_MKV11Z7.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -528,7 +528,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>source-include</GroupName>
+          <GroupName>source/include</GroupName>
           <Files>
             <File>
               <FileName>bootloader_core.h</FileName>
@@ -566,24 +566,24 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,15 +17,16 @@ void default_isr(void); /* function prototype for default_isr in vectors.c */
 void ResetISR(void);
 void NMI_isr(void); /* included in vector.c */
 void hard_fault_handler_c(uint32_t * hardfault_args);
-typedef void pointer(void); /* Interrupt Vector Table Function Pointers */
-extern uint32_t __BOOT_STACK_ADDRESS[];
+
+typedef void (*vector_entry_t)(void); /* Interrupt Vector Table Function Pointers */
+extern uint32_t __BOOT_STACK_ADDRESS;
 extern void start(void);
 
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
 //				Address     Vector IRQ   Source module   Source description
-#define VECTOR_000      (pointer*)__BOOT_STACK_ADDRESS	//          ARM core        Initial Supervisor SP
+#define VECTOR_000      (vector_entry_t)(uint32_t)&__BOOT_STACK_ADDRESS//          ARM core        Initial Supervisor SP
 #define VECTOR_001      ResetISR	    // 0x0000_0004 1 -          ARM core        Initial Program Counter
 #define VECTOR_002      NMI_isr         // 0x0000_0008 2 -          ARM core        Non-maskable Interrupt (NMI)
 #define VECTOR_003      default_isr     // 0x0000_000C 3 -          ARM core        Hard Fault
@@ -121,15 +122,24 @@ extern void start(void);
 #define CONFIG_1  (uint32_t)0xFFFFFFFF 
 #define CONFIG_2  (uint32_t)0xFFFFFFFF 
 #define CONFIG_3  (uint32_t)0xFFFFFFFF
-#ifdef 	_MKE15Z7_H_
- #define CONFIG_4 (uint32_t)0xFFFF7DFE
-#else
-	#ifdef MKE02Z2_H_
-		#define CONFIG_4 (uint32_t) 0xFFFEFFFF
-	#else
-		#define CONFIG_4 (uint32_t) 0xFFFFFFFE
-	#endif
-#endif  
+
+  #ifdef _MKE15Z7_H_
+   #define CONFIG_4 (uint32_t)0xFFFF7DFE
+  #else
+     #if defined(_K32L2A41A_H_)  /* L2 A A A */
+      #define CONFIG_4 (uint32_t)0xFFFF3DFE
+     #else
+       #if defined(_K32L2B31A_H_)  /* L2B B B */
+        #define CONFIG_4 (uint32_t)0xFFFF3FFE
+       #else
+          #ifdef _MKE02Z4_H_
+                  #define CONFIG_4 (uint32_t)0xFFFEFFFF
+          #else   /*Others MCU*/
+                  #define CONFIG_4 (uint32_t)0xFFFFFFFE
+          #endif
+       #endif
+     #endif
+  #endif
 #endif
 
 #endif /* _VECTORS_H_ */

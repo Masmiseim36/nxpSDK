@@ -1,0 +1,5 @@
+if(NOT MIDDLEWARE_MCU-BOOT_POSTACTION_MKV31F51212_INCLUDED)
+    
+    set(MIDDLEWARE_MCU-BOOT_POSTACTION_MKV31F51212_INCLUDED true CACHE BOOL "middleware_mcu-boot_postaction component is included.")
+
+endif()

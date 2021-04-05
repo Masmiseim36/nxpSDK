@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP.
+ * Copyright 2021 NXP.
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -29,7 +29,7 @@ void WatchdogEnable(void);
 void WatchdogDisable(void);
 void ClockInit(void);
 void SystickInit(uint32_t reloadValue);
-void LPTMRInit(void);
+void LPTMRInit(uint8_t call_type);
 void AdcInit(void);
 void PortInit(uint32_t gpio, uint32_t pcr, uint8_t pinNum, uint8_t pinDir, uint8_t pinMux);
 void SerialInit(void);

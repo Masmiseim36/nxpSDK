@@ -317,14 +317,6 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MKV58F24</state>
           <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/utilities/str</state>
@@ -332,9 +324,6 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/utilities</state>
         </option>
         <option>
@@ -1303,14 +1292,6 @@
           <state>$PROJ_DIR$/../../../..</state>
           <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../components/timer</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MKV58F24</state>
           <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/utilities/str</state>
@@ -1318,9 +1299,6 @@
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MKV58F24/utilities</state>
         </option>
         <option>
@@ -2007,61 +1985,7 @@
     </file>
   </group>
   <group>
-    <name>component</name>
-    <group>
-      <name>timer</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/timer/lptmr_adapter.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/timer/timer.h</name>
-      </file>
-    </group>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart_adapter.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
-      </file>
-    </group>
-  </group>
-  <group>
     <name>drivers</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers/fsl_lptmr.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers/fsl_lptmr.h</name>
-    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MKV58F24/drivers/fsl_port.h</name>
     </file>
@@ -2154,6 +2078,45 @@
     </file>
   </group>
   <group>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/uart_adapter.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>startup</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MKV58F24/iar/startup_MKV58F24.s</name>
@@ -2163,6 +2126,9 @@
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm7.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -2184,21 +2150,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>

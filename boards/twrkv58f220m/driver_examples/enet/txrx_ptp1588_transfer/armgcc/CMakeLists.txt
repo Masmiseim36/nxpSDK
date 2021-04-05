@@ -88,8 +88,6 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MKV58F1M0VLQ24")
 
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DENET_ENHANCEDBUFFERDESCRIPTOR_MODE")
-
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DENET_ENHANCEDBUFFERDESCRIPTOR_MODE=1")
 
 SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DPRINTF_ADVANCED_ENABLE=1")
@@ -135,8 +133,6 @@ SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MKV58F1M0VLQ24")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DENET_ENHANCEDBUFFERDESCRIPTOR_MODE")
 
 SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DENET_ENHANCEDBUFFERDESCRIPTOR_MODE=1")
 
@@ -346,8 +342,6 @@ SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
 
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
 
-include_directories(${ProjDirPath}/../../../../../../platform/components/phyksz8041)
-
 include_directories(${ProjDirPath}/..)
 
 include_directories(${ProjDirPath}/../../../..)
@@ -356,7 +350,9 @@ include_directories(${ProjDirPath}/../../../../../../CMSIS/Include)
 
 include_directories(${ProjDirPath}/../../../../../../devices)
 
-include_directories(${ProjDirPath}/../../../../../../components/phyksz8041)
+include_directories(${ProjDirPath}/../../../../../../components/phy/mdio/enet)
+
+include_directories(${ProjDirPath}/../../../../../../components/phy/device/phyksz8041)
 
 include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/drivers)
 
@@ -372,6 +368,8 @@ include_directories(${ProjDirPath}/../../../../../../components/serial_manager)
 
 include_directories(${ProjDirPath}/../../../../../../components/lists)
 
+include_directories(${ProjDirPath}/../../../../../../components/phy)
+
 include_directories(${ProjDirPath}/../../../../../../devices/MKV58F24/utilities)
 
 add_executable(enet_txrx_ptp1588_transfer.elf 
@@ -382,8 +380,10 @@ add_executable(enet_txrx_ptp1588_transfer.elf
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
 "${ProjDirPath}/../clock_config.h"
-"${ProjDirPath}/../../../../../../components/phyksz8041/fsl_phy.c"
-"${ProjDirPath}/../../../../../../components/phyksz8041/fsl_phy.h"
+"${ProjDirPath}/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.c"
+"${ProjDirPath}/../../../../../../components/phy/mdio/enet/fsl_enet_mdio.h"
+"${ProjDirPath}/../../../../../../components/phy/device/phyksz8041/fsl_phyksz8041.c"
+"${ProjDirPath}/../../../../../../components/phy/device/phyksz8041/fsl_phyksz8041.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_port.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_gpio.c"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_gpio.h"
@@ -422,7 +422,9 @@ add_executable(enet_txrx_ptp1588_transfer.elf
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_smc.c"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/drivers/fsl_smc.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/fsl_assert.c"
+"${ProjDirPath}/../../../../../../components/phy/fsl_mdio.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/core_cm7.h"
+"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h"
@@ -430,14 +432,10 @@ add_executable(enet_txrx_ptp1588_transfer.elf
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_gcc.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_iccarm.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv81mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../CMSIS/Include/mpu_armv8.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_common_tables.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_const_structs.h"
 "${ProjDirPath}/../../../../../../CMSIS/Include/arm_math.h"
+"${ProjDirPath}/../../../../../../components/phy/fsl_phy.h"
 "${ProjDirPath}/../../../../../../devices/MKV58F24/utilities/fsl_sbrk.c"
 )
 

@@ -10,13 +10,13 @@
 #include "fsl_debug_console.h"
 #include "fsl_flexcan.h"
 #include "fsl_flexcan_edma.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if defined(FSL_FEATURE_SOC_DMAMUX_COUNT) && FSL_FEATURE_SOC_DMAMUX_COUNT
 #include "fsl_dmamux.h"
 #endif
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -28,6 +28,13 @@
 #define EXAMPLE_CAN_DMA_CHANNEL 0
 #define EXAMPLE_CAN_DMA_REQUEST kDmaRequestMux0Reserved14
 #define EXAMPLE_CAN_DMAMUX      DMAMUX0
+
+/* The CAN clock prescaler = CAN source clock/(baud rate * quantum), and the prescaler must be an integer.
+   The quantum default value is set to 10=(3+2+1)+4, because for most platforms the CAN clock frequency is
+   a multiple of 10. e.g. 120M CAN source clock/(1M baud rate * 10) is an integer. If the CAN clock frequency
+   is not a multiple of 10, users need to set SET_CAN_QUANTUM and define the PSEG1/PSEG2/PROPSEG (classical CAN)
+   and FPSEG1/FPSEG2/FPROPSEG (CANFD) vaule. Or can set USE_IMPROVED_TIMING_CONFIG macro to use driver api to
+   calculates the improved timing values. */
 /* Fix MISRA_C-2012 Rule 17.7. */
 #define LOG_INFO (void)PRINTF
 /*******************************************************************************

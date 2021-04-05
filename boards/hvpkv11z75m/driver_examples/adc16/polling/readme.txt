@@ -16,10 +16,10 @@ the ADC16's performance.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -29,9 +29,8 @@ Hardware requirements
 
 Board settings
 ==============
-No special settings are required.
-It is used the internal temperature sensor (channel 26) on ADC0 for the example due to lack of the pins on HVP board itself.
-Together with the main board other signals from it can be measured. Please select appropriate ADC channel in macro DEMO_ADC16_USER_CHANNEL.
+This example use channel 5(PTE17, pin 6) as ADC16's analog input channel. Please make sure the input signal to be
+converted connected with PTE17.
 
 Prepare the Demo
 ================
@@ -62,6 +61,3 @@ ADC Value: 1625
 ADC Value: 1575
 ADC Value: 1471
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

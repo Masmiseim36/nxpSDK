@@ -7,13 +7,13 @@
 **     Compiler:            Keil ARM C/C++ Compiler
 **     Reference manual:    KV31P100M120SF7RM, Rev. 1, March 24, 2014
 **     Version:             rev. 1.7, 2015-02-19
-**     Build:               b190916
+**     Build:               b200914
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -57,7 +57,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start { ; loa
     * (.isr_vector,+FIRST)
   }
   ER_m_flash_config m_flash_config_start FIXED m_flash_config_size { ; load address = execution address
-    * (.FlashConfig)
+    * (.FlashConfig,+FIRST)
   }
   ER_m_text m_text_start m_text_size { ; load address = execution address
     * (InRoot$$Sections)

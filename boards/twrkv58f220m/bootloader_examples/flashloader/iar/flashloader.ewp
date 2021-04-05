@@ -316,33 +316,29 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/autobaud</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/crc</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/packet</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/property</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/crc</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/smc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/autobaud</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/security</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/ltc</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/mmcau</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV58F24</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
         </option>
         <option>
@@ -605,6 +601,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1303,33 +1300,29 @@
           <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/autobaud</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/crc</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/packet</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/property</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/sbloader</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/crc</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/smc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/autobaud</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/security</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bm_usb</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/ltc</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/mmcau</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV58F24</state>
           <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/osa</state>
-          <state>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
         </option>
         <option>
@@ -1592,6 +1585,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
         </option>
         <option>
           <name>AExtraOptionsCheckV2</name>
@@ -1976,6 +1970,15 @@
     </settings>
   </configuration>
   <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+  </group>
+  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MKV58F24/drivers/fsl_clock.c</name>
@@ -2222,12 +2225,6 @@
       <group>
         <name>src</name>
         <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/device_memory.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/device_memory.h</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/memory/src/memory.c</name>
         </file>
         <file>
@@ -2386,19 +2383,19 @@
   <group>
     <name>MKV58F24</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src/bootloader_config.h</name>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src/bl_clock_config_MKV58F24.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src/clock_config_MKV58F24.c</name>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src/bl_peripherals_MKV58F24.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src/bootloader_config.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src/hardware_init_MKV58F24.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src/memory_map_MKV58F24.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src/peripherals_MKV58F24.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MKV58F24/src/peripherals_pinmux.h</name>
@@ -2452,6 +2449,9 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm7.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
@@ -2471,21 +2471,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

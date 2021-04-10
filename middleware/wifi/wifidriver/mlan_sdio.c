@@ -171,7 +171,7 @@ void sdio_enable_interrupt(void)
 
 static void sdio_controller_init(void)
 {
-    memset(&wm_g_sd, 0, sizeof(sdio_card_t));
+    (void)memset(&wm_g_sd, 0, sizeof(sdio_card_t));
 
     BOARD_SDIO_Config(&wm_g_sd, SDIOCARD_DetectCallBack, BOARD_SDMMC_SDIO_HOST_IRQ_PRIORITY,
                       SDIO_CardInterruptCallBack);

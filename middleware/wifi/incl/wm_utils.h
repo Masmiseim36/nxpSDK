@@ -106,9 +106,9 @@ static inline unsigned int hex2bin(const uint8_t *ibuf, uint8_t *obuf, unsigned 
     {
         if (i == (2 * max_olen))
         {
-            PRINTF("hexbin",
-                   "Destination full. "
-                   "Truncating to avoid overflow.\r\n");
+            (void)PRINTF("hexbin",
+                         "Destination full. "
+                         "Truncating to avoid overflow.\r\n");
             return j + 1;
         }
         ch = toupper(*ibuf++); /* get next uppercase character */
@@ -257,18 +257,18 @@ void get_random_sequence(void *buf, unsigned int size);
  */
 static inline void dump_hex(const void *data, unsigned len)
 {
-    PRINTF("**** Dump @ %p Len: %d ****\n\r", data, len);
+    (void)PRINTF("**** Dump @ %p Len: %d ****\n\r", data, len);
 
     unsigned int i;
     const char *data8 = (const char *)data;
     for (i = 0; i < len;)
     {
-        PRINTF("%02x ", data8[i++]);
+        (void)PRINTF("%02x ", data8[i++]);
         if (!(i % DUMP_WRAPAROUND))
-            PRINTF("\n\r");
+            (void)PRINTF("\n\r");
     }
 
-    PRINTF("\n\r******** End Dump *******\n\r");
+    (void)PRINTF("\n\r******** End Dump *******\n\r");
 }
 /** Dump buffer in hex and ascii format on console
  *

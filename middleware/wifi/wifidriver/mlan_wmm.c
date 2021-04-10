@@ -160,7 +160,7 @@ t_void wlan_clean_txrx(pmlan_private priv)
 
     pmadapter->callbacks.moal_spin_lock(pmadapter->pmoal_handle, priv->wmm.ra_list_spinlock);
     wlan_11n_deleteall_txbastream_tbl(priv);
-    memcpy(pmadapter, tos_to_tid, ac_to_tid, sizeof(tos_to_tid));
+    (void)memcpy(pmadapter, tos_to_tid, ac_to_tid, sizeof(tos_to_tid));
     for (i = 0; i < MAX_NUM_TID; i++)
     {
         tos_to_tid_inv[tos_to_tid[i]] = (t_u8)i;
@@ -234,7 +234,7 @@ t_void wlan_wmm_init(pmlan_adapter pmadapter)
             }
             priv->add_ba_param.tx_amsdu = MTRUE;
             priv->add_ba_param.rx_amsdu = MTRUE;
-            memset(priv->adapter, priv->rx_seq, 0xff, sizeof(priv->rx_seq));
+            (void)memset(priv->adapter, priv->rx_seq, 0xff, sizeof(priv->rx_seq));
             wlan_wmm_default_queue_priorities(priv);
         }
     }
@@ -295,10 +295,10 @@ t_u32 wlan_wmm_process_association_req(pmlan_private priv,
         pwmm_tlv->header.type = (t_u16)wmm_info_ie[0];
         pwmm_tlv->header.type = wlan_cpu_to_le16(pwmm_tlv->header.type);
         pwmm_tlv->header.len  = (t_u16)wmm_info_ie[1];
-        memcpy(priv->adapter, pwmm_tlv->wmm_ie, &wmm_info_ie[2], pwmm_tlv->header.len);
+        (void)memcpy(priv->adapter, pwmm_tlv->wmm_ie, &wmm_info_ie[2], pwmm_tlv->header.len);
         if (pWmmIE->qos_info.qos_uapsd)
-            memcpy(priv->adapter, (t_u8 *)(pwmm_tlv->wmm_ie + pwmm_tlv->header.len - sizeof(priv->wmm_qosinfo)),
-                   &priv->wmm_qosinfo, sizeof(priv->wmm_qosinfo));
+            (void)memcpy(priv->adapter, (t_u8 *)(pwmm_tlv->wmm_ie + pwmm_tlv->header.len - sizeof(priv->wmm_qosinfo)),
+                         &priv->wmm_qosinfo, sizeof(priv->wmm_qosinfo));
 
         ret_len              = sizeof(pwmm_tlv->header) + pwmm_tlv->header.len;
         pwmm_tlv->header.len = wlan_cpu_to_le16(pwmm_tlv->header.len);

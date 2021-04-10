@@ -119,7 +119,7 @@
  *              going to use.
  */
 #ifndef gNvTableEntriesCountMax_c
-#define gNvTableEntriesCountMax_c       32
+#define gNvTableEntriesCountMax_c       32U
 #endif
 
 /*
@@ -254,8 +254,8 @@
 #elif defined(__GNUC__)
   extern uint32_t __start_NVM_TABLE[];
   extern uint32_t __stop_NVM_TABLE[];
-  #define gNVM_TABLE_startAddr_c    ((NVM_DataEntry_t*)__start_NVM_TABLE)
-  #define gNVM_TABLE_endAddr_c      ((NVM_DataEntry_t*)__stop_NVM_TABLE)
+  #define gNVM_TABLE_startAddr_c    ((NVM_DataEntry_t*)((void *)__start_NVM_TABLE))
+  #define gNVM_TABLE_endAddr_c      ((NVM_DataEntry_t*)((void *)__stop_NVM_TABLE))
 #elif (defined(__IAR_SYSTEMS_ICC__))
   #define gNVM_TABLE_startAddr_c    ((NVM_DataEntry_t*)__section_begin("NVM_TABLE"))
   #define gNVM_TABLE_endAddr_c      ((NVM_DataEntry_t*)__section_end("NVM_TABLE"))
@@ -476,6 +476,7 @@ extern NVM_DataEntry_t* const pNVM_DataTable;
 *****************************************************************************/
 
 #ifndef gHostApp_d
+#if 0
 /*
  * Name: BUtl_SetReceiverOff
  * Description: Turn OFF the 802.15.4 receiver
@@ -491,6 +492,7 @@ extern void BUtl_SetReceiverOff(void);
  * Return: -
  */
 extern void BUtl_SetReceiverOn(void);
+#endif
 
 /*
  * Name: NvOperationStart
@@ -608,10 +610,14 @@ extern NVM_Status_t NvMoveToRam
  * Parameter(s): -
  * Return: 0 or flash table version
  *****************************************************************************/
+#if gNvStorageIncluded_d
+#if gNvUseExtendedFeatureSet_d
 extern uint16_t GetFlashTableVersion
 (
     void
 );
+#endif
+#endif
 
 /******************************************************************************
  * Name: NvErase
@@ -942,11 +948,15 @@ extern void NvCompletePendingOperations
            gNVM_AddressOutOfRange_c - if the index is too large
            gNVM_Error_c - not supported, NVM table is stored in FLASH
  *****************************************************************************/
+#if gNvStorageIncluded_d
+#if gNvUseExtendedFeatureSet_d
 extern NVM_Status_t RecoverNvEntry
 (
     uint16_t index,
     NVM_DataEntry_t *entry
 );
+#endif
+#endif
 
 /******************************************************************************
  * Name: NvCompletePendingOperationsUnsafe

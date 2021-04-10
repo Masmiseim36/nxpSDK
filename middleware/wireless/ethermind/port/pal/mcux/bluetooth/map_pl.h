@@ -21,6 +21,24 @@
 /* Max Folder Name length */
 #define MAP_FOLDER_NAME_LEN              64
 
+/* File object name including path */
+#define MAPC_MAX_FILE_OBJ_NAME_LEN       128
+
+/* MAP Conversation Listing file name */
+#define APPL_MAPC_CONV_LISTING_FILE                           "MAP_rx_conv_listing.xml"
+
+/* MAP Folder Listing file name */
+#define APPL_MAPC_FOLDER_LISTING_FILE                         "MAP_rx_folder_listing.xml"
+
+/* MAP Message Listing file name */
+#define APPL_MAPC_MSG_LISTING_FILE                            "MAP_rx_msg_listing.xml"
+
+/* MAP Rx. Message file name */
+#define APPL_MAPC_MSG_FILE                                    "map_rx_raw.msg"
+
+/* MAP Rx. Message file name */
+#define APPL_MAPC_EVENT_RPRT_FILE                             "map_tx_event.txt"
+
 /* Base folder for MAP objects */
 #define MAP_ROOT_FOLDER_BASE \
     BT_FOPS_PATH_JOIN(BT_FOPS_BASE,"data" BT_FOPS_PATH_SEP "map")

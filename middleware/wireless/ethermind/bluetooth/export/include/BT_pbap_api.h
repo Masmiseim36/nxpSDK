@@ -2,6 +2,8 @@
 /**
  *  \file BT_pbap_api.h
  *
+ *  \brief EtherMind PBAP API Header File.
+ *
  *  This Header File contains declaration of PBAP APIs, Macros and
  *  Constant Definitions for use in upper layer applications.
  */
@@ -19,14 +21,36 @@
 #include "BT_obex_api.h"
 
 /* ----------------------------------------- Global Definitions */
+/**
+ * \addtogroup bt_profiles Profiles
+ * \{
+ */
+/**
+ *  \defgroup  pbap_module PBAP (Phone Book Access Profile)
+ *  \{
+ *
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Phone Book Access Profile module to the Application and other upper
+ *  layers of the stack.
+ */
+/**
+ * \defgroup pbap_defines Defines
+ * \{
+ * Describes defines for the module.
+ */
+
+/**
+ * \defgroup pbap_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
 
 #ifdef PBAP_1_2
 #define PBAP_OBEX_L2CAP_PSM                       0x8801
 #endif /* PBAP_1_2 */
 
 /**
- *  \name PBAP Event Notification Callback Event Types
- *
+ *  PBAP Event Notification Callback Event Types
  */
 #define PBAP_PCE_CONNECT_CFM                      0x01
 #define PBAP_PCE_GET_PHONEBOOK_CFM                0x02
@@ -55,8 +79,7 @@
 
 
 /**
- *  \name Results of the operation (OBEX Response codes)
- *
+ *  Results of the operation (OBEX Response codes)
  */
 #define PBAP_SUCCESS_RSP                          OBEX_SUCCESS_RSP
 #define PBAP_CONTINUE_RSP                         OBEX_CONTINUE_RSP
@@ -69,47 +92,45 @@
 #define PBAP_NO_SERVICE_RSP                       OBEX_NO_SERVICE_RSP
 #define PBAP_FORBIDDEN_RSP                        OBEX_FORBIDDEN_RSP
 
-/* Maximum number of Application Headers */
+/** Maximum number of Application Headers */
 #ifdef PBAP_1_2
 #define PBAP_MAX_NUM_APPL_HDRS                    0x10 /* 16 */
 #else
 #define PBAP_MAX_NUM_APPL_HDRS                    0x09 /* 9 */
 #endif /* PBAP_1_2 */
 
-/* Maximum OBEX PIN SIZE supported */
+/** Maximum OBEX PIN SIZE supported */
 #define PBAP_OBEX_MAX_PIN_SIZE                    0x10 /* 16 */
 
-/* Authentication Challenge/ Response Size */
+/** Authentication Challenge/ Response Size */
 #define PBAP_OBEX_AUTH_CHALLENGE_RESP_SIZE        0x10 /* 16 */
 
-/* PBAP Target Header Size */
+/** PBAP Target Header Size */
 #define PBAP_TARGET_HDR_SIZE                      0x10 /* 16 */
 
 /* ==== PBAPv1.2 Related Definitions =========  */
 
-/* PBAP Version Counter size */
+/** PBAP Version Counter size */
 #define PBAP_FLDR_VER_CNTR_SIZE                   0x10 /* 16 */
 
-/* PBAP vCARD Selector size */
+/** PBAP vCARD Selector size */
 #define PBAP_VCARD_SELECTOR_SIZE                  0x08 /* 8 */
 
-/* PBAP Database Identifiers size */
+/** PBAP Database Identifiers size */
 #define PBAP_DATABASE_IDENTIFIER_SIZE             0x10 /* 16 */
 
-/* PBAP Supported Features size */
+/** PBAP Supported Features size */
 #define PBAP_FEATURES_SIZE                        0x04 /* 4 */
 
 /**
- *  \name Search Attributes
- *
+ *  Search Attributes
  */
 #define PBAP_SEARCH_ATTR_NAME                     0x00
 #define PBAP_SEARCH_ATTR_NUMBER                   0x01
 #define PBAP_SEARCH_ATTR_SOUND                    0x02
 
 /**
- *  \name Application parameters Tag IDs
- *
+ *  Application parameters Tag IDs
  */
 #define PBAP_TAG_ID_ORDER                             0x01 /* 1  Byte Length  */
 #define PBAP_TAG_ID_SEARCH_VALUE                      0x02 /* Variable Length */
@@ -121,7 +142,7 @@
 #define PBAP_TAG_ID_PHONE_BOOK_SIZE                   0x08 /* 2       "       */
 #define PBAP_TAG_ID_NEW_MISSED_CALLS                  0x09 /* 1       "       */
 
-/* PBAPv1.2 Related TAG ID's */
+/** PBAPv1.2 Related TAG ID's */
 #define PBAP_TAG_ID_PRIMARY_FOLDER_VERSION            0x0A /* 16 Byte Length */
 #define PBAP_TAG_ID_SECONDARY_FOLDER_VERSION          0x0B /* 16     "       */
 #define PBAP_TAG_ID_VCARD_SELECTOR                    0x0C /* 8      "       */
@@ -131,8 +152,7 @@
 #define PBAP_TAG_ID_PBAP_SUPPORTED_FEATURES           0x10 /* 4      "       */
 
 /**
- *  \name Application parameters flags corresponding to each Tag
- *
+ *  Application parameters flags corresponding to each Tag
  */
 #define PBAP_FLAG_ORDER                           0x0001
 #define PBAP_FLAG_SEARCH_VALUE                    0x0002
@@ -144,7 +164,7 @@
 #define PBAP_FLAG_PHONE_BOOK_SIZE                 0x0080
 #define PBAP_FLAG_NEW_MISSED_CALLS                0x0100
 
-/* PBAP v1.2 related application flags */
+/** PBAP v1.2 related application flags */
 #define PBAP_FLAG_PRIMARY_FOLDER_VERSION          0x0200
 #define PBAP_FLAG_SECONDARY_FOLDER_VERSION        0x0400
 #define PBAP_FLAG_VCARD_SELECTOR                  0x0800
@@ -154,8 +174,7 @@
 #define PBAP_FLAG_SUPPORTED_FEATURES              0x8000
 
 /**
- *  \name Attribute Mask: used in case of Filtering
- *
+ *  Attribute Mask: used in case of Filtering
  */
 #define PBAP_FLAG_VCARD_VERSION                   0x00000001
 #define PBAP_FLAG_FN                              0x00000002
@@ -191,13 +210,20 @@
 #define PBAP_FLAG_X_BT_UID                        0x80000000
 
 /**
- *  \name SET PATH Flags
- *
+ *  SET PATH Flags
  */
 #define PBAP_SET_CHILD_FOLDER                     0x01
 #define PBAP_SET_PARENT_FOLDER                    0x02
 #define PBAP_SET_ROOT_FOLDER                      0x03
+/** \} */
+/** \} */
 
+/* ----------------------------------------- Macros  */
+/**
+ *  \defgroup pbap_marcos Utility Macros
+ *  \{
+ *  Initialization and other Utility Macros offered by the module.
+ */
 /**
  * To set application parameter flag
  */
@@ -263,8 +289,18 @@
             (to_params)->search_value.length =                              \
                                 (from_params)->search_value.length;         \
         }
+/** \} */
 
 /* ----------------------------------------- Structures/Data Types */
+/**
+ *  \addtogroup pbap_defines Defines
+ *  \{
+ */
+
+/**
+ *  \addtogroup pbap_structures Structures
+ *  \{
+ */
 
 /**
  *  \typedef PBAP_HANDLE
@@ -569,6 +605,15 @@ typedef union _PBAP_HEADERS
      */
     PBAP_CONNECT_STRUCT   * pbap_connect_info;
 }PBAP_HEADERS;
+/** \} */
+/** \} */
+
+/**
+ *  \defgroup pbap_cb Application Callback
+ *  \{
+ *  This Section Describes the module Notification Callback interface offered
+ *  to the application
+ */
 
 /**
  *  \typedef PBAP_EVENT_NOTIFY_CB
@@ -611,7 +656,6 @@ typedef union _PBAP_HEADERS
  *
  *  \return API_RESULT: API_SUCCESS or an Error Code describing
  *                      the cause of failure or the OBEX Response codes.
- *
  */
 typedef API_RESULT (*PBAP_EVENT_NTF_CB)
                    (
@@ -621,7 +665,14 @@ typedef API_RESULT (*PBAP_EVENT_NTF_CB)
                         /* IN */ PBAP_HEADERS   * pbap_headers,
                         /* IN */ UINT8            num_headers
                    );
+/** \} */
 
+/* ----------------------------------------- Functions */
+/**
+ * \defgroup  pbap_api API Defintions
+ * \{
+ * Describes API defintiions of PBAP Module
+ */
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -629,8 +680,6 @@ extern "C" {
 #ifdef PBAP_PSE
 
 /**
- *  \fn BT_pbap_pse_init
- *
  *  \brief To initialize the PSE module.
  *
  *  \par Description:
@@ -652,8 +701,6 @@ API_RESULT BT_pbap_pse_init
            );
 
 /**
- *  \fn BT_pbap_pse_shutdown
- *
  *  \brief To shutdown PSE module.
  *
  *  \par Description:
@@ -675,8 +722,6 @@ API_RESULT BT_pbap_pse_shutdown
            );
 
 /**
- *  \fn BT_pbap_pse_start_instance
- *
  *  \brief To start an instance of PSE.
  *
  *  \par Description:
@@ -706,8 +751,6 @@ API_RESULT BT_pbap_pse_start_instance
            );
 
 /**
- *  \fn BT_pbap_pse_stop_instance
- *
  *  \brief To stop an instance of PSE.
  *
  *  \par Description:
@@ -727,8 +770,6 @@ API_RESULT BT_pbap_pse_stop_instance
            );
 
 /**
- *  \fn BT_pbap_pse_trans_disconnect
- *
  *  \brief To disconnect the OBEX transport connection from the remote device.
  *
  *  \par Description:
@@ -747,8 +788,6 @@ API_RESULT BT_pbap_pse_trans_disconnect
            );
 
 /**
- *  \fn BT_pbap_pse_send_response
- *
  *  \brief To send PBAP Response to the latest request made by the PCE
  *
  *  \par Description:
@@ -781,8 +820,6 @@ API_RESULT BT_pbap_pse_send_response
 
 #ifdef PBAP_PCE
 /**
- *  \fn BT_pbap_pce_init
- *
  *  \brief To initialize the PCE module.
  *
  *  \par Description:
@@ -804,8 +841,6 @@ API_RESULT BT_pbap_pce_init
            );
 
 /**
- *  \fn BT_pbap_pce_shutdown
- *
  *  \brief To shutdown PCE module.
  *
  *  \par Description:
@@ -827,8 +862,6 @@ API_RESULT BT_pbap_pce_shutdown
            );
 
 /**
- *  \fn BT_pbap_pce_start_instance
- *
  *  \brief To start an instance of PCE.
  *
  *  \par Description:
@@ -858,8 +891,6 @@ API_RESULT BT_pbap_pce_start_instance
            );
 
 /**
- *  \fn BT_pbap_pce_stop_instance
- *
  *  \brief To stop an instance of PCE.
  *
  *  \par Description:
@@ -878,8 +909,6 @@ API_RESULT BT_pbap_pce_stop_instance
            );
 
 /**
- *  \fn BT_pbap_pce_connect
- *
  *  \brief To connect an instance of PCE to a remote PSE.
  *
  *  \par Description:
@@ -899,8 +928,6 @@ API_RESULT BT_pbap_pce_connect
            );
 
 /**
- *  \fn BT_pbap_pce_get_phonebook
- *
  *  \brief To get a phonebook from the connected remote PSE.
  *
  *  \par Description:
@@ -922,8 +949,6 @@ API_RESULT BT_pbap_pce_get_phonebook
            );
 
 /**
- *  \fn BT_pbap_pce_get_vcard_list
- *
  *  \brief To get list of the vcards from the connected remote PSE.
  *
  *  \par Description:
@@ -945,8 +970,6 @@ API_RESULT BT_pbap_pce_get_vcard_list
            );
 
 /**
- *  \fn BT_pbap_pce_get_vcard
- *
  *  \brief To get a phonebook from the connected remote PSE.
  *
  *  \par Description:
@@ -968,8 +991,6 @@ API_RESULT BT_pbap_pce_get_vcard
            );
 
 /**
- *  \fn BT_pbap_pce_set_phonebook
- *
  *  \brief To set the path to phonebook from the connected remote PSE.
  *
  *  \par Description:
@@ -991,8 +1012,6 @@ API_RESULT BT_pbap_pce_set_phonebook
            );
 
 /**
- *  \fn BT_pbap_pce_abort
- *
  *  \brief To abort the ongoing operation.
  *
  *  \par Description:
@@ -1011,8 +1030,6 @@ API_RESULT BT_pbap_pce_abort
            );
 
 /**
- *  \fn BT_pbap_pce_disconnect
- *
  *  \brief To abort the ongoing operation.
  *
  *  \par Description:
@@ -1030,8 +1047,6 @@ API_RESULT BT_pbap_pce_disconnect
            );
 
 /**
- *  \fn BT_pbap_pce_trans_disconnect
- *
  *  \brief To disconnect the OBEX transport connection from the remote device.
  *
  *  \par Description:
@@ -1050,8 +1065,6 @@ API_RESULT BT_pbap_pce_trans_disconnect
            );
 
 /**
- *  \fn BT_pbap_pce_send_request
- *
  *  \brief To send PBAP subsequent requests to the PSE.
  *
  *  \par Description:
@@ -1085,6 +1098,8 @@ API_RESULT BT_pbap_pce_send_request
 #ifdef __cplusplus
 };
 #endif
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_BT_PBAP_API_ */
 

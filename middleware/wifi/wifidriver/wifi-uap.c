@@ -98,7 +98,7 @@ int wifi_uap_downld_domain_params(MrvlIEtypes_DomainParamSet_t *dp)
 
     t_u8 band = (pmpriv->uap_state_chan_cb.band_config & BAND_CONFIG_5GHZ) ? BAND_A : BAND_B;
 
-    if (pmpriv->support_11d_APIs)
+    if (pmpriv->support_11d_APIs != NULL)
         rv = pmpriv->support_11d_APIs->wlan_11d_handle_uap_domain_info_p(pmpriv, band, (t_u8 *)dp, NULL);
     if (rv != MLAN_STATUS_SUCCESS)
         return -WM_FAIL;
@@ -134,16 +134,16 @@ int wifi_cmd_uap_config(char *ssid,
 
     /* fixme: check if this needs to go on heap */
     mlan_ds_bss bss;
-    memset(&bss, 0x00, sizeof(mlan_ds_bss));
+    (void)memset(&bss, 0x00, sizeof(mlan_ds_bss));
 
     bss.sub_command = MLAN_OID_UAP_BSS_CONFIG;
 
     bss.param.bss_config.ssid.ssid_len = ssid_len;
-    memcpy(bss.param.bss_config.ssid.ssid, ssid, ssid_len);
+    (void)memcpy(bss.param.bss_config.ssid.ssid, ssid, ssid_len);
 
-    if (mac_addr)
+    if (mac_addr != NULL)
     {
-        memcpy(bss.param.bss_config.mac_addr, mac_addr, MLAN_MAC_ADDR_LENGTH);
+        (void)memcpy(bss.param.bss_config.mac_addr, mac_addr, MLAN_MAC_ADDR_LENGTH);
     }
 
     if (bss_type == MLAN_BSS_TYPE_UAP)
@@ -151,7 +151,7 @@ int wifi_cmd_uap_config(char *ssid,
         bss.param.bss_config.beacon_period  = beacon_period;
         bss.param.bss_config.dtim_period    = dtim_period;
         bss.param.bss_config.bcast_ssid_ctl = !wm_wifi.bcast_ssid_ctl;
-        if (chan_sw_count)
+        if (chan_sw_count != 0U)
         {
             bss.param.bss_config.dtim_period   = 1;
             bss.param.bss_config.chan_sw_count = chan_sw_count;
@@ -160,7 +160,7 @@ int wifi_cmd_uap_config(char *ssid,
     /* Auto channel selection is not handled in 5GHz band, only
      * manual channel selection is supported right now.
      */
-    if (channel)
+    if (channel != 0U)
     {
 #ifdef CONFIG_5GHz_SUPPORT
         if (channel > MAX_CHANNELS_BG)
@@ -172,7 +172,7 @@ int wifi_cmd_uap_config(char *ssid,
             }
 
             bss.param.bss_config.band_cfg = BAND_CONFIG_5GHZ;
-            memcpy(bss.param.bss_config.rates, rates_5ghz, sizeof(rates_5ghz));
+            (void)memcpy(bss.param.bss_config.rates, rates_5ghz, sizeof(rates_5ghz));
         }
         else
             bss.param.bss_config.band_cfg = BAND_CONFIG_MANUAL;
@@ -187,7 +187,7 @@ int wifi_cmd_uap_config(char *ssid,
         bss.param.bss_config.band_cfg = BAND_CONFIG_ACS_MODE;
         bss.param.bss_config.channel  = 0;
 
-        if (scan_chan_list.num_of_chan)
+        if (scan_chan_list.num_of_chan != 0U)
         {
             /* Specify channels if any for Auto channel selection */
             bss.param.bss_config.num_of_chan = scan_chan_list.num_of_chan;
@@ -198,7 +198,7 @@ int wifi_cmd_uap_config(char *ssid,
                 if (scan_chan_list.chan_number[i] > MAX_CHANNELS_BG)
                 {
                     bss.param.bss_config.chan_list[i].band_config_type = BAND_CONFIG_5GHZ;
-                    memcpy(bss.param.bss_config.rates, rates_5ghz, sizeof(rates_5ghz));
+                    (void)memcpy(bss.param.bss_config.rates, rates_5ghz, sizeof(rates_5ghz));
                 }
 #endif
             }
@@ -226,6 +226,9 @@ int wifi_cmd_uap_config(char *ssid,
             bss.param.bss_config.protocol = PROTOCOL_WPA2 | PROTOCOL_WPA3_SAE;
             bss.param.bss_config.key_mgmt = KEY_MGMT_SAE | KEY_MGMT_PSK;
         }
+        else
+        { /* Do Nothing */
+        }
 
         bss.param.bss_config.wpa_cfg.pairwise_cipher_wpa2 = CIPHER_AES_CCMP;
         bss.param.bss_config.wpa_cfg.group_cipher         = CIPHER_AES_CCMP;
@@ -241,16 +244,16 @@ int wifi_cmd_uap_config(char *ssid,
         {
             /*app has converted pmk with psk*/
             bss.param.bss_config.wpa_cfg.length = passphrase_len;
-            memcpy(bss.param.bss_config.wpa_cfg.passphrase, passphrase, passphrase_len);
+            (void)memcpy(bss.param.bss_config.wpa_cfg.passphrase, passphrase, passphrase_len);
         }
         if (security == WLAN_SECURITY_WPA3_SAE || security == WLAN_SECURITY_WPA2_WPA3_SAE_MIXED)
         {
             bss.param.bss_config.wpa_cfg.password_length = password_len;
-            memcpy(bss.param.bss_config.wpa_cfg.password, password, password_len);
+            (void)memcpy(bss.param.bss_config.wpa_cfg.password, password, password_len);
         }
     }
 
-    if (channel)
+    if (channel != 0U)
     {
 #ifdef CONFIG_5GHz_SUPPORT
         if (channel > MAX_CHANNELS_BG)
@@ -265,14 +268,15 @@ int wifi_cmd_uap_config(char *ssid,
         bss.param.bss_config.ht_cap_info = wm_wifi.ht_cap_info == 0 ? 0x112c : wm_wifi.ht_cap_info;
 
     bss.param.bss_config.ampdu_param = 0x03;
-    memcpy(bss.param.bss_config.supported_mcs_set, supported_mcs_set, sizeof(bss.param.bss_config.supported_mcs_set));
+    (void)memcpy(bss.param.bss_config.supported_mcs_set, supported_mcs_set,
+                 sizeof(bss.param.bss_config.supported_mcs_set));
     /*
      * Note that we are leaving htcap info set to zero by default. This
      *  will ensure that 11N is disabled.
      */
 
     mlan_ioctl_req ioctl_buf;
-    memset(&ioctl_buf, 0x00, sizeof(mlan_ioctl_req));
+    (void)memset(&ioctl_buf, 0x00, sizeof(mlan_ioctl_req));
 
     ioctl_buf.req_id = MLAN_IOCTL_BSS;
     /** Pointer to buffer */
@@ -291,10 +295,10 @@ static wifi_domain_param_t *get_11d_uap_domain_params()
 
     wifi_domain_param_t *dp = os_mem_alloc(sizeof(wifi_domain_param_t) + (sizeof(wifi_sub_band_set_t) * (nr_sb - 1)));
 
-    memcpy(dp->country_code, "UN ", COUNTRY_CODE_LEN);
+    (void)memcpy(dp->country_code, "UN ", COUNTRY_CODE_LEN);
 
     dp->no_of_sub_band = nr_sb;
-    memcpy(&dp->sub_band[0], &subband_UN_2_4GHz[0], 2 * sizeof(wifi_sub_band_set_t));
+    (void)memcpy(&dp->sub_band[0], &subband_UN_2_4GHz[0], 2 * sizeof(wifi_sub_band_set_t));
 
     return dp;
 }
@@ -316,7 +320,7 @@ int wifi_uap_set_domain_params(wifi_domain_param_t *dp)
     if (!dp)
         return -WM_E_INVAL;
 
-    if (wm_wifi.dp)
+    if (wm_wifi.dp != NULL)
         wuap_w("Overwriting previous configuration");
 
     /*
@@ -333,7 +337,7 @@ int wifi_uap_set_domain_params(wifi_domain_param_t *dp)
     n_dp->header.len  = sizeof(MrvlIEtypes_DomainParamSet_t) - sizeof(MrvlIEtypesHeader_t) +
                        ((dp->no_of_sub_band - 1) * sizeof(IEEEtypes_SubbandSet_t));
 
-    memcpy(n_dp->country_code, dp->country_code, COUNTRY_CODE_LEN);
+    (void)memcpy(n_dp->country_code, dp->country_code, COUNTRY_CODE_LEN);
 
     wifi_sub_band_set_t *is   = dp->sub_band;
     IEEEtypes_SubbandSet_t *s = n_dp->sub_band;
@@ -364,7 +368,7 @@ int wifi_uap_set_params()
 
     ret = wifi_uap_set_domain_params(dp);
 
-    if (dp)
+    if (dp != NULL)
         os_mem_free(dp);
 
     return ret;
@@ -493,7 +497,7 @@ int wifi_sta_deauth(uint8_t *mac_addr, uint16_t reason_code)
     if (!mac_addr)
         return -WM_FAIL;
 
-    memcpy(deauth.mac_addr, mac_addr, MLAN_MAC_ADDR_LENGTH);
+    (void)memcpy(deauth.mac_addr, mac_addr, MLAN_MAC_ADDR_LENGTH);
     deauth.reason_code = reason_code;
 
     /* Start BSS */
@@ -601,7 +605,7 @@ void wifi_uap_enable_sticky_bit(const uint8_t *mac_addr)
 
     tim_cfg->tag    = MRVL_STICKY_TIM_STA_MAC_ADDR_TLV_ID;
     tim_cfg->length = sizeof(tlvbuf_sticky_tim_sta_mac_addr) - TLVHEADER_LEN;
-    memcpy(tim_cfg->sta_mac_address, mac_addr, MLAN_MAC_ADDR_LENGTH);
+    (void)memcpy(tim_cfg->sta_mac_address, mac_addr, MLAN_MAC_ADDR_LENGTH);
     tim_cfg->control = 1;
 
     size += sizeof(MrvlIEtypesHeader_t) + tim_cfg->length;
@@ -632,7 +636,7 @@ void wifi_uap_handle_cmd_resp(HostCmd_DS_COMMAND *resp)
                 MrvlIEtypes_tx_power_t *tlv_tx_power = (MrvlIEtypes_tx_power_t *)tlv;
                 if (sys_config->action == HostCmd_ACT_GEN_GET)
                 {
-                    if (wm_wifi.cmd_resp_priv)
+                    if (wm_wifi.cmd_resp_priv != NULL)
                     {
                         uint8_t *tx_power     = (uint8_t *)wm_wifi.cmd_resp_priv;
                         wm_wifi.cmd_resp_priv = NULL;
@@ -647,7 +651,7 @@ void wifi_uap_handle_cmd_resp(HostCmd_DS_COMMAND *resp)
                 MrvlIEtypes_sta_ageout_t *tlv_sta_ageout_timer = (MrvlIEtypes_sta_ageout_t *)tlv;
                 if (sys_config->action == HostCmd_ACT_GEN_GET)
                 {
-                    if (wm_wifi.cmd_resp_priv)
+                    if (wm_wifi.cmd_resp_priv != NULL)
                     {
                         uint32_t *sta_ageout_timer = (uint32_t *)wm_wifi.cmd_resp_priv;
                         wm_wifi.cmd_resp_priv      = NULL;
@@ -662,7 +666,7 @@ void wifi_uap_handle_cmd_resp(HostCmd_DS_COMMAND *resp)
                 MrvlIEtypes_ps_sta_ageout_t *tlv_ps_sta_ageout_timer = (MrvlIEtypes_ps_sta_ageout_t *)tlv;
                 if (sys_config->action == HostCmd_ACT_GEN_GET)
                 {
-                    if (wm_wifi.cmd_resp_priv)
+                    if (wm_wifi.cmd_resp_priv != NULL)
                     {
                         uint32_t *ps_sta_ageout_timer = (uint32_t *)wm_wifi.cmd_resp_priv;
                         wm_wifi.cmd_resp_priv         = NULL;
@@ -677,7 +681,7 @@ void wifi_uap_handle_cmd_resp(HostCmd_DS_COMMAND *resp)
                 MrvlIEtypes_group_rekey_time_t *tlv_group_rekey_timer = (MrvlIEtypes_group_rekey_time_t *)tlv;
                 if (sys_config->action == HostCmd_ACT_GEN_GET)
                 {
-                    if (wm_wifi.cmd_resp_priv)
+                    if (wm_wifi.cmd_resp_priv != NULL)
                     {
                         uint32_t *group_rekey_timer = (uint32_t *)wm_wifi.cmd_resp_priv;
                         wm_wifi.cmd_resp_priv       = NULL;
@@ -692,7 +696,7 @@ void wifi_uap_handle_cmd_resp(HostCmd_DS_COMMAND *resp)
                 MrvlIEtypes_mcbc_rate_t *tlv_mcbc_rate = (MrvlIEtypes_mcbc_rate_t *)tlv;
                 if (sys_config->action == HostCmd_ACT_GEN_GET)
                 {
-                    if (wm_wifi.cmd_resp_priv)
+                    if (wm_wifi.cmd_resp_priv != NULL)
                     {
                         uint16_t *mcbc_rate   = (uint16_t *)wm_wifi.cmd_resp_priv;
                         wm_wifi.cmd_resp_priv = NULL;
@@ -708,12 +712,12 @@ void wifi_uap_handle_cmd_resp(HostCmd_DS_COMMAND *resp)
 
                 if (sys_config->action == HostCmd_ACT_GEN_GET)
                 {
-                    if (wm_wifi.cmd_resp_priv)
+                    if (wm_wifi.cmd_resp_priv != NULL)
                     {
                         char *rates           = (char *)wm_wifi.cmd_resp_priv;
                         wm_wifi.cmd_resp_priv = NULL;
-                        memset(rates, 0, MAX_RATES);
-                        memcpy(rates, tlv_rates->rates, MIN(MAX_RATES, tlv_rates->header.len));
+                        (void)memset(rates, 0, MAX_RATES);
+                        (void)memcpy(rates, tlv_rates->rates, MIN(MAX_RATES, tlv_rates->header.len));
                     }
                 }
                 wm_wifi.cmd_resp_status = WM_SUCCESS;
@@ -726,7 +730,7 @@ void wifi_uap_handle_cmd_resp(HostCmd_DS_COMMAND *resp)
                 pmpriv->uap_state_chan_cb.channel     = tlv_cb->channel;
                 if (!(sys_config->action == HostCmd_ACT_GEN_GET))
                     break;
-                if (wm_wifi.cmd_resp_priv)
+                if (wm_wifi.cmd_resp_priv != NULL)
                 {
                     int *channel          = (int *)wm_wifi.cmd_resp_priv;
                     wm_wifi.cmd_resp_priv = NULL;
@@ -741,7 +745,7 @@ void wifi_uap_handle_cmd_resp(HostCmd_DS_COMMAND *resp)
                 pmpriv->uap_state_chan_cb.max_sta_count  = tlv_sta_cnt->max_sta_count;
                 if (!(sys_config->action == HostCmd_ACT_GEN_GET))
                     break;
-                if (wm_wifi.cmd_resp_priv)
+                if (wm_wifi.cmd_resp_priv != NULL)
                 {
                     int *sta_count        = (int *)wm_wifi.cmd_resp_priv;
                     wm_wifi.cmd_resp_priv = NULL;
@@ -987,7 +991,7 @@ static int wifi_send_uap_get_channel_cmd(int *channel)
     if (rv != WM_SUCCESS)
         return rv;
 
-    if (wm_wifi.cmd_resp_status)
+    if (wm_wifi.cmd_resp_status != 0)
     {
         wifi_w("Unable to uap channel");
         return wm_wifi.cmd_resp_status;
@@ -1002,7 +1006,7 @@ static int wifi_send_uap_max_sta_num_cmd(uint8_t action, unsigned int *max_sta_n
     mlan_private *pmpriv = (mlan_private *)mlan_adap->priv[0];
     MrvlIEtypes_max_sta_count_t max_sta_count_tlv;
 
-    memset(&max_sta_count_tlv, 0, sizeof(MrvlIEtypes_max_sta_count_t));
+    (void)memset(&max_sta_count_tlv, 0, sizeof(MrvlIEtypes_max_sta_count_t));
 
     max_sta_count_tlv.header.type = TLV_TYPE_UAP_MAX_STA_CNT;
 
@@ -1017,7 +1021,7 @@ static int wifi_send_uap_max_sta_num_cmd(uint8_t action, unsigned int *max_sta_n
     if (rv != WM_SUCCESS)
         return rv;
 
-    if (wm_wifi.cmd_resp_status)
+    if (wm_wifi.cmd_resp_status != 0)
     {
         wifi_w("Unable to uap max_sta_num");
         return wm_wifi.cmd_resp_status;
@@ -1057,7 +1061,7 @@ static int wifi_uap_pmf_getset(uint8_t action, bool *mfpc, bool *mfpr)
     cmd->command                          = wlan_cpu_to_le16(HostCmd_CMD_PMF_PARAMS);
     HostCmd_DS_PMF_PARAMS *sys_pmf_params = (HostCmd_DS_PMF_PARAMS *)((uint32_t)cmd + S_DS_GEN);
 
-    memset(sys_pmf_params, 0x00, sizeof(HostCmd_DS_PMF_PARAMS));
+    (void)memset(sys_pmf_params, 0x00, sizeof(HostCmd_DS_PMF_PARAMS));
 
     if (action == HostCmd_ACT_GEN_GET)
         sys_pmf_params->action = HostCmd_ACT_GEN_GET;

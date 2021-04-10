@@ -15,6 +15,10 @@
 #define _H_BT_COMMON_
 
 /**
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
+/**
  * \defgroup bt_common_module Bluetooth Common Module
  * \{
  */
@@ -317,35 +321,25 @@
     *((UCHAR *)(dst)) = (UCHAR)(*((UCHAR *)(src)));
 
 #define BT_UNPACK_LE_2_BYTE(dst,src)\
-    { \
-        UINT16 val = 0; \
-        UINT16 *temp = (UINT16 *)dst;\
-        val  = *(((UCHAR *)src) + 1); \
-        val  = val << 8; \
-        val |= *(((UCHAR *)src) + 0);\
-        *((UINT16 *)(temp)) = val;\
-    }
+        *((UINT16 *)(dst))  = *((src) + 1); \
+        *((UINT16 *)(dst))  = *((UINT16 *)(dst)) << 8; \
+        *((UINT16 *)(dst)) |= *((src) + 0);
 
 #define BT_UNPACK_LE_3_BYTE(dst,src)\
-        *((UINT32 *)((UINT32 *)dst))  = *(((UCHAR *)src) + 2);\
-        *((UINT32 *)((UINT32 *)dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)((UINT32 *)dst)) |= *(((UCHAR *)src) + 1);\
-        *((UINT32 *)((UINT32 *)dst))  = (*((UINT32 *)(dst))) << 8;\
-        *((UINT32 *)((UINT32 *)dst)) |= *(((UCHAR *)src) + 0);
+        *((UINT32 *)(dst))  = *((src) + 2);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
+        *((UINT32 *)(dst)) |= *((src) + 1);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
+        *((UINT32 *)(dst)) |= *((src) + 0);
 
 #define BT_UNPACK_LE_4_BYTE(dst,src)\
-     { \
-        UINT32 val = 0; \
-        UINT32 *temp = (UINT32 *)dst;\
-        val  = *(((UCHAR *)src) + 3);\
-        val  = val << 8;\
-        val |= *(((UCHAR *)src) + 2);\
-        val  = val << 8;\
-        val |= *(((UCHAR *)src) + 1);\
-        val  = val << 8;\
-        val |= *(((UCHAR *)src) + 0);\
-        *((UINT32 *)(temp)) = val;\
-    }
+        *((UINT32 *)(dst))  = *((src) + 3);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
+        *((UINT32 *)(dst)) |= *((src) + 2);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
+        *((UINT32 *)(dst)) |= *((src) + 1);\
+        *((UINT32 *)(dst))  = (*((UINT32 *)(dst))) << 8;\
+        *((UINT32 *)(dst)) |= *((src) + 0);
 
 /* TBD: Update based on 64 Bit, 128 Bit Data Types */
 #define BT_UNPACK_LE_8_BYTE(dst,src)\
@@ -1077,7 +1071,7 @@ API_RESULT BT_bluetooth_get_stack_init_state (/* OUT */ UCHAR *state);
 #endif
 
 /** \} */
-
+/** \} */
 /** \} */
 
 #endif /* _H_BT_COMMON_ */

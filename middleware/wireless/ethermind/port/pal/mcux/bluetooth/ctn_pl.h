@@ -38,6 +38,10 @@
 #define     APPL_CTN_ROOT_FOLDER_REFERENCE \
     BT_FOPS_PATH_JOIN(BT_FOPS_BASE,"data" BT_FOPS_PATH_SEP "ctn")
 
+/* Reference folder for CTN Calender objects */
+#define     APPL_CTN_CALENDAR_FOLDER_REFERENCE \
+            BT_FOPS_PATH_JOIN(BT_FOPS_BASE,"data" BT_FOPS_PATH_SEP "ctn" BT_FOPS_PATH_SEP "root" BT_FOPS_PATH_SEP "telecom" BT_FOPS_PATH_SEP "CTN" BT_FOPS_PATH_SEP "calendar")
+
 /* Folder path for ctn objects */
 #define     APPL_CTN_CALENDAR_FOLDER_PATH \
     BT_FOPS_PATH_SEP "root" BT_FOPS_PATH_SEP "telecom" BT_FOPS_PATH_SEP "CTN" BT_FOPS_PATH_SEP "calendar"
@@ -48,6 +52,10 @@
 
 /* CTN-listing file name */
 #define     APPL_LISTING_FILE                           "CTN-listing.xml"
+
+#define     APPL_LARGE_LISTING_FILE                     "CTN-listing_large.xml"
+
+#define     APPL_NEW_CALENDER_FILE                      "new_calendar.ics"
 
 /* CTN-get file */
 #define     APPL_GET_FILE_NAME                          "CTN-pull-object.ics"
@@ -63,8 +71,14 @@
 /* CTN Event file name */
 #define     APPL_CTN_EVENT_FILE_NAME                    "CTN-event.ics"
 
+/* CTN as CCE Event file name */
+#define     APPL_CTN_CCE_EVENT_FILE_NAME                "CTN_CCE-event.ics"
+
 /* CTN Account info file */
 #define     APPL_CTN_ACCOUNT_INFO_FILE                  "CTN-account-info.ics"
+
+/* CTN as CCE Account info file */
+#define     APPL_CTN_CCE_ACCOUNT_INFO_FILE              "CTN_CCE-account-info.ics"
 
 #define     APPL_CTN_CSE_EMAIL_URL_NAME                 "mindtree.com"
 
@@ -351,5 +365,11 @@ API_RESULT BT_ctn_build_event_file_pl
                /* IN */  UCHAR   *handle,
                /* IN */  UCHAR   *cal_type
            );
+
+UINT32 str_to_num_pl
+       (
+           /* IN */  UCHAR  * str,
+           /* IN */  UINT16 len
+       );
 
 #endif /* _H_CTN_PL_ */

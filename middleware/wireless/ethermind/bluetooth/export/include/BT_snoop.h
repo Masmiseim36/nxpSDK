@@ -19,24 +19,63 @@
 
 
 /* ----------------------------------------- Global Definitions */
+/**
+ * \addtogroup bt_utils Utilities
+ * \{
+ */
+/**
+ * \defgroup snoop_module SNOOP
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Snoop functionality module to the Application and other upper layers of the
+ *  stack.
+ */
 
 /* ----------------------------------------- Structures/Data Types */
 
 
 /* ----------------------------------------- Function Declarations */
+/**
+ * \defgroup snoop_api_defs API Definitions
+ * \{
+ * This section describes the EtherMind Snoop APIs.
+ */
 #ifdef __cplusplus
 extern "C"{
 #endif
-
 #ifdef BT_SNOOP
-
 /** Initialization/Shutdown of EtherMind btsnoop module */
+/**
+ *  \brief To do power on initialization of EtherMind btsnoop module
+ *
+ *  \par Description:
+ *       This function is the EtherMind-Init handler for the btsnoop module
+ *       and performs power-on initialization.
+ *
+ *  \note This function must be called only once.
+ */
 void em_snoop_init (void);
+
+/**
+ *  \brief To perform Bluetooth specific initializations for EtherMind btsnoop module
+ *
+ *  \par Description:
+ *       This function is the Bluetooth-ON handler for btsnoop module, and it
+ *       performs bluetooth specific initializations for the btsnoop module.
+ */
 void snoop_bt_init (void);
+
+/**
+ *  \brief To perform Bluetooth specific shutdown for EtherMind btsnoop module
+ *
+ *  \par Description:
+ *       This function is the Bluetooth-OFF handler for btsnoop module, and it
+ *       performs bluetooth specific shutdown for the btsnoop module.
+ */
 void snoop_bt_shutdown (void);
 
 /**
- *  \fn BT_snoop_write_packet
+ *  \brief To write btsnoop packet
  *
  *  \par Description
  *  This function writes btsnoop packet record.
@@ -64,7 +103,7 @@ void BT_snoop_write_packet
      );
 
 /**
- *  \fn BT_snoop_logging
+ *  \brief To enable/disable btsnoop logging
  *
  *  \par Description
  *  This function allows run-time enable/disable of btsnoop logging.
@@ -99,6 +138,8 @@ void BT_snoop_logging
 #ifdef __cplusplus
 };
 #endif
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_BT_SNOOP_ */
 

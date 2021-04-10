@@ -22,7 +22,29 @@
 
 
 /* ----------------------------------------- Global Definitions */
+/**
+ * \addtogroup bt_profiles Profiles
+ * \{
+ */
+/**
+ * \defgroup avrcp_module AVRCP (Audio Video Remote Control Profile)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Audio Video Remote Control Profile (AVRCP) module to the Application
+ *  and other upper layers of the stack.
+ */
 
+/**
+ * \defgroup avrcp_defines Defines
+ * \{
+ * Describes defines for the module.
+ */
+
+/**
+ * \defgroup avrcp_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
 /**
  *  \name AVRCP Event Notification Callback Event Types
  *  Constant Definitions for AVRCP Notification Callback Event Types.
@@ -87,7 +109,7 @@
 
 
 /**
- *  @name AVRCP Command Header Length
+ *  \name AVRCP Command Header Length
  *  Constant Definitioins for AVRCP COMMAND Header Length.
  */
 
@@ -97,7 +119,7 @@
 /*@}*/
 
 /**
- *  @name AVRCP Command Header Length
+ *  \name AVRCP Command Header Length
  *  Constant Definitioins for AVRCP COMMAND Header Length.
  */
 
@@ -257,10 +279,10 @@
 
 /*@{*/
 
-/* AVRCP State_Flag: Pressed */
+/** AVRCP State_Flag: Pressed */
 #define AVRCP_STATE_FLAG_PRESSED                        0x00
 
-/* AVRCP State_Flag: Released */
+/** AVRCP State_Flag: Released */
 #define AVRCP_STATE_FLAG_RELEASED                       0x80
 
 /*@}*/
@@ -273,10 +295,10 @@
 
 /*@{*/
 
-/* AVRCP PASSTHROUGH Control Command length */
+/** AVRCP PASSTHROUGH Control Command length */
 #define AVRCP_PASSTHROUGH_CT_CMD_LEN                    0x05
 
-/* AVRCP PASSTHROUGH Vendor Unique Control Command length */
+/** AVRCP PASSTHROUGH Vendor Unique Control Command length */
 #define AVRCP_PASSTHROUGH_VU_CT_CMD_LEN                 0x0A
 
 /*@}*/
@@ -288,11 +310,11 @@
 
 /*@{*/
 
-/* Macro to set an Operation ID's State Flag as Pressed */
+/** Macro to set an Operation ID's State Flag as Pressed */
 #define AVRCP_SET_STATE_FLAG_PRESSED(op_id)      \
         ((op_id) &= ~AVRCP_STATE_FLAG_RELEASED)
 
-/* Macro to set an Operation ID's State Flag as Released */
+/** Macro to set an Operation ID's State Flag as Released */
 #define AVRCP_SET_STATE_FLAG_RELEASED(op_id)     \
         ((op_id) |= AVRCP_STATE_FLAG_RELEASED)
 
@@ -300,7 +322,7 @@
 #define AVRCP_GET_OPERATION_ID(op_id)            \
         ((op_id) & (~AVRCP_STATE_FLAG_RELEASED))
 
-/*
+/**
  * Macro to Extract the State Flag
  * The Macro would result in 'AVRCP_STATE_FLAG_RELEASED' value if the
  * State Flag indicates 'Released',
@@ -683,9 +705,14 @@
 #define AVRCP_BOW_ERROR_ADDR_PLAYER_CHANGED         0x16
 /*@}*/
 #endif /* AVRCP_1_3 */
-
+/** \} */
 
 /* ----------------------------------------- Structures/Data Types */
+/**
+ * \defgroup avrcp_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
 /**
  *  \typedef AVRCP_HANDLE
  *  \brief   AVRCP Handle.
@@ -708,7 +735,13 @@ typedef struct _AVRCP_HANDLE
     UCHAR bd_addr [BT_BD_ADDR_SIZE];
 
 } AVRCP_HANDLE;
+/** \} */
+/** \} */
 
+/**
+ * \defgroup avrcp_appl_callback Application Callback
+ * \{
+ */
 
 /**
  *  \typedef AVRCP_EVENT_NTF_CB
@@ -761,6 +794,12 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
                        UINT16         event_datalen
                    );
 
+/** \} */
+
+/**
+ * \cond ignore_this
+ * \{
+ */
 
 /**
  *  This section describes the use of AVRCP_EVENT_NTF_CB for AVRCP event
@@ -918,14 +957,15 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
  *  - Error Code describing the reason of failure.
  *
  */
+
+/** \endcond */
+
 /* ----------------------------------------- Macros */
-
 /**
- *  @name AVCTP Utility Macros
- *  Defining AVCTP Utility Macros.
+ *  \defgroup avrcp_marcos Utility Macros
+ *  \{
+ *  Initialization and other Utility Macros offered by the module.
  */
-
-/*@{*/
 
 /**
  *  This utility macro initializes an AVRCP Handle.
@@ -1214,15 +1254,13 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
         (op_id)      = (((buffer)[4]) & (0x7F));                  \
         (state_flag) = (((buffer)[4]) & (0x80))
 
-/*@}*/
 
 
 /**
- *  @name AVRCP 1.3 Adaptation Layer Utility Macros
+ *  \name AVRCP 1.3 Adaptation Layer Utility Macros
  *  Defining AVRCP 1.3 Adaptation Layer Utility Macros
  */
 
-/*@{*/
 #ifdef AVRCP_1_3
 
 /**
@@ -1741,15 +1779,21 @@ typedef API_RESULT (* AVRCP_EVENT_NTF_CB)
 
 #endif /* AVRCP_1_3 */
 
-/*@}*/
+/** \} */
+/** \} */
+
 /* ----------------------------------------- APIs */
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
 /**
- *  @name AVRCP APIs - Intitialization and Shutdown
+ * \defgroup avrcp_api API Definitions
+ * \{
+ * Describes API definitions of this module.
+ */
+/**
+ *  \name AVRCP APIs - Intitialization and Shutdown
  */
 
 /*@{*/
@@ -1804,7 +1848,7 @@ API_RESULT BT_avrcp_shutdown ( void );
 
 
 /**
- *  @name AVRCP APIs - Start and Stop of AVRCP profile instance
+ *  \name AVRCP APIs - Start and Stop of AVRCP profile instance
  */
 
 /*@{*/
@@ -1872,7 +1916,7 @@ API_RESULT BT_avrcp_stop
 
 
 /**
- *  @name AVRCP APIs - Connection Management
+ *  \name AVRCP APIs - Connection Management
  */
 
 /*@{*/
@@ -1942,7 +1986,7 @@ API_RESULT BT_avrcp_channel_disconnect_req
 /*@}*/
 
 /**
- *  @name AVRCP APIs - Control Message Exchange Management
+ *  \name AVRCP APIs - Control Message Exchange Management
  */
 
 /*@{*/
@@ -2061,7 +2105,7 @@ API_RESULT BT_avrcp_send_rsp
 /*@}*/
 
 /**
- *  @name AVRCP APIs - Utility APIs
+ *  \name AVRCP APIs - Utility APIs
  */
 
 /*@{*/
@@ -2131,6 +2175,8 @@ API_RESULT BT_avrcp_set_mtu
 #ifdef __cplusplus
 };
 #endif
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_BT_AVRCP_API_ */
 

@@ -20,7 +20,27 @@
 #include "l2cap.h"
 
 /* --------------------------------------------- Global Definitions */
-
+/**
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
+/**
+ * \defgroup mcap_module MCAP (Multi-Channel Adaptation Protocol)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Multi-Channel Adaptation Protocol (MCAP) module to the Application and other upper
+ *  layers of the stack.
+ */
+/**
+ * \defgroup mcap_defines Defines
+ * \{
+ * Describes defines for the module.
+ */
+/**
+ * \defgroup mcap_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
 /** MCAP Event Notification Callback Event Types */
 #define MCAP_MD_CREATE_IND              0x01
 #define MCAP_MD_CREATE_CNF              0x02
@@ -67,9 +87,22 @@
 #define MCAP_INVALID_MDL_ID                 0x0000
 #define MCAP_INVALID_MDEP_ID                0xFF
 #define MCAP_ALL_MDL_ID                     0xFFFF
+/** \} */
+/** \} */
 
 
 /* --------------------------------------------- Structures/Data Types */
+
+/**
+ *  \addtogroup mcap_defines Defines
+ *  \{
+ */
+
+/**
+ *  \addtogroup mcap_structures Structures
+ *  \{
+ */
+
 /**
  *  This data type represents the abstract handle to refer while
  *  initiating a procedure with MCAP. Except utility APIs, all MCAP
@@ -106,7 +139,15 @@ typedef struct
     UINT8 mdep_id;
 
 } MCAP_HANDLE;
+/** \} */
+/** \} */
 
+/**
+ *  \defgroup mcap_cb Application Callback
+ *  \{
+ *  This Section Describes the module Notification Callback interface offered
+ *  to the application
+ */
 
 /** The MCAP Asynchronous Event Notification Callback */
 typedef API_RESULT (* MCAP_EVENT_NTF_CB)
@@ -125,7 +166,17 @@ typedef void (* MCAP_L2CAP_CONFIG_CB)
                  UCHAR,
                  L2CAP_CONFIG_OPTION **
              );
+/** \} */
 
+/**
+ *  \addtogroup mcap_defines Defines
+ *  \{
+ */
+
+/**
+ *  \addtogroup mcap_structures Structures
+ *  \{
+ */
 /** MCAP Exchange Point information to be provided with mcap_register */
 typedef struct
 {
@@ -141,12 +192,12 @@ typedef struct
      */
     MCAP_L2CAP_CONFIG_CB config_cb;
 
-    /* PSM for control channel */
+    /** PSM for control channel */
     UINT16 control_channel_psm;
 
 #ifdef MCAP_STANDARD_COMMANDS
 
-    /* PSM for data channel */
+    /** PSM for data channel */
     UINT16 data_channel_psm;
 
 #endif /* MCAP_STANDARD_COMMANDS */
@@ -157,7 +208,7 @@ typedef struct
 /** Parameters to be provided at the time of creating a MCAP data channel */
 typedef struct
 {
-    /* Remote Data Channel PSM */
+    /** Remote Data Channel PSM */
     UINT16 rem_data_ch_psm;
 
     /**
@@ -166,7 +217,7 @@ typedef struct
      */
     UCHAR channel_preference;
 
-    /* Remote MDEP ID */
+    /** Remote MDEP ID */
     UCHAR rem_mdep_id;
 
 } MCAP_MD_PARAMS;
@@ -175,19 +226,26 @@ typedef struct
 /** TODO: Comment */
 typedef struct
 {
-    /* Remote Control Channel PSM */
+    /** Remote Control Channel PSM */
     UINT16 cntrl_ch_psm;
 
-    /* Identifies mep that initiated the connection */
+    /** Identifies mep that initiated the connection */
     UCHAR mep_id;
 
 } MCAP_MC_CONNECT_PARAMS;
 
+/** \} */
+/** \} */
 
 
 /* --------------------------------------------- Macros */
 /* MCAP Utility macros */
 
+/**
+ *  \defgroup mcap_marcos Utility Macros
+ *  \{
+ *  Initialization and other Utility Macros offered by the module.
+ */
 /**
  *  Utility macro to initialize MCAP Exchange endpoint.
  *  The application may use it before registering a MEP with MCAP
@@ -208,19 +266,19 @@ typedef struct
 
 #endif /* MCAP_STANDARD_COMMANDS */
 
-/* Utility macro to set callback for MCAP Exchange endpoint */
+/** Utility macro to set callback for MCAP Exchange endpoint */
 #define MCAP_SET_MEP_CALLBACK(mep_info,cb)                   \
         (mep_info).ntf_cb = (cb);
 
-/* Utility macro to set control channel PSM for MCAP Exchange endpoint */
+/** Utility macro to set control channel PSM for MCAP Exchange endpoint */
 #define MCAP_SET_MEP_CONTROL_CH_PSM(mep_info,psm)            \
         (mep_info).control_channel_psm = (psm);
 
-/* Utility macro to set data channel PSM for MCAP Exchange endpoint */
+/** Utility macro to set data channel PSM for MCAP Exchange endpoint */
 #define MCAP_SET_MEP_DATA_CH_PSM(mep_id,psm)                 \
         (mep_id).data_channel_psm = (psm);
 
-/* Utility macro to set the config call back */
+/** Utility macro to set the config call back */
 #define MCAP_SET_CONFIG_CB(mep_id,cb)                        \
         (mep_id).config_cb = cb;
 /**
@@ -236,7 +294,7 @@ typedef struct
         (handle).mdl_id     = MCAP_INVALID_MDL_ID;           \
         (handle).mdep_id    = MCAP_INVALID_MDEP_ID;
 
-/* Utility macro to set remote bluetooth device address in a MCAP Handle */
+/** Utility macro to set remote bluetooth device address in a MCAP Handle */
 #define MCAP_SET_HANDLE_BD_ADDR (handle, rem_bd_addr)        \
           BT_COPY_BD_ADDR((handle.bd_addr),(rem_bd_addr));
 
@@ -247,7 +305,7 @@ typedef struct
 #define MCAP_SET_HANDLE_MDEP(x,y)                            \
         (x).mdep_id = (y);
 
-/* Utility macro to get the remote bluetooth device address in a MCAP Handle */
+/** Utility macro to get the remote bluetooth device address in a MCAP Handle */
 #define MCAP_GET_HANDLE_BD_ADDR (handle,rem_bd_addr)         \
         BT_COPY_BD_ADDR((rem_bd_addr),(handle.bd_addr));
 
@@ -384,17 +442,20 @@ typedef struct
         BT_mcap_get_timestamp (handle,timestamp);
 
 #endif /* MCAP_CLOCK_SYNC */
-
+/** \} */
 
 
 /* --------------------------------------------- API Declarations */
+/**
+ * \defgroup mcap_api_defs API Definitions
+ * \{
+ * This section describes the EtherMind Multi-Channel Adaptation Protocol APIs.
+ */
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /**
- *  \fn BT_mcap_register_mep
- *
  *  \brief To register application Exchange Point with MCAP
  *
  *  \Description
@@ -404,12 +465,11 @@ extern "C" {
  *  control channel and data channel PSM, to facilitate creation of control
  *  channel and subsequently data channels for it.
  *
- *
- *  \param mep_info
+ *  \param [in] mep_info
  *         MCAP Exchange point info to be provided by the MCAP application or
  *         profile in order to start receiving MCAP events.
  *
- *  \param mep_id
+ *  \param [out] mep_id
  *         Unique MCAP Exchange Point identifier provided by MCAP. This is
  *         identifier is to be provided by the application during subsequent
  *         creation of control channel connection
@@ -435,8 +495,6 @@ API_RESULT BT_mcap_common_api_handler
 
 
 /**
- *  \fn BT_mcap_mc_connect_req
- *
  *  \brief To initiate control channel connection with a remote device
  *
  *  \Description
@@ -467,8 +525,6 @@ API_RESULT BT_mcap_common_api_handler
 
 
 /**
- *  \fn BT_mcap_mc_disconnect_req
- *
  *  \brief To initiate disconnect control channel connection
  *
  *  \Description
@@ -493,10 +549,7 @@ API_RESULT BT_mcap_common_api_handler
             NULL                                             \
         );
 
-
 /**
- *  \fn BT_mcap_md_create_req
- *
  *  \brief To create data channel with remote a device.
  *
  *  \Description
@@ -523,10 +576,7 @@ API_RESULT BT_mcap_common_api_handler
             md_params                                        \
         );
 
-
 /**
- *  \fn BT_mcap_md_reconnect_req
- *
  *  \brief To reconnect a data channel with remote device
  *
  *  \Description
@@ -553,10 +603,7 @@ API_RESULT BT_mcap_common_api_handler
             rem_data_ch_psm                                  \
         );
 
-
 /**
- *  \fn BT_mcap_md_abort_req
- *
  *  \brief To abort a data channel connection with remote device
  *
  *  \Description
@@ -580,10 +627,7 @@ API_RESULT BT_mcap_common_api_handler
             NULL                                             \
         );
 
-
 /**
- *  \fn BT_mcap_md_delete_req
- *
  *  \brief To initiate delete mdl
  *
  *  \Description
@@ -607,10 +651,7 @@ API_RESULT BT_mcap_common_api_handler
             NULL                                             \
         );
 
-
 /**
- *  \fn BT_mcap_md_delete_all_req
- *
  *  \brief To initiate delete mdl
  *
  *  \Description
@@ -636,10 +677,7 @@ API_RESULT BT_mcap_common_api_handler
             NULL                                             \
         ));
 
-
 /**
- *  \fn BT_mcap_md_disconnect_req
- *
  *  \brief To initiate disconnect data channel
  *
  *  \Description
@@ -663,10 +701,7 @@ API_RESULT BT_mcap_common_api_handler
             NULL                                             \
         );
 
-
 /**
- *  \fn BT_mcap_md_write
- *
  *  \brief To write the data on to mdl
  *
  *  \Description
@@ -700,10 +735,7 @@ API_RESULT BT_mcap_md_write
 #define BT_mcap_md_write(h, d, dl)   API_SUCCESS
 #endif /* MCAP_STANDARD_COMMANDS */
 
-
 /**
- *  \fn BT_mcap_md_create_rsp
- *
  *  \brief To send the response for MD_CREATE request to remote device
  *
  *  \Description
@@ -731,10 +763,7 @@ API_RESULT BT_mcap_md_write
             rsp_params                                       \
         );
 
-
 /**
- *  \fn BT_mcap_md_reconnect_rsp
- *
  *  \brief To send the response for MD_CREATE request to remote device
  *
  *  \Description
@@ -759,10 +788,7 @@ API_RESULT BT_mcap_md_write
             NULL                                             \
         );
 
-
 /**
- *  \fn BT_mcap_mc_connect_rsp
- *
  *  \brief Routine to send the connect response for control channel connect req
  *
  *  \Description
@@ -793,7 +819,30 @@ API_RESULT BT_mcap_md_write
 
 #ifdef MCAP_CLOCK_SYNC
 
-/* TODO: Add Comment */
+/**
+ *  \brief To handle functionality common to MCAP Clock Sync commands
+ *
+ *  \Description This routine enqueues MCAP Clock Sync command request
+ *               responses.
+ *
+ *  \param [in] handle
+ *         Indentifies the MCAP control channel
+ *
+ *  \param [in] mcap_csp_cmd
+ *         MCAP Clock Sync command to be processed
+ *
+ *  \param [in] rsp_code
+ *         Response code in case it is a response
+ *
+ *  \param [in] cmd_params
+ *         Command Parameters
+ *
+ *  \param [in] param_len
+ *         Length of command parameters.
+ *
+ *  \return API_SUCCESS in case of success else an error code indicating reason
+ *  for failure.
+ */
 API_RESULT BT_mcap_sync_common_api_handler
            (
                /* IN */ MCAP_HANDLE    * handle,
@@ -872,6 +921,9 @@ void BT_mcap_earse_data_channels (void);
 #ifdef __cplusplus
 };
 #endif
+/** \} */
+/** \} */
+/** \} */
 
 #endif /* _H_BT_MCAP_API_ */
 

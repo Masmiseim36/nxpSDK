@@ -42,7 +42,7 @@ void test_wfa_wlan_version(int argc, char **argv)
         }
     }
 
-    PRINTF("WLAN Version : %s\r\n", version_str);
+    (void)PRINTF("WLAN Version : %s\r\n", version_str);
 }
 
 void test_wlan_version(int argc, char **argv)
@@ -51,19 +51,19 @@ void test_wlan_version(int argc, char **argv)
 
     version_str = wlan_get_firmware_version_ext();
 
-    PRINTF("WLAN Driver Version   : %s\r\n", WLAN_DRV_VERSION);
-    PRINTF("WLAN Firmware Version : %s\r\n", version_str);
+    (void)PRINTF("WLAN Driver Version   : %s\r\n", WLAN_DRV_VERSION);
+    (void)PRINTF("WLAN Firmware Version : %s\r\n", version_str);
 }
 
 static void test_wlan_get_mac_address(int argc, char **argv)
 {
     uint8_t mac[6];
 
-    PRINTF("MAC address\r\n");
-    if (wlan_get_mac_address(mac))
-        PRINTF("Error: unable to retrieve MAC address\r\n");
+    (void)PRINTF("MAC address\r\n");
+    if (wlan_get_mac_address(mac) != 0)
+        (void)PRINTF("Error: unable to retrieve MAC address\r\n");
     else
-        PRINTF("%02X:%02X:%02X:%02X:%02X:%02X\r\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+        (void)PRINTF("%02X:%02X:%02X:%02X:%02X:%02X\r\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
 }
 
 static struct cli_command wlan_wfa_basic_commands[] = {
@@ -83,7 +83,7 @@ int wlan_wfa_basic_cli_init(void)
     int i;
 
     for (i = 0; i < sizeof(wlan_wfa_basic_commands) / sizeof(struct cli_command); i++)
-        if (cli_register_command(&wlan_wfa_basic_commands[i]))
+        if (cli_register_command(&wlan_wfa_basic_commands[i]) != 0)
             return WLAN_ERROR_ACTION;
 
     wlan_wfa_basic_cli_init_done = true;
@@ -99,7 +99,7 @@ int wlan_basic_cli_init(void)
         return WLAN_ERROR_NONE;
 
     for (i = 0; i < sizeof(wlan_basic_commands) / sizeof(struct cli_command); i++)
-        if (cli_register_command(&wlan_basic_commands[i]))
+        if (cli_register_command(&wlan_basic_commands[i]) != 0)
             return WLAN_ERROR_ACTION;
 
     return WLAN_ERROR_NONE;

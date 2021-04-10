@@ -187,6 +187,11 @@ INT16 storage_read_pl (UCHAR type, void * buffer, UINT16 size)
 INT16 storage_write_signature_pl (UCHAR type)
 {
 #if (STORAGE_SKEY_SIZE != 0)
+    if (STORAGE_NUM_TYPES <= type)
+    {
+        return -1;
+    }
+
     BT_mem_copy(NvmSaveBuf, ssign[type], STORAGE_SKEY_SIZE);
     nv_offset += STORAGE_SKEY_SIZE;
 
@@ -203,8 +208,13 @@ INT16 storage_read_signature_pl (UCHAR type)
 #if (STORAGE_SKEY_SIZE != 0)
 	INT16 ret;
 
+    if (STORAGE_NUM_TYPES <= type)
+    {
+        return -1;
+    }
+
 	ret = STORAGE_SKEY_SIZE;
-	if (BT_mem_cmp (ssign, NvmSaveBuf, STORAGE_SKEY_SIZE))
+	if (BT_mem_cmp (ssign[type], NvmSaveBuf, STORAGE_SKEY_SIZE))
 	{
 		ret = -1;
 	}

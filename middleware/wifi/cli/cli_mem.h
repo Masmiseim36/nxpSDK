@@ -24,6 +24,8 @@
  *
  */
 
+#ifndef _CLI_MEM_H_
+#define _CLI_MEM_H_
 #define INBUF_SIZE    256
 #define BUF_ALLOCATED 1
 #define BUF_AVAILABLE 0
@@ -51,3 +53,4 @@ int cli_mem_init(void);
  * itself. Applications need not call this function.
  */
 int cli_mem_cleanup(void);
+#endif /* _CLI_MEM_H_ */

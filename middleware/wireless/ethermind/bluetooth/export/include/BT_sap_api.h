@@ -19,10 +19,36 @@
 /* ----------------------------------------- Header File Inclusion */
 #include "BT_api.h"
 
+/**
+ * \addtogroup bt_profiles Profiles
+ * \{
+ */
 #if ((defined SAP_SERVER) || (defined SAP_CLIENT))
+/**
+ * \defgroup sap_module SAP (SIM Access Profile)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  SIM Access Profile (SAP) module to the Application and other upper layers
+ *  of the stack.
+ */
+/**
+ * \defgroup sap_defines Defines
+ * \{
+ * Describes defines for the module.
+ */
+/**
+ * \defgroup sap_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
+/** \} */
 
 /* -------------------------------------------------- constants */
-
+/**
+ * \defgroup sap_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
 /** SAP Message IDs */
 typedef enum _SAP_MSG_ID
 {
@@ -37,55 +63,55 @@ typedef enum _SAP_MSG_ID
 
     /** [0x03] DISCONNECT_RESP. Server -> Client */
     SAP_MSG_DISCONNECT_RESP,
-    
+
     /** [0x04] DISCONNECT_IND. Server -> Client */
     SAP_MSG_DISCONNECT_IND,
 
     /** [0x05] TRANSFER_APDU_REQ. Client -> Server */
     SAP_MSG_TRANSFER_APDU_REQ,
-    
+
     /** [0x06] TRANSFER_APDU_RESP. Server -> Client */
     SAP_MSG_TRANSFER_APDU_RESP,
-    
+
     /** [0x07] TRANSFER_ATR_REQ. Client -> Server */
     SAP_MSG_TRANSFER_ATR_REQ,
-    
+
     /** [0x08] TRANSFER_ATR_RESP. Server -> Client */
     SAP_MSG_TRANSFER_ATR_RESP,
-    
+
     /** [0x09] POWER_SIM_OFF_REQ. Client -> Server */
     SAP_MSG_POWER_SIM_OFF_REQ,
-    
+
     /** [0x0A] POWER_SIM_OFF_RESP. Server -> Client */
     SAP_MSG_POWER_SIM_OFF_RESP,
-    
+
     /** [0x0B] POWER_SIM_ON_REQ. Client -> Server */
     SAP_MSG_POWER_SIM_ON_REQ,
-    
+
     /** [0x0C] POWER_SIM_ON_RESP. Server -> Client */
     SAP_MSG_POWER_SIM_ON_RESP,
-    
+
     /** [0x0D] RESET_SIM_REQ. Client -> Server */
     SAP_MSG_RESET_SIM_REQ,
-    
+
     /** [0x0E] RESET_SIM_RESP. Server -> Client */
     SAP_MSG_RESET_SIM_RESP,
-    
+
     /** [0x0F] TRANSFER_CARD_READER_STATUS_REQ. Client -> Server */
     SAP_MSG_TRANSFER_CARD_READER_STATUS_REQ,
-    
+
     /** [0x10] TRANSFER_CARD_READER_STATUS_RESP. Server -> Client */
     SAP_MSG_TRANSFER_CARD_READER_STATUS_RESP,
-    
+
     /** [0x11] STATUS_IND. Server -> Client */
     SAP_MSG_STATUS_IND,
-    
+
     /** [0x12] ERROR_RESP. Server -> Client */
     SAP_MSG_ERROR_RESP,
 
     /** [0x13] SET_TRANSPORT_PROTOCOL_REQ. Client -> Server */
     SAP_MSG_SET_TRANSPORT_PROTOCOL_REQ,
-    
+
     /** [0x14] SET_TRANSPORT_PROTOCOL_RESP. Server -> Client */
     SAP_MSG_SET_TRANSPORT_PROTOCOL_RESP
 }SAP_MSG_ID;
@@ -295,23 +321,31 @@ typedef API_RESULT (* SAP_SERVER_APPL_CALLBACK)
                        void   * event_data,
                        UINT16   event_datalen
                    );
-
+/** \} */
+/** \} */
 /* --------------------------------------------------- APIs Declarations */
-
+/**
+ * \defgroup sap_api API Definitions
+ * \{
+ * Describes API definitions of this module.
+ */
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /** SAP Server related API */
 /**
- *  Starts the SIM Access Server.
+ *  \brief To start the SIM Access Server.
  *
- *  @ingroup SIM_Access_Server_API Handler
+ *  \par Description:
+ *       This API starts the SIM Access Server.
  *
- *  @param [in] appl_cb
+ *  \ingroup SIM_Access_Server_API Handler
+ *
+ *  \param [in] appl_cb
  *         Callback function to be registered by the caller application.
  *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_server_start
@@ -320,14 +354,17 @@ API_RESULT BT_sap_server_start
            );
 
 /**
- *  Starts SIM Access Profile disconnection from the server side.
+ *  \brief To start SIM Access Profile disconnection from the server side.
  *
- *  @ingroup SIM_Access_Server_API Handler
+ *  \par Description:
+         This API starts SIM Access Profile disconnection from the server side.
  *
- *  @param [in] disconnection_type
+ *  \ingroup SIM_Access_Server_API Handler
+ *
+ *  \param [in] disconnection_type
  *         Values: 0x00 (Graceful), 0x01 (Immediate)
  *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_server_disconnect
@@ -336,13 +373,17 @@ API_RESULT BT_sap_server_disconnect
            );
 
 /**
- *  This procedure is used during the connection setup phase
- *  or whenever a change in the physical connection between
- *  Server and SIM occurs.
  *
- *  @ingroup SIM_Access_Server_API Handler
+ *  \brief To report status of SAP server.
  *
- *  @param [in] status
+ *  \par Description:
+ *       This procedure is used during the connection setup phase
+ *       or whenever a change in the physical connection between
+ *       Server and SIM occurs.
+ *
+ *  \ingroup SIM_Access_Server_API Handler
+ *
+ *  \param [in] status
  *         One of the following values
  *             SAP_STATUS_CHANGE_UNKNOWN_ERROR
  *             SAP_STATUS_CHANGE_CARD_RESET
@@ -351,7 +392,7 @@ API_RESULT BT_sap_server_disconnect
  *             SAP_STATUS_CHANGE_CARD_INSERTED
  *             SAP_STATUS_CHANGE_CARD_RECOVERED
  *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_server_report_status
@@ -362,14 +403,17 @@ API_RESULT BT_sap_server_report_status
 
 /** SAP Client related APIs */
 /**
- *  Starts the SIM Access Client.
+ *  \brief To start the SIM Access Client.
  *
- *  @ingroup SIM_Access_Client_API Handler
+ *  \par Description:
+ *       This API starts the SIM Access Client.
  *
- *  @param [in] appl_cb
+ *  \ingroup SIM_Access_Client_API Handler
+ *
+ *  \param [in] appl_cb
  *         Callback function to be registered by the caller application.
  *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_client_start
@@ -378,18 +422,22 @@ API_RESULT BT_sap_client_start
            );
 
 /**
- *  Starts SIM Access Profile connection and negotiate important parameters
- *  adherent to the connection.
  *
- *  @ingroup SIM_Access_Client_API Handler
+ *  \brief To start SIM Access Profile connection.
  *
- *  @param [in] bd_addr
+ *  \par Description:
+ *       This API starts SIM Access Profile connection and negotiate important parameters
+ *       adherent to the connection.
+ *
+ *  \ingroup SIM_Access_Client_API Handler
+ *
+ *  \param [in] bd_addr
  *         Bluetooth Device Address to which SIM Access Connection to be made.
  *
- *  @param [in] remote_server_channel
+ *  \param [in] remote_server_channel
  *         RFCOMM Server Channel of SAP Server
  *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_client_connect
@@ -399,70 +447,84 @@ API_RESULT BT_sap_client_connect
            );
 
 /**
- *  Starts SIM Access Profile disconnection from the client side.
- *  First SIM Client terminate any existing GSM session which involves
- *  the SIM in the Server and then send DISCONNECT_REQ message to the
- *  Server.
+ *  \brief To start SIM Access Profile disconnection from the client side.
  *
- *  @ingroup SIM_Access_Client_API Handler
+ *  \par Description:
+ *       This API starts SIM Access Profile disconnection from the client side.
+ *       First SIM Client terminate any existing GSM session which involves
+ *       the SIM in the Server and then send DISCONNECT_REQ message to the
+ *       Server.
  *
- *  @param void
+ *  \ingroup SIM_Access_Client_API Handler
  *
- *  @return
+ *  \param void
+ *
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_client_disconnect(void);
 
 /**
- *  Requests the Server to send the ATR from the SIM.
- *  The TRANSFER_ATR_REQ message is used for this purpose.
+ *  \brief To request the server to send ATR from the SIM.
  *
- *  @ingroup SIM_Access_Client_API Handler
+ *  \par Description:
+ *       This API requests the Server to send the ATR from the SIM.
+ *       The TRANSFER_ATR_REQ message is used for this purpose.
  *
- *  @param  void
+ *  \ingroup SIM_Access_Client_API Handler
  *
- *  @return
+ *  \param  void
+ *
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_client_trasfer_atr(void);
 
 /**
- *  Requests the Server to power on the SIM.
- *  The POWER_SIM_ON_REQ message is used for this purpose.
- *  Upon receiving this message, the Server powers on and eventually
- *  performs PPS procedure. After this has been completed, the Server
- *  sends the POWER_SIM_ON_RESP message to the Client.
- *  If the response indicates that operation is successful, the client
- *  requests the ATR of the SIM.
  *
- *  @ingroup SIM_Access_Client_API Handler
+ *  \brief To request the Server to power on the SIM.
  *
- *  @param  void
+ *  \par Description:
+ *       This API requests the Server to power on the SIM.
+ *       The POWER_SIM_ON_REQ message is used for this purpose.
+ *       Upon receiving this message, the Server powers on and eventually
+ *       performs PPS procedure. After this has been completed, the Server
+ *       sends the POWER_SIM_ON_RESP message to the Client.
+ *       If the response indicates that operation is successful, the client
+ *       requests the ATR of the SIM.
  *
- *  @return
+ *  \ingroup SIM_Access_Client_API Handler
+ *
+ *  \param  void
+ *
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_client_power_sim_on(void);
 
 /**
- *  Requests the Server to power off the SIM.
- *  First the client terminates any existing GSM session which involves
- *  the SIM in the server.
- *  The client then send the POWER_SIM_OFF_REQ message to the Server.
- *  Upon receiving this message, the Server powers off the SIM and then
- *  sends the POWER_SIM_OFF_RESP message to the Client.
+ *  \brief To request the Server to power off the SIM.
  *
- *  @ingroup SIM_Access_Client_API Handler
+ *  \par Description:
+ *       This API requests the Server to power off the SIM.
+ *       First the client terminates any existing GSM session which involves
+ *       the SIM in the server.
+ *       The client then send the POWER_SIM_OFF_REQ message to the Server.
+ *       Upon receiving this message, the Server powers off the SIM and then
+ *       sends the POWER_SIM_OFF_RESP message to the Client.
  *
- *  @param  void
+ *  \ingroup SIM_Access_Client_API Handler
  *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_client_power_sim_off(void);
 
 /**
- *  Requests the Server to reset the SIM.
+ *  \brief To request the Server to reset the SIM.
+ *
+ *  \par Description:
+ *       This API requests the Server to reset the SIM.
  *
  *  - First the client terminates any existing GSM session which involves
  *  the SIM in the server.
@@ -474,45 +536,47 @@ API_RESULT BT_sap_client_power_sim_off(void);
  *  If the response indicates that operation is successful, the client
  *  requests the ATR of the SIM.
  *
- *  @ingroup SIM_Access_Client_API Handler
+ *  \ingroup SIM_Access_Client_API Handler
  *
- *  @param void
- *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_client_reset_sim(void);
 
 /**
- *  Requests the Server to return the Card Reader Status using
- *  the TRANSFER_CARD_READER_STATUS_REQ message.
- *  Following this request, the Server sends the Client
- *  the Card Reader Status in the TRANSFER_CARD_READER_STATUS_RESP
- *  message.
+ *  \brief To request the Server to return the Card Reader Status.
  *
- *  @ingroup SIM_Access_Client_API Handler
+ *  \par Description:
+ *       This API requests the Server to return the Card Reader Status using
+ *       the TRANSFER_CARD_READER_STATUS_REQ message.
+ *       Following this request, the Server sends the Client
+ *       the Card Reader Status in the TRANSFER_CARD_READER_STATUS_RESP
+ *       message.
  *
- *  @param  void
+ *  \ingroup SIM_Access_Client_API Handler
  *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_client_transfer_card_reader_status(void);
 
 /**
- *  Requests the Server to set transport protocol using
- *  the SET_TRANSPORT_PROTOCOL_REQ message.
- *  Following this request, the Server sends the Client
- *  the Set Transport Protocol response using SET_TRANSPORT_PROTOCOL_RESP
- *  message.
+ *  \brief To request the Server to set transport protocol.
  *
- *  @ingroup SIM_Access_Client_API Handler
+ *  \par Description:
+ *       This API requests the Server to set transport protocol using
+ *       the SET_TRANSPORT_PROTOCOL_REQ message.
+ *       Following this request, the Server sends the Client
+ *       the Set Transport Protocol response using SET_TRANSPORT_PROTOCOL_RESP
+ *       message.
  *
- *  @param  [in] transport_protocol
+ *  \ingroup SIM_Access_Client_API Handler
+ *
+ *  \param  [in] transport_protocol
  *          0x00: T=0
  *          0x01: T=1
  *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_client_set_transport_protocol
@@ -521,14 +585,15 @@ API_RESULT BT_sap_client_set_transport_protocol
            );
 
 /**
- *  Transfers an APDU between the Client and the Server.
- *  APDU transfers are always initiated by the Client.
+ *  \brief To transfer an APDU between the Client and the Server.
  *
- *  @ingroup SIM_Access_Client_API Handler
+ *  \par Description:
+ *       Transfers an APDU between the Client and the Server.
+ *       APDU transfers are always initiated by the Client.
  *
- *  @param  void
+ *  \ingroup SIM_Access_Client_API Handler
  *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_client_transfer_apdu(void);
@@ -536,21 +601,24 @@ API_RESULT BT_sap_client_transfer_apdu(void);
 
 /** SAP Access Common APIs */
 /**
- *  Forms Messages based on SIM Access Profile specification
- *  and sends it to the peer SIM Access entity.
+ *  \brief To form messages and send it to the peer SIM Access entity.
  *
- *  @ingroup SIM_Access_Common_Functions
+ *  \par Description:
+ *       Forms Messages based on SIM Access Profile specification
+ *       and sends it to the peer SIM Access entity.
  *
- *  @param [in] sap_msg 
+ *  \ingroup SIM_Access_Common_Functions
+ *
+ *  \param [in] sap_msg
  *         SAP Message to be sent to peer
  *
- *  @param [in] rfcomm_handle
+ *  \param [in] rfcomm_handle
  *         RFCOMM Connection Handle identifying the SAP connection with peer
  *
- *  @param [in] apdu
- *         Memory buffer provided by the caller to frame the SAP APDU from the ‘sap_msg’
+ *  \param [in] apdu
+ *         Memory buffer provided by the caller to frame the SAP APDU from the 'sap_msg'
  *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_form_and_send_message
@@ -561,18 +629,21 @@ API_RESULT BT_sap_form_and_send_message
            );
 
 /**
- *  Parses SIM Access Profile Messages.
+ *  \brief To parses SIM Access Profile Messages.
  *
- *  @ingroup SIM_Access_Common_Functions
+ *  \par Description:
+ *       This API parses SIM Access Profile Messages.
  *
- *  @param [out] sap_msg
- *         SAP Message structure, filled after parsing ‘apdu’.
+ *  \ingroup SIM_Access_Common_Functions
+ *
+ *  \param [out] sap_msg
+ *         SAP Message structure, filled after parsing 'apdu'.
  *         Memory for this SAP_MESSAGE is provided by the caller.
  *
- *  @param [in] apdu
+ *  \param [in] apdu
  *         SAP APDU to be parsed.
  *
- *  @return
+ *  \return
  *      API_RESULT: API_SUCCESS or Error code for failure
  */
 API_RESULT BT_sap_parse_message
@@ -586,6 +657,8 @@ API_RESULT BT_sap_parse_message
 #endif
 
 #endif /* ((defined SAP_SERVER) || (defined SAP_CLIENT)) */
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_BT_SAP_API_ */
 

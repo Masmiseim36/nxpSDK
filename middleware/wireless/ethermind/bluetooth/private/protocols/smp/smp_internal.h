@@ -466,10 +466,10 @@
 
 #ifdef SMP_LESC_CROSS_TXP_KEY_GEN
 #define SMP_IS_LOCAL_LINK_KEY_ON(keyvar) \
-    (((keyvar) & (UCHAR)(~SMP_LOCAL_LINK_KEY))? (SMP_TRUE): (SMP_FALSE))
+    SMP_IS_KEY_ON((keyvar), SMP_LOCAL_LINK_KEY)
 
 #define SMP_IS_REMOTE_LINK_KEY_ON(keyvar) \
-    (((keyvar) & (UCHAR)(~SMP_REMOTE_LINK_KEY))? (SMP_TRUE): (SMP_FALSE))
+    SMP_IS_KEY_ON((keyvar), SMP_REMOTE_LINK_KEY)
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 
 #define SMP_MIN(x, y) (((x) < (y))? ((x)): ((y)))

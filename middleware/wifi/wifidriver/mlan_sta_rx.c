@@ -247,13 +247,13 @@ mlan_status wlan_ops_sta_process_rx_packet(IN t_void *adapter, IN pmlan_buffer p
 
     if (queuing_ra_based(priv))
     {
-        memcpy(pmadapter, ta, prx_pkt->eth803_hdr.src_addr, MLAN_MAC_ADDR_LENGTH);
+        (void)memcpy(pmadapter, ta, prx_pkt->eth803_hdr.src_addr, MLAN_MAC_ADDR_LENGTH);
     }
     else
     {
         if ((rx_pkt_type != PKT_TYPE_BAR) && (prx_pd->priority < MAX_NUM_TID))
             priv->rx_seq[prx_pd->priority] = prx_pd->seq_num;
-        memcpy(pmadapter, ta, priv->curr_bss_params.bss_descriptor.mac_address, MLAN_MAC_ADDR_LENGTH);
+        (void)memcpy(pmadapter, ta, priv->curr_bss_params.bss_descriptor.mac_address, MLAN_MAC_ADDR_LENGTH);
     }
 
     /* Reorder and send to OS */

@@ -57,6 +57,9 @@ uint8_t hexc2bin(char chr)
         chr -= ('A' - 10);
     else if (chr >= 'a' && chr <= 'f')
         chr -= ('a' - 10);
+    else
+    { /* Do Nothing */
+    }
     return chr;
 }
 
@@ -154,7 +157,7 @@ uint32_t a2hex_or_atoi(char *value)
     {
         return a2hex(value + 2);
     }
-    else if (isdigit((unsigned char)*value))
+    else if (isdigit((unsigned char)*value) != 0)
     {
         return atoi(value);
     }
@@ -192,7 +195,7 @@ int get_mac(const char *arg, char *dest, char sep)
     if (strlen(arg) < 17)
         return 1;
 
-    memset(dest, 0, 6);
+    (void)memset(dest, 0, 6);
 
     for (i = 0, k = 0; i < 17; i += 3, k++)
     {
@@ -219,7 +222,7 @@ int get_mac(const char *arg, char *dest, char sep)
 
 void print_mac(const char *mac)
 {
-    PRINTF("%02X:%02X:%02X:%02X:%02X:%02X ", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+    (void)PRINTF("%02X:%02X:%02X:%02X:%02X:%02X ", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
 }
 
 /* Non-reentrant getopt implementation */

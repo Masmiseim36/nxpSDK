@@ -491,7 +491,6 @@
  */
 #define SM_MIN_ENCRYPTION_KEY_SIZE                      7
 
-
 /* ----------------------------------------------------------------------- */
 /* =======================  Attribute Protocol  ========================== */
 /* ----------------------------------------------------------------------- */
@@ -1509,7 +1508,7 @@
  *  Minimum Value: 1
  *  Maximum Value:
  */
-#define OBEX_ERTM_MAX_TRANSMIT                          10
+#define OBEX_ERTM_MAX_TRANSMIT                          32
 
 /*
  *  Maximum Payload size that can be received over L2CAP transport
@@ -1991,7 +1990,7 @@
  *  Minimum Value: 1
  *  Maximum Value: RFCOMM_MAX_CONNECTION
  */
-#define SPP_MAX_ENTITY                                  1
+#define SPP_MAX_ENTITY                                  2
 
 
 /* ----------------------------------------------------------------------- */
@@ -2112,7 +2111,7 @@
  * Minimum Value: 1
  * Maximum Value: As required
  */
-#define MAP_MSE_NUM_ENTITIES                            1
+#define MAP_MSE_NUM_ENTITIES                            2
 
 /*
  * Maximum number of Message Access Service (MAS) Instances per MAP Client/Server
@@ -2182,7 +2181,7 @@
  * Minimum Value: 1
  * Maximum Value: As required
  */
-#define CTN_CSE_NUM_ENTITIES                            1
+#define CTN_CSE_NUM_ENTITIES                            2
 
 /*
  * Maximum number of CTN Access Service (CAS) Instances per CTN Client/Server
@@ -2191,7 +2190,7 @@
  * Minimum Value: 1
  * Maximum Value: As required
  */
-#define CTN_NUM_CAS_INSTANCE                            1
+#define CTN_NUM_CAS_INSTANCE                            2
 
 /*
  * Number of CTN Access Service (CAS) Entities in Pool.
@@ -2200,7 +2199,7 @@
  *                (CTN_CSE_NUM_ENTITIES * CTN_NUM_CAS_INSTANCE)
  * Maximum Value: As required
  */
-#define CTN_CAS_NUM_ENTITIES                            1
+#define CTN_CAS_NUM_ENTITIES                            2
 
 /*
  * Number of CTN Notification Service (CNS) Entities in Pool

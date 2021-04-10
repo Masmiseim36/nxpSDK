@@ -54,10 +54,17 @@
 
 #define SDIO_OUTBUF_LEN 2048
 
+#ifndef CONFIG_11AC
 /* fixme: sizeof(HostCmd_DS_COMMAND) is 1132 bytes. So have kept this at
    the current size.
 */
 #define WIFI_FW_CMDBUF_SIZE 1400
+#else
+/* In 802.11ac sizeof(HostCmd_CMD_CHANNEL_TRPC_CONFIG) is 1572 bytes.
+ */
+#define WIFI_FW_CMDBUF_SIZE 1580
+#endif /* CONFIG_11AC */
+
 #define WIFI_RESP_WAIT_TIME 10
 
 #define SDIO_INBUF_LEN (2048 * 2)

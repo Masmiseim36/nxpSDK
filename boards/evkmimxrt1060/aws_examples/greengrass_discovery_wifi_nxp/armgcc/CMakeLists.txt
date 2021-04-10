@@ -202,6 +202,8 @@ include(middleware_freertos-aws_iot_libraries_abstractions_platform_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_abstractions_secure_sockets_MIMXRT1062)
 
+include(middleware_wifi_wifidriver_MIMXRT1062)
+
 include(middleware_freertos-aws_iot_libraries_freertos_plus_standard_tls_MIMXRT1062)
 
 include(middleware_freertos-aws_iot_libraries_3rdparty_mbedtls_utils_MIMXRT1062)

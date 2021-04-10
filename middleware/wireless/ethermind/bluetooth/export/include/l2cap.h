@@ -20,6 +20,10 @@
 
 /* ---------------------------------------------- Global Definitions */
 /**
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
+/**
  * \defgroup l2cap_module L2CAP (Logical Link Control and Adaptation Protocol)
  * \{
  *  This section describes the interfaces & APIs offered by the EtherMind
@@ -232,19 +236,10 @@
 
 /* LMP Link types */
 /** BR/EDR LMP Link type */
-#define L2CAP_ACL_LINK                          0x01
+#define L2CAP_LINK_TYPE_BR_EDR                  0x01
 /** LE LMP Link type */
-#define L2CAP_LE_LINK                           0x03
-/** \} */
+#define L2CAP_LINK_TYPE_LE                      0x03
 
-/**
- * \addtogroup le_l2cap_group L2CAP Low Energy
- * \{
- */
-/**
- * \addtogroup l2cap_le_apis L2CAP Low Energy APIs
- * \{
- */
 /* Response codes for Connection parameter update request */
 /** Connection Parameters accepted */
 #define L2CAP_CONNECTION_PARAMETERS_ACCEPTED   0x0000
@@ -262,26 +257,9 @@
 /** Invalid Connection Identifier in request */
 #define L2CAP_INVALID_CID_IN_REQUEST           0x0002
 
-/**
- * \}
- */
-/**
- * \}
- */
-
 #ifdef BT_L2CAP_FIXED_CHANNEL
 
 /* L2CAP Fixed Channel Events */
-/**
- * \addtogroup le_l2cap_group L2CAP Low Energy
- * \{
- *  This section describes all the interfaces and APIs of Bluetooth Low Energy
- *  L2CAP.
- */
-/**
- * \defgroup le_l2cap_fc_events L2CAP Low Energy Fixed Channel Events
- * \{
- */
 /**
  * This event indicates L2CAP Fixed Channel connection from remote device.
  * Fixed Channel Event handler registered with L2CAP for specific fixed channel
@@ -317,27 +295,11 @@
 #else
 #define L2CAP_FIXED_CH_MAX_EVENT           L2CAP_FIXED_CH_DATA_RX_EVENT
 #endif /* BT_L2CAP_FIXED_CHANNEL_TX_COMPLETE */
-/**
- * \}
- */
-/**
- * \}
- */
 #endif /* BT_L2CAP_FIXED_CHANNEL */
 
 #ifdef BT_LE
 
 /* L2CAP LE events */
-/**
- * \addtogroup le_l2cap_group L2CAP Low Energy
- * \{
- *  This section describes all the interfaces and APIs of Bluetooth Low Energy
- *  L2CAP.
- */
-/**
- * \defgroup le_l2cap_events L2CAP Low Energy events
- * \{
- */
 /**
  * This event indicates the connection parameter update received from remote
  * device. The application expected to reply to L2CAP using
@@ -367,18 +329,19 @@
  * - \ref L2CAP_INVALID_CID_IN_REQUEST
  */
 #define L2CAP_COMMAND_REJECTED_EVENT           0x03
-/**
- * \}
- */
-/**
- * \}
- */
 
 /* L2CAP connection update error code */
 #define L2CAP_CONNECTION_PARAM_REJECTED        0x0001
 #endif /* BT_LE */
+/** \} */
+/** \} */
+
 
 /* ---------------------------------------------- Structures/Data Types */
+/**
+ *  \addtogroup l2cap_defines Defines
+ *  \{
+ */
 /**
  * \defgroup l2cap_structures Structures
  * \{
@@ -504,7 +467,6 @@ typedef struct
 #endif /* BT_ENH_L2CAP */
 
 } L2CAP_CONFIG_OPTION;
-/** \} */
 
 /**
  *  The structure representing the PSMs. It stores all the callback
@@ -513,11 +475,6 @@ typedef struct
  */
 typedef struct
 {
-#ifdef BT_ENH_L2CAP
-    /* Bitmap to indicate support for L2CAP extended features */
-    UINT32 feature_mask;
-#endif /* BT_ENH_L2CAP */
-
     /** Callback for l2ca_connect_ind (Device Queue Handle, CID, PSM) */
     API_RESULT (* l2ca_connect_ind_cb)(DEVICE_HANDLE *, UINT16, UINT16);
 
@@ -548,6 +505,11 @@ typedef struct
 
     /** Callback for l2ca_get_fec_params (CID, FEC) */
     API_RESULT (* l2ca_get_fec_params_cb) (UINT16, L2CAP_FEC_OPTION *);
+#endif /* BT_ENH_L2CAP */
+
+#ifdef BT_ENH_L2CAP
+    /* Bitmap to indicate support for L2CAP extended features */
+    UINT32 feature_mask;
 #endif /* BT_ENH_L2CAP */
 
     /** The PSM value for the Protocol */
@@ -593,16 +555,6 @@ typedef struct
 } L2CAP_COMMON_CB;
 
 #ifdef L2CAP_SUPPORT_CBFC_MODE
-/**
- * \addtogroup le_l2cap_group L2CAP Low Energy
- * \{
- */
-/**
- *  \defgroup le_l2cap_structures L2CAP Structures
- *  \{
- *  This Section describes the Data Structures exposed to the application
- */
-
 /**
  *  The structure representing the Connection Parameter for
  *  L2CAP Credit Based Flow Control Mode.
@@ -768,15 +720,12 @@ typedef struct psm_struct_cbfc
 
 #endif /* L2CAP_SUPPORT_CBFC_MODE */
 
-/**
- * \}
- */
 
 #ifdef BT_L2CAP_FIXED_CHANNEL
-/**
- * \addtogroup l2cap_le_apis L2CAP Low Energy APIs
- * \{
- */
+
+/** \} */
+/** \} */
+
 /**
  *  \defgroup le_l2cap_cb Application Callback
  *  \{
@@ -839,31 +788,24 @@ typedef void (* L2CAP_LE_EVENT_HANDLER)
                  /* IN */ UINT16                  /* length of PDU received */
              ) DECL_REENTRANT;
 #endif /* BT_LE */
-/**
- * \}
- */
-/**
- * \}
- */
-/**
- * \}
- */
+/** \} */
 
 /* ---------------------------------------------- Macros */
 
 
 /* ---------------------------------------------- API Declarations */
+/**
+ * \defgroup l2cap_api API Definitions
+ * \{
+ * Describes APIs defined by the module.
+ */
+
 #ifdef __cplusplus
 extern "C"{
 #endif
 
 #ifdef L2CAP
 
-/**
- * \defgroup l2cap_api L2CAP API definitions
- * \{
- * Describes APIs defined by the module.
- */
 /** L2CAP Initialisation & Shutdown */
 /**
  *  \brief To do power on initialization of L2CAP module
@@ -900,11 +842,28 @@ void l2cap_bt_shutdown ( void );
 
 /** Initialization of L2CAP_PSM Structure */
 /**
- *  \brief To perform Bluetooth specific shutdown for L2CAP module
+ *  \brief To initialize L2CAP PSM data structure
  *
  *  \par Description:
- *       This function is the Bluetooth-OFF handler for L2CAP module, and it
- *       performs bluetooth specific shutdown for the L2CAP module.
+ *  This L2CAP API can be used by any Upper Layer PSM
+ *  to initialize L2CAP_PSM Structure before registering
+ *  the same to L2CAP using l2cap_register_psm(). This API
+ *  initializes PSM value, and sets NULL for all optional
+ *  L2CA Callbacks. Also, it disables Connectionless data
+ *  reception by default.
+ *
+ *  \param [in] psm
+ *         PSM value of the upper layer.
+ *  \param [out] l2cap_psm
+ *         Pointer to the L2CAP_PSM Structure, allocated
+ *         by the Upper Layer prior to calling this API
+ *
+ *  \return None
+ *
+ *  \note
+ *  It is adviced that the Upper Layers call this API
+ *  prior to registration of the PSM to initialize
+ *  unused (optional) L2CA Callbacks to NULL.
  */
 void l2cap_init_psm
      (
@@ -922,7 +881,7 @@ void l2cap_init_psm
  *       callback functions (L2CA Callbacks) that L2CAP will use to report
  *       various events (L2CA Indications & Confirmation).
  *
- *  \param [in] l2cap_psm 
+ *  \param [in] l2cap_psm
  *         Pointer to the L2CAP_PSM structure, allocated by the upper
  *         layer prior to calling this API. It is adviced that the upper
  *         layer use l2cap_init_psm() API to initialize the L2CAP_PSM
@@ -943,7 +902,7 @@ void l2cap_init_psm
 
 API_RESULT l2cap_register_psm
            (
-               /* IN */ L2CAP_PSM *proto
+               /* IN */ L2CAP_PSM *l2cap_psm
            );
 
 /** De-registration of Upper Layer PSM to L2CAP */
@@ -951,16 +910,18 @@ API_RESULT l2cap_register_psm
  *  \brief To de-register Upper Layer PSM to L2CAP
  *
  *  \par Description:
- *       This API enables upper layers of L2CAP to remove registeration their PSM.
- *       
+ *       This API de-registers an already registered PSM from the L2CAP.
  *
- *  \param [in] l2cap_psm
- *         Pointer to the L2CAP_PSM structure, allocated by the upper
- *         layer prior to calling this API. 
+ *  \param [in] psm
+ *         The PSM value of the upper layer to be de-registered.
  *
  *  \return  API_RESULT:
  *           API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *           describing the cause of failure.
+ *
+ *  \note
+ *  It must be noted that this routine can succeed for a registered
+ *  PSM only if there exists no active L2CAP channels for it.
  *
  */
 API_RESULT l2cap_unregister_psm ( /* IN */ UINT16 psm );
@@ -1230,8 +1191,8 @@ void l2cap_lp_num_completed_packets
  *       Successful ACL Connection also marks creation of L2CAP Signalling
  *       Channel, and a Signalling Entity is created for the purpose.
  *
- *  \param [in] handle
- *         LMP Handle of the remote device.
+ *  \param [in] device_handle
+ *         The DEVICE_HANDLE of the remote device
  *
  *  \return  API_RESULT:
  *           API_SUCCESS on success, or, an Error Code (see BT_error.h)
@@ -1291,10 +1252,10 @@ API_RESULT lp_device_mode_change_ind
  *  \par Description
  *       To handle indication of setting automatic flush timeout.
  *
- *  \param [in]handle 
+ *  \param [in]handle
  *         LMP Handle of the remote device.
  *
- *  \param [in]flush_to 
+ *  \param [in]flush_to
  *         New Automatic Flush Timeout for the ACL link.
  *
  *  \return  API_RESULT:
@@ -1480,40 +1441,40 @@ API_RESULT l2cap_get_remote_cid
 
 /** L2CA Data Write - CID, Length, Buffer, Length Written */
 /**
- *  \brief To request transmission of data through a connected and configured 
+ *  \brief To request transmission of data through a connected and configured
  *         L2CAP channel.
  *
  *  \par Description:
- *        This service primitive enables upper layer protocol to request L2CAP 
- *        for transmission of service data units (SDUs) through a specified 
+ *        This service primitive enables upper layer protocol to request L2CAP
+ *        for transmission of service data units (SDUs) through a specified
  *        L2CAP channel.
- *        The state of the L2CAP channel must be in OPEN state (connected & 
+ *        The state of the L2CAP channel must be in OPEN state (connected &
  *        configured) to be able to transmit the given SDU.
- *        If the length of the SDU is more than the OutMTU of the L2CAP channel, 
+ *        If the length of the SDU is more than the OutMTU of the L2CAP channel,
  *        then only the first OutMTU octets will be sent.
- *        The same API can be used by upper layer protocols to transmit Group 
- *        data as well. To broadcast a Group data from a PSM, a group is to be 
- *        created for the PSM and members must be added to the group. If there 
- *        are no members in a group then the data will not be broadcasted. 
- *        
+ *        The same API can be used by upper layer protocols to transmit Group
+ *        data as well. To broadcast a Group data from a PSM, a group is to be
+ *        created for the PSM and members must be added to the group. If there
+ *        are no members in a group then the data will not be broadcasted.
+ *
  *  \param [in] local_cid
- *         This parameter specifies the local channel end-point for the L2CAP 
+ *         This parameter specifies the local channel end-point for the L2CAP
  *         channel.
- *  
+ *
  *  \param [in] buffer_length
- *         This parameter specifies the size of the requested SDU to be 
- *         transmitted over the L2CAP channel, inclusive of 4 octets of 
+ *         This parameter specifies the size of the requested SDU to be
+ *         transmitted over the L2CAP channel, inclusive of 4 octets of
  *         L2CAP Header size.
- *         
+ *
  *  \param [in] buffer
- *         This parameter specifies the pointer holding the SDU to be 
- *         transmitted of size data_length. The SDU must have 4 octets of empty 
+ *         This parameter specifies the pointer holding the SDU to be
+ *         transmitted of size data_length. The SDU must have 4 octets of empty
  *         space in front to hold the 4 octets of L2CAP Header.
- *         
+ *
  *  \param [out] actual
- *         This parameter returns the actual number of octets, of 
- *         ‘buffer_length’, scheduled for transmission over the L2CAP channel.
- * 
+ *         This parameter returns the actual number of octets, of
+ *         'buffer_length', scheduled for transmission over the L2CAP channel.
+ *
  *  \return API_RESULT:
  *          API_SUCCESS on success, or, an Error Code (see BT_error.h)
  *          describing the cause of failure.
@@ -1529,17 +1490,17 @@ API_RESULT l2ca_data_write ( /* IN */ UINT16,
  *  \brief To ping for a Bluetooth device address.
  *
  *  \par Description:
- *       This service interface allows application over L2CAP to ping for a 
- *       remote Bluetooth device using its Bluetooth device address (BD_ADDR). 
- *       It is a prerequisite that an ACL connection with the device to be 
- *       pinged already exists. If there is no ACL connection then an error 
- *       is returned. 
+ *       This service interface allows application over L2CAP to ping for a
+ *       remote Bluetooth device using its Bluetooth device address (BD_ADDR).
+ *       It is a prerequisite that an ACL connection with the device to be
+ *       pinged already exists. If there is no ACL connection then an error
+ *       is returned.
  *
  *  \param [in] bd_addr
  *         The Bluetooth Device Address, BD_ADDR, of the remote Bluetooth device.
  *
  *  \param [in]echo_data
- *         This parameter specifies a pointer holding the data to be sent to 
+ *         This parameter specifies a pointer holding the data to be sent to
  *          the remote device with the echo request.
  *
  *  \param [in]echo_datalen
@@ -1556,7 +1517,7 @@ API_RESULT l2ca_ping_req ( /* IN */ UCHAR *,
 
 /** L2CA Get Information Request - BD_ADDR, Info Type */
 /**
- *  \brief 
+ *  \brief
  *
  *  \par Description:
  *
@@ -1577,18 +1538,18 @@ API_RESULT l2ca_getinfo_req ( /* IN */ UCHAR *,
  *
  *  \par Description:
  *       This service interface enables upper layer protocol to request for data
- *       reception flow control for a specified L2CAP channel, configured for 
+ *       reception flow control for a specified L2CAP channel, configured for
  *       either Retransmission Mode or Flow Control Mode.
- *       This API is only available in L2CAP if the BT_1_2 compilation switch 
+ *       This API is only available in L2CAP if the BT_1_2 compilation switch
  *       is enabled.
  *
  *  \param [in] local_cid
- *         This parameter specifies the local channel end-point for the L2CAP 
+ *         This parameter specifies the local channel end-point for the L2CAP
  *         channel.
  *
  *  \param [in] flow
- *         This parameter specifies whether data reception flow control to be 
- *         switched on or off for the specified L2CAP channel. The valid values 
+ *         This parameter specifies whether data reception flow control to be
+ *         switched on or off for the specified L2CAP channel. The valid values
  *         are specified in the Reception Flow Control Constant section.
  *
  *  \return API_RESULT:
@@ -1620,7 +1581,7 @@ API_RESULT l2cap_set_flushability
  *
  *  \par Description:
  *       This service primitive creates a new group and allocates a new channel
- *       end-point identified (CID) to the group. The PSM value for which the 
+ *       end-point identified (CID) to the group. The PSM value for which the
  *       group is created should be a registered PSM.
  *
  *  \param [in] psm
@@ -1644,14 +1605,14 @@ API_RESULT l2ca_group_create ( /* IN */  UINT16,
  *
  *  \par Description:
  *       This service primitive adds a remote device to the group. The group CID
- *       must be a valid one and an ACL connection must exist with the given 
+ *       must be a valid one and an ACL connection must exist with the given
  *       Bluetooth device address for the device to be added to the group.
  *
  *  \param [in] cid
- *         Local channel end-point for the L2CAP group channel. 
+ *         Local channel end-point for the L2CAP group channel.
  *
  *  \param [in] bd_addr
- *         Pointer to the buffer holding the remote address of the device to be 
+ *         Pointer to the buffer holding the remote address of the device to be
  *         added to the group.
  *
  *  \return API_RESULT:
@@ -1667,14 +1628,14 @@ API_RESULT l2ca_group_add_member ( /* IN */ UINT16,
  *  \brief To remove a member from an existing group.
  *
  *  \par Description:
- *       This service primitive removes a remote device from a group. Both the 
- *       group cid and the device address must be valid. 
+ *       This service primitive removes a remote device from a group. Both the
+ *       group cid and the device address must be valid.
  *
  *  \param [in] cid
  *         Local channel end-point for the L2CAP group channel.
  *
  *  \param [in] bd_addr
- *         Pointer to the buffer holding the remote address of the device to be 
+ *         Pointer to the buffer holding the remote address of the device to be
  *         removed from the group.
  *
  *  \return API_RESULT:
@@ -1707,22 +1668,22 @@ API_RESULT l2ca_group_destroy ( /* IN */ UINT16 );
  *  \brief To report the existing members of the group
  *
  *  \par Description:
- *       This service primitive gives the address information of all the 
+ *       This service primitive gives the address information of all the
  *       existing members of the group. The primitive has to passed a pointer to
- *       buffer sufficient to accommodate all the member device addresses. If 
- *       the buffer size is insufficient then a failure is returned and the 
- *       number of devices in the group is reported so that the upper layer 
+ *       buffer sufficient to accommodate all the member device addresses. If
+ *       the buffer size is insufficient then a failure is returned and the
+ *       number of devices in the group is reported so that the upper layer
  *       allocates a buffer appropriate size.
  *
  *  \param [in] cid
  *         Local channel end-point for the L2CAP group channel.
  *
  *  \param [in,out] num_bd_addr
- *         This is an Input/output parameter which indicates the number of 
- *         device addresses that can be stored in the buffer or in case of 
- *         insufficient space this variable will report the number of devices 
+ *         This is an Input/output parameter which indicates the number of
+ *         device addresses that can be stored in the buffer or in case of
+ *         insufficient space this variable will report the number of devices
  *         in the group.
- *         
+ *
  *  \param [out] buffer
  *         Pointer to the buffer in which the device addresses are to be stored.
  *
@@ -1741,8 +1702,8 @@ API_RESULT l2ca_group_get_membership ( /* IN */    UINT16,
  *
  *  \par Description:
  *       This service primitive enables the connectionless traffic reception for
- *       the given PSM. The service primitive can be called with PSM value 
- *       0x0000 to enable the connectionless traffic for all the active PSM’s.
+ *       the given PSM. The service primitive can be called with PSM value
+ *       0x0000 to enable the connectionless traffic for all the active PSM's.
  *
  *  \param [in] psm
  *         PSM for which the connectionless traffic is to be enabled.
@@ -1759,9 +1720,9 @@ API_RESULT l2ca_group_enable_clt ( /* IN */ UINT16 );
  *  \brief To disable reception of Connectionless data.
  *
  *  \par Description:
- *       This service primitive disables the connectionless traffic reception 
- *       for the given PSM. The service primitive can be called with PSM value 
- *       0x0000 to disable the connectionless traffic for all the active PSM’s.
+ *       This service primitive disables the connectionless traffic reception
+ *       for the given PSM. The service primitive can be called with PSM value
+ *       0x0000 to disable the connectionless traffic for all the active PSM's.
  *
  *  \param [in] psm
  *         PSM for which the connectionless traffic is to be disabled.
@@ -1796,18 +1757,18 @@ API_RESULT l2cap_set_config_timeout (/* IN */ UINT16 seconds);
  *  \brief To initialize a L2CAP_CONFIG_OPTION variable.
  *
  *  \par Description:
- *       This utility routine can be used by upper layer protocols 
- *       to initialize a L2CAP_CONFIG_OPTION variable to default parameter 
+ *       This utility routine can be used by upper layer protocols
+ *       to initialize a L2CAP_CONFIG_OPTION variable to default parameter
  *       values that is used with l2ca_config_req() or l2ca_config_rsp() APIs.
- *       The L2CAP_CONFIG_OPTION contains pointer for FLOW_SPEC and 
- *       L2CAP_FEC_OPTION data types – these are initialized to NULL. The 
- *       MTU and Flush Timeout parameters are initialized to L2CAP_MTU_DEFAULT 
+ *       The L2CAP_CONFIG_OPTION contains pointer for FLOW_SPEC and
+ *       L2CAP_FEC_OPTION data types - these are initialized to NULL. The
+ *       MTU and Flush Timeout parameters are initialized to L2CAP_MTU_DEFAULT
  *       and L2CAP_FLUSH_TO_DEFAULT respectively.
  *
  *  \param [out] ptr
- *         Pointer to an upper layer protocol allocated L2CAP_CONFIG_OPTION 
+ *         Pointer to an upper layer protocol allocated L2CAP_CONFIG_OPTION
  *         variable, which needs to be initialized.
- *         
+ *
  */
 void l2cap_init_config_option (/* OUT */ L2CAP_CONFIG_OPTION * ptr);
 /**
@@ -1815,8 +1776,8 @@ void l2cap_init_config_option (/* OUT */ L2CAP_CONFIG_OPTION * ptr);
  *
  *  \par Description:
  *       This utility routine can be used by upper layer protocols to initialize
- *       a FLOW_SPEC variable to default parameter values that can be used in a 
- *       L2CAP_CONFIG_OPTION variable in l2ca_config_req() or l2ca_config_rsp() 
+ *       a FLOW_SPEC variable to default parameter values that can be used in a
+ *       L2CAP_CONFIG_OPTION variable in l2ca_config_req() or l2ca_config_rsp()
  *       APIs.
  *
  *  \param [out] flow_spec
@@ -1867,7 +1828,7 @@ void l2cap_init_ext_flow_spec_default
  *    - TxWindow      : 0
  *    - MPS           : 0
  *
- *  \param [out] flow_spec 
+ *  \param [out] flow_spec
  *         Pointer to the FEC Option to be initialized.
  *
  *  \return None
@@ -2338,6 +2299,7 @@ void l2ca_ucd_data_read_cb
 #ifdef __cplusplus
 };
 #endif
+/** \} */
 /** \} */
 /** \} */
 #endif /* _H_L2CAP_ */

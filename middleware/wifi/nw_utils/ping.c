@@ -40,31 +40,31 @@ int wlan_get_ipv4_addr(unsigned int *ipv4_addr);
 static void display_ping_result(ip_addr_t *addr, int total, int recvd)
 {
     int dropped = total - recvd;
-    PRINTF("\r\n--- %s ping statistics ---\r\n", inet_ntoa(*addr));
-    PRINTF("%d packets transmitted, %d received,", total, recvd);
+    (void)PRINTF("\r\n--- %s ping statistics ---\r\n", inet_ntoa(*addr));
+    (void)PRINTF("%d packets transmitted, %d received,", total, recvd);
     if (dropped != 0)
-        PRINTF(" +%d errors,", dropped);
-    PRINTF(" %d%% packet loss\r\n", (dropped * 100) / total);
+        (void)PRINTF(" +%d errors,", dropped);
+    (void)PRINTF(" %d%% packet loss\r\n", (dropped * 100) / total);
 }
 
 /* Display the statistics of the current iteration of ping */
 static void display_ping_stats(int status, uint32_t size, ip_addr_t *ipaddr, int seqno, int ttl, uint32_t time)
 {
     if (status == WM_SUCCESS)
-        PRINTF("%u bytes from %s: icmp_req=%u ttl=%u time=%u ms\r\n", size, inet_ntoa(*ipaddr), seqno, ttl, time);
+        (void)PRINTF("%u bytes from %s: icmp_req=%u ttl=%u time=%u ms\r\n", size, inet_ntoa(*ipaddr), seqno, ttl, time);
     else
-        PRINTF("From %s icmp_seq=%u Destination Host Unreachable\r\n", inet_ntoa(*ipaddr), seqno);
+        (void)PRINTF("From %s icmp_seq=%u Destination Host Unreachable\r\n", inet_ntoa(*ipaddr), seqno);
 }
 
 /* Display the usage of ping */
 static void display_ping_usage()
 {
-    PRINTF("Usage:\r\n");
-    PRINTF(
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF(
         "\tping [-s <packet_size>] [-c <packet_count>] "
         "[-W <timeout in sec>] <ip_address>\r\n");
-    PRINTF("Default values:\r\n");
-    PRINTF(
+    (void)PRINTF("Default values:\r\n");
+    (void)PRINTF(
         "\tpacket_size: %u\r\n\tpacket_count: %u"
         "\r\n\ttimeout: %u sec\r\n",
         PING_DEFAULT_SIZE, PING_DEFAULT_COUNT, PING_DEFAULT_TIMEOUT_SEC);
@@ -136,8 +136,8 @@ static int ping(unsigned int count, unsigned short size, unsigned int r_timeout,
     ip_addr_t *ip_addr;
     struct timeval timeout;
 
-    PRINTF("PING %s (%s) %u(%u) bytes of data\r\n", inet_ntoa(*addr), inet_ntoa(*addr), size,
-           size + sizeof(struct ip_hdr) + sizeof(struct icmp_echo_hdr));
+    (void)PRINTF("PING %s (%s) %u(%u) bytes of data\r\n", inet_ntoa(*addr), inet_ntoa(*addr), size,
+                 size + sizeof(struct ip_hdr) + sizeof(struct icmp_echo_hdr));
 
     /* Create a raw socket */
     s = socket(AF_INET, SOCK_RAW, 1);
@@ -243,12 +243,13 @@ void cmd_ping(int argc, char **argv)
     uint32_t timeout = PING_DEFAULT_TIMEOUT_SEC;
 
     /* If number of arguments is odd then print error */
-    if (argc & 0x01)
+    if ((argc & 0x01) != 0)
         goto end;
 
     cli_optind = 1;
     while ((c = cli_getopt(argc, argv, "c:s:W:")) != -1)
     {
+        errno = 0;
         switch (c)
         {
             case 'c':
@@ -258,7 +259,9 @@ void cmd_ping(int argc, char **argv)
                 temp = strtoul(cli_optarg, NULL, 10);
                 if (temp > PING_MAX_SIZE)
                 {
-                    PRINTF(
+                    if (errno != 0)
+                        (void)PRINTF("Error during strtoul errno:%d", errno);
+                    (void)PRINTF(
                         "ping: packet size too large: %u."
                         " Maximum is %u\r\n",
                         temp, PING_MAX_SIZE);
@@ -272,19 +275,21 @@ void cmd_ping(int argc, char **argv)
             default:
                 goto end;
         }
+        if (errno != 0)
+            (void)PRINTF("Error during strtoul errno:%d", errno);
     }
     if (cli_optind == argc)
         goto end;
 
     /* Extract the destination IP address. This function returns non zero on
      * success, zero on failure */
-    if (inet_aton(argv[cli_optind], &addr))
+    if (inet_aton(argv[cli_optind], &addr) != 0)
     {
         ping(count, size, timeout, &addr);
         return;
     }
 end:
-    PRINTF("Incorrect usage\r\n");
+    (void)PRINTF("Incorrect usage\r\n");
     display_ping_usage();
 }
 
@@ -296,7 +301,7 @@ int ping_cli_init(void)
 {
     int i;
     for (i = 0; i < sizeof(ping_cli) / sizeof(struct cli_command); i++)
-        if (cli_register_command(&ping_cli[i]))
+        if (cli_register_command(&ping_cli[i]) != 0)
             return -WM_FAIL;
     return WM_SUCCESS;
 }
@@ -306,7 +311,7 @@ int ping_cli_deinit(void)
     int i;
 
     for (i = 0; i < sizeof(ping_cli) / sizeof(struct cli_command); i++)
-        if (cli_unregister_command(&ping_cli[i]))
+        if (cli_unregister_command(&ping_cli[i]) != 0)
             return -WM_FAIL;
     return WM_SUCCESS;
 }

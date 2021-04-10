@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1061xxxxA" name="MIMXRT1061xxxxA" brief="This is SDK version 2.9.2 manifest file. It describes the content of the MIMXRT1061xxxxA and additional settings for tools that support SDK version 2.9.2" format_version="3.8" api_version="2.0.0" configuration="31ea58e9c182e0d797a0fc69f1fd0087" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
-  <!--Timestamp (UTC): 2021-03-10 14:57:27.105108-->
-  <!--This manifest is generated based on sdk repo commit: 25c4f93766fafdc552a84591d0d1a958e37caf7a-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT1061xxxxA" name="MIMXRT1061xxxxA" brief="This is SDK version 2.9.3 manifest file. It describes the content of the MIMXRT1061xxxxA and additional settings for tools that support SDK version 2.9.3" format_version="3.8" api_version="2.0.0" configuration="51693ab08da5a502d7a984430d7922c6" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
+  <!--Timestamp (UTC): 2021-04-10 18:59:36.248027-->
+  <!--This manifest is generated based on sdk repo commit: 77cacb20f3cba65166f73489455ddbef67431d58-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
   </defines>
-  <ksdk id="MCUXpresso292" name="MCUXpresso292" version="2.9.2" revision="453 2021-03-10"/>
+  <ksdk id="MCUXpresso293" name="MCUXpresso293" version="2.9.3" revision="465 2021-04-09"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -98,6 +98,16 @@ ${load}</script>
       </memory>
       <total_memory flash_size_kb="8192" ram_size_kb="32768"/>
       <examples>
+        <example id="evkmimxrt1060_a2dp_sink" name="a2dp_sink" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/a2dp_sink">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/a2dp_sink" type="xml">
+            <files mask="a2dp_sink_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_a2dp_source" name="a2dp_source" brief="The ethermind audio source with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/a2dp_source">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/a2dp_source" type="xml">
+            <files mask="a2dp_source_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1060_adc_12b1msps_sar_interrupt" name="adc_12b1msps_sar_interrupt" brief="The adc_interrupt example shows how to use interrupt with adc driver.In this example, user should indicate a channel to provide a voltage signal (can be controlled by user) as the adc'ssample input. When running the project, typing any key into debug console would trigger the conversion. ADC interrupt would be asserted once the conversion is completed. In ADC ISR, the conversion completed flag would be cleared by reading the conversion result value. Also, the conversion result value is stored, and the ISR counter is increased. These information would be printed when the execution return to the main loop.The point is that the adc interrupt configuration is set when configuring the adc's conversion channel. When in software trigger mode, the conversion would be launched by the operation of configuring channel, just like writing aconversion command. So if user wants to generate the interrupt every time the conversion is completed, the channel's configuration with enabling interrupt setting would be used for each conversion." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/adc" path="boards/evkmimxrt1060/driver_examples/adc/interrupt">
           <external path="boards/evkmimxrt1060/driver_examples/adc/interrupt" type="xml">
             <files mask="adc_12b1msps_sar_interrupt_v3_8.xml"/>
@@ -121,6 +131,11 @@ ${load}</script>
         <example id="evkmimxrt1060_arm_pelion_enet" name="arm_pelion_enet" brief="This example demonstrates communication between ARM Pelion Cloud and IOT platform client device." toolchain="armgcc mdk" compiler="compiler_armclang compiler_gcc" category="arm_pelion_examples" path="boards/evkmimxrt1060/arm_examples/pelion_enet">
           <external path="boards/evkmimxrt1060/arm_examples/pelion_enet" type="xml">
             <files mask="arm_pelion_enet_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_audio_profile" name="audio_profile" brief="The ethermind audio demo with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/audio_profile">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/audio_profile" type="xml">
+            <files mask="audio_profile_v3_8.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1060_aws_device_configuration_enet" name="aws_device_configuration_enet" brief="This example demonstrates how the aws iot device can be configured by mobile application." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="aws_examples" path="boards/evkmimxrt1060/aws_examples/device_configuration_enet">
@@ -183,11 +198,6 @@ ${load}</script>
             <files mask="bee_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_bt_ble_wifi_provisioning" name="bt_ble_wifi_provisioning" brief="The bt_ble_wifi_provisioning." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="bt_ble_examples" path="boards/evkmimxrt1060/bt_ble_examples/bt_ble_wifi_provisioning">
-          <external path="boards/evkmimxrt1060/bt_ble_examples/bt_ble_wifi_provisioning" type="xml">
-            <files mask="bt_ble_wifi_provisioning_v3_8.xml"/>
-          </external>
-        </example>
         <example id="evkmimxrt1060_bubble_peripheral" name="bubble_peripheral" brief="The bubble level demo demonstrates basic usage of the on-board accelerometer to implement a bubble level. A bubble level utilizes two axes to visually show deviation from a level plane (0 degrees) on a given axis. You can open the mex file with MCUXpresso Config Tool to do further configuration of pin, clock and peripheral." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1060/demo_apps/bubble_peripheral">
           <external path="boards/evkmimxrt1060/demo_apps/bubble_peripheral" type="xml">
             <files mask="bubble_peripheral_v3_8.xml"/>
@@ -216,6 +226,26 @@ ${load}</script>
         <example id="evkmimxrt1060_ccm_clockout" name="ccm_clockout" brief="The ccm_clockout driver example shows how to output the internal clock signal. In this driver example, users can choose the clock signal to be outputted, and the divider of the output clock signal. By probing the output pin, users can observe the selected internal clock signal." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples" path="boards/evkmimxrt1060/driver_examples/clockout">
           <external path="boards/evkmimxrt1060/driver_examples/clockout" type="xml">
             <files mask="ccm_clockout_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_central_hpc" name="central_hpc" brief="The ethermind hpc example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_hpc">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_hpc" type="xml">
+            <files mask="central_hpc_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_central_ht" name="central_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_ht">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_ht" type="xml">
+            <files mask="central_ht_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_central_ipsp" name="central_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_ipsp">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_ipsp" type="xml">
+            <files mask="central_ipsp_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_central_pxm" name="central_pxm" brief="The ethermind pxm example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_pxm">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/central_pxm" type="xml">
+            <files mask="central_pxm_v3_8.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1060_cmp_interrupt" name="cmp_interrupt" brief="The CMP interrupt Example shows how to use interrupt with CMP driver.In this example, user should indicate an input channel to capture a voltage signal (can be controlled by user) as the CMP's positive channel input. On the negative side, the internal 6-bit DAC is used to generate the fixed voltage abouthalf value of reference voltage.When running the project, change the input voltage of user-defined channel, then the comparator's output would changebetween logic one and zero when the user-defined channel's voltage crosses the internal DAC's value. The change ofcomparator's output would generate the falling and rising edge events with their interrupts enabled. When any CMP interrupt happens, the CMP's ISR would turn on the LED light if detecting the output's rising edge, or turn off it whendetecting the output's falling edge." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/cmp" path="boards/evkmimxrt1060/driver_examples/cmp/interrupt">
@@ -1028,6 +1058,16 @@ ${load}</script>
             <files mask="guix_washing_machine_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1060_handsfree" name="handsfree" brief="The ethermind bluetooth handsfree example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/handsfree">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/handsfree" type="xml">
+            <files mask="handsfree_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_handsfree_ag" name="handsfree_ag" brief="The ethermind handsfree AG example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/handsfree_ag">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/handsfree_ag" type="xml">
+            <files mask="handsfree_ag_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1060_hello_world" name="hello_world" brief="The HelloWorld demo prints the &quot;Hello World&quot; string to the terminal using the SDK UART drivers and repeat what user input. The purpose of this demo is to show how to use the UART, and to provide a simple project for debugging and further development." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1060/demo_apps/hello_world">
           <external path="boards/evkmimxrt1060/demo_apps/hello_world" type="xml">
             <files mask="hello_world_v3_8.xml"/>
@@ -1493,6 +1533,26 @@ ${load}</script>
             <files mask="ota_demo_enet_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1060_peripheral_hps" name="peripheral_hps" brief="The ethermind hps example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_hps">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_hps" type="xml">
+            <files mask="peripheral_hps_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_peripheral_ht" name="peripheral_ht" brief="The ethermind hts example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_ht">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_ht" type="xml">
+            <files mask="peripheral_ht_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_peripheral_ipsp" name="peripheral_ipsp" brief="The ethermind ipsp example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_ipsp">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_ipsp" type="xml">
+            <files mask="peripheral_ipsp_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_peripheral_pxr" name="peripheral_pxr" brief="The ethermind pxr example with simplified application." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_pxr">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/peripheral_pxr" type="xml">
+            <files mask="peripheral_pxr_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1060_pin_detect_hid_mouse_bm" name="pin_detect_hid_mouse_bm" brief="This pin detect HID example supports the mouse device. The application prints the operation information when the mouse device is attached or plugged in to the PC host." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="usb_examples" path="boards/evkmimxrt1060/usb_examples/usb_pin_detect_hid_mouse/bm">
           <external path="boards/evkmimxrt1060/usb_examples/usb_pin_detect_hid_mouse/bm" type="xml">
             <files mask="pin_detect_hid_mouse_bm_v3_8.xml"/>
@@ -1708,11 +1768,6 @@ ${load}</script>
             <files mask="semc_v3_8.xml"/>
           </external>
         </example>
-        <example id="evkmimxrt1060_shell" name="shell" brief="The Shell Demo application demonstrates to control Leds by commands." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="demo_apps" path="boards/evkmimxrt1060/demo_apps/shell">
-          <external path="boards/evkmimxrt1060/demo_apps/shell" type="xml">
-            <files mask="shell_v3_8.xml"/>
-          </external>
-        </example>
         <example id="evkmimxrt1060_snvs_hp_hac" name="snvs_hp_hac" brief="The SNVS HP HAC project shows how to use the High Assurance Counter (HAC) based on SDK SNVS HP driver. In this example, The HAC is enabled and set a initial value. Software fatal security violation is triggered, and the SSM switches to soft fail mode. In soft fail mode, software stops the HAC counter, and clear the HAC to make SSM switch to hard fail mode. The system resets when enters hard fail mode." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/snvs" path="boards/evkmimxrt1060/driver_examples/snvs/snvs_hp_hac">
           <external path="boards/evkmimxrt1060/driver_examples/snvs/snvs_hp_hac" type="xml">
             <files mask="snvs_hp_hac_v3_8.xml"/>
@@ -1736,6 +1791,11 @@ ${load}</script>
         <example id="evkmimxrt1060_snvs_sw_zmk" name="snvs_sw_zmk" brief="The SNVS SW ZMK project shows how to provision the zeroizable master key (ZMK) by software based on SDK SNVS driver. In this example, ZMK key value is set and ECC is enabled. When change the ZMK key value, violation detected and ZMK key is zeroized." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/snvs" path="boards/evkmimxrt1060/driver_examples/snvs/snvs_sw_zmk">
           <external path="boards/evkmimxrt1060/driver_examples/snvs/snvs_sw_zmk" type="xml">
             <files mask="snvs_sw_zmk_v3_8.xml"/>
+          </external>
+        </example>
+        <example id="evkmimxrt1060_spp" name="spp" brief="The Bluetooth BR SPP example." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/spp">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/spp" type="xml">
+            <files mask="spp_v3_8.xml"/>
           </external>
         </example>
         <example id="evkmimxrt1060_src_reset_source" name="src_reset_source" brief="The src_reset_source example shows how to check the reset source and boot option with SRC driver.When run this example firstly on the board after power up, the POR reset or IPP reset flag would be asserted. But when running it again, the flag would be cleared, since it is no longer a reset.Usually, the reset flags are used and cleared by ROM code or bootloader to check which reset occurred. With the boot mode words, the initial boot code would go to the right way to execute the start code. For example, when the SoC is waked up from some low power mode, all necessary data are already staying in the RAM, the CPU would not have to reload the program to RAM and execute the application directly." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="driver_examples/src" path="boards/evkmimxrt1060/driver_examples/src/src_reset_source">
@@ -1858,6 +1918,11 @@ ${load}</script>
             <files mask="wifi_iperf_v3_8.xml"/>
           </external>
         </example>
+        <example id="evkmimxrt1060_wifi_provisioning" name="wifi_provisioning" brief="The wifi provisioning example." toolchain="armgcc iar mcuxpresso" compiler="compiler_gcc compiler_iar" category="edgefast_bluetooth_examples" path="boards/evkmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning">
+          <external path="boards/evkmimxrt1060/edgefast_bluetooth_examples/wifi_provisioning" type="xml">
+            <files mask="wifi_provisioning_v3_8.xml"/>
+          </external>
+        </example>
         <example id="evkmimxrt1060_wifi_test_mode" name="wifi_test_mode" brief="wifi_test_mode" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="wifi_examples" path="boards/evkmimxrt1060/wifi_examples/wifi_test_mode">
           <external path="boards/evkmimxrt1060/wifi_examples/wifi_test_mode" type="xml">
             <files mask="wifi_test_mode_v3_8.xml"/>
@@ -1898,56 +1963,6 @@ ${load}</script>
         <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
           <drivers>
             <driver id_refs="BOARD_FLASH_evkmimxrt1060">
-              <driverBinary path="devices/MIMXRT1062/mcuxpresso" type="binary">
-                <files mask="MIMXRT1060_SFDP_QSPI.cfx"/>
-              </driverBinary>
-            </driver>
-          </drivers>
-        </debug_configuration>
-      </debug_configurations>
-    </board>
-    <board id="evkmimxrt1060_agm01" name="EVK-MIMXRT1060-AGM01" href="" version="1.0.0" package="MIMXRT1062DVL6A" type="kit">
-      <description>i.MX RT1060 Evaluation Kit with 9-Axis sensor shield board FRDM-STBC-AGM01 having FXAS21002C Gyroscope &amp; FXOS8700CQ E-compass sensors</description>
-      <image path="boards/evkmimxrt1060_agm01" type="image">
-        <files mask="evkmimxrt1060_agm01.png"/>
-      </image>
-      <memory>
-        <memoryBlock id="BOARD_FLASH_evkmimxrt1060_agm01" name="BOARD_FLASH" addr="60000000" size="00800000" type="ExtFlash" access="RO"/>
-        <memoryBlock id="BOARD_SDRAM_evkmimxrt1060_agm01" name="BOARD_SDRAM" addr="80000000" size="01e00000" type="RAM" access="RW"/>
-        <memoryBlock id="NCACHE_REGION_evkmimxrt1060_agm01" name="NCACHE_REGION" addr="81e00000" size="00200000" type="RAM" access="RW"/>
-      </memory>
-      <total_memory flash_size_kb="8192" ram_size_kb="32768"/>
-      <examples>
-        <example id="evkmimxrt1060_agm01_fxas21002_fifo" name="fxas21002_fifo" brief="The FXAS21002 FIFO example application demonstrates the use of the FXAS21002 sensor in Buffered (FIFO) Mode.The example demonstrates configuration of all registers reguired to put the sensor in FIFO Mode and read out samples.The sensor reads samples and are buffered upto the configured Water Mark Level and then a Flag is set." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="issdk/sensors" path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo">
-          <external path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxas21002/fxas21002_fifo" type="xml">
-            <files mask="fxas21002_fifo_v3_8.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_agm01_fxas21002_poll" name="fxas21002_poll" brief="The FXAS21002 FIFO example application demonstrates the use of the FXAS21002 sensor in Buffered (FIFO) Mode.The example demonstrates configuration of all registers reguired to put the sensor in FIFO Mode and read out samples.The sensor reads samples and are buffered upto the configured Water Mark Level and then a Flag is set." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="issdk/sensors" path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll">
-          <external path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxas21002/fxas21002_poll" type="xml">
-            <files mask="fxas21002_poll_v3_8.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_agm01_fxos8700_fifo" name="fxos8700_fifo" brief="The FXAS8700 FIFO example application demonstrates the use of the FXAS8700 sensor in Buffered (FIFO) Mode.The example demonstrates configuration of all registers reguired to put the sensor in FIFO Mode and read out samples.The sensor reads samples and are buffered upto the configured Water Mark Level and then a Flag is set." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="issdk/sensors" path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo">
-          <external path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_fifo" type="xml">
-            <files mask="fxos8700_fifo_v3_8.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_agm01_fxos8700_poll" name="fxos8700_poll" brief="The FXAS8700 FIFO example application demonstrates the use of the FXAS8700 sensor in Buffered (FIFO) Mode.The example demonstrates configuration of all registers reguired to put the sensor in FIFO Mode and read out samples.The sensor reads samples and are buffered upto the configured Water Mark Level and then a Flag is set." toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="issdk/sensors" path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll">
-          <external path="boards/evkmimxrt1060_agm01/issdk_examples/sensors/fxos8700/fxos8700_poll" type="xml">
-            <files mask="fxos8700_poll_v3_8.xml"/>
-          </external>
-        </example>
-        <example id="evkmimxrt1060_agm01_tensorflow_lite_adt" name="tensorflow_lite_adt" brief="Anomaly detection example for TensorFlow Lite" toolchain="armgcc iar mcuxpresso mdk" compiler="compiler_armclang compiler_gcc compiler_iar" category="eiq_examples" path="boards/evkmimxrt1060_agm01/eiq_examples/tensorflow_lite_adt">
-          <external path="boards/evkmimxrt1060_agm01/eiq_examples/tensorflow_lite_adt" type="xml">
-            <files mask="tensorflow_lite_adt_v3_8.xml"/>
-          </external>
-        </example>
-      </examples>
-      <debug_configurations>
-        <debug_configuration id_refs="com.crt.advproject.config.exe.debug com.crt.advproject.config.exe.release">
-          <drivers>
-            <driver id_refs="BOARD_FLASH_evkmimxrt1060_agm01">
               <driverBinary path="devices/MIMXRT1062/mcuxpresso" type="binary">
                 <files mask="MIMXRT1060_SFDP_QSPI.cfx"/>
               </driverBinary>
@@ -2090,46 +2105,6 @@ ${load}</script>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
         <include_path relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="project_template.evkmimxrt1060_agm01.MIMXRT1062" name="evkmimxrt1060_agm01" brief="Board_project_template evkmimxrt1060_agm01" version="1.0.0" full_name="Board_project_template evkmimxrt1060_agm01" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Board Support/SDK Project Template" user_visible="true" type="project_template" package_base_path="boards" project_base_path="./">
-      <dependencies>
-        <all>
-          <component_dependency value="device.MIMXRT1062_startup.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.lpuart.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.common.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.iomuxc.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.igpio.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.xip_device.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.xip_board.MIMXRT1062"/>
-          <component_dependency value="utility.debug_console.MIMXRT1062"/>
-          <component_dependency value="platform.drivers.clock.MIMXRT1062"/>
-          <component_dependency value="component.lpuart_adapter.MIMXRT1062"/>
-          <component_dependency value="component.serial_manager_uart.MIMXRT1062"/>
-          <component_dependency value="component.serial_manager.MIMXRT1062"/>
-        </all>
-      </dependencies>
-      <source relative_path="evkmimxrt1060/project_template" project_relative_path="evkmimxrt1060" type="c_include">
-        <files mask="dcd.h"/>
-      </source>
-      <source relative_path="evkmimxrt1060/project_template" project_relative_path="evkmimxrt1060" type="src">
-        <files mask="dcd.c"/>
-      </source>
-      <source relative_path="evkmimxrt1060_agm01/project_template" type="src">
-        <files mask="board.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="pin_mux.c"/>
-        <files mask="peripherals.c"/>
-      </source>
-      <source relative_path="evkmimxrt1060_agm01/project_template" type="c_include">
-        <files mask="board.h"/>
-        <files mask="clock_config.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="peripherals.h"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="evkmimxrt1060/project_template" project_relative_path="evkmimxrt1060" type="c_include"/>
-        <include_path relative_path="evkmimxrt1060_agm01/project_template" type="c_include"/>
       </include_paths>
     </component>
     <component id="platform.CMSIS.MIMXRT1062" name="CMSIS" brief="Cmsis" version="5.6.0" full_name="Cmsis" devices="MIMXRT1062xxxxA" user_visible="true" type="CMSIS" package_base_path="CMSIS" project_base_path="./">
@@ -3492,6 +3467,9 @@ ${load}</script>
       <source relative_path="./" type="src">
         <files mask="fsl_component_common_task.c"/>
       </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="component_common_task_MIMXRT1062.cmake" hidden="true"/>
+      </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
       </include_paths>
@@ -3532,19 +3510,30 @@ ${load}</script>
     </component>
     <component id="component.flexspi_nor_flash_adapter.MIMXRT1062" name="flexspi_nor_flash_adapter" brief="Component flexspi_nor_flash_adapter" version="1.0.0" full_name="Component flexspi_nor_flash_adapter" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="abstraction_layer" package_base_path="components/internal_flash" project_base_path="component/internal_flash">
       <dependencies>
+        <component_dependency value="component.flexspi_nor_flash_adapter_rt1060evk.MIMXRT1062"/>
+      </dependencies>
+      <source relative_path="./" type="c_include">
+        <files mask="fsl_adapter_flash.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="component_flexspi_nor_flash_adapter_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="./" type="c_include"/>
+      </include_paths>
+    </component>
+    <component id="component.flexspi_nor_flash_adapter_rt1060evk.MIMXRT1062" name="flexspi_nor_flash_adapter_rt1060evk" brief="Component flexspi_nor_flash_adapter_rt1060evk" version="1.0.0" full_name="Component flexspi_nor_flash_adapter_rt1060evk" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" user_visible="true" type="abstraction_layer" package_base_path="components/internal_flash" project_base_path="component/internal_flash">
+      <dependencies>
         <all>
           <component_dependency value="platform.drivers.common.MIMXRT1062"/>
           <component_dependency value="platform.drivers.flexspi.MIMXRT1062"/>
         </all>
       </dependencies>
-      <source relative_path="./" type="c_include">
-        <files mask="fsl_adapter_flash.h"/>
-      </source>
       <source relative_path="./" type="src">
         <files mask="fsl_adapter_flexspi_nor_flash.c"/>
       </source>
       <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="component_flexspi_nor_flash_adapter_MIMXRT1062.cmake" hidden="true"/>
+        <files mask="component_flexspi_nor_flash_adapter_rt1060evk_MIMXRT1062.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>
@@ -23155,20 +23144,6 @@ ${load}</script>
         <include_path relative_path="drivers/systick" project_relative_path="./" type="c_include"/>
       </include_paths>
     </component>
-    <component id="middleware.issdk.drivers.systick_utils.evkmimxrt1060.MIMXRT1062" name="systick_utils" brief="ISSDK Utils" version="1.7.0" full_name="Middleware issdk drivers systick_utils evkmimxrt1060" devices="MIMXRT1062xxxxA" user_visible="false" type="middleware" package_base_path="middleware/issdk" project_base_path="utilities">
-      <source relative_path="drivers/systick" project_relative_path="./" type="src">
-        <files mask="systick_utils.c"/>
-      </source>
-      <source relative_path="drivers/systick" project_relative_path="./" type="c_include">
-        <files mask="systick_utils.h"/>
-      </source>
-      <source toolchain="armgcc" relative_path="." type="workspace">
-        <files mask="middleware_issdk_drivers_systick_utils_evkmimxrt1060_MIMXRT1062.cmake" hidden="true"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="drivers/systick" project_relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
     <component id="middleware.issdk.sensor.allregdefs.MIMXRT1062" name="issdk_allregdefs" brief="ISSDK Sensors RegDefs" version="1.7.0" full_name="Middleware issdk sensor allregdefs" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
         <all>
@@ -23195,39 +23170,6 @@ ${load}</script>
       <include_paths>
         <include_path relative_path="sensors" project_relative_path="./" type="c_include"/>
       </include_paths>
-    </component>
-    <component id="middleware.issdk.sensor.boardkit.evkmimxrt1060.MIMXRT1062" name="issdk_boardkit_evkmimxrt1060" brief="ISSDK Board-Kit files for RT1060 kit" version="1.7.0" full_name="Middleware issdk sensor boardkit evkmimxrt1060" devices="MIMXRT1062xxxxA" user_visible="false" type="other" package_base_path="middleware/issdk" project_base_path="issdk_boardkit">
-      <source relative_path="boardkit/evk-mimxrt1060" project_relative_path="./" type="src">
-        <files mask="evkmimxrt1060.c"/>
-        <files mask="clock_config.c"/>
-        <files mask="pin_mux.c"/>
-        <files mask="board.c"/>
-      </source>
-      <source relative_path="boardkit/evk-mimxrt1060" project_relative_path="./" type="c_include">
-        <files mask="clock_config.h"/>
-        <files mask="pin_mux.h"/>
-        <files mask="board.h"/>
-        <files mask="RTE_Device.h"/>
-        <files mask="evkmimxrt1060.h"/>
-      </source>
-      <source relative_path="boardkit/evk-mimxrt1060/frdm-stbc-agm01" project_relative_path="./" type="c_include">
-        <files mask="issdk_hal.h"/>
-        <files mask="frdm_stbc_agm01_shield.h"/>
-      </source>
-    </component>
-    <component id="middleware.issdk.sensor.driverexamples.agm01.MIMXRT1062" name="issdk_driverexamples_agm01" brief="ISSDK Sensor Driver Examples files for sensors on FRDM-STBC-AGM01" version="1.7.0" full_name="Middleware issdk sensor driverexamples agm01" devices="MIMXRT1062xxxxA" user_visible="false" type="other" package_base_path="middleware/issdk" project_base_path="issdk_driverexamples">
-      <source relative_path="driverexamples/fxas21002" project_relative_path="./" type="src">
-        <files mask="fxas21002_poll.c"/>
-        <files mask="fxas21002_interrupt.c"/>
-        <files mask="fxas21002_fifo.c"/>
-        <files mask="fxas21002_poll_spi.c"/>
-      </source>
-      <source relative_path="driverexamples/fxos8700" project_relative_path="./" type="src">
-        <files mask="fxos8700_poll_spi.c"/>
-        <files mask="fxos8700_interrupt.c"/>
-        <files mask="fxos8700_poll.c"/>
-        <files mask="fxos8700_fifo.c"/>
-      </source>
     </component>
     <component id="middleware.issdk.sensor.fxas21002.MIMXRT1062" name="issdk_fxas21002" brief="ISSDK FXAS21002 Sensor Driver Files" version="1.7.0" full_name="Middleware issdk sensor fxas21002" devices="MIMXRT1062xxxxA" user_visible="true" type="middleware" package_base_path="middleware/issdk" project_base_path="sensors">
       <dependencies>
@@ -29606,6 +29548,7 @@ ${load}</script>
           <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
           <component_dependency value="middleware.sdmmc.sdio.MIMXRT1062"/>
           <component_dependency value="utility.debug_console.MIMXRT1062"/>
+          <component_dependency value="middleware.wifi.wifidriver.MIMXRT1062"/>
         </all>
       </dependencies>
       <source relative_path="dhcpd" type="c_include">
@@ -29614,77 +29557,12 @@ ${load}</script>
         <files mask="dns.h"/>
       </source>
       <source relative_path="dhcpd" type="src">
-        <files mask="dhcp-server.c"/>
         <files mask="dhcp-server-main.c"/>
+        <files mask="dhcp-server.c"/>
         <files mask="dns-server.c"/>
       </source>
-      <source relative_path="incl" type="c_include">
-        <files mask="dhcp-server.h"/>
-        <files mask="wm_utils.h"/>
-        <files mask="wmerrno.h"/>
-        <files mask="wmlog.h"/>
-        <files mask="wmtypes.h"/>
-      </source>
-      <source relative_path="wifidriver" type="src">
-        <files mask="mlan_sdio.c"/>
-        <files mask="mlan_11ac.c"/>
-        <files mask="mlan_11d.c"/>
-        <files mask="mlan_11h.c"/>
-        <files mask="mlan_11n.c"/>
-        <files mask="mlan_11n_aggr.c"/>
-        <files mask="mlan_11n_rxreorder.c"/>
-        <files mask="mlan_cfp.c"/>
-        <files mask="mlan_cmdevt.c"/>
-        <files mask="mlan_glue.c"/>
-        <files mask="mlan_init.c"/>
-        <files mask="mlan_join.c"/>
-        <files mask="mlan_misc.c"/>
-        <files mask="mlan_scan.c"/>
-        <files mask="mlan_shim.c"/>
-        <files mask="mlan_sta_cmd.c"/>
-        <files mask="mlan_sta_cmdresp.c"/>
-        <files mask="mlan_sta_event.c"/>
-        <files mask="mlan_sta_ioctl.c"/>
-        <files mask="mlan_sta_rx.c"/>
-        <files mask="mlan_txrx.c"/>
-        <files mask="mlan_uap_cmdevent.c"/>
-        <files mask="mlan_uap_ioctl.c"/>
-        <files mask="mlan_wmm.c"/>
-        <files mask="mlan_api.c"/>
-        <files mask="wifi.c"/>
-        <files mask="wifi_pwrmgr.c"/>
-        <files mask="wifi-debug.c"/>
-        <files mask="wifi-mem.c"/>
-        <files mask="wifi-sdio.c"/>
-        <files mask="wifi-uap.c"/>
-      </source>
-      <source relative_path="incl/wifidriver" type="c_include">
-        <files mask="mlan_sdio_api.h"/>
-        <files mask="wifi.h"/>
-        <files mask="wifi_events.h"/>
-        <files mask="wifi-decl.h"/>
-      </source>
-      <source relative_path="wifidriver/incl" type="c_include">
-        <files mask="mlan.h"/>
-        <files mask="mlan_11ac.h"/>
-        <files mask="mlan_11h.h"/>
-        <files mask="mlan_11n.h"/>
-        <files mask="mlan_11n_aggr.h"/>
-        <files mask="mlan_11n_rxreorder.h"/>
-        <files mask="mlan_decl.h"/>
-        <files mask="mlan_fw.h"/>
-        <files mask="mlan_ieee.h"/>
-        <files mask="mlan_init.h"/>
-        <files mask="mlan_ioctl.h"/>
-        <files mask="mlan_join.h"/>
-        <files mask="mlan_main.h"/>
-        <files mask="mlan_meas.h"/>
-        <files mask="mlan_remap_mem_operations.h"/>
-        <files mask="mlan_sdio.h"/>
-        <files mask="mlan_uap.h"/>
-        <files mask="mlan_util.h"/>
-        <files mask="mlan_wmm.h"/>
-        <files mask="mlan_api.h"/>
+      <source relative_path="incl/port/lwip" type="c_include">
+        <files mask="wm_net.h"/>
       </source>
       <source relative_path="port/lwip" type="src">
         <files mask="net.c"/>
@@ -29693,48 +29571,17 @@ ${load}</script>
       <source relative_path="port/lwip" type="c_include">
         <files mask="netif_decl.h"/>
       </source>
-      <source relative_path="port/os" type="src">
-        <files mask="os.c"/>
-      </source>
-      <source relative_path="wifidriver" type="c_include">
-        <files mask="wifi_common.h"/>
-        <files mask="wifi-debug.h"/>
-        <files mask="wifi-internal.h"/>
-        <files mask="wifi-sdio.h"/>
-      </source>
       <source relative_path="wlcmgr" type="src">
         <files mask="wlan.c"/>
         <files mask="wlan_txpwrlimit_cfg.c"/>
-      </source>
-      <source relative_path="incl/wlcmgr" type="c_include">
-        <files mask="wlan.h"/>
-        <files mask="wlan_11d.h"/>
-      </source>
-      <source relative_path="incl/port/lwip" type="c_include">
-        <files mask="wm_net.h"/>
-      </source>
-      <source relative_path="incl/port/os" type="c_include">
-        <files mask="wm_os.h"/>
-      </source>
-      <source relative_path="wifi_bt_firmware" type="c_include">
-        <files mask="sd8801_wlan.h"/>
-        <files mask="sduart8977_wlan_bt.h"/>
-        <files mask="sduart8978_wlan_bt.h"/>
       </source>
       <source toolchain="armgcc" relative_path="." type="workspace">
         <files mask="middleware_wifi_MIMXRT1062.cmake" hidden="true"/>
       </source>
       <include_paths>
         <include_path relative_path="dhcpd" type="c_include"/>
-        <include_path relative_path="incl" type="c_include"/>
-        <include_path relative_path="incl/wifidriver" type="c_include"/>
-        <include_path relative_path="wifidriver/incl" type="c_include"/>
-        <include_path relative_path="port/lwip" type="c_include"/>
-        <include_path relative_path="wifidriver" type="c_include"/>
-        <include_path relative_path="incl/wlcmgr" type="c_include"/>
         <include_path relative_path="incl/port/lwip" type="c_include"/>
-        <include_path relative_path="incl/port/os" type="c_include"/>
-        <include_path relative_path="wifi_bt_firmware" type="c_include"/>
+        <include_path relative_path="port/lwip" type="c_include"/>
       </include_paths>
     </component>
     <component id="middleware.wifi.cli.MIMXRT1062" name="wifi_nxp_cli" brief="Middlware WiFi CLI" version="1.3.23" full_name="NXP WiFi CLI" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Wireless/NXP WiFi" user_visible="true" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
@@ -29784,6 +29631,116 @@ ${load}</script>
       <source relative_path="wifi_bt_firmware" type="doc">
         <files mask="version.txt"/>
       </source>
+    </component>
+    <component id="middleware.wifi.wifidriver.MIMXRT1062" name="nxp_wifi_driver" brief="NXP Wi-Fi driver" version="1.3.23" full_name="NXP Wi-Fi driver" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Wireless/NXP WiFi" user_visible="true" type="middleware" package_base_path="middleware/wifi" project_base_path="wifi">
+      <dependencies>
+        <all>
+          <component_dependency value="middleware.freertos-kernel.MIMXRT1062"/>
+          <component_dependency value="middleware.sdmmc.sdio.MIMXRT1062"/>
+          <component_dependency value="utility.debug_console.MIMXRT1062"/>
+        </all>
+      </dependencies>
+      <source relative_path="incl" type="c_include">
+        <files mask="dhcp-server.h"/>
+        <files mask="wm_utils.h"/>
+        <files mask="wmerrno.h"/>
+        <files mask="wmlog.h"/>
+        <files mask="wmtypes.h"/>
+      </source>
+      <source relative_path="incl/port/os" type="c_include">
+        <files mask="wm_os.h"/>
+      </source>
+      <source relative_path="incl/wifidriver" type="c_include">
+        <files mask="mlan_sdio_api.h"/>
+        <files mask="wifi-decl.h"/>
+        <files mask="wifi.h"/>
+        <files mask="wifi_events.h"/>
+      </source>
+      <source relative_path="incl/wlcmgr" type="c_include">
+        <files mask="wlan.h"/>
+        <files mask="wlan_11d.h"/>
+      </source>
+      <source relative_path="port/os" type="src">
+        <files mask="os.c"/>
+      </source>
+      <source relative_path="wifi_bt_firmware" type="c_include">
+        <files mask="sd8801_wlan.h"/>
+        <files mask="sduart8977_wlan_bt.h"/>
+        <files mask="sduart8978_wlan_bt.h"/>
+      </source>
+      <source relative_path="wifidriver/incl" type="c_include">
+        <files mask="mlan.h"/>
+        <files mask="mlan_11ac.h"/>
+        <files mask="mlan_11h.h"/>
+        <files mask="mlan_11n.h"/>
+        <files mask="mlan_11n_aggr.h"/>
+        <files mask="mlan_11n_rxreorder.h"/>
+        <files mask="mlan_api.h"/>
+        <files mask="mlan_decl.h"/>
+        <files mask="mlan_fw.h"/>
+        <files mask="mlan_ieee.h"/>
+        <files mask="mlan_init.h"/>
+        <files mask="mlan_ioctl.h"/>
+        <files mask="mlan_join.h"/>
+        <files mask="mlan_main.h"/>
+        <files mask="mlan_meas.h"/>
+        <files mask="mlan_remap_mem_operations.h"/>
+        <files mask="mlan_sdio.h"/>
+        <files mask="mlan_uap.h"/>
+        <files mask="mlan_util.h"/>
+        <files mask="mlan_wmm.h"/>
+      </source>
+      <source relative_path="wifidriver" type="src">
+        <files mask="mlan_11ac.c"/>
+        <files mask="mlan_11d.c"/>
+        <files mask="mlan_11h.c"/>
+        <files mask="mlan_11n.c"/>
+        <files mask="mlan_11n_aggr.c"/>
+        <files mask="mlan_11n_rxreorder.c"/>
+        <files mask="mlan_api.c"/>
+        <files mask="mlan_cfp.c"/>
+        <files mask="mlan_cmdevt.c"/>
+        <files mask="mlan_glue.c"/>
+        <files mask="mlan_init.c"/>
+        <files mask="mlan_join.c"/>
+        <files mask="mlan_misc.c"/>
+        <files mask="mlan_scan.c"/>
+        <files mask="mlan_sdio.c"/>
+        <files mask="mlan_shim.c"/>
+        <files mask="mlan_sta_cmd.c"/>
+        <files mask="mlan_sta_cmdresp.c"/>
+        <files mask="mlan_sta_event.c"/>
+        <files mask="mlan_sta_ioctl.c"/>
+        <files mask="mlan_sta_rx.c"/>
+        <files mask="mlan_txrx.c"/>
+        <files mask="mlan_uap_cmdevent.c"/>
+        <files mask="mlan_uap_ioctl.c"/>
+        <files mask="mlan_wmm.c"/>
+        <files mask="wifi-debug.c"/>
+        <files mask="wifi-mem.c"/>
+        <files mask="wifi-sdio.c"/>
+        <files mask="wifi-uap.c"/>
+        <files mask="wifi.c"/>
+        <files mask="wifi_pwrmgr.c"/>
+      </source>
+      <source relative_path="wifidriver" type="c_include">
+        <files mask="wifi-debug.h"/>
+        <files mask="wifi-internal.h"/>
+        <files mask="wifi-sdio.h"/>
+        <files mask="wifi_common.h"/>
+      </source>
+      <source toolchain="armgcc" relative_path="." type="workspace">
+        <files mask="middleware_wifi_wifidriver_MIMXRT1062.cmake" hidden="true"/>
+      </source>
+      <include_paths>
+        <include_path relative_path="incl" type="c_include"/>
+        <include_path relative_path="incl/port/os" type="c_include"/>
+        <include_path relative_path="incl/wifidriver" type="c_include"/>
+        <include_path relative_path="incl/wlcmgr" type="c_include"/>
+        <include_path relative_path="wifi_bt_firmware" type="c_include"/>
+        <include_path relative_path="wifidriver" type="c_include"/>
+        <include_path relative_path="wifidriver/incl" type="c_include"/>
+      </include_paths>
     </component>
     <component id="middleware.wifi_wiced.MIMXRT1062" name="wifi_wiced" brief="Cypress WICED framework for MCUXpresso SDK" version="6.1.0" full_name="Cypress WICED framework" devices="MIMXRT1062xxxxA" device_cores="core0_MIMXRT1062xxxxA" category="Wireless/Cypress WiFi" user_visible="true" type="middleware" package_base_path="middleware/wiced" project_base_path="wiced">
       <dependencies>
@@ -31788,23 +31745,6 @@ ${load}</script>
       </source>
       <source relative_path="./" type="src">
         <files mask="fsl_component_common_task.c"/>
-      </source>
-      <include_paths>
-        <include_path relative_path="./" type="c_include"/>
-      </include_paths>
-    </component>
-    <component id="component.flexspi_nor_flash_adapter.MIMXRT1061" name="flexspi_nor_flash_adapter" brief="Component flexspi_nor_flash_adapter" version="1.0.0" full_name="Component flexspi_nor_flash_adapter" devices="MIMXRT1061xxxxA" device_cores="core0_MIMXRT1061xxxxA" user_visible="true" type="abstraction_layer" package_base_path="components/internal_flash" project_base_path="component/internal_flash">
-      <dependencies>
-        <all>
-          <component_dependency value="platform.drivers.common.MIMXRT1061"/>
-          <component_dependency value="platform.drivers.flexspi.MIMXRT1061"/>
-        </all>
-      </dependencies>
-      <source relative_path="./" type="c_include">
-        <files mask="fsl_adapter_flash.h"/>
-      </source>
-      <source relative_path="./" type="src">
-        <files mask="fsl_adapter_flexspi_nor_flash.c"/>
       </source>
       <include_paths>
         <include_path relative_path="./" type="c_include"/>

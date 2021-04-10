@@ -50,21 +50,21 @@
 #define fflush(x)
 
 /* TODO: Map to SDK/platform interfaces */
-#define	fgets(...)
+#define fgets(...)
 #define rewind(...)
 #define ftell(...)      0
 #define fgetc(x)        0
-#define	fscanf(fp,f,x)  (*x) = 0
+#define fscanf(fp,f,x)  (*x) = 0
 #define fprintf(...)
 #define fread(...)
 #define fwrite(...)
 #define fopen(...) 0
 #define fclose(...)
-#define fseek(...) 
+#define fseek(...)
 
 #if defined(__IAR_SYSTEMS_ICC__)
 #define stdin
-#endif /* defined(__IAR_SYSTEMS_ICC__) || defined(__CC_ARM) || defined(__ARMCC_VERSION) */
+#endif /* defined(__IAR_SYSTEMS_ICC__) */
 
 /* --------------------------------------------- Structures/Data Types */
 

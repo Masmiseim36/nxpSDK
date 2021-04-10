@@ -134,7 +134,7 @@ mlan_status wlan_11n_deaggregate_pkt(mlan_private *priv, pmlan_buffer pmbuf)
 
         if (memcmp(pmadapter, &prx_pkt->rfc1042_hdr, rfc1042_eth_hdr, sizeof(rfc1042_eth_hdr)) == 0)
         {
-            memmove(pmadapter, data + LLC_SNAP_LEN, data, (2 * MLAN_MAC_ADDR_LENGTH));
+            (void)memmove(pmadapter, data + LLC_SNAP_LEN, data, (2 * MLAN_MAC_ADDR_LENGTH));
             data += LLC_SNAP_LEN;
             pkt_len += sizeof(Eth803Hdr_t) - LLC_SNAP_LEN;
         }

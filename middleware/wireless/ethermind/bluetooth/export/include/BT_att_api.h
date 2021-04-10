@@ -20,6 +20,10 @@
 #include "BT_device_queue.h"
 
 /* --------------------------------------------- Global Definitions */
+/**
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
 
 /**
  * \defgroup att_module ATT (Attribute Protocol)
@@ -484,10 +488,10 @@ typedef UCHAR ATT_CON_ID;
 /** ATT Handle */
 typedef struct
 {
-    /* Identifies the peer instance */
+    /** Identifies the peer instance */
     DEVICE_HANDLE     device_id;
 
-    /* Identifies the ATT Instance */
+    /** Identifies the ATT Instance */
     ATT_CON_ID        att_id;
 
 }ATT_HANDLE;
@@ -626,6 +630,20 @@ typedef struct
     UINT16   actual_len;
 
 }ATT_VALUE;
+
+/** Abstracts Value List */
+typedef struct
+{
+    /** Values to be packed */
+    ATT_VALUE    * value;
+
+    /** Number of values to be packed */
+    UINT16       count;
+
+    /** Number of elements packed */
+    UINT16       actual_count;
+
+}ATT_VALUE_LIST;
 
 /**
  *  Abstracts Handle List needed for Read Multiple Request.
@@ -865,18 +883,7 @@ typedef ATT_HANDLE_LIST ATT_READ_MULTIPLE_REQ_PARAM;
  * See \ref BT_att_read_multiple_rsp
  */
 /* <comment> is sending partial value allowed? */
-typedef struct
-{
-    /** Values to be packed */
-    ATT_VALUE    * value;
-
-    /** Number of values to be packed */
-    UINT16       count;
-
-    /** Number of elements packed */
-    UINT16       actual_count;
-
-}ATT_READ_MULTIPLE_RSP_PARAM;
+typedef ATT_VALUE_LIST ATT_READ_MULTIPLE_RSP_PARAM;
 
 /**
  * Read By Group Type Request Parameters
@@ -1081,18 +1088,63 @@ API_RESULT BT_att_send_pdu
            );
 
 #ifdef ATT_ON_BR_EDR_SUPPORT
-
+/**
+ *  \brief To establish ATT connection for L2CAP Credit Based Flow Control mode.
+ *
+ *  \par Description:
+ *  This ATT interface initiates L2CAP channel establishment
+ *  procedure for CBFC mode, to the specified remote Bluetooth device over BR/EDR.
+ *
+ *  \param [in, out] handle
+ *         Identifies the remote ATT entity to which the connection to be
+ *         requested.
+ *
+ *  \return API_SUCCESS or an error code indicating reason for failure
+ */
 API_RESULT BT_att_connect_req
            (
                 /* INOUT */ ATT_HANDLE    * handle
            );
-
+/**
+ *  \brief To respond to an incoming ATT connection request for
+ *  L2CAP Credit Based Flow Control mode.
+ *
+ *  \par Description:
+ *  This ATT interface enables an upper layer to respond
+ *  to ATT connection request for L2CAP Credit Based Flow Control mode over BR/EDR.
+ *  It is mandatory that the upper layer always responds back by calling
+ *  this interface upon receiving ATT CBFC Connection Request.
+ *
+ *  \param [in] handle
+ *         This parameter specifies a list of ATT entities to which the connection
+ *         response to be sent.
+ *  \param [in] response
+ *         This parameter specifies the response of the upper layer for
+ *         the new ATT connection establishment requests from the peer.
+ *         It must be set to a value as specified in L2CAP Connect Result Codes.
+ *
+ *  \return API_SUCCESS or an error code indicating reason for failure
+ */
 API_RESULT BT_att_connect_rsp
            (
                 /* IN */ ATT_HANDLE    * handle,
                 /* IN */ UCHAR         response
            );
-
+/**
+ *  \brief To disconnect an established ATT CBFC connection.
+ *
+ *  \par Description:
+ *  This ATT interface initiates disconnection of the referred ATT CBFC connection over BR/EDR.
+ *  Disconnection of the ATT connection always succeeds - either by reception
+ *  of the Disconnect Response message from the peer, or by timeout.
+ *  In any case, ATT will confirm disconnection of the connection,
+ *  by calling the registered ATT callback.
+ *
+ *  \param [in] handle
+ *         Identifies the remote ATT entity which is to be disconnected.
+ *
+ *  \return API_SUCCESS or an error code indicating reason for failure
+ */
 API_RESULT BT_att_disconnect_req
            (
                 /* IN */ ATT_HANDLE    * handle
@@ -1859,6 +1911,7 @@ API_RESULT BT_att_access_mtu
 
 /** \} */
 
+/** \} */
 /** \} */
 
 #endif /* _H_BT_ATT_API_ */

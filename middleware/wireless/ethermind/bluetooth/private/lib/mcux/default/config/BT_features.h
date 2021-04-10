@@ -236,35 +236,6 @@
 
 
 /* ----------------------------------------------------------------------- */
-/* ==== Bluetooth v4.1 Feature Flags ===================================== */
-/* ----------------------------------------------------------------------- */
-
-#ifdef BT_4_1
-/*
- *  BT_BRSC
- *
- *  This flag is used to enable support for BR/EDR Secure Connections
- *  feature of Bluetooth Specification v4.1.
- *
- *  Dependency: BT_4_1 must be defined.
- */
-#define BT_BRSC
-#endif /* BT_4_1 */
-
-/*
- *  BT_BRSC_TEST
- *
- *  This flag is used to enable support for BR/EDR Secure Connections Test Mode
- *  Command.
- *
- *  Dependency: BT_BRSC must be defined.
- */
-#ifdef BT_BRSC
-#define BT_BRSC_TEST
-#endif /* BT_BRSC */
-
-
-/* ----------------------------------------------------------------------- */
 /* ==== Bluetooth v4.0 Feature Flags ===================================== */
 /* ----------------------------------------------------------------------- */
 #ifdef BT_4_0
@@ -322,6 +293,33 @@
 
 #endif /* BT_4_0 */
 
+/* ----------------------------------------------------------------------- */
+/* ==== Bluetooth v4.1 Feature Flags ===================================== */
+/* ----------------------------------------------------------------------- */
+
+#ifdef BT_4_1
+/*
+ *  BT_BRSC
+ *
+ *  This flag is used to enable support for BR/EDR Secure Connections
+ *  feature of Bluetooth Specification v4.1.
+ *
+ *  Dependency: BT_4_1 must be defined.
+ */
+#define BT_BRSC
+#endif /* BT_4_1 */
+
+/*
+ *  BT_BRSC_TEST
+ *
+ *  This flag is used to enable support for BR/EDR Secure Connections Test Mode
+ *  Command.
+ *
+ *  Dependency: BT_BRSC must be defined.
+ */
+#ifdef BT_BRSC
+#define BT_BRSC_TEST
+#endif /* BT_BRSC */
 
 /* ----------------------------------------------------------------------- */
 /* ==== Bluetooth v3.0 Feature Flags ===================================== */
@@ -1056,7 +1054,7 @@
 #define BPP
 #define BPP_SENDER
 #define BPP_PRINTER
-/* #define PAN */
+#define PAN
 #define HID_HOST
 #define HID_DEVICE
 #define A2DP
@@ -1317,6 +1315,31 @@
 /* #define HCI_BYPASS_BH_ENQUEUE */
 
 /*
+ *  HCI_HANDLE_CONNECTION_FAILURE_IN_CONNECTED_STATE
+ *
+ *  This flag enables hack to drop connection failure from the same peer
+ *  which is previously disconnected due to connection timeout but the
+ *  local device has not indicated the disconnection.
+ *
+ *  This is observed with the certain controllers and this check
+ *  is a hack to drop the connection event as long as no
+ *  disconnection is received.
+ *
+ *  Dependancy: None
+ */
+#define HCI_HANDLE_CONNECTION_FAILURE_IN_CONNECTED_STATE
+
+/*
+ *  HCI_CHECK_EVENT_CODE_IN_RANGE
+ *
+ *  This flag enables the block to validate the event codes
+ *  received from the controller.
+ *
+ *  Dependancy: None
+ */
+#define HCI_CHECK_EVENT_CODE_IN_RANGE
+
+/*
  * Feature flags for HCI Commands defined for BLE Single Mode
  *
  * Note:
@@ -1473,6 +1496,65 @@
 
 #endif /* BT_LE */
 
+#ifdef BT_1_2
+/* Read LMP Handle */
+/* #define HCI_READ_LMP_HANDLE_SUPPORT */
+#endif /* BT_1_2 */
+
+#ifdef BT_3_0
+/* Read Data Block Size */
+/* #define HCI_READ_DATA_BLOCK_SIZE_SUPPORT  */
+#endif /* BT_3_0 */
+
+#ifdef BT_4_1
+/* Remote OOB Extended Data Request Reply */
+/* #define HCI_REMOTE_OOB_EXTENDED_DATA_REQUEST_REPLY_SUPPORT */
+
+/* Set MWS Channel Parameters */
+/* #define HCI_SET_MWS_CHANNEL_PARAMETERS_SUPPORT */
+
+/* Set External Frame Configuration */
+/* #define HCI_SET_EXTERNAL_FRAME_CONFIGURATION_SUPPORT */
+
+/* Set MWS Signaling */
+/* #define HCI_SET_MWS_SIGNALING_SUPPORT */
+
+/* Set MWS Transport Layer */
+/* #define HCI_SET_MWS_TRANSPORT_LAYER_SUPPORT */
+
+/* Set MWS_PATTERN Configuration */
+/* #define HCI_SET_MWS_PATTERN_CONFIGURATION_SUPPORT */
+
+/* Set MWS Scan Frequency Table */
+/* #define HCI_SET_MWS_SCAN_FREQUENCY_TABLE_SUPPORT */
+
+/* Read Extended Page Timeout */
+/* #define HCI_READ_EXTENDED_PAGE_TIMEOUT_SUPPORT */
+
+/* Write Extended Page Timeout */
+/* #define HCI_WRITE_EXTENDED_PAGE_TIMEOUT_SUPPORT */
+
+/* Read Extended Inquiry Length */
+/* #define HCI_READ_EXTENDED_INQUIRY_LENGTH_SUPPORT */
+
+/* Write Extended Inquiry Length */
+/* #define HCI_WRITE_EXTENDED_INQUIRY_LENGTH_SUPPORT */
+
+/* Read Local OOB Extended Data */
+/* #define HCI_READ_LOCAL_OOB_EXTENDED_DATA_SUPPORT */
+
+/* Get MWS Transport Layer Configuration */
+/* #define HCI_GET_MWS_TRANSPORT_LAYER_CONFIGURATION_SUPPORT */
+
+/* Set Triggered Clock Capture */
+/* #define HCI_SET_TRIGGERED_CLOCK_CAPTURE_SUPPORT */
+#endif /* BT_4_1 */
+
+#ifdef BT_5_1
+/* Read Local Simple Pairing Options */
+/* #define HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_SUPPORT */
+#endif /* BT_5_1 */
+
 
 /* ----------------------------------------------------------------------- */
 /* ==== SM Module Specific Flags ========================================= */
@@ -1558,6 +1640,7 @@
 /* #define SM_NOSYNC_PSSTORE_ON_DELETION */
 
 #ifdef BT_4_1
+#ifdef BT_LE
 /*
  *  HCI_LOW_DUTY_CYCLE_DIRECTED_ADVERTISING
  *
@@ -1575,6 +1658,7 @@
  * Dependency: BT_4_1 must be defined.
  */
 #define HCI_LE_PING_SUPPORT
+#endif /* BT_LE */
 
 #ifdef HCI_LE_PING_SUPPORT
 /*
@@ -1708,6 +1792,7 @@
 #endif /* BT_4_1 */
 
 #ifdef BT_4_2
+#ifdef BT_LE
 /*
  * HCI_LE_DATA_LENGTH_EXT_SUPPORT
  *
@@ -1731,7 +1816,6 @@
  * Dependency: BT_4_2 must be defined.
  */
 #define HCI_LE_PRIVACY_1_2_SUPPORT
-
 
 #ifdef HCI_LE_DATA_LENGTH_EXT_SUPPORT
 /* LE Set Data Length command support */
@@ -1780,9 +1864,11 @@
 /* LE Set Resolvable Private Address Timeout */
 #define HCI_LE_SET_RESOLVABLE_PRIVATE_ADDR_TIMEOUT_SUPPORT
 #endif /* HCI_LE_PRIVACY_1_2_SUPPORT */
+#endif /* BT_LE */
 #endif /* BT_4_2 */
 
 #ifdef BT_5_0
+#ifdef BT_LE
 /*
  * HCI_LE_2MBPS_PHY_SUPPORT
  *
@@ -1910,11 +1996,11 @@
 
 /* LE Set Privacy Mode */
 #define HCI_LE_SET_PRIVACY_MODE_SUPPORT
-
+#endif /* BT_LE */
 #endif /* BT_5_0 */
 
 #ifdef BT_5_1
-
+#ifdef BT_LE
 /* LE Receiver Test v3 */
 #define HCI_LE_RECEIVER_TEST_V3_SUPPORT
 
@@ -1965,6 +2051,7 @@
 
 /* LE Modify Sleep Clock Accuracy */
 #define HCI_LE_MODIFY_SLEEP_CLOCK_ACCURACY_SUPPORT
+#endif /* BT_LE */
 #endif /* BT_5_1 */
 
 
@@ -3626,7 +3713,7 @@
  *  Dependency: SMP_LESC
  */
 #ifdef SMP_LESC
-/* #define SMP_LESC_CROSS_TXP_KEY_GEN */
+#define SMP_LESC_CROSS_TXP_KEY_GEN
 #endif /* SMP_LESC */
 
 /*

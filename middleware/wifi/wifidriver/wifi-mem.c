@@ -49,7 +49,7 @@ void *wifi_malloc_eventbuf(int size)
 {
     void *ptr = os_mem_alloc(size);
 
-    if (ptr)
+    if (ptr != NULL)
     {
         w_mem_d("[evtbuf] Alloc: A: %p S: %d", ptr, size);
     }
@@ -71,7 +71,7 @@ mlan_status wrapper_moal_malloc(IN t_void *pmoal_handle, IN t_u32 size, IN t_u32
 {
     *ppbuf = os_mem_alloc(size);
 
-    if (*ppbuf)
+    if (*ppbuf != NULL)
     {
         w_mem_d("[mlan]: Alloc: A: %p S: %d", *ppbuf, size);
         return MLAN_STATUS_SUCCESS;

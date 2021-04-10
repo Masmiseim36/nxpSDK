@@ -116,7 +116,7 @@ static char *parse_questions(unsigned int num_questions, uint8_t *pos, int *foun
             for (i = 0; i < dnss.count_qnames; i++)
             {
                 *found = !strncmp(dnss.list_qnames[i].qname, (char *)pos, (base + SERVER_BUFFER_SIZE - pos));
-                if (*found)
+                if (*found != 0)
                     break;
             }
         }
@@ -150,7 +150,7 @@ int process_dns_message(char *msg, int len, struct sockaddr_in *fromaddr)
 
     dhcp_d("DNS transaction id: 0x%x", htons(hdr->id));
 
-    if (hdr->flags.fields.qr)
+    if (hdr->flags.fields.qr != 0U)
     {
         dhcp_e("ignoring this dns message (not a query)");
         return -WM_E_DHCPD_DNS_IGNORE;
@@ -229,7 +229,7 @@ void dhcp_enable_dns_server(char **domain_names)
 
         for (i = 0; i < dnss.count_qnames; i++)
         {
-            memset(dnss.list_qnames[i].qname, 0, sizeof(struct dns_qname));
+            (void)memset(dnss.list_qnames[i].qname, 0, sizeof(struct dns_qname));
             format_qname(domain_names[i], dnss.list_qnames[i].qname);
         }
     }
@@ -268,7 +268,7 @@ void dns_process_packet()
 
 uint32_t dns_get_nameserver()
 {
-    if (dhcp_dns_server_handler)
+    if (dhcp_dns_server_handler != NULL)
         return dhcps.my_ip;
     return 0;
 }
@@ -289,7 +289,7 @@ void dns_free_allocations()
     if (!dhcp_dns_server_handler)
         return;
 
-    if (dnss.list_qnames)
+    if (dnss.list_qnames != NULL)
     {
         dnss.count_qnames = 0;
         os_mem_free(dnss.list_qnames);

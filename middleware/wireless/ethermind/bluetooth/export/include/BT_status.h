@@ -19,6 +19,30 @@
 
 
 /* ----------------------------------------- Global Definitions */
+/**
+ * \addtogroup bt_utils Utilities
+ * \{
+ */
+/**
+ * \defgroup status_module STATUS (Status Module)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Status (STATIS) module to the Application and other upper
+ *  layers of the stack.
+ */
+
+/**
+ * \defgroup status_defines Defines
+ * \{
+ * Describes defines for the module.
+ */
+
+/**
+ * \defgroup status_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
+
 /*
  *  EtherMind Status Flag
  *  ---------------------
@@ -69,6 +93,12 @@
  */
 
 /** Status Bit Definitions */
+/**
+ * @name  Status Bit Definitions
+ *
+ * Constant Definitions for Status Bit Definitions
+ */
+/*@{*/
 #define STATUS_BIT_MEM_ALLOC_FAILED             0
 #define STATUS_BIT_DATA_BUFFER_FULL             1
 #define STATUS_BIT_HCI_COMMAND_Q_FULL           2
@@ -77,25 +107,45 @@
 #define STATUS_ATT_INVALID_PEER_RSP             5
 #define STATUS_ATT_INVALID_PEER_PDU             6
 #define STATUS_ATT_NO_FREE_INSTANCE             7
-
+/*@}*/
 /* Stack Activity Bit Definitions */
+/**
+ * @name  Stack Activity Bit Definitions
+ *
+ * Constant Definitions for Stack Activity Bit Definitions
+ */
+/*@{*/
 #define STATUS_BIT_ATT_BUSY                     8
 #define STATUS_BIT_SMP_BUSY                     9
 #define STATUS_BIT_L2CAP_BUSY                   10
 #define STATUS_BIT_HCI_BUSY                     11
-
+/*@}*/
 /** Count of maximum defined bit in Status Flag */
 #define STATUS_NUM_DEFINED_BITS                 12
 
 /** Set/Reset Status Flag Bits */
+/**
+ * @name  Stack Activity Bit Definitions
+ *
+ * Constant Definitions for Stack Activity Bit Definitions
+ */
+/*@{*/
 #define STATUS_BIT_SET                          0x01
 #define STATUS_BIT_RESET                        0x00
+/*@}*/
 
+/** \} */
+/** \} */
 
 /* ----------------------------------------- Structures/Data Types */
 
 
 /* ----------------------------------------- Function Declarations */
+/**
+ * \defgroup status_api_defs API Definitions
+ * \{
+ * This section describes the EtherMind Status APIs.
+ */
 #ifdef __cplusplus
 extern "C"{
 #endif
@@ -107,8 +157,6 @@ void em_status_init (void);
 void status_bt_init (void);
 
 /**
- *  \fn BT_status_get_flag
- *
  *  \par Description
  *  This function returns the value of the EtherMind Status Flag.
  *  The EtherMind Status Flag is reset to zero after returning the
@@ -126,8 +174,6 @@ void BT_status_get_flag
      );
 
 /**
- *  \fn BT_status_get_bit
- *
  *  \par Description
  *  This API returns the value of a bit of EtherMind Status Flag.
  *  The value of bit in EtherMind Status Flag is reset to zero
@@ -149,8 +195,6 @@ void BT_status_get_bit
      );
 
 /**
- *  \fn BT_status_set_bit
- *
  *  \par Description
  *  This API sets/resets the value of a bit of EtherMind Status Flag.
  *  Upon a change in EtherMind Status Flag, this function calls the
@@ -169,7 +213,7 @@ void BT_status_set_bit
          /* IN */ UCHAR     op
      );
 
-/* Platform specific handling of change in Status Flag */
+/** Platform specific handling of change in Status Flag */
 void BT_status_set_bit_pl
      (
          /* IN */ UINT32    flag
@@ -192,6 +236,11 @@ void BT_status_set_bit_pl
 #ifdef __cplusplus
 };
 #endif
+
+/** \} */
+
+/** \} */
+/** \} */
 
 #endif /* _H_BT_STATUS_ */
 

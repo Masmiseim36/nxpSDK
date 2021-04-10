@@ -2274,9 +2274,9 @@ API_RESULT BT_smp_get_lk_ltk_pl
                UCHAR                           ct2
            )
 {
-    UCHAR  * plain_text;
-    UCHAR  * enc_key;
-    UINT16 plain_text_size;
+    UCHAR  * plain_text = NULL;
+    UCHAR  * enc_key = NULL;
+    UINT16 plain_text_size = 0U;
 
     if (SMP_LESC_LK_LTK_IDLE != SMP_LESC_LK_LTK_GET_STATE(&smp_lesc_txp_keys))
     {

@@ -101,7 +101,7 @@ mlan_status wlan_init_priv(pmlan_private priv)
     ENTER();
 
     priv->media_connected = MFALSE;
-    memset(pmadapter, priv->curr_addr, 0xff, MLAN_MAC_ADDR_LENGTH);
+    (void)memset(pmadapter, priv->curr_addr, 0xff, MLAN_MAC_ADDR_LENGTH);
 
     priv->pkt_tx_ctrl = 0;
     priv->bss_mode    = MLAN_BSS_MODE_INFRA;
@@ -116,19 +116,19 @@ mlan_status wlan_init_priv(pmlan_private priv)
     priv->sec_info.authentication_mode = MLAN_AUTH_MODE_AUTO;
     priv->sec_info.encryption_mode     = MLAN_ENCRYPTION_MODE_NONE;
     for (i = 0; i < sizeof(priv->wep_key) / sizeof(priv->wep_key[0]); i++)
-        memset(pmadapter, &priv->wep_key[i], 0, sizeof(mrvl_wep_key_t));
+        (void)memset(pmadapter, &priv->wep_key[i], 0, sizeof(mrvl_wep_key_t));
     priv->wep_key_curr_index = 0;
     priv->ewpa_query         = MFALSE;
     priv->adhoc_aes_enabled  = MFALSE;
     priv->curr_pkt_filter    = HostCmd_ACT_MAC_RX_ON | HostCmd_ACT_MAC_TX_ON | HostCmd_ACT_MAC_ETHERNETII_ENABLE;
 
-    memset(pmadapter, &priv->curr_bss_params, 0, sizeof(priv->curr_bss_params));
+    (void)memset(pmadapter, &priv->curr_bss_params, 0, sizeof(priv->curr_bss_params));
     priv->listen_interval = MLAN_DEFAULT_LISTEN_INTERVAL;
     wlan_11d_priv_init(priv);
     wlan_11h_priv_init(priv);
 
     priv->uap_bss_started = MFALSE;
-    memset(pmadapter, &priv->uap_state_chan_cb, 0, sizeof(priv->uap_state_chan_cb));
+    (void)memset(pmadapter, &priv->uap_state_chan_cb, 0, sizeof(priv->uap_state_chan_cb));
     priv->num_drop_pkts = 0;
 
     priv->tx_bf_cap    = 0;
@@ -233,9 +233,9 @@ t_void wlan_init_adapter(pmlan_adapter pmadapter)
     /* pmadapter->pscan_channels = MNULL; */
     pmadapter->fw_release_number = 0;
     pmadapter->fw_cap_info       = 0;
-    memset(pmadapter, &pmadapter->region_channel, 0, sizeof(pmadapter->region_channel));
+    (void)memset(pmadapter, &pmadapter->region_channel, 0, sizeof(pmadapter->region_channel));
     pmadapter->region_code = MRVDRV_DEFAULT_REGION_CODE;
-    memcpy(pmadapter, pmadapter->country_code, MRVDRV_DEFAULT_COUNTRY_CODE, COUNTRY_CODE_LEN);
+    (void)memcpy(pmadapter, pmadapter->country_code, MRVDRV_DEFAULT_COUNTRY_CODE, COUNTRY_CODE_LEN);
     pmadapter->bcn_miss_time_out  = DEFAULT_BCN_MISS_TIMEOUT;
     pmadapter->adhoc_awake_period = 0;
     return;
@@ -262,7 +262,7 @@ mlan_status wlan_init_lock_list(IN pmlan_adapter pmadapter)
     ENTER();
     for (i = 0; i < pmadapter->priv_num; i++)
     {
-        if (pmadapter->priv[i])
+        if (pmadapter->priv[i] != NULL)
         {
             priv = pmadapter->priv[i];
             for (j = 0; j < MAX_NUM_TID; ++j)
@@ -306,12 +306,12 @@ mlan_status wlan_init_fw(IN pmlan_adapter pmadapter)
 
     for (i = 0; i < pmadapter->priv_num; i++)
     {
-        if (pmadapter->priv[i])
+        if (pmadapter->priv[i] != NULL)
         {
             priv = pmadapter->priv[i];
 
             /* Initialize private structure */
-            if ((ret = wlan_init_priv(priv)))
+            if ((ret = wlan_init_priv(priv)) != MLAN_STATUS_SUCCESS)
             {
                 ret = MLAN_STATUS_FAILURE;
                 goto done;

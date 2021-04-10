@@ -21,6 +21,9 @@
 #elif defined(WIFI_BOARD_AW_AM457)
 #define SD8978
 #define SDMMCHOST_OPERATION_VOLTAGE_1V8
+#elif defined(WIFI_BOARD_AW_CM358MA)
+#define SD8987
+#define SDMMCHOST_OPERATION_VOLTAGE_1V8
 #else
 #error "Please define macro related to wifi board"
 #endif
@@ -29,8 +32,12 @@
 
 #define CONFIG_MAX_AP_ENTRIES 10
 
-#if defined(SD8977) || defined(SD8978)
+#if defined(SD8977) || defined(SD8978) || defined(SD8987)
 #define CONFIG_5GHz_SUPPORT 1
+#endif
+
+#if defined(SD8987)
+#define CONFIG_11AC
 #endif
 
 /* Logs */

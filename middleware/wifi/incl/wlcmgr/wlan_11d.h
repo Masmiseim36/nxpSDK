@@ -344,12 +344,12 @@ wifi_sub_band_set_t subband_JP_5_GHz[] = {
    (sizeof(wifi_sub_band_set_t) * (nr_sb - 1)));
 
  // COUNTRY_CODE_LEN is 3. Add extra ' ' as country code is 2 characters
- memcpy(dp->country_code, "KR ", COUNTRY_CODE_LEN);
+ (void)memcpy(dp->country_code, "KR ", COUNTRY_CODE_LEN);
 
  dp->no_of_sub_band = nr_sb;
- memcpy(&dp->sub_band[0], &subband_EU_AU_KR_CN_2_4GHz[0],
+ (void)memcpy(&dp->sub_band[0], &subband_EU_AU_KR_CN_2_4GHz[0],
    1 * sizeof(wifi_sub_band_set_t));
- memcpy(&dp->sub_band[1], &subband_EU_AU_KR_5GHz,
+ (void)memcpy(&dp->sub_band[1], &subband_EU_AU_KR_5GHz,
    (nr_sb - 1) * sizeof(wifi_sub_band_set_t));
 
  wlan_set_domain_params(dp);

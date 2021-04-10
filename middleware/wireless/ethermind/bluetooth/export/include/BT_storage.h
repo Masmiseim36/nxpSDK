@@ -16,6 +16,27 @@
 #include "BT_common.h"
 
 /* --------------------------------------------- Global Definitions */
+/**
+ * \addtogroup bt_utils Utilities
+ * \{
+ */
+/**
+ * \defgroup  storage_module  Storage
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Storage module to the Application and other upper layers of the stack.
+ *
+ */
+/**
+ * \defgroup  storage_defines Defines
+ * \{
+ * Describes defines for Storage module.
+ */
+/**
+ * \defgroup storage_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
 /* Storage types currently supported */
 #define STORAGE_TYPE_PERSISTENT                  0
 #ifndef STORAGE_RETENTION_SUPPORT
@@ -26,15 +47,27 @@
 #endif /* STORAGE_RETENTION_SUPPORT */
 
 /* Storage Operations */
+/**
+ * @name  Storage Operations
+ *
+ * Constant Definitions for Storage Operations
+ */
+/*@{*/
 #define STORAGE_STORE                            0x00
 #define STORAGE_LOAD                             0x01
-
+/*@}*/
 /* Core module persistent storage IDs */
+/**
+ * @name  Core module persistent storage IDs
+ *
+ * Constant Definitions for Core module persistent storage IDs
+ */
+/*@{*/
 #define STORAGE_DQ_PID                           0
 #define STORAGE_SMP_PID                          1
 #define STORAGE_SM_PID                           2
 #define STORAGE_MCAP_PID                         3
-
+/*@}*/
 /* Number of core module persistent storage IDs */
 #define STORAGE_NUM_PIDS                         4
 
@@ -67,10 +100,16 @@
             (STORAGE_EVENT_AUTH_UPDATE) |         \
             (STORAGE_EVENT_SHUTDOWN) |            \
             (STORAGE_EVENT_OTHERS)
-
+/** \} */
 /* --------------------------------------------- Structures/Data Types */
+/**
+ * \defgroup storage_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
 typedef void (*STORAGE_CB)(UCHAR id, UCHAR type, UCHAR action) DECL_REENTRANT;
-
+/** \} */
+/** \} */
 /* --------------------------------------------- Macros */
 
 /* --------------------------------------------- Internal Functions */
@@ -79,7 +118,11 @@ typedef void (*STORAGE_CB)(UCHAR id, UCHAR type, UCHAR action) DECL_REENTRANT;
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+/**
+ * \defgroup storage_API API Definitions
+ * \{
+ * Describes API definitions of this module.
+ */
 #ifdef STORAGE_HAVE_EVENT_MASK
 /**
  *  API to enable storage events
@@ -142,6 +185,8 @@ UINT16 BT_storage_read
 #ifdef __cplusplus
 };
 #endif
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_BT_STORAGE_ */
 

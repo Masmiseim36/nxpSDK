@@ -14,13 +14,30 @@
 #ifndef _H_BT_HID_DEVICE_API_
 #define _H_BT_HID_DEVICE_API_
 
-/**
- * Header File Inclusion
- */
+/* ----------------------------------- Header File Inclusion */
 #include "BT_common.h"
 
+/* ----------------------------------- Global Definitions */
 /**
- * Global Definitions
+ * \addtogroup bt_profiles Profiles
+ * \{
+ */
+/**
+ * \defgroup  hid_module  HID (Human Interface Device Profile)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Human Interface Device Profile module to the Application and other upper
+ *  layers of the stack.
+ */
+/**
+ * \defgroup  hid_device_defines Defines
+ * \{
+ * Describes defines for HID Device module.
+ */
+/**
+ * \defgroup hid_device_constants Constants
+ * \{
+ * Describes Constants defined by the module.
  */
 
 /**
@@ -32,12 +49,7 @@
  *  Function Parameter Definition.
  */
 
-/** @addtogroup TYPE_DEFINITIONS
- * @{
- */
-
 /** ------------------------------------  Type Definition */
-
 /** BT-HID Protocol HANDSHAKE Parameter Definitions */
 #define HID_HANDSHAKE_SUCCESSFUL                     0
 #define HID_HANDSHAKE_NOT_READY                      1
@@ -188,7 +200,7 @@
 /** Packet Types LMP shall use for the ACL connection */
 #define HID_DEVICE_PACKET_TYPES  LMP_ACL_DM1 | LMP_ACL_DM3 | LMP_ACL_DM5 | \
                                  LMP_ACL_DH1 | LMP_ACL_DH3 | LMP_ACL_DH5
-
+/** \} */
 /**
  *  Device address used to describe an Invalid HID Host.
  *  This address is set as 0xFF : 0xFF : 0xFF : 0xFF : 0xFF : 0xFF
@@ -197,10 +209,17 @@ extern const UCHAR HID_DEVICE_INVALID_HOST[];
 
 /** @} */
 
-/** @addtogroup DATA_STRUCTURES
- * @{
- */
 /* --------------------------------- Data Type/Structures/Typedefs */
+/**
+ *  \addtogroup hid_device_defines Defines
+ *  \{
+ */
+
+/**
+ * \defgroup hid_device_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
 
 /** Structure to store the Profile Callbacks */
 typedef struct
@@ -295,7 +314,7 @@ typedef struct
      */
 
     /** Call back function to relay HID Device Profile Specific events */
-    API_RESULT (*hid_device_events) 
+    API_RESULT (*hid_device_events)
                (
                    /* IN */    UCHAR event_type,
                    /* INOUT */ UCHAR *event_data,
@@ -462,7 +481,6 @@ typedef struct
 
 } HID_DEVICE_CALLBACK_STRUCT;
 
-
 /* Structure to describe the power policy parameters for the application */
 typedef struct
 {
@@ -521,10 +539,15 @@ typedef struct
     UINT16 device_attrs;
 
 } HID_DEVICE_INIT_PARAMS;
+/** \} */
+/** \} */
 
-
-/** @} */
-
+/*  --------------------------------------------- HID Device APIs */
+/**
+ * \defgroup  hid_api API Definitions
+ * \{
+ * Describes API definitions for this module.
+ */
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -534,18 +557,64 @@ extern "C" {
  */
 
 /** The API is used to initialize the HID Device Profile */
+/**
+ *  \brief To initialize the HID device profile.
+ *
+ *  \par Description:
+ *       The API initializes the HID Device Profile.
+ *       This API must be called before other operations on the profile are
+ *       performed. It is important to set the different values of the
+ *       init_params structure to ensure a correct and predictable behavior of
+ *       the profile. The init_params are those parameters that may be part of
+ *       SDP or that affect the functionality of the profile.
+ *       Please refer to structure definition of HID_DEVICE_INIT_PARAMS for more
+ *       detailed description of the different parameters that must be
+ *       initialized before passing it to this API.
+ *
+ *  \param [in] init_params
+ *         Pointer to structure describing the initialization parameters for the profile.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_hid_device_init
          (
              /* IN */ HID_DEVICE_INIT_PARAMS *init_params
          );
 
 /** The API is used to start the HID Device Profile */
+/**
+ *  \brief To start the HID device profile.
+ *
+ *  \par Description:
+ *       The API starts the HID Device Profile.
+ *       This must be preceded by the initialization. The module is now ready to
+ *       perform HID services.
+ *
+ *  \param [in] init_params
+ *         Pointer to structure describing the initialization parameters for the profile.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_hid_device_start
            (
                /* IN */ HID_DEVICE_INIT_PARAMS *init_params
            );
 
 /** The API is used to stop the HID Device Profile */
+/**
+ *  \brief To stop the HID device profile
+ *
+ *  \par Description:
+ *       The API stops the HID Device Profile.
+ *       This API is used to stop all operations of the HID Device Module.
+ *       The existing HID connection is closed. The Module needs to be restarted
+ *       using the start API to be used again.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_hid_device_stop(void);
 
 /**
@@ -554,18 +623,77 @@ API_RESULT BT_hid_device_stop(void);
  *  that when reconnection is desired, it shall be attempted by profile
  *  only towards this host.
  */
+/**
+ *  \brief To set the active status for desired host.
+ *
+ *  \par Description:
+ *       The API is used to set active status for desired host. An active host
+ *       is one with which the virtually cable connection is made. This implies
+ *       that when reconnection is desired, it shall be attempted by profile
+ *       only towards this host.
+ *
+ *  \param [in] hid_host_bd_addr
+ *         BD_ADDR of the host which has to be set active.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_hid_device_set_active_host
            (
                /* IN */ UCHAR *hid_host_bd_addr
            );
 
 /** The API is used to register callbacks with the HID Device Profile */
+/**
+ *  \brief To register callbacks with the HID Device Profile.
+ *
+ *  \par Description:
+ *       The API is used to register profile callback functions.
+ *       The profile callback functions are a way by which the calling
+ *       application is given information about the various events that may be
+ *       occurring at the profile level. Please refer to the structure
+ *       hid_device_cb_struct for a more detailed explanation of the call back.
+ *       The callback functions are:
+ *       i)hid_device_get_request:relays HID GET_ requests to the application
+ *       ii)hid_device_get_request:relay SET_ requests, HID_CONTROL messages and
+ *          HID Host OUT reports.
+ *       iii)hid_device_events :Callback function to relay HID Device Profile
+ *           Specific events
+ *
+ *  \param [in] hid_device_cb_stuct
+ *         Pointer to structure storing the profile callbacks.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *
+ *  \note NULL parameters passed to the function imply no callbacks will
+ *        registered with the profile.
+ */
 API_RESULT BT_hid_device_register
            (
                /* IN */ HID_DEVICE_CALLBACK_STRUCT *hid_device_cb_stuct
            );
 
 /** The API is used to initiate connection from the HID device */
+/**
+ *  \brief To initiate connection from the HID device.
+ *
+ *  \par Description:
+ *       The API is used to initiate connection from the device to the HID host.
+ *       This API has been provided to allow the application to connect to a HID
+ *       host, if it wants to. In a general deployment, the device never
+ *       attempts to connect to a host - so the calling of this API is
+ *       completely at the discretion of the application.
+ *
+ *  \param [in] bd_addr
+ *         bd_addr is the BD ADDR of the remote host.
+ *
+ *  \param [in] ch_type
+ *         Type of channel
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_hid_device_connect
            (
                /* IN */ UCHAR *bd_addr,
@@ -573,6 +701,26 @@ API_RESULT BT_hid_device_connect
            );
 
 /** The API is used to send INTERRUPT reports to the remote host */
+/**
+ *  \brief To send INTERRUPT reports to the remote host.
+ *
+ *  \par Description:
+ *       The API is used to send INTERRUPT reports to the remote host.
+ *       Note that the API takes care of appending appropriate BT_HID headers t
+ *       the report_data. The input report_data must be formatted correctly
+ *       only as per the USB HID specifications.
+ *
+ *  \param [in] report_data
+ *         The HID Report. The report data is constructed from the data read
+ *         from the device controller and conforms to the USB HID report format.
+ *         This function will append the necessary BT HID protocol headers.
+ *
+ *  \param [in] report_size
+ *         Size of the Report.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_hid_device_send_report
            (
                /* IN */ UCHAR *report_data,
@@ -580,9 +728,44 @@ API_RESULT BT_hid_device_send_report
            );
 
 /** The API is used to initiate reconnection to the last known HID host. */
+/**
+ *  \brief To initiate reconnection to the last known HID host
+ *
+ *  \par Description:
+ *       The API is used to initiate reconnection to the last known host.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_hid_device_initiate_reconnection(void);
 
 /** The API is used to send responses to the HID Host */
+/**
+ *  \brief To send responses to the HID Host
+ *
+ *  \par Description:
+ *       The API is used to respond to the HID host requests. Whenever a HID
+ *       protocol request (e.g. GET_PROTOCOL, SET_PROTOCOL) comes from the host,
+ *       this information is relayed to the application that can then decide
+ *       how to respond to the request.
+ *
+ *  \param [in] response_type
+ *         Identifier for type of response.
+ *
+ *  \param [in] response_status
+ *         Status of the response - successful/ erroneous.
+ *
+ *  \param [in] reponse_len
+ *         Size of the response packet buffer.
+ *
+ *  \param [in] response_data
+ *         Response packet buffer.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *
+ *  \note The API takes care of appending appropriate BT_HID headers to the response.
+ */
 API_RESULT BT_hid_device_send_response
            (
                /* IN */ UCHAR response_type,
@@ -592,6 +775,17 @@ API_RESULT BT_hid_device_send_response
            );
 
 /** The API is used to initiate disconnect from the remote HID Host */
+/**
+ *  \brief To initiate disconnect from the remote HID Host.
+ *
+ *  \par Description:
+ *       The API is used to disconnect from the remote host.
+ *
+ *  \param [in] disconn_type
+ *         Type of disconnection
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_hid_device_disconnect
            (
                /* IN */ UCHAR disconn_type
@@ -601,12 +795,33 @@ API_RESULT BT_hid_device_disconnect
  *  The API is used to disconnect from the remote host when the virtual
  *  Cable Configuration is employed.
  */
+/**
+ *  \brief To disconnect from remote host when virtual cable configuration is employed
+ *
+ *  \par Description:
+ *       The API is used to disconnect from the remote host when the virtual
+ *       Cable Configuration is employed.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_hid_device_vc_unplug(void);
 
-/** Function to receive bt on complete event. */
-API_RESULT hid_device_bt_on_complete(void);
-
 /** Function to determine the current active host */
+/**
+ *  \brief To determine the current active host.
+ *
+ *  \par Description:
+ *       This API is used to determine the current active host.
+ *
+ *  \param [in] hid_host_bd_addr
+ *         BD_ADDR of the host which has to be set active.
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *
+ *  \note
+ */
 API_RESULT BT_hid_device_get_active_host
            (
                /* OUT */ UCHAR *hid_host_bd_addr
@@ -615,5 +830,7 @@ API_RESULT BT_hid_device_get_active_host
 #ifdef __cplusplus
 };
 #endif
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_BT_HID_DEVICE_API_ */

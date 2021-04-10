@@ -115,7 +115,7 @@ static mlan_status wlan_11n_dispatch_pkt(t_void *priv, t_void *payload)
 static void mlan_11n_rxreorder_timer_restart(pmlan_adapter pmadapter, RxReorderTbl *rx_reor_tbl_ptr)
 {
     ENTER();
-    if (rx_reor_tbl_ptr->timer_context.timer_is_set)
+    if (rx_reor_tbl_ptr->timer_context.timer_is_set != 0U)
         pmadapter->callbacks.moal_stop_timer(pmadapter->pmoal_handle, rx_reor_tbl_ptr->timer_context.timer);
 
     pmadapter->callbacks.moal_start_timer(pmadapter->pmoal_handle, rx_reor_tbl_ptr->timer_context.timer, MFALSE,
@@ -152,13 +152,13 @@ static mlan_status wlan_11n_dispatch_pkt_until_start_win(t_void *priv, RxReorder
     {
         pmpriv->adapter->callbacks.moal_spin_lock(pmpriv->adapter->pmoal_handle, pmpriv->rx_pkt_lock);
         rx_tmp_ptr = MNULL;
-        if (rx_reor_tbl_ptr->rx_reorder_ptr[i])
+        if (rx_reor_tbl_ptr->rx_reorder_ptr[i] != NULL)
         {
             rx_tmp_ptr                         = rx_reor_tbl_ptr->rx_reorder_ptr[i];
             rx_reor_tbl_ptr->rx_reorder_ptr[i] = MNULL;
         }
         pmpriv->adapter->callbacks.moal_spin_unlock(pmpriv->adapter->pmoal_handle, pmpriv->rx_pkt_lock);
-        if (rx_tmp_ptr)
+        if (rx_tmp_ptr != NULL)
             wlan_11n_dispatch_pkt(priv, rx_tmp_ptr);
     }
 
@@ -277,9 +277,9 @@ static t_void wlan_11n_delete_rxreorder_tbl_entry(mlan_private *priv, RxReorderT
     wlan_11n_dispatch_pkt_until_start_win(
         priv, rx_reor_tbl_ptr, (rx_reor_tbl_ptr->start_win + rx_reor_tbl_ptr->win_size) & (MAX_TID_VALUE - 1));
 
-    if (rx_reor_tbl_ptr->timer_context.timer)
+    if (rx_reor_tbl_ptr->timer_context.timer != NULL)
     {
-        if (rx_reor_tbl_ptr->timer_context.timer_is_set)
+        if (rx_reor_tbl_ptr->timer_context.timer_is_set != 0U)
             priv->adapter->callbacks.moal_stop_timer(pmadapter->pmoal_handle, rx_reor_tbl_ptr->timer_context.timer);
         priv->adapter->callbacks.moal_free_timer(pmadapter->pmoal_handle, &rx_reor_tbl_ptr->timer_context.timer);
     }
@@ -308,7 +308,7 @@ static int wlan_11n_find_last_seqnum(RxReorderTbl *rx_reorder_tbl_ptr)
     ENTER();
     for (i = (rx_reorder_tbl_ptr->win_size - 1); i >= 0; --i)
     {
-        if (rx_reorder_tbl_ptr->rx_reorder_ptr[i])
+        if (rx_reorder_tbl_ptr->rx_reorder_ptr[i] != NULL)
         {
             LEAVE();
             return i;
@@ -394,7 +394,7 @@ static t_void wlan_11n_create_rxreorder_tbl(mlan_private *priv, t_u8 *ta, int ti
 
         util_init_list((pmlan_linked_list)new_node);
         new_node->tid = tid;
-        memcpy(pmadapter, new_node->ta, ta, MLAN_MAC_ADDR_LENGTH);
+        (void)memcpy(pmadapter, new_node->ta, ta, MLAN_MAC_ADDR_LENGTH);
         new_node->start_win = seq_num;
         new_node->pkt_count = 0;
         if (queuing_ra_based(priv))
@@ -500,7 +500,7 @@ mlan_status wlan_cmd_11n_addba_req(mlan_private *priv, HostCmd_DS_COMMAND *cmd, 
     cmd->command = wlan_cpu_to_le16(HostCmd_CMD_11N_ADDBA_REQ);
     cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_11N_ADDBA_REQ) + S_DS_GEN);
 
-    memcpy(priv->adapter, padd_ba_req, pdata_buf, sizeof(HostCmd_DS_11N_ADDBA_REQ));
+    (void)memcpy(priv->adapter, padd_ba_req, pdata_buf, sizeof(HostCmd_DS_11N_ADDBA_REQ));
     padd_ba_req->block_ack_param_set = wlan_cpu_to_le16(padd_ba_req->block_ack_param_set);
     padd_ba_req->block_ack_tmo       = wlan_cpu_to_le16(padd_ba_req->block_ack_tmo);
     padd_ba_req->ssn                 = wlan_cpu_to_le16(padd_ba_req->ssn);
@@ -536,7 +536,7 @@ mlan_status wlan_cmd_11n_addba_rspgen(mlan_private *priv, HostCmd_DS_COMMAND *cm
     cmd->command = wlan_cpu_to_le16(HostCmd_CMD_11N_ADDBA_RSP);
     cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_11N_ADDBA_RSP) + S_DS_GEN);
 
-    memcpy(NULL, padd_ba_rsp->peer_mac_addr, pevt_addba_req->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
+    (void)memcpy(NULL, padd_ba_rsp->peer_mac_addr, pevt_addba_req->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
     padd_ba_rsp->dialog_token   = pevt_addba_req->dialog_token;
     padd_ba_rsp->block_ack_tmo  = wlan_cpu_to_le16(pevt_addba_req->block_ack_tmo);
     padd_ba_rsp->ssn            = wlan_cpu_to_le16(pevt_addba_req->ssn);
@@ -588,7 +588,7 @@ mlan_status wlan_cmd_11n_uap_addba_rspgen(mlan_private *priv, HostCmd_DS_COMMAND
     cmd->command = wlan_cpu_to_le16(HostCmd_CMD_11N_ADDBA_RSP);
     cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_11N_ADDBA_RSP) + S_DS_GEN);
 
-    memcpy(NULL, padd_ba_rsp->peer_mac_addr, pevt_addba_req->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
+    (void)memcpy(NULL, padd_ba_rsp->peer_mac_addr, pevt_addba_req->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
     padd_ba_rsp->dialog_token  = pevt_addba_req->dialog_token;
     padd_ba_rsp->block_ack_tmo = wlan_cpu_to_le16(pevt_addba_req->block_ack_tmo);
     padd_ba_rsp->ssn           = wlan_cpu_to_le16(pevt_addba_req->ssn);
@@ -625,7 +625,7 @@ mlan_status wlan_cmd_11n_delba(mlan_private *priv, HostCmd_DS_COMMAND *cmd, void
     cmd->command = wlan_cpu_to_le16(HostCmd_CMD_11N_DELBA);
     cmd->size    = wlan_cpu_to_le16(sizeof(HostCmd_DS_11N_DELBA) + S_DS_GEN);
 
-    memcpy(priv->adapter, pdel_ba, pdata_buf, sizeof(HostCmd_DS_11N_DELBA));
+    (void)memcpy(priv->adapter, pdel_ba, pdata_buf, sizeof(HostCmd_DS_11N_DELBA));
     pdel_ba->del_ba_param_set = wlan_cpu_to_le16(pdel_ba->del_ba_param_set);
     pdel_ba->reason_code      = wlan_cpu_to_le16(pdel_ba->reason_code);
 
@@ -676,7 +676,7 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
         if (pkt_type == PKT_TYPE_AMSDU)
             PRINTM(MDAT_D, "AMSDU ");
 
-        if (rx_reor_tbl_ptr->check_start_win)
+        if (rx_reor_tbl_ptr->check_start_win != 0U)
         {
             if (seq_num == rx_reor_tbl_ptr->start_win)
                 rx_reor_tbl_ptr->check_start_win = MFALSE;
@@ -722,6 +722,9 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
                                rx_reor_tbl_ptr->last_seq, rx_reor_tbl_ptr->start_win, seq_num);
                         rx_reor_tbl_ptr->start_win = rx_reor_tbl_ptr->last_seq + 1;
                     }
+                    else
+                    { /* Do Nothing */
+                    }
                 }
             }
         }
@@ -736,7 +739,7 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
          * If seq_num is less then starting win then ignore and drop
          * the packet
          */
-        if (rx_reor_tbl_ptr->force_no_drop)
+        if (rx_reor_tbl_ptr->force_no_drop != 0U)
         {
             PRINTM(MDAT_D, "Force no drop packet after HS_ACTIVED\n");
             rx_reor_tbl_ptr->force_no_drop = MFALSE;
@@ -755,6 +758,9 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
             {
                 ret = MLAN_STATUS_FAILURE;
                 goto done;
+            }
+            else
+            { /* Do Nothing */
             }
         }
 
@@ -776,7 +782,7 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
             else
                 start_win = (MAX_TID_VALUE - (win_size - seq_num)) + 1;
 
-            if ((ret = wlan_11n_dispatch_pkt_until_start_win(priv, rx_reor_tbl_ptr, start_win)))
+            if ((ret = wlan_11n_dispatch_pkt_until_start_win(priv, rx_reor_tbl_ptr, start_win)) != MLAN_STATUS_SUCCESS)
             {
                 goto done;
             }
@@ -790,7 +796,7 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
         {
             if (seq_num >= start_win)
             {
-                if (rx_reor_tbl_ptr->rx_reorder_ptr[seq_num - start_win])
+                if (rx_reor_tbl_ptr->rx_reorder_ptr[seq_num - start_win] != NULL)
                 {
                     PRINTM(MDAT_D, "Drop Duplicate Pkt\n");
                     ret = MLAN_STATUS_FAILURE;
@@ -800,7 +806,7 @@ mlan_status mlan_11n_rxreorder_pkt(void *priv, t_u16 seq_num, t_u16 tid, t_u8 *t
             }
             else
             { /* Wrap condition */
-                if (rx_reor_tbl_ptr->rx_reorder_ptr[(seq_num + (MAX_TID_VALUE)) - start_win])
+                if (rx_reor_tbl_ptr->rx_reorder_ptr[(seq_num + (MAX_TID_VALUE)) - start_win] != NULL)
                 {
                     PRINTM(MDAT_D, "Drop Duplicate Pkt\n");
                     ret = MLAN_STATUS_FAILURE;
@@ -861,7 +867,7 @@ void mlan_11n_delete_bastream_tbl(mlan_private *priv, int tid, t_u8 *peer_mac, t
            "initiator=%d\n",
            peer_mac[0], peer_mac[1], peer_mac[2], peer_mac[3], peer_mac[4], peer_mac[5], tid, initiator);
 
-    if (cleanup_rx_reorder_tbl)
+    if (cleanup_rx_reorder_tbl != 0U)
     {
         if (!(rx_reor_tbl_ptr = wlan_11n_get_rxreorder_tbl(priv, tid, peer_mac)))
         {
@@ -919,7 +925,7 @@ mlan_status wlan_ret_11n_addba_resp(mlan_private *priv, HostCmd_DS_COMMAND *resp
                ((padd_ba_rsp->block_ack_param_set & BLOCKACKPARAM_WINSIZE_MASK) >> BLOCKACKPARAM_WINSIZE_POS),
                padd_ba_rsp->block_ack_param_set & BLOCKACKPARAM_AMSDU_SUPP_MASK);
 
-        if ((rx_reor_tbl_ptr = wlan_11n_get_rxreorder_tbl(priv, tid, padd_ba_rsp->peer_mac_addr)))
+        if ((rx_reor_tbl_ptr = wlan_11n_get_rxreorder_tbl(priv, tid, padd_ba_rsp->peer_mac_addr)) != NULL)
         {
             rx_reor_tbl_ptr->ba_status = BA_STREAM_SETUP_COMPLETE;
             if ((padd_ba_rsp->block_ack_param_set & BLOCKACKPARAM_AMSDU_SUPP_MASK) && priv->add_ba_param.rx_amsdu &&
@@ -934,7 +940,7 @@ mlan_status wlan_ret_11n_addba_resp(mlan_private *priv, HostCmd_DS_COMMAND *resp
         PRINTM(MERROR, "ADDBA RSP: Failed(%02x:%02x:%02x:%02x:%02x:%02x tid=%d)\n", padd_ba_rsp->peer_mac_addr[0],
                padd_ba_rsp->peer_mac_addr[1], padd_ba_rsp->peer_mac_addr[2], padd_ba_rsp->peer_mac_addr[3],
                padd_ba_rsp->peer_mac_addr[4], padd_ba_rsp->peer_mac_addr[5], tid);
-        if ((rx_reor_tbl_ptr = wlan_11n_get_rxreorder_tbl(priv, tid, padd_ba_rsp->peer_mac_addr)))
+        if ((rx_reor_tbl_ptr = wlan_11n_get_rxreorder_tbl(priv, tid, padd_ba_rsp->peer_mac_addr)) != NULL)
         {
             wlan_11n_delete_rxreorder_tbl_entry(priv, rx_reor_tbl_ptr);
         }
@@ -960,8 +966,8 @@ void wlan_11n_ba_stream_timeout(mlan_private *priv, HostCmd_DS_11N_BATIMEOUT *ev
 
     DBG_HEXDUMP(MCMD_D, "Event:", (t_u8 *)event, 20);
 
-    memset(priv->adapter, &delba, 0, sizeof(HostCmd_DS_11N_DELBA));
-    memcpy(priv->adapter, delba.peer_mac_addr, event->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
+    (void)memset(priv->adapter, &delba, 0, sizeof(HostCmd_DS_11N_DELBA));
+    (void)memcpy(priv->adapter, delba.peer_mac_addr, event->peer_mac_addr, MLAN_MAC_ADDR_LENGTH);
 
     delba.del_ba_param_set |= (t_u16)event->tid << DELBA_TID_POS;
     delba.del_ba_param_set |= (t_u16)event->origninator << DELBA_INITIATOR_POS;
@@ -994,7 +1000,7 @@ void wlan_11n_cleanup_reorder_tbl(mlan_private *priv)
 
     util_init_list((pmlan_linked_list)&priv->rx_reorder_tbl_ptr);
 
-    memset(priv->adapter, priv->rx_seq, 0xff, sizeof(priv->rx_seq));
+    (void)memset(priv->adapter, priv->rx_seq, 0xff, sizeof(priv->rx_seq));
     LEAVE();
 }
 
@@ -1012,7 +1018,7 @@ void wlan_cleanup_reorder_tbl(mlan_private *priv, t_u8 *ta)
     ENTER();
     for (i = 0; i < MAX_NUM_TID; ++i)
     {
-        if ((rx_reor_tbl_ptr = wlan_11n_get_rxreorder_tbl(priv, i, ta)))
+        if ((rx_reor_tbl_ptr = wlan_11n_get_rxreorder_tbl(priv, i, ta)) != NULL)
         {
             wlan_11n_delete_rxreorder_tbl_entry(priv, rx_reor_tbl_ptr);
         }
@@ -1066,7 +1072,7 @@ void wlan_update_rxreorder_tbl(pmlan_adapter pmadapter, t_u8 flag)
     pmlan_private priv = MNULL;
     for (i = 0; i < pmadapter->priv_num; i++)
     {
-        if (pmadapter->priv[i])
+        if (pmadapter->priv[i] != NULL)
         {
             priv = pmadapter->priv[i];
             wlan_set_rxreorder_tbl_no_drop_flag(priv, flag);

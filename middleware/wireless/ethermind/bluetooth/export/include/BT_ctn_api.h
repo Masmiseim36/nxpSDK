@@ -18,11 +18,36 @@
 
 
 /* --------------------------------------------- Global Definitions */
-
+/**
+ * \addtogroup bt_profiles Profiles
+ * \{
+ */
+/**
+ * \defgroup  ctn_module  CTN (Calendar, Tasks, and Notes Profile)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Calendar, Tasks, and Notes Profile module to the Application and other upper
+ *  layers of the stack.
+ */
+/**
+ * \defgroup  ctn_defines Defines
+ * \{
+ * Describes defines for CTN module.
+ */
+/**
+ * \defgroup ctn_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
 /* OBEX L2CAP PSM for local entities */
 #define CTN_OBEX_L2CAP_PSM                       0x8001
 
 /* CTN Notification Callback Event types */
+/**
+ *  @name CTN Notification Callback Event types
+ *  Constant Definitions for CTN Notification Callback Event types
+ */
+/*@{*/
 #ifdef CTN_CCE
 
 #define CTN_CCE_CONNECT_CNF                      0x01
@@ -72,12 +97,18 @@
 #define CTN_CSE_NS_SEND_EVENT_CNF                0x54
 
 #endif /* CTN_CSE */
-
+/*@}*/
 #define CTN_EVENT_INVALID                        0xFF
 #define CTN_ENTITY_INVALID                       0xFF
 #define CTN_INVALID_OBEX_CONNECTION_ID           0xFFFFFFFF
 
 /* CTN OBEX Response Codes */
+/**
+ *  @name CTN OBEX Response Codes
+ *
+ *  Constant Definitions for CTN OBEX Response Codes
+ */
+/*@{*/
 #define CTN_SUCCESS_RSP                          OBEX_SUCCESS_RSP
 #define CTN_CONTINUE_RSP                         OBEX_CONTINUE_RSP
 
@@ -90,7 +121,7 @@
 #define CTN_NO_SERVICE_RSP                       OBEX_NO_SERVICE_RSP
 #define CTN_FORBIDDEN_RSP                        OBEX_FORBIDDEN_RSP
 #define CTN_SERVER_ERROR                         OBEX_SERVER_ERR_RSP
-
+/*@}*/
 /* CTN Services OBEX Target header UUID values */
 #define CTN_CAS_OBEX_TARGET_HDR_UUID            \
         0x115F1EC2292211E4B65DA6C5E4D22FB7
@@ -98,10 +129,16 @@
 #define CTN_CNS_OBEX_TARGET_HDR_UUID            \
         0x4FD68D34292211E4B65DA6C5E4D22FB7
 
-/* CTN Target Header Size */
+/** CTN Target Header Size */
 #define CTN_TARGET_HDR_SIZE                      0x10 /* 16 */
 
 /* CTN Application Parameters header Tag IDs */
+/**
+ *  @name CTN Application Parameters header Tag IDs
+ *
+ *  Constant Definitions for CTN Application Parameters header Tag IDs
+ */
+/*@{*/
 #define CTN_TAG_ID_MAXLISTCOUNT                  0x41  /* 2  Byte Length  */
 #define CTN_TAG_ID_LISTSTARTOFFSET               0x42  /* 2  Byte Length  */
 #define CTN_TAG_ID_NOTIFICATIONSTATUS            0x43  /* 1  Byte Length  */
@@ -121,11 +158,17 @@
 #define CTN_TAG_ID_RECURRENT                     0x0C  /* 1  Byte Length  */
 #define CTN_TAG_ID_ATTACHID                      0x0D  /* 1  Byte Length  */
 #define CTN_TAG_ID_LASTUPDATE                    0x0E  /* Variable Length */
-
-/* Maximum number of Application Headers */
+/*@}*/
+/** Maximum number of Application Headers */
 #define CTN_NUM_APPL_HEADERS                     0x13 /* 19 */
 
 /* CTN Application parameters flag corresponding to each Tag */
+/**
+ *  @name CTN Application parameters flag corresponding to each Tag
+ *
+ *  Constant Definitions for CTN Application parameters flag corresponding to each Tag
+ */
+/*@{*/
 #define CTN_FLAG_MAXLISTCOUNT                    0x00000001
 #define CTN_FLAG_LISTSTARTOFFSET                 0x00000002
 #define CTN_FLAG_NOTIFICATIONSTATUS              0x00000004
@@ -145,29 +188,61 @@
 #define CTN_FLAG_RECURRENT                       0x00010000
 #define CTN_FLAG_ATTACHID                        0x00020000
 #define CTN_FLAG_LASTUPDATE                      0x00040000
-
+/*@}*/
 /* Application Header Parameters Value Range Definitions */
 /* ----------------------------------------------------- */
-
+/**
+ *  \defgroup  APP_VAL BPP Application Header Parameters Value Range Definitions
+ *
+ *
+ *  Application Header Parameters Value Range Definitions
+ *
+ *  \{
+ *
+ */
 /* CTN Application Parameter values  */
+/**
+ * @name CTN Application Parameter values
+ */
+/*@{*/
 #define CTN_NOTIFICATIONSTATUS_OFF               0x00
 #define CTN_NOTIFICATIONSTATUS_ON                0x01
-
+/*@}*/
+/**
+ * @name
+ */
+/*@{*/
 #define CTN_ACOUSTICALARM_OFF                    0x00
 #define CTN_ACOUSTICALARM_ON                     0x01
-
+/*@}*/
+/**
+ * @name
+ */
+/*@{*/
 #define CTN_ATTACHMENT_ON                        0x00
 #define CTN_ATTACHMENT_OFF                       0x01
 #define CTN_ATTACHMENT_SELECT                    0x02
-
+/*@}*/
+/**
+ * @name
+ */
+/*@{*/
 #define CTN_SEND_NO                              0x00
 #define CTN_SEND_YES                             0x01
-
+/*@}*/
+/**
+ * @name
+ */
+/*@{*/
 #define CTN_STATUSINDICATOR_PSTATUS              0x00
 #define CTN_STATUSINDICATOR_ALARMSTATUS          0x01
 #define CTN_STATUSINDICATOR_SENDSTATUS           0x02
 #define CTN_STATUSINDICATOR_DELETEDSTATUS        0x03
-
+/*@}*/
+/**
+ * @name
+ */
+/*@{*/
 #define CTN_STATUSVALUE_NO                       0x00
 #define CTN_STATUSVALUE_YES                      0x01
 #define CTN_STATUSVALUE_POSTPONE                 0x02
@@ -178,12 +253,19 @@
 #define CTN_STATUSVALUE_DELEGATED                0x07
 #define CTN_STATUSVALUE_COMPLETED                0x08
 #define CTN_STATUSVALUE_IN_PROGRESS              0x09
-
+/*@}*/
+/**
+ * @name
+ */
+/*@{*/
 #define CTN_RECURRENT_NO                         0x00
 #define CTN_RECURRENT_YES                        0x01
-
+/*@}*/
 /**
- * CTN parameter mask for Get Listing Request
+ */
+/*@{*/
+/**
+ * @name CTN parameter mask for Get Listing Request
  */
 #define CTN_PARAM_MASK_ATTACHMENT                0x00000001
 #define CTN_PARAM_MASK_SUMMARY                   0x00000002
@@ -195,11 +277,18 @@
 #define CTN_PARAM_MASK_ALARMSTATUS               0x00000080
 #define CTN_PARAM_MASK_SENDSTATUS                0x00000100
 #define CTN_PARAM_MASK_RECURRENT                 0x00000200
+/*@}*/
 
-
+/**\}*/
+/** \} */
 /* ----------------------------------------------------- */
 
 /* --------------------------------------------- Structures/Data Types */
+/**
+ * \defgroup ctn_strcutures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
 /* CTN Handle type */
 typedef UINT8 CTN_HANDLE;
 
@@ -215,7 +304,7 @@ typedef enum
 typedef struct _CTN_HANDLE_INFO
 {
     /**
-     * Service Type 
+     * Service Type
      */
     CTN_SERVICE_TYPE    service;
 
@@ -309,7 +398,7 @@ typedef struct _CTN_CONNECT_STRUCT
     UCHAR               * bd_addr;
 
     /**
-     *  Maximum Receive Size 
+     *  Maximum Receive Size
      */
     UINT16                max_recv_size;
 
@@ -330,20 +419,20 @@ typedef struct _CTN_REQUEST_STRUCT
      * Name/Handle of the object
      */
     CTN_HEADER_STRUCT   * name;
-   
+
     /**
      * List of receipients to forward a bCalendar
      * object
      */
     CTN_HEADER_STRUCT   * description;
-    
+
     /**
      * Object content
      */
     CTN_HEADER_STRUCT   * body;
-    
+
     /**
-     * Application Parameters 
+     * Application Parameters
      */
     CTN_APPL_PARAMS     * appl_params;
 
@@ -366,7 +455,7 @@ typedef struct _CTN_RESPONSE_STRUCT
       * Object contents
       */
     CTN_HEADER_STRUCT  * body;
-    
+
     /**
      * Application Parameters
      */
@@ -397,8 +486,16 @@ typedef union _CTN_HEADERS
      */
     CTN_CONNECT_STRUCT   * ctn_connect_info;
 } CTN_HEADERS;
+/**\}*/
+/**\}*/
 
-/* CTN Event Notification Callback Type */
+/**
+ *  \defgroup ctn_cb Application Callback
+ *  \{
+ *  This Section Describes the module Notification Callback interface offered
+ *  to the application
+ */
+/** CTN Event Notification Callback Type */
 typedef API_RESULT (* CTN_EVENT_NTF_CB)
                    (
                         CTN_HANDLE_INFO * ctn_handle,
@@ -407,8 +504,13 @@ typedef API_RESULT (* CTN_EVENT_NTF_CB)
                         CTN_HEADERS     * ctn_headers,
                         UINT16            num_headers
                    );
-
+/**\}*/
 /* --------------------------------------------- Macros */
+/**
+ * \defgroup ctn_utility_macros Utility Macros
+ * \{
+ * Describes Utility Macros defined by the module.
+ */
 /* To initialize a Header Structure */
 #define CTN_INIT_HEADER_STRUCT(hs)                                          \
         (hs).value = NULL;                                                  \
@@ -445,14 +547,21 @@ typedef API_RESULT (* CTN_EVENT_NTF_CB)
             (to_params)->search_value.length =                              \
                                 (from_params)->search_value.length;         \
         }
+/**\}*/
 
 /* --------------------------------------------- API Declarations */
+/**
+ * \defgroup ctn_api_definitions API Definitions
+ * \{
+ * Describes CTN API definitions of the module.
+ */
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* CTN Client APIs */
 #ifdef CTN_CCE
-
 /**
- *  \fn BT_ctn_cce_init
- *
  *  \brief To initialize the CTN CCE module.
  *
  *  \par Description:
@@ -474,8 +583,6 @@ API_RESULT BT_ctn_cce_init
            );
 
 /**
- *  \fn BT_ctn_cce_shutdown
- *
  *  \brief To shutdown CTN CCE module.
  *
  *  \par Description:
@@ -486,8 +593,8 @@ API_RESULT BT_ctn_cce_init
  *  \return API_RESULT: API_SUCCESS or an Error Code describing
  *                      the cause of failure.
  *
- *  \note This API shall be called only when there are no active/started instances of 
- *        the CCE. In case of active CCE instances, they should be stopped by 
+ *  \note This API shall be called only when there are no active/started instances of
+ *        the CCE. In case of active CCE instances, they should be stopped by
  *        calling BT_ctn_cce_stop() API..
  */
 API_RESULT BT_ctn_cce_shutdown
@@ -496,8 +603,6 @@ API_RESULT BT_ctn_cce_shutdown
            );
 
 /**
- *  \fn BT_ctn_cce_start
- *
  *  \brief To start an instance of CTN CCE.
  *
  *  \par Description:
@@ -507,19 +612,19 @@ API_RESULT BT_ctn_cce_shutdown
  *       needs to call when any event occurs for this instance. Now the CCE
  *       is ready to initiate a CTN connection to CSE.
  *
- *  \param (in) ctn_service
+ *  \param [in] ctn_service
  *         CTN Service Type (Access/Notification) to be started
  *
- *  \param (in) ctn_cce_cb
+ *  \param [in] ctn_cce_cb
  *         The application callback function pointer to be registered.
  *
- *  \param (out) ctn_handle
+ *  \param [out] ctn_handle
  *         Index to the client CAS/CNS entity that is started.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
  *                      describing the cause of failure.
  *
- *  \note All further communication exchanged between the application and profile 
+ *  \note All further communication exchanged between the application and profile
  *        for the CCE instance will be identified using the assigned CTN handle.
  */
 API_RESULT BT_ctn_cce_start
@@ -530,19 +635,17 @@ API_RESULT BT_ctn_cce_start
            );
 
 /**
- *  \fn BT_ctn_cce_stop
- *
  *  \brief To stop an active CTN CCE instance of Access/Notification Service
  *         as given by the ctn_service parameter
  *
  *  \par Description:
- *       This API stops the CTN CCE instance corresponding 
+ *       This API stops the CTN CCE instance corresponding
  *       to the specified handle.
  *
- *  \param (in) ctn_service
+ *  \param [in] ctn_service
  *         CTN Service Type (Access/Notification) to be stopped.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         Index to the client CAS/CNS entity that has to be stopped.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -558,20 +661,18 @@ API_RESULT BT_ctn_cce_stop
            );
 
 /**
- *  \fn BT_ctn_cce_connect
- *
  *  \brief To establish the CTN Access Service (CAS) connection.
  *
  *  \par Description:
- *       This API establishes the CTN transport &  profile connection with the remote 
+ *       This API establishes the CTN transport &  profile connection with the remote
  *       CTN server (CSE) for the CTN Access Service (CAS). CTN CCE calls the registered
- *       application callback upon the completion of the connection procedure (when the CSE 
- *       responds with the connection response) with the notification CTN_CCE_CONNECT_CNF event 
+ *       application callback upon the completion of the connection procedure (when the CSE
+ *       responds with the connection response) with the notification CTN_CCE_CONNECT_CNF event
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance that has to be connected.
  *
- *  \param (in) ctn_connect_info
+ *  \param [in] ctn_connect_info
  *         Structure containing the Bluetooth Device Address of the CSE,
  *         the local maximum receive capacity (in Bytes) and L2CAP psm of CSE.
  *
@@ -585,17 +686,15 @@ API_RESULT BT_ctn_cce_connect
            );
 
 /**
- *  \fn BT_ctn_cce_disconnect
- *
  *  \brief To disconnect the established CTN Access Service Connection.
  *
  *  \par Description:
  *       This API is to disconnect the active CTN Access Service Connection
- *       with the remote CTN CSE. CTN CCE calls the registered application 
+ *       with the remote CTN CSE. CTN CCE calls the registered application
  *       callback upon completion of this request with the notification
 *        CTN_CCE_DISCONNECT_CNF event.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance that has to be disconnected.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -607,17 +706,15 @@ API_RESULT BT_ctn_cce_disconnect
            );
 
 /**
- *  \fn BT_ctn_cce_transport_close
- *
  *  \brief To disconnect the underlying transport of CTN Access Service Connection.
  *
  *  \par Description:
- *       This API is to disconnect the transport connection of the Access 
- *       Service with the remote CTN CSE. CTN CCE calls the registered 
- *       application callback upon completion of this procedure with the 
+ *       This API is to disconnect the transport connection of the Access
+ *       Service with the remote CTN CSE. CTN CCE calls the registered
+ *       application callback upon completion of this procedure with the
  *       notification CTN_CCE_TRANSPORT_CLOSE_CNF event.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance that has to be disconnected.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -629,29 +726,27 @@ API_RESULT BT_ctn_cce_transport_close
            );
 
 /**
- *  \fn BT_ctn_cce_get_listing
- *
- *  \brief To get the bCalendar object listing from the given 
+ *  \brief To get the bCalendar object listing from the given
  *         directory in the CSE.
  *
  *  \par Description:
- *       This API retrieves the bCalendar object listing from the 
- *       requested folder at the connected CSE entity. The application 
- *       shall include the folder name and may include the optional 
+ *       This API retrieves the bCalendar object listing from the
+ *       requested folder at the connected CSE entity. The application
+ *       shall include the folder name and may include the optional
  *       application parameters for the request using the ctn_get_info parameter.
  *
- *       The completion of this procedure is notified through CTN_CCE_GET_LISTING_CNF 
+ *       The completion of this procedure is notified through CTN_CCE_GET_LISTING_CNF
  *       event along with the status of the procedure.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance.
  *
- *  \param (in) ctn_get_info
- *         Structure containing folder name to retrieve the CTN bCalendar object 
+ *  \param [in] ctn_get_info
+ *         Structure containing folder name to retrieve the CTN bCalendar object
  *         listing from and the application parameters if any, that may be included
  *         by the application. The following application parameters are supported
  *         as part of this request for this parameter.
- *         MaxListCount, ListStartOffset, ParameterMask, FilterPeriodBegin, FilterPeriodEnd. 
+ *         MaxListCount, ListStartOffset, ParameterMask, FilterPeriodBegin, FilterPeriodEnd.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
  *                      describing the cause of failure.
@@ -663,24 +758,22 @@ API_RESULT BT_ctn_cce_get_listing
            );
 
 /**
- *  \fn BT_ctn_cce_get_object
- *
  *  \brief To get the bCalendar object with given handle from the CSE's repository.
  *
  *  \par Description:
- *       This API retrieves the bCalendar object with the given object handle from 
- *       the connected CSE device. The application shall specify the object handle 
+ *       This API retrieves the bCalendar object with the given object handle from
+ *       the connected CSE device. The application shall specify the object handle
  *       and application parameters through the ctn_get_info parameter.
  *
- *       The completion of this procedure is notified through CTN_CCE_GET_OBJECT_CNF 
+ *       The completion of this procedure is notified through CTN_CCE_GET_OBJECT_CNF
  *       event along with the status of the procedure.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance.
  *
- *  \param (in) ctn_get_info
- *         Structure containing the object handle that is to be retrieved and the 
- *         application parameters. The following are the mandatory and optional 
+ *  \param [in] ctn_get_info
+ *         Structure containing the object handle that is to be retrieved and the
+ *         application parameters. The following are the mandatory and optional
  *         application parameters that are supported for the request through this parameter.
  *         Attachment (M), AttachmentID (O), Recurrent (O)
  *
@@ -694,8 +787,6 @@ API_RESULT BT_ctn_cce_get_object
            );
 
 /**
- *  \fn BT_ctn_cce_set_status
- *
  *  \brief To modify the status of the CTN object entry in the CSE with given handle.
  *
  *  \par Description:
@@ -706,13 +797,13 @@ API_RESULT BT_ctn_cce_get_object
  *       The completion of this procedure is notified through CTN_CCE_SET_OBJECT_STATUS_CNF
  *       event along with the status of the procedure.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance.
  *
- *  \param (in) ctn_set_info
+ *  \param [in] ctn_set_info
  *         Structure containing the object handle whose status indicator has to be updated
  *         and the application parameters that convey the indicator parameter to be updated
- *         and the value. The following are the mandatory & optional application parameters 
+ *         and the value. The following are the mandatory & optional application parameters
  *         that are supported for the request through this parameter.
  *         StatusIndicator(M), StatusValue(M), PostponeVal(O)
  *
@@ -726,34 +817,32 @@ API_RESULT BT_ctn_cce_set_status
            );
 
 /**
- *  \fn BT_ctn_cce_push_object
- *
  *  \brief To push a CTN object to the CTN CSE.
  *
  *  \par Description:
- *       This API pushes the given CTN object to the CSE repository. The application shall 
+ *       This API pushes the given CTN object to the CSE repository. The application shall
  *       specify the name of folder to which the object has to be directed to at
- *       the CSE, the application parameters and the object body through the 
+ *       the CSE, the application parameters and the object body through the
  *       parameter ctn_req_info.
  *
- *       The completion of this procedure is notified through CTN_CCE_PUSH_OBJECT_CNF 
+ *       The completion of this procedure is notified through CTN_CCE_PUSH_OBJECT_CNF
  *       event along with the status of the procedure.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance.
  *
- *  \param (in) ctn_req_info
- *         Structure containing name of the folder at CSE to which the object is 
+ *  \param [in] ctn_req_info
+ *         Structure containing name of the folder at CSE to which the object is
  *         directed along with the application parameters and message body.
  *         The following mandatory application parameter is supported for the
  *         request through this parameter. Send (M)
  *
- *  \param (in) more
+ *  \param [in] more
  *         Indicates if application has remaining of object still to be sent or object complete
  *         1 -> Object part remaining
  *         0 -> No more object part remaining
  *
- *  \param (out) actual
+ *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included in
  *         the request, that is packed for transmission.
  *
@@ -769,21 +858,19 @@ API_RESULT BT_ctn_cce_push_object
            );
 
 /**
- *  \fn BT_ctn_cce_forward_object
- *
- *  \brief To forward a bCalendar from CSE’s repository to one or more additional recipients.
+ *  \brief To forward a bCalendar from CSE's repository to one or more additional recipients.
  *
  *  \par Description:
- *       This API requests the connected CSE to forward a bCalendar object. Upon receiving 
+ *       This API requests the connected CSE to forward a bCalendar object. Upon receiving
  *       a response from the Server, the application is notified using the registered event
  *       callback through the event CTN_CCE_FORWARD_OBJECT_CNF along with the result of the
  *       operation
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance.
  *
- *  \param (in) ctn_set_info
- *         Structure containing handle of the object to be forwarded and the description 
+ *  \param [in] ctn_set_info
+ *         Structure containing handle of the object to be forwarded and the description
  *         containing the list of recipients to forward the given object.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -796,8 +883,6 @@ API_RESULT BT_ctn_cce_forward_object
            );
 
 /**
- *  \fn BT_ctn_cce_get_account_information
- *
  *  \brief To retrieve account information of CSE.
  *
  *  \par Description:
@@ -806,10 +891,10 @@ API_RESULT BT_ctn_cce_forward_object
  *       from the Server, the application is notified using the registered event callback
  *       through the event CTN_CCE_GET_ACCOUNT_INFO_CNF along with the result of the operation
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance.
  *
- *  \param (in) ctn_set_info
+ *  \param [in] ctn_set_info
  *         Structure containing the mandatory InstanceID application parameter
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -822,17 +907,15 @@ API_RESULT BT_ctn_cce_get_account_information
            );
 
 /**
- *  \fn BT_ctn_cce_sync_account
- *
- *  \brief To initiate synchronization of the CSE’s account with external server.
+ *  \brief To initiate synchronization of the CSE's account with external server.
  *
  *  \par Description:
- *       This API requests the connected CSE to synchronize the CSE’s repository in case added,
+ *       This API requests the connected CSE to synchronize the CSE's repository in case added,
  *       removed or updated entries. Upon receiving a response from the server, the application is
  *       notified using the registered event callback through the event CTN_CCE_SYNC_ACCOUNT_CNF
  *       along with the result of the operation.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -844,21 +927,19 @@ API_RESULT BT_ctn_cce_sync_account
            );
 
 /**
- *  \fn BT_ctn_cce_set_ntf_registration
- *
  *  \brief To register for enabling or disabling notification with CSE.
  *
  *  \par Description:
  *       This API registers with the CSE to enable or disable the
- *       notification feature. The application shall include the 
+ *       notification feature. The application shall include the
  *       NotificationStatus application parameter through the ctn_set_info parameter.
  *       The completion of this procedure is notified through
  *       CTN_CCE_SET_NTF_REGISTRATION_CNF event along with the status of the procedure.
  *
- *  \param (in) ctn_handle
- *         CTN handle of the CAS instance. 
+ *  \param [in] ctn_handle
+ *         CTN handle of the CAS instance.
  *
- *  \param (in) ctn_set_info
+ *  \param [in] ctn_set_info
  *         Structure containing the mandatory NotificationStatus, AcousticAlarmStatus
  *         application parameters
  *
@@ -872,41 +953,39 @@ API_RESULT BT_ctn_cce_set_ntf_registration
            );
 
 /**
- *  \fn BT_ctn_cce_send_request
- *
  *  \brief To send a request to the CTN server.
  *
  *  \par Description:
- *       This API sends the request to the CTN server with the corresponding 
+ *       This API sends the request to the CTN server with the corresponding
  *       CTN event and the data given by the application contained in the ctn_headers.
  *       The application shall call this API to continue any operation initiated and to
  *       which the first notification has been received. Thus this API shall be called from the
  *       CTN CCE application callback function with the event_type set to the current received event.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance.
  *
- *  \param (in) event_type
+ *  \param [in] event_type
  *         Event type that was received in the application callback,
- *         to indicate that the request is the continuation of the 
+ *         to indicate that the request is the continuation of the
  *         operation for which it was notified.
  *
- *  \param (in) event_result
+ *  \param [in] event_result
  *         This is the status of the request.
  *
- *  \param (in) ctn_headers
- *           Structure containing either the connect information in case 
+ *  \param [in] ctn_headers
+ *           Structure containing either the connect information in case
  *           of connect operation or Get request information, in case of
  *           Get operation or Put request information in case of Put operation.
  *
- *  \param (in) more
- *          Indicates if application has remaining of object body still to be 
+ *  \param [in] more
+ *          Indicates if application has remaining of object body still to be
  *          sent or object complete
  *          1 -> Object part remaining
  *          0 -> No more object part remaining
  *
- *  \param (out) actual
- *         Contains the actual number of bytes of BODY header, if any included 
+ *  \param [out] actual
+ *         Contains the actual number of bytes of BODY header, if any included
  *         in the request, that is packed for transmission.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -923,17 +1002,15 @@ API_RESULT BT_ctn_cce_send_request
            );
 
 /**
- *  \fn BT_ctn_cce_abort
- *
  *  \brief To abort the ongoing CTN operation.
  *
  *  \par Description:
- *       This API aborts the ongoing OBEX Get/Put operation 
+ *       This API aborts the ongoing OBEX Get/Put operation
  *       that was initiated by the Client. The completion of the
- *       Abort operation is notified through CTN_CCE_ABORT_CNF notification 
+ *       Abort operation is notified through CTN_CCE_ABORT_CNF notification
  *       event along with the status of the procedure.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance of which the operation is to be aborted.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -947,17 +1024,15 @@ API_RESULT BT_ctn_cce_abort
 #ifdef CTN_SUPPORT_NOTIFICATION
 
 /**
- *  \fn BT_ctn_cce_ns_transport_close
- *
  *  \brief To disconnect the underlying transport of CTN Notificatin Service Connection.
  *
  *  \par Description:
- *       This API is to disconnect the transport connection of the Notification 
- *       Service with the remote CTN CSE. CTN CCE calls the registered application 
+ *       This API is to disconnect the transport connection of the Notification
+ *       Service with the remote CTN CSE. CTN CCE calls the registered application
  *       callback upon completion of this procedure with the notification
  *       CTN_CCE_NS_TRANSPORT_CLOSE_CNF event.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CNS instance to be disconnected.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -969,31 +1044,29 @@ API_RESULT BT_ctn_cce_ns_transport_close
            );
 
 /**
- *  \fn BT_ctn_cce_ns_send_response
- *
- *  \brief To send response to the latest request received over notification 
+ *  \brief To send response to the latest request received over notification
  *         channel from the CTN CSE.
  *
  *  \par Description:
  *       This API is used to send the response to the requests made by the CTN CSE.
  *       Response to connect, send event etc. shall be sent through this API.
  *       The application shall call this API with the event type of the latest
- *       notification received. This indicates the response is for the latest 
- *       indication received. CTN CCE frames the OBEX specific packets based on the 
- *       response & associated response_data and send it to the CTN CSE. 
+ *       notification received. This indicates the response is for the latest
+ *       indication received. CTN CCE frames the OBEX specific packets based on the
+ *       response & associated response_data and send it to the CTN CSE.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CNS instance.
  *
- *  \param (in) event_type
+ *  \param [in] event_type
  *         Event type that was received in the application callback. This is to
  *         indicate that the response being sent is response to the request for
  *         which the application was notified.
  *
- *  \param (in) response
+ *  \param [in] response
  *         This is the OBEX response code.
  *
- *  \param (in) ctn_headers
+ *  \param [in] ctn_headers
  *         Structure containing either the connect information, in case of connect operation
  *         or the response data, in case of Get/Put operation.
  *
@@ -1011,7 +1084,7 @@ API_RESULT BT_ctn_cce_ns_send_response
 
 #ifdef HAVE_CTN_SYNC_INSTANCE
 /**
- * CTN Sync CTN Instance with external Server 
+ * CTN Sync CTN Instance with external Server
  * Note: This feature is related to Generic PIM Profile(GPP)
  */
 API_RESULT BT_ctn_cce_sync_instance
@@ -1026,8 +1099,6 @@ API_RESULT BT_ctn_cce_sync_instance
 #ifdef CTN_CSE
 
 /**
- *  \fn BT_ctn_cse_init
- *
  *  \brief To initialize the CTN CSE module.
  *
  *  \par Description:
@@ -1043,14 +1114,12 @@ API_RESULT BT_ctn_cce_sync_instance
  *  \note It should be the first function to be called for using CTN CSE
  *        module.
  */
-API_RESULT BT_ctn_cse_init 
+API_RESULT BT_ctn_cse_init
            (
                void
            );
 
 /**
- *  \fn BT_ctn_cse_shutdown
- *
  *  \brief To shutdown CTN CSE module.
  *
  *  \par Description:
@@ -1061,8 +1130,8 @@ API_RESULT BT_ctn_cse_init
  *  \return API_RESULT: API_SUCCESS or an Error Code describing
  *                      the cause of failure.
  *
- *  \note This API shall be called only when there are no active/started instances of 
- *        the CSE. In case of active CSE instances, they should be stopped by 
+ *  \note This API shall be called only when there are no active/started instances of
+ *        the CSE. In case of active CSE instances, they should be stopped by
  *        calling BT_ctn_cse_stop() API.
  */
 API_RESULT BT_ctn_cse_shutdown
@@ -1071,8 +1140,6 @@ API_RESULT BT_ctn_cse_shutdown
            );
 
 /**
- *  \fn BT_ctn_cse_start
- *
  *  \brief To start an instance of CTN CSE.
  *
  *  \par Description:
@@ -1081,19 +1148,19 @@ API_RESULT BT_ctn_cse_shutdown
  *       CTN CSE entity. This also registers the callback function that CTN
  *       needs to call when any event occurs for this instance.
  *
- *  \param (in) ctn_service
+ *  \param [in] ctn_service
  *         CTN Service Type (Access/Notification) to be started
  *
- *  \param (in) ctn_cse_cb
+ *  \param [in] ctn_cse_cb
  *         The application callback function pointer to be registered.
  *
- *  \param (out) ctn_handle
+ *  \param [out] ctn_handle
  *         Index to the client CAS/CNS entity that is started.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
  *                      describing the cause of failure.
  *
- *  \note All further communication exchanged between the application and profile 
+ *  \note All further communication exchanged between the application and profile
  *        for the CSE instance will be identified using the assigned CTN handle.
  */
 API_RESULT BT_ctn_cse_start
@@ -1104,19 +1171,17 @@ API_RESULT BT_ctn_cse_start
            );
 
 /**
- *  \fn BT_ctn_cse_stop
- *
  *  \brief To stop an active CTN CSE instance of Access/Notification Service
  *         as given by the ctn_service parameter
  *
  *  \par Description:
- *       This API stops the CTN CSE instance corresponding 
+ *       This API stops the CTN CSE instance corresponding
  *       to the specified handle.
  *
- *  \param (in) ctn_service
+ *  \param [in] ctn_service
  *         CTN Service type (Access/Notification) to be stopped.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         Index to the client CAS/CNS entity that has to be stopped.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1132,17 +1197,15 @@ API_RESULT BT_ctn_cse_stop
            );
 
 /**
- *  \fn BT_ctn_cse_transport_close
- *
  *  \brief To disconnect the underlying transport of CTN Access Service Connection.
  *
  *  \par Description:
- *       This API is to disconnect the transport connection of the Access 
- *       Service with the remote CTN CCE. CTN CSE calls the registered 
- *       application callback upon completion of this request with the 
+ *       This API is to disconnect the transport connection of the Access
+ *       Service with the remote CTN CCE. CTN CSE calls the registered
+ *       application callback upon completion of this request with the
  *       notification CTN_CSE_TRANSPORT_CLOSE_CNF event.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CAS instance that has to be disconnected.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1154,31 +1217,29 @@ API_RESULT BT_ctn_cse_transport_close
            );
 
 /**
- *  \fn BT_ctn_cse_send_response
- *
  *  \brief To send response to the latest request received from the CTN CCE.
  *
  *  \par Description:
  *       This API is used to send the response to the requests made by the CTN CCE.
- *       Response to Connect, GetListing, GetAcountInformation, GetObject, 
- *       PutObject etc. shall be sent through this API.The application shall call 
+ *       Response to Connect, GetListing, GetAcountInformation, GetObject,
+ *       PutObject etc. shall be sent through this API.The application shall call
  *       this API with the event type of the latest notification received.
  *       This indicates the response is for the latest indication received.
  *       CTN CSE frames the OBEX specific packets based on the response and associated
  *       response data and send it to the CTN CCE.
  *
- *  \param (in) ctn_handle
- *         CTN handle of the CAS instance. 
+ *  \param [in] ctn_handle
+ *         CTN handle of the CAS instance.
  *
- *  \param (in) event_type
- *         Event type that was received in the application callback. 
- *         This is to indicate that the response being sent is response to the 
+ *  \param [in] event_type
+ *         Event type that was received in the application callback.
+ *         This is to indicate that the response being sent is response to the
  *         request for which the application was notified
  *
- *  \param (in) response
+ *  \param [in] response
  *         This is the OBEX response code.
  *
- *  \param (in) ctn_headers
+ *  \param [in] ctn_headers
  *         Structure containing either the connect information, in case of connect operation
  *         or the response data, in case of Get/Put operation.
  *
@@ -1195,21 +1256,19 @@ API_RESULT BT_ctn_cse_send_response
 
 #ifdef CTN_SUPPORT_NOTIFICATION
 /**
- *  \fn BT_ctn_cse_ns_connect
- *
  *  \brief To establish the CTN Notification Service (CNS) Connection.
  *
  *  \par Description:
  *       This API establishes the OBEX connection with the remote CTN Client (CCE)
- *       for the CTN Notification Service (CNS). CTN CSE calls the registered 
- *       application callback upon the completion of the connection procedure 
- *       (when the CCE responds with the connection response) with the notification 
+ *       for the CTN Notification Service (CNS). CTN CSE calls the registered
+ *       application callback upon the completion of the connection procedure
+ *       (when the CCE responds with the connection response) with the notification
  *       CTN_CSE_NS_CONNECT_CNF event.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CNS instance that has to be connected.
  *
- *  \param (in) ctn_connect_info
+ *  \param [in] ctn_connect_info
  *         Structure containing the Bluetooth Device Address of the CCE,
  *         the local maximum receive capacity (in Bytes) and L2CAP psm of CCE.
  *
@@ -1223,17 +1282,15 @@ API_RESULT BT_ctn_cse_ns_connect
            );
 
 /**
- *  \fn BT_ctn_cse_ns_disconnect
- *
  *  \brief To disconnect the established CTN Notification Service Connection.
  *
  *  \par Description:
  *       This API is to disconnect the active CTN Notification Service Connection
- *       with the remote CTN CCE. CTN CSE calls the registered application 
+ *       with the remote CTN CCE. CTN CSE calls the registered application
  *       callback upon completion of this procedure with the notification
 *        CTN_CSE_DISCONNECT_CNF event.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CNS instance that has to be disconnected.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1245,17 +1302,15 @@ API_RESULT BT_ctn_cse_ns_disconnect
            );
 
 /**
- *  \fn BT_ctn_cse_ns_transport_close
- *
  *  \brief To disconnect the underlying transport of CTN Notificatin Service Connection.
  *
  *  \par Description:
- *       This API is to disconnect the transport connection of the Notification 
- *       Service with the remote CTN CCE. CTN CSE calls the registered application 
+ *       This API is to disconnect the transport connection of the Notification
+ *       Service with the remote CTN CCE. CTN CSE calls the registered application
  *       callback upon completion of this procedure with the notification
  *       CTN_CCE_NS_TRANSPORT_CLOSE_CNF event.
  *
- *  \param (in) ctn_handle
+ *  \param [in] ctn_handle
  *         CTN handle of the CNS instance to be disconnected.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1267,27 +1322,25 @@ API_RESULT BT_ctn_cse_ns_transport_close
            );
 
 /**
- *  \fn BT_ctn_cse_ns_send_event
- *
  *  \brief To Send a notification event to the CNS server in the CTN client.
  *
  *  \par Description:
- *       This API send a notification event over notification channel from 
+ *       This API send a notification event over notification channel from
  *       the CTN server to the CTN Client. The application shall call
  *       this API with the event report content.
  *
- *  \param (in) ctn_handle
- *         CTN handle of the CAS instance. 
+ *  \param [in] ctn_handle
+ *         CTN handle of the CAS instance.
  *
- *  \param (in) ctn_req_info
+ *  \param [in] ctn_req_info
  *         Structure containing the notification event report content.
  *
- *  \param (in) more
+ *  \param [in] more
  *         Indicates if application has remaining of event body still to be sent or event complete
  *         1 -> Event body part remaining
  *         0 -> No more event body part remaining
  *
- *  \param (out) actual
+ *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included in
  *         the request, that is packed for transmission.
  *
@@ -1303,38 +1356,36 @@ API_RESULT BT_ctn_cse_ns_send_event
            );
 
 /**
- *  \fn BT_ctn_cse_ns_send_request
- *
  *  \brief To send a request(Notification event) over notification channel to the CNS server in the CTN client.
  *
  *  \par Description:
- *       This API sends the request over notification channel to the CTN client with the corresponding 
+ *       This API sends the request over notification channel to the CTN client with the corresponding
  *       CTN event and the data given by the application contained in the ctn_headers.
  *       The application shall call this API to continue any operation initiated and to
  *       which the first notification has been received. Thus this API shall be called from the
  *       CTN CSE application callback function with the event_type set to the current received event
  *
- *  \param (in) ctn_handle
- *         CTN handle of the CNS instance. 
+ *  \param [in] ctn_handle
+ *         CTN handle of the CNS instance.
  *
- *  \param (in) event_type
+ *  \param [in] event_type
  *         Event type that was received in the application callback,
- *         to indicate that the request is the continuation of the 
+ *         to indicate that the request is the continuation of the
  *         operation for which it was notified.
  *
- *  \param (in) event_result
+ *  \param [in] event_result
  *         This is the status of the request.
  *
- *  \param (in) ctn_headers
+ *  \param [in] ctn_headers
  *           Structure containing either the get request information, in case of
  *           get operation or put request information in case of put operation.
  *
- *  \param (in) more
+ *  \param [in] more
  *         Indicates if application has remaining of event still to be sent or event complete
  *         1 -> Event part remaining
  *         0 -> No more event part remaining
  *
- *  \param (out) actual
+ *  \param [out] actual
  *         Contains the actual number of bytes of BODY header, if any included in
  *         the request, that is packed for transmission.
  *
@@ -1354,6 +1405,11 @@ API_RESULT BT_ctn_cse_ns_send_request
 #endif /* CTN_SUPPORT_NOTIFICATION */
 
 #endif /* CTN_CSE */
-
+#ifdef __cplusplus
+};
+#endif
+/**\}*/
+/**\}*/
+/**\}*/
 #endif /* _H_BT_CTN_API_ */
 

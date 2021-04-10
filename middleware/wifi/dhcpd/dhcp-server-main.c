@@ -50,7 +50,7 @@ int dhcp_server_start(void *intrfc_handle)
         return -WM_E_DHCPD_SERVER_RUNNING;
 
     ret = os_thread_create(&dhcpd_thread, "dhcp-server", dhcp_server, 0, &dhcp_stack, OS_PRIO_3);
-    if (ret)
+    if (ret != 0)
     {
         dhcp_free_allocations();
         return -WM_E_DHCPD_THREAD_CREATE;

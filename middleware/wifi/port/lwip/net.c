@@ -109,7 +109,7 @@ int net_wlan_init(void)
         ip_2_ip4(&g_mlan.ipaddr)->addr = INADDR_ANY;
         ret = netifapi_netif_add(&g_mlan.netif, ip_2_ip4(&g_mlan.ipaddr), ip_2_ip4(&g_mlan.ipaddr),
                                  ip_2_ip4(&g_mlan.ipaddr), NULL, lwip_netif_init, tcpip_input);
-        if (ret)
+        if (ret != 0)
         {
             net_e("MLAN interface add failed");
             return -WM_FAIL;
@@ -117,7 +117,7 @@ int net_wlan_init(void)
 
         ret = netifapi_netif_add(&g_uap.netif, ip_2_ip4(&g_uap.ipaddr), ip_2_ip4(&g_uap.ipaddr),
                                  ip_2_ip4(&g_uap.ipaddr), NULL, lwip_netif_uap_init, tcpip_input);
-        if (ret)
+        if (ret != 0)
         {
             net_e("UAP interface add failed");
             return -WM_FAIL;
@@ -175,6 +175,10 @@ static void wm_netif_status_callback(struct netif *n)
         /* If no ip address is supplied */
         event_flag_dhcp_connection = DHCP_STATE_FAILED;
     }
+    else
+    { /* Do Nothing */
+    }
+
     /* Based on the value of status flag send corresponding message
      * to wlcmgr
      */
@@ -231,8 +235,11 @@ void *net_sock_to_interface(int sock)
     struct sockaddr_in peer;
     socklen_t peerlen = sizeof(peer);
     void *req_iface   = NULL;
+    int ret;
 
-    getpeername(sock, (struct sockaddr *)&peer, &peerlen);
+    ret = getpeername(sock, (struct sockaddr *)&peer, &peerlen);
+    if (ret < 0)
+        net_e("Failed to get peer name");
     req_iface = net_ip_to_interface(peer.sin_addr.s_addr);
     return req_iface;
 }
@@ -299,9 +306,9 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
         case ADDR_TYPE_DHCP:
             /* Reset the address since we might be
                transitioning from static to DHCP */
-            memset(&if_handle->ipaddr, 0, sizeof(ip_addr_t));
-            memset(&if_handle->nmask, 0, sizeof(ip_addr_t));
-            memset(&if_handle->gw, 0, sizeof(ip_addr_t));
+            (void)memset(&if_handle->ipaddr, 0, sizeof(ip_addr_t));
+            (void)memset(&if_handle->nmask, 0, sizeof(ip_addr_t));
+            (void)memset(&if_handle->gw, 0, sizeof(ip_addr_t));
             netifapi_netif_set_addr(&if_handle->netif, ip_2_ip4(&if_handle->ipaddr), ip_2_ip4(&if_handle->nmask),
                                     ip_2_ip4(&if_handle->gw));
             netifapi_netif_set_up(&if_handle->netif);
@@ -330,6 +337,9 @@ int net_configure_address(struct wlan_ip_config *addr, void *intrfc_handle)
     else if ((if_handle == &g_uap))
     {
         wlan_wlcmgr_send_msg(WIFI_EVENT_UAP_NET_ADDR_CONFIG, WIFI_EVENT_REASON_SUCCESS, NULL);
+    }
+    else
+    { /* Do Nothing */
     }
 
     return WM_SUCCESS;

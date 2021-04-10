@@ -16,11 +16,25 @@
 /* ----------------------------------------------- Header File Inclusion */
 #include "BT_common.h"
 
-/* ----------------------------------------------- Type Definition */
-typedef UCHAR DEVICE_HANDLE;
-
-typedef UCHAR DEVICE_LINK_TYPE;
-
+/**
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
+/**
+ * \defgroup device_queue Device Queue
+ * \{
+ * Describes Device Queue defined by the module.
+ */
+/**
+ * \defgroup device_queue_defines Defines
+ * \{
+ * Describes defines for the module.
+ */
+/**
+ * \defgroup device_queue_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
 #define DEVICE_HANDLE_INIT_VAL     0xFF
 
 #define DEVICE_HANDLE_INIT(hndl)\
@@ -31,21 +45,77 @@ typedef UCHAR DEVICE_LINK_TYPE;
 #define DQ_LE_LINK                      0x02
 #define DQ_LINK_ANY                     0xFF
 
+/** \} */
+/**
+ * \defgroup device_queue_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
+/* ----------------------------------------------- Type Definition */
+typedef UCHAR DEVICE_HANDLE;
+
+typedef UCHAR DEVICE_LINK_TYPE;
+/** \} */
+/** \} */
+
 /* ----------------------------------------------- Function Declarations */
+/**
+ * \defgroup device_queue_api API definitions
+ * \{
+ * Describes API definitions defined by the module.
+ */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /** Init routine */
+/**
+ *  \brief To do power on initialization of EtherMind Device Queue module
+ *
+ *  \par Description:
+ *       This function is the EtherMind-Init handler for the Device Queue module
+ *       and performs power-on initialization.
+ *
+ *  \note This function must be called only once.
+ */
 void em_device_queue_init ( void );
 
 /** Activating routine */
+/**
+ *  \brief To perform Bluetooth specific initializations for EtherMind Device Queue module
+ *
+ *  \par Description:
+ *       This function is the Bluetooth-ON handler for Device Queue module, and it
+ *       performs bluetooth specific initializations for the Device Queue module.
+ */
 void device_queue_bt_init ( void );
 
 /** Shutdown routine */
+/**
+ *  \brief To perform Bluetooth specific shutdown for EtherMind Device Queue module
+ *
+ *  \par Description:
+ *       This function is the Bluetooth-OFF handler for Device Queue module, and it
+ *       performs bluetooth specific shutdown for the Device Queue module.
+ */
 void device_queue_bt_shutdown ( void );
 
 #ifdef BT_DUAL_MODE
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 /** Enqueue routine */
 API_RESULT device_queue_alloc
            (
@@ -54,6 +124,20 @@ API_RESULT device_queue_alloc
                /* IN */  DEVICE_LINK_TYPE    link_type
            );
 
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 /* Fetch Link Type */
 API_RESULT device_queue_get_link_type
            (
@@ -61,6 +145,20 @@ API_RESULT device_queue_get_link_type
                /* IN */  DEVICE_HANDLE       * hndl
            );
 #else /* BT_DUAL_MODE */
+
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 /** Enqueue routine */
 API_RESULT device_queue_alloc
            (
@@ -69,6 +167,19 @@ API_RESULT device_queue_alloc
            );
 #endif /* BT_DUAL_MODE */
 
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 /* Delete routine */
 API_RESULT device_queue_free
            (
@@ -86,6 +197,19 @@ API_RESULT device_queue_free
 #define device_queue_search_any_remote_addr(h,a)\
         device_queue_search_remote_addr ((h),(a),DQ_LINK_ANY)
 
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 /* Search routine */
 API_RESULT device_queue_search_remote_addr
            (
@@ -104,6 +228,19 @@ API_RESULT device_queue_search_remote_addr
 #define device_queue_search_any_remote_addr(h,a)\
         device_queue_search_remote_addr ((h),(a))
 
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 /* Search routine */
 API_RESULT device_queue_search_remote_addr
            (
@@ -111,42 +248,114 @@ API_RESULT device_queue_search_remote_addr
                /* IN */  BT_DEVICE_ADDR    * addr /* Remote Device to be searched*/
            );
 #endif /* BT_DUAL_MODE */
-
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 /* Fetch Remote Device Address */
 API_RESULT device_queue_get_remote_addr
            (
                /* IN */  DEVICE_HANDLE     * hndl, /* Device Reference */
                /* OUT */ BT_DEVICE_ADDR    * addr  /* Remote Device Address */
            );
-
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 /* Fetch Device Address Only */
 API_RESULT device_queue_get_remote_addr_only
            (
                /* IN */  DEVICE_HANDLE    * hndl, /* Device Reference */
                /* OUT */ UCHAR            * addr  /* Remote Device Address */
            );
-
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 /* Set remote addr routine */
 API_RESULT device_queue_set_remote_addr
            (
                /* IN */ DEVICE_HANDLE     * hndl, /* Device Reference */
                /* IN */ BT_DEVICE_ADDR    * addr  /* Remote Device to be set */
            );
-
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 /* Fetch Local Device Address */
 API_RESULT device_queue_get_local_addr
            (
                /* IN */  DEVICE_HANDLE     * hndl, /* Device Reference */
                /* OUT */ BT_DEVICE_ADDR    * addr  /* Device's address */
            );
-
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 /* Set local addr routine */
 API_RESULT device_queue_set_local_addr
            (
                /* IN */ DEVICE_HANDLE     * hndl, /* Device Reference */
                /* IN */ BT_DEVICE_ADDR    * addr  /* Local Device to be set*/
            );
-
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 API_RESULT device_queue_set_curr_addr_type
            (
                /* IN */ UCHAR    * addr,/* Local Device to be set*/
@@ -156,6 +365,8 @@ API_RESULT device_queue_set_curr_addr_type
 #ifdef __cplusplus
 };
 #endif
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_BT_DEVICE_QUEUE_ */
 

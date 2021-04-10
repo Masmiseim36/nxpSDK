@@ -161,6 +161,8 @@ include(middleware_usb_host_common_header_MIMXRT1062)
 
 include(middleware_freertos-kernel_extension_MIMXRT1062)
 
+include(middleware_wifi_wifidriver_MIMXRT1062)
+
 include(middleware_sdmmc_osa_freertos_MIMXRT1062)
 
 include(component_osa_free_rtos_MIMXRT1062)

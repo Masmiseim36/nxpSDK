@@ -163,7 +163,7 @@ EM_RESULT EM_fops_set_file_attributes
 EM_RESULT EM_fops_access_first
            (
                /* IN */   UCHAR   * dir,
-			   /* IN */   UCHAR   * pattern,
+               /* IN */   UCHAR   * pattern,
                /* OUT */  EM_fops_object_handle   * object,
                /* OUT */  EM_FOPS_FILINFO   * info
            );
@@ -235,6 +235,14 @@ EM_RESULT EM_fops_file_get
               /* IN */   EM_fops_file_handle   file_handle,
               /* IN */   UCHAR               * buffer,
               /* INOUT */   UINT16           * buf_length
+          );
+
+EM_RESULT EM_fops_file_get_formatted
+          (
+              /* IN */    EM_fops_file_handle   file_handle,
+              /* IN */    CHAR                * format,
+              /* INOUT */ void                * parameter,
+              /* INOUT */ UINT16              * length
           );
 
 EM_RESULT EM_fops_file_close

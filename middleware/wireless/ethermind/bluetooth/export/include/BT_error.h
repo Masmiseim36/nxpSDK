@@ -15,24 +15,24 @@
 #define _H_BT_ERROR_
 
 /**
- * \defgroup BLE_ERROR_CODES BlueLitE Error Codes
+ * \defgroup BT_ERROR_CODES EtherMind Error Codes
  * \{
- *  This section contains all the error codes defined for BlueLitE stack
+ *  This section contains all the error codes defined for EtherMind stack
  *  and profiles.
  *  <p>
  *  \anchor error_code_overview
  *  <b>Theory:</b>
  *  <p>
- *    Every API under BlueLitE Protocol Suite returns \ref API_RESULT,
+ *    Every API under EtherMind Protocol Suite returns \ref API_RESULT,
  *    which is a 2 Byte Unsigned Short variable. The higher order byte
  *    signifies the Module from which the Error has been generated, and
  *    the lower order byte encodes the actual reason of Error.
  *    <p>
- *    Each module under BlueLitE Stack is given unique
+ *    Each module under EtherMind Stack is given unique
  *    Error ID (the higher order byte). Also, for each module the Error
  *    Code (the lower order byte) signifies an unique error situation.
  *    <p>
- *    For BlueLitE Protocol Modules (eg, HCI, RFCOMM etc.), Error IDs are
+ *    For EtherMind Protocol Modules (eg, HCI, RFCOMM etc.), Error IDs are
  *    assigned from the range 0x10 to 0x4F. For Profiles, the range
  *    is from 0x50 to 0x7F.
  *    <p>
@@ -45,7 +45,7 @@
  *    <p>
  *  <b>Note:</b>
  *    <p>
- *    The applications using native/profile BlueLitE API should NOT do
+ *    The applications using native/profile EtherMind API should NOT do
  *    any check on the basis of \ref API_FAILURE - rather, the correct way to
  *    detect an error situation is by doing a negative check on \ref
  *    API_SUCCESS.
@@ -110,7 +110,7 @@ typedef UINT16    API_RESULT;
 
 /**
  * \defgroup btle_error_codes_groups_core Core Modules (0x10 - 0x1F)
- * Error IDs for BlueLitE Core Modules (0x10 - 0x1F).
+ * Error IDs for EtherMind Core Modules (0x10 - 0x1F).
  * \{
  */
 
@@ -133,7 +133,7 @@ typedef UINT16    API_RESULT;
 
 /**
  * \defgroup btle_error_codes_groups_protocols Protocols (0x20 - 0x3F)
- * Error IDs for BlueLitE Protocol Modules (0x20 - 0x3F).
+ * Error IDs for EtherMind Protocol Modules (0x20 - 0x3F).
  * \{
  */
 
@@ -178,7 +178,7 @@ typedef UINT16    API_RESULT;
 
 /**
  * \defgroup btle_error_codes_groups_profiles Profiles (0x50 - 0x7F)
- * Error IDs for BlueLitE Profile Modules (0x50 - 0x7F).
+ * Error IDs for EtherMind Profile Modules (0x50 - 0x7F).
  * \{
  */
 
@@ -1779,6 +1779,9 @@ typedef UINT16    API_RESULT;
         (MUTEX_UNLOCK_FAILED | HID_ERR_ID)
 #define HID_MEMORY_ALLOCATION_FAILED            \
         (MEMORY_ALLOCATION_FAILED | HID_ERR_ID)
+
+#define HID_HOST_MUTEX_INIT_FAILED              \
+        (MUTEX_INIT_FAILED | HID_ERR_ID)
 
 /* HID-Device Error IDs */
 #define HID_DEVICE_NOT_INIT                     (0x0011 | HID_ERR_ID)

@@ -75,7 +75,7 @@ void obex_md5
  */
 API_RESULT  BT_obex_generate_digest_string ( /* OUT */ UCHAR * digest_string )
 {
-    char * pts = "Randomize me";
+    CHAR * pts = "Randomize me";
 
     if (NULL == digest_string)
     {

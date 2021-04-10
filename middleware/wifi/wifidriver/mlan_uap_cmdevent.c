@@ -96,7 +96,7 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
         tlv_mac              = (MrvlIEtypes_MacAddr_t *)tlv;
         tlv_mac->header.type = wlan_cpu_to_le16(TLV_TYPE_UAP_MAC_ADDRESS);
         tlv_mac->header.len  = wlan_cpu_to_le16(MLAN_MAC_ADDR_LENGTH);
-        memcpy(pmpriv->adapter, tlv_mac->mac, &bss->param.bss_config.mac_addr, MLAN_MAC_ADDR_LENGTH);
+        (void)memcpy(pmpriv->adapter, tlv_mac->mac, &bss->param.bss_config.mac_addr, MLAN_MAC_ADDR_LENGTH);
         cmd_size += sizeof(MrvlIEtypes_MacAddr_t);
         tlv += sizeof(MrvlIEtypes_MacAddr_t);
     }
@@ -106,7 +106,8 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
         tlv_ssid              = (MrvlIEtypes_SsIdParamSet_t *)tlv;
         tlv_ssid->header.type = wlan_cpu_to_le16(TLV_TYPE_SSID);
         tlv_ssid->header.len  = wlan_cpu_to_le16((t_u16)bss->param.bss_config.ssid.ssid_len);
-        memcpy(pmpriv->adapter, tlv_ssid->ssid, bss->param.bss_config.ssid.ssid, bss->param.bss_config.ssid.ssid_len);
+        (void)memcpy(pmpriv->adapter, tlv_ssid->ssid, bss->param.bss_config.ssid.ssid,
+                     bss->param.bss_config.ssid.ssid_len);
         cmd_size += sizeof(MrvlIEtypesHeader_t) + bss->param.bss_config.ssid.ssid_len;
         tlv += sizeof(MrvlIEtypesHeader_t) + bss->param.bss_config.ssid.ssid_len;
     }
@@ -262,8 +263,8 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
             tlv_passphrase              = (MrvlIEtypes_passphrase_t *)tlv;
             tlv_passphrase->header.type = wlan_cpu_to_le16(TLV_TYPE_UAP_WPA_PASSPHRASE);
             tlv_passphrase->header.len  = (t_u16)wlan_cpu_to_le16(bss->param.bss_config.wpa_cfg.length);
-            memcpy(pmpriv->adapter, tlv_passphrase->passphrase, bss->param.bss_config.wpa_cfg.passphrase,
-                   bss->param.bss_config.wpa_cfg.length);
+            (void)memcpy(pmpriv->adapter, tlv_passphrase->passphrase, bss->param.bss_config.wpa_cfg.passphrase,
+                         bss->param.bss_config.wpa_cfg.length);
             cmd_size += sizeof(MrvlIEtypesHeader_t) + bss->param.bss_config.wpa_cfg.length;
             tlv += sizeof(MrvlIEtypesHeader_t) + bss->param.bss_config.wpa_cfg.length;
         }
@@ -273,8 +274,8 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
             tlv_password              = (MrvlIEtypes_password_t *)tlv;
             tlv_password->header.type = wlan_cpu_to_le16(TLV_TYPE_UAP_WPA3_SAE_PASSWORD);
             tlv_password->header.len  = (t_u16)wlan_cpu_to_le16(bss->param.bss_config.wpa_cfg.password_length);
-            memcpy(pmpriv->adapter, tlv_password->password, bss->param.bss_config.wpa_cfg.password,
-                   bss->param.bss_config.wpa_cfg.password_length);
+            (void)memcpy(pmpriv->adapter, tlv_password->password, bss->param.bss_config.wpa_cfg.password,
+                         bss->param.bss_config.wpa_cfg.password_length);
             cmd_size += sizeof(MrvlIEtypesHeader_t) + bss->param.bss_config.wpa_cfg.password_length;
             tlv += sizeof(MrvlIEtypesHeader_t) + bss->param.bss_config.wpa_cfg.password_length;
         }
@@ -291,7 +292,7 @@ static mlan_status wlan_uap_cmd_ap_config(pmlan_private pmpriv,
         tlv_htcap->header.len         = wlan_cpu_to_le16(sizeof(HTCap_t));
         tlv_htcap->ht_cap.ht_cap_info = wlan_cpu_to_le16(bss->param.bss_config.ht_cap_info);
         tlv_htcap->ht_cap.ampdu_param = bss->param.bss_config.ampdu_param;
-        memcpy(pmpriv->adapter, tlv_htcap->ht_cap.supported_mcs_set, bss->param.bss_config.supported_mcs_set, 16);
+        (void)memcpy(pmpriv->adapter, tlv_htcap->ht_cap.supported_mcs_set, bss->param.bss_config.supported_mcs_set, 16);
         tlv_htcap->ht_cap.ht_ext_cap = wlan_cpu_to_le16(bss->param.bss_config.ht_ext_cap);
         tlv_htcap->ht_cap.tx_bf_cap  = wlan_cpu_to_le32(bss->param.bss_config.tx_bf_cap);
         tlv_htcap->ht_cap.asel       = bss->param.bss_config.asel;
@@ -333,7 +334,7 @@ static mlan_status wlan_uap_cmd_sys_configure(pmlan_private pmpriv,
     cmd->size          = wlan_cpu_to_le16(sizeof(HostCmd_DS_SYS_CONFIG) - 1 + S_DS_GEN);
     if (pioctl_buf == MNULL)
     {
-        if (pdata_buf)
+        if (pdata_buf != NULL)
         {
             switch (*(t_u16 *)pdata_buf)
             {
@@ -345,7 +346,7 @@ static mlan_status wlan_uap_cmd_sys_configure(pmlan_private pmpriv,
                     chan_band_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_UAP_CHAN_BAND_CONFIG);
                     chan_band_tlv->header.len =
                         wlan_cpu_to_le16(sizeof(MrvlIEtypes_channel_band_t) - sizeof(MrvlIEtypesHeader_t));
-                    if (cmd_action)
+                    if (cmd_action != 0)
                     {
                         chan_band_tlv->band_config = pdat_tlv_cb->band_config;
                         chan_band_tlv->channel     = pdat_tlv_cb->channel;
@@ -359,7 +360,7 @@ static mlan_status wlan_uap_cmd_sys_configure(pmlan_private pmpriv,
                                                  sizeof(MrvlIEtypes_max_sta_count_t));
                     max_sta_cnt_tlv->header.type = wlan_cpu_to_le16(TLV_TYPE_UAP_MAX_STA_CNT);
 
-                    if (cmd_action)
+                    if (cmd_action != 0U)
                     {
                         max_sta_cnt_tlv->header.len =
                             wlan_cpu_to_le16(sizeof(MrvlIEtypes_max_sta_count_t) - sizeof(MrvlIEtypesHeader_t));
@@ -394,9 +395,16 @@ static mlan_status wlan_uap_cmd_sys_configure(pmlan_private pmpriv,
             ret = wlan_uap_cmd_ap_config(pmpriv, cmd, cmd_action, pioctl_buf);
             goto done;
         }
+        else
+        { /* Do Nothing */
+        }
     }
     else if (pioctl_buf->req_id == MLAN_IOCTL_MISC_CFG)
     {
+    }
+    else
+    {
+        goto done;
     }
 done:
     LEAVE();
@@ -526,7 +534,7 @@ static mlan_status wlan_uap_cmd_sta_deauth(pmlan_private pmpriv, IN HostCmd_DS_C
     ENTER();
     cmd->command = wlan_cpu_to_le16(HOST_CMD_APCMD_STA_DEAUTH);
     cmd->size    = wlan_cpu_to_le16(S_DS_GEN + sizeof(HostCmd_DS_STA_DEAUTH));
-    memcpy(pmpriv->adapter, pcmd_sta_deauth->mac, deauth->mac_addr, MLAN_MAC_ADDR_LENGTH);
+    (void)memcpy(pmpriv->adapter, pcmd_sta_deauth->mac, deauth->mac_addr, MLAN_MAC_ADDR_LENGTH);
     pcmd_sta_deauth->reason = wlan_cpu_to_le16(deauth->reason_code);
     LEAVE();
     return MLAN_STATUS_SUCCESS;
@@ -582,7 +590,7 @@ mlan_status wlan_ops_uap_prepare_cmd(IN t_void *priv,
             ret = wlan_uap_cmd_snmp_mib(pmpriv, cmd_ptr, cmd_action, cmd_oid, (pmlan_ioctl_req)pioctl_buf, pdata_buf);
             break;
         case HostCmd_CMD_802_11D_DOMAIN_INFO:
-            if (pmpriv->support_11d_APIs)
+            if (pmpriv->support_11d_APIs != NULL)
                 ret = pmpriv->support_11d_APIs->wlan_cmd_802_11d_domain_info_p(pmpriv, cmd_ptr, cmd_action);
             break;
         case HOST_CMD_APCMD_STA_DEAUTH:
@@ -605,7 +613,7 @@ mlan_status wlan_ops_uap_prepare_cmd(IN t_void *priv,
             break;
         default:
             PRINTM(MERROR, "PREP_CMD: unknown command- %#x\n", cmd_no);
-            if (pioctl_req)
+            if (pioctl_req != NULL)
                 pioctl_req->status_code = MLAN_ERROR_CMD_INVALID;
             ret = MLAN_STATUS_FAILURE;
             break;

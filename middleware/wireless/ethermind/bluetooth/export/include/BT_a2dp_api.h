@@ -22,10 +22,14 @@
 
 /* ----------------------------------------- Global Definitions */
 /**
+ * \addtogroup bt_profiles Profiles
+ * \{
+ */
+/**
  * \defgroup  a2dp_module  A2DP (Advanced Audio Distribution Profile)
  * \{
  *  This section describes the interfaces & APIs offered by the EtherMind
- *  Advanced Audio Distribution Profile (A2DP) module to the Application and  
+ *  Advanced Audio Distribution Profile (A2DP) module to the Application and
  *  other upper layers of the stack.
  */
 /**
@@ -37,6 +41,12 @@
  * \defgroup a2dp_constants Constants
  * \{
  * Describes Constants defined by A2DP module.
+ */
+/**
+ *  \addtogroup a2dp_constants
+ *
+ *  \name A2DP Event Notification Callback Event Types
+ *  Constant Definitions for A2DP Notification Callback Event Types.
  */
 
 /*@{*/
@@ -59,6 +69,8 @@
 
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP SBC Codec Sampling Frequency
  *  Constant Definitions for A2DP SBC Codec Sampling Frequency values.
  */
@@ -73,6 +85,8 @@
 
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP SBC Codec Channel Mode
  *  Constant Definitions for types of A2DP SBC Codec Channel Mode.
  */
@@ -87,6 +101,8 @@
 
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP SBC Codec Block Length
  *  Constant Definitions for length of A2DP SBC Block.
  */
@@ -101,6 +117,8 @@
 
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP SBC Codec Subbands
  *  Constant Definitions for number of A2DP SBC Codec Subbands.
  */
@@ -112,6 +130,8 @@
 /*@}*/
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP SBC Allocation Method
  *  Constant Definitions for type of A2DP SBC Bit Allocation Method.
  */
@@ -124,6 +144,8 @@
 
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP Maximum and Minimum Bitpool
  *  Constant Definitions for A2DP SBC Minimum and Maximum Bitpool values.
  */
@@ -135,6 +157,8 @@
 /*@}*/
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP SBC CODEC Capability Information Element (IE) Length
  *  Constant Definitions for A2DP SBC CODEC Capability IE Length.
  */
@@ -145,6 +169,8 @@
 /*@}*/
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-1,2 CODEC Capability Information Element (IE) Length
  *  Constant Definitions for A2DP MPEG-1, 2 CODEC Capability IE Length.
  */
@@ -155,6 +181,8 @@
 /*@}*/
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-2,4 CODEC Capability Information Element (IE) Length
  *  Constant Definitions for A2DP MPEG-2, 4 CODEC Capability IE Length.
  */
@@ -165,6 +193,8 @@
 /*@}*/
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-1,2 Codec Sampling Frequency
  *  Constant Definitions for A2DP MPEG-1,2 Sampling Frequency values.
  */
@@ -181,6 +211,8 @@
 /*@}*/
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-1,2 Codec Channel Mode
  *  Constant Definitions for types of A2DP MPEG-1,2 Codec Channel Mode.
  */
@@ -194,6 +226,8 @@
 /*@}*/
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-1,2 Codec Layers
  *  Constant Definitions for types of A2DP MPEG-1,2 Codec Layers.
  */
@@ -207,6 +241,8 @@
 
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-1,2 Codec CRC Protection
  *  Constant Definitions for CRC Protection of A2DP MPEG-1,2 Codec.
  */
@@ -219,6 +255,8 @@
 
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-1,2 Codec Media Payload Format
  *  Constant Definitions for MRF of A2DP MPEG-1,2 Codec.
  */
@@ -231,6 +269,8 @@
 
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-1,2 Codec Variable Bit Rate
  *  Constant Definitions for VBR of A2DP MPEG-1,2 Codec.
  */
@@ -242,6 +282,8 @@
 /*@}*/
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-1,2 Codec Samples Per Frame Size
  *  Constant Definitions for Samples Per Frame of A2DP MPEG-1,2 Codec.
  */
@@ -254,6 +296,8 @@
 
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-1,2 Bit Rate
  *  Constant Definitions for Bit Rate Values A2DP MPEG-1,2 Codec Layer III.
  */
@@ -293,6 +337,8 @@
 /*@}*/
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-2,4 Codec Object Type
  *  Constant Definitions for Object Type of A2DP MPEG-2,4 Codec.
  */
@@ -305,6 +351,8 @@
 /*@}*/
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-2,4 Codec Sampling Frequency
  *  Constant Definitions for A2DP MPEG-2,4 Sampling Frequency values.
  */
@@ -326,6 +374,8 @@
 
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-2,4 Codec Channels
  *  Constant Definitions for types of A2DP MPEG-2,4 Codec Channels.
  */
@@ -337,6 +387,8 @@
 /*@}*/
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-1,2 Codec Variable Bit Rate
  *  Constant Definitions for VBR of A2DP MPEG-1,2 Codec.
  */
@@ -349,6 +401,8 @@
 
 
 /**
+ *  \addtogroup a2dp_constants
+ *
  *  @name A2DP MPEG-2,4 Bit Rate
  *  Constant Definitions for Bit Rate Values A2DP MPEG-2,4 Codec.
  *  It is 23-bit value.
@@ -437,6 +491,14 @@ typedef API_RESULT (* A2DP_EVENT_NTF_CB)
                        void  *  event_data,
                        UINT16   event_datalen
                    );
+/** \} */
+/** \} */
+
+/**
+ * \cond ignore_this
+ * \{
+ */
+
 /**
  *  \page page1 A2DP Asynchronous Event Notification
  *  This section describes the use of A2DP_EVENT_NTF_CB for asynchronous
@@ -691,8 +753,8 @@ typedef API_RESULT (* A2DP_EVENT_NTF_CB)
  *
  *
  */
-/** \} */
-/** \} */
+
+/** \endcond */
 
 #ifdef AVDTP_ASSISTIVE_MODE
 typedef AVDTP_MEDIA_CHANNEL_PARAMS A2DP_MEDIA_CHANNEL_PARAMS;
@@ -1858,10 +1920,10 @@ API_RESULT BT_a2dp_get_media_channel_params
  *       This API is used to read configured content protection type
  *       with a remote SEP entity.
  *
- *  \param [in] inst 
+ *  \param [in] inst
  *         Codec Instance representing this Codec.
  *
- *  \param [out] cp_type 
+ *  \param [out] cp_type
  *         Configured Content Protection Type.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -1884,7 +1946,7 @@ API_RESULT BT_a2dp_get_configured_cp_type
  *       This function is used to set the content protection header that will be
  *       used in the media frames.
  *
- *  \param [in] inst 
+ *  \param [in] inst
  *         Codec Instance representing this Codec.
  *  \param [in] header
  *         The CP header to be set.
@@ -1907,13 +1969,13 @@ API_RESULT BT_a2dp_set_cp_header
  *  \brief To Get the CP Type in set during A2DP connectino.
  *
  *  \par Description:
- *       This function is used to get the Content Protection Type set durring 
+ *       This function is used to get the Content Protection Type set durring
  *       the A2DP connection.
  *
- *  \param [in] inst 
+ *  \param [in] inst
  *         A2DP instance
- *           
- *  \param [out] cp_type 
+ *
+ *  \param [out] cp_type
  *         Content Protection Type.
  *
  *  \return
@@ -1935,7 +1997,7 @@ API_RESULT BT_a2dp_get_cp_type
  *
  *  \param [in] service_type
  *         A2DP Service Type - Source or Sink
- *            
+ *
  *  \param [in] flag
  *         0x01 - Activate SDP Record for Service Type specified
  *         0x00 - Inactivate SDP Record for Service Type specified
@@ -2001,6 +2063,7 @@ API_RESULT BT_a2dp_send_delay_report
 
 #endif /* A2DP_1_3  */
 
+/** \} */
 #ifdef __cplusplus
 };
 #endif

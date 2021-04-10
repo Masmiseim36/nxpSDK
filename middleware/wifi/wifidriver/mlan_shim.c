@@ -162,12 +162,12 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
         goto exit_register;
     }
 
-    memset(pmadapter, pmadapter, 0, sizeof(mlan_adapter));
+    (void)memset(pmadapter, pmadapter, 0, sizeof(mlan_adapter));
 
     pcb = &pmadapter->callbacks;
 
     /* Save callback functions */
-    memmove(pmadapter->pmoal_handle, pcb, &pmdevice->callbacks, sizeof(mlan_callbacks));
+    (void)memmove(pmadapter->pmoal_handle, pcb, &pmdevice->callbacks, sizeof(mlan_callbacks));
 
     pmadapter->priv_num = 0;
     for (i = 0; i < MLAN_MAX_BSS_NUM; i++)
@@ -185,7 +185,7 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
             }
 
             pmadapter->priv_num++;
-            memset(pmadapter, pmadapter->priv[i], 0, sizeof(mlan_private));
+            (void)memset(pmadapter, pmadapter->priv[i], 0, sizeof(mlan_private));
 
             pmadapter->priv[i]->adapter = pmadapter;
 
@@ -206,7 +206,7 @@ mlan_status mlan_register(IN pmlan_device pmdevice, OUT t_void **ppmlan_adapter)
             {
                 if (mlan_ops[j]->bss_role == GET_BSS_ROLE(pmadapter->priv[i]))
                 {
-                    memcpy(pmadapter, &pmadapter->priv[i]->ops, mlan_ops[j], sizeof(mlan_operations));
+                    (void)memcpy(pmadapter, &pmadapter->priv[i]->ops, mlan_ops[j], sizeof(mlan_operations));
                 }
             }
         }

@@ -348,7 +348,7 @@ static int process_dhcp_message(char *msg, int len)
         {
             dhcp_d("found REQUESTED IP option %hhu.%hhu.%hhu.%hhu", opt->value[0], opt->value[1], opt->value[2],
                    opt->value[3]);
-            memcpy((uint8_t *)&dhcps.client_ip, (uint8_t *)opt->value, 4);
+            (void)memcpy((uint8_t *)&dhcps.client_ip, (uint8_t *)opt->value, 4);
             got_client_ip = 1;
         }
 
@@ -401,6 +401,9 @@ static int process_dhcp_message(char *msg, int len)
                             "mapping..");
                     }
                     got_ip = 1;
+                }
+                else
+                { /* Do Nothing */
                 }
             }
         }
@@ -462,17 +465,24 @@ void dhcp_server(os_thread_arg_t data)
     socklen_t flen = sizeof(caddr);
     fd_set rfds;
 
-    memset(&ctrl_listen, 0, sizeof(struct sockaddr_in));
+    (void)memset(&ctrl_listen, 0, sizeof(struct sockaddr_in));
 
     /* create listening control socket */
     ctrl = net_socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (ctrl < 0)
     {
         ret = net_get_sock_error(ctrl);
-        dhcp_e("Failed to create control socket: %d.", ret);
+        if (ret != 0)
+            dhcp_e("Failed to create control socket: %d.", ret);
+
         goto done;
     }
-    setsockopt(ctrl, SOL_SOCKET, SO_REUSEADDR, (char *)&one, sizeof(one));
+    if (setsockopt(ctrl, SOL_SOCKET, SO_REUSEADDR, (char *)&one, sizeof(one)) == -1)
+    {
+        dhcp_e("failed to set SO_REUSEADDR");
+        net_close(ctrl);
+        goto done;
+    }
     ctrl_listen.sin_family      = PF_INET;
     ctrl_listen.sin_port        = htons(CTRL_PORT);
     ctrl_listen.sin_addr.s_addr = net_inet_aton("127.0.0.1");
@@ -488,7 +498,7 @@ void dhcp_server(os_thread_arg_t data)
 
     os_mutex_get(&dhcpd_mutex, OS_WAIT_FOREVER);
 
-    while (1)
+    while (true)
     {
         FD_ZERO(&rfds);
         FD_SET(dhcps.sock, &rfds);
@@ -507,7 +517,7 @@ void dhcp_server(os_thread_arg_t data)
         }
 
         /* check the control socket */
-        if (FD_ISSET(ctrl, &rfds))
+        if (FD_ISSET(ctrl, &rfds) != 0)
         {
             ret = recvfrom(ctrl, ctrl_msg, sizeof(ctrl_msg), 0, (struct sockaddr *)0, (socklen_t *)0);
             if (ret == -1)
@@ -526,7 +536,7 @@ void dhcp_server(os_thread_arg_t data)
             }
         }
 
-        if (FD_ISSET(dhcps.sock, &rfds))
+        if (FD_ISSET(dhcps.sock, &rfds) != 0)
         {
             len = recvfrom(dhcps.sock, dhcps.msg, sizeof(dhcps.msg), 0, (struct sockaddr *)&caddr, &flen);
             if (len > 0)
@@ -552,7 +562,7 @@ int dhcp_create_and_bind_udp_socket(struct sockaddr_in *address, void *intrfc_ha
     int ret;
     struct ifreq req;
 
-    memset(req.ifr_name, 0, sizeof(req.ifr_name));
+    (void)memset(req.ifr_name, 0, sizeof(req.ifr_name));
     strncpy(req.ifr_name, "ua2", 3);
 
     int sock = net_socket(PF_INET, SOCK_DGRAM, 0);
@@ -587,7 +597,7 @@ int dhcp_create_and_bind_udp_socket(struct sockaddr_in *address, void *intrfc_ha
 
     ret = net_bind(sock, (struct sockaddr *)address, sizeof(struct sockaddr));
 
-    if (ret)
+    if (ret != 0)
     {
         dhcp_e("failed to bind server socket");
         dhcp_e("socket err: %d", net_get_sock_error(sock));
@@ -601,7 +611,7 @@ int dhcp_server_init(void *intrfc_handle)
 {
     int ret = WM_SUCCESS;
 
-    memset(&dhcps, 0, sizeof(dhcps));
+    (void)memset(&dhcps, 0, sizeof(dhcps));
 
     ret = os_mutex_create(&dhcpd_mutex, "dhcp", OS_MUTEX_INHERIT);
     if (ret != WM_SUCCESS)
@@ -664,18 +674,23 @@ static int send_ctrl_msg(const char *msg)
     if (ctrl_tmp < 0)
     {
         ret = net_get_sock_error(ctrl_tmp);
-        dhcp_e("failed to create socket");
+        if (ret != 0)
+            dhcp_e("failed to create socket error:%d", ret);
         return ret;
     }
 
-    memset((char *)&to_addr, 0, sizeof(to_addr));
+    (void)memset((char *)&to_addr, 0, sizeof(to_addr));
     to_addr.sin_family      = PF_INET;
     to_addr.sin_port        = htons(CTRL_PORT);
     to_addr.sin_addr.s_addr = net_inet_aton("127.0.0.1");
 
     ret = sendto(ctrl_tmp, msg, strlen(msg) + 1, 0, (struct sockaddr *)&to_addr, sizeof(to_addr));
     if (ret == -1)
+    {
         ret = net_get_sock_error(ctrl_tmp);
+        if (ret != 0)
+            dhcp_e("failed to send ctrl_msg error:%d", ret);
+    }
     else
         ret = WM_SUCCESS;
 
@@ -734,8 +749,8 @@ static int send_gratuitous_arp(uint32_t ip)
     write_u32(pkt.sndr_ip_addr, ip);
     write_u32(pkt.rcpt_ip_addr, ip);
 
-    memset(pkt.targ_hw_addr, 0xff, ETH_HW_ADDR_LEN);
-    memset(pkt.rcpt_hw_addr, 0xff, ETH_HW_ADDR_LEN);
+    (void)memset(pkt.targ_hw_addr, 0xff, ETH_HW_ADDR_LEN);
+    (void)memset(pkt.rcpt_hw_addr, 0xff, ETH_HW_ADDR_LEN);
     wlan_get_mac_address(pkt.sndr_hw_addr);
     wlan_get_mac_address(pkt.src_hw_addr);
     sock = net_socket(AF_INET, SOCK_DGRAM, 0);
@@ -744,7 +759,7 @@ static int send_gratuitous_arp(uint32_t ip)
         dhcp_e("Could not open socket to send Gratuitous ARP");
         return -WM_E_DHCPD_SOCKET;
     }
-    memset(pkt.padding, 0, sizeof(pkt.padding));
+    (void)memset(pkt.padding, 0, sizeof(pkt.padding));
 
     if (sendto(sock, (char *)&pkt, sizeof(pkt), 0, (struct sockaddr *)&to_addr, sizeof(to_addr)) < 0)
     {
@@ -778,20 +793,20 @@ static int get_netmask_from_interface(uint32_t *nm, void *interface_handle)
 void dhcp_stat()
 {
     int i = 0;
-    PRINTF("DHCP Server Lease Duration : %d seconds\r\n", (int)dhcp_address_timeout);
+    (void)PRINTF("DHCP Server Lease Duration : %d seconds\r\n", (int)dhcp_address_timeout);
     if (dhcps.count_clients == 0)
     {
-        PRINTF("No IP-MAC mapping stored\r\n");
+        (void)PRINTF("No IP-MAC mapping stored\r\n");
     }
     else
     {
-        PRINTF("Client IP\tClient MAC\r\n");
+        (void)PRINTF("Client IP\tClient MAC\r\n");
         for (i = 0; i < dhcps.count_clients && i < MAC_IP_CACHE_SIZE; i++)
         {
-            PRINTF("%s\t%02X:%02X:%02X:%02X:%02X:%02X\r\n", inet_ntoa(dhcps.ip_mac_mapping[i].client_ip),
-                   dhcps.ip_mac_mapping[i].client_mac[0], dhcps.ip_mac_mapping[i].client_mac[1],
-                   dhcps.ip_mac_mapping[i].client_mac[2], dhcps.ip_mac_mapping[i].client_mac[3],
-                   dhcps.ip_mac_mapping[i].client_mac[4], dhcps.ip_mac_mapping[i].client_mac[5]);
+            (void)PRINTF("%s\t%02X:%02X:%02X:%02X:%02X:%02X\r\n", inet_ntoa(dhcps.ip_mac_mapping[i].client_ip),
+                         dhcps.ip_mac_mapping[i].client_mac[0], dhcps.ip_mac_mapping[i].client_mac[1],
+                         dhcps.ip_mac_mapping[i].client_mac[2], dhcps.ip_mac_mapping[i].client_mac[3],
+                         dhcps.ip_mac_mapping[i].client_mac[4], dhcps.ip_mac_mapping[i].client_mac[5]);
         }
     }
 }

@@ -928,7 +928,7 @@ shell_status_t SHELL_Init(shell_handle_t shellHandle, serial_handle_t serialHand
 
     SHELL_WriteWithCopy(shellContextHandle, "\r\nSHELL build: ", strlen("\r\nSHELL build: "));
     SHELL_WriteWithCopy(shellContextHandle, __DATE__, strlen(__DATE__));
-    SHELL_WriteWithCopy(shellContextHandle, "\r\nCopyright  2020  NXP\r\n", strlen("\r\nCopyright  2020  NXP\r\n"));
+    SHELL_WriteWithCopy(shellContextHandle, "\r\nCopyright  2021  NXP\r\n", strlen("\r\nCopyright  2021  NXP\r\n"));
     SHELL_PrintPrompt(shellContextHandle);
 
     return kStatus_SHELL_Success;

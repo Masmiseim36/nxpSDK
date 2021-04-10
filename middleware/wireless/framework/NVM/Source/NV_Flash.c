@@ -11,7 +11,7 @@
 
 #include "EmbeddedTypes.h"
 #include "NV_Flash.h"
-#if USE_COMPONNET
+#if ((defined(USE_COMPONNET)) && (USE_COMPONNET > 0U))
 #include "fsl_component_timer_manager.h"
 #include "fsl_component_mem_manager.h"
 #include "fsl_component_messaging.h"
@@ -28,7 +28,7 @@
 
 #include "fsl_os_abstraction.h"
 
-#if (gFsciIncluded_c && (gNvmEnableFSCIRequests_c || gNvmEnableFSCIMonitoring_c))
+#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && (gNvmEnableFSCIRequests_c || gNvmEnableFSCIMonitoring_c))
 #include "NV_FsciCommands.h"
 #endif
 
@@ -37,10 +37,13 @@
  * Private macros
  *****************************************************************************
  *****************************************************************************/
+__attribute__((weak))  uint64_t TM_GetTimestamp(void);
 __attribute__((weak))  uint64_t TM_GetTimestamp(void)
 {
   return 0;
 }
+
+__attribute__((weak))  void RNG_GetRandomNo(uint32_t *random);
 __attribute__((weak))  void RNG_GetRandomNo(uint32_t *random)
 {
   *random = 0x123;
@@ -1262,7 +1265,7 @@ bool_t overwrite
                         else
                         {
                             /*update the flash table*/
-                            #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+                            #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
                             FSCI_MsgNVVirtualPageMonitoring(TRUE,gNVM_OK_c);
                             FSCI_MsgNVVirtualPageMonitoring(FALSE,status=NvCopyPage(gNvCopyAll_c));
                             #else
@@ -1365,7 +1368,7 @@ NVM_STATIC NVM_Status_t __NvEraseEntryFromStorage
             * but skipping while copying the table entry to be erased */
             if (gEmptyPageMetaAddress_c != mNvVirtualPageProperty[mNvActivePageId].NvLastMetaInfoAddress)
             {
-                #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+                #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
                 FSCI_MsgNVVirtualPageMonitoring(TRUE,gNVM_OK_c);
                 FSCI_MsgNVVirtualPageMonitoring(FALSE, status = NvCopyPage(entryId));
                 #else
@@ -1676,7 +1679,7 @@ NVM_STATIC NVM_Status_t __NvAtomicSave
             }
         }
 #else  /*gUnmirroredFeatureSet_d*/
-        NvInitPendingSavesQueue(&mNvPendingSavesQueue);
+        (void)NvInitPendingSavesQueue(&mNvPendingSavesQueue);
 #endif /*gUnmirroredFeatureSet_d*/
         /* if critical section, add a special entry in the queue */
         if (mNvCriticalSectionFlag != 0u)
@@ -1806,7 +1809,7 @@ NVM_STATIC NVM_Status_t __NvSyncSave
                     if(status == gNVM_PageCopyPending_c)
                     {
                           /* copy active page */
-                          #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+                          #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
                           FSCI_MsgNVVirtualPageMonitoring(TRUE,gNVM_OK_c);
                           FSCI_MsgNVVirtualPageMonitoring(FALSE,status=NvCopyPage(gNvCopyAll_c));
                           #else
@@ -1883,7 +1886,7 @@ NVM_STATIC NVM_Status_t __NvFormat
         {
             NV_FlashRead((uint32_t*)mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress, (uint8_t*)&tableInfo, sizeof(NVM_TableInfo_t));
 
-            status = NvInternalFormat(tableInfo.fields.NvPageCounter);
+            status = NvInternalFormat((uint32_t)tableInfo.fields.NvPageCounter);
             if(gNVM_OK_c == status)
             {
                 #if gUnmirroredFeatureSet_d
@@ -1987,7 +1990,7 @@ NVM_STATIC void __NvIdle
         #if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
         if(mNvCopyOperationIsPending)
         {
-            #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+            #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
                 FSCI_MsgNVVirtualPageMonitoring(TRUE,gNVM_OK_c);
                 FSCI_MsgNVVirtualPageMonitoring(FALSE,status = NvCopyPage(gNvCopyAll_c));
             #else
@@ -2006,7 +2009,7 @@ NVM_STATIC void __NvIdle
                 /* all sectors of the page had been erased */
                 mNvVirtualPageProperty[mNvErasePgCmdStatus.NvPageToErase].NvLastMetaInfoAddress = gEmptyPageMetaAddress_c;
                 mNvErasePgCmdStatus.NvErasePending = FALSE;
-                #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+                #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
                 FSCI_MsgNVPageEraseMonitoring(mNvVirtualPageProperty[mNvErasePgCmdStatus.NvPageToErase].NvRawSectorStartAddress, gNVM_OK_c);
                 #endif
                 ret = TRUE;
@@ -2014,7 +2017,7 @@ NVM_STATIC void __NvIdle
             else
             {
                 /* erase */
-                HAL_FlashEraseSector(mNvErasePgCmdStatus.NvSectorAddress, (uint32_t) ((uint8_t*) NV_STORAGE_SECTOR_SIZE));
+                (void)HAL_FlashEraseSector(mNvErasePgCmdStatus.NvSectorAddress, (uint32_t) ((uint8_t*) NV_STORAGE_SECTOR_SIZE));
 
                 /* blank check */
                 if(kStatus_HAL_Flash_Success == HAL_FlashVerifyErase (
@@ -2161,7 +2164,7 @@ bool_t restoreAll
 
     if(!mNvModuleInitialized)
     {
-        #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+        #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
         FSCI_MsgNVRestoreMonitoring(0, TRUE, (uint8_t)gNVM_ModuleNotInitialized_c);
         #endif
         nvmStatus = gNVM_ModuleNotInitialized_c;
@@ -2170,7 +2173,7 @@ bool_t restoreAll
     {
         if(NULL == ptrData)
         {
-            #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+            #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
             FSCI_MsgNVRestoreMonitoring(0, TRUE, (uint8_t)gNVM_NullPointer_c);
             #endif
             nvmStatus = gNVM_NullPointer_c;
@@ -2185,7 +2188,7 @@ bool_t restoreAll
             /* get table and element indexes */
             if(gNVM_OK_c != NvGetEntryFromDataPtr(ptrData, &tblIdx))
             {
-               #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+               #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
                 FSCI_MsgNVRestoreMonitoring(tblIdx.entryId, TRUE, (uint8_t)gNVM_PointerOutOfRange_c);
                #endif
                 nvmStatus = gNVM_PointerOutOfRange_c;
@@ -2206,7 +2209,7 @@ bool_t restoreAll
                 #endif
 
                 /* Do Nv Restore Data */
-                #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+                #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
                 {
                     FSCI_MsgNVRestoreMonitoring(tblIdx.entryId, TRUE, (uint8_t)gNVM_OK_c);
                     nvmStatus=NvRestoreData(&tblIdx);
@@ -2491,7 +2494,7 @@ NVM_STATIC NVM_Status_t __NvModulePostInit
         {
             if(pageFreeSpace < gNvMinimumFreeBytesCountStart_c )
             {
-#if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+#if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
                 FSCI_MsgNVVirtualPageMonitoring(TRUE,gNVM_OK_c);
                 status = NvCopyPage(gNvCopyAll_c);
                 FSCI_MsgNVVirtualPageMonitoring(FALSE,status);
@@ -2734,7 +2737,7 @@ NVM_STATIC NVM_Status_t __NvModuleInit
                             if(gNVM_OK_c == NvUpdateLastMetaInfoAddress())
                             {
                                 /* copy the new RAM table and the page content */
-                                #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+                                #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
                                 FSCI_MsgNVVirtualPageMonitoring(TRUE,gNVM_OK_c);
                                 status = NvCopyPage(gNvCopyAll_c);
                                 FSCI_MsgNVVirtualPageMonitoring(FALSE,status);
@@ -3341,7 +3344,7 @@ NVM_STATIC NVM_Status_t NvEraseVirtualPage
         {
             status = NvVirtualPageBlankCheck(pageID);
         }
-        #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+        #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
             FSCI_MsgNVPageEraseMonitoring(mNvVirtualPageProperty[pageID].NvRawSectorStartAddress, status);
         #endif
     }
@@ -3968,7 +3971,7 @@ NVM_STATIC NVM_Status_t NvInternalCopy
             if(gNVM_OK_c == status)
             {
                 /* write to Flash destination page the rest of the aligned data */
-                if(kStatus_HAL_Flash_Success != HAL_FlashProgramUnaligned(dstAddress, diffSize - innerOffset,
+                if(kStatus_HAL_Flash_Success != HAL_FlashProgramUnaligned(dstAddress, (uint32_t)diffSize - (uint32_t)innerOffset,
                                                        ((uint8_t*)pNVM_DataTable[srcTblEntryIdx].pData + (diffIdx * pNVM_DataTable[srcTblEntryIdx].ElementSize) + innerOffset)))
                 {
                     status = gNVM_RecordWriteError_c;
@@ -4303,10 +4306,10 @@ NVM_STATIC bool_t NvIsMetaInfoValid
         /* get table entry index */
         *srcTableEntryIdx = NvGetTableEntryIndexFromId(srcMetaInfo->fields.NvmDataEntryID);
         /* Check if VSB ?= VEB */
-        if((srcMetaInfo->fields.NvValidationStartByte != srcMetaInfo->fields.NvValidationEndByte) ||
+        if(NvIsRecordCopied(dstPageId, srcMetaInfo) ||
+           (srcMetaInfo->fields.NvValidationStartByte != srcMetaInfo->fields.NvValidationEndByte) ||
            (*srcTableEntryIdx == gNvInvalidDataEntry_c) ||
-           (srcMetaInfo->fields.NvmDataEntryID == skipEntryId) ||
-           NvIsRecordCopied(dstPageId, srcMetaInfo))
+           (srcMetaInfo->fields.NvmDataEntryID == skipEntryId))
         {
             /* go to the next meta information tag */
             *srcMetaAddress -= sizeof(NVM_RecordMetaInfo_t);
@@ -5311,7 +5314,7 @@ NVM_STATIC NVM_Status_t NvWriteRecordToFlash(NVM_TableEntryInfo_t* tblIndexes,ui
             }
             #endif
             /* Empty macro when nvm monitoring is not enabled */
-            #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+            #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
             FSCI_MsgNVWriteMonitoring(metaInfo.fields.NvmDataEntryID,tblIndexes->elementIndex,tblIndexes->saveRestoreAll);
             #endif
 
@@ -5788,7 +5791,7 @@ NVM_STATIC NVM_Status_t NvRestoreData
 
                             NV_FlashRead(mNvVirtualPageProperty[mNvActivePageId].NvRawSectorStartAddress + metaInfo.fields.NvmRecordOffset,
                                          (uint8_t*)pNVM_DataTable[tableEntryIdx].pData,
-                                         pNVM_DataTable[tableEntryIdx].ElementsCount * pNVM_DataTable[tableEntryIdx].ElementSize);
+                                         (uint32_t)pNVM_DataTable[tableEntryIdx].ElementsCount * (uint32_t)pNVM_DataTable[tableEntryIdx].ElementSize);
                             status = gNVM_OK_c;
                             break;
                             #endif
@@ -5916,7 +5919,7 @@ NVM_STATIC NVM_Status_t NvProcessFirstSaveInQueue
                 #if (gNvUseFlexNVM_d == FALSE) /* no FlexNVM */
                 if(NvWriteRecord(&tblIdx) == gNVM_PageCopyPending_c)
                 {
-                    #if (gFsciIncluded_c && gNvmEnableFSCIMonitoring_c)
+                    #if (((defined(gFsciIncluded_c)) && (gFsciIncluded_c > 0U)) && ((defined(gNvmEnableFSCIMonitoring_c)) && (gNvmEnableFSCIMonitoring_c > 0U)))
                     FSCI_MsgNVVirtualPageMonitoring(TRUE,gNVM_OK_c);
                     FSCI_MsgNVVirtualPageMonitoring(FALSE,status = NvCopyPage(gNvCopyAll_c));
                     #else
@@ -6671,7 +6674,7 @@ void NvIdle
         mNvIdleTaskId = OSA_TaskGetCurrentHandle();
 #else
         mNvIdleTaskId = 0;
-#endif        
+#endif
     }
     (void)OSA_MutexLock(mNVMMutexId, osaWaitForever_c);
     __NvIdle();

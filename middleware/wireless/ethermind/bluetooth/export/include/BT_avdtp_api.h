@@ -22,10 +22,14 @@
 
 /* ----------------------------------------- Global Definitions */
 /**
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
+/**
  * \defgroup  avdtp_module  AVDTP (Audio/Video Distribution Transport Protocol)
  * \{
  *  This section describes the interfaces & APIs offered by the EtherMind
- *  Advanced Video Distribution Transport Profile (AVDTP) module to the 
+ *  Advanced Video Distribution Transport Profile (AVDTP) module to the
  *  Application and other upper layers of the stack.
  */
 /**
@@ -266,8 +270,11 @@ typedef struct avdtp_sig_msg_reject_rsp_params
 } AVDTP_SIG_MSG_REJECT_RSP_PARAMS;
 #endif /* HAVE_AVDTP_TEST_MODE */
 /** \} */
-
-
+/** \} */
+/**
+ * \defgroup avdtp_appl_callbacks Application Callbacks 
+ * \{
+ */
 /**
  *  \typedef AVDTP_EVENT_NTF_CB
  *  \brief   AVDTP Event Notification Callback
@@ -320,7 +327,11 @@ typedef API_RESULT (* AVDTP_EVENT_NTF_CB)
                        void  *event_data,
                        UINT16 event_datalen
                    );
-
+/** \} */
+/**
+ * \cond ignore_this
+ * \{
+ */
 
 /**
  *  \page page1 AVDTP Asynchronous Event Notification
@@ -559,7 +570,15 @@ typedef API_RESULT (* AVDTP_EVENT_NTF_CB)
  *
  */
 
-
+/** \endcond */
+/**
+ * \addtogroup avdtp_defines Defines
+ * \{
+ */
+/**
+ * \addtogroup avdtp_structures Structures
+ * \{
+ */
 /**
  *  \struct AVDTP_CODEC_CAP BT_avdtp_api.h
  *  \brief  AVDTP Codec Capabilities.
@@ -584,10 +603,6 @@ typedef struct
 
 } AVDTP_CODEC_CAP;
 
-/**
- * \addtogroup avdtp_structures
- * \{
- */
 /**
  *  \struct AVDTP_CP_CAP BT_avdtp_api.h
  *  \brief  AVDTP Content Protection Capabilities.
@@ -1453,6 +1468,11 @@ typedef struct
 /** \} */
 /* ----------------------------------------- Internal APIs */
 
+/**
+ * \defgroup avdtp_api API Definitions
+ * \{
+ * Describes APIs defined by the module.
+ */
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -2975,11 +2995,7 @@ API_RESULT BT_avdtp_get_media_channel_params
 #endif /* AVDTP_ASSISTIVE_MODE */
 
 /*@}*/
-/**
- * \defgroup avdtp_api API Definitions
- * \{
- * Describes APIs defined by the module.
- */
+
 
 /**
  *  @name AVDTP APIs - Utility Functions
@@ -3196,6 +3212,7 @@ API_RESULT BT_avdtp_set_flushable
 #ifdef __cplusplus
 };
 #endif
+/** \} */
 /** \} */
 /** \} */
 #endif /* _H_BT_AVDTP_API_ */

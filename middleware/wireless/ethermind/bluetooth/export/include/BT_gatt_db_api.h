@@ -20,6 +20,10 @@
 #include "gatt_defines.h"
 
 /* --------------------------------------------- Global Definitions */
+/**
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
 
 /**
  * \defgroup gatt_db_module GATT DB (Generic Attribute Profile Database)
@@ -519,12 +523,12 @@ typedef struct
 
     GATT_DB_SERVICE_DESC    desc;
 
-    /* Service Handle Range */
+    /** Service Handle Range */
     ATT_ATTR_HANDLE         start_handle;
 
     ATT_ATTR_HANDLE         end_handle;
 
-    /* Range of Characeristics grouped in the service */
+    /** Range of Characeristics grouped in the service */
     UCHAR                   char_start_index;
 
     UCHAR                   char_end_index;
@@ -544,7 +548,7 @@ typedef struct
  */
 typedef struct
 {
-    /* Describe how the descriptor could be accessed */
+    /** Describe how the descriptor could be accessed */
     UCHAR     desc_property;
 
     /**
@@ -556,10 +560,10 @@ typedef struct
     /**  Length of Descriptor Value */
     UINT16    length;
 
-    /* Pointer to Next Attribute of this type */
+    /** Pointer to Next Attribute of this type */
     UINT16     next;
 
-    /* Offset to UUID value */
+    /** Offset to UUID value */
     UINT16     uuid_offset;
 
     /**  Offset where the Descriptor Value is located */
@@ -645,7 +649,7 @@ typedef struct _GATT_DB_STRUCT
     /** GATT Service Count */
     UCHAR  gatt_service_count;
 
-    /** GATT Characterictic Count */
+    /** GATT Characteristic Count */
     UCHAR  gatt_characteristic_count;
 
     /** GATT MAX Type Count */
@@ -921,6 +925,7 @@ API_RESULT gatt_db_access_value
                /* IN */  UINT16            offset,
                /* IN */  UCHAR             flags
            );
+
 /**
  *
  *  \brief To search for group entities or get values of a speicifc group.
@@ -1089,7 +1094,6 @@ API_RESULT BT_gatt_db_fetch_handle_value_pair
             (uuid),\
             BT_FALSE\
         )
-
 
 /**
  *  \brief To get Handle Attribute Type Pair in the requested Range.
@@ -1382,7 +1386,6 @@ API_RESULT BT_gatt_db_access_handle
                 /* IN */    UCHAR                     flags
            );
 
-
 /**
  *
  *  \brief To Convert a 128-bit UUID in BT Space to its 16-bit equivalent.
@@ -1420,7 +1423,6 @@ API_RESULT BT_gatt_db_get_16_bit_uuid
  *
  *  \param [out] sec
  *         Security Level and Mode of the Service.
- *
  */
 #define BT_gatt_db_get_service_security(hndl,sec)\
         ((*(UCHAR *)(sec)) = GATT_DB_GET_NEEDED_SECURITY((hndl)->service_id))
@@ -1440,7 +1442,6 @@ API_RESULT BT_gatt_db_get_16_bit_uuid
  *
  *  \param [out] key_size
  *         Needed Encryption Key Size for the Service.
- *
  */
 #define BT_gatt_db_get_service_enc_key_size(hndl,key_size)\
         ((*(UCHAR *)(key_size)) = GATT_DB_GET_NEEDED_ENC_KEY_SIZE((hndl)->service_id))
@@ -1455,7 +1456,7 @@ API_RESULT BT_gatt_db_get_16_bit_uuid
  *  persistently while for non bonded devices, all Client specific information
  *  will be reinitialized.
  *
- *  \param inst
+ *  \param [in] inst
  *         Identifies the Peer instance for which Book Keeping is to be
  *         performed.
  *
@@ -1711,6 +1712,7 @@ void gatt_db_handle_hci_command_complete
      );
 /** \endcond */
 
+/** \} */
 /** \} */
 
 /** \} */

@@ -19,21 +19,52 @@
 /* -------------------------------------------- Header File Inclusion */
 #include "BT_common.h"
 #include "sbc_api.h"
-
+/**
+ * \addtogroup bt_utils Utilities
+ * \{
+ */
+/**
+ * \defgroup jpl_module JPL (Jitter Protection Layer)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  module to the Application
+ *  and other upper layers of the stack.
+ */
+/**
+ * \defgroup jpl_defines Defines
+ * \{
+ * Describes defines for the module.
+ */
+/**
+ * \defgroup jpl_constants Constants
+ * \{
+ * Describes constants defined by the module.
+ */
 
 /* -------------------------------------------- Global Definitions */
 /** JPL Event Codes */
+/**
+ * @name JPL Event Codes
+ *
+ * Constant Definitions for JPL Event Codes
+ */
+/*@{*/
 #define JPL_DATA_IND                            0x01
 #define JPL_OVERFLOW_IND                        0x02
 #define JPL_UNDERFLOW_IND                       0x03
 #define JPL_STALE_PACKET_IND                    0x04
 #define JPL_SILENCE_DATA_IND                    0x05
-
+/*@}*/
 /** Tolerance limit for switching from Silence to actual PCM data */
 #define JPL_TOLERANCE                           375
-
+/** \} */
 
 /* -------------------------------------------- Structures/Data Types */
+/**
+ * \defgroup jpl_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
 /**
  *  JPL_CB
  *  Typedef for the Application notification callback pointer
@@ -151,8 +182,8 @@ typedef struct
 
 } JPL_STATS;
 #endif /* JPL_TEST_MODE */
-
-
+/** \} */
+/** \} */
 /* -------------------------------------------- Macros */
 
 
@@ -160,8 +191,26 @@ typedef struct
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+/**
+ * \defgroup jpl_api API Definitions
+ *
+ * Describes API definitions of this module.
+ * \{
+ *
+ */
 /** To initialize the JPL module */
+/**
+ *  \brief To initialize the JPL module
+ *
+ *  \par Description
+ *       This API initializes the Jitter Protection Library.
+ *
+ *  \param [in] callback
+ *         Application provided Event Indication Callback Function
+ *
+ *  \return
+ *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_jpl_init
            (
                 /* IN */  JPL_CB    callback_fn
@@ -176,15 +225,62 @@ API_RESULT BT_jpl_register_buffers
 #endif /* JPL_USE_APP_MEMORY */
 
 /** To start JPL for accepting SBC frames */
+/**
+ *  \fn To start JPL for accepting SBC frames
+ *
+ *  \par Description
+ *       This function starts the JPL module for accepting SBC frames for
+ *       Jitter Protection.
+ *
+ *  \param [in] params
+ *         Pointer to allocated JPL_PARAM structure containing filled up
+ *         runtime configuration settings
+ *
+ *  \return API_RESULT
+ *          API_SUCCESS, or, an Error Code from BT_error.h
+ */
 API_RESULT BT_jpl_start
            (
                /* IN */  JPL_PARAM *    params
            );
 
 /** To suspend JPL from accepting SBC frames */
+/*
+ *  \brief To suspend JPL from accepting SBC frames
+ *
+ *  \par Description
+ *  To indicate that audio streaming is suspended, and can be reconfigured
+ *
+ *  \param None
+ *
+ *  \return API_RESULT
+ *          API_SUCCESS, or, an Error Code from BT_error.h
+ */
 API_RESULT BT_jpl_stop ( void );
 
 /** To add incoming SBC frames for Jitter Protection */
+/**
+ *  \brief To add incoming SBC frames for Jitter Protection
+ *
+ *  \par Description
+ *       This function adds incoming SBC frames, and decodes the same to PCM if
+ *       required, to Jitter Protection Buffer.
+ *
+ *  \param [in] seq
+ *         The sequence number of the packet containing SBC
+ *
+ *  \param [in] timestamp
+ *         The timestamp of the media packet containing SBC
+ *
+ *  \param [in] data
+ *         Pointer to SBC frames that are to be added to JPL Buffer
+ *
+ *  \param [in] datalen
+ *         The total length of all the frames, inclusive of 1 octet SBC header
+ *
+ *  \return API_RESULT
+ *          API_SUCCESS, or, an Error Code from BT_error.h
+ */
 API_RESULT BT_jpl_add_frames
            (
                /* IN */  UINT16     seq_num,
@@ -194,6 +290,23 @@ API_RESULT BT_jpl_add_frames
            );
 
 /** To request delivery of decoded SBC frames from Jitter Protection */
+/*
+ *  \brief To request delivery of decoded SBC frames from Jitter Protection
+ *
+ *  \par Description
+ *       To remove PCM data from JPL.
+ *
+ *  \param [in] old_frame
+ *         Pointer to the PCM buffer block that has been played and
+ *         can be freed. All buffer blocks till this one will be
+ *         freed.
+ *
+ *  \param [in] old_frame_datalen
+ *         Datalen of PCM buffer to be freed
+ *
+ *  \return API_RESULT
+ *          API_SUCCESS, or, an Error Code from BT_error.h
+ */
 API_RESULT BT_jpl_remove_frames
            (
                /* IN */  UCHAR *    old_frame,
@@ -212,6 +325,8 @@ API_RESULT BT_jpl_get_stats
 #ifdef __cplusplus
 };
 #endif
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_BT_JPL_API_ */
 

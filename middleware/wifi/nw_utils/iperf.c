@@ -91,28 +91,28 @@ static void lwiperf_report(void *arg,
                            u32_t ms_duration,
                            u32_t bandwidth_kbitpsec)
 {
-    PRINTF("-------------------------------------------------\r\n");
+    (void)PRINTF("-------------------------------------------------\r\n");
     if (report_type < (sizeof(report_type_str) / sizeof(report_type_str[0])))
     {
-        PRINTF(" %s \r\n", report_type_str[report_type]);
+        (void)PRINTF(" %s \r\n", report_type_str[report_type]);
         if (local_addr && remote_addr)
         {
-            PRINTF(" Local address : %u.%u.%u.%u ", ((u8_t *)local_addr)[0], ((u8_t *)local_addr)[1],
-                   ((u8_t *)local_addr)[2], ((u8_t *)local_addr)[3]);
-            PRINTF(" Port %d \r\n", local_port);
-            PRINTF(" Remote address : %u.%u.%u.%u ", ((u8_t *)remote_addr)[0], ((u8_t *)remote_addr)[1],
-                   ((u8_t *)remote_addr)[2], ((u8_t *)remote_addr)[3]);
-            PRINTF(" Port %d \r\n", remote_port);
-            PRINTF(" Bytes Transferred %llu \r\n", bytes_transferred);
-            PRINTF(" Duration (ms) %d \r\n", ms_duration);
-            PRINTF(" Bandwidth (Mbitpsec) %d \r\n", bandwidth_kbitpsec / 1000);
+            (void)PRINTF(" Local address : %u.%u.%u.%u ", ((u8_t *)local_addr)[0], ((u8_t *)local_addr)[1],
+                         ((u8_t *)local_addr)[2], ((u8_t *)local_addr)[3]);
+            (void)PRINTF(" Port %d \r\n", local_port);
+            (void)PRINTF(" Remote address : %u.%u.%u.%u ", ((u8_t *)remote_addr)[0], ((u8_t *)remote_addr)[1],
+                         ((u8_t *)remote_addr)[2], ((u8_t *)remote_addr)[3]);
+            (void)PRINTF(" Port %d \r\n", remote_port);
+            (void)PRINTF(" Bytes Transferred %llu \r\n", bytes_transferred);
+            (void)PRINTF(" Duration (ms) %d \r\n", ms_duration);
+            (void)PRINTF(" Bandwidth (Mbitpsec) %d \r\n", bandwidth_kbitpsec / 1000);
         }
     }
     else
     {
-        PRINTF(" IPERF Report error\r\n");
+        (void)PRINTF(" IPERF Report error\r\n");
     }
-    PRINTF("\r\n");
+    (void)PRINTF("\r\n");
 }
 
 /*!
@@ -124,7 +124,7 @@ static void iperf_test_start(void *arg)
 
     if (ctx->iperf_session != NULL)
     {
-        PRINTF("Abort ongoing IPERF session\r\n");
+        (void)PRINTF("Abort ongoing IPERF session\r\n");
         lwiperf_abort(ctx->iperf_session);
         ctx->iperf_session = NULL;
     }
@@ -165,7 +165,7 @@ static void iperf_test_start(void *arg)
     }
     else
     {
-        if (IP_IS_V4(&server_address))
+        if (IP_IS_V4(&server_address) != 0)
         {
             if (ctx->tcp)
             {
@@ -187,17 +187,17 @@ static void iperf_test_start(void *arg)
         }
         else
         {
-            PRINTF("IPERF_SERVER_ADDRESS is not a valid IPv4 address!\r\n");
+            (void)PRINTF("IPERF_SERVER_ADDRESS is not a valid IPv4 address!\r\n");
         }
     }
 
     if (ctx->iperf_session == NULL)
     {
-        PRINTF("IPERF initialization failed!\r\n");
+        (void)PRINTF("IPERF initialization failed!\r\n");
     }
     else
     {
-        PRINTF("IPERF initialization successful\r\n");
+        (void)PRINTF("IPERF initialization successful\r\n");
     }
 }
 
@@ -214,7 +214,7 @@ static void iperf_test_abort(void *arg)
         test_ctx->iperf_session = NULL;
     }
 
-    memset(&ctx, 0, sizeof(struct iperf_test_context));
+    (void)memset(&ctx, 0, sizeof(struct iperf_test_context));
 }
 
 /*!
@@ -317,21 +317,21 @@ static void UDPClientTradeOff(void)
 /* Display the usage of iperf */
 static void display_iperf_usage()
 {
-    PRINTF("Usage:\r\n");
-    PRINTF("\tiperf [-s|-c <host>|-a] [options]\r\n");
-    PRINTF("\tiperf [-h]\r\n");
-    PRINTF("\r\n");
-    PRINTF("\tClient/Server:\r\n");
-    PRINTF("\t   -u             use UDP rather than TCP\r\n");
-    PRINTF("\t   -B    <host>   bind to <host>, a multicast address\r\n");
-    PRINTF("\t   -a             abort ongoing iperf session\r\n");
-    PRINTF("\tServer specific:\r\n");
-    PRINTF("\t   -s             run in server mode\r\n");
-    PRINTF("\tClient specific:\r\n");
-    PRINTF("\t   -c    <host>   run in client mode, connecting to <host>\r\n");
-    PRINTF("\t   -d             Do a bidirectional test simultaneously\r\n");
-    PRINTF("\t   -r             Do a bidirectional test individually\r\n");
-    PRINTF("\t   -t    #        time in seconds to transmit for (default 10 secs)\r\n");
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("\tiperf [-s|-c <host>|-a] [options]\r\n");
+    (void)PRINTF("\tiperf [-h]\r\n");
+    (void)PRINTF("\r\n");
+    (void)PRINTF("\tClient/Server:\r\n");
+    (void)PRINTF("\t   -u             use UDP rather than TCP\r\n");
+    (void)PRINTF("\t   -B    <host>   bind to <host>, a multicast address\r\n");
+    (void)PRINTF("\t   -a             abort ongoing iperf session\r\n");
+    (void)PRINTF("\tServer specific:\r\n");
+    (void)PRINTF("\t   -s             run in server mode\r\n");
+    (void)PRINTF("\tClient specific:\r\n");
+    (void)PRINTF("\t   -c    <host>   run in client mode, connecting to <host>\r\n");
+    (void)PRINTF("\t   -d             Do a bidirectional test simultaneously\r\n");
+    (void)PRINTF("\t   -r             Do a bidirectional test individually\r\n");
+    (void)PRINTF("\t   -t    #        time in seconds to transmit for (default 10 secs)\r\n");
 }
 
 void cmd_iperf(int argc, char **argv)
@@ -362,11 +362,11 @@ void cmd_iperf(int argc, char **argv)
         mcast_mac_valid = false;
     }
 
-    memset(&info, 0, sizeof(info));
+    (void)memset(&info, 0, sizeof(info));
 
     if (argc < 2)
     {
-        PRINTF("Incorrect usage\r\n");
+        (void)PRINTF("Incorrect usage\r\n");
         display_iperf_usage();
         return;
     }
@@ -402,7 +402,7 @@ void cmd_iperf(int argc, char **argv)
             {
                 inet_aton(argv[arg], &server_address);
 
-                if (IP_IS_V4(&server_address))
+                if (IP_IS_V4(&server_address) != 0)
                     info.chost = 1;
 
                 arg += 1;
@@ -430,7 +430,10 @@ void cmd_iperf(int argc, char **argv)
         {
             arg += 1;
             info.time = 1;
+            errno     = 0;
             amount    = -(100 * strtoul(argv[arg], NULL, 10));
+            if (errno != 0)
+                (void)PRINTF("Error during strtoul errno:%d", errno);
             arg += 1;
         }
         else if (!info.dual && string_equal("-d", argv[arg]))
@@ -445,9 +448,9 @@ void cmd_iperf(int argc, char **argv)
         }
         else
         {
-            PRINTF("Incorrect usage\r\n");
+            (void)PRINTF("Incorrect usage\r\n");
             display_iperf_usage();
-            PRINTF("Error: argument %d is invalid\r\n", arg);
+            (void)PRINTF("Error: argument %d is invalid\r\n", arg);
             return;
         }
     } while (arg < argc);
@@ -456,42 +459,45 @@ void cmd_iperf(int argc, char **argv)
         (info.bind && (!info.udp || !info.server || !info.bhost)) || ((info.dual || info.tradeoff) && !info.client) ||
         (info.dual && info.tradeoff))
     {
-        PRINTF("Incorrect usage\r\n");
+        (void)PRINTF("Incorrect usage\r\n");
         display_iperf_usage();
         return;
     }
 
-    if (info.abort)
+    if (info.abort != 0U)
     {
         TESTAbort();
     }
-    else if (info.server)
+    else if (info.server != 0U)
     {
-        if (info.udp)
+        if (info.udp != 0U)
             UDPServer();
         else
             TCPServer();
     }
-    else if (info.client)
+    else if (info.client != 0U)
     {
-        if (info.udp)
+        if (info.udp != 0U)
         {
-            if (info.dual)
+            if (info.dual != 0U)
                 UDPClientDual();
-            else if (info.tradeoff)
+            else if (info.tradeoff != 0U)
                 UDPClientTradeOff();
             else
                 UDPClient();
         }
         else
         {
-            if (info.dual)
+            if (info.dual != 0U)
                 TCPClientDual();
-            else if (info.tradeoff)
+            else if (info.tradeoff != 0U)
                 TCPClientTradeOff();
             else
                 TCPClient();
         }
+    }
+    else
+    { /* Do Nothing */
     }
 }
 
@@ -503,23 +509,23 @@ int iperf_cli_init(void)
 {
     int i;
     for (i = 0; i < sizeof(iperf) / sizeof(struct cli_command); i++)
-        if (cli_register_command(&iperf[i]))
+        if (cli_register_command(&iperf[i]) != 0)
             return -WM_FAIL;
 
-    memset(&ctx, 0, sizeof(struct iperf_test_context));
+    (void)memset(&ctx, 0, sizeof(struct iperf_test_context));
 
     timer = xTimerCreate("UDP Poll Timer", 1 / portTICK_PERIOD_MS, pdTRUE, (void *)0, timer_poll_udp_client);
     if (timer == NULL)
     {
-        PRINTF("Timer creation failed!\r\n");
-        while (1)
+        (void)PRINTF("Timer creation failed!\r\n");
+        while (true)
             ;
     }
 
     if (xTimerStart(timer, 0) != pdPASS)
     {
-        PRINTF("Timer could not be started!\r\n");
-        while (1)
+        (void)PRINTF("Timer could not be started!\r\n");
+        while (true)
             ;
     }
 
@@ -531,7 +537,7 @@ int iperf_cli_deinit(void)
     int i;
 
     for (i = 0; i < sizeof(iperf) / sizeof(struct cli_command); i++)
-        if (cli_unregister_command(&iperf[i]))
+        if (cli_unregister_command(&iperf[i]) != 0)
             return -WM_FAIL;
     return WM_SUCCESS;
 }

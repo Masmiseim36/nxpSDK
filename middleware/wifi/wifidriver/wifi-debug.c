@@ -96,15 +96,15 @@ const char *get_status_str(uint16_t status)
 void wifi_show_assoc_fail_reason(int status)
 {
 #ifdef CONFIG_WIFI_EXTRA_DEBUG
-    PRINTF("[wifi] Assoc Status: %s\n\r", get_status_str(status));
+    (void)PRINTF("[wifi] Assoc Status: %s\n\r", get_status_str(status));
 
     switch (status)
     {
         case 13:
-            PRINTF("Assoc failed: Network not found.\n\r");
+            (void)PRINTF("Assoc failed: Network not found.\n\r");
             break;
         case 18:
-            PRINTF("(11n disabled ?)\n\r");
+            (void)PRINTF("(11n disabled ?)\n\r");
             break;
     }
 #endif /* CONFIG_WIFI_EXTRA_DEBUG */
@@ -114,18 +114,18 @@ void wifi_show_assoc_fail_reason(int status)
 void dump_mac_addr(const char *msg, unsigned char *addr)
 {
     if (msg)
-        PRINTF("%s: ", msg);
+        (void)PRINTF("%s: ", msg);
     else
-        PRINTF("mac: ", msg);
+        (void)PRINTF("mac: ", msg);
 
     int i;
     for (i = 0; i < MLAN_MAC_ADDR_LENGTH; i++)
     {
-        PRINTF("%x", addr[i]);
+        (void)PRINTF("%x", addr[i]);
         if (i != (MLAN_MAC_ADDR_LENGTH - 1))
-            PRINTF(":");
+            (void)PRINTF(":");
     }
 
-    PRINTF("\n\r");
+    (void)PRINTF("\n\r");
 }
 #endif /* DUMP_PACKET_MAC */

@@ -345,7 +345,7 @@ static t_u8 wlan_find_stream_to_delete(mlan_private *priv, raListTbl *ptr, int p
         {
             tid   = priv->aggr_prio_tbl[ptx_tbl->tid].ampdu_user;
             *ptid = ptx_tbl->tid;
-            memcpy(ra, ptx_tbl->ra, MLAN_MAC_ADDR_LENGTH);
+            (void)memcpy(ra, ptx_tbl->ra, MLAN_MAC_ADDR_LENGTH);
             ret = MTRUE;
         }
 

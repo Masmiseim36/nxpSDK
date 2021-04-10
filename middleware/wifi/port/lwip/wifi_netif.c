@@ -64,7 +64,7 @@ void deliver_packet_above(struct pbuf *p, int recv_interface)
         case ETHTYPE_ARP:
             if (recv_interface >= MAX_INTERFACES_SUPPORTED)
             {
-                while (1)
+                while (true)
                     ;
             }
 
@@ -99,7 +99,7 @@ static struct pbuf *gen_pbuf_from_data(t_u8 *payload, t_u16 datalen)
     if (!p)
         return NULL;
 
-    if (pbuf_take(p, payload, datalen))
+    if (pbuf_take(p, payload, datalen) != 0)
     {
         pbuf_free(p);
         p = NULL;
@@ -155,8 +155,8 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
         struct eth_llc_hdr *ethllchdr = (struct eth_llc_hdr *)((t_u8 *)p->payload + SIZEOF_ETH_HDR);
         ethhdr->type                  = ethllchdr->type;
         p->len -= SIZEOF_ETH_LLC_HDR;
-        memcpy((t_u8 *)p->payload + SIZEOF_ETH_HDR, (t_u8 *)p->payload + SIZEOF_ETH_HDR + SIZEOF_ETH_LLC_HDR,
-               p->len - SIZEOF_ETH_LLC_HDR);
+        (void)memcpy((t_u8 *)p->payload + SIZEOF_ETH_HDR, (t_u8 *)p->payload + SIZEOF_ETH_HDR + SIZEOF_ETH_LLC_HDR,
+                     p->len - SIZEOF_ETH_LLC_HDR);
     }
     switch (htons(ethhdr->type))
     {
@@ -197,7 +197,7 @@ static void process_data_packet(const t_u8 *rcvdata, const t_u16 datalen)
 /* Callback function called from the wifi module */
 void handle_data_packet(const t_u8 interface, const t_u8 *rcvdata, const t_u16 datalen)
 {
-    if (netif_arr[interface])
+    if (netif_arr[interface] != NULL)
         process_data_packet(rcvdata, datalen);
 }
 
@@ -275,20 +275,20 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
 
     pkt_len = sizeof(TxPD) + INTF_HEADER_LEN;
 
-    memset(outbuf, 0x00, pkt_len);
+    (void)memset(outbuf, 0x00, pkt_len);
 
     for (q = p; q != NULL; q = q->next)
     {
         if (pkt_len > outbuf_len)
         {
-            while (1)
+            while (true)
             {
                 LWIP_DEBUGF(NETIF_DEBUG, ("PANIC: Xmit packet"
                                           "is bigger than inbuf.\r\n"));
                 vTaskDelay((3000) / portTICK_RATE_MS);
             }
         }
-        memcpy((u8_t *)outbuf + pkt_len, (u8_t *)q->payload, q->len);
+        (void)memcpy((u8_t *)outbuf + pkt_len, (u8_t *)q->payload, q->len);
         pkt_len += q->len;
     }
 
@@ -309,6 +309,9 @@ static err_t low_level_output(struct netif *netif, struct pbuf *p)
     {
         LINK_STATS_INC(link.xmit);
         ret = ERR_OK;
+    }
+    else
+    { /* Do Nothing */
     }
 
     return ret;

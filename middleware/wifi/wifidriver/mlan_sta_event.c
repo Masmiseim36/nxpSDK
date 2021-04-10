@@ -102,7 +102,7 @@ t_void wlan_reset_connect_state(pmlan_private priv, t_u8 drv_disconnect)
         wlan_clean_txrx(priv);
 
         /* Need to erase the current SSID and BSSID info */
-        memset(priv->adapter, &priv->curr_bss_params, 0x00, sizeof(priv->curr_bss_params));
+        (void)memset(priv->adapter, &priv->curr_bss_params, 0x00, sizeof(priv->curr_bss_params));
     }
 
     LEAVE();

@@ -542,7 +542,7 @@ static chan_freq_power_t *wlan_get_region_cfp_table(pmlan_adapter pmadapter, t_u
 #endif /* CONFIG_5GHz_SUPPORT */
     }
 
-    if (band & (BAND_B | BAND_G | BAND_GN | BAND_GAC))
+    if ((band & (BAND_B | BAND_G | BAND_GN | BAND_GAC)) != 0)
     {
 #ifdef OTP_CHANINFO
         /* Return the FW cfp table for requested region code, if available.
@@ -574,7 +574,7 @@ static chan_freq_power_t *wlan_get_region_cfp_table(pmlan_adapter pmadapter, t_u
     }
 
 #ifdef CONFIG_5GHz_SUPPORT
-    if (band & (BAND_A | BAND_AN | BAND_AAC))
+    if ((band & (BAND_A | BAND_AN | BAND_AAC)) != 0)
     {
 #ifdef OTP_CHANINFO
         /* Return the FW cfp table for requested region code */
@@ -696,12 +696,50 @@ t_u32 wlan_index_to_data_rate(pmlan_adapter pmadapter, t_u8 index, t_u8 tx_rate_
                                        {0x0d, 0x1a, 0x27, 0x34, 0x4e, 0x68, 0x75, 0x82},   /*LG 20M */
                                        {0x0e, 0x1c, 0x2b, 0x39, 0x56, 0x73, 0x82, 0x90}};  /*SG 20M */
 
-    t_u32 rate = 0;
-    t_u8 bw    = 0;
-    t_u8 gi    = 0;
+#ifdef CONFIG_11AC
+#define MCS_NUM_AC 10
+    /* NSS 1. note: the value in the table is 2 multiplier of the actual rate
+     *              in other words, it is in the unit of 500 Kbs
+     */
+    t_u16 ac_mcs_rate_nss1[8][MCS_NUM_AC] = {
+        {0x75, 0xEA, 0x15F, 0x1D4, 0x2BE, 0x3A8, 0x41D, 0x492, 0x57C, 0x618},  /* LG 160M*/
+        {0x82, 0x104, 0x186, 0x208, 0x30C, 0x410, 0x492, 0x514, 0x618, 0x6C6}, /* SG 160M*/
+        {0x3B, 0x75, 0xB0, 0xEA, 0x15F, 0x1D4, 0x20F, 0x249, 0x2BE, 0x30C},    /* LG 80M */
+        {0x41, 0x82, 0xC3, 0x104, 0x186, 0x208, 0x249, 0x28A, 0x30C, 0x363},   /* SG 80M */
+        {0x1B, 0x36, 0x51, 0x6C, 0xA2, 0xD8, 0xF3, 0x10E, 0x144, 0x168},       /* LG 40M */
+        {0x1E, 0x3C, 0x5A, 0x78, 0xB4, 0xF0, 0x10E, 0x12C, 0x168, 0x190},      /* SG 40M */
+        {0xD, 0x1A, 0x27, 0x34, 0x4E, 0x68, 0x75, 0x82, 0x9C, 0x00},           /* LG 20M */
+        {0xF, 0x1D, 0x2C, 0x3A, 0x57, 0x74, 0x82, 0x91, 0xAE, 0x00},           /* SG 20M */
+    };
+#endif /* CONFIG_11AC */
+
+    t_u32 rate     = 0;
+#ifdef CONFIG_11AC
+    t_u8 mcs_index = 0;
+#endif
+    t_u8 bw        = 0;
+    t_u8 gi        = 0;
     ENTER();
 
-    if ((tx_rate_info & 0x3) == MLAN_RATE_FORMAT_HT)
+#ifdef CONFIG_11AC
+    if ((tx_rate_info & 0x3) == MLAN_RATE_FORMAT_VHT)
+    {
+        /* VHT rate */
+        mcs_index = index & 0xF;
+
+        if (mcs_index > 9)
+            mcs_index = 9;
+
+        /* 20M: bw=0, 40M: bw=1, 80M: bw=2, 160M: bw=3 */
+        bw = (tx_rate_info & 0xC) >> 2;
+        /* LGI: gi =0, SGI: gi = 1 */
+        gi = (tx_rate_info & 0x10) >> 4;
+        /* NSS = 1 */
+        rate = ac_mcs_rate_nss1[2 * (3 - bw) + gi][mcs_index];
+    }
+    else
+#endif
+        if ((tx_rate_info & 0x3) == MLAN_RATE_FORMAT_HT)
     {
         /* HT rate */
         /* 20M: bw=0, 40M: bw=1 */
@@ -1046,7 +1084,7 @@ t_u8 wlan_is_rate_auto(mlan_private *pmpriv)
     ENTER();
 
     for (i = 0; i < NELEMENTS(pmpriv->bitmap_rates); i++)
-        if (pmpriv->bitmap_rates[i])
+        if (pmpriv->bitmap_rates[i] != 0U)
             rate_num++;
 
     LEAVE();
@@ -1073,7 +1111,7 @@ int wlan_get_rate_index(pmlan_adapter pmadapter, t_u16 *rate_bitmap, int size)
 
     for (i = 0; i < size * 8; i++)
     {
-        if (rate_bitmap[i / 16] & (1 << (i % 16)))
+        if ((rate_bitmap[i / 16] & (1 << (i % 16))) != 0)
         {
             LEAVE();
             return i;
@@ -1199,7 +1237,7 @@ mlan_status wlan_set_regiontable(mlan_private *pmpriv, t_u8 region, t_u8 band)
 
     ENTER();
 
-    memset(pmadapter, pmadapter->region_channel, 0, sizeof(pmadapter->region_channel));
+    (void)memset(pmadapter, pmadapter->region_channel, 0, sizeof(pmadapter->region_channel));
 
     if (band & (BAND_B | BAND_G | BAND_GN))
     {
@@ -1320,7 +1358,7 @@ t_bool wlan_bg_scan_type_is_passive(mlan_private *priv, t_u8 chnl)
     /* get the cfp table first */
     for (i = 0; i < MAX_REGION_CHANNEL_NUM; i++)
     {
-        if (priv->adapter->region_channel[i].band & (BAND_B | BAND_G))
+        if ((priv->adapter->region_channel[i].band & (BAND_B | BAND_G)) != 0)
         {
             pcfp = priv->adapter->region_channel[i].pcfp;
             break;
@@ -1606,7 +1644,7 @@ void wlan_set_custom_regiontable(mlan_private *pmpriv, t_u8 cfp_no_bg)
 
     ENTER();
 
-    if (cfp_no_bg)
+    if (cfp_no_bg != 0U)
     {
         pmadapter->region_channel[i].num_cfp = (t_u8)cfp_no_bg;
         pmadapter->region_channel[i].pcfp    = channel_freq_power_Custom_BG;
@@ -1615,7 +1653,7 @@ void wlan_set_custom_regiontable(mlan_private *pmpriv, t_u8 cfp_no_bg)
     i++;
 
 #ifdef CONFIG_5GHz_SUPPORT
-    if (cfp_no_a)
+    if (cfp_no_a != 0U)
     {
         pmadapter->region_channel[i].num_cfp = (t_u8)cfp_no_a;
         pmadapter->region_channel[i].pcfp    = channel_freq_power_Custom_A;
@@ -1758,7 +1796,7 @@ void wlan_add_fw_cfp_tables(pmlan_private pmpriv, t_u8 *buf, t_u16 buf_left)
                 /* Save region info values from OTP in the otp_region
                  * structure
                  */
-                memcpy(pmadapter, pmadapter->otp_region, data, sizeof(otp_region_info_t));
+                (void)memcpy(pmadapter, pmadapter->otp_region, data, sizeof(otp_region_info_t));
 
                 data += sizeof(otp_region_info_t);
                 /* Get pre-defined cfp tables corresponding to the region code
@@ -1899,7 +1937,7 @@ void wlan_add_fw_cfp_tables(pmlan_private pmpriv, t_u8 *buf, t_u16 buf_left)
                         break;
                     }
                 }
-                memcpy(pmadapter, pmadapter->tx_power_table_bg, data, i);
+                (void)memcpy(pmadapter, pmadapter->tx_power_table_bg, data, i);
                 pmadapter->tx_power_table_bg_size = i;
                 data += i;
 #ifdef CONFIG_5GHz_SUPPORT
@@ -1921,7 +1959,7 @@ void wlan_add_fw_cfp_tables(pmlan_private pmpriv, t_u8 *buf, t_u16 buf_left)
                         break;
                     }
                 }
-                memcpy(pmadapter, pmadapter->tx_power_table_a, data, i);
+                (void)memcpy(pmadapter, pmadapter->tx_power_table_a, data, i);
                 pmadapter->tx_power_table_a_size = i;
 #endif
                 break;
@@ -1977,20 +2015,20 @@ void wlan_free_fw_cfp_tables(mlan_adapter *pmadapter)
     ENTER();
 
     pcb = &pmadapter->callbacks;
-    if (pmadapter->otp_region)
+    if (pmadapter->otp_region != NULL)
         pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->otp_region);
-    if (pmadapter->cfp_otp_bg)
+    if (pmadapter->cfp_otp_bg != NULL)
         pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->cfp_otp_bg);
-    if (pmadapter->tx_power_table_bg)
+    if (pmadapter->tx_power_table_bg != NULL)
         pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->tx_power_table_bg);
     pmadapter->otp_region             = MNULL;
     pmadapter->cfp_otp_bg             = MNULL;
     pmadapter->tx_power_table_bg      = MNULL;
     pmadapter->tx_power_table_bg_size = 0;
 #ifdef CONFIG_5GHz_SUPPORT
-    if (pmadapter->cfp_otp_a)
+    if (pmadapter->cfp_otp_a != NULL)
         pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->cfp_otp_a);
-    if (pmadapter->tx_power_table_a)
+    if (pmadapter->tx_power_table_a != NULL)
         pcb->moal_mfree(pmadapter->pmoal_handle, (t_u8 *)pmadapter->tx_power_table_a);
     pmadapter->cfp_otp_a             = MNULL;
     pmadapter->tx_power_table_a      = MNULL;

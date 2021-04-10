@@ -1715,6 +1715,9 @@ enum _mlan_rate_format
 {
     MLAN_RATE_FORMAT_LG = 0,
     MLAN_RATE_FORMAT_HT,
+#ifdef CONFIG_11AC
+    MLAN_RATE_FORMAT_VHT,
+#endif
     MLAN_RATE_FORMAT_AUTO = 0xFF,
 };
 /** Max bitmap rates size */
@@ -1731,6 +1734,10 @@ typedef struct _mlan_rate_cfg_t
     t_u32 rate;
     /** Rate Bitmap */
     t_u16 bitmap_rates[MAX_BITMAP_RATES_SIZE];
+#ifdef CONFIG_11AC
+    /** NSS */
+    t_u32 nss;
+#endif
     /* LG rate: 0, HT rate: 1, VHT rate: 2 */
     t_u32 rate_format;
 } mlan_rate_cfg_t;
@@ -1740,6 +1747,10 @@ typedef enum _mlan_ht_bw
 {
     MLAN_HT_BW20,
     MLAN_HT_BW40,
+#ifdef CONFIG_11AC
+    MLAN_VHT_BW80,
+    MLAN_VHT_BW160,
+#endif
 } mlan_ht_bw;
 
 /** HT guard interval */
@@ -1748,6 +1759,20 @@ typedef enum _mlan_ht_gi
     MLAN_HT_LGI,
     MLAN_HT_SGI,
 } mlan_ht_gi;
+
+#ifdef CONFIG_11AC
+typedef enum _mlan_vht_stbc
+{
+    MLAN_VHT_STBC,
+    MLAN_VHT_NO_STBC,
+} mlan_vht_stbc;
+
+typedef enum _mlan_vht_ldpc
+{
+    MLAN_VHT_LDPC,
+    MLAN_VHT_NO_LDPC,
+} mlan_vht_ldpc;
+#endif
 
 /** Band and BSS mode */
 typedef struct _mlan_band_data_rate
@@ -1779,6 +1804,12 @@ typedef struct _mlan_data_rate
     /** MCS index */
     t_u32 tx_mcs_index;
     t_u32 rx_mcs_index;
+
+#ifdef CONFIG_11AC
+    /** NSS */
+    t_u32 tx_nss;
+    t_u32 rx_nss;
+#endif
 
     /* LG rate: 0, HT rate: 1, VHT rate: 2 */
     t_u32 tx_rate_format;

@@ -77,11 +77,11 @@
 
 #ifdef PRINTM
 #undef PRINTM
-#define PRINTM(level, ...)             \
-    do                                 \
-    {                                  \
-        PRINTF("[mlan] " __VA_ARGS__); \
-        PRINTF("\n\r");                \
+#define PRINTM(level, ...)                   \
+    do                                       \
+    {                                        \
+        (void)PRINTF("[mlan] " __VA_ARGS__); \
+        (void)PRINTF("\n\r");                \
     } while (0)
 #else
 #define PRINTM(...)
@@ -89,12 +89,12 @@
 
 #ifdef DBG_HEXDUMP
 #undef DBG_HEXDUMP
-#define DBG_HEXDUMP(level, x, y, z) \
-    do                              \
-    {                               \
-        PRINTF("[mlan] %s\r\n", x); \
-        dump_hex(y, z);             \
-        PRINTF("\r\n");             \
+#define DBG_HEXDUMP(level, x, y, z)       \
+    do                                    \
+    {                                     \
+        (void)PRINTF("[mlan] %s\r\n", x); \
+        dump_hex(y, z);                   \
+        (void)PRINTF("\r\n");             \
     } while (0)
 #else
 #define DBG_HEXDUMP(...)
@@ -102,12 +102,12 @@
 
 #ifdef HEXDUMP
 #undef HEXDUMP
-#define HEXDUMP(x, y, z)            \
-    do                              \
-    {                               \
-        PRINTF("[mlan] %s\r\n", x); \
-        dump_hex(y, z);             \
-        PRINTF("\r\n");             \
+#define HEXDUMP(x, y, z)                  \
+    do                                    \
+    {                                     \
+        (void)PRINTF("[mlan] %s\r\n", x); \
+        dump_hex(y, z);                   \
+        (void)PRINTF("\r\n");             \
     } while (0)
 #else
 #define HEXDUMP(...)

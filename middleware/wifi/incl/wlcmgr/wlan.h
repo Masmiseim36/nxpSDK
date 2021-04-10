@@ -143,7 +143,7 @@
 #include <wifi.h>
 #include <wlan_11d.h>
 
-#define WLAN_DRV_VERSION "v1.3.r27.p2"
+#define WLAN_DRV_VERSION "v1.3.r30.p2"
 
 /* Configuration */
 
@@ -2008,11 +2008,12 @@ int wlan_get_txratecfg(wlan_ds_rate *ds_rate);
 /**
  * Get Station interface transmit power
  *
+ * \param[out] power_level Transmit power level.
  * \return WM_SUCCESS if successful.
  * \return -WM_FAIL if unsuccessful.
  *
  */
-int wlan_get_sta_tx_power();
+int wlan_get_sta_tx_power(t_u32 *power_level);
 
 /**
  * Set Station interface transmit power
@@ -2343,7 +2344,7 @@ void wlan_uap_set_scan_chan_list(wifi_scan_chan_list_t scan_chan_list);
 
 static inline void print_mac(const char *mac)
 {
-    PRINTF("%02X:%02X:%02X:%02X:%02X:%02X ", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+    (void)PRINTF("%02X:%02X:%02X:%02X:%02X:%02X ", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
 }
 
 #ifdef CONFIG_RF_TEST_MODE

@@ -70,7 +70,7 @@ pmlan_buffer wlan_alloc_mlan_buffer(mlan_adapter *pmadapter, t_u32 data_len, t_u
             pmbuf = MNULL;
             goto exit;
         }
-        memset(pmadapter, pmbuf, 0, sizeof(mlan_buffer));
+        (void)memset(pmadapter, pmbuf, 0, sizeof(mlan_buffer));
 
         pmbuf->pdesc = MNULL;
         /* Align address */
@@ -112,7 +112,7 @@ void wlan_add_ext_capa_info_ie(IN mlan_private *pmpriv, OUT t_u8 **pptlv_out)
     ENTER();
 
     pext_cap = (MrvlIETypes_ExtCap_t *)*pptlv_out;
-    memset(pmpriv->adapter, pext_cap, 0, sizeof(MrvlIETypes_ExtCap_t));
+    (void)memset(pmpriv->adapter, pext_cap, 0, sizeof(MrvlIETypes_ExtCap_t));
     pext_cap->header.type = wlan_cpu_to_le16(EXT_CAPABILITY);
     pext_cap->header.len  = wlan_cpu_to_le16(sizeof(ExtCap_t));
     if (((t_u8)(pmpriv->hotspot_cfg >> 8)) & HOTSPOT_ENABLE_INTERWORKING_IND)
@@ -164,6 +164,9 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
 {
     t_s32 rate_index;
     t_u32 rate_format;
+#ifdef CONFIG_11AC
+    t_u32 nss;
+#endif
     t_u32 i;
     mlan_ds_rate *ds_rate = MNULL;
     mlan_status ret       = MLAN_STATUS_FAILURE;
@@ -175,11 +178,14 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
     ds_rate = (mlan_ds_rate *)pioctl_req->pbuf;
 
     rate_format = ds_rate->param.rate_cfg.rate_format;
-    rate_index  = ds_rate->param.rate_cfg.rate;
+#ifdef CONFIG_11AC
+    nss = ds_rate->param.rate_cfg.nss;
+#endif
+    rate_index = ds_rate->param.rate_cfg.rate;
 
     if (ds_rate->param.rate_cfg.is_rate_auto)
     {
-        memset(pmadapter, bitmap_rates, 0, sizeof(bitmap_rates));
+        (void)memset(pmadapter, bitmap_rates, 0, sizeof(bitmap_rates));
         /* Rates talbe [0]: HR/DSSS;[1]: OFDM; [2..9] HT; */
         /* Support all HR/DSSS rates */
         bitmap_rates[0] = 0x000F;
@@ -189,12 +195,21 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
         for (i = 2; i < 9; i++)
             bitmap_rates[i] = 0xFFFF;
         bitmap_rates[9] = 0x3FFF;
+#ifdef CONFIG_11AC
+        /* [10..17] VHT */
+        /* Support all VHT-MCSs rate for NSS 1 and 2 */
+        for (i = 10; i < 12; i++)
+            bitmap_rates[i] = 0x03FF; /* 10 Bits valid */
+        /* Set to 0 as default value for all other NSSs */
+        for (i = 12; i < NELEMENTS(bitmap_rates); i++)
+            bitmap_rates[i] = 0x0;
+#endif
     }
     else
     {
         PRINTM(MINFO, "Rate index is %d\n", rate_index);
 
-        memset(pmadapter, bitmap_rates, 0, sizeof(bitmap_rates));
+        (void)memset(pmadapter, bitmap_rates, 0, sizeof(bitmap_rates));
         if (rate_format == MLAN_RATE_FORMAT_LG)
         {
             /* Bitmap of HR/DSSS rates */
@@ -222,6 +237,16 @@ static mlan_status wlan_rate_ioctl_set_rate_index(IN pmlan_adapter pmadapter, IN
             }
         }
 
+#ifdef CONFIG_11AC
+        if (rate_format == MLAN_RATE_FORMAT_VHT)
+        {
+            if ((rate_index <= MLAN_RATE_INDEX_MCS9) && (MLAN_RATE_NSS1 <= nss) && (nss <= MLAN_RATE_NSS2))
+            {
+                bitmap_rates[10 + nss - MLAN_RATE_NSS1] = (1 << rate_index);
+                ret                                     = MLAN_STATUS_SUCCESS;
+            }
+        }
+#endif
         if (ret == MLAN_STATUS_FAILURE)
         {
             PRINTM(MERROR, "Invalid MCS index=%d. \n", rate_index);

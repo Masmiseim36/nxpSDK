@@ -17,8 +17,34 @@
 /* --------------------------------------------- Global Definitions */
 
 #ifdef AVRCP_COVER_ART
+/**
+ * \defgroup avrcp_ca_module AVRCP CA(Audio Video Remote Control Profile - Cover Art)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Audio Video Remote Control Profile - Cover Art(AVRCP - CA) module to the Application
+ *  and other upper layers of the stack.
+ */
 
+/**
+ * \defgroup avrcp_ca_defines Defines
+ * \{
+ * Describes defines for the module.
+ */
+
+/**
+ * \defgroup avrcp_ca_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
 /* AVRCP Cover Art Initiator Notification Callback Event Types */
+/**
+ *  \name AVRCP Cover Art Initiator Notification Callback Event Types
+ *
+ *  Constant Definitions for AVRCP Cover Art Initiator Notification Callback
+ *  Event Types
+ *
+ */
+/*@{*/
 #define AVRCP_CAI_CONNECT_CNF                           0x01
 #define AVRCP_CAI_DISCONNECT_CNF                        0x02
 #define AVRCP_CAI_TRANSPORT_CLOSE_CNF                   0x03
@@ -27,8 +53,15 @@
 #define AVRCP_CAI_GET_IMAGE_CNF                         0x06
 #define AVRCP_CAI_GET_LINKED_THUMBNAIL_CNF              0x07
 #define AVRCP_CAI_GET_ABORT_CNF                         0x08
-
+/*@}*/
 /* AVRCP Cover Art Responder Notification Callback Event Types */
+/**
+ *  \name AVRCP Cover Art Responder Notification Callback Event Types
+ *
+ *  Constant Definitions for AVRCP Cover Art Responder Notification Callback Event Types
+ *
+ */
+/*@{*/
 #define AVRCP_CAR_CONNECT_IND                           0x31
 #define AVRCP_CAR_DISCONNECT_IND                        0x32
 #define AVRCP_CAR_TRANSPORT_CLOSE_CNF                   0x33
@@ -37,19 +70,47 @@
 #define AVRCP_CAR_GET_IMAGE_IND                         0x36
 #define AVRCP_CAR_GET_LINKED_THUMBNAIL_IND              0x37
 #define AVRCP_CAR_GET_ABORT_IND                         0x38
-
+/*@}*/
 /* Cover Art Target Header Size */
+/**
+ *  \name AVRCP Cover Art Responder Notification Callback Event Types
+ *
+ *  Constant Definitions for AVRCP Cover Art Responder Notification Callback Event Types
+ *
+ */
+/*@{*/
 #define AVRCP_CA_TARGET_HDR_SIZE                        0x10
-
+/*@}*/
 /* Supported Image Formats */
+/**
+ *  \name Supported Image Formats
+ *
+ *  Constant Definitions for Supported Image Formats
+ *
+ */
+/*@{*/
 #define COVER_ART_FORMAT_JPEG                           0x01
 #define COVER_ART_FORMAT_GIF                            0x02
 #define COVER_ART_FORMAT_INVALID                        0xFF
-
+/*@}*/
 /* Dynamic PSM used for Cover Art */
+/**
+ *  \name Dynamic PSM used for Cover Art
+ *
+ *  Constant Definitions for Dynamic PSM used for Cover Art
+ *
+ */
+ /*@{*/
 #define COVER_ART_GOEP_L2CAP_PSM                        0x1005
-
+/*@}*/
 /* AVRCP Cover Art OBEX Response Codes */
+/**
+ *  \name AVRCP Cover Art OBEX Response Codes
+ *
+ *  Constant Definitions for AVRCP Cover Art OBEX Response Codes
+ *
+ */
+/*@{*/
 #define AVRCP_CA_SUCCESS_RSP                            OBEX_SUCCESS_RSP
 #define AVRCP_CA_CONTINUE_RSP                           OBEX_CONTINUE_RSP
 #define AVRCP_CA_BAD_REQ_RSP                            OBEX_REQ_IS_BAD_RSP
@@ -61,12 +122,18 @@
 #define AVRCP_CA_NO_SERVICE_RSP                         OBEX_NO_SERVICE_RSP
 #define AVRCP_CA_FORBIDDEN_RSP                          OBEX_FORBIDDEN_RSP
 #define AVRCP_CA_SERVER_ERROR                           OBEX_SERVER_ERR_RSP
-
+/*@}*/
 /* User Defined OBEX Headers for BIP */
+/**
+ *  \name User Defined OBEX Headers for BIP
+ *
+ *  Constant Definitions for User Defined OBEX Headers for BIP
+ *
+ */
+/*@{*/
 #define OBEX_HDR_IMG_HANDLE                             0x30
 #define OBEX_HDR_IMG_DESCRIPTOR                         0x71
-
-
+/*@}*/
 #define AVRCP_CA_EVENT_INVALID                          0xFF
 #define AVRCP_CA_ENTITY_INVALID                         0xFF
 #define AVRCP_CA_INVALID_OBEX_CONNECTION_ID             0xFFFFFFFF
@@ -75,9 +142,13 @@
 #define CA_INIT_HEADER_STRUCT(hs)    \
         (hs).value = NULL;           \
         (hs).length = 0
-
+/** \} */
 /* --------------------------------------------- Structures/Data Types */
-
+/**
+ * \defgroup avrcp_ca_structures AVRCP CA Structures
+ * \{
+ * Describes AVRCP CA Structures defined by the module.
+ */
 /**
  * AVRCP Cover Art Handle type
  */
@@ -213,12 +284,18 @@ typedef API_RESULT (* AVRCP_CA_EVENT_NTF_CB)
                         AVRCP_CA_HEADERS    * avrcp_ca_headers,
                         UINT16                num_headers
                    );
-
+/** \} */
+/** \} */
 /* --------------------------------------------- Macros */
 
 /* --------------------------------------------- Functions */
 
 /* =========== AVRCP  Cover Art Initiator APIs ==== */
+/**
+ * \defgroup avrcp_ca_api AVRCP CA API definitions
+ * \{
+ * Describes API definitions of the module.
+ */
 #ifdef AVRCP_COVER_ART_INITIATOR
 /**
  *  \fn BT_avrcp_cai_init
@@ -268,10 +345,10 @@ API_RESULT BT_avrcp_cai_shutdown (void);
  *        Cover Art Initiator is ready to initiate a connection to AVRCP
  *       Cover Art Responder.
  *
- *  \param (out) ca_handle
+ *  \param [out] ca_handle
  *         Index to the Covert Art Initiator entity that is started.
  *
- *  \param (in) avrcp_cai_cb
+ *  \param [in] avrcp_cai_cb
  *         The application callback function pointer to be registered.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -296,7 +373,7 @@ API_RESULT BT_avrcp_cai_start
  *       This API stops the AVRCP  Cover Art Initiator instance corresponding
  *       to the specified handle.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Index to the AVRCP  Cover Art entity that has to
  *         be stopped.
  *
@@ -323,10 +400,10 @@ API_RESULT BT_avrcp_cai_stop
  *       Cover Art Responder responds for the connection request) with the notification
  *       AVRCP_CAI_CONNECT_CNF event
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *          Handle of the Cover Art Initiator instance that has to be connected.
  *
- *  \param (in) avrcp_ca_connect_info
+ *  \param [in] avrcp_ca_connect_info
  *         Structure containing the Bluetooth Device Address of the Cover Art Responder,
  *         the local maximum receive capacity (in Bytes) and L2CAP psm of
  *         Cover Art Responder.
@@ -351,7 +428,7 @@ API_RESULT BT_avrcp_cai_connect
  *       the registered application callback upon completion of this request
  *       with the notification AVRCP_CAI_DISCONNECT_CNF event.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Handle of the Cover Art Initiator instance that has to be disconnected.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -376,10 +453,10 @@ API_RESULT BT_avrcp_cai_disconnect
  *       The completion of this procedure is notified through AVRCP_CAI_GET_IMAGE_PROPERTIES_CNF
  *       event along with the status of the procedure.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Handle of the Cover Art Initiator instance.
  *
- *  \param (in) avrcp_ca_get_info
+ *  \param [in] avrcp_ca_get_info
  *         Structure containing the Cover Art Image handle.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -404,10 +481,10 @@ API_RESULT BT_avrcp_cai_get_image_properties
  *       The completion of this procedure is notified through AVRCP_CAI_GET_IMAGE_CNF
  *       event along with the status of the procedure.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Handle of the Cover Art Initiator instance.
  *
- *  \param (in) avrcp_ca_get_info
+ *  \param [in] avrcp_ca_get_info
  *         Structure containing the Cover Art Image handle and its image descriptor object.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -434,10 +511,10 @@ API_RESULT BT_avrcp_cai_get_image
  *       AVRCP_CAI_GET_LINKED_THUMBNAIL_CNF  event along with the status of
  *       the procedure.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Handle of the Cover Art Initiator instance.
  *
- *  \param (in) avrcp_ca_get_info
+ *  \param [in] avrcp_ca_get_info
  *         Structure containing the Cover Art Image handle.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -459,7 +536,7 @@ API_RESULT BT_avrcp_cai_get_linked_thumbnail
  *       The completion of the Abort operation is notified through AVRCP_CAI_GET_ABORT_CNF notification
  *       event along with the status of the procedure.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Handle of the Cover Art Initiator instance of which the operation is to be aborted.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -483,17 +560,17 @@ API_RESULT BT_avrcp_cai_abort
  *       AVRCP  Cover Art Initiator application callback function with the event_type set
  *       to the current received event.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Handle of the Cover Art Initiator instance.
  *
- *  \param (in) event_type
+ *  \param [in] event_type
  *         Event type that was received in the application callback, to indicate that the request is
  *         the continuation of the operation for which it was notified.
  *
- *  \param (in) event_result
+ *  \param [in] event_result
  *         Status of the request.
  *
- *  \param (in) cover_art_headers
+ *  \param [in] cover_art_headers
  *           Structure containing Get request information, in case of Get operation.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -518,7 +595,7 @@ API_RESULT BT_avrcp_cai_send_req
  *       calls the registered  application callback upon completion of this procedure with the
  *       notification AVRCP_CAI_TRANSPORT_CLOSE_CNF event.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Handle of the Cover Art Initiator instance.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -580,10 +657,10 @@ API_RESULT BT_avrcp_car_shutdown (void);
  *        Cover Art Responder is ready to accept a connection from AVRCP
  *       Cover Art Responder.
  *
- *  \param (out) ca_handle
+ *  \param [out] ca_handle
  *         Index to the Cover Art Responder entity that is started.
  *
- *  \param (in) avrcp_car_cb
+ *  \param [in] avrcp_car_cb
  *         The application callback function pointer to be registered.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -608,7 +685,7 @@ API_RESULT BT_avrcp_car_start
  *       This API stops the AVRCP  Cover Art Responder instance corresponding
  *       to the specified handle.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Index to the AVRCP  Cover Art entity that has to
  *         be stopped.
  *
@@ -636,18 +713,18 @@ API_RESULT BT_avrcp_car_stop
  *       latest indication received. Cover Art Responder frames the OBEX specific packets
  *       based on the response and associated response data and send it to the Cover Art Initiator.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Handle of the Cover Art Responder instance.
  *
- *  \param (in) event_type
+ *  \param [in] event_type
  *         Event type that was received in the application callback.
  *         This is to indicate that the response being sent in response to the
  *         request for which the application was notified.
  *
- *  \param (in) event_result
+ *  \param [in] event_result
  *         This is the OBEX response code.
  *
- *  \param (in) cover_art_headers
+ *  \param [in] cover_art_headers
  *         Structure containing either the connect information, in case of connect operation
  *         or the response data, in case of Get operation.
  *
@@ -672,10 +749,10 @@ API_RESULT BT_avrcp_car_send_response
  *       connection status is true, then Cover Art Attribute can be sent for GetElementAttribute,
  *       GetFolderItems etc. requests.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Handle of the Cover Art Responder instance.
  *
- *  \param (out) status
+ *  \param [out] status
  *         Status of Cover Art OBEX connection, Set to BT_TRUE for an Active Cover Art
  *         Connection else BT_FALSE
  *
@@ -700,7 +777,7 @@ API_RESULT BT_avrcp_car_get_obex_connection_status
  *       calls the registered  application callback upon completion of this procedure with the
  *       notification AVRCP_CAR_TRANSPORT_CLOSE_CNF event.
  *
- *  \param (in) ca_handle
+ *  \param [in] ca_handle
  *         Handle of the Cover Art Responder instance.
  *
  *  \return API_RESULT: API_SUCCESS on success otherwise an error code
@@ -710,7 +787,8 @@ API_RESULT BT_avrcp_car_transport_close
            (
                /* IN */ AVRCP_CA_HANDLE   * ca_handle
            );
-
+/** \} */
+/** \} */
 #endif /* AVRCP_COVER_ART_RESPONDER */
 
 #endif /* AVRCP_COVER_ART */

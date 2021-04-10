@@ -18,6 +18,7 @@
 /* --------------------------------------------- Exported Global Variables */
 
 /* --------------------------------------------- Static Global Variables */
+static CHAR                    ctn_msg_readline[MAX_CTN_ATTR_SIZE];
 
 /* --------------------------------------------- Functions */
 /**
@@ -56,6 +57,7 @@ API_RESULT BT_ctn_build_object_listing_pl
     UINT32          ctn_obj_param_mask;
     INT16           time_cmp;
     UINT16          start_offset;
+    UCHAR first;
 
     /* param check */
     if ((NULL == dir_entry) ||
@@ -85,11 +87,14 @@ API_RESULT BT_ctn_build_object_listing_pl
     }
 
     BT_str_copy(dir, dir_entry);
-    BT_str_cat(dir, BT_FOPS_PATH_SEP"*.*");
+    /* BT_str_cat(dir, BT_FOPS_PATH_SEP"*.*"); */
 
     CTN_PL_TRC(
     "[CTN_PL] Path = %s\n", dir_entry);
 
+    first = BT_FALSE;
+
+#if 0
     retval = BT_fops_access_first(dir, NULL, &h, &info);
     if (API_SUCCESS != retval)
     {
@@ -130,6 +135,7 @@ API_RESULT BT_ctn_build_object_listing_pl
 
         BT_str_cat(dir, "*.*");
     }
+#endif /* 0 */
 
     /* check for application param mask*/
     if (CTN_GET_APPL_PARAM_FLAG
@@ -158,7 +164,15 @@ API_RESULT BT_ctn_build_object_listing_pl
 
     while (1)
     {
-        retval = BT_fops_access_next(&h, &info);
+        if (BT_FALSE == first)
+        {
+            first = BT_TRUE;
+            retval = BT_fops_access_first(dir, NULL, &h, &info);
+        }
+        else
+        {
+            retval = BT_fops_access_next(&h, &info);
+        }
 
         if (API_SUCCESS != retval)
         {
@@ -389,6 +403,8 @@ API_RESULT BT_ctn_get_object_list
     API_RESULT      retval;
     UINT16          object_count;
 
+    UCHAR first;
+
     /* param check */
     if ((NULL == dir_entry) ||
         (NULL == obj_list_info))
@@ -403,11 +419,14 @@ API_RESULT BT_ctn_get_object_list
     object_count = 0x00;
 
     BT_str_copy(dir, dir_entry);
-    BT_str_cat(dir, BT_FOPS_PATH_SEP"*.*");
+    /* BT_str_cat(dir, BT_FOPS_PATH_SEP"*.*"); */
 
     CTN_PL_TRC(
     "[CTN_PL] Path = %s\n", dir_entry);
 
+    first = BT_FALSE;
+
+#if 0
     retval = BT_fops_access_first(dir, NULL, &h, &info);
     if (API_SUCCESS != retval)
     {
@@ -446,10 +465,19 @@ API_RESULT BT_ctn_get_object_list
 
         BT_str_cat(dir, "*.*");
     }
+#endif /* 0 */
 
     while (1)
     {
-        retval = BT_fops_access_next(&h, &info);
+        if (BT_FALSE == first)
+        {
+            first = BT_TRUE;
+            retval = BT_fops_access_first(dir, NULL, &h, &info);
+        }
+        else
+        {
+            retval = BT_fops_access_next(&h, &info);
+        }
 
         if (API_SUCCESS != retval)
         {
@@ -526,7 +554,7 @@ API_RESULT ctn_get_object_attributes_pl
 {
     API_RESULT              retval;
     BT_fops_file_handle     fd;
-    CHAR                    readstr[MAX_CTN_ATTR_SIZE];
+    CHAR                    *readstr;
     CHAR                    *str_ptr, *str_ptr1;
     UCHAR                   object_full_name[MAX_CTN_FOLDER_NAME_LEN];
     int                     i, len;
@@ -549,6 +577,9 @@ API_RESULT ctn_get_object_attributes_pl
 
     /* Get the file size */
     BT_fops_file_size(fd, &fsize);
+
+    readstr = ctn_msg_readline;
+    count = sizeof(ctn_msg_readline);
 
     /* Get Priority */
     sprintf(attr->priority, "%s", "low");
@@ -573,7 +604,7 @@ API_RESULT ctn_get_object_attributes_pl
     do
     {
         /* using fgets instead fscanf to read white spaces also */
-        count = MAX_CTN_ATTR_SIZE;
+        BT_mem_set(readstr, 0, count);
         if (API_SUCCESS != (BT_fops_file_get(fd, (UCHAR *)readstr, &count)))
         {
             break;
@@ -790,7 +821,7 @@ INT16 ctn_compare_timestamp_pl
     CHAR    src_year[6], src_month[4], src_day[4];
     CHAR    dst_year[6], dst_month[4], dst_day[4];
     UCHAR   offset;
-    INT32   src_val, dst_val;
+    UINT32   src_val, dst_val;
 
     /* param check */
     if ((NULL == t1) || (NULL == t2) ||
@@ -806,9 +837,14 @@ INT16 ctn_compare_timestamp_pl
     dst_year[4] = '\0';
     offset += 4;
 
+#if 0
     /* TODO: abract atoi */
     src_val = atoi(src_year);
     dst_val = atoi(dst_year);
+#else
+    src_val = str_to_num_pl((UCHAR  *)src_year, BT_str_len(src_year));
+    dst_val = str_to_num_pl((UCHAR  *)dst_year, BT_str_len(dst_year));
+#endif /* 0 */
 
     /* comaparing years */
     if (src_val > dst_val)
@@ -827,8 +863,13 @@ INT16 ctn_compare_timestamp_pl
 
     offset += 2;
 
+#if 0
     src_val = atoi(src_month);
     dst_val = atoi(dst_month);
+#else
+    src_val = str_to_num_pl((UCHAR  *)src_month, BT_str_len(src_month));
+    dst_val = str_to_num_pl((UCHAR  *)dst_month, BT_str_len(dst_month));
+#endif /* 0 */
 
     /* comparing months */
     if (src_val > dst_val)
@@ -845,8 +886,13 @@ INT16 ctn_compare_timestamp_pl
     src_day[2] = '\0';
     dst_day[2] = '\0';
 
+#if 0
     src_val = atoi(src_day);
     dst_val = atoi(dst_day);
+#else
+    src_val = str_to_num_pl((UCHAR  *)src_day, BT_str_len(src_day));
+    dst_val = str_to_num_pl((UCHAR  *)dst_day, BT_str_len(dst_day));
+#endif /* 0 */
 
     /* comparing days */
     if (src_val > dst_val)
@@ -866,8 +912,13 @@ INT16 ctn_compare_timestamp_pl
     src_day[2] = '\0';
     dst_day[2] = '\0';
 
+#if 0
     src_val = atoi(src_day);
     dst_val = atoi(dst_day);
+#else
+    src_val = str_to_num_pl((UCHAR  *)src_day, BT_str_len(src_day));
+    dst_val = str_to_num_pl((UCHAR  *)dst_day, BT_str_len(dst_day));
+#endif /* 0 */
 
     /* compare hours */
     if (src_val > dst_val)
@@ -884,9 +935,16 @@ INT16 ctn_compare_timestamp_pl
     src_day[2] = '\0';
     dst_day[2] = '\0';
 
+#if 0
     /* compare minutes */
     src_val = atoi(src_day);
     dst_val = atoi(dst_day);
+#else
+    /* compare minutes */
+    src_val = str_to_num_pl((UCHAR  *)src_day, BT_str_len(src_day));
+    dst_val = str_to_num_pl((UCHAR  *)dst_day, BT_str_len(dst_day));
+#endif /* 0 */
+
     if (src_val > dst_val)
     {
         return 1;
@@ -901,9 +959,15 @@ INT16 ctn_compare_timestamp_pl
     src_day[2] = '\0';
     dst_day[2] = '\0';
 
+#if 0
     /* comapre seconds */
     src_val = atoi(src_day);
     dst_val = atoi(dst_day);
+#else
+    src_val = str_to_num_pl((UCHAR  *)src_day, BT_str_len(src_day));
+    dst_val = str_to_num_pl((UCHAR  *)dst_day, BT_str_len(dst_day));
+#endif /* 0 */
+
     if (src_val > dst_val)
     {
         return 1;
@@ -914,6 +978,30 @@ INT16 ctn_compare_timestamp_pl
     }
 
     return 0;
+}
+
+UINT32 str_to_num_pl
+       (
+           /* IN */  UCHAR  * str,
+           /* IN */  UINT16 len
+       )
+{
+    UINT32 num = 0;
+    UINT8 index;
+
+    for(index = 0; index < len; index++)
+    {
+        if(str[index] >= '0' && str[index] <= '9')
+        {
+            num = (num * 10) + (str[index] - '0');
+        }
+        else
+        {
+            /* :TODO: What error value is to be returned? */
+        }
+    }
+
+    return num;
 }
 
 /**
@@ -1017,7 +1105,7 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
     BT_fops_file_handle  dst_fd;
     UCHAR   src_obj_full_name[MAX_CTN_FOLDER_NAME_LEN];
     UCHAR   dst_obj_full_name[MAX_CTN_FOLDER_NAME_LEN];
-    CHAR    readstr[MAX_CTN_ATTR_SIZE];
+    CHAR    *readstr;
     CHAR    handle_field[64];
     UCHAR   dst_file_name[64];
     CHAR   *tmp_ptr;
@@ -1076,12 +1164,15 @@ CHAR  ctn_nibble_to_char(UCHAR nibble)
         return API_FAILURE;
     }
 
+    readstr = ctn_msg_readline;
+    count = sizeof(ctn_msg_readline);
+
     flag = 0x00;
     do
     {
         /* Read one line */
-        count = MAX_CTN_ATTR_SIZE;
-        if (API_SUCCESS != (BT_fops_file_put(src_fd, (UCHAR *)readstr, &count)))
+        BT_mem_set(readstr, 0, count);
+        if (API_SUCCESS != (BT_fops_file_get(src_fd, (UCHAR *)readstr, &count)))
         {
             break;
         }
@@ -1175,11 +1266,13 @@ API_RESULT BT_ctn_build_event_file_pl
                /* IN */  UCHAR   *cal_type
            )
 {
-   API_RESULT retval = API_SUCCESS;
-   CHAR    event_file_full_name[MAX_CTN_FOLDER_NAME_LEN];
-   UCHAR parent[] = "CTN-event-report";
-   CHAR version[] = "version = \"1.0\"";
-   BT_fops_file_handle  event_fd;
+    API_RESULT retval;
+    CHAR    event_file_full_name[MAX_CTN_FOLDER_NAME_LEN];
+    UCHAR parent[] = "CTN-event-report";
+    CHAR version[] = "version = \"1.0\"";
+    BT_fops_file_handle  event_fd;
+
+    retval = API_SUCCESS;
 
     /* param check */
     if ((NULL == dir_entry) ||

@@ -17,7 +17,7 @@
 
 #elif defined(__GNUC__)
 
-#define __section_define(x)      __attribute__((section("" #x)))
+#define __section_define(x)      __attribute__((section("" #x), used))
 #define NVM_ADAPTER_TABLE(table) const __section_define(.NVM_ADAPTER_TABLE) table
 
 #elif (defined(__IAR_SYSTEMS_ICC__))

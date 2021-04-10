@@ -18,7 +18,10 @@
 #include "BT_device_queue.h"
 
 /* -------------------------------------------- Global Definitions */
-
+/**
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
 /**
  * \defgroup smp_module SMP (Security Manager Protocol)
  * \{
@@ -178,14 +181,13 @@
 #define SMP_SEC_LEVEL_MASK                          0x0F
 
 #ifdef SMP_LESC
+/** LE Security Modes */
 #define SMP_LEGACY_MODE                             0x01
 #define SMP_LESC_MODE                               0x02
 
 /** LE Pairing Mode Mask */
 #define SMP_PAIRING_MODE_MASK                       0x03
-#endif /* SMP_LESC */
 
-#ifdef SMP_LESC
 /** LE Secure Connection Bit */
 #define SMP_SEC_LESC                                0x80
 #define SMP_LESC_AUTH_REQ_BIT_SET_MASK              0x08
@@ -927,6 +929,15 @@ typedef struct _SMP_AUTH_INFO
     UCHAR xtx_info;
 #endif /* SMP_LESC_CROSS_TXP_KEY_GEN */
 
+    /**
+     * The data length of the data
+     */
+    UCHAR    data_len;
+    /**
+     * The data for event,
+     *       Pairing request data for SMP_AUTHENTICATION_REQUEST event
+     */
+    UCHAR *  data;
 } SMP_AUTH_INFO;
 
 
@@ -1734,9 +1745,8 @@ API_RESULT smp_tbx_test_lesc_funcs
 };
 #endif
 
-/**
- * \}
- */
+/** \} */
+/** \} */
 
 #endif /* _H_BT_SMP_API_ */
 

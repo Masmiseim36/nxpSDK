@@ -19,7 +19,10 @@
 
 /* --------------------------------------------- Static Global Variables */
 /* XML header for folder & message listing object */
-UCHAR xml_hdr[] = "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>\n";
+static UCHAR xml_hdr[] = "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>\n";
+
+static UCHAR msg_readline[512];
+
 /* --------------------------------------------- Functions */
 
 /**
@@ -50,6 +53,7 @@ API_RESULT BT_map_create_xml_folder_listing_pl
     UCHAR parent[]="folder-listing";
     UCHAR version[] = "version = \"1.0\"";
     UCHAR dir[MAP_FOLDER_NAME_LEN];
+    UCHAR first;
 
     *num_entity = 0;
 
@@ -75,33 +79,7 @@ API_RESULT BT_map_create_xml_folder_listing_pl
     BT_debug_trace(BT_MODULE_ID_MAP,
     "[MAP_PL] Path = %s\n", dir_entry);
 
-    retval = BT_fops_access_first(dir, NULL, &h, &info);
-    if (API_SUCCESS != retval)
-    {
-        BT_debug_error(BT_MODULE_ID_MAP,
-        "[MAP_PL] Invalid File Handle.\n");
-
-        BT_fops_file_close(xml_fd);
-
-        return API_FAILURE;
-    }
-    else
-    {
-        BT_debug_info(BT_MODULE_ID_MAP,
-        "[MAP_PL] The first file/directory found is %s\n",
-        FindFileData.cFileName);
-
-        if(info.fattrib & BT_FOPS_MASK_FOLDER)
-        {
-            BT_debug_info(BT_MODULE_ID_MAP,
-            "[MAP_PL] It is a directory\n");
-        }
-        else
-        {
-            BT_debug_info(BT_MODULE_ID_MAP,
-            "[MAP_PL] It is a file\n");
-        }
-    }
+    first = BT_FALSE;
 
 #if 0
     if(API_SUCCESS != BT_fops_set_path_forward(dir))
@@ -121,10 +99,20 @@ API_RESULT BT_map_create_xml_folder_listing_pl
     BT_fops_file_print(xml_fd ,"%s<%s %s>\n", xml_hdr, parent, version);
     while (1)
     {
-        retval = BT_fops_access_next(&h, &info);
+        if (BT_FALSE == first)
+        {
+            first = BT_TRUE;
+            retval = BT_fops_access_first(dir, NULL, &h, &info);
+        }
+        else
+        {
+            retval = BT_fops_access_next(&h, &info);
+        }
 
         if (API_SUCCESS != retval)
         {
+            BT_debug_error(BT_MODULE_ID_MAP,
+            "[MAP_PL] Invalid File Handle. Get Last Error reports\n");
             break;
         }
 
@@ -133,6 +121,7 @@ API_RESULT BT_map_create_xml_folder_listing_pl
         {
             continue;
         }
+
         if(info.fattrib & BT_FOPS_MASK_FOLDER)
         {
             BT_debug_info(BT_MODULE_ID_MAP,
@@ -203,6 +192,7 @@ API_RESULT BT_map_create_xml_messages_listing_pl
     UCHAR dir[MAP_FOLDER_NAME_LEN];
     MAP_MSG_ATTR_PL msg_attr;
     API_RESULT retval;
+    UCHAR first;
 
     *num_entity = 0;
 
@@ -228,33 +218,7 @@ API_RESULT BT_map_create_xml_messages_listing_pl
     BT_debug_trace(BT_MODULE_ID_MAP,
     "[MAP_PL] Path = %s\n", dir_entry);
 
-    retval = BT_fops_access_first(dir, NULL, &h, &info);
-    if (API_SUCCESS != retval)
-    {
-        BT_debug_error(BT_MODULE_ID_MAP,
-        "[MAP_PL] Invalid File Handle. Get Last Error reports\n");
-
-        BT_fops_file_close(xml_fd);
-
-        return API_FAILURE;
-    }
-    else
-    {
-        BT_debug_info(BT_MODULE_ID_MAP,
-        "[MAP_PL] The first file/directory found is %s\n",
-        info.fname);
-
-        if(info.fattrib & BT_FOPS_MASK_FOLDER)
-        {
-            BT_debug_info(BT_MODULE_ID_MAP,
-            "[MAP_PL] It is a directory\n");
-        }
-        else
-        {
-            BT_debug_info(BT_MODULE_ID_MAP,
-            "[MAP_PL] It is a file\n");
-        }
-    }
+    first = BT_FALSE;
 
 #if 0
     if(API_SUCCESS != BT_fops_set_path_forward(dir))
@@ -274,10 +238,20 @@ API_RESULT BT_map_create_xml_messages_listing_pl
     BT_fops_file_print(xml_fd ,"%s<%s %s>\n", xml_hdr, parent, version);
     while (1)
     {
-        retval = BT_fops_access_next(&h, &info);
+        if (BT_FALSE == first)
+        {
+            first = BT_TRUE;
+            retval = BT_fops_access_first(dir, NULL, &h, &info);
+        }
+        else
+        {
+            retval = BT_fops_access_next(&h, &info);
+        }
 
         if (API_SUCCESS != retval)
         {
+            BT_debug_error(BT_MODULE_ID_MAP,
+            "[MAP_PL] Invalid File Handle. Get Last Error reports\n");
             break;
         }
 
@@ -286,6 +260,7 @@ API_RESULT BT_map_create_xml_messages_listing_pl
         {
             continue;
         }
+
         if(info.fattrib & BT_FOPS_MASK_FOLDER)
         {
             BT_debug_info(BT_MODULE_ID_MAP,
@@ -370,7 +345,7 @@ API_RESULT BT_map_update_inbox_pl
     BT_fops_file_handle fp, fd;
     UCHAR file_object[128];
     UCHAR fn[24];
-    UCHAR readstr[128];
+    UCHAR readstr[256];
     UINT16 count, i;
 
     /* Form the file handle */
@@ -438,9 +413,10 @@ API_RESULT BT_map_update_inbox_pl
         return API_FAILURE;
     }
 
+    count = sizeof(readstr);
     do
     {
-        count = sizeof(readstr);
+        BT_mem_set(readstr, 0, count);
         retval = BT_fops_file_get(fd, readstr, &count);
 
         if (API_SUCCESS != retval)
@@ -448,7 +424,7 @@ API_RESULT BT_map_update_inbox_pl
             break;
         }
 
-        BT_fops_file_print(fp, "%s\n", readstr);
+        BT_fops_file_print(fp, "%s", readstr);
 
     } while (1);
 
@@ -548,7 +524,7 @@ API_RESULT map_get_message_attributes_pl
 {
     API_RESULT retval;
     BT_fops_file_handle fd;
-    UCHAR readstr[256];
+    UCHAR *readstr;
     UCHAR file_object[128];
     UCHAR vcard_count, sender, recipient, message;
     UINT16 count;
@@ -572,6 +548,9 @@ API_RESULT map_get_message_attributes_pl
     recipient = 0x00;
     message = 0x00;
 
+    readstr = msg_readline;
+    count = sizeof(msg_readline);
+
     /* Get the Message Handle. This will be from the filename */
     BT_mem_copy (attr->handle, &filename[1], 16);
     attr->handle[16] = '\0';
@@ -587,7 +566,7 @@ API_RESULT map_get_message_attributes_pl
 
     do
     {
-        count = sizeof(readstr);
+        BT_mem_set(readstr, 0, count);
         retval = BT_fops_file_get(fd, readstr, &count);
 
         if (API_SUCCESS != retval)
@@ -595,7 +574,7 @@ API_RESULT map_get_message_attributes_pl
             break;
         }
 
-        i = BT_str_len(readstr) - 1;
+        i = (UINT16)(BT_str_len(readstr) - 1);
 
         do
         {
@@ -772,7 +751,7 @@ API_RESULT BT_map_set_message_status_pl
 {
     API_RESULT retval;
     BT_fops_file_handle fd, fp;
-    UCHAR readstr[32768], readstr_t[32768];
+    UCHAR readstr[256], readstr_t[256];
     UCHAR file_object[128], new_object[128];
     UCHAR fn[24], curr_folder[128];
     UINT16 count;
@@ -874,10 +853,13 @@ API_RESULT BT_map_set_message_status_pl
 
         BT_fops_file_open (new_object, (UCHAR *)"wb", &fp);
 
+        count = sizeof(readstr);
         if (NULL != fp)
         {
             do
             {
+                BT_mem_set(readstr, 0, count);
+                BT_mem_set(readstr_t, 0, count);
                 retval = BT_fops_file_get(fd, readstr, &count);
 
                 if (API_SUCCESS != retval)
@@ -887,7 +869,13 @@ API_RESULT BT_map_set_message_status_pl
 
                 BT_str_copy (readstr_t, readstr);
 
-                i = BT_str_len(readstr) - 1;
+                if (0 == BT_str_len(readstr))
+                {
+                    BT_fops_file_print(fp, "%s", readstr_t);
+                    continue;
+                }
+
+                i = (UINT16)(BT_str_len(readstr) - 1);
 
                 do
                 {
@@ -905,12 +893,6 @@ API_RESULT BT_map_set_message_status_pl
 
                 } while (i >= 0);
 
-                if (0 == BT_str_len(readstr))
-                {
-                    BT_fops_file_print(fp, "%s\n", readstr_t);
-                    continue;
-                }
-
                 /* Get Type */
                 if ((0 == BT_mem_cmp("STATUS:", readstr, 7)) ||
                     (0 == BT_mem_cmp("status:", readstr, 7)))
@@ -921,12 +903,15 @@ API_RESULT BT_map_set_message_status_pl
                     continue;
                 }
 
-                BT_fops_file_print(fp, "%s\n", readstr_t);
+                BT_fops_file_print(fp, "%s", readstr_t);
 
             } while (1);
 
             BT_fops_file_close (fp);
         }
+
+        BT_fops_file_close(fd);
+        fd = NULL;
 
         /* Delete the existing file */
         BT_fops_object_delete(file_object);
@@ -935,7 +920,10 @@ API_RESULT BT_map_set_message_status_pl
         BT_fops_file_move (new_object, file_object);
     }
 
-    BT_fops_file_close(fd);
+    if (NULL != fd)
+    {
+        BT_fops_file_close(fd);
+    }
 
     return API_SUCCESS;
 }
@@ -971,6 +959,7 @@ API_RESULT BT_map_get_message_file_pl
     BT_FOPS_FILINFO info;
 
     API_RESULT retval;
+    UCHAR first;
 
     BT_IGNORE_UNUSED_PARAM(idir);
 
@@ -978,21 +967,24 @@ API_RESULT BT_map_get_message_file_pl
     BT_str_cat(rdir, BT_FOPS_PATH_SEP"root_0"BT_FOPS_PATH_SEP"telecom"BT_FOPS_PATH_SEP"msg");
     BT_str_copy(dir, rdir);
 
-    retval = BT_fops_access_first(dir, NULL, &h, &info);
-    if (API_SUCCESS != retval)
-    {
-        BT_debug_error(BT_MODULE_ID_MAP,
-            "[MAP_PL] Invalid File Handle. Get Last Error reports  %d\n");
-
-        return API_FAILURE;
-    }
+    first = BT_FALSE;
 
     while (1)
     {
-        retval = BT_fops_access_next(&h, &info);
+        if (BT_FALSE == first)
+        {
+            first = BT_TRUE;
+            retval = BT_fops_access_first(dir, NULL, &h, &info);
+        }
+        else
+        {
+            retval = BT_fops_access_next(&h, &info);
+        }
 
         if (API_SUCCESS != retval)
         {
+            BT_debug_error(BT_MODULE_ID_MAP,
+            "[MAP_PL] Invalid File Handle. Get Last Error reports\n");
             break;
         }
 

@@ -22,6 +22,10 @@
 
 /* --------------------------------------------- Global Definitions */
 /**
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
+/**
  * \defgroup  rfcomm_module  RFCOMM (Radio Frequency Communication Protocol)
  * \{
  *  This section describes the interfaces & APIs offered by the EtherMind
@@ -51,9 +55,9 @@
 /*@}*/
 /** RFCOMM Port Parameters - Baud Rates */
 /**
- * @name  RFCOMM Port Parameters - Baud Rates 
+ * @name  RFCOMM Port Parameters - Baud Rates
  *
- * Constant Definitions for RFCOMM Port Parameters - Baud Rates 
+ * Constant Definitions for RFCOMM Port Parameters - Baud Rates
  */
 /*@{*/
 #define RFCOMM_PORT_BAUD_RATE_2400              0x00
@@ -70,7 +74,7 @@
 /**
  * @name  RFCOMM Port Parameters - Data Bits
  *
- * Constant Definitions for RFCOMM Port Parameters - Data Bits 
+ * Constant Definitions for RFCOMM Port Parameters - Data Bits
  */
 /*@{*/
 #define RFCOMM_PORT_DATA_BITS_5                 0x00
@@ -556,6 +560,7 @@ extern "C" {
 
 /* --------------------------------------------- Internal Functions */
 
+/* \cond ignore_this Not to be documented - Internal Functions */
 /** RFCOMM Credit Transmission Enable & Disable - Internal Functions */
 API_RESULT BT_rfcomm_credit_tx
            (
@@ -577,6 +582,7 @@ API_RESULT BT_rfcomm_send_fc
                /* IN */  RFCOMM_HANDLE *    handle,
                /* IN */  UCHAR              operation
            );
+/** \endcond */
 
 
 /* --------------------------------------------- API Declarations */
@@ -587,40 +593,39 @@ API_RESULT BT_rfcomm_send_fc
  */
 /** To Accept Connection on a RFCOMM Server Channel */
 /**
- *  \brief To accept Data Link Connection for a RFCOMM Server Channel from a 
+ *  \brief To accept Data Link Connection for a RFCOMM Server Channel from a
  *         remote device.
  *
  *  \par Description:
- *       This API starts waiting for an incoming RFCOMM Data Link Connection 
+ *       This API starts waiting for an incoming RFCOMM Data Link Connection
  *       from a remote device. The Server Channel Parameter identifies the DLC.
  *       The RFCOMM DLC must not already be connected.
- *       This API marks the corresponding RFCOMM DLC for connection acceptance, 
- *       and returns. 
- *       The “server” side device generally uses this API. The “client” device will
- *       “open” the RFCOMM connection to this “server” using BT_rfcomm_open() API.
- *       
+ *       This API marks the corresponding RFCOMM DLC for connection acceptance,
+ *       and returns.
+ *       The "server" side device generally uses this API. The "client" device will
+ *       "open" the RFCOMM connection to this "server" using BT_rfcomm_open() API.
+ *
  *  \param [in] server_channel
- *         The Server Channel, the corresponding RFCOMM DLC to which the local 
+ *         The Server Channel, the corresponding RFCOMM DLC to which the local
  *         RFCOMM will allow connection attempt by the remote RFCOMM entity.
- *         
+ *
  *  \param [in] handle
  *         RFCOMM handle must be initialized using RFCOMM_RESET_HANDLE() and
  *         RFCOMM_SET_HANDLE() utility macros. The RFCOMM handle must be
  *         populated with correct Notification Callback function pointer,
  *         so that RFCOMM can notify the caller later with the result of the
  *         operation. Also, the Notification Callback function pointer populated
- *         in the handle parameter will be invoked later on by RFCOMM for 
- *         indication of asynchronous events, such as RFCOMM_READ, 
+ *         in the handle parameter will be invoked later on by RFCOMM for
+ *         indication of asynchronous events, such as RFCOMM_READ,
  *         RFCOMM_RECVD_MSC and RFCOMM_RECVD_RLS.
- *        
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
- *  \note When the remote RFCOMM entity connects to this DLC, RFCOMM will call 
+ *  \note When the remote RFCOMM entity connects to this DLC, RFCOMM will call
  *        the Event Notification Callback with the event_type set as RFCOMM_ACCEPT.
- *        The rfcomm_handle parameter will hold the RFCOMM Handle corresponding 
+ *        The rfcomm_handle parameter will hold the RFCOMM Handle corresponding
  *        to this RFCMM Data Link Connection.
- *
  */
 API_RESULT BT_rfcomm_accept
            (
@@ -633,9 +638,9 @@ API_RESULT BT_rfcomm_accept
  *  \brief To stop waiting for connection on a RFCOMM Server Channel.
  *
  *  \par Description:
- *       This API can be used if the local RFCOMM entity was waiting for a 
+ *       This API can be used if the local RFCOMM entity was waiting for a
  *       connection. This API will cancel that provided the referred Server
- *       Channel is not opened by any remote RFCOMM entity already.  
+ *       Channel is not opened by any remote RFCOMM entity already.
  *
  *  \param [in] server_channel
  *         The Server Channel for which the connection accept needs to be cancelled.
@@ -654,44 +659,43 @@ API_RESULT BT_rfcomm_accept_cancel
  *
  *  \par Description:
  *       This API initiates connection procedure for RFCOMM Data Link Connection
- *       as specified by the Server Channel parameter with the remote device. 
- *       RFCOMM Data Link Connection establishment phase starts with establishment 
- *       of RFCOMM Session with the RFCOMM Entity on remote device, if it is not 
+ *       as specified by the Server Channel parameter with the remote device.
+ *       RFCOMM Data Link Connection establishment phase starts with establishment
+ *       of RFCOMM Session with the RFCOMM Entity on remote device, if it is not
  *       available. Once the RFCOMM Session is available, the local RFCOMM Entity
  *       can perform the optional Parameter Negotiation (PN) and Remote Port
  *       Negotiation.
- *       Actual DLC establishment happens then when local RFCOMM entity sends SABM 
+ *       Actual DLC establishment happens then when local RFCOMM entity sends SABM
  *       (Set Asynchronous Balanced Mode) command and expects
  *       UA (Unnumbered Acknowledgement)
  *       response for it. Finally, both RFCOMM entities exchange Modem Status
  *       Commands regarding their initial Modem Status line status.
- *       The “client” side device generally uses this API. The “server” device 
+ *       The "client" side device generally uses this API. The "server" device
  *       will be waiting for an RFCOMM connection, on the specified server channel.
  *
  *  \param [in] bd_addr
  *         Bluetooth Device Address of the remote device.
  *
  *  \param [in] server_channel
- *         The RFCOMM Server Channel on which the Data Link Connection needs to 
+ *         The RFCOMM Server Channel on which the Data Link Connection needs to
  *         be established.
  *  \param [in] handle
- *         RFCOMM handle must be initialized using RFCOMM_RESET_HANDLE() and 
+ *         RFCOMM handle must be initialized using RFCOMM_RESET_HANDLE() and
  *         RFCOMM_SET_HANDLE() utility macros. The RFCOMM handle should be
- *         populated with correct Notification Callback function pointer, 
+ *         populated with correct Notification Callback function pointer,
  *         so that RFCOMM can notify the result of the operation.
  *         Also, the Notification Callback function pointer populated in the handle
  *         parameter will be invoked later on by RFCOMM for indication of
  *         asynchronous events, such as RFCOMM_READ, RFCOMM_RECVD_MSC and
- *         RFCOMM_RECVD_RLS. 
- *         
+ *         RFCOMM_RECVD_RLS.
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
- *  \note Completion of RFCOMM Open procedure will be notified using the RFCOMM 
+ *  \note Completion of RFCOMM Open procedure will be notified using the RFCOMM
  *        Event Notification Callback with event_type set to the value of
  *        RFCOMM_OPEN. The rfcomm_handle parameter will hold the RFCOMM Handle
  *        corresponding to this DLC.
- *
  */
 API_RESULT BT_rfcomm_open
            (
@@ -702,14 +706,14 @@ API_RESULT BT_rfcomm_open
 
 /** To Close a RFCOMM Connection for a Server Channel */
 /**
- *  \brief To close an existing RFCOMM Data Link Connection. 
+ *  \brief To close an existing RFCOMM Data Link Connection.
  *
  *  \par Description:
  *       This API closes an existing RFCOMM Data Link Connection, as identified
- *       by the handle parameter. 
+ *       by the handle parameter.
  *       Closure of a RFCOMM Data Link Connection (DLC) involves transmission of
  *       DISC command by the local RFCOMM entity and reception of the UA respons
- *       for it. Additionally, if the DLC happens to be the only active DLC for 
+ *       for it. Additionally, if the DLC happens to be the only active DLC for
  *       the RFCOMM Session, then it also triggers closure of the RFCOMM Session
  *       with the remote RFCOMM entity.
  *
@@ -722,10 +726,9 @@ API_RESULT BT_rfcomm_open
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note On completion of RFCOMM Close procedure, local RFCOMM entity will call
- *        the RFCOMM Event Notification Callback with event_type set to RFCOMM_CLOSE. 
- *        The response parameter of the callback will be set accordingly, 
+ *        the RFCOMM Event Notification Callback with event_type set to RFCOMM_CLOSE.
+ *        The response parameter of the callback will be set accordingly,
  *        indicating successful or unsuccessful completion.
- *
  */
 API_RESULT BT_rfcomm_close
            (
@@ -741,13 +744,12 @@ API_RESULT BT_rfcomm_close
  *       RFCOMM handle is open and in connected state.
  *
  *  \param [in] handle
- *         The RFCOMM Handle corresponding to the RFCOMM DLC which needs to be 
- *         validated. The handle parameter must have been obtained as a result 
+ *         The RFCOMM Handle corresponding to the RFCOMM DLC which needs to be
+ *         validated. The handle parameter must have been obtained as a result
  *         of earlier BT_rfcomm_open() or BT_rfcomm_accept() operation.
- *         
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
  */
 API_RESULT BT_rfcomm_query_state
            (
@@ -759,25 +761,25 @@ API_RESULT BT_rfcomm_query_state
  *  \brief To Write to an RFCOMM Data Link Connection.
  *
  *  \par Description:
- *       This API enables the application to transmit data over an established 
- *       RFCOMM DLC to its peer entity. RFCOMM transmits data according to the 
+ *       This API enables the application to transmit data over an established
+ *       RFCOMM DLC to its peer entity. RFCOMM transmits data according to the
  *       Frame Size set for the DLC during the Parameter Negotiation (PN) phase.
- *       If the data size requested to be written is more than the negotiated 
- *       Frame Size, RFCOMM will segment the application requested data into 
+ *       If the data size requested to be written is more than the negotiated
+ *       Frame Size, RFCOMM will segment the application requested data into
  *       segments of Frame Size.
  *
  *  \param [in] handle
  *         The RFCOMM Handle corresponding to the RFCOMM DLC, on which the
- *         requested data needs to transmitted. The handle parameter must have 
+ *         requested data needs to transmitted. The handle parameter must have
  *         been obtained as a result of earlier BT_rfcomm_open() or
  *         BT_rfcomm_accept() operation.
- *         
+ *
  *  \param [in] data
  *         The application buffer location containing data to be transmitted.
- *         
+ *
  *  \param [in] length
  *         The size of the application data.
- *             
+ *
  *  \param [out] actual
  *         Not used. It must be set to NULL.
  *
@@ -785,15 +787,15 @@ API_RESULT BT_rfcomm_query_state
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note The local RFCOMM entity stores the application data pointer in its
- *        Transmit Queue and returns back. Transmission from the Transmit Queue 
- *        happens automatically, but subject to Flow Control conditions. 
- *        When the full data has been transmitted RFCOMM will call the 
- *        Notification Callback to enable the application to free any allocated 
+ *        Transmit Queue and returns back. Transmission from the Transmit Queue
+ *        happens automatically, but subject to Flow Control conditions.
+ *        When the full data has been transmitted RFCOMM will call the
+ *        Notification Callback to enable the application to free any allocated
  *        memory. Till then, the original data pointer, which the application
  *        has earlier written, must be resident and accessible to RFCOMM.
  *        When data is written (or, in case of an error), the RFCOMM will
- *        call the Notification Callback with the event_type parameter set to 
- *        RFCOMM_WRITE. The event_data and event_datalen parameters will hold 
+ *        call the Notification Callback with the event_type parameter set to
+ *        RFCOMM_WRITE. The event_data and event_datalen parameters will hold
  *        the original data and the amount of data written respectively.
  */
 API_RESULT BT_rfcomm_write
@@ -811,36 +813,35 @@ API_RESULT BT_rfcomm_write
  *  \par Description:
  *       This API enables the application to ask local RFCOMM entity to transmit
  *       a Test Command (RFCOMM_TEST), with the Test data pattern,
- *       over the RFCOMM Session with a remote RFCOMM entity. 
- *       The RFCOMM Session must be available with the remote RFCOMM entity as 
+ *       over the RFCOMM Session with a remote RFCOMM entity.
+ *       The RFCOMM Session must be available with the remote RFCOMM entity as
  *       identifiable by the Bluetooth Device Address parameter.
  *       The remote RFCOMM entity should respond to the Test Command with a Test
- *       Response, containing the same Test data pattern, as requested by the 
+ *       Response, containing the same Test data pattern, as requested by the
  *       application.
  *
  *
  *  \param [in] handle
- *         The RFCOMM Handle. Only Bluetooth Device Address field of the RFCOMM 
- *         handle is used. The handle parameter must be initialized using the 
- *         RFCOMM_RESET_HANDLE() and RFCOMM_SET_HANDLE() utility macros 
+ *         The RFCOMM Handle. Only Bluetooth Device Address field of the RFCOMM
+ *         handle is used. The handle parameter must be initialized using the
+ *         RFCOMM_RESET_HANDLE() and RFCOMM_SET_HANDLE() utility macros
  *         (to specify the Notification Callback function pointer that the RFCOMM
  *         needs to call to confirm result of the operation).
- *         
+ *
  *  \param [in] test
- *         The pointer to the RFCOMM_TEST data type describing the RFCOMM Test 
- *         data pattern and size of the same. The memory for the test data 
+ *         The pointer to the RFCOMM_TEST data type describing the RFCOMM Test
+ *         data pattern and size of the same. The memory for the test data
  *         pattern must be allocated by the application.
- *         The memory for the test data pattern must be available and resident 
+ *         The memory for the test data pattern must be available and resident
  *         till the Test procedure is ongoing.
- *         
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note Calling the Notification Callback with event_type set to \
- *        RFCOMM_SEND_TEST indicates completion of the RFCOMM Test procedure. 
- *        The response parameter holds the result of the procedure – Successful
+ *        RFCOMM_SEND_TEST indicates completion of the RFCOMM Test procedure.
+ *        The response parameter holds the result of the procedure - Successful
  *        or Unsuccessful Error Code.
- *
  */
 API_RESULT BT_rfcomm_send_test
            (
@@ -853,9 +854,9 @@ API_RESULT BT_rfcomm_send_test
  *  \brief To send Parameter Negotiation Frame to the Peer.
  *
  *  \par Description:
- *       This API enables the application to initiate RFCOMM Parameter 
- *       Negotiation with the remote RFCOMM entity. The only useful parameters 
- *       in the Parameter Negotiation (RFCOMM_PN) block are the DLC Frame Size 
+ *       This API enables the application to initiate RFCOMM Parameter
+ *       Negotiation with the remote RFCOMM entity. The only useful parameters
+ *       in the Parameter Negotiation (RFCOMM_PN) block are the DLC Frame Size
  *       and Priority.  Rest of the parameters are either ignored or not used by
  *       RFCOMM.
  *
@@ -864,30 +865,29 @@ API_RESULT BT_rfcomm_send_test
  *         Channel for which parameter needs to negotiated.
  *         The Parameter Negotiation may be initiated either before or after
  *         establishment of an RFCOMM Data Link Connection (DLC). If initiated
- *         prior to establishment of a DLC, the handle parameter must be 
- *         initialized using RFCOMM_RESET_HANDLE() and RFCOMM_SET_HANDLE() 
+ *         prior to establishment of a DLC, the handle parameter must be
+ *         initialized using RFCOMM_RESET_HANDLE() and RFCOMM_SET_HANDLE()
  *         utility macros. If initiated after establishment of a DLC, the handle
- *         parameter must have been obtained as a result of earlier BT_rfcomm_open() 
+ *         parameter must have been obtained as a result of earlier BT_rfcomm_open()
  *         or BT_rfcomm_accept() operation.
- *         
- *  \param [in] pn   
- *         The pointer to the RFCOMM_PN structure describing the RFCOMM DLC 
- *         Parameters that the local RFCOMM entity should propose to the peer 
- *         entity. The frame_size parameter of RFCOMM_PN can be specified to be 
- *         Zero. In that case, RFCOMM chooses the Frame Size for the Data Link 
- *         Connection to be a value that is 5 octets less than (to account for 
- *         the RFCOMM UIH Frame Header) the minimum of L2CAP In 
- *         (see BT_rfcomm_register_mtu) and Out MTU values configured for the 
+ *
+ *  \param [in] pn
+ *         The pointer to the RFCOMM_PN structure describing the RFCOMM DLC
+ *         Parameters that the local RFCOMM entity should propose to the peer
+ *         entity. The frame_size parameter of RFCOMM_PN can be specified to be
+ *         Zero. In that case, RFCOMM chooses the Frame Size for the Data Link
+ *         Connection to be a value that is 5 octets less than (to account for
+ *         the RFCOMM UIH Frame Header) the minimum of L2CAP In
+ *         (see BT_rfcomm_register_mtu) and Out MTU values configured for the
  *         RFCOMM Session.
- *         
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note Calling the Notification Callback with event_type set to RFCOMM_SEND_PN
  *        indicates completion of the parameter negotiation procedure. The response
- *        parameter holds the result of the procedure – Successful or Unsuccessful
+ *        parameter holds the result of the procedure - Successful or Unsuccessful
  *        Error Code.
- *
  */
 API_RESULT BT_rfcomm_send_pn
            (
@@ -900,45 +900,44 @@ API_RESULT BT_rfcomm_send_pn
  *  \brief To initiate RFCOMM Remote Port Negotiation.
  *
  *  \par Description:
- *       This API enables the application to initiate RFCOMM Remote Port 
- *       Negotiation (RPN) with the remote RFCOMM entity. 
- *       The RPN can be of two types – RPN Request or RPN Command. 
- *       The RPN Request attempts to retrieve the remote RFCOMM entity’s port
+ *       This API enables the application to initiate RFCOMM Remote Port
+ *       Negotiation (RPN) with the remote RFCOMM entity.
+ *       The RPN can be of two types - RPN Request or RPN Command.
+ *       The RPN Request attempts to retrieve the remote RFCOMM entity's port
  *       settings, while an RPN Command initiates negotiation of port settings
  *       with the remote RFCOMM entity.
  *
  *  \param [in] handle
  *         The RFCOMM Handle corresponding to the RFCOMM Data Link Connection or
- *         Channel for which parameter needs to negotiated. 
- *         The Remote Port Negotiation (RPN Command) may be initiated either 
+ *         Channel for which parameter needs to negotiated.
+ *         The Remote Port Negotiation (RPN Command) may be initiated either
  *         before or after establishment of an RFCOMM Data Link Connection (DLC).
  *         If initiated prior to establishment of a DLC, the handle parameter must
- *         be initialized using RFCOMM_RESET_HANDLE() and RFCOMM_SET_HANDLE() 
+ *         be initialized using RFCOMM_RESET_HANDLE() and RFCOMM_SET_HANDLE()
  *         utility macros. If initiated after establishment of a DLC, the handle
  *         parameter must have been obtained as a result of earlier BT_rfcomm_open()
  *         or BT_rfcomm_accept() operation.
  *
  *  \param [in] rpn
- *         The pointer to the RFCOMM_RPN structure describing the RFCOMM Port 
- *         Parameters that the local RFCOMM entity should propose to the peer 
+ *         The pointer to the RFCOMM_RPN structure describing the RFCOMM Port
+ *         Parameters that the local RFCOMM entity should propose to the peer
  *         entity.
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note Calling the Notification Callback with event_type set to RFCOMM_SEND_RPN
- *        indicates completion of the remote port negotiation procedure. 
- *        The response parameter holds the result of the procedure – Successful 
+ *        indicates completion of the remote port negotiation procedure.
+ *        The response parameter holds the result of the procedure - Successful
  *        or Unsuccessful Error Code.
  *        The data parameter will hold the pointer to a RFCOMM_RPN variable that
- *        describes the Remote RFCOMM entity’s port settings. The datalen will 
- *        be set to size of RFCOMM_RPN. If an RPN Request had been sent to the 
- *        peer, the data parameter holds the current port settings of the peer 
+ *        describes the Remote RFCOMM entity's port settings. The datalen will
+ *        be set to size of RFCOMM_RPN. If an RPN Request had been sent to the
+ *        peer, the data parameter holds the current port settings of the peer
  *        device for the RFCOMM DLC. If an RPN Command had been sent to the peer,
  *        the data parameter holds the resultant port settings that the peer has
- *        accepted or rejected (for more information see description of 
+ *        accepted or rejected (for more information see description of
  *        RFCOMM_RPN data type).
- *
  */
 API_RESULT BT_rfcomm_send_rpn
            (
@@ -951,27 +950,26 @@ API_RESULT BT_rfcomm_send_rpn
  *  \brief To transmit Modem Status Command.
  *
  *  \par Description:
- *       This API enables the application to transmit Modem Status Commands to 
+ *       This API enables the application to transmit Modem Status Commands to
  *       its peer as described by the Modem Status Command (RFCOMM_MSC) data type.
- *       
+ *
  *  \param [in] handle
  *         The RFCOMM Handle corresponding to the RFCOMM Data Link Connection or
- *         Channel for which modem status command needs to be transmitted. 
+ *         Channel for which modem status command needs to be transmitted.
  *         The handle parameter must have been obtained as a result of earlier
  *         BT_rfcomm_open() or BT_rfcomm_accept() operation.
  *
  *  \param [in] msc
- *         The pointer of the RFCOMM_MSC structure describing the Modem Status 
+ *         The pointer of the RFCOMM_MSC structure describing the Modem Status
  *         that the local entity should transmit to its peer.
- *         
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note Calling the Notification Callback with event_type set to
- *        RFCOMM_SEND_MSC indicates completion of the transmission of modem 
+ *        RFCOMM_SEND_MSC indicates completion of the transmission of modem
  *        status command procedure. The response parameter holds the result of
- *        the procedure – Successful or Unsuccessful Error Code.
- *
+ *        the procedure - Successful or Unsuccessful Error Code.
  */
 API_RESULT BT_rfcomm_send_msc
            (
@@ -984,27 +982,26 @@ API_RESULT BT_rfcomm_send_msc
  *  \brief To send Line Status.
  *
  *  \par Description:
- *       This API enables the application to transmit Line Status (RFCOMM_RLS) 
+ *       This API enables the application to transmit Line Status (RFCOMM_RLS)
  *       command to the peer RFCOMM entity.
  *
  *  \param [in] handle
  *         This parameter identifies the RFCOMM Handle corresponding to the
- *         RFCOMM DLC for which Line Status needs to be sent to the peer. 
- *         The handle parameter must have been obtained as a result of earlier 
+ *         RFCOMM DLC for which Line Status needs to be sent to the peer.
+ *         The handle parameter must have been obtained as a result of earlier
  *         BT_rfcomm_open() or BT_rfcomm_accept() operation.
- *         
- *  \param [in] rls     
+ *
+ *  \param [in] rls
  *         The pointer to the RFCOMM_RLS data type which describes the
- *         line_status value that needs to be transmitted to the peer. 
- *         
+ *         line_status value that needs to be transmitted to the peer.
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note Calling the Notification Callback with event_type set to
  *        RFCOMM_SEND_RLS indicates completion of the transmission of line status
  *        procedure. The response parameter holds the result of the procedure
- *        – Successful or Unsuccessful Error Code.
- *
+ *        - Successful or Unsuccessful Error Code.
  */
 API_RESULT BT_rfcomm_send_rls
            (
@@ -1021,23 +1018,22 @@ API_RESULT BT_rfcomm_send_rls
  *       settings for an RFCOMM data link connection.
  *       The local port settings are initialized to default values when a DLC is
  *       created. The local port settings should be updated by applications after
- *       port settings are negotiated and final values are accepted for use, 
+ *       port settings are negotiated and final values are accepted for use,
  *       by using the BT_rfcomm_send_rpn() API.
  *
  *  \param [in] handle
  *         The RFCOMM Handle corresponding to the RFCOMM Data Link Connection or
  *         Channel for which local port settings to be retrieved.
- *         
+ *
  *  \param [out] rpn
- *         The pointer to the RFCOMM_RPN structure onto which the current local 
- *         port settings for the data link connection to be copied. The dlci, 
+ *         The pointer to the RFCOMM_RPN structure onto which the current local
+ *         port settings for the data link connection to be copied. The dlci,
  *         request and mask parameters of the RFCOMM_RPN should be ignored.
- *         
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note
- *
  */
 API_RESULT BT_rfcomm_get_local_rpn
            (
@@ -1050,32 +1046,31 @@ API_RESULT BT_rfcomm_get_local_rpn
  *  \brief To set/update local port settings for a DLC
  *
  *  \par Description:
- *       This API enables the application to set/update the local port settings 
+ *       This API enables the application to set/update the local port settings
  *       for an RFCOMM data link connection.
  *       The local port settings are initialized to default values when a DLC is
  *       created. The local port settings should be updated by applications after
- *       port settings are negotiated and final values are accepted for use, 
+ *       port settings are negotiated and final values are accepted for use,
  *       by using the BT_rfcomm_send_rpn() API.
  *       The RFCOMM uses the local port settings values in two ways:
- *        i)To reply to peer device in response to received RPN “Request”
- *       ii)To reply to peer device in response to received RPN “Command” for 
- *       port negotiation. In this case, RFCOMM automatically accepts the changed 
+ *        i)To reply to peer device in response to received RPN "Request"
+ *       ii)To reply to peer device in response to received RPN "Command" for
+ *       port negotiation. In this case, RFCOMM automatically accepts the changed
  *       port settings that the peer proposes and updates its local port settings.
  *
  *  \param [in] handle
  *         The RFCOMM Handle corresponding to the RFCOMM Data Link Connection or
  *         Channel for which local port settings to be updated.
- *         
+ *
  *  \param [in] rpn
- *         The pointer to the RFCOMM_RPN structure describing the port settings 
+ *         The pointer to the RFCOMM_RPN structure describing the port settings
  *         that needs to be set/updated for the data link connection. The dlci,
  *         request and mask parameters of the RFCOMM_RPN are ignored.
- *         
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note
- *
  */
 API_RESULT BT_rfcomm_set_local_rpn
            (
@@ -1088,24 +1083,22 @@ API_RESULT BT_rfcomm_set_local_rpn
  *  \brief To get parameter negotiation (PN) values for a DLC
  *
  *  \par Description:
- *       This API enables the application to get the parameter negotiation (PN) 
+ *       This API enables the application to get the parameter negotiation (PN)
  *       values for an RFCOMM data link connection.
- *       
+ *
  *  \param [in] handle
  *         The RFCOMM Handle corresponding to the RFCOMM Data Link Connection or
  *         Channel for which parameter negotiation (PN) values to be retrieved.
  *
- *  \param [in] pn 
- *         The pointer to the RFCOMM_PN structure onto which the parameter 
+ *  \param [in] pn
+ *         The pointer to the RFCOMM_PN structure onto which the parameter
  *         negotiation (PN) values for the data link connection to be copied.
  *         The frame_size and priority parameters of the RFCOMM_PN are populated.
- *         Other parameters are used internally in RFCOMM, and should be ignored 
+ *         Other parameters are used internally in RFCOMM, and should be ignored
  *         by application.
- *         
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
- *
  */
 API_RESULT BT_rfcomm_get_local_pn
            (
@@ -1118,28 +1111,26 @@ API_RESULT BT_rfcomm_get_local_pn
  *  \brief To get local modem status command values for a DLC
  *
  *  \par Description:
- *       This API enables the application to get the local modem status command 
+ *       This API enables the application to get the local modem status command
  *       values for an RFCOMM data link connection.
  *       The RFCOMM maintains the local and remote Modem Status (MSC) parameters
  *       for every DLC. The local Modem Status parameter is updated when the local
  *       application sends the Modem Status Command to the peer device using the
- *       BT_rfcomm_send_msc() API. The remote Modem Status parameter is updated 
- *       when the RFCOMM receives the Modem Status Command (MSC) from the peer 
+ *       BT_rfcomm_send_msc() API. The remote Modem Status parameter is updated
+ *       when the RFCOMM receives the Modem Status Command (MSC) from the peer
  *       device (which is indicated to application using RFCOMM_RECVD_MSC event).
- *       
+ *
  *  \param [in] handle
  *         The RFCOMM Handle corresponding to the RFCOMM Data Link Connection or
  *         Channel for which local modem status (MSC) values to be retrieved.
- *         
- *  \param [out] msc 
+ *
+ *  \param [out] msc
  *         The pointer to the RFCOMM_MSC structure onto which the parameter
  *         negotiation (PN) values for the data link connection to be copied.
- *         The dlci parameter of the RFCOMM_MSC should be ignored by application. 
+ *         The dlci parameter of the RFCOMM_MSC should be ignored by application.
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
- *
- *
  */
 API_RESULT BT_rfcomm_get_local_msc
            (
@@ -1152,30 +1143,29 @@ API_RESULT BT_rfcomm_get_local_msc
  *  \brief To set Incoming Data MTU value for L2CAP channel establishment.
  *
  *  \par Description:
- *       This API enables the application to specify L2CAP MTU size that RFCOMM 
- *       will request to configure for the In-MTU (incoming data) parameter 
+ *       This API enables the application to specify L2CAP MTU size that RFCOMM
+ *       will request to configure for the In-MTU (incoming data) parameter
  *       during L2CAP channel establishment (configuration) for an RFCOMM Session.
- *       The MTU can only be set when there exist no RFCOMM Session with any 
+ *       The MTU can only be set when there exist no RFCOMM Session with any
  *       remote Bluetooth devices.
  *
  *  \param [in] mtu
- *         This parameter specifies the MTU size to be configured. The value of 
+ *         This parameter specifies the MTU size to be configured. The value of
  *         the MTU must be more than L2CAP_MIN_MTU (48) and less than
  *         L2CAP_MAX_MTU (see BT_limits.h).
  *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
- *  \note RFCOMM calculates the Frame Size for all Data Link Connections 
- *        (Server Channels) based on the MTU configured for underlying L2CAP 
- *        connection. When initiating establishment of a data link connection 
+ *  \note RFCOMM calculates the Frame Size for all Data Link Connections
+ *        (Server Channels) based on the MTU configured for underlying L2CAP
+ *        connection. When initiating establishment of a data link connection
  *        (during parameter negotiation phase), the RFCOMM proposes a frame size
  *        value which is 5 octet less than (to account for the RFCOMM UIH Frame Header)
  *        the minimum of L2CAP In and Out MTU values configured for the RFCOMM Session.
  *        If application does not invoke this API to set the In-MTU for the
  *        L2CAP channel, then the default value L2CAP_MTU_DEFAULT (see BT_limits.h)
  *        is used.
- *
  */
 API_RESULT BT_rfcomm_register_mtu
            (
@@ -1187,22 +1177,21 @@ API_RESULT BT_rfcomm_register_mtu
  *  \brief To mark the RFCOMM ACL data as flushable PDU.
  *
  *  \par Description:
- *       This API enables the application to set the RFCOMM data to be as 
- *       flushable ACL data. 
- *       
+ *       This API enables the application to set the RFCOMM data to be as
+ *       flushable ACL data.
+ *
  *  \param [in] handle
- *          The RFCOMM Handle corresponding to the RFCOMM DLC, on which the 
+ *          The RFCOMM Handle corresponding to the RFCOMM DLC, on which the
  *          requested data configuration needs to be set. The handle parameter
- *          must have been obtained as a result of earlier BT_rfcomm_open() 
+ *          must have been obtained as a result of earlier BT_rfcomm_open()
  *          or BT_rfcomm_accept() operation.
- *          
+ *
  *  \return
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
- *  \note This API configures the flush-ability with the L2CAP call 
- *        l2cap_set_flushability for the LCID corresponding to the RFCOMM DLCI 
+ *  \note This API configures the flush-ability with the L2CAP call
+ *        l2cap_set_flushability for the LCID corresponding to the RFCOMM DLCI
  *        in handle. This API is protected by the feature flag RFCOMM_FLUSHABLE_PACKET.
- *
  */
 API_RESULT BT_rfcomm_set_flushable
            (
@@ -1223,7 +1212,6 @@ API_RESULT BT_rfcomm_set_flushable
  *       API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  *
  *  \note
- *
  */
 API_RESULT BT_rfcomm_set_l2cap_operation_mode
            (
@@ -1235,7 +1223,7 @@ API_RESULT BT_rfcomm_set_l2cap_operation_mode
 #endif
 /** \} */
 /** \} */
+/** \} */
 
 #endif /* _H_BT_RFCOMM_API_ */
-
 

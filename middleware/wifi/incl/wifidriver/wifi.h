@@ -579,9 +579,9 @@ int wifi_get_uap_channel(int *channel);
  *	wifi_domain_param_t *dp = os_mem_alloc(sizeof(wifi_domain_param_t) +
  *					       sizeof(wifi_sub_band_set_t));
  *
- *	memcpy(dp->country_code, "US\0", COUNTRY_CODE_LEN);
+ *	(void)memcpy(dp->country_code, "US\0", COUNTRY_CODE_LEN);
  *	dp->no_of_sub_band = 1;
- *	memcpy(dp->sub_band, &sb, sizeof(wifi_sub_band_set_t));
+ *	(void)memcpy(dp->sub_band, &sb, sizeof(wifi_sub_band_set_t));
  *
  *	wmprintf("wifi uap set domain params\n\r");
  *	wifi_uap_set_domain_params(dp);
@@ -609,7 +609,7 @@ int wifi_enable_ecsa_support();
 bool wifi_is_ecsa_enabled();
 int wifi_set_htcapinfo(unsigned int htcapinfo);
 int wifi_set_httxcfg(unsigned short httxcfg);
-int wifi_get_tx_power();
+int wifi_get_tx_power(t_u32 *power_level);
 int wifi_set_tx_power(int power_level);
 int wifi_set_smart_mode_cfg(char *ssid,
                             int beacon_period,

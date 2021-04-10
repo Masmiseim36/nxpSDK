@@ -38,17 +38,17 @@
 
 static void dump_wlan_set_pmfcfg_usage()
 {
-    PRINTF("Usage:\r\n");
-    PRINTF("wlan-set-pmfcfg <mfpc> <mfpr> \r\n");
-    PRINTF("\r\n");
-    PRINTF("\t<mfpc>:   Management Frame Protection Capable (MFPC)\r\n");
-    PRINTF("\t          1: Management Frame Protection Capable\r\n");
-    PRINTF("\t          0: Management Frame Protection not Capable\r\n");
-    PRINTF("\t<mfpr>:   Management Frame Protection Required (MFPR)\r\n");
-    PRINTF("\t          1: Management Frame Protection Required\r\n");
-    PRINTF("\t          0: Management Frame Protection Optional\r\n");
-    PRINTF("\tDefault setting is PMF not capable.\r\n");
-    PRINTF("\tmfpc = 0, mfpr = 1 is an invalid combination\r\n");
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-set-pmfcfg <mfpc> <mfpr> \r\n");
+    (void)PRINTF("\r\n");
+    (void)PRINTF("\t<mfpc>:   Management Frame Protection Capable (MFPC)\r\n");
+    (void)PRINTF("\t          1: Management Frame Protection Capable\r\n");
+    (void)PRINTF("\t          0: Management Frame Protection not Capable\r\n");
+    (void)PRINTF("\t<mfpr>:   Management Frame Protection Required (MFPR)\r\n");
+    (void)PRINTF("\t          1: Management Frame Protection Required\r\n");
+    (void)PRINTF("\t          0: Management Frame Protection Optional\r\n");
+    (void)PRINTF("\tDefault setting is PMF not capable.\r\n");
+    (void)PRINTF("\tmfpc = 0, mfpr = 1 is an invalid combination\r\n");
 }
 
 static void wlan_pmfcfg_set(int argc, char *argv[])
@@ -68,19 +68,19 @@ static void wlan_pmfcfg_set(int argc, char *argv[])
     ret = wlan_set_pmfcfg(mfpc, mfpr);
     if (ret == WM_SUCCESS)
     {
-        PRINTF("PMF configuration successful\r\n");
+        (void)PRINTF("PMF configuration successful\r\n");
     }
     else
     {
-        PRINTF("PMF configuration failed\r\n");
+        (void)PRINTF("PMF configuration failed\r\n");
         dump_wlan_set_pmfcfg_usage();
     }
 }
 
 static void dump_wlan_get_pmfcfg_usage()
 {
-    PRINTF("Usage:\r\n");
-    PRINTF("wlan-get-pmfcfg \r\n");
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-get-pmfcfg \r\n");
 }
 
 static void wlan_pmfcfg_get(int argc, char *argv[])
@@ -97,29 +97,29 @@ static void wlan_pmfcfg_get(int argc, char *argv[])
     ret = wlan_get_pmfcfg(&mfpc, &mfpr);
     if (ret == WM_SUCCESS)
     {
-        PRINTF("Management Frame Protection Capability: %s\r\n", mfpc == 1 ? "Yes" : "No");
-        if (mfpc)
-            PRINTF("Management Frame Protection: %s\r\n", mfpr == 1 ? "Required" : "Optional");
+        (void)PRINTF("Management Frame Protection Capability: %s\r\n", mfpc == 1 ? "Yes" : "No");
+        if (mfpc != 0U)
+            (void)PRINTF("Management Frame Protection: %s\r\n", mfpr == 1 ? "Required" : "Optional");
     }
     else
     {
-        PRINTF("PMF configuration read failed\r\n");
+        (void)PRINTF("PMF configuration read failed\r\n");
         dump_wlan_get_pmfcfg_usage();
     }
 }
 
 static void dump_wlan_set_antcfg_usage()
 {
-    PRINTF("Usage:\r\n");
-    PRINTF("wlan-set-antcfg <ant mode> [evaluate_time] \r\n");
-    PRINTF("\r\n");
-    PRINTF("\t<ant mode>: \r\n");
-    PRINTF("\t           Bit 0   -- Tx/Rx antenna 1\r\n");
-    PRINTF("\t           Bit 1   -- Tx/Rx antenna 2\r\n");
-    PRINTF("\t           0xFFFF  -- Tx/Rx antenna diversity\r\n");
-    PRINTF("\t[evaluate_time]: \r\n");
-    PRINTF("\t           if ant mode = 0xFFFF, SAD evaluate time interval,\r\n");
-    PRINTF("\t           default value is 6s(0x1770)\r\n");
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-set-antcfg <ant mode> [evaluate_time] \r\n");
+    (void)PRINTF("\r\n");
+    (void)PRINTF("\t<ant mode>: \r\n");
+    (void)PRINTF("\t           Bit 0   -- Tx/Rx antenna 1\r\n");
+    (void)PRINTF("\t           Bit 1   -- Tx/Rx antenna 2\r\n");
+    (void)PRINTF("\t           0xFFFF  -- Tx/Rx antenna diversity\r\n");
+    (void)PRINTF("\t[evaluate_time]: \r\n");
+    (void)PRINTF("\t           if ant mode = 0xFFFF, SAD evaluate time interval,\r\n");
+    (void)PRINTF("\t           default value is 6s(0x1770)\r\n");
 }
 
 static void wlan_antcfg_set(int argc, char *argv[])
@@ -134,7 +134,10 @@ static void wlan_antcfg_set(int argc, char *argv[])
         return;
     }
 
+    errno    = 0;
     ant_mode = strtol(argv[1], NULL, 16);
+    if (errno != 0)
+        (void)PRINTF("Error during strtoul errno:%d", errno);
 
     if ((argc == 3) && (ant_mode != 0xFFFF))
     {
@@ -142,25 +145,28 @@ static void wlan_antcfg_set(int argc, char *argv[])
         return;
     }
 
+    errno = 0;
     if (argc == 3)
         evaluate_time = strtol(argv[2], NULL, 16);
+    if (errno != 0)
+        (void)PRINTF("Error during strtoul errno:%d", errno);
 
     ret = wlan_set_antcfg(ant_mode, evaluate_time);
     if (ret == WM_SUCCESS)
     {
-        PRINTF("Antenna configuration successful\r\n");
+        (void)PRINTF("Antenna configuration successful\r\n");
     }
     else
     {
-        PRINTF("Antenna configuration failed\r\n");
+        (void)PRINTF("Antenna configuration failed\r\n");
         dump_wlan_set_antcfg_usage();
     }
 }
 
 static void dump_wlan_get_antcfg_usage()
 {
-    PRINTF("Usage:\r\n");
-    PRINTF("wlan-get-antcfg \r\n");
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-get-antcfg \r\n");
 }
 
 static void wlan_antcfg_get(int argc, char *argv[])
@@ -178,39 +184,39 @@ static void wlan_antcfg_get(int argc, char *argv[])
     ret = wlan_get_antcfg(&ant_mode, &evaluate_time);
     if (ret == WM_SUCCESS)
     {
-        PRINTF("Mode of Tx/Rx path is : %x\r\n", ant_mode);
+        (void)PRINTF("Mode of Tx/Rx path is : %x\r\n", ant_mode);
         if (ant_mode == 0XFFFF)
-            PRINTF("Evaluate time : %x\r\n", evaluate_time);
+            (void)PRINTF("Evaluate time : %x\r\n", evaluate_time);
     }
     else
     {
-        PRINTF("antcfg configuration read failed\r\n");
+        (void)PRINTF("antcfg configuration read failed\r\n");
         dump_wlan_get_antcfg_usage();
     }
 }
 
 static void dump_wlan_set_ed_mac_mode_usage()
 {
-    PRINTF("Usage:\r\n");
+    (void)PRINTF("Usage:\r\n");
 #ifdef CONFIG_5GHz_SUPPORT
-    PRINTF("wlan-set-ed-mac-mode <ed_ctrl_2g> <ed_offset_2g> <ed_ctrl_5g> <ed_offset_5g>\r\n");
+    (void)PRINTF("wlan-set-ed-mac-mode <ed_ctrl_2g> <ed_offset_2g> <ed_ctrl_5g> <ed_offset_5g>\r\n");
 #else
-    PRINTF("wlan-set-ed-mac-mode <ed_ctrl_2g> <ed_offset_2g>\r\n");
+    (void)PRINTF("wlan-set-ed-mac-mode <ed_ctrl_2g> <ed_offset_2g>\r\n");
 #endif
-    PRINTF("\r\n");
-    PRINTF("\ted_ctrl_2g \r\n");
-    PRINTF("\t    # 0       - disable EU adaptivity for 2.4GHz band\r\n");
-    PRINTF("\t    # 1       - enable EU adaptivity for 2.4GHz band\r\n");
-    PRINTF("\ted_offset_2g \r\n");
-    PRINTF("\t    # 0       - Default Energy Detect threshold\r\n");
-    PRINTF("\t    #offset value range: 0x80 to 0x7F\r\n");
+    (void)PRINTF("\r\n");
+    (void)PRINTF("\ted_ctrl_2g \r\n");
+    (void)PRINTF("\t    # 0       - disable EU adaptivity for 2.4GHz band\r\n");
+    (void)PRINTF("\t    # 1       - enable EU adaptivity for 2.4GHz band\r\n");
+    (void)PRINTF("\ted_offset_2g \r\n");
+    (void)PRINTF("\t    # 0       - Default Energy Detect threshold\r\n");
+    (void)PRINTF("\t    #offset value range: 0x80 to 0x7F\r\n");
 #ifdef CONFIG_5GHz_SUPPORT
-    PRINTF("\ted_ctrl_5g \r\n");
-    PRINTF("\t    # 0       - disable EU adaptivity for 5GHz band\r\n");
-    PRINTF("\t    # 1       - enable EU adaptivity for 5GHz band\r\n");
-    PRINTF("\ted_offset_2g \r\n");
-    PRINTF("\t    # 0       - Default Energy Detect threshold\r\n");
-    PRINTF("\t    #offset value range: 0x80 to 0x7F\r\n");
+    (void)PRINTF("\ted_ctrl_5g \r\n");
+    (void)PRINTF("\t    # 0       - disable EU adaptivity for 5GHz band\r\n");
+    (void)PRINTF("\t    # 1       - enable EU adaptivity for 5GHz band\r\n");
+    (void)PRINTF("\ted_offset_2g \r\n");
+    (void)PRINTF("\t    # 0       - Default Energy Detect threshold\r\n");
+    (void)PRINTF("\t    #offset value range: 0x80 to 0x7F\r\n");
 #endif
 }
 
@@ -229,11 +235,23 @@ static void wlan_ed_mac_mode_set(int argc, char *argv[])
         return;
     }
 
-    wlan_ed_mac_ctrl.ed_ctrl_2g   = strtol(argv[1], NULL, 16);
+    errno                       = 0;
+    wlan_ed_mac_ctrl.ed_ctrl_2g = strtol(argv[1], NULL, 16);
+    if (errno != 0)
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    errno                         = 0;
     wlan_ed_mac_ctrl.ed_offset_2g = strtol(argv[2], NULL, 16);
+    if (errno != 0)
+        (void)PRINTF("Error during strtoul errno:%d", errno);
 #ifdef CONFIG_5GHz_SUPPORT
-    wlan_ed_mac_ctrl.ed_ctrl_5g   = strtol(argv[3], NULL, 16);
+    errno                       = 0;
+    wlan_ed_mac_ctrl.ed_ctrl_5g = strtol(argv[3], NULL, 16);
+    if (errno != 0)
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    errno                         = 0;
     wlan_ed_mac_ctrl.ed_offset_5g = strtol(argv[4], NULL, 16);
+    if (errno != 0)
+        (void)PRINTF("Error during strtoul errno:%d", errno);
 #endif
 
     if (wlan_ed_mac_ctrl.ed_ctrl_2g != 0 && wlan_ed_mac_ctrl.ed_ctrl_2g != 1)
@@ -252,19 +270,19 @@ static void wlan_ed_mac_mode_set(int argc, char *argv[])
     ret = wlan_set_ed_mac_mode(wlan_ed_mac_ctrl);
     if (ret == WM_SUCCESS)
     {
-        PRINTF("ED MAC MODE settings configuration successful\r\n");
+        (void)PRINTF("ED MAC MODE settings configuration successful\r\n");
     }
     else
     {
-        PRINTF("ED MAC MODE settings configuration failed\r\n");
+        (void)PRINTF("ED MAC MODE settings configuration failed\r\n");
         dump_wlan_set_ed_mac_mode_usage();
     }
 }
 
 static void dump_wlan_get_ed_mac_mode_usage()
 {
-    PRINTF("Usage:\r\n");
-    PRINTF("wlan-get-ed-mac-mode \r\n");
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-get-ed-mac-mode \r\n");
 }
 
 static void wlan_ed_mac_mode_get(int argc, char *argv[])
@@ -281,18 +299,19 @@ static void wlan_ed_mac_mode_get(int argc, char *argv[])
     ret = wlan_get_ed_mac_mode(&wlan_ed_mac_ctrl);
     if (ret == WM_SUCCESS)
     {
-        PRINTF("EU adaptivity for 2.4GHz band : %s\r\n", wlan_ed_mac_ctrl.ed_ctrl_2g == 1 ? "Enabled" : "Disabled");
-        if (wlan_ed_mac_ctrl.ed_ctrl_2g)
-            PRINTF("Energy Detect threshold offset : 0X%x\r\n", wlan_ed_mac_ctrl.ed_offset_2g);
+        (void)PRINTF("EU adaptivity for 2.4GHz band : %s\r\n",
+                     wlan_ed_mac_ctrl.ed_ctrl_2g == 1 ? "Enabled" : "Disabled");
+        if (wlan_ed_mac_ctrl.ed_ctrl_2g != 0U)
+            (void)PRINTF("Energy Detect threshold offset : 0X%x\r\n", wlan_ed_mac_ctrl.ed_offset_2g);
 #ifdef CONFIG_5GHz_SUPPORT
-        PRINTF("EU adaptivity for 5GHz band : %s\r\n", wlan_ed_mac_ctrl.ed_ctrl_5g == 1 ? "Enabled" : "Disabled");
-        if (wlan_ed_mac_ctrl.ed_ctrl_5g)
-            PRINTF("Energy Detect threshold offset : 0X%x\r\n", wlan_ed_mac_ctrl.ed_offset_5g);
+        (void)PRINTF("EU adaptivity for 5GHz band : %s\r\n", wlan_ed_mac_ctrl.ed_ctrl_5g == 1 ? "Enabled" : "Disabled");
+        if (wlan_ed_mac_ctrl.ed_ctrl_5g != 0U)
+            (void)PRINTF("Energy Detect threshold offset : 0X%x\r\n", wlan_ed_mac_ctrl.ed_offset_5g);
 #endif
     }
     else
     {
-        PRINTF("ED MAC MODE read failed\r\n");
+        (void)PRINTF("ED MAC MODE read failed\r\n");
         dump_wlan_get_ed_mac_mode_usage();
     }
 }
@@ -322,9 +341,9 @@ int wlan_memrdwr_getset(int argc, char *argv[])
     if (ret == WM_SUCCESS)
     {
         if (action == ACTION_GET)
-            PRINTF("At Memory 0x%x: 0x%x\r\n", a2hex_or_atoi(argv[2]), value);
+            (void)PRINTF("At Memory 0x%x: 0x%x\r\n", a2hex_or_atoi(argv[2]), value);
         else
-            PRINTF("Set the Memory successfully\r\n");
+            (void)PRINTF("Set the Memory successfully\r\n");
     }
     else
     {
@@ -336,19 +355,19 @@ int wlan_memrdwr_getset(int argc, char *argv[])
 
 static void dump_wlan_set_regioncode_usage()
 {
-    PRINTF("Usage:\r\n");
-    PRINTF("wlan-set-regioncode <region-code>\r\n");
-    PRINTF("where, region code =\r\n");
-    PRINTF("0xAA : World Wide Safe Mode\r\n");
-    PRINTF("0x10 : US FCC, Singapore\r\n");
-    PRINTF("0x20 : IC Canada\r\n");
-    PRINTF("0x30 : ETSI, Australia, Republic of Korea\r\n");
-    PRINTF("0x32 : France\r\n");
-    PRINTF("0x40 : Japan\r\n");
-    PRINTF("0x41 : Japan\r\n");
-    PRINTF("0x50 : China\r\n");
-    PRINTF("0xFE : Japan\r\n");
-    PRINTF("0xFF : Special\r\n");
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-set-regioncode <region-code>\r\n");
+    (void)PRINTF("where, region code =\r\n");
+    (void)PRINTF("0xAA : World Wide Safe Mode\r\n");
+    (void)PRINTF("0x10 : US FCC, Singapore\r\n");
+    (void)PRINTF("0x20 : IC Canada\r\n");
+    (void)PRINTF("0x30 : ETSI, Australia, Republic of Korea\r\n");
+    (void)PRINTF("0x32 : France\r\n");
+    (void)PRINTF("0x40 : Japan\r\n");
+    (void)PRINTF("0x41 : Japan\r\n");
+    (void)PRINTF("0x50 : China\r\n");
+    (void)PRINTF("0xFE : Japan\r\n");
+    (void)PRINTF("0xFF : Special\r\n");
 }
 
 static void test_wlan_set_regioncode(int argc, char **argv)
@@ -359,12 +378,15 @@ static void test_wlan_set_regioncode(int argc, char **argv)
         return;
     }
 
+    errno             = 0;
     t_u32 region_code = strtol(argv[1], NULL, 0);
-    int rv            = wifi_set_region_code(region_code);
+    if (errno != 0)
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    int rv = wifi_set_region_code(region_code);
     if (rv != WM_SUCCESS)
-        PRINTF("Unable to set region code: 0x%x\r\n", region_code);
+        (void)PRINTF("Unable to set region code: 0x%x\r\n", region_code);
     else
-        PRINTF("Region code: 0x%x set\r\n", region_code);
+        (void)PRINTF("Region code: 0x%x set\r\n", region_code);
 }
 
 static void test_wlan_get_regioncode(int argc, char **argv)
@@ -372,9 +394,9 @@ static void test_wlan_get_regioncode(int argc, char **argv)
     t_u32 region_code = 0;
     int rv            = wifi_get_region_code(&region_code);
     if (rv != WM_SUCCESS)
-        PRINTF("Unable to get region code: 0x%x\r\n", region_code);
+        (void)PRINTF("Unable to get region code: 0x%x\r\n", region_code);
     else
-        PRINTF("Region code: 0x%x\r\n", region_code);
+        (void)PRINTF("Region code: 0x%x\r\n", region_code);
 }
 
 static char *bw[]           = {"20 MHz", "40 MHz", "80 MHz", "160 MHz"};
@@ -386,156 +408,198 @@ static void print_ds_rate(wlan_ds_rate ds_rate)
 {
     if (ds_rate.sub_command == WIFI_DS_RATE_CFG)
     {
-        PRINTF("Tx Rate Configuration: \r\n");
+        (void)PRINTF("Tx Rate Configuration: \r\n");
         /* format */
         if (ds_rate.param.rate_cfg.rate_format == 0xFF)
         {
-            PRINTF("    Type:       0xFF (Auto)\r\n");
+            (void)PRINTF("    Type:       0xFF (Auto)\r\n");
         }
         else if (ds_rate.param.rate_cfg.rate_format <= 2)
         {
-            PRINTF("    Type:       %d (%s)\r\n", ds_rate.param.rate_cfg.rate_format,
-                   rate_format[ds_rate.param.rate_cfg.rate_format]);
+            (void)PRINTF("    Type:       %d (%s)\r\n", ds_rate.param.rate_cfg.rate_format,
+                         rate_format[ds_rate.param.rate_cfg.rate_format]);
             if (ds_rate.param.rate_cfg.rate_format == 0)
-                PRINTF("    Rate Index: %d (%s)\r\n", ds_rate.param.rate_cfg.rate_index,
-                       lg_rate[ds_rate.param.rate_cfg.rate_index]);
+                (void)PRINTF("    Rate Index: %d (%s)\r\n", ds_rate.param.rate_cfg.rate_index,
+                             lg_rate[ds_rate.param.rate_cfg.rate_index]);
             else if (ds_rate.param.rate_cfg.rate_format >= 1)
-                PRINTF("    MCS Index:  %d\r\n", (int)ds_rate.param.rate_cfg.rate_index);
+                (void)PRINTF("    MCS Index:  %d\r\n", (int)ds_rate.param.rate_cfg.rate_index);
+            else
+            { /* Do Nothing */
+            }
+#ifdef CONFIG_11AC
+            if (ds_rate.param.rate_cfg.rate_format == 2)
+                (void)PRINTF("    NSS:        %d\r\n", (int)ds_rate.param.rate_cfg.nss);
+#endif
         }
         else
         {
-            PRINTF("    Unknown rate format.\r\n");
+            (void)PRINTF("    Unknown rate format.\r\n");
         }
     }
     else if (ds_rate.sub_command == WIFI_DS_GET_DATA_RATE)
     {
         wifi_data_rate_t *datarate = (wifi_data_rate_t *)&(ds_rate.param.data_rate);
-        PRINTF("Data Rate:\r\n");
+        (void)PRINTF("Data Rate:\r\n");
 #ifdef SD8801
-        PRINTF("  TX: \r\n");
+        (void)PRINTF("  TX: \r\n");
         if (datarate->tx_data_rate < 12)
         {
-            PRINTF("    Type: %s\r\n", rate_format[0]);
+            (void)PRINTF("    Type: %s\r\n", rate_format[0]);
             /* LG */
-            PRINTF("    Rate: %s\r\n", lg_rate[datarate->tx_data_rate]);
+            (void)PRINTF("    Rate: %s\r\n", lg_rate[datarate->tx_data_rate]);
         }
         else
         {
             /* HT*/
-            PRINTF("    Type: %s\r\n", rate_format[1]);
+            (void)PRINTF("    Type: %s\r\n", rate_format[1]);
             if (datarate->tx_ht_bw <= 2)
-                PRINTF("    BW:   %s\r\n", bw[datarate->tx_ht_bw]);
+                (void)PRINTF("    BW:   %s\r\n", bw[datarate->tx_ht_bw]);
             if (datarate->tx_ht_gi == 0)
-                PRINTF("    GI:   Long\r\n");
+                (void)PRINTF("    GI:   Long\r\n");
             else
-                PRINTF("    GI:   Short\r\n");
-            PRINTF("    MCS:  MCS %d\r\n", (int)(datarate->tx_data_rate - 12));
+                (void)PRINTF("    GI:   Short\r\n");
+            (void)PRINTF("    MCS:  MCS %d\r\n", (int)(datarate->tx_data_rate - 12));
         }
 
-        PRINTF("  RX: \n");
+        (void)PRINTF("  RX: \n");
         if (datarate->rx_data_rate < 12)
         {
-            PRINTF("    Type: %s\r\n", rate_format[0]);
+            (void)PRINTF("    Type: %s\r\n", rate_format[0]);
             /* LG */
-            PRINTF("    Rate: %s\r\n", lg_rate[datarate->rx_data_rate]);
+            (void)PRINTF("    Rate: %s\r\n", lg_rate[datarate->rx_data_rate]);
         }
         else
         {
             /* HT*/
-            PRINTF("    Type: %s\r\n", rate_format[1]);
+            (void)PRINTF("    Type: %s\r\n", rate_format[1]);
             if (datarate->rx_ht_bw <= 2)
-                PRINTF("    BW:   %s\r\n", bw[datarate->rx_ht_bw]);
+                (void)PRINTF("    BW:   %s\r\n", bw[datarate->rx_ht_bw]);
             if (datarate->rx_ht_gi == 0)
-                PRINTF("    GI:   Long\r\n");
+                (void)PRINTF("    GI:   Long\r\n");
             else
-                PRINTF("    GI:   Short\r\n");
-            PRINTF("    MCS:  MCS %d\r\n", (int)(datarate->rx_data_rate - 12));
+                (void)PRINTF("    GI:   Short\r\n");
+            (void)PRINTF("    MCS:  MCS %d\r\n", (int)(datarate->rx_data_rate - 12));
         }
 #else
-        PRINTF("  TX: \r\n");
+        (void)PRINTF("  TX: \r\n");
         if (datarate->tx_rate_format <= 2)
         {
-            PRINTF("    Type: %s\r\n", rate_format[datarate->tx_rate_format]);
+            (void)PRINTF("    Type: %s\r\n", rate_format[datarate->tx_rate_format]);
             if ((datarate->tx_rate_format == 0) && datarate->tx_data_rate <= 11)
                 /* LG */
-                PRINTF("    Rate: %s\r\n", lg_rate[datarate->tx_data_rate]);
+                (void)PRINTF("    Rate: %s\r\n", lg_rate[datarate->tx_data_rate]);
             else
             {
                 /* HT and VHT*/
                 if (datarate->tx_ht_bw <= 3)
-                    PRINTF("    BW:   %s\r\n", bw[datarate->tx_ht_bw]);
+                    (void)PRINTF("    BW:   %s\r\n", bw[datarate->tx_ht_bw]);
                 if (datarate->tx_ht_gi == 0)
-                    PRINTF("    GI:   Long\r\n");
+                    (void)PRINTF("    GI:   Long\r\n");
                 else
-                    PRINTF("    GI:   Short\r\n");
+                    (void)PRINTF("    GI:   Short\r\n");
+#ifdef CONFIG_11AC
+                if (datarate->tx_rate_format == 3)
+                    (void)PRINTF("    NSS:  %d\r\n", datarate->tx_nss + 1);
+#endif
                 if (datarate->tx_mcs_index != 0xFF)
-                    PRINTF("    MCS:  MCS %d\r\n", (int)datarate->tx_mcs_index);
+                    (void)PRINTF("    MCS:  MCS %d\r\n", (int)datarate->tx_mcs_index);
                 else
-                    PRINTF("    MCS:  Auto\r\n");
-                PRINTF("    Rate: %f Mbps\r\n", (float)datarate->tx_data_rate / 2);
+                    (void)PRINTF("    MCS:  Auto\r\n");
+                (void)PRINTF("    Rate: %f Mbps\r\n", (float)datarate->tx_data_rate / 2);
             }
         }
 
-        PRINTF("  RX: \r\n");
+        (void)PRINTF("  RX: \r\n");
         if (datarate->rx_rate_format <= 2)
         {
-            PRINTF("    Type: %s\r\n", rate_format[datarate->rx_rate_format]);
+            (void)PRINTF("    Type: %s\r\n", rate_format[datarate->rx_rate_format]);
             if ((datarate->rx_rate_format == 0) && datarate->rx_data_rate <= 11)
                 /* LG */
-                PRINTF("    Rate: %s\r\n", lg_rate[datarate->rx_data_rate]);
+                (void)PRINTF("    Rate: %s\r\n", lg_rate[datarate->rx_data_rate]);
             else
             {
                 /* HT and VHT*/
                 if (datarate->rx_ht_bw <= 3)
-                    PRINTF("    BW:   %s\r\n", bw[datarate->rx_ht_bw]);
+                    (void)PRINTF("    BW:   %s\r\n", bw[datarate->rx_ht_bw]);
                 if (datarate->rx_ht_gi == 0)
-                    PRINTF("    GI:   Long\r\n");
+                    (void)PRINTF("    GI:   Long\r\n");
                 else
-                    PRINTF("    GI:   Short\r\n");
+                    (void)PRINTF("    GI:   Short\r\n");
+#ifdef CONFIG_11AC
+                if (datarate->rx_rate_format == 3)
+                    (void)PRINTF("    NSS:  %d\r\n", datarate->rx_nss + 1);
+#endif
                 if (datarate->rx_mcs_index != 0xFF)
-                    PRINTF("    MCS:  MCS %d\r\n", (int)datarate->rx_mcs_index);
+                    (void)PRINTF("    MCS:  MCS %d\r\n", (int)datarate->rx_mcs_index);
                 else
-                    PRINTF("    MCS:  Auto\n");
-                PRINTF("    Rate: %f Mbps\r\n", (float)datarate->rx_data_rate / 2);
+                    (void)PRINTF("    MCS:  Auto\n");
+                (void)PRINTF("    Rate: %f Mbps\r\n", (float)datarate->rx_data_rate / 2);
             }
         }
 #endif
+    }
+    else
+    { /* Do Nothing */
     }
 }
 
 static void dump_wlan_set_txratecfg_usage()
 {
-    PRINTF("Usage:\r\n");
-    PRINTF("wlan-set-txratecfg <format> <index> ");
-    PRINTF("\r\n");
-    PRINTF("\tWhere\r\n");
-    PRINTF("\t<format> - This parameter specifies the data rate format used in this command\r\n");
-    PRINTF("\t        0:    LG\r\n");
-    PRINTF("\t        1:    HT\r\n");
-    PRINTF("\t        0xff: Auto\r\n");
-    PRINTF("\t<index> - This parameter specifies the rate or MCS index\r\n");
-    PRINTF("\tIf <format> is 0 (LG),\r\n");
-    PRINTF("\t        0       1 Mbps\r\n");
-    PRINTF("\t        1       2 Mbps\r\n");
-    PRINTF("\t        2       5.5 Mbps\r\n");
-    PRINTF("\t        3       11 Mbps\r\n");
-    PRINTF("\t        4       6 Mbps\r\n");
-    PRINTF("\t        5       9 Mbps\r\n");
-    PRINTF("\t        6       12 Mbps\r\n");
-    PRINTF("\t        7       18 Mbps\r\n");
-    PRINTF("\t        8       24 Mbps\r\n");
-    PRINTF("\t        9       36 Mbps\r\n");
-    PRINTF("\t        10      48 Mbps\r\n");
-    PRINTF("\t        11      54 Mbps\r\n");
-    PRINTF("\tIf <format> is 1 (HT),\r\n");
-    PRINTF("\t        0       MCS0\r\n");
-    PRINTF("\t        1       MCS1\r\n");
-    PRINTF("\t        2       MCS2\r\n");
-    PRINTF("\t        3       MCS3\r\n");
-    PRINTF("\t        4       MCS4\r\n");
-    PRINTF("\t        5       MCS5\r\n");
-    PRINTF("\t        6       MCS6\r\n");
-    PRINTF("\t        7       MCS7\r\n");
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-set-txratecfg <format> <index> ");
+#ifdef CONFIG_11AC
+    (void)PRINTF("<nss>\r\n");
+#else
+    (void)PRINTF("\r\n");
+#endif
+    (void)PRINTF("\tWhere\r\n");
+    (void)PRINTF("\t<format> - This parameter specifies the data rate format used in this command\r\n");
+    (void)PRINTF("\t        0:    LG\r\n");
+    (void)PRINTF("\t        1:    HT\r\n");
+#ifdef CONFIG_11AC
+    (void)PRINTF("\t        2:    VHT\r\n");
+#endif
+    (void)PRINTF("\t        0xff: Auto\r\n");
+    (void)PRINTF("\t<index> - This parameter specifies the rate or MCS index\r\n");
+    (void)PRINTF("\tIf <format> is 0 (LG),\r\n");
+    (void)PRINTF("\t        0       1 Mbps\r\n");
+    (void)PRINTF("\t        1       2 Mbps\r\n");
+    (void)PRINTF("\t        2       5.5 Mbps\r\n");
+    (void)PRINTF("\t        3       11 Mbps\r\n");
+    (void)PRINTF("\t        4       6 Mbps\r\n");
+    (void)PRINTF("\t        5       9 Mbps\r\n");
+    (void)PRINTF("\t        6       12 Mbps\r\n");
+    (void)PRINTF("\t        7       18 Mbps\r\n");
+    (void)PRINTF("\t        8       24 Mbps\r\n");
+    (void)PRINTF("\t        9       36 Mbps\r\n");
+    (void)PRINTF("\t        10      48 Mbps\r\n");
+    (void)PRINTF("\t        11      54 Mbps\r\n");
+    (void)PRINTF("\tIf <format> is 1 (HT),\r\n");
+    (void)PRINTF("\t        0       MCS0\r\n");
+    (void)PRINTF("\t        1       MCS1\r\n");
+    (void)PRINTF("\t        2       MCS2\r\n");
+    (void)PRINTF("\t        3       MCS3\r\n");
+    (void)PRINTF("\t        4       MCS4\r\n");
+    (void)PRINTF("\t        5       MCS5\r\n");
+    (void)PRINTF("\t        6       MCS6\r\n");
+    (void)PRINTF("\t        7       MCS7\r\n");
+#ifdef CONFIG_11AC
+    (void)PRINTF("\tIf <format> is 2 (VHT),\r\n");
+    (void)PRINTF("\t        0       MCS0\r\n");
+    (void)PRINTF("\t        1       MCS1\r\n");
+    (void)PRINTF("\t        2       MCS2\r\n");
+    (void)PRINTF("\t        3       MCS3\r\n");
+    (void)PRINTF("\t        4       MCS4\r\n");
+    (void)PRINTF("\t        5       MCS5\r\n");
+    (void)PRINTF("\t        6       MCS6\r\n");
+    (void)PRINTF("\t        7       MCS7\r\n");
+    (void)PRINTF("\t        8       MCS8\r\n");
+    (void)PRINTF("\t        9       MCS9\r\n");
+    (void)PRINTF("\t<nss> - This parameter specifies the NSS. It is valid only for VHT\r\n");
+    (void)PRINTF("\tIf <format> is 2 (VHT),\r\n");
+    (void)PRINTF("\t        1       NSS1\r\n");
+    (void)PRINTF("\t        2       NSS2\r\n");
+#endif
 }
 
 static void test_wlan_set_txratecfg(int argc, char **argv)
@@ -543,20 +607,43 @@ static void test_wlan_set_txratecfg(int argc, char **argv)
     wlan_ds_rate ds_rate;
     int rv = WM_SUCCESS;
 
-    if (argc < 2 || argc > 3)
+    if (argc < 2 ||
+#ifdef CONFIG_11AC
+        argc > 4)
     {
-        PRINTF("Invalid arguments\r\n");
+#else
+        argc > 3)
+    {
+#endif
+        (void)PRINTF("Invalid arguments\r\n");
         goto done;
     }
-    memset(&ds_rate, 0, sizeof(wlan_ds_rate));
+    (void)memset(&ds_rate, 0, sizeof(wlan_ds_rate));
 
-    ds_rate.sub_command                = WIFI_DS_RATE_CFG;
+    ds_rate.sub_command = WIFI_DS_RATE_CFG;
+
+    errno                              = 0;
     ds_rate.param.rate_cfg.rate_format = strtol(argv[1], NULL, 0);
-    ds_rate.param.rate_cfg.rate_index  = strtol(argv[2], NULL, 0);
+    if (errno != 0)
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+    errno                             = 0;
+    ds_rate.param.rate_cfg.rate_index = strtol(argv[2], NULL, 0);
+    if (errno != 0)
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+#ifdef CONFIG_11AC
+    errno                      = 0;
+    ds_rate.param.rate_cfg.nss = strtol(argv[3], NULL, 0);
+    if (errno != 0)
+        (void)PRINTF("Error during strtoul errno:%d", errno);
+#endif
 
+#ifdef CONFIG_11AC
+    if (ds_rate.param.rate_cfg.rate_format > 2)
+#else
     if (ds_rate.param.rate_cfg.rate_format > 1)
+#endif
     {
-        PRINTF("Invalid format selection\r\n");
+        (void)PRINTF("Invalid format selection\r\n");
         goto done;
     }
 
@@ -564,17 +651,25 @@ static void test_wlan_set_txratecfg(int argc, char **argv)
         ((ds_rate.param.rate_cfg.rate_format == 1) && (ds_rate.param.rate_cfg.rate_index != 32) &&
          (ds_rate.param.rate_cfg.rate_index > 7)))
     {
-        PRINTF("Invalid index selection\r\n");
+        (void)PRINTF("Invalid index selection\r\n");
         goto done;
     }
 
+#ifdef CONFIG_11AC
+    /* NSS is supported up to 2 */
+    if ((ds_rate.param.rate_cfg.nss <= 0) || (ds_rate.param.rate_cfg.nss >= 3))
+    {
+        (void)PRINTF("Invalid nss selection\r\n");
+        goto done;
+    }
+#endif
     rv = wlan_set_txratecfg(ds_rate);
     if (rv != WM_SUCCESS)
     {
-        PRINTF("Unable to set txratecfg\r\n");
+        (void)PRINTF("Unable to set txratecfg\r\n");
         goto done;
     }
-    PRINTF("Configured txratecfg as below:\r\n");
+    (void)PRINTF("Configured txratecfg as below:\r\n");
     print_ds_rate(ds_rate);
     return;
 
@@ -586,14 +681,14 @@ static void test_wlan_get_txratecfg(int argc, char **argv)
 {
     wlan_ds_rate ds_rate;
 
-    memset(&ds_rate, 0, sizeof(wlan_ds_rate));
+    (void)memset(&ds_rate, 0, sizeof(wlan_ds_rate));
 
     ds_rate.sub_command = WIFI_DS_RATE_CFG;
 
     int rv = wlan_get_txratecfg(&ds_rate);
     if (rv != WM_SUCCESS)
     {
-        PRINTF("Unable to get tx rate cfg\r\n");
+        (void)PRINTF("Unable to get tx rate cfg\r\n");
         return;
     }
 
@@ -604,14 +699,14 @@ static void test_wlan_get_data_rate(int argc, char **argv)
 {
     wlan_ds_rate ds_rate;
 
-    memset(&ds_rate, 0, sizeof(wlan_ds_rate));
+    (void)memset(&ds_rate, 0, sizeof(wlan_ds_rate));
 
     ds_rate.sub_command = WIFI_DS_GET_DATA_RATE;
 
     int rv = wlan_get_data_rate(&ds_rate);
     if (rv != WM_SUCCESS)
     {
-        PRINTF("Unable to get tx rate cfg\r\n");
+        (void)PRINTF("Unable to get tx rate cfg\r\n");
         return;
     }
 
@@ -622,61 +717,61 @@ void print_txpwrlimit(wlan_txpwrlimit_t txpwrlimit)
 {
     int i, j;
 
-    PRINTF("--------------------------------------------------------------------------------\r\n");
-    PRINTF("Get txpwrlimit: sub_band=%x \r\n", txpwrlimit.subband);
+    (void)PRINTF("--------------------------------------------------------------------------------\r\n");
+    (void)PRINTF("Get txpwrlimit: sub_band=%x \r\n", txpwrlimit.subband);
     for (i = 0; i < txpwrlimit.num_chans; i++)
     {
-        PRINTF("StartFreq: %d\r\n", txpwrlimit.txpwrlimit_config[i].chan_desc.start_freq);
-        PRINTF("ChanWidth: %d\r\n", txpwrlimit.txpwrlimit_config[i].chan_desc.chan_width);
-        PRINTF("ChanNum:   %d\r\n", txpwrlimit.txpwrlimit_config[i].chan_desc.chan_num);
-        PRINTF("Pwr:");
+        (void)PRINTF("StartFreq: %d\r\n", txpwrlimit.txpwrlimit_config[i].chan_desc.start_freq);
+        (void)PRINTF("ChanWidth: %d\r\n", txpwrlimit.txpwrlimit_config[i].chan_desc.chan_width);
+        (void)PRINTF("ChanNum:   %d\r\n", txpwrlimit.txpwrlimit_config[i].chan_desc.chan_num);
+        (void)PRINTF("Pwr:");
         for (j = 0; j < txpwrlimit.txpwrlimit_config[i].num_mod_grps; j++)
         {
             if (j == (txpwrlimit.txpwrlimit_config[i].num_mod_grps - 1))
-                PRINTF("%d,%d", txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].mod_group,
-                       txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].tx_power);
+                (void)PRINTF("%d,%d", txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].mod_group,
+                             txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].tx_power);
             else
-                PRINTF("%d,%d,", txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].mod_group,
-                       txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].tx_power);
+                (void)PRINTF("%d,%d,", txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].mod_group,
+                             txpwrlimit.txpwrlimit_config[i].txpwrlimit_entry[j].tx_power);
         }
-        PRINTF("\r\n");
+        (void)PRINTF("\r\n");
     }
-    PRINTF("\r\n");
+    (void)PRINTF("\r\n");
 }
 
 void print_chanlist(wlan_chanlist_t chanlist)
 {
     int i;
 
-    PRINTF("--------------------------------------------------------------------------------\r\n");
-    PRINTF("Number of channels configured: %d\r\n", chanlist.num_chans);
-    PRINTF("\r\n");
+    (void)PRINTF("--------------------------------------------------------------------------------\r\n");
+    (void)PRINTF("Number of channels configured: %d\r\n", chanlist.num_chans);
+    (void)PRINTF("\r\n");
     for (i = 0; i < chanlist.num_chans; i++)
     {
-        PRINTF("ChanNum: %d\t", chanlist.chan_info[i].chan_num);
-        PRINTF("ChanFreq: %d\t", chanlist.chan_info[i].chan_freq);
-        PRINTF("%s", chanlist.chan_info[i].passive_scan_or_radar_detect ? "Passive" : "Active");
-        PRINTF("\r\n");
+        (void)PRINTF("ChanNum: %d\t", chanlist.chan_info[i].chan_num);
+        (void)PRINTF("ChanFreq: %d\t", chanlist.chan_info[i].chan_freq);
+        (void)PRINTF("%s", chanlist.chan_info[i].passive_scan_or_radar_detect ? "Passive" : "Active");
+        (void)PRINTF("\r\n");
     }
 }
 
 static void dump_wlan_get_txpwrlimit_usage()
 {
-    PRINTF("Usage:\r\n");
-    PRINTF("wlan-get-txpwrlimit <subband> \r\n");
-    PRINTF("\r\n");
-    PRINTF("\t Where subband is: \r\n");
-    PRINTF("\t       0x00 2G subband  (2.4G: channel 1-14)\r\n");
+    (void)PRINTF("Usage:\r\n");
+    (void)PRINTF("wlan-get-txpwrlimit <subband> \r\n");
+    (void)PRINTF("\r\n");
+    (void)PRINTF("\t Where subband is: \r\n");
+    (void)PRINTF("\t       0x00 2G subband  (2.4G: channel 1-14)\r\n");
 #ifdef CONFIG_5GHz_SUPPORT
-    PRINTF("\t       0x10 5G subband0 (5G: channel 36,40,44,48,\r\n");
-    PRINTF("\t                                     52,56,60,64)\r\n");
-    PRINTF("\t       0x11 5G subband1 (5G: channel 100,104,108,112,\r\n");
-    PRINTF("\t                                     116,120,124,128,\r\n");
-    PRINTF("\t                                     132,136,140,144)\r\n");
-    PRINTF("\t       0x12 5G subband2 (5G: channel 149,153,157,161,165,172)\r\n");
-    PRINTF("\t       0x13 5G subband3 (5G: channel 183,184,185,187,188,\r\n");
-    PRINTF("\t                                     189, 192,196;\r\n");
-    PRINTF("\t                         5G: channel 7,8,11,12,16,34)\r\n");
+    (void)PRINTF("\t       0x10 5G subband0 (5G: channel 36,40,44,48,\r\n");
+    (void)PRINTF("\t                                     52,56,60,64)\r\n");
+    (void)PRINTF("\t       0x11 5G subband1 (5G: channel 100,104,108,112,\r\n");
+    (void)PRINTF("\t                                     116,120,124,128,\r\n");
+    (void)PRINTF("\t                                     132,136,140,144)\r\n");
+    (void)PRINTF("\t       0x12 5G subband2 (5G: channel 149,153,157,161,165,172)\r\n");
+    (void)PRINTF("\t       0x13 5G subband3 (5G: channel 183,184,185,187,188,\r\n");
+    (void)PRINTF("\t                                     189, 192,196;\r\n");
+    (void)PRINTF("\t                         5G: channel 7,8,11,12,16,34)\r\n");
 #endif
 }
 
@@ -691,7 +786,10 @@ static void test_wlan_get_txpwrlimit(int argc, char **argv)
         return;
     }
 
+    errno   = 0;
     subband = (wifi_SubBand_t)strtol(argv[1], NULL, 16);
+    if (errno != 0)
+        (void)PRINTF("Error during strtoul errno:%d", errno);
 
     if (subband != SubBand_2_4_GHz
 #ifdef CONFIG_5GHz_SUPPORT
@@ -706,7 +804,7 @@ static void test_wlan_get_txpwrlimit(int argc, char **argv)
 
     int rv = wlan_get_txpwrlimit(subband, &txpwrlimit);
     if (rv != WM_SUCCESS)
-        PRINTF("Unable to get TX PWR Limit configuration\r\n");
+        (void)PRINTF("Unable to get TX PWR Limit configuration\r\n");
     else
     {
         print_txpwrlimit(txpwrlimit);
@@ -807,6 +905,7 @@ static wlan_chanlist_t chanlist_5g_cfg = {
 };
 #endif
 
+#ifndef CONFIG_11AC
 static wlan_txpwrlimit_t
     txpwrlimit_2g_cfg =
         {
@@ -966,7 +1065,7 @@ static wlan_txpwrlimit_t
                         },
                     .txpwrlimit_entry = {{0, 12}, {1, 12}, {2, 12}, {3, 12}, {4, 12}, {5, 12}, {6, 12}},
                 },
-};
+        };
 
 #ifdef CONFIG_5GHz_SUPPORT
 static wlan_txpwrlimit_t txpwrlimit_5g_cfg =
@@ -1397,31 +1496,1397 @@ static wlan_txpwrlimit_t txpwrlimit_5g_cfg =
                     },
                 .txpwrlimit_entry = {{1, 17}, {2, 16}, {3, 14}, {4, 17}, {5, 16}, {6, 14}, {7, 17}, {8, 16}, {9, 14}},
             },
-};
+    };
 #endif
+#else
+static wlan_txpwrlimit_t
+    txpwrlimit_2g_cfg =
+        {
+            .subband = (wifi_SubBand_t)0x00,
+            .num_chans = 14,
+            .txpwrlimit_config[0] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 1,
+                        },
+                    .txpwrlimit_entry = {{0, 18},
+                                         {1, 18},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 18},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 18},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[1] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 2,
+                        },
+                    .txpwrlimit_entry = {{0, 18},
+                                         {1, 18},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 18},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 18},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[2] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 3,
+                        },
+                    .txpwrlimit_entry = {{0, 18},
+                                         {1, 18},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 18},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 18},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[3] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 4,
+                        },
+                    .txpwrlimit_entry = {{0, 18},
+                                         {1, 18},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 18},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 18},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[4] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 5,
+                        },
+                    .txpwrlimit_entry = {{0, 18},
+                                         {1, 18},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 18},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 18},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[5] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 6,
+                        },
+                    .txpwrlimit_entry = {{0, 18},
+                                         {1, 18},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 18},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 18},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[6] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 7,
+                        },
+                    .txpwrlimit_entry = {{0, 18},
+                                         {1, 18},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 18},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 18},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[7] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 8,
+                        },
+                    .txpwrlimit_entry = {{0, 18},
+                                         {1, 18},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 18},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 18},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[8] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 9,
+                        },
+                    .txpwrlimit_entry = {{0, 18},
+                                         {1, 18},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 18},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 18},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[9] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 10,
+                        },
+                    .txpwrlimit_entry = {{0, 18},
+                                         {1, 18},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 18},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 18},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[10] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 11,
+                        },
+                    .txpwrlimit_entry = {{0, 18},
+                                         {1, 18},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 18},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 18},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[11] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 12,
+                        },
+                    .txpwrlimit_entry = {{0, 16},
+                                         {1, 16},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 16},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 16},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[12] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2407,
+                            .chan_width = 20,
+                            .chan_num = 13,
+                        },
+                    .txpwrlimit_entry = {{0, 16},
+                                         {1, 16},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 16},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 16},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 16},
+                                         {11, 16}},
+                },
+            .txpwrlimit_config[13] =
+                {
+                    .num_mod_grps = 12,
+                    .chan_desc =
+                        {
+                            .start_freq = 2414,
+                            .chan_width = 20,
+                            .chan_num = 14,
+                        },
+                    .txpwrlimit_entry = {{0, 12},
+                                         {1, 12},
+                                         {2, 12},
+                                         {3, 12},
+                                         {4, 12},
+                                         {5, 12},
+                                         {6, 12},
+                                         {7, 12},
+                                         {8, 12},
+                                         {9, 12},
+                                         {10, 12},
+                                         {11, 12}},
+                },
+        };
+
+#ifdef CONFIG_5GHz_SUPPORT
+static wlan_txpwrlimit_t
+    txpwrlimit_5g_cfg =
+        {
+            .subband = (wifi_SubBand_t)0x00,
+            .num_chans = 39,
+            .txpwrlimit_config[0] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 36,
+                        },
+                    .txpwrlimit_entry = {{0, 0},
+                                         {1, 16},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 16},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 16},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 15},
+                                         {11, 14},
+                                         {12, 15},
+                                         {13, 15},
+                                         {14, 14},
+                                         {15, 13}},
+                },
+            .txpwrlimit_config[1] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 40,
+                        },
+                    .txpwrlimit_entry = {{0, 0},
+                                         {1, 16},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 16},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 16},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 15},
+                                         {11, 14},
+                                         {12, 15},
+                                         {13, 15},
+                                         {14, 14},
+                                         {15, 13}},
+                },
+            .txpwrlimit_config[2] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 44,
+                        },
+                    .txpwrlimit_entry = {{0, 0},
+                                         {1, 16},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 16},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 16},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 15},
+                                         {11, 14},
+                                         {12, 15},
+                                         {13, 15},
+                                         {14, 14},
+                                         {15, 13}},
+                },
+            .txpwrlimit_config[3] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 48,
+                        },
+                    .txpwrlimit_entry = {{0, 0},
+                                         {1, 16},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 16},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 16},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 15},
+                                         {11, 14},
+                                         {12, 15},
+                                         {13, 15},
+                                         {14, 14},
+                                         {15, 13}},
+                },
+            .txpwrlimit_config[4] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 52,
+                        },
+                    .txpwrlimit_entry = {{0, 0},
+                                         {1, 17},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 17},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 17},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 15},
+                                         {11, 14},
+                                         {12, 15},
+                                         {13, 15},
+                                         {14, 14},
+                                         {15, 13}},
+                },
+            .txpwrlimit_config[5] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 56,
+                        },
+                    .txpwrlimit_entry = {{0, 0},
+                                         {1, 17},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 17},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 17},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 15},
+                                         {11, 14},
+                                         {12, 15},
+                                         {13, 15},
+                                         {14, 14},
+                                         {15, 13}},
+                },
+            .txpwrlimit_config[6] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 60,
+                        },
+                    .txpwrlimit_entry = {{0, 0},
+                                         {1, 17},
+                                         {2, 16},
+                                         {3, 14},
+                                         {4, 17},
+                                         {5, 16},
+                                         {6, 14},
+                                         {7, 17},
+                                         {8, 16},
+                                         {9, 14},
+                                         {10, 15},
+                                         {11, 14},
+                                         {12, 15},
+                                         {13, 15},
+                                         {14, 14},
+                                         {15, 13}},
+                },
+            .txpwrlimit_config[7] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 64,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[8] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 100,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[9] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 104,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[10] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 108,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[11] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 112,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[12] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 116,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[13] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 120,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[14] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 124,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[15] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 128,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[16] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 132,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[17] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 136,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[18] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 140,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[19] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 144,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[20] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 149,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[21] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 153,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[22] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 157,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[23] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 161,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[24] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 165,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[25] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 183,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[26] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 184,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[27] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 185,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[28] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc = {.start_freq = 5000, .chan_width = 20, .chan_num = 187},
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[29] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 188,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[30] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 189,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[31] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 192,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[32] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 196,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[33] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 7,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[34] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 8,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[35] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 11,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[36] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 12,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[37] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 16,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+            .txpwrlimit_config[38] =
+                {
+                    .num_mod_grps = 16,
+                    .chan_desc =
+                        {
+                            .start_freq = 5000,
+                            .chan_width = 20,
+                            .chan_num = 34,
+                        },
+                    .txpwrlimit_entry =
+                        {{0, 0},
+                         {1, 17},
+                         {2, 16},
+                         {3, 14},
+                         {4, 17},
+                         {5, 16},
+                         {6, 14},
+                         {7, 17},
+                         {8, 16},
+                         {9, 14},
+                         {10, 15},
+                         {11, 14},
+                         {12, 15},
+                         {13, 15},
+                         {14, 14},
+                         {15, 13}},
+                },
+        };
+#endif /* CONFIG_5GHz_SUPPORT */
+#endif /* CONFIG_11AC */
 
 static void test_wlan_set_txpwrlimit(int argc, char **argv)
 {
     wlan_txpwrlimit_t txpwrlimit;
 
-    memset(&txpwrlimit, 0x00, sizeof(wlan_txpwrlimit_t));
+    (void)memset(&txpwrlimit, 0x00, sizeof(wlan_txpwrlimit_t));
 
     int rv = wlan_set_txpwrlimit(&txpwrlimit_2g_cfg);
     if (rv != WM_SUCCESS)
-        PRINTF("Unable to set 2G TX PWR Limit configuration\r\n");
+        (void)PRINTF("Unable to set 2G TX PWR Limit configuration\r\n");
     else
     {
 #ifdef CONFIG_5GHz_SUPPORT
         rv = wlan_set_txpwrlimit(&txpwrlimit_5g_cfg);
         if (rv != WM_SUCCESS)
-            PRINTF("Unable to set 5G TX PWR Limit configuration\r\n");
+            (void)PRINTF("Unable to set 5G TX PWR Limit configuration\r\n");
         else
         {
 #endif
             txpwrlimit.subband = SubBand_2_4_GHz;
             rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
             if (rv != WM_SUCCESS)
-                PRINTF("Unable to get 2G TX PWR Limit configuration\r\n");
+                (void)PRINTF("Unable to get 2G TX PWR Limit configuration\r\n");
             else
             {
                 print_txpwrlimit(txpwrlimit);
@@ -1430,7 +2895,7 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
             txpwrlimit.subband = SubBand_5_GHz_0;
             rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
             if (rv != WM_SUCCESS)
-                PRINTF("Unable to get 5G SubBand0 TX PWR Limit configuration\r\n");
+                (void)PRINTF("Unable to get 5G SubBand0 TX PWR Limit configuration\r\n");
             else
             {
                 print_txpwrlimit(txpwrlimit);
@@ -1438,7 +2903,7 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
             txpwrlimit.subband = SubBand_5_GHz_1;
             rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
             if (rv != WM_SUCCESS)
-                PRINTF("Unable to get 5G SubBand1 TX PWR Limit configuration\r\n");
+                (void)PRINTF("Unable to get 5G SubBand1 TX PWR Limit configuration\r\n");
             else
             {
                 print_txpwrlimit(txpwrlimit);
@@ -1446,7 +2911,7 @@ static void test_wlan_set_txpwrlimit(int argc, char **argv)
             txpwrlimit.subband = SubBand_5_GHz_2;
             rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
             if (rv != WM_SUCCESS)
-                PRINTF("Unable to get 5G SubBand2 TX PWR Limit configuration\r\n");
+                (void)PRINTF("Unable to get 5G SubBand2 TX PWR Limit configuration\r\n");
             else
             {
                 print_txpwrlimit(txpwrlimit);
@@ -1460,24 +2925,24 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
 {
     wlan_txpwrlimit_t txpwrlimit;
 
-    memset(&txpwrlimit, 0x00, sizeof(wlan_txpwrlimit_t));
+    (void)memset(&txpwrlimit, 0x00, sizeof(wlan_txpwrlimit_t));
 
     int rv = wlan_set_chanlist_and_txpwrlimit(&chanlist_2g_cfg, &txpwrlimit_2g_cfg);
     if (rv != WM_SUCCESS)
-        PRINTF("Unable to set 2G TX PWR Limit configuration\r\n");
+        (void)PRINTF("Unable to set 2G TX PWR Limit configuration\r\n");
     else
     {
 #ifdef CONFIG_5GHz_SUPPORT
         rv = wlan_set_chanlist_and_txpwrlimit(&chanlist_5g_cfg, &txpwrlimit_5g_cfg);
         if (rv != WM_SUCCESS)
-            PRINTF("Unable to set 5G TX PWR Limit configuration\r\n");
+            (void)PRINTF("Unable to set 5G TX PWR Limit configuration\r\n");
         else
         {
 #endif
             txpwrlimit.subband = SubBand_2_4_GHz;
             rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
             if (rv != WM_SUCCESS)
-                PRINTF("Unable to get 2G TX PWR Limit configuration\r\n");
+                (void)PRINTF("Unable to get 2G TX PWR Limit configuration\r\n");
             else
             {
                 print_txpwrlimit(txpwrlimit);
@@ -1486,7 +2951,7 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
             txpwrlimit.subband = SubBand_5_GHz_0;
             rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
             if (rv != WM_SUCCESS)
-                PRINTF("Unable to get 5G SubBand0 TX PWR Limit configuration\r\n");
+                (void)PRINTF("Unable to get 5G SubBand0 TX PWR Limit configuration\r\n");
             else
             {
                 print_txpwrlimit(txpwrlimit);
@@ -1494,7 +2959,7 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
             txpwrlimit.subband = SubBand_5_GHz_1;
             rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
             if (rv != WM_SUCCESS)
-                PRINTF("Unable to get 5G SubBand1 TX PWR Limit configuration\r\n");
+                (void)PRINTF("Unable to get 5G SubBand1 TX PWR Limit configuration\r\n");
             else
             {
                 print_txpwrlimit(txpwrlimit);
@@ -1502,7 +2967,7 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
             txpwrlimit.subband = SubBand_5_GHz_2;
             rv                 = wlan_get_txpwrlimit(txpwrlimit.subband, &txpwrlimit);
             if (rv != WM_SUCCESS)
-                PRINTF("Unable to get 5G SubBand2 TX PWR Limit configuration\r\n");
+                (void)PRINTF("Unable to get 5G SubBand2 TX PWR Limit configuration\r\n");
             else
             {
                 print_txpwrlimit(txpwrlimit);
@@ -1511,10 +2976,10 @@ static void test_wlan_set_chanlist_and_txpwrlimit(int argc, char **argv)
 #endif
         wlan_chanlist_t chanlist;
 
-        memset(&chanlist, 0x00, sizeof(wlan_chanlist_t));
+        (void)memset(&chanlist, 0x00, sizeof(wlan_chanlist_t));
         rv = wlan_get_chanlist(&chanlist);
         if (rv != WM_SUCCESS)
-            PRINTF("Unable to get channel list configuration\r\n");
+            (void)PRINTF("Unable to get channel list configuration\r\n");
         else
         {
             print_chanlist(chanlist);
@@ -1526,23 +2991,23 @@ static void test_wlan_set_chanlist(int argc, char **argv)
 {
     wlan_chanlist_t chanlist;
 
-    memset(&chanlist, 0x00, sizeof(wlan_chanlist_t));
+    (void)memset(&chanlist, 0x00, sizeof(wlan_chanlist_t));
 
     int rv = wlan_set_chanlist(&chanlist_2g_cfg);
     if (rv != WM_SUCCESS)
-        PRINTF("Unable to set 2G channel list configuration\r\n");
+        (void)PRINTF("Unable to set 2G channel list configuration\r\n");
     else
     {
 #ifdef CONFIG_5GHz_SUPPORT
         rv = wlan_set_chanlist(&chanlist_5g_cfg);
         if (rv != WM_SUCCESS)
-            PRINTF("Unable to set 5G channel list configuration\r\n");
+            (void)PRINTF("Unable to set 5G channel list configuration\r\n");
         else
         {
 #endif
             rv = wlan_get_chanlist(&chanlist);
             if (rv != WM_SUCCESS)
-                PRINTF("Unable to get channel list configuration\r\n");
+                (void)PRINTF("Unable to get channel list configuration\r\n");
             else
             {
                 print_chanlist(chanlist);
@@ -1557,10 +3022,10 @@ static void test_wlan_get_chanlist(int argc, char **argv)
 {
     wlan_chanlist_t chanlist;
 
-    memset(&chanlist, 0x00, sizeof(wlan_chanlist_t));
+    (void)memset(&chanlist, 0x00, sizeof(wlan_chanlist_t));
     int rv = wlan_get_chanlist(&chanlist);
     if (rv != WM_SUCCESS)
-        PRINTF("Unable to get channel list configuration\r\n");
+        (void)PRINTF("Unable to get channel list configuration\r\n");
     else
     {
         print_chanlist(chanlist);
@@ -1575,7 +3040,11 @@ static struct cli_command wlan_enhanced_commands[] = {
     {"wlan-set-chanlist-and-txpwrlimit", NULL, test_wlan_set_chanlist_and_txpwrlimit},
     {"wlan-set-chanlist", NULL, test_wlan_set_chanlist},
     {"wlan-get-chanlist", NULL, test_wlan_get_chanlist},
+#ifdef CONFIG_11AC
+    {"wlan-set-txratecfg", "<format> <index> <nss>", test_wlan_set_txratecfg},
+#else
     {"wlan-set-txratecfg", "<format> <index>", test_wlan_set_txratecfg},
+#endif
     {"wlan-get-txratecfg", NULL, test_wlan_get_txratecfg},
     {"wlan-get-data-rate", NULL, test_wlan_get_data_rate},
     {"wlan-set-pmfcfg", "<mfpc> <mfpr>", wlan_pmfcfg_set},
@@ -1592,7 +3061,7 @@ static struct cli_command wlan_enhanced_commands[] = {
 
 int wlan_enhanced_cli_init(void)
 {
-    if (cli_register_commands(wlan_enhanced_commands, sizeof(wlan_enhanced_commands) / sizeof(struct cli_command)))
+    if (cli_register_commands(wlan_enhanced_commands, sizeof(wlan_enhanced_commands) / sizeof(struct cli_command)) != 0)
         return -WM_FAIL;
 
     return WM_SUCCESS;

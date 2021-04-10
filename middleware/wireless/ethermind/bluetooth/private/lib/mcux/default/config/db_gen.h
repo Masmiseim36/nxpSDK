@@ -3,7 +3,7 @@
  *  \file db_gen.h
  *
  *  [DBG Version: 1.1.1] This is a generated file.
- *  Created On : Mon Nov 16 00:41:54 2020
+ *  Created On : Thu Dec 24 22:17:06 2020
  */
 
 /*
@@ -23,7 +23,7 @@
 #define DB_MAX_UUIDS                      65
 
 /* Number of SDP Records in the SDDB */
-#define DB_MAX_RECORDS                    41
+#define DB_MAX_RECORDS                    42
 
 #ifdef BT_EIR
 /* Number of Service Class UUIDs */

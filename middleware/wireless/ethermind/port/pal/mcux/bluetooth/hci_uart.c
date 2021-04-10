@@ -524,7 +524,7 @@ DECL_STATIC BT_THREAD_RETURN_TYPE hci_uart_read_task (BT_THREAD_ARGS args)
 
                         BT_usleep(1);
                     }
-                    
+
                     BT_IGNORE_UNUSED_PARAM(retval);
 
 #else /* HT_ENQUEUE_WITH_RETURN */

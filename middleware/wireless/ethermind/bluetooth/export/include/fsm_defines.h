@@ -17,7 +17,25 @@
 #include "BT_common.h"
 
 /* --------------------------------------------- Structures/Data Types */
+/**
+ * \defgroup fsm_module FSM (Finite State Machine)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Finite State Machine (FSM) module to the Application and other upper
+ *  layers of the stack.
+ */
 
+/**
+ * \defgroup fsm_defines Defines
+ * \{
+ * This section describes the defines for FSM
+ */
+
+/**
+ * \defgroup fsm_structures Structures
+ * \{
+ *  This section describes the various constant defines used in FSM
+ */
 typedef UINT32 STATE_T;
 
 typedef UCHAR EVENT_T;
@@ -38,7 +56,7 @@ typedef struct
 
 } RETVAL_TABLE_T;
 
-/*
+/**
  * Event Handler Table.
  * Current State, handler(if any), num_of_retval, retval_table_start_index,
  * num_of_substates handles this event,
@@ -54,7 +72,8 @@ typedef struct
 
 #define EVENT_HANDLER_TABLE     EVENT_HANDLER_TABLE_T
 
-/* State-Event Table.
+/**
+ * State-Event Table.
  * Event, Default Handler, num_of_retval, retval_table_start_index,
  * num_of_substates handles this event,
  * start_index_of_those_handler_in_this_same_table
@@ -83,22 +102,24 @@ typedef UCHAR FSM_STATE_SIZE_T;
 
 typedef struct fsm_module_t
 {
-    /* Function to Access State of Module */
+    /** Function to Access State of Module */
     FSM_STATE_ACCESS_HANDLER     state_access_handler;
 
-    /* State Change Function Registered with FSM */
+    /** State Change Function Registered with FSM */
     FSM_STATE_CHANGE_HANDLER     state_change_handler;
 
-    /* Event Handler Table */
+    /** Event Handler Table */
     DECL_CONST EVENT_HANDLER_TABLE         * event_table;
 
-    /* State Event Table */
+    /** State Event Table */
     DECL_CONST STATE_EVENT_TABLE           * state_event_table;
 
-    /* State Event Table Size */
+    /** State Event Table Size */
     FSM_STATE_SIZE_T            state_event_table_size;
 
 }FSM_MODULE_TABLE_T;
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_FSM_DEFINES_ */
 

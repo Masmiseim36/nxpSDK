@@ -68,6 +68,7 @@
 #define BT_fops_file_print                  EM_fops_file_print
 #define BT_fops_file_put                    EM_fops_file_put
 #define BT_fops_file_get                    EM_fops_file_get
+#define BT_fops_file_get_formatted          EM_fops_file_get_formatted
 #define BT_fops_file_close                  EM_fops_file_close
 #define BT_fops_object_delete               EM_fops_object_delete
 #define BT_fops_file_size                   EM_fops_file_size
@@ -77,6 +78,7 @@
 #define BT_vfops_create_object_name         EM_vfops_create_object_name
 #define BT_vfops_set_path_backward          EM_vfops_set_path_backward
 #define BT_vfops_set_path_forward           EM_vfops_set_path_forward
+#define BT_fops_list_directory              EM_fops_list_directory
 
 #endif /* _H_EBT_FOPS_ */
 

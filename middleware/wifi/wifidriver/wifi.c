@@ -48,8 +48,8 @@
 #define _T(x) x
 #endif
 
-static char wifi_init_done;
-static char wifi_core_init_done;
+static t_u8 wifi_init_done;
+static t_u8 wifi_core_init_done;
 
 bool sta_ampdu_tx_enable = true;
 
@@ -413,7 +413,7 @@ void wifi_sdio_reg_dbg()
 
     for (loop = 0; loop < 5; loop++)
     {
-        memset(buf, 0, sizeof(buf));
+        (void)memset(buf, 0, sizeof(buf));
         ptr = buf;
         if (loop == 0)
         {
@@ -728,7 +728,7 @@ void wifi_sdio_reg_dbg()
 
     for (loop = 0; loop < 5; loop++)
     {
-        memset(buf, 0, sizeof(buf));
+        (void)memset(buf, 0, sizeof(buf));
         ptr = buf;
         if (loop == 0)
         {
@@ -871,7 +871,10 @@ void wifi_event_completion(int event, enum wifi_event_reason result, void *data)
     msg.data   = data;
     msg.reason = result;
     msg.event  = event;
-    os_queue_send(wm_wifi.wlc_mgr_event_queue, &msg, OS_NO_WAIT);
+    if (os_queue_send(wm_wifi.wlc_mgr_event_queue, &msg, OS_NO_WAIT) != WM_SUCCESS)
+    {
+        wifi_e("Failed to send response on Queue");
+    }
 }
 
 static int cmp_mac_addr(uint8_t *mac_addr1, uint8_t *mac_addr2)
@@ -900,7 +903,7 @@ static int add_mcast_ip(uint8_t *mac_addr)
             wifi_put_mcastf_lock();
             return -WM_FAIL;
         }
-        memcpy(new_node->mac_addr, mac_addr, MLAN_MAC_ADDR_LENGTH);
+        (void)memcpy(new_node->mac_addr, mac_addr, MLAN_MAC_ADDR_LENGTH);
         new_node->next     = NULL;
         wm_wifi.start_list = new_node;
         wifi_put_mcastf_lock();
@@ -920,7 +923,7 @@ static int add_mcast_ip(uint8_t *mac_addr)
         wifi_put_mcastf_lock();
         return -WM_FAIL;
     }
-    memcpy(new_node->mac_addr, mac_addr, MLAN_MAC_ADDR_LENGTH);
+    (void)memcpy(new_node->mac_addr, mac_addr, MLAN_MAC_ADDR_LENGTH);
     new_node->next = NULL;
     node_t->next   = new_node;
     wifi_put_mcastf_lock();
@@ -978,7 +981,7 @@ static int make_filter_list(char *mlist, int maxlen)
     node_t = wm_wifi.start_list;
     while (node_t != NULL)
     {
-        memcpy(mlist, node_t->mac_addr, MLAN_MAC_ADDR_LENGTH);
+        (void)memcpy(mlist, node_t->mac_addr, MLAN_MAC_ADDR_LENGTH);
         node_t = (struct mcast_filter *)node_t->next;
         mlist  = mlist + MLAN_MAC_ADDR_LENGTH;
         maddr_cnt++;
@@ -1083,7 +1086,7 @@ int wrapper_bssdesc_second_set(int bss_index,
 static struct wifi_scan_result common_desc;
 int wifi_get_scan_result(unsigned int index, struct wifi_scan_result **desc)
 {
-    memset(&common_desc, 0x00, sizeof(struct wifi_scan_result));
+    (void)memset(&common_desc, 0x00, sizeof(struct wifi_scan_result));
     int rv = wrapper_bssdesc_first_set(
         index, common_desc.bssid, &common_desc.is_ibss_bit_set, &common_desc.ssid_len, common_desc.ssid,
         &common_desc.Channel, &common_desc.RSSI, &common_desc.beacon_period, &common_desc.dtim_period,
@@ -1117,7 +1120,7 @@ int wifi_register_event_queue(os_queue_t *event_queue)
     if (!event_queue)
         return -WM_E_INVAL;
 
-    if (wm_wifi.wlc_mgr_event_queue)
+    if (wm_wifi.wlc_mgr_event_queue != NULL)
         return -WM_FAIL;
 
     wm_wifi.wlc_mgr_event_queue = event_queue;
@@ -1146,7 +1149,7 @@ static void wifi_driver_main_loop(void *argv)
     struct bus_message msg;
 
     /* Main Loop */
-    while (1)
+    while (true)
     {
         ret = os_queue_recv(&wm_wifi.io_events, &msg, OS_WAIT_FOREVER);
         if (ret == WM_SUCCESS)
@@ -1167,6 +1170,9 @@ static void wifi_driver_main_loop(void *argv)
                 wifi_process_cmd_response((HostCmd_DS_COMMAND *)((uint8_t *)msg.data + INTF_HEADER_LEN));
                 wifi_update_last_cmd_sent_ms();
                 wifi_put_command_resp_sem();
+            }
+            else
+            { /* Do Nothing */
             }
 
             // wakelock_put(WL_ID_WIFI_MAIN_LOOP);
@@ -1215,7 +1221,7 @@ static int wifi_core_init(void)
 {
     int ret;
 
-    if (wifi_core_init_done)
+    if (wifi_core_init_done != 0U)
         return WM_SUCCESS;
 
     ret = os_mutex_create(&wm_wifi.command_lock, "command lock", OS_MUTEX_INHERIT);
@@ -1305,32 +1311,32 @@ static void wifi_core_deinit()
     bus_deregister_event_queue();
     bus_deregister_data_input_funtion();
 
-    if (wm_wifi.io_events)
+    if (wm_wifi.io_events != NULL)
     {
         os_queue_delete(&wm_wifi.io_events);
         wm_wifi.io_events = NULL;
     }
-    if (wm_wifi.mcastf_mutex)
+    if (wm_wifi.mcastf_mutex != NULL)
     {
         os_mutex_delete(&wm_wifi.mcastf_mutex);
         wm_wifi.mcastf_mutex = NULL;
     }
-    if (wm_wifi.command_resp_sem)
+    if (wm_wifi.command_resp_sem != NULL)
     {
         os_semaphore_delete(&wm_wifi.command_resp_sem);
         wm_wifi.command_resp_sem = NULL;
     }
-    if (wm_wifi.command_lock)
+    if (wm_wifi.command_lock != NULL)
     {
         os_mutex_delete(&wm_wifi.command_lock);
         wm_wifi.command_lock = NULL;
     }
-    if (wm_wifi.wm_wifi_main_thread)
+    if (wm_wifi.wm_wifi_main_thread != NULL)
     {
         os_thread_delete(&wm_wifi.wm_wifi_main_thread);
         wm_wifi.wm_wifi_main_thread = NULL;
     }
-    if (wm_wifi.wm_wifi_core_thread)
+    if (wm_wifi.wm_wifi_core_thread != NULL)
     {
         os_thread_delete(&wm_wifi.wm_wifi_core_thread);
         wm_wifi.wm_wifi_core_thread = NULL;
@@ -1340,11 +1346,11 @@ static void wifi_core_deinit()
 
 int wifi_init(const uint8_t *fw_ram_start_addr, const size_t size)
 {
-    if (wifi_init_done)
+    if (wifi_init_done != 0U)
         return WM_SUCCESS;
 
     int ret = sd_wifi_init(WLAN_TYPE_NORMAL, WLAN_FW_IN_RAM, fw_ram_start_addr, size);
-    if (ret)
+    if (ret != 0)
     {
         wifi_e("sd_wifi_init failed. status code %d", ret);
         switch (ret)
@@ -1367,7 +1373,7 @@ int wifi_init(const uint8_t *fw_ram_start_addr, const size_t size)
     }
 
     ret = wifi_core_init();
-    if (ret)
+    if (ret != 0)
     {
         wifi_e("wifi_core_init failed. status code %d", ret);
     }
@@ -1415,7 +1421,7 @@ int wifi_register_data_input_callback(void (*data_intput_callback)(const uint8_t
                                                                    const uint8_t *buffer,
                                                                    const uint16_t len))
 {
-    if (wm_wifi.data_intput_callback)
+    if (wm_wifi.data_intput_callback != NULL)
         return -WM_FAIL;
 
     wm_wifi.data_intput_callback = data_intput_callback;
@@ -1432,7 +1438,7 @@ int wifi_register_amsdu_data_input_callback(void (*amsdu_data_intput_callback)(u
                                                                                uint8_t *buffer,
                                                                                uint16_t len))
 {
-    if (wm_wifi.amsdu_data_intput_callback)
+    if (wm_wifi.amsdu_data_intput_callback != NULL)
         return -WM_FAIL;
 
     wm_wifi.amsdu_data_intput_callback = amsdu_data_intput_callback;
@@ -1448,7 +1454,7 @@ void wifi_deregister_amsdu_data_input_callback()
 int wifi_register_deliver_packet_above_callback(void (*deliver_packet_above_callback)(uint8_t interface,
                                                                                       void *lwip_pbuf))
 {
-    if (wm_wifi.deliver_packet_above_callback)
+    if (wm_wifi.deliver_packet_above_callback != NULL)
         return -WM_FAIL;
 
     wm_wifi.deliver_packet_above_callback = deliver_packet_above_callback;
@@ -1463,7 +1469,7 @@ void wifi_deregister_deliver_packet_above_callback()
 
 int wifi_register_wrapper_net_is_ip_or_ipv6_callback(bool (*wrapper_net_is_ip_or_ipv6_callback)(const t_u8 *buffer))
 {
-    if (wm_wifi.wrapper_net_is_ip_or_ipv6_callback)
+    if (wm_wifi.wrapper_net_is_ip_or_ipv6_callback != NULL)
         return -WM_FAIL;
 
     wm_wifi.wrapper_net_is_ip_or_ipv6_callback = wrapper_net_is_ip_or_ipv6_callback;
@@ -1478,7 +1484,7 @@ void wifi_deregister_wrapper_net_is_ip_or_ipv6_callback()
 
 static int wifi_low_level_input(const uint8_t interface, const uint8_t *buffer, const uint16_t len)
 {
-    if (wm_wifi.data_intput_callback)
+    if (wm_wifi.data_intput_callback != NULL)
     {
         wm_wifi.data_intput_callback(interface, buffer, len);
         return WM_SUCCESS;
@@ -1535,6 +1541,9 @@ retry_xmit:
                 wifi_sdio_lock();
                 goto retry_xmit;
             }
+        }
+        else
+        { /* Do Nothing */
         }
     }
 

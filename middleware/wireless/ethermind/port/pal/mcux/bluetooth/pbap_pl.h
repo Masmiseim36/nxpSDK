@@ -20,6 +20,10 @@
 /* Max Folder Name length */
 #define PBAP_FOLDER_NAME_LEN                100
 
+/* Reference folder for PBAP Client objects */
+#define   APPL_PBAP_FOLDER_REFERENCE \
+          BT_FOPS_PATH_JOIN(BT_FOPS_BASE, "data" BT_FOPS_PATH_SEP "pbap")
+
 /* Base folder for PBAP objects */
 #define PBAP_ROOT_FOLDER_BASE \
     BT_FOPS_PATH_JOIN(BT_FOPS_BASE,"data" BT_FOPS_PATH_SEP "pbap" BT_FOPS_PATH_SEP "phonebook")
@@ -36,6 +40,8 @@
 #define MAX_VCARD_NAME_LEN                  64
 #define MAX_VCARD_TEL_LEN                   20
 #define MAX_VCARD_UID_LEN                   32
+
+#define MAX_PBAP_FILE_OBJ_NAME_LEN          128
 
 /* --------------------------------------------- Structures/Data Types */
 

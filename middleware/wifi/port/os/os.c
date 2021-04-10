@@ -47,7 +47,7 @@ int os_timer_activate(os_timer_t *timer_t)
      * state, until timer command succeeds.
      * We are giving as 0, to be consistent with threadx logic.
      */
-    if (is_isr_context())
+    if (is_isr_context() != 0U)
     {
         /* This call is from Cortex-M3 handler mode, i.e. exception
          * context, hence use FromISR FreeRTOS APIs.
@@ -87,7 +87,7 @@ int os_queue_create(os_queue_t *qhandle, const char *name, int msgsize, os_queue
     os_dprintf(" Queue Create: name = %s poolsize = %d msgsize = %d\r\n", name, poolname->size, msgsize);
     *qhandle = xQueueCreate(poolname->size / msgsize, msgsize);
     os_dprintf(" Queue Create: handle %p\r\n", *qhandle);
-    if (*qhandle)
+    if (*qhandle != NULL)
         return WM_SUCCESS;
     return -WM_FAIL;
 }
@@ -102,7 +102,7 @@ void vApplicationTickHook(void)
 
     for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
     {
-        if (g_os_tick_hooks[i])
+        if (g_os_tick_hooks[i] != NULL)
             g_os_tick_hooks[i]();
     }
 }
@@ -112,7 +112,7 @@ void vApplicationIdleHook(void)
     int i;
     for (i = 0; i < MAX_CUSTOM_HOOKS; i++)
     {
-        if (g_os_idle_hooks[i])
+        if (g_os_idle_hooks[i] != NULL)
             g_os_idle_hooks[i]();
     }
 }
@@ -147,9 +147,9 @@ typedef struct event_group_t
 
 static inline void os_event_flags_remove_node(event_wait_t *node, event_group_t *grp_ptr)
 {
-    if (node->prev)
+    if (node->prev != NULL)
         node->prev->next = node->next;
-    if (node->next)
+    if (node->next != NULL)
         node->next->prev = node->prev;
     /* If only one node is present */
     if (!node->next && !node->prev)
@@ -166,7 +166,7 @@ int os_event_flags_create(event_group_handle_t *hnd)
         os_dprintf("ERROR:Mem allocation\r\n");
         return -WM_FAIL;
     }
-    memset(eG, 0x00, sizeof(event_group_t));
+    (void)memset(eG, 0x00, sizeof(event_group_t));
     ret = os_mutex_create(&eG->mutex, "event-flag", OS_MUTEX_INHERIT);
     if (ret != WM_SUCCESS)
     {
@@ -226,7 +226,7 @@ check_again:
         return -WM_FAIL;
     }
     /* Check flags */
-    if (status)
+    if (status != 0U)
     {
         *actual_flags_ptr = status;
 
@@ -246,7 +246,7 @@ check_again:
     }
     else
     {
-        if (wait_option)
+        if (wait_option != 0U)
         {
             if (wait_done == 0)
             {
@@ -259,12 +259,12 @@ check_again:
                     os_mutex_put(&eG->mutex);
                     return -WM_FAIL;
                 }
-                memset(node, 0x00, sizeof(event_wait_t));
+                (void)memset(node, 0x00, sizeof(event_wait_t));
                 /* Set the requested flag in the node */
                 node->thread_mask = requested_flags;
                 /* Create a semaophore */
                 ret = os_semaphore_create(&node->sem, "wait_thread");
-                if (ret)
+                if (ret != 0)
                 {
                     os_dprintf("ERROR:In creating semaphore\r\n");
                     os_mem_free(node);
@@ -373,19 +373,19 @@ int os_event_flags_set(event_group_handle_t hnd, unsigned flags_to_set, flag_rtr
         return -WM_FAIL;
     }
 
-    if (eG->list)
+    if (eG->list != NULL)
     {
         tmp = eG->list;
         if (tmp->next == NULL)
         {
-            if (tmp->thread_mask & eG->flags)
+            if ((tmp->thread_mask & eG->flags) != 0U)
                 os_semaphore_put(&tmp->sem);
         }
         else
         {
             while (tmp != NULL)
             {
-                if (tmp->thread_mask & eG->flags)
+                if ((tmp->thread_mask & eG->flags) != 0U)
                     os_semaphore_put(&tmp->sem);
                 tmp = tmp->next;
             }
@@ -412,7 +412,7 @@ int os_event_flags_delete(event_group_handle_t *hnd)
     /* Set the flag to delete the group */
     eG->delete_group = 1;
 
-    if (eG->list)
+    if (eG->list != NULL)
     {
         tmp = eG->list;
         if (tmp->next == NULL)
@@ -432,7 +432,7 @@ int os_event_flags_delete(event_group_handle_t *hnd)
     for (i = 0; i < max_attempt; i++)
     {
         os_mutex_get(&eG->mutex, OS_WAIT_FOREVER);
-        if (eG->list)
+        if (eG->list != NULL)
         {
             os_mutex_put(&eG->mutex);
             os_thread_sleep(os_msec_to_ticks(1000));
@@ -445,7 +445,7 @@ int os_event_flags_delete(event_group_handle_t *hnd)
     }
 
     os_mutex_get(&eG->mutex, OS_WAIT_FOREVER);
-    if (eG->list)
+    if (eG->list != NULL)
     {
         os_mutex_put(&eG->mutex);
         return -WM_FAIL;
@@ -492,7 +492,7 @@ int os_rwlock_read_lock(os_rw_lock_t *lock, unsigned int wait_time)
     lock->reader_count++;
     if (lock->reader_count == 1)
     {
-        if (lock->reader_cb)
+        if (lock->reader_cb != NULL)
         {
             ret = lock->reader_cb(lock, wait_time);
             if (ret == -WM_FAIL)
@@ -575,7 +575,7 @@ unsigned int os_get_timestamp()
      * chance to run, then set the return value
      * to the start of next tick.
      */
-    if (SCB->ICSR & SCB_ICSR_PENDSTSET_Msk)
+    if ((SCB->ICSR & SCB_ICSR_PENDSTSET_Msk) != 0U)
     {
         nticks++;
         counter = CNTMAX;

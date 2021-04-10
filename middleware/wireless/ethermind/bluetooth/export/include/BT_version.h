@@ -59,19 +59,22 @@
  *  internal function/variable names etc are viewed as changes that result in
  *  increment in this number.
  */
-#define BT_SUB_MINOR_VERSION_NUMBER   4
+#define BT_SUB_MINOR_VERSION_NUMBER   7
 
 /* -------------------------------------------- Macros */
 
 /* -------------------------------------------- Structures/Data Types */
 
-/* Version Number Structure */
+/** Version Number Structure */
 typedef struct _BT_VERSION_NUMBER
 {
+    /** Major Number */
     UCHAR   major;
 
+    /** Minor Number */
     UCHAR   minor;
 
+    /** Sub-minor Number */
     UCHAR   subminor;
 
 } BT_VERSION_NUMBER;
@@ -82,6 +85,19 @@ extern "C"{
 #endif
 
 #ifdef BT_SUPPORT_STACK_VERSION_INFO
+/**
+ *  \brief To get Stack Version Number
+ *
+ *  \Description
+ *   Routine to get the version number of the stack as return value.
+ *   The version number consists of 3 fields:
+ *        Major Number, Minor Number, Sub-Minor Number
+ *
+ *  \param  [out] version_number    Pointer to a structure to be filled
+ *                                  with version number information.
+ *
+ *  \return None.
+ */
 void BT_get_version_number
      (
          /* OUT */ BT_VERSION_NUMBER  * version_number
@@ -93,6 +109,4 @@ void BT_get_version_number
 #endif
 
 #endif /* _H_BT_VERSION_ */
-
-
 

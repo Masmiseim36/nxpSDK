@@ -47,25 +47,25 @@ extern t_u32 drvdbg;
     {                                             \
         if ((drvdbg & MINFO) && (print_callback)) \
             print_callback(MNULL, MINFO, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MWARN(msg...)                      \
     do                                            \
     {                                             \
         if ((drvdbg & MWARN) && (print_callback)) \
             print_callback(MNULL, MWARN, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MENTRY(msg...)                      \
     do                                             \
     {                                              \
         if ((drvdbg & MENTRY) && (print_callback)) \
             print_callback(MNULL, MENTRY, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_GET_SYS_TIME(level, psec, pusec)          \
     do                                                   \
     {                                                    \
         if ((level & drvdbg) && (get_sys_time_callback)) \
             get_sys_time_callback(MNULL, psec, pusec);   \
-    } while (0)
+    } while (false)
 
 /** Hexdump for level-2 debugging */
 #define HEXDUMP(x, y, z)                                        \
@@ -73,35 +73,35 @@ extern t_u32 drvdbg;
     {                                                           \
         if ((drvdbg & (MHEX_DUMP | MINFO)) && (print_callback)) \
             print_callback(MNULL, MHEX_DUMP | MINFO, x, y, z);  \
-    } while (0)
+    } while (false)
 
 #else
 
 #define PRINTM_MINFO(msg...) \
     do                       \
     {                        \
-    } while (0)
+    } while (false)
 #define PRINTM_MWARN(msg...) \
     do                       \
     {                        \
-    } while (0)
+    } while (false)
 #define PRINTM_MENTRY(msg...) \
     do                        \
     {                         \
-    } while (0)
+    } while (false)
 
 #define PRINTM_GET_SYS_TIME(level, psec, pusec)                                                  \
     do                                                                                           \
     {                                                                                            \
         if ((level & drvdbg) && (get_sys_time_callback) && (level != MINFO) && (level != MWARN)) \
             get_sys_time_callback(MNULL, psec, pusec);                                           \
-    } while (0)
+    } while (false)
 
 /** Hexdump for debugging */
 #define HEXDUMP(x, y, z) \
     do                   \
     {                    \
-    } while (0)
+    } while (false)
 
 #endif /* DEBUG_LEVEL2 */
 
@@ -110,74 +110,74 @@ extern t_u32 drvdbg;
     {                                             \
         if ((drvdbg & MFW_D) && (print_callback)) \
             print_callback(MNULL, MFW_D, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MCMD_D(msg...)                      \
     do                                             \
     {                                              \
         if ((drvdbg & MCMD_D) && (print_callback)) \
             print_callback(MNULL, MCMD_D, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MDAT_D(msg...)                      \
     do                                             \
     {                                              \
         if ((drvdbg & MDAT_D) && (print_callback)) \
             print_callback(MNULL, MDAT_D, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MIF_D(msg...)                      \
     do                                            \
     {                                             \
         if ((drvdbg & MIF_D) && (print_callback)) \
             print_callback(MNULL, MIF_D, msg);    \
-    } while (0)
+    } while (false)
 
 #define PRINTM_MIOCTL(msg...)                      \
     do                                             \
     {                                              \
         if ((drvdbg & MIOCTL) && (print_callback)) \
             print_callback(MNULL, MIOCTL, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MINTR(msg...)                      \
     do                                            \
     {                                             \
         if ((drvdbg & MINTR) && (print_callback)) \
             print_callback(MNULL, MINTR, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MEVENT(msg...)                      \
     do                                             \
     {                                              \
         if ((drvdbg & MEVENT) && (print_callback)) \
             print_callback(MNULL, MEVENT, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MCMND(msg...)                      \
     do                                            \
     {                                             \
         if ((drvdbg & MCMND) && (print_callback)) \
             print_callback(MNULL, MCMND, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MDATA(msg...)                      \
     do                                            \
     {                                             \
         if ((drvdbg & MDATA) && (print_callback)) \
             print_callback(MNULL, MDATA, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MERROR(msg...)                      \
     do                                             \
     {                                              \
         if ((drvdbg & MERROR) && (print_callback)) \
             print_callback(MNULL, MERROR, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MFATAL(msg...)                      \
     do                                             \
     {                                              \
         if ((drvdbg & MFATAL) && (print_callback)) \
             print_callback(MNULL, MFATAL, msg);    \
-    } while (0)
+    } while (false)
 #define PRINTM_MMSG(msg...)                      \
     do                                           \
     {                                            \
         if ((drvdbg & MMSG) && (print_callback)) \
             print_callback(MNULL, MMSG, msg);    \
-    } while (0)
+    } while (false)
 
 #define PRINTM(level, msg...) PRINTM_##level(msg)
 
@@ -188,7 +188,7 @@ extern t_u32 drvdbg;
     {                                                                                                               \
         if ((drvdbg & level) && pmpriv && pmpriv->adapter->callbacks.moal_print_netintf)                            \
             pmpriv->adapter->callbacks.moal_print_netintf(pmpriv->adapter->pmoal_handle, pmpriv->bss_index, level); \
-    } while (0)
+    } while (false)
 #endif /* __GNUC__ */
 
 /** Max hex dump data length */
@@ -200,36 +200,36 @@ extern t_u32 drvdbg;
     {                                                          \
         if ((drvdbg & level) && print_callback)                \
             print_callback(MNULL, MHEX_DUMP | level, x, y, z); \
-    } while (0)
+    } while (false)
 
 #else /* DEBUG_LEVEL1 */
 
 #define PRINTM(level, msg...) \
     do                        \
     {                         \
-    } while (0)
+    } while ((bool)false)
 
 #define PRINTM_NETINTF(level, pmpriv) \
     do                                \
     {                                 \
-    } while (0)
+    } while (false)
 
 /** Debug hexdump for level-1 debugging */
 #define DBG_HEXDUMP(level, x, y, z) \
     do                              \
     {                               \
-    } while (0)
+    } while (false)
 
 /** Hexdump for debugging */
 #define HEXDUMP(x, y, z) \
     do                   \
     {                    \
-    } while (0)
+    } while (false)
 
 #define PRINTM_GET_SYS_TIME(level, psec, pusec) \
     do                                          \
     {                                           \
-    } while (0)
+    } while (false)
 
 #endif /* DEBUG_LEVEL1 */
 
@@ -238,14 +238,14 @@ extern t_u32 drvdbg;
     do                                               \
     {                                                \
         PRINTM(MENTRY, "Enter: %s\n", __FUNCTION__); \
-    } while (0)
+    } while (false)
 
 /** Log exit point for debugging */
 #define LEAVE()                                      \
     do                                               \
     {                                                \
         PRINTM(MENTRY, "Leave: %s\n", __FUNCTION__); \
-    } while (0)
+    } while (false)
 
 /** Find minimum */
 #ifndef MIN
@@ -349,12 +349,12 @@ extern t_u32 drvdbg;
 #define endian_convert_TxPD(x) \
     do                         \
     {                          \
-    } while (0)
+    } while (false)
 /** Convert RxPD from little endian format to CPU format */
 #define endian_convert_RxPD(x) \
     do                         \
     {                          \
-    } while (0)
+    } while (false)
 
 /** Global moal_assert_callback */
 extern t_void (*assert_callback)(IN t_void *pmoal_handle, IN t_u32 cond);
@@ -366,7 +366,7 @@ extern t_void (*assert_callback)(IN t_void *pmoal_handle, IN t_u32 cond);
         if (!(cond))                                                    \
         {                                                               \
             PRINTM(MFATAL, "ASSERT: %s: %i\n", __FUNCTION__, __LINE__); \
-            if (assert_callback)                                        \
+            if (assert_callback != NULL)                                \
             {                                                           \
                 assert_callback(MNULL, (t_ptr)(cond));                  \
             }                                                           \
@@ -374,10 +374,10 @@ extern t_void (*assert_callback)(IN t_void *pmoal_handle, IN t_u32 cond);
             {                                                           \
                 do                                                      \
                 {                                                       \
-                } while (1);                                            \
+                } while (true);                                         \
             }                                                           \
         }                                                               \
-    } while (0)
+    } while (false)
 
 /** Upload size */
 #define WLAN_UPLD_SIZE (2312)

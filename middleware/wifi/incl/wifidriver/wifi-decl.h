@@ -354,6 +354,10 @@ typedef PACK_START struct _wifi_rate_cfg_t
     t_u32 rate_index;
     /** Rate rate */
     t_u32 rate;
+#ifdef CONFIG_11AC
+    /** NSS */
+    t_u32 nss;
+#endif
 } PACK_END wifi_rate_cfg_t;
 
 /** Data structure for cmd get data rate */
@@ -378,6 +382,12 @@ typedef PACK_START struct _wifi_data_rate_t
     t_u32 tx_mcs_index;
     /** MCS index */
     t_u32 rx_mcs_index;
+#ifdef CONFIG_11AC
+    /** NSS */
+    t_u32 tx_nss;
+    /** NSS */
+    t_u32 rx_nss;
+#endif
     /** LG rate: 0, HT rate: 1, VHT rate: 2 */
     t_u32 tx_rate_format;
     /** LG rate: 0, HT rate: 1, VHT rate: 2 */
@@ -777,7 +787,11 @@ typedef PACK_START struct
     /** Chnannel descriptor */
     wifi_channel_desc_t chan_desc;
     /** Channel Modulation groups */
+#ifndef CONFIG_11AC
     wifi_txpwrlimit_entry_t txpwrlimit_entry[10];
+#else
+    wifi_txpwrlimit_entry_t txpwrlimit_entry[16];
+#endif /* CONFIG_11AC */
 } PACK_END wifi_txpwrlimit_config_t;
 
 /**

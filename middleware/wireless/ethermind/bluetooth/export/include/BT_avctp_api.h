@@ -22,7 +22,27 @@
 
 
 /* ----------------------------------------- Global Definitions */
-
+/**
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
+/**
+ * \defgroup  avctp_module  AVCTP (Audio/Video Control Transport Protocol)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Advanced Audio Distribution Profile module to the Application and other upper
+ *  layers of the stack.
+ */
+/**
+ * \defgroup  avctp_defines Defines
+ * \{
+ * Describes defines for AVCTP module.
+ */
+/**
+ * \defgroup avctp_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
 /**
  *  @name AVCTP Event Notification Callback Event Types
  *  Constant Definitioins for AVCTP Event Notification Callback Event Types.
@@ -72,11 +92,15 @@
 
 /*@}*/
 
-
+/** \} */
 /* ----------------------------------------- Internal Macros */
 
 /* ----------------------------------------- Structures/Data Types */
-
+/**
+ * \defgroup avctp_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
 /**
  *  \struct AVCTP_HANDLE
  *  \brief  AVCTP Handle.
@@ -121,8 +145,14 @@ typedef struct avctp_handle
 
 } AVCTP_HANDLE;
 
-
-
+/** \} */
+/** \} */
+/**
+ *  \defgroup avctp_cb Application Callback
+ * \{
+ *  This Section Describes the module Notification Callback interface offered
+ *  to the application
+ */
 /**
  *  \typedef AVCTP_EVENT_NTF_CB
  *  \brief   AVCTP Event Notification Callback
@@ -176,6 +206,8 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
                        void  *event_data,
                        UINT16 event_datalen
                    );
+
+/** \} */
 
 
 /**
@@ -333,10 +365,16 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  *  - AVCTP Error Code describing the reason of failure.
  * \}
  */
-
+/** \} */
 
 /* ----------------------------------------- Macros */
-
+/**
+ *  \defgroup AVCTP_Utility_Macros Utility Macros
+ *
+ *  \{
+ *
+ *  This section describes the EtherMind Utility Macros of AVCTP module.
+ */
 /**
  *  @name AVCTP Utility Macros
  *  Defining AVCTP Utility Macros.
@@ -444,7 +482,6 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
  *
  *  \hideinitializer
  */
-/* TODO: Change both the below macros */
 #define AVCTP_COMPARE_HANDLE(h1, h2) \
         (((h1)->profile_index == (h2).profile_index) && \
         (0 == BT_mem_cmp((h1)->bd_addr, (h2).bd_addr, BT_BD_ADDR_SIZE)))
@@ -473,10 +510,14 @@ typedef API_RESULT (* AVCTP_EVENT_NTF_CB)
 #endif /* AVCTP_1_3 */
 
 /*@}*/
-
+/** \} */
 
 /* ----------------------------------------- API Declarations */
-
+/**
+ * \defgroup AVCTP_API API Definitions
+ * \{
+ * This section describes the EtherMind AVCTP APIs.
+ */
 /**
  *  @name AVCTP APIs - Profile Registration
  */
@@ -633,7 +674,6 @@ API_RESULT BT_avctp_channel_disconnect_req
                /* IN */ UCHAR          channel_type
            );
 
-/*@}*/
 
 
 
@@ -780,7 +820,9 @@ API_RESULT BT_avctp_set_flush_to
 #ifdef __cplusplus
 };
 #endif
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_BT_AVCTP_API_ */
 
 

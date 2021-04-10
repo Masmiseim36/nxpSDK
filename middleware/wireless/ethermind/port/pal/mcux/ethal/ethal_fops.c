@@ -148,7 +148,7 @@ EM_RESULT EM_fops_get_current_directory
 #if FF_FS_RPATH >= 2
     ret = f_getcwd((TCHAR*)current_directory, EM_FOPS_MAX_DIRECTORY_SIZE);
 #else
-		ret = FR_NOT_ENABLED;
+        ret = FR_NOT_ENABLED;
 #endif
     if (ret)
     {
@@ -257,11 +257,11 @@ EM_RESULT EM_fops_set_file_attributes
                /* IN */  UINT32    file_attribute
            )
 {
-	BYTE attr;
+    BYTE attr;
 
-	attr = (((UINT8)file_attribute & 0xFF) == 0x01)? AM_RDO: 0;
+    attr = (((UINT8)file_attribute & 0xFF) == 0x01)? AM_RDO: 0;
 
-	f_chmod(_T((TCHAR *)object_name), attr, AM_RDO);
+    f_chmod(_T((TCHAR *)object_name), attr, AM_RDO);
     return EM_FAILURE;
 }
 
@@ -287,7 +287,7 @@ EM_RESULT EM_fops_set_file_attributes
 EM_RESULT EM_fops_access_first
            (
                /* IN */   UCHAR   * dir,
-			   /* IN */   UCHAR   * pattern,
+               /* IN */   UCHAR   * pattern,
                /* OUT */  EM_fops_object_handle   * object,
                /* OUT */  EM_FOPS_FILINFO   * info
            )
@@ -307,7 +307,7 @@ EM_RESULT EM_fops_access_first
         ret = f_readdir(object, &fi);
         if ((ret) || (!fi.fname[0]))
         {
-        	retval = EM_FOPS_ERR_GET_FILE_ATTRIBUTES;
+            retval = EM_FOPS_ERR_GET_FILE_ATTRIBUTES;
         }
         else
         {
@@ -358,7 +358,7 @@ EM_RESULT EM_fops_access_next
     ret = f_readdir(object, &fi);
     if ((ret) || (!fi.fname[0]))
     {
-    	retval = EM_FOPS_ERR_GET_FILE_ATTRIBUTES;
+        retval = EM_FOPS_ERR_GET_FILE_ATTRIBUTES;
     }
     else
     {
@@ -442,7 +442,7 @@ EM_RESULT EM_fops_set_path_forward
 #if (FF_FS_RPATH >= 2)
     ret = f_chdir((TCHAR*)folder_name);
 #else
-		ret = FR_NOT_ENABLED;
+        ret = FR_NOT_ENABLED;
 #endif
 
     if (ret)
@@ -480,7 +480,7 @@ EM_RESULT EM_fops_set_path_backward( void )
 #if (FF_FS_RPATH >= 2)
     ret = f_chdir(_T(".."));
 #else
-		ret = FR_NOT_ENABLED;
+        ret = FR_NOT_ENABLED;
 #endif
 
     if (ret)
@@ -582,7 +582,7 @@ EM_RESULT EM_fops_file_open
     fhandle = (fops_file_handle_t *)EM_alloc_mem(sizeof(fops_file_handle_t));
     if (NULL == fhandle)
     {
-    	return EM_FOPS_MEMORY_ALLOCATION_FAILED;
+        return EM_FOPS_MEMORY_ALLOCATION_FAILED;
     }
 
     memset(fhandle, 0, sizeof(*fhandle));
@@ -593,12 +593,12 @@ EM_RESULT EM_fops_file_open
 
     if ((ret) && (ret != FR_EXIST))
     {
-    	EM_free_mem(fhandle);
+        EM_free_mem(fhandle);
         retval = EM_FOPS_ERR_FILE_OPEN;
     }
     else
     {
-    	*file_handle = (EM_fops_file_handle)fhandle;
+        *file_handle = (EM_fops_file_handle)fhandle;
     }
     return retval;
 }
@@ -949,6 +949,7 @@ EM_RESULT EM_fops_file_get
           )
 {
     TCHAR * buf;
+    EM_RESULT retval;
 
     /* NULL Check */
     if ((NULL == buffer) ||
@@ -959,10 +960,92 @@ EM_RESULT EM_fops_file_get
     }
 
     buf = f_gets((TCHAR*)buffer, *buf_length, file_handle);
+    retval = (NULL == buf) ? EM_FAILURE : EM_SUCCESS;
 
-    return (NULL == buf)? EM_FAILURE: EM_SUCCESS;
+    return retval;
 }
 
+
+/**
+ *  \fn EM_fops_file_get_formatted
+ *
+ *  \brief To scan string from the file.
+ *
+ *  \par Description:
+ *  This function is used to scan string of given length from file like fgets.
+ *
+ *  \param [in] file_handle File handle to be printed
+ *  \param [in] buffer Pointer to get the string
+ *  \param [in] buf_length Pointer Length of string. Actual scanned can
+ *              be returned if required
+ *  \param [inout] buffer Pointer to formatted paramter
+ *
+ *  \return EM_RESULT: EM_SUCCESS on success otherwise an error code
+ *                      describing the cause of failure.
+ *
+ */
+EM_RESULT EM_fops_file_get_formatted
+          (
+              /* IN */    EM_fops_file_handle   file_handle,
+              /* IN */    CHAR                * format,
+              /* INOUT */ void                * parameter,
+              /* INOUT */ UINT16              * length
+          )
+{
+    TCHAR * buf;
+    TCHAR buffer[32];
+    CHAR * rbuf;
+    EM_RESULT retval;
+    UINT16 rlen, i;
+
+    /* NULL Check */
+    if ((NULL == format) ||
+        (NULL == parameter))
+    {
+        return EM_FOPS_INVALID_PARAMETER_VALUE;
+    }
+
+    /* If length is Not NULL it is a string read */
+    if (NULL != length)
+    {
+        rbuf = ((CHAR *)parameter);
+        rlen = (*length);
+    }
+    else
+    {
+        rbuf = buffer;
+        rlen = sizeof(buffer);
+    }
+
+    /* fgets(buffer, *buf_length, file_handle); */
+    buf = f_gets((TCHAR*)rbuf, rlen, file_handle);
+
+    if (NULL != buf)
+    {
+        rlen = EM_str_len(rbuf);
+        for (i = 0; i < rlen; i++)
+        {
+            if (('\r' == rbuf[i]) || ('\n' == rbuf[i]))
+            {
+                rbuf[i] = '\0';
+                break;
+            }
+        }
+
+        if (NULL == length)
+        {
+            sscanf(rbuf, format, parameter);
+        }
+
+        retval = EM_SUCCESS;
+    }
+    else
+    {
+        retval = EM_FAILURE;
+    }
+
+    return retval;
+}
 
 /**
  *  \fn EM_fops_file_close
@@ -1065,7 +1148,7 @@ EM_RESULT EM_fops_file_close
     }
     else
     {
-    	EM_free_mem(fhandle);
+        EM_free_mem(fhandle);
     }
 
     return retval;
@@ -1228,7 +1311,7 @@ EM_RESULT EM_fops_file_copy
     FRESULT ret;
     EM_RESULT retval;
     UCHAR buffer[512];
-    UINT16 bytes;
+    UINT bytes;
     fops_file_handle_t *ifhandle, *ofhandle;
 
     /* NULL Check */
@@ -1245,14 +1328,14 @@ EM_RESULT EM_fops_file_copy
     ifhandle = (fops_file_handle_t *)EM_alloc_mem(sizeof(fops_file_handle_t));
     if (NULL == ifhandle)
     {
-    	return EM_FOPS_MEMORY_ALLOCATION_FAILED;
+        return EM_FOPS_MEMORY_ALLOCATION_FAILED;
     }
 
     ofhandle = (fops_file_handle_t *)EM_alloc_mem(sizeof(fops_file_handle_t));
     if (NULL == ofhandle)
     {
-    	EM_free_mem(ifhandle);
-    	return EM_FOPS_MEMORY_ALLOCATION_FAILED;
+        EM_free_mem(ifhandle);
+        return EM_FOPS_MEMORY_ALLOCATION_FAILED;
     }
 
     ret = f_open(&ifhandle->fileHandle, _T((TCHAR*)existing_file_name), (FA_READ));
@@ -1263,10 +1346,10 @@ EM_RESULT EM_fops_file_copy
         {
             while(!f_eof(&ifhandle->fileHandle))
             {
-                ret = f_read(&ifhandle->fileHandle, buffer, sizeof(buffer), (UINT*)&bytes);
+                ret = f_read(&ifhandle->fileHandle, buffer, sizeof(buffer), &bytes);
                 if (!ret)
                 {
-                    ret = f_write(&ofhandle->fileHandle, buffer, bytes, (UINT*)&bytes);
+                    ret = f_write(&ofhandle->fileHandle, buffer, bytes, &bytes);
                     if (!ret)
                     {
                         retval = EM_SUCCESS;
@@ -1475,7 +1558,7 @@ static void fops_list_directory (CHAR *path)
     fatfsCode = f_opendir(&dir, path);
     if (fatfsCode)
     {
-    	fops_echo ("Failed to open directory for listing\n");
+        fops_echo ("Failed to open directory for listing\n");
         return;
     }
     while (1)
@@ -1490,7 +1573,7 @@ static void fops_list_directory (CHAR *path)
     }
     if (!outputLabel)
     {
-    	fops_echo("\r\n");
+        fops_echo("\r\n");
     }
 
     return;

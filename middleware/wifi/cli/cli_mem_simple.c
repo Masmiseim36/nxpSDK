@@ -84,6 +84,9 @@ int cli_mem_free(char **buffer)
         alloc[0] = BUF_AVAILABLE;
     else if (*buffer == buff2)
         alloc[1] = BUF_AVAILABLE;
+    else
+    { /* Do Nothing */
+    }
 
     *buffer = NULL;
     return WM_SUCCESS;

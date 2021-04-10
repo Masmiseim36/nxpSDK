@@ -21,7 +21,23 @@
 #ifdef BT_LE
 #include "BT_smp_api.h"
 #endif /* BT_LE */
-
+/**
+ * \defgroup security_module Security
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  security module to the Application and other upper layers of the stack.
+ *
+ */
+/**
+ * \defgroup security_defines Defines
+ * \{
+ * Describes defines for the module.
+ */
+/**
+ * \defgroup security_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
 /* --------------------------------------------- Global Definitions */
 /* Device link types mask */
 #define BT_LINK_CLASSIC                     0x00
@@ -49,12 +65,17 @@
 #define BT_SEC_SL_2                         0x02
 /* Security Level 4 - Secure Connection Requirement */
 #define BT_SEC_SL_3                         0x03
-
+/** \} */
 /* --------------------------------------------- Structures/Data Types */
-/* Security Information Structure */
+/**
+ * \defgroup security_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
+/** Security Information Structure */
 typedef struct _BT_SEC_INFO
 {
-    /*
+    /**
      * Security status bitmask
      *
      * BIT 0 - Link Type (0 - BR/EDR, 1 - LE)
@@ -68,15 +89,21 @@ typedef struct _BT_SEC_INFO
      */
     UCHAR status;
 
-    /* Security Mode/Level */
+    /** Security Mode/Level */
     UCHAR security;
 
-    /* Encryption Key size */
+    /** Encryption Key size */
     UCHAR eksize;
 
 } BT_SEC_INFO;
-
+/** \} */
+/** \} */
 /* --------------------------------------------- Macros */
+/**
+ * \defgroup security_utility_macros Utitlity Macros
+ * \{
+ * Describes utility macros for the module.
+ */
 /* Macros to set link and security properties */
 #define BT_SEC_SET_LINKTYPE(x, lt)      (x) |= (lt)
 #define BT_SEC_SET_BONDED(x)            (x) |= BT_SEC_BONDED
@@ -96,21 +123,50 @@ typedef struct _BT_SEC_INFO
 /* Macros to get security modes and levels */
 #define BT_SEC_GET_SM(x)                ((x) & BT_SEC_SM_MASK)
 #define BT_SEC_GET_SL(x)                ((x) & BT_SEC_SL_MASK)
-
+/** \} */
 /* --------------------------------------------- Internal Functions */
 
 /* --------------------------------------------- API Declarations */
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+/**
+ * \defgroup security_api API definitions
+ * \{
+ * Describes API definitions for the module.
+ */
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_security_get_device_status
            (
                /* IN */  DEVICE_HANDLE       * bd_handle,
                /* IN */  DEVICE_LINK_TYPE    link_type,
                /* OUT */ BT_SEC_INFO         * info
            );
-
+/**
+ *  \brief
+ *
+ *  \par Description:
+ *
+ *
+ *  \param [in]
+ *
+ *
+ *  \return
+ *      API_RESULT: API_SUCCESS or one of the error codes as defined in
+ *                  \ref BLE_ERROR_CODES.
+ */
 void BT_security_get_trusted_device_count
      (
          /* OUT */ UCHAR * ntrusted
@@ -119,6 +175,7 @@ void BT_security_get_trusted_device_count
 #ifdef __cplusplus
 };
 #endif
-
+/** \} */
+/** \} */
 #endif /* _H_BT_SECURITY_ */
 

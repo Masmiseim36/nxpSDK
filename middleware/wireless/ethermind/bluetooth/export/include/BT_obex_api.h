@@ -20,20 +20,41 @@
 
 /* ----------------------------------------- Global Definitions */
 /**
- *  @name OBEX Roles
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
+/**
+ * \defgroup obex_module OBEX (Object Exchange Protocol)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  obex module to the Application
+ *  and other upper layers of the stack.
+ */
+/**
+ * \defgroup obex_defines Defines
+ * \{
+ * Describes defines for the module.
+ */
+/**
+ * \defgroup obex_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
+/**
+ *  OBEX Roles
  *  Constant Definitions for OBEX Roles.
  */
 #define OBEX_SERVER_ROLE                    1
 #define OBEX_CLIENT_ROLE                    2
 
 /**
- *  @name OBEX Minimum Packet Size
+ *  OBEX Minimum Packet Size
  *  Constant Definitions for Minimum OBEX Packet Length.
  */
 #define OBEX_MIN_PACKET_LENGTH              255
 
 /**
- *  @name OBEX Asynchronous Events
+ *  OBEX Asynchronous Events
  *  Constant Definitions for OBEX Asynchronous Events.
  */
 
@@ -95,7 +116,7 @@
 #endif /* OBEX_ENH_SUPPORT */
 
 /**
- *  @name Header identifiers for OBEX objects
+ *  Header identifiers for OBEX objects
  */
 #define OBEX_HDR_COUNT                      0xC0
 #define OBEX_HDR_NAME                       0x01
@@ -150,7 +171,7 @@
 #define OBEX_TAG_LENGTH_REQ_DIGEST          OBEX_TAG_LENGTH_NONCE
 
 /**
- *  @name OBEX Operation Codes
+ *  OBEX Operation Codes
  */
 #define OBEX_CONNECT_OP                     0x80
 #define OBEX_DISCONNECT_OP                  0x81
@@ -172,46 +193,46 @@
 #define OBEX_ABORT_OP                       0xFF
 
 /**
- *  @name OBEX Response Codes
+ *  OBEX Response Codes
  */
-#define OBEX_CONTINUE_RSP                   0x90 /* Continue response code */
-#define OBEX_SUCCESS_RSP                    0xA0 /* OK, Success */
-#define OBEX_CREATED_RSP                    0xA1 /* Created */
-#define OBEX_ACCEPTED_RSP                   0xA2 /* Accepted */
-#define OBEX_NON_AUTH_RSP                   0xA3 /* Non Authoritative Info */
-#define OBEX_NO_CONTENT_RSP                 0xA4 /* No content */
-#define OBEX_RESET_CONTENT_RSP              0xA5 /* Reset Content */
-#define OBEX_PART_CONTENT_RSP               0xA6 /* Partial Content */
-#define OBEX_MULTI_CHOICE_RSP               0xB0 /* Multiple Choices */
-#define OBEX_MOVED_PERM_RSP                 0xB1 /* Moved Permanently */
-#define OBEX_MOVED_TEMP_RSP                 0xB2 /* Moved Temporarily */
-#define OBEX_SEE_OTHER_RSP                  0xB3 /* See Other */
-#define OBEX_NOT_MODIFIED_RSP               0xB4 /* Not Modified */
-#define OBEX_USE_PROXY_RSP                  0xB5 /* Use Proxy */
-#define OBEX_REQ_IS_BAD_RSP                 0xC0 /* Bad Req server can't */
-#define OBEX_UNAUTHORIZED_RSP               0xC1 /* Unauthorized */
-#define OBEX_PAYMENT_REQUIRED_RSP           0xC2 /* Payment Required */
-#define OBEX_FORBIDDEN_RSP                  0xC3 /* op understood but refused */
-#define OBEX_NOT_FOUND_RSP                  0xC4 /* Not Found */
-#define OBEX_METHOD_NA_RSP                  0xC5 /* Method Not Allowed */
-#define OBEX_NOT_ACCEPTABLE_RSP             0xC6 /* Not Acceptable */
-#define OBEX_PROXY_AUTH_REQD_RSP            0xC7 /* Proxy Authentication Required */
-#define OBEX_TIMEOUT_RSP                    0xC8 /* Request Time out */
-#define OBEX_CONFLICT_RSP                   0xC9 /* Conflict */
-#define OBEX_GONE_RSP                       0xCA /* Gone */
-#define OBEX_LENGTH_REQUIRED_RSP            0xCB /* Length Required */
-#define OBEX_PRECOND_FAIL_RSP               0xCC /* Precondition Failed */
-#define OBEX_REQ_ENTITY_LARGE_RSP           0xCD /* Requested Entity too large */
-#define OBEX_REQ_URL_LARGE_RSP              0xCE /* Requested URL too large */
-#define OBEX_UNSUPP_MEDIA_RSP               0xCF /* Unsupported Media type */
-#define OBEX_SERVER_ERR_RSP                 0xD0 /* Internal Server error */
-#define OBEX_NOT_IMP_RSP                    0xD1 /* Not implemented */
-#define OBEX_BAD_GATEWAY_RSP                0xD2 /* Bad Gateway */
-#define OBEX_NO_SERVICE_RSP                 0xD3 /* Service Unavailable */
-#define OBEX_GATEWAY_TIMEOUT_RSP            0xD4 /* Gateway Timeout */
-#define OBEX_HTTP_VER_RSP                   0xD5 /* HTTP version not supported */
-#define OBEX_DATABASE_FULL_RSP              0xE0 /* Database Full */
-#define OBEX_DATABASE_LOCKED_RSP            0xE1 /* Database Locked */
+#define OBEX_CONTINUE_RSP                   0x90 /**< Continue response code */
+#define OBEX_SUCCESS_RSP                    0xA0 /**< OK, Success */
+#define OBEX_CREATED_RSP                    0xA1 /**< Created */
+#define OBEX_ACCEPTED_RSP                   0xA2 /**< Accepted */
+#define OBEX_NON_AUTH_RSP                   0xA3 /**< Non Authoritative Info */
+#define OBEX_NO_CONTENT_RSP                 0xA4 /**< No content */
+#define OBEX_RESET_CONTENT_RSP              0xA5 /**< Reset Content */
+#define OBEX_PART_CONTENT_RSP               0xA6 /**< Partial Content */
+#define OBEX_MULTI_CHOICE_RSP               0xB0 /**< Multiple Choices */
+#define OBEX_MOVED_PERM_RSP                 0xB1 /**< Moved Permanently */
+#define OBEX_MOVED_TEMP_RSP                 0xB2 /**< Moved Temporarily */
+#define OBEX_SEE_OTHER_RSP                  0xB3 /**< See Other */
+#define OBEX_NOT_MODIFIED_RSP               0xB4 /**< Not Modified */
+#define OBEX_USE_PROXY_RSP                  0xB5 /**< Use Proxy */
+#define OBEX_REQ_IS_BAD_RSP                 0xC0 /**< Bad Req server can't */
+#define OBEX_UNAUTHORIZED_RSP               0xC1 /**< Unauthorized */
+#define OBEX_PAYMENT_REQUIRED_RSP           0xC2 /**< Payment Required */
+#define OBEX_FORBIDDEN_RSP                  0xC3 /**< op understood but refused */
+#define OBEX_NOT_FOUND_RSP                  0xC4 /**< Not Found */
+#define OBEX_METHOD_NA_RSP                  0xC5 /**< Method Not Allowed */
+#define OBEX_NOT_ACCEPTABLE_RSP             0xC6 /**< Not Acceptable */
+#define OBEX_PROXY_AUTH_REQD_RSP            0xC7 /**< Proxy Authentication Required */
+#define OBEX_TIMEOUT_RSP                    0xC8 /**< Request Time out */
+#define OBEX_CONFLICT_RSP                   0xC9 /**< Conflict */
+#define OBEX_GONE_RSP                       0xCA /**< Gone */
+#define OBEX_LENGTH_REQUIRED_RSP            0xCB /**< Length Required */
+#define OBEX_PRECOND_FAIL_RSP               0xCC /**< Precondition Failed */
+#define OBEX_REQ_ENTITY_LARGE_RSP           0xCD /**< Requested Entity too large */
+#define OBEX_REQ_URL_LARGE_RSP              0xCE /**< Requested URL too large */
+#define OBEX_UNSUPP_MEDIA_RSP               0xCF /**< Unsupported Media type */
+#define OBEX_SERVER_ERR_RSP                 0xD0 /**< Internal Server error */
+#define OBEX_NOT_IMP_RSP                    0xD1 /**< Not implemented */
+#define OBEX_BAD_GATEWAY_RSP                0xD2 /**< Bad Gateway */
+#define OBEX_NO_SERVICE_RSP                 0xD3 /**< Service Unavailable */
+#define OBEX_GATEWAY_TIMEOUT_RSP            0xD4 /**< Gateway Timeout */
+#define OBEX_HTTP_VER_RSP                   0xD5 /**< HTTP version not supported */
+#define OBEX_DATABASE_FULL_RSP              0xE0 /**< Database Full */
+#define OBEX_DATABASE_LOCKED_RSP            0xE1 /**< Database Locked */
 
 
 #define OBEX_SSN_CREATE                     0x00
@@ -247,9 +268,21 @@
  */
 #define OBEX_SRMP_WAIT                      0x01
 #define OBEX_WAIT_MASK                      0x08
-
+/** \} */
+/** \} */
 
 /* ----------------------------------------- Structures/Data Types */
+/**
+ *  \addtogroup obex_defines Defines
+ *  \{
+ */
+
+/**
+ * \defgroup obex_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
+
 /**
  *  \typedef OBEX_HANDLE
  *
@@ -397,18 +430,23 @@ typedef struct _OBEX_INIT_PARAMS
 #endif /* OBEX_SUPPORT_RELIABLE_SSN */
 
 } OBEX_INIT_PARAMS;
+/** \} */
+/** \} */
 
-/* ----------------------------------------- Function Definitions */
+/* ----------------------------------------- Function Declarations */
+/**
+ * \defgroup obex_api API Definitions
+ * \{
+ * Describes API definitions defined by the module.
+ */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /* ========== OBEX Client related APIs ==== */
 #ifdef OBEX_CLIENT
-
 /**
- *  \fn BT_obex_register_client
- *
  *  \brief To initialize an OBEX client instance.
  *
  *  \par Description:
@@ -439,15 +477,13 @@ extern "C" {
     BT_obex_register((obex_handle), (init_params), OBEX_CLIENT_ROLE)
 
 /**
- *  \fn BT_obex_unregister_client
- *
  *  \brief To uninitialize an OBEX client instance.
  *
  *  \par Description:
  *      This API is used to put the OBEX client instance in an inactive state
  *      and it members are set to default initial values.
  *
- *  \param [in] obex_handle
+ *  \param [in] handle
  *      Handle to refer the OBEX client instance to be unregistered
  *
  *  \return API_RESULT
@@ -460,8 +496,6 @@ extern "C" {
 #define BT_obex_unregister_client(handle) BT_obex_unregister ((handle))
 
 /**
- *  \fn BT_obex_transport_connect
- *
  *  \brief To establish an OBEX transport layer connection.
  *
  *  \par Description:
@@ -483,10 +517,7 @@ API_RESULT BT_obex_transport_connect
                /* IN */ OBEX_HANDLE * obex_handle
            );
 
-
 /**
- *  \fn BT_obex_connect_req
- *
  *  \brief To establish connection to an OBEX server
  *
  *  \par Description:
@@ -515,8 +546,6 @@ API_RESULT BT_obex_transport_connect
         BT_obex_reqrsp ((obex_handle), OBEX_CONNECT_OP, (obj_hdr), (num_of_hdrs), 0x00, 0x00)
 
 /**
- *  \fn BT_obex_disconnect_req
- *
  *  \brief To terminate the OBEX connection with remote OBEX server.
  *
  *  \par Description:
@@ -543,8 +572,6 @@ API_RESULT BT_obex_transport_connect
         BT_obex_reqrsp ((obex_handle), OBEX_DISCONNECT_OP, (obj_hdr), (num_of_hdrs), 0x00, 0x00)
 
 /**
- *  \fn BT_obex_get_req
- *
  *  \brief To retrieve an object from an OBEX server.
  *
  *  \par Description:
@@ -576,8 +603,6 @@ API_RESULT BT_obex_transport_connect
                         (obj_hdr), (num_of_hdrs), 0x00, (flags))
 
 /**
- *  \fn BT_obex_put_req
- *
  *  \brief To transfer an object to an OBEX server.
  *
  *  \par Description:
@@ -610,8 +635,6 @@ API_RESULT BT_obex_transport_connect
                         (obj_hdr), (num_of_hdrs), 0x00, (flags))
 
 /**
- *  \fn BT_obex_setpath_req
- *
  *  \brief To set the current folder in an OBEX server.
  *
  *  \par Description:
@@ -642,8 +665,6 @@ API_RESULT BT_obex_transport_connect
         BT_obex_reqrsp ((obex_handle), OBEX_SETPATH_OP, (obj_hdr), (num_of_hdrs), 0x00, (flags))
 
 /**
- *  \fn BT_obex_abort_req
- *
  *  \brief To terminate an ongoing OBEX operation.
  *
  *  \par Description:
@@ -671,8 +692,6 @@ API_RESULT BT_obex_transport_connect
 
 #ifdef OBEX_ENH_SUPPORT
 /**
- *  \fn BT_obex_action_req
- *
  *  \brief To perform an action on the object present in the OBEX server.
  *
  *  \par Description:
@@ -706,11 +725,10 @@ API_RESULT BT_obex_transport_connect
 #endif /* OBEX_ENH_SUPPORT */
 
 /**
- *  \fn BT_obex_ssn_suspend_req
- *
- *  \brief
+ *  \brief To suspend the OBEX reliable session.
  *
  *  \par Description:
+ *       This API enables to suspend the OBEX reliable session that was already created.
  *
  *  \param [in] obex_handle
  *      Handle to refer to the OBEX Client instance
@@ -726,11 +744,10 @@ API_RESULT BT_obex_transport_connect
         BT_obex_ssn_reqrsp ((obex_handle), OBEX_SSN_SUSPEND, OBEX_SSN_TIMEOUT_DEFAULT, NULL, 0, 0x00)
 
 /**
- *  \fn BT_obex_ssn_resume_req
- *
- *  \brief
+ *  \brief To resume the OBEX reliable session.
  *
  *  \par Description:
+ *       This API enables to resme the OBEX reliable session that was already suspended.
  *
  *  \param [in] obex_handle
  *      Handle to refer to the OBEX Client instance
@@ -744,16 +761,11 @@ API_RESULT BT_obex_transport_connect
  */
 #define BT_obex_ssn_resume_req(obex_handle, obj_hdr, num_of_hdrs) \
         BT_obex_ssn_reqrsp ((obex_handle), OBEX_SSN_RESUME, OBEX_SSN_TIMEOUT_DEFAULT, obj_hdr, num_of_hdrs, 0x00)
-
-
 #endif /* OBEX_CLIENT */
 
 /* =============== OBEX SERVER related APIs ========= */
 #ifdef OBEX_SERVER
-
- /**
- *  \fn BT_obex_register_server
- *
+/**
  *  \brief To Initialize an OBEX Server instance.
  *
  *  \par Description:
@@ -781,11 +793,9 @@ API_RESULT BT_obex_transport_connect
  *      RFCOMM channel or L2CAP psm
  */
 #define BT_obex_register_server(obex_handle, init_params) \
-    BT_obex_register((obex_handle), (init_params), OBEX_SERVER_ROLE)
+        BT_obex_register((obex_handle), (init_params), OBEX_SERVER_ROLE)
 
 /**
- *  \fn BT_obex_unregister_server
- *
  *  \brief To uninitialize an OBEX server instance.
  *
  *  \par Description:
@@ -805,8 +815,6 @@ API_RESULT BT_obex_transport_connect
 #define BT_obex_unregister_server(handle) BT_obex_unregister ((handle))
 
 /**
- *  \fn BT_obex_connect_rsp
- *
  *  \brief To respond to an OBEX connect request
  *
  *  \par Description:
@@ -838,8 +846,6 @@ API_RESULT BT_obex_transport_connect
         BT_obex_reqrsp ((obex_handle), OBEX_CONNECT_OP, (obj_hdr), (num_of_hdrs), (rsp_code), 0x00)
 
 /**
- *  \fn BT_obex_disconnect_rsp
- *
  *  \brief To respond to an OBEX disconnect request.
  *
  *  \par Description:
@@ -871,8 +877,6 @@ API_RESULT BT_obex_transport_connect
         BT_obex_reqrsp ((obex_handle), OBEX_DISCONNECT_OP, (obj_hdr), (num_of_hdrs), (rsp_code), 0x00)
 
 /**
- *  \fn BT_obex_get_rsp
- *
  *  \brief To respond to an OBEX get request.
  *
  *  \par Description:
@@ -909,8 +913,6 @@ API_RESULT BT_obex_transport_connect
                         (obj_hdr), (num_of_hdrs), (rsp_code), (flags))
 
 /**
- *  \fn BT_obex_put_rsp
- *
  *  \brief To respond to an OBEX put request.
  *
  *  \par Description:
@@ -947,8 +949,6 @@ API_RESULT BT_obex_transport_connect
                         (obj_hdr), (num_of_hdrs), (rsp_code), (flags))
 
 /**
- *  \fn BT_obex_setpath_rsp
- *
  *  \brief To respond to an OBEX setpath request.
  *
  *  \par Description:
@@ -980,8 +980,6 @@ API_RESULT BT_obex_transport_connect
         BT_obex_reqrsp ((obex_handle), OBEX_SETPATH_OP, (obj_hdr), (num_of_hdrs), (rsp_code), 0x00)
 
 /**
- *  \fn BT_obex_abort_rsp
- *
  *  \brief To respond to an OBEX abort request.
  *
  *  \par Description:
@@ -1014,8 +1012,6 @@ API_RESULT BT_obex_transport_connect
 
 #ifdef OBEX_ENH_SUPPORT
 /**
- *  \fn BT_obex_action_rsp
- *
  *  \brief To respond to an OBEX action request.
  *
  *  \par Description:
@@ -1054,14 +1050,13 @@ API_RESULT BT_obex_transport_connect
 #endif /*  OBEX_ENH_SUPPORT */
 
 /**
- *  \fn BT_obex_ssn_suspend_rsp
- *
- *  \brief
+ *  \brief To response to OBEX reliable session suspend request.
  *
  *  \par Description:
+ *       This API enable to send response to OBEX reliable session suspend request.
  *
  *  \param [in] obex_handle
- *      Handle to refer to the OBEX Client instance
+ *      Handle to refer to the OBEX instance
  *
  *  \param [in] rsp_code
  *      Response code to be sent
@@ -1076,19 +1071,23 @@ API_RESULT BT_obex_transport_connect
 #define BT_obex_ssn_suspend_rsp(obex_handle, rsp_code) \
         BT_obex_ssn_reqrsp ((obex_handle), OBEX_SSN_SUSPEND, OBEX_SSN_TIMEOUT_DEFAULT, NULL, 0, (rsp_code))
 
-
 /**
- *  \fn BT_obex_ssn_resume_rsp
- *
- *  \brief
+ *  \brief To response to OBEX reliable session resume request.
  *
  *  \par Description:
+ *       This API enable to send response to OBEX reliable session resume request.
  *
  *  \param [in] obex_handle
- *      Handle to refer to the OBEX Client instance
+ *      Handle to refer to the OBEX instance
  *
  *  \param [in] rsp_code
  *      Response code to be sent
+ *
+ *  \param [in] obj_hdr
+ *      List of OBEX headers to be transmitted in the response.
+ *
+ *  \param [in] num_of_hdrs
+ *      Number of OBEX headers being transmitted.
  *
  *  \return API_RESULT
  *      API_SUCCESS on success otherwise an error code describing
@@ -1099,14 +1098,10 @@ API_RESULT BT_obex_transport_connect
  */
 #define BT_obex_ssn_resume_rsp(obex_handle, rsp_code, obj_hdr, num_of_hdrs) \
         BT_obex_ssn_reqrsp ((obex_handle), OBEX_SSN_RESUME, OBEX_SSN_TIMEOUT_DEFAULT, obj_hdr, num_of_hdrs, (rsp_code))
-
 #endif /* OBEX_SERVER */
 
 /* =========== APIs Common for OBEX Server & OBEX Client ===============*/
-
 /**
- *  \fn BT_obex_transport_disconnect
- *
  *  \brief To terminate an OBEX transport layer connection.
  *
  *  \par Description:
@@ -1128,6 +1123,28 @@ API_RESULT BT_obex_transport_disconnect
                /* IN */ OBEX_HANDLE * obex_handle
            );
 
+/**
+ *
+ *  \brief To initialize an obex entity.
+ *
+ *  \par Description:
+ *       This API initializes the OBEX with the RFCOMM channel number or L2CAP
+ *       PSM on which it will listen and the callback function to be called
+ *       on receiving an event.
+ *
+ *  \param [out] obex_handle
+ *      Handle that points to the OBEX client/server session
+ *
+ *  \param [in] init_params
+ *      The parameters that will be used for initializing the server instance
+ *
+ *  \param [in] role
+ *      OBEX role (Client/Server)
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ *
+ */
 API_RESULT BT_obex_register
            (
                /* OUT */ OBEX_HANDLE      * obex_handle,
@@ -1135,11 +1152,57 @@ API_RESULT BT_obex_register
                /* IN */  UCHAR              role
            );
 
+/**
+ *  \brief To un-initialize an obex entity.
+ *
+ *  \par Description:
+ *      This API puts the OBEX instance in a non-connectable state.
+ *
+ *  \param [in] obex_handle
+ *      Handle that points to the OBEX client/server session
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
+ */
 API_RESULT BT_obex_unregister
            (
                /* IN */ OBEX_HANDLE * obex_handle
            );
 
+/**
+ *  \brief To send OBEX request or response.
+ *
+ *  \par Description:
+ *      This API enables to send an OBEX request(like PUT/GET request) or to send
+ *      resonse for OBEX request.
+ *
+ *  \param [in] handle
+ *      Handle to refer the OBEX instance.
+ *
+ *  \param [in] opcode
+ *      OBEX operation code.
+ *
+ *  \param [in] obj_hdr
+ *      List of OBEX headers to be transmitted in the request/response.
+ *
+ *  \param [in] num_hdr
+ *      Number of OBEX headers being transmitted.
+ *
+ *  \param [in] rsp_code
+ *      Response code being sent by the server.
+ *      For response codes refer to the section "OBEX Response codes" above.
+ *
+ *  \param [in] flags
+ *      Specifies if the request/response is a final request/response or not.
+ *         - (flags != 0) correspond to a final request/response.
+ *
+ *  \return API_RESULT
+ *      API_SUCCESS on success otherwise an error code describing
+ *      the reason for failure
+ *
+ *  \note
+ *      None
+ */
 API_RESULT BT_obex_reqrsp
            (
                /* IN */ OBEX_HANDLE     * handle,
@@ -1150,6 +1213,37 @@ API_RESULT BT_obex_reqrsp
                /* IN */ UCHAR             flags
            );
 
+/**
+ *  \brief To send OBEX reliable request/response.
+ *
+ *  \par Description:
+ *      This API enables to send an OBEX reliable session request/response.
+ *
+ *  \param [in] handle
+ *      Handle to refer the OBEX instance.
+ *
+ *  \param [in] opcode
+ *      OBEX operation code.
+ *
+ *  \param [in] timeout
+ *      Session Timeout Value.
+ *
+ *  \param [in] ssn_params
+ *      Session parameters.
+ *
+ *  \param [in] ssn_params_len
+ *      Session parameters length.
+ *
+ *  \param [in] rsp_code
+ *      Response op code to OBEX request.
+ *
+ *  \return API_RESULT
+ *      API_SUCCESS on success otherwise an error code describing
+ *      the reason for failure
+ *
+ *  \note
+ *      None
+ */
 API_RESULT BT_obex_ssn_reqrsp
            (
                /* IN */ OBEX_HANDLE     * handle,
@@ -1163,8 +1257,6 @@ API_RESULT BT_obex_ssn_reqrsp
 /* ================== OBEX Utility APIs =================================*/
 
 /**
- *  \fn BT_obex_get_peer_recv_size
- *
  *  \brief To retrieve a peer's maximum receive data size.
  *
  *  \par Description:
@@ -1191,8 +1283,6 @@ API_RESULT BT_obex_get_peer_recv_size
            );
 
 /**
- *  \fn BT_obex_char_to_unicode
- *
  *  \brief Utility to convert a string from ASCII to unicode.
  *
  *  \par Description:
@@ -1217,8 +1307,6 @@ UINT16 BT_obex_char_to_unicode
        );
 
 /**
- *  \fn BT_obex_unicode_to_char
- *
  *  \brief Utility to convert a string from unicode to ASCII.
  *
  *  \par Description:
@@ -1243,8 +1331,6 @@ UINT16 BT_obex_unicode_to_char
        );
 
 /**
- *  \fn BT_obex_get_next_header
- *
  *  \brief Utility to extract the OBEX header and related data
  *         from a given OBEX received message.
  *
@@ -1284,8 +1370,6 @@ API_RESULT BT_obex_get_next_header
            );
 
 /**
- *  \fn BT_obex_extract_obex_headers
- *
  *  \brief Utility to extract headers and related data from
  *         a given received OBEX message.
  *
@@ -1311,8 +1395,8 @@ API_RESULT BT_obex_get_next_header
  *
  *  \return API_RESULT
  *      Always returns API_SUCCESS.
- *     Caller has to ensure that pointer ‘hdr’ point to array of OBEX header
- *     and also need to use the extracted number of OBEX headers ‘header_num’.
+ *      Caller has to ensure that pointer 'hdr' point to array of OBEX header
+ *      and also need to use the extracted number of OBEX headers 'header_num'.
  */
 API_RESULT BT_obex_extract_obex_headers
            (
@@ -1323,8 +1407,6 @@ API_RESULT BT_obex_extract_obex_headers
            );
 
 /**
- *  \fn BT_obex_search_header_val
- *
  *  \brief Utility to search a given OBEX header identifier.
  *
  *  \par Description:
@@ -1360,8 +1442,6 @@ API_RESULT BT_obex_search_header_val
            );
 
 /**
- *  \fn BT_obex_get_available_frame_len
- *
  *  \brief Utility to get the available free OBEX frame length.
  *
  *  \par Description:
@@ -1394,8 +1474,6 @@ API_RESULT BT_obex_get_available_frame_len
            );
 
 /**
- *  \fn BT_obex_get_connect_flag
- *
  *  \brief Utility to extract the OBEX connect flags.
  *
  *  \par Description:
@@ -1416,7 +1494,6 @@ API_RESULT BT_obex_get_available_frame_len
  *      All connect request flags except bit 0 are currently reserved and are set to zero,
  *      and shall be ignored by the receiving side. All connect response flags are also set
  *      to zero and shall be ignored at the receiving side.
- *
  */
 API_RESULT BT_obex_get_connect_flag
            (
@@ -1425,8 +1502,6 @@ API_RESULT BT_obex_get_connect_flag
            );
 
 /**
- * \fn BT_obex_get_setpath_flag
- *
  *  \brief Utility to extract the OBEX setpath flags.
  *
  *  \par Description:
@@ -1445,7 +1520,7 @@ API_RESULT BT_obex_get_connect_flag
  *  \note
  *      The valid flags are only the first two bits of the setpath_flag is valid.
  *      Bit 0: Backup a level before applying the name (equivalent to ../ on many systems)
- *      Bit 1: Don’t create folder if it does not exist, instead return an Error
+ *      Bit 1: Don't create folder if it does not exist, instead return an Error
  */
 API_RESULT BT_obex_get_setpath_flag
            (
@@ -1454,8 +1529,6 @@ API_RESULT BT_obex_get_setpath_flag
            );
 
 /**
- * \fn BT_obex_get_remote_bd_addr
- *
  *  \brief Utility to extract the Bluetooth address of remote device.
  *
  *  \par Description:
@@ -1482,8 +1555,6 @@ API_RESULT BT_obex_get_remote_bd_addr
 
 #ifdef OBEX_ENH_SUPPORT
 /**
- * \fn BT_obex_get_action_flag
- *
  *  \brief Utility to extract the OBEX action flags.
  *
  *  \par Description:
@@ -1513,7 +1584,26 @@ API_RESULT BT_obex_get_action_flag
 
 #ifdef OBEX_OVER_L2CAP
 /**
- * To get the OBEX SRM status
+ *  \brief To get the OBEX SRM status.
+ *
+ *  \par Description:
+ *      This API is used to extract the OBEX SRM status of a device.
+ *
+ *  \param [in] handle
+ *      Handle to refer the OBEX instance.
+ *
+ *  \param [in] device
+ *      Flag to indicate local or remote device SRM status.
+ *
+ *  \param [out] value
+ *      OBEX SRM status (OBEX_SRM_ENABLE or OBEX_SRM_DISABLE)
+ *
+ *  \return API_RESULT
+ *      API_SUCCESS on success otherwise an error code describing
+ *      the reason for failure
+ *
+ *  \note
+ *      None
  */
 API_RESULT BT_obex_get_srm_status
            (
@@ -1523,14 +1613,12 @@ API_RESULT BT_obex_get_srm_status
            );
 
 /**
- * \fn BT_obex_get_local_srm_status
- *
  *  \brief Utility to get the OBEX SRM status of local device.
  *
  *  \par Description:
  *      This API is used to extract the OBEX SRM status of local device.
  *
- *  \param [in] obex_handle
+ *  \param [in] handle
  *      Handle to refer the OBEX instance.
  *
  *  \param [out] value
@@ -1547,14 +1635,12 @@ API_RESULT BT_obex_get_srm_status
         BT_obex_get_srm_status ((handle), 0x01, (value))
 
 /**
- * \fn BT_obex_get_peer_srm_status
- *
  *  \brief Utility to get the OBEX SRM status of peer device.
  *
  *  \par Description:
  *      This API is used to extract the OBEX SRM status of peer device.
  *
- *  \param [in] obex_handle
+ *  \param [in] handle
  *      Handle to refer the OBEX instance.
  *
  *  \param [out] value
@@ -1575,10 +1661,7 @@ API_RESULT BT_obex_get_srm_status
 #define BT_obex_get_srm_status(handle, type, value) API_FAILURE
 #endif /* OBEX_OVER_L2CAP */
 
-
 /**
- *  \fn BT_obex_generate_digest_string
- *
  *  \brief To generate a digest string from a nonce.
  *
  *  \par Description:
@@ -1601,8 +1684,6 @@ API_RESULT BT_obex_generate_digest_string
            );
 
 /**
- *  \fn BT_obex_generate_digest_rsp
- *
  *  \brief To generate a digest response for a given authentication challenge.
  *
  *  \par Description:
@@ -1638,8 +1719,6 @@ API_RESULT BT_obex_generate_digest_rsp
            );
 
 /**
- *  \fn BT_obex_validate_auth_rsp
- *
  *  \brief To validate an authentication response.
  *
  *  \par Description:
@@ -1675,6 +1754,8 @@ API_RESULT BT_obex_validate_auth_rsp
 #ifdef __cplusplus
 };
 #endif
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_BT_OBEX_API_ */
 

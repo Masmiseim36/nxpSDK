@@ -27,7 +27,7 @@
 /* ----------------------------------------- Static Global Variables */
 #ifdef SM_IO_CAP_DYNAMIC
 /** Local IO Capability */
-DECL_STATIC UCHAR sm_local_io_cap = SM_IO_CAPABILITY_DEFAULT;
+DECL_STATIC volatile UCHAR sm_local_io_cap = SM_IO_CAPABILITY_DEFAULT;
 #endif /* SM_IO_CAP_DYNAMIC */
 
 #ifdef BT_SSP_OOB
@@ -121,7 +121,51 @@ API_RESULT BT_sm_set_device_oob_data
 }
 #endif /* BT_SSP_OOB */
 
+API_RESULT BT_sm_get_remote_io_cap
+           (
+               /* IN */  DEVICE_HANDLE    * device_handle,
+               /* OUT */ SM_IO_CAPS *    io_cap
+           )
+{
+    UINT32 di;
 
+    /* Search for the Device Database entry */
+    for (di = 0; di < SM_MAX_DEVICES; di ++)
+    {
+        if (SM_DEVICE_INVALID != sm_devices[di].valid)
+        {
+            if (NULL != device_handle)
+            {
+                if ((*device_handle) == sm_devices[di].device_handle)
+                {
+                    break;
+                }
+            }
+        }
+    }
+
+    if (SM_MAX_DEVICES <= di)
+    {
+        return API_FAILURE;
+    }
+
+    /*
+     *  Set remote Authentication Requirements.
+     */
+    io_cap->auth_reqs = sm_devices[di].remote_io_cap.auth_reqs;
+
+    /* Set Local IO Cap */
+    io_cap->io_cap = sm_devices[di].remote_io_cap.io_cap;
+
+    /* Set authentication */
+    io_cap->oob_present = sm_devices[di].remote_io_cap.oob_present;
+
+    SM_INF(
+    "[SM] Local IO Cap Generated: IO Cap %02X, OOB %02X, AuthReqs %02X\n",
+    io_cap->io_cap, io_cap->oob_present, io_cap->auth_reqs);
+
+    return API_SUCCESS;
+}
 /* ----------------------------------------- Internal Functions */
 /** To return IO Capability to SM Core */
 API_RESULT sm_get_io_capability_pl
@@ -275,8 +319,8 @@ API_RESULT sm_get_io_capability_pl
             if (SM_SERVICE_SECURITY_LEVEL_3 == SM_GET_SERVICE_AUTHENTICATION(si))
 #else
             if ((BT_FALSE != sc_only_mode) ||
-                (SM_SERVICE_SECURITY_LEVEL_4 == SM_GET_SERVICE_AUTHENTICATION(sm_authentication_service)) ||
-                (SM_SERVICE_SECURITY_LEVEL_3 == SM_GET_SERVICE_AUTHENTICATION(sm_authentication_service)))
+                (SM_SERVICE_SECURITY_LEVEL_4 == SM_GET_SERVICE_AUTHENTICATION(si)) ||
+                (SM_SERVICE_SECURITY_LEVEL_3 == SM_GET_SERVICE_AUTHENTICATION(si)))
 #endif /* BT_BRSC */
             {
                 mitm_reqd = 0x1;

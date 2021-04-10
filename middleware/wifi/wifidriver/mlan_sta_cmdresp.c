@@ -131,7 +131,7 @@ static mlan_status wlan_ret_802_11_snmp_mib(IN pmlan_private pmpriv,
             /* Set 11d state to private */
             pmpriv->state_11d.enable_11d = (state_11d_t)ul_temp;
             /* Set user enable flag if called from ioctl */
-            if (pioctl_buf)
+            if (pioctl_buf != NULL)
                 pmpriv->state_11d.user_enable_11d = (state_11d_t)ul_temp;
         }
         /* Update state for 11h */
@@ -146,7 +146,7 @@ static mlan_status wlan_ret_802_11_snmp_mib(IN pmlan_private pmpriv,
         }
     }
 
-    if (pioctl_buf)
+    if (pioctl_buf != NULL)
     {
         /* Indicate ioctl complete */
         pioctl_buf->data_read_written = sizeof(mlan_ds_snmp_mib);
@@ -171,7 +171,7 @@ static mlan_status wlan_ret_get_log(IN pmlan_private pmpriv, IN HostCmd_DS_COMMA
     mlan_ds_get_info *pget_info         = MNULL;
 
     ENTER();
-    if (pioctl_buf)
+    if (pioctl_buf != NULL)
     {
         pget_info                               = (mlan_ds_get_info *)pioctl_buf->pbuf;
         pget_info->param.stats.mcast_tx_frame   = wlan_le32_to_cpu(pget_log->mcast_tx_frame);
@@ -213,7 +213,7 @@ static mlan_status wlan_get_power_level(pmlan_private pmpriv, void *pdata_buf)
 
     ENTER();
 
-    if (pdata_buf)
+    if (pdata_buf != NULL)
     {
         ppg_tlv = (MrvlTypes_Power_Group_t *)((t_u8 *)pdata_buf + sizeof(HostCmd_DS_TXPWR_CFG));
         pg      = (Power_Group_t *)((t_u8 *)ppg_tlv + sizeof(MrvlTypes_Power_Group_t));
@@ -224,7 +224,7 @@ static mlan_status wlan_get_power_level(pmlan_private pmpriv, void *pdata_buf)
             min_power = pg->power_min;
             length -= sizeof(Power_Group_t);
         }
-        while (length)
+        while (length > 0)
         {
             pg++;
             if (max_power < pg->power_max)
@@ -342,8 +342,9 @@ static mlan_status wlan_ret_tx_power_cfg(IN pmlan_private pmpriv,
                     data[2] = pg->power_min;
                     data[3] = pg->power_max;
                     data[4] = pg->power_step;
-                    memcpy(pmpriv->adapter, (t_u8 *)(&power->param.power_ext.power_data[power->param.power_ext.len]),
-                           (t_u8 *)data, sizeof(data));
+                    (void)memcpy(pmpriv->adapter,
+                                 (t_u8 *)(&power->param.power_ext.power_data[power->param.power_ext.len]), (t_u8 *)data,
+                                 sizeof(data));
                     power->param.power_ext.len += 5;
                     pg++;
                     ppg_tlv->length -= sizeof(Power_Group_t);

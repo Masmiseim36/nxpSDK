@@ -132,8 +132,8 @@ static int handle_input(char *inbuf)
     const struct cli_command *command = NULL;
     const char *p;
 
-    memset((void *)&argv, 0, sizeof(argv));
-    memset(&stat, 0, sizeof(stat));
+    (void)memset((void *)&argv, 0, sizeof(argv));
+    (void)memset(&stat, 0, sizeof(stat));
 
     /*
      * Some terminals add CRLF to the input buffer.
@@ -145,7 +145,7 @@ static int handle_input(char *inbuf)
         if (inbuf[j] == 0x0D || inbuf[j] == 0x0A)
         {
             if (j < (INBUF_SIZE - 1))
-                memmove((inbuf + j), inbuf + j + 1, (INBUF_SIZE - i));
+                (void)memmove((inbuf + j), inbuf + j + 1, (INBUF_SIZE - i));
             inbuf[INBUF_SIZE] = 0x00;
         }
     }
@@ -155,7 +155,7 @@ static int handle_input(char *inbuf)
         switch (inbuf[i])
         {
             case '\0':
-                if (stat.inQuote)
+                if (stat.inQuote != 0U)
                     return 2;
                 stat.done = 1;
                 break;
@@ -163,7 +163,7 @@ static int handle_input(char *inbuf)
             case '"':
                 if (i > 0 && inbuf[i - 1] == '\\' && stat.inArg)
                 {
-                    memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
+                    (void)memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
                     --i;
                     break;
                 }
@@ -185,12 +185,15 @@ static int handle_input(char *inbuf)
                     stat.inQuote = 0;
                     inbuf[i]     = '\0';
                 }
+                else
+                { /* Do Nothing */
+                }
                 break;
 
             case ' ':
                 if (i > 0 && inbuf[i - 1] == '\\' && stat.inArg)
                 {
-                    memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
+                    (void)memcpy(&inbuf[i - 1], &inbuf[i], strlen(&inbuf[i]) + 1);
                     --i;
                     break;
                 }
@@ -212,14 +215,14 @@ static int handle_input(char *inbuf)
         }
     } while (!stat.done && ++i < INBUF_SIZE);
 
-    if (stat.inQuote)
+    if (stat.inQuote != 0U)
         return 2;
 
     if (argc < 1)
         return 0;
 
     if (!cli.echo_disabled)
-        PRINTF("\r\n");
+        (void)PRINTF("\r\n");
 
     /*
      * Some comamands can allow extensions like foo.a, foo.b and hence
@@ -243,7 +246,7 @@ static void tab_complete(char *inbuf, unsigned int *bp)
     int i, n, m;
     const char *fm = NULL;
 
-    PRINTF("\r\n");
+    (void)PRINTF("\r\n");
 
     /* show matching commands */
     for (i = 0, n = 0, m = 0; i < MAX_COMMANDS && n < cli.num_commands; i++)
@@ -256,9 +259,9 @@ static void tab_complete(char *inbuf, unsigned int *bp)
                 if (m == 1)
                     fm = cli.commands[i]->name;
                 else if (m == 2)
-                    PRINTF("%s %s ", fm, cli.commands[i]->name);
+                    (void)PRINTF("%s %s ", fm, cli.commands[i]->name);
                 else
-                    PRINTF("%s ", cli.commands[i]->name);
+                    (void)PRINTF("%s ", cli.commands[i]->name);
             }
             n++;
         }
@@ -270,7 +273,7 @@ static void tab_complete(char *inbuf, unsigned int *bp)
         n = strlen(fm) - *bp;
         if (*bp + n < INBUF_SIZE)
         {
-            memcpy(inbuf + *bp, fm + *bp, n);
+            (void)memcpy(inbuf + *bp, fm + *bp, n);
             *bp += n;
             inbuf[(*bp)++] = ' ';
             inbuf[*bp]     = '\0';
@@ -278,7 +281,7 @@ static void tab_complete(char *inbuf, unsigned int *bp)
     }
 
     /* just redraw input line */
-    PRINTF("%s%s", PROMPT, inbuf);
+    (void)PRINTF("%s%s", PROMPT, inbuf);
 }
 
 enum
@@ -303,7 +306,7 @@ static int get_input(char *inbuf, unsigned int *bp)
 
     // wmstdio_flush();
 
-    while (1)
+    while (true)
     {
         inbuf[*bp] = GETCHAR();
         if (state == EXT_KEY_SECOND_SYMBOL)
@@ -358,7 +361,7 @@ static int get_input(char *inbuf, unsigned int *bp)
             {
                 (*bp)--;
                 if (!cli.echo_disabled)
-                    PRINTF("%c %c", 0x08, 0x08);
+                    (void)PRINTF("%c %c", 0x08, 0x08);
             }
             continue;
         }
@@ -371,13 +374,13 @@ static int get_input(char *inbuf, unsigned int *bp)
         }
 
         if (!cli.echo_disabled)
-            PRINTF("%c", inbuf[*bp]);
+            (void)PRINTF("%c", inbuf[*bp]);
 
         (*bp)++;
         if (*bp >= INBUF_SIZE)
         {
-            PRINTF("Error: input buffer overflow\r\n");
-            PRINTF(PROMPT);
+            (void)PRINTF("Error: input buffer overflow\r\n");
+            (void)PRINTF(PROMPT);
             *bp = 0;
             return 0;
         }
@@ -393,20 +396,20 @@ static void print_bad_command(char *cmd_string)
     if (cmd_string != NULL)
     {
         unsigned char *c = (unsigned char *)cmd_string;
-        PRINTF("command '");
+        (void)PRINTF("command '");
         while (*c != '\0')
         {
-            if (isprint(*c))
+            if (isprint(*c) != 0)
             {
-                PRINTF("%c", *c);
+                (void)PRINTF("%c", *c);
             }
             else
             {
-                PRINTF("\\0x%x", *c);
+                (void)PRINTF("\\0x%x", *c);
             }
             ++c;
         }
-        PRINTF("' not found\r\n");
+        (void)PRINTF("' not found\r\n");
     }
 }
 
@@ -432,7 +435,7 @@ static void console_tick(void)
         cli.inbuf         = NULL;
         if (ret != WM_SUCCESS)
         {
-            PRINTF(
+            (void)PRINTF(
                 "Error: problem sending cli message"
                 "\r\n");
         }
@@ -451,7 +454,7 @@ static void console_tick(void)
 static void cli_main(os_thread_arg_t data)
 {
     os_mutex_get(&cli_mutex, OS_WAIT_FOREVER);
-    while (1)
+    while (true)
     {
         int ret;
         char *msg;
@@ -462,7 +465,7 @@ static void cli_main(os_thread_arg_t data)
         {
             if (ret == WM_E_BADF)
             {
-                PRINTF(
+                (void)PRINTF(
                     "Error: CLI fatal queue error."
                     "\r\n");
                 /* Special case fatal errors.  Shouldn't happen. If it does
@@ -490,8 +493,11 @@ static void cli_main(os_thread_arg_t data)
             if (ret == 1)
                 print_bad_command(msg);
             else if (ret == 2)
-                PRINTF("syntax error\r\n");
-            PRINTF(PROMPT);
+                (void)PRINTF("syntax error\r\n");
+            else
+            { /* Do Nothing */
+            }
+            (void)PRINTF(PROMPT);
             /* done with it, clean up the message (we own it) */
             cli_mem_free(&msg);
         }
@@ -518,7 +524,7 @@ static int __cli_cleanup(void)
 
     if (cli_remove_UART_Tick() != WM_SUCCESS)
     {
-        PRINTF(
+        (void)PRINTF(
             "Error: could not remove UART Tick function."
             "\r\n");
         final = -WM_FAIL;
@@ -527,7 +533,7 @@ static int __cli_cleanup(void)
     ret = cli_submit_cmd_buffer(&halt_msg);
     if (ret != WM_SUCCESS)
     {
-        PRINTF(
+        (void)PRINTF(
             "Error: problem sending cli message"
             "\r\n");
     }
@@ -535,11 +541,11 @@ static int __cli_cleanup(void)
     ret = os_queue_delete(&cli.input_queue);
     if (ret != WM_SUCCESS)
     {
-        PRINTF("Warning: failed to delete queue.\r\n");
+        (void)PRINTF("Warning: failed to delete queue.\r\n");
         final = -WM_FAIL;
     }
 
-    if (cli.inbuf)
+    if (cli.inbuf != NULL)
         cli_mem_free(&cli.inbuf);
 
     ret = cli_mem_cleanup();
@@ -551,7 +557,7 @@ static int __cli_cleanup(void)
     ret = os_thread_delete(&cli_main_thread);
     if (ret != WM_SUCCESS)
     {
-        PRINTF("Warning: failed to delete thread.\r\n");
+        (void)PRINTF("Warning: failed to delete thread.\r\n");
         final = -WM_FAIL;
     }
     os_mutex_put(&cli_mutex);
@@ -577,7 +583,7 @@ int cli_start(void)
     ret = os_thread_create(&cli_main_thread, "cli", cli_main, 0, &cli_stack, OS_PRIO_3);
     if (ret != WM_SUCCESS)
     {
-        PRINTF("Error: Failed to create cli thread: %d\r\n", ret);
+        (void)PRINTF("Error: Failed to create cli thread: %d\r\n", ret);
         return -WM_FAIL;
     }
 
@@ -589,7 +595,7 @@ int cli_start(void)
     ret = os_queue_create(&cli.input_queue, "cli_queue", sizeof(void *), &cli.in_queue_data);
     if (ret != WM_SUCCESS)
     {
-        PRINTF("Error: Failed to create cli queue: %d\r\n", ret);
+        (void)PRINTF("Error: Failed to create cli queue: %d\r\n", ret);
         return -WM_FAIL;
     }
     cli.initialized = true;
@@ -630,11 +636,11 @@ int cli_submit_cmd_buffer(char **buff)
 
     if (buff == NULL)
     {
-        PRINTF("Error: release_cmd_buffer given NULL buff\r\n");
+        (void)PRINTF("Error: release_cmd_buffer given NULL buff\r\n");
         return -WM_FAIL;
     }
 
-    if (cli.initialized)
+    if (cli.initialized != 0)
     {
         ret = os_queue_send(&cli.input_queue, (void *)buff, SEND_WAIT);
     }
@@ -652,12 +658,12 @@ void help_command(int argc, char **argv)
 {
     int i, n;
 
-    PRINTF("\r\n");
+    (void)PRINTF("\r\n");
     for (i = 0, n = 0; i < MAX_COMMANDS && n < cli.num_commands; i++)
     {
-        if (cli.commands[i]->name)
+        if (cli.commands[i]->name != NULL)
         {
-            PRINTF("%s %s\r\n", cli.commands[i]->name, cli.commands[i]->help ? cli.commands[i]->help : "");
+            (void)PRINTF("%s %s\r\n", cli.commands[i]->name, cli.commands[i]->help ? cli.commands[i]->help : "");
             n++;
         }
     }
@@ -667,19 +673,19 @@ void help_command(int argc, char **argv)
 static void echo_cmd_handler(int argc, char **argv)
 {
 	if (argc == 1) {
-		PRINTF("Usage: echo on/off. Echo is currently %s\r\n",
+		(void)PRINTF("Usage: echo on/off. Echo is currently %s\r\n",
 			 cli.echo_disabled ? "Disabled" : "Enabled");
 		return;
 	}
 
 	if (!strcasecmp(argv[1], "on")) {
-		PRINTF("Enable echo\r\n");
+		(void)PRINTF("Enable echo\r\n");
 		cli.echo_disabled = false;
 	} else if (!strcasecmp(argv[1], "off")) {
-		PRINTF("Disable echo\r\n");
+		(void)PRINTF("Disable echo\r\n");
 		cli.echo_disabled = true;
 	} else
-		PRINTF("Usage: echo on/off. Echo is currently %s\r\n",
+		(void)PRINTF("Usage: echo on/off. Echo is currently %s\r\n",
 			 cli.echo_disabled ? "Disabled" : "Enabled");
 }
 
@@ -742,7 +748,7 @@ int cli_unregister_command(const struct cli_command *command)
             int remaining_cmds = cli.num_commands - i;
             if (remaining_cmds > 0)
             {
-                memmove(&cli.commands[i], &cli.commands[i + 1], (remaining_cmds * sizeof(struct cli_command *)));
+                (void)memmove(&cli.commands[i], &cli.commands[i + 1], (remaining_cmds * sizeof(struct cli_command *)));
             }
             cli.commands[cli.num_commands] = NULL;
             return 0;
@@ -756,7 +762,7 @@ int cli_register_commands(const struct cli_command *commands, int num_commands)
 {
     int i;
     for (i = 0; i < num_commands; i++)
-        if (cli_register_command(commands++))
+        if (cli_register_command(commands++) != 0)
             return 1;
     return 0;
 }
@@ -765,7 +771,7 @@ int cli_unregister_commands(const struct cli_command *commands, int num_commands
 {
     int i;
     for (i = 0; i < num_commands; i++)
-        if (cli_unregister_command(commands++))
+        if (cli_unregister_command(commands++) != 0)
             return 1;
 
     return 0;
@@ -777,17 +783,17 @@ int cli_init(void)
     if (cli_init_done)
         return WM_SUCCESS;
 
-    memset((void *)&cli, 0, sizeof(cli));
+    (void)memset((void *)&cli, 0, sizeof(cli));
     cli.input_enabled = 1;
     cli.in_queue_data = queue_data;
 
     /* add our built-in commands */
-    if (cli_register_commands(&built_ins[0], sizeof(built_ins) / sizeof(struct cli_command)))
+    if (cli_register_commands(&built_ins[0], sizeof(built_ins) / sizeof(struct cli_command)) != 0)
         return -WM_FAIL;
 
     if (cli_install_UART_Tick() != WM_SUCCESS)
     {
-        PRINTF(
+        (void)PRINTF(
             "Error: could not install UART Tick function."
             "\r\n");
         return -WM_FAIL;

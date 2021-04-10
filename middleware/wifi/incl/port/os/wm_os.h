@@ -1490,7 +1490,7 @@ static inline void *os_mem_calloc(size_t size)
 {
     void *ptr = pvPortMalloc(size);
     if (ptr)
-        memset(ptr, 0x00, size);
+        (void)memset(ptr, 0x00, size);
 
     return ptr;
 }
@@ -1529,7 +1529,7 @@ static inline void *os_mem_alloc(size_t size)
 {
     void *ptr = pvPortMalloc(size);
     if (ptr)
-        PRINTF("MDC:A:%x:%d\r\n", ptr, size);
+        (void)PRINTF("MDC:A:%x:%d\r\n", ptr, size);
     return ptr;
 }
 /** This function allocates memory dynamically and
@@ -1544,8 +1544,8 @@ static inline void *os_mem_calloc(size_t size)
     void *ptr = pvPortMalloc(size);
     if (ptr)
     {
-        PRINTF("MDC:A:%x:%d\r\n", ptr, size);
-        memset(ptr, 0x00, size);
+        (void)PRINTF("MDC:A:%x:%d\r\n", ptr, size);
+        (void)memset(ptr, 0x00, size);
     }
 
     return ptr;
@@ -1564,7 +1564,7 @@ static inline void *os_mem_realloc(void *ptr, size_t size)
 {
     void *new_ptr = pvPortReAlloc(ptr, size);
     if (new_ptr)
-        PRINTF("MDC:R:%x:%x:%d\r\n", ptr, new_ptr, size);
+        (void)PRINTF("MDC:R:%x:%x:%d\r\n", ptr, new_ptr, size);
 
     return new_ptr;
 }
@@ -1574,7 +1574,7 @@ static inline void *os_mem_realloc(void *ptr, size_t size)
 static inline void os_mem_free(void *ptr)
 {
     vPortFree(ptr);
-    PRINTF("MDC:F:%x\r\n", ptr);
+    (void)PRINTF("MDC:F:%x\r\n", ptr);
 }
 #endif /* CONFIG_HEAP_DEBUG */
 
@@ -1588,14 +1588,14 @@ static inline void os_dump_mem_stats(void)
     HeapStats_t HS;
     vPortGetHeapStats(&HS);
 
-    PRINTF("\n\r");
-    PRINTF("Heap size ---------------------- : %d\n\r", HS.xAvailableHeapSpaceInBytes);
-    PRINTF("Largest Free Block size ---------: %d\n\r", HS.xSizeOfLargestFreeBlockInBytes);
-    PRINTF("Smallest Free Block size ------- : %d\n\r", HS.xSizeOfSmallestFreeBlockInBytes);
-    PRINTF("Number of Free Blocks ---------- : %d\n\r", HS.xNumberOfFreeBlocks);
-    PRINTF("Total successful allocations --- : %d\n\r", HS.xNumberOfSuccessfulAllocations);
-    PRINTF("Total successful frees --------- : %d\n\r", HS.xNumberOfSuccessfulFrees);
-    PRINTF("Min Free since system boot ----- : %d\n\r", HS.xMinimumEverFreeBytesRemaining);
+    (void)PRINTF("\n\r");
+    (void)PRINTF("Heap size ---------------------- : %d\n\r", HS.xAvailableHeapSpaceInBytes);
+    (void)PRINTF("Largest Free Block size ---------: %d\n\r", HS.xSizeOfLargestFreeBlockInBytes);
+    (void)PRINTF("Smallest Free Block size ------- : %d\n\r", HS.xSizeOfSmallestFreeBlockInBytes);
+    (void)PRINTF("Number of Free Blocks ---------- : %d\n\r", HS.xNumberOfFreeBlocks);
+    (void)PRINTF("Total successful allocations --- : %d\n\r", HS.xNumberOfSuccessfulAllocations);
+    (void)PRINTF("Total successful frees --------- : %d\n\r", HS.xNumberOfSuccessfulFrees);
+    (void)PRINTF("Min Free since system boot ----- : %d\n\r", HS.xMinimumEverFreeBytesRemaining);
     //#endif /* FREERTOS_ENABLE_MALLOC_STATS */
     os_exit_critical_section(sta);
 }

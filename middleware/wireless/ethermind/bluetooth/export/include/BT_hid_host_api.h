@@ -18,8 +18,29 @@
 /* ----------------------------------- Header File Inclusion */
 #include "BT_common.h"
 
+/**
+ * \addtogroup bt_profiles Profiles
+ * \{
+ */
+/**
+ * \defgroup  hid_host_module  HID Host(Human Interface Device Profile - Host)
+ * \{
+ *  This section describes the interfaces & APIs offered by the EtherMind
+ *  Human Interface Device Profile Host module to the Application and other upper
+ *  layers of the stack.
+ */
 /* ----------------------------------- Type Definitions */
 
+/**
+ * \defgroup  hid_host_defines Defines
+ * \{
+ * Describes defines for HID Host module.
+ */
+/**
+ * \defgroup hid_host_constants Constants
+ * \{
+ * Describes Constants defined by the module.
+ */
 /**
  * This value is the default Transmit MTU used in the Connection API when
  * it is set to 0 by the application.
@@ -116,7 +137,12 @@
 #define     HID_HOST_GET_IDLE_RSP               0x08
 #define     HID_HOST_SET_IDLE_RSP               0x09
 #define     HID_HOST_VIRTUAL_CABLE_UNPLUG_IND   0x0A
-
+/** \} */
+/**
+ * \defgroup hid_host_structures Structures
+ * \{
+ * Describes Structures defined by the module.
+ */
 /**
  * Data type to associate a unique handle with HID Host instance
  */
@@ -159,13 +185,13 @@ typedef UCHAR HID_HOST_MSG_TYPE;
  */
 typedef struct
 {
-    /* The report data */
+    /** The report data */
     UCHAR            report[BT_HID_HOST_MAX_REPORT_LEN];
 
-    /* The length of the Report */
+    /** The length of the Report */
     UINT16           report_len;
 
-    /* The type of the report */
+    /** The type of the report */
     HID_REPORT_TYPE  report_type;
 
 } HID_HOST_REPORT;
@@ -193,13 +219,18 @@ typedef void ( *HID_HOST_EVENT_IND_CALLBACK )
                  UINT16
              );
 
-
+/** \} */
+/** \} */
 /*  --------------------------------------------- HID Host APIs */
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-
+/**
+ * \defgroup hid_host_api_definitios API Definitions
+ * \{
+ * Describes HID Host API definitions of the module.
+ */
 /**
  * This API is used to initialise the HID host module. This must be done
  * before using any other APIs of this module.
@@ -418,6 +449,8 @@ API_RESULT BT_hid_host_send_report_on_interrupt
 #ifdef __cplusplus
 }
 #endif
-
+/** \} */
+/** \} */
+/** \} */
 #endif /* _H_BT_HID_HOST_API_ */
 

@@ -11,11 +11,38 @@
  *  All rights reserved.
  */
 
+/*   Copyright 2008-2020 NXP
+ *
+ *  NXP CONFIDENTIAL
+ *  The source code contained or described herein and all documents related to
+ *  the source code ("Materials") are owned by NXP, its
+ *  suppliers and/or its licensors. Title to the Materials remains with NXP,
+ *  its suppliers and/or its licensors. The Materials contain
+ *  trade secrets and proprietary and confidential information of NXP, its
+ *  suppliers and/or its licensors. The Materials are protected by worldwide copyright
+ *  and trade secret laws and treaty provisions. No part of the Materials may be
+ *  used, copied, reproduced, modified, published, uploaded, posted,
+ *  transmitted, distributed, or disclosed in any way without NXP's prior
+ *  express written permission.
+ *
+ *  No license under any patent, copyright, trade secret or other intellectual
+ *  property right is granted to or conferred upon you by disclosure or delivery
+ *  of the Materials, either expressly, by implication, inducement, estoppel or
+ *  otherwise. Any license under such intellectual property rights must be
+ *  express and approved by NXP in writing.
+ *
+ */
+
 #ifndef _H_BT_HCI_API_
 #define _H_BT_HCI_API_
 
 /* =================================================== Header File Inclusion */
 #include "BT_common.h"
+
+/**
+ * \addtogroup bt_protocol Protocols
+ * \{
+ */
 /**
  * \defgroup  hci_module  HCI (Host Controller Interface)
  * \{
@@ -23,7 +50,7 @@
  *  Host Controller Interface module to the Application and other upper
  *  layers of the stack.
  */
- 
+
 /**
  * \defgroup hci_defines Defines
  * \{
@@ -522,6 +549,7 @@
 #define HCI_CREATE_CONNECTION_CANCEL_OPCODE                     0x0408
 #define HCI_REMOTE_NAME_REQUEST_CANCEL_OPCODE                   0x041A
 #define HCI_READ_REMOTE_EXTENDED_FEATURES_OPCODE                0x041C
+#define HCI_READ_LMP_HANDLE_OPCODE                              0x0420
 #define HCI_SETUP_SYNCHRONOUS_CONNECTION_OPCODE                 0x0428
 #define HCI_ACCEPT_SYNCHRONOUS_CONNECTION_REQUEST_OPCODE        0x0429
 #define HCI_REJECT_SYNCHRONOUS_CONNECTION_REQUEST_OPCODE        0x042A
@@ -720,6 +748,10 @@
 #define HCI_READ_LOCAL_EXTENDED_FEATURES_OPCODE                 0x1004
 #endif /* BT_HCI_1_2 */
 
+#ifdef BT_3_0
+#define HCI_READ_DATA_BLOCK_SIZE_OPCODE                         0x100A
+#endif /* BT_3_0 */
+
 #ifdef HCI_ENH_SCO
 #define HCI_READ_LOCAL_SUPPORTED_CODECS_OPCODE                  0x100B
 #endif /* HCI_ENH_SCO */
@@ -801,11 +833,25 @@
 #define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_RECEIVE_OPCODE           0x0442
 #define HCI_START_SYNCHRONIZATION_TRAIN_OPCODE                          0x0443
 #define HCI_RECEIVE_SYNCHRONIZATION_TRAIN_OPCODE                        0x0444
+#define HCI_REMOTE_OOB_EXTENDED_DATA_REQUEST_REPLY_OPCODE               0x0445
+#define HCI_SET_MWS_CHANNEL_PARAMETERS_OPCODE                           0x0C6E
+#define HCI_SET_EXTERNAL_FRAME_CONFIGURATION_OPCODE                     0x0C6F
+#define HCI_SET_MWS_SIGNALING_OPCODE                                    0x0C70
+#define HCI_SET_MWS_TRANSPORT_LAYER_OPCODE                              0x0C71
+#define HCI_SET_MWS_SCAN_FREQUENCY_TABLE_OPCODE                         0x0C72
+#define HCI_SET_MWS_PATTERN_CONFIGURATION_OPCODE                        0x0C73
 #define HCI_SET_RESERVED_LT_ADDR_OPCODE                                 0x0C74
 #define HCI_DELETE_RESERVED_LT_ADDR_OPCODE                              0x0C75
 #define HCI_SET_CONNECTIONLESS_SLAVE_BROADCAST_DATA_OPCODE              0x0C76
 #define HCI_READ_SYNCHRONIZATION_TRAIN_PARAMETERS_OPCODE                0x0C77
 #define HCI_WRITE_SYNCHRONIZATION_TRAIN_PARAMETERS_OPCODE               0x0C78
+#define HCI_READ_LOCAL_OOB_EXTENDED_DATA_OPCODE                         0x0C7D
+#define HCI_READ_EXTENDED_PAGE_TIMEOUT_OPCODE                           0x0C7E
+#define HCI_WRITE_EXTENDED_PAGE_TIMEOUT_OPCODE                          0x0C7F
+#define HCI_READ_EXTENDED_INQUIRY_LENGTH_OPCODE                         0x0C80
+#define HCI_WRITE_EXTENDED_INQUIRY_LENGTH_OPCODE                        0x0C81
+#define HCI_GET_MWS_TRANSPORT_LAYER_CONFIGURATION_OPCODE                0x140C
+#define HCI_SET_TRIGGERED_CLOCK_CAPTURE_OPCODE                          0x140D
 #endif /* BT_4_1 */
 
 /* BT 4.2 Specification */
@@ -865,6 +911,7 @@
 #endif /* BT_5_0 */
 
 #ifdef BT_5_1
+#define HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_OPCODE                    0x100C
 /* HCI LE Connection Oriented AOA and Connectionless AOD related defines */
 #define HCI_LE_RECEIVER_TEST_V3_OPCODE                                  0x204F
 #define HCI_LE_TRANSMITTER_TEST_V3_OPCODE                               0x2050
@@ -1521,12 +1568,12 @@ API_RESULT hci_write_command_BD_ADDR_with_TYPE
  *  \brief To register the HCI Event Indication Callback of Application with HCI
  *
  *  \par Description:
- *       This API is for registering the HCI Event Indication Callback. 
+ *       This API is for registering the HCI Event Indication Callback.
  *       The callback Function Pointer cannot be NULL. Reregistration of the
  *       event handler is not allowed.
  *
  *  \param [in] callback_ptr
- *         Function Pointer to application callback 
+ *         Function Pointer to application callback
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -1545,12 +1592,12 @@ API_RESULT BT_hci_register_event_indication_callback
  *  \brief To register the HCI Error Indication Callback of Application with HCI
  *
  *  \par Description:
- *       This API is for registering the HCI Error Indication Callback. 
+ *       This API is for registering the HCI Error Indication Callback.
  *       The callback Function Pointer cannot be NULL. Reregistration of the
  *       event handler is not allowed.
  *
  *  \param [in] callback_ptr
- *         Function Pointer to application callback 
+ *         Function Pointer to application callback
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -1570,12 +1617,12 @@ API_RESULT BT_hci_register_error_indication_callback
  *  \brief To register the HCI SCO data handler of Application with HCI
  *
  *  \par Description:
- *       This API is for registering the HCI SCO data handler. 
+ *       This API is for registering the HCI SCO data handler.
  *       The callback Function Pointer cannot be NULL. Reregistration of the
  *       event handler is not allowed.
  *
  *  \param [in] callback_ptr
- *         Function Pointer to application HCI SCO data handler 
+ *         Function Pointer to application HCI SCO data handler
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -1593,21 +1640,21 @@ API_RESULT BT_hci_register_sco_data_handler
  *
  *  \par Description:
  *       This API sets the Role that the local Bluetooth device will attempt
- *       to assume, either Master or Slave, for all new ACL connection that 
+ *       to assume, either Master or Slave, for all new ACL connection that
  *       is remotely initiated from a particular specified, or, all remote
  *       Bluetooth device(s).
  *
  *  \param [in] bd_addr
- *         The Bluetooth Device Address of a remote Bluetooth device if the 
+ *         The Bluetooth Device Address of a remote Bluetooth device if the
  *         Role parameter is to  be specified for a particular remote
- *         Bluetooth device. If this parameter is set to NULL, then the 
- *         Role parameter is applied to incoming ACL connections from all 
+ *         Bluetooth device. If this parameter is set to NULL, then the
+ *         Role parameter is applied to incoming ACL connections from all
  *         remote Bluetooth devices.
  *
  *  \param [in] Role
  *         The value of the Device Role parameter to be set in HCI layer
  *         Valid values are:
- *         Value 0x00 – be Master.
+ *         Value 0x00 - be Master.
  *         Value 0x01 - be Slave (Default).
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -1619,7 +1666,7 @@ API_RESULT BT_hci_set_device_role
                UCHAR    role
            );
 /**
- *  \brief To retrieve the BD_ADDR of the local Bluetooth device, as stored in 
+ *  \brief To retrieve the BD_ADDR of the local Bluetooth device, as stored in
  *         the HCI module.
  *
  *  \par Description:
@@ -1637,12 +1684,12 @@ API_RESULT BT_hci_get_local_bd_addr
                UCHAR *  bd_addr
            );
 /**
- *  \brief To retrieve the ACL Connection Handle for a specified 
+ *  \brief To retrieve the ACL Connection Handle for a specified
  *         Bluetooth Device Address.
  *
  *  \par Description:
- *       This API retrieves the ACL Connection Handle, if one exists, 
- *       for a specified Remote Bluetooth device as given by the 
+ *       This API retrieves the ACL Connection Handle, if one exists,
+ *       for a specified Remote Bluetooth device as given by the
  *       BD_ADDR parameter.
  *
  *  \param [in] bd_addr
@@ -1666,11 +1713,11 @@ API_RESULT BT_hci_get_acl_connection_handle
  *         Bluetooth Device Address.
  *
  *  \par Description:
- *       This API retrieves the SCO Connection Handles for a remote 
+ *       This API retrieves the SCO Connection Handles for a remote
  *       Bluetooth device, if one exists.
  *
  *  \param [in] bd_addr
- *         The remote Bluetooth Device Address for which the SCO Connection 
+ *         The remote Bluetooth Device Address for which the SCO Connection
  *         Handles have to be retrieved.
  *
  *  \param [out] handle
@@ -1693,14 +1740,14 @@ API_RESULT BT_hci_get_sco_connection_handle
  *  \par Description:
  *       This API can be used to retrieve the details of the active ACL, SCO and
  *       eSCO connections to all remote Bluetooth devices from the HCI module.
- *       The details, that can be retrieved using this API, include 
- *       ACL connection status, ACL handle and the SCO/eSCO Connection Handles 
- *       for every remote Bluetooth device.The Connection Handle values are set 
- *       to 0xFFFF, if they are invalid, and these should be interpreted as 
+ *       The details, that can be retrieved using this API, include
+ *       ACL connection status, ACL handle and the SCO/eSCO Connection Handles
+ *       for every remote Bluetooth device.The Connection Handle values are set
+ *       to 0xFFFF, if they are invalid, and these should be interpreted as
  *       non-existent ACL/SCO/eSCO links.
  *
  *  \param [in] num_allocated
- *         Array size of the hci_conn_list allocated by the caller. 
+ *         Array size of the hci_conn_list allocated by the caller.
  *         This parameter must be less than HCI_MAX_REMOTE_DEVICES.
  *
  *  \param [out] hci_conn_list
@@ -1710,10 +1757,10 @@ API_RESULT BT_hci_get_sco_connection_handle
  *
  *  \param [out] Num_present
  *         Pointer to a caller allocated UCHAR variable that is populated by HCI
- *         to denote actual number of location filled in hci_conn_list. This 
+ *         to denote actual number of location filled in hci_conn_list. This
  *         value will less than or equal to num_allocated.
- *         When num_allocated is greater than HCI_MAX_REMOTE_DEVICES, the API 
- *         will provide connection information for a maximum of 
+ *         When num_allocated is greater than HCI_MAX_REMOTE_DEVICES, the API
+ *         will provide connection information for a maximum of
  *         HCI_MAX_REMOTE_DEVICES elements only.
  *
  *  \return
@@ -1735,7 +1782,7 @@ API_RESULT BT_hci_get_connection_details
  *       This API is used to get the own BD address used in the connection.
  *
  *  \param [in] remote_bd_addr
- *         The variable passed by the user which conatins remote device 
+ *         The variable passed by the user which conatins remote device
  *         BD address.
  *
  *  \param [in] remote_bd_addr_type
@@ -1746,7 +1793,7 @@ API_RESULT BT_hci_get_connection_details
  *         The variable passed by the user into which the BD address is copied.
  *
  *  \param [out] bd_addr_type
- *         The variable passed by the user into which the BD address type is 
+ *         The variable passed by the user into which the BD address type is
  *         copied.
  *
  *  \return
@@ -1763,16 +1810,16 @@ API_RESULT BT_hci_own_conn_bd_address
  *  \brief To decode a given HCI Command Opcode.
  *
  *  \par Description:
- *       This utility API decodes a given HCI Command Opcode into OCF & OGF 
- *       values. For more on OCF, OGF and HCI Command Opcode, please refer to 
- *       the Specification of the Bluetooth System, v1.2, Vol. 2, Part E – Host 
+ *       This utility API decodes a given HCI Command Opcode into OCF & OGF
+ *       values. For more on OCF, OGF and HCI Command Opcode, please refer to
+ *       the Specification of the Bluetooth System, v1.2, Vol. 2, Part E - Host
  *       Controller Interface Functional Specification, Section 5.4.1.
  *
  *  \param [in] opcode
  *         The HCI Command Opcode to be decoded.
  *
  *  \param [out] Parameters
- *         Pointer to a HCI_OPCODE type variable containing OCF & OGF values, 
+ *         Pointer to a HCI_OPCODE type variable containing OCF & OGF values,
  *         onto which decoded values will be copied.
  *
  *  \return
@@ -1785,22 +1832,22 @@ API_RESULT BT_hci_decode_opcode
                HCI_OPCODE *  hci_opcode
            );
 /**
- *  \brief To decode a HCI Inquiry response Bytes. 
+ *  \brief To decode a HCI Inquiry response Bytes.
  *
  *  \par Description:
- *       This utility API decodes a given Inquiry Result Bytes into HCI Inquiry 
+ *       This utility API decodes a given Inquiry Result Bytes into HCI Inquiry
  *       Result parameters. Each HCI Inquiry Result consists of 14 bytes
  *       containing the BD_ADDR, various Page Scan Modes, Class of Device
- *       and Clock Offset.This API should not be used to decode Inquiry Result 
- *       bytes, if the Inquiry Mode (HCI-1.2 only) is set to return Inquiry 
- *       Result with RSSI Event (see BT_hci_write_inquiry_mode() API). Instead, 
+ *       and Clock Offset.This API should not be used to decode Inquiry Result
+ *       bytes, if the Inquiry Mode (HCI-1.2 only) is set to return Inquiry
+ *       Result with RSSI Event (see BT_hci_write_inquiry_mode() API). Instead,
  *       the BT_hci_decode_inquiry_result_rssi() API should be used.
  *
  *  \param [in] buffer
  *         Pointer to a 14-bytes UCHAR array containing the Inquiry Result bytes.
  *
  *  \param [out] result
- *         Pointer to a HCI_INQUIRY_RESULT type variable onto which decoded 
+ *         Pointer to a HCI_INQUIRY_RESULT type variable onto which decoded
  *         information will be stored.
  *
  *  \return
@@ -1819,9 +1866,9 @@ API_RESULT BT_hci_decode_inquiry_result
  *
  *  \par Description:
  *       This API is used to initiate the initialization of a mask for HCI
- *       commands which disables processing of those selected commands during 
- *       Bluetooth Initialization 
- *       
+ *       commands which disables processing of those selected commands during
+ *       Bluetooth Initialization
+ *
  *  \param [in] command_mask
  *         Mask (Bitmap) for HCI Commands that are allowed to be switched off
  *         (not to be sent) during HCI Bluetooth-ON processing (HCI BT-Init).
@@ -1841,11 +1888,11 @@ API_RESULT BT_hci_set_init_command_mask
  *  \brief To skip Bluetooth Controller Initialization
  *
  *  \par Description:
- *       This API is used to set a global state identifier to skip 
- *       initialization of Bluetooth Controller 
- *       
+ *       This API is used to set a global state identifier to skip
+ *       initialization of Bluetooth Controller
+ *
  *  \param [in] state
- *         The value of state identifier to be set 
+ *         The value of state identifier to be set
  *         Value BT_TRUE - Initialize controller on BT Init
  *         Value BT_FALSE - Skip initialization of Bluetooth Controller
  *
@@ -1859,11 +1906,11 @@ API_RESULT BT_hci_set_controller_init (/* IN */ UCHAR state);
  *  \brief To skip Bluetooth Controller Initialization
  *
  *  \par Description:
- *       This API is used to set a global state identifier to skip 
- *       initialization of Bluetooth Controller 
- *       
+ *       This API is used to set a global state identifier to skip
+ *       initialization of Bluetooth Controller
+ *
  *  \param [in] state
- *         The value of state identifier to be set 
+ *         The value of state identifier to be set
  *         Value BT_TRUE - Initialize controller on BT Init
  *         Value BT_FALSE - Skip initialization of Bluetooth Controller
  *
@@ -1883,20 +1930,20 @@ API_RESULT BT_hci_get_connection_handle
  *  \par Description:
  *       This API is used to get the connection type with respect to a
  *       particular device or connection handle.
- *       
+ *
  *  \param [in] bd_addr
- *         The variable passed by the user which has the BD address of the 
+ *         The variable passed by the user which has the BD address of the
  *         remote device.
  *
  *  \param [in] bd_addr_type
- *         The variable passed by the user which has the BD address type of the 
+ *         The variable passed by the user which has the BD address type of the
  *         remote device.
  *
- *  \param [out] conn_type 
+ *  \param [out] conn_type
  *         The variable into which the connection type is copied.
  *
  *  \return
- *      API_RESULT: 
+ *      API_RESULT:
  *      API_SUCCESS : After the handle is copied.
  *      HCI_STATE_NOT_CONNECTED : If the device is not connected.
  *      HCI_DEVICE_ASSERTION_FAILED : If the device is not found
@@ -1972,20 +2019,20 @@ API_RESULT BT_hci_get_device_role
  *  \brief To decode a given HCI Inquiry Result Bytes with RSSI values.
  *
  *  \par Description:
- *       This utility API decodes a given Inquiry Result Bytes into HCI Inquiry 
- *       Result parameters. Each HCI Inquiry Result consists of 14 bytes 
+ *       This utility API decodes a given Inquiry Result Bytes into HCI Inquiry
+ *       Result parameters. Each HCI Inquiry Result consists of 14 bytes
  *       containing the BD_ADDR, various Page Scan Modes, Class of Device,
- *       Clock Offset, and RSSI. This API should not be used to decode 
- *       Inquiry Result bytes, if the Inquiry Mode (HCI-1.2 only) is set to 
- *       return standard Inquiry Result Event format 
- *       (see BT_hci_write_inquiry_mode() API). 
+ *       Clock Offset, and RSSI. This API should not be used to decode
+ *       Inquiry Result bytes, if the Inquiry Mode (HCI-1.2 only) is set to
+ *       return standard Inquiry Result Event format
+ *       (see BT_hci_write_inquiry_mode() API).
  *       Instead, the BT_hci_decode_inquiry_result() API should be used.
  *
  *  \param [in] buffer
  *         Pointer to a 14-bytes UCHAR array containing the Inquiry Result bytes.
  *
  *  \param [out] result
- *         Pointer to a HCI_INQUIRY_RESULT type variable onto which decoded 
+ *         Pointer to a HCI_INQUIRY_RESULT type variable onto which decoded
  *         information will be stored.
  *
  *  \return
@@ -2001,16 +2048,16 @@ API_RESULT BT_hci_decode_inquiry_result_rssi
  *  \brief To create or update a Synchronous Connection (eSCO).
  *
  *  \par Description:
- *       This API enables Profiles, and Applications, to specify eSCO channel 
- *       parameters, to be used while accepting an incoming eSCO Connection 
+ *       This API enables Profiles, and Applications, to specify eSCO channel
+ *       parameters, to be used while accepting an incoming eSCO Connection
  *       Request using the HCI Accept Synchronous Connection Command.
- *       The EtherMind HCI module automatically accepts incoming SCO connection 
- *       request from the Bluetooth hardware. But for eSCO connection request, 
- *       HCI cannot perform automatic accept since it needs to know choice of 
- *       profile for eSCO channel parameters.The Connection Request Event for 
- *       eSCO is delivered to Profiles on its registered HCI Event Indication 
- *       Callback. The Profile is required to supply HCI with the required eSCO 
- *       channel parameter using this API from the context of the 
+ *       The EtherMind HCI module automatically accepts incoming SCO connection
+ *       request from the Bluetooth hardware. But for eSCO connection request,
+ *       HCI cannot perform automatic accept since it needs to know choice of
+ *       profile for eSCO channel parameters.The Connection Request Event for
+ *       eSCO is delivered to Profiles on its registered HCI Event Indication
+ *       Callback. The Profile is required to supply HCI with the required eSCO
+ *       channel parameter using this API from the context of the
  *       HCI Event Indication Callback.
  *
  *  \param [in] sco_params
@@ -2028,23 +2075,23 @@ API_RESULT BT_hci_set_esco_channel_parameters
 
 #ifdef HCI_ENH_SCO
 /**
- *  \brief To specify Synchronous Connection (eSCO) channel parameters to be 
+ *  \brief To specify Synchronous Connection (eSCO) channel parameters to be
  *         used while accepting eSCO connection request.
  *
  *  \par Description:
  *       This API enables application, to specify eSCO channel parameters, to be
  *       used while accepting an incoming enhanced eSCO Connection Request using
  *       the HCI Accept Enhanced Synchronous Connection Command.
- *       The Connection Request Event for enhanced eSCO is delivered to the 
- *       application on its registered HCI Event Indication Callback. 
- *       The application is required to supply HCI with the required 
+ *       The Connection Request Event for enhanced eSCO is delivered to the
+ *       application on its registered HCI Event Indication Callback.
+ *       The application is required to supply HCI with the required
  *       eSCO channel parameter using this API from the context of the HCI Event
  *       Indication Callback.
  *
  *  \param [in] sco_params
- *         Pointer to caller allocated HCI_ENH_SCO_PARAMS variable containing 
- *         the input parameters for negotiating the new or existing synchronous 
- *         link.         
+ *         Pointer to caller allocated HCI_ENH_SCO_PARAMS variable containing
+ *         the input parameters for negotiating the new or existing synchronous
+ *         link.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -2073,38 +2120,38 @@ API_RESULT BT_hci_sco_write
 
 #ifndef HCI_LITE
 /**
- *  \brief To initiate/perform Bluetooth Device Inquiry/Discovery. 
+ *  \brief To initiate/perform Bluetooth Device Inquiry/Discovery.
  *
  *  \par Description:
- *       This API initiates/performs the Bluetooth Device Inquiry/Discovery for 
- *       the specified Inquiry Length and Number of Responses, and with the 
- *       specified LAP (Lower Address Part) from which the local Bluetooth 
+ *       This API initiates/performs the Bluetooth Device Inquiry/Discovery for
+ *       the specified Inquiry Length and Number of Responses, and with the
+ *       specified LAP (Lower Address Part) from which the local Bluetooth
  *       device derives the Inquiry Access Code (IAC).
- *       The local Bluetooth device starts the Bluetooth Inquiry on reception 
- *       of the HCI Inquiry Command, and sends a Command Status Event to the 
- *       HCI. At the end of the Inquiry process, the Inquiry Complete Event is 
- *       received. Between these two events, none, one or more Inquiry Results 
- *       Event may be received, when one or more remote Bluetooth devices 
- *       respond to the Inquiry process initiated by the local Bluetooth 
- *       device. This API must not be called if the local Bluetooth device is 
- *       in the process of establishing a connection with another Bluetooth 
- *       device. A remote Bluetooth device will respond to Inquiry procedure 
+ *       The local Bluetooth device starts the Bluetooth Inquiry on reception
+ *       of the HCI Inquiry Command, and sends a Command Status Event to the
+ *       HCI. At the end of the Inquiry process, the Inquiry Complete Event is
+ *       received. Between these two events, none, one or more Inquiry Results
+ *       Event may be received, when one or more remote Bluetooth devices
+ *       respond to the Inquiry process initiated by the local Bluetooth
+ *       device. This API must not be called if the local Bluetooth device is
+ *       in the process of establishing a connection with another Bluetooth
+ *       device. A remote Bluetooth device will respond to Inquiry procedure
  *       only if it has its Inquiry Scan enabled.
- *        
+ *
  *  \param [in] lap
- *         This is the Lower Address Part from which the Bluetooth Hardware 
+ *         This is the Lower Address Part from which the Bluetooth Hardware
  *         should derive Inquiry Access Code when the Inquiry procedure is made.
  *         Few of the commonly used values are defined in BT_assigned_numbers.h:
- *         * BT_GIAC – The General Inquiry Access Code (0x9E8B33)
- *         * BT_LIAC – The Limited Inquiry Access Code (0x9E8B30)
+ *         * BT_GIAC - The General Inquiry Access Code (0x9E8B33)
+ *         * BT_LIAC - The Limited Inquiry Access Code (0x9E8B30)
  *
  *  \param [in] inquiry_length
- *         Maximum amount of time specified before the Inquiry is halted.      
+ *         Maximum amount of time specified before the Inquiry is halted.
  *         Value Range: 0x01 to 0x30. Inquiry Time = inquiry_length * 1.28 Sec.
- * 
+ *
  *  \param [in] Num_responses
  *         Maximum number of responses from the Inquiry before the Inquiry is
- *         halted. Range: 0x00 – 0xFF. A value 0f 0x00 means unlimited number
+ *         halted. Range: 0x00 - 0xFF. A value 0f 0x00 means unlimited number
  *         of responses.
  *
  *  \return
@@ -2121,51 +2168,51 @@ API_RESULT BT_hci_inquiry
 #define BT_hci_inquiry_cancel() \
         hci_common_api_handler_no_params (HCI_INQUIRY_CANCEL_OPCODE)
 /**
- *  \brief To initiate/perform Bluetooth Device Inquiry/Discovery. 
+ *  \brief To initiate/perform Bluetooth Device Inquiry/Discovery.
  *
  *  \par Description:
- *       This API can be used to configure the local Bluetooth device to enter 
+ *       This API can be used to configure the local Bluetooth device to enter
  *       the Periodic Inquiry Mode that performs automatic Inquiries at periodic
  *       intervals. Maximum and Minimum Period Lengths define the time range
  *       between two consecutive inquiries. The Bluetooth Controller uses this
  *       range to determine a new random time between two consecutive inquiries
  *       for each Inquiry.
- *       The local Bluetooth device starts the periodic Bluetooth Inquiry on 
+ *       The local Bluetooth device starts the periodic Bluetooth Inquiry on
  *       reception of the HCI Periodic Inquiry Mode Command, and sends a Command
- *       Complete Event to the HCI to confirm the same. At the end of each 
- *       Inquiry process, an Inquiry Complete Event will be received. Also 
- *       during each Inquiry process, local Bluetooth device may send none, 
+ *       Complete Event to the HCI to confirm the same. At the end of each
+ *       Inquiry process, an Inquiry Complete Event will be received. Also
+ *       during each Inquiry process, local Bluetooth device may send none,
  *       one or more Inquiry Results Events, when one or more remote Bluetooth
  *       devices respond to the Inquiry process initiated by the local Bluetooth
- *       device. The results of the periodic inquiry are returned to 
+ *       device. The results of the periodic inquiry are returned to
  *       Application using HCI Event Indication Callback.
  *       This API must not be called if the local Bluetooth device is in the
  *       process of establishing a connection with another Bluetooth device.
- *       A remote Bluetooth device will respond to Inquiry procedure only 
+ *       A remote Bluetooth device will respond to Inquiry procedure only
  *       if it has its Inquiry Scan enabled.
- *       This API must not be called if BT_hci_inquiry() was called earlier 
- *       and has not completed yet. 
- *        
+ *       This API must not be called if BT_hci_inquiry() was called earlier
+ *       and has not completed yet.
+ *
  *  \param [in] max_period_length
  *         Maximum time period between two consecutive Inquiry processes.
  *         The time is calculated as follows:
  *         Time = max_period_length * 1.28 Sec
- *         Value Range = 0x0003 – 0xFFFF
- *         Time Range = 3.84 – 83884.3 Sec
+ *         Value Range = 0x0003 - 0xFFFF
+ *         Time Range = 3.84 - 83884.3 Sec
  *
  *  \param [in] min_period_length
  *         Minimum time period between two consecutive Inquiry processes.
  *         The time is calculated as follows:
  *         Time = min_period_length * 1.28 Sec
- *         Value Range = 0x0002 – 0xFFFE
- *         Time Range = 2.56 – 83883.52 Sec
- * 
+ *         Value Range = 0x0002 - 0xFFFE
+ *         Time Range = 2.56 - 83883.52 Sec
+ *
  *  \param [in] lap
- *         This is the Lower Address Part from which the Bluetooth Hardware 
+ *         This is the Lower Address Part from which the Bluetooth Hardware
  *         should derive Inquiry Access Code when the Inquiry procedure is made.
  *         Few of the commonly used values are (defined in BT_assigned_numbers.h):
- *         BT_GIAC – The General Inquiry Access Code (0x9E8B33)
- *         BT_LIAC – The Limited Inquiry Access Code (0x9E8B30)
+ *         BT_GIAC - The General Inquiry Access Code (0x9E8B33)
+ *         BT_LIAC - The Limited Inquiry Access Code (0x9E8B30)
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -2187,47 +2234,47 @@ API_RESULT BT_hci_periodic_inquiry_mode
  *  \brief To initiate ACL link creation process.
  *
  *  \par Description:
- *       This API is used to create an ACL connection to the specified remote 
+ *       This API is used to create an ACL connection to the specified remote
  *       Bluetooth device.
- *       The local Bluetooth device starts the Bluetooth Paging process to 
- *       create an ACL link on reception of the HCI Create Connection Command, 
- *       and sends a Command Status Event to the HCI. At the end of the 
+ *       The local Bluetooth device starts the Bluetooth Paging process to
+ *       create an ACL link on reception of the HCI Create Connection Command,
+ *       and sends a Command Status Event to the HCI. At the end of the
  *       Paging process, the Connection Complete Event is received.
- *       Before receiving the Connection Complete Event, Bluetooth Security 
- *       related events (Link Key Request Event and/or PIN Code Request Event) 
- *       might be received, depending on the security settings on the local 
+ *       Before receiving the Connection Complete Event, Bluetooth Security
+ *       related events (Link Key Request Event and/or PIN Code Request Event)
+ *       might be received, depending on the security settings on the local
  *       and/or remote Bluetooth device.
- *       For details on the Bluetooth ACL link establishment, with or without 
- *       link-level authentication procedure, refer to the Specification of the 
- *       Bluetooth System, v1.2, Vol. 2, Part F – Message Sequence Charts. There
- *       can only be one ACL connection between a pair of Bluetooth devices. 
- *       Establishment of ACL link depends to the Page Scan mode of the remote 
+ *       For details on the Bluetooth ACL link establishment, with or without
+ *       link-level authentication procedure, refer to the Specification of the
+ *       Bluetooth System, v1.2, Vol. 2, Part F - Message Sequence Charts. There
+ *       can only be one ACL connection between a pair of Bluetooth devices.
+ *       Establishment of ACL link depends to the Page Scan mode of the remote
  *       Bluetooth device.
  *
  *  \param [in] bd_addr
- *         This is the Bluetooth Device Address for the remote device to which 
+ *         This is the Bluetooth Device Address for the remote device to which
  *         an attempt will be made to create an ACL connection.
- *         
+ *
  *  \param [in] Packet_type
- *         This is the ACL Packet Types to be used by the Baseband Controller  
- *         for this new ACL connection. Refer to the EtherMind HCI Constants 
- *         section for the valid values for this parameter. One or more DHx/DMx 
- *         packet types can be combined together. 
- *         
+ *         This is the ACL Packet Types to be used by the Baseband Controller
+ *         for this new ACL connection. Refer to the EtherMind HCI Constants
+ *         section for the valid values for this parameter. One or more DHx/DMx
+ *         packet types can be combined together.
+ *
  *  \param [in] Page_scan_repetition_mode and page_scan_mode
- *         These two parameters specify the Page Scan modes supported by the 
- *         remote Bluetooth device – this information must have been acquired 
- *         during the Bluetooth Inquiry procedure. 
- *         
+ *         These two parameters specify the Page Scan modes supported by the
+ *         remote Bluetooth device - this information must have been acquired
+ *         during the Bluetooth Inquiry procedure.
+ *
  *  \param [in] Clock_offset
- *         The clock offset between the local Baseband Controller  and the 
- *         remote one – this information must have been acquired during 
+ *         The clock offset between the local Baseband Controller  and the
+ *         remote one - this information must have been acquired during
  *         Bluetooth Inquiry procedure.
  *
- *  \param [in] Allow_role_switch 
- *         This parameter specified whether the local Baseband Controller  
- *         would accept or reject the request of a Master-Slave role switch 
- *         during the ACL connection establishment phase.         
+ *  \param [in] Allow_role_switch
+ *         This parameter specified whether the local Baseband Controller
+ *         would accept or reject the request of a Master-Slave role switch
+ *         during the ACL connection establishment phase.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -2246,25 +2293,25 @@ API_RESULT BT_hci_create_connection
  *  \brief To add a SCO connection with the remote device.
  *
  *  \par Description:
- *       This API attempts to add a SCO connection with the specified remote 
- *       Bluetooth device. An ACL connection must exist before an attempt is 
+ *       This API attempts to add a SCO connection with the specified remote
+ *       Bluetooth device. An ACL connection must exist before an attempt is
  *       made to add a SCO connection.
- *       The local Bluetooth device starts the Link Manager procedure to add an 
- *       SCO link on reception of the HCI Add SCO Connection Command, and sends 
- *       a Command Status Event to the HCI. At the end of the link creation 
+ *       The local Bluetooth device starts the Link Manager procedure to add an
+ *       SCO link on reception of the HCI Add SCO Connection Command, and sends
+ *       a Command Status Event to the HCI. At the end of the link creation
  *       process, the Connection Complete Event is received.
- *       For details on the Bluetooth Synchronous link establishment, 
- *       refer to the Specification of the Bluetooth System, 
- *       v1.2, Vol. 2, Part F – Message Sequence Charts.
- *      
+ *       For details on the Bluetooth Synchronous link establishment,
+ *       refer to the Specification of the Bluetooth System,
+ *       v1.2, Vol. 2, Part F - Message Sequence Charts.
+ *
  *  \param [in] bd_addr
  *         This is the Bluetooth Device Address for the remote device.
- *         
+ *
  *  \param [in] Packet_type
- *         This is the SCO Packet Type to be used for this new SCO connection. 
+ *         This is the SCO Packet Type to be used for this new SCO connection.
  *         Refer to the EtherMind HCI Constants section for the valid values for
  *         this parameter. One or more HVx packet types can be combined together.
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -2282,27 +2329,27 @@ API_RESULT BT_hci_add_sco_connection
  *  \brief To retrieve the Name of the remote Bluetooth device.
  *
  *  \par Description:
- *       This API is used to get the Name of a remote Bluetooth device, as 
+ *       This API is used to get the Name of a remote Bluetooth device, as
  *       identified by the supplied Bluetooth Device Address.
- *       The local Bluetooth device starts the name retrieval process on 
- *       reception of the HCI Remote Name Request Command, and sends a 
- *       Command Status Event to the HCI. At the end this process, 
- *       the Remote Name Request Complete Event is received. To retrieve the 
- *       name, an ACL connection is required between the devices. A temporary 
+ *       The local Bluetooth device starts the name retrieval process on
+ *       reception of the HCI Remote Name Request Command, and sends a
+ *       Command Status Event to the HCI. At the end this process,
+ *       the Remote Name Request Complete Event is received. To retrieve the
+ *       name, an ACL connection is required between the devices. A temporary
  *       ACL connection is made if it does not exist. Hence this API can fail,
- *       if the remote device does not have Page Scan enabled. 
- *      
+ *       if the remote device does not have Page Scan enabled.
+ *
  *  \param [in] bd_addr
  *         Bluetooth Device Address of the remote Bluetooth device.
  *
  *  \param [in] Page_scan_repetition_mode and page_scan_mode
- *         These two parameters specify the Page Scan modes supported by the 
- *         remote Bluetooth device – this information must have been acquired 
- *         during the Bluetooth Inquiry procedure. 
- *         
+ *         These two parameters specify the Page Scan modes supported by the
+ *         remote Bluetooth device - this information must have been acquired
+ *         during the Bluetooth Inquiry procedure.
+ *
  *  \param [in] Clock_offset
- *         The clock offset between the local Baseband Controller and the 
- *         remote one – this information must have been acquired during 
+ *         The clock offset between the local Baseband Controller and the
+ *         remote one - this information must have been acquired during
  *         Bluetooth Inquiry procedure.
  *
  *  \return
@@ -2320,11 +2367,11 @@ API_RESULT BT_hci_remote_name_request
  *  \brief To retrieve supported features of a remote Bluetooth device.
  *
  *  \par Description:
- *       This API is used to retrieve supported features of a remote Bluetooth 
+ *       This API is used to retrieve supported features of a remote Bluetooth
  *       device, as identified by the supplied Bluetooth Device Address.
- *       The local Bluetooth device starts the feature request process on 
- *       reception of the HCI Read Remote Supported Features Command, and 
- *       sends a Command Status Event to the HCI. At the end this process, 
+ *       The local Bluetooth device starts the feature request process on
+ *       reception of the HCI Read Remote Supported Features Command, and
+ *       sends a Command Status Event to the HCI. At the end this process,
  *       the Read Remote Supported Features Complete Event is received.
  *
  *  \param [in] connection_handle
@@ -2375,23 +2422,23 @@ API_RESULT BT_hci_read_remote_supported_features
         )
 #endif /* HCI_READ_REMOTE_VERSION_INFORMATION_SUPPORT */
 /**
- *  \brief To retrieve clock offset of the local Bluetooth device with respect 
+ *  \brief To retrieve clock offset of the local Bluetooth device with respect
  *         to the remote one.
- *         
- *  \par Description: 
- *       This API attempts to retrieve the clock offset of the local Bluetooth 
- *       device with respect to the remote one, as identified by the supplied 
+ *
+ *  \par Description:
+ *       This API attempts to retrieve the clock offset of the local Bluetooth
+ *       device with respect to the remote one, as identified by the supplied
  *       ACL Connection Handle.
  *       Both the System Clock and the Clock Offset to a remote Bluetooth device
- *       is used to determine the hopping frequency used by a remote device for 
- *       page scan. This command allows the Host to read clock offset to remote 
- *       devices. The clock offset can be used to speed up the paging procedure 
- *       when the local device tries to establish a connection with a 
- *       remote device, for example, when the local Host has issued 
+ *       is used to determine the hopping frequency used by a remote device for
+ *       page scan. This command allows the Host to read clock offset to remote
+ *       devices. The clock offset can be used to speed up the paging procedure
+ *       when the local device tries to establish a connection with a
+ *       remote device, for example, when the local Host has issued
  *       Create Connection or Remote Name Request.
  *
  *  \param [in] connection_handle
- *         Connection Handle of the ACL Connection with the remote Bluetooth 
+ *         Connection Handle of the ACL Connection with the remote Bluetooth
  *         device with respect to which the clock offset needs to be determined.
  *
  *  \return
@@ -2401,11 +2448,32 @@ API_RESULT BT_hci_read_remote_supported_features
 #define BT_hci_read_clock_offset(p1) \
         hci_write_command_UINT16 (HCI_READ_CLOCK_OFFSET_OPCODE, (p1))
 
+#ifdef HCI_READ_LMP_HANDLE_SUPPORT
+/**
+ *  \brief To read the current LMP Handle associated with the
+ *         Connection_Handle.
+ *
+ *  \par Description:
+ *       This command reads the current LMP Handle associated with
+ *       the Connection_Handle.
+ *
+ *  \param [in] connection_handle
+ *              Connection_Handle
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_read_lmp_handle
+           (
+               UINT16 connection_handle
+           );
+#endif /* HCI_READ_LMP_HANDLE_SUPPORT */
+
 #ifdef HCI_NO_ESCO_AUTO_ACCEPT
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -2420,15 +2488,15 @@ void BT_hci_esco_connection_response
  *  \brief To accept a Synchronous Connection (eSCO).
  *
  *  \par Description:
- *       This API enables application, to accept an incoming eSCO Connection 
+ *       This API enables application, to accept an incoming eSCO Connection
  *       Request.
- *       By default, the EtherMind HCI module automatically accepts incoming 
+ *       By default, the EtherMind HCI module automatically accepts incoming
  *       eSCO connection request from the Bluetooth hardware.
- *       If feature flag ‘HCI_NO_ESCO_AUTO_ACCEPT’ is defined, application need 
- *       to use BT_hci_accept_esco_connection_request() or 
- *       BT_hci_reject_esco_connection_request() API to accept or reject the 
+ *       If feature flag 'HCI_NO_ESCO_AUTO_ACCEPT' is defined, application need
+ *       to use BT_hci_accept_esco_connection_request() or
+ *       BT_hci_reject_esco_connection_request() API to accept or reject the
  *       eSCO connection request.
- *      
+ *
  *  \param [in] bd_addr
  *         This is the Bluetooth Device Address for the remote device.
  *
@@ -2442,20 +2510,20 @@ void BT_hci_esco_connection_response
  *  \brief To reject a Synchronous Connection (eSCO).
  *
  *  \par Description:
- *       This API enables application, to reject an incoming eSCO Connection 
+ *       This API enables application, to reject an incoming eSCO Connection
  *       Request.
- *       By default, the EtherMind HCI module automatically accepts incoming 
+ *       By default, the EtherMind HCI module automatically accepts incoming
  *       eSCO connection request from the Bluetooth hardware.
- *       If feature flag ‘HCI_NO_ESCO_AUTO_ACCEPT’ is defined, application need 
- *       to use BT_hci_accept_esco_connection_request() or 
- *       BT_hci_reject_esco_connection_request() API to accept or reject the 
+ *       If feature flag 'HCI_NO_ESCO_AUTO_ACCEPT' is defined, application need
+ *       to use BT_hci_accept_esco_connection_request() or
+ *       BT_hci_reject_esco_connection_request() API to accept or reject the
  *       eSCO connection request.
- *      
+ *
  *  \param [in] bd_addr
  *         This is the Bluetooth Device Address for the remote device.
  *
  *  \param [in] reject
- *         This parameter specifies the reason for rejecting eSCO 
+ *         This parameter specifies the reason for rejecting eSCO
  *         connection request.
  *
  *  \return
@@ -2475,12 +2543,12 @@ void BT_hci_enh_sco_connection_response
  *  \brief To accept an Enhanced Synchronous Connection (eSCO).
  *
  *  \par Description:
- *       This API enables application, to accept an incoming enhanced eSCO 
+ *       This API enables application, to accept an incoming enhanced eSCO
  *       Connection Request.
  *
  *  \param [in] bd_addr
  *         This is the Bluetooth Device Address for the remote device.
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -2491,14 +2559,14 @@ void BT_hci_enh_sco_connection_response
  *  \brief To reject an Enhanced Synchronous Connection (eSCO).
  *
  *  \par Description:
- *       This API enables application, to reject an incoming eSCO 
+ *       This API enables application, to reject an incoming eSCO
  *       Connection Request.
  *
  *  \param [in] bd_addr
  *         This is the Bluetooth Device Address for the remote device.
  *
  *  \param [in] reason
- *         This parameter specifies the reason for rejecting enhanced eSCO 
+ *         This parameter specifies the reason for rejecting enhanced eSCO
  *         connection request.
  *
  *  \return
@@ -2555,26 +2623,26 @@ API_RESULT BT_hci_disconnect
  *  \brief To place an ACL Connection with a remote Bluetooth device to Hold mode.
  *
  *  \par Description:
- *       This API can be used to place an ACL connection between the local and 
- *       remote Bluetooth device (identified by the ACL Connection Handle) 
+ *       This API can be used to place an ACL connection between the local and
+ *       remote Bluetooth device (identified by the ACL Connection Handle)
  *       into Hold mode.
- *      
+ *
  *  \param [in] connection_handle
- *         The Connection Handle of the ACL connection with a remote Bluetooth 
+ *         The Connection Handle of the ACL connection with a remote Bluetooth
  *         device that needs to be placed into Hold mode.
- *         
+ *
  *  \param [in] Hold_mode_max_interval
- *         This parameter specifies the maximum acceptable number of Baseband 
+ *         This parameter specifies the maximum acceptable number of Baseband
  *         time slots to wait in Hold mode.
  *         Value Range = 0x0002 to 0xFFFE. Only even values are valid.
  *         Hold time = hold_mode_max_interval * 0.625 msec
  *         Time Range = 1.25 msec to 40.9 sec
- *         hold_mode_min_interval    This parameter specifies the minimum 
+ *         hold_mode_min_interval    This parameter specifies the minimum
  *         acceptable number of BaseBand time slots to wait in Hold mode.
  *         Value Range = 0x0002 to 0xFF00. Only even values are valid.
  *         Hold time = hold_mode_min_interval * 0.625 msec
  *         Time Range = 0.625 msec to 40.9 sec
- *                    
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -2586,30 +2654,30 @@ API_RESULT BT_hci_hold_mode
                UINT16  hold_min_interval
            );
 /**
- *  \brief To place an ACL Connection with a remote Bluetooth device to 
+ *  \brief To place an ACL Connection with a remote Bluetooth device to
  *         Sniff mode.
- *         
+ *
  *  \par Description:
- *       This API can be used to place an ACL connection between the local and 
- *       remote Bluetooth device (identified by the ACL Connection Handle) into 
+ *       This API can be used to place an ACL connection between the local and
+ *       remote Bluetooth device (identified by the ACL Connection Handle) into
  *       Sniff mode.
- *       The local Bluetooth device starts the Sniff mode process on reception 
- *       of the HCI Sniff Mode Command, and sends a Command Status Event to the 
+ *       The local Bluetooth device starts the Sniff mode process on reception
+ *       of the HCI Sniff Mode Command, and sends a Command Status Event to the
  *       HCI. At the end of this process, the Mode Change Event is received.
  *
  *  \param [in] connection_handle
- *         The Connection Handle of the ACL connection with a remote Bluetooth 
+ *         The Connection Handle of the ACL connection with a remote Bluetooth
  *         device that needs to be placed into Sniff mode.
- *         
+ *
  *  \param [in] Sniff_mode_max_interval
- *         This parameter specifies the maximum acceptable number of Baseband 
+ *         This parameter specifies the maximum acceptable number of Baseband
  *         time slots to wait in Sniff mode.
  *         Value Range = 0x0002 to 0xFFFE. Only even values are valid
  *         Sniff time = sniff_mode_max_interval * 0.625 msec
  *         Time Range = 1.25 msec to 40.9 sec
- *         
- *  \param [in] sniff_mode_min_interval    
- *         This parameter specifies the maximum acceptable number of Baseband 
+ *
+ *  \param [in] sniff_mode_min_interval
+ *         This parameter specifies the maximum acceptable number of Baseband
  *         time slots to wait in Sniff mode.
  *         Value Range = 0x0002 to 0xFFFE. Only even values are valid
  *         Sniff time = sniff_mode_min_interval * 0.625 msec
@@ -2617,14 +2685,14 @@ API_RESULT BT_hci_hold_mode
  *         Note: sniff_mode_max_interval > sniff_mode_min_interval
  *
  *  \param [in] sniff_attempt
- *         This parameter specifies the number of Baseband receive slots for 
+ *         This parameter specifies the number of Baseband receive slots for
  *         Sniff attempt.
  *         Value Range = 0x0001 to 0x7FFF.
  *         Time = (2 * sniff_attempt  - 1) * 0.625 msec
  *         Time Range = 0.625 msec to 40.9 sec
- *                    
+ *
  *  \param [in] sniff_timeout
- *         This parameter specifies the number of Baseband receive slots for 
+ *         This parameter specifies the number of Baseband receive slots for
  *         Sniff timeout.
  *         Value Range = 0x0000 to 0x7FFF.
  *         If sniff_timeout > 0, Time = (2 * sniff_timeout  - 1) * 0.625 msec. Otherwise, Time = 0.
@@ -2649,12 +2717,12 @@ API_RESULT BT_hci_sniff_mode
  *       This API can be used to end the Sniff mode for an ACL Connection, which
  *       is currently in the Sniff mode.
  *       The local Bluetooth device starts the exit from the Sniff mode process
- *       on reception of the HCI Exit Sniff Mode Command, and sends a Command 
- *       Status Event to the HCI. At the end of this process, the Mode Change 
+ *       on reception of the HCI Exit Sniff Mode Command, and sends a Command
+ *       Status Event to the HCI. At the end of this process, the Mode Change
  *       Event is received.
  *
  *  \param [in] connection_handle
- *         The Connection Handle of the ACL connection with a remote Bluetooth 
+ *         The Connection Handle of the ACL connection with a remote Bluetooth
  *         device, for which the Sniff mode needs to be cancelled.
  *
  *  \return
@@ -2674,15 +2742,15 @@ API_RESULT BT_hci_park_mode
  *  \brief To end/cancel the Park mode & switch to Active mode.
  *
  *  \par Description:
- *       This API can be used to end the Park mode for an ACL Connection, which 
+ *       This API can be used to end the Park mode for an ACL Connection, which
  *       is currently in the Sniff mode.
- *       The local Bluetooth device starts the exit from the Park mode process 
- *       on reception of the HCI Exit Park Mode Command, and sends a Command 
- *       Status Event to the HCI. At the end of this process, the Mode Change 
+ *       The local Bluetooth device starts the exit from the Park mode process
+ *       on reception of the HCI Exit Park Mode Command, and sends a Command
+ *       Status Event to the HCI. At the end of this process, the Mode Change
  *       Event is received.
  *
  *  \param [in] connection_handle
- *         The Connection Handle of the ACL connection with a remote Bluetooth 
+ *         The Connection Handle of the ACL connection with a remote Bluetooth
  *         device, for which Park mode to Active mode switch needs to happen.
  *
  *  \return
@@ -2697,21 +2765,21 @@ API_RESULT BT_hci_exit_park_mode
  *  \brief To specify Quality of Service parameters for a connection.
  *
  *  \par Description:
- *       This API enables applications to specify the Quality of Service 
+ *       This API enables applications to specify the Quality of Service
  *       parameters for an ACL connection to a remote Bluetooth device.
- *       The local Bluetooth device starts the QoS Setup process to negotiate 
+ *       The local Bluetooth device starts the QoS Setup process to negotiate
  *       QoS parameters with the remote device on reception of the HCI QoS Setup
  *       Command, and sends a Command Status Event to the HCI. At the end of the
  *       QoS Setup process, the QoS Setup Complete Event is received.
  *
  *  \param [in] connection_handle
  *         Connection Handle of the ACL link for which QoS parameters to be specified.
- *         
+ *
  *  \param [in] Qos_requested
- *         This parameter must be a pointer to the HCI_QOS data type containing 
+ *         This parameter must be a pointer to the HCI_QOS data type containing
  *         the requested QoS parameters to be negotiated and specified for the
  *         ACL link with the remote Bluetooth device.
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -2722,13 +2790,13 @@ API_RESULT BT_hci_qos_setup
                HCI_QOS *    qos_requested
            );
 /**
- *  \brief To determine the role of a Bluetooth ACL connection. 
+ *  \brief To determine the role of a Bluetooth ACL connection.
  *
  *  \par Description:
- *       This API determines the role that the local Bluetooth device is 
- *       performing for an ACL link with a remote Bluetooth device, 
+ *       This API determines the role that the local Bluetooth device is
+ *       performing for an ACL link with a remote Bluetooth device,
  *       as identified by the ACL Connection Handle.
- *      
+ *
  *  \param [in] connection_handle
  *         The ACL Connection Handle for which role needs to be determined
  *
@@ -2741,26 +2809,26 @@ API_RESULT BT_hci_role_discovery
                UINT16   connection_handle
            );
 /**
- *  \brief To switch Bluetooth role for the specified connection. 
+ *  \brief To switch Bluetooth role for the specified connection.
  *
  *  \par Description:
- *       This API can be used to switch the current role of the ACL Connection 
+ *       This API can be used to switch the current role of the ACL Connection
  *       that exists in the local Bluetooth device with a remote Bluetooth device,
  *       as identified by the supplied Connection Handle.
- *       on reception of the HCI Switch Role Command, and sends a Command Status 
- *       Event to the HCI. At the end of the Master-Slave Role Switch process, 
+ *       on reception of the HCI Switch Role Command, and sends a Command Status
+ *       Event to the HCI. At the end of the Master-Slave Role Switch process,
  *       the Role Change Event is received.
- *      
+ *
  *  \param [in] bd_addr
  *         The Bluetooth Device Address of the remote Bluetooth device.
- *         
+ *
  *  \param [in] Role
- *         This parameter specifies new Bluetooth Role that the local Bluetooth 
- *         device should assume for the ACL connection to the remote Bluetooth 
+ *         This parameter specifies new Bluetooth Role that the local Bluetooth
+ *         device should assume for the ACL connection to the remote Bluetooth
  *         device. Valid values are:
  *         Value 0x00: Change own role to Master.
  *         Value 0x01: Change own role to Slave.
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -2775,19 +2843,19 @@ API_RESULT BT_hci_switch_role
  *
  *  \par Description:
  *       This API reads the Link Policy Setting configuration parameter from the
- *       local Bluetooth device for a specified ACL Connection Handle. 
+ *       local Bluetooth device for a specified ACL Connection Handle.
  *       The Link Policy Settings parameter determines the behavior of the local
- *       Bluetooth device when it receives a request from a remote Bluetooth 
- *       device to change the Master-Slave role or to enter the Hold, Sniff, 
- *       or Park mode. The local Bluetooth device will automatically accept or 
- *       reject such a request from the remote device based on the value of the 
+ *       Bluetooth device when it receives a request from a remote Bluetooth
+ *       device to change the Master-Slave role or to enter the Hold, Sniff,
+ *       or Park mode. The local Bluetooth device will automatically accept or
+ *       reject such a request from the remote device based on the value of the
  *       Link Policy Settings parameter for the corresponding Connection Handle.
- *      
+ *
  *
  *  \param [in] connection_handle
- *         The Connection Handle of the ACL connection with a remote Bluetooth 
+ *         The Connection Handle of the ACL connection with a remote Bluetooth
  *         device, for which the Link Policy Settings to be read.
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -2800,21 +2868,21 @@ API_RESULT BT_hci_read_link_policy_settings
  *  \brief To write the Link Policy Settings configuration parameter to the local Bluetooth device.
  *
  *  \par Description:
- *       This API writes the Link Policy Setting configuration parameter to the 
- *       local Bluetooth device for a specified ACL Connection Handle. 
- *       The Link Policy Settings parameter determines the behavior of the 
- *       local Bluetooth device when it receives a request from a remote 
- *       Bluetooth device to change the Master-Slave role or to enter the 
- *       Hold, Sniff, or Park mode. The local Bluetooth device will 
- *       automatically accept or reject such a request from the remote device 
- *       based on the value of the Link Policy Settings parameter for the 
+ *       This API writes the Link Policy Setting configuration parameter to the
+ *       local Bluetooth device for a specified ACL Connection Handle.
+ *       The Link Policy Settings parameter determines the behavior of the
+ *       local Bluetooth device when it receives a request from a remote
+ *       Bluetooth device to change the Master-Slave role or to enter the
+ *       Hold, Sniff, or Park mode. The local Bluetooth device will
+ *       automatically accept or reject such a request from the remote device
+ *       based on the value of the Link Policy Settings parameter for the
  *       corresponding Connection Handle
- *      
+ *
  *  \param [in] connection_handle
- *         The Connection Handle of the ACL connection with a remote Bluetooth 
+ *         The Connection Handle of the ACL connection with a remote Bluetooth
  *         device, for which the Link Policy Settings to be written.
- * 
- *  \param [in] Link_policy_settings    
+ *
+ *  \param [in] Link_policy_settings
  *         The Link Policy Settings to be set.
  *         Value 0x0000: Disable all LM modes. (Default)
  *         Value 0x0001: Enable Master-Slave switch.
@@ -2902,20 +2970,20 @@ API_RESULT BT_hci_read_link_policy_settings
         hci_common_api_handler_no_params (HCI_RESET_OPCODE)
 #endif /* HCI_RESET_SUPPORT */
 /**
- *  \brief To set the HCI Event Filter at the Bluetooth device 
+ *  \brief To set the HCI Event Filter at the Bluetooth device
  *
  *  \par Description:
- *       This API sets the HCI Event filters at the local Bluetooth device. 
- *       For details on the Event Filters, refer to the Specification of the 
- *       Bluetooth System, v1.2, Vol. 2, Part E – Host Controller Interface 
+ *       This API sets the HCI Event filters at the local Bluetooth device.
+ *       For details on the Event Filters, refer to the Specification of the
+ *       Bluetooth System, v1.2, Vol. 2, Part E - Host Controller Interface
  *       Functional Specification, Section 7.3.3.
- *      
+ *
  *  \param [in] filter_type
- *         Information about the kind of filter to be set at the Bluetooth device. 
- *         
+ *         Information about the kind of filter to be set at the Bluetooth device.
+ *
  *  \param [in] filter_condition_type
  *         Type of condition to be set for the filter.
- *         
+ *
  *  \param [in] condition
  *         Condition of filtering to be set at the Bluetooth device.
  *
@@ -2927,7 +2995,7 @@ API_RESULT BT_hci_read_link_policy_settings
  *                  \ref BLE_ERROR_CODES.
  *
  *  \note For details on the these parameter values, refer to the Specification of
- *        the Bluetooth System, v1.2, Vol. 2, Part E – Host Controller Interface 
+ *        the Bluetooth System, v1.2, Vol. 2, Part E - Host Controller Interface
  *        Functional Specification, Section 7.3.3.
  */
 API_RESULT BT_hci_set_event_filter
@@ -2938,24 +3006,24 @@ API_RESULT BT_hci_set_event_filter
                UINT16   condition_length
            );
 /**
- *  \brief To flush all pending ACL data from the Bluetooth device for the 
+ *  \brief To flush all pending ACL data from the Bluetooth device for the
  *         specified ACL Connection Handle.
- *         
+ *
  *  \par Description:
- *       This API can be used to discard all data that is currently pending for 
- *       transmission in the local Bluetooth device for the specified Connection 
- *       Handle, even if there currently are fragments of data that belong to 
+ *       This API can be used to discard all data that is currently pending for
+ *       transmission in the local Bluetooth device for the specified Connection
+ *       Handle, even if there currently are fragments of data that belong to
  *       more than one L2CAP packet in the Host Controller.
- *       After this API has successfully executed, the local Bluetooth device 
- *       will discard all data that is sent to the Controller for the same 
- *       connection handle until an HCI Data Packet with the “Start” Packet 
+ *       After this API has successfully executed, the local Bluetooth device
+ *       will discard all data that is sent to the Controller for the same
+ *       connection handle until an HCI Data Packet with the "Start" Packet
  *       Boundary Flag (0x02) is received. When this happens, a new transmission
  *       attempt can be made.
- *       This API allows Applications to control how long the Baseband should 
- *       try to retransmit a baseband packet for a connection handle before all 
- *       data that is currently pending for transmission in the local Bluetooth 
+ *       This API allows Applications to control how long the Baseband should
+ *       try to retransmit a baseband packet for a connection handle before all
+ *       data that is currently pending for transmission in the local Bluetooth
  *       device should be flushed.
- *      
+ *
  *  \param [in] connection_handle
  *         Connection Handle of the ACL connection with a remote Bluetooth device,
  *         data for which needs to be flushed.
@@ -2966,10 +3034,10 @@ API_RESULT BT_hci_set_event_filter
  *
  *  \note This API is available for ACL packets only, and a valid ACL Connection
  *        Handle must be specified.
- *        In addition to HCI Flush command, the applications can make use of 
- *        Automatic Flush Timeout in the Bluetooth device to automatically 
+ *        In addition to HCI Flush command, the applications can make use of
+ *        Automatic Flush Timeout in the Bluetooth device to automatically
  *        flush data after a timeout.
- *  
+ *
  */
 API_RESULT BT_hci_flush
            (
@@ -2980,12 +3048,12 @@ API_RESULT BT_hci_flush
 /**
  *  \brief To create a new unit key by the Bluetooth device.
  *
- *  \par Description: 
- *       This API can be used to create a new unit key. 
+ *  \par Description:
+ *       This API can be used to create a new unit key.
  *       The Bluetooth hardware will generate a random seed that will be used to
  *       generate the new unit key. All new connection will use the new unit key,
  *       but the old unit key will still be used for all current connections.
- *       This API will not have any effect for a device that does not use unit 
+ *       This API will not have any effect for a device that does not use unit
  *       keys (i.e. a device which uses only combination keys).
  *
  *
@@ -2999,10 +3067,10 @@ API_RESULT BT_hci_flush
 
 #ifdef HCI_SUPPORT_STORED_LINK_KEY_COMMANDS
 /**
- *  \brief 
- *  
+ *  \brief
+ *
  *  \par Description:
- *       
+ *
  *
  *
  *
@@ -3016,9 +3084,9 @@ API_RESULT BT_hci_flush
             (bd_addr), \
             (read_all_flag))
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -3032,9 +3100,9 @@ API_RESULT BT_hci_write_stored_link_key
                HCI_H_LINK_KEY * link_keys
            );
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -3050,24 +3118,24 @@ API_RESULT BT_hci_write_stored_link_key
 
 #endif /* HCI_SUPPORT_STORED_LINK_KEY_COMMANDS */
 /**
- *  \brief To set the local name of the device. 
+ *  \brief To set the local name of the device.
  *  \par Description: This API configures the name of the local Bluetooth device.
- *      
+ *
  *  \param [in] name
- *         Caller allocated CHAR array of size 248 bytes, which will be used to 
+ *         Caller allocated CHAR array of size 248 bytes, which will be used to
  *         copy the name of the remote Bluetooth device.
  *
  *  \param [in] Name_length
- *         Length of the Name to be set. This must be less than or equal to 
+ *         Length of the Name to be set. This must be less than or equal to
  *         248 bytes.
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
  *
- *  \note On embedded version of the EtherMind stack, the size of the name is 
+ *  \note On embedded version of the EtherMind stack, the size of the name is
  *        limited to 12 due to memory constraints.
- *        The BT_hci_write_local_name() behaves exactly the same way as 
+ *        The BT_hci_write_local_name() behaves exactly the same way as
  *        BT_hci_change_local_name(), but it is available only in Bluetooth-1.2.
  */
 API_RESULT BT_hci_change_local_name
@@ -3080,9 +3148,9 @@ API_RESULT BT_hci_change_local_name
 /**
  *  \brief To read the name of the local Bluetooth device
  *
- *  \par Description: 
- *       This API reads the name set in the local Bluetooth device. 
- *      
+ *  \par Description:
+ *       This API reads the name set in the local Bluetooth device.
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -3096,14 +3164,14 @@ API_RESULT BT_hci_change_local_name
  *  \brief To read the value of Connection Accept Timeout configuration parameter.
  *
  *  \par Description:
- *       This API reads the value of Connection Accept Timeout configuration 
- *       parameter from the local Bluetooth device. 
- *       The Connection Accept Timeout parameter allows the local Bluetooth 
- *       device to automatically deny a connection request after a specified 
+ *       This API reads the value of Connection Accept Timeout configuration
+ *       parameter from the local Bluetooth device.
+ *       The Connection Accept Timeout parameter allows the local Bluetooth
+ *       device to automatically deny a connection request after a specified
  *       time period has occurred and the Host (EtherMind Stack and Application)
- *       has not accepted the new connection request. The parameter defines the 
+ *       has not accepted the new connection request. The parameter defines the
  *       time duration from when the Bluetooth device sends a Connection Request
- *       Event to the Host Stack until the local Bluetooth device automatically 
+ *       Event to the Host Stack until the local Bluetooth device automatically
  *       rejects an incoming connection.
  *
  *  \return
@@ -3119,21 +3187,21 @@ API_RESULT BT_hci_change_local_name
  *
  *  \par Description:
  *       This API writes the value of Connection Accept Timeout configuration
- *       parameter to the local Bluetooth device. 
- *       The Connection Accept Timeout parameter allows the local Bluetooth 
- *       device to automatically deny a connection request after a specified 
+ *       parameter to the local Bluetooth device.
+ *       The Connection Accept Timeout parameter allows the local Bluetooth
+ *       device to automatically deny a connection request after a specified
  *       time period has occurred and the Host (EtherMind Stack and Application)
  *       has not accepted the new connection request. The parameter defines the
  *       time duration from when the Bluetooth device sends a Connection Request
- *       Event to the Host Stack until the local Bluetooth device automatically 
+ *       Event to the Host Stack until the local Bluetooth device automatically
  *       rejects an incoming connection.
- *      
+ *
  *
  *  \param [in] timeout
  *         The Connection Accept Timeout measured in number of Baseband slots.
- *         Value Range = 0x0001 – 0xB540
+ *         Value Range = 0x0001 - 0xB540
  *         Time Range (conn_accept_timeout * 0.625 msec)  = 0.625 msec to 29 sec
- *         
+ *
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -3149,11 +3217,11 @@ API_RESULT BT_hci_write_connection_accept_timeout
  *  \brief To read the value of Page Timeout configuration parameter.
  *
  *  \par Description:
- *       This API reads the value of the Page Timeout configuration 
- *       parameter set in the local Bluetooth device. 
- *       The Page Timeout configuration parameter defines the maximum amount of 
- *       time the local Bluetooth device will wait for a response from a remote 
- *       Bluetooth device for a locally initiated connection. 
+ *       This API reads the value of the Page Timeout configuration
+ *       parameter set in the local Bluetooth device.
+ *       The Page Timeout configuration parameter defines the maximum amount of
+ *       time the local Bluetooth device will wait for a response from a remote
+ *       Bluetooth device for a locally initiated connection.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -3163,20 +3231,20 @@ API_RESULT BT_hci_write_connection_accept_timeout
         hci_common_api_handler_no_params (HCI_READ_PAGE_TIMEOUT_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief To set the Page Timeout configuration parameter value in the local 
- *         Bluetooth device. 
- *         
+ *  \brief To set the Page Timeout configuration parameter value in the local
+ *         Bluetooth device.
+ *
  *  \par Description:
- *       This API writes the value of the Page Timeout configuration parameter 
- *       to the local Bluetooth device. 
- *       The Page Timeout configuration parameter defines the maximum amount of 
- *       time the local Bluetooth device will wait for a response from a remote 
- *       Bluetooth device for a locally initiated connection. 
- *      
+ *       This API writes the value of the Page Timeout configuration parameter
+ *       to the local Bluetooth device.
+ *       The Page Timeout configuration parameter defines the maximum amount of
+ *       time the local Bluetooth device will wait for a response from a remote
+ *       Bluetooth device for a locally initiated connection.
+ *
  *
  *  \param [in] page_timeout
  *         The value of Page Timeout to be set. The actual timeout is calculated
- *         as follows: Time = page_timeout * 0.625 msec; Value Range: 0x0001 – 0xFFFF.          
+ *         as follows: Time = page_timeout * 0.625 msec; Value Range: 0x0001 - 0xFFFF.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -3187,13 +3255,13 @@ API_RESULT BT_hci_write_connection_accept_timeout
 
 #ifndef HCI_LITE
 /**
- *  \brief To read the Scan Mode settings of the local Bluetooth device. 
+ *  \brief To read the Scan Mode settings of the local Bluetooth device.
  *  \par Description:
- *       This API reads the value of Scan Enable configuration parameter in the 
+ *       This API reads the value of Scan Enable configuration parameter in the
  *       Baseband Controller.
- *       The Scan Enable defines whether the local Bluetooth device will 
- *       periodically scan for responding to Paging attempts and/or Inquiry 
- *       attempts from other remote Bluetooth devices or not. 
+ *       The Scan Enable defines whether the local Bluetooth device will
+ *       periodically scan for responding to Paging attempts and/or Inquiry
+ *       attempts from other remote Bluetooth devices or not.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -3203,18 +3271,18 @@ API_RESULT BT_hci_write_connection_accept_timeout
         hci_common_api_handler_no_params (HCI_READ_SCAN_ENABLE_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief To write the Scan Mode settings in the local Bluetooth device. 
+ *  \brief To write the Scan Mode settings in the local Bluetooth device.
  *
  *  \par Description:
  *       This API writes the value of Scan Enable configuration parameter in the
  *       local Bluetooth device.
- *       The Scan Enable defines whether the local Bluetooth device will 
- *       periodically scan for responding to Paging attempts and/or Inquiry 
+ *       The Scan Enable defines whether the local Bluetooth device will
+ *       periodically scan for responding to Paging attempts and/or Inquiry
  *       attempts from other remote Bluetooth devices or not.
  *
  *  \param [in] scan_enable
- *         Value of the Scan Enable parameter to be set in the local 
- *         Bluetooth device. 
+ *         Value of the Scan Enable parameter to be set in the local
+ *         Bluetooth device.
  *         The valid values and their meanings are shown below:
  *         0x00: No Scans enabled (Default).
  *         0x01: Inquiry Scan enabled, Page Scan disabled.
@@ -3230,11 +3298,11 @@ API_RESULT BT_hci_write_connection_accept_timeout
 
 #ifndef HCI_LITE
 /**
- *  \brief To read the Page Scan Activity configuration variable from the local 
+ *  \brief To read the Page Scan Activity configuration variable from the local
  *         Bluetooth device.
- *         
+ *
  *  \par Description:
- *       This API reads the value for Page Scan Activity configuration 
+ *       This API reads the value for Page Scan Activity configuration
  *       parameters from the Baseband Controller.
  *
  *  \return
@@ -3245,29 +3313,29 @@ API_RESULT BT_hci_write_connection_accept_timeout
         hci_common_api_handler_no_params (HCI_READ_PAGE_SCAN_ACTIVITY_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief To write the Page Scan Activity configuration parameters to the 
+ *  \brief To write the Page Scan Activity configuration parameters to the
  *         local Bluetooth device.
- *         
+ *
  *  \par Description:
  *       This API writes the value for Page Scan Activity to the local Bluetooth
  *       device. The Page Scan Interval configuration parameter defines the amount
- *       of time between consecutive page scans. This is defined as the time 
- *       intervals from when the local Bluetooth device started its last 
+ *       of time between consecutive page scans. This is defined as the time
+ *       intervals from when the local Bluetooth device started its last
  *       page scan until it begins the next page scan.
- *       The Page Scan Window configuration parameter defines the amount of 
+ *       The Page Scan Window configuration parameter defines the amount of
  *       time for the duration of the page scan.
  *       The Page Scan Window must be less than or equal to the Page Scan Interval.
  *
  *  \param [in] page_scan_interval
  *         The value of Page Scan Interval to be set.
- *         Value Range: 0x0012 – 0x1000, only even values are valid.
+ *         Value Range: 0x0012 - 0x1000, only even values are valid.
  *         Time Range: page_scan_interval * 0.625 msec = 11.25 msec to 2560 msec
- *         
+ *
  *  \param [in] page_scan_window
  *         The value of Page Scan Window to be set.
- *         Value Range: 0x0011 – 0x1000
+ *         Value Range: 0x0011 - 0x1000
  *         Time Range: page_scan_window * 0.625 msec = 10.625 msec to 2560 msec
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -3280,9 +3348,9 @@ API_RESULT BT_hci_write_connection_accept_timeout
 /**
  *  \brief To read the Inquiry Scan Activity configuration variable from the local Bluetooth device.
  *  \par Description:
- *       This API reads the value for Inquiry Scan Activity configuration 
+ *       This API reads the value for Inquiry Scan Activity configuration
  *       parameters from the Baseband Controller.
- *      
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -3292,28 +3360,28 @@ API_RESULT BT_hci_write_connection_accept_timeout
         (HCI_READ_INQUIRY_SCAN_ACTIVITY_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief To write the Inquiry Scan Activity configuration parameters to the 
+ *  \brief To write the Inquiry Scan Activity configuration parameters to the
  *         local Bluetooth device.
- *         
+ *
  *  \par Description:
- *       This API writes the value for Inquiry Scan Activity to the local 
- *       Bluetooth device. The Inquiry Scan Interval configuration parameter 
- *       defines the amount of time between consecutive inquiry scans. This is 
- *       defined as the time intervals from when the local Bluetooth device 
+ *       This API writes the value for Inquiry Scan Activity to the local
+ *       Bluetooth device. The Inquiry Scan Interval configuration parameter
+ *       defines the amount of time between consecutive inquiry scans. This is
+ *       defined as the time intervals from when the local Bluetooth device
  *       started its last inquiry scan until it begins the next inquiry scan.
- *       The Inquiry Scan Window configuration parameter defines the amount of 
+ *       The Inquiry Scan Window configuration parameter defines the amount of
  *       time for the duration of the inquiry scan.
- *       The Inquiry Scan Window must be less than or equal to the 
+ *       The Inquiry Scan Window must be less than or equal to the
  *       Inquiry Scan Interval.
  *
  *  \param [in] inquiry_scan_interval
  *         The value of Inquiry Scan Interval to be set.
- *         Value Range: 0x0012 – 0x1000, only even values are valid.
+ *         Value Range: 0x0012 - 0x1000, only even values are valid.
  *         Time Range: inquiry_scan_interval * 0.625 msec = 11.25 msec to 2560 msec
- *         
+ *
  *  \param [in] inquiry_scan_window
  *         The value of Inquiry Scan Window to be set.
- *         Value Range: 0x0011 – 0x1000
+ *         Value Range: 0x0011 - 0x1000
  *         Time Range: inquiry_scan_window * 0.625 msec = 10.625 msec to 2560 msec
  *
  *  \return
@@ -3326,9 +3394,9 @@ API_RESULT BT_hci_write_connection_accept_timeout
 
 #ifndef HCI_LITE
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -3340,9 +3408,9 @@ API_RESULT BT_hci_write_connection_accept_timeout
         hci_common_api_handler_no_params (HCI_READ_AUTHENTICATION_ENABLE_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -3355,9 +3423,9 @@ API_RESULT BT_hci_write_connection_accept_timeout
 
 #ifndef HCI_LITE
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -3369,9 +3437,9 @@ API_RESULT BT_hci_write_connection_accept_timeout
         hci_common_api_handler_no_params (HCI_READ_ENCRYPTION_MODE_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -3384,13 +3452,13 @@ API_RESULT BT_hci_write_connection_accept_timeout
 
 #ifndef HCI_LITE
 /**
- *  \brief To read the Class of Device configuration parameter from the local 
+ *  \brief To read the Class of Device configuration parameter from the local
  *         Bluetooth device.
  *
  *  \par Description:
- *       This API reads the Class of Device configuration parameter from the 
- *       local Bluetooth device. 
- *       The Class of Device is used to indicate the capabilities of the local 
+ *       This API reads the Class of Device configuration parameter from the
+ *       local Bluetooth device.
+ *       The Class of Device is used to indicate the capabilities of the local
  *       Bluetooth device to the other remote Bluetooth devices when at the time
  *       of their inquiry processes.
  *
@@ -3402,21 +3470,21 @@ API_RESULT BT_hci_write_connection_accept_timeout
         hci_common_api_handler_no_params (HCI_READ_CLASS_OF_DEVICE_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief To set the Class of Device in the local Bluetooth device 
+ *  \brief To set the Class of Device in the local Bluetooth device
  *
  *  \par Description:
- *       This API writes the Class of Device configuration parameter to the 
+ *       This API writes the Class of Device configuration parameter to the
  *       local Bluetooth device.
- *       The Class of Device is used to indicate the capabilities of the local 
- *       Bluetooth device to the other remote Bluetooth devices when at the 
- *       time of their inquiry processes. 
+ *       The Class of Device is used to indicate the capabilities of the local
+ *       Bluetooth device to the other remote Bluetooth devices when at the
+ *       time of their inquiry processes.
  *
  *  \param [in] class_of_device
  *         Value of the Class of Device for the local device. Though represented
- *         in 4-byte UINT32 type, Class of Device is a 3 Byte value. Population 
- *         of Class of Device should be according to Bluetooth Assigned Numbers 
- *         document – http://www.bluetooth.org/assigned-numbers/.
- *         
+ *         in 4-byte UINT32 type, Class of Device is a 3 Byte value. Population
+ *         of Class of Device should be according to Bluetooth Assigned Numbers
+ *         document - http://www.bluetooth.org/assigned-numbers/.
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -3433,9 +3501,9 @@ API_RESULT BT_hci_write_class_of_device
  *  \par Description:
  *       This API reads the Voice Setting configuration parameter from the local
  *       Bluetooth device.
- *       For details on the Voice Setting configuration parameter, refer to the 
- *       Specification of the Bluetooth System, v1.2, Vol. 2, 
- *       Part E – Host Controller Interface Functional Specification, Section 6.12.
+ *       For details on the Voice Setting configuration parameter, refer to the
+ *       Specification of the Bluetooth System, v1.2, Vol. 2,
+ *       Part E - Host Controller Interface Functional Specification, Section 6.12.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -3445,15 +3513,15 @@ API_RESULT BT_hci_write_class_of_device
         hci_common_api_handler_no_params (HCI_READ_VOICE_SETTING_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief To set the Voice Setting configuration parameter in the local 
- *         Bluetooth device. 
- *         
+ *  \brief To set the Voice Setting configuration parameter in the local
+ *         Bluetooth device.
+ *
  *  \par Description:
- *       This API writes the Voice Setting configuration parameter in the local 
+ *       This API writes the Voice Setting configuration parameter in the local
  *       Bluetooth device.
- *       For details on the Voice Setting configuration parameter, 
- *       refer to the Specification of the Bluetooth System, v1.2, Vol. 2, 
- *       Part E – Host Controller Interface Functional Specification, Section 6.12.
+ *       For details on the Voice Setting configuration parameter,
+ *       refer to the Specification of the Bluetooth System, v1.2, Vol. 2,
+ *       Part E - Host Controller Interface Functional Specification, Section 6.12.
  *
  *  \param [in] voice_setting
  *         The value of Voice Setting parameter to be set.
@@ -3467,25 +3535,25 @@ API_RESULT BT_hci_write_voice_setting
                UINT16  voice_setting
            );
 /**
- *  \brief To read the value of the Flush Timeout configuration parameter from 
+ *  \brief To read the value of the Flush Timeout configuration parameter from
  *         the local Bluetooth device.
  *
  *  \par Description:
  *       This API reads the Flush Timeout configuration parameter from the local
- *       Bluetooth device. 
- *       The Flush Timeout parameter defines the amount of time before all 
- *       fragments of the L2CAP packet, of which a Baseband packet is currently 
- *       being transmitted, are automatically flushed by the local Bluetooth 
- *       device. The timeout period starts when a transmission attempt is made 
- *       for the first Baseband packet of an L2CAP packet. This allows ACL 
- *       packets to be automatically flushed without the Host device issuing a 
+ *       Bluetooth device.
+ *       The Flush Timeout parameter defines the amount of time before all
+ *       fragments of the L2CAP packet, of which a Baseband packet is currently
+ *       being transmitted, are automatically flushed by the local Bluetooth
+ *       device. The timeout period starts when a transmission attempt is made
+ *       for the first Baseband packet of an L2CAP packet. This allows ACL
+ *       packets to be automatically flushed without the Host device issuing a
  *       \Flush command, using the BT_hci_flush() API. This provides support
- *       for isochronous data, such as audio. When the L2CAP packet that is 
- *       currently being transmitted is automatically ‘flushed’, the Failed 
+ *       for isochronous data, such as audio. When the L2CAP packet that is
+ *       currently being transmitted is automatically 'flushed', the Failed
  *       Contact Counter is incremented by one.
- *      
+ *
  *  \param [in] connection_handle
- *         The ACL Connection Handle for the connection with the remote 
+ *         The ACL Connection Handle for the connection with the remote
  *         Bluetooth device for which the automatic flush timeout to be read.
  *
  *  \return
@@ -3500,21 +3568,21 @@ API_RESULT BT_hci_read_automatic_flush_timeout
  *  \brief To read the value of the Flush Timeout configuration parameter from the local Bluetooth device.
  *
  *  \par Description:
- *       This API reads the Flush Timeout configuration parameter from the local 
- *       Bluetooth device. 
- *       The Flush Timeout parameter defines the amount of time before all 
- *       fragments of the L2CAP packet, of which a Baseband packet is currently 
- *       being transmitted, are automatically flushed by the local Bluetooth 
- *       device. The timeout period starts when a transmission attempt is made 
- *       for the first Baseband packet of an L2CAP packet. This allows 
+ *       This API reads the Flush Timeout configuration parameter from the local
+ *       Bluetooth device.
+ *       The Flush Timeout parameter defines the amount of time before all
+ *       fragments of the L2CAP packet, of which a Baseband packet is currently
+ *       being transmitted, are automatically flushed by the local Bluetooth
+ *       device. The timeout period starts when a transmission attempt is made
+ *       for the first Baseband packet of an L2CAP packet. This allows
  *       ACL packets to be automatically flushed without the Host device issuing
- *       a Flush command, using the BT_hci_flush() API. This provides support 
- *       for isochronous data, such as audio. When the L2CAP packet that is 
- *       currently being transmitted is automatically ‘flushed’, the Failed 
+ *       a Flush command, using the BT_hci_flush() API. This provides support
+ *       for isochronous data, such as audio. When the L2CAP packet that is
+ *       currently being transmitted is automatically 'flushed', the Failed
  *       Contact Counter is incremented by one.
- *      
+ *
  *  \param [in] connection_handle
- *         The ACL Connection Handle for the connection with the remote 
+ *         The ACL Connection Handle for the connection with the remote
  *         Bluetooth device for which the automatic flush timeout to be read.
  *
  *  \return
@@ -3575,16 +3643,16 @@ API_RESULT BT_hci_write_automatic_flush_timeout
 
 #ifndef HCI_LITE
 /**
- *  \brief To read the Number of Broadcast Retransmissions parameter from the 
- *         local Bluetooth device 
- *         
+ *  \brief To read the Number of Broadcast Retransmissions parameter from the
+ *         local Bluetooth device
+ *
  *  \par Description:
- *       This API reads the value of the Number of Broadcast Retransmissions from the local 
+ *       This API reads the value of the Number of Broadcast Retransmissions from the local
  *       Bluetooth device.
- *       The Number of Broadcast Retransmissions parameter is used to increase 
- *       the reliability of a broadcast message by retransmitting the broadcast 
- *       message multiple times. This parameter defines the number of times the 
- *       device will retransmit a broadcast data packet. This parameter should 
+ *       The Number of Broadcast Retransmissions parameter is used to increase
+ *       the reliability of a broadcast message by retransmitting the broadcast
+ *       message multiple times. This parameter defines the number of times the
+ *       device will retransmit a broadcast data packet. This parameter should
  *       be adjusted as the link quality measurement changes.
  *
  *
@@ -3600,19 +3668,19 @@ API_RESULT BT_hci_write_automatic_flush_timeout
 /**
  *  \brief To set the Number of Broadcast Retransmissions parameter to the local
  *         Bluetooth device.
- *         
+ *
  *  \par Description:
  *       This API writes the value of the Number of Broadcast Retransmissions to
- *       the local Bluetooth device. 
- *       The Number of Broadcast Retransmissions parameter is used to increase 
- *       the reliability of a broadcast message by retransmitting the broadcast 
- *       message multiple times. This parameter defines the number of times the 
- *       device will retransmit a broadcast data packet. This parameter should 
+ *       the local Bluetooth device.
+ *       The Number of Broadcast Retransmissions parameter is used to increase
+ *       the reliability of a broadcast message by retransmitting the broadcast
+ *       message multiple times. This parameter defines the number of times the
+ *       device will retransmit a broadcast data packet. This parameter should
  *       be adjusted as the link quality measurement changes.
  *
  *  \param [in] num_broadcast_rx
- *         The value of the Number of Broadcast Retransmissions to be set.    
- *         Range = 0x00 – 0xFE.
+ *         The value of the Number of Broadcast Retransmissions to be set.
+ *         Range = 0x00 - 0xFE.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -3625,16 +3693,16 @@ API_RESULT BT_hci_write_num_broadcast_retransmissions
 
 #ifndef HCI_LITE
 /**
- *  \brief To read the Hold Mode Activity configuration parameter of the local 
+ *  \brief To read the Hold Mode Activity configuration parameter of the local
  *         Bluetooth device.
- *         
+ *
  *  \par Description:
- *       This API reads the Hold Mode Activity configuration parameter from the 
- *       local Bluetooth device. 
- *       The Hold Mode Activity value is used to determine what activities 
- *       should be suspended when the device is in hold mode. 
- *       After the Hold period has expired, the device will return to the 
- *       previous mode of operation. 
+ *       This API reads the Hold Mode Activity configuration parameter from the
+ *       local Bluetooth device.
+ *       The Hold Mode Activity value is used to determine what activities
+ *       should be suspended when the device is in hold mode.
+ *       After the Hold period has expired, the device will return to the
+ *       previous mode of operation.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -3644,31 +3712,31 @@ API_RESULT BT_hci_write_num_broadcast_retransmissions
         hci_common_api_handler_no_params (HCI_READ_HOLD_MODE_ACTIVITY_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief To write the Hold Mode Activity configuration parameter in the local 
+ *  \brief To write the Hold Mode Activity configuration parameter in the local
  *         Bluetooth device.
- *         
+ *
  *  \par Description:
- *       This API writes the Hold Mode Activity configuration parameter in the 
+ *       This API writes the Hold Mode Activity configuration parameter in the
  *       local Bluetooth device.
- *       The Hold Mode Activity value is used to determine what activities 
+ *       The Hold Mode Activity value is used to determine what activities
  *       should be suspended when the device is in hold mode. After the hold
  *       period has expired, the device will return to the previous mode of
- *       operation. 
- *       Multiple hold mode activities may be specified for the Hold Mode 
- *       Activity parameter by performing a bitwise OR operation of the 
- *       different activity types. If no activities are suspended, then all 
- *       of the current Periodic Inquiry, Inquiry Scan, and Page Scan settings 
- *       remain valid during the Hold Mode. If the Hold Mode Activity parameter 
+ *       operation.
+ *       Multiple hold mode activities may be specified for the Hold Mode
+ *       Activity parameter by performing a bitwise OR operation of the
+ *       different activity types. If no activities are suspended, then all
+ *       of the current Periodic Inquiry, Inquiry Scan, and Page Scan settings
+ *       remain valid during the Hold Mode. If the Hold Mode Activity parameter
  *       is set to Suspend Page Scan, Suspend Inquiry Scan, and Suspend Periodic
- *       Inquiries, then the device can enter a low-power state during the Hold 
- *       Mode period, and all activities are suspended. Suspending multiple 
- *       activities can be specified for the Hold Mode Activity parameter by 
- *       performing a bitwise OR operation of the different activity types. 
+ *       Inquiries, then the device can enter a low-power state during the Hold
+ *       Mode period, and all activities are suspended. Suspending multiple
+ *       activities can be specified for the Hold Mode Activity parameter by
+ *       performing a bitwise OR operation of the different activity types.
  *       The Hold Mode Activity is only valid if all connections are in Hold Mode.
- *      
+ *
  *  \param [in] hold_mode_activity
- *         Value of the Hold Mode Activity parameter to be set in the 
- *         Baseband Controller . 
+ *         Value of the Hold Mode Activity parameter to be set in the
+ *         Baseband Controller .
  *         The valid values and their meanings are shown below:
  *         0x00: Maintain current power state.
  *         0x01: Suspend Page Scan.
@@ -3686,7 +3754,7 @@ API_RESULT BT_hci_write_hold_mode_activity
 
 #ifndef HCI_LITE
 /**
- *  \brief To read the SCO Flow Control settings from the local Bluetooth device. 
+ *  \brief To read the SCO Flow Control settings from the local Bluetooth device.
  *
  *  \par Description:
  *      This API reads the value of SCO/eSCO Flow Control Enable configuration parameter from the local Bluetooth device.
@@ -3703,11 +3771,11 @@ API_RESULT BT_hci_write_hold_mode_activity
  *  \brief To write the SCO Flow Control settings in the local Bluetooth device.
  *
  *  \par Description:
- *       This API writes the value of SCO/eSCO Flow Control setting in the 
- *       local Bluetooth device. 
+ *       This API writes the value of SCO/eSCO Flow Control setting in the
+ *       local Bluetooth device.
  *
  *  \param [in] flow_enable
- *         Value of the SCO Flow Control setting to be set in the local 
+ *         Value of the SCO Flow Control setting to be set in the local
  *         Bluetooth device.
  *         Value 0x00: SCO Flow Control Disabled.
  *         Value 0x01: SCO Flow Control Enabled.
@@ -3766,38 +3834,42 @@ API_RESULT BT_hci_set_host_controller_to_host_flow_control
 #ifdef HCI_HOST_CONTROLLER_FLOW_ON
 #ifdef HCI_HOST_BUFFER_SIZE_SUPPORT
 /**
- *  \brief 
+ *  \brief To notify the Controller about maximum size and number of ACL
+ *         and SCO data packets.
+ *
  *  \par Description:
- *      
- *
- *
+ *       This API is to notify the Controller about the maximum size of
+ *       the data portion of HCI ACL and Synchronous Data packets sent
+ *       from the Controller to the Host. The HCI_Host_Buffer_Size command
+ *       also notifies the Controller about the total number of HCI ACL and
+ *       Synchronous Data packets that can be stored in the data buffers of
+ *       the Host.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
  */
-#define BT_hci_host_buffer_size() \
-        hci_common_api_handler_no_params (HCI_HOST_BUFFER_SIZE_OPCODE)
+API_RESULT BT_hci_host_buffer_size(void);
 #endif /* HCI_HOST_BUFFER_SIZE_SUPPORT */
 #endif /* HCI_HOST_CONTROLLER_FLOW_ON */
 /**
- *  \brief To read the value of the Link Supervision Timeout configuration 
+ *  \brief To read the value of the Link Supervision Timeout configuration
  *         parameter from the local Bluetooth device.
- *         
+ *
  *  \par Description:
- *       This API reads the Link Supervision Timeout configuration parameter 
+ *       This API reads the Link Supervision Timeout configuration parameter
  *       from the local Bluetooth device.
- *       The Master or Slave Bluetooth device uses the Link Supervision Timeout 
- *       configuration parameter to monitor link loss. If, for any reason, 
- *       no Baseband packets are received from a Connection Handle for duration 
+ *       The Master or Slave Bluetooth device uses the Link Supervision Timeout
+ *       configuration parameter to monitor link loss. If, for any reason,
+ *       no Baseband packets are received from a Connection Handle for duration
  *       longer than the Link Supervision Timeout, the connection is disconnected.
- *       The same timeout value is used for both Synchronous (SCO/eSCO) and 
+ *       The same timeout value is used for both Synchronous (SCO/eSCO) and
  *       ACL connections for the device specified by the Connection Handle.
  *
  *  \param [in] handle
- *         The ACL Connection Handle for the connection with the remote 
+ *         The ACL Connection Handle for the connection with the remote
  *         Bluetooth device for which the Link Supervision Timeout to be read.
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -3807,36 +3879,36 @@ API_RESULT BT_hci_read_link_supervision_timeout
                UINT16    handle
            );
 /**
- *  \brief To write the value of the Link Supervision Timeout configuration 
+ *  \brief To write the value of the Link Supervision Timeout configuration
  *         parameter in the local Bluetooth device.
- *         
+ *
  *  \par Description:
  *       This API writes the value of the Link Supervision Timeout configuration
- *       parameter in the local Bluetooth device. 
- *       The Master or Slave Bluetooth device uses the Link Supervision Timeout 
- *       configuration parameter to monitor link loss. If, for any reason, 
- *       no Baseband packets are received from a Connection Handle for duration 
+ *       parameter in the local Bluetooth device.
+ *       The Master or Slave Bluetooth device uses the Link Supervision Timeout
+ *       configuration parameter to monitor link loss. If, for any reason,
+ *       no Baseband packets are received from a Connection Handle for duration
  *       longer than the Link Supervision Timeout, the connection is disconnected.
- *       The same timeout value is used for both Synchronous (SCO/eSCO) and ACL 
+ *       The same timeout value is used for both Synchronous (SCO/eSCO) and ACL
  *       connections for the device specified by the Connection Handle.
  *
  *  \param [in] connection_handle
- *         The ACL Connection Handle for the connection with the remote 
+ *         The ACL Connection Handle for the connection with the remote
  *         Bluetooth device for which the link supervision timeout to be set.
- *         
+ *
  *  \param [in] Link_supervision_timeout
- *         The value of Link Supervision Timeout parameter to be set. 
- *         Value Range = 0x0001 – 0x07FF. A value of 0x0000 means 
- *         No Link Supervision Timeout at all. 
+ *         The value of Link Supervision Timeout parameter to be set.
+ *         Value Range = 0x0001 - 0x07FF. A value of 0x0000 means
+ *         No Link Supervision Timeout at all.
  *         Actual Time = link_supervision_timeout * 0.625 msec.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
  *
- *  \note Setting the Link Supervision Timeout to 0x0000 will disable the Link 
- *        Supervision Timeout check for the specified Connection Handle. 
- *        This makes it unnecessary for the Bluetooth Master of the Piconet to 
+ *  \note Setting the Link Supervision Timeout to 0x0000 will disable the Link
+ *        Supervision Timeout check for the specified Connection Handle.
+ *        This makes it unnecessary for the Bluetooth Master of the Piconet to
  *        unpark and then park each Bluetooth Device every ~40 seconds. By using
  *        a value of 0x0000 for the Link Supervision Timeout setting,
  *        the scalability of the Park state is not limited.
@@ -3849,12 +3921,12 @@ API_RESULT BT_hci_read_link_supervision_timeout
 /**
  *  \brief To read the number of Inquiry Access Codes the local Bluetooth device
  *         can listen on.
- *         
+ *
  *  \par Description:
- *       This API reads the value for the Number of Inquiry Access Codes (IAC) 
- *       that the local Bluetooth device can simultaneous listen for during an 
+ *       This API reads the value for the Number of Inquiry Access Codes (IAC)
+ *       that the local Bluetooth device can simultaneous listen for during an
  *       Inquiry Scan performed by other Bluetooth devices.
- *       All Bluetooth devices should support at least one IAC, 
+ *       All Bluetooth devices should support at least one IAC,
  *       the General Inquiry Access Code (the GIAC).
  *
  *  \return
@@ -3865,14 +3937,14 @@ API_RESULT BT_hci_read_link_supervision_timeout
         hci_common_api_handler_no_params \
         (HCI_READ_NUMBER_OF_SUPPORTED_IAC_OPCODE)
 /**
- *  \brief To read the current Inquiry Access Code LAP(s) stored in the local 
- *         Bluetooth device 
- *         
+ *  \brief To read the current Inquiry Access Code LAP(s) stored in the local
+ *         Bluetooth device
+ *
  *  \par Description:
- *       This API reads the currently configured values for the Inquiry 
- *       Access Code LAP(s) the local Bluetooth device can simultaneous 
+ *       This API reads the currently configured values for the Inquiry
+ *       Access Code LAP(s) the local Bluetooth device can simultaneous
  *       listen for during an Inquiry Scan performed by other Bluetooth devices.
- *       All Bluetooth devices should support at least one IAC, 
+ *       All Bluetooth devices should support at least one IAC,
  *       the General Inquiry Access Code (GIAC).
  *
  *  \return
@@ -3883,29 +3955,29 @@ API_RESULT BT_hci_read_link_supervision_timeout
         hci_common_api_handler_no_params (HCI_READ_CURRENT_IAC_LAP_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief To write the current Inquiry Access Code LAP(s) in the local 
+ *  \brief To write the current Inquiry Access Code LAP(s) in the local
  *         Bluetooth device
- *         
+ *
  *  \par Description:
- *       This API writes the current values for the Inquiry Access Code LAP(s), 
- *       to be used by the local Bluetooth device to simultaneous listen for 
+ *       This API writes the current values for the Inquiry Access Code LAP(s),
+ *       to be used by the local Bluetooth device to simultaneous listen for
  *       during an Inquiry Scan performed by other Bluetooth devices.
  *       All Bluetooth devices should support at least one IAC,
  *       the General Inquiry Access Code (GIAC).
  *
  *  \param [in] num_iac
- *         This parameter specifies the number of IACs, which are currently to 
- *         be used by the local Baseband Controller to simultaneously listen 
- *         for during an Inquiry Scan. Range: 0x01-0x40. 
- *         The value specified must not be greater than the number of IACs that 
+ *         This parameter specifies the number of IACs, which are currently to
+ *         be used by the local Baseband Controller to simultaneously listen
+ *         for during an Inquiry Scan. Range: 0x01-0x40.
+ *         The value specified must not be greater than the number of IACs that
  *         the local Bluetooth device is capable of supporting, as returned by
  *         the BT_hci_read_number_of_supported_iac() API.
- *         
+ *
  *  \param [in] iac_lap
- *         Pointer to a caller allocated UINT32 array of size num_current_iac, 
- *         which holds the values of each LAP to be set. Each IAC LAP is 
+ *         Pointer to a caller allocated UINT32 array of size num_current_iac,
+ *         which holds the values of each LAP to be set. Each IAC LAP is
  *         actually a 3-byte value represented in a 4-byte UINT32 variable.
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -3918,14 +3990,14 @@ API_RESULT BT_hci_write_current_iac_lap
 
 #ifndef HCI_LITE
 /**
- *  \brief To read the Page Scan Period Mode settings of the local 
- *         Bluetooth device. 
- *         
+ *  \brief To read the Page Scan Period Mode settings of the local
+ *         Bluetooth device.
+ *
  *  \par Description:
  *       This API can be used to read the mandatory Page Scan Period Mode of the
  *       local Bluetooth device.
- *       Every time an inquiry response message is sent, the Bluetooth device 
- *       will start a timer, the value of which is dependent on the Page Scan 
+ *       Every time an inquiry response message is sent, the Bluetooth device
+ *       will start a timer, the value of which is dependent on the Page Scan
  *       Period Mode. As long as this timer has not expired, the Bluetooth device
  *       will use the Page Scan Period Mode for all following page scans.
  *
@@ -3937,25 +4009,25 @@ API_RESULT BT_hci_write_current_iac_lap
         hci_common_api_handler_no_params (HCI_READ_PAGE_SCAN_PERIOD_MODE_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief To set the Page Scan Period Mode in the local Bluetooth device. 
+ *  \brief To set the Page Scan Period Mode in the local Bluetooth device.
  *
  *  \par Description:
- *       This API can be used to write the mandatory Page Scan Period Mode 
+ *       This API can be used to write the mandatory Page Scan Period Mode
  *       configuration parameter to the local Bluetooth device.
- *       Every time an inquiry response message is sent, the Bluetooth device 
- *       will start a timer, the value of which is dependent on the Page Scan 
- *       Period Mode. As long as this timer has not expired, 
- *       the Bluetooth device will use the Page Scan Period Mode for all 
+ *       Every time an inquiry response message is sent, the Bluetooth device
+ *       will start a timer, the value of which is dependent on the Page Scan
+ *       Period Mode. As long as this timer has not expired,
+ *       the Bluetooth device will use the Page Scan Period Mode for all
  *       following page scans.
  *
  *  \param [in] mode
- *         Value of the Page Scan Period Mode parameter to be set in the local 
- *         Bluetooth device. 
+ *         Value of the Page Scan Period Mode parameter to be set in the local
+ *         Bluetooth device.
  *         The valid values and their meanings are shown below:
  *         0x00: P0 (Default)
  *         0x01: P1.
  *         0x02: P2.
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -3972,9 +4044,9 @@ API_RESULT BT_hci_write_page_scan_period_mode
  *  \par Description:
  *       This API can be used to read the Page Scan Mode configuration parameter
  *       from the local Bluetooth device.
- *       The Page Scan Mode configuration parameter indicates the mode for the 
- *       default page scan. Currently, one mandatory page scan mode and three 
- *       optional page scan modes are defined. 
+ *       The Page Scan Mode configuration parameter indicates the mode for the
+ *       default page scan. Currently, one mandatory page scan mode and three
+ *       optional page scan modes are defined.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -3988,14 +4060,14 @@ API_RESULT BT_hci_write_page_scan_period_mode
  *
  *  \par Description:
  *       This API can be used to write the default Page Scan Mode for the local
- *       Bluetooth device. 
- *       The Page Scan Mode configuration parameter indicates the mode for the 
- *       default page scan. Currently, one mandatory page scan mode and three 
+ *       Bluetooth device.
+ *       The Page Scan Mode configuration parameter indicates the mode for the
+ *       default page scan. Currently, one mandatory page scan mode and three
  *       optional page scan modes are defined.
  *
  *  \param [in] mode
- *         Value of the Page Scan Mode parameter to be set in the local 
- *         Bluetooth device . 
+ *         Value of the Page Scan Mode parameter to be set in the local
+ *         Bluetooth device .
  *         The valid values and their meanings are shown below:
  *         0x00: Mandatory Page Scan Mode (Default)
  *         0x01: Optional Page Scan Mode I
@@ -4237,6 +4309,7 @@ API_RESULT BT_hci_read_transmit_power_level
 /* ------------------------------------------------------------------------- */
 /* HCI Bluetooth Low Energy API's ----------------------------------------------- */
 
+/* New APIs from Bluetooth Spec 4.0 ---------------------------------------- */
 #ifdef BT_4_0
 #ifdef HCI_LE_SET_EVENT_MASK_SUPPORT
 /**
@@ -5561,16 +5634,16 @@ API_RESULT BT_hci_write_authenticated_payload_timeout
  *  \brief To read the Loopback Mode configuration parameter
  *
  *  \par Description:
- *       This API reads the current value for Loopback Mode configuration 
- *       parameter stored in the local Bluetooth device. The setting of the 
- *       Loopback Mode will determine the path of information. 
- *       In Non-testing Mode operation, the Loopback Mode is set to 
+ *       This API reads the current value for Loopback Mode configuration
+ *       parameter stored in the local Bluetooth device. The setting of the
+ *       Loopback Mode will determine the path of information.
+ *       In Non-testing Mode operation, the Loopback Mode is set to
  *       Non-testing Mode and the path of the information is as specified by the
- *       Bluetooth specifications. In local Loopback Mode, the local Bluetooth 
- *       device sends back every Data Packet (ACL, SCO and eSCO) and 
+ *       Bluetooth specifications. In local Loopback Mode, the local Bluetooth
+ *       device sends back every Data Packet (ACL, SCO and eSCO) and
  *       Command Packet that is sent from the Host to the local Bluetooth device.
- *       For details on the Loopback Mode, please refer to the Specification of 
- *       the Bluetooth System, v1.2, Vol. 2, Part E – Host Controller Interface 
+ *       For details on the Loopback Mode, please refer to the Specification of
+ *       the Bluetooth System, v1.2, Vol. 2, Part E - Host Controller Interface
  *       Functional Specification, Section 7.6.1.
  *
  *  \return
@@ -5583,29 +5656,29 @@ API_RESULT BT_hci_write_authenticated_payload_timeout
  *  \brief To write the Loopback Mode configuration parameter
  *
  *  \par Description:
- *       This API writes the current value for Loopback Mode configuration 
- *       parameter to the local Bluetooth device. The setting of the Loopback 
- *       Mode will determine the path of information. In Non-testing Mode 
- *       operation, the Loopback Mode is set to Non-testing Mode and the path 
- *       of the information is as specified by the Bluetooth specifications. 
- *       In local Loopback Mode, the local Bluetooth device sends back every 
- *       Data Packet (ACL, SCO and eSCO) and Command Packet that is sent from 
+ *       This API writes the current value for Loopback Mode configuration
+ *       parameter to the local Bluetooth device. The setting of the Loopback
+ *       Mode will determine the path of information. In Non-testing Mode
+ *       operation, the Loopback Mode is set to Non-testing Mode and the path
+ *       of the information is as specified by the Bluetooth specifications.
+ *       In local Loopback Mode, the local Bluetooth device sends back every
+ *       Data Packet (ACL, SCO and eSCO) and Command Packet that is sent from
  *       the Host to the local Bluetooth device.
- *       For details on the Loopback Mode, please refer to the Specification of 
- *       the Bluetooth System, v1.2, Vol. 2, Part E – Host Controller Interface 
+ *       For details on the Loopback Mode, please refer to the Specification of
+ *       the Bluetooth System, v1.2, Vol. 2, Part E - Host Controller Interface
  *       Functional Specification, Section 7.6.2.
  *
  *  \param [in] loopback_mode
  *         The Loopback Mode to be set. The valid values are:
- *         0x00 – No Loopback Mode Enabled
- *         0x01 – Enable Local Loopback Mode
- *         0x02 – Enable Remote Loopback Mode
+ *         0x00 - No Loopback Mode Enabled
+ *         0x01 - Enable Local Loopback Mode
+ *         0x02 - Enable Remote Loopback Mode
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
  *
- *  \note This API is available only if HCI_TESTING_COMMANDS compilation flag 
+ *  \note This API is available only if HCI_TESTING_COMMANDS compilation flag
  *        is enabled during compilation.
  */
 API_RESULT BT_hci_write_loopback_mode
@@ -5616,11 +5689,11 @@ API_RESULT BT_hci_write_loopback_mode
  *  \brief To allow local Bluetooth device to enter DUT mode.
  *
  *  \par Description:
- *       This API enables the local Bluetooth device to enter Device Under Test 
+ *       This API enables the local Bluetooth device to enter Device Under Test
  *       (DUT) mode via the LMP test Commands.
- *       For details on the Device Under Test Mode, please refer to the 
- *       Specification of the Bluetooth System, v1.2, Vol. 2, 
- *       Part E – Host Controller Interface Functional Specification, 
+ *       For details on the Device Under Test Mode, please refer to the
+ *       Specification of the Bluetooth System, v1.2, Vol. 2,
+ *       Part E - Host Controller Interface Functional Specification,
  *       Section 7.6.3.
  *
  *  \return
@@ -5635,9 +5708,9 @@ API_RESULT BT_hci_write_loopback_mode
 
 #ifdef BT_BRSC_TEST
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -5686,12 +5759,12 @@ API_RESULT BT_hci_write_secure_connections_test_mode
  *  \brief  To cancel ongoing ACL link creation process.
  *
  *  \par Description:
- *       This API can be used to cancel an ongoing ACL link creation process to 
- *       a remote Bluetooth device, as started with the 
- *       BT_hci_create_connection() API. 
+ *       This API can be used to cancel an ongoing ACL link creation process to
+ *       a remote Bluetooth device, as started with the
+ *       BT_hci_create_connection() API.
  *
  *  \param [in] bd_addr
- *         This is the Bluetooth Device Address for the remote device to which 
+ *         This is the Bluetooth Device Address for the remote device to which
  *         an attempt was made to create an ACL.
  *
  *  \return
@@ -5706,13 +5779,13 @@ API_RESULT BT_hci_create_connection_cancel
  *  \brief To cancel ongoing remote name request process.
  *
  *  \par Description:
- *       This API cancels ongoing remote name request process to a remote 
- *       Bluetooth device, as started with the 
- *       BT_hci_remote_name_request() API. 
+ *       This API cancels ongoing remote name request process to a remote
+ *       Bluetooth device, as started with the
+ *       BT_hci_remote_name_request() API.
  *
  *  \param [in] bd_addr
- *         This is the Bluetooth Device Address for the remote device to which 
- *         an attempt was made to retrieve its name using 
+ *         This is the Bluetooth Device Address for the remote device to which
+ *         an attempt was made to retrieve its name using
  *         BT_hci_remote_name_request() API.
  *
  *  \return
@@ -5727,20 +5800,20 @@ API_RESULT BT_hci_remote_name_request_cancel
  *  \brief To retrieve extended features of the remote Bluetooth device.
  *
  *  \par Description:
- *       This API attempts to retrieve the requested page of the extended LMP 
- *       features for the remote device identified by the specified connection 
- *       handle. 
+ *       This API attempts to retrieve the requested page of the extended LMP
+ *       features for the remote device identified by the specified connection
+ *       handle.
  *
  *  \param [in] connection_handle
  *         Connection Handle of the ACL Connection with the remote Bluetooth device.
- *         
+ *
  *  \param [in] page_number
- *         Page Number for LMP Features to retrieve. 
+ *         Page Number for LMP Features to retrieve.
  *         The values are:
  *         Value 0x00: Request for normal LMP features as returned by
  *         BT_hci_read_remote_supported_features() API.
  *         Value 0x01-0xFF: Request to return the corresponding page of LMP features.
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -5754,76 +5827,76 @@ API_RESULT BT_hci_read_remote_extended_features
  *  \brief To create or update a Synchronous Connection (eSCO).
  *
  *  \par Description:
- *       This API adds a new or modifies an existing synchronous logical 
- *       transport (SCO or eSCO) on a physical link depending on the 
- *       Connection Handle parameter specified. If the Connection Handle refers 
- *       to an ACL link a new synchronous logical transport will be added. 
- *       If the Connection Handle refers to an already existing synchronous 
- *       logical transport (eSCO only) this link will be modified. 
- *       The parameters are specified per connection. This synchronous 
- *       connection can be used to transfer synchronous voice at 64kbps or 
+ *       This API adds a new or modifies an existing synchronous logical
+ *       transport (SCO or eSCO) on a physical link depending on the
+ *       Connection Handle parameter specified. If the Connection Handle refers
+ *       to an ACL link a new synchronous logical transport will be added.
+ *       If the Connection Handle refers to an already existing synchronous
+ *       logical transport (eSCO only) this link will be modified.
+ *       The parameters are specified per connection. This synchronous
+ *       connection can be used to transfer synchronous voice at 64kbps or
  *       transparent synchronous data.
- *       When used to setup a new synchronous logical transport, the Connection 
- *       Handle parameter must specify an ACL connection with which the new 
- *       synchronous connection will be associated. The other parameters relate 
- *       to the negotiation of the link, and may be reconfigured during the 
- *       lifetime of the link. Transmit and receive bandwidth specify how much 
- *       bandwidth shall be available for transmitting and for receiving data. 
- *       While in many cases transmit and receive bandwidth parameters may be 
- *       equal, they may be different. The latency specifies an upper limit to 
- *       the time in milliseconds between the eSCO (or SCO) instants, 
- *       plus the size of the retransmission window, plus the length of the 
- *       reserved synchronous slots for this logical transport. The content 
- *       format specifies the settings for voice or transparent data on this 
- *       connection. The Retransmission Effort specifies the extra resources 
- *       that are allocated to this connection if a packet may need to be 
+ *       When used to setup a new synchronous logical transport, the Connection
+ *       Handle parameter must specify an ACL connection with which the new
+ *       synchronous connection will be associated. The other parameters relate
+ *       to the negotiation of the link, and may be reconfigured during the
+ *       lifetime of the link. Transmit and receive bandwidth specify how much
+ *       bandwidth shall be available for transmitting and for receiving data.
+ *       While in many cases transmit and receive bandwidth parameters may be
+ *       equal, they may be different. The latency specifies an upper limit to
+ *       the time in milliseconds between the eSCO (or SCO) instants,
+ *       plus the size of the retransmission window, plus the length of the
+ *       reserved synchronous slots for this logical transport. The content
+ *       format specifies the settings for voice or transparent data on this
+ *       connection. The Retransmission Effort specifies the extra resources
+ *       that are allocated to this connection if a packet may need to be
  *       retransmitted.
- *       The Retransmission Effort parameter must be set to indicate the 
- *       required behaviour, or to “don’t care”. When used to modify an 
+ *       The Retransmission Effort parameter must be set to indicate the
+ *       required behaviour, or to "don't care". When used to modify an
  *       existing synchronous logical transport, the Transmit Bandwidth,
- *       Receive Bandwidth and Voice Settings shall be set to the same values 
- *       as were used during the initial setup. The Packet Type, Retransmission 
+ *       Receive Bandwidth and Voice Settings shall be set to the same values
+ *       as were used during the initial setup. The Packet Type, Retransmission
  *       Effort and Max Latency parameters may be modified.
- *       The Packet Type field is a bitmap specifying which packet types the 
- *       LM shall accept in the negotiation of the link parameters. 
- *       Multiple packet types are specified by bitwise OR of the packet 
- *       type codes in the table. At least one packet type must be specified 
- *       for each negotiation. It is recommended to enable as many packet 
- *       types as possible. Note that it is allowed to enable packet types that 
+ *       The Packet Type field is a bitmap specifying which packet types the
+ *       LM shall accept in the negotiation of the link parameters.
+ *       Multiple packet types are specified by bitwise OR of the packet
+ *       type codes in the table. At least one packet type must be specified
+ *       for each negotiation. It is recommended to enable as many packet
+ *       types as possible. Note that it is allowed to enable packet types that
  *       are not supported by the local device.
- *       The Connection Handle for the new synchronous connection will be 
+ *       The Connection Handle for the new synchronous connection will be
  *       returned in the synchronous connection complete event.
- *       The local Bluetooth device starts the Link Manager procedure to add or 
+ *       The local Bluetooth device starts the Link Manager procedure to add or
  *       modify an eSCO link on reception of the HCI Setup Synchronous Connection
  *       Command, and sends a Command Status Event to the HCI. At the end of the
  *       link creation process, the Synchronous Connection Complete Event is received.
- *       For details on the Bluetooth Synchronous link establishment, refer to 
+ *       For details on the Bluetooth Synchronous link establishment, refer to
  *       the Specification of the Bluetooth System, v1.2, Vol. 2,
- *       Part F – Message Sequence Charts.
- *       
+ *       Part F - Message Sequence Charts.
+ *
  *  \param [in] handle
  *         The Connection Handle of the ACL, or existing SCO/eSCO link
  *
  *  \param [in] sco_in_params
  *         Pointer to caller allocated HCI_SCO_IN_PARAMS variable containing the
  *         input parameters for negotiating the new or existing synchronous link.
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
  *
- *  \note The link manager may choose any combination of packet types, timing, 
- *        and retransmission window sizes that satisfy the parameters given. 
+ *  \note The link manager may choose any combination of packet types, timing,
+ *        and retransmission window sizes that satisfy the parameters given.
  *        This may be achieved by using more frequent transmissions of smaller packets.
- *        The link manager may choose to set up either a SCO or an eSCO connection, 
+ *        The link manager may choose to set up either a SCO or an eSCO connection,
  *        if the parameters allow, using the corresponding LMP sequences.
  *        To modify a SCO connection, use the BT_hci_change_connection_packet_type() API.
- *        If the lower layers cannot achieve the exact transmit and receive 
- *        bandwidth requested subject to the other parameters, then the link 
+ *        If the lower layers cannot achieve the exact transmit and receive
+ *        bandwidth requested subject to the other parameters, then the link
  *        will be rejected.
- *        A synchronous connection may only be created when an ACL connection 
+ *        A synchronous connection may only be created when an ACL connection
  *        already exists and when it is not in park state.
- *  
+ *
  */
 API_RESULT BT_hci_setup_synchronous_connection
            (
@@ -5834,40 +5907,40 @@ API_RESULT BT_hci_setup_synchronous_connection
 #ifdef HCI_ENH_SCO
 /**
  *  \brief To create or update a Synchronous Connection (eSCO).
- * 
+ *
  *  \par Description:
- *       This API adds a new or modifies an existing synchronous logical 
- *       transport (SCO or eSCO) on a physical link depending on the Connection 
- *       Handle parameter specified. If the Connection Handle refers to an ACL 
- *       link a new synchronous logical transport will be added. 
- *       If the Connection Handle refers to an already existing synchronous 
- *       logical transport (eSCO only) this link will be modified. 
- *       The parameters are specified per connection. 
- *       For details on the Bluetooth Enhanced Synchronous link establishment, 
+ *       This API adds a new or modifies an existing synchronous logical
+ *       transport (SCO or eSCO) on a physical link depending on the Connection
+ *       Handle parameter specified. If the Connection Handle refers to an ACL
+ *       link a new synchronous logical transport will be added.
+ *       If the Connection Handle refers to an already existing synchronous
+ *       logical transport (eSCO only) this link will be modified.
+ *       The parameters are specified per connection.
+ *       For details on the Bluetooth Enhanced Synchronous link establishment,
  *       refer to the Specification of the Bluetooth System.
  *
  *  \param [in] handle
  *         The Connection Handle of the ACL, or existing SCO/eSCO link.
- *         
+ *
  *  \param [in] enh_sco_params
- *         Pointer to caller allocated HCI_ENH_SCO_PARAMS variable containing 
- *         the input parameters for negotiating the new or existing 
+ *         Pointer to caller allocated HCI_ENH_SCO_PARAMS variable containing
+ *         the input parameters for negotiating the new or existing
  *         synchronous link.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
  *
- *  \note The link manager may choose any combination of packet types, timing, 
- *        and retransmission window sizes that satisfy the parameters given. 
- *        This may be achieved by using more frequent transmissions of smaller 
+ *  \note The link manager may choose any combination of packet types, timing,
+ *        and retransmission window sizes that satisfy the parameters given.
+ *        This may be achieved by using more frequent transmissions of smaller
  *        packets. The link manager may choose to set up either a SCO or an eSCO
- *        connection, if the parameters allow, using the corresponding 
+ *        connection, if the parameters allow, using the corresponding
  *        LMP sequences.
  *        If the lower layers cannot achieve the exact transmit and receive
- *        bandwidth requested subject to the other parameters, then the link 
+ *        bandwidth requested subject to the other parameters, then the link
  *        will be rejected.
- *        A synchronous connection may only be created when an ACL connection 
+ *        A synchronous connection may only be created when an ACL connection
  *        already exists and when it is not in park state.
  */
 API_RESULT BT_hci_setup_enh_synchronous_connection
@@ -5880,23 +5953,23 @@ API_RESULT BT_hci_setup_enh_synchronous_connection
  *  \brief To specify the flow parameters for the traffic carried over a connection.
  *
  *  \par Description:
- *       This API enables applications to specify the flow parameters for the 
- *       traffic, both outgoing and incoming, carried over an ACL connection 
+ *       This API enables applications to specify the flow parameters for the
+ *       traffic, both outgoing and incoming, carried over an ACL connection
  *       to a remote Bluetooth device.
- *       The local Bluetooth device starts the Flow Specification process to 
- *       negotiate flow parameters with the remote device on reception of the 
+ *       The local Bluetooth device starts the Flow Specification process to
+ *       negotiate flow parameters with the remote device on reception of the
  *       HCI Flow Specification Command
  *
  *  \param [in] connection_handle
- *         Connection Handle of the ACL link for which flow parameters to be 
+ *         Connection Handle of the ACL link for which flow parameters to be
  *         specified.
- *         
+ *
  *  \param [in] Qos_requested
- *         This parameter must be a pointer to the HCI_QOS data type containing 
- *         the requested flow parameters to be negotiated and specified for the 
- *         ACL link with the remote Bluetooth device, for the specified flow 
+ *         This parameter must be a pointer to the HCI_QOS data type containing
+ *         the requested flow parameters to be negotiated and specified for the
+ *         ACL link with the remote Bluetooth device, for the specified flow
  *         direction (incoming or outgoing).
- *         
+ *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
@@ -5910,11 +5983,11 @@ API_RESULT BT_hci_flow_specification
  *  \brief To read the Default Link Policy Settings of the Bluetooth device.
  *
  *  \par Description:
- *       This API reads the default Link Policy Settings for all new connections. 
+ *       This API reads the default Link Policy Settings for all new connections.
  *       The Link Policy Settings parameter determines the behavior of the local
- *       Bluetooth device when it receives a request from a remote device or it 
- *       decides to change the Master-Slave role or to enter the Hold, Sniff, 
- *       or Park mode. The local Bluetooth device will automatically accept or 
+ *       Bluetooth device when it receives a request from a remote device or it
+ *       decides to change the Master-Slave role or to enter the Hold, Sniff,
+ *       or Park mode. The local Bluetooth device will automatically accept or
  *       reject such a request from the remote device, and may even autonomously
  *       request itself based on the value of the Link Policy Settings parameter.
  *
@@ -5929,11 +6002,11 @@ API_RESULT BT_hci_flow_specification
  *  \brief To write default Link Policy Settings to the Bluetooth device.
  *
  *  \par Description:
- *       This API writes the default Link Policy setting for all new connections. 
+ *       This API writes the default Link Policy setting for all new connections.
  *       The Link Policy Settings parameter determines the behavior of the local
- *       Bluetooth device when it receives a request from a remote device or it 
- *       decides to change the Master-Slave role or to enter the Hold, Sniff, 
- *       or Park mode. The local Bluetooth device will automatically accept or 
+ *       Bluetooth device when it receives a request from a remote device or it
+ *       decides to change the Master-Slave role or to enter the Hold, Sniff,
+ *       or Park mode. The local Bluetooth device will automatically accept or
  *       reject such a request from the remote device, and may even autonomously
  *       request itself based on the value of the Link Policy Settings parameter.
  *
@@ -5953,26 +6026,26 @@ API_RESULT BT_hci_flow_specification
         hci_write_command_UINT16 \
         (HCI_WRITE_DEFAULT_LINK_POLICY_SETTINGS_OPCODE, (p1))
 /**
- *  \brief To specify local chanel classification. 
+ *  \brief To specify local chanel classification.
  *
  *  \par Description:
- *       This API allows user to specify AFH Channel Classification to local 
- *       Bluetooth Controller, based on local information. This classification, 
+ *       This API allows user to specify AFH Channel Classification to local
+ *       Bluetooth Controller, based on local information. This classification,
  *       once written successfully, persists until overwritten again later.
- *       If this API is used, then updates should be sent within 10 seconds, 
- *       of the host knowing that the channel classification has changed. 
- *       The interval between two successive updates sent must be at least 
+ *       If this API is used, then updates should be sent within 10 seconds,
+ *       of the host knowing that the channel classification has changed.
+ *       The interval between two successive updates sent must be at least
  *       1 second.
  *
  *  \param [in] channel_classification
- *         Pointer to an user allocated 10 octet array, containing a bitmap of 
- *         79 bits, representing the 79 Bluetooth channels. 
- *         The 79 1-bit fields of the bitmap is interpreted in the following 
- *         manner – the nth such field (in the range 0 to 78) contains the 
+ *         Pointer to an user allocated 10 octet array, containing a bitmap of
+ *         79 bits, representing the 79 Bluetooth channels.
+ *         The 79 1-bit fields of the bitmap is interpreted in the following
+ *         manner - the nth such field (in the range 0 to 78) contains the
  *         value for channel n:
  *         0 = the Channel n is bad
  *         1 = the Channel n is unknown
- *         The most significant bit is reserved and shall be set to 0. At least 
+ *         The most significant bit is reserved and shall be set to 0. At least
  *         20 channels must be marked as unknown.
  *
  *  \return
@@ -5989,11 +6062,11 @@ API_RESULT BT_hci_set_afh_host_channel_classification
  *  \brief To read the Inquiry Scan Type configuration parameter.
  *
  *  \par Description:
- *       This API reads the current value for Inquiry Scan Type configuration 
- *       parameter stored in the local Bluetooth device. 
- *       The Inquiry Scan Type configuration parameter controls whether the 
- *       local Bluetooth device performs Standard Scan or Interlaces Scan 
- *       (faster) during inquiry. 
+ *       This API reads the current value for Inquiry Scan Type configuration
+ *       parameter stored in the local Bluetooth device.
+ *       The Inquiry Scan Type configuration parameter controls whether the
+ *       local Bluetooth device performs Standard Scan or Interlaces Scan
+ *       (faster) during inquiry.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -6007,15 +6080,15 @@ API_RESULT BT_hci_set_afh_host_channel_classification
  *  \brief To write the Inquiry Scan Type configuration parameter
  *
  *  \par Description:
- *       This API writes the current value for Inquiry Scan Type configuration 
- *       parameter to be stored in the local Bluetooth device. The Inquiry Scan 
- *       Type configuration parameter controls whether the local Bluetooth 
+ *       This API writes the current value for Inquiry Scan Type configuration
+ *       parameter to be stored in the local Bluetooth device. The Inquiry Scan
+ *       Type configuration parameter controls whether the local Bluetooth
  *       device performs Standard Scan or Interlaces Scan (faster) during inquiry.
  *
  *  \param [in] inquiry_scan_type
  *         The Inquiry Scan Type to be set. The valid values are:
- *         0x00 – Standard Scan
- *         0x01 – Interlaced Scan
+ *         0x00 - Standard Scan
+ *         0x01 - Interlaced Scan
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -6029,10 +6102,10 @@ API_RESULT BT_hci_set_afh_host_channel_classification
  *  \brief To read the Inquiry Mode configuration parameter.
  *
  *  \par Description:
- *       This API reads the current value for Inquiry Mode configuration 
- *       parameter stored in the local Bluetooth device. The Inquiry Mode 
+ *       This API reads the current value for Inquiry Mode configuration
+ *       parameter stored in the local Bluetooth device. The Inquiry Mode
  *       configuration parameter control whether Bluetooth Inquiry results to be
- *       delivered to host with standard format or with RSSI data. 
+ *       delivered to host with standard format or with RSSI data.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -6045,16 +6118,16 @@ API_RESULT BT_hci_set_afh_host_channel_classification
  *  \brief To write the Inquiry Mode configuration parameter
  *
  *  \par Description:
- *       This API writes the current value for Inquiry Mode configuration 
- *       parameter to be stored in the local Bluetooth device. The Inquiry Mode 
+ *       This API writes the current value for Inquiry Mode configuration
+ *       parameter to be stored in the local Bluetooth device. The Inquiry Mode
  *       configuration parameter control whether Bluetooth Inquiry results to be
- *       delivered to host with standard format or with RSSI data. 
+ *       delivered to host with standard format or with RSSI data.
  *
  *  \param [in] inquiry_mode
- *         The Inquiry Mode to be set. 
+ *         The Inquiry Mode to be set.
  *         The valid values are:
- *         0x00 – Standard Inquiry Result Event format
- *         0x01 – Inquiry Result with RSSI Event format
+ *         0x00 - Standard Inquiry Result Event format
+ *         0x01 - Inquiry Result with RSSI Event format
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -6070,10 +6143,10 @@ API_RESULT BT_hci_write_inquiry_mode
  *  \brief To read the Page Scan Type configuration parameter
  *
  *  \par Description:
- *       This API reads the current value for Page Scan Type configuration 
- *       parameter stored in the local Bluetooth device. The Page Scan Type 
- *       configuration parameter controls whether the local Bluetooth device 
- *       performs Standard Scan or Interlaces Scan (faster) during paging. 
+ *       This API reads the current value for Page Scan Type configuration
+ *       parameter stored in the local Bluetooth device. The Page Scan Type
+ *       configuration parameter controls whether the local Bluetooth device
+ *       performs Standard Scan or Interlaces Scan (faster) during paging.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -6086,16 +6159,16 @@ API_RESULT BT_hci_write_inquiry_mode
  *  \brief To write the Page Scan Type configuration parameter
  *
  *  \par Description:
- *       This API writes the current value for Page Scan Type configuration 
- *       parameter to be stored in the local Bluetooth device. 
- *       The Page Scan Type configuration parameter controls whether the 
- *       local Bluetooth device performs Standard Scan or Interlaces Scan 
+ *       This API writes the current value for Page Scan Type configuration
+ *       parameter to be stored in the local Bluetooth device.
+ *       The Page Scan Type configuration parameter controls whether the
+ *       local Bluetooth device performs Standard Scan or Interlaces Scan
  *       (faster) during paging.
  *
  *  \param [in] page_scan_type
  *         The Page Scan Type to be set. The valid values are:
- *         0x00 – Standard Scan
- *         0x01 – Interlaced Scan
+ *         0x00 - Standard Scan
+ *         0x01 - Interlaced Scan
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -6109,9 +6182,9 @@ API_RESULT BT_hci_write_inquiry_mode
  *  \brief To read the AFH Channel Assessment Mode configuration parameter.
  *
  *  \par Description:
- *       This API reads the AFH Channel Assessment Mode configuration parameter 
- *       from the local Bluetooth device. The AFH Channel Assessment Mode 
- *       configuration parameter controls whether the controller’s channel 
+ *       This API reads the AFH Channel Assessment Mode configuration parameter
+ *       from the local Bluetooth device. The AFH Channel Assessment Mode
+ *       configuration parameter controls whether the controller's channel
  *       assessment scheme is enabled or disabled.
  *
  *  \return
@@ -6123,19 +6196,19 @@ API_RESULT BT_hci_write_inquiry_mode
         (HCI_READ_AFH_CHANNEL_ASSESSMENT_MODE_OPCODE)
 #endif /* HCI_LITE */
 /**
- *  \brief To write the AFH Channel Assessment Mode configuration parameter. 
+ *  \brief To write the AFH Channel Assessment Mode configuration parameter.
  *
  *  \par Description:
  *       This API writes the AFH Channel Assessment Mode configuration parameter
- *       to the local Bluetooth device. The AFH Channel Assessment Mode 
- *       configuration parameter controls whether the controller’s channel 
+ *       to the local Bluetooth device. The AFH Channel Assessment Mode
+ *       configuration parameter controls whether the controller's channel
  *       assessment scheme is enabled or disabled.
  *
  *  \param [in] afh_assessment_mode
- *         The AFH Channel Assessment mode to be written. 
+ *         The AFH Channel Assessment mode to be written.
  *         The valid values are:
- *         Value 0x00 – Controller’s channel assessment disabled
- *         Value 0x01 - Controller’s channel assessment enabled
+ *         Value 0x00 - Controller's channel assessment disabled
+ *         Value 0x01 - Controller's channel assessment enabled
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -6149,7 +6222,7 @@ API_RESULT BT_hci_write_afh_channel_assessment_mode
  *  \brief To read the AFH Mode and AFH Channel Map for a specified connection handle
  *
  *  \par Description:
- *       This API allows user to read the AFH Mode and AFH Channel Map for a 
+ *       This API allows user to read the AFH Mode and AFH Channel Map for a
  *       specified ACL connection handle.
  *
  *  \param [in] connection_handle
@@ -6184,13 +6257,13 @@ API_RESULT BT_hci_read_afh_channel_map
 /**
  *  \brief To retrieve extended features of the local Bluetooth device.
  *  \par Description:
- *       This API attempts to retrieve the requested page of the extended LMP 
- *       features for the local Bluetooth device. 
+ *       This API attempts to retrieve the requested page of the extended LMP
+ *       features for the local Bluetooth device.
  *
  *  \param [in] page_number
- *         Page Number for LMP Features to retrieve. 
+ *         Page Number for LMP Features to retrieve.
  *         The values are:
- *         Value 0x00: Request for normal LMP features as returned by 
+ *         Value 0x00: Request for normal LMP features as returned by
  *         BT_hci_read_local_supported_features() API.
  *         Value 0x01-0xFF: Request to return the corresponding page of LMP features.
  *
@@ -6203,23 +6276,23 @@ API_RESULT BT_hci_read_local_extended_features
                UCHAR     page_number
            );
 /**
- *  \brief To retrieve clock offset of the local Bluetooth device with respect 
+ *  \brief To retrieve clock offset of the local Bluetooth device with respect
  *         to the remote one.
- *         
+ *
  *  \par Description:
- *       This API attempts to retrieve the clock offset of the local Bluetooth 
- *       device with respect to the remote one, as identified by the supplied 
+ *       This API attempts to retrieve the clock offset of the local Bluetooth
+ *       device with respect to the remote one, as identified by the supplied
  *       ACL Connection Handle.
  *       Both the System Clock and the Clock Offset to a remote Bluetooth device
- *       is used to determine the hopping frequency used by a remote device for 
- *       page scan. This command allows the Host to read clock offset to remote 
- *       devices. The clock offset can be used to speed up the paging procedure 
+ *       is used to determine the hopping frequency used by a remote device for
+ *       page scan. This command allows the Host to read clock offset to remote
+ *       devices. The clock offset can be used to speed up the paging procedure
  *       when the local device tries to establish a connection with a remote
- *       device, for example, when the local Host has issued Create Connection 
+ *       device, for example, when the local Host has issued Create Connection
  *       or Remote Name Request.
  *
  *  \param [in] connection_handle
- *         Connection Handle of the ACL Connection with the remote Bluetooth 
+ *         Connection Handle of the ACL Connection with the remote Bluetooth
  *         device with respect to which the clock offset needs to be determined.
  *
  *  \return
@@ -6746,6 +6819,489 @@ API_RESULT BT_hci_write_synchronization_train_parameters
            );
 #endif /* HCI_WRITE_SYNCHRONIZATION_TRAIN_PARAMETERS_SUPPORT */
 
+
+#ifdef HCI_REMOTE_OOB_EXTENDED_DATA_REQUEST_REPLY_SUPPORT
+/**
+ *  \brief To reply to an HCI_Remote_OOB_Data_Request event.
+ *
+ *  \par Description:
+ *       This command is used to reply to an
+ *       HCI_Remote_OOB_Data_Request event with the C and R values
+ *       derived with the P-192 public key and the C and R values
+ *       associated with the P-256 public key received via an OOB
+ *       transfer from a remote device identified by BD_ADDR.
+ *
+ *  \param [in] bd_addr
+ *              BD_ADDR of remote device from which the C and R values were
+ *              received
+ *
+ *  \param [in] c_192
+ *              Simple Pairing Hash C derived from the P-192 public key.
+ *
+ *  \param [in] r_192
+ *              Simple Pairing Randomizer associated with the P-192 public
+ *              key.
+ *
+ *  \param [in] c_256
+ *              Simple Pairing Hash C derived from the P-256 public key.
+ *
+ *  \param [in] r_256
+ *              Simple Pairing Randomizer associated with the P-256 public
+ *              key.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_remote_oob_extended_data_request_reply
+           (
+               UCHAR * bd_addr,
+               UCHAR * c_192,
+               UCHAR * r_192,
+               UCHAR * c_256,
+               UCHAR * r_256
+           );
+#endif /* HCI_REMOTE_OOB_EXTENDED_DATA_REQUEST_REPLY_SUPPORT */
+
+#ifdef HCI_SET_MWS_CHANNEL_PARAMETERS_SUPPORT
+/**
+ *  \brief To inform the Controller of the MWS channel parameters.
+ *
+ *  \par Description:
+ *       This command is used to inform the Controller of the MWS
+ *       channel parameters.
+ *
+ *  \param [in] mws_channel_enable
+ *              0x00: MWS channel is disabled.
+ *              0x01: MWS channel is enabled.
+ *
+ *  \param [in] mws_rx_center_frequency
+ *              MWS RX center frequency in MHz.
+ *
+ *  \param [in] mws_tx_center_frequency
+ *              MWS TX center frequency in MHz.
+ *
+ *  \param [in] mws_rx_channel_bandwidth
+ *              MWS RX channel bandwidth in kHz.
+ *
+ *  \param [in] mws_tx_channel_bandwidth
+ *              MWS TX channel bandwidth in kHz.
+ *
+ *  \param [in] mws_channel_type
+ *              See Assigned Numbers.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_set_mws_channel_parameters
+           (
+               UCHAR  mws_channel_enable,
+               UINT16 mws_rx_center_frequency,
+               UINT16 mws_tx_center_frequency,
+               UINT16 mws_rx_channel_bandwidth,
+               UINT16 mws_tx_channel_bandwidth,
+               UCHAR  mws_channel_type
+           );
+#endif /* HCI_SET_MWS_CHANNEL_PARAMETERS_SUPPORT */
+
+#ifdef HCI_SET_EXTERNAL_FRAME_CONFIGURATION_SUPPORT
+/**
+ *  \brief To specify a frame configuration for an external collocated
+ *         MWS system.
+ *
+ *  \par Description:
+ *       This command allows the Host to specify a frame
+ *       configuration for an external collocated MWS system.
+ *
+ *  \param [in] mws_frame_duration
+ *              External frame duration in microseconds
+ *
+ *  \param [in] mws_frame_sync_assert_offset
+ *              External frame offset in microseconds (signed integer).
+ *
+ *  \param [in] mws_frame_sync_assert_jitter
+ *              External frame sync jitter in microseconds (unsigned
+ *              integer)
+ *
+ *  \param [in] mws_num_periods
+ *              Number of specified periods in an external frame.
+ *
+ *  \param [in] period_duration
+ *              Duration of the [i] period in microseconds.
+ *
+ *  \param [in] period_type
+ *              0x00: Downlink
+ *              0x01: Uplink
+ *              0x02: Bi-Directional
+ *              0x03: Guard Period
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_set_external_frame_configuration
+           (
+               UINT16 mws_frame_duration,
+               UINT16 mws_frame_sync_assert_offset,
+               UINT16 mws_frame_sync_assert_jitter,
+               UCHAR  mws_num_periods,
+               UINT16 * period_duration,
+               UCHAR * period_type
+           );
+#endif /* HCI_SET_EXTERNAL_FRAME_CONFIGURATION_SUPPORT */
+
+#ifdef HCI_SET_MWS_SIGNALING_SUPPORT
+/**
+ *  \brief To inform the Bluetooth Controller of the MWS signaling
+ *         interface logical layer parameters.
+ *
+ *  \par Description:
+ *       This command informs the Bluetooth Controller of the MWS
+ *       signaling interface logical layer parameters.
+ *
+ *  \param [in] mws_rx_assert_offset
+ *              MWS_RX signal assert offset in microseconds (signed
+ *              integer).
+ *
+ *  \param [in] mws_rx_assert_jitter
+ *              MWS_RX signal assert jitter in microseconds (unsigned
+ *              integer).
+ *
+ *  \param [in] mws_rx_deassert_offset
+ *              MWS_RX signal de-assert offset in microseconds (signed
+ *              integer).
+ *
+ *  \param [in] mws_rx_deassert_jitter
+ *              MWS_RX signal de-assert jitter in microseconds (unsigned
+ *              integer).
+ *
+ *  \param [in] mws_tx_assert_offset
+ *              MWS_TX signal assert offset in microseconds (signed
+ *              integer).
+ *
+ *  \param [in] mws_tx_assert_jitter
+ *              MWS_TX signal assert jitter in microseconds (unsigned
+ *              integer).
+ *
+ *  \param [in] mws_tx_deassert_offset
+ *              MWS_TX signal de-assert offset in microseconds (signed
+ *              integer).
+ *
+ *  \param [in] mws_tx_deassert_jitter
+ *              MWS_TX signal de-assert jitter in microseconds (unsigned
+ *              integer).
+ *
+ *  \param [in] mws_pattern_assert_offset
+ *              MWS_PATTERN signal assert offset in microseconds (signed
+ *              integer).
+ *
+ *  \param [in] mws_pattern_assert_jitter
+ *              MWS_PATTERN signal assert jitter in microseconds (unsigned
+ *              integer).
+ *
+ *  \param [in] mws_inactivity_duration_assert_offset
+ *              MWS_INACTIVITY_DURATION signal assert offset in microseconds
+ *              (signed integer).
+ *
+ *  \param [in] mws_inactivity_duration_assert_jitter
+ *              MWS_INACTIVITY_DURATION signal assert jitter in microseconds
+ *              (unsigned integer).
+ *
+ *  \param [in] mws_scan_frequency_assert_offset
+ *              MWS_SCAN_FREQUENCY signal assert offset in microseconds
+ *              (signed integer).
+ *
+ *  \param [in] mws_scan_frequency_assert_jitter
+ *              MWS_SCAN_FREQUENCY signal assert jitter in microseconds
+ *              (unsigned integer).
+ *
+ *  \param [in] mws_priority_assert_offset_request
+ *              Minimum advance notification from the beginning of an MWS
+ *              Uplink period in microseconds (unsigned integer) before
+ *              which the BLUETOOTH_ RX_PRI or 802_RX_PRI signal shall be
+ *              asserted to be recognized by the MWS.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_set_mws_signaling
+           (
+               UINT16 mws_rx_assert_offset,
+               UINT16 mws_rx_assert_jitter,
+               UINT16 mws_rx_deassert_offset,
+               UINT16 mws_rx_deassert_jitter,
+               UINT16 mws_tx_assert_offset,
+               UINT16 mws_tx_assert_jitter,
+               UINT16 mws_tx_deassert_offset,
+               UINT16 mws_tx_deassert_jitter,
+               UINT16 mws_pattern_assert_offset,
+               UINT16 mws_pattern_assert_jitter,
+               UINT16 mws_inactivity_duration_assert_offset,
+               UINT16 mws_inactivity_duration_assert_jitter,
+               UINT16 mws_scan_frequency_assert_offset,
+               UINT16 mws_scan_frequency_assert_jitter,
+               UINT16 mws_priority_assert_offset_request
+           );
+#endif /* HCI_SET_MWS_SIGNALING_SUPPORT */
+
+#ifdef HCI_SET_MWS_TRANSPORT_LAYER_SUPPORT
+/**
+ *  \brief To configure the transport layer between the Bluetooth
+ *         Controller and MWS device.
+ *
+ *  \par Description:
+ *       This command configures the transport layer between the
+ *       Bluetooth Controller and MWS device.
+ *
+ *  \param [in] transport_layer
+ *              See Assigned Numbers.
+ *
+ *  \param [in] to_mws_baud_rate
+ *              Baud rate in the Bluetooth to MWS direction in Baud.
+ *
+ *  \param [in] from_mws_baud_rate
+ *              Baud rate in the MWS to Bluetooth direction in Baud.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_set_mws_transport_layer
+           (
+               UCHAR  transport_layer,
+               UINT32 to_mws_baud_rate,
+               UINT32 from_mws_baud_rate
+           );
+#endif /* HCI_SET_MWS_TRANSPORT_LAYER_SUPPORT */
+
+#ifdef HCI_SET_MWS_PATTERN_CONFIGURATION_SUPPORT
+/**
+ *  \brief To specify, in conjunction with the
+ *         HCI_Set_External_Frame_Configuration command, local
+ *         MWS_PATTERN parameters for an external collocated system.
+ *
+ *  \par Description:
+ *       This command specifies in conjunction with the
+ *       HCI_Set_External_Frame_Configuration command, local
+ *       MWS_PATTERN parameters for an external collocated system.
+ *
+ *  \param [in] mws_pattern_index
+ *              Index of the MWS_PATTERN instance to be configured.
+ *              Range: 0 to 2.
+ *
+ *  \param [in] mws_pattern_num_intervals
+ *              The number of intervals in the following arrays.
+ *
+ *  \param [in] mws_pattern_interval_duration
+ *              The duration of this Bluetooth activity interval in
+ *              microseconds.
+ *
+ *  \param [in] mws_pattern_interval_type
+ *              0x00: Neither transmission nor reception is allowed in this
+ *              interval.
+ *              0x01: Transmission is allowed in this interval.
+ *              0x02: Reception is allowed in this interval.
+ *              0x03: Both transmission and reception are allowed in this
+ *              interval.
+ *              0x04: Interval for the MWS frame as defined by the
+ *              HCI_Set_External_Frame_Configuration command.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_set_mws_pattern_configuration
+           (
+               UCHAR  mws_pattern_index,
+               UCHAR  mws_pattern_num_intervals,
+               UINT16 * mws_pattern_interval_duration,
+               UCHAR * mws_pattern_interval_type
+           );
+#endif /* HCI_SET_MWS_PATTERN_CONFIGURATION_SUPPORT */
+
+#ifdef HCI_SET_MWS_SCAN_FREQUENCY_TABLE_SUPPORT
+/**
+ *  \brief To configure the MWS scan frequency table in the Controller.
+ *
+ *  \par Description:
+ *       This command configures the MWS scan frequency table in the
+ *       Controller.
+ *
+ *  \param [in] num_scan_frequencies
+ *              Number of MWS scan frequencies to be set in the table.
+ *
+ *  \param [in] scan_frequency_low
+ *              Lower edge of the MWS scan frequency in MHz.
+ *
+ *  \param [in] scan_frequency_high
+ *              Upper edge of the MWS scan frequency in MHz.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_set_mws_scan_frequency_table
+           (
+               UCHAR  num_scan_frequencies,
+               UINT16 * scan_frequency_low,
+               UINT16 * scan_frequency_high
+           );
+#endif /* HCI_SET_MWS_SCAN_FREQUENCY_TABLE_SUPPORT */
+
+#ifdef HCI_READ_EXTENDED_PAGE_TIMEOUT_SUPPORT
+/**
+ *  \brief To read Extended_Page_Timeout configuration parameter.
+ *
+ *  \par Description:
+ *       This command is to read the value for the
+ *       Extended_Page_Timeout configuration parameter.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+#define BT_hci_read_extended_page_timeout() \
+        hci_common_api_handler_no_params \
+        (HCI_READ_EXTENDED_PAGE_TIMEOUT_OPCODE)
+#endif /* HCI_READ_EXTENDED_PAGE_TIMEOUT_SUPPORT */
+
+#ifdef HCI_WRITE_EXTENDED_PAGE_TIMEOUT_SUPPORT
+/**
+ *  \brief To write Extended_Page_Timeout configuration parameter.
+ *
+ *  \par Description:
+ *       This command is to write the value for the
+ *       Extended_Page_Timeout configuration parameter.
+ *
+ *  \param [in] extended_page_timeout
+ *              Extended Page Timeout measured in number of Baseband slots.
+ *              Interval Length = N * 0.625 ms (1 Baseband slot)
+ *              Range: 0x0000 (default) to 0xFFFF
+ *              Time Range: 0 to 40.9 s
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_write_extended_page_timeout
+           (
+               UINT16 extended_page_timeout
+           );
+#endif /* HCI_WRITE_EXTENDED_PAGE_TIMEOUT_SUPPORT */
+
+#ifdef HCI_READ_EXTENDED_INQUIRY_LENGTH_SUPPORT
+/**
+ *  \brief To read Extended_Inquiry_Length configuration parameter.
+ *
+ *  \par Description:
+ *       This command is to read the value for the
+ *       Extended_Inquiry_Length configuration parameter.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+#define BT_hci_read_extended_inquiry_length() \
+        hci_common_api_handler_no_params \
+        (HCI_READ_EXTENDED_INQUIRY_LENGTH_OPCODE)
+#endif /* HCI_READ_EXTENDED_INQUIRY_LENGTH_SUPPORT */
+
+#ifdef HCI_WRITE_EXTENDED_INQUIRY_LENGTH_SUPPORT
+/**
+ *  \brief To write Extended_Inquiry_Length configuration parameter.
+ *
+ *  \par Description:
+ *       This command is to write the value for the
+ *       Extended_Inquiry_Length configuration parameter.
+ *
+ *  \param [in] extended_inquiry_length
+ *              Interval Length = N * 0.625 ms (1 Baseband slot)
+ *              Range: 0x0000 (default) to 0xFFFF
+ *              Time Range: 0 to 40.9 s
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_write_extended_inquiry_length
+           (
+               UINT16 extended_inquiry_length
+           );
+#endif /* HCI_WRITE_EXTENDED_INQUIRY_LENGTH_SUPPORT */
+
+#ifdef HCI_READ_LOCAL_OOB_EXTENDED_DATA_SUPPORT
+/**
+ *  \brief To read local OOB extended data.
+ *
+ *  \par Description:
+ *       This command obtains Simple Pairing Hash C_192, Simple
+ *       Pairing Randomizer R_192, Simple Pairing Hash C_256, and
+ *       Simple Pairing Randomizer R_256, which are intended to be
+ *       transferred to a remote device using an OOB mechanism.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+#define BT_hci_read_local_oob_extended_data() \
+        hci_common_api_handler_no_params \
+        (HCI_READ_LOCAL_OOB_EXTENDED_DATA_OPCODE)
+#endif /* HCI_READ_LOCAL_OOB_EXTENDED_DATA_SUPPORT */
+
+#ifdef HCI_GET_MWS_TRANSPORT_LAYER_CONFIGURATION_SUPPORT
+/**
+ *  \brief To inform the Host of the Baud rates supported by the
+ *         Controller for the transport layer.
+ *
+ *  \par Description:
+ *       This command is used to inform the Host of the Baud rates
+ *       supported by the Controller for the transport layer.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+#define BT_hci_get_mws_transport_layer_configuration() \
+        hci_common_api_handler_no_params \
+        (HCI_GET_MWS_TRANSPORT_LAYER_CONFIGURATION_OPCODE)
+#endif /* HCI_GET_MWS_TRANSPORT_LAYER_CONFIGURATION_SUPPORT */
+
+#ifdef HCI_SET_TRIGGERED_CLOCK_CAPTURE_SUPPORT
+/**
+ *  \brief To configure the BR/EDR Controller for triggered clock
+ *         capturing.
+ *
+ *  \par Description:
+ *       This command configures the BR/EDR Controller for triggered
+ *       clock capturing.
+ *
+ *  \param [in] connection_handle
+ *              Connection_Handle
+ *
+ *  \param [in] enable
+ *              0x00: Disable triggered clock capturing on the specified
+ *              Connection_Handle (Default)
+ *              0x01: Enable triggered clock capturing on the specified
+ *              Connection_Handle
+ *
+ *  \param [in] which_clock
+ *              0x00: Local Clock
+ *              0x01: Piconet Clock for the specified connection
+ *
+ *  \param [in] lpo_allowed
+ *              0x00: Controller shall not sleep (that is, clock accuracy
+ *              shall be equal to or better than +|- 20 ppm)
+ *              0x01: Controller may sleep (that is, clock accuracy shall be
+ *              equal to or better than +|- 250 ppm)
+ *
+ *  \param [in] num_clock_captures_to_filter
+ *              0x00: All triggered clock captures result in an
+ *              HCI_Triggered_Clock_Capture event sent to the Host
+ *              0x01 to 0xFF: Number of triggered clock captures filtered
+ *              between sending an HCI_Triggered_Clock_Capture event to the
+ *              Host.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+API_RESULT BT_hci_set_triggered_clock_capture
+           (
+               UINT16 connection_handle,
+               UCHAR  enable,
+               UCHAR  which_clock,
+               UCHAR  lpo_allowed,
+               UCHAR  num_clock_captures_to_filter
+           );
+#endif /* HCI_SET_TRIGGERED_CLOCK_CAPTURE_SUPPORT */
 
 /* New APIs from Bluetooth Spec 4.2 ---------------------------------------- */
 
@@ -7503,10 +8059,14 @@ API_RESULT BT_hci_le_set_adv_set_random_address
  *         Time = N * 0.625 msec
  *         Time Range: 20 ms to 10,485.759375 s
  *
- *  \param [in] primary_advertising_channel_map
- *         0 - Channel 37 shall be used
- *         1 - Channel 38 shall be used
- *         2 - Channel 39 shall be used
+ *  \param [in] primary_advertising_channel_map    bit field
+ *         Bit Number | Parameter Description
+ *         -----------+----------------------
+ *            0       | Channel 37 shall be used
+ *         -----------+----------------------
+ *            1       | Channel 38 shall be used
+ *         -----------+----------------------
+ *            2       | Channel 39 shall be used
  *
  *  \param [in] own_address_type
  *         0x00    Public Device Address
@@ -8191,12 +8751,19 @@ API_RESULT BT_hci_le_extended_create_connection
  *       occur when scanning is enabled. While scanning is disabled, no attempt to
  *       synchronize will take place.
  *
- *  \param [in] filter_policy
- *         0x00    Use the Advertising_SID, Advertising_Address_Type, and
- *                 Advertising_Address parameters to determine which advertiser
- *                 to listen to.
- *         0x01    Use the Periodic Advertiser List to determine which advertiser
- *                 to listen to.
+ *  \param [in] options  bit field
+ *         Bit Number | Parameter Description
+ *         -----------+----------------------
+ *            0       | 0: Use the Advertising_SID, Advertisier_Address_Type,
+ *                    |    and Advertiser_Address parameters to determine
+ *                    |    which advertiser to listen to.
+ *                    | 1: Use the Periodic Advertiser List to determine
+ *                    |    which advertiser to listen to.
+ *         -----------+----------------------
+ *            1       | 0: Reporting initially enabled
+ *                    | 1: Reporting initially disabled
+ *         -----------+----------------------
+ *     All other bits | Reserved for future use
  *
  *  \param [in] advertising_sid
  *         0x00 - 0x0F  Advertising SID subfield in the ADI field used to
@@ -8221,21 +8788,39 @@ API_RESULT BT_hci_le_extended_create_connection
  *         Time = N*10 msec
  *         Time Range: 100 ms to 163.84 seconds
  *
- *  \param [in] unused
- *         This value must be used by the Host.
+ *  \param [in] sync_cte_type    bit field
+ *         Bit Number | Parameter Description
+ *         -----------+----------------------
+ *            0       | Do not sync to packets with an AoA
+ *                    | Constant Tone Extension
+ *         -----------+----------------------
+ *            1       | Do not sync to packets with an AoD
+ *                    | Constant Tone Extension with 1 us slots
+ *         -----------+----------------------
+ *            2       | Do not sync to packets with an AoD
+ *                    | Constant Tone Extension with 2 us slots
+ *         -----------+----------------------
+ *            3       | Do not sync to packets with a type 3
+ *                    | Constant Tone Extension (currently
+ *                    | reserved for future use)
+ *         -----------+----------------------
+ *            4       | Do not sync to packets without
+ *                    | a Constant Tone Extension
+ *         -----------+----------------------
+ *     All other bits | Reserved for future use
  *
  *  \return
  *      API_SUCCESS or one of the error codes as defined in \ref BLE_ERROR_CODES.
  */
 API_RESULT BT_hci_le_periodic_adv_create_sync
            (
-               UCHAR   filter_policy,
+               UCHAR   options,
                UCHAR   advertising_sid,
                UCHAR   adv_address_type,
                UCHAR * adv_address,
                UINT16  skip,
                UINT16  sync_timeout,
-               UCHAR   unused
+               UCHAR   sync_cte_type
            );
 #endif /* HCI_LE_PERIODIC_ADVERTISING_CREATE_SYNC_SUPPORT */
 
@@ -8506,6 +9091,7 @@ API_RESULT BT_hci_le_set_privacy_mode
            );
 #endif /* HCI_LE_SET_PRIVACY_MODE_SUPPORT */
 
+/* New APIs from Bluetooth Spec 5.1 ---------------------------------------- */
 #ifdef HCI_LE_RECEIVER_TEST_V3_SUPPORT
 /**
  *  \brief To start a test where the DUT receives test reference
@@ -9214,6 +9800,23 @@ API_RESULT BT_hci_le_modify_sleep_clock_accuracy
            );
 #endif /* HCI_LE_MODIFY_SLEEP_CLOCK_ACCURACY_SUPPORT */
 
+#ifdef HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_SUPPORT
+/**
+ *  \brief To read the simple pairing options and the maximum
+ *         encryption key size supported.
+ *
+ *  \par Description:
+ *       This command is to read the simple pairing options and the
+ *       maximum encryption key size supported.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+#define BT_hci_read_local_simple_pairing_options() \
+        hci_common_api_handler_no_params \
+        (HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_OPCODE)
+#endif /* HCI_READ_LOCAL_SIMPLE_PAIRING_OPTIONS_SUPPORT */
+
 
 /* ------------------------------------------------------------------------- */
 
@@ -9243,10 +9846,10 @@ API_RESULT BT_hci_write_extended_inquiry_response
 /**
  *  \brief To read the Inquiry Mode configuration parameter
  *
- *  \par Description: 
- *       This API reads the inquiry Transmit Power level used to transmit the 
- *       FHS and EIR data packets. This can be used directly in the Transmit 
- *       Power Level EIR data type.    
+ *  \par Description:
+ *       This API reads the inquiry Transmit Power level used to transmit the
+ *       FHS and EIR data packets. This can be used directly in the Transmit
+ *       Power Level EIR data type.
  *
  *  \return
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
@@ -9259,9 +9862,9 @@ API_RESULT BT_hci_write_extended_inquiry_response
  *  \brief To write the Inquiry Mode configuration parameter
  *
  *  \par Description:
- *       This API writes the inquiry transmit power level used to transmit the 
- *       inquiry (ID) data packets. The Controller attempts to use the supported 
- *       transmit power level closest to the tx_power parameter. 
+ *       This API writes the inquiry transmit power level used to transmit the
+ *       inquiry (ID) data packets. The Controller attempts to use the supported
+ *       transmit power level closest to the tx_power parameter.
  *
  *  \param [in] tx_power
  *         Signed integer value in the range -70 <= N <= 20 (unit: dbm)
@@ -9286,7 +9889,7 @@ API_RESULT BT_hci_write_inquiry_response_transmit_power_level
  *  \brief To read Erroneous Data Reporting parameter from Controller.
  *
  *  \par Description:
- *       This API can be used to read the Erroneous Data Reporting parameter 
+ *       This API can be used to read the Erroneous Data Reporting parameter
  *       from controller.
  *
  *  \return
@@ -9301,7 +9904,7 @@ API_RESULT BT_hci_write_inquiry_response_transmit_power_level
  *
  *  \par Description:
  *       This API can be used to write the Erroneous Data Reporting parameter to
- *       controller. The new value for the Erroneous Data Reporting parameter 
+ *       controller. The new value for the Erroneous Data Reporting parameter
  *       does not apply to existing synchronous connections.
  *
  *  \param [in] erroneous_data_reporting
@@ -9341,32 +9944,32 @@ API_RESULT BT_hci_send_keypress_notification
 
 #ifdef BT_ENHANCED_FLUSH
 /**
- *  \brief To flush all pending ACL data from the Bluetooth device for the 
+ *  \brief To flush all pending ACL data from the Bluetooth device for the
  *         specified ACL Connection Handle, for the specified packet type
- *         
+ *
  *  \par Description:
  *       This API can be used to discard all L2CAP packets identified by packet_
- *       type that are currently pending for transmission in the Controller for 
- *       the specified Connection Handle, even if there currently are chunks of 
- *       data that belong to more than one L2CAP packet of the same type in the 
+ *       type that are currently pending for transmission in the Controller for
+ *       the specified Connection Handle, even if there currently are chunks of
+ *       data that belong to more than one L2CAP packet of the same type in the
  *       Controller.
- *       The only packet type defined is automatically-flushable. Packets not 
- *       identified by packet_type will not be flushed and will be processed 
+ *       The only packet type defined is automatically-flushable. Packets not
+ *       identified by packet_type will not be flushed and will be processed
  *       normally by the Controller.
  *       After flushing the packets, all data that is sent to the Controller for
- *       the same Connection Handle and packet type will be discarded by the 
- *       Controller until an HCI Data Packet with the start 
+ *       the same Connection Handle and packet type will be discarded by the
+ *       Controller until an HCI Data Packet with the start
  *       Packet_Boundary_Flag (0x00 or 0x02) is received.
- *       This API will allow higher-level application to control how long the 
- *       baseband should try to retransmit a baseband packet of a specific type 
- *       for a Connection Handle before all data of that type currently pending 
+ *       This API will allow higher-level application to control how long the
+ *       baseband should try to retransmit a baseband packet of a specific type
+ *       for a Connection Handle before all data of that type currently pending
  *       for transmission in the Controller should be flushed.
  *
  *
  *  \param [in] connection_handle
  *         Connection Handle of the ACL connection with a remote Bluetooth device,
  *         data for which needs to be flushed.
- *         
+ *
  *  \param [in] packet_type
  *         0x00: Automatically flushable packets only.
  *
@@ -9374,13 +9977,13 @@ API_RESULT BT_hci_send_keypress_notification
  *      API_RESULT: API_SUCCESS or one of the error codes as defined in
  *                  \ref BLE_ERROR_CODES.
  *
- *  \note This API is available for ACL packets only, and a valid ACL Connection 
+ *  \note This API is available for ACL packets only, and a valid ACL Connection
  *        Handle must be specified.
- *        The BT_hci_flush() API can be used to flush all packets, irrespective 
- *        of packet type. In addition to the BT_hci_flush() and 
- *        BT_hci_enhanced_flush() APIs, the applications can make use of 
- *        Automatic Flush Timeout in the Bluetooth device to automatically 
- *        flush an automatically-flushable L2CAP packet that is currently being 
+ *        The BT_hci_flush() API can be used to flush all packets, irrespective
+ *        of packet type. In addition to the BT_hci_flush() and
+ *        BT_hci_enhanced_flush() APIs, the applications can make use of
+ *        Automatic Flush Timeout in the Bluetooth device to automatically
+ *        flush an automatically-flushable L2CAP packet that is currently being
  *        transmitted after the specified flush timer has expired.
  */
 API_RESULT BT_hci_enhanced_flush
@@ -9392,9 +9995,9 @@ API_RESULT BT_hci_enhanced_flush
 
 #ifdef BT_SSP_DEBUG
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9415,9 +10018,9 @@ API_RESULT BT_hci_enhanced_flush
 
 #ifdef HCI_FLOW_CONTROL_COMMANDS
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9428,9 +10031,9 @@ API_RESULT BT_hci_enhanced_flush
 #define BT_hci_read_flow_control_mode() \
         hci_common_api_handler_no_params (HCI_READ_FLOW_CONTROL_MODE_OPCODE)
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9444,9 +10047,9 @@ API_RESULT BT_hci_write_flow_control_mode
            );
 #endif /* HCI_FLOW_CONTROL_COMMANDS */
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9459,9 +10062,9 @@ API_RESULT BT_hci_read_encryption_key_size
                 UINT16   connection_handle
            );
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9474,13 +10077,30 @@ API_RESULT BT_hci_read_enhanced_transmit_power_level
                 UINT16   handle,
                 UCHAR    power_type
            );
+
+#ifdef HCI_READ_DATA_BLOCK_SIZE_SUPPORT
+/**
+ *  \brief To read supported data block size from the controller.
+ *
+ *  \par Description:
+ *       This command is used to read values regarding the maximum
+ *       permitted data transfers over the Controller and the data
+ *       buffering available in the Controller.
+ *
+ *  \return
+ *      API_SUCCESS or one of the error codes as defined in BT_error.h.
+ */
+#define BT_hci_read_data_block_size() \
+        hci_common_api_handler_no_params \
+        (HCI_READ_DATA_BLOCK_SIZE_OPCODE)
+#endif /* HCI_READ_DATA_BLOCK_SIZE_SUPPORT */
 #endif /* BT_3_0 */
 
 #ifdef BT_BRSC
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9491,9 +10111,9 @@ API_RESULT BT_hci_read_enhanced_transmit_power_level
 #define BT_hci_read_secure_connections_host_support()  \
         hci_common_api_handler_no_params (HCI_READ_SECURE_CONNECTIONS_HOST_SUPPORT_OPCODE)
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9540,14 +10160,22 @@ API_RESULT BT_hci_vendor_specific_command
                UCHAR    params_length
            );
 
+API_RESULT BT_hci_generic_command
+           (
+               UCHAR    ogf,
+               UINT16   ocf,
+               UCHAR *  params,
+               UCHAR    params_length
+           );
+
 /* ------------------------------------------------------------------------- */
 
 
 /* APIs for EtherMind Security Manager ------------------------------------- */
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9558,9 +10186,9 @@ API_RESULT BT_hci_vendor_specific_command
 API_RESULT hci_sm_link_key_request_reply
            (UCHAR *bd_addr, UCHAR *link_key, UCHAR link_key_present);
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9571,9 +10199,9 @@ API_RESULT hci_sm_link_key_request_reply
 API_RESULT hci_sm_pin_code_request_reply
            (UCHAR *bd_addr, UCHAR *pin_code, UCHAR pin_length);
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9583,9 +10211,9 @@ API_RESULT hci_sm_pin_code_request_reply
  */
 API_RESULT hci_sm_set_pin_type_master_link_key (UINT16 opcode, UCHAR flag);
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9596,9 +10224,9 @@ API_RESULT hci_sm_set_pin_type_master_link_key (UINT16 opcode, UCHAR flag);
 #define hci_sm_set_pin_type(pt) \
         hci_sm_set_pin_type_master_link_key (HCI_WRITE_PIN_TYPE_OPCODE, (pt))
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9611,9 +10239,9 @@ API_RESULT hci_sm_set_pin_type_master_link_key (UINT16 opcode, UCHAR flag);
 
 #ifdef BT_SSP_UC
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9630,9 +10258,9 @@ API_RESULT hci_sm_user_confirmation_request_reply
 
 #ifdef BT_SSP_PE
 /**
- *  \brief 
+ *  \brief
  *  \par Description:
- *      
+ *
  *
  *
  *
@@ -9654,7 +10282,8 @@ API_RESULT hci_sm_user_passkey_request_reply
 };
 #endif
 
-/* \} */
+/** \} */
+/** \} */
 /** \} */
 #endif /* _H_BT_HCI_API_ */
 

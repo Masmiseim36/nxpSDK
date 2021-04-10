@@ -457,49 +457,49 @@ typedef enum _WLAN_802_11_WEP_STATUS
 /** HW_SPEC Dot11nDevCap : Beamforming support */
 #define ISSUPP_BEAMFORMING(Dot11nDevCap) (Dot11nDevCap & MBIT(30))
 /** HW_SPEC Dot11nDevCap : Green field support */
-#define ISSUPP_GREENFIELD(Dot11nDevCap) (Dot11nDevCap & MBIT(29))
+#define ISSUPP_GREENFIELD(Dot11nDevCap) ((Dot11nDevCap)&MBIT(29))
 /** HW_SPEC Dot11nDevCap : AMPDU support */
-#define ISSUPP_AMPDU(Dot11nDevCap) (Dot11nDevCap & MBIT(28))
+#define ISSUPP_AMPDU(Dot11nDevCap) ((Dot11nDevCap)&MBIT(28))
 /** HW_SPEC Dot11nDevCap : MIMO PS support  */
-#define ISSUPP_MIMOPS(Dot11nDevCap) (Dot11nDevCap & MBIT(27))
+#define ISSUPP_MIMOPS(Dot11nDevCap) ((Dot11nDevCap)&MBIT(27))
 /** HW_SPEC Dot11nDevCap : Rx STBC support */
-#define ISSUPP_RXSTBC(Dot11nDevCap) (Dot11nDevCap & MBIT(26))
+#define ISSUPP_RXSTBC(Dot11nDevCap) ((Dot11nDevCap)&MBIT(26))
 /** HW_SPEC Dot11nDevCap : Tx STBC support */
-#define ISSUPP_TXSTBC(Dot11nDevCap) (Dot11nDevCap & MBIT(25))
+#define ISSUPP_TXSTBC(Dot11nDevCap) ((Dot11nDevCap)&MBIT(25))
 /** HW_SPEC Dot11nDevCap : Short GI @ 40Mhz support */
-#define ISSUPP_SHORTGI40(Dot11nDevCap) (Dot11nDevCap & MBIT(24))
+#define ISSUPP_SHORTGI40(Dot11nDevCap) ((Dot11nDevCap)&MBIT(24))
 /** HW_SPEC Dot11nDevCap : Short GI @ 20Mhz support */
-#define ISSUPP_SHORTGI20(Dot11nDevCap) (Dot11nDevCap & MBIT(23))
+#define ISSUPP_SHORTGI20(Dot11nDevCap) ((Dot11nDevCap)&MBIT(23))
 /** HW_SPEC Dot11nDevCap : Rx LDPC support */
-#define ISSUPP_RXLDPC(Dot11nDevCap) (Dot11nDevCap & MBIT(22))
+#define ISSUPP_RXLDPC(Dot11nDevCap) ((Dot11nDevCap)&MBIT(22))
 /** HW_SPEC Dot11nDevCap : Delayed ACK */
-#define GET_DELAYEDBACK(Dot11nDevCap) (((Dot11nDevCap >> 20) & 0x03))
+#define GET_DELAYEDBACK(Dot11nDevCap) ((((Dot11nDevCap) >> 20) & 0x03))
 /** HW_SPEC Dot11nDevCap : Immediate ACK */
 #define GET_IMMEDIATEBACK(Dot11nDevCap) (((Dot11nDevCap >> 18) & 0x03))
 /** HW_SPEC Dot11nDevCap : Channel BW support @ 40Mhz  support */
-#define ISSUPP_CHANWIDTH40(Dot11nDevCap) (Dot11nDevCap & MBIT(17))
+#define ISSUPP_CHANWIDTH40(Dot11nDevCap) ((Dot11nDevCap)&MBIT(17))
 /** HW_SPEC Dot11nDevCap : Channel BW support @ 20Mhz  support */
 #define ISSUPP_CHANWIDTH20(Dot11nDevCap) (Dot11nDevCap & MBIT(16))
 /** HW_SPEC Dot11nDevCap : Channel BW support @ 10Mhz  support */
 #define ISSUPP_CHANWIDTH10(Dot11nDevCap) (Dot11nDevCap & MBIT(15))
 /** Dot11nUsrCap : 40Mhz intolarance enabled */
-#define ISENABLED_40MHZ_INTOLARENT(Dot11nDevCap) (Dot11nDevCap & MBIT(8))
+#define ISENABLED_40MHZ_INTOLARENT(Dot11nDevCap) ((Dot11nDevCap)&MBIT(8))
 /** HW_SPEC Dot11nDevCap : Rx AntennaD support */
-#define ISSUPP_RXANTENNAD(Dot11nDevCap) (Dot11nDevCap & MBIT(7))
+#define ISSUPP_RXANTENNAD(Dot11nDevCap) ((Dot11nDevCap)&MBIT(7))
 /** HW_SPEC Dot11nDevCap : Rx AntennaC support */
-#define ISSUPP_RXANTENNAC(Dot11nDevCap) (Dot11nDevCap & MBIT(6))
+#define ISSUPP_RXANTENNAC(Dot11nDevCap) ((Dot11nDevCap)&MBIT(6))
 /** HW_SPEC Dot11nDevCap : Rx AntennaB support */
-#define ISSUPP_RXANTENNAB(Dot11nDevCap) (Dot11nDevCap & MBIT(5))
+#define ISSUPP_RXANTENNAB(Dot11nDevCap) ((Dot11nDevCap)&MBIT(5))
 /** HW_SPEC Dot11nDevCap : Rx AntennaA support */
-#define ISSUPP_RXANTENNAA(Dot11nDevCap) (Dot11nDevCap & MBIT(4))
+#define ISSUPP_RXANTENNAA(Dot11nDevCap) ((Dot11nDevCap)&MBIT(4))
 /** HW_SPEC Dot11nDevCap : Tx AntennaD support */
-#define ISSUPP_TXANTENNAD(Dot11nDevCap) (Dot11nDevCap & MBIT(3))
+#define ISSUPP_TXANTENNAD(Dot11nDevCap) ((Dot11nDevCap)&MBIT(3))
 /** HW_SPEC Dot11nDevCap : Tx AntennaC support */
-#define ISSUPP_TXANTENNAC(Dot11nDevCap) (Dot11nDevCap & MBIT(2))
+#define ISSUPP_TXANTENNAC(Dot11nDevCap) ((Dot11nDevCap)&MBIT(2))
 /** HW_SPEC Dot11nDevCap : Tx AntennaB support */
-#define ISSUPP_TXANTENNAB(Dot11nDevCap) (Dot11nDevCap & MBIT(1))
+#define ISSUPP_TXANTENNAB(Dot11nDevCap) ((Dot11nDevCap)&MBIT(1))
 /** HW_SPEC Dot11nDevCap : Tx AntennaA support */
-#define ISSUPP_TXANTENNAA(Dot11nDevCap) (Dot11nDevCap & MBIT(0))
+#define ISSUPP_TXANTENNAA(Dot11nDevCap) ((Dot11nDevCap)&MBIT(0))
 
 /** HW_SPEC Dot11nDevCap : Set support of channel bw @ 40Mhz */
 #define SETSUPP_CHANWIDTH40(Dot11nDevCap) (Dot11nDevCap |= MBIT(17))
@@ -532,7 +532,7 @@ typedef enum _WLAN_802_11_WEP_STATUS
 /** GET HTCapInfo : Support for Delayed ACK */
 #define GETHT_DELAYEDBACK(HTCapInfo) (HTCapInfo & MBIT(10))
 /** GET HTCapInfo : Support for Max AMSDU */
-#define GETHT_MAXAMSDU(HTCapInfo) (HTCapInfo & MBIT(11))
+#define GETHT_MAXAMSDU(HTCapInfo) ((HTCapInfo)&MBIT(11))
 
 /** SET HTCapInfo : Set support for LDPC coding capability */
 #define SETHT_LDPCCODINGCAP(HTCapInfo) (HTCapInfo |= MBIT(0))
@@ -736,7 +736,7 @@ typedef enum _WLAN_802_11_WEP_STATUS
 /** GET VHT CapInfo : MAX MPDU Length */
 #define GET_VHTCAP_MAXMPDULEN(VHTCapInfo) (VHTCapInfo & 0x3)
 /** GET VHT CapInfo:  Supported Channel Width SET (2 bits)*/
-#define GET_VHTCAP_CHWDSET(VHTCapInfo) ((VHTCapInfo >> 2) & 0x3)
+#define GET_VHTCAP_CHWDSET(VHTCapInfo) (((VHTCapInfo) >> 2) & 0x3)
 /** GET VHT CapInfo:  Rx STBC (3 bits) */
 #define GET_VHTCAP_RXSTBC(VHTCapInfo) ((VHTCapInfo >> 8) & 0x7)
 /** GET VHT CapInfo:  Compressed Steering Num of BFer Ant Supported (3 bits) */
@@ -1387,6 +1387,22 @@ typedef enum _mod_grp
     MOD_HT2_40_QAM64, // 15
 #endif
 
+#ifdef CONFIG_11AC
+    MOD_VHT_20_QAM256, // 16
+    MOD_VHT_40_QAM256, // 17
+    MOD_VHT_80_PSK,    // 18
+    MOD_VHT_80_QAM16,  // 19
+    MOD_VHT_80_QAM64,  // 20
+    MOD_VHT_80_QAM256, // 21
+#ifdef STREAM_2x2
+    MOD_VHT2_20_QAM256, // 22
+    MOD_VHT2_40_QAM256, // 23
+    MOD_VHT2_80_PSK,    // 24
+    MOD_VHT2_80_QAM16,  // 25
+    MOD_VHT2_80_QAM64,  // 26
+    MOD_VHT2_80_QAM256, // 27
+#endif
+#endif
 } mod_grp;
 
 typedef MLAN_PACK_START struct _power_table_attr

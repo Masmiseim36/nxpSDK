@@ -122,7 +122,7 @@ t_void wlan_11h_init(mlan_adapter *adapter)
     pstate_11h->is_slave_radar_det_active       = MFALSE;
 
     /* Initialize quiet_ie */
-    memset(adapter, pquiet, 0, sizeof(IEEEtypes_Quiet_t));
+    (void)memset(adapter, pquiet, 0, sizeof(IEEEtypes_Quiet_t));
     pquiet->element_id = QUIET;
     pquiet->len        = (sizeof(pquiet->quiet_count) + sizeof(pquiet->quiet_period) + sizeof(pquiet->quiet_duration) +
                    sizeof(pquiet->quiet_offset));
@@ -142,7 +142,7 @@ t_void wlan_11h_init(mlan_adapter *adapter)
     pstate_rdh->new_channel     = 0;
     pstate_rdh->uap_band_cfg    = 0;
     pstate_rdh->max_bcn_dtim_ms = 0;
-    memset(adapter, pstate_rdh->priv_list, 0, sizeof(pstate_rdh->priv_list));
+    (void)memset(adapter, pstate_rdh->priv_list, 0, sizeof(pstate_rdh->priv_list));
 
     LEAVE();
 }

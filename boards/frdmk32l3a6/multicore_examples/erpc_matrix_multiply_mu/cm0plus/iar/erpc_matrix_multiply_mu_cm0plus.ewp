@@ -311,33 +311,21 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60</state>
           <state>$PROJ_DIR$/../../../erpc_common</state>
           <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../..</state>
+          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
         </option>
         <option>
@@ -1303,33 +1291,21 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60</state>
           <state>$PROJ_DIR$/../../../erpc_common</state>
           <state>$PROJ_DIR$/../../../erpc_common/erpc_matrix_multiply/service</state>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../..</state>
+          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src</state>
+          <state>$PROJ_DIR$/../../../../../../components/uart</state>
+          <state>$PROJ_DIR$/../../../../../../components/lists</state>
+          <state>$PROJ_DIR$/../../../../../../devices/K32L3A60</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c</state>
         </option>
         <option>
@@ -2021,64 +1997,73 @@
     <group>
       <name>infra</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</name>
       </file>
     </group>
     <group>
       <name>setup</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.cpp</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.cpp</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mu.cpp</name>
@@ -2087,31 +2072,34 @@
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_transport_setup.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_transport_setup.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</name>
       </file>
     </group>
     <group>
       <name>transports</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_mu_transport.cpp</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_mu_transport.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_mu_transport.h</name>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_mu_transport.cpp</name>
       </file>
     </group>
     <group>
       <name>port</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</name>
-      </file>
-      <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port.h</name>
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port_stdlib.cpp</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</name>
       </file>
     </group>
   </group>
@@ -2151,76 +2139,67 @@
       <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr_mu_internal.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr_internal_core_api.h</name>
     </file>
-  </group>
-  <group>
-    <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_gpio.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_gpio.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_port.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_clock.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_clock.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_mu.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_mu.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_common.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_msmc.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_msmc.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_lpuart.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_lpuart.h</name>
+      <name>$PROJ_DIR$/../../../../../../middleware/multicore/mcmgr/src/mcmgr.c</name>
     </file>
   </group>
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/debug_console/fsl_debug_console.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/debug_console_lite/fsl_debug_console.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/debug_console/fsl_debug_console.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/debug_console_lite/fsl_assert.c</name>
+    </file>
+  </group>
+  <group>
+    <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/debug_console/fsl_debug_console_conf.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_gpio.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/str/fsl_str.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_port.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/utilities/str/fsl_str.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_clock.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_mu.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_mu.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_msmc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_msmc.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/drivers/fsl_lpuart.c</name>
     </file>
   </group>
   <group>
@@ -2228,50 +2207,32 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/lpuart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_lpuart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
   <group>
     <name>device</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/fsl_device_registers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/K32L3A60_cm0plus.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/K32L3A60_cm0plus_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/K32L3A60/system_K32L3A60_cm0plus.c</name>
@@ -2286,13 +2247,7 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm0plus.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -2301,28 +2256,28 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_const_structs.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
   <group>

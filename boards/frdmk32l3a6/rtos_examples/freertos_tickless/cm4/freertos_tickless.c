@@ -13,26 +13,26 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if defined(FSL_FEATURE_SOC_PORT_COUNT) && (FSL_FEATURE_SOC_PORT_COUNT > 0)
 #include "fsl_port.h"
 #endif
-#include "pin_mux.h"
 #include "fsl_device_registers.h"
 #include "fsl_common.h"
-#include "clock_config.h"
 #if configUSE_TICKLESS_IDLE == 2
 #include "fsl_lptmr.h"
 #endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_SW_GPIO BOARD_SW2_GPIO
-#define BOARD_SW_PORT BOARD_SW2_PORT
-#define BOARD_SW_GPIO_PIN BOARD_SW2_GPIO_PIN
-#define BOARD_SW_IRQ BOARD_SW2_IRQ
+#define BOARD_SW_GPIO        BOARD_SW2_GPIO
+#define BOARD_SW_PORT        BOARD_SW2_PORT
+#define BOARD_SW_GPIO_PIN    BOARD_SW2_GPIO_PIN
+#define BOARD_SW_IRQ         BOARD_SW2_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_SW2_IRQ_HANDLER
-#define BOARD_SW_NAME BOARD_SW2_NAME
+#define BOARD_SW_NAME        BOARD_SW2_NAME
 /* Task priorities. */
 /* clang-format off */
 #define tickless_task_PRIORITY   ( configMAX_PRIORITIES - 2 )
@@ -130,7 +130,7 @@ int main(void)
     EnableIRQ(LPTMR0_IRQn);
 #endif
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     PRINTF("Press any key to start the example\r\n");

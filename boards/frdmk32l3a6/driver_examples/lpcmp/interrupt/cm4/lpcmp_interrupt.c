@@ -7,23 +7,23 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lpcmp.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPCMP_BASE LPCMP0
-#define DEMO_LPCMP_USER_CHANNEL 2U
-#define DEMO_LPCMP_DAC_CHANNEL 7U
-#define DEMO_LPCMP_IRQ_ID LPCMP0_IRQn
+#define DEMO_LPCMP_BASE             LPCMP0
+#define DEMO_LPCMP_USER_CHANNEL     2U
+#define DEMO_LPCMP_DAC_CHANNEL      7U
+#define DEMO_LPCMP_IRQ_ID           LPCMP0_IRQn
 #define DEMO_LPCMP_IRQ_HANDLER_FUNC LPCMP0_IRQHandler
 
 #define LED_INIT() LED1_INIT(LOGIC_LED_OFF)
-#define LED_ON() LED1_ON()
-#define LED_OFF() LED1_OFF()
+#define LED_ON()   LED1_ON()
+#define LED_OFF()  LED1_OFF()
 
 /*******************************************************************************
  * Prototypes
@@ -68,7 +68,8 @@ int main(void)
     /* Configure the internal DAC to output half of reference voltage. */
     mLpcmpDacConfigStruct.enableLowPowerMode     = false;
     mLpcmpDacConfigStruct.referenceVoltageSource = kLPCMP_VrefSourceVin2;
-    mLpcmpDacConfigStruct.DACValue               = 32U; /* Half of reference voltage. */
+    mLpcmpDacConfigStruct.DACValue =
+        ((LPCMP_DCR_DAC_DATA_MASK >> LPCMP_DCR_DAC_DATA_SHIFT) >> 1U); /* Half of reference voltage. */
     LPCMP_SetDACConfig(DEMO_LPCMP_BASE, &mLpcmpDacConfigStruct);
 
     /* Configure LPCMP input channels. */
@@ -91,19 +92,14 @@ int main(void)
  */
 void DEMO_LPCMP_IRQ_HANDLER_FUNC(void)
 {
-    if (kLPCMP_OutputRisingEventFlag == (kLPCMP_OutputRisingEventFlag & LPCMP_GetStatusFlags(DEMO_LPCMP_BASE)))
+    LPCMP_ClearStatusFlags(DEMO_LPCMP_BASE, kLPCMP_OutputRisingEventFlag | kLPCMP_OutputFallingEventFlag);
+    if (kLPCMP_OutputAssertEventFlag == (kLPCMP_OutputAssertEventFlag & LPCMP_GetStatusFlags(DEMO_LPCMP_BASE)))
     {
-        LPCMP_ClearStatusFlags(DEMO_LPCMP_BASE, kLPCMP_OutputRisingEventFlag);
         LED_ON(); /* Turn on the led. */
     }
     else
     {
-        LPCMP_ClearStatusFlags(DEMO_LPCMP_BASE, kLPCMP_OutputFallingEventFlag);
         LED_OFF(); /* Turn off the led. */
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }

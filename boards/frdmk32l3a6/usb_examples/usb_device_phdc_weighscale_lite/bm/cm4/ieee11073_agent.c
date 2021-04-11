@@ -6,13 +6,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
 #include "usb_device_config.h"
 #include "usb.h"
 #include "ieee11073_timer.h"
 #include "ieee11073_types.h"
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
 #include "fsl_debug_console.h"
 #include "ieee11073_timer.h"
 #include "ieee11073_agent.h"
@@ -38,14 +38,14 @@
 static void AGENT_SendAssociationRequestTimeout(void *arg);
 static void AGENT_SendConfigTimeout(void *arg);
 #endif
-static agent_struct_t *AGENT_GetDeviceByHandle(uint32_t handle);
-static void AGENT_RecvAssociationResponse(uint32_t handle, aare_apdu_t *associaionResponse);
-static void AGENT_RecvPresentationProtocolDataUnit(uint32_t handle, prst_apdu_t *pPrst);
+static agent_struct_t *AGENT_GetDeviceByHandle(void *handle);
+static void AGENT_RecvAssociationResponse(void *handle, aare_apdu_t *associaionResponse);
+static void AGENT_RecvPresentationProtocolDataUnit(void *handle, prst_apdu_t *pPrst);
 #if AGENT_SUPPORT_FULL_FEATURE
-static void AGENT_SendAssociationReleaseResponse(uint32_t handle, release_request_reason_t releaseReason);
-static void AGENT_SendRoer(uint32_t handle, error_result_t *errorResult);
+static void AGENT_SendAssociationReleaseResponse(void *handle, release_request_reason_t releaseReason);
+static void AGENT_SendRoer(void *handle, error_result_t *errorResult);
 #endif
-static void AGENT_RecvComplete(uint32_t handle, uint8_t *dataBuffer, uint32_t size);
+static void AGENT_RecvComplete(void *handle, uint8_t *dataBuffer, uint32_t size);
 
 /*******************************************************************************
  * Variables
@@ -69,21 +69,21 @@ agent_struct_t g_agentDevice[MAX_AGENT_NUM];
  * @param assoc_ptr     the association request data.
  * @param size          the association request data size.
  */
-void AGENT_SendAssociationRequest(uint32_t handle, uint8_t *associationData, uint32_t size)
+void AGENT_SendAssociationRequest(void *handle, uint8_t *associationData, uint32_t size)
 {
     agent_struct_t *pAgent = NULL;
-    pAgent = AGENT_GetDeviceByHandle(handle);
+    pAgent                 = AGENT_GetDeviceByHandle(handle);
     if (NULL != pAgent)
     {
         if (AGENT_STATE_CON_UNASSOCIATED == pAgent->agentState)
         {
 #if IEEE_MAX_TIMER_OBJECTS
             /* preparing association timer object */
-            ieee11073_timer_struct_t *pAgentTimer = &pAgent->agentTimer[0U];
-            pAgentTimer->timerObject.timerCount = (int32_t)(RC_ASSOC * TO_ASSOC); /* 30S */
+            ieee11073_timer_struct_t *pAgentTimer  = &pAgent->agentTimer[0U];
+            pAgentTimer->timerObject.timerCount    = (int32_t)(RC_ASSOC * TO_ASSOC); /* 30S */
             pAgentTimer->timerObject.timerCallback = AGENT_SendAssociationRequestTimeout;
             pAgentTimer->timerObject.timerArgument = (void *)pAgent;
-            pAgentTimer->timerId = IEEE_AddTimerQueue(&pAgentTimer->timerObject);
+            pAgentTimer->timerId                   = IEEE_AddTimerQueue(&pAgentTimer->timerObject);
 #endif
             /* the first time for sending the association request to host */
             if (AGENT_SendData(handle, AGENT_SEND_DATA_QOS, (uint8_t *)associationData, size))
@@ -132,21 +132,21 @@ static void AGENT_SendAssociationRequestTimeout(void *arg)
  * @param config_ptr    the agent configuration data.
  * @param size          the agent configuration data size.
  */
-void AGENT_SendConfig(uint32_t handle, uint8_t *config, uint32_t size)
+void AGENT_SendConfig(void *handle, uint8_t *config, uint32_t size)
 {
     agent_struct_t *pAgent = NULL;
-    pAgent = AGENT_GetDeviceByHandle(handle);
+    pAgent                 = AGENT_GetDeviceByHandle(handle);
     if (NULL != pAgent)
     {
         if (AGENT_STATE_CON_ASSOC_CFG_SENDING_CONFIG == pAgent->agentState)
         {
 #if IEEE_MAX_TIMER_OBJECTS
             /* preparing association timer object */
-            ieee11073_timer_struct_t *pAgentTimer = &pAgent->agentTimer[1U];
-            pAgentTimer->timerObject.timerCount = TO_CONFIG; /* 10S */
+            ieee11073_timer_struct_t *pAgentTimer  = &pAgent->agentTimer[1U];
+            pAgentTimer->timerObject.timerCount    = TO_CONFIG; /* 10S */
             pAgentTimer->timerObject.timerCallback = AGENT_SendConfigTimeout;
             pAgentTimer->timerObject.timerArgument = (void *)pAgent;
-            pAgentTimer->timerId = IEEE_AddTimerQueue(&pAgentTimer->timerObject);
+            pAgentTimer->timerId                   = IEEE_AddTimerQueue(&pAgentTimer->timerObject);
 #endif
             /* the first time for sending the association request to host */
             if (AGENT_SendData(handle, AGENT_SEND_DATA_QOS, (uint8_t *)config, size))
@@ -196,18 +196,18 @@ static void AGENT_SendConfigTimeout(void *arg)
  * @param handle        the agent handle.
  * @param abort_reason  the abort reason.
  */
-void AGENT_SendAssociationAbortRequest(uint32_t handle, abort_reason_t abortReason)
+void AGENT_SendAssociationAbortRequest(void *handle, abort_reason_t abortReason)
 {
     apdu_t *pApdu;
     agent_struct_t *pAgent = NULL;
-    pAgent = AGENT_GetDeviceByHandle(handle);
+    pAgent                 = AGENT_GetDeviceByHandle(handle);
     if (NULL != pAgent)
     {
         uint16_t size;
-        size = (uint16_t)(ABRT_DATA_LENGTH + APDU_HEADER_SIZE);
-        pApdu = (apdu_t *)&pAgent->agentTxBuffer[0U];
-        pApdu->choice = ABRT_CHOSEN;
-        pApdu->length = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
+        size                 = (uint16_t)(ABRT_DATA_LENGTH + APDU_HEADER_SIZE);
+        pApdu                = (apdu_t *)&pAgent->agentTxBuffer[0U];
+        pApdu->choice        = ABRT_CHOSEN;
+        pApdu->length        = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
         pApdu->u.abrt.reason = USB_SHORT_FROM_BIG_ENDIAN(abortReason);
         if (AGENT_SendData(pAgent->agentHandle, AGENT_SEND_DATA_QOS, (uint8_t *)pApdu, (uint32_t)size))
         {
@@ -238,18 +238,18 @@ void AGENT_SendAssociationAbortRequest(uint32_t handle, abort_reason_t abortReas
  * @retval AGENT_ERROR_SUCCESS          sending request is successful.
  * @retval AGENT_ERROR_INVALID_PARAM    the agent device is not found.
  */
-void AGENT_SendAssociationRleaseRequest(uint32_t handle, release_request_reason_t releaseReason)
+void AGENT_SendAssociationRleaseRequest(void *handle, release_request_reason_t releaseReason)
 {
     apdu_t *pApdu;
     agent_struct_t *pAgent = NULL;
-    pAgent = AGENT_GetDeviceByHandle(handle);
+    pAgent                 = AGENT_GetDeviceByHandle(handle);
     if (NULL != pAgent)
     {
         uint16_t size;
-        size = (uint16_t)(RLRQ_DATA_LENGTH + APDU_HEADER_SIZE);
-        pApdu = (apdu_t *)&pAgent->agentTxBuffer[0U];
-        pApdu->choice = RLRQ_CHOSEN;
-        pApdu->length = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
+        size                 = (uint16_t)(RLRQ_DATA_LENGTH + APDU_HEADER_SIZE);
+        pApdu                = (apdu_t *)&pAgent->agentTxBuffer[0U];
+        pApdu->choice        = RLRQ_CHOSEN;
+        pApdu->length        = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
         pApdu->u.rlrq.reason = USB_SHORT_FROM_BIG_ENDIAN(releaseReason);
         if (AGENT_SendData(pAgent->agentHandle, AGENT_SEND_DATA_QOS, (uint8_t *)pApdu, (uint32_t)size))
         {
@@ -280,18 +280,18 @@ void AGENT_SendAssociationRleaseRequest(uint32_t handle, release_request_reason_
  * @retval AGENT_ERROR_SUCCESS          sending response is successful.
  * @retval AGENT_ERROR_INVALID_PARAM    sending response is fail.
  */
-static void AGENT_SendAssociationReleaseResponse(uint32_t handle, release_request_reason_t releaseReason)
+static void AGENT_SendAssociationReleaseResponse(void *handle, release_request_reason_t releaseReason)
 {
     apdu_t *pApdu;
     agent_struct_t *pAgent = NULL;
-    pAgent = AGENT_GetDeviceByHandle(handle);
+    pAgent                 = AGENT_GetDeviceByHandle(handle);
     if (NULL != pAgent)
     {
         uint16_t size;
-        size = (uint16_t)(RLRE_DATA_LENGTH + APDU_HEADER_SIZE);
-        pApdu = (apdu_t *)&pAgent->agentTxBuffer[0U];
-        pApdu->choice = RLRE_CHOSEN;
-        pApdu->length = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
+        size                 = (uint16_t)(RLRE_DATA_LENGTH + APDU_HEADER_SIZE);
+        pApdu                = (apdu_t *)&pAgent->agentTxBuffer[0U];
+        pApdu->choice        = RLRE_CHOSEN;
+        pApdu->length        = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
         pApdu->u.rlre.reason = USB_SHORT_FROM_BIG_ENDIAN(releaseReason);
         if (AGENT_SendData(handle, AGENT_SEND_DATA_QOS, (uint8_t *)pApdu, (uint32_t)size))
         {
@@ -320,7 +320,7 @@ static void AGENT_SendAssociationReleaseResponse(uint32_t handle, release_reques
  * @retval pAgent           the agent device instance.
  * @retval NULL             the agent device is not found.
  */
-static agent_struct_t *AGENT_GetDeviceByHandle(uint32_t handle)
+static agent_struct_t *AGENT_GetDeviceByHandle(void *handle)
 {
     agent_struct_t *pAgent = NULL;
     for (uint8_t i = 0U; i < MAX_AGENT_NUM; i++)
@@ -345,10 +345,10 @@ static agent_struct_t *AGENT_GetDeviceByHandle(uint32_t handle)
  * @retval AGENT_ERROR_SUCCESS          the agent device is found.
  * @retval AGENT_ERROR_INVALID_PARAM    the agent device is not found.
  */
-void AGENT_SetAgentState(uint32_t handle, uint8_t state)
+void AGENT_SetAgentState(void *handle, uint8_t state)
 {
     agent_struct_t *pAgent = NULL;
-    pAgent = AGENT_GetDeviceByHandle(handle);
+    pAgent                 = AGENT_GetDeviceByHandle(handle);
     if (NULL != pAgent)
     {
         switch (state)
@@ -425,11 +425,11 @@ void AGENT_SetAgentState(uint32_t handle, uint8_t state)
  *
  * @param handle            the agent handle.
  */
-void AGENT_Init(uint32_t handle)
+void AGENT_Init(void *handle)
 {
     uint8_t isNonActiveAgent = 0U;
-    uint8_t agentIndex = 0U;
-    agent_struct_t *pAgent = NULL;
+    uint8_t agentIndex       = 0U;
+    agent_struct_t *pAgent   = NULL;
     for (; agentIndex < MAX_AGENT_NUM; agentIndex++)
     {
         if (0U == g_agentDevice[agentIndex].agentHandle)
@@ -469,10 +469,10 @@ void AGENT_Init(uint32_t handle)
  * @param data          the callback data.
  * @param size          the callback data size.
  */
-void AGENT_Callback(uint32_t handle, uint8_t request, uint8_t *data, uint32_t size)
+void AGENT_Callback(void *handle, uint8_t request, uint8_t *data, uint32_t size)
 {
     agent_struct_t *pAgent = NULL;
-    pAgent = AGENT_GetDeviceByHandle(handle);
+    pAgent                 = AGENT_GetDeviceByHandle(handle);
     if (NULL != pAgent)
     {
         switch (request)
@@ -545,18 +545,18 @@ void AGENT_Callback(uint32_t handle, uint8_t request, uint8_t *data, uint32_t si
  * @param dataBuffer   pointer to data
  * @param size         data size
  */
-static void AGENT_RecvComplete(uint32_t handle, uint8_t *dataBuffer, uint32_t size)
+static void AGENT_RecvComplete(void *handle, uint8_t *dataBuffer, uint32_t size)
 {
     agent_struct_t *pAgent = NULL;
-    pAgent = AGENT_GetDeviceByHandle(handle);
+    pAgent                 = AGENT_GetDeviceByHandle(handle);
     if (NULL != pAgent)
     {
         if (AGENT_STATE_DISCONNECTED != pAgent->agentState)
         {
             uint16_t apduChoice;
             apdu_t *pApdu = NULL;
-            pApdu = (apdu_t *)dataBuffer;
-            apduChoice = USB_SHORT_FROM_BIG_ENDIAN(pApdu->choice);
+            pApdu         = (apdu_t *)dataBuffer;
+            apduChoice    = USB_SHORT_FROM_BIG_ENDIAN(pApdu->choice);
             switch (apduChoice)
             {
                 case AARQ_CHOSEN:
@@ -690,10 +690,10 @@ static void AGENT_RecvComplete(uint32_t handle, uint8_t *dataBuffer, uint32_t si
  * @param handle       the agent handle.
  * @associaionResponse association response data
  */
-static void AGENT_RecvAssociationResponse(uint32_t handle, aare_apdu_t *associaionResponse)
+static void AGENT_RecvAssociationResponse(void *handle, aare_apdu_t *associaionResponse)
 {
     agent_struct_t *pAgent = NULL;
-    pAgent = AGENT_GetDeviceByHandle(handle);
+    pAgent                 = AGENT_GetDeviceByHandle(handle);
     if (NULL != pAgent)
     {
         if (ACCEPTED == USB_SHORT_FROM_BIG_ENDIAN(associaionResponse->result))
@@ -737,10 +737,10 @@ static void AGENT_RecvAssociationResponse(uint32_t handle, aare_apdu_t *associai
  * @param handle       the agent handle.
  * @param pPrst        presentation data unit pointer.
  */
-static void AGENT_RecvPresentationProtocolDataUnit(uint32_t handle, prst_apdu_t *pPrst)
+static void AGENT_RecvPresentationProtocolDataUnit(void *handle, prst_apdu_t *pPrst)
 {
     agent_struct_t *pAgent = NULL;
-    pAgent = AGENT_GetDeviceByHandle(handle);
+    pAgent                 = AGENT_GetDeviceByHandle(handle);
     if (NULL != pAgent)
     {
         data_apdu_t *dataApdu = (data_apdu_t *)&(pPrst->value[0U]);
@@ -785,8 +785,8 @@ static void AGENT_RecvPresentationProtocolDataUnit(uint32_t handle, prst_apdu_t 
 #if AGENT_SUPPORT_FULL_FEATURE
                     /* not allowed, send roer with no-such-object-instance */
                     uint8_t tempBuffer[4U];
-                    error_result_t *errorResult = (error_result_t *)&tempBuffer[0];
-                    errorResult->errorValue = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
+                    error_result_t *errorResult   = (error_result_t *)&tempBuffer[0];
+                    errorResult->errorValue       = USB_SHORT_FROM_BIG_ENDIAN(NO_SUCH_OBJECT_INSTANCE);
                     errorResult->parameter.length = 0U; /* There is no parameter for error result */
                     /* Send rors or rore or rorj, no state transition */
                     AGENT_SendRoer(handle, errorResult);
@@ -906,7 +906,7 @@ static void AGENT_RecvPresentationProtocolDataUnit(uint32_t handle, prst_apdu_t 
 static void AGENT_SendRoer(uint32_t handle, error_result_t *errorResult)
 {
     agent_struct_t *pAgent = NULL;
-    pAgent = AGENT_GetDeviceByHandle(handle);
+    pAgent                 = AGENT_GetDeviceByHandle(handle);
     if (NULL != pAgent)
     {
         uint16_t size;
@@ -918,15 +918,15 @@ static void AGENT_SendRoer(uint32_t handle, error_result_t *errorResult)
                           sizeof(errorResult->parameter.length) +
                           USB_SHORT_FROM_BIG_ENDIAN(errorResult->parameter.length));
 
-        pApdu = (apdu_t *)&pAgent->agentTxBuffer[0];
-        pApdu->choice = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(PRST_CHOSEN);
-        pApdu->length = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
+        pApdu                = (apdu_t *)&pAgent->agentTxBuffer[0];
+        pApdu->choice        = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(PRST_CHOSEN);
+        pApdu->length        = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE);
         pApdu->u.prst.length = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE - sizeof(uint16_t));
-        pPrst = (data_apdu_t *)&pApdu->u.prst.value[0U];
-        pPrst->invokeId = pAgent->invokeId;
+        pPrst                = (data_apdu_t *)&pApdu->u.prst.value[0U];
+        pPrst->invokeId      = pAgent->invokeId;
         pPrst->choice.choice = USB_SHORT_FROM_BIG_ENDIAN(ROER_CHOSEN);
         pPrst->choice.length = (uint16_t)USB_SHORT_FROM_BIG_ENDIAN(size - APDU_HEADER_SIZE - PRST_HEADER_LENGTH);
-        pPrst->choice.u.roer.errorValue = errorResult->errorValue;
+        pPrst->choice.u.roer.errorValue       = errorResult->errorValue;
         pPrst->choice.u.roer.parameter.length = errorResult->parameter.length;
         if (USB_SHORT_FROM_BIG_ENDIAN(errorResult->parameter.length) > 0U)
         {

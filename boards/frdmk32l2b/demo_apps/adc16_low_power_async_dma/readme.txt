@@ -7,10 +7,10 @@ user and toggle LED.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -44,15 +44,18 @@ When the demo runs successfully, the log would be seen on the OpenSDA terminal l
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ADC LOW POWER ASYNC DMA DEMO
 ADC16_DoAutoCalibration() Done.
+ADC Full Range: 65536
+Please press any key to trigger ADC conversion.
 ADC value: 15670
+Please press any key to trigger ADC conversion.
 ADC value: 16634
+Please press any key to trigger ADC conversion.
 ADC value: 16686
+Please press any key to trigger ADC conversion.
 ADC value: 16681
+Please press any key to trigger ADC conversion.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Note:
  - LED will be toggled when the CPU wake up.
-Customization options
-=====================
-

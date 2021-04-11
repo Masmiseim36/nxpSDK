@@ -6,20 +6,20 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "erpc_client_setup.h"
 #include "erpc_error_handler.h"
 #include "erpc_matrix_multiply.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_lpuart_cmsis.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BUTTON_INIT() GPIO_PinInit(BOARD_SW1_GPIO, BOARD_SW1_GPIO_PIN, &button_config)
+#define BUTTON_INIT()       GPIO_PinInit(BOARD_SW1_GPIO, BOARD_SW1_GPIO_PIN, &button_config)
 #define IS_BUTTON_PRESSED() !GPIO_PinRead(BOARD_SW1_GPIO, BOARD_SW1_GPIO_PIN)
-#define ERPC_DEMO_UART Driver_USART0
+#define ERPC_DEMO_UART      Driver_USART0
 #define MATRIX_ITEM_MAX_VALUE 50
 
 /*******************************************************************************

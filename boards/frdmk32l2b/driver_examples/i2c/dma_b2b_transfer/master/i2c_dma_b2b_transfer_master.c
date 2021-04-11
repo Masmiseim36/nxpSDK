@@ -9,6 +9,7 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
@@ -16,24 +17,23 @@
 #include "fsl_dmamux.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* I2C source clock */
-#define I2C_MASTER_CLK_SRC I2C0_CLK_SRC
-#define I2C_MASTER_CLK_FREQ CLOCK_GetFreq(I2C0_CLK_SRC)
+#define I2C_MASTER_CLK_SRC          I2C0_CLK_SRC
+#define I2C_MASTER_CLK_FREQ         CLOCK_GetFreq(I2C0_CLK_SRC)
 #define EXAMPLE_I2C_MASTER_BASEADDR I2C0
-#define DMA_REQUEST_SRC kDmaRequestMux0I2C0
+#define DMA_REQUEST_SRC             kDmaRequestMux0I2C0
 #define EXAMPLE_I2C_DMAMUX_BASEADDR DMAMUX0
-#define EXAMPLE_I2C_DMA_BASEADDR DMA0
-#define I2C_DMA_CHANNEL 0U
+#define EXAMPLE_I2C_DMA_BASEADDR    DMA0
+#define I2C_DMA_CHANNEL             0U
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define I2C_BAUDRATE 100000U
-#define I2C_DATA_LENGTH 33U
+#define I2C_BAUDRATE               100000U
+#define I2C_DATA_LENGTH            33U
 
 /*******************************************************************************
  * Prototypes

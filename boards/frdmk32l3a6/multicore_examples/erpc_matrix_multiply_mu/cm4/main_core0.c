@@ -1,11 +1,12 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
 #include "board.h"
 #include "erpc_client_setup.h"
 #include "erpc_error_handler.h"
@@ -15,27 +16,27 @@
 #include "mcmgr.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-#define BUTTON_INIT() GPIO_PinInit(BOARD_SW2_GPIO, BOARD_SW2_GPIO_PIN, &button_config)
-#define IS_BUTTON_PRESSED() !GPIO_PinRead(BOARD_SW2_GPIO, BOARD_SW2_GPIO_PIN)
+#define BUTTON_INIT()       GPIO_PinInit(BOARD_SW2_GPIO, BOARD_SW2_GPIO_PIN, &button_config)
+#define IS_BUTTON_PRESSED() (0U == GPIO_PinRead(BOARD_SW2_GPIO, BOARD_SW2_GPIO_PIN))
+#define BUTTON_NAME         BOARD_SW2_NAME
 
 /* Address of memory, from which the secondary core will boot */
-#define CORE1_BOOT_ADDRESS (void *)0x01000000
+#define CORE1_BOOT_ADDRESS 0x01000000
 
-#define MATRIX_ITEM_MAX_VALUE 50
-#define APP_ERPC_READY_EVENT_DATA (1)
+#define MATRIX_ITEM_MAX_VALUE     (50)
+#define APP_ERPC_READY_EVENT_DATA (1U)
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 
 extern bool g_erpc_error_occurred;
-volatile uint16_t eRPCReadyEventData = 0;
+static volatile uint16_t eRPCReadyEventData = 0;
 
 /*******************************************************************************
  * Prototypes
@@ -74,9 +75,9 @@ static void print_matrix(Matrix matrix_ptr)
     {
         for (b = 0; b < matrix_size; ++b)
         {
-            PRINTF("%4i ", (int)(matrix_ptr[a][b]));
+            (void)PRINTF("%4i ", matrix_ptr[a][b]);
         }
-        PRINTF("\r\n");
+        (void)PRINTF("\r\n");
     }
 }
 
@@ -97,18 +98,18 @@ void SystemInitHook(void)
        function as close to the reset entry as possible to allow CoreUp event
        triggering. The SystemInitHook() weak function overloading is used in this
        application. */
-    MCMGR_EarlyInit();
+    (void)MCMGR_EarlyInit();
 }
 
 /*!
  * @brief Main function
  */
-int main()
+int main(void)
 {
     Matrix matrix1 = {0}, matrix2 = {0}, result_matrix = {0};
 
-    BOARD_InitPins_Core0();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /* Define the init structure for the input switch pin */
@@ -120,26 +121,27 @@ int main()
     /* Configure BUTTON */
     BUTTON_INIT();
 
-    PRINTF("\r\nPrimary core started\r\n");
+    (void)PRINTF("\r\nPrimary core started\r\n");
 
 #ifdef CORE1_IMAGE_COPY_TO_RAM
     /* Calculate size of the image */
     uint32_t core1_image_size;
     core1_image_size = get_core1_image_size();
-    PRINTF("Copy CORE1 image to address: 0x%x, size: %d\n", CORE1_BOOT_ADDRESS, core1_image_size);
+    (void)PRINTF("Copy CORE1 image to address: 0x%x, size: %d\r\n", (void *)(char *)CORE1_BOOT_ADDRESS,
+                 core1_image_size);
 
     /* Copy application from FLASH to RAM */
-    memcpy(CORE1_BOOT_ADDRESS, (void *)CORE1_IMAGE_START, core1_image_size);
+    (void)memcpy((void *)(char *)CORE1_BOOT_ADDRESS, (void *)CORE1_IMAGE_START, core1_image_size);
 #endif
 
     /* Initialize MCMGR before calling its API */
-    MCMGR_Init();
+    (void)MCMGR_Init();
 
     /* Register the application event before starting the secondary core */
-    MCMGR_RegisterEvent(kMCMGR_RemoteApplicationEvent, eRPCReadyEventHandler, NULL);
+    (void)MCMGR_RegisterEvent(kMCMGR_RemoteApplicationEvent, eRPCReadyEventHandler, ((void *)0));
 
     /* Boot source for Core 1 */
-    MCMGR_StartCore(kMCMGR_Core1, CORE1_BOOT_ADDRESS, (uint32_t)0, kMCMGR_Start_Asynchronous);
+    (void)MCMGR_StartCore(kMCMGR_Core1, (void *)(char *)CORE1_BOOT_ADDRESS, 0U, kMCMGR_Start_Asynchronous);
 
     /* Wait until the secondary core application signals the erpc server has been initialized and is ready to
      * communicate. */
@@ -165,17 +167,17 @@ int main()
     fill_matrices(matrix1, matrix2);
 
     /* Print both matrices on the console */
-    PRINTF("\r\nMatrix #1");
-    PRINTF("\r\n=========\r\n");
+    (void)PRINTF("\r\nMatrix #1");
+    (void)PRINTF("\r\n=========\r\n");
     print_matrix(matrix1);
 
-    PRINTF("\r\nMatrix #2");
-    PRINTF("\r\n=========\r\n");
+    (void)PRINTF("\r\nMatrix #2");
+    (void)PRINTF("\r\n=========\r\n");
     print_matrix(matrix2);
 
-    while (1)
+    for (;;)
     {
-        PRINTF("\r\neRPC request is sent to the server\r\n");
+        (void)PRINTF("\r\neRPC request is sent to the server\r\n");
 
         erpcMatrixMultiply(matrix1, matrix2, result_matrix);
 
@@ -186,18 +188,18 @@ int main()
             break;
         }
 
-        PRINTF("\r\nResult matrix");
-        PRINTF("\r\n=============\r\n");
-        print_matrix(result_matrix);
+        (void)PRINTF("\r\nResult matrix");
+        (void)PRINTF("\r\n=============\r\n");
+        (void)print_matrix(result_matrix);
 
-        PRINTF("\r\nPress the SW2 button to initiate the next matrix multiplication\r\n");
-        /* Check for SW2 button push. Pin is grounded when button is pushed. */
-        while (1 != IS_BUTTON_PRESSED())
+        (void)PRINTF("\r\nPress the %s button to initiate the next matrix multiplication\r\n", BUTTON_NAME);
+        /* Check for SWx button push. Pin is grounded when button is pushed. */
+        while (IS_BUTTON_PRESSED())
         {
         }
 
         /* Wait to eliminate the button glitch */
-        int i;
+        int32_t i;
         for (i = 0; i < 1000000; i++)
         {
         }
@@ -206,15 +208,15 @@ int main()
         fill_matrices(matrix1, matrix2);
 
         /* Print both matrices on the console */
-        PRINTF("\r\nMatrix #1");
-        PRINTF("\r\n=========\r\n");
+        (void)PRINTF("\r\nMatrix #1");
+        (void)PRINTF("\r\n=========\r\n");
         print_matrix(matrix1);
 
-        PRINTF("\r\nMatrix #2");
-        PRINTF("\r\n=========\r\n");
+        (void)PRINTF("\r\nMatrix #2");
+        (void)PRINTF("\r\n=========\r\n");
         print_matrix(matrix2);
     }
-    while (1)
+    for (;;)
     {
     }
 }

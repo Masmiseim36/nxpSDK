@@ -29,7 +29,7 @@
  */
 /*! @brief SDK versions supported by AML layer. */
 #define SDK_S32     0U              /*! S32 SDK 0.8.6 EAR. */
-#define SDK_KSDK    1U              /*! MCUXpresso SDK 2.3. */
+#define SDK_KSDK    1U              /*! MCUXpresso SDK 2.9. */
 
 /*!
  * @brief Selection of SDK version you are using (S32 SDK or KSDK).

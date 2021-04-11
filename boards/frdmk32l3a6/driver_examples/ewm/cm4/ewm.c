@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -11,23 +11,23 @@
  ******************************************************************************/
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_gpio.h"
 #include "fsl_ewm.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SW_GPIO BOARD_SW2_GPIO
+#define SW_GPIO     BOARD_SW2_GPIO
 #define SW_GPIO_PIN BOARD_SW2_GPIO_PIN
-#define SW_NAME BOARD_SW2_NAME
+#define SW_NAME     BOARD_SW2_NAME
 /* GPIO port input low-logic level when SW is pressed */
 #define SW_GPIO_PRESSED_VALUE 0U
-#define WDOG_EWM_IRQHandler EWM_IRQHandler
-#define WDOG_EWM_IRQn EWM_IRQn
+#define WDOG_EWM_IRQHandler   EWM_IRQHandler
+#define WDOG_EWM_IRQn         EWM_IRQn
 
 /*******************************************************************************
  * Prototypes
@@ -77,19 +77,7 @@ void WDOG_EWM_IRQHandler(void)
 {
     EWM_DisableInterrupts(base, kEWM_InterruptEnable); /*!< de-assert interrupt request */
     ewmIsrFlag = true;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
-}
-
-void delay(void)
-{
-    for (uint32_t i = 0; i < 0x7fffffU; i++)
-    {
-        __NOP();
-    }
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -103,6 +91,10 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+
+    PRINTF("\r\nPress anykey to start the example...\r\n");
+    GETCHAR();
+
     gpio_configure();
 
     /* EWM peripheral driver test */
@@ -127,6 +119,7 @@ int main(void)
     {
         /* Restart counter*/
         EWM_Refresh(base);
+
         /* Check for SW button push*/
         if (is_key_pressed())
         {
@@ -135,14 +128,16 @@ int main(void)
             {
             }
             PRINTF("\r\n EWM interrupt is occurred");
+            PRINTF("\r\n Press %s to expire EWM again", SW_NAME);
 
+            /*Wait for the key to release*/
+            while (is_key_pressed())
+            {
+            }
             /* Clear interrupt flag*/
             ewmIsrFlag = false;
-            PRINTF("\r\n Press %s to expire EWM again", SW_NAME);
             /*Restart counter and enable interrupt for next run*/
             EWM_Refresh(base);
-            /* Delay for a while in order to press button, interrrupt occurred only once*/
-            delay();
             /*Enable EWM interrupt*/
             EWM_EnableInterrupts(base, kEWM_InterruptEnable);
         }

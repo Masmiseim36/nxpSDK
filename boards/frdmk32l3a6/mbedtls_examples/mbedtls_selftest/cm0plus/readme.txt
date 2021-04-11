@@ -6,9 +6,9 @@ terminal.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- Keil MDK  5.33
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -229,6 +229,3 @@ When the demo runs successfully, the terminal will display similar information l
   Executed 18 test suites
 
                            [ All tests PASS ]
-Customization options
-=====================
-

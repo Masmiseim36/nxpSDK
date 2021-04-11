@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  *
@@ -22,50 +22,56 @@
 #error "This RPMsg-Lite port requires RL_USE_ENVIRONMENT_CONTEXT set to 0"
 #endif
 
-static int isr_counter = 0;
-static int disable_counter = 0;
+static int32_t isr_counter     = 0;
+static int32_t disable_counter = 0;
 static void *platform_lock;
 
 #if defined(RL_USE_MCMGR_IPC_ISR_HANDLER) && (RL_USE_MCMGR_IPC_ISR_HANDLER == 1)
 static void mcmgr_event_handler(uint16_t vring_idx, void *context)
 {
-    env_isr(vring_idx);
+    env_isr((uint32_t)vring_idx);
 }
 #else
 static void mu_isr(MU_Type *base)
 {
     uint32_t flags;
     flags = MU_GetStatusFlags(base);
-    if (kMU_GenInt0Flag & flags)
+    if (((uint32_t)kMU_GenInt0Flag & flags) != 0UL)
     {
-        MU_ClearStatusFlags(base, kMU_GenInt0Flag);
+        MU_ClearStatusFlags(base, (uint32_t)kMU_GenInt0Flag);
         env_isr(0);
     }
-    if (kMU_GenInt1Flag & flags)
+    if (((uint32_t)kMU_GenInt1Flag & flags) != 0UL)
     {
-        MU_ClearStatusFlags(base, kMU_GenInt1Flag);
+        MU_ClearStatusFlags(base, (uint32_t)kMU_GenInt1Flag);
         env_isr(1);
     }
 }
 
 #if defined(FSL_FEATURE_MU_SIDE_A)
-int MUA_IRQHandler()
+int32_t MUA_IRQHandler(void)
 {
     mu_isr(MUA);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    /* ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+     * exception return operation might vector to incorrect interrupt.
+     * For Cortex-M7, if core speed much faster than peripheral register write speed,
+     * the peripheral interrupt flags may be still set after exiting ISR, this results to
+     * the same error similar with errata 83869 */
+#if (defined __CORTEX_M) && ((__CORTEX_M == 4U) || (__CORTEX_M == 7U))
     __DSB();
 #endif
     return 0;
 }
 #elif defined(FSL_FEATURE_MU_SIDE_B)
-int MUB_IRQHandler()
+int32_t MUB_IRQHandler(void)
 {
     mu_isr(MUB);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    /* ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+     * exception return operation might vector to incorrect interrupt.
+     * For Cortex-M7, if core speed much faster than peripheral register write speed,
+     * the peripheral interrupt flags may be still set after exiting ISR, this results to
+     * the same error similar with errata 83869 */
+#if (defined __CORTEX_M) && ((__CORTEX_M == 4U) || (__CORTEX_M == 7U))
     __DSB();
 #endif
     return 0;
@@ -73,18 +79,17 @@ int MUB_IRQHandler()
 #endif
 #endif
 
-void platform_global_isr_disable(void)
+static void platform_global_isr_disable(void)
 {
     __asm volatile("cpsid i");
 }
 
-
-void platform_global_isr_enable(void)
+static void platform_global_isr_enable(void)
 {
     __asm volatile("cpsie i");
 }
 
-int platform_init_interrupt(unsigned int vector_id, void *isr_data)
+int32_t platform_init_interrupt(uint32_t vector_id, void *isr_data)
 {
     /* Register ISR to environment layer */
     env_register_isr(vector_id, isr_data);
@@ -95,9 +100,9 @@ int platform_init_interrupt(unsigned int vector_id, void *isr_data)
     if (isr_counter < 2)
     {
 #if defined(FSL_FEATURE_MU_SIDE_A)
-        MU_EnableInterrupts(MUA, 1 << (31 - vector_id));
+        MU_EnableInterrupts(MUA, 1UL << (31UL - vector_id));
 #elif defined(FSL_FEATURE_MU_SIDE_B)
-        MU_EnableInterrupts(MUB, 1 << (31 - vector_id));
+        MU_EnableInterrupts(MUB, 1UL << (31UL - vector_id));
 #endif
     }
     isr_counter++;
@@ -107,7 +112,7 @@ int platform_init_interrupt(unsigned int vector_id, void *isr_data)
     return 0;
 }
 
-int platform_deinit_interrupt(unsigned int vector_id)
+int32_t platform_deinit_interrupt(uint32_t vector_id)
 {
     /* Prepare the MU Hardware */
     env_lock_mutex(platform_lock);
@@ -115,11 +120,11 @@ int platform_deinit_interrupt(unsigned int vector_id)
     RL_ASSERT(0 < isr_counter);
     isr_counter--;
     if (isr_counter < 2)
-	{
+    {
 #if defined(FSL_FEATURE_MU_SIDE_A)
-        MU_DisableInterrupts(MUA, 1 << (31 - vector_id));
+        MU_DisableInterrupts(MUA, 1UL << (31UL - vector_id));
 #elif defined(FSL_FEATURE_MU_SIDE_B)
-        MU_DisableInterrupts(MUB, 1 << (31 - vector_id));
+        MU_DisableInterrupts(MUB, 1UL << (31UL - vector_id));
 #endif
     }
 
@@ -131,20 +136,21 @@ int platform_deinit_interrupt(unsigned int vector_id)
     return 0;
 }
 
-void platform_notify(unsigned int vector_id)
+void platform_notify(uint32_t vector_id)
 {
     env_lock_mutex(platform_lock);
 #if defined(RL_USE_MCMGR_IPC_ISR_HANDLER) && (RL_USE_MCMGR_IPC_ISR_HANDLER == 1)
-    MCMGR_TriggerEventForce(kMCMGR_RemoteRPMsgEvent, RL_GET_Q_ID(vector_id));
+    (void)MCMGR_TriggerEventForce(kMCMGR_RemoteRPMsgEvent, (uint16_t)RL_GET_Q_ID(vector_id));
 #else
-/* Write directly into the MU TX register, no need to wait until the content is cleared
-   (consumed by the receiver side) because the same walue of the virtqueu ID is written
-   into this register when trigerring the ISR for the receiver side. The whole queue of
-   received buffers for associated virtqueue is handled in the ISR then. */
+/* Write directly into the MU Control Register to trigger General Purpose Interrupt Request (GIR).
+   No need to wait until the previous interrupt is processed because the same value
+   of the virtqueue ID is used for GIR mask when triggering the ISR for the receiver side.
+   The whole queue of received buffers for associated virtqueue is then handled in the ISR
+   on the receiver side. */
 #if defined(FSL_FEATURE_MU_SIDE_A)
-    MU_TriggerInterrupts(MUA, 1 << (19 - RL_GET_Q_ID(vector_id)));
+    (void)MU_TriggerInterrupts(MUA, 1UL << (19UL - RL_GET_Q_ID(vector_id)));
 #elif defined(FSL_FEATURE_MU_SIDE_B)
-    MU_TriggerInterrupts(MUB, 1 << (19 - RL_GET_Q_ID(vector_id)));
+    (void)MU_TriggerInterrupts(MUB, 1UL << (19UL - RL_GET_Q_ID(vector_id)));
 #endif
 #endif
     env_unlock_mutex(platform_lock);
@@ -157,7 +163,7 @@ void platform_notify(unsigned int vector_id)
  *
  * This is not an accurate delay, it ensures at least num_msec passed when return.
  */
-void platform_time_delay(int num_msec)
+void platform_time_delay(uint32_t num_msec)
 {
     uint32_t loop;
 
@@ -165,10 +171,10 @@ void platform_time_delay(int num_msec)
     SystemCoreClockUpdate();
 
     /* Calculate the CPU loops to delay, each loop has 3 cycles */
-    loop = SystemCoreClock / 3 / 1000 * num_msec;
+    loop = SystemCoreClock / 3U / 1000U * num_msec;
 
     /* There's some difference among toolchains, 3 or 4 cycles each loop */
-    while (loop)
+    while (loop > 0U)
     {
         __NOP();
         loop--;
@@ -183,9 +189,9 @@ void platform_time_delay(int num_msec)
  * @return True for IRQ, false otherwise.
  *
  */
-int platform_in_isr(void)
+int32_t platform_in_isr(void)
 {
-    return ((SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk) != 0);
+    return (((SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk) != 0UL) ? 1 : 0);
 }
 
 /**
@@ -198,15 +204,15 @@ int platform_in_isr(void)
  * @return vector_id Return value is never checked.
  *
  */
-int platform_interrupt_enable(unsigned int vector_id)
+int32_t platform_interrupt_enable(uint32_t vector_id)
 {
     RL_ASSERT(0 < disable_counter);
 
     platform_global_isr_disable();
     disable_counter--;
 
-    if (!disable_counter)
-	{
+    if (disable_counter == 0)
+    {
 #if defined(FSL_FEATURE_MU_SIDE_A)
         NVIC_EnableIRQ(MUA_IRQn);
 #elif defined(FSL_FEATURE_MU_SIDE_B)
@@ -214,7 +220,7 @@ int platform_interrupt_enable(unsigned int vector_id)
 #endif
     }
     platform_global_isr_enable();
-    return (vector_id);
+    return ((int32_t)vector_id);
 }
 
 /**
@@ -227,14 +233,14 @@ int platform_interrupt_enable(unsigned int vector_id)
  * @return vector_id Return value is never checked.
  *
  */
-int platform_interrupt_disable(unsigned int vector_id)
+int32_t platform_interrupt_disable(uint32_t vector_id)
 {
     RL_ASSERT(0 <= disable_counter);
 
     platform_global_isr_disable();
     /* virtqueues use the same NVIC vector
        if counter is set - the interrupts are disabled */
-    if (!disable_counter)
+    if (disable_counter == 0)
     {
 #if defined(FSL_FEATURE_MU_SIDE_A)
         NVIC_DisableIRQ(MUA_IRQn);
@@ -246,7 +252,7 @@ int platform_interrupt_disable(unsigned int vector_id)
 
     disable_counter++;
     platform_global_isr_enable();
-    return (vector_id);
+    return ((int32_t)vector_id);
 }
 
 /**
@@ -255,7 +261,7 @@ int platform_interrupt_disable(unsigned int vector_id)
  * Dummy implementation
  *
  */
-void platform_map_mem_region(unsigned int vrt_addr, unsigned int phy_addr, unsigned int size, unsigned int flags)
+void platform_map_mem_region(uint32_t vrt_addr, uint32_t phy_addr, uint32_t size, uint32_t flags)
 {
 }
 
@@ -285,9 +291,9 @@ void platform_cache_disable(void)
  * Dummy implementation
  *
  */
-unsigned long platform_vatopa(void *addr)
+uint32_t platform_vatopa(void *addr)
 {
-    return ((unsigned long)addr);
+    return ((uint32_t)(char *)addr);
 }
 
 /**
@@ -296,9 +302,9 @@ unsigned long platform_vatopa(void *addr)
  * Dummy implementation
  *
  */
-void *platform_patova(unsigned long addr)
+void *platform_patova(uint32_t addr)
 {
-    return ((void *)addr);
+    return ((void *)(char *)addr);
 }
 
 /**
@@ -306,22 +312,23 @@ void *platform_patova(unsigned long addr)
  *
  * platform/environment init
  */
-int platform_init(void)
+int32_t platform_init(void)
 {
     /* The MU peripheral driver is not initialized here because it covers also
     the secondary core booting controls and it needs to be initialized earlier
     in the application code */
 
 #if defined(RL_USE_MCMGR_IPC_ISR_HANDLER) && (RL_USE_MCMGR_IPC_ISR_HANDLER == 1)
-    mcmgr_status_t retval;
-    retval = MCMGR_RegisterEvent(kMCMGR_RemoteRPMsgEvent, mcmgr_event_handler, NULL);
-    if(kStatus_MCMGR_Success != retval)
+    mcmgr_status_t retval = kStatus_MCMGR_Error;
+    retval                = MCMGR_RegisterEvent(kMCMGR_RemoteRPMsgEvent, mcmgr_event_handler, ((void *)0));
+    if (kStatus_MCMGR_Success != retval)
     {
         return -1;
     }
-#endif    
+#endif
+
     /* Create lock used in multi-instanced RPMsg */
-    if(0 != env_create_mutex(&platform_lock, 1))
+    if (0 != env_create_mutex(&platform_lock, 1))
     {
         return -1;
     }
@@ -334,10 +341,10 @@ int platform_init(void)
  *
  * platform/environment deinit process
  */
-int platform_deinit(void)
+int32_t platform_deinit(void)
 {
     /* Delete lock used in multi-instanced RPMsg */
     env_delete_mutex(platform_lock);
-    platform_lock = NULL;
+    platform_lock = ((void *)0);
     return 0;
 }

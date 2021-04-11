@@ -168,7 +168,7 @@ BOOL NTAG_SetI2CRstOnOff(NTAG_HANDLE_T ntag, BOOL on)
 //---------------------------------------------------------------------
 BOOL NTAG_GetI2CRstOnOff(NTAG_HANDLE_T ntag, BOOL *on)
 {
-    uint8_t val;
+    uint8_t val = 0u;
     NTAG_ReadRegister(ntag, NTAG_MEM_OFFSET_NC_REG, &val);
 
     *on = ((val & NTAG_NC_REG_MASK_I2C_RST_ON_OFF) != 0);
@@ -184,7 +184,7 @@ BOOL NTAG_SetRFConfigurationWrite(NTAG_HANDLE_T ntag)
 //---------------------------------------------------------------------
 BOOL NTAG_GetRFConfigurationLock(NTAG_HANDLE_T ntag, BOOL *locked)
 {
-    uint8_t val;
+    uint8_t val = 0u;
     NTAG_ReadConfiguration(ntag, NTAG_MEM_OFFSET_REG_LOCK, &val);
 
     if (val & 0x01)
@@ -219,7 +219,7 @@ BOOL NTAG_GetI2CConfigurationLock(NTAG_HANDLE_T ntag, BOOL *locked)
 //---------------------------------------------------------------------
 BOOL NTAG_GetI2CClockStr(NTAG_HANDLE_T ntag, BOOL *clk)
 {
-    uint8_t val;
+    uint8_t val = 0u;
     NTAG_ReadRegister(ntag, NTAG_MEM_OFFSET_NC_REG, &val);
 
     *clk = (val & 0x01);
@@ -241,7 +241,7 @@ BOOL NTAG_SetFDOnFunction(NTAG_HANDLE_T ntag, NTAG_FD_ON_FUNCTIONS_T func)
 //---------------------------------------------------------------------
 BOOL NTAG_GetFDOnFunction(NTAG_HANDLE_T ntag, NTAG_FD_ON_FUNCTIONS_T *func)
 {
-    uint8_t val;
+    uint8_t val = 0u;
     NTAG_ReadRegister(ntag, NTAG_MEM_OFFSET_NC_REG, &val);
 
     *func = (NTAG_FD_ON_FUNCTIONS_T)(val & NTAG_NC_REG_MASK_FD_ON);
@@ -257,7 +257,7 @@ BOOL NTAG_SetFDOffFunction(NTAG_HANDLE_T ntag, NTAG_FD_OFF_FUNCTIONS_T func)
 //---------------------------------------------------------------------
 BOOL NTAG_GetFDOffFunction(NTAG_HANDLE_T ntag, NTAG_FD_OFF_FUNCTIONS_T *func)
 {
-    uint8_t val;
+    uint8_t val = 0u;
     NTAG_ReadRegister(ntag, NTAG_MEM_OFFSET_NC_REG, &val);
 
     *func = (NTAG_FD_OFF_FUNCTIONS_T)(val & NTAG_NC_REG_MASK_FD_OFF);
@@ -279,7 +279,7 @@ BOOL NTAG_SetPthruOnOff(NTAG_HANDLE_T ntag, BOOL on)
 //---------------------------------------------------------------------
 BOOL NTAG_GetPthruOnOff(NTAG_HANDLE_T ntag, BOOL *on)
 {
-    uint8_t val;
+    uint8_t val = 0u;
     NTAG_ReadRegister(ntag, NTAG_MEM_OFFSET_NC_REG, &val);
 
     *on = ((val & NTAG_NC_REG_MASK_PTHRU_ON_OFF) != 0);
@@ -301,7 +301,7 @@ BOOL NTAG_SetSRAMMirrorOnOff(NTAG_HANDLE_T ntag, BOOL on)
 //---------------------------------------------------------------------
 BOOL NTAG_GetSRAMMirrorOnOff(NTAG_HANDLE_T ntag, BOOL *on)
 {
-    uint8_t val;
+    uint8_t val = 0u;
     NTAG_ReadRegister(ntag, NTAG_MEM_OFFSET_NC_REG, &val);
 
     *on = ((val & NTAG_NC_REG_MASK_SRAM_MIRROR_ON_OFF) != 0);

@@ -1,0 +1,20 @@
+if(NOT MIDDLEWARE_MULTICORE_ERPC_ERPC_MU_RTOS_TRANSPORT_K32L3A60_cm4_INCLUDED)
+    
+    set(MIDDLEWARE_MULTICORE_ERPC_ERPC_MU_RTOS_TRANSPORT_K32L3A60_cm4_INCLUDED true CACHE BOOL "middleware_multicore_erpc_eRPC_mu_rtos_transport component is included.")
+
+    target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/transports/erpc_mu_transport.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port/erpc_threading_freertos.cpp
+        ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp
+    )
+
+
+    target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/transports
+        ${CMAKE_CURRENT_LIST_DIR}/erpc/erpc_c/port
+    )
+
+
+    include(middleware_multicore_erpc_common_K32L3A60_cm4)
+
+endif()

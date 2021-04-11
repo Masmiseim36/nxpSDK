@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -36,7 +36,7 @@ static void _nt_keydetector_usafa_reset(struct nt_electrode_data *electrode);
 const struct nt_keydetector_usafa nt_keydetector_usafa_default = {
     .signal_filter         = {.coef1 = 2},
     .base_avrg             = {.n2_order = 9},
-    .non_activity_avrg     = {.n2_order = NT_FILTER_MOVING_AVERAGE_MAX_ORDER},
+    .non_activity_avrg     = {.n2_order = (int32_t) NT_FILTER_MOVING_AVERAGE_MAX_ORDER},
     .entry_event_cnt       = 4,
     .signal_to_noise_ratio = 8,
     .deadband_cnt          = 5,
@@ -57,7 +57,7 @@ const struct nt_keydetector_interface nt_keydetector_usafa_interface = {
 
 static int32_t _nt_keydetector_usafa_rom_check(const struct nt_keydetector_usafa *rom)
 {
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 static int32_t _nt_keydetector_usafa_init(struct nt_electrode_data *electrode)
@@ -66,9 +66,9 @@ static int32_t _nt_keydetector_usafa_init(struct nt_electrode_data *electrode)
 
     const struct nt_keydetector_usafa *rom = electrode->rom->keydetector_params.usafa;
 
-    if (_nt_keydetector_usafa_rom_check(rom) != NT_SUCCESS)
+    if (_nt_keydetector_usafa_rom_check(rom) != (int32_t) NT_SUCCESS)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
     electrode->keydetector_data.usafa =
@@ -76,7 +76,7 @@ static int32_t _nt_keydetector_usafa_init(struct nt_electrode_data *electrode)
 
     if (electrode->keydetector_data.usafa == NULL)
     {
-        return NT_OUT_OF_MEMORY;
+        return (int32_t) NT_OUT_OF_MEMORY;
     }
 
     electrode->keydetector_data.usafa->recovery_cnt = 0;
@@ -85,39 +85,42 @@ static int32_t _nt_keydetector_usafa_init(struct nt_electrode_data *electrode)
     electrode->keydetector_data.usafa->noise_avrg_init = rom->base_avrg;
     electrode->keydetector_data.usafa->noise_avrg_init.n2_order += 2;
 
-    if (electrode->keydetector_data.usafa->noise_avrg_init.n2_order > NT_FILTER_MOVING_AVERAGE_MAX_ORDER)
-        electrode->keydetector_data.usafa->noise_avrg_init.n2_order = NT_FILTER_MOVING_AVERAGE_MAX_ORDER;
+    if (electrode->keydetector_data.usafa->noise_avrg_init.n2_order > (int32_t) NT_FILTER_MOVING_AVERAGE_MAX_ORDER)
+    {    electrode->keydetector_data.usafa->noise_avrg_init.n2_order = (int32_t) NT_FILTER_MOVING_AVERAGE_MAX_ORDER;
+    }
 
     /* fast noise filter */
     electrode->keydetector_data.usafa->f_noise_avrg_init = rom->base_avrg;
     electrode->keydetector_data.usafa->f_noise_avrg_init.n2_order =
         electrode->keydetector_data.usafa->noise_avrg_init.n2_order - 4;
     if (electrode->keydetector_data.usafa->f_noise_avrg_init.n2_order < 4)
-        electrode->keydetector_data.usafa->f_noise_avrg_init.n2_order = 4;
+    {    electrode->keydetector_data.usafa->f_noise_avrg_init.n2_order = 4;
+    }
 
     electrode->keydetector_data.usafa->predicted_signal_avrg_init = rom->base_avrg;
     if (electrode->keydetector_data.usafa->predicted_signal_avrg_init.n2_order > 2)
-        electrode->keydetector_data.usafa->predicted_signal_avrg_init.n2_order -= 2;
+    {   electrode->keydetector_data.usafa->predicted_signal_avrg_init.n2_order -= 2;
+    }
 
-    _nt_electrode_set_status(electrode, NT_ELECTRODE_STATE_INIT);
+    _nt_electrode_set_status(electrode, (int32_t)NT_ELECTRODE_STATE_INIT);
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 static void _nt_keydetector_usafa_enable(struct nt_electrode_data *electrode, uint32_t touch)
 {
     struct nt_keydetector_usafa_data *ram = electrode->keydetector_data.usafa;
 
-    if (touch)
+    if ((bool)touch)
     {
-        _nt_electrode_set_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
+        _nt_electrode_set_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
     }
     else
     {
-        _nt_electrode_clear_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
+        _nt_electrode_clear_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
     }
     ram->filter_state = NT_FILTER_STATE_INIT;
-    _nt_electrode_set_status(electrode, NT_ELECTRODE_STATE_INIT);
+    _nt_electrode_set_status(electrode, (int32_t) NT_ELECTRODE_STATE_INIT);
 }
 
 static void _nt_keydetector_usafa_measure(struct nt_electrode_data *electrode, uint32_t signal)
@@ -132,9 +135,9 @@ static void _nt_keydetector_usafa_measure(struct nt_electrode_data *electrode, u
     if (ram->filter_state == NT_FILTER_STATE_INIT)
     {
         _nt_reset_keydetector_usafa_reset(electrode, signal,
-                                          _nt_electrode_get_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG));
+                                          _nt_electrode_get_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG));
 
-        _nt_keydetector_usafa_unlock_baseline(electrode, rom, ram, signal); /* Initial signal warm-up (settling) */
+        _nt_keydetector_usafa_unlock_baseline(electrode, rom, ram, (uint16_t)signal); /* Initial signal warm-up (settling) */
 
         ram->filter_state = NT_FILTER_STATE_RUN;
     }
@@ -145,7 +148,7 @@ static void _nt_keydetector_usafa_measure(struct nt_electrode_data *electrode, u
         uint32_t iir_signal  = _nt_filter_iir_process(&rom->signal_filter, signal, prev_signal);
         _nt_electrode_set_signal(electrode, iir_signal);
 
-        _nt_keydetector_usafa_signal_track(electrode, rom, ram, iir_signal);
+        _nt_keydetector_usafa_signal_track(electrode, rom, ram, (uint16_t)iir_signal);
     }
 }
 
@@ -156,50 +159,50 @@ static void _nt_reset_keydetector_usafa_reset(struct nt_electrode_data *electrod
     const struct nt_keydetector_usafa *rom = electrode->rom->keydetector_params.usafa;
     struct nt_keydetector_usafa_data *ram  = electrode->keydetector_data.usafa;
 
-    _nt_electrode_clear_flag(electrode, NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG | NT_ELECTRODE_LOCK_BASELINE_FLAG |
-                                            NT_ELECTRODE_DIGITAL_RESULT_ONLY_FLAG | NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
+    _nt_electrode_clear_flag(electrode, (uint32_t)NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG | (uint32_t)NT_ELECTRODE_LOCK_BASELINE_FLAG |
+    		(uint32_t)NT_ELECTRODE_DIGITAL_RESULT_ONLY_FLAG | (uint32_t)NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
 
-    if (!touch)
+    if (!(bool)touch)
     {
         _nt_electrode_set_signal(electrode, signal);
 
         ram->base_avrg_init.n2_order = rom->base_avrg.n2_order;
-        _nt_filter_moving_average_init(&ram->base_avrg_init, &ram->base_avrg, signal);
+        (void)(int32_t)_nt_filter_moving_average_init(&ram->base_avrg_init, &ram->base_avrg, (uint16_t)signal);
         electrode->baseline = electrode->signal;
-        _nt_filter_moving_average_init(&ram->noise_avrg_init, &ram->noise_avrg, rom->min_noise_limit);
+        _nt_filter_moving_average_init(&ram->noise_avrg_init, &ram->noise_avrg, (uint16_t)rom->min_noise_limit);
         /* fast noise filter */
-        _nt_filter_moving_average_init(&ram->f_noise_avrg_init, &ram->f_noise_avrg, rom->min_noise_limit);
+        _nt_filter_moving_average_init(&ram->f_noise_avrg_init, &ram->f_noise_avrg, (uint16_t)(rom->min_noise_limit));
 
         ram->predicted_signal = signal + rom->min_noise_limit * rom->signal_to_noise_ratio;
-        _nt_filter_moving_average_init(&rom->non_activity_avrg, &ram->predicted_signal_avrg, ram->predicted_signal);
+        _nt_filter_moving_average_init(&rom->non_activity_avrg, &ram->predicted_signal_avrg, (uint16_t)ram->predicted_signal);
 
         ram->noise   = rom->min_noise_limit;
         ram->f_noise = rom->min_noise_limit;
 
-        _nt_electrode_clear_flag(electrode, NT_ELECTRODE_LOCK_BASELINE_FLAG);
+        _nt_electrode_clear_flag(electrode, (int32_t) NT_ELECTRODE_LOCK_BASELINE_FLAG);
     }
     else
     {
         _nt_electrode_set_signal(electrode, signal);
 
-        electrode->baseline = _nt_filter_limit_u(((signal >> 2) * 3), 0, 50000);
+        electrode->baseline = (uint16_t)_nt_filter_limit_u((int32_t)((signal >> 2U) * 3U), 0U, 50000U);
 
         ram->base_avrg_init = rom->non_activity_avrg;
         _nt_filter_moving_average_init(&ram->base_avrg_init, &ram->base_avrg, electrode->baseline);
 
-        _nt_filter_moving_average_init(&ram->noise_avrg_init, &ram->noise_avrg, rom->min_noise_limit);
+        _nt_filter_moving_average_init(&ram->noise_avrg_init, &ram->noise_avrg, (uint16_t)rom->min_noise_limit);
         /* fast noise filter */
-        _nt_filter_moving_average_init(&ram->f_noise_avrg_init, &ram->f_noise_avrg, rom->min_noise_limit);
+        _nt_filter_moving_average_init(&ram->f_noise_avrg_init, &ram->f_noise_avrg, (uint16_t)rom->min_noise_limit);
 
         ram->predicted_signal = signal;
         _nt_filter_moving_average_init(&ram->predicted_signal_avrg_init, &ram->predicted_signal_avrg,
-                                       ram->predicted_signal);
+        		                       (uint16_t)ram->predicted_signal);
 
         ram->noise   = rom->min_noise_limit;
         ram->f_noise = rom->min_noise_limit;
 
-        _nt_keydetector_usafa_lock_baseline(electrode, rom, ram, signal);
-        _nt_electrode_set_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
+        _nt_keydetector_usafa_lock_baseline(electrode, rom, ram, (uint16_t)signal);
+        _nt_electrode_set_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
     }
 }
 
@@ -212,22 +215,22 @@ static void _nt_keydetector_usafa_process(struct nt_electrode_data *electrode)
     struct nt_kernel *system               = _nt_system_get();
 
     int32_t signal  = (int32_t)_nt_electrode_get_signal(electrode);
-    int32_t s_delta = (signal - electrode->baseline);
-    int32_t delta   = _nt_filter_pos(s_delta);
+    int32_t s_delta = (signal - (int32_t)electrode->baseline);
+    int32_t delta   = (int32_t)_nt_filter_pos((int16_t)s_delta);
 
-    uint16_t sig_filter = signal;
+    uint16_t sig_filter = (uint16_t) signal;
 
     /* DC tracker: Ignore signal drop below the baseline (Unwanted touch presence at startup) */
-    if (rom->dc_track_enabled)
+    if ((bool)(rom->dc_track_enabled))
     {
-        if ((s_delta < 0) && (_nt_filter_abs(s_delta) > (rom->min_noise_limit * 2)))
+        if ((s_delta < 0) && (_nt_filter_abs((int16_t)s_delta) > (rom->min_noise_limit * 2U)))
         {
             ram->dc_track_cnt++;
-            if (ram->dc_track_cnt > rom->dc_track_cnt) /* debouncing to ignore short drops, i.e. noise */
+            if (ram->dc_track_cnt > (int32_t)rom->dc_track_cnt) /* debouncing to ignore short drops, i.e. noise */
             {
                 ram->dc_track_cnt = 0;
                 _nt_reset_keydetector_usafa_reset(
-                    electrode, signal, _nt_electrode_get_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG));
+                    electrode, (uint32_t)signal, _nt_electrode_get_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG));
             }
         }
         else
@@ -238,85 +241,87 @@ static void _nt_keydetector_usafa_process(struct nt_electrode_data *electrode)
 
     switch (_nt_electrode_get_last_status(electrode))
     {
-        case NT_ELECTRODE_STATE_INIT:
+        case (int32_t)NT_ELECTRODE_STATE_INIT:
             /* manage switch from electrode init to run phase */
             if (_nt_electrode_get_time_offset(electrode) >= system->rom->init_time)
             {
                 ram->entry_event_cnt = 0;
-                ram->deadband_cnt    = rom->deadband_cnt;
+                ram->deadband_cnt    = (int32_t) rom->deadband_cnt;
 
-                if (_nt_electrode_get_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG))
+                if ((bool)_nt_electrode_get_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG))
                 {
                     if (sig_filter < (ram->noise * rom->signal_to_noise_ratio))
                     {
-                        sig_filter = ram->noise * rom->signal_to_noise_ratio;
+                        sig_filter = (uint16_t)(ram->noise) * (uint16_t)(rom->signal_to_noise_ratio);
                     }
-                    _nt_filter_moving_average_init(&ram->predicted_signal_avrg_init, &ram->predicted_signal_avrg,
+                    (void)(int32_t)_nt_filter_moving_average_init(&ram->predicted_signal_avrg_init, &ram->predicted_signal_avrg,
                                                    sig_filter);
-                    _nt_electrode_set_status(electrode, NT_ELECTRODE_STATE_TOUCH);
-                    _nt_keydetector_usafa_lock_baseline(electrode, rom, ram, signal);
+                    _nt_electrode_set_status(electrode, (int32_t) NT_ELECTRODE_STATE_TOUCH);
+                    _nt_keydetector_usafa_lock_baseline(electrode, rom, ram, (uint16_t)signal);
                 }
                 else
                 {
-                    _nt_electrode_set_status(electrode, NT_ELECTRODE_STATE_RELEASE);
+                    _nt_electrode_set_status(electrode, (int32_t) NT_ELECTRODE_STATE_RELEASE);
                     _nt_filter_moving_average_init(&rom->non_activity_avrg, &ram->predicted_signal_avrg,
-                                                   ram->predicted_signal);
-                    _nt_keydetector_usafa_unlock_baseline(electrode, rom, ram, signal);
+                    		                       (uint16_t)(ram->predicted_signal));
+                    _nt_keydetector_usafa_unlock_baseline(electrode, rom, ram, (uint16_t)signal);
 
                     _nt_reset_keydetector_usafa_reset(
-                        electrode, signal,
+                        electrode, (uint32_t)signal,
                         _nt_electrode_get_flag(
                             electrode,
-                            NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG)); /* Initial signal warm-up (settling) Completed */
+                            (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG)); /* Initial signal warm-up (settling) Completed */
                 }
             }
             break;
-        case NT_ELECTRODE_STATE_TOUCH:
-            if ((delta < (_nt_filter_pos(ram->predicted_signal - electrode->baseline) * 4 / 5)) &&
-                (ram->deadband_cnt == 0)) /* 80% release thresh */
+        case (int32_t)NT_ELECTRODE_STATE_TOUCH:
+            if ((delta < ((int32_t)_nt_filter_pos(((int16_t)ram->predicted_signal - (int16_t)electrode->baseline) * 4U / 5U)) &&
+                (ram->deadband_cnt == 0))) /* 80% release thresh */
             {
                 ram->entry_event_cnt = 0;
-                ram->deadband_cnt    = rom->deadband_cnt;
-                _nt_electrode_set_status(electrode, NT_ELECTRODE_STATE_RELEASE);
+                ram->deadband_cnt    = (int16_t)(rom->deadband_cnt);
+                _nt_electrode_set_status(electrode, (int32_t) NT_ELECTRODE_STATE_RELEASE);
                 _nt_filter_moving_average_init(&rom->non_activity_avrg, &ram->predicted_signal_avrg,
-                                               ram->predicted_signal);
+                                               (uint16_t)(ram->predicted_signal));
 
                 /* is init touch */
-                if (_nt_electrode_get_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG))
+                if (_nt_electrode_get_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG))
                 {
-                    if (!_nt_electrode_get_flag(electrode, NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG))
-                        _nt_keydetector_usafa_unlock_baseline(electrode, rom, ram, signal);
+                    if (!(bool)_nt_electrode_get_flag(electrode, (int32_t) NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG))
+                    {   _nt_keydetector_usafa_unlock_baseline(electrode, rom, ram, (uint16_t)signal);
+                    }    
                 }
             }
             else
             {
                 ram->entry_event_cnt = 0;
-                if (ram->deadband_cnt)
+                if ((bool)(ram->deadband_cnt))
                 {
                     ram->deadband_cnt--;
                 }
             }
 
             break;
-        case NT_ELECTRODE_STATE_RELEASE:
+        case (int32_t)NT_ELECTRODE_STATE_RELEASE:
             if (((delta > (_nt_filter_pos(ram->predicted_signal - electrode->baseline) >> 2))) &&
                 (ram->deadband_cnt == 0) &&
-                (!_nt_filter_is_deadrange_u(signal, electrode->baseline, (ram->noise * rom->signal_to_noise_ratio))))
+                (!(bool)_nt_filter_is_deadrange_u(signal, electrode->baseline, (uint16_t)(ram->noise * rom->signal_to_noise_ratio))))
             {
                 ram->entry_event_cnt++;
 
-                if (ram->entry_event_cnt > rom->entry_event_cnt) /* debouncing */
+                if (ram->entry_event_cnt > (int32_t)(rom->entry_event_cnt)) /* debouncing */
                 {
                     ram->entry_event_cnt = 0;
-                    ram->deadband_cnt    = rom->deadband_cnt;
+                    ram->deadband_cnt    = (int32_t)(rom->deadband_cnt);
 
-                    if (!_nt_electrode_get_flag(electrode, NT_ELECTRODE_LOCK_BASELINE_FLAG))
-                        _nt_keydetector_usafa_lock_baseline(electrode, rom, ram, signal);
+                    if (!(bool)_nt_electrode_get_flag(electrode, (int32_t) NT_ELECTRODE_LOCK_BASELINE_FLAG))
+                    {   _nt_keydetector_usafa_lock_baseline(electrode, rom, ram, signal);
+                    }
 
                     _nt_filter_moving_average_init(
                         &ram->predicted_signal_avrg_init, &ram->predicted_signal_avrg,
-                        _nt_filter_deadrange_p(signal, electrode->baseline, (ram->noise * rom->signal_to_noise_ratio)));
-                    _nt_electrode_set_status(electrode, NT_ELECTRODE_STATE_TOUCH);
+                        _nt_filter_deadrange_p(signal, electrode->baseline, (uint16_t)(ram->noise * rom->signal_to_noise_ratio)));
+                    _nt_electrode_set_status(electrode, (int32_t) NT_ELECTRODE_STATE_TOUCH);
                 }
             }
 
@@ -324,7 +329,7 @@ static void _nt_keydetector_usafa_process(struct nt_electrode_data *electrode)
             {
                 ram->entry_event_cnt = 0;
 
-                if (_nt_electrode_get_flag(electrode, NT_ELECTRODE_LOCK_BASELINE_FLAG))
+                if (_nt_electrode_get_flag(electrode, (int32_t) NT_ELECTRODE_LOCK_BASELINE_FLAG))
                 {
                     if (ram->deadband_cnt)
                     {
@@ -334,7 +339,7 @@ static void _nt_keydetector_usafa_process(struct nt_electrode_data *electrode)
                 }
                 else
                 {
-                    if (ram->recovery_cnt)
+                    if ((bool)(ram->recovery_cnt))
                     {
                         ram->recovery_cnt--;
                         if (ram->recovery_cnt == 0)
@@ -349,13 +354,13 @@ static void _nt_keydetector_usafa_process(struct nt_electrode_data *electrode)
                 ram->deadband_cnt = 0;
                 ram->recovery_cnt = 0;
 
-                if (_nt_electrode_get_flag(electrode, NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG))
-                    _nt_keydetector_usafa_lock_baseline(electrode, rom, ram, signal);
-
-                if (_nt_electrode_get_flag(electrode,
-                                           NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG | NT_ELECTRODE_LOCK_BASELINE_FLAG) ==
-                    NT_ELECTRODE_LOCK_BASELINE_FLAG)
-                    _nt_keydetector_usafa_unlock_baseline(electrode, rom, ram, signal);
+                if (_nt_electrode_get_flag(electrode, (int32_t) NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG))
+                {   _nt_keydetector_usafa_lock_baseline(electrode, rom, ram, signal);
+                }
+                if ((bool)_nt_electrode_get_flag(electrode, ((uint32_t)NT_ELECTRODE_LOCK_BASELINE_REQ_FLAG | (uint32_t)(NT_ELECTRODE_LOCK_BASELINE_FLAG)) ==
+                		(uint32_t)(NT_ELECTRODE_LOCK_BASELINE_FLAG)))
+                {   _nt_keydetector_usafa_unlock_baseline(electrode, rom, ram, signal);
+                }    
             }
             break;
         default:
@@ -368,10 +373,10 @@ static void _nt_keydetector_usafa_lock_baseline(struct nt_electrode_data *electr
                                                 struct nt_keydetector_usafa_data *ram,
                                                 uint16_t signal)
 {
-    _nt_electrode_set_flag(electrode, NT_ELECTRODE_LOCK_BASELINE_FLAG);
+    _nt_electrode_set_flag(electrode, (int32_t) NT_ELECTRODE_LOCK_BASELINE_FLAG);
 
     ram->base_avrg_init = rom->non_activity_avrg;
-    _nt_filter_moving_average_init(&ram->base_avrg_init, &ram->base_avrg, electrode->baseline);
+    (void)(int32_t)_nt_filter_moving_average_init(&ram->base_avrg_init, &ram->base_avrg, electrode->baseline);
 }
 
 static void _nt_keydetector_usafa_unlock_baseline(struct nt_electrode_data *electrode,
@@ -379,21 +384,21 @@ static void _nt_keydetector_usafa_unlock_baseline(struct nt_electrode_data *elec
                                                   struct nt_keydetector_usafa_data *ram,
                                                   uint16_t signal)
 {
-    if (_nt_electrode_get_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG))
+    if ((bool)_nt_electrode_get_flag(electrode, (uint32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG))
     {
-        ram->recovery_cnt            = rom->deadband_cnt * 8;
-        ram->base_avrg_init.n2_order = rom->base_avrg.n2_order >> 2;
-        _nt_electrode_clear_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
+        ram->recovery_cnt            = (int32_t)(rom->deadband_cnt * 8);
+        ram->base_avrg_init.n2_order = (int32_t)((uint32_t)(rom->base_avrg.n2_order >> 2U));
+        _nt_electrode_clear_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
     }
     else
     {
-        ram->recovery_cnt            = rom->deadband_cnt * 2;
+        ram->recovery_cnt            = (int32_t)(rom->deadband_cnt * 2U);
         ram->base_avrg_init.n2_order = rom->base_avrg.n2_order / 2;
     }
 
-    _nt_filter_moving_average_init(&ram->base_avrg_init, &ram->base_avrg, electrode->baseline);
+    (void)(int32_t)_nt_filter_moving_average_init(&ram->base_avrg_init, &ram->base_avrg, electrode->baseline);
 
-    _nt_electrode_clear_flag(electrode, NT_ELECTRODE_LOCK_BASELINE_FLAG);
+    _nt_electrode_clear_flag(electrode, (int32_t) NT_ELECTRODE_LOCK_BASELINE_FLAG);
 }
 
 static void _nt_keydetector_usafa_signal_track(struct nt_electrode_data *electrode,
@@ -404,35 +409,35 @@ static void _nt_keydetector_usafa_signal_track(struct nt_electrode_data *electro
     if (ram->entry_event_cnt == 0)
     {
         /* Just use the direction of change and limit it as minimal noise is defined */
-        int32_t delta       = _nt_filter_range_s(signal - electrode->baseline, (rom->min_noise_limit / 2));
-        uint16_t loc_signal = electrode->baseline + delta;
+        int32_t delta       = _nt_filter_range_s(((int32_t)signal - (int32_t)electrode->baseline), (rom->min_noise_limit / 2U));
+        uint16_t loc_signal = electrode->baseline + (uint16_t) delta;
 
-        electrode->baseline = _nt_filter_moving_average_process(&ram->base_avrg_init, &ram->base_avrg, loc_signal);
+        electrode->baseline = (uint16_t)_nt_filter_moving_average_process(&ram->base_avrg_init, &ram->base_avrg, loc_signal);
     }
 
-    if (!_nt_electrode_get_flag(electrode, NT_ELECTRODE_LOCK_BASELINE_FLAG))
+    if (!(bool)_nt_electrode_get_flag(electrode, (int32_t) NT_ELECTRODE_LOCK_BASELINE_FLAG))
     {
-        if (_nt_filter_pos(signal - electrode->baseline) < (ram->noise * rom->signal_to_noise_ratio))
+        if (_nt_filter_pos((int16_t)(signal - electrode->baseline)) < (ram->noise * rom->signal_to_noise_ratio))
         {
             /* Noise increased only when positive signal increase */
             ram->noise = _nt_filter_moving_average_process(
                 &ram->noise_avrg_init, &ram->noise_avrg,
-                _nt_filter_limit_u(_nt_filter_pos(signal - electrode->baseline), rom->min_noise_limit,
-                                   (rom->min_noise_limit * rom->signal_to_noise_ratio * 4)));
+                _nt_filter_limit_u((int32_t)_nt_filter_pos((int16_t)(signal - electrode->baseline)), rom->min_noise_limit,
+                                   (uint16_t)(rom->min_noise_limit * rom->signal_to_noise_ratio * 4U)));
 
             ram->f_noise = _nt_filter_moving_average_process(
                 &ram->f_noise_avrg_init, &ram->f_noise_avrg,
-                _nt_filter_limit_u(_nt_filter_pos(signal - electrode->baseline), rom->min_noise_limit,
-                                   (rom->min_noise_limit * rom->signal_to_noise_ratio * 4)));
+                _nt_filter_limit_u((uint16_t)_nt_filter_pos((int16_t)(signal - electrode->baseline)), (uint16_t)rom->min_noise_limit,
+                		           (uint16_t)(rom->min_noise_limit * (uint32_t)rom->signal_to_noise_ratio * 4U)));
 
             /* Noise level recovery */
             if ((ram->noise > (rom->min_noise_limit)) && (ram->noise > (ram->f_noise)))
             {
                 /* if fast noise drops 2x time faster than slowly accumulated value, then recovery slow noise level */
-                if ((ram->noise - rom->min_noise_limit) > 2 * (ram->f_noise - rom->min_noise_limit))
+                if ((ram->noise - rom->min_noise_limit) > 2U * (ram->f_noise - rom->min_noise_limit))
 
                 {
-                    _nt_filter_moving_average_init(&ram->noise_avrg_init, &ram->noise_avrg, ram->f_noise);
+                    (void)(int32_t)_nt_filter_moving_average_init(&ram->noise_avrg_init, &ram->noise_avrg, (uint16_t)ram->f_noise);
                 }
             }
         }
@@ -442,26 +447,27 @@ static void _nt_keydetector_usafa_signal_track(struct nt_electrode_data *electro
     }
 
     /* Predicted Signal tracking in released state */
-    if (_nt_electrode_get_last_status(electrode) != NT_ELECTRODE_STATE_TOUCH)
+    if (_nt_electrode_get_last_status(electrode) != (int32_t) NT_ELECTRODE_STATE_TOUCH)
     {
         uint16_t sig_filter = signal;
 
-        sig_filter = _nt_filter_abs(signal - electrode->baseline);
+        sig_filter = _nt_filter_abs((int16_t)(signal - electrode->baseline));
 
         if (sig_filter < (ram->noise * rom->signal_to_noise_ratio))
-            sig_filter = ram->noise * rom->signal_to_noise_ratio;
+        {   sig_filter = (uint16_t)(ram->noise * rom->signal_to_noise_ratio);
+        }
 
         sig_filter += electrode->baseline;
 
-        sig_filter = _nt_filter_limit_u(sig_filter, 0, 65535);
+        sig_filter = (uint16_t)_nt_filter_limit_u((int32_t)sig_filter, 0, 65535);
         ram->predicted_signal =
             _nt_filter_moving_average_process(&rom->non_activity_avrg, &ram->predicted_signal_avrg, sig_filter);
     }
     else /* In touched state */
     {
-        ram->predicted_signal = _nt_filter_deadrange_p(
+        ram->predicted_signal = _nt_filter_deadrange_p((uint16_t)
             _nt_filter_moving_average_process(&ram->predicted_signal_avrg_init, &ram->predicted_signal_avrg, signal),
-            electrode->baseline, (ram->noise * rom->signal_to_noise_ratio));
+            electrode->baseline, (uint16_t)(ram->noise * rom->signal_to_noise_ratio));
     }
 }
 

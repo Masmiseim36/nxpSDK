@@ -50,9 +50,9 @@
 #define SCG_LPFLLCFG_FSEL_VAL ((SCG->LPFLLCFG & SCG_LPFLLCFG_FSEL_MASK) >> SCG_LPFLLCFG_FSEL_SHIFT)
 
 /* Get the value of each field in PCC register. */
-#define PCC_PCS_VAL(reg) (((reg) & PCC_CLKCFG_PCS_MASK) >> PCC_CLKCFG_PCS_SHIFT)
-#define PCC_FRAC_VAL(reg) (((reg) & PCC_CLKCFG_FRAC_MASK) >> PCC_CLKCFG_FRAC_SHIFT)
-#define PCC_PCD_VAL(reg) (((reg) & PCC_CLKCFG_PCD_MASK) >> PCC_CLKCFG_PCD_SHIFT)
+#define PCC_PCS_VAL(reg) (((reg)&PCC_CLKCFG_PCS_MASK) >> PCC_CLKCFG_PCS_SHIFT)
+#define PCC_FRAC_VAL(reg) (((reg)&PCC_CLKCFG_FRAC_MASK) >> PCC_CLKCFG_FRAC_SHIFT)
+#define PCC_PCD_VAL(reg) (((reg)&PCC_CLKCFG_PCD_MASK) >> PCC_CLKCFG_PCD_SHIFT)
 
 /*******************************************************************************
  * Variables
@@ -230,7 +230,7 @@ uint32_t CLOCK_GetFreq(clock_name_t clockName)
  */
 uint32_t CLOCK_GetIpFreq(clock_ip_name_t name)
 {
-    uint32_t reg = (*(volatile uint32_t *)name);
+    uint32_t reg = (*(volatile uint32_t *)(uint32_t)name);
 
     scg_async_clk_t asycClk;
     uint32_t freq;
@@ -254,13 +254,13 @@ uint32_t CLOCK_GetIpFreq(clock_ip_name_t name)
 
     switch (PCC_PCS_VAL(reg))
     {
-        case kCLOCK_IpSrcSircAsync:
+        case (uint8_t)kCLOCK_IpSrcSircAsync:
             freq = CLOCK_GetSircAsyncFreq(asycClk);
             break;
-        case kCLOCK_IpSrcFircAsync:
+        case (uint8_t)kCLOCK_IpSrcFircAsync:
             freq = CLOCK_GetFircAsyncFreq(asycClk);
             break;
-        case kCLOCK_IpSrcLpFllAsync:
+        case (uint8_t)kCLOCK_IpSrcLpFllAsync:
             freq = CLOCK_GetLpFllAsyncFreq(asycClk);
             break;
         default: /* kCLOCK_IpSrcNoneOrExt. */
@@ -297,7 +297,7 @@ bool CLOCK_EnableUsbfs0Clock(clock_usb_src_t src, uint32_t freq)
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 
     USBVREG->CTRL |= USBVREG_CTRL_EN_MASK;
-    USB0->CONTROL &= ~USB_CONTROL_DPPULLUPNONOTG_MASK;
+    USB0->CONTROL &= (uint8_t)(~USB_CONTROL_DPPULLUPNONOTG_MASK);
 
     if (kCLOCK_UsbSrcIrc48M == src)
     {
@@ -327,16 +327,16 @@ uint32_t CLOCK_GetSysClkFreq(scg_sys_clk_t type)
 
     switch (sysClkConfig.src)
     {
-        case kSCG_SysClkSrcSirc:
+        case (uint8_t)kSCG_SysClkSrcSirc:
             freq = CLOCK_GetSircFreq();
             break;
-        case kSCG_SysClkSrcFirc:
+        case (uint8_t)kSCG_SysClkSrcFirc:
             freq = CLOCK_GetFircFreq();
             break;
-        case kSCG_SysClkSrcRosc:
+        case (uint8_t)kSCG_SysClkSrcRosc:
             freq = CLOCK_GetRtcOscFreq();
             break;
-        case kSCG_SysClkSrcLpFll:
+        case (uint8_t)kSCG_SysClkSrcLpFll:
             freq = CLOCK_GetLpFllFreq();
             break;
         default:
@@ -360,6 +360,7 @@ uint32_t CLOCK_GetSysClkFreq(scg_sys_clk_t type)
     }
     else
     {
+        /* Add comment to prevent the case of rule 15.7. */
     }
 
     return freq;
@@ -405,7 +406,7 @@ status_t CLOCK_InitSirc(const scg_sirc_config_t *config)
     SCG->SIRCCSR = SCG_SIRCCSR_SIRCEN_MASK | config->enableMode;
 
     /* Step 4. Wait for SIRC clock to be valid. */
-    while (!(SCG->SIRCCSR & SCG_SIRCCSR_SIRCVLD_MASK))
+    while (0UL == (SCG->SIRCCSR & SCG_SIRCCSR_SIRCVLD_MASK))
     {
     }
 
@@ -428,13 +429,13 @@ status_t CLOCK_DeinitSirc(void)
     uint32_t reg = SCG->SIRCCSR;
 
     /* If clock is used by system, return error. */
-    if (reg & SCG_SIRCCSR_SIRCSEL_MASK)
+    if ((reg & SCG_SIRCCSR_SIRCSEL_MASK) != 0UL)
     {
         return kStatus_SCG_Busy;
     }
 
     /* If configure register is locked, return error. */
-    if (reg & SCG_SIRCCSR_LK_MASK)
+    if ((reg & SCG_SIRCCSR_LK_MASK) != 0UL)
     {
         return kStatus_ReadOnly;
     }
@@ -453,7 +454,7 @@ uint32_t CLOCK_GetSircFreq(void)
 {
     static const uint32_t sircFreq[] = {SCG_SIRC_LOW_RANGE_FREQ, SCG_SIRC_HIGH_RANGE_FREQ};
 
-    if (SCG->SIRCCSR & SCG_SIRCCSR_SIRCVLD_MASK) /* SIRC is valid. */
+    if ((SCG->SIRCCSR & SCG_SIRCCSR_SIRCVLD_MASK) != 0UL) /* SIRC is valid. */
     {
         return sircFreq[SCG_SIRCCFG_RANGE_VAL];
     }
@@ -472,10 +473,10 @@ uint32_t CLOCK_GetSircFreq(void)
 uint32_t CLOCK_GetSircAsyncFreq(scg_async_clk_t type)
 {
     uint32_t sircFreq = CLOCK_GetSircFreq();
-    uint32_t divider = 0U;
+    uint32_t divider  = 0U;
 
     /* Get divider. */
-    if (sircFreq)
+    if (sircFreq != 0UL)
     {
         switch (type)
         {
@@ -489,10 +490,11 @@ uint32_t CLOCK_GetSircAsyncFreq(scg_async_clk_t type)
                 divider = SCG_SIRCDIV_SIRCDIV1_VAL;
                 break;
             default:
+                divider = 0U;
                 break;
         }
     }
-    if (divider)
+    if (divider != 0U)
     {
         return sircFreq >> (divider - 1U);
     }
@@ -538,10 +540,9 @@ status_t CLOCK_InitFirc(const scg_firc_config_t *config)
     SCG->FIRCCFG = SCG_FIRCCFG_RANGE(config->range);
 
     /* Step 3. Set trimming configuration. */
-    if (config->trimConfig)
+    if ((config->trimConfig) != NULL)
     {
-        SCG->FIRCTCFG =
-            SCG_FIRCTCFG_TRIMSRC(config->trimConfig->trimSrc);
+        SCG->FIRCTCFG = SCG_FIRCTCFG_TRIMSRC(config->trimConfig->trimSrc);
 
         /* TODO: Write FIRCSTAT cause bus error: TKT266932. */
         if (kSCG_FircTrimNonUpdate == config->trimConfig->trimMode)
@@ -551,9 +552,9 @@ status_t CLOCK_InitFirc(const scg_firc_config_t *config)
         }
 
         /* trim mode. */
-        SCG->FIRCCSR = config->trimConfig->trimMode;
+        SCG->FIRCCSR = (uint32_t)(config->trimConfig->trimMode);
 
-        if (SCG->FIRCCSR & SCG_FIRCCSR_FIRCERR_MASK)
+        if ((SCG->FIRCCSR & SCG_FIRCCSR_FIRCERR_MASK) != 0U)
         {
             return kStatus_Fail;
         }
@@ -563,7 +564,7 @@ status_t CLOCK_InitFirc(const scg_firc_config_t *config)
     SCG->FIRCCSR |= (SCG_FIRCCSR_FIRCEN_MASK | SCG_FIRCCSR_FIRCTREN_MASK | config->enableMode);
 
     /* Step 5. Wait for FIRC clock to be valid. */
-    while (!(SCG->FIRCCSR & SCG_FIRCCSR_FIRCVLD_MASK))
+    while (0U == (SCG->FIRCCSR & SCG_FIRCCSR_FIRCVLD_MASK))
     {
     }
 
@@ -586,13 +587,13 @@ status_t CLOCK_DeinitFirc(void)
     uint32_t reg = SCG->FIRCCSR;
 
     /* If clock is used by system, return error. */
-    if (reg & SCG_FIRCCSR_FIRCSEL_MASK)
+    if ((reg & SCG_FIRCCSR_FIRCSEL_MASK) != 0UL)
     {
         return kStatus_SCG_Busy;
     }
 
     /* If configure register is locked, return error. */
-    if (reg & SCG_FIRCCSR_LK_MASK)
+    if ((reg & SCG_FIRCCSR_LK_MASK) != 0UL)
     {
         return kStatus_ReadOnly;
     }
@@ -610,10 +611,13 @@ status_t CLOCK_DeinitFirc(void)
 uint32_t CLOCK_GetFircFreq(void)
 {
     static const uint32_t fircFreq[] = {
-        SCG_FIRC_FREQ0, SCG_FIRC_FREQ1, SCG_FIRC_FREQ2, SCG_FIRC_FREQ3,
+        SCG_FIRC_FREQ0,
+        SCG_FIRC_FREQ1,
+        SCG_FIRC_FREQ2,
+        SCG_FIRC_FREQ3,
     };
 
-    if (SCG->FIRCCSR & SCG_FIRCCSR_FIRCVLD_MASK) /* FIRC is valid. */
+    if ((SCG->FIRCCSR & SCG_FIRCCSR_FIRCVLD_MASK) != 0UL) /* FIRC is valid. */
     {
         return fircFreq[SCG_FIRCCFG_RANGE_VAL];
     }
@@ -632,10 +636,10 @@ uint32_t CLOCK_GetFircFreq(void)
 uint32_t CLOCK_GetFircAsyncFreq(scg_async_clk_t type)
 {
     uint32_t fircFreq = CLOCK_GetFircFreq();
-    uint32_t divider = 0U;
+    uint32_t divider  = 0U;
 
     /* Get divider. */
-    if (fircFreq)
+    if (fircFreq != 0UL)
     {
         switch (type)
         {
@@ -649,10 +653,11 @@ uint32_t CLOCK_GetFircAsyncFreq(scg_async_clk_t type)
                 divider = SCG_FIRCDIV_FIRCDIV1_VAL;
                 break;
             default:
+                divider = 0U;
                 break;
         }
     }
-    if (divider)
+    if (divider != 0UL)
     {
         return fircFreq >> (divider - 1U);
     }
@@ -669,7 +674,7 @@ uint32_t CLOCK_GetFircAsyncFreq(scg_async_clk_t type)
  */
 uint32_t CLOCK_GetRtcOscFreq(void)
 {
-    if (SCG->ROSCCSR & SCG_ROSCCSR_ROSCVLD_MASK) /* RTC OSC clock is valid. */
+    if ((SCG->ROSCCSR & SCG_ROSCCSR_ROSCVLD_MASK) != 0UL) /* RTC OSC clock is valid. */
     {
         /* Please call CLOCK_SetXtal32Freq base on board setting before using RTC OSC clock. */
         assert(g_xtal32Freq);
@@ -717,7 +722,7 @@ status_t CLOCK_InitLpFll(const scg_lpfll_config_t *config)
     SCG->LPFLLCFG = SCG_LPFLLCFG_FSEL(config->range);
 
     /* Step 3. Set trimming configuration. */
-    if (config->trimConfig)
+    if ((config->trimConfig) != NULL)
     {
         SCG->LPFLLTCFG = SCG_LPFLLTCFG_TRIMDIV(config->trimConfig->trimDiv) |
                          SCG_LPFLLTCFG_TRIMSRC(config->trimConfig->trimSrc) |
@@ -729,26 +734,26 @@ status_t CLOCK_InitLpFll(const scg_lpfll_config_t *config)
         }
 
         /* Trim mode. */
-        SCG->LPFLLCSR = config->trimConfig->trimMode;
+        SCG->LPFLLCSR = (uint32_t)(config->trimConfig->trimMode);
 
-        if (SCG->LPFLLCSR & SCG_LPFLLCSR_LPFLLERR_MASK)
+        if ((SCG->LPFLLCSR & SCG_LPFLLCSR_LPFLLERR_MASK) != 0UL)
         {
             return kStatus_Fail;
         }
     }
 
     /* Step 4. Enable clock. */
-    SCG->LPFLLCSR |= (SCG_LPFLLCSR_LPFLLEN_MASK | config->enableMode);
+    SCG->LPFLLCSR |= ((uint32_t)SCG_LPFLLCSR_LPFLLEN_MASK | (uint32_t)config->enableMode);
 
     /* Step 5. Wait for LPFLL clock to be valid. */
-    while (!(SCG->LPFLLCSR & SCG_LPFLLCSR_LPFLLVLD_MASK))
+    while (0UL == (SCG->LPFLLCSR & SCG_LPFLLCSR_LPFLLVLD_MASK))
     {
     }
 
     /* Step 6. Wait for LPFLL trim lock. */
-    if ((config->trimConfig) && (kSCG_LpFllTrimUpdate == config->trimConfig->trimMode))
+    if ((config->trimConfig != NULL) && (kSCG_LpFllTrimUpdate == config->trimConfig->trimMode))
     {
-        while (!(SCG->LPFLLCSR & SCG_LPFLLCSR_LPFLLTRMLOCK_MASK))
+        while (0UL == (SCG->LPFLLCSR & SCG_LPFLLCSR_LPFLLTRMLOCK_MASK))
         {
         }
     }
@@ -772,13 +777,13 @@ status_t CLOCK_DeinitLpFll(void)
     uint32_t reg = SCG->LPFLLCSR;
 
     /* If clock is used by system, return error. */
-    if (reg & SCG_LPFLLCSR_LPFLLSEL_MASK)
+    if ((reg & SCG_LPFLLCSR_LPFLLSEL_MASK) != 0UL)
     {
         return kStatus_SCG_Busy;
     }
 
     /* If configure register is locked, return error. */
-    if (reg & SCG_LPFLLCSR_LK_MASK)
+    if ((reg & SCG_LPFLLCSR_LK_MASK) != 0UL)
     {
         return kStatus_ReadOnly;
     }
@@ -796,10 +801,13 @@ status_t CLOCK_DeinitLpFll(void)
 uint32_t CLOCK_GetLpFllFreq(void)
 {
     static const uint32_t lpfllFreq[] = {
-        SCG_LPFLL_FREQ0, SCG_LPFLL_FREQ1, SCG_LPFLL_FREQ2, SCG_LPFLL_FREQ3,
+        SCG_LPFLL_FREQ0,
+        SCG_LPFLL_FREQ1,
+        SCG_LPFLL_FREQ2,
+        SCG_LPFLL_FREQ3,
     };
 
-    if (SCG->LPFLLCSR & SCG_LPFLLCSR_LPFLLVLD_MASK) /* LPFLL is valid. */
+    if ((SCG->LPFLLCSR & SCG_LPFLLCSR_LPFLLVLD_MASK) != 0UL) /* LPFLL is valid. */
     {
         return lpfllFreq[SCG_LPFLLCFG_FSEL_VAL];
     }
@@ -818,10 +826,10 @@ uint32_t CLOCK_GetLpFllFreq(void)
 uint32_t CLOCK_GetLpFllAsyncFreq(scg_async_clk_t type)
 {
     uint32_t lpfllFreq = CLOCK_GetLpFllFreq();
-    uint32_t divider = 0U;
+    uint32_t divider   = 0U;
 
     /* Get divider. */
-    if (lpfllFreq)
+    if (lpfllFreq != 0UL)
     {
         switch (type)
         {
@@ -832,10 +840,11 @@ uint32_t CLOCK_GetLpFllAsyncFreq(scg_async_clk_t type)
                 divider = SCG_LPFLLDIV_LPFLLDIV1_VAL;
                 break;
             default:
+                divider = 0U;
                 break;
         }
     }
-    if (divider)
+    if (divider != 0U)
     {
         return lpfllFreq >> (divider - 1U);
     }

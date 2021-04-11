@@ -10,8 +10,8 @@
 #define _USB_MSC_DISK_H_ 1
 
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #endif
@@ -27,7 +27,8 @@
 /* Net Disk Size , default disk is 48*512, that is 24kByte, however , the disk recognized by that PC only has 4k Byte,
  * This is caused by that the file system also need memory*/
 #define DISK_SIZE_NORMAL (TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL * LENGTH_OF_EACH_LBA)
-/* application define logical unit number, if LOGICAL_UNIT_SUPPORTED > USB_DEVICE_MSC_MAX_LUN, update USB_DEVICE_MSC_MAX_LUN in class driver usb_device_msc.h*/
+/* application define logical unit number, if LOGICAL_UNIT_SUPPORTED > USB_DEVICE_MSC_MAX_LUN, update
+ * USB_DEVICE_MSC_MAX_LUN in class driver usb_device_msc.h*/
 #define LOGICAL_UNIT_SUPPORTED (1)
 
 typedef struct _usb_msc_struct

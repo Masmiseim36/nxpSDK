@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -245,7 +245,7 @@ int32_t nt_electrode_enable(const struct nt_electrode *electrode, uint32_t touch
 
     _nt_electrode_set_flag(electrode_data, NT_ELECTRODE_ENABLED); /* Set electrode state as enabled */
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 int32_t nt_electrode_resume(const struct nt_electrode *electrode)
@@ -260,7 +260,7 @@ int32_t nt_electrode_resume(const struct nt_electrode *electrode)
 
     _nt_electrode_set_flag(electrode_data, NT_ELECTRODE_ENABLED); /* Set electrode state as enabled */
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 int32_t nt_electrode_disable(const struct nt_electrode *electrode)
 {
@@ -274,12 +274,12 @@ int32_t nt_electrode_disable(const struct nt_electrode *electrode)
 
     _nt_electrode_clear_flag(electrode_data, NT_ELECTRODE_ENABLED); /* Set electrode state as disabled */
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 int32_t nt_electrode_suspend(const struct nt_electrode *electrode)
 {
-    return nt_electrode_disable(electrode);
+    return (int32_t) nt_electrode_disable(electrode);
 }
 
 int32_t nt_electrode_reset(const struct nt_electrode *electrode)
@@ -290,7 +290,7 @@ int32_t nt_electrode_reset(const struct nt_electrode *electrode)
     NT_ASSERT(electrode_data != NULL);
 
     electrode->keydetector_interface->nt_keydetector_reset(electrode_data);
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 uint32_t nt_electrode_is_enabled(const struct nt_electrode *electrode)
@@ -411,7 +411,7 @@ int32_t _nt_electrode_get_status(const struct nt_electrode_data *electrode, uint
     }
     else
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 }
 

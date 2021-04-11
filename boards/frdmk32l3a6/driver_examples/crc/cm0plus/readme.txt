@@ -6,9 +6,9 @@ for an ASCII string. Several CRC protocols are implemented using the CRC driver 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -46,6 +46,3 @@ CRC-16 MAXIM: 0x44c2
 CRC-16 KERMIT: 0x2189
 CRC-32: 0xcbf43926
 CRC-32 POSIX: 0x765e7680
-Customization options
-=====================
-

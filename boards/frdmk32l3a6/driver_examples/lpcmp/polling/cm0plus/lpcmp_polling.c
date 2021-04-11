@@ -7,19 +7,27 @@
  */
 
 #include "fsl_debug_console.h"
-#include "board.h"
-#include "app.h"
-#include "fsl_lpcmp.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+#include "fsl_lpcmp.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+#define DEMO_LPCMP_BASE         LPCMP1
+#define DEMO_LPCMP_USER_CHANNEL 2U
+#define DEMO_LPCMP_DAC_CHANNEL  7U
+
+#define LED_INIT() LED1_INIT(LOGIC_LED_OFF)
+#define LED_ON()   LED1_ON()
+#define LED_OFF()  LED1_OFF()
+
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+
 
 /*******************************************************************************
  * Variables
@@ -59,7 +67,8 @@ int main(void)
     /* Configure the internal DAC to output half of reference voltage. */
     mLpcmpDacConfigStruct.enableLowPowerMode     = false;
     mLpcmpDacConfigStruct.referenceVoltageSource = kLPCMP_VrefSourceVin2;
-    mLpcmpDacConfigStruct.DACValue               = 32U; /* Half of reference voltage. */
+    mLpcmpDacConfigStruct.DACValue =
+        ((LPCMP_DCR_DAC_DATA_MASK >> LPCMP_DCR_DAC_DATA_SHIFT) >> 1U); /* Half of reference voltage. */
     LPCMP_SetDACConfig(DEMO_LPCMP_BASE, &mLpcmpDacConfigStruct);
 
     /* Configure LPCMP input channels. */

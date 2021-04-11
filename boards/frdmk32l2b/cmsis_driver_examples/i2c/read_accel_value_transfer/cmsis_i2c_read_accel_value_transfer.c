@@ -7,13 +7,13 @@
  */
 
 /*  SDK Included Files */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
 #include "Driver_I2C.h"
 #include "fsl_i2c_cmsis.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
 /*******************************************************************************
@@ -23,12 +23,12 @@
 
 /* Accelerometer Reset PIN */
 #define BOARD_ACCEL_RESET_GPIO GPIOE
-#define BOARD_ACCEL_RESET_PIN 1U
-#define FXOS8700_WHOAMI 0xC7U
-#define MMA8451_WHOAMI 0x1AU
-#define ACCEL_STATUS 0x00U
+#define BOARD_ACCEL_RESET_PIN  1U
+#define FXOS8700_WHOAMI    0xC7U
+#define MMA8451_WHOAMI     0x1AU
+#define ACCEL_STATUS       0x00U
 #define ACCEL_XYZ_DATA_CFG 0x0EU
-#define ACCEL_CTRL_REG1 0x2AU
+#define ACCEL_CTRL_REG1    0x2AU
 /* FXOS8700 and MMA8451 have the same who_am_i register address. */
 #define ACCEL_WHOAMI_REG 0x0DU
 #define ACCEL_READ_TIMES 10U
@@ -68,11 +68,11 @@ void BOARD_ACCEL_Reset(void)
     GPIO_PinInit(BOARD_ACCEL_RESET_GPIO, BOARD_ACCEL_RESET_PIN, &pin_config);
     GPIO_PinWrite(BOARD_ACCEL_RESET_GPIO, BOARD_ACCEL_RESET_PIN, 1);
     /* Delay to ensure reliable sensor reset */
-    SDK_DelayAtLeastUs(8000);
+    SDK_DelayAtLeastUs(8000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     GPIO_PinWrite(BOARD_ACCEL_RESET_GPIO, BOARD_ACCEL_RESET_PIN, 0);
 
     /* Delay to wait sensor stable after reset */
-    SDK_DelayAtLeastUs(8000);
+    SDK_DelayAtLeastUs(8000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 }
 
 uint32_t I2C0_GetFreq(void)

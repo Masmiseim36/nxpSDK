@@ -9,10 +9,10 @@ In this example:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -37,9 +37,6 @@ Prepare the demo
 3.  Build core1 project first, then build core0 project.
 4.  Download the core0 program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
-
-Prepare the Demo
-================
 
 Running the demo
 ================
@@ -81,6 +78,3 @@ Send: 30. Receive 30
 Send: 31. Receive 31
 MU example run succeed!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

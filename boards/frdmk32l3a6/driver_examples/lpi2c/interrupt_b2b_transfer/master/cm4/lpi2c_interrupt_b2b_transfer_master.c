@@ -8,23 +8,23 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_MASTER_BASE (LPI2C1_BASE)
+#define EXAMPLE_I2C_MASTER_BASE      (LPI2C1_BASE)
 #define LPI2C_MASTER_CLOCK_FREQUENCY (CLOCK_GetIpFreq(kCLOCK_Lpi2c1))
 
 #define EXAMPLE_I2C_MASTER ((LPI2C_Type *)EXAMPLE_I2C_MASTER_BASE)
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define I2C_BAUDRATE 100000U
-#define I2C_DATA_LENGTH 33U
+#define I2C_BAUDRATE               100000U
+#define I2C_DATA_LENGTH            33U
 
 /*******************************************************************************
  * Prototypes
@@ -38,6 +38,7 @@ uint8_t g_master_txBuff[I2C_DATA_LENGTH];
 uint8_t g_master_rxBuff[I2C_DATA_LENGTH];
 lpi2c_master_handle_t g_m_handle;
 volatile bool g_MasterCompletionFlag = false;
+volatile bool g_MasterNackFlag       = false;
 
 /*******************************************************************************
  * Code
@@ -46,10 +47,18 @@ volatile bool g_MasterCompletionFlag = false;
 
 static void lpi2c_master_callback(LPI2C_Type *base, lpi2c_master_handle_t *handle, status_t status, void *userData)
 {
-    /* Signal transfer success when received success status. */
-    if (status == kStatus_Success)
+    if (status == kStatus_LPI2C_Nak)
+    {
+        g_MasterNackFlag = true;
+    }
+    else
     {
         g_MasterCompletionFlag = true;
+        /* Display failure information when status is not success. */
+        if (status != kStatus_Success)
+        {
+            PRINTF("Error occured during transfer!");
+        }
     }
 }
 
@@ -124,15 +133,19 @@ int main(void)
 
     /* Send master non-blocking data to slave */
     reVal = LPI2C_MasterTransferNonBlocking(EXAMPLE_I2C_MASTER, &g_m_handle, &masterXfer);
-    /*  Reset master completion flag to false. */
-    g_MasterCompletionFlag = false;
+
     if (reVal != kStatus_Success)
     {
         return -1;
     }
     /*  Wait for transfer completed. */
-    while (!g_MasterCompletionFlag)
+    while ((!g_MasterCompletionFlag) && (!g_MasterNackFlag))
     {
+    }
+    if (g_MasterNackFlag)
+    {
+        PRINTF("Master nacked by slave!");
+        g_MasterNackFlag = false;
     }
     g_MasterCompletionFlag = false;
 
@@ -153,12 +166,15 @@ int main(void)
     {
         return -1;
     }
-    /*  Reset master completion flag to false. */
-    g_MasterCompletionFlag = false;
 
     /*  Wait for transfer completed. */
-    while (!g_MasterCompletionFlag)
+    while ((!g_MasterCompletionFlag) && (!g_MasterNackFlag))
     {
+    }
+    if (g_MasterNackFlag)
+    {
+        PRINTF("Master nacked by slave!");
+        g_MasterNackFlag = false;
     }
     g_MasterCompletionFlag = false;
 

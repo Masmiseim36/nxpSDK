@@ -6,10 +6,10 @@ should probe the TPM output with a oscilloscope to see the signal toggling.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -43,6 +43,3 @@ You will see the output signal toggle
 Probe the signal using an oscilloscope
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  In this example GREEN LED blinks.
-Customization options
-=====================
-

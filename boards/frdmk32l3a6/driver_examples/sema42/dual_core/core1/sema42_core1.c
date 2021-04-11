@@ -8,16 +8,16 @@
 
 #include "fsl_common.h"
 #include "fsl_sema42.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_mu.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_MU MUB
+#define APP_MU     MUB
 #define APP_SEMA42 SEMA420
-#define LED_OFF() LED1_OFF()
+#define LED_OFF()  LED1_OFF()
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U
 /* Flag indicates Core 0 has locked the sema42 gate. */

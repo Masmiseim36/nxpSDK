@@ -1,0 +1,61 @@
+#!armclang --target=arm-arm-none-eabi -mcpu=cortex-m0plus -E -x c 
+
+;/*
+; * Copyright 2021 NXP.
+; * All rights reserved.
+; *
+; * SPDX-License-Identifier: BSD-3-Clause
+; */
+
+; *************************************************************
+; *** Scatter-Loading Description File                      ***
+; *************************************************************
+#include "linker_config.h"
+
+LR_IROM1 __ROM_start__ (m_flash_end)   {    ; load region size_region
+  
+    ER_IROM1 m_intvec_table_start NOCOMPRESS __vector_table_size__ {  ; load address = execution address
+        * (section_ivt,+FIRST)
+    }
+    
+    ER_IROM2 m_flash_config_start FIXED (__flash_cfg_size) {  ; load address = execution address
+        * (.FlashConfig)
+    }
+	
+	RW_PCTEST __PC_test_start__ FIXED __PC_test_size {
+
+    iec60730b_cm0_pc_object.o
+    }
+	
+	ER_IROM3 (m_flash_start) FIXED {  ; load address = execution address
+        * (InRoot$$Sections)
+        .ANY (+RO)
+    }
+}
+
+LR_IROM2 (+0)
+{
+  ARM_LIB_HEAP +0 EMPTY 0x0 {    ; Heap region growing up
+  }
+
+  ARM_LIB_STACK __BOOT_STACK_ADDRESS EMPTY -(__size_cstack__){ ; Stack region growing down
+  }
+
+  SafetyRam_region m_safety_ram_start NOCOMPRESS {
+  main.o (.safety_ram)
+  safety_test_items.o (.data)
+  }
+  
+  RW_IRAM1 (+0) NOCOMPRESS  {  ; RW data
+   .ANY (+RW +ZI)
+  }
+}
+
+LR_IROM3 m_fs_flash_crc_start __size_flash_crc__{
+
+    ; Safety-flash CRC region
+    ER_CRC (m_fs_flash_crc_start) FIXED (__size_flash_crc__)
+    {
+        *(.flshcrc)
+    }
+}

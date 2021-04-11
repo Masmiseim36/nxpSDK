@@ -6,31 +6,31 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "math.h"
 #include "fsl_tpm.h"
 #include "fsl_fxos.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* The Flextimer instance/channel used for board */
-#define BOARD_TIMER_BASEADDR TPM0
-#define BOARD_FIRST_TIMER_CHANNEL 4U
+#define BOARD_TIMER_BASEADDR       TPM0
+#define BOARD_FIRST_TIMER_CHANNEL  4U
 #define BOARD_SECOND_TIMER_CHANNEL 5U
 /* Get source clock for TPM driver */
 #define BOARD_TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_McgIrc48MClk)
-#define TIMER_CLOCK_MODE 1U
+#define TIMER_CLOCK_MODE         1U
 /* I2C source clock */
 #define I2C_BAUDRATE 100000U
 
 /* Accelerometer Reset PIN */
 #define BOARD_ACCEL_RESET_GPIO GPIOE
-#define BOARD_ACCEL_RESET_PIN 1U
+#define BOARD_ACCEL_RESET_PIN  1U
 /* Upper bound and lower bound angle values */
 #define ANGLE_UPPER_BOUND 85U
 #define ANGLE_LOWER_BOUND 5U

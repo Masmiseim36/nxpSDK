@@ -5,13 +5,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_LED_GPIO BOARD_LED_RED_GPIO
+#define BOARD_LED_GPIO     BOARD_LED_RED_GPIO
 #define BOARD_LED_GPIO_PIN BOARD_LED_RED_GPIO_PIN
 
 /*******************************************************************************

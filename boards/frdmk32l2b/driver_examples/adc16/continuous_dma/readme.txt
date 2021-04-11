@@ -8,10 +8,10 @@ ADC16 results to memory and if users press any key, demo will average ADC16 resu
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -50,7 +50,4 @@ ADC value: 34463
 ADC value: 36226
 ADC value: 32819
 ADC value: 37477
-
-Customization options
-=====================
 

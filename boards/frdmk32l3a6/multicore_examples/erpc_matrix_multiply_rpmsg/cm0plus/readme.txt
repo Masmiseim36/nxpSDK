@@ -16,17 +16,17 @@ and the size have to be defined in linker file for each core equally. The shared
 address is then exported from the linker to the application.
 
 eRPC documentation
-eRPC specific files are stored in: middleware\multicore_<version>\erpc
-eRPC documentation is stored in: middleware\multicore_<version>\erpc\doc
+eRPC specific files are stored in: middleware\multicore\erpc
+eRPC documentation is stored in: middleware\multicore\erpc\doc
 eRPC is open-source project stored on github: https://github.com/EmbeddedRPC/erpc
 eRPC documentation can be also found in: http://embeddedrpc.github.io
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- MCUXpresso  11.0.1
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -82,6 +82,3 @@ Result matrix
 
 Press the SW2 button to initiate the next matrix multiplication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

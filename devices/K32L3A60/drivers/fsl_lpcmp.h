@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -22,8 +23,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPCMP driver version 2.0.2. */
-#define FSL_LPCMP_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+/*! @brief LPCMP driver version 2.0.3. */
+#define FSL_LPCMP_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
 /*@}*/
 
 /*!
@@ -276,7 +277,7 @@ static inline void LPCMP_DisableInterrupts(LPCMP_Type *base, uint32_t mask)
 /*!
  * @brief Get the LPCMP status flags.
  *
- * @param LPCMP peripheral base address.
+ * @param base LPCMP peripheral base address.
  *
  * @return Mask value for the asserted flags. See "_lpcmp_status_flags".
  */
@@ -295,5 +296,9 @@ static inline void LPCMP_ClearStatusFlags(LPCMP_Type *base, uint32_t mask)
 {
     base->CSR = mask;
 }
+
+/*@}*/
+
+/*@}*/
 
 #endif /* _FSL_LPCMP_H_ */

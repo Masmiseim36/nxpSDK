@@ -19,9 +19,9 @@ With board to board connection, one LPSPI instance on one board is used as LPSPI
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -83,6 +83,3 @@ LPSPI slave transfer completed successfully.
 
 LPSPI transfer all data matched !
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

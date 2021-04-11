@@ -188,6 +188,7 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>FRDM_K32L2B</state>
           <state>FREEDOM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -317,28 +318,19 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sigfox/boards/frdmk32l2b</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../middleware/sigfox</state>
           <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/K32L2B31A</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aml</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aml/spi_aml</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aml/tmr_aml</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aml/wait_aml</state>
           <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../middleware/aml</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1176,6 +1168,7 @@
           <state>SCANF_ADVANCED_ENABLE=0</state>
           <state>FRDM_K32L2B</state>
           <state>FREEDOM</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1305,28 +1298,19 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../middleware/sigfox/boards/frdmk32l2b</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
           <state>$PROJ_DIR$/../../../../../middleware/sigfox</state>
           <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
           <state>$PROJ_DIR$/../../../../../devices/K32L2B31A</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aml</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aml/spi_aml</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aml/tmr_aml</state>
+          <state>$PROJ_DIR$/../../../../../middleware/aml/wait_aml</state>
           <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../devices/K32L2B31A/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../middleware/aml</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -2043,22 +2027,19 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_clock.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_flash.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_adapter.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_cache.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_utilities.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_cache.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_features.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_controller.c</name>
@@ -2067,13 +2048,16 @@
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_controller.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_features.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_flash.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_flash.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_cache.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_flexnvm.c</name>
@@ -2082,25 +2066,25 @@
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_flexnvm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_ftfx_utilities.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_flash.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_common.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_uart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_common.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_uart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_uart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_lpuart.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_port.h</name>
@@ -2112,34 +2096,34 @@
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_tpm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_smc.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_smc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_smc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_spi.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_spi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/drivers/fsl_spi.c</name>
     </file>
   </group>
   <group>
     <name>device</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/fsl_device_registers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/K32L2B31A.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/K32L2B31A_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/system_K32L2B31A.c</name>
@@ -2160,6 +2144,12 @@
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/utilities/fsl_assert.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2168,51 +2158,6 @@
     <file>
       <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</name>
-    </file>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/lpuart_adapter.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_internal.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>aml</name>
@@ -2220,10 +2165,10 @@
       <name>$PROJ_DIR$/../../../../../middleware/aml/common_aml.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/aml/gpio_aml.h</name>
+      <name>$PROJ_DIR$/../../../../../middleware/aml/readme.txt</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../middleware/aml/readme.txt</name>
+      <name>$PROJ_DIR$/../../../../../middleware/aml/gpio_aml.h</name>
     </file>
     <group>
       <name>spi_aml</name>
@@ -2263,9 +2208,51 @@
     </group>
   </group>
   <group>
+    <name>component</name>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_lpuart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>serial_manager</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm0plus.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -2277,31 +2264,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

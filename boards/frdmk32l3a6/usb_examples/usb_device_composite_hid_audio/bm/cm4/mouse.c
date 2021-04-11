@@ -5,7 +5,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -20,9 +22,6 @@
 #include "clock_config.h"
 #include "board.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "composite.h"
 /*******************************************************************************
  * Definitions
@@ -33,14 +32,14 @@
  ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_MouseBuffer[USB_HID_MOUSE_REPORT_LENGTH];
 static usb_device_composite_struct_t *g_deviceComposite;
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 /*!
  * @brief device mouse moves action.
  *

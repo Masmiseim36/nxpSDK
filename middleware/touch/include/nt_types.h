@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -83,7 +83,7 @@ enum nt_result
     {                                     \
         if (!(expr))                      \
         {                                 \
-            nt_error(__FILE__, __LINE__); \
+            nt_error((char *)__FILE__, __LINE__); \
         }                                 \
     }
 #endif

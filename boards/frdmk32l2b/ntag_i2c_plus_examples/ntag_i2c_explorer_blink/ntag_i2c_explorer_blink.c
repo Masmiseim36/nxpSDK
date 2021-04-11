@@ -6,6 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
@@ -13,19 +15,17 @@
 #include "nfc_device.h"
 #include "ntag_bridge.h"
 #include "HAL_I2C_driver.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #ifdef I2C_CMSIS
 #define NTAG_I2C_MASTER_BASEADDR &Driver_I2C0
-#define I2C_MASTER_IRQ I2C0_IRQn
+#define I2C_MASTER_IRQ           I2C0_IRQn
 #endif
 
 #ifdef I2C_FSL
 #define NTAG_I2C_MASTER_BASEADDR I2C1
-#define I2C_MASTER_CLK_SRC I2C1_CLK_SRC
+#define I2C_MASTER_CLK_SRC       I2C1_CLK_SRC
 #endif
 
 

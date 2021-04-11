@@ -400,7 +400,10 @@ static status_t SF_ReceiveSpiData(sf_drv_data_t *drvData,
     dataSizeOld = amlSpiData->dataSize;
 
     /* Send dummy data (all bits equal to 1) */
-    memset((void *)amlSpiData->txBuffer, 0xFFU, (size_t)(amlSpiData->dataSize));
+	if (amlSpiData->dataSize > 0U)
+    {
+        memset((void *)amlSpiData->txBuffer, 0xFFU, (size_t)(amlSpiData->dataSize));
+    }
 
     /* Wait until ACK pin goes low. It takes long time for some commands causing
      * SIGFOX communication (for example Send Payload). It is several seconds

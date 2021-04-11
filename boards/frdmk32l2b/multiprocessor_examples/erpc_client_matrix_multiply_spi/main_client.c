@@ -6,6 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "erpc_client_setup.h"
 #include "erpc_error_handler.h"
@@ -13,12 +15,10 @@
 #include "fsl_debug_console.h"
 #include <stdlib.h>
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BUTTON_INIT() GPIO_PinInit(BOARD_SW1_GPIO, BOARD_SW1_GPIO_PIN, &button_config)
+#define BUTTON_INIT()       GPIO_PinInit(BOARD_SW1_GPIO, BOARD_SW1_GPIO_PIN, &button_config)
 #define IS_BUTTON_PRESSED() !GPIO_PinRead(BOARD_SW1_GPIO, BOARD_SW1_GPIO_PIN)
 
 #define MATRIX_ITEM_MAX_VALUE 50

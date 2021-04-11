@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,25 +10,25 @@
 #include "fsl_i2c.h"
 #include "fsl_flexio_i2c_master.h"
 
-#include "board.h"
-#include "clock_config.h"
 #include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_I2C_SLAVE_BASE I2C1
-#define BOARD_I2C_SLAVE_IRQn I2C1_IRQn
-#define BOARD_FLEXIO_BASE FLEXIO
-#define FLEXIO_I2C_SDA_PIN 6U
-#define FLEXIO_I2C_SCL_PIN 7U
-#define FLEXIO_CLOCK_FREQUENCY 48000000U
+#define BOARD_I2C_SLAVE_BASE      I2C1
+#define BOARD_I2C_SLAVE_IRQn      I2C1_IRQn
+#define BOARD_FLEXIO_BASE         FLEXIO
+#define FLEXIO_I2C_SDA_PIN        6U
+#define FLEXIO_I2C_SCL_PIN        7U
+#define FLEXIO_CLOCK_FREQUENCY    48000000U
 #define I2C_SLAVE_CLOCK_FREQUENCY CLOCK_GetFreq(I2C1_CLK_SRC)
 /* I2C Slave Address */
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
 /* I2C Baudrate 100K */
 #define I2C_BAUDRATE 100000U
 /* The length of data */
-#define I2C_DATA_LENGTH 13U
+#define I2C_DATA_LENGTH 32U
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -150,6 +150,7 @@ int main(void)
     i2cDev.shifterIndex[1] = 1U;
     i2cDev.timerIndex[0]   = 0U;
     i2cDev.timerIndex[1]   = 1U;
+    i2cDev.timerIndex[2]   = 2U;
 
     /*
      * masterConfig.enableMaster = true;

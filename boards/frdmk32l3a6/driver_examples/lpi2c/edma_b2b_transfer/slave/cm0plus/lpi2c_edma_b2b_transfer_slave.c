@@ -8,22 +8,22 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_I2C_SLAVE_BASE (LPI2C3_BASE)
+#define EXAMPLE_I2C_SLAVE_BASE      (LPI2C3_BASE)
 #define LPI2C_SLAVE_CLOCK_FREQUENCY (CLOCK_GetIpFreq(kCLOCK_Lpi2c3))
 
 #define EXAMPLE_I2C_SLAVE ((LPI2C_Type *)EXAMPLE_I2C_SLAVE_BASE)
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define I2C_DATA_LENGTH 34U
+#define I2C_DATA_LENGTH            34U
 
 /*******************************************************************************
  * Prototypes

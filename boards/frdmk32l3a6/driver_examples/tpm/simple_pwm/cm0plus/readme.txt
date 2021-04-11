@@ -7,9 +7,9 @@ brightness if user enter different values.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -57,6 +57,3 @@ Value:
 At this example, you need use oscillooscope to measure and observe the format of output.
 M0 core: output is PTB13(J1-8) of FRDM-K32L3A6 board.
 M4 core: output is PTB2(J2-2) of FRDM-K32L3A6 board.
-Customization options
-=====================
-

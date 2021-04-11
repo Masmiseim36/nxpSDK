@@ -1,35 +1,33 @@
 /*
  * Copyright (c) 2015 Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "usb_device_config.h"
-#include "usb.h"
-#include "usb_device.h"
-
-#include "usb_device_class.h"
-#include "usb_device_msc.h"
-#include "usb_device_ch9.h"
-#include "usb_descriptor.h"
-#include "msc_disk.h"
-#include "sbloader.h"
-#include "sb_file_format.h"
-#include "bootloader.h"
-#include "fsl_rtos_abstraction.h"
-#include "fsl_device_registers.h"
-#include "fsl_assert.h"
-#include "fsl_rtos_abstraction.h"
-#include "bl_peripheral_interface.h"
-#include "bl_context.h"
-#include "fat_directory_entry.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "bl_context.h"
+#include "bl_peripheral_interface.h"
+#include "bootloader.h"
 #include "composite.h"
+#include "fat_directory_entry.h"
+#include "fsl_assert.h"
+#include "fsl_device_registers.h"
+#include "fsl_rtos_abstraction.h"
+#include "msc_disk.h"
+#include "sb_file_format.h"
+#include "sbloader.h"
+#include "usb.h"
+#include "usb_descriptor.h"
+#include "usb_device.h"
+#include "usb_device_ch9.h"
+#include "usb_device_class.h"
+#include "usb_device_config.h"
+#include "usb_device_msc.h"
 
 #if (BL_CONFIG_USB_MSC || BL_CONFIG_HS_USB_MSC)
 
@@ -66,17 +64,18 @@ usb_device_inquiry_data_fromat_struct_t g_InquiryInfo = {
     USB_DEVICE_MSC_UFI_VERSIONS,
     0x02,
     USB_DEVICE_MSC_UFI_ADDITIONAL_LENGTH,
-    {0x00, 0x00, 0x00},
-    {'N', 'X', 'P', ' ', 'S', 'E', 'M', 'I'},
-    {'N', 'X', 'P', ' ', 'M', 'A', 'S', 'S', ' ', 'S', 'T', 'O', 'R', 'A', 'G', 'E'},
-    {'0', '0', '0', '1'}};
+    { 0x00, 0x00, 0x00 },
+    { 'N', 'X', 'P', ' ', 'S', 'E', 'M', 'I' },
+    { 'N', 'X', 'P', ' ', 'M', 'A', 'S', 'S', ' ', 'S', 'T', 'O', 'R', 'A', 'G', 'E' },
+    { '0', '0', '0', '1' }
+};
 USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 usb_device_mode_parameters_header_struct_t g_ModeParametersHeader = {
     /*refer to ufi spec mode parameter header*/
     0x0000, /*!< Mode Data Length*/
     0x00,   /*!<Default medium type (current mounted medium type)*/
     0x00,   /*!MODE SENSE command, a Write Protected bit of zero indicates the medium is write enabled*/
-    {0x00, 0x00, 0x00, 0x00} /*!<This bit should be set to zero*/
+    { 0x00, 0x00, 0x00, 0x00 } /*!<This bit should be set to zero*/
 };
 //! @brief Used by format_hex_string().
 static const char kHexChars[] = "0123456789abcdef";
@@ -330,17 +329,17 @@ static const fat_directory_entry_t k_fseventsdDir[] = {
         '.', '.', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', kDirectoryAttribute, kFileTime, kFileDate, 0, 0),
 
     // Special 'no_log' file with reserved byte set to 0x08.
-    {.entry = {.name = { 'N', 'O', '_', 'L', 'O', 'G', ' ', ' ', ' ', ' ', ' ' },
-               .attributes = kArchiveAttribute,
-               .ntReserved = 0x08,
-               .creationTime = kFileTime,
-               .creationDate = kFileDate,
-               .lastAccessDate = kFileDate,
-               .firstClusterHigh = 0,
-               .writeTime = kFileTime,
-               .writeDate = kFileDate,
-               .firstClusterLow = 0,
-               .fileSize = 0 } },
+    { .entry = { .name = { 'N', 'O', '_', 'L', 'O', 'G', ' ', ' ', ' ', ' ', ' ' },
+                 .attributes = kArchiveAttribute,
+                 .ntReserved = 0x08,
+                 .creationTime = kFileTime,
+                 .creationDate = kFileDate,
+                 .lastAccessDate = kFileDate,
+                 .firstClusterHigh = 0,
+                 .writeTime = kFileTime,
+                 .writeDate = kFileDate,
+                 .firstClusterLow = 0,
+                 .fileSize = 0 } },
 };
 
 static const wchar_t k_indexerVolumeGuidFile[] = L"{37203BF8-FD83-4321-A4C4-9A9ABF8FBCFD}";
@@ -434,6 +433,7 @@ usb_status_t usb_device_msc_callback(class_handle_t handle, uint32_t event, void
     usb_device_ufi_app_struct_t *ufi;
     uint8_t *prevent_removal_ptr;
     uint32_t sector;
+    usb_device_capacity_information_struct_t *capacityInformation;
 
     switch (event)
     {
@@ -496,11 +496,11 @@ usb_status_t usb_device_msc_callback(class_handle_t handle, uint32_t event, void
             break;
         case kUSB_DeviceMscEventGetLbaInformation:
             lba_info_structure_ptr = (usb_device_lba_information_struct_t *)param;
-            //lba_info_structure_ptr->totalLbaNumberSupports = kDiskTotalLogicalBlocks;
-            //lba_info_structure_ptr->lengthOfEachLba = kDiskSectorSize;
+            lba_info_structure_ptr->logicalUnitInformations[0].totalLbaNumberSupports = kDiskTotalLogicalBlocks;
+            lba_info_structure_ptr->logicalUnitInformations[0].lengthOfEachLba = kDiskSectorSize;
             lba_info_structure_ptr->logicalUnitNumberSupported = kDiskLogicalUnits;
-            //lba_info_structure_ptr->bulkInBufferSize = USB_DEVICE_MSC_WRITE_BUFF_SIZE;
-            //lba_info_structure_ptr->bulkOutBufferSize = USB_DEVICE_MSC_READ_BUFF_SIZE;
+            lba_info_structure_ptr->logicalUnitInformations[0].bulkInBufferSize = USB_DEVICE_MSC_WRITE_BUFF_SIZE;
+            lba_info_structure_ptr->logicalUnitInformations[0].bulkOutBufferSize = USB_DEVICE_MSC_READ_BUFF_SIZE;
             error = kStatus_USB_Success;
             break;
         case kUSB_DeviceMscEventTestUnitReady:
@@ -536,6 +536,17 @@ usb_status_t usb_device_msc_callback(class_handle_t handle, uint32_t event, void
                 /* code to be added here for this condition, if required */
             }
             error = kStatus_USB_Success;
+            break;
+        case kUSB_DeviceMscEventReadCapacity:
+            capacityInformation = (usb_device_capacity_information_struct_t *)param;
+            capacityInformation->lengthOfEachLba = LENGTH_OF_EACH_LBA;
+            capacityInformation->totalLbaNumberSupports =
+                kDiskTotalLogicalBlocks; // TOTAL_LOGICAL_ADDRESS_BLOCKS_NORMAL;
+            break;
+        case kUSB_DeviceMscEventReadFormatCapacity:
+            capacityInformation = (usb_device_capacity_information_struct_t *)param;
+            capacityInformation->lengthOfEachLba = LENGTH_OF_EACH_LBA;
+            capacityInformation->totalLbaNumberSupports = kDiskTotalLogicalBlocks;
             break;
     }
     return error;
@@ -733,6 +744,10 @@ usb_status_t usb_msd_write_sector(uint32_t sector, const usb_device_lba_app_stru
 usb_status_t usb_msd_read_sector(uint32_t sector, usb_device_lba_app_struct_t *lbaData)
 {
     // Clear the sector contents (all zeroes).
+    if (lbaData->size > 512)
+    {
+        return kStatus_Fail;
+    }
     memset(lbaData->buffer, 0, lbaData->size);
 
     // Search for a sector entry in our table.
@@ -914,7 +929,8 @@ void usb_msd_update_info_file(uint8_t *buffer)
 
     format_hex_string(hexBuffers[0], SIM->SDID);
     format_hex_string(hexBuffers[1], store->flashStartAddress[kFlashIndex_Main]);
-    format_hex_string(hexBuffers[2], store->flashStartAddress[kFlashIndex_Main] + store->flashSizeInBytes[kFlashIndex_Main] - 1);
+    format_hex_string(hexBuffers[2],
+                      store->flashStartAddress[kFlashIndex_Main] + store->flashSizeInBytes[kFlashIndex_Main] - 1);
     format_hex_string(hexBuffers[3], store->ramStartAddress[0]);
     format_hex_string(hexBuffers[4], store->ramStartAddress[0] + store->ramSizeInBytes[0] - 1);
     format_hex_string(hexBuffers[5], store->reservedRegions[0].startAddress);

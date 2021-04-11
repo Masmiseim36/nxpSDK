@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,14 +19,14 @@
 /******************************************************************************
  * Definitions
  *****************************************************************************/
-#define FSL_XRDC_DRIVER_VERSION (MAKE_VERSION(2, 0, 3)) /*!< Version 2.0.3. */
+#define FSL_XRDC_DRIVER_VERSION (MAKE_VERSION(2, 0, 4))
 
 #ifndef FSL_CLOCK_XRDC_GATE_COUNT
 #define FSL_CLOCK_XRDC_GATE_COUNT 1U
 #endif
 
-/*! @brief XRDC status.  */
-enum _xrdc_status
+/*! @brief XRDC status _xrdc_status.  */
+enum
 {
     kStatus_XRDC_NoError = MAKE_STATUS(kStatusGroup_XRDC, 0) /*!< No error captured. */
 };
@@ -597,12 +597,7 @@ status_t XRDC_GetAndClearFirstSpecificDomainError(XRDC_Type *base, xrdc_error_t 
  *
  * @param config Pointer to the configuration structure.
  */
-static inline void XRDC_GetPidDefaultConfig(xrdc_pid_config_t *config)
-{
-    assert(config);
-
-    (*((uint32_t *)config)) = 0U;
-}
+void XRDC_GetPidDefaultConfig(xrdc_pid_config_t *config);
 
 /*!
  * @brief Configures the PID for a specific bus master.
@@ -614,12 +609,7 @@ static inline void XRDC_GetPidDefaultConfig(xrdc_pid_config_t *config)
  * @param master Which bus master to configure.
  * @param config Pointer to the configuration structure.
  */
-static inline void XRDC_SetPidConfig(XRDC_Type *base, xrdc_master_t master, const xrdc_pid_config_t *config)
-{
-    assert(config);
-
-    base->PID[master] = *((const uint32_t *)config);
-}
+void XRDC_SetPidConfig(XRDC_Type *base, xrdc_master_t master, const xrdc_pid_config_t *config);
 
 /*!
  * @brief Sets the PID configuration register lock mode.
@@ -643,7 +633,7 @@ static inline void XRDC_SetPidLockMode(XRDC_Type *base, xrdc_master_t master, xr
  * @brief Gets the default master domain assignment for non-processor bus master.
  *
  * This function gets the default master domain assignment for non-processor bus master.
- * It should only be used for the no-processor bus masters, such as DMA. This function
+ * It should only be used for the non-processor bus masters, such as DMA. This function
  * sets the assignment as follows:
  *
  * @code
@@ -656,14 +646,9 @@ static inline void XRDC_SetPidLockMode(XRDC_Type *base, xrdc_master_t master, xr
  * assignment->lock                = 0U;
  * @endcode
  *
- * @param assignment Pointer to the assignment structure.
+ * @param domainAssignment Pointer to the assignment structure.
  */
-static inline void XRDC_GetDefaultNonProcessorDomainAssignment(xrdc_non_processor_domain_assignment_t *assignment)
-{
-    assert(assignment);
-
-    *(uint32_t *)assignment = 0U;
-}
+void XRDC_GetDefaultNonProcessorDomainAssignment(xrdc_non_processor_domain_assignment_t *domainAssignment);
 
 /*!
  * @brief Gets the default master domain assignment for the processor bus master.
@@ -683,14 +668,9 @@ static inline void XRDC_GetDefaultNonProcessorDomainAssignment(xrdc_non_processo
  * assignment->lock               = 0U;
  * @endcode
  *
- * @param assignment Pointer to the assignment structure.
+ * @param domainAssignment Pointer to the assignment structure.
  */
-static inline void XRDC_GetDefaultProcessorDomainAssignment(xrdc_processor_domain_assignment_t *assignment)
-{
-    assert(assignment);
-
-    *(uint32_t *)assignment = 0U;
-}
+void XRDC_GetDefaultProcessorDomainAssignment(xrdc_processor_domain_assignment_t *domainAssignment);
 
 /*!
  * @brief Sets the non-processor bus master domain assignment.
@@ -703,33 +683,22 @@ static inline void XRDC_GetDefaultProcessorDomainAssignment(xrdc_processor_domai
  * @code
  * xrdc_non_processor_domain_assignment_t nonProcessorAssignment;
  *
- * XRDC_GetDefaultNonProcessorDomainAssignment(&nonProcessorAssignment); // Get default assignment
- * // Modify necessary members.
+ * XRDC_GetDefaultNonProcessorDomainAssignment(&nonProcessorAssignment);
  * nonProcessorAssignment.domainId = 1;
- * nonProcessorAssignment.xxx      = xxx; // Other modifications.
+ * nonProcessorAssignment.xxx      = xxx;
  *
- * // Set the domain assignment. Only 1 assignment register for DMA0. Pass in 0U as assignIndex;
  * XRDC_SetMasterDomainAssignment(XRDC, kXrdcMasterDma0, 0U, &nonProcessorAssignment);
  * @endcode
  *
  * @param base XRDC peripheral base address.
  * @param master Which master to configure.
  * @param assignIndex Which assignment register to set.
- * @param assignment Pointer to the assignment structure.
+ * @param domainAssignment Pointer to the assignment structure.
  */
-static inline void XRDC_SetNonProcessorDomainAssignment(XRDC_Type *base,
-                                                        xrdc_master_t master,
-                                                        uint8_t assignIndex,
-                                                        const xrdc_non_processor_domain_assignment_t *assignment)
-{
-    /* Make sure the master is a non-CPU/non-processor master */
-    assert(base->MDACFG[master] & XRDC_MDACFG_NCM_MASK);
-    /* Make sure the master has the assignment register. */
-    assert(assignIndex < ((base->MDACFG[master] & XRDC_MDACFG_NMDAR_MASK) >> XRDC_MDACFG_NMDAR_SHIFT));
-    assert(assignment);
-
-    base->MDA[master].MDA_W[assignIndex] = ((*(const uint32_t *)assignment) | XRDC_MDA_W_VLD_MASK);
-}
+void XRDC_SetNonProcessorDomainAssignment(XRDC_Type *base,
+                                          xrdc_master_t master,
+                                          uint8_t assignIndex,
+                                          const xrdc_non_processor_domain_assignment_t *domainAssignment);
 
 /*!
  * @brief Sets the processor bus master domain assignment.
@@ -739,46 +708,35 @@ static inline void XRDC_SetNonProcessorDomainAssignment(XRDC_Type *base,
  * \p assignIndex specifies which assignment register to set.
  *
  * Example: Set domain assignment for core 0.
+ * In this example, there are 3 assignment registers for core 0.
+ *
  * @code
  * xrdc_processor_domain_assignment_t processorAssignment;
  *
- * XRDC_GetDefaultProcessorDomainAssignment(&processorAssignment); // Get default assignment
+ * XRDC_GetDefaultProcessorDomainAssignment(&processorAssignment);
  *
- * // Set the domain assignment. There are 3 assignment registers for core 0.
- * // Set assignment register 0.
  * processorAssignment.domainId = 1;
- * processorAssignment.xxx      = xxx; // Other modifications.
+ * processorAssignment.xxx      = xxx;
  * XRDC_SetMasterDomainAssignment(XRDC, kXrdcMasterCpu0, 0U, &processorAssignment);
  *
- * // Set assignment register 1.
  * processorAssignment.domainId = 2;
- * processorAssignment.xxx      = xxx; // Other modifications.
+ * processorAssignment.xxx      = xxx;
  * XRDC_SetMasterDomainAssignment(XRDC, kXrdcMasterCpu0, 1U, &processorAssignment);
  *
- * // Set assignment register 2.
  * processorAssignment.domainId = 0;
- * processorAssignment.xxx      = xxx; // Other modifications.
+ * processorAssignment.xxx      = xxx;
  * XRDC_SetMasterDomainAssignment(XRDC, kXrdcMasterCpu0, 2U, &processorAssignment);
  * @endcode
  *
  * @param base XRDC peripheral base address.
  * @param master Which master to configure.
  * @param assignIndex Which assignment register to set.
- * @param assignment Pointer to the assignment structure.
+ * @param domainAssignment Pointer to the assignment structure.
  */
-static inline void XRDC_SetProcessorDomainAssignment(XRDC_Type *base,
-                                                     xrdc_master_t master,
-                                                     uint8_t assignIndex,
-                                                     const xrdc_processor_domain_assignment_t *assignment)
-{
-    /* Make sure the master is a CPU/processor master */
-    assert(!(base->MDACFG[master] & XRDC_MDACFG_NCM_MASK));
-    /* Make sure the master has the assignment register. */
-    assert(assignIndex < ((base->MDACFG[master] & XRDC_MDACFG_NMDAR_MASK) >> XRDC_MDACFG_NMDAR_SHIFT));
-    assert(assignment);
-
-    base->MDA[master].MDA_W[assignIndex] = ((*(const uint32_t *)assignment) | XRDC_MDA_W_VLD_MASK);
-}
+void XRDC_SetProcessorDomainAssignment(XRDC_Type *base,
+                                       xrdc_master_t master,
+                                       uint8_t assignIndex,
+                                       const xrdc_processor_domain_assignment_t *domainAssignment);
 
 /*!
  * @brief Locks the bus master domain assignment register.
@@ -866,8 +824,8 @@ void XRDC_GetMemAccessDefaultConfig(xrdc_mem_access_config_t *config);
  * There are two methods to use it:
  *
  * Example 1: Set one configuration run time.
+ * Set memory region 0x20000000 ~ 0x20000400 accessible by domain 0, use MRC0_1.
  * @code
- * // Set memory region 0x20000000 ~ 0x20000400 accessible by domain 0, use MRC0_1.
  * xrdc_mem_access_config_t config =
  * {
  *     .mem         = kXRDC_MemMrc0_1,
@@ -879,9 +837,9 @@ void XRDC_GetMemAccessDefaultConfig(xrdc_mem_access_config_t *config);
  * @endcode
  *
  * Example 2: Set multiple configurations during startup.
+ * Set memory region 0x20000000 ~ 0x20000400 accessible by domain 0, use MRC0_1.
+ * Set memory region 0x1FFF0000 ~ 0x1FFF0800 accessible by domain 0, use MRC0_2.
  * @code
- * // Set memory region 0x20000000 ~ 0x20000400 accessible by domain 0, use MRC0_1.
- * // Set memory region 0x1FFF0000 ~ 0x1FFF0800 accessible by domain 0, use MRC0_2.
  * xrdc_mem_access_config_t configs[] =
  * {
  *     {
@@ -898,7 +856,6 @@ void XRDC_GetMemAccessDefaultConfig(xrdc_mem_access_config_t *config);
  *     }
  * };
  *
- * // Set the configurations.
  * for (i=0U; i<((sizeof(configs)/sizeof(configs[0]))); i++)
  * {
  *     XRDC_SetMemAccessConfig(XRDC, &configs[i]);
@@ -940,7 +897,6 @@ static inline void XRDC_SetMemAccessLockMode(XRDC_Type *base, xrdc_mem_t mem, xr
  * This function sets the memory region access configuration dynamically. For example:
  *
  * @code
- * // Set memory region 0x20000000 ~ 0x20000400 accessible by domain 0, use MRC0_1.
  * xrdc_mem_access_config_t config =
  * {
  *     .mem         = kXRDC_MemMrc0_1,
@@ -950,10 +906,8 @@ static inline void XRDC_SetMemAccessLockMode(XRDC_Type *base, xrdc_mem_t mem, xr
  * };
  * XRDC_SetMemAccessConfig(XRDC, &config);
  *
- * // Set the memory access configuration invalid.
  * XRDC_SetMemAccessValid(kXRDC_MemMrc0_1, false);
  *
- * // Set the memory access configuration valid, the region 0x20000000 ~ 0x20000400 accessible by domain 0
  * XRDC_SetMemAccessValid(kXRDC_MemMrc0_1, true);
  * @endcode
  *
@@ -1035,7 +989,7 @@ static inline uint8_t XRDC_GetMemExclAccessLockDomainOwner(XRDC_Type *base, xrdc
  *
  * @param base XRDC peripheral base address.
  * @param mem Which memory region descriptor to lock.
- * @param mem Which set/index of ACCSET to lock.
+ * @param accset Which set/index of ACCSET to lock.
  * @param lock True to set lock, false to set unlock.
  */
 void XRDC_SetMemAccsetLock(XRDC_Type *base, xrdc_mem_t mem, xrdc_mem_accset_t accset, bool lock);
@@ -1072,10 +1026,10 @@ void XRDC_GetPeriphAccessDefaultConfig(xrdc_periph_access_config_t *config);
  * This function sets the peripheral access configuration as valid. Two
  * methods to use it:
  * Method 1: Set for one peripheral, which is used for runtime settings.
+ * Example: set LPTMR0 accessible by domain 0
  * @code
  * xrdc_periph_access_config_t config;
  *
- * // Set LPTMR0 accessible by domain 0
  * config.periph    = kXRDC_PeriphLptmr0;
  * config.policy[0] = kXRDC_AccessPolicyAll;
  * XRDC_SetPeriphAccessConfig(XRDC, &config);
@@ -1083,7 +1037,6 @@ void XRDC_GetPeriphAccessDefaultConfig(xrdc_periph_access_config_t *config);
  *
  * Method 2: Set for multiple peripherals, which is used for initialization settings.
  * @code
- * // Prepare the configurations
  * xrdc_periph_access_config_t configs[] =
  * {
  *     {
@@ -1098,7 +1051,6 @@ void XRDC_GetPeriphAccessDefaultConfig(xrdc_periph_access_config_t *config);
  *     }
  * };
  *
- * // Set the configurations.
  * for (i=0U; i<(sizeof(configs)/sizeof(configs[0])), i++)
  * {
  *     XRDC_SetPeriphAccessConfig(XRDC, &config[i]);
@@ -1139,7 +1091,6 @@ static inline void XRDC_SetPeriphAccessLockMode(XRDC_Type *base,
  * This function sets the peripheral access configuration dynamically. For example:
  *
  * @code
- * // Set LPTMR0 accessible by domain 0.
  * xrdc_periph_access_config_t config =
  * {
  *     .periph    = kXRDC_PeriphLptmr0;
@@ -1147,10 +1098,8 @@ static inline void XRDC_SetPeriphAccessLockMode(XRDC_Type *base,
  * };
  * XRDC_SetPeriphAccessConfig(XRDC, &config);
  *
- * // Set the LPTMR0 access configuration invalid.
  * XRDC_SetPeriphAccessValid(kXrdcPeriLptmr0, false);
  *
- * // Set the LPTMR0 access configuration valid, the LPTMR0 accessible by domain 0.
  * XRDC_SetPeriphAccessValid(kXrdcPeriLptmr0, true);
  * @endcode
  *

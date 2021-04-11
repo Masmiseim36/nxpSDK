@@ -1,9 +1,9 @@
 Overview
 ========
 This example demonstrates usage of eRPC between PC and board using UART transport layer.
-Both board and the PC acts like server and client thanks to eRPC arbitrator.
+Thanks to eRPC arbitrator both the board and the PC act like server and client.
 
-When both servers starts, they waits for data being send from client over UART. 
+When both servers start they wait for data being sent from client over UART. 
 A. Server on the board performs action (DAC/ADC conversion, turn on selected LEDs, read data from magnetometer and accelerometer sensor) 
 and sends result data back to client (or lights LED).
 B. Server on the PC displays which SW button was pressed on the board.
@@ -16,10 +16,10 @@ eRPC documentation can be also found in: http://embeddedrpc.github.io
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- MCUXpresso  11.0.1
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -91,10 +91,7 @@ DAC is set for 1.5 V which is 1861 of atomic steps
 ADC value: 1.50095212675 V
 
 
-A. Server on the PC, client on the board:
+B. Server on the PC, client on the board:
 
 [Message from board] Button SW1 was pressed
 [Message from board] Button SW3 was pressed
-Customization options
-=====================
-

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,28 +10,28 @@
 #include <stdio.h>
 #include <string.h>
 /*  SDK Included Files */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_flexio_i2c_master.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 #include "fsl_intmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO0
-#define FLEXIO_I2C_SDA_PIN 30U
-#define FLEXIO_I2C_SCL_PIN 31U
+#define BOARD_FLEXIO_BASE      FLEXIO0
+#define FLEXIO_I2C_SDA_PIN     30U
+#define FLEXIO_I2C_SCL_PIN     31U
 #define FLEXIO_CLOCK_FREQUENCY (CLOCK_GetIpFreq(kCLOCK_Flexio0))
 
 #define I2C_BAUDRATE (100000) /* 100K */
 
-#define FXOS8700_WHOAMI (0xC7U)
-#define MMA8451_WHOAMI (0x1AU)
-#define ACCEL_STATUS (0x00U)
+#define FXOS8700_WHOAMI    (0xC7U)
+#define MMA8451_WHOAMI     (0x1AU)
+#define ACCEL_STATUS       (0x00U)
 #define ACCEL_XYZ_DATA_CFG (0x0EU)
-#define ACCEL_CTRL_REG1 (0x2AU)
+#define ACCEL_CTRL_REG1    (0x2AU)
 /* FXOS8700 and MMA8451 have the same who_am_i register address. */
 #define ACCEL_WHOAMI_REG (0x0DU)
 #define ACCEL_READ_TIMES (10U)
@@ -111,6 +111,8 @@ static bool I2C_example_readAccelWhoAmI(void)
         PRINTF("FlexIO clock frequency exceeded upper range. \r\n");
         return false;
     }
+
+    FLEXIO_I2C_MasterTransferCreateHandle(&i2cDev, &g_m_handle, flexio_i2c_master_callback, NULL);
 
     flexio_i2c_master_transfer_t masterXfer;
     memset(&masterXfer, 0, sizeof(masterXfer));
@@ -271,6 +273,7 @@ int main(void)
     i2cDev.shifterIndex[1] = 1U;
     i2cDev.timerIndex[0]   = 0U;
     i2cDev.timerIndex[1]   = 1U;
+    i2cDev.timerIndex[2]   = 2U;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -281,7 +284,6 @@ int main(void)
 
     PRINTF("\r\nFlexIO I2C example read accelerometer value\r\n");
 
-    FLEXIO_I2C_MasterTransferCreateHandle(&i2cDev, &g_m_handle, flexio_i2c_master_callback, NULL);
     isThereAccel = I2C_example_readAccelWhoAmI();
 
     /*  read the accel xyz value if there is accel device on board */
@@ -335,6 +337,8 @@ int main(void)
             {
                 I2C_read_accel_regs(&i2cDev, g_accel_addr_found, ACCEL_STATUS, &status0_value, 1);
             }
+            /* Delay 10us for the data to be ready. */
+            SDK_DelayAtLeastUs(10, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
             /*  Multiple-byte Read from STATUS (0x00) register */
             I2C_read_accel_regs(&i2cDev, g_accel_addr_found, ACCEL_STATUS, readBuff, 7);

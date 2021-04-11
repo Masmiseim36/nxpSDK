@@ -4,11 +4,11 @@
 ;            K32L3A60_cm4
 ;  @version: 1.0
 ;  @date:    2019-4-22
-;  @build:   b190628
+;  @build:   b200319
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
-; Copyright 2016-2019 NXP
+; Copyright 2016-2020 NXP
 ; All rights reserved.
 ;
 ; SPDX-License-Identifier: BSD-3-Clause
@@ -44,6 +44,9 @@
         PUBLIC  __Vectors_Size
 
         DATA
+
+__iar_init$$done:              ; The vector table is not needed
+                      ; until after copy initialization is done
 
 __vector_table
         DCD     sfe(CSTACK)

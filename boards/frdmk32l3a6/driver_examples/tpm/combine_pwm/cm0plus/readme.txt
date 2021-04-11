@@ -9,9 +9,9 @@ And if the board do not support LEDs to show, the outputs can be observed by osc
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -59,6 +59,3 @@ Value:
 
 M0 core: Use oscilloscope to measure output signal pin at PTB13(J1-8),PTB14(J1-10) pin of FRDM-K32L3A6 board.
 M4 core: Use oscilloscope to measure output signal pin at PTB2(J2-2),PTB3(J2-4) pin of FRDM-K32L3A6 board.
-Customization options
-=====================
-

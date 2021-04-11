@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,84 +21,85 @@ bool g_erpc_error_occurred = false;
 
 void erpc_error_handler(erpc_status_t err, uint32_t functionID)
 {
+    if (err == (erpc_status_t)kErpcStatus_Success)
+    {
+        return;
+    }
+
     switch (err)
     {
-        case kErpcStatus_Fail:
-            PRINTF("\r\nGeneric failure.");
+        case (erpc_status_t)kErpcStatus_Fail:
+            (void)PRINTF("\r\nGeneric failure.");
             break;
 
-        case kErpcStatus_InvalidArgument:
-            PRINTF("\r\nArgument is an invalid value.");
+        case (erpc_status_t)kErpcStatus_InvalidArgument:
+            (void)PRINTF("\r\nArgument is an invalid value.");
             break;
 
-        case kErpcStatus_Timeout:
-            PRINTF("\r\nOperated timed out.");
+        case (erpc_status_t)kErpcStatus_Timeout:
+            (void)PRINTF("\r\nOperated timed out.");
             break;
 
-        case kErpcStatus_InvalidMessageVersion:
-            PRINTF("\r\nMessage header contains an unknown version.");
+        case (erpc_status_t)kErpcStatus_InvalidMessageVersion:
+            (void)PRINTF("\r\nMessage header contains an unknown version.");
             break;
 
-        case kErpcStatus_ExpectedReply:
-            PRINTF("\r\nExpected a reply message but got another message type.");
+        case (erpc_status_t)kErpcStatus_ExpectedReply:
+            (void)PRINTF("\r\nExpected a reply message but got another message type.");
             break;
 
-        case kErpcStatus_CrcCheckFailed:
-            PRINTF("\r\nMessage is corrupted.");
+        case (erpc_status_t)kErpcStatus_CrcCheckFailed:
+            (void)PRINTF("\r\nMessage is corrupted.");
             break;
 
-        case kErpcStatus_BufferOverrun:
-            PRINTF("\r\nAttempt to read or write past the end of a buffer.");
+        case (erpc_status_t)kErpcStatus_BufferOverrun:
+            (void)PRINTF("\r\nAttempt to read or write past the end of a buffer.");
             break;
 
-        case kErpcStatus_UnknownName:
-            PRINTF("\r\nCould not find host with given name.");
+        case (erpc_status_t)kErpcStatus_UnknownName:
+            (void)PRINTF("\r\nCould not find host with given name.");
             break;
 
-        case kErpcStatus_ConnectionFailure:
-            PRINTF("\r\nFailed to connect to host.");
+        case (erpc_status_t)kErpcStatus_ConnectionFailure:
+            (void)PRINTF("\r\nFailed to connect to host.");
             break;
 
-        case kErpcStatus_ConnectionClosed:
-            PRINTF("\r\nConnected closed by peer.");
+        case (erpc_status_t)kErpcStatus_ConnectionClosed:
+            (void)PRINTF("\r\nConnected closed by peer.");
             break;
 
-        case kErpcStatus_MemoryError:
-            PRINTF("\r\nMemory allocation error.");
+        case (erpc_status_t)kErpcStatus_MemoryError:
+            (void)PRINTF("\r\nMemory allocation error.");
             break;
 
-        case kErpcStatus_ServerIsDown:
-            PRINTF("\r\nServer is stopped.");
+        case (erpc_status_t)kErpcStatus_ServerIsDown:
+            (void)PRINTF("\r\nServer is stopped.");
             break;
 
-        case kErpcStatus_InitFailed:
-            PRINTF("\r\nTransport layer initialization failed.");
+        case (erpc_status_t)kErpcStatus_InitFailed:
+            (void)PRINTF("\r\nTransport layer initialization failed.");
             break;
 
-        case kErpcStatus_ReceiveFailed:
-            PRINTF("\r\nFailed to receive data.");
+        case (erpc_status_t)kErpcStatus_ReceiveFailed:
+            (void)PRINTF("\r\nFailed to receive data.");
             break;
 
-        case kErpcStatus_SendFailed:
-            PRINTF("\r\nFailed to send data.");
+        case (erpc_status_t)kErpcStatus_SendFailed:
+            (void)PRINTF("\r\nFailed to send data.");
             break;
-
-        /* no error occurred */
-        case kErpcStatus_Success:
-            return;
 
         /* unhandled error */
         default:
-            PRINTF("\r\nUnhandled error occurred.");
+            (void)PRINTF("\r\nUnhandled error occurred.");
             break;
     }
 
     /* When error occurred on client side. */
-    if (functionID != 0)
+    if (functionID != 0U)
     {
-        PRINTF("Function id '%u'.", (unsigned int)functionID);
+        (void)PRINTF("Function id '%u'.", (unsigned int)functionID);
     }
-    PRINTF("\r\n");
+    (void)PRINTF("\r\n");
 
     /* error occurred */
     g_erpc_error_occurred = true;

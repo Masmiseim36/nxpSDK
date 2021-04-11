@@ -8,15 +8,15 @@
 #include "fsl_mu.h"
 #include "fsl_gpio.h"
 #include "fsl_msmc.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_MU MUB
+#define APP_MU                        MUB
 #define APP_MU_XFER_CMD_CHANNEL_INDEX 0U
-#define APP_MU_SHAKE_HAND_VALUE 0xAAAAAAAA
+#define APP_MU_SHAKE_HAND_VALUE       0xAAAAAAAA
 
 #define APP_SMC SMC1
 

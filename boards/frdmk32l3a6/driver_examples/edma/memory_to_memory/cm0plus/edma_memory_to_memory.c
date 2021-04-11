@@ -6,18 +6,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_edma.h"
 #include "fsl_dmamux.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_DMAMUX DMAMUX1
-#define EXAMPLE_DMA DMA1
+#define EXAMPLE_DMA    DMA1
 
 #define BUFF_LENGTH 4U
 

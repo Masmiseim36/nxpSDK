@@ -288,7 +288,7 @@ static usb_status_t USB_DeviceCh9GetStatus(usb_device_handle handle,
     if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_DEVICE)
     {
         /* Get the device status */
-        error = USB_DeviceGetStatus(handle, kUSB_DeviceStatusDevice, &s_UsbDeviceStandardRx);
+        error                 = USB_DeviceGetStatus(handle, kUSB_DeviceStatusDevice, &s_UsbDeviceStandardRx);
         s_UsbDeviceStandardRx = s_UsbDeviceStandardRx & USB_GET_STATUS_DEVICE_MASK;
         s_UsbDeviceStandardRx = USB_SHORT_TO_LITTLE_ENDIAN(s_UsbDeviceStandardRx);
         /* The device status length must be USB_DEVICE_STATUS_SIZE. */
@@ -297,7 +297,7 @@ static usb_status_t USB_DeviceCh9GetStatus(usb_device_handle handle,
     else if ((setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) == USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
     {
         /* Get the interface status */
-        error = kStatus_USB_Success;
+        error                 = kStatus_USB_Success;
         s_UsbDeviceStandardRx = 0U;
         /* The interface status length must be USB_INTERFACE_STATUS_SIZE. */
         *length = USB_INTERFACE_STATUS_SIZE;
@@ -307,10 +307,10 @@ static usb_status_t USB_DeviceCh9GetStatus(usb_device_handle handle,
         /* Get the endpoint status */
         usb_device_endpoint_status_struct_t endpointStatus;
         endpointStatus.endpointAddress = (uint8_t)setup->wIndex;
-        endpointStatus.endpointStatus = kUSB_DeviceEndpointStateIdle;
-        error = USB_DeviceGetStatus(handle, kUSB_DeviceStatusEndpoint, &endpointStatus);
-        s_UsbDeviceStandardRx = endpointStatus.endpointStatus & USB_GET_STATUS_ENDPOINT_MASK;
-        s_UsbDeviceStandardRx = USB_SHORT_TO_LITTLE_ENDIAN(s_UsbDeviceStandardRx);
+        endpointStatus.endpointStatus  = kUSB_DeviceEndpointStateIdle;
+        error                          = USB_DeviceGetStatus(handle, kUSB_DeviceStatusEndpoint, &endpointStatus);
+        s_UsbDeviceStandardRx          = endpointStatus.endpointStatus & USB_GET_STATUS_ENDPOINT_MASK;
+        s_UsbDeviceStandardRx          = USB_SHORT_TO_LITTLE_ENDIAN(s_UsbDeviceStandardRx);
         /* The endpoint status length must be USB_INTERFACE_STATUS_SIZE. */
         *length = USB_ENDPOINT_STATUS_SIZE;
     }
@@ -664,7 +664,7 @@ static usb_status_t USB_DeviceCh9SynchFrame(usb_device_handle handle,
 
     s_UsbDeviceStandardRx = setup->wIndex;
     /* Get the sync frame value */
-    error = USB_DeviceGetStatus(handle, kUSB_DeviceStatusSynchFrame, &s_UsbDeviceStandardRx);
+    error   = USB_DeviceGetStatus(handle, kUSB_DeviceStatusSynchFrame, &s_UsbDeviceStandardRx);
     *buffer = (uint8_t *)&s_UsbDeviceStandardRx;
     *length = sizeof(s_UsbDeviceStandardRx);
 
@@ -705,7 +705,7 @@ static usb_status_t USB_DeviceControlCallbackFeedback(usb_device_handle handle,
                                                       uint32_t *length)
 {
     usb_status_t errorCode = kStatus_USB_Error;
-    uint8_t direction = USB_IN;
+    uint8_t direction      = USB_IN;
 
     if (kStatus_USB_InvalidRequest == error)
     {
@@ -757,12 +757,12 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
 {
     usb_setup_struct_t *deviceSetup;
     uint8_t *setupOutBuffer;
-    uint8_t *buffer = (uint8_t *)NULL;
-    uint32_t length = 0U;
+    uint8_t *buffer    = (uint8_t *)NULL;
+    uint32_t length    = 0U;
     usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t state;
-
-    if (USB_UNINITIALIZED_VAL_32 == message->length)
+    /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+    if (USB_CANCELLED_TRANSFER_LENGTH == message->length)
     {
         return error;
     }
@@ -790,10 +790,10 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
         usb_setup_struct_t *setup = (usb_setup_struct_t *)(message->buffer);
 
         /* Copy the setup packet to the application buffer */
-        deviceSetup->wValue = USB_SHORT_FROM_LITTLE_ENDIAN(setup->wValue);
-        deviceSetup->wIndex = USB_SHORT_FROM_LITTLE_ENDIAN(setup->wIndex);
-        deviceSetup->wLength = USB_SHORT_FROM_LITTLE_ENDIAN(setup->wLength);
-        deviceSetup->bRequest = setup->bRequest;
+        deviceSetup->wValue        = USB_SHORT_FROM_LITTLE_ENDIAN(setup->wValue);
+        deviceSetup->wIndex        = USB_SHORT_FROM_LITTLE_ENDIAN(setup->wIndex);
+        deviceSetup->wLength       = USB_SHORT_FROM_LITTLE_ENDIAN(setup->wLength);
+        deviceSetup->bRequest      = setup->bRequest;
         deviceSetup->bmRequestType = setup->bmRequestType;
 
         if ((deviceSetup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK) == USB_REQUEST_TYPE_TYPE_STANDARD)
@@ -815,7 +815,7 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
                 {
                     /* Get data buffer to receive the data from the host. */
                     length = deviceSetup->wLength;
-                    error = USB_DeviceGetClassReceiveBuffer(handle, deviceSetup, &length, &setupOutBuffer);
+                    error  = USB_DeviceGetClassReceiveBuffer(handle, deviceSetup, &length, &setupOutBuffer);
                     length = 0U;
                 }
                 else
@@ -896,14 +896,14 @@ usb_status_t USB_DeviceControlPipeInit(usb_device_handle handle)
     usb_device_endpoint_callback_struct_t epCallback;
     usb_status_t error;
 
-    epCallback.callbackFn = USB_DeviceControlCallback;
+    epCallback.callbackFn    = USB_DeviceControlCallback;
     epCallback.callbackParam = handle;
 
-    epInitStruct.zlt = 1U;
-    epInitStruct.interval = 0U;
-    epInitStruct.transferType = USB_ENDPOINT_CONTROL;
+    epInitStruct.zlt             = 1U;
+    epInitStruct.interval        = 0U;
+    epInitStruct.transferType    = USB_ENDPOINT_CONTROL;
     epInitStruct.endpointAddress = USB_CONTROL_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
-    epInitStruct.maxPacketSize = USB_CONTROL_MAX_PACKET_SIZE;
+    epInitStruct.maxPacketSize   = USB_CONTROL_MAX_PACKET_SIZE;
     /* Initialize the control IN pipe */
     error = USB_DeviceInitEndpoint(handle, &epInitStruct, &epCallback);
 

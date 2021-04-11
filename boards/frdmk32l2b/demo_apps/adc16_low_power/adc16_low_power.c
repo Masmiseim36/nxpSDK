@@ -10,18 +10,18 @@
 #include "fsl_smc.h"
 #include "fsl_pmc.h"
 #include "fsl_adc16.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lptmr.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC16_BASEADDR ADC0
+#define DEMO_ADC16_BASEADDR      ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
 
-#define DEMO_ADC16_IRQ_ID ADC0_IRQn
+#define DEMO_ADC16_IRQ_ID           ADC0_IRQn
 #define DEMO_ADC16_IRQ_HANDLER_FUNC ADC0_IRQHandler
 
 #define DEMO_LPTMR_BASE LPTMR0
@@ -31,21 +31,21 @@
  * The method used in this demo to calculate temperature of chip is mapped to
  * Temperature Sensor for the HCS08 Microcontroller Family document (Document Number: AN3031)
  */
-#define ADCR_VDD (65535U) /* Maximum value when use 16b resolution */
-#define V_BG (1000U)      /* BANDGAP voltage in mV (trim to 1.0V) */
-#define V_TEMP25 (716U)   /* Typical VTEMP25 in mV */
-#define M (1620U)         /* Typical slope: (mV x 1000)/oC */
+#define ADCR_VDD      (65535U) /* Maximum value when use 16b resolution */
+#define V_BG          (1000U)  /* BANDGAP voltage in mV (trim to 1.0V) */
+#define V_TEMP25      (716U)   /* Typical VTEMP25 in mV */
+#define M             (1620U)  /* Typical slope: (mV x 1000)/oC */
 #define STANDARD_TEMP (25U)
 
 #define LED1_INIT() LED_RED_INIT(LOGIC_LED_OFF)
-#define LED1_ON() LED_RED_ON()
-#define LED1_OFF() LED_RED_OFF()
+#define LED1_ON()   LED_RED_ON()
+#define LED1_OFF()  LED_RED_OFF()
 
 #define LED2_INIT() LED_GREEN_INIT(LOGIC_LED_OFF)
-#define LED2_ON() LED_GREEN_ON()
-#define LED2_OFF() LED_GREEN_OFF()
+#define LED2_ON()   LED_GREEN_ON()
+#define LED2_OFF()  LED_GREEN_OFF()
 #define kAdcChannelTemperature (26U) /*! ADC channel of temperature sensor */
-#define kAdcChannelBandgap (27U)     /*! ADC channel of BANDGAP */
+#define kAdcChannelBandgap     (27U) /*! ADC channel of BANDGAP */
 
 #define UPPER_VALUE_LIMIT (1U) /*! This value/10 is going to be added to current Temp to set the upper boundary*/
 #define LOWER_VALUE_LIMIT                                                               \
@@ -384,11 +384,7 @@ void DEMO_ADC16_IRQ_HANDLER_FUNC(void)
     adcValue = ADC16_GetChannelConversionValue(DEMO_ADC16_BASEADDR, DEMO_ADC16_CHANNEL_GROUP);
     /* Set conversionCompleted flag. This prevents an wrong conversion in main function */
     conversionCompleted = true;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

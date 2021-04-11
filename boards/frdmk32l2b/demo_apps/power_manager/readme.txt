@@ -1,10 +1,13 @@
 Overview
 ========
-The Power manager demo application demonstrates the use of power modes in the KSDK. The demo use the notification mechanism
-and prints the power mode menu through the debug console, where the user can set the MCU to a specific power mode. The user
-can also set the wakeup source by following the debug console prompts. The purpose of this demo is to demonstrate the
-implementation of a power mode manager. The callback can be registered to the framework. If a power mode transition happens,
-the callback will be called and user can do something.
+The power manager demo application demonstrates how to change power modes in the KSDK. The difference between this demo
+and power_mode_switch is, this demo uses a notification framework to inform application about the mode change.
+Application could register callback to the notification framework, when power mode changes, the callback
+function is called and user can do something, such as closing debug console before entering low power mode, and
+opening debug console after exiting low power mode.
+
+When this demo runs, the power mode menu is shown in the debug console, where the user can set the MCU to a specific power mode.
+User can also set the wakeup source following the debug console prompts.
 
  Tips:
  This demo is to show how the various power mode can switch to each other. However, in actual low power use case, to save energy and reduce the consumption even more, many things can be done including:
@@ -15,10 +18,10 @@ the callback will be called and user can do something.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -69,6 +72,3 @@ Press  J for enter: VLLS3    - Very Low Leakage Stop 3 mode
 
 Waiting for power mode select..
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

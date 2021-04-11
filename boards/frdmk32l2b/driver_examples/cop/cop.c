@@ -10,12 +10,12 @@
  * Includes
  ******************************************************************************/
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_cop.h"
 #include "fsl_rcm.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

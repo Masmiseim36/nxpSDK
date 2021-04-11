@@ -10,9 +10,9 @@ the virtual serial port on board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -57,6 +57,3 @@ status_reg = 0xff , x =   -14 , y =     6 , z =  2024
 
 End of FlexIO I2C example .
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

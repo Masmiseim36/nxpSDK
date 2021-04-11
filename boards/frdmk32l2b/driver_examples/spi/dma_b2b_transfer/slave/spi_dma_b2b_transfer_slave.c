@@ -8,21 +8,21 @@
 
 #include "fsl_spi_dma.h"
 #include "fsl_dmamux.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_SLAVE SPI1
-#define EXAMPLE_DMA DMA0
-#define EXAMPLE_DMAMUX DMAMUX0
+#define EXAMPLE_SPI_SLAVE      SPI1
+#define EXAMPLE_DMA            DMA0
+#define EXAMPLE_DMAMUX         DMAMUX0
 #define EXAMPLE_SPI_TX_CHANNEL 0U
 #define EXAMPLE_SPI_RX_CHANNEL 1U
-#define EXAMPLE_SPI_TX_SOURCE kDmaRequestMux0SPI1Tx
-#define EXAMPLE_SPI_RX_SOURCE kDmaRequestMux0SPI1Rx
+#define EXAMPLE_SPI_TX_SOURCE  kDmaRequestMux0SPI1Tx
+#define EXAMPLE_SPI_RX_SOURCE  kDmaRequestMux0SPI1Rx
 
 /*******************************************************************************
  * Prototypes

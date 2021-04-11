@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -37,17 +37,17 @@ static int32_t _nt_keydetector_afid_rom_check(const struct nt_keydetector_afid *
 {
     if (rom->fast_signal_filter.cutoff == 0)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
     if (rom->slow_signal_filter.cutoff == 0)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
     if (rom->base_avrg.n2_order == 0)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 static void _nt_keydetector_afid_asc_init(struct nt_keydetector_afid_data *ram)
@@ -72,7 +72,7 @@ static void _nt_keydetector_afid_asc_process(const struct nt_keydetector_afid *r
         uint32_t touch_threshold = ram->touch_threshold;
         if (ram->asc.max_resets > rom->asc.resets_for_touch)
         {
-            touch_threshold = (touch_threshold * ram->asc.max_resets) / (rom->asc.resets_for_touch * 4);
+            touch_threshold = (touch_threshold * (uint32_t)(ram->asc.max_resets)) / ((uint16_t)rom->asc.resets_for_touch * 4U);
 
             if (touch_threshold <= rom->asc.noise_resets_minimum)
             { /* check if sensitivity is not too low */
@@ -96,9 +96,9 @@ static int32_t _nt_keydetector_afid_init(struct nt_electrode_data *electrode)
 
     const struct nt_keydetector_afid *rom = electrode->rom->keydetector_params.afid;
 
-    if (_nt_keydetector_afid_rom_check(rom) != NT_SUCCESS)
+    if (_nt_keydetector_afid_rom_check(rom) != (int32_t) NT_SUCCESS)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
     electrode->keydetector_data.afid =
@@ -106,9 +106,9 @@ static int32_t _nt_keydetector_afid_init(struct nt_electrode_data *electrode)
 
     if (electrode->keydetector_data.afid == NULL)
     {
-        return NT_OUT_OF_MEMORY;
+        return (int32_t) NT_OUT_OF_MEMORY;
     }
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 static void _nt_keydetector_afid_enable(struct nt_electrode_data *electrode, uint32_t touch)
@@ -122,16 +122,16 @@ static void _nt_keydetector_afid_enable(struct nt_electrode_data *electrode, uin
     ram->release_reset_counter = NT_KEYDETECTOR_AFID_INITIAL_RESET_RELEASE_COUNTER_VALUE;
     _nt_keydetector_afid_asc_init(ram);
 
-    if (touch)
+    if ((bool)touch)
     {
-        _nt_electrode_set_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
+        _nt_electrode_set_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
     }
     else
     {
-        _nt_electrode_clear_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
+        _nt_electrode_clear_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
     }
-    ram->filter_state = NT_FILTER_STATE_INIT;
-    _nt_electrode_set_status(electrode, NT_ELECTRODE_STATE_INIT);
+    ram->filter_state = (int32_t)NT_FILTER_STATE_INIT;
+    _nt_electrode_set_status(electrode, (int32_t) NT_ELECTRODE_STATE_INIT);
 }
 
 static void _nt_keydetector_afid_measure(struct nt_electrode_data *electrode, uint32_t signal)
@@ -143,15 +143,15 @@ static void _nt_keydetector_afid_measure(struct nt_electrode_data *electrode, ui
 
     signal = _nt_electrode_normalization_process(electrode, signal);
 
-    if (ram->filter_state == NT_FILTER_STATE_INIT)
+    if (ram->filter_state == (uint8_t)NT_FILTER_STATE_INIT)
     {
         _nt_filter_fbutt_init(&rom->fast_signal_filter, &ram->fast_signal_filter, signal);
         _nt_filter_fbutt_init(&rom->slow_signal_filter, &ram->slow_signal_filter, signal);
-        _nt_filter_moving_average_init(&rom->base_avrg, &ram->base_avrg, signal);
-        electrode->baseline = signal;
+        (void)(int32_t)_nt_filter_moving_average_init(&rom->base_avrg, &ram->base_avrg, (uint16_t)signal);
+        electrode->baseline = (uint16_t)signal;
         ram->slow_signal    = (uint16_t)signal;
         _nt_electrode_set_signal(electrode, signal);
-        ram->filter_state = NT_FILTER_STATE_RUN;
+        ram->filter_state = (uint8_t)NT_FILTER_STATE_RUN;
     }
     else
     {
@@ -159,14 +159,14 @@ static void _nt_keydetector_afid_measure(struct nt_electrode_data *electrode, ui
         uint32_t prev_signal = (uint32_t)_nt_electrode_get_signal(electrode);
         signal               = _nt_filter_iir_process(&rom->signal_filter, signal, prev_signal);
 
-        ram->slow_signal = (uint16_t)_nt_filter_fbutt_process(&ram->slow_signal_filter, signal);
-        signal           = (uint16_t)_nt_filter_fbutt_process(&ram->fast_signal_filter, signal);
+        ram->slow_signal = (uint16_t)_nt_filter_fbutt_process(&ram->slow_signal_filter, (uint16_t)signal);
+        signal           = (uint16_t)_nt_filter_fbutt_process(&ram->fast_signal_filter, (uint16_t)signal);
         _nt_electrode_set_signal(electrode, signal);
     }
     /* calculate delta (subtraction of fast and slow filter) */
     int32_t integration_value = (int32_t)((int32_t)signal - (int32_t)ram->slow_signal);
     /* signal drift suppression - caused by not ideal filters */
-    if (_nt_abs_int32(integration_value) <= 8)
+    if (_nt_abs_int32(integration_value) <= 8U)
     {
         integration_value = 0;
     }
@@ -212,21 +212,22 @@ static void _nt_keydetector_afid_measure(struct nt_electrode_data *electrode, ui
         /* slow touch threshold fall if touch threshold > destination threshold */
         if (ram->touch_threshold > rom->asc.noise_resets_minimum)
         {
-            if (!(_nt_electrode_get_time_offset_period(electrode, rom->asc.touch_threshold_fall_rate)))
+            if (!(bool)(_nt_electrode_get_time_offset_period(electrode, (uint32_t)rom->asc.touch_threshold_fall_rate)))
             {
                 ram->touch_threshold -= (ram->touch_threshold / rom->asc.noise_resets_minimum);
                 if (ram->touch_threshold < rom->asc.noise_resets_minimum)
-                    ram->touch_threshold = rom->asc.noise_resets_minimum;
+                {   ram->touch_threshold = rom->asc.noise_resets_minimum;
+                }
             }
         }
         /* integration reset - for suppression of long-term temperature drift */
-        if (!(_nt_electrode_get_time_offset_period(electrode, rom->reset_rate)))
+        if (!(bool)(_nt_electrode_get_time_offset_period(electrode, rom->reset_rate)))
         {
             ram->integration_value = NT_KEYDETECTOR_AFID_INITIAL_INTEGRATOR_VALUE;
         }
 
         /* Update the baseline */
-        electrode->baseline = _nt_filter_moving_average_process(&rom->base_avrg, &ram->base_avrg, signal);
+        electrode->baseline = (uint16_t)_nt_filter_moving_average_process(&rom->base_avrg, &ram->base_avrg, signal);
     }
 }
 
@@ -240,41 +241,43 @@ static void _nt_keydetector_afid_process(struct nt_electrode_data *electrode)
 
     switch (_nt_electrode_get_last_status(electrode))
     {
-        case NT_ELECTRODE_STATE_INIT:
+        case (int32_t) NT_ELECTRODE_STATE_INIT:
             /* manage switch from init to run phase */
             if (_nt_electrode_get_time_offset(electrode) >= system->rom->init_time)
             {
                 _nt_keydetector_afid_asc_track(rom, ram);
                 _nt_keydetector_afid_asc_process(rom, ram);
 
-                if (_nt_electrode_get_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG))
-                    _nt_electrode_set_status(electrode, NT_ELECTRODE_STATE_TOUCH);
+                if ((bool)_nt_electrode_get_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG))
+                {   _nt_electrode_set_status(electrode, (int32_t) NT_ELECTRODE_STATE_TOUCH);
+                }
                 else
-                    _nt_electrode_set_status(electrode, NT_ELECTRODE_STATE_RELEASE);
+                {   _nt_electrode_set_status(electrode, (int32_t) NT_ELECTRODE_STATE_RELEASE);
+                }
 
-                _nt_electrode_clear_flag(electrode, NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
+                _nt_electrode_clear_flag(electrode, (int32_t) NT_ELECTRODE_AFTER_INIT_TOUCH_FLAG);
             }
             break;
-        case NT_ELECTRODE_STATE_TOUCH:
+        case (int32_t) NT_ELECTRODE_STATE_TOUCH:
             if (ram->release_reset_counter > 0U)
             {
-                _nt_electrode_set_status(electrode, NT_ELECTRODE_STATE_RELEASE);
+                _nt_electrode_set_status(electrode, (int32_t) NT_ELECTRODE_STATE_RELEASE);
             }
             else
             {
                 _nt_keydetector_afid_asc_track(rom, ram);
 
-                if (ram->touch_reset_counter < rom->asc.resets_for_touch / 2)
+                if (ram->touch_reset_counter < (uint32_t)rom->asc.resets_for_touch / 2)
                 {
                     ram->touch_reset_counter = 0;
                 }
             }
             break;
 
-        case NT_ELECTRODE_STATE_RELEASE:
-            if (ram->touch_reset_counter > rom->asc.resets_for_touch)
+        case (int32_t) NT_ELECTRODE_STATE_RELEASE:
+            if (ram->touch_reset_counter > (uint32_t)rom->asc.resets_for_touch)
             {
-                _nt_electrode_set_status(electrode, NT_ELECTRODE_STATE_TOUCH);
+                _nt_electrode_set_status(electrode, (int32_t) NT_ELECTRODE_STATE_TOUCH);
             }
             else
             {
@@ -297,8 +300,8 @@ static void _nt_keydetector_afid_reset(struct nt_electrode_data *electrode)
 
     _nt_filter_fbutt_init(&rom->fast_signal_filter, &ram->fast_signal_filter, signal);
     _nt_filter_fbutt_init(&rom->slow_signal_filter, &ram->slow_signal_filter, signal);
-    _nt_filter_moving_average_init(&rom->base_avrg, &ram->base_avrg, signal);
-    electrode->baseline = signal;
+    (void)(int32_t)_nt_filter_moving_average_init(&rom->base_avrg, &ram->base_avrg, (uint16_t)signal);
+    electrode->baseline = (uint16_t)signal;
     ram->slow_signal    = (uint16_t)signal;
     _nt_electrode_set_signal(electrode, signal);
 }

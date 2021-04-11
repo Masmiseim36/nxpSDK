@@ -9,16 +9,16 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_spi_cmsis.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_SPI_SLAVE_DMA_MUX_BASEADDR DMAMUX0
-#define EXAMPLE_SPI_SLAVE_DMA_BASEADDR DMA0
-#define DRIVER_SLAVE_SPI Driver_SPI1
+#define EXAMPLE_SPI_SLAVE_DMA_BASEADDR     DMA0
+#define DRIVER_SLAVE_SPI                   Driver_SPI1
 #define TRANSFER_SIZE 64U /* Transfer dataSize */
 
 /*******************************************************************************

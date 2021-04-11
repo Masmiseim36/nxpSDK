@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,7 +26,7 @@ status_t SMC_SetPowerModeRun(SMC_Type *base)
     reg = base->PMCTRL;
     /* configure Normal RUN mode */
     reg &= ~SMC_PMCTRL_RUNM_MASK;
-    reg |= (kSMC_RunNormal << SMC_PMCTRL_RUNM_SHIFT);
+    reg |= ((uint32_t)kSMC_RunNormal << SMC_PMCTRL_RUNM_SHIFT);
     base->PMCTRL = reg;
 
     return kStatus_Success;
@@ -45,7 +45,7 @@ status_t SMC_SetPowerModeHsrun(SMC_Type *base)
     reg = base->PMCTRL;
     /* configure High Speed RUN mode */
     reg &= ~SMC_PMCTRL_RUNM_MASK;
-    reg |= (kSMC_Hsrun << SMC_PMCTRL_RUNM_SHIFT);
+    reg |= ((uint32_t)kSMC_Hsrun << SMC_PMCTRL_RUNM_SHIFT);
     base->PMCTRL = reg;
 
     return kStatus_Success;
@@ -77,12 +77,13 @@ status_t SMC_SetPowerModeWait(SMC_Type *base)
  */
 status_t SMC_SetPowerModeStop(SMC_Type *base, smc_partial_stop_option_t option)
 {
+    status_t status;
     uint32_t reg;
 
     /* configure the Partial Stop mode in Normal Stop mode */
     reg = base->PMCTRL;
     reg &= ~(SMC_PMCTRL_PSTOPO_MASK | SMC_PMCTRL_STOPM_MASK);
-    reg |= ((uint32_t)option << SMC_PMCTRL_PSTOPO_SHIFT) | (kSMC_StopNormal << SMC_PMCTRL_STOPM_SHIFT);
+    reg |= ((uint32_t)option << SMC_PMCTRL_PSTOPO_SHIFT) | ((uint32_t)kSMC_StopNormal << SMC_PMCTRL_STOPM_SHIFT);
     base->PMCTRL = reg;
 
     /* Set the SLEEPDEEP bit to enable deep sleep mode (stop mode) */
@@ -96,17 +97,19 @@ status_t SMC_SetPowerModeStop(SMC_Type *base, smc_partial_stop_option_t option)
 
 #if (defined(FSL_FEATURE_SMC_HAS_PMCTRL_STOPA) && FSL_FEATURE_SMC_HAS_PMCTRL_STOPA)
     /* check whether the power mode enter Stop mode succeed */
-    if (base->PMCTRL & SMC_PMCTRL_STOPA_MASK)
+    if (0U != (base->PMCTRL & SMC_PMCTRL_STOPA_MASK))
     {
-        return kStatus_SMC_StopAbort;
+        status = kStatus_SMC_StopAbort;
     }
     else
     {
-        return kStatus_Success;
+        status = kStatus_Success;
     }
 #else
-    return kStatus_Success;
+    status = kStatus_Success;
 #endif /* FSL_FEATURE_SMC_HAS_PMCTRL_STOPA */
+
+    return status;
 }
 
 /*!
@@ -122,7 +125,7 @@ status_t SMC_SetPowerModeVlpr(SMC_Type *base)
     reg = base->PMCTRL;
     /* configure VLPR mode */
     reg &= ~SMC_PMCTRL_RUNM_MASK;
-    reg |= (kSMC_RunVlpr << SMC_PMCTRL_RUNM_SHIFT);
+    reg |= ((uint32_t)kSMC_RunVlpr << SMC_PMCTRL_RUNM_SHIFT);
     base->PMCTRL = reg;
 
     return kStatus_Success;
@@ -155,11 +158,12 @@ status_t SMC_SetPowerModeVlpw(SMC_Type *base)
 status_t SMC_SetPowerModeVlps(SMC_Type *base)
 {
     uint32_t reg;
+    status_t status;
 
     /* configure VLPS mode */
     reg = base->PMCTRL;
     reg &= ~SMC_PMCTRL_STOPM_MASK;
-    reg |= (kSMC_StopVlps << SMC_PMCTRL_STOPM_SHIFT);
+    reg |= ((uint32_t)kSMC_StopVlps << SMC_PMCTRL_STOPM_SHIFT);
     base->PMCTRL = reg;
 
     /* Set the SLEEPDEEP bit to enable deep sleep mode */
@@ -173,17 +177,19 @@ status_t SMC_SetPowerModeVlps(SMC_Type *base)
 
 #if (defined(FSL_FEATURE_SMC_HAS_PMCTRL_STOPA) && FSL_FEATURE_SMC_HAS_PMCTRL_STOPA)
     /* check whether the power mode enter Stop mode succeed */
-    if (base->PMCTRL & SMC_PMCTRL_STOPA_MASK)
+    if (0U != (base->PMCTRL & SMC_PMCTRL_STOPA_MASK))
     {
-        return kStatus_SMC_StopAbort;
+        status = kStatus_SMC_StopAbort;
     }
     else
     {
-        return kStatus_Success;
+        status = kStatus_Success;
     }
 #else
-    return kStatus_Success;
+    status = kStatus_Success;
 #endif /* FSL_FEATURE_SMC_HAS_PMCTRL_STOPA */
+
+    return status;
 }
 
 /*!
@@ -195,11 +201,12 @@ status_t SMC_SetPowerModeVlps(SMC_Type *base)
 status_t SMC_SetPowerModeLls(SMC_Type *base)
 {
     uint32_t reg;
+    status_t status;
 
     /* configure to LLS mode */
     reg = base->PMCTRL;
     reg &= ~SMC_PMCTRL_STOPM_MASK;
-    reg |= (kSMC_StopLls << SMC_PMCTRL_STOPM_SHIFT);
+    reg |= ((uint32_t)kSMC_StopLls << SMC_PMCTRL_STOPM_SHIFT);
     base->PMCTRL = reg;
 
     /* Set the SLEEPDEEP bit to enable deep sleep mode */
@@ -213,17 +220,19 @@ status_t SMC_SetPowerModeLls(SMC_Type *base)
 
 #if (defined(FSL_FEATURE_SMC_HAS_PMCTRL_STOPA) && FSL_FEATURE_SMC_HAS_PMCTRL_STOPA)
     /* check whether the power mode enter Stop mode succeed */
-    if (base->PMCTRL & SMC_PMCTRL_STOPA_MASK)
+    if (0U != (base->PMCTRL & SMC_PMCTRL_STOPA_MASK))
     {
-        return kStatus_SMC_StopAbort;
+        status = kStatus_SMC_StopAbort;
     }
     else
     {
-        return kStatus_Success;
+        status = kStatus_Success;
     }
 #else
-    return kStatus_Success;
+    status = kStatus_Success;
 #endif /* FSL_FEATURE_SMC_HAS_PMCTRL_STOPA */
+
+    return status;
 }
 
 #if (defined(FSL_FEATURE_SMC_HAS_SUB_STOP_MODE) && FSL_FEATURE_SMC_HAS_SUB_STOP_MODE)
@@ -242,7 +251,7 @@ status_t SMC_SetPowerModeVlls0(SMC_Type *base)
     /* configure to VLLS mode */
     reg = base->PMCTRL;
     reg &= ~SMC_PMCTRL_STOPM_MASK;
-    reg |= (kSMC_StopVlls0 << SMC_PMCTRL_STOPM_SHIFT);
+    reg |= ((uint32_t)kSMC_StopVlls0 << SMC_PMCTRL_STOPM_SHIFT);
     base->PMCTRL = reg;
 
     /* Set the SLEEPDEEP bit to enable deep sleep mode */
@@ -272,7 +281,7 @@ status_t SMC_SetPowerModeVlls2(SMC_Type *base)
     /* configure to VLLS mode */
     reg = base->PMCTRL;
     reg &= ~SMC_PMCTRL_STOPM_MASK;
-    reg |= (kSMC_StopVlls2 << SMC_PMCTRL_STOPM_SHIFT);
+    reg |= ((uint32_t)kSMC_StopVlls2 << SMC_PMCTRL_STOPM_SHIFT);
     base->PMCTRL = reg;
 
     /* Set the SLEEPDEEP bit to enable deep sleep mode */
@@ -298,11 +307,12 @@ status_t SMC_SetPowerModeVlls2(SMC_Type *base)
 status_t SMC_SetPowerModeVlls(SMC_Type *base)
 {
     uint32_t reg;
+    status_t status;
 
     /* configure to VLLS mode */
     reg = base->PMCTRL;
     reg &= ~SMC_PMCTRL_STOPM_MASK;
-    reg |= (kSMC_StopVlls << SMC_PMCTRL_STOPM_SHIFT);
+    reg |= ((uint32_t)kSMC_StopVlls << SMC_PMCTRL_STOPM_SHIFT);
     base->PMCTRL = reg;
 
     /* Set the SLEEPDEEP bit to enable deep sleep mode */
@@ -316,17 +326,19 @@ status_t SMC_SetPowerModeVlls(SMC_Type *base)
 
 #if (defined(FSL_FEATURE_SMC_HAS_PMCTRL_STOPA) && FSL_FEATURE_SMC_HAS_PMCTRL_STOPA)
     /* check whether the power mode enter Stop mode succeed */
-    if (base->PMCTRL & SMC_PMCTRL_STOPA_MASK)
+    if (0U != (base->PMCTRL & SMC_PMCTRL_STOPA_MASK))
     {
-        return kStatus_SMC_StopAbort;
+        status = kStatus_SMC_StopAbort;
     }
     else
     {
-        return kStatus_Success;
+        status = kStatus_Success;
     }
 #else
-    return kStatus_Success;
+    status = kStatus_Success;
 #endif /* FSL_FEATURE_SMC_HAS_PMCTRL_STOPA */
+
+    return status;
 }
 #endif /* FSL_FEATURE_SMC_HAS_SUB_STOP_MODE */
 
@@ -340,7 +352,7 @@ status_t SMC_SetPowerModeVlls(SMC_Type *base)
  */
 void SMC_ConfigureResetPinFilter(SMC_Type *base, const smc_reset_pin_filter_config_t *config)
 {
-    assert(config);
+    assert(NULL != config);
 
     uint32_t reg;
 

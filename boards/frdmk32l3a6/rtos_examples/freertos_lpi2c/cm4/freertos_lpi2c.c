@@ -17,13 +17,13 @@
 #include "timers.h"
 
 /* Freescale includes. */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 #include "fsl_lpi2c_freertos.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -83,7 +83,7 @@ SemaphoreHandle_t lpi2c_sem;
  * Definitions
  ******************************************************************************/
 /* Task priorities. */
-#define slave_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define slave_task_PRIORITY  (configMAX_PRIORITIES - 2)
 #define master_task_PRIORITY (configMAX_PRIORITIES - 1)
 
 /*******************************************************************************
@@ -101,8 +101,8 @@ int main(void)
     uint32_t i = 0;
 
     /* Init board hardware. */
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     CLOCK_SetIpSrc(kCLOCK_Lpi2c1, kCLOCK_IpSrcFircAsync);
@@ -119,7 +119,8 @@ int main(void)
         g_master_buff[i] = i;
     }
 
-    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 64, NULL, slave_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 100, NULL, slave_task_PRIORITY, NULL) !=
+        pdPASS)
     {
         PRINTF("Failed to create slave task");
         while (1)
@@ -213,7 +214,7 @@ static void slave_task(void *pvParameters)
                                    kLPI2C_SlaveReceiveEvent | kLPI2C_SlaveCompletionEvent);
 #endif
 #if ((I2C_MASTER_SLAVE == isMASTER) || (EXAMPLE_CONNECT_I2C == SINGLE_BOARD))
-    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 64, NULL, master_task_PRIORITY, NULL) !=
+    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 100, NULL, master_task_PRIORITY, NULL) !=
         pdPASS)
     {
         vTaskSuspend(NULL);

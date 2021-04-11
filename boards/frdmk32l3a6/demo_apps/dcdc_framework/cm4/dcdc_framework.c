@@ -11,28 +11,28 @@
 #include "fsl_spm.h"
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "math.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /* LPTMRx. */
-#define LPTMRx_BASE LPTMR0
-#define LPTMRx_INTERVAL_MS 1000U /* 50s. */
+#define LPTMRx_BASE         LPTMR0
+#define LPTMRx_INTERVAL_MS  1000U /* 50s. */
 #define LPTMRx_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_LpoClk)
-#define LPTMRx_IRQn LPTMR0_IRQn
-#define LPTMRx_IRQHandler LPTMR0_IRQHandler
+#define LPTMRx_IRQn         LPTMR0_IRQn
+#define LPTMRx_IRQHandler   LPTMR0_IRQHandler
 
 /* LPADCx. */
-#define LPADCx_BASE LPADC0
-#define LPADCx_USER_CMD_IDX 1U
-#define LPADCx_USER_TRIGGER_IDX 0U
+#define LPADCx_BASE                         LPADC0
+#define LPADCx_USER_CMD_IDX                 1U
+#define LPADCx_USER_TRIGGER_IDX             0U
 #define LPADCx_MEASURE_VBANDGAP_CHANNEL_NUM 27U /* CH27B, Bandgap. */
-#define LPADCx_MEASURE_VBATT_CHANNEL_NUM 31U    /* CH31B, DCDC. */
+#define LPADCx_MEASURE_VBATT_CHANNEL_NUM    31U /* CH31B, DCDC. */
 
 /* Keep the global variables for DCDC framework measurement. */
 struct
@@ -62,7 +62,7 @@ int main(void)
 {
     /* Init board hardware. */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
 
     /* Set the clock source for LPADC0. */
     CLOCK_SetIpSrcDiv(kCLOCK_Lpadc0, kCLOCK_IpSrcFircAsync, 2U, 0U);

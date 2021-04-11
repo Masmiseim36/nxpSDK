@@ -9,21 +9,21 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* I2C source clock */
 #define EXAMPLE_I2C_SLAVE_BASEADDR I2C0
-#define I2C_SLAVE_CLK_SRC I2C0_CLK_SRC
-#define I2C_SLAVE_CLK_FREQ CLOCK_GetFreq(I2C0_CLK_SRC)
+#define I2C_SLAVE_CLK_SRC          I2C0_CLK_SRC
+#define I2C_SLAVE_CLK_FREQ         CLOCK_GetFreq(I2C0_CLK_SRC)
 
 #define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define I2C_DATA_LENGTH 34U
+#define I2C_DATA_LENGTH            34U
 
 /*******************************************************************************
  * Prototypes

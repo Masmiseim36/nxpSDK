@@ -5,15 +5,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "utilities/fsl_assert.h"
-#include "bootloader/bl_context.h"
+#include "fsl_assert.h"
+#include "bl_context.h"
 #include "bootloader_common.h"
-#include "bootloader/bl_peripheral_interface.h"
-#include "packet/command_packet.h"
+#include "bl_peripheral_interface.h"
+#include "command_packet.h"
 #include "fsl_lpspi.h"
 #include "fsl_device_registers.h"
 #include "peripherals_pinmux.h"
-#include "packet/serial_packet.h"
+#include "serial_packet.h"
 
 #if BL_CONFIG_LPSPI
 
@@ -187,17 +187,17 @@ status_t lpspi_full_init(const peripheral_descriptor_t *self, serial_byte_receiv
     {
 #if defined(SPI0_SELECTED_PCS)
         case 0:
-            selectedChip = (lpspi_which_pcs_t)SPI0_SELECTED_PCS;
+            selectedChip = kLPSPI_Pcs0;
             break;
 #endif // #if defined(SPI0_SELECTED_PCS)
 #if defined(SPI1_SELECTED_PCS)
         case 1:
-            selectedChip = (lpspi_which_pcs_t)SPI1_SELECTED_PCS;
+            selectedChip = kLPSPI_Pcs1;
             break;
 #endif // #if defined(SPI1_SELECTED_PCS)
 #if defined(SPI2_SELECTED_PCS)
         case 2:
-            selectedChip = (lpspi_which_pcs_t)SPI2_SELECTED_PCS;
+            selectedChip = kLPSPI_Pcs2;
             break;
 #endif // #if defined(SPI2_SELECTED_PCS)
         default:
@@ -217,8 +217,6 @@ status_t lpspi_full_init(const peripheral_descriptor_t *self, serial_byte_receiv
 
     // Ungate the LPSPI clock.
     LPSPI_SlaveInit((LPSPI_Type *)baseAddr, &config);
-
-    ((LPSPI_Type *)baseAddr)-> TCR |= LPSPI_TCR_PCS(config.whichPcs);
 
     // Enable LPSPI interrupt
     LPSPI_SetSystemIRQ(self->instance, kPeripheralEnableIRQ);

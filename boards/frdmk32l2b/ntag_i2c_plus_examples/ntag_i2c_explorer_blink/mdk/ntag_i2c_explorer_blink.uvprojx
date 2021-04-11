@@ -7,6 +7,7 @@
       <TargetName>ntag_i2c_explorer_blink debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>K32L2B31VLH0A</Device>
@@ -78,6 +79,8 @@
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopA1X>0</nStopA1X>
+            <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString/>
@@ -116,48 +119,6 @@
             <HexOffset>0</HexOffset>
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
-          <Simulator>
-            <UseSimulator>0</UseSimulator>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>1</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
-            <RestoreSysVw>1</RestoreSysVw>
-          </Simulator>
-          <Target>
-            <UseTarget>1</UseTarget>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>0</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>1</RestoreTracepoints>
-            <RestoreSysVw>1</RestoreSysVw>
-            <UsePdscDebugDescription>1</UsePdscDebugDescription>
-          </Target>
-          <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>14</TargetSelection>
-          <SimDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-          </SimDlls>
-          <TargetDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-            <Driver>BIN\CMSIS_AGDI.dll</Driver>
-          </TargetDlls>
         </DebugOption>
         <Utilities>
           <Flash1>
@@ -216,12 +177,15 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
+            <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
@@ -339,11 +303,10 @@
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
-            <nSecure>0</nSecure>
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -352,16 +315,24 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
+            <v6Lang>3</v6Lang>
+            <v6LangP>1</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_K32L2B31VLH0A, PRINTF_ADVANCED_ENABLE=1, I2C_FSL, FRDM_K32L2B, FREEDOM, HAVE_STDBOOL_H, HAVE_STDINT_H</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../middleware/ntag_i2c_plus/inc;../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc;../../../../../middleware/ntag_i2c_plus/HAL_ISR;../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc;../../../../../middleware/ntag_i2c_plus/HAL_NTAG/inc;../../../../../middleware/ntag_i2c_plus/HAL_NTAG;../../../../../middleware/ntag_i2c_plus/HAL_TMR/inc;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A;../../../../../devices/K32L2B31A/utilities/str;../../../../../devices/K32L2B31A/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/K32L2B31A/drivers;../../../../../components/lists;../../../../../devices/K32L2B31A/drivers</IncludePath>
+              <IncludePath>..;../../../../../devices/K32L2B31A/utilities/debug_console_lite;../../../../../devices/K32L2B31A/drivers;../../../../../middleware/ntag_i2c_plus/HAL_NTAG/inc;../../../../../middleware/ntag_i2c_plus/HAL_NTAG;../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc;../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc;../../../../../middleware/ntag_i2c_plus/HAL_ISR;../../../../../middleware/ntag_i2c_plus/HAL_TMR/inc;../../../../../middleware/ntag_i2c_plus/inc;../../../../../devices/K32L2B31A;../../../../../components/uart;../../../../../components/lists;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -374,6 +345,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
               <Define>DEBUG</Define>
@@ -394,7 +366,7 @@
             <ScatterFile>K32L2B31xxxxA_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -457,17 +429,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_port.h</FileName>
@@ -475,19 +467,14 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i2c.c</FileName>
+              <FileName>fsl_smc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_i2c.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
               <FileName>fsl_i2c.h</FileName>
@@ -495,9 +482,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_i2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -505,9 +492,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -515,9 +502,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -525,74 +512,24 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>ntag_i2c_plus-HAL_I2C</GroupName>
-          <Files>
             <File>
-              <FileName>i2c_kinetis_fsl.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/i2c_kinetis_fsl.c</FilePath>
-            </File>
-            <File>
-              <FileName>HAL_I2C_driver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc/HAL_I2C_driver.h</FilePath>
-            </File>
-            <File>
-              <FileName>HAL_I2C_kinetis_fsl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc/HAL_I2C_kinetis_fsl.h</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>ntag_i2c_plus-HAL_ISR</GroupName>
-          <Files>
-            <File>
-              <FileName>HAL_ISR_callback_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc/HAL_ISR_callback_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>HAL_ISR_driver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc/HAL_ISR_driver.h</FilePath>
-            </File>
-            <File>
-              <FileName>isr_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>isr_driver_intern.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_driver_intern.h</FilePath>
-            </File>
-            <File>
-              <FileName>isr_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_kinetis.c</FilePath>
-            </File>
-            <File>
-              <FileName>isr_kinetis_intern.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_kinetis_intern.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>ntag_i2c_plus-HAL_NTAG</GroupName>
+          <GroupName>ntag_i2c_plus/HAL_NTAG/inc</GroupName>
           <Files>
             <File>
               <FileName>ntag_bridge.h</FileName>
@@ -614,6 +551,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_NTAG/inc/ntag_driver.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_NTAG</GroupName>
+          <Files>
+            <File>
+              <FileName>ntag_driver_intern.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_NTAG/ntag_driver_intern.h</FilePath>
+            </File>
             <File>
               <FileName>ntag_bridge.c</FileName>
               <FileType>1</FileType>
@@ -624,21 +571,86 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_NTAG/ntag_driver.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_I2C/inc</GroupName>
+          <Files>
             <File>
-              <FileName>ntag_driver_intern.h</FileName>
+              <FileName>HAL_I2C_driver.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_NTAG/ntag_driver_intern.h</FilePath>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc/HAL_I2C_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>HAL_I2C_kinetis_fsl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc/HAL_I2C_kinetis_fsl.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>ntag_i2c_plus-HAL_TMR</GroupName>
+          <GroupName>ntag_i2c_plus/HAL_I2C</GroupName>
+          <Files>
+            <File>
+              <FileName>i2c_kinetis_fsl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/i2c_kinetis_fsl.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_ISR/inc</GroupName>
+          <Files>
+            <File>
+              <FileName>HAL_ISR_callback_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc/HAL_ISR_callback_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>HAL_ISR_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc/HAL_ISR_driver.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_ISR</GroupName>
+          <Files>
+            <File>
+              <FileName>isr_driver_intern.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_driver_intern.h</FilePath>
+            </File>
+            <File>
+              <FileName>isr_kinetis_intern.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_kinetis_intern.h</FilePath>
+            </File>
+            <File>
+              <FileName>isr_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>isr_kinetis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_kinetis.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_TMR/inc</GroupName>
           <Files>
             <File>
               <FileName>HAL_timer_driver.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_TMR/inc/HAL_timer_driver.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_TMR</GroupName>
+          <Files>
             <File>
               <FileName>timer_driver.c</FileName>
               <FileType>1</FileType>
@@ -647,7 +659,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ntag_i2c_plus-ntag_i2c_plus_include</GroupName>
+          <GroupName>ntag_i2c_plus/inc</GroupName>
           <Files>
             <File>
               <FileName>global_types.h</FileName>
@@ -665,6 +677,11 @@
           <GroupName>device</GroupName>
           <Files>
             <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
               <FileName>K32L2B31A.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/K32L2B31A.h</FilePath>
@@ -673,11 +690,6 @@
               <FileName>K32L2B31A_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/K32L2B31A_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_K32L2B31A.c</FileName>
@@ -692,97 +704,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -790,9 +737,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_K32L2B31A.s</FileName>
+              <FileName>startup_K32L2B31A.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.s</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -803,6 +750,11 @@
               <FileName>core_cm0plus.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm0plus.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -820,19 +772,14 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -840,29 +787,9 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
+              <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -887,6 +814,7 @@
       <TargetName>ntag_i2c_explorer_blink release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>K32L2B31VLH0A</Device>
@@ -958,6 +886,8 @@
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopA1X>0</nStopA1X>
+            <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString/>
@@ -996,48 +926,6 @@
             <HexOffset>0</HexOffset>
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
-          <Simulator>
-            <UseSimulator>0</UseSimulator>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>1</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
-            <RestoreSysVw>1</RestoreSysVw>
-          </Simulator>
-          <Target>
-            <UseTarget>1</UseTarget>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>0</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>1</RestoreTracepoints>
-            <RestoreSysVw>1</RestoreSysVw>
-            <UsePdscDebugDescription>1</UsePdscDebugDescription>
-          </Target>
-          <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>14</TargetSelection>
-          <SimDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-          </SimDlls>
-          <TargetDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-            <Driver>BIN\CMSIS_AGDI.dll</Driver>
-          </TargetDlls>
         </DebugOption>
         <Utilities>
           <Flash1>
@@ -1096,12 +984,15 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
+            <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
@@ -1219,11 +1110,10 @@
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
-            <nSecure>0</nSecure>
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1232,16 +1122,24 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
+            <v6Lang>3</v6Lang>
+            <v6LangP>1</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_K32L2B31VLH0A, PRINTF_ADVANCED_ENABLE=1, I2C_FSL, FRDM_K32L2B, FREEDOM, HAVE_STDBOOL_H, HAVE_STDINT_H</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../middleware/ntag_i2c_plus/inc;../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc;../../../../../middleware/ntag_i2c_plus/HAL_ISR;../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc;../../../../../middleware/ntag_i2c_plus/HAL_NTAG/inc;../../../../../middleware/ntag_i2c_plus/HAL_NTAG;../../../../../middleware/ntag_i2c_plus/HAL_TMR/inc;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A;../../../../../devices/K32L2B31A/utilities/str;../../../../../devices/K32L2B31A/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/K32L2B31A/drivers;../../../../../components/lists;../../../../../devices/K32L2B31A/drivers</IncludePath>
+              <IncludePath>..;../../../../../devices/K32L2B31A/utilities/debug_console_lite;../../../../../devices/K32L2B31A/drivers;../../../../../middleware/ntag_i2c_plus/HAL_NTAG/inc;../../../../../middleware/ntag_i2c_plus/HAL_NTAG;../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc;../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc;../../../../../middleware/ntag_i2c_plus/HAL_ISR;../../../../../middleware/ntag_i2c_plus/HAL_TMR/inc;../../../../../middleware/ntag_i2c_plus/inc;../../../../../devices/K32L2B31A;../../../../../components/uart;../../../../../components/lists;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1254,6 +1152,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
               <Define>NDEBUG</Define>
@@ -1274,7 +1173,7 @@
             <ScatterFile>K32L2B31xxxxA_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1337,17 +1236,37 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>drivers</GroupName>
+          <GroupName>utilities</GroupName>
           <Files>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
             </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console_lite/fsl_assert.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>drivers</GroupName>
+          <Files>
             <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_port.h</FileName>
@@ -1355,19 +1274,14 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i2c.c</FileName>
+              <FileName>fsl_smc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_i2c.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
               <FileName>fsl_i2c.h</FileName>
@@ -1375,9 +1289,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_i2c.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_i2c.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -1385,9 +1299,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1395,9 +1309,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1405,74 +1319,24 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>ntag_i2c_plus-HAL_I2C</GroupName>
-          <Files>
             <File>
-              <FileName>i2c_kinetis_fsl.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/i2c_kinetis_fsl.c</FilePath>
-            </File>
-            <File>
-              <FileName>HAL_I2C_driver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc/HAL_I2C_driver.h</FilePath>
-            </File>
-            <File>
-              <FileName>HAL_I2C_kinetis_fsl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc/HAL_I2C_kinetis_fsl.h</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>ntag_i2c_plus-HAL_ISR</GroupName>
-          <Files>
-            <File>
-              <FileName>HAL_ISR_callback_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc/HAL_ISR_callback_list.h</FilePath>
-            </File>
-            <File>
-              <FileName>HAL_ISR_driver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc/HAL_ISR_driver.h</FilePath>
-            </File>
-            <File>
-              <FileName>isr_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_common.c</FilePath>
-            </File>
-            <File>
-              <FileName>isr_driver_intern.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_driver_intern.h</FilePath>
-            </File>
-            <File>
-              <FileName>isr_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_kinetis.c</FilePath>
-            </File>
-            <File>
-              <FileName>isr_kinetis_intern.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_kinetis_intern.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>ntag_i2c_plus-HAL_NTAG</GroupName>
+          <GroupName>ntag_i2c_plus/HAL_NTAG/inc</GroupName>
           <Files>
             <File>
               <FileName>ntag_bridge.h</FileName>
@@ -1494,6 +1358,16 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_NTAG/inc/ntag_driver.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_NTAG</GroupName>
+          <Files>
+            <File>
+              <FileName>ntag_driver_intern.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_NTAG/ntag_driver_intern.h</FilePath>
+            </File>
             <File>
               <FileName>ntag_bridge.c</FileName>
               <FileType>1</FileType>
@@ -1504,21 +1378,86 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_NTAG/ntag_driver.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_I2C/inc</GroupName>
+          <Files>
             <File>
-              <FileName>ntag_driver_intern.h</FileName>
+              <FileName>HAL_I2C_driver.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_NTAG/ntag_driver_intern.h</FilePath>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc/HAL_I2C_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>HAL_I2C_kinetis_fsl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/inc/HAL_I2C_kinetis_fsl.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>ntag_i2c_plus-HAL_TMR</GroupName>
+          <GroupName>ntag_i2c_plus/HAL_I2C</GroupName>
+          <Files>
+            <File>
+              <FileName>i2c_kinetis_fsl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_I2C/i2c_kinetis_fsl.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_ISR/inc</GroupName>
+          <Files>
+            <File>
+              <FileName>HAL_ISR_callback_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc/HAL_ISR_callback_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>HAL_ISR_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/inc/HAL_ISR_driver.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_ISR</GroupName>
+          <Files>
+            <File>
+              <FileName>isr_driver_intern.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_driver_intern.h</FilePath>
+            </File>
+            <File>
+              <FileName>isr_kinetis_intern.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_kinetis_intern.h</FilePath>
+            </File>
+            <File>
+              <FileName>isr_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_common.c</FilePath>
+            </File>
+            <File>
+              <FileName>isr_kinetis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_ISR/isr_kinetis.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_TMR/inc</GroupName>
           <Files>
             <File>
               <FileName>HAL_timer_driver.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/ntag_i2c_plus/HAL_TMR/inc/HAL_timer_driver.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>ntag_i2c_plus/HAL_TMR</GroupName>
+          <Files>
             <File>
               <FileName>timer_driver.c</FileName>
               <FileType>1</FileType>
@@ -1527,7 +1466,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>ntag_i2c_plus-ntag_i2c_plus_include</GroupName>
+          <GroupName>ntag_i2c_plus/inc</GroupName>
           <Files>
             <File>
               <FileName>global_types.h</FileName>
@@ -1545,6 +1484,11 @@
           <GroupName>device</GroupName>
           <Files>
             <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
               <FileName>K32L2B31A.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/K32L2B31A.h</FilePath>
@@ -1553,11 +1497,6 @@
               <FileName>K32L2B31A_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/K32L2B31A_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_K32L2B31A.c</FileName>
@@ -1572,97 +1511,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>utilities</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/fsl_assert.c</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1670,9 +1544,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_K32L2B31A.s</FileName>
+              <FileName>startup_K32L2B31A.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.s</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1683,6 +1557,11 @@
               <FileName>core_cm0plus.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm0plus.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -1700,19 +1579,14 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1720,29 +1594,9 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
+              <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1764,4 +1618,23 @@
       </Groups>
     </Target>
   </Targets>
+  <RTE>
+    <apis/>
+    <components/>
+    <files/>
+  </RTE>
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>&lt;Project Info&gt;</LayName>
+        <LayDesc/>
+        <LayUrl/>
+        <LayKeys/>
+        <LayCat/>
+        <LayLic/>
+        <LayTarg>0</LayTarg>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 </Project>

@@ -8,22 +8,22 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_MASTER_BASEADDR LPSPI3
-#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME kCLOCK_Lpspi3
-#define LPSPI_MASTER_CLK_FREQ (CLOCK_GetIpFreq(EXAMPLE_LPSPI_MASTER_CLOCK_NAME))
-#define EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT kLPSPI_Pcs1
+#define EXAMPLE_LPSPI_MASTER_BASEADDR         LPSPI3
+#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME       kCLOCK_Lpspi3
+#define LPSPI_MASTER_CLK_FREQ                 (CLOCK_GetIpFreq(EXAMPLE_LPSPI_MASTER_CLOCK_NAME))
+#define EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE     (kCLOCK_IpSrcFircAsync)
+#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT     kLPSPI_Pcs1
 #define EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER kLPSPI_MasterPcs1
 
 #define EXAMPLE_LPSPI_DEALY_COUNT 0xfffff
-#define TRANSFER_SIZE 64U         /*! Transfer dataSize */
+#define TRANSFER_SIZE     64U     /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -39,12 +39,20 @@ uint8_t masterRxData[TRANSFER_SIZE] = {0U};
 uint8_t masterTxData[TRANSFER_SIZE] = {0U};
 
 lpspi_master_handle_t g_m_handle;
-volatile bool isTransferCompleted = false;
+volatile bool isTransferCompleted  = false;
+volatile uint32_t g_systickCounter = 20U;
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 
+void SysTick_Handler(void)
+{
+    if (g_systickCounter != 0U)
+    {
+        g_systickCounter--;
+    }
+}
 
 void LPSPI_MasterUserCallback(LPSPI_Type *base, lpspi_master_handle_t *handle, status_t status, void *userData)
 {
@@ -87,21 +95,9 @@ int main(void)
     lpspi_transfer_t masterXfer;
 
     /*Master config*/
-    masterConfig.baudRate     = TRANSFER_BAUDRATE;
-    masterConfig.bitsPerFrame = 8 * TRANSFER_SIZE;
-    masterConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
-    masterConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
-    masterConfig.direction    = kLPSPI_MsbFirst;
-
-    masterConfig.pcsToSckDelayInNanoSec        = 1000000000 / masterConfig.baudRate;
-    masterConfig.lastSckToPcsDelayInNanoSec    = 1000000000 / masterConfig.baudRate;
-    masterConfig.betweenTransferDelayInNanoSec = 1000000000 / masterConfig.baudRate;
-
-    masterConfig.whichPcs           = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
-    masterConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
-
-    masterConfig.pinCfg        = kLPSPI_SdiInSdoOut;
-    masterConfig.dataOutConfig = kLpspiDataOutRetained;
+    LPSPI_MasterGetDefaultConfig(&masterConfig);
+    masterConfig.baudRate = TRANSFER_BAUDRATE;
+    masterConfig.whichPcs = EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT;
 
     srcClock_Hz = LPSPI_MASTER_CLK_FREQ;
     LPSPI_MasterInit(EXAMPLE_LPSPI_MASTER_BASEADDR, &masterConfig, srcClock_Hz);
@@ -136,7 +132,7 @@ int main(void)
         masterXfer.rxData   = NULL;
         masterXfer.dataSize = TRANSFER_SIZE;
         masterXfer.configFlags =
-            EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER | kLPSPI_MasterPcsContinuous | kLPSPI_SlaveByteSwap;
+            EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER | kLPSPI_MasterPcsContinuous | kLPSPI_MasterByteSwap;
 
         LPSPI_MasterTransferNonBlocking(EXAMPLE_LPSPI_MASTER_BASEADDR, &g_m_handle, &masterXfer);
 
@@ -146,9 +142,16 @@ int main(void)
         }
 
         /* Delay to wait slave is ready */
-        for (i = 0; i < EXAMPLE_LPSPI_DEALY_COUNT; i++)
+        if (SysTick_Config(SystemCoreClock / 1000U))
         {
-            __NOP();
+            while (1)
+            {
+            }
+        }
+        /* Delay 20 ms */
+        g_systickCounter = 20U;
+        while (g_systickCounter != 0U)
+        {
         }
 
         /* Start master transfer, receive data from slave */
@@ -157,7 +160,7 @@ int main(void)
         masterXfer.rxData   = masterRxData;
         masterXfer.dataSize = TRANSFER_SIZE;
         masterXfer.configFlags =
-            EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER | kLPSPI_MasterPcsContinuous | kLPSPI_SlaveByteSwap;
+            EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER | kLPSPI_MasterPcsContinuous | kLPSPI_MasterByteSwap;
 
         LPSPI_MasterTransferNonBlocking(EXAMPLE_LPSPI_MASTER_BASEADDR, &g_m_handle, &masterXfer);
 

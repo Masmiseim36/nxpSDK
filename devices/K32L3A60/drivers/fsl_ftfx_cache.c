@@ -1,6 +1,6 @@
 /*
  * Copyright 2013-2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -12,6 +12,11 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.flash"
+#endif
 
 /*!
  * @name Flash cache and speculation control defines
@@ -94,6 +99,11 @@ void mscm_flash_prefetch_speculation_enable(ftfx_cache_config_t *config, bool en
 void fmc_flash_prefetch_speculation_clear(ftfx_cache_config_t *config);
 #endif /* FLASH_PREFETCH_SPECULATION_IS_CONTROLLED_BY_FMC */
 
+#if FTFx_DRIVER_IS_FLASH_RESIDENT
+static void ftfx_common_bit_operation_command_sequence(
+    ftfx_cache_config_t *config, FTFx_REG32_ACCESS_TYPE base, uint32_t bitMask, uint32_t bitShift, uint32_t bitValue);
+#endif /* FTFx_DRIVER_IS_FLASH_RESIDENT */
+
 #if FTFx_DRIVER_IS_FLASH_RESIDENT && FLASH_IS_CACHE_INVALIDATION_AVAILABLE
 /*! @brief Copy flash_cache_clear_command() to RAM*/
 static void ftfx_copy_common_bit_operation_to_ram(uint32_t *ftfxCommonBitOperation);
@@ -147,15 +157,16 @@ status_t FTFx_CACHE_Init(ftfx_cache_config_t *config)
 
 /* copy required flash commands to RAM */
 #if FTFx_DRIVER_IS_FLASH_RESIDENT && FLASH_IS_CACHE_INVALIDATION_AVAILABLE
-    if (NULL == config->comBitOperFuncAddr)
+    if (NULL == config->bitOperFuncAddr.callFlashCommand)
     {
 #if FTFx_DRIVER_IS_EXPORTED
         return kStatus_FTFx_ExecuteInRamFunctionNotReady;
 #else
-        config->comBitOperFuncAddr = s_ftfxCommonBitOperation;
+        config->bitOperFuncAddr.commadAddr = (uint32_t)s_ftfxCommonBitOperation;
 #endif /* FTFx_DRIVER_IS_EXPORTED */
     }
-    ftfx_copy_common_bit_operation_to_ram(config->comBitOperFuncAddr);
+
+    ftfx_copy_common_bit_operation_to_ram((uint32_t *)config->bitOperFuncAddr.commadAddr);
 #endif /* FLASH_IS_CACHE_INVALIDATION_AVAILABLE && FTFx_DRIVER_IS_FLASH_RESIDENT */
 
     return kStatus_FTFx_Success;
@@ -291,7 +302,7 @@ status_t FTFx_CACHE_PflashGetPrefetchSpeculation(ftfx_prefetch_speculation_statu
 #if FLASH_PREFETCH_SPECULATION_IS_CONTROLLED_BY_MCM
     {
         uint32_t value = MCM0_CACHE_REG;
-        if (0u != (value & MCM_PLACR_DFCS_MASK))
+        if (0U != (value & MCM_PLACR_DFCS_MASK))
         {
             /* Speculation buffer is off. */
             speculationStatus->instructionOff = true;
@@ -300,7 +311,7 @@ status_t FTFx_CACHE_PflashGetPrefetchSpeculation(ftfx_prefetch_speculation_statu
         else
         {
             /* Speculation buffer is on for instruction. */
-            if (0u == (value & MCM_PLACR_EFDS_MASK))
+            if (0U == (value & MCM_PLACR_EFDS_MASK))
             {
                 /* Speculation buffer is off for data. */
                 speculationStatus->dataOff = true;
@@ -310,12 +321,12 @@ status_t FTFx_CACHE_PflashGetPrefetchSpeculation(ftfx_prefetch_speculation_statu
 #elif FLASH_PREFETCH_SPECULATION_IS_CONTROLLED_BY_FMC
     {
         uint32_t value = FMC_CACHE_REG;
-        if (!(value & FMC_CACHE_B0DPE_MASK))
+        if (0U == (value & FMC_CACHE_B0DPE_MASK))
         {
             /* Do not prefetch in response to data references. */
             speculationStatus->dataOff = true;
         }
-        if (!(value & FMC_CACHE_B0IPE_MASK))
+        if (0U == (value & FMC_CACHE_B0IPE_MASK))
         {
             /* Do not prefetch in response to instruction fetches. */
             speculationStatus->instructionOff = true;
@@ -324,7 +335,7 @@ status_t FTFx_CACHE_PflashGetPrefetchSpeculation(ftfx_prefetch_speculation_statu
 #elif FLASH_PREFETCH_SPECULATION_IS_CONTROLLED_BY_MSCM
     {
         uint32_t value = MSCM_OCMDR0_REG;
-        if (value & MSCM_OCMDR_OCMC1_DFCS_MASK)
+        if (0U != (value & MSCM_OCMDR_OCMC1_DFCS_MASK))
         {
             /* Speculation buffer is off. */
             speculationStatus->instructionOff = true;
@@ -333,7 +344,7 @@ status_t FTFx_CACHE_PflashGetPrefetchSpeculation(ftfx_prefetch_speculation_statu
         else
         {
             /* Speculation buffer is on for instruction. */
-            if (value & MSCM_OCMDR_OCMC1_DFDS_MASK)
+            if (0U != (value & MSCM_OCMDR_OCMC1_DFDS_MASK))
             {
                 /* Speculation buffer is off for data. */
                 speculationStatus->dataOff = true;
@@ -356,6 +367,23 @@ static void ftfx_copy_common_bit_operation_to_ram(uint32_t *ftfxCommonBitOperati
 }
 #endif /* FTFx_DRIVER_IS_FLASH_RESIDENT && FLASH_IS_CACHE_INVALIDATION_AVAILABLE */
 
+#if FTFx_DRIVER_IS_FLASH_RESIDENT
+static void ftfx_common_bit_operation_command_sequence(
+    ftfx_cache_config_t *config, FTFx_REG32_ACCESS_TYPE base, uint32_t bitMask, uint32_t bitShift, uint32_t bitValue)
+{
+    uint32_t *ftfxCommonBitOperationAddr;
+    ftfxCommonBitOperationAddr = &config->bitOperFuncAddr.commadAddr;
+    /* Since the value of ARM function pointer is always odd, but the real start
+     * address
+     * of function memory should be even, that's why +1 operation exist. */
+    *ftfxCommonBitOperationAddr += 1UL;
+    callftfxCommonBitOperation_t ftfxCommonBitOperationCommand = config->bitOperFuncAddr.callFlashCommand;
+    /* Workround for some devices which doesn't need this function */
+    ftfxCommonBitOperationCommand((FTFx_REG32_ACCESS_TYPE)base, bitMask, bitShift, bitValue);
+    *ftfxCommonBitOperationAddr -= 1UL;
+}
+#endif /*FTFx_DRIVER_IS_FLASH_RESIDENT*/
+
 #if FLASH_CACHE_IS_CONTROLLED_BY_MCM
 /*! @brief Performs the cache clear to the flash by MCM.*/
 void mcm_flash_cache_clear(ftfx_cache_config_t *config)
@@ -369,11 +397,9 @@ void mcm_flash_cache_clear(ftfx_cache_config_t *config)
 #endif
 
 #if FTFx_DRIVER_IS_FLASH_RESIDENT
-    /* Since the value of ARM function pointer is always odd, but the real start address
-     * of function memory should be even, that's why +1 operation exist. */
-    callftfxCommonBitOperation_t callftfxCommonBitOperation =
-        (callftfxCommonBitOperation_t)((uint32_t)config->comBitOperFuncAddr + 1U);
-    callftfxCommonBitOperation(regBase, MCM_CACHE_CLEAR_MASK, MCM_CACHE_CLEAR_SHIFT, 1U);
+    /* calling flash command sequence function to execute the command */
+    ftfx_common_bit_operation_command_sequence(config, regBase, MCM_CACHE_CLEAR_MASK, MCM_CACHE_CLEAR_SHIFT, 1UL);
+
 #else  /* !FTFx_DRIVER_IS_FLASH_RESIDENT */
     *regBase |= MCM_CACHE_CLEAR_MASK;
 
@@ -395,20 +421,18 @@ void mscm_flash_cache_clear(ftfx_cache_config_t *config)
 /* For device with FlexNVM support, the OCMDR[1] is used to cache Dflash.
  * For device with secondary flash support, the OCMDR[1] is used to cache secondary Pflash. */
 #if FTFx_DRIVER_IS_FLASH_RESIDENT
-    /* Since the value of ARM function pointer is always odd, but the real start address
-     * of function memory should be even, that's why +1 operation exist. */
-    callftfxCommonBitOperation_t callftfxCommonBitOperation =
-        (callftfxCommonBitOperation_t)((uint32_t)config->comBitOperFuncAddr + 1);
     switch (config->flashMemoryIndex)
     {
         case kFLASH_MemoryIndexSecondaryFlash:
-            callftfxCommonBitOperation((FTFx_REG32_ACCESS_TYPE)&MSCM_OCMDR1_REG, MSCM_CACHE_CLEAR_MASK,
-                                       MSCM_CACHE_CLEAR_SHIFT, setValue);
+            /* calling flash command sequence function to execute the command */
+            ftfx_common_bit_operation_command_sequence(config, (FTFx_REG32_ACCESS_TYPE)&MSCM_OCMDR1_REG,
+                                                       MSCM_CACHE_CLEAR_MASK, MSCM_CACHE_CLEAR_SHIFT, setValue);
             break;
         case kFLASH_MemoryIndexPrimaryFlash:
         default:
-            callftfxCommonBitOperation((FTFx_REG32_ACCESS_TYPE)&MSCM_OCMDR0_REG, MSCM_CACHE_CLEAR_MASK,
-                                       MSCM_CACHE_CLEAR_SHIFT, setValue);
+            /* calling flash command sequence function to execute the command */
+            ftfx_common_bit_operation_command_sequence(config, (FTFx_REG32_ACCESS_TYPE)&MSCM_OCMDR0_REG,
+                                                       MSCM_CACHE_CLEAR_MASK, MSCM_CACHE_CLEAR_SHIFT, setValue);
             break;
     }
 #else  /* !FTFx_DRIVER_IS_FLASH_RESIDENT */
@@ -438,12 +462,9 @@ void mscm_flash_cache_clear(ftfx_cache_config_t *config)
 void fmc_flash_cache_clear(ftfx_cache_config_t *config)
 {
 #if FTFx_DRIVER_IS_FLASH_RESIDENT
-    /* Since the value of ARM function pointer is always odd, but the real start address
-     * of function memory should be even, that's why +1 operation exist. */
-    callftfxCommonBitOperation_t callftfxCommonBitOperation =
-        (callftfxCommonBitOperation_t)((uint32_t)config->comBitOperFuncAddr + 1);
-    callftfxCommonBitOperation((FTFx_REG32_ACCESS_TYPE)&FMC_CACHE_REG, FMC_CACHE_CLEAR_MASK, FMC_CACHE_CLEAR_SHIFT,
-                               0xFU);
+    /* calling flash command sequence function to execute the command */
+    ftfx_common_bit_operation_command_sequence(config, (FTFx_REG32_ACCESS_TYPE)&FMC_CACHE_REG, FMC_CACHE_CLEAR_MASK,
+                                               FMC_CACHE_CLEAR_SHIFT, 0xFUL);
 #else  /* !FTFx_DRIVER_IS_FLASH_RESIDENT */
     FMC_CACHE_REG = (FMC_CACHE_REG & (~FMC_CACHE_CLEAR_MASK)) | FMC_CACHE_CLEAR(~0);
     /* Memory barriers for good measure.
@@ -472,20 +493,19 @@ void mscm_flash_prefetch_speculation_enable(ftfx_cache_config_t *config, bool en
 /* For device with FlexNVM support, the OCMDR[1] is used to prefetch Dflash.
  * For device with secondary flash support, the OCMDR[1] is used to prefetch secondary Pflash. */
 #if FTFx_DRIVER_IS_FLASH_RESIDENT
-    /* Since the value of ARM function pointer is always odd, but the real start address
-     * of function memory should be even, that's why +1 operation exist. */
-    callftfxCommonBitOperation_t callftfxCommonBitOperation =
-        (callftfxCommonBitOperation_t)((uint32_t)config->comBitOperFuncAddr + 1);
+
     switch (config->flashMemoryIndex)
     {
         case 1:
-            callftfxCommonBitOperation((FTFx_REG32_ACCESS_TYPE)&MSCM_OCMDR1_REG, MSCM_SPECULATION_SET_MASK,
-                                       MSCM_SPECULATION_SET_SHIFT, setValue);
+            /* calling flash command sequence function to execute the command */
+            ftfx_common_bit_operation_command_sequence(config, (FTFx_REG32_ACCESS_TYPE)&MSCM_OCMDR1_REG,
+                                                       MSCM_SPECULATION_SET_MASK, MSCM_SPECULATION_SET_SHIFT, setValue);
             break;
         case 0:
         default:
-            callftfxCommonBitOperation((FTFx_REG32_ACCESS_TYPE)&MSCM_OCMDR0_REG, MSCM_SPECULATION_SET_MASK,
-                                       MSCM_SPECULATION_SET_SHIFT, setValue);
+            /* calling flash command sequence function to execute the command */
+            ftfx_common_bit_operation_command_sequence(config, (FTFx_REG32_ACCESS_TYPE)&MSCM_OCMDR0_REG,
+                                                       MSCM_SPECULATION_SET_MASK, MSCM_SPECULATION_SET_SHIFT, setValue);
             break;
     }
 #else  /* !FTFx_DRIVER_IS_FLASH_RESIDENT */
@@ -515,12 +535,9 @@ void mscm_flash_prefetch_speculation_enable(ftfx_cache_config_t *config, bool en
 void fmc_flash_prefetch_speculation_clear(ftfx_cache_config_t *config)
 {
 #if FTFx_DRIVER_IS_FLASH_RESIDENT
-    /* Since the value of ARM function pointer is always odd, but the real start address
-     * of function memory should be even, that's why +1 operation exist. */
-    callftfxCommonBitOperation_t callftfxCommonBitOperation =
-        (callftfxCommonBitOperation_t)((uint32_t)config->comBitOperFuncAddr + 1);
-    callftfxCommonBitOperation((FTFx_REG32_ACCESS_TYPE)&FMC_SPECULATION_INVALIDATE_REG, FMC_SPECULATION_INVALIDATE_MASK,
-                               FMC_SPECULATION_INVALIDATE_SHIFT, 1U);
+    /* calling flash command sequence function to execute the command */
+    ftfx_common_bit_operation_command_sequence(config, (FTFx_REG32_ACCESS_TYPE)&FMC_SPECULATION_INVALIDATE_REG,
+                                               FMC_SPECULATION_INVALIDATE_MASK, FMC_SPECULATION_INVALIDATE_SHIFT, 1UL);
 #else  /* !FTFx_DRIVER_IS_FLASH_RESIDENT */
     FMC_SPECULATION_INVALIDATE_REG |= FMC_SPECULATION_INVALIDATE_MASK;
     /* Memory barriers for good measure.

@@ -9,9 +9,9 @@ outputs the DAC output voltage through DAC output pin.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -46,7 +46,4 @@ Input value is 200
 DAC out: 200
 
 Then user can measure the DAC output pin to check responding voltage.
-
-Customization options
-=====================
 

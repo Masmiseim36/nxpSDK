@@ -14,11 +14,12 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v7.0
 processor: K32L3A60xxx
 package_id: K32L3A60VPJ1A
 mcu_data: ksdk2_0
-processor_version: 0.0.0
+processor_version: 0.0.1
+board: FRDM-K32L3A6
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */

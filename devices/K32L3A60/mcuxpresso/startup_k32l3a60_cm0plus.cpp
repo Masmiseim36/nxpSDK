@@ -1,10 +1,10 @@
 //*****************************************************************************
 // K32L3A60_cm0plus startup code for use with MCUXpresso IDE
 //
-// Version : 280619
+// Version : 160420
 //*****************************************************************************
 //
-// Copyright 2016-2019 NXP
+// Copyright 2016-2020 NXP
 // All rights reserved.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -226,6 +226,9 @@ extern void _vStackTop(void);
 // The vector table.
 // This relies on the linker script to place at correct location in memory.
 //*****************************************************************************
+
+
+
 extern void (* const g_pfnVectors[])(void);
 extern void * __Vectors __attribute__ ((alias ("g_pfnVectors")));
 
@@ -314,6 +317,7 @@ void (* const g_pfnVectors[])(void) = {
     LPADC0_IRQHandler,                   // 77: LPADC0 interrupt (INTMUX1 source IRQ29)
     LPCMP0_IRQHandler,                   // 78: LPCMP0 interrupt (INTMUX1 source IRQ30)
     LPDAC0_IRQHandler,                   // 79: LPDAC0 interrupt (INTMUX1 source IRQ31)
+
 
 }; /* End of g_pfnVectors */
 

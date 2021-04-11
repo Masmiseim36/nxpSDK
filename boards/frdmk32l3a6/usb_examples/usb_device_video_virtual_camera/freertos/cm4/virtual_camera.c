@@ -5,7 +5,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -21,12 +23,11 @@
 #include "video_data.h"
 
 #include "fsl_device_registers.h"
+#include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
-#include "fsl_debug_console.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
@@ -35,7 +36,6 @@
 #include "usb_phy.h"
 #endif
 
-#include "pin_mux.h"
 #if defined(FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT > 0)
 #include "fsl_intmux.h"
 #endif
@@ -69,20 +69,30 @@ extern const uint32_t g_UsbDeviceVideoMjpegLength;
 
 extern usb_device_class_struct_t g_UsbDeviceVideoVirtualCameraConfig;
 
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static usb_device_video_probe_and_commit_controls_struct_t s_ProbeStruct;
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static usb_device_video_probe_and_commit_controls_struct_t s_CommitStruct;
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static usb_device_video_still_probe_and_commit_controls_struct_t s_StillProbeStruct;
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static usb_device_video_still_probe_and_commit_controls_struct_t s_StillCommitStruct;
-USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint32_t s_ClassRequestBuffer[(sizeof(usb_device_video_probe_and_commit_controls_struct_t) >> 2U) + 1U];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static usb_device_video_probe_and_commit_controls_struct_t s_ProbeStruct;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static usb_device_video_probe_and_commit_controls_struct_t s_CommitStruct;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static usb_device_video_still_probe_and_commit_controls_struct_t s_StillProbeStruct;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static usb_device_video_still_probe_and_commit_controls_struct_t s_StillCommitStruct;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint32_t s_ClassRequestBuffer[(sizeof(usb_device_video_probe_and_commit_controls_struct_t) >> 2U) + 1U];
+/* this buffer is used to do transfer */
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_ImageBuffer[HS_STREAM_IN_PACKET_SIZE];
 usb_video_virtual_camera_struct_t g_UsbDeviceVideoVirtualCamera;
 
 usb_device_class_config_struct_t g_UsbDeviceVideoConfig[1] = {{
-    USB_DeviceVideoCallback, (class_handle_t)NULL, &g_UsbDeviceVideoVirtualCameraConfig,
+    USB_DeviceVideoCallback,
+    (class_handle_t)NULL,
+    &g_UsbDeviceVideoVirtualCameraConfig,
 }};
 
 usb_device_class_config_list_struct_t g_UsbDeviceVideoConfigList = {
-    g_UsbDeviceVideoConfig, USB_DeviceCallback, 1U,
+    g_UsbDeviceVideoConfig,
+    USB_DeviceCallback,
+    1U,
 };
 
 /*******************************************************************************
@@ -119,7 +129,7 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
 #if defined(__GIC_PRIO_BITS)
@@ -144,16 +154,18 @@ static void USB_DeviceVideoPrepareVideoData(void)
     usb_device_video_mjpeg_payload_header_struct_t *payloadHeader;
     uint32_t maxPacketSize;
     uint32_t temp32dwFrameInterval;
-
+    /* update the current time counter, add 1 ms in this case */
     g_UsbDeviceVideoVirtualCamera.currentTime += 10000U;
-
+    /* get payload header buffer from imageBuffer */
     payloadHeader = (usb_device_video_mjpeg_payload_header_struct_t *)&g_UsbDeviceVideoVirtualCamera.imageBuffer[0];
-
-    payloadHeader->bHeaderLength = sizeof(usb_device_video_mjpeg_payload_header_struct_t);
+    /* set payload header length */
+    payloadHeader->bHeaderLength                = sizeof(usb_device_video_mjpeg_payload_header_struct_t);
     payloadHeader->headerInfoUnion.bmheaderInfo = 0U;
+    /* set frame id */
     payloadHeader->headerInfoUnion.headerInfoBits.frameIdentifier = g_UsbDeviceVideoVirtualCamera.currentFrameId;
     g_UsbDeviceVideoVirtualCamera.imageBufferLength = sizeof(usb_device_video_mjpeg_payload_header_struct_t);
 
+    /* the current frame need to be still image */
     if (g_UsbDeviceVideoVirtualCamera.stillImageTransmission)
     {
         payloadHeader->headerInfoUnion.headerInfoBits.stillImage = 1U;
@@ -166,32 +178,42 @@ static void USB_DeviceVideoPrepareVideoData(void)
             USB_LONG_FROM_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoVirtualCamera.commitStruct->dwMaxPayloadTransferSize);
     }
 
+    /* wait for the next frame interval */
     if (g_UsbDeviceVideoVirtualCamera.waitForNewInterval)
     {
         temp32dwFrameInterval =
             USB_LONG_FROM_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoVirtualCamera.commitStruct->dwFrameInterval);
+        /* the current time is still in transferred frame, return to continue waiting */
         if (g_UsbDeviceVideoVirtualCamera.currentTime < temp32dwFrameInterval)
         {
             return;
         }
-        else
+        else /* next frame time */
         {
-            g_UsbDeviceVideoVirtualCamera.currentTime = 0U;
-            g_UsbDeviceVideoVirtualCamera.waitForNewInterval = 0U;
+            /* before the new frame starts transfer, set endOfFrame of the current frame is 1, this frame may not have payload */
             payloadHeader->headerInfoUnion.headerInfoBits.endOfFrame = 1U;
-            g_UsbDeviceVideoVirtualCamera.stillImageTransmission = 0U;
+            /* prepare to transfer new frame, reset the current time */
+            g_UsbDeviceVideoVirtualCamera.currentTime                = 0U;
+            g_UsbDeviceVideoVirtualCamera.waitForNewInterval         = 0U;
+            /* clear the still image transmission flag */
+            g_UsbDeviceVideoVirtualCamera.stillImageTransmission     = 0U;
+            /* toggle frame id for the next frame */
             g_UsbDeviceVideoVirtualCamera.currentFrameId ^= 1U;
+            /* next frame is still image */
             if (USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_TRANSMIT_STILL_IMAGE ==
                 g_UsbDeviceVideoVirtualCamera.stillImageTriggerControl)
             {
+                /* reset the image trigger control as normal operation */
                 g_UsbDeviceVideoVirtualCamera.stillImageTriggerControl =
                     USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_NORMAL_OPERATION;
+                /* still image starts transfer */
                 g_UsbDeviceVideoVirtualCamera.stillImageTransmission = 1U;
             }
             return;
         }
     }
 
+    /* copy paypoad to image buffer, copy size is maxPacketSize every time */
     for (; g_UsbDeviceVideoVirtualCamera.imageBufferLength < maxPacketSize;
          g_UsbDeviceVideoVirtualCamera.imageBufferLength++)
     {
@@ -199,30 +221,39 @@ static void USB_DeviceVideoPrepareVideoData(void)
             g_UsbDeviceVideoMjpegData[g_UsbDeviceVideoVirtualCamera.imageIndex];
         g_UsbDeviceVideoVirtualCamera.imageIndex++;
 
+        /* the end of one frame */
         if ((0xFFU == g_UsbDeviceVideoMjpegData[g_UsbDeviceVideoVirtualCamera.imageIndex - 2]) &&
             (0xD9U == g_UsbDeviceVideoMjpegData[g_UsbDeviceVideoVirtualCamera.imageIndex - 1U]))
         {
+            /* get the negotiated frame interval */
             temp32dwFrameInterval =
                 USB_LONG_FROM_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoVirtualCamera.commitStruct->dwFrameInterval);
+            /* back to the start of stream mjpeg data if reach to the end of the video data buffer */
             if (g_UsbDeviceVideoVirtualCamera.imageIndex >= g_UsbDeviceVideoMjpegLength)
             {
                 g_UsbDeviceVideoVirtualCamera.imageIndex = 0U;
             }
+            /* finish to transfer this frame, if there is still time left, start transfer in next frame interval */
             if (g_UsbDeviceVideoVirtualCamera.currentTime < temp32dwFrameInterval)
             {
                 g_UsbDeviceVideoVirtualCamera.waitForNewInterval = 1U;
             }
-            else
+            else /* the current fame is finished, next frame can start */
             {
-                g_UsbDeviceVideoVirtualCamera.currentTime = 0U;
+                /* before the new frame starts transfer, set endOfFrame of the current frame is 1, this frame may not have payload */
                 payloadHeader->headerInfoUnion.headerInfoBits.endOfFrame = 1U;
-                g_UsbDeviceVideoVirtualCamera.stillImageTransmission = 0U;
+                /* prepare to transfer new frame, reset the current time */
+                g_UsbDeviceVideoVirtualCamera.currentTime                = 0U;
+                g_UsbDeviceVideoVirtualCamera.stillImageTransmission     = 0U;
+                /* toggle frame id for the next frame */
                 g_UsbDeviceVideoVirtualCamera.currentFrameId ^= 1U;
                 if (USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_TRANSMIT_STILL_IMAGE ==
                     g_UsbDeviceVideoVirtualCamera.stillImageTriggerControl)
                 {
+                    /* reset the image trigger control as normal operation */
                     g_UsbDeviceVideoVirtualCamera.stillImageTriggerControl =
                         USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_NORMAL_OPERATION;
+                    /* still image starts transfer */
                     g_UsbDeviceVideoVirtualCamera.stillImageTransmission = 1U;
                 }
             }
@@ -267,7 +298,7 @@ static usb_status_t USB_DeviceVideoRequest(class_handle_t handle, uint32_t event
                                                g_UsbDeviceVideoVirtualCamera.probeStruct->dwMaxPayloadTransferSize);
             }
             g_UsbDeviceVideoVirtualCamera.probeStruct->bFormatIndex = probe->bFormatIndex;
-            g_UsbDeviceVideoVirtualCamera.probeStruct->bFrameIndex = probe->bFrameIndex;
+            g_UsbDeviceVideoVirtualCamera.probeStruct->bFrameIndex  = probe->bFrameIndex;
             break;
         case USB_DEVICE_VIDEO_GET_CUR_VS_PROBE_CONTROL:
             request->buffer = (uint8_t *)g_UsbDeviceVideoVirtualCamera.probeStruct;
@@ -301,7 +332,7 @@ static usb_status_t USB_DeviceVideoRequest(class_handle_t handle, uint32_t event
                                                g_UsbDeviceVideoVirtualCamera.commitStruct->dwMaxPayloadTransferSize);
             }
             g_UsbDeviceVideoVirtualCamera.commitStruct->bFormatIndex = commit->bFormatIndex;
-            g_UsbDeviceVideoVirtualCamera.commitStruct->bFrameIndex = commit->bFrameIndex;
+            g_UsbDeviceVideoVirtualCamera.commitStruct->bFrameIndex  = commit->bFrameIndex;
             break;
         case USB_DEVICE_VIDEO_GET_CUR_VS_COMMIT_CONTROL:
             request->buffer = (uint8_t *)g_UsbDeviceVideoVirtualCamera.commitStruct;
@@ -329,7 +360,7 @@ static usb_status_t USB_DeviceVideoRequest(class_handle_t handle, uint32_t event
             }
 
             g_UsbDeviceVideoVirtualCamera.stillProbeStruct->bFormatIndex = still_probe->bFormatIndex;
-            g_UsbDeviceVideoVirtualCamera.stillProbeStruct->bFrameIndex = still_probe->bFrameIndex;
+            g_UsbDeviceVideoVirtualCamera.stillProbeStruct->bFrameIndex  = still_probe->bFrameIndex;
             break;
         case USB_DEVICE_VIDEO_GET_CUR_VS_STILL_PROBE_CONTROL:
             request->buffer = (uint8_t *)g_UsbDeviceVideoVirtualCamera.stillProbeStruct;
@@ -357,7 +388,7 @@ static usb_status_t USB_DeviceVideoRequest(class_handle_t handle, uint32_t event
             }
 
             g_UsbDeviceVideoVirtualCamera.stillCommitStruct->bFormatIndex = still_commit->bFormatIndex;
-            g_UsbDeviceVideoVirtualCamera.stillCommitStruct->bFrameIndex = still_commit->bFrameIndex;
+            g_UsbDeviceVideoVirtualCamera.stillCommitStruct->bFrameIndex  = still_commit->bFrameIndex;
             break;
         case USB_DEVICE_VIDEO_GET_CUR_VS_STILL_COMMIT_CONTROL:
             request->buffer = (uint8_t *)g_UsbDeviceVideoVirtualCamera.stillCommitStruct;
@@ -409,7 +440,7 @@ static usb_status_t USB_DeviceVideoCallback(class_handle_t handle, uint32_t even
                 if (request->length <= sizeof(usb_device_video_probe_and_commit_controls_struct_t))
                 {
                     request->buffer = (uint8_t *)g_UsbDeviceVideoVirtualCamera.classRequestBuffer;
-                    error = kStatus_USB_Success;
+                    error           = kStatus_USB_Success;
                 }
             }
             break;
@@ -428,22 +459,22 @@ static usb_status_t USB_DeviceVideoCallback(class_handle_t handle, uint32_t even
 /* Set to default state */
 static void USB_DeviceVideoApplicationSetDefault(void)
 {
-    g_UsbDeviceVideoVirtualCamera.speed = USB_SPEED_FULL;
-    g_UsbDeviceVideoVirtualCamera.attach = 0U;
+    g_UsbDeviceVideoVirtualCamera.speed                = USB_SPEED_FULL;
+    g_UsbDeviceVideoVirtualCamera.attach               = 0U;
     g_UsbDeviceVideoVirtualCamera.currentMaxPacketSize = HS_STREAM_IN_PACKET_SIZE;
-    g_UsbDeviceVideoVirtualCamera.imageBuffer = s_ImageBuffer;
-    g_UsbDeviceVideoVirtualCamera.probeStruct = &s_ProbeStruct;
-    g_UsbDeviceVideoVirtualCamera.commitStruct = &s_CommitStruct;
-    g_UsbDeviceVideoVirtualCamera.stillProbeStruct = &s_StillProbeStruct;
-    g_UsbDeviceVideoVirtualCamera.stillCommitStruct = &s_StillCommitStruct;
-    g_UsbDeviceVideoVirtualCamera.classRequestBuffer = &s_ClassRequestBuffer[0];
-    for(uint8_t i = 0; i < USB_VIDEO_VIRTUAL_CAMERA_INTERFACE_COUNT; i++)
+    g_UsbDeviceVideoVirtualCamera.imageBuffer          = s_ImageBuffer;
+    g_UsbDeviceVideoVirtualCamera.probeStruct          = &s_ProbeStruct;
+    g_UsbDeviceVideoVirtualCamera.commitStruct         = &s_CommitStruct;
+    g_UsbDeviceVideoVirtualCamera.stillProbeStruct     = &s_StillProbeStruct;
+    g_UsbDeviceVideoVirtualCamera.stillCommitStruct    = &s_StillCommitStruct;
+    g_UsbDeviceVideoVirtualCamera.classRequestBuffer   = &s_ClassRequestBuffer[0];
+    for (uint8_t i = 0; i < USB_VIDEO_VIRTUAL_CAMERA_INTERFACE_COUNT; i++)
     {
         g_UsbDeviceVideoVirtualCamera.currentInterfaceAlternateSetting[i] = 0;
     }
-    
+
     g_UsbDeviceVideoVirtualCamera.probeStruct->bFormatIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FORMAT_INDEX;
-    g_UsbDeviceVideoVirtualCamera.probeStruct->bFrameIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_INDEX;
+    g_UsbDeviceVideoVirtualCamera.probeStruct->bFrameIndex  = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_INDEX;
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_DEFAULT_INTERVAL,
                                    g_UsbDeviceVideoVirtualCamera.probeStruct->dwFrameInterval);
     USB_LONG_TO_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoVirtualCamera.currentMaxPacketSize,
@@ -452,7 +483,7 @@ static void USB_DeviceVideoApplicationSetDefault(void)
                                    g_UsbDeviceVideoVirtualCamera.probeStruct->dwMaxVideoFrameSize);
 
     g_UsbDeviceVideoVirtualCamera.commitStruct->bFormatIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FORMAT_INDEX;
-    g_UsbDeviceVideoVirtualCamera.commitStruct->bFrameIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_INDEX;
+    g_UsbDeviceVideoVirtualCamera.commitStruct->bFrameIndex  = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_INDEX;
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_DEFAULT_INTERVAL,
                                    g_UsbDeviceVideoVirtualCamera.commitStruct->dwFrameInterval);
     USB_LONG_TO_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoVirtualCamera.currentMaxPacketSize,
@@ -460,39 +491,39 @@ static void USB_DeviceVideoApplicationSetDefault(void)
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_MAX_FRAME_SIZE,
                                    g_UsbDeviceVideoVirtualCamera.commitStruct->dwMaxVideoFrameSize);
 
-    g_UsbDeviceVideoVirtualCamera.probeInfo = 0x03U;
-    g_UsbDeviceVideoVirtualCamera.probeLength = 26U;
-    g_UsbDeviceVideoVirtualCamera.commitInfo = 0x03U;
+    g_UsbDeviceVideoVirtualCamera.probeInfo    = 0x03U;
+    g_UsbDeviceVideoVirtualCamera.probeLength  = 26U;
+    g_UsbDeviceVideoVirtualCamera.commitInfo   = 0x03U;
     g_UsbDeviceVideoVirtualCamera.commitLength = 26U;
 
-    g_UsbDeviceVideoVirtualCamera.stillProbeStruct->bFormatIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FORMAT_INDEX;
-    g_UsbDeviceVideoVirtualCamera.stillProbeStruct->bFrameIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_INDEX;
+    g_UsbDeviceVideoVirtualCamera.stillProbeStruct->bFormatIndex      = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FORMAT_INDEX;
+    g_UsbDeviceVideoVirtualCamera.stillProbeStruct->bFrameIndex       = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_INDEX;
     g_UsbDeviceVideoVirtualCamera.stillProbeStruct->bCompressionIndex = 0x01U;
     USB_LONG_TO_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoVirtualCamera.currentMaxPacketSize,
                                    g_UsbDeviceVideoVirtualCamera.stillProbeStruct->dwMaxPayloadTransferSize);
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_MAX_FRAME_SIZE,
                                    g_UsbDeviceVideoVirtualCamera.stillProbeStruct->dwMaxVideoFrameSize);
 
-    g_UsbDeviceVideoVirtualCamera.stillCommitStruct->bFormatIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FORMAT_INDEX;
-    g_UsbDeviceVideoVirtualCamera.stillCommitStruct->bFrameIndex = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_INDEX;
+    g_UsbDeviceVideoVirtualCamera.stillCommitStruct->bFormatIndex      = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FORMAT_INDEX;
+    g_UsbDeviceVideoVirtualCamera.stillCommitStruct->bFrameIndex       = USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_INDEX;
     g_UsbDeviceVideoVirtualCamera.stillCommitStruct->bCompressionIndex = 0x01U;
     USB_LONG_TO_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoVirtualCamera.currentMaxPacketSize,
                                    g_UsbDeviceVideoVirtualCamera.stillCommitStruct->dwMaxPayloadTransferSize);
     USB_LONG_TO_LITTLE_ENDIAN_DATA(USB_VIDEO_VIRTUAL_CAMERA_MJPEG_FRAME_MAX_FRAME_SIZE,
                                    g_UsbDeviceVideoVirtualCamera.stillCommitStruct->dwMaxVideoFrameSize);
 
-    g_UsbDeviceVideoVirtualCamera.stillProbeInfo = 0x03U;
-    g_UsbDeviceVideoVirtualCamera.stillProbeLength = sizeof(s_StillProbeStruct);
-    g_UsbDeviceVideoVirtualCamera.stillCommitInfo = 0x03U;
+    g_UsbDeviceVideoVirtualCamera.stillProbeInfo    = 0x03U;
+    g_UsbDeviceVideoVirtualCamera.stillProbeLength  = sizeof(s_StillProbeStruct);
+    g_UsbDeviceVideoVirtualCamera.stillCommitInfo   = 0x03U;
     g_UsbDeviceVideoVirtualCamera.stillCommitLength = sizeof(s_StillCommitStruct);
 
-    g_UsbDeviceVideoVirtualCamera.currentTime = 0U;
-    g_UsbDeviceVideoVirtualCamera.currentFrameId = 0U;
+    g_UsbDeviceVideoVirtualCamera.currentTime                            = 0U;
+    g_UsbDeviceVideoVirtualCamera.currentFrameId                         = 0U;
     g_UsbDeviceVideoVirtualCamera.currentStreamInterfaceAlternateSetting = 0U;
-    g_UsbDeviceVideoVirtualCamera.imageBufferLength = 0U;
-    g_UsbDeviceVideoVirtualCamera.imageIndex = 0U;
-    g_UsbDeviceVideoVirtualCamera.waitForNewInterval = 0U;
-    g_UsbDeviceVideoVirtualCamera.stillImageTransmission = 0U;
+    g_UsbDeviceVideoVirtualCamera.imageBufferLength                      = 0U;
+    g_UsbDeviceVideoVirtualCamera.imageIndex                             = 0U;
+    g_UsbDeviceVideoVirtualCamera.waitForNewInterval                     = 0U;
+    g_UsbDeviceVideoVirtualCamera.stillImageTransmission                 = 0U;
     g_UsbDeviceVideoVirtualCamera.stillImageTriggerControl = USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_NORMAL_OPERATION;
 }
 
@@ -500,8 +531,8 @@ static void USB_DeviceVideoApplicationSetDefault(void)
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Success;
-    uint8_t *temp8 = (uint8_t *)param;
-    uint16_t *temp16 = (uint16_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
+    uint16_t *temp16   = (uint16_t *)param;
 
     switch (event)
     {
@@ -509,7 +540,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         {
             /* The device BUS reset signal detected */
             USB_DeviceVideoApplicationSetDefault();
-            g_UsbDeviceVideoVirtualCamera.attach = 0U;
+            g_UsbDeviceVideoVirtualCamera.attach               = 0U;
             g_UsbDeviceVideoVirtualCamera.currentConfiguration = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -531,13 +562,13 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
         case kUSB_DeviceEventSetConfiguration:
             if (0 == (*temp8))
             {
-                g_UsbDeviceVideoVirtualCamera.attach = 0U; 
+                g_UsbDeviceVideoVirtualCamera.attach               = 0U;
                 g_UsbDeviceVideoVirtualCamera.currentConfiguration = 0U;
             }
             else if (USB_VIDEO_VIRTUAL_CAMERA_CONFIGURE_INDEX == (*temp8))
             {
                 /* Set the configuration request */
-                g_UsbDeviceVideoVirtualCamera.attach = 1U;
+                g_UsbDeviceVideoVirtualCamera.attach               = 1U;
                 g_UsbDeviceVideoVirtualCamera.currentConfiguration = *temp8;
             }
             else
@@ -549,7 +580,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             if ((g_UsbDeviceVideoVirtualCamera.attach) && param)
             {
                 /* Set alternateSetting of the interface request */
-                uint8_t interface = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
+                uint8_t interface        = (uint8_t)((*temp16 & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*temp16 & 0x00FFU);
 
                 if (g_UsbDeviceVideoVirtualCamera.currentInterfaceAlternateSetting[interface] != alternateSetting)
@@ -574,7 +605,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 /* Get the current configuration request */
                 *temp8 = g_UsbDeviceVideoVirtualCamera.currentConfiguration;
-                error = kStatus_USB_Success;
+                error  = kStatus_USB_Success;
             }
             break;
         case kUSB_DeviceEventGetInterface:
@@ -646,6 +677,8 @@ static void USB_DeviceApplicationInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_UsbDeviceVideoVirtualCamera.deviceHandle);
 }
 

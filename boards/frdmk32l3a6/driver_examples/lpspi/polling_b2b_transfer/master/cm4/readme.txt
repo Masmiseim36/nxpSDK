@@ -9,10 +9,10 @@ The file 'lpspi_polling_b2b_transfer_master.c' includes the LPSPI master code.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- MCUXpresso  11.0.1
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -93,6 +93,3 @@ LPSPI transfer all data matched!
 
  Press any key to run again
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

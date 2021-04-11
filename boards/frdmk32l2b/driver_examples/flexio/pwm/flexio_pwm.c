@@ -9,20 +9,20 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_flexio.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define DEMO_TIME_DELAY_FOR_DUTY_CYCLE_UPDATE 100000U
-#define DEMO_FLEXIO_BASEADDR FLEXIO
-#define DEMO_FLEXIO_OUTPUTPIN 2U /* Select FXIO_D2 as PWM output */
-#define DEMO_FLEXIO_TIMER_CH 0U  /* Flexio timer0 used */
+#define DEMO_FLEXIO_BASEADDR                  FLEXIO
+#define DEMO_FLEXIO_OUTPUTPIN                 2U /* Select FXIO_D2 as PWM output */
+#define DEMO_FLEXIO_TIMER_CH                  0U /* Flexio timer0 used */
 
 #define DEMO_FLEXIO_CLOCK_FREQUENCY CLOCK_GetFreq(kCLOCK_McgIrc48MClk)
-#define DEMO_FLEXIO_FREQUENCY 200000U
+#define DEMO_FLEXIO_FREQUENCY       200000U
 #define FLEXIO_MAX_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 2U)
 #define FLEXIO_MIN_FREQUENCY (DEMO_FLEXIO_CLOCK_FREQUENCY / 256U)
 /*******************************************************************************
@@ -104,7 +104,6 @@ static void flexio_pwm_start(void)
  */
 int main(void)
 {
-    uint32_t i;
     uint32_t duty = 100;
     flexio_config_t fxioUserConfig;
 
@@ -129,10 +128,8 @@ int main(void)
         flexio_pwm_init(DEMO_FLEXIO_FREQUENCY, --duty);
         flexio_pwm_start();
 
-        for (i = 0; i < DEMO_TIME_DELAY_FOR_DUTY_CYCLE_UPDATE; i++)
-        {
-            __NOP();
-        }
+        /* Delay at least 100 PWM periods. */
+        SDK_DelayAtLeastUs((1000000U / DEMO_FLEXIO_FREQUENCY) * 100, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
         if (duty == 0)
         {

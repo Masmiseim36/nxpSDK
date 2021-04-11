@@ -19,10 +19,10 @@ RemoteExceptionEvent on the primary core.
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  8.2.1
-- Keil MDK  5.27
-- IAR embedded Workbench  8.32.3
-- MCUXpresso  11.0.1
+- GCC ARM Embedded  9.3.1
+- Keil MDK  5.33
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -65,6 +65,3 @@ Use the Stop and then the Start button to get it running again.
 .
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

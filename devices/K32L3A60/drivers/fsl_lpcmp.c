@@ -1,5 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  *
@@ -164,7 +165,7 @@ void LPCMP_Deinit(LPCMP_Type *base)
 void LPCMP_GetDefaultConfig(lpcmp_config_t *config)
 {
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
     config->enableStopMode      = false;
     config->enableOutputPin     = false;

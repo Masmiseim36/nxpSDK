@@ -1,5 +1,5 @@
 /*
- * Copyright  2017-2018 NXP
+ * Copyright  2017-2020 NXP
  * All rights reserved.
  *
  *
@@ -21,9 +21,9 @@
  */
 /*! @name Driver version */
 /*@{*/
-/*! @brief CAU3 driver version. Version 2.0.2.
+/*! @brief CAU3 driver version. Version 2.0.4.
  *
- * Current version: 2.0.2
+ * Current version: 2.0.4
  *
  * Change log:
  * - Version 2.0.0
@@ -34,8 +34,12 @@
  * - Version 2.0.2
  *   - Add FSL_CAU3_USE_HW_SEMA compile time macro. When enabled, all CAU3 API functions
  *     lock hw semaphore on function entry and release the hw semaphore on function return.
+ * - Version 2.0.3
+ *   - Fix MISRA C-2012 issue.
+ * - Version 2.0.4
+ *   - Fix MISRA C-2012 issue.
  */
-#define FSL_CAU3_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+#define FSL_CAU3_DRIVER_VERSION (MAKE_VERSION(2, 0, 4))
 /*@}*/
 
 /*! @brief Hardware semaphore usage by driver functions.
@@ -51,8 +55,8 @@
  */
 #if defined(FSL_FEATURE_SOC_SEMA42_COUNT) && (FSL_FEATURE_SOC_SEMA42_COUNT > 0)
 #include "fsl_sema42.h"
-#define FSL_CAU3_SEMA42_BASE SEMA420
-#define FSL_CAU3_SEMA42_GATE (1)
+#define FSL_CAU3_SEMA42_BASE       SEMA420
+#define FSL_CAU3_SEMA42_GATE       (1)
 #define FSL_CAU3_SEMA42_CLOCK_NAME kCLOCK_Sema420
 #else
 #error FSL_CAU3_USE_HW_SEMA requires SEMA42 semaphore.
@@ -122,7 +126,7 @@ typedef enum _cau3_hash_algo_t
 } cau3_hash_algo_t;
 
 /*! @brief CAU3 HASH Context size. */
-#define CAU3_SHA_BLOCK_SIZE 128                  /*!< internal buffer block size  */
+#define CAU3_SHA_BLOCK_SIZE  128U                /*!< internal buffer block size  */
 #define CAU3_HASH_BLOCK_SIZE CAU3_SHA_BLOCK_SIZE /*!< CAU3 hash block size  */
 
 /*! @brief CAU3 HASH Context size. */
@@ -280,6 +284,7 @@ status_t CAU3_LoadKeyInitVector(CAU3_Type *base, const uint8_t *iv, cau3_key_slo
  *
  * This configuration remains in effect until the next hardware reset.
  *
+ * @param base CAU3 base address
  * @param   taskDone indicates completion signal: CAU_[POLL, IRQ, EVENT, DMAREQ]
  *
  * @retval  status check from task completion: CAU_[OK, ERROR]
@@ -476,7 +481,7 @@ status_t CAU3_HASH_Init(CAU3_Type *base, cau3_hash_ctx_t *ctx, cau3_hash_algo_t 
  *
  * Add data to current HASH. This can be called repeatedly with an arbitrary amount of data to be
  * hashed. The functions blocks. If it returns kStatus_Success, the running hash or mac
- * has been updated (CAU3 has processed the input data), so the memory at @ref input pointer
+ * has been updated (CAU3 has processed the input data), so the memory at input pointer
  * can be released back to system. The context is updated with the running hash or mac
  * and with all necessary information to support possible context switch.
  *
@@ -493,6 +498,7 @@ status_t CAU3_HASH_Update(CAU3_Type *base, cau3_hash_ctx_t *ctx, const uint8_t *
  *
  * Outputs the final hash (computed by CAU3_HASH_Update()) and erases the context.
  *
+ * @param base CAU3 peripheral base address
  * @param[in,out] ctx Input hash context
  * @param[out] output Output hash data
  * @param[out] outputSize Output parameter storing the size of the output hash in bytes

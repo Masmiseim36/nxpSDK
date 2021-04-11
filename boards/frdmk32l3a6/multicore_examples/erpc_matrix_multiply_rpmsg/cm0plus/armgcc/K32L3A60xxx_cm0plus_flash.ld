@@ -4,13 +4,13 @@
 **     Compiler:            GNU C Compiler
 **     Reference manual:    K32L3ARM, Rev. 0 , 05/2019
 **     Version:             rev. 1.0, 2019-04-22
-**     Build:               b190628
+**     Build:               b200723
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -44,8 +44,10 @@ SECTIONS
   /* NOINIT section for rpmsg_sh_mem */
   .noinit_rpmsg_sh_mem (NOLOAD) : ALIGN(4)
   {
+     __RPMSG_SH_MEM_START__ = .;
      *(.noinit.$rpmsg_sh_mem*)
      . = ALIGN(4) ;
+     __RPMSG_SH_MEM_END__ = .;
   } > rpmsg_sh_mem
 
   /* The startup code goes first into internal flash */

@@ -14,7 +14,7 @@
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
-#include "serial_port_usb.h"
+#include "fsl_component_serial_port_usb.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

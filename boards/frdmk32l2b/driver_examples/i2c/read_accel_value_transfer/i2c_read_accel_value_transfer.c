@@ -7,30 +7,30 @@
  */
 
 /*  SDK Included Files */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define ACCEL_I2C_CLK_SRC I2C0_CLK_SRC
+#define ACCEL_I2C_CLK_SRC  I2C0_CLK_SRC
 #define ACCEL_I2C_CLK_FREQ CLOCK_GetFreq(I2C0_CLK_SRC)
 
 /* Accelerometer Reset PIN */
 #define BOARD_ACCEL_RESET_GPIO GPIOE
-#define BOARD_ACCEL_RESET_PIN 1U
-#define I2C_BAUDRATE 100000U
-#define FXOS8700_WHOAMI 0xC7U
-#define MMA8451_WHOAMI 0x1AU
-#define MMA8652_WHOAMI 0x4AU
-#define ACCEL_STATUS 0x00U
+#define BOARD_ACCEL_RESET_PIN  1U
+#define I2C_BAUDRATE       100000U
+#define FXOS8700_WHOAMI    0xC7U
+#define MMA8451_WHOAMI     0x1AU
+#define MMA8652_WHOAMI     0x4AU
+#define ACCEL_STATUS       0x00U
 #define ACCEL_XYZ_DATA_CFG 0x0EU
-#define ACCEL_CTRL_REG1 0x2AU
+#define ACCEL_CTRL_REG1    0x2AU
 /* FXOS8700 and MMA8451 have the same who_am_i register address. */
 #define ACCEL_WHOAMI_REG 0x0DU
 #define ACCEL_READ_TIMES 10U
@@ -48,7 +48,9 @@ static bool I2C_ReadAccelRegs(I2C_Type *base, uint8_t device_addr, uint8_t reg_a
  * Variables
  ******************************************************************************/
 
-/*  FXOS8700 and MMA8451 device address */
+uint8_t MSBshift = 8U;
+uint8_t LSBshift = 2U;
+/* FXOS8700, MMA8652 and MMA8451 device address */
 const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
 
 i2c_master_handle_t g_m_handle;
@@ -198,6 +200,7 @@ static bool I2C_ReadAccelWhoAmI(void)
             }
             else if (who_am_i_value == MMA8652_WHOAMI)
             {
+                LSBshift = 4U;
                 PRINTF("Found an MMA8652 on board , the device address is 0x%x . \r\n", masterXfer.slaveAddress);
                 return true;
             }
@@ -366,9 +369,9 @@ int main(void)
             I2C_ReadAccelRegs(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, ACCEL_STATUS, readBuff, 7);
 
             status0_value = readBuff[0];
-            x             = ((int16_t)(((readBuff[1] * 256U) | readBuff[2]))) / 4U;
-            y             = ((int16_t)(((readBuff[3] * 256U) | readBuff[4]))) / 4U;
-            z             = ((int16_t)(((readBuff[5] * 256U) | readBuff[6]))) / 4U;
+            x             = ((int16_t)(((readBuff[1] << MSBshift) | readBuff[2]))) >> LSBshift;
+            y             = ((int16_t)(((readBuff[3] << MSBshift) | readBuff[4]))) >> LSBshift;
+            z             = ((int16_t)(((readBuff[5] << MSBshift) | readBuff[6]))) >> LSBshift;
 
             PRINTF("status_reg = 0x%x , x = %5d , y = %5d , z = %5d \r\n", status0_value, x, y, z);
         }

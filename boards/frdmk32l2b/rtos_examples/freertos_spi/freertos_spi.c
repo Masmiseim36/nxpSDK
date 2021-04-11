@@ -17,17 +17,17 @@
 #include "fsl_debug_console.h"
 #include "fsl_spi.h"
 #include "fsl_spi_freertos.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_SPI_MASTER_BASE (SPI0_BASE)
 #define EXAMPLE_SPI_MASTER_IRQN (SPI0_IRQn)
-#define SPI_MASTER_CLK_SRC (SPI0_CLK_SRC)
-#define SPI_MASTER_CLK_FREQ CLOCK_GetFreq((SPI0_CLK_SRC))
+#define SPI_MASTER_CLK_SRC      (SPI0_CLK_SRC)
+#define SPI_MASTER_CLK_FREQ     CLOCK_GetFreq((SPI0_CLK_SRC))
 #ifndef EXAMPLE_SPI_MASTER_BASE
 #error Undefined SPI base address!
 #endif // ifndef EXAMPLE_SPI_MASTER_BASE
@@ -78,7 +78,7 @@ int main(void)
     PRINTF("Please be sure to externally connect together SOUT and SIN signals.\r\n");
     PRINTF("   SOUT     --    SIN  \r\n");
 
-    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 38, NULL, master_task_PRIORITY, NULL) !=
+    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 100, NULL, master_task_PRIORITY, NULL) !=
         pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");

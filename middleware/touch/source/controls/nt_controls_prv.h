@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -180,7 +180,7 @@ void _nt_control_clear_flag_all_elec(struct nt_control_data *control, uint32_t f
  *         _nt_control_get_electrodes_state function, and returns the first
  *         touched electrode.
  */
-uint32_t _nt_control_get_first_elec_touched(uint32_t current_state);
+uint32_t _nt_control_get_first_elec_touched(uint64_t current_state);
 
 /**
  * \internal
@@ -190,7 +190,7 @@ uint32_t _nt_control_get_first_elec_touched(uint32_t current_state);
  *         _nt_control_get_electrodes_state function, and returns the last
  *         touched electrode.
  */
-uint32_t _nt_control_get_last_elec_touched(uint32_t current_state);
+uint32_t _nt_control_get_last_elec_touched(uint64_t current_state);
 
 /**
  * \internal
@@ -200,7 +200,7 @@ uint32_t _nt_control_get_last_elec_touched(uint32_t current_state);
  *         _nt_control_get_electrodes_state function, and returns the number of
  *         touched electrodes.
  */
-uint32_t _nt_control_get_touch_count(uint32_t current_state);
+uint32_t _nt_control_get_touch_count(uint64_t current_state);
 
 /**
  * \internal
@@ -265,19 +265,19 @@ static inline uint32_t _nt_control_get_flag(const struct nt_control_data *contro
  * \internal
  * \brief Check for data everrun in the control.
  * \param control Pointer to the control data.
- * \return NT_FAILURE
+ * \return (int32_t) NT_FAILURE
            NT_SUCCESS
  *
  * If the control flag is not NT_CONTROL_NEW_DATA_FLAG, it resets the flag in control.
  */
 static inline int32_t _nt_control_overrun(struct nt_control_data *control)
 {
-    if (_nt_control_get_flag(control, NT_CONTROL_NEW_DATA_FLAG))
+    if ((bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG))
     {
-        return NT_FAILURE; /* overrun, data has not been processed */
+        return (int32_t) NT_FAILURE; /* overrun, data has not been processed */
     }
-    _nt_control_clear_flag(control, NT_CONTROL_NEW_DATA_FLAG);
-    return NT_SUCCESS;
+    _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG);
+    return (int32_t) NT_SUCCESS;
 }
 
 /**

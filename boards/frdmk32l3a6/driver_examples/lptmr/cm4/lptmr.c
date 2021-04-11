@@ -7,26 +7,26 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_lptmr.h"
 #include "fsl_gpio.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPTMR_BASE LPTMR0
-#define DEMO_LPTMR_IRQn LPTMR0_IRQn
+#define DEMO_LPTMR_BASE   LPTMR0
+#define DEMO_LPTMR_IRQn   LPTMR0_IRQn
 #define LPTMR_LED_HANDLER LPTMR0_IRQHandler
 //#define LPTMR0_IRQn LPTMR0_LPTMR1_IRQn
 /* Get source clock for LPTMR driver */
 #define LPTMR_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_LpoClk)
 /* Define LPTMR microseconds counts value */
 #define LPTMR_USEC_COUNT 1000000U
-#define LED_INIT() LED1_INIT(LOGIC_LED_ON)
-#define LED_TOGGLE() LED1_TOGGLE()
+#define LED_INIT()       LED1_INIT(LOGIC_LED_ON)
+#define LED_TOGGLE()     LED1_TOGGLE()
 
 /*******************************************************************************
  * Prototypes

@@ -8,7 +8,7 @@
 **
 **     Reference manual:    K32L3ARM, Rev. 0 , 05/2019
 **     Version:             rev. 1.0, 2019-04-22
-**     Build:               b190628
+**     Build:               b201013
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -16,7 +16,7 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -95,17 +95,55 @@ void DAC_Init(LPDAC_Type *base, const dac_config_t *config)
         case kDAC_FIFOWorkAsSwingMode:
             tmp32 |= LPDAC_GCR_FIFOEN_MASK | LPDAC_GCR_SWMD_MASK; /* Enable swing mode. */
             break;
+#if defined(FSL_FEATURE_LPDAC_HAS_PERIODIC_TRIGGER_MODE) && FSL_FEATURE_LPDAC_HAS_PERIODIC_TRIGGER_MODE
+        case kDAC_FIFOWorkAsPeriodTriggerMode:
+            tmp32 |= LPDAC_GCR_FIFOEN_MASK | LPDAC_GCR_PTGEN_MASK; /* Enable period trigger mode. */
+            /* Set trigger number and width. */
+            base->PCR =
+                LPDAC_PCR_PTG_NUM(config->periodicTriggerNumber) | LPDAC_PCR_PTG_PERIOD(config->periodicTriggerWidth);
+            break;
+        case kDAC_FIFOWorkAsPeriodTriggerAndSwingMode:
+            tmp32 |= LPDAC_GCR_FIFOEN_MASK | LPDAC_GCR_PTGEN_MASK | LPDAC_GCR_SWMD_MASK;
+            /* Set trigger number and width. */
+            base->PCR =
+                LPDAC_PCR_PTG_NUM(config->periodicTriggerNumber) | LPDAC_PCR_PTG_PERIOD(config->periodicTriggerWidth);
+            break;
+#endif           /* FSL_FEATURE_LPDAC_HAS_PERIODIC_TRIGGER_MODE */
         default: /* kDAC_FIFODisabled. */
             break;
     }
+
+#if defined(FSL_FEATURE_LPDAC_HAS_GCR_RCV_TRG) && FSL_FEATURE_LPDAC_HAS_GCR_RCV_TRG
+    if (config->enableExternalTriggerSource)
+    {
+        tmp32 |= LPDAC_GCR_RCV_TRG_MASK; /* Use trigger source from another DAC. */
+    }
+#endif /* FSL_FEATURE_LPDAC_HAS_GCR_RCV_TRG */
+#if defined(FSL_FEATURE_LPDAC_HAS_GCR_BUF_SPD_CTRL) && FSL_FEATURE_LPDAC_HAS_GCR_BUF_SPD_CTRL
+    if (false == config->enableLowerLowPowerMode)
+    {
+        tmp32 |= LPDAC_GCR_BUF_SPD_CTRL_MASK; /* Enable low power. */
+    }
+#else
     if (config->enableLowPowerMode)
     {
         tmp32 |= LPDAC_GCR_LPEN_MASK; /* Enable low power. */
     }
-    if (kDAC_ReferenceVoltageSourceAlt2 == config->referenceVoltageSource)
-    {
-        tmp32 |= LPDAC_GCR_DACRFS_MASK;
-    }
+#endif /* LPDAC_GCR_BUF_SPD_CTRL_MASK */
+
+#if defined(FSL_FEATURE_LPDAC_HAS_GCR_BUF_EN) && FSL_FEATURE_LPDAC_HAS_GCR_BUF_EN
+    tmp32 |= LPDAC_GCR_BUF_EN_MASK; /* Opamp is used as buffer. */
+#endif                              /* FSL_FEATURE_LPDAC_HAS_GCR_BUF_EN */
+#if defined(FSL_FEATURE_LPDAC_HAS_GCR_LATCH_CYC) && FSL_FEATURE_LPDAC_HAS_GCR_LATCH_CYC
+    /* Configure DAC sync cycles. */
+    tmp32 |= LPDAC_GCR_LATCH_CYC(config->syncTime);
+#endif /* FSL_FEATURE_LPDAC_HAS_GCR_LATCH_CYC */
+#if defined(FSL_FEATURE_LPDAC_HAS_INTERNAL_REFERENCE_CURRENT) && FSL_FEATURE_LPDAC_HAS_INTERNAL_REFERENCE_CURRENT
+    tmp32 |= config->referenceCurrentSource;
+#endif /* FSL_FEATURE_LPDAC_HAS_INTERNAL_REFERENCE_CURRENT */
+    /* Set reference voltage source. */
+    tmp32 |= LPDAC_GCR_DACRFS(config->referenceVoltageSource);
+
     base->GCR = tmp32;
     base->FCR = LPDAC_FCR_WML(config->fifoWatermarkLevel);
 
@@ -132,12 +170,31 @@ void DAC_GetDefaultConfig(dac_config_t *config)
     assert(config != NULL);
 
     /* Initializes the configure structure to zero. */
-    memset(config, 0, sizeof(*config));
+    (void)memset(config, 0, sizeof(*config));
 
-    config->fifoWatermarkLevel     = 0U;
-    config->fifoTriggerMode        = kDAC_FIFOTriggerByHardwareMode;
-    config->fifoWorkMode           = kDAC_FIFODisabled;
-    config->enableLowPowerMode     = false;
+    config->fifoWatermarkLevel = 0U;
+    config->fifoTriggerMode    = kDAC_FIFOTriggerByHardwareMode;
+    config->fifoWorkMode       = kDAC_FIFODisabled;
+
+#if defined(FSL_FEATURE_LPDAC_HAS_GCR_RCV_TRG) && FSL_FEATURE_LPDAC_HAS_GCR_RCV_TRG
+    config->enableExternalTriggerSource = false;
+#endif /* FSL_FEATURE_LPDAC_HAS_GCR_RCV_TRG */
+#if defined(FSL_FEATURE_LPDAC_HAS_GCR_BUF_SPD_CTRL) && FSL_FEATURE_LPDAC_HAS_GCR_BUF_SPD_CTRL
+    config->enableLowerLowPowerMode = true;
+#else
+    config->enableLowPowerMode = false;
+#endif /* FSL_FEATURE_LPDAC_HAS_GCR_BUF_SPD_CTRL */
+#if defined(FSL_FEATURE_LPDAC_HAS_PERIODIC_TRIGGER_MODE) && FSL_FEATURE_LPDAC_HAS_PERIODIC_TRIGGER_MODE
+    config->periodicTriggerNumber = 0UL;
+    config->periodicTriggerWidth  = 0UL;
+#endif /* FSL_FEATURE_LPDAC_HAS_PERIODIC_TRIGGER_MODE */
+#if defined(FSL_FEATURE_LPDAC_HAS_GCR_LATCH_CYC) && FSL_FEATURE_LPDAC_HAS_GCR_LATCH_CYC
+    /* Configure DAC sync cycles. */
+    config->syncTime = 1U;
+#endif /* FSL_FEATURE_LPDAC_HAS_GCR_LATCH_CYC */
+#if defined(FSL_FEATURE_LPDAC_HAS_INTERNAL_REFERENCE_CURRENT) && FSL_FEATURE_LPDAC_HAS_INTERNAL_REFERENCE_CURRENT
+    config->referenceCurrentSource = kDAC_ReferenceCurrentSourcePtat;
+#endif /* FSL_FEATURE_LPDAC_HAS_INTERNAL_REFERENCE_CURRENT */
     config->referenceVoltageSource = kDAC_ReferenceVoltageSourceAlt1;
 }
 

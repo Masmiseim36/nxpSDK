@@ -13,29 +13,29 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if defined(FSL_FEATURE_SOC_PORT_COUNT) && (FSL_FEATURE_SOC_PORT_COUNT > 0)
 #include "fsl_port.h"
 #endif
-#include "pin_mux.h"
 #include "fsl_device_registers.h"
 #include "fsl_common.h"
-#include "clock_config.h"
 #if configUSE_TICKLESS_IDLE == 2
 #include "fsl_lptmr.h"
 #endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_LED_GPIO BOARD_LED_RED_GPIO
+#define BOARD_LED_GPIO     BOARD_LED_RED_GPIO
 #define BOARD_LED_GPIO_PIN BOARD_LED_RED_GPIO_PIN
 
-#define BOARD_SW_GPIO BOARD_SW1_GPIO
-#define BOARD_SW_PORT BOARD_SW1_PORT
-#define BOARD_SW_GPIO_PIN BOARD_SW1_GPIO_PIN
-#define BOARD_SW_IRQ BOARD_SW1_IRQ
+#define BOARD_SW_GPIO        BOARD_SW1_GPIO
+#define BOARD_SW_PORT        BOARD_SW1_PORT
+#define BOARD_SW_GPIO_PIN    BOARD_SW1_GPIO_PIN
+#define BOARD_SW_IRQ         BOARD_SW1_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_SW1_IRQ_HANDLER
-#define BOARD_SW_NAME BOARD_SW1_NAME
+#define BOARD_SW_NAME        BOARD_SW1_NAME
 /* Task priorities. */
 /* clang-format off */
 #define tickless_task_PRIORITY   ( configMAX_PRIORITIES - 2 )

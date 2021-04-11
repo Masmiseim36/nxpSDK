@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019, NXP
+ * Copyright 2016-2020, NXP
  * All rights reserved.
  *
  *
@@ -28,13 +28,13 @@ void SPM_GetRegulatorStatus(SPM_Type *base, spm_regulator_status_t *info)
     volatile uint32_t tmp32 = base->RSR; /* volatile here is to make sure this value is actually from the hardware. */
 
     info->mcuLowPowerModeStatus =
-        (spm_mcu_low_power_mode_status_t)((tmp32 & SPM_RSR_MCUPMSTAT_MASK) >> SPM_RSR_MCUPMSTAT_SHIFT);
+        (spm_mcu_low_power_mode_status_t)(uint32_t)((tmp32 & SPM_RSR_MCUPMSTAT_MASK) >> SPM_RSR_MCUPMSTAT_SHIFT);
     info->isDcdcLdoOn =
-        (0x4 == (0x4 & ((tmp32 & SPM_RSR_REGSEL_MASK) >> SPM_RSR_REGSEL_SHIFT))); /* 1<<2 responses DCDC LDO. */
+        (0x4UL == (0x4UL & ((tmp32 & SPM_RSR_REGSEL_MASK) >> SPM_RSR_REGSEL_SHIFT))); /* 1<<2 responses DCDC LDO. */
     info->isAuxLdoOn =
-        (0x2 == (0x2 & ((tmp32 & SPM_RSR_REGSEL_MASK) >> SPM_RSR_REGSEL_SHIFT))); /* 1<<1 responses AUX LDO. */
+        (0x2UL == (0x2UL & ((tmp32 & SPM_RSR_REGSEL_MASK) >> SPM_RSR_REGSEL_SHIFT))); /* 1<<1 responses AUX LDO. */
     info->isCoreLdoOn =
-        (0x1 == (0x1 & ((tmp32 & SPM_RSR_REGSEL_MASK) >> SPM_RSR_REGSEL_SHIFT))); /* 1<<0 responses CORE LDO. */
+        (0x1UL == (0x1UL & ((tmp32 & SPM_RSR_REGSEL_MASK) >> SPM_RSR_REGSEL_SHIFT))); /* 1<<0 responses CORE LDO. */
 }
 
 /*!
@@ -177,6 +177,30 @@ void SPM_SetDcdcBattMonitor(SPM_Type *base, uint32_t batAdcVal)
 }
 
 /*!
+ * brief Set DCDC loop control config.
+ *
+ * param base SPM peripheral base address.
+ * param config The Pointer to the structure @ref spm_dcdc_loop_control_config_t.
+ */
+void SPM_SetDcdcLoopControlConfig(SPM_Type *base, const spm_dcdc_loop_control_config_t *config)
+{
+    assert(config != NULL);
+
+    uint32_t temp32;
+
+    temp32 = base->DCDCC1;
+    temp32 &= ~(SPM_DCDCC1_DCDC_LOOPCTRL_EN_CM_HYST_MASK | SPM_DCDCC1_DCDC_LOOPCTRL_EN_DF_HYST_MASK);
+    temp32 |= SPM_DCDCC1_DCDC_LOOPCTRL_EN_CM_HYST(config->enableCommonHysteresis) |
+              SPM_DCDCC1_DCDC_LOOPCTRL_EN_DF_HYST(config->enableDifferentialHysteresis);
+    base->DCDCC1 = temp32;
+
+    temp32 = base->DCDCC2;
+    temp32 &= ~SPM_DCDCC2_DCDC_LOOPCTRL_HYST_SIGN_MASK;
+    temp32 |= SPM_DCDCC2_DCDC_LOOPCTRL_HYST_SIGN(config->invertHysteresisSign);
+    base->DCDCC2 = temp32;
+}
+
+/*!
  * brief Bypasses the ADC measure value
  *
  * Forces DCDC to bypass the adc measuring state and loads the user-defined value in this function.
@@ -224,8 +248,8 @@ void SPM_SetDcdcIntegratorConfig(SPM_Type *base, const spm_dcdc_integrator_confi
 
     assert(NULL != config);
 
-    tmp32 = (int32_t)(config->vddCoreValue / config->vBatValue * 32 - 16) *
-            8192; /* Target value = ((VDD_CORE/Vbat)*32 - 16) * 2^13 */
+    tmp32 = (int32_t)(double)(config->vddCoreValue / config->vBatValue * 32.0 - 16.0) *
+            8192L; /* Target value = ((VDD_CORE/Vbat)*32 - 16) * 2^13 */
     base->DCDCC4 = SPM_DCDCC4_PULSE_RUN_SPEEDUP_MASK | SPM_DCDCC4_INTEGRATOR_VALUE_SELECT_MASK |
                    SPM_DCDCC4_INTEGRATOR_VALUE(tmp32);
 }

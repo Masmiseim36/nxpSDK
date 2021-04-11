@@ -7,6 +7,8 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_adc16.h"
 #include "fsl_gpio.h"
@@ -20,32 +22,30 @@
 #include "fsl_dac.h"
 #endif
 
-#include "clock_config.h"
-#include "pin_mux.h"
 #include "fsl_port.h"
 #include "fsl_common.h"
 #include "fsl_lpuart_cmsis.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC16_BASEADDR ADC0
+#define DEMO_ADC16_BASEADDR      ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_USER_CHANNEL 8U /* PTB0, ADC0_SE8 */
+#define DEMO_ADC16_USER_CHANNEL  8U /* PTB0, ADC0_SE8 */
 
-#define DEMO_ADC16_IRQn ADC0_IRQn
+#define DEMO_ADC16_IRQn             ADC0_IRQn
 #define DEMO_ADC16_IRQ_HANDLER_FUNC ADC0_IRQHandler
 
-#define BOARD_LED_GPIO BOARD_LED_GREEN_GPIO
+#define BOARD_LED_GPIO     BOARD_LED_GREEN_GPIO
 #define BOARD_LED_GPIO_PIN BOARD_LED_GREEN_GPIO_PIN
 
 /* I2C source clock */
 
-#define I2C_BAUDRATE 100000U
+#define I2C_BAUDRATE   100000U
 #define ACCEL_I2C_ADDR 1DU
 
 /* Accelerometer Reset PIN */
 #define BOARD_ACCEL_RESET_GPIO GPIOE
-#define BOARD_ACCEL_RESET_PIN 1U
+#define BOARD_ACCEL_RESET_PIN  1U
 
 #define ERPC_DEMO_UART Driver_USART0
 
@@ -89,11 +89,11 @@ void BOARD_ACCEL_Reset(void)
     GPIO_PinWrite(BOARD_ACCEL_RESET_GPIO, BOARD_ACCEL_RESET_PIN, 1);
 
     /* Delay to ensure reliable sensor reset */
-    SDK_DelayAtLeastUs(8000U);
+    SDK_DelayAtLeastUs(8000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     GPIO_PinWrite(BOARD_ACCEL_RESET_GPIO, BOARD_ACCEL_RESET_PIN, 0);
 
     /* Delay to wait sensor stable after reset */
-    SDK_DelayAtLeastUs(8000U);
+    SDK_DelayAtLeastUs(8000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 }
 
 uint32_t LPUART0_GetFreq(void)

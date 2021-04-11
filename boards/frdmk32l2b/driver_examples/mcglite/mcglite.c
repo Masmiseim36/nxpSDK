@@ -6,15 +6,15 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define BOARD_XTAL0_CLK_HZ 32768U
 
-#define LED_INIT() LED_RED_INIT(LOGIC_LED_OFF)
+#define LED_INIT()   LED_RED_INIT(LOGIC_LED_OFF)
 #define LED_TOGGLE() LED_RED_TOGGLE()
 #define MAX_STEP_NUM 13
 

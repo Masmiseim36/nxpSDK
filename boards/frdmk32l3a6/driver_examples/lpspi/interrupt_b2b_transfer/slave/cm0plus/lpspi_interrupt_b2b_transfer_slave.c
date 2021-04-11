@@ -8,19 +8,19 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR LPSPI3
-#define EXAMPLE_LPSPI_SLAVE_IRQN LPSPI3_IRQn
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT kLPSPI_Pcs1
+#define EXAMPLE_LPSPI_SLAVE_BASEADDR         LPSPI3
+#define EXAMPLE_LPSPI_SLAVE_IRQN             LPSPI3_IRQn
+#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     kLPSPI_Pcs1
 #define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER kLPSPI_SlavePcs1
 
-#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME (kCLOCK_Lpspi3)
+#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME   (kCLOCK_Lpspi3)
 #define EXAMPLE_LPSPI_SLAVE_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
 #define TRANSFER_SIZE 64U /*! Transfer dataSize */
 
@@ -79,16 +79,8 @@ int main(void)
     lpspi_transfer_t slaveXfer;
 
     /*Slave config*/
-    slaveConfig.bitsPerFrame = 8 * TRANSFER_SIZE;
-    slaveConfig.cpol         = kLPSPI_ClockPolarityActiveHigh;
-    slaveConfig.cpha         = kLPSPI_ClockPhaseFirstEdge;
-    slaveConfig.direction    = kLPSPI_MsbFirst;
-
-    slaveConfig.whichPcs           = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
-    slaveConfig.pcsActiveHighOrLow = kLPSPI_PcsActiveLow;
-
-    slaveConfig.pinCfg        = kLPSPI_SdiInSdoOut;
-    slaveConfig.dataOutConfig = kLpspiDataOutRetained;
+    LPSPI_SlaveGetDefaultConfig(&slaveConfig);
+    slaveConfig.whichPcs = EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT;
 
     LPSPI_SlaveInit(EXAMPLE_LPSPI_SLAVE_BASEADDR, &slaveConfig);
 

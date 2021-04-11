@@ -6,18 +6,18 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_uart.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_UART UART2
-#define DEMO_UART_CLKSRC kCLOCK_BusClk
-#define DEMO_UART_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
-#define DEMO_UART_IRQn UART2_FLEXIO_IRQn
+#define DEMO_UART            UART2
+#define DEMO_UART_CLKSRC     kCLOCK_BusClk
+#define DEMO_UART_CLK_FREQ   CLOCK_GetFreq(kCLOCK_BusClk)
+#define DEMO_UART_IRQn       UART2_FLEXIO_IRQn
 #define DEMO_UART_IRQHandler UART2_FLEXIO_IRQHandler
 
 /*! @brief Ring buffer size (Unit: Byte). */
@@ -68,11 +68,7 @@ void DEMO_UART_IRQHandler(void)
             rxIndex %= DEMO_RING_BUFFER_SIZE;
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

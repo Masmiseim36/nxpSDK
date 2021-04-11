@@ -17,10 +17,10 @@
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
 #include "fsl_lpspi_freertos.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 #if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
 #include "fsl_intmux.h"
 #endif
@@ -28,26 +28,26 @@
  * Definitions
  ******************************************************************************/
 /*Master related*/
-#define EXAMPLE_LPSPI_MASTER_BASEADDR (LPSPI0)
-#define EXAMPLE_LPSPI_MASTER_IRQN (LPSPI0_IRQn)
-#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME (kCLOCK_Lpspi0)
-#define EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
-#define EXAMPLE_LPSPI_MASTER_CLOCK_FREQ (CLOCK_GetIpFreq(EXAMPLE_LPSPI_MASTER_CLOCK_NAME))
-#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT (kLPSPI_Pcs2)
+#define EXAMPLE_LPSPI_MASTER_BASEADDR         (LPSPI0)
+#define EXAMPLE_LPSPI_MASTER_IRQN             (LPSPI0_IRQn)
+#define EXAMPLE_LPSPI_MASTER_CLOCK_NAME       (kCLOCK_Lpspi0)
+#define EXAMPLE_LPSPI_MASTER_CLOCK_SOURCE     (kCLOCK_IpSrcFircAsync)
+#define EXAMPLE_LPSPI_MASTER_CLOCK_FREQ       (CLOCK_GetIpFreq(EXAMPLE_LPSPI_MASTER_CLOCK_NAME))
+#define EXAMPLE_LPSPI_MASTER_PCS_FOR_INIT     (kLPSPI_Pcs2)
 #define EXAMPLE_LPSPI_MASTER_PCS_FOR_TRANSFER (kLPSPI_MasterPcs2)
 
 /*Slave related*/
-#define EXAMPLE_LPSPI_SLAVE_BASEADDR (LPSPI3)
-#define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI3_IRQn)
-#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME (kCLOCK_Lpspi3)
-#define EXAMPLE_LPSPI_SLAVE_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
-#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT (kLPSPI_Pcs1)
+#define EXAMPLE_LPSPI_SLAVE_BASEADDR         (LPSPI3)
+#define EXAMPLE_LPSPI_SLAVE_IRQN             (LPSPI3_IRQn)
+#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME       (kCLOCK_Lpspi3)
+#define EXAMPLE_LPSPI_SLAVE_CLOCK_SOURCE     (kCLOCK_IpSrcFircAsync)
+#define EXAMPLE_LPSPI_SLAVE_PCS_FOR_INIT     (kLPSPI_Pcs1)
 #define EXAMPLE_LPSPI_SLAVE_PCS_FOR_TRANSFER (kLPSPI_SlavePcs1)
 
 /*INTMUX setting*/
 #define EXAMPLE_LPSPI_INTMUX_CHANNLE (0U)
 
-#define SINGLE_BOARD 0
+#define SINGLE_BOARD   0
 #define BOARD_TO_BOARD 1
 
 #ifndef EXAMPLE_CONNECT_SPI
@@ -56,13 +56,13 @@
 
 #if (EXAMPLE_CONNECT_SPI == BOARD_TO_BOARD)
 #define isMASTER 0
-#define isSLAVE 1
+#define isSLAVE  1
 #ifndef SPI_MASTER_SLAVE
 #define SPI_MASTER_SLAVE isMASTER
 #endif /* SPI_MASTER_SLAVE */
 #endif /* EXAMPLE_CONNECT_SPI */
 
-#define TRANSFER_SIZE (512U)        /*! Transfer dataSize.*/
+#define TRANSFER_SIZE     (512U)    /*! Transfer dataSize.*/
 #define TRANSFER_BAUDRATE (500000U) /*! Transfer baudrate - 500k */
 
 /*******************************************************************************
@@ -87,7 +87,7 @@ SemaphoreHandle_t lpspi_sem;
  * Definitions
  ******************************************************************************/
 /* Task priorities. */
-#define slave_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define slave_task_PRIORITY  (configMAX_PRIORITIES - 2)
 #define master_task_PRIORITY (configMAX_PRIORITIES - 1)
 
 /*******************************************************************************
@@ -110,10 +110,10 @@ int main(void)
 
     /* Init board hardware. */
     bool isMasterIrqInIntmux = false;
-    bool isSlaveIrqInIntmux = false;
+    bool isSlaveIrqInIntmux  = false;
 
-    BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     /*Set clock source for LPSPI and get master clock source*/
@@ -176,7 +176,8 @@ int main(void)
         slaveReceiveBuffer[i] = 0;
     }
 
-    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 64, NULL, slave_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 100, NULL, slave_task_PRIORITY, NULL) !=
+        pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
@@ -256,7 +257,7 @@ static void slave_task(void *pvParameters)
 #endif /* (SPI_MASTER_SLAVE == isSLAVE) || (EXAMPLE_CONNECT_SPI == SINGLE_BOARD) */
 
 #if ((SPI_MASTER_SLAVE == isMASTER) || (EXAMPLE_CONNECT_SPI == SINGLE_BOARD))
-    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 64, NULL, master_task_PRIORITY, NULL) !=
+    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 100, NULL, master_task_PRIORITY, NULL) !=
         pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");

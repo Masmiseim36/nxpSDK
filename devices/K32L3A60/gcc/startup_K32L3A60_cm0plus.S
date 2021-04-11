@@ -4,7 +4,7 @@
 /*            K32L3A60_cm0plus                                               */
 /*  @version: 1.0                                                            */
 /*  @date:    2019-4-22                                                      */
-/*  @build:   b190628                                                        */
+/*  @build:   b190918                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
@@ -167,8 +167,8 @@ Reset_Handler:
 
     movs    r0, 0
 .LC2:
-    str r0, [r1, r2]
     subs    r2, 4
+    str r0, [r1, r2]
     bge .LC2
 .LC3:
 #endif

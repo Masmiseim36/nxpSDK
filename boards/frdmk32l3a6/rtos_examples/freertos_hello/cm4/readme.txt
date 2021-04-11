@@ -12,10 +12,10 @@ via debug console utility and suspend itself.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- MCUXpresso  11.0.1
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -28,15 +28,9 @@ Board settings
 This example project does not call for any special hardware configurations.
 Although not required, the recommendation is to leave the development board's jumper settings
 and configurations in default state when running this example.
-Prepare the Demo
-================
-
 Running the demo
 ================
 After the board is flashed the Tera Term will print "Hello world" message on terminal.
 
 Example output:
 Hello world.
-Customization options
-=====================
-

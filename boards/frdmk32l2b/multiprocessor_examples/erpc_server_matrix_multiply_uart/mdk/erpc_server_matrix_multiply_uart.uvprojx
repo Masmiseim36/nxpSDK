@@ -7,6 +7,7 @@
       <TargetName>erpc_server_matrix_multiply_uart debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>K32L2B31VLH0A</Device>
@@ -78,6 +79,8 @@
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopA1X>0</nStopA1X>
+            <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString/>
@@ -116,48 +119,6 @@
             <HexOffset>0</HexOffset>
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
-          <Simulator>
-            <UseSimulator>0</UseSimulator>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>1</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
-            <RestoreSysVw>1</RestoreSysVw>
-          </Simulator>
-          <Target>
-            <UseTarget>1</UseTarget>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>0</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>1</RestoreTracepoints>
-            <RestoreSysVw>1</RestoreSysVw>
-            <UsePdscDebugDescription>1</UsePdscDebugDescription>
-          </Target>
-          <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>14</TargetSelection>
-          <SimDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-          </SimDlls>
-          <TargetDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-            <Driver>BIN\CMSIS_AGDI.dll</Driver>
-          </TargetDlls>
         </DebugOption>
         <Utilities>
           <Flash1>
@@ -216,12 +177,15 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>0</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
+            <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
@@ -339,11 +303,10 @@
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
-            <nSecure>0</nSecure>
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -352,16 +315,24 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
+            <v6Lang>3</v6Lang>
+            <v6LangP>1</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>DEBUG, CPU_K32L2B31VLH0A, FRDM_K32L2B, FREEDOM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_K32L2B31VLH0A, FRDM_K32L2B, FREEDOM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../erpc_common/erpc_matrix_multiply/service;../../erpc_common;../../../../../CMSIS/Driver/Include;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/cmsis_drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A;../../../../../devices/K32L2B31A/utilities/str;../../../../../devices/K32L2B31A/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../CMSIS/Driver/Include;../../../../../CMSIS/Driver/Include;../../../../../devices/K32L2B31A/template;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/cmsis_drivers;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/K32L2B31A;../../../../../devices/K32L2B31A/utilities/str;../../../../../devices/K32L2B31A/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Include;../../../../../CMSIS/Driver/Include;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -374,6 +345,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
               <Define>DEBUG</Define>
@@ -394,7 +366,7 @@
             <ScatterFile>K32L2B31xxxxA_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --muldefweak --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --keep=*(.FlashConfig) --muldefweak --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -427,7 +399,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>erpc-service</GroupName>
+          <GroupName>erpc/service</GroupName>
           <Files>
             <File>
               <FileName>erpc_matrix_multiply.erpc</FileName>
@@ -489,11 +461,6 @@
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
             </File>
-            <File>
-              <FileName>RTE_Device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/template/RTE_Device.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -510,19 +477,14 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart_dma.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart_dma.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart_dma.h</FileName>
@@ -530,9 +492,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart_dma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart_cmsis.c</FileName>
+              <FileName>fsl_lpuart_dma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/cmsis_drivers/fsl_lpuart_cmsis.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart_dma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart_cmsis.h</FileName>
@@ -540,9 +502,9 @@
               <FilePath>../../../../../devices/K32L2B31A/cmsis_drivers/fsl_lpuart_cmsis.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_lpuart_cmsis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/cmsis_drivers/fsl_lpuart_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -550,14 +512,14 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_port.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dma.h</FileName>
@@ -565,9 +527,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_dma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -575,9 +537,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -585,9 +547,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -595,9 +557,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
@@ -605,29 +567,29 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>erpc-infra</GroupName>
+          <GroupName>erpc/infra</GroupName>
           <Files>
             <File>
-              <FileName>erpc_server.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_server.h</FileName>
+              <FileName>erpc_simple_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
             </File>
             <File>
               <FileName>erpc_simple_server.cpp</FileName>
@@ -635,14 +597,14 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_simple_server.h</FileName>
+              <FileName>erpc_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_framed_transport.cpp</FileName>
+              <FileName>erpc_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
               <FileName>erpc_framed_transport.h</FileName>
@@ -650,14 +612,14 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_basic_codec.cpp</FileName>
+              <FileName>erpc_framed_transport.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_basic_codec.h</FileName>
+              <FileName>erpc_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
               <FileName>erpc_codec.h</FileName>
@@ -665,44 +627,9 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_common.h</FileName>
+              <FileName>erpc_basic_codec.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_crc16.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_crc16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_manually_constructed.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_message_buffer.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_message_loggers.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_message_loggers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
             </File>
             <File>
               <FileName>erpc_transport.h</FileName>
@@ -710,29 +637,79 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_version.h</FileName>
+              <FileName>erpc_message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_message_loggers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_manually_constructed.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_crc16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_basic_codec.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_message_buffer.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_message_loggers.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_crc16.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_client_server_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_pre_post_action.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_pre_post_action.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>erpc-setup</GroupName>
+          <GroupName>erpc/setup</GroupName>
           <Files>
-            <File>
-              <FileName>erpc_server_setup.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.cpp</FilePath>
-            </File>
             <File>
               <FileName>erpc_server_setup.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_setup_mbf_dynamic.cpp</FileName>
+              <FileName>erpc_server_setup.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.cpp</FilePath>
             </File>
             <File>
               <FileName>erpc_setup_uart_cmsis.cpp</FileName>
@@ -740,40 +717,40 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_uart_cmsis.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_mbf_setup.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</FilePath>
+              <FileName>erpc_setup_mbf_dynamic.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp</FilePath>
             </File>
             <File>
               <FileName>erpc_transport_setup.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_transport_setup.h</FilePath>
             </File>
+            <File>
+              <FileName>erpc_mbf_setup.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>erpc-transports</GroupName>
+          <GroupName>erpc/transports</GroupName>
           <Files>
-            <File>
-              <FileName>erpc_uart_cmsis_transport.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</FilePath>
-            </File>
             <File>
               <FileName>erpc_uart_cmsis_transport.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
             </File>
+            <File>
+              <FileName>erpc_uart_cmsis_transport.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>erpc-port</GroupName>
+          <GroupName>erpc/port</GroupName>
           <Files>
-            <File>
-              <FileName>erpc_config_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</FilePath>
-            </File>
             <File>
               <FileName>erpc_port.h</FileName>
               <FileType>5</FileType>
@@ -784,11 +761,26 @@
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port_stdlib.cpp</FilePath>
             </File>
+            <File>
+              <FileName>erpc_config_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_setup_extensions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>K32L2B31A.h</FileName>
               <FileType>5</FileType>
@@ -798,11 +790,6 @@
               <FileName>K32L2B31A_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/K32L2B31A_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_K32L2B31A.c</FileName>
@@ -820,6 +807,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -835,16 +832,6 @@
               <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/K32L2B31A/utilities/fsl_assert.c</FilePath>
@@ -852,62 +839,62 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
+              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -915,9 +902,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_K32L2B31A.s</FileName>
+              <FileName>startup_K32L2B31A.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.s</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -928,6 +915,11 @@
               <FileName>core_cm0plus.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm0plus.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -945,19 +937,14 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -965,29 +952,9 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
+              <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1027,6 +994,7 @@
       <TargetName>erpc_server_matrix_multiply_uart release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>K32L2B31VLH0A</Device>
@@ -1098,6 +1066,8 @@
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopA1X>0</nStopA1X>
+            <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString/>
@@ -1136,48 +1106,6 @@
             <HexOffset>0</HexOffset>
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
-          <Simulator>
-            <UseSimulator>0</UseSimulator>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>1</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
-            <RestoreSysVw>1</RestoreSysVw>
-          </Simulator>
-          <Target>
-            <UseTarget>1</UseTarget>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>0</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>1</RestoreTracepoints>
-            <RestoreSysVw>1</RestoreSysVw>
-            <UsePdscDebugDescription>1</UsePdscDebugDescription>
-          </Target>
-          <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>14</TargetSelection>
-          <SimDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-          </SimDlls>
-          <TargetDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-            <Driver>BIN\CMSIS_AGDI.dll</Driver>
-          </TargetDlls>
         </DebugOption>
         <Utilities>
           <Flash1>
@@ -1236,12 +1164,15 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>0</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
+            <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
@@ -1359,11 +1290,10 @@
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
-            <nSecure>0</nSecure>
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1372,16 +1302,24 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
+            <v6Lang>3</v6Lang>
+            <v6LangP>1</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>NDEBUG, CPU_K32L2B31VLH0A, FRDM_K32L2B, FREEDOM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_K32L2B31VLH0A, FRDM_K32L2B, FREEDOM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../erpc_common/erpc_matrix_multiply/service;../../erpc_common;../../../../../CMSIS/Driver/Include;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/cmsis_drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A;../../../../../devices/K32L2B31A/utilities/str;../../../../../devices/K32L2B31A/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../components/lists;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/drivers;../../../../../CMSIS/Driver/Include;../../../../../CMSIS/Driver/Include;../../../../../devices/K32L2B31A/template;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
+              <IncludePath>../../erpc_common;../../erpc_common/erpc_matrix_multiply/service;..;../../../../../devices/K32L2B31A/drivers;../../../../../devices/K32L2B31A/cmsis_drivers;../../../../../middleware/multicore/erpc/erpc_c/infra;../../../../../middleware/multicore/erpc/erpc_c/setup;../../../../../middleware/multicore/erpc/erpc_c/transports;../../../../../middleware/multicore/erpc/erpc_c/port;../../../../../devices/K32L2B31A;../../../../../devices/K32L2B31A/utilities/str;../../../../../devices/K32L2B31A/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Include;../../../../../CMSIS/Driver/Include;../../../../../middleware/multicore/erpc/erpc_c</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1394,6 +1332,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
               <Define>NDEBUG</Define>
@@ -1414,7 +1353,7 @@
             <ScatterFile>K32L2B31xxxxA_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove --muldefweak --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
+            <Misc>--remove --keep=*(.FlashConfig) --muldefweak --predefine="-D__stack_size__=0x400" --predefine="-D__heap_size__=0x2000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1447,7 +1386,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>erpc-service</GroupName>
+          <GroupName>erpc/service</GroupName>
           <Files>
             <File>
               <FileName>erpc_matrix_multiply.erpc</FileName>
@@ -1509,11 +1448,6 @@
               <FileType>5</FileType>
               <FilePath>../clock_config.h</FilePath>
             </File>
-            <File>
-              <FileName>RTE_Device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/template/RTE_Device.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1530,19 +1464,14 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpuart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart_dma.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart_dma.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart_dma.h</FileName>
@@ -1550,9 +1479,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart_dma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart_cmsis.c</FileName>
+              <FileName>fsl_lpuart_dma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/cmsis_drivers/fsl_lpuart_cmsis.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_lpuart_dma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart_cmsis.h</FileName>
@@ -1560,9 +1489,9 @@
               <FilePath>../../../../../devices/K32L2B31A/cmsis_drivers/fsl_lpuart_cmsis.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_lpuart_cmsis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/cmsis_drivers/fsl_lpuart_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -1570,14 +1499,14 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_port.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_port.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_dma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dma.h</FileName>
@@ -1585,9 +1514,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_dma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -1595,9 +1524,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -1605,9 +1534,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1615,9 +1544,9 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
@@ -1625,29 +1554,29 @@
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>erpc-infra</GroupName>
+          <GroupName>erpc/infra</GroupName>
           <Files>
             <File>
-              <FileName>erpc_server.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_server.h</FileName>
+              <FileName>erpc_simple_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
             </File>
             <File>
               <FileName>erpc_simple_server.cpp</FileName>
@@ -1655,14 +1584,14 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_simple_server.h</FileName>
+              <FileName>erpc_server.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_simple_server.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_framed_transport.cpp</FileName>
+              <FileName>erpc_server.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_server.cpp</FilePath>
             </File>
             <File>
               <FileName>erpc_framed_transport.h</FileName>
@@ -1670,14 +1599,14 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_basic_codec.cpp</FileName>
+              <FileName>erpc_framed_transport.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_framed_transport.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_basic_codec.h</FileName>
+              <FileName>erpc_version.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
             </File>
             <File>
               <FileName>erpc_codec.h</FileName>
@@ -1685,44 +1614,9 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_codec.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_common.h</FileName>
+              <FileName>erpc_basic_codec.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_crc16.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_crc16.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_manually_constructed.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_message_buffer.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_message_buffer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_message_loggers.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>erpc_message_loggers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.h</FilePath>
             </File>
             <File>
               <FileName>erpc_transport.h</FileName>
@@ -1730,29 +1624,79 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_transport.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_version.h</FileName>
+              <FileName>erpc_message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_version.h</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_message_loggers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_manually_constructed.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_manually_constructed.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_crc16.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_basic_codec.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_basic_codec.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_message_buffer.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_buffer.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_message_loggers.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_message_loggers.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_crc16.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_client_server_common.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_pre_post_action.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_pre_post_action.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>erpc-setup</GroupName>
+          <GroupName>erpc/setup</GroupName>
           <Files>
-            <File>
-              <FileName>erpc_server_setup.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.cpp</FilePath>
-            </File>
             <File>
               <FileName>erpc_server_setup.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.h</FilePath>
             </File>
             <File>
-              <FileName>erpc_setup_mbf_dynamic.cpp</FileName>
+              <FileName>erpc_server_setup.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp</FilePath>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_server_setup.cpp</FilePath>
             </File>
             <File>
               <FileName>erpc_setup_uart_cmsis.cpp</FileName>
@@ -1760,40 +1704,40 @@
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_uart_cmsis.cpp</FilePath>
             </File>
             <File>
-              <FileName>erpc_mbf_setup.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</FilePath>
+              <FileName>erpc_setup_mbf_dynamic.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp</FilePath>
             </File>
             <File>
               <FileName>erpc_transport_setup.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_transport_setup.h</FilePath>
             </File>
+            <File>
+              <FileName>erpc_mbf_setup.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/setup/erpc_mbf_setup.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>erpc-transports</GroupName>
+          <GroupName>erpc/transports</GroupName>
           <Files>
-            <File>
-              <FileName>erpc_uart_cmsis_transport.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</FilePath>
-            </File>
             <File>
               <FileName>erpc_uart_cmsis_transport.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.h</FilePath>
             </File>
+            <File>
+              <FileName>erpc_uart_cmsis_transport.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/transports/erpc_uart_cmsis_transport.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>erpc-port</GroupName>
+          <GroupName>erpc/port</GroupName>
           <Files>
-            <File>
-              <FileName>erpc_config_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</FilePath>
-            </File>
             <File>
               <FileName>erpc_port.h</FileName>
               <FileType>5</FileType>
@@ -1804,11 +1748,26 @@
               <FileType>8</FileType>
               <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_port_stdlib.cpp</FilePath>
             </File>
+            <File>
+              <FileName>erpc_config_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>erpc_setup_extensions.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>K32L2B31A.h</FileName>
               <FileType>5</FileType>
@@ -1818,11 +1777,6 @@
               <FileName>K32L2B31A_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/K32L2B31A/K32L2B31A_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_K32L2B31A.c</FileName>
@@ -1840,6 +1794,16 @@
           <GroupName>utilities</GroupName>
           <Files>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1855,16 +1819,6 @@
               <FilePath>../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/K32L2B31A/utilities/fsl_assert.c</FilePath>
@@ -1872,62 +1826,62 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/lpuart_adapter.c</FilePath>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
+              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1935,9 +1889,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_K32L2B31A.s</FileName>
+              <FileName>startup_K32L2B31A.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.s</FilePath>
+              <FilePath>../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1948,6 +1902,11 @@
               <FileName>core_cm0plus.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm0plus.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -1965,19 +1924,14 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1985,29 +1939,9 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
+              <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -2044,4 +1978,23 @@
       </Groups>
     </Target>
   </Targets>
+  <RTE>
+    <apis/>
+    <components/>
+    <files/>
+  </RTE>
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>&lt;Project Info&gt;</LayName>
+        <LayDesc/>
+        <LayUrl/>
+        <LayKeys/>
+        <LayCat/>
+        <LayLic/>
+        <LayTarg>0</LayTarg>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 </Project>

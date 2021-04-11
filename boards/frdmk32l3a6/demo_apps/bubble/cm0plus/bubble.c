@@ -6,33 +6,33 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "math.h"
 #include "fsl_tpm.h"
 #include "fsl_fxos.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* The Flextimer instance/channel used for board */
-#define BOARD_TIMER_BASEADDR TPM2
-#define BOARD_FIRST_TIMER_CHANNEL 0U
+#define BOARD_TIMER_BASEADDR       TPM2
+#define BOARD_FIRST_TIMER_CHANNEL  0U
 #define BOARD_SECOND_TIMER_CHANNEL 1U
 /* Get source clock for TPM driver */
 #define BOARD_TIMER_SOURCE_CLOCK (CLOCK_GetIpFreq(kCLOCK_Tpm2))
 /* LPI2C */
 #define I2C_BAUDRATE 100000U
 
-#define I2C_RELEASE_SDA_PORT PORTE
-#define I2C_RELEASE_SCL_PORT PORTE
-#define I2C_RELEASE_SDA_GPIO GPIOE
-#define I2C_RELEASE_SDA_PIN 29U
-#define I2C_RELEASE_SCL_GPIO GPIOE
-#define I2C_RELEASE_SCL_PIN 30U
+#define I2C_RELEASE_SDA_PORT  PORTE
+#define I2C_RELEASE_SCL_PORT  PORTE
+#define I2C_RELEASE_SDA_GPIO  GPIOE
+#define I2C_RELEASE_SDA_PIN   29U
+#define I2C_RELEASE_SCL_GPIO  GPIOE
+#define I2C_RELEASE_SCL_PIN   30U
 #define I2C_RELEASE_BUS_COUNT 100U
 /* Upper bound and lower bound angle values */
 #define ANGLE_UPPER_BOUND 85U
@@ -176,7 +176,7 @@ int main(void)
     /* Init board hardware. */
     CLOCK_EnableClock(kCLOCK_Rgpio1);
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_I2C_ReleaseBus();
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();

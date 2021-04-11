@@ -16,7 +16,6 @@
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000)</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:K32L3A60xxx$Device\Include\K32L3A60_M4.h</RegisterFile>
           <MemoryEnv/>
@@ -347,7 +346,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -356,21 +355,22 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
-            <v6Lang>0</v6Lang>
+            <v6Lang>3</v6Lang>
             <v6LangP>0</v6LangP>
-            <vShortEn>0</vShortEn>
-            <vShortWch>0</vShortWch>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>DEBUG, CPU_K32L3A60VPJ1A_cm4</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_K32L3A60VPJ1A_cm4, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../..;../..;..;../../../../../../../../CMSIS/Include;../../../../../../../../devices;../../../../../../../../devices/K32L3A60;../../../../../../../frdmk32l3a6;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/cmsis_drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/cmsis_drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../middleware/issdk/drivers/gpio/kinetis;../../../../../../../../middleware/issdk/sensors;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/utilities/str;../../../../../../../../devices/K32L3A60/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/K32L3A60;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../devices/K32L3A60/template;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../../..;../..;..;../../../../../../../../middleware/issdk/drivers/gpio/kinetis;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/K32L3A60/utilities/str;../../../../../../../../devices/K32L3A60/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/K32L3A60;../../../../../../../../CMSIS/Include;../../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -383,11 +383,12 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--cpreproc</MiscControls>
+              <MiscControls/>
               <Define>DEBUG</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
+            <uClangAs>1</uClangAs>
           </Aads>
           <LDads>
             <umfTarg>0</umfTarg>
@@ -408,6 +409,7 @@
           </LDads>
         </TargetArmAds>
       </TargetOption>
+      <uAC6>1</uAC6>
       <Groups>
         <Group>
           <GroupName>board</GroupName>
@@ -467,11 +469,6 @@
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
             </File>
-            <File>
-              <FileName>RTE_Device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/template/RTE_Device.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -490,12 +487,37 @@
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../readme.txt</FilePath>
+              <FilePath>../readme.txt</FilePath>
             </File>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>gpio_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>gpio_driver_irq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_GPIO.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -508,19 +530,14 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -528,9 +545,9 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_edma.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -538,9 +555,9 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -548,9 +565,9 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -558,9 +575,9 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart_edma.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart_edma.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart_edma.h</FileName>
@@ -568,14 +585,19 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart_cmsis.c</FileName>
+              <FileName>fsl_lpuart_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpuart_cmsis.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpuart_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpuart_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpi2c.c</FileName>
@@ -598,14 +620,14 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpi2c_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpi2c_cmsis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpi2c_cmsis.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpi2c_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpi2c_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpi2c_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpspi.c</FileName>
@@ -618,19 +640,14 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpspi_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpspi_edma.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpspi_edma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpspi_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpspi_cmsis.c</FileName>
+              <FileName>fsl_lpspi_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpspi_cmsis.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpspi_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpspi_cmsis.h</FileName>
@@ -638,9 +655,9 @@
               <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpspi_cmsis.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_lpspi_cmsis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpspi_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -648,14 +665,19 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_msmc.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_msmc.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_msmc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_msmc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_msmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_msmc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -678,6 +700,16 @@
               <FilePath>../../../../../../../../devices/K32L3A60/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -692,41 +724,6 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/utilities/str/fsl_str.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>gpio_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_GPIO.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver_irq.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -738,34 +735,9 @@
               <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>register_io_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_i2c.h</FilePath>
-            </File>
-            <File>
               <FileName>register_io_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>register_io_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</FilePath>
             </File>
             <File>
               <FileName>sensor_io_spi.c</FileName>
@@ -773,9 +745,34 @@
               <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_spi.c</FilePath>
             </File>
             <File>
+              <FileName>sensor_io_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_spi.h</FilePath>
+            </File>
+            <File>
               <FileName>sensor_io_spi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_drv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -788,80 +785,85 @@
               <FilePath>../../../../../../../../middleware/issdk/sensors/fxos8700.h</FilePath>
             </File>
             <File>
-              <FileName>fxos8700_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/fxos8700_drv.c</FilePath>
-            </File>
-            <File>
               <FileName>fxos8700_drv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../middleware/issdk/sensors/fxos8700_drv.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-uart</GroupName>
-          <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
+              <FileName>fxos8700_drv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/fxos8700_drv.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>K32L3A60_cm4.h</FileName>
               <FileType>5</FileType>
@@ -871,11 +873,6 @@
               <FileName>K32L3A60_cm4_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/K32L3A60_cm4_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_K32L3A60_cm4.c</FileName>
@@ -898,6 +895,46 @@
               <FilePath>../../../../../../../../CMSIS/Include/core_cm4.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -912,65 +949,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_K32L3A60_cm4.s</FileName>
+              <FileName>startup_K32L3A60_cm4.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/arm/startup_K32L3A60_cm4.s</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/arm/startup_K32L3A60_cm4.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1014,7 +1001,6 @@
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile/>
-          <FlashDriverDll>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC1000)</FlashDriverDll>
           <DeviceId>0</DeviceId>
           <RegisterFile>$$Device:K32L3A60xxx$Device\Include\K32L3A60_M4.h</RegisterFile>
           <MemoryEnv/>
@@ -1345,7 +1331,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1354,21 +1340,22 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
-            <v6Lang>0</v6Lang>
+            <v6Lang>3</v6Lang>
             <v6LangP>0</v6LangP>
-            <vShortEn>0</vShortEn>
-            <vShortWch>0</vShortWch>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>NDEBUG, CPU_K32L3A60VPJ1A_cm4</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_K32L3A60VPJ1A_cm4, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../../..;../..;..;../../../../../../../../CMSIS/Include;../../../../../../../../devices;../../../../../../../../devices/K32L3A60;../../../../../../../frdmk32l3a6;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/cmsis_drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/cmsis_drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../middleware/issdk/drivers/gpio/kinetis;../../../../../../../../middleware/issdk/sensors;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/utilities/str;../../../../../../../../devices/K32L3A60/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/K32L3A60;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../devices/K32L3A60/template;../../../../../../../../CMSIS/Driver/Include;../../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../../..;../..;..;../../../../../../../../middleware/issdk/drivers/gpio/kinetis;../../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../../devices/K32L3A60/drivers;../../../../../../../../devices/K32L3A60/cmsis_drivers;../../../../../../../../middleware/issdk/drivers/systick;../../../../../../../../middleware/issdk/sensors;../../../../../../../../devices/K32L3A60/utilities/str;../../../../../../../../devices/K32L3A60/utilities/debug_console;../../../../../../../../components/uart;../../../../../../../../components/serial_manager;../../../../../../../../components/lists;../../../../../../../../devices/K32L3A60;../../../../../../../../CMSIS/Include;../../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -1381,11 +1368,12 @@
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
             <VariousControls>
-              <MiscControls>--cpreproc</MiscControls>
+              <MiscControls/>
               <Define>NDEBUG</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
+            <uClangAs>1</uClangAs>
           </Aads>
           <LDads>
             <umfTarg>0</umfTarg>
@@ -1406,6 +1394,7 @@
           </LDads>
         </TargetArmAds>
       </TargetOption>
+      <uAC6>1</uAC6>
       <Groups>
         <Group>
           <GroupName>board</GroupName>
@@ -1465,11 +1454,6 @@
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
             </File>
-            <File>
-              <FileName>RTE_Device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/template/RTE_Device.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1488,12 +1472,37 @@
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../readme.txt</FilePath>
+              <FilePath>../readme.txt</FilePath>
             </File>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
               <FilePath>../readme.txt</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>gpio_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>gpio_driver_irq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_GPIO.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1506,19 +1515,14 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -1526,9 +1530,9 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_edma.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -1536,9 +1540,9 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -1546,9 +1550,9 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1556,9 +1560,9 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart_edma.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart_edma.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart_edma.h</FileName>
@@ -1566,14 +1570,19 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart_cmsis.c</FileName>
+              <FileName>fsl_lpuart_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpuart_cmsis.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpuart_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpuart_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpuart_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpuart_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpi2c.c</FileName>
@@ -1596,14 +1605,14 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpi2c_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpi2c_cmsis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpi2c_cmsis.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpi2c_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpi2c_cmsis.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_lpi2c_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpi2c_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpspi.c</FileName>
@@ -1616,19 +1625,14 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpspi_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpspi_edma.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_lpspi_edma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpspi_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpspi_cmsis.c</FileName>
+              <FileName>fsl_lpspi_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpspi_cmsis.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_lpspi_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpspi_cmsis.h</FileName>
@@ -1636,9 +1640,9 @@
               <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpspi_cmsis.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_lpspi_cmsis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/cmsis_drivers/fsl_lpspi_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1646,14 +1650,19 @@
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_msmc.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_msmc.c</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_msmc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_msmc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_msmc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/drivers/fsl_msmc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1676,6 +1685,16 @@
               <FilePath>../../../../../../../../devices/K32L3A60/utilities/fsl_assert.c</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1690,41 +1709,6 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/utilities/str/fsl_str.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>gpio_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_GPIO.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver_irq.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1736,34 +1720,9 @@
               <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>register_io_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_i2c.h</FilePath>
-            </File>
-            <File>
               <FileName>register_io_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>register_io_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</FilePath>
             </File>
             <File>
               <FileName>sensor_io_spi.c</FileName>
@@ -1771,9 +1730,34 @@
               <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_spi.c</FilePath>
             </File>
             <File>
+              <FileName>sensor_io_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/register_io_spi.h</FilePath>
+            </File>
+            <File>
               <FileName>sensor_io_spi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/sensor_drv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1786,80 +1770,85 @@
               <FilePath>../../../../../../../../middleware/issdk/sensors/fxos8700.h</FilePath>
             </File>
             <File>
-              <FileName>fxos8700_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../middleware/issdk/sensors/fxos8700_drv.c</FilePath>
-            </File>
-            <File>
               <FileName>fxos8700_drv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../middleware/issdk/sensors/fxos8700_drv.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-uart</GroupName>
-          <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
+              <FileName>fxos8700_drv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/uart/lpuart_adapter.c</FilePath>
-            </File>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../../../../middleware/issdk/sensors/fxos8700_drv.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../devices/K32L3A60/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>K32L3A60_cm4.h</FileName>
               <FileType>5</FileType>
@@ -1869,11 +1858,6 @@
               <FileName>K32L3A60_cm4_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../devices/K32L3A60/K32L3A60_cm4_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_K32L3A60_cm4.c</FileName>
@@ -1896,6 +1880,46 @@
               <FilePath>../../../../../../../../CMSIS/Include/core_cm4.h</FilePath>
             </File>
             <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+            </File>
+            <File>
               <FileName>arm_common_tables.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Include/arm_common_tables.h</FilePath>
@@ -1910,65 +1934,15 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_K32L3A60_cm4.s</FileName>
+              <FileName>startup_K32L3A60_cm4.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../../../devices/K32L3A60/arm/startup_K32L3A60_cm4.s</FilePath>
+              <FilePath>../../../../../../../../devices/K32L3A60/arm/startup_K32L3A60_cm4.S</FilePath>
             </File>
           </Files>
         </Group>

@@ -8,18 +8,18 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi_cmsis.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI3_IRQn)
-#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME (kCLOCK_Lpspi3)
+#define EXAMPLE_LPSPI_SLAVE_IRQN         (LPSPI3_IRQn)
+#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME   (kCLOCK_Lpspi3)
 #define EXAMPLE_LPSPI_SLAVE_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
 
-#define EXAMPLE_LPSPI_SLAVE_DMA_BASEADDR DMA1
+#define EXAMPLE_LPSPI_SLAVE_DMA_BASEADDR     DMA1
 #define EXAMPLE_LPSPI_SLAVE_DMA_MUX_BASEADDR DMAMUX1
 
 #define DRIVER_SLAVE_SPI Driver_SPI3

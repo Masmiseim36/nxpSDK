@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -68,29 +68,29 @@ uint32_t nt_control_rotary_get_position(const struct nt_control *control)
 uint32_t nt_control_rotary_is_touched(const struct nt_control *control)
 {
     NT_ASSERT(control != NULL);
-    uint32_t flag = _nt_control_get_flag(_nt_control_get_data(control), NT_ROTARY_TOUCH_FLAG);
-    return flag ? 1U : 0U;
+    uint32_t flag = _nt_control_get_flag(_nt_control_get_data(control), (int32_t) NT_ROTARY_TOUCH_FLAG);
+    return (bool)flag ? 1U : 0U;
 }
 
 uint32_t nt_control_rotary_movement_detected(const struct nt_control *control)
 {
     NT_ASSERT(control != NULL);
-    uint32_t flag = _nt_control_get_flag(_nt_control_get_data(control), NT_ROTARY_MOVEMENT_FLAG);
-    return flag ? 1U : 0U;
+    uint32_t flag = _nt_control_get_flag(_nt_control_get_data(control), (int32_t) NT_ROTARY_MOVEMENT_FLAG);
+    return (bool)flag ? 1U : 0U;
 }
 
 uint32_t nt_control_rotary_get_direction(const struct nt_control *control)
 {
     NT_ASSERT(control != NULL);
-    uint32_t flag = _nt_control_get_flag(_nt_control_get_data(control), NT_ROTARY_DIRECTION_FLAG);
-    return flag ? 1U : 0U;
+    uint32_t flag = _nt_control_get_flag(_nt_control_get_data(control), (int32_t) NT_ROTARY_DIRECTION_FLAG);
+    return (bool)flag ? 1U : 0U;
 }
 
 uint32_t nt_control_rotary_get_invalid_position(const struct nt_control *control)
 {
     NT_ASSERT(control != NULL);
-    uint32_t flag = _nt_control_get_flag(_nt_control_get_data(control), NT_ROTARY_INVALID_POSITION_FLAG);
-    return flag ? 1U : 0U;
+    uint32_t flag = _nt_control_get_flag(_nt_control_get_data(control), (int32_t) NT_ROTARY_INVALID_POSITION_FLAG);
+    return (bool)flag ? 1U : 0U;
 }
 
 static void _nt_control_rotary_invoke_callback(struct nt_control_data *control,
@@ -116,17 +116,17 @@ static void _nt_control_rotary_calc_dynamic(struct nt_control_data *control, uin
         /* movement detected */
         if (position > ram->position)
         {
-            _nt_control_set_flag(control, NT_ROTARY_DIRECTION_FLAG);
+            _nt_control_set_flag(control, (int32_t) NT_ROTARY_DIRECTION_FLAG);
         }
         else
         {
-            _nt_control_clear_flag(control, NT_ROTARY_DIRECTION_FLAG);
+            _nt_control_clear_flag(control, (int32_t) NT_ROTARY_DIRECTION_FLAG);
         }
-        _nt_control_set_flag(control, NT_ROTARY_MOVEMENT_FLAG);
+        _nt_control_set_flag(control, (int32_t) NT_ROTARY_MOVEMENT_FLAG);
     }
     else
     {
-        _nt_control_clear_flag(control, NT_ROTARY_MOVEMENT_FLAG);
+        _nt_control_clear_flag(control, (int32_t) NT_ROTARY_MOVEMENT_FLAG);
     }
 }
 
@@ -138,16 +138,16 @@ static void _nt_control_rotary_adjust_direction(struct nt_control_data *control,
     uint32_t prev_pos  = ram->position;
     uint32_t elec_size = control->electrodes_size;
 
-    if (((prev_pos >= elec_size) && (position == 0)) || ((prev_pos == 0) && (position >= elec_size)))
+    if (((prev_pos >= elec_size) && (position == 0U)) || ((prev_pos == 0U) && (position >= elec_size)))
     {
         /* negate the direction flag if the rotary was crossed through 0 */
-        if (_nt_control_get_flag(control, NT_ROTARY_DIRECTION_FLAG))
+        if ((bool)_nt_control_get_flag(control, (int32_t) NT_ROTARY_DIRECTION_FLAG))
         {
-            _nt_control_clear_flag(control, NT_ROTARY_DIRECTION_FLAG);
+            _nt_control_clear_flag(control, (int32_t) NT_ROTARY_DIRECTION_FLAG);
         }
         else
         {
-            _nt_control_set_flag(control, NT_ROTARY_DIRECTION_FLAG);
+            _nt_control_set_flag(control, (int32_t) NT_ROTARY_DIRECTION_FLAG);
         }
     }
 }
@@ -163,10 +163,10 @@ static void _nt_control_rotary_calc_position(struct nt_control_data *control,
     if ((last_elec - first_elec) == touch_count)
     {
         /* valid position (not on the edges) */
-        _nt_control_clear_flag(control, NT_ROTARY_INVALID_POSITION_FLAG);
+        _nt_control_clear_flag(control, (int32_t) NT_ROTARY_INVALID_POSITION_FLAG);
         uint32_t position = ((first_elec << 1U) + touch_count) - 1U;
         _nt_control_rotary_calc_dynamic(control, position);
-        ram->position = position;
+        ram->position = (uint8_t)position;
     }
     else
     {
@@ -174,22 +174,22 @@ static void _nt_control_rotary_calc_position(struct nt_control_data *control,
         if ((ram->position == 0U) || (ram->position == ((control->electrodes_size - 1U) << 1U)))
         {
             /* first or the last touched */
-            if ((first_elec == 0) && (last_elec == control->electrodes_size))
+            if ((first_elec == 0U) && (last_elec == control->electrodes_size))
             {
                 uint32_t position = (uint8_t)((control->electrodes_size << 1U) - 1U);
-                _nt_control_clear_flag(control, NT_ROTARY_INVALID_POSITION_FLAG);
+                _nt_control_clear_flag(control, (int32_t) NT_ROTARY_INVALID_POSITION_FLAG);
                 _nt_control_rotary_calc_dynamic(control, position);
                 _nt_control_rotary_adjust_direction(control, position);
-                ram->position = position;
+                ram->position = (uint8_t)position;
             }
             else
             {
-                _nt_control_set_flag(control, NT_ROTARY_INVALID_POSITION_FLAG);
+                _nt_control_set_flag(control, (int32_t) NT_ROTARY_INVALID_POSITION_FLAG);
             }
         }
     }
     /* processed all use cases, invoke movement callback if movement is set */
-    if (_nt_control_get_flag(control, NT_ROTARY_MOVEMENT_FLAG))
+    if ((bool)_nt_control_get_flag(control, (int32_t) NT_ROTARY_MOVEMENT_FLAG))
     {
         _nt_control_rotary_invoke_callback(control, NT_ROTARY_MOVEMENT, ram->position);
     }
@@ -204,15 +204,15 @@ static int32_t _nt_control_rotary_init(struct nt_control_data *control)
 
     if (control->data.rotary == NULL)
     {
-        return NT_OUT_OF_MEMORY;
+        return (int32_t) NT_OUT_OF_MEMORY;
     }
 
-    if (_nt_control_check_data(control) != NT_SUCCESS)
+    if ((bool)_nt_control_check_data(control) != (bool) NT_SUCCESS)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 static int32_t _nt_control_rotary_process(struct nt_control_data *control)
@@ -223,45 +223,45 @@ static int32_t _nt_control_rotary_process(struct nt_control_data *control)
     struct nt_control_rotary_data *ram = control->data.rotary;
     NT_ASSERT(ram != NULL);
 
-    if (!_nt_control_get_flag(control, NT_CONTROL_EN_FLAG) || !_nt_control_get_flag(control, NT_CONTROL_NEW_DATA_FLAG))
+    if (!(bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_EN_FLAG) || !(bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG))
     {
-        return NT_FAILURE; /* control disabled or data not ready */
+        return (int32_t) NT_FAILURE; /* control disabled or data not ready */
     }
 
     uint64_t elec_state = _nt_control_get_electrodes_state(control);
-    if (!elec_state)
+    if (!(bool)elec_state)
     {
         /* all released */
-        if (_nt_control_get_flag(control, NT_ROTARY_TOUCH_FLAG))
+        if ((bool)_nt_control_get_flag(control, (int32_t) NT_ROTARY_TOUCH_FLAG))
         {
             /* if none is touched & touch was reported, all released event */
             _nt_control_clear_flag(control,
-                                   NT_ROTARY_TOUCH_FLAG | NT_ROTARY_MOVEMENT_FLAG | NT_ROTARY_INVALID_POSITION_FLAG);
+                                   (uint32_t)NT_ROTARY_TOUCH_FLAG | (uint32_t)NT_ROTARY_MOVEMENT_FLAG | (uint32_t)NT_ROTARY_INVALID_POSITION_FLAG);
             _nt_control_rotary_invoke_callback(control, NT_ROTARY_ALL_RELEASE, (uint32_t)ram->position);
         }
-        _nt_control_clear_flag(control, NT_CONTROL_NEW_DATA_FLAG); /* data processed */
-        return NT_SUCCESS;                                         /* no touch on the control's electrodes */
+        _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+        return (int32_t) NT_SUCCESS;                                         /* no touch on the control's electrodes */
     }
 
     uint32_t touch_count = _nt_control_get_touch_count(elec_state);
-    if (touch_count <= 2)
+    if (touch_count <= 2U)
     {
         uint32_t last_elec  = _nt_control_get_last_elec_touched(elec_state);
         uint32_t first_elec = _nt_control_get_first_elec_touched(elec_state);
 
         _nt_control_rotary_calc_position(control, first_elec, last_elec, touch_count);
 
-        if (!_nt_control_get_flag(control, NT_ROTARY_TOUCH_FLAG))
+        if (!(bool)_nt_control_get_flag(control, (int32_t) NT_ROTARY_TOUCH_FLAG))
         {
             _nt_control_rotary_invoke_callback(control, NT_ROTARY_INITIAL_TOUCH, (uint32_t)ram->position);
         }
-        _nt_control_set_flag(control, NT_ROTARY_TOUCH_FLAG);
+        _nt_control_set_flag(control, (int32_t) NT_ROTARY_TOUCH_FLAG);
 
-        _nt_control_clear_flag(control, NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+        _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
     }
     else
     {
-        _nt_control_set_flag(control, NT_ROTARY_INVALID_POSITION_FLAG);
+        _nt_control_set_flag(control, (int32_t) NT_ROTARY_INVALID_POSITION_FLAG);
     }
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }

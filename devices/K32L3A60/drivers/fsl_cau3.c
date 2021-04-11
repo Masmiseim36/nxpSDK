@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  *
@@ -20,51 +20,51 @@
 /*! Compile time sizeof() check */
 #define BUILD_ASSURE(condition, msg) extern int msg[1 - 2 * (!(condition))] __attribute__((unused))
 
-#define CAU3_SR_TKCS_INITRUN 0x00000000U
-#define CAU3_SR_TKCS_RUN 0x00000100U
-#define CAU3_SR_TKCS_DBGHALT 0x00000200U
+#define CAU3_SR_TKCS_INITRUN   0x00000000U
+#define CAU3_SR_TKCS_RUN       0x00000100U
+#define CAU3_SR_TKCS_DBGHALT   0x00000200U
 #define CAU3_SR_TKCS_STOPNOERR 0x00000900U
 #define CAU3_SR_TKCS_STOPERROR 0x00000A00U
-#define CAU3_SR_TKCS_SECV 0x00000E00U
-#define CAU3_SR_TKCS_EXTSECV 0x00000F00U
+#define CAU3_SR_TKCS_SECV      0x00000E00U
+#define CAU3_SR_TKCS_EXTSECV   0x00000F00U
 
 #define CAU3_DMEM_STK_BASE 0xfff003f8U
 #define CAU3_DMEM_AES_RCON 0xfff00A00U
 
-#define CAU3_TASK_SECV_INIT 0x00 * 4
-#define CAU3_TASK_STOPERROR 0x01 * 4
-#define CAU3_TASK_STOPNOERR 0x02 * 4
-#define CAU3_TASK_NULL 0x02 * 4
-#define CAU3_TASK_BLKLD_DMEM 0x03 * 4
-#define CAU3_TASK_LD_KEYCTX 0x04 * 4
-#define CAU3_TASK_LD_SP_KEYCTX 0x05 * 4
-#define CAU3_TASK_CLR_KEYCTX 0x06 * 4
-#define CAU3_TASK_LD_KEY 0x07 * 4
-#define CAU3_TASK_LD_KEK 0x08 * 4
-#define CAU3_TASK_LD_IV 0x09 * 4
-#define CAU3_TASK_AES_KEY_SCH 0x0A * 4
-#define CAU3_TASK_AES_ENCRYPT 0x0B * 4
-#define CAU3_TASK_AES_DECRYPT 0x0C * 4
-#define CAU3_TASK_AES128_ENCRYPT 0x0D * 4
-#define CAU3_TASK_AES128_DECRYPT 0x0E * 4
-#define CAU3_TASK_AES128_CMAC 0x0F * 4
+#define CAU3_TASK_SECV_INIT         0x00 * 4
+#define CAU3_TASK_STOPERROR         0x01 * 4
+#define CAU3_TASK_STOPNOERR         0x02 * 4
+#define CAU3_TASK_NULL              0x02 * 4
+#define CAU3_TASK_BLKLD_DMEM        0x03 * 4
+#define CAU3_TASK_LD_KEYCTX         0x04 * 4
+#define CAU3_TASK_LD_SP_KEYCTX      0x05 * 4
+#define CAU3_TASK_CLR_KEYCTX        0x06 * 4
+#define CAU3_TASK_LD_KEY            0x07 * 4
+#define CAU3_TASK_LD_KEK            0x08 * 4
+#define CAU3_TASK_LD_IV             0x09 * 4
+#define CAU3_TASK_AES_KEY_SCH       0x0A * 4
+#define CAU3_TASK_AES_ENCRYPT       0x0B * 4
+#define CAU3_TASK_AES_DECRYPT       0x0C * 4
+#define CAU3_TASK_AES128_ENCRYPT    0x0D * 4
+#define CAU3_TASK_AES128_DECRYPT    0x0E * 4
+#define CAU3_TASK_AES128_CMAC       0x0F * 4
 #define CAU3_TASK_SHA256_INIT_STATE 0x10 * 4
-#define CAU3_TASK_SHA256_UPDATE 0x11 * 4
-#define CAU3_TASK_KEY_BLOB_UNWRAP 0x12 * 4
-#define CAU3_TASK_SHA1_HASH 0x13 * 4
-#define CAU3_TASK_SHA1_INIT_STATE 0x14 * 4
+#define CAU3_TASK_SHA256_UPDATE     0x11 * 4
+#define CAU3_TASK_KEY_BLOB_UNWRAP   0x12 * 4
+#define CAU3_TASK_SHA1_HASH         0x13 * 4
+#define CAU3_TASK_SHA1_INIT_STATE   0x14 * 4
 #define CAU3_TASK_SHA512_INIT_STATE 0x15 * 4
-#define CAU3_TASK_SHA512_UPDATE 0x16 * 4
+#define CAU3_TASK_SHA512_UPDATE     0x16 * 4
 #define CAU3_TASK_3DES_CHECK_PARITY 0x17 * 4
-#define CAU3_TASK_3DES_ENCRYPT 0x18 * 4
-#define CAU3_TASK_3DES_DECRYPT 0x19 * 4
-#define CAU3_TASK_CHA_POLY_ENCRYPT 0x1A * 4
-#define CAU3_TASK_CHA_POLY_DECRYPT 0x1B * 4
+#define CAU3_TASK_3DES_ENCRYPT      0x18 * 4
+#define CAU3_TASK_3DES_DECRYPT      0x19 * 4
+#define CAU3_TASK_CHA_POLY_ENCRYPT  0x1A * 4
+#define CAU3_TASK_CHA_POLY_DECRYPT  0x1B * 4
 
-#define CAU3_SEMA4_LOCK 0x80000000U
-#define CAU3_SEMA4_RELEASE 0x00000000U
+#define CAU3_SEMA4_LOCK         0x80000000U
+#define CAU3_SEMA4_RELEASE      0x00000000U
 #define CAU3_SMOWNR_OWNED_BY_ME 0x00000001U
-#define CAU3_SMOWNR_UNLOCKED 0x80000000U
+#define CAU3_SMOWNR_UNLOCKED    0x80000000U
 
 /*! @brief keyContext structure in the CAU3's DataMemory */
 typedef struct _cau3_key_context
@@ -128,7 +128,7 @@ typedef union _cau3_sha_block
 typedef uint32_t cau3_mode_t;
 
 #define CAU3_MDPK_ALG_PKHA (0x80U) /*!< Bit field value for CAU3_MDPK_ALG: PKHA */
-#define CAU3_MD_ALG_SHIFT 16
+#define CAU3_MD_ALG_SHIFT  16
 
 typedef enum _cau3_algorithm
 {
@@ -816,12 +816,12 @@ static void cau3_release_semaphore(CAU3_Type *base);
 static status_t cau3_process_task_completion(CAU3_Type *base, cau3_task_done_t taskDone)
 {
     status_t taskCompletionStatus;
+    uint32_t tkcs;
 
     taskCompletionStatus = kStatus_Fail; /* assume an error completion status */
+
     switch (((uint32_t)taskDone >> 16U) & 7U)
     {
-        uint32_t tkcs;
-
         case 0: /* poll the cau3 status register */
             tkcs = base->SR & CAU3_SR_TKCS_MASK;
             while (tkcs == CAU3_SR_TKCS_RUN)
@@ -896,7 +896,7 @@ static status_t cau3_initialize_inst_memory(CAU3_Type *base, const uint32_t *cau
     /* check for error-free stop state */
     if ((base->SR & CAU3_SR_TKCS_MASK) != CAU3_SR_TKCS_STOPNOERR)
     {
-        return (0xbad00000U + (base->SR & CAU3_SR_TKCS_MASK)); /* exit with error */
+        return (int32_t)(uint32_t)(0xbad00000U + (base->SR & CAU3_SR_TKCS_MASK)); /* exit with error */
     }
 
     base->SR = CAU3_SR_TCIRQ_MASK; /* clear the TCIRQ interrupt flag */
@@ -905,7 +905,7 @@ static status_t cau3_initialize_inst_memory(CAU3_Type *base, const uint32_t *cau
      * initialize the memory cmd and address registers */
     base->DBGMCMD = 0xac000000U; /* wt=1, ia=1, imem=0 */
     base->DBGMADR = 0U;          /* imem starting address */
-    for (i = 0; i < cau3ImemBytes / 4; i++)
+    for (i = 0; i < cau3ImemBytes / 4U; i++)
     {
         base->DBGMDR = cau3ImemImage[i]; /* indirect write into cau3Imem */
     }
@@ -914,11 +914,11 @@ static status_t cau3_initialize_inst_memory(CAU3_Type *base, const uint32_t *cau
      * initialize the memory cmd and address registers */
     base->DBGMCMD = 0x8c000000U; /* wt=0, ia=1, imem=0 */
     base->DBGMADR = 0U;          /* imem starting address */
-    for (i = 0; i < cau3ImemBytes / 4; i++)
+    for (i = 0; i < cau3ImemBytes / 4U; i++)
     {
         if (base->DBGMDR != cau3ImemImage[i]) /* indirect read from cau3Imem */
         {
-            return (0xbad10000U + i); /* exit on miscompare */
+            return (int32_t)(uint32_t)(0xbad10000U + i); /* exit on miscompare */
         }
     }
 
@@ -926,7 +926,7 @@ static status_t cau3_initialize_inst_memory(CAU3_Type *base, const uint32_t *cau
      * but, this operation is needed to "secure" (i.e., make private) the cau3
      * local memories */
 
-    return 0U;
+    return 0;
 }
 
 /*!
@@ -948,7 +948,7 @@ static status_t cau3_initialize_data_memory(CAU3_Type *base, cau3_task_done_t ta
     base->CC_R30 = CAU3_DMEM_STK_BASE;  /* initialize stack pointer (sp) */
     base->CC_R31 = 0U;                  /* set LR = 0 to signal a host task */
     base->CC_PC  = CAU3_TASK_SECV_INIT; /* call cau_secv_init() */
-    base->CC_CMD = taskDone;            /* trigger cau3 execution */
+    base->CC_CMD = (uint32_t)taskDone;  /* trigger cau3 execution */
 
     /* process the cau3 task completion signal specified by taskDone */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -984,7 +984,7 @@ static status_t cau3_initialize_read_only_data_memory(CAU3_Type *base,
     base->CC_R30   = CAU3_DMEM_STK_BASE;                /* initialize stack pointer (sp) */
     base->CC_R31   = 0U;                                /* set LR = 0 to signal a host task */
     base->CC_PC    = CAU3_TASK_BLKLD_DMEM;              /* call cau_block_load_dmem task */
-    base->CC_CMD   = taskDone;                          /* trigger cau3 execution */
+    base->CC_CMD   = (uint32_t)taskDone;                /* trigger cau3 execution */
 
     /* process the cau3 task completion signal specified by taskDone */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1091,7 +1091,7 @@ static status_t cau3_load_key(
     base->CC_R30   = CAU3_DMEM_STK_BASE; /*  initialize stack pointer (sp)  */
     base->CC_R31   = 0U;                 /*  set LR = 0 to signal a host task  */
     base->CC_PC    = CAU3_TASK_LD_KEY;   /*  call cau_load_key()  */
-    base->CC_CMD   = taskDone;           /*  trigger cau3 execution  */
+    base->CC_CMD   = (uint32_t)taskDone; /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1130,13 +1130,13 @@ status_t CAU3_AES_Encrypt(CAU3_Type *base, cau3_handle_t *handle, const uint8_t 
 #endif
 
     /* execute the cau3 "aes_encrypt_ecb" task */
-    base->CC_R[16] = (uint32_t)plaintext;   /* pPlainText */
-    base->CC_R[17] = handle->keySlot;       /* keySlot */
-    base->CC_R[19] = (uint32_t)ciphertext;  /* pCipherText */
-    base->CC_R30   = CAU3_DMEM_STK_BASE;    /* initialize stack pointer (sp) */
-    base->CC_R31   = 0U;                    /* set LR = 0 to signal a host task */
-    base->CC_PC    = CAU3_TASK_AES_ENCRYPT; /* call cau_aes_encrypt() */
-    base->CC_CMD   = taskDone;              /* trigger cau3 execution */
+    base->CC_R[16] = (uint32_t)plaintext;       /* pPlainText */
+    base->CC_R[17] = (uint32_t)handle->keySlot; /* keySlot */
+    base->CC_R[19] = (uint32_t)ciphertext;      /* pCipherText */
+    base->CC_R30   = CAU3_DMEM_STK_BASE;        /* initialize stack pointer (sp) */
+    base->CC_R31   = 0U;                        /* set LR = 0 to signal a host task */
+    base->CC_PC    = CAU3_TASK_AES_ENCRYPT;     /* call cau_aes_encrypt() */
+    base->CC_CMD   = (uint32_t)taskDone;        /* trigger cau3 execution */
 
     /* process the cau3 task completion signal specified by taskDone */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1175,13 +1175,13 @@ status_t CAU3_AES_Decrypt(CAU3_Type *base, cau3_handle_t *handle, const uint8_t 
 #endif
 
     /* execute the cau3 "aes_decrypt_ecb" task */
-    base->CC_R[16] = (uint32_t)ciphertext;  /* pCipherText */
-    base->CC_R[17] = handle->keySlot;       /* keySlot */
-    base->CC_R[19] = (uint32_t)plaintext;   /* pPlainText */
-    base->CC_R30   = CAU3_DMEM_STK_BASE;    /* initialize stack pointer (sp) */
-    base->CC_R31   = 0U;                    /* set LR = 0 to signal a host task */
-    base->CC_PC    = CAU3_TASK_AES_DECRYPT; /* call cau_aes_decrypt() */
-    base->CC_CMD   = taskDone;              /* trigger cau3 execution */
+    base->CC_R[16] = (uint32_t)ciphertext;      /* pCipherText */
+    base->CC_R[17] = (uint32_t)handle->keySlot; /* keySlot */
+    base->CC_R[19] = (uint32_t)plaintext;       /* pPlainText */
+    base->CC_R30   = CAU3_DMEM_STK_BASE;        /* initialize stack pointer (sp) */
+    base->CC_R31   = 0U;                        /* set LR = 0 to signal a host task */
+    base->CC_PC    = CAU3_TASK_AES_DECRYPT;     /* call cau_aes_decrypt() */
+    base->CC_CMD   = (uint32_t)taskDone;        /* trigger cau3 execution */
 
     /* process the cau3 task completion signal specified by taskDone */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1210,10 +1210,10 @@ void CAU3_Init(CAU3_Type *base)
 
     base->CR = CAU3_CR_RSTSM4(1);
     base->CR = CAU3_CR_RSTSM4(2);
-    cau3_initialize_inst_memory(base, s_cau3ImemImage, s_cau3ImemBytes);
-    cau3_initialize_data_memory(base, kCAU3_TaskDonePoll);
-    cau3_initialize_read_only_data_memory(base, s_cau3ReadOnlyConstants, s_cau3ReadOnlyConstantsBytes,
-                                          kCAU3_TaskDonePoll);
+    (void)cau3_initialize_inst_memory(base, s_cau3ImemImage, s_cau3ImemBytes);
+    (void)cau3_initialize_data_memory(base, kCAU3_TaskDonePoll);
+    (void)cau3_initialize_read_only_data_memory(base, s_cau3ReadOnlyConstants, s_cau3ReadOnlyConstantsBytes,
+                                                kCAU3_TaskDonePoll);
 }
 
 #if defined(FSL_CAU3_USE_HW_SEMA) && (FSL_CAU3_USE_HW_SEMA > 0)
@@ -1290,11 +1290,11 @@ static status_t cau3_load_key_context(CAU3_Type *base,
 
     /* execute the cau3 "load key context" task */
     base->CC_R[16] = (uint32_t)cauKeyContext; /* pKeyContext */
-    base->CC_R[17] = keySlot;                 /* keySlot */
+    base->CC_R[17] = (uint32_t)keySlot;       /* keySlot */
     base->CC_R30   = CAU3_DMEM_STK_BASE;      /* initialize stack pointer (sp) */
     base->CC_R31   = 0U;                      /* set LR = 0 to signal a host task */
     base->CC_PC    = CAU3_TASK_LD_KEYCTX;     /* call cau_load_key_context() */
-    base->CC_CMD   = taskDone;                /* trigger cau3 execution */
+    base->CC_CMD   = (uint32_t)taskDone;      /* trigger cau3 execution */
 
     /* process the cau3 task completion signal specified by taskDone */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1332,7 +1332,7 @@ status_t CAU3_ForceError(CAU3_Type *base, cau3_task_done_t taskDone)
     base->CC_R30 = CAU3_DMEM_STK_BASE; /*  initialize stack pointer (sp)  */
     base->CC_R31 = 0;                  /*  set LR = 0 to signal a host task  */
     base->CC_PC  = CAU3_TASK_STOPERROR;
-    base->CC_CMD = taskDone; /*  trigger cau3 execution  */
+    base->CC_CMD = (uint32_t)taskDone; /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1379,11 +1379,11 @@ status_t CAU3_LoadSpecialKeyContext(CAU3_Type *base, size_t keySize, cau3_key_sl
 
     /*  execute the cau3 "load special key context" task  */
     base->CC_R[16] = keySize;                /*  keySize [8,16,24,32]  */
-    base->CC_R[17] = keySlot;                /*  keySlot  */
+    base->CC_R[17] = (uint32_t)keySlot;      /*  keySlot  */
     base->CC_R30   = CAU3_DMEM_STK_BASE;     /*  initialize stack pointer (sp)  */
     base->CC_R31   = 0U;                     /*  set LR = 0 to signal a host task  */
     base->CC_PC    = CAU3_TASK_LD_SP_KEYCTX; /*  call cau_load_special_key_context()  */
-    base->CC_CMD   = taskDone;               /*  trigger cau3 execution  */
+    base->CC_CMD   = (uint32_t)taskDone;     /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1418,18 +1418,18 @@ status_t CAU3_ClearKeyContext(CAU3_Type *base, cau3_key_slot_t keySlot, cau3_tas
 #endif
 
     /*  execute the cau3 "clear key context" task  */
-    base->CC_R[17] = keySlot;              /*  keySlot  */
+    base->CC_R[17] = (uint32_t)keySlot;    /*  keySlot  */
     base->CC_R30   = CAU3_DMEM_STK_BASE;   /*  initialize stack pointer (sp)  */
     base->CC_R31   = 0U;                   /*  set LR = 0 to signal a host task  */
     base->CC_PC    = CAU3_TASK_CLR_KEYCTX; /*  call cau_clear_key_context()  */
-    base->CC_CMD   = taskDone;             /*  trigger cau3 execution  */
+    base->CC_CMD   = (uint32_t)taskDone;   /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
-    completionStatus = cau3_process_task_completion(base, taskDone);
+    completionStatus = (uint32_t)cau3_process_task_completion(base, taskDone);
 #if defined(FSL_CAU3_USE_HW_SEMA) && (FSL_CAU3_USE_HW_SEMA > 0)
     cau3_release_semaphore(base);
 #endif
-    return (completionStatus);
+    return ((int32_t)completionStatus);
 }
 
 /*!
@@ -1462,11 +1462,11 @@ status_t CAU3_LoadKeyInitVector(CAU3_Type *base, const uint8_t *iv, cau3_key_slo
 
     /*  execute the cau3 "load initialization vector into key context" task  */
     base->CC_R[16] = (uintptr_t)iv;      /*  pIv  */
-    base->CC_R[17] = keySlot;            /*  keySlot  */
+    base->CC_R[17] = (uint32_t)keySlot;  /*  keySlot  */
     base->CC_R30   = CAU3_DMEM_STK_BASE; /*  initialize stack pointer (sp)  */
     base->CC_R31   = 0U;                 /*  set LR = 0 to signal a host task  */
     base->CC_PC    = CAU3_TASK_LD_IV;    /*  call cau_load_iv()  */
-    base->CC_CMD   = taskDone;           /*  trigger cau3 execution  */
+    base->CC_CMD   = (uint32_t)taskDone; /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1505,11 +1505,11 @@ status_t CAU3_AES_KeyExpansion(CAU3_Type *base, cau3_key_slot_t keySlot, cau3_ta
 #endif
 
     /* execute the cau3 "aes_key_expansion" task */
-    base->CC_R[17] = keySlot;               /* keySlot */
+    base->CC_R[17] = (uint32_t)keySlot;     /* keySlot */
     base->CC_R30   = CAU3_DMEM_STK_BASE;    /* initialize stack pointer (sp) */
     base->CC_R31   = 0U;                    /* set LR = 0 to signal a host task */
     base->CC_PC    = CAU3_TASK_AES_KEY_SCH; /* call cau_aes_key_sched() */
-    base->CC_CMD   = taskDone;              /* trigger cau3 execution */
+    base->CC_CMD   = (uint32_t)taskDone;    /* trigger cau3 execution */
 
     /* process the cau3 task completion signal specified by taskDone */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1538,7 +1538,7 @@ status_t CAU3_AES_SetKey(CAU3_Type *base, cau3_handle_t *handle, const uint8_t *
     cau3_key_context_t cau3KeyCtx = {0};
 
     /* only work with aligned key[] */
-    if (0x3U & (uintptr_t)key)
+    if (0U != (0x3U & (uintptr_t)key))
     {
         return kStatus_InvalidArgument;
     }
@@ -1553,7 +1553,7 @@ status_t CAU3_AES_SetKey(CAU3_Type *base, cau3_handle_t *handle, const uint8_t *
 
     /* move the key by 32-bit words */
     int i = 0;
-    while (keySize)
+    while (keySize != 0U)
     {
         keySize -= sizeof(uint32_t);
         ((uint32_t *)((uintptr_t)cau3KeyCtx.key))[i] = ((uint32_t *)(uintptr_t)key)[i];
@@ -1581,7 +1581,7 @@ status_t CAU3_AES_Cmac(CAU3_Type *base, cau3_handle_t *handle, const uint8_t *me
     status_t completionStatus;
 
     /* mac must be 0-mod-4 aligned */
-    if (0x3U & (uintptr_t)mac)
+    if (0U != (0x3U & (uintptr_t)mac))
     {
         return kStatus_InvalidArgument;
     }
@@ -1596,14 +1596,14 @@ status_t CAU3_AES_Cmac(CAU3_Type *base, cau3_handle_t *handle, const uint8_t *me
 #endif
 
     /*  execute the cau3 "aes_cmac" task  */
-    base->CC_R[16] = (uintptr_t)message;    /*  pMessage  */
-    base->CC_R[17] = handle->keySlot;       /*  keySlot  */
-    base->CC_R[18] = size;                  /*  messageSize  */
-    base->CC_R[19] = (uintptr_t)mac;        /*  pMac  */
-    base->CC_R30   = CAU3_DMEM_STK_BASE;    /*  initialize stack pointer (sp)  */
-    base->CC_R31   = 0U;                    /*  set LR = 0 to signal a host task  */
-    base->CC_PC    = CAU3_TASK_AES128_CMAC; /*  call cau_aes128_cmac()  */
-    base->CC_CMD   = handle->taskDone;      /*  trigger cau3 execution  */
+    base->CC_R[16] = (uintptr_t)message;         /*  pMessage  */
+    base->CC_R[17] = (uint32_t)handle->keySlot;  /*  keySlot  */
+    base->CC_R[18] = size;                       /*  messageSize  */
+    base->CC_R[19] = (uintptr_t)mac;             /*  pMac  */
+    base->CC_R30   = CAU3_DMEM_STK_BASE;         /*  initialize stack pointer (sp)  */
+    base->CC_R31   = 0U;                         /*  set LR = 0 to signal a host task  */
+    base->CC_PC    = CAU3_TASK_AES128_CMAC;      /*  call cau_aes128_cmac()  */
+    base->CC_CMD   = (uint32_t)handle->taskDone; /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, handle->taskDone);
@@ -1704,7 +1704,7 @@ static status_t CAU3_Sha1InitializeOutput(CAU3_Type *base, uint32_t *sha1State, 
     base->CC_R30   = CAU3_DMEM_STK_BASE;        /*  initialize stack pointer (sp)  */
     base->CC_R31   = 0U;                        /*  set LR = 0 to signal a host task  */
     base->CC_PC    = CAU3_TASK_SHA1_INIT_STATE; /*  call cau_sha1_init_state()  */
-    base->CC_CMD   = taskDone;                  /*  trigger cau3 execution  */
+    base->CC_CMD   = (uint32_t)taskDone;        /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1750,7 +1750,7 @@ static status_t CAU3_Sha1Update(
     base->CC_R30   = CAU3_DMEM_STK_BASE;   /*  initialize stack pointer (sp)  */
     base->CC_R31   = 0U;                   /*  set LR = 0 to signal a host task  */
     base->CC_PC    = CAU3_TASK_SHA1_HASH;  /*  call cau_sha1_hash_n()  */
-    base->CC_CMD   = taskDone;             /*  trigger cau3 execution  */
+    base->CC_CMD   = (uint32_t)taskDone;   /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1772,7 +1772,7 @@ static status_t CAU3_Sha1Update(
  * @retval  status check from task completion: CAU_[OK, ERROR]
  */
 
-status_t CAU3_Sha256InitializeOutput(CAU3_Type *base, uint32_t *sha256State, cau3_task_done_t taskDone)
+static status_t CAU3_Sha256InitializeOutput(CAU3_Type *base, uint32_t *sha256State, cau3_task_done_t taskDone)
 {
     status_t completionStatus;
 
@@ -1790,7 +1790,7 @@ status_t CAU3_Sha256InitializeOutput(CAU3_Type *base, uint32_t *sha256State, cau
     base->CC_R30   = CAU3_DMEM_STK_BASE;          /* initialize stack pointer (sp) */
     base->CC_R31   = 0U;                          /* set LR = 0 to signal a host task */
     base->CC_PC    = CAU3_TASK_SHA256_INIT_STATE; /* call cau_sha256_init_state() */
-    base->CC_CMD   = taskDone;                    /* trigger cau3 execution */
+    base->CC_CMD   = (uint32_t)taskDone;          /* trigger cau3 execution */
 
     /* process the cau3 task completion signal specified by taskDone */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1816,7 +1816,7 @@ status_t CAU3_Sha256InitializeOutput(CAU3_Type *base, uint32_t *sha256State, cau
  * @retval  status check from task completion: CAU_[OK, ERROR]
  */
 
-status_t CAU3_Sha256Update(
+static status_t CAU3_Sha256Update(
     CAU3_Type *base, const uint8_t *message, uint32_t numberOfBlocks, uint32_t *sha256State, cau3_task_done_t taskDone)
 {
     status_t completionStatus;
@@ -1837,7 +1837,7 @@ status_t CAU3_Sha256Update(
     base->CC_R30   = CAU3_DMEM_STK_BASE;      /* initialize stack pointer (sp) */
     base->CC_R31   = 0U;                      /* set LR = 0 to signal a host task */
     base->CC_PC    = CAU3_TASK_SHA256_UPDATE; /* call cau_sha256_update() */
-    base->CC_CMD   = taskDone;                /* trigger cau3 execution */
+    base->CC_CMD   = (uint32_t)taskDone;      /* trigger cau3 execution */
 
     /* process the cau3 task completion signal specified by taskDone */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -1898,7 +1898,7 @@ static status_t cau3_hash_process_message_data(CAU3_Type *base,
 
     /* first fill the internal buffer to full block */
     size_t toCopy = CAU3_HASH_BLOCK_SIZE - ctxInternal->blksz;
-    cau3_memcpy(&ctxInternal->blk.b[ctxInternal->blksz], message, toCopy);
+    (void)cau3_memcpy(&ctxInternal->blk.b[ctxInternal->blksz], message, toCopy);
     message += toCopy;
     messageSize -= toCopy;
 
@@ -1916,6 +1916,7 @@ static status_t cau3_hash_process_message_data(CAU3_Type *base,
             break;
 
         default:
+            /* All the cases have been listed above, the default clause should not be reached. */
             break;
     }
 
@@ -1943,7 +1944,7 @@ static status_t cau3_hash_process_message_data(CAU3_Type *base,
         }
 
         /* copy last incomplete message bytes into internal block */
-        cau3_memcpy(&ctxInternal->blk.b[0], message, messageSize);
+        (void)cau3_memcpy(&ctxInternal->blk.b[0], message, messageSize);
         ctxInternal->blksz = messageSize;
     }
 
@@ -1966,7 +1967,6 @@ static status_t cau3_hash_finalize(CAU3_Type *base, cau3_hash_ctx_internal_t *ct
     status_t (*funcUpdate)(CAU3_Type * cau3base, const uint8_t *msg, uint32_t numberOfBlocks, uint32_t *shaState,
                            cau3_task_done_t taskDone);
 
-    status     = kStatus_InvalidArgument;
     funcUpdate = NULL;
 
     switch (ctxInternal->algo)
@@ -1980,6 +1980,7 @@ static status_t cau3_hash_finalize(CAU3_Type *base, cau3_hash_ctx_internal_t *ct
             break;
 
         default:
+            /* All the cases have been listed above, the default clause should not be reached. */
             break;
     }
 
@@ -1988,7 +1989,7 @@ static status_t cau3_hash_finalize(CAU3_Type *base, cau3_hash_ctx_internal_t *ct
         return kStatus_InvalidArgument;
     }
 
-    memset(&lastBlock, 0, sizeof(cau3_sha_block_t));
+    (void)memset(&lastBlock, 0, sizeof(cau3_sha_block_t));
     status = kStatus_Success;
 
     while (ctxInternal->blksz >= 64u)
@@ -1999,14 +2000,14 @@ static status_t cau3_hash_finalize(CAU3_Type *base, cau3_hash_ctx_internal_t *ct
             return status;
         }
         ctxInternal->blksz -= 64u;
-        cau3_memcpy(&ctxInternal->blk.b[0], &ctxInternal->blk.b[64], ctxInternal->blksz);
+        (void)memmove(&ctxInternal->blk.b[0], &ctxInternal->blk.b[64], ctxInternal->blksz);
     }
 
     /* this is last call, so need to flush buffered message bytes along with padding */
     if (ctxInternal->blksz <= 55u)
     {
         /* last data is 440 bits or less. */
-        cau3_memcpy(&lastBlock.b[0], &ctxInternal->blk.b[0], ctxInternal->blksz);
+        (void)cau3_memcpy(&lastBlock.b[0], &ctxInternal->blk.b[0], ctxInternal->blksz);
         lastBlock.b[ctxInternal->blksz] = (uint8_t)0x80U;
         lastBlock.w[15]                 = __REV(8u * ctxInternal->fullMessageSize);
         status = funcUpdate(base, &lastBlock.b[0], 1, ctxInternal->runningHash, kCAU3_TaskDonePoll);
@@ -2065,7 +2066,7 @@ status_t CAU3_HASH_Init(CAU3_Type *base, cau3_hash_ctx_t *ctx, cau3_hash_algo_t 
     cau3_hash_ctx_internal_t *ctxInternal;
     /* compile time check for the correct structure size */
     BUILD_ASSURE(sizeof(cau3_hash_ctx_t) >= sizeof(cau3_hash_ctx_internal_t), cau3_hash_ctx_t_size);
-    uint32_t i;
+    uint32_t i, j;
 
     status = cau3_hash_check_input_args(base, ctx, algo);
     if (status != kStatus_Success)
@@ -2074,10 +2075,11 @@ status_t CAU3_HASH_Init(CAU3_Type *base, cau3_hash_ctx_t *ctx, cau3_hash_algo_t 
     }
 
     /* set algorithm in context struct for later use */
-    ctxInternal        = (cau3_hash_ctx_internal_t *)ctx;
+    ctxInternal        = (cau3_hash_ctx_internal_t *)(uint32_t)ctx;
     ctxInternal->algo  = algo;
     ctxInternal->blksz = 0u;
-    for (i = 0; i < sizeof(ctxInternal->blk.w) / sizeof(ctxInternal->blk.w[0]); i++)
+    j                  = sizeof(ctxInternal->blk.w) / sizeof(ctxInternal->blk.w[0]);
+    for (i = 0; i < j; i++)
     {
         ctxInternal->blk.w[0] = 0u;
     }
@@ -2109,12 +2111,12 @@ status_t CAU3_HASH_Update(CAU3_Type *base, cau3_hash_ctx_t *ctx, const uint8_t *
     cau3_hash_ctx_internal_t *ctxInternal;
     size_t blockSize;
 
-    if (inputSize == 0)
+    if (inputSize == 0U)
     {
         return kStatus_Success;
     }
 
-    ctxInternal = (cau3_hash_ctx_internal_t *)ctx;
+    ctxInternal = (cau3_hash_ctx_internal_t *)(uint32_t)ctx;
     status      = cau3_hash_check_context(ctxInternal, input);
     if (kStatus_Success != status)
     {
@@ -2126,7 +2128,7 @@ status_t CAU3_HASH_Update(CAU3_Type *base, cau3_hash_ctx_t *ctx, const uint8_t *
     /* if we are still less than CAU3_HASH_BLOCK_SIZE bytes, keep only in context */
     if ((ctxInternal->blksz + inputSize) <= blockSize)
     {
-        cau3_memcpy((&ctxInternal->blk.b[0]) + ctxInternal->blksz, input, inputSize);
+        (void)cau3_memcpy((&ctxInternal->blk.b[0]) + ctxInternal->blksz, input, inputSize);
         ctxInternal->blksz += inputSize;
         return status;
     }
@@ -2166,7 +2168,7 @@ status_t CAU3_HASH_Finish(CAU3_Type *base, cau3_hash_ctx_t *ctx, uint8_t *output
     status_t status;
     cau3_hash_ctx_internal_t *ctxInternal;
 
-    ctxInternal = (cau3_hash_ctx_internal_t *)ctx;
+    ctxInternal = (cau3_hash_ctx_internal_t *)(uint32_t)ctx;
     status      = cau3_hash_check_context(ctxInternal, output);
     if (kStatus_Success != status)
     {
@@ -2188,12 +2190,13 @@ status_t CAU3_HASH_Finish(CAU3_Type *base, cau3_hash_ctx_t *ctx, uint8_t *output
     switch (ctxInternal->algo)
     {
         case kCAU3_Sha256:
-            outSize = kCAU3_OutLenSha256;
+            outSize = (uint32_t)kCAU3_OutLenSha256;
             break;
         case kCAU3_Sha1:
-            outSize = kCAU3_OutLenSha1;
+            outSize = (uint32_t)kCAU3_OutLenSha1;
             break;
         default:
+            /* All the cases have been listed above, the default clause should not be reached. */
             break;
     }
     algOutSize = outSize;
@@ -2201,7 +2204,7 @@ status_t CAU3_HASH_Finish(CAU3_Type *base, cau3_hash_ctx_t *ctx, uint8_t *output
     /* flush message last incomplete block, if there is any, and add padding bits */
     status = cau3_hash_finalize(base, ctxInternal);
 
-    if (outputSize)
+    if (outputSize != NULL)
     {
         if (algOutSize < *outputSize)
         {
@@ -2213,9 +2216,9 @@ status_t CAU3_HASH_Finish(CAU3_Type *base, cau3_hash_ctx_t *ctx, uint8_t *output
         }
     }
 
-    cau3_memcpy(&output[0], ctxInternal->runningHash, algOutSize);
+    (void)cau3_memcpy(&output[0], (const uint8_t *)ctxInternal->runningHash, algOutSize);
 
-    memset(ctx, 0, sizeof(cau3_hash_ctx_t));
+    (void)memset(ctx, 0, sizeof(cau3_hash_ctx_t));
     return status;
 }
 
@@ -2256,7 +2259,7 @@ status_t CAU3_HASH(
 }
 
 /*! @brief CAU3 driver wait mechanism. */
-status_t cau3_wait(CAU3_Type *base)
+static status_t cau3_wait(CAU3_Type *base)
 {
     status_t status;
 
@@ -2267,8 +2270,8 @@ status_t cau3_wait(CAU3_Type *base)
     while ((!error) && (!done))
     {
         uint32_t temp32 = base->STA;
-        error           = temp32 & kCAU3_StatusErrorIsr;
-        done            = temp32 & kCAU3_StatusDoneIsr;
+        error           = (bool)(temp32 & (uint32_t)kCAU3_StatusErrorIsr);
+        done            = (bool)(temp32 & (uint32_t)kCAU3_StatusDoneIsr);
     }
 
     if (error)
@@ -2280,9 +2283,9 @@ status_t cau3_wait(CAU3_Type *base)
     {
         status = kStatus_Success;
 
-        base->CW = kCAU3_ClearDataSize;
+        base->CW = (uint32_t)kCAU3_ClearDataSize;
         /* Clear 'done' interrupt status.  This also clears the mode register. */
-        base->STA = kCAU3_StatusDoneIsr;
+        base->STA = (uint32_t)kCAU3_StatusDoneIsr;
     }
 
     return status;
@@ -2295,12 +2298,12 @@ status_t cau3_wait(CAU3_Type *base)
  * @param base CAU3 peripheral base address
  * @param pkha Include CAU3 PKHA register clear. If there is no PKHA, the argument is ignored.
  */
-void cau3_clear_all(CAU3_Type *base, bool addPKHA)
+static void cau3_clear_all(CAU3_Type *base, bool addPKHA)
 {
     base->CW = (uint32_t)kCAU3_ClearAll;
     if (addPKHA)
     {
-        cau3_pkha_clear_regabne(base, true, true, true, true);
+        (void)cau3_pkha_clear_regabne(base, true, true, true, true);
     }
 }
 
@@ -2317,7 +2320,7 @@ static inline uint32_t cau3_get_word_from_unaligned(const uint8_t *srcAddr)
 #if (!(defined(__CORTEX_M)) || (defined(__CORTEX_M) && (__CORTEX_M == 0)))
     register const uint8_t *src = srcAddr;
     /* Cortex M0 does not support misaligned loads */
-    if ((uint32_t)src & 0x3u)
+    if (0U != ((uint32_t)src & 0x3u))
     {
         union _align_bytes_t
         {
@@ -2334,7 +2337,7 @@ static inline uint32_t cau3_get_word_from_unaligned(const uint8_t *srcAddr)
     else
     {
         /* addr aligned to 0-modulo-4 so it is safe to type cast */
-        return *((const uint32_t *)src);
+        return *((const uint32_t *)(uintptr_t)src);
     }
 #elif defined(__CC_ARM) || defined(__ARMCC_VERSION)
     /* -O3 optimization in Keil Compiler 5 uses LDM instruction here (LDM r4!, {r0})
@@ -2344,7 +2347,7 @@ static inline uint32_t cau3_get_word_from_unaligned(const uint8_t *srcAddr)
     memcpy(&ret, srcAddr, sizeof(uint32_t));
     return ret;
 #else
-    return *((const uint32_t *)srcAddr);
+    return *((const uint32_t *)(uintptr_t)srcAddr);
 #endif
 }
 
@@ -2362,19 +2365,19 @@ static status_t cau3_pkha_clear_regabne(CAU3_Type *base, bool A, bool B, bool N,
     /* Set ram area to clear. Clear all. */
     if (A)
     {
-        mode |= 1U << 19U;
+        mode |= ((uint32_t)1U << 19U);
     }
     if (B)
     {
-        mode |= 1U << 18U;
+        mode |= ((uint32_t)1U << 18U);
     }
     if (N)
     {
-        mode |= 1U << 16U;
+        mode |= ((uint32_t)1U << 16U);
     }
     if (E)
     {
-        mode |= 1U << 17U;
+        mode |= ((uint32_t)1U << 17U);
     }
 
     /* Write the mode register to the hardware.
@@ -2424,6 +2427,7 @@ static void cau3_pkha_write_word(CAU3_Type *base, cau3_pkha_reg_area_t reg, uint
             break;
 
         default:
+            /* All the cases have been listed above, the default clause should not be reached. */
             break;
     }
 }
@@ -2463,7 +2467,7 @@ static status_t cau3_pkha_write_reg(
     uint8_t startIndex = (quad * 32u);
     uint32_t outWord;
 
-    while (dataSize > 0)
+    while (dataSize > 0U)
     {
         if (dataSize >= sizeof(uint32_t))
         {
@@ -2474,7 +2478,7 @@ static status_t cau3_pkha_write_reg(
         else /* (dataSize > 0) && (dataSize < 4) */
         {
             outWord = 0;
-            cau3_memcpy(&outWord, data, dataSize);
+            (void)cau3_memcpy(&outWord, (const uint32_t *)(uintptr_t)data, dataSize);
             cau3_pkha_write_word(base, reg, startIndex, outWord);
             dataSize = 0;
         }
@@ -2490,12 +2494,12 @@ static void cau3_pkha_read_reg(CAU3_Type *base, cau3_pkha_reg_area_t reg, uint8_
     size_t calcSize;
     uint32_t word;
 
-    while (dataSize > 0)
+    while (dataSize > 0U)
     {
         word = cau3_pkha_read_word(base, reg, startIndex++);
 
         calcSize = (dataSize >= sizeof(uint32_t)) ? sizeof(uint32_t) : dataSize;
-        cau3_memcpy(data, &word, calcSize);
+        (void)cau3_memcpy(data, (const uint8_t *)&word, calcSize);
 
         data += calcSize;
         dataSize -= calcSize;
@@ -2512,65 +2516,65 @@ static void cau3_pkha_init_data(CAU3_Type *base,
                                 const uint8_t *E,
                                 size_t sizeE)
 {
-    uint32_t clearMask = kCAU3_ClearMode; /* clear Mode Register */
+    uint32_t clearMask = (uint32_t)kCAU3_ClearMode; /* clear Mode Register */
 
     /* Clear internal register states. */
-    if (sizeA)
+    if (sizeA != 0U)
     {
-        clearMask |= kCAU3_ClearPkhaSizeA;
+        clearMask |= (uint32_t)kCAU3_ClearPkhaSizeA;
     }
-    if (sizeB)
+    if (sizeB != 0U)
     {
-        clearMask |= kCAU3_ClearPkhaSizeB;
+        clearMask |= (uint32_t)kCAU3_ClearPkhaSizeB;
     }
-    if (sizeN)
+    if (sizeN != 0U)
     {
-        clearMask |= kCAU3_ClearPkhaSizeN;
+        clearMask |= (uint32_t)kCAU3_ClearPkhaSizeN;
     }
-    if (sizeE)
+    if (sizeE != 0U)
     {
-        clearMask |= kCAU3_ClearPkhaSizeE;
+        clearMask |= (uint32_t)kCAU3_ClearPkhaSizeE;
     }
 
     base->CW  = clearMask;
-    base->STA = kCAU3_StatusDoneIsr;
-    cau3_pkha_clear_regabne(base, A, B, N, E);
+    base->STA = (uint32_t)kCAU3_StatusDoneIsr;
+    (void)cau3_pkha_clear_regabne(base, (bool)(uintptr_t)A, (bool)(uintptr_t)B, (bool)(uintptr_t)N, (bool)(uintptr_t)E);
 
     /* Write register sizes. */
     /* Write modulus (N) and A and B register arguments. */
-    if (sizeN)
+    if (sizeN != 0U)
     {
         base->PKNSZ = sizeN;
-        if (N)
+        if (N != NULL)
         {
-            cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, sizeN);
+            (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, sizeN);
         }
     }
 
-    if (sizeA)
+    if (sizeA != 0U)
     {
         base->PKASZ = sizeA;
-        if (A)
+        if (A != NULL)
         {
-            cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, A, sizeA);
+            (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, A, sizeA);
         }
     }
 
-    if (sizeB)
+    if (sizeB != 0U)
     {
         base->PKBSZ = sizeB;
-        if (B)
+        if (B != NULL)
         {
-            cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, B, sizeB);
+            (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, B, sizeB);
         }
     }
 
-    if (sizeE)
+    if (sizeE != 0U)
     {
         base->PKESZ = sizeE;
-        if (E)
+        if (E != NULL)
         {
-            cau3_pkha_write_reg(base, kCAU3_PKHA_RegE, 0, E, sizeE);
+            (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegE, 0, E, sizeE);
         }
     }
 }
@@ -2581,9 +2585,9 @@ static void cau3_pkha_mode_set_src_reg_copy(cau3_mode_t *outMode, cau3_pkha_reg_
 
     do
     {
-        reg = (cau3_pkha_reg_area_t)(((uint32_t)reg) >> 1u);
+        reg = (cau3_pkha_reg_area_t)(uint32_t)((uint32_t)reg >> 1u);
         i++;
-    } while (reg);
+    } while ((uint32_t)reg != 0U);
 
     i = 4 - i;
     /* Source register must not be E. */
@@ -2599,9 +2603,9 @@ static void cau3_pkha_mode_set_dst_reg_copy(cau3_mode_t *outMode, cau3_pkha_reg_
 
     do
     {
-        reg = (cau3_pkha_reg_area_t)(((uint32_t)reg) >> 1u);
+        reg = (cau3_pkha_reg_area_t)(uint32_t)(((uint32_t)reg) >> 1u);
         i++;
-    } while (reg);
+    } while ((uint32_t)reg != 0U);
 
     i = 4 - i;
     *outMode |= ((uint32_t)i << 10u);
@@ -2631,7 +2635,7 @@ static status_t cau3_pkha_init_mode(CAU3_Type *base, const cau3_pkha_mode_params
     status_t retval;
 
     /* Set the PKHA algorithm and the appropriate function. */
-    modeReg = kCAU3_AlgorithmPKHA;
+    modeReg = (uint32_t)kCAU3_AlgorithmPKHA;
     modeReg |= (uint32_t)params->func;
 
     if ((params->func == kCAU3_PKHA_CopyMemSizeN) || (params->func == kCAU3_PKHA_CopyMemSizeSrc))
@@ -2681,7 +2685,7 @@ static status_t cau3_pkha_modR2(
     if (status == kStatus_Success)
     {
         /* Read the result and size from register B0. */
-        if (resultSize && result)
+        if ((resultSize != NULL) && (result != NULL))
         {
             *resultSize = base->PKBSZ;
             /* Read the data from the result register into place. */
@@ -2735,7 +2739,7 @@ static status_t cau3_pkha_modmul(CAU3_Type *base,
     if (status == kStatus_Success)
     {
         /* Read the result and size from register B0. */
-        if (resultSize && result)
+        if ((resultSize != NULL) && (result != NULL))
         {
             *resultSize = base->PKBSZ;
             /* Read the data from the result register into place. */
@@ -2759,13 +2763,13 @@ int CAU3_PKHA_CompareBigNum(const uint8_t *a, size_t sizeA, const uint8_t *b, si
     int retval = 0;
 
     /* skip zero msbytes - integer a */
-    while ((sizeA) && (0u == a[sizeA - 1]))
+    while ((sizeA != 0U) && (0u == a[sizeA - 1U]))
     {
         sizeA--;
     }
 
     /* skip zero msbytes - integer b */
-    while ((sizeB) && (0u == b[sizeB - 1]))
+    while ((sizeB != 0U) && (0u == b[sizeB - 1U]))
     {
         sizeB--;
     }
@@ -2778,7 +2782,7 @@ int CAU3_PKHA_CompareBigNum(const uint8_t *a, size_t sizeA, const uint8_t *b, si
     {
         retval = -1;
     } /* int b has more non-zero bytes, thus it is bigger than a */
-    else if (sizeA == 0)
+    else if (sizeA == 0U)
     {
         retval = 0;
     } /* sizeA = sizeB = 0 */
@@ -2789,16 +2793,16 @@ int CAU3_PKHA_CompareBigNum(const uint8_t *a, size_t sizeA, const uint8_t *b, si
         int val;
         uint32_t equal;
 
-        n     = sizeA - 1;
+        n     = (int32_t)((int32_t)sizeA - 1);
         i     = 0;
         equal = 0;
 
         while (n >= 0)
         {
-            uint32_t chXor = a[i] ^ b[i];
+            uint32_t chXor = ((uint32_t)a[i] ^ (uint32_t)b[i]);
 
             equal |= chXor;
-            val = (int)chXor * (a[i] - b[i]);
+            val = (int)chXor * ((int32_t)a[i] - (int32_t)b[i]);
 
             if (val < 0)
             {
@@ -2815,14 +2819,14 @@ int CAU3_PKHA_CompareBigNum(const uint8_t *a, size_t sizeA, const uint8_t *b, si
                 val = 1;
             }
 
-            if (val)
+            if (0 != val)
             {
                 i++;
                 n--;
             }
         }
 
-        if (0 == equal)
+        if (0U == equal)
         {
             retval = 0;
         }
@@ -2874,7 +2878,7 @@ status_t CAU3_PKHA_NormalToMontgomery(CAU3_Type *base,
 #endif
 
     /* need to convert our Integer inputs into Montgomery format */
-    if (N && sizeN && R2 && sizeR2)
+    if ((N != NULL) && (sizeN != 0U) && (R2 != NULL) && (sizeR2 != NULL))
     {
         /* 1. R2 = MOD_R2(N) */
         status = cau3_pkha_modR2(base, N, sizeN, R2, sizeR2, arithType);
@@ -2887,7 +2891,7 @@ status_t CAU3_PKHA_NormalToMontgomery(CAU3_Type *base,
         }
 
         /* 2. A(Montgomery) = MOD_MUL_IM_OM(A, R2, N) */
-        if (A && sizeA)
+        if ((A != NULL) && (sizeA != NULL))
         {
             status = cau3_pkha_modmul(base, A, *sizeA, R2, *sizeR2, N, sizeN, A, sizeA, arithType,
                                       kCAU3_PKHA_MontgomeryFormat, kCAU3_PKHA_MontgomeryFormat, equalTime);
@@ -2901,7 +2905,7 @@ status_t CAU3_PKHA_NormalToMontgomery(CAU3_Type *base,
         }
 
         /* 2. B(Montgomery) = MOD_MUL_IM_OM(B, R2, N) */
-        if (B && sizeB)
+        if ((B != NULL) && (sizeB != NULL))
         {
             status = cau3_pkha_modmul(base, B, *sizeB, R2, *sizeR2, N, sizeN, B, sizeB, arithType,
                                       kCAU3_PKHA_MontgomeryFormat, kCAU3_PKHA_MontgomeryFormat, equalTime);
@@ -2968,7 +2972,7 @@ status_t CAU3_PKHA_MontgomeryToNormal(CAU3_Type *base,
 #endif
 
     /* A = MOD_MUL_IM_OM(A(Montgomery), 1, N) */
-    if (A && sizeA)
+    if ((A != NULL) && (sizeA != NULL))
     {
         status = cau3_pkha_modmul(base, A, *sizeA, &one, sizeof(one), N, sizeN, A, sizeA, arithType,
                                   kCAU3_PKHA_MontgomeryFormat, kCAU3_PKHA_MontgomeryFormat, equalTime);
@@ -2982,7 +2986,7 @@ status_t CAU3_PKHA_MontgomeryToNormal(CAU3_Type *base,
     }
 
     /* B = MOD_MUL_IM_OM(B(Montgomery), 1, N) */
-    if (B && sizeB)
+    if ((B != NULL) && (sizeB != NULL))
     {
         status = cau3_pkha_modmul(base, B, *sizeB, &one, sizeof(one), N, sizeN, B, sizeB, arithType,
                                   kCAU3_PKHA_MontgomeryFormat, kCAU3_PKHA_MontgomeryFormat, equalTime);
@@ -3067,7 +3071,7 @@ status_t CAU3_PKHA_ModAdd(CAU3_Type *base,
     if (status == kStatus_Success)
     {
         /* Read the result and size from register B0. */
-        if (resultSize && result)
+        if ((resultSize != NULL) && (result != NULL))
         {
             *resultSize = base->PKBSZ;
             /* Read the data from the result register into place. */
@@ -3140,7 +3144,7 @@ status_t CAU3_PKHA_ModSub1(CAU3_Type *base,
     if (status == kStatus_Success)
     {
         /* Read the result and size from register B0. */
-        if (resultSize && result)
+        if ((resultSize != NULL) && (result != NULL))
         {
             *resultSize = base->PKBSZ;
             /* Read the data from the result register into place. */
@@ -3203,7 +3207,7 @@ status_t CAU3_PKHA_ModSub2(CAU3_Type *base,
     if (status == kStatus_Success)
     {
         /* Read the result and size from register B0. */
-        if (resultSize && result)
+        if ((resultSize != NULL) && (result != NULL))
         {
             *resultSize = base->PKBSZ;
             /* Read the data from the result register into place. */
@@ -3341,7 +3345,7 @@ status_t CAU3_PKHA_ModExp(CAU3_Type *base,
     if (status == kStatus_Success)
     {
         /* Read the result and size from register B0. */
-        if (resultSize && result)
+        if ((resultSize != NULL) && (result != NULL))
         {
             *resultSize = base->PKBSZ;
             /* Read the data from the result register into place. */
@@ -3410,7 +3414,7 @@ status_t CAU3_PKHA_ModSqrt(CAU3_Type *base,
     if (status == kStatus_Success)
     {
         /* Read the result and size from register B0. */
-        if (resultSize && result)
+        if ((resultSize != NULL) && (result != NULL))
         {
             *resultSize = base->PKBSZ;
             /* Read the data from the result register into place. */
@@ -3472,7 +3476,7 @@ status_t CAU3_PKHA_ModRed(CAU3_Type *base,
     if (status == kStatus_Success)
     {
         /* Read the result and size from register B0. */
-        if (resultSize && result)
+        if ((resultSize != NULL) && (result != NULL))
         {
             *resultSize = base->PKBSZ;
             /* Read the data from the result register into place. */
@@ -3543,7 +3547,7 @@ status_t CAU3_PKHA_ModInv(CAU3_Type *base,
     if (status == kStatus_Success)
     {
         /* Read the result and size from register B0. */
-        if (resultSize && result)
+        if ((resultSize != NULL) && (result != NULL))
         {
             *resultSize = base->PKBSZ;
             /* Read the data from the result register into place. */
@@ -3633,7 +3637,7 @@ status_t CAU3_PKHA_ModRR(
     if (status == kStatus_Success)
     {
         /* Read the result and size from register B0. */
-        if (resultSize && result)
+        if ((resultSize != NULL) && (result != NULL))
         {
             *resultSize = base->PKBSZ;
             /* Read the data from the result register into place. */
@@ -3694,7 +3698,7 @@ status_t CAU3_PKHA_ModGcd(CAU3_Type *base,
     if (status == kStatus_Success)
     {
         /* Read the result and size from register B0. */
-        if (resultSize && result)
+        if ((resultSize != NULL) && (result != NULL))
         {
             *resultSize = base->PKBSZ;
             /* Read the data from the result register into place. */
@@ -3813,36 +3817,36 @@ status_t CAU3_PKHA_ECC_PointAdd(CAU3_Type *base,
     cau3_pkha_default_parms(&params);
     params.func      = kCAU3_PKHA_ArithEccAdd;
     params.arithType = arithType;
-    params.r2modn    = R2modN ? kCAU3_PKHA_InputR2 : kCAU3_PKHA_CalcR2;
+    params.r2modn    = (R2modN != NULL) ? kCAU3_PKHA_InputR2 : kCAU3_PKHA_CalcR2;
 
-    clearMask = kCAU3_ClearMode;
+    clearMask = (uint32_t)kCAU3_ClearMode;
 
     /* Clear internal register states. */
-    clearMask |= kCAU3_ClearPkhaSizeA;
-    clearMask |= kCAU3_ClearPkhaSizeB;
-    clearMask |= kCAU3_ClearPkhaSizeN;
-    clearMask |= kCAU3_ClearPkhaSizeE;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeA;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeB;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeN;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeE;
 
     base->CW  = clearMask;
-    base->STA = kCAU3_StatusDoneIsr;
-    cau3_pkha_clear_regabne(base, true, true, true, false);
+    base->STA = (uint32_t)kCAU3_StatusDoneIsr;
+    (void)cau3_pkha_clear_regabne(base, true, true, true, false);
 
     /* sizeN should be less than 64 bytes. */
     base->PKNSZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
 
     base->PKASZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, A->X, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 1, A->Y, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, aCurveParam, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, A->X, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 1, A->Y, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, aCurveParam, size);
 
     base->PKBSZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, bCurveParam, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, B->X, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 2, B->Y, size);
-    if (R2modN)
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, bCurveParam, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, B->X, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 2, B->Y, size);
+    if (R2modN != NULL)
     {
-        cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 3, R2modN, size);
+        (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 3, R2modN, size);
     }
 
     status = cau3_pkha_init_mode(base, &params);
@@ -3903,29 +3907,29 @@ status_t CAU3_PKHA_ECC_PointDouble(CAU3_Type *base,
     params.func      = kCAU3_PKHA_ArithEccDouble;
     params.arithType = arithType;
 
-    clearMask = kCAU3_ClearMode;
+    clearMask = (uint32_t)kCAU3_ClearMode;
 
     /* Clear internal register states. */
-    clearMask |= kCAU3_ClearPkhaSizeA;
-    clearMask |= kCAU3_ClearPkhaSizeB;
-    clearMask |= kCAU3_ClearPkhaSizeN;
-    clearMask |= kCAU3_ClearPkhaSizeE;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeA;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeB;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeN;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeE;
 
     base->CW  = clearMask;
-    base->STA = kCAU3_StatusDoneIsr;
-    cau3_pkha_clear_regabne(base, true, true, true, false);
+    base->STA = (uint32_t)kCAU3_StatusDoneIsr;
+    (void)cau3_pkha_clear_regabne(base, true, true, true, false);
 
     /* sizeN should be less than 64 bytes. */
     base->PKNSZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
 
     base->PKASZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, aCurveParam, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, aCurveParam, size);
 
     base->PKBSZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, bCurveParam, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, B->X, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 2, B->Y, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, bCurveParam, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, B->X, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 2, B->Y, size);
     status = cau3_pkha_init_mode(base, &params);
 
     if (status == kStatus_Success)
@@ -3993,37 +3997,37 @@ status_t CAU3_PKHA_ECC_PointMul(CAU3_Type *base,
     params.func      = kCAU3_PKHA_ArithEccMul;
     params.equalTime = equalTime;
     params.arithType = arithType;
-    params.r2modn    = R2modN ? kCAU3_PKHA_InputR2 : kCAU3_PKHA_CalcR2;
+    params.r2modn    = (R2modN != NULL) ? kCAU3_PKHA_InputR2 : kCAU3_PKHA_CalcR2;
 
-    clearMask = kCAU3_ClearMode;
+    clearMask = (uint32_t)kCAU3_ClearMode;
 
     /* Clear internal register states. */
-    clearMask |= kCAU3_ClearPkhaSizeA;
-    clearMask |= kCAU3_ClearPkhaSizeB;
-    clearMask |= kCAU3_ClearPkhaSizeN;
-    clearMask |= kCAU3_ClearPkhaSizeE;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeA;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeB;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeN;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeE;
 
     base->CW  = clearMask;
-    base->STA = kCAU3_StatusDoneIsr;
-    cau3_pkha_clear_regabne(base, true, true, true, true);
+    base->STA = (uint32_t)kCAU3_StatusDoneIsr;
+    (void)cau3_pkha_clear_regabne(base, true, true, true, true);
 
     /* sizeN should be less than 64 bytes. */
     base->PKNSZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
 
     base->PKESZ = sizeE;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegE, 0, E, sizeE);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegE, 0, E, sizeE);
 
     base->PKASZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, A->X, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 1, A->Y, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, aCurveParam, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, A->X, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 1, A->Y, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, aCurveParam, size);
 
     base->PKBSZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, bCurveParam, size);
-    if (R2modN)
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, bCurveParam, size);
+    if (R2modN != NULL)
     {
-        cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, R2modN, size);
+        (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, R2modN, size);
     }
 
     status = cau3_pkha_init_mode(base, &params);
@@ -4092,34 +4096,34 @@ status_t CAU3_PKHA_ECM_PointMul(CAU3_Type *base,
     cau3_pkha_default_parms(&params);
     params.func      = kCAU3_PKHA_ArithEcmMul;
     params.equalTime = equalTime;
-    params.r2modn    = R2modN ? kCAU3_PKHA_InputR2 : kCAU3_PKHA_CalcR2;
+    params.r2modn    = (R2modN != NULL) ? kCAU3_PKHA_InputR2 : kCAU3_PKHA_CalcR2;
 
-    clearMask = kCAU3_ClearMode;
+    clearMask = (uint32_t)kCAU3_ClearMode;
 
     /* Clear internal register states. */
-    clearMask |= kCAU3_ClearPkhaSizeA;
-    clearMask |= kCAU3_ClearPkhaSizeB;
-    clearMask |= kCAU3_ClearPkhaSizeN;
-    clearMask |= kCAU3_ClearPkhaSizeE;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeA;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeB;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeN;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeE;
 
     base->CW  = clearMask;
-    base->STA = kCAU3_StatusDoneIsr;
-    cau3_pkha_clear_regabne(base, true, true, true, true);
+    base->STA = (uint32_t)kCAU3_StatusDoneIsr;
+    (void)cau3_pkha_clear_regabne(base, true, true, true, true);
 
     base->PKNSZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
 
     base->PKESZ = sizeE;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegE, 0, E, sizeE);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegE, 0, E, sizeE);
 
     base->PKASZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, inputCoordinate, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, A24, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, inputCoordinate, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, A24, size);
 
-    if (R2modN)
+    if (R2modN != NULL)
     {
         base->PKBSZ = size;
-        cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, R2modN, size);
+        (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, R2modN, size);
     }
 
     status = cau3_pkha_init_mode(base, &params);
@@ -4127,7 +4131,7 @@ status_t CAU3_PKHA_ECM_PointMul(CAU3_Type *base,
     if (status == kStatus_Success)
     {
         /* Read the data from the result register into place. */
-        cau3_pkha_read_reg(base, kCAU3_PKHA_RegB, 1, outputCoordinate, size);
+        (void)cau3_pkha_read_reg(base, kCAU3_PKHA_RegB, 1, outputCoordinate, size);
     }
 
     cau3_clear_all(base, true);
@@ -4186,36 +4190,36 @@ status_t CAU3_PKHA_ECT_PointMul(CAU3_Type *base,
     cau3_pkha_default_parms(&params);
     params.func      = kCAU3_PKHA_ArithEctMul;
     params.equalTime = equalTime;
-    params.r2modn    = R2modN ? kCAU3_PKHA_InputR2 : kCAU3_PKHA_CalcR2;
+    params.r2modn    = (R2modN != NULL) ? kCAU3_PKHA_InputR2 : kCAU3_PKHA_CalcR2;
 
-    clearMask = kCAU3_ClearMode;
+    clearMask = (uint32_t)kCAU3_ClearMode;
 
     /* Clear internal register states. */
-    clearMask |= kCAU3_ClearPkhaSizeA;
-    clearMask |= kCAU3_ClearPkhaSizeB;
-    clearMask |= kCAU3_ClearPkhaSizeN;
-    clearMask |= kCAU3_ClearPkhaSizeE;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeA;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeB;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeN;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeE;
 
     base->CW  = clearMask;
-    base->STA = kCAU3_StatusDoneIsr;
-    cau3_pkha_clear_regabne(base, true, true, true, true);
+    base->STA = (uint32_t)kCAU3_StatusDoneIsr;
+    (void)cau3_pkha_clear_regabne(base, true, true, true, true);
 
     base->PKNSZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
 
     base->PKESZ = sizeE;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegE, 0, E, sizeE);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegE, 0, E, sizeE);
 
     base->PKASZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, A->X, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 1, A->Y, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, aCurveParam, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, A->X, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 1, A->Y, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, aCurveParam, size);
 
     base->PKBSZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, dCurveParam, size);
-    if (R2modN)
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, dCurveParam, size);
+    if (R2modN != NULL)
     {
-        cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, R2modN, size);
+        (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, R2modN, size);
     }
 
     status = cau3_pkha_init_mode(base, &params);
@@ -4277,36 +4281,36 @@ status_t CAU3_PKHA_ECT_PointAdd(CAU3_Type *base,
 
     cau3_pkha_default_parms(&params);
     params.func   = kCAU3_PKHA_ArithEctAdd;
-    params.r2modn = R2modN ? kCAU3_PKHA_InputR2 : kCAU3_PKHA_CalcR2;
+    params.r2modn = (R2modN != NULL) ? kCAU3_PKHA_InputR2 : kCAU3_PKHA_CalcR2;
 
-    clearMask = kCAU3_ClearMode;
+    clearMask = (uint32_t)kCAU3_ClearMode;
 
     /* Clear internal register states. */
-    clearMask |= kCAU3_ClearPkhaSizeA;
-    clearMask |= kCAU3_ClearPkhaSizeB;
-    clearMask |= kCAU3_ClearPkhaSizeN;
-    clearMask |= kCAU3_ClearPkhaSizeE;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeA;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeB;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeN;
+    clearMask |= (uint32_t)kCAU3_ClearPkhaSizeE;
 
     base->CW  = clearMask;
-    base->STA = kCAU3_StatusDoneIsr;
-    cau3_pkha_clear_regabne(base, true, true, true, false);
+    base->STA = (uint32_t)kCAU3_StatusDoneIsr;
+    (void)cau3_pkha_clear_regabne(base, true, true, true, false);
 
     /* sizeN should be less than 64 bytes. */
     base->PKNSZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegN, 0, N, size);
 
     base->PKASZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, A->X, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 1, A->Y, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, aCurveParam, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 0, A->X, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 1, A->Y, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegA, 3, aCurveParam, size);
 
     base->PKBSZ = size;
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, dCurveParam, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, B->X, size);
-    cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 2, B->Y, size);
-    if (R2modN)
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 0, dCurveParam, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 1, B->X, size);
+    (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 2, B->Y, size);
+    if (R2modN != NULL)
     {
-        cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 3, R2modN, size);
+        (void)cau3_pkha_write_reg(base, kCAU3_PKHA_RegB, 3, R2modN, size);
     }
 
     status = cau3_pkha_init_mode(base, &params);
@@ -4353,11 +4357,11 @@ status_t CAU3_TDES_CheckParity(CAU3_Type *base, cau3_key_slot_t keySlot)
     taskDone = kCAU3_TaskDonePoll;
 
     /*  execute the cau3 "3des_check_parity" task  */
-    base->CC_R[17] = keySlot;                     /*  keySlot  */
+    base->CC_R[17] = (uint32_t)keySlot;           /*  keySlot  */
     base->CC_R30   = CAU3_DMEM_STK_BASE;          /*  initialize stack pointer (sp)  */
     base->CC_R31   = 0U;                          /*  set LR = 0 to signal a host task  */
     base->CC_PC    = CAU3_TASK_3DES_CHECK_PARITY; /*  call cau_3des_chk_parity()  */
-    base->CC_CMD   = taskDone;                    /*  trigger cau3 execution  */
+    base->CC_CMD   = (uint32_t)taskDone;          /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, taskDone);
@@ -4381,7 +4385,7 @@ status_t CAU3_TDES_CheckParity(CAU3_Type *base, cau3_key_slot_t keySlot)
 status_t CAU3_TDES_SetKey(CAU3_Type *base, cau3_handle_t *handle, const uint8_t *key, size_t keySize)
 {
     /* only work with aligned key[] */
-    if (0x3U & (uintptr_t)key)
+    if (0U != (0x3U & (uintptr_t)key))
     {
         return kStatus_InvalidArgument;
     }
@@ -4392,7 +4396,7 @@ status_t CAU3_TDES_SetKey(CAU3_Type *base, cau3_handle_t *handle, const uint8_t 
         return kStatus_InvalidArgument;
     }
 
-    return cau3_load_key(base, key, keySize, handle->keySlot, handle->taskDone);
+    return cau3_load_key(base, key, keySize, (uint32_t)handle->keySlot, handle->taskDone);
 }
 
 /*!
@@ -4423,13 +4427,13 @@ status_t CAU3_TDES_Encrypt(CAU3_Type *base, cau3_handle_t *handle, const uint8_t
 #endif
 
     /*  execute the cau3 "3des_encrypt_ecb" task  */
-    base->CC_R[16] = (uintptr_t)plaintext;   /*  pPlainText  */
-    base->CC_R[17] = handle->keySlot;        /*  keySlot  */
-    base->CC_R[19] = (uintptr_t)ciphertext;  /*  pCipherText  */
-    base->CC_R30   = CAU3_DMEM_STK_BASE;     /*  initialize stack pointer (sp)  */
-    base->CC_R31   = 0U;                     /*  set LR = 0 to signal a host task  */
-    base->CC_PC    = CAU3_TASK_3DES_ENCRYPT; /*  call cau_3des_encrypt()  */
-    base->CC_CMD   = handle->taskDone;       /*  trigger cau3 execution  */
+    base->CC_R[16] = (uintptr_t)plaintext;       /*  pPlainText  */
+    base->CC_R[17] = (uint32_t)handle->keySlot;  /*  keySlot  */
+    base->CC_R[19] = (uintptr_t)ciphertext;      /*  pCipherText  */
+    base->CC_R30   = CAU3_DMEM_STK_BASE;         /*  initialize stack pointer (sp)  */
+    base->CC_R31   = 0U;                         /*  set LR = 0 to signal a host task  */
+    base->CC_PC    = CAU3_TASK_3DES_ENCRYPT;     /*  call cau_3des_encrypt()  */
+    base->CC_CMD   = (uint32_t)handle->taskDone; /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, handle->taskDone);
@@ -4466,13 +4470,13 @@ status_t CAU3_TDES_Decrypt(CAU3_Type *base, cau3_handle_t *handle, const uint8_t
 #endif
 
     /*  execute the cau3 "3des_decrypt_ecb" task  */
-    base->CC_R[16] = (uintptr_t)ciphertext;  /*  pCipherText  */
-    base->CC_R[17] = handle->keySlot;        /*  keySlot  */
-    base->CC_R[19] = (uintptr_t)plaintext;   /*  pPlainText  */
-    base->CC_R30   = CAU3_DMEM_STK_BASE;     /*  initialize stack pointer (sp)  */
-    base->CC_R31   = 0U;                     /*  set LR = 0 to signal a host task  */
-    base->CC_PC    = CAU3_TASK_3DES_DECRYPT; /*  call cau_3des_decrypt()  */
-    base->CC_CMD   = handle->taskDone;       /*  trigger cau3 execution  */
+    base->CC_R[16] = (uintptr_t)ciphertext;      /*  pCipherText  */
+    base->CC_R[17] = (uint32_t)handle->keySlot;  /*  keySlot  */
+    base->CC_R[19] = (uintptr_t)plaintext;       /*  pPlainText  */
+    base->CC_R30   = CAU3_DMEM_STK_BASE;         /*  initialize stack pointer (sp)  */
+    base->CC_R31   = 0U;                         /*  set LR = 0 to signal a host task  */
+    base->CC_PC    = CAU3_TASK_3DES_DECRYPT;     /*  call cau_3des_decrypt()  */
+    base->CC_CMD   = (uint32_t)handle->taskDone; /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, handle->taskDone);
@@ -4496,7 +4500,7 @@ status_t CAU3_TDES_Decrypt(CAU3_Type *base, cau3_handle_t *handle, const uint8_t
 status_t CAU3_CHACHA20_POLY1305_SetKey(CAU3_Type *base, cau3_handle_t *handle, const uint8_t *key, size_t keySize)
 {
     /* only work with aligned key[] */
-    if (0x3U & (uintptr_t)key)
+    if (0U != (0x3U & (uintptr_t)key))
     {
         return kStatus_InvalidArgument;
     }
@@ -4513,12 +4517,12 @@ status_t CAU3_CHACHA20_POLY1305_SetKey(CAU3_Type *base, cau3_handle_t *handle, c
         uint32_t w[8];
     } tempKey;
 
-    for (int i = 0; i < ARRAY_SIZE(tempKey.w); i++)
+    for (uint32_t i = 0; i < ARRAY_SIZE(tempKey.w); i++)
     {
         tempKey.w[i] = __REV(((const uint32_t *)(uintptr_t)key)[i]);
     }
 
-    return cau3_load_key(base, tempKey.b, keySize, handle->keySlot, handle->taskDone);
+    return cau3_load_key(base, tempKey.b, keySize, (uint32_t)handle->keySlot, handle->taskDone);
 }
 
 static status_t cau3_load_nonce(CAU3_Type *base, const uint8_t *nonce, cau3_key_slot_t keySlot)
@@ -4529,10 +4533,10 @@ static status_t cau3_load_nonce(CAU3_Type *base, const uint8_t *nonce, cau3_key_
         uint32_t w[4];
     } tempIv;
 
-    memset(&tempIv, 0, sizeof(tempIv));
+    (void)memset(&tempIv, 0, sizeof(tempIv));
 
     /* set nonce to keySlot */
-    memcpy(tempIv.b, nonce, 12);
+    (void)memcpy(tempIv.b, nonce, 12);
     /* swap bytes */
     tempIv.w[0] = __REV(tempIv.w[0]);
     tempIv.w[1] = __REV(tempIv.w[1]);
@@ -4587,7 +4591,7 @@ status_t CAU3_CHACHA20_POLY1305_Encrypt(CAU3_Type *base,
     }
 #endif
 
-    base->CC_R[17] = handle->keySlot;            /*  key/iv slot  */
+    base->CC_R[17] = (uint32_t)handle->keySlot;  /*  key/iv slot  */
     base->CC_R[18] = (uintptr_t)aad;             /*  AAD pointer  */
     base->CC_R[19] = aadLen;                     /*  AAD length (bytes)  */
     base->CC_R[20] = (uintptr_t)plaintext;       /*  Plaintext pointer  */
@@ -4597,7 +4601,7 @@ status_t CAU3_CHACHA20_POLY1305_Encrypt(CAU3_Type *base,
     base->CC_R30   = CAU3_DMEM_STK_BASE;         /*  initialize stack pointer (sp)  */
     base->CC_R31   = 0U;                         /*  set LR = 0 to signal a host task  */
     base->CC_PC    = CAU3_TASK_CHA_POLY_ENCRYPT; /*  ChaChaPoly encrypt vector  */
-    base->CC_CMD   = handle->taskDone;           /*  trigger cau3 execution  */
+    base->CC_CMD   = (uint32_t)handle->taskDone; /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, handle->taskDone);
@@ -4655,7 +4659,7 @@ status_t CAU3_CHACHA20_POLY1305_Decrypt(CAU3_Type *base,
     }
 #endif
 
-    base->CC_R[17] = handle->keySlot;            /*  key/iv slot  */
+    base->CC_R[17] = (uint32_t)handle->keySlot;  /*  key/iv slot  */
     base->CC_R[18] = (uintptr_t)aad;             /*  AAD pointer  */
     base->CC_R[19] = aadLen;                     /*  AAD length (bytes)  */
     base->CC_R[20] = (uintptr_t)ciphertext;      /*  Ciphertext pointer  */
@@ -4665,7 +4669,7 @@ status_t CAU3_CHACHA20_POLY1305_Decrypt(CAU3_Type *base,
     base->CC_R30   = CAU3_DMEM_STK_BASE;         /*  initialize stack pointer (sp)  */
     base->CC_R31   = 0U;                         /*  set LR = 0 to signal a host task  */
     base->CC_PC    = CAU3_TASK_CHA_POLY_DECRYPT; /*  ChaChaPoly decrypt vector  */
-    base->CC_CMD   = handle->taskDone;           /*  trigger cau3 execution  */
+    base->CC_CMD   = (uint32_t)handle->taskDone; /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, handle->taskDone);
@@ -4722,7 +4726,7 @@ status_t CAU3_KeyBlobUnwrap(CAU3_Type *base,
     status_t completionStatus;
     cau3_task_done_t taskDone;
 
-    if (0x3U & (uintptr_t)keyBlob)
+    if (0U != (0x3U & (uintptr_t)keyBlob))
     {
         return kStatus_InvalidArgument;
     }
@@ -4740,13 +4744,13 @@ status_t CAU3_KeyBlobUnwrap(CAU3_Type *base,
 
     /*  execute the cau3 "key blob unwrap" task  */
     base->CC_R[16] = (uintptr_t)keyBlob;        /*  pKeyBlob  */
-    base->CC_R[17] = keySlot;                   /*  keySlot  */
+    base->CC_R[17] = (uint32_t)keySlot;         /*  keySlot  */
     base->CC_R[18] = numberOfBlocks;            /*  numberOfBlocks  */
-    base->CC_R[19] = dstContext;                /*  destination key context  */
+    base->CC_R[19] = (uint32_t)dstContext;      /*  destination key context  */
     base->CC_R30   = CAU3_DMEM_STK_BASE;        /*  initialize stack pointer (sp)  */
     base->CC_R31   = 0U;                        /*  set LR = 0 to signal a host task  */
     base->CC_PC    = CAU3_TASK_KEY_BLOB_UNWRAP; /*  call cau_key_blob_unwrap()  */
-    base->CC_CMD   = taskDone;                  /*  trigger cau3 execution  */
+    base->CC_CMD   = (uint32_t)taskDone;        /*  trigger cau3 execution  */
 
     /*  process the cau3 task completion signal specified by taskDone  */
     completionStatus = cau3_process_task_completion(base, taskDone);

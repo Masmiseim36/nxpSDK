@@ -6,10 +6,10 @@ terminal.
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.1
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
 
 Hardware requirements
 =====================
@@ -93,6 +93,3 @@ Using following implementations:
   ECDH-secp256r1           :    3.00 handshake/s
   ECDH-secp224r1           :    4.67 handshake/s
   ECDH-secp192r1           :    6.00 handshake/s
-Customization options
-=====================
-

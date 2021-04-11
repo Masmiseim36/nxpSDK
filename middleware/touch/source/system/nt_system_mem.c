@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,34 +17,34 @@ int32_t _nt_mem_init(uint8_t *pool, const uint32_t size)
 
     if (pool == NULL)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
     /* Is the buffer start address aligned? */
-    if (((uint32_t)pool) & 0x03)
+    if ((bool)(((uint32_t)pool) & 0x03U))
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
     if (system->memory.pool != NULL)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
     system->memory.pool         = pool;
-    system->memory.pool_size    = (size & 0xfffffffc); /* Just only 4 byte aligned area is interesting */
+    system->memory.pool_size    = (size & 0xfffffffcU); /* Just only 4 byte aligned area is interesting */
     system->memory.free_pointer = pool;
 
     data_pointer = (uint32_t *)system->memory.pool;
     counter      = system->memory.pool_size >> 2;
 
-    while (counter--)
+    while ((bool)(counter--))
     {
         *data_pointer = 0;
         data_pointer++;
     }
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 void *_nt_mem_alloc(const uint32_t size)
@@ -59,7 +59,7 @@ void *_nt_mem_alloc(const uint32_t size)
         return NULL;
     }
 
-    if (size == 0)
+    if (size == 0U)
     {
         return NULL;
     }
@@ -75,7 +75,7 @@ void *_nt_mem_alloc(const uint32_t size)
     memory_block = system->memory.free_pointer;
 
     pool_size--;
-    pool_size |= 0x03; /* Get full aligned block to 4 bytes */
+    pool_size |= 0x03U; /* Get full aligned block to 4 bytes */
     pool_size++;
 
     system->memory.free_pointer += pool_size;
@@ -88,13 +88,14 @@ uint32_t nt_mem_get_free_size(void)
     struct nt_kernel *system = _nt_system_get();
     struct nt_mem *mem       = &system->memory;
 
-    int32_t size = mem->pool_size;
+    int32_t size = (int32_t)mem->pool_size;
 
-    size -= mem->free_pointer - mem->pool;
+    size -= (int32_t)*(mem->free_pointer);
+    size += (int32_t)*(mem->pool);
 
     NT_ASSERT(size >= 0);
 
-    return size;
+    return (uint32_t)size;
 }
 
 int32_t _nt_mem_deinit(void)
@@ -105,5 +106,5 @@ int32_t _nt_mem_deinit(void)
     system->memory.pool_size    = 0;
     system->memory.free_pointer = NULL;
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -144,7 +144,7 @@ static inline void _nt_control_proxi_clear_flag(uint32_t *electrode, uint32_t fl
  * \brief Get the assigned flag from the specific electrodes.
  * \param electrode The electrode number to specify the flags array index.
  * \param flag The flag to be set.
- * \return flag value
+ * \return (bool)flag value
  *
  * This function reads the specified flag in the specific electrode.
  */

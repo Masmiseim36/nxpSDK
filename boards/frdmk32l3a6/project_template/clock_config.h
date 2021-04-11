@@ -43,7 +43,7 @@ void BOARD_InitBootClocks(void);
 /*******************************************************************************
  * Definitions for BOARD_BootClockRUN configuration
  ******************************************************************************/
-#define BOARD_BOOTCLOCKRUN_CORE_CLOCK              48000000U  /*!< Core clock frequency: 48000000Hz */
+#define BOARD_BOOTCLOCKRUN_CORE_CLOCK 48000000U /*!< Core clock frequency: 48000000Hz */
 
 /*! @brief SCG set for BOARD_BootClockRUN configuration.
  */
@@ -81,7 +81,7 @@ void BOARD_BootClockRUN(void);
 /*******************************************************************************
  * Definitions for BOARD_BootClockHSRUN configuration
  ******************************************************************************/
-#define BOARD_BOOTCLOCKHSRUN_CORE_CLOCK            72000000U  /*!< Core clock frequency: 72000000Hz */
+#define BOARD_BOOTCLOCKHSRUN_CORE_CLOCK 72000000U /*!< Core clock frequency: 72000000Hz */
 
 /*! @brief SCG set for BOARD_BootClockHSRUN configuration.
  */
@@ -119,7 +119,7 @@ void BOARD_BootClockHSRUN(void);
 /*******************************************************************************
  * Definitions for BOARD_BootClockVLPR configuration
  ******************************************************************************/
-#define BOARD_BOOTCLOCKVLPR_CORE_CLOCK              4000000U  /*!< Core clock frequency: 4000000Hz */
+#define BOARD_BOOTCLOCKVLPR_CORE_CLOCK 4000000U /*!< Core clock frequency: 4000000Hz */
 
 /*! @brief SCG set for BOARD_BootClockVLPR configuration.
  */
@@ -152,4 +152,3 @@ void BOARD_BootClockVLPR(void);
 #endif /* __cplusplus*/
 
 #endif /* _CLOCK_CONFIG_H_ */
-

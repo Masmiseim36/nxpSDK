@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -84,7 +84,7 @@ struct nt_kernel
     nt_error_callback error_callback; /*!< User Error handler */
 #endif
 };
-
+extern struct nt_kernel nt_kernel_data;
 /**
  * \defgroup system_api_private API Functions
  * \ingroup system_private
@@ -182,7 +182,7 @@ const struct nt_module *_nt_system_get_module(uint32_t interface_address, uint32
  * \param line Number of the line which was asserted.
  * \return none
  */
-void nt_error(char *file_name, uint32_t line);
+void nt_error(char *file, uint32_t line);
 
 /* Get the count of pointer array terminated by NULL pointer. */
 uint32_t _nt_system_count_pointer_array(const void **pointer_array);

@@ -17,10 +17,10 @@ The RTC demo supports the following features:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- MCUXpresso  11.0.1
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -97,7 +97,4 @@ Shows the digital time animation by seconds-interrupt function.
 ...
 10:11:11
 ~~~~~~~~~~~~~~~~~~~~~
-
-Customization options
-=====================
 

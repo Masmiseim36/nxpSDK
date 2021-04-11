@@ -10,24 +10,24 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
-#include "serial_manager.h"
+#include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_NUMBERS 2U
+#define LED_NUMBERS  2U
 #define LED_1_INIT() LED_RED_INIT(LOGIC_LED_OFF)
 #define LED_2_INIT() LED_GREEN_INIT(LOGIC_LED_OFF)
-#define LED_1_ON() LED_RED_ON()
-#define LED_1_OFF() LED_RED_OFF()
-#define LED_2_ON() LED_GREEN_ON()
-#define LED_2_OFF() LED_GREEN_OFF()
+#define LED_1_ON()   LED_RED_ON()
+#define LED_1_OFF()  LED_RED_OFF()
+#define LED_2_ON()   LED_GREEN_ON()
+#define LED_2_OFF()  LED_GREEN_OFF()
 #define SHELL_Printf PRINTF
 /*******************************************************************************
  * Prototypes
@@ -150,16 +150,15 @@ int main(void)
 
     /* Init SHELL */
     s_shellHandle = &s_shellHandleBuffer[0];
-    SHELL_Init(s_shellHandle, g_serialHandle, "SHELL>> ");
 
+    SHELL_Init(s_shellHandle, g_serialHandle, "SHELL>> ");
     /* Add new command to commands list */
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(led));
 
-#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
-    SHELL_Task(s_shellHandle);
-#endif
-
     while (1)
     {
+#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
+        SHELL_Task(s_shellHandle);
+#endif
     }
 }

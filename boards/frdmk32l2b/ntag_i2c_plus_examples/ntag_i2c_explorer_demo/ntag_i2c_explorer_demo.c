@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_gpio.h"
 #include "fsl_adc16.h"
@@ -22,8 +24,6 @@
 #include "nfc_device.h"
 #include "ndef_message.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -55,12 +55,12 @@
 
 #ifdef I2C_CMSIS
 #define NTAG_I2C_MASTER_BASEADDR &Driver_I2C1
-#define I2C_MASTER_IRQ I2C1_IRQn
+#define I2C_MASTER_IRQ           I2C1_IRQn
 #endif
 
 #ifdef I2C_FSL
 #define NTAG_I2C_MASTER_BASEADDR I2C1
-#define I2C_MASTER_CLK_SRC I2C1_CLK_SRC
+#define I2C_MASTER_CLK_SRC       I2C1_CLK_SRC
 #endif
 
 #define SW1_PRESSED (!GPIO_PinRead(BOARD_SW1_GPIO, BOARD_SW1_GPIO_PIN))
@@ -69,9 +69,9 @@
     (SW1_PRESSED && SW2_PRESSED) /* All three push buttons press is simulated by both push buttons on the board */
 
 /* define the ADC input pin connected to the VOUT pin on NTAG I2C plus chip*/
-#define DEMO_ADC16_BASE ADC0
+#define DEMO_ADC16_BASE          ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_USER_CHANNEL 14U
+#define DEMO_ADC16_USER_CHANNEL  14U
 
 /* On the FRDM-K32L2B there is no BLUE LED, so do nothing when it is called */
 #define LED_BLUE_INIT(output) \

@@ -5,12 +5,14 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "fsl_device_registers.h"
-#include "clock_config.h"
-#include "board.h"
-
 #include <stdio.h>
 #include <stdlib.h>
+/*${standard_header_anchor}*/
+#include "fsl_device_registers.h"
+#include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 
 #include "usb_device_config.h"
 #include "usb.h"
@@ -18,7 +20,6 @@
 
 #include "usb_device_cdc_acm.h"
 #include "usb_device_ch9.h"
-#include "fsl_debug_console.h"
 
 #include "usb_device_descriptor.h"
 #include "virtual_com.h"
@@ -45,19 +46,19 @@ void USB_DeviceTaskFn(void *deviceHandle);
 void BOARD_DbgConsole_Deinit(void);
 void BOARD_DbgConsole_Init(void);
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 
 /*******************************************************************************
-* Variables
-******************************************************************************/
+ * Variables
+ ******************************************************************************/
 /* Data structure of virtual com device */
 usb_cdc_vcom_struct_t s_cdcVcom;
 
 /* Line coding of cdc device */
-USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_lineCoding[LINE_CODING_SIZE] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t s_lineCoding[LINE_CODING_SIZE] = {
     /* E.g. 0x00,0xC2,0x01,0x00 : 0x0001C200 is 115200 bits per second */
     (LINE_CODING_DTERATE >> 0U) & 0x000000FFU,
     (LINE_CODING_DTERATE >> 8U) & 0x000000FFU,
@@ -68,11 +69,13 @@ USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_lineCoding[LINE_CO
     LINE_CODING_DATABITS};
 
 /* Abstract state of cdc device */
-USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_abstractState[COMM_FEATURE_DATA_SIZE] = {(STATUS_ABSTRACT_STATE >> 0U) & 0x00FFU,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t s_abstractState[COMM_FEATURE_DATA_SIZE] = {(STATUS_ABSTRACT_STATE >> 0U) & 0x00FFU,
                                                           (STATUS_ABSTRACT_STATE >> 8U) & 0x00FFU};
 
 /* Country code of cdc device */
-USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_countryCode[COMM_FEATURE_DATA_SIZE] = {(COUNTRY_SETTING >> 0U) & 0x00FFU,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+static uint8_t s_countryCode[COMM_FEATURE_DATA_SIZE] = {(COUNTRY_SETTING >> 0U) & 0x00FFU,
                                                         (COUNTRY_SETTING >> 8U) & 0x00FFU};
 
 /* CDC ACM information */
@@ -80,22 +83,23 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static usb_cdc_acm_info_t s_usbC
 /* Data buffer for receiving and sending*/
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currRecvBuf[DATA_BUFF_SIZE];
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_currSendBuf[DATA_BUFF_SIZE];
-volatile static uint32_t s_recvSize = 0;
-volatile static uint32_t s_sendSize = 0;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
+volatile static uint32_t s_recvSize    = 0;
+volatile static uint32_t s_sendSize    = 0;
 static uint32_t s_usbBulkMaxPacketSize = FS_CDC_VCOM_BULK_OUT_PACKET_SIZE;
 #if defined(FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED) && (FSL_FEATURE_USB_KHCI_KEEP_ALIVE_ENABLED > 0U) && \
     defined(USB_DEVICE_CONFIG_KEEP_ALIVE_MODE) && (USB_DEVICE_CONFIG_KEEP_ALIVE_MODE > 0U) &&             \
     defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U)
 volatile static uint8_t s_waitForDataReceive = 0;
-volatile static uint8_t s_comOpen = 0;
+volatile static uint8_t s_comOpen            = 0;
 #endif
 /*******************************************************************************
-* Prototypes
-******************************************************************************/
+ * Prototypes
+ ******************************************************************************/
 
 /*******************************************************************************
-* Code
-******************************************************************************/
+ * Code
+ ******************************************************************************/
 
 void USB0_IRQHandler(void)
 {
@@ -138,7 +142,7 @@ usb_status_t USB_DeviceCdcAcmInterruptIn(usb_device_handle handle,
                                          usb_device_endpoint_callback_message_struct_t *message,
                                          void *callbackParam)
 {
-    usb_status_t error = kStatus_USB_Error;
+    usb_status_t error     = kStatus_USB_Error;
     s_cdcVcom.hasSentState = 0;
     return error;
 }
@@ -269,12 +273,11 @@ usb_status_t USB_DeviceGetClassReceiveBuffer(usb_device_handle handle,
                                              uint32_t *length,
                                              uint8_t **buffer)
 {
-    static uint8_t setupOut[8];
-    if ((NULL == buffer) || ((*length) > sizeof(setupOut)))
+    if ((NULL == buffer) || ((*length) > sizeof(s_SetupOutBuffer)))
     {
         return kStatus_USB_InvalidRequest;
     }
-    *buffer = setupOut;
+    *buffer = s_SetupOutBuffer;
     return kStatus_USB_Success;
 }
 
@@ -361,15 +364,15 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
         case USB_DEVICE_CDC_REQUEST_GET_LINE_CODING:
             *buffer = s_lineCoding;
             *length = LINE_CODING_SIZE;
-            error = kStatus_USB_Success;
+            error   = kStatus_USB_Success;
             break;
         case USB_DEVICE_CDC_REQUEST_SET_LINE_CODING:
             *buffer = s_lineCoding;
-            error = kStatus_USB_Success;
+            error   = kStatus_USB_Success;
             break;
         case USB_DEVICE_CDC_REQUEST_SET_CONTROL_LINE_STATE:
         {
-            error = kStatus_USB_Success;
+            error              = kStatus_USB_Success;
             acmInfo->dteStatus = setup->wValue;
             /* activate/deactivate Tx carrier */
             if (acmInfo->dteStatus & USB_DEVICE_CDC_CONTROL_SIG_BITMAP_CARRIER_ACTIVATION)
@@ -407,10 +410,10 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
             /* Notify to host the line state */
             acmInfo->serialStateBuf[4] = setup->wIndex;
             /* Lower byte of UART BITMAP */
-            uartBitmap = (uint8_t *)&acmInfo->serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE - 2];
+            uartBitmap    = (uint8_t *)&acmInfo->serialStateBuf[NOTIF_PACKET_SIZE + UART_BITMAP_SIZE - 2];
             uartBitmap[0] = acmInfo->uartState & 0xFFu;
             uartBitmap[1] = (acmInfo->uartState >> 8) & 0xFFu;
-            len = (uint32_t)(NOTIF_PACKET_SIZE + UART_BITMAP_SIZE);
+            len           = (uint32_t)(NOTIF_PACKET_SIZE + UART_BITMAP_SIZE);
             if (0 == s_cdcVcom.hasSentState)
             {
                 error = USB_DeviceSendRequest(handle, USB_CDC_VCOM_INTERRUPT_IN_ENDPOINT, acmInfo->serialStateBuf, len);
@@ -478,14 +481,14 @@ usb_status_t USB_DeviceProcessClassRequest(usb_device_handle handle,
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Error;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
         {
             USB_DeviceControlPipeInit(s_cdcVcom.deviceHandle);
-            s_cdcVcom.attach = 0;
+            s_cdcVcom.attach               = 0;
             s_cdcVcom.currentConfiguration = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -499,9 +502,9 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
         }
         break;
         case kUSB_DeviceEventSetConfiguration:
-            if (0U ==(*temp8))
+            if (0U == (*temp8))
             {
-                s_cdcVcom.attach = 0;
+                s_cdcVcom.attach               = 0;
                 s_cdcVcom.currentConfiguration = 0U;
             }
             else if (USB_CDC_VCOM_CONFIGURE_INDEX == (*temp8))
@@ -509,36 +512,36 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                 usb_device_endpoint_init_struct_t epInitStruct;
                 usb_device_endpoint_callback_struct_t epCallback;
 
-                s_cdcVcom.attach = 1;
+                s_cdcVcom.attach               = 1;
                 s_cdcVcom.currentConfiguration = *temp8;
-                
+
                 /* Initiailize endpoint for interrupt pipe */
-                epCallback.callbackFn = USB_DeviceCdcAcmInterruptIn;
+                epCallback.callbackFn    = USB_DeviceCdcAcmInterruptIn;
                 epCallback.callbackParam = handle;
 
-                epInitStruct.zlt = 0;
+                epInitStruct.zlt          = 0;
                 epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
-                epInitStruct.endpointAddress = USB_CDC_VCOM_INTERRUPT_IN_ENDPOINT |
-                                               (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
+                epInitStruct.endpointAddress =
+                    USB_CDC_VCOM_INTERRUPT_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
                 if (USB_SPEED_HIGH == s_cdcVcom.speed)
                 {
                     epInitStruct.maxPacketSize = HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
-                    epInitStruct.interval = HS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
+                    epInitStruct.interval      = HS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
                 }
                 else
                 {
                     epInitStruct.maxPacketSize = FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE;
-                    epInitStruct.interval = FS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
+                    epInitStruct.interval      = FS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
                 }
 
                 USB_DeviceInitEndpoint(s_cdcVcom.deviceHandle, &epInitStruct, &epCallback);
 
                 /* Initiailize endpoints for bulk pipe */
-                epCallback.callbackFn = USB_DeviceCdcAcmBulkIn;
+                epCallback.callbackFn    = USB_DeviceCdcAcmBulkIn;
                 epCallback.callbackParam = handle;
 
-                epInitStruct.zlt = 0;
-                epInitStruct.interval = 0U;
+                epInitStruct.zlt          = 0;
+                epInitStruct.interval     = 0U;
                 epInitStruct.transferType = USB_ENDPOINT_BULK;
                 epInitStruct.endpointAddress =
                     USB_CDC_VCOM_BULK_IN_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -553,11 +556,11 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 
                 USB_DeviceInitEndpoint(s_cdcVcom.deviceHandle, &epInitStruct, &epCallback);
 
-                epCallback.callbackFn = USB_DeviceCdcAcmBulkOut;
+                epCallback.callbackFn    = USB_DeviceCdcAcmBulkOut;
                 epCallback.callbackParam = handle;
 
-                epInitStruct.zlt = 0;
-                epInitStruct.interval = 0U;
+                epInitStruct.zlt          = 0;
+                epInitStruct.interval     = 0U;
                 epInitStruct.transferType = USB_ENDPOINT_BULK;
                 epInitStruct.endpointAddress =
                     USB_CDC_VCOM_BULK_OUT_ENDPOINT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -581,8 +584,7 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
                     s_usbBulkMaxPacketSize = FS_CDC_VCOM_BULK_OUT_PACKET_SIZE;
                 }
                 /* Schedule buffer for receive */
-                USB_DeviceRecvRequest(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf,
-                                      s_usbBulkMaxPacketSize);
+                USB_DeviceRecvRequest(handle, USB_CDC_VCOM_BULK_OUT_ENDPOINT, s_currRecvBuf, s_usbBulkMaxPacketSize);
             }
             else
             {
@@ -633,8 +635,8 @@ void APPInit(void)
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-    s_cdcVcom.speed = USB_SPEED_FULL;
-    s_cdcVcom.attach = 0;
+    s_cdcVcom.speed        = USB_SPEED_FULL;
+    s_cdcVcom.attach       = 0;
     s_cdcVcom.deviceHandle = NULL;
 
     if (kStatus_USB_Success != USB_DeviceInit(CONTROLLER_ID, USB_DeviceCallback, &s_cdcVcom.deviceHandle))
@@ -649,6 +651,8 @@ void APPInit(void)
 
     USB_DeviceIsrEnable();
 
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(s_cdcVcom.deviceHandle);
 }
 
@@ -665,7 +669,8 @@ void APP_task(void)
     if ((1 == s_cdcVcom.attach) && (1 == s_cdcVcom.startTransactions))
     {
         /* User Code */
-        if ((0 != s_recvSize) && (0xFFFFFFFFU != s_recvSize))
+        /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+        if ((0 != s_recvSize) && (USB_CANCELLED_TRANSFER_LENGTH != s_recvSize))
         {
             int32_t i;
 
@@ -680,7 +685,7 @@ void APP_task(void)
         if (s_sendSize)
         {
             uint32_t size = s_sendSize;
-            s_sendSize = 0;
+            s_sendSize    = 0;
 
             error = USB_DeviceSendRequest(s_cdcVcom.deviceHandle, USB_CDC_VCOM_BULK_IN_ENDPOINT, s_currSendBuf, size);
 
@@ -697,12 +702,12 @@ void APP_task(void)
             if (s_comOpen == 1)
             {
                 /* Wait for all the packets been sent during opening the com port. Otherwise these packets may
-                   * wake up the system.
-                */
+                 * wake up the system.
+                 */
                 usb_echo("Waiting to enter lowpower ...\r\n");
                 for (uint32_t i = 0U; i < 16000000U; ++i)
                 {
-                    __ASM("NOP"); /* delay */
+                    __NOP(); /* delay */
                 }
 
                 s_comOpen = 0;

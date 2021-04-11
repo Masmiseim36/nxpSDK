@@ -1,24 +1,24 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lpuart.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_intmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART0
-#define DEMO_LPUART_CLKSRC kCLOCK_ScgFircAsyncDiv2Clk
-#define DEMO_LPUART_CLK_FREQ CLOCK_GetFreq(kCLOCK_ScgFircAsyncDiv2Clk)
-#define DEMO_LPUART_IRQn LPUART0_IRQn
+#define DEMO_LPUART            LPUART0
+#define DEMO_LPUART_CLKSRC     kCLOCK_ScgFircAsyncDiv2Clk
+#define DEMO_LPUART_CLK_FREQ   CLOCK_GetFreq(kCLOCK_ScgFircAsyncDiv2Clk)
+#define DEMO_LPUART_IRQn       LPUART0_IRQn
 #define DEMO_LPUART_IRQHandler LPUART0_IRQHandler
 
 /*! @brief Ring buffer size (Unit: Byte). */
@@ -55,6 +55,8 @@ volatile uint16_t rxIndex; /* Index of the memory to save new arrived data. */
 void DEMO_LPUART_IRQHandler(void)
 {
     uint8_t data;
+    uint16_t tmprxIndex = rxIndex;
+    uint16_t tmptxIndex = txIndex;
 
     /* If new data arrived. */
     if ((kLPUART_RxDataRegFullFlag)&LPUART_GetStatusFlags(DEMO_LPUART))
@@ -62,18 +64,14 @@ void DEMO_LPUART_IRQHandler(void)
         data = LPUART_ReadByte(DEMO_LPUART);
 
         /* If ring buffer is not full, add data to ring buffer. */
-        if (((rxIndex + 1) % DEMO_RING_BUFFER_SIZE) != txIndex)
+        if (((tmprxIndex + 1) % DEMO_RING_BUFFER_SIZE) != tmptxIndex)
         {
             demoRingBuffer[rxIndex] = data;
             rxIndex++;
             rxIndex %= DEMO_RING_BUFFER_SIZE;
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -82,6 +80,8 @@ void DEMO_LPUART_IRQHandler(void)
 int main(void)
 {
     lpuart_config_t config;
+    uint16_t tmprxIndex = rxIndex;
+    uint16_t tmptxIndex = txIndex;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -115,11 +115,16 @@ int main(void)
     while (1)
     {
         /* Send data only when LPUART TX register is empty and ring buffer has data to send out. */
-        while ((kLPUART_TxDataRegEmptyFlag & LPUART_GetStatusFlags(DEMO_LPUART)) && (rxIndex != txIndex))
+        while (kLPUART_TxDataRegEmptyFlag & LPUART_GetStatusFlags(DEMO_LPUART))
         {
-            LPUART_WriteByte(DEMO_LPUART, demoRingBuffer[txIndex]);
-            txIndex++;
-            txIndex %= DEMO_RING_BUFFER_SIZE;
+            tmprxIndex = rxIndex;
+            tmptxIndex = txIndex;
+            if (tmprxIndex != tmptxIndex)
+            {
+                LPUART_WriteByte(DEMO_LPUART, demoRingBuffer[txIndex]);
+                txIndex++;
+                txIndex %= DEMO_RING_BUFFER_SIZE;
+            }
         }
     }
 }

@@ -5,7 +5,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -21,17 +23,15 @@
 #include "hid_keyboard.h"
 
 #include "fsl_device_registers.h"
+#include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
-#include "fsl_debug_console.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#include "pin_mux.h"
 #if defined(FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT > 0)
 #include "fsl_intmux.h"
 #endif
@@ -55,6 +55,7 @@ static void USB_DeviceApplicationInit(void);
  * Variables
  ******************************************************************************/
 
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_SetupOutBuffer[8];
 extern uint8_t g_UsbDeviceCurrentConfigure;
 extern uint8_t g_UsbDeviceInterface[USB_COMPOSITE_INTERFACE_COUNT];
 
@@ -94,7 +95,7 @@ void USB_DeviceIsrEnable(void)
     uint8_t irqNumber;
 #if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
     uint8_t usbDeviceKhciIrq[] = USB_IRQS;
-    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+    irqNumber                  = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
 #endif
 /* Install isr, set priority, and enable IRQ. */
 #if defined(__GIC_PRIO_BITS)
@@ -117,7 +118,7 @@ void USB_DeviceTaskFn(void *deviceHandle)
 usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t error = kStatus_USB_Success;
-    uint8_t *temp8 = (uint8_t *)param;
+    uint8_t *temp8     = (uint8_t *)param;
 
     switch (event)
     {
@@ -236,12 +237,11 @@ usb_status_t USB_DeviceGetClassReceiveBuffer(usb_device_handle handle,
                                              uint32_t *length,
                                              uint8_t **buffer)
 {
-    static uint8_t setupOut[8];
-    if ((NULL == buffer) || ((*length) > sizeof(setupOut)))
+    if ((NULL == buffer) || ((*length) > sizeof(s_SetupOutBuffer)))
     {
         return kStatus_USB_InvalidRequest;
     }
-    *buffer = setupOut;
+    *buffer = s_SetupOutBuffer;
     return kStatus_USB_Success;
 }
 
@@ -277,8 +277,8 @@ static void USB_DeviceApplicationInit(void)
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
     /* Set composite device default state */
-    g_UsbDeviceComposite.speed = USB_SPEED_FULL;
-    g_UsbDeviceComposite.attach = 0U;
+    g_UsbDeviceComposite.speed        = USB_SPEED_FULL;
+    g_UsbDeviceComposite.attach       = 0U;
     g_UsbDeviceComposite.deviceHandle = NULL;
 
     /* Initialize the usb stack and class drivers */
@@ -298,6 +298,8 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceIsrEnable();
 
     /* Start USB device composite */
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_UsbDeviceComposite.deviceHandle);
 }
 

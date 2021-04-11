@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -103,12 +103,12 @@ void GPIO_PinInit(GPIO_Type *base, uint32_t pin, const gpio_pin_config_t *config
 
     if (config->pinDirection == kGPIO_DigitalInput)
     {
-        base->PDDR &= ~(u32flag << pin);
+        base->PDDR &= GPIO_FIT_REG(~(u32flag << pin));
     }
     else
     {
         GPIO_PinWrite(base, pin, config->outputLogic);
-        base->PDDR |= (u32flag << pin);
+        base->PDDR |= GPIO_FIT_REG((u32flag << pin));
     }
 }
 
@@ -134,7 +134,33 @@ uint32_t GPIO_PortGetInterruptFlags(GPIO_Type *base)
     portBase = s_portBases[instance];
     return portBase->ISFR;
 }
-#endif
+#else
+/*!
+ * brief Read the GPIO interrupt status flags.
+ *
+ * param base GPIO peripheral base pointer. (GPIOA, GPIOB, GPIOC, and so on.)
+ * return The current GPIO's interrupt status flag.
+ *         '1' means the related pin's flag is set, '0' means the related pin's flag not set.
+ *          For example, the return value 0x00010001 means the pin 0 and 17 have the interrupt pending.
+ */
+uint32_t GPIO_GpioGetInterruptFlags(GPIO_Type *base)
+{
+    return base->ISFR[0];
+}
+
+/*!
+ * brief Read individual pin's interrupt status flag.
+ *
+ * param base GPIO peripheral base pointer. (GPIOA, GPIOB, GPIOC, and so on)
+ * param pin GPIO specific pin number.
+ * return The current selected pin's interrupt status flag.
+ */
+uint8_t GPIO_PinGetInterruptFlag(GPIO_Type *base, uint32_t pin)
+{
+    return (uint8_t)((base->ICR[pin] & GPIO_ICR_ISF_MASK) >> GPIO_ICR_ISF_SHIFT);
+}
+#endif /* FSL_FEATURE_PORT_HAS_NO_INTERRUPT */
+
 #if !(defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
 /*!
  * brief Clears multiple GPIO pin interrupt status flags.
@@ -159,25 +185,40 @@ void GPIO_PortClearInterruptFlags(GPIO_Type *base, uint32_t mask)
  */
 void GPIO_GpioClearInterruptFlags(GPIO_Type *base, uint32_t mask)
 {
-    base->ISFR[0] = mask;
+    base->ISFR[0] = GPIO_FIT_REG(mask);
 }
-#endif
+
+/*!
+ * brief Clear GPIO individual pin's interrupt status flag.
+ *
+ * param base GPIO peripheral base pointer (GPIOA, GPIOB, GPIOC, and so on).
+ * param pin GPIO specific pin number.
+ */
+void GPIO_PinClearInterruptFlag(GPIO_Type *base, uint32_t pin)
+{
+    base->ICR[pin] |= GPIO_FIT_REG(GPIO_ICR_ISF(1U));
+}
+#endif /* FSL_FEATURE_PORT_HAS_NO_INTERRUPT */
 
 #if defined(FSL_FEATURE_GPIO_HAS_ATTRIBUTE_CHECKER) && FSL_FEATURE_GPIO_HAS_ATTRIBUTE_CHECKER
 /*!
  * brief The GPIO module supports a device-specific number of data ports, organized as 32-bit
- * words. Each 32-bit data port includes a GACR register, which defines the byte-level
- * attributes required for a successful access to the GPIO programming model. The attribute controls for the 4 data
- * bytes in the GACR follow a standard little endian
- * data convention.
+ * words/8-bit Bytes. Each 32-bit/8-bit data port includes a GACR register, which defines the byte-level
+ * attributes required for a successful access to the GPIO programming model. If the GPIO module's GACR register
+ * organized as 32-bit words, the attribute controls for the 4 data bytes in the GACR follow a standard little
+ * endian data convention.
  *
- * param base GPIO peripheral base pointer (GPIOA, GPIOB, GPIOC, and so on.)
- * param mask GPIO pin number macro
+ * param base      GPIO peripheral base pointer (GPIOA, GPIOB, GPIOC, and so on.)
+ * param attribute GPIO checker attribute
  */
 void GPIO_CheckAttributeBytes(GPIO_Type *base, gpio_checker_attribute_t attribute)
 {
+#if defined(FSL_FEATURE_GPIO_REGISTERS_WIDTH) && (FSL_FEATURE_GPIO_REGISTERS_WIDTH == 8U)
+    base->GACR = ((uint8_t)attribute << GPIO_GACR_ACB_SHIFT);
+#else
     base->GACR = ((uint32_t)attribute << GPIO_GACR_ACB0_SHIFT) | ((uint32_t)attribute << GPIO_GACR_ACB1_SHIFT) |
                  ((uint32_t)attribute << GPIO_GACR_ACB2_SHIFT) | ((uint32_t)attribute << GPIO_GACR_ACB3_SHIFT);
+#endif /* FSL_FEATURE_GPIO_REGISTERS_WIDTH */
 }
 #endif
 
@@ -328,13 +369,13 @@ void FGPIO_PortClearInterruptFlags(FGPIO_Type *base, uint32_t mask)
  * bytes in the GACR follow a standard little endian
  * data convention.
  *
- * param base FGPIO peripheral base pointer (FGPIOA, FGPIOB, FGPIOC, and so on.)
- * param mask FGPIO pin number macro
+ * param base      FGPIO peripheral base pointer (FGPIOA, FGPIOB, FGPIOC, and so on.)
+ * param attribute FGPIO checker attribute
  */
 void FGPIO_CheckAttributeBytes(FGPIO_Type *base, gpio_checker_attribute_t attribute)
 {
-    base->GACR = (attribute << FGPIO_GACR_ACB0_SHIFT) | (attribute << FGPIO_GACR_ACB1_SHIFT) |
-                 (attribute << FGPIO_GACR_ACB2_SHIFT) | (attribute << FGPIO_GACR_ACB3_SHIFT);
+    base->GACR = ((uint32_t)attribute << FGPIO_GACR_ACB0_SHIFT) | ((uint32_t)attribute << FGPIO_GACR_ACB1_SHIFT) |
+                 ((uint32_t)attribute << FGPIO_GACR_ACB2_SHIFT) | ((uint32_t)attribute << FGPIO_GACR_ACB3_SHIFT);
 }
 #endif
 

@@ -8,16 +8,16 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_dac.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define DEMO_DAC_BASEADDR LPDAC0
-#define DEMO_DAC_VREF kDAC_ReferenceVoltageSourceAlt2
+#define DEMO_DAC_VREF     kDAC_ReferenceVoltageSourceAlt2
 
 /*******************************************************************************
  * Prototypes

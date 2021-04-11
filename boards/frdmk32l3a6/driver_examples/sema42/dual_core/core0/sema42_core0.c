@@ -9,19 +9,19 @@
 #include "fsl_common.h"
 #include "fsl_sema42.h"
 #include "fsl_mu.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
 #include "fsl_port.h"
 #include "fsl_gpio.h"
 #include "fsl_xrdc.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_INIT() LED1_INIT(LOGIC_LED_ON)
-#define APP_MU MUA
-#define APP_SEMA42 SEMA420
+#define LED_INIT()          LED1_INIT(LOGIC_LED_ON)
+#define APP_MU              MUA
+#define APP_SEMA42          SEMA420
 #define APP_CORE1_BOOT_MODE kMU_CoreBootFromDflashBase
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U

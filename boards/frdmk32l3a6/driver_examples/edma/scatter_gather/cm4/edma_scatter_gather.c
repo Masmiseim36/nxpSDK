@@ -6,23 +6,23 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_edma.h"
 #include "fsl_dmamux.h"
 #include <stdlib.h>
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_DMA DMA0
+#define EXAMPLE_DMA    DMA0
 #define EXAMPLE_DMAMUX DMAMUX0
 
-#define BUFFER_LENGTH 8U
+#define BUFFER_LENGTH      8U
 #define HALF_BUFFER_LENGTH (BUFFER_LENGTH / 2U)
-#define TCD_QUEUE_SIZE 2U
+#define TCD_QUEUE_SIZE     2U
 
 /*******************************************************************************
  * Prototypes

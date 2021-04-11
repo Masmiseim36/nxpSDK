@@ -7,17 +7,17 @@
  */
 
 #include "fsl_spi.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_SPI_MASTER SPI0
+#define EXAMPLE_SPI_MASTER              SPI0
 #define EXAMPLE_SPI_MASTER_SOURCE_CLOCK kCLOCK_BusClk
-#define EXAMPLE_SPI_MASTER_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
+#define EXAMPLE_SPI_MASTER_CLK_FREQ     CLOCK_GetFreq(kCLOCK_BusClk)
 
 /*******************************************************************************
  * Prototypes

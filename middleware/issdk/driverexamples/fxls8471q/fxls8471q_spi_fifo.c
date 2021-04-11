@@ -15,9 +15,9 @@
 //-----------------------------------------------------------------------
 // SDK Includes
 //-----------------------------------------------------------------------
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_debug_console.h"
 
 //-----------------------------------------------------------------------
@@ -105,7 +105,11 @@ int main(void)
     }
 
     /*! Set the SPI Slave speed. */
-    status = pSPIdriver->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL0_CPHA0, SPI_S_BAUDRATE);
+#ifndef FRDM_KL27Z
+    status = pSPIdriver->Control(ARM_SPI_MODE_MASTER | ARM_SPI_CPOL1_CPHA0, SPI_S_BAUDRATE);
+#else
+    status = pSPIdriver->Control(ARM_SPI_MODE_MASTER | ARM_SPI_SS_MASTER_HW_OUTPUT, SPI_S_BAUDRATE);
+#endif
     if (ARM_DRIVER_OK != status)
     {
         PRINTF("\r\n SPI Control Mode setting Failed\r\n");

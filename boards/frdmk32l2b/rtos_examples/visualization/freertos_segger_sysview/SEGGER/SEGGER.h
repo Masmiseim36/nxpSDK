@@ -108,8 +108,8 @@ extern "C" { /* Make sure we have C-declarations in C++ programs */
  */
 
 #define SEGGER_COUNTOF(a) (sizeof((a)) / sizeof((a)[0]))
-#define SEGGER_MIN(a, b) (((a) < (b)) ? (a) : (b))
-#define SEGGER_MAX(a, b) (((a) > (b)) ? (a) : (b))
+#define SEGGER_MIN(a, b)  (((a) < (b)) ? (a) : (b))
+#define SEGGER_MAX(a, b)  (((a) > (b)) ? (a) : (b))
 
 /*********************************************************************
  *

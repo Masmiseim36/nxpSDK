@@ -8,12 +8,12 @@
 /*${header:start}*/
 #include "app.h"
 #include "pin_mux.h"
-#include "board.h"
 #include "clock_config.h"
+#include "board.h"
 #if (defined(BUTTON_COUNT) && (BUTTON_COUNT > 0U))
-#include "button.h"
+#include "fsl_component_button.h"
 #endif
-#include "led.h"
+#include "fsl_component_led.h"
 
 /*${header:end}*/
 
@@ -22,9 +22,10 @@ button_config_t g_buttonConfig[BUTTON_COUNT] = {
     {
         .gpio =
             {
-                0,
-                BOARD_SW1_GPIO_PIN,
-                1,
+                .direction       = kHAL_GpioDirectionIn,
+                .pinStateDefault = 1,
+                .port            = 0,
+                .pin             = BOARD_SW1_GPIO_PIN,
             },
     },
 };
@@ -39,9 +40,12 @@ led_config_t g_ledMonochrome[LED_TYPE_MONOCHROME_COUNT] = {
                         .dimmingEnable = 0,
                         .gpio =
                             {
-                                4,
-                                BOARD_LED_RED_GPIO_PIN,
-                                1,
+#if (defined(LED_USE_CONFIGURE_STRUCTURE) && (LED_USE_CONFIGURE_STRUCTURE > 0U))
+                                .direction = kHAL_GpioDirectionOut,
+#endif
+                                .level = 1,
+                                .port  = 4,
+                                .pin   = BOARD_LED_RED_GPIO_PIN,
                             },
                     },
             },

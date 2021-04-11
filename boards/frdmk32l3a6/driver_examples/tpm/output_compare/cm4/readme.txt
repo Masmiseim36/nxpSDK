@@ -6,10 +6,10 @@ should probe the TPM output with a oscilloscope to see the signal toggling.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- MCUXpresso  11.0.1
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -45,6 +45,3 @@ Probe the signal using an oscilloscope
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 M4 core: Use oscilloscope to measure output signal pin at PTB2(J2-2) pin of FRDM-K32L3A6 board.
 M0 core: Use oscilloscope to measure output signal pin at PTB13(J1-8) pin of FRDM-K32L3A6 board.
-Customization options
-=====================
-

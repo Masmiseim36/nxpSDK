@@ -7,16 +7,16 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_tpm.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* The Flextimer instance/channel used for board */
-#define BOARD_TPM_BASEADDR TPM0
-#define BOARD_FIRST_TPM_CHANNEL 4U
+#define BOARD_TPM_BASEADDR       TPM0
+#define BOARD_FIRST_TPM_CHANNEL  4U
 #define BOARD_SECOND_TPM_CHANNEL 5U
 
 /* Get source clock for TPM driver */

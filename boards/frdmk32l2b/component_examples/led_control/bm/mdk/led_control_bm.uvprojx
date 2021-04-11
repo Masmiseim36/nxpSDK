@@ -7,6 +7,7 @@
       <TargetName>led_control_bm debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>K32L2B31VLH0A</Device>
@@ -78,6 +79,8 @@
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopA1X>0</nStopA1X>
+            <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString/>
@@ -116,48 +119,6 @@
             <HexOffset>0</HexOffset>
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
-          <Simulator>
-            <UseSimulator>0</UseSimulator>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>1</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
-            <RestoreSysVw>1</RestoreSysVw>
-          </Simulator>
-          <Target>
-            <UseTarget>1</UseTarget>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>0</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>1</RestoreTracepoints>
-            <RestoreSysVw>1</RestoreSysVw>
-            <UsePdscDebugDescription>1</UsePdscDebugDescription>
-          </Target>
-          <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>14</TargetSelection>
-          <SimDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-          </SimDlls>
-          <TargetDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-            <Driver>BIN\CMSIS_AGDI.dll</Driver>
-          </TargetDlls>
         </DebugOption>
         <Utilities>
           <Flash1>
@@ -216,12 +177,15 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
+            <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
@@ -339,11 +303,10 @@
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
-            <nSecure>0</nSecure>
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -352,16 +315,24 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
+            <v6Lang>3</v6Lang>
+            <v6LangP>1</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>DEBUG, CPU_K32L2B31VLH0A, USB_STACK_BM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, osCustomStartup=0, FRDM_K32L2B, FREEDOM, DEBUG_CONSOLE_RX_ENABLE=0</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_K32L2B31VLH0A, USB_STACK_BM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_OSA_TASK_ENABLE=1, FRDM_K32L2B, FREEDOM, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/utilities;../../../../../../devices/K32L2B31A/drivers;../../../../../../components/led;../../../../../../components/button;../../../../../../components/timer_manager;../../../../../../components/lists;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A;../../../../../../devices/K32L2B31A/utilities/str;../../../../../../devices/K32L2B31A/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/drivers</IncludePath>
+              <IncludePath>..;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/utilities;../../../../../../components/led;../../../../../../components/timer_manager;../../../../../../components/gpio;../../../../../../components/button;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/K32L2B31A;../../../../../../devices/K32L2B31A/utilities/str;../../../../../../devices/K32L2B31A/utilities/debug_console;../../../../../../components/uart;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -374,6 +345,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
               <Define>DEBUG</Define>
@@ -394,7 +366,7 @@
             <ScatterFile>K32L2B31xxxxA_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -460,39 +432,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>board.readme</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.readme</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/gpio</GroupName>
-          <Files>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/gpio/gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/gpio/gpio_kinetis.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/timer</GroupName>
-          <Files>
-            <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer/timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>tpm_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer/tpm_adapter.c</FilePath>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -510,24 +452,9 @@
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_tpm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_clock.h</FilePath>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.c</FileName>
@@ -535,14 +462,24 @@
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
+              <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_common.h</FilePath>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -550,9 +487,9 @@
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
@@ -560,19 +497,24 @@
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_port.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_smc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -590,6 +532,16 @@
               <FilePath>../../../../../../devices/K32L2B31A/utilities/fsl_shell.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -605,16 +557,6 @@
               <FilePath>../../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/K32L2B31A/utilities/fsl_assert.c</FilePath>
@@ -625,29 +567,14 @@
           <GroupName>component/led</GroupName>
           <Files>
             <File>
-              <FileName>led.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/led/led.c</FilePath>
-            </File>
-            <File>
-              <FileName>led.h</FileName>
+              <FileName>fsl_component_led.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/led/led.h</FilePath>
+              <FilePath>../../../../../../components/led/fsl_component_led.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/button</GroupName>
-          <Files>
             <File>
-              <FileName>button.c</FileName>
+              <FileName>fsl_component_led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/button/button.c</FilePath>
-            </File>
-            <File>
-              <FileName>button.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/button/button.h</FilePath>
+              <FilePath>../../../../../../components/led/fsl_component_led.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -655,29 +582,74 @@
           <GroupName>component/timer_manager</GroupName>
           <Files>
             <File>
-              <FileName>timer_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer_manager/timer_manager.c</FilePath>
+              <FileName>fsl_component_timer_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer_manager/fsl_component_timer_manager.h</FilePath>
             </File>
             <File>
-              <FileName>timer_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer_manager/timer_manager.h</FilePath>
+              <FileName>fsl_component_timer_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer_manager/fsl_component_timer_manager.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/gpio</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
+              <FileName>fsl_adapter_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/button</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_button.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../../components/button/fsl_component_button.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/button/fsl_component_button.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/timer</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_tpm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_tpm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -685,44 +657,44 @@
           <GroupName>component/panic</GroupName>
           <Files>
             <File>
-              <FileName>panic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/panic/panic.c</FilePath>
+              <FileName>fsl_component_panic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/panic/fsl_component_panic.h</FilePath>
             </File>
             <File>
-              <FileName>panic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/panic/panic.h</FilePath>
+              <FileName>fsl_component_panic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/panic/fsl_component_panic.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -735,11 +707,6 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -749,11 +716,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>K32L2B31A.h</FileName>
               <FileType>5</FileType>
@@ -763,11 +740,6 @@
               <FileName>K32L2B31A_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/K32L2B31A/K32L2B31A_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_K32L2B31A.c</FileName>
@@ -782,17 +754,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/lpuart_adapter.c</FilePath>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -800,9 +772,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_K32L2B31A.s</FileName>
+              <FileName>startup_K32L2B31A.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.s</FilePath>
+              <FilePath>../../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -813,6 +785,11 @@
               <FileName>core_cm0plus.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm0plus.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -830,19 +807,14 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -850,29 +822,9 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
+              <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -897,6 +849,7 @@
       <TargetName>led_control_bm release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>K32L2B31VLH0A</Device>
@@ -968,6 +921,8 @@
             <UserProg2Name/>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopA1X>0</nStopA1X>
+            <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>1</SelectedForBatchBuild>
           <SVCSIdString/>
@@ -1006,48 +961,6 @@
             <HexOffset>0</HexOffset>
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
-          <Simulator>
-            <UseSimulator>0</UseSimulator>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>1</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
-            <RestoreSysVw>1</RestoreSysVw>
-          </Simulator>
-          <Target>
-            <UseTarget>1</UseTarget>
-            <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
-            <RestoreBreakpoints>1</RestoreBreakpoints>
-            <RestoreWatchpoints>1</RestoreWatchpoints>
-            <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
-            <RestoreFunctions>0</RestoreFunctions>
-            <RestoreToolbox>1</RestoreToolbox>
-            <RestoreTracepoints>1</RestoreTracepoints>
-            <RestoreSysVw>1</RestoreSysVw>
-            <UsePdscDebugDescription>1</UsePdscDebugDescription>
-          </Target>
-          <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>14</TargetSelection>
-          <SimDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-          </SimDlls>
-          <TargetDlls>
-            <CpuDll/>
-            <CpuDllArguments/>
-            <PeripheralDll/>
-            <PeripheralDllArguments/>
-            <InitializationFile/>
-            <Driver>BIN\CMSIS_AGDI.dll</Driver>
-          </TargetDlls>
         </DebugOption>
         <Utilities>
           <Flash1>
@@ -1106,12 +1019,15 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
+            <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
@@ -1229,11 +1145,10 @@
               </OCR_RVCT10>
             </OnChipMemories>
             <RvctStartVector/>
-            <nSecure>0</nSecure>
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1242,16 +1157,24 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
+            <v6Lang>3</v6Lang>
+            <v6LangP>1</v6LangP>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>NDEBUG, CPU_K32L2B31VLH0A, USB_STACK_BM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, osCustomStartup=0, FRDM_K32L2B, FREEDOM, DEBUG_CONSOLE_RX_ENABLE=0</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_K32L2B31VLH0A, USB_STACK_BM=1, DEBUG_CONSOLE_TRANSFER_NON_BLOCKING, FSL_OSA_TASK_ENABLE=1, FRDM_K32L2B, FREEDOM, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../components/gpio;../../../../../../components/timer;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/utilities;../../../../../../devices/K32L2B31A/drivers;../../../../../../components/led;../../../../../../components/button;../../../../../../components/timer_manager;../../../../../../components/lists;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A;../../../../../../devices/K32L2B31A/utilities/str;../../../../../../devices/K32L2B31A/utilities/debug_console;../../../../../../components/uart;../../../../../../components/serial_manager;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/drivers</IncludePath>
+              <IncludePath>..;../../../../../../devices/K32L2B31A/drivers;../../../../../../devices/K32L2B31A/utilities;../../../../../../components/led;../../../../../../components/timer_manager;../../../../../../components/gpio;../../../../../../components/button;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/K32L2B31A;../../../../../../devices/K32L2B31A/utilities/str;../../../../../../devices/K32L2B31A/utilities/debug_console;../../../../../../components/uart;../../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1264,6 +1187,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <ClangAsOpt>2</ClangAsOpt>
             <VariousControls>
               <MiscControls/>
               <Define>NDEBUG</Define>
@@ -1284,7 +1208,7 @@
             <ScatterFile>K32L2B31xxxxA_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1350,39 +1274,9 @@
           <GroupName>doc</GroupName>
           <Files>
             <File>
-              <FileName>board.readme</FileName>
+              <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../board.readme</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/gpio</GroupName>
-          <Files>
-            <File>
-              <FileName>gpio.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/gpio/gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_kinetis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/gpio/gpio_kinetis.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/timer</GroupName>
-          <Files>
-            <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer/timer.h</FilePath>
-            </File>
-            <File>
-              <FileName>tpm_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer/tpm_adapter.c</FilePath>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -1400,24 +1294,9 @@
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_tpm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_gpio.h</FileName>
+              <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_gpio.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_clock.h</FilePath>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_common.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.c</FileName>
@@ -1425,14 +1304,24 @@
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_common.c</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.h</FileName>
+              <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_common.h</FilePath>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_clock.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1440,9 +1329,9 @@
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
@@ -1450,19 +1339,24 @@
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_uart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_port.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_smc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/drivers/fsl_smc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1480,6 +1374,16 @@
               <FilePath>../../../../../../devices/K32L2B31A/utilities/fsl_shell.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1495,16 +1399,6 @@
               <FilePath>../../../../../../devices/K32L2B31A/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/K32L2B31A/utilities/fsl_assert.c</FilePath>
@@ -1515,29 +1409,14 @@
           <GroupName>component/led</GroupName>
           <Files>
             <File>
-              <FileName>led.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/led/led.c</FilePath>
-            </File>
-            <File>
-              <FileName>led.h</FileName>
+              <FileName>fsl_component_led.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/led/led.h</FilePath>
+              <FilePath>../../../../../../components/led/fsl_component_led.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component/button</GroupName>
-          <Files>
             <File>
-              <FileName>button.c</FileName>
+              <FileName>fsl_component_led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/button/button.c</FilePath>
-            </File>
-            <File>
-              <FileName>button.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/button/button.h</FilePath>
+              <FilePath>../../../../../../components/led/fsl_component_led.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1545,29 +1424,74 @@
           <GroupName>component/timer_manager</GroupName>
           <Files>
             <File>
-              <FileName>timer_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer_manager/timer_manager.c</FilePath>
+              <FileName>fsl_component_timer_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer_manager/fsl_component_timer_manager.h</FilePath>
             </File>
             <File>
-              <FileName>timer_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer_manager/timer_manager.h</FilePath>
+              <FileName>fsl_component_timer_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer_manager/fsl_component_timer_manager.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/gpio</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_adapter_gpio.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
+              <FileName>fsl_adapter_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/button</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_button.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../../components/button/fsl_component_button.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/button/fsl_component_button.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/timer</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_timer.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_tpm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_tpm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1575,44 +1499,44 @@
           <GroupName>component/panic</GroupName>
           <Files>
             <File>
-              <FileName>panic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/panic/panic.c</FilePath>
+              <FileName>fsl_component_panic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/panic/fsl_component_panic.h</FilePath>
             </File>
             <File>
-              <FileName>panic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/panic/panic.h</FilePath>
+              <FileName>fsl_component_panic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/panic/fsl_component_panic.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1625,11 +1549,6 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_os_abstraction_bm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_os_abstraction_bm.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.h</FilePath>
@@ -1639,11 +1558,21 @@
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
             </File>
+            <File>
+              <FileName>fsl_os_abstraction_bm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_bm.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>K32L2B31A.h</FileName>
               <FileType>5</FileType>
@@ -1653,11 +1582,6 @@
               <FileName>K32L2B31A_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/K32L2B31A/K32L2B31A_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_K32L2B31A.c</FileName>
@@ -1672,17 +1596,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>lpuart_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/lpuart_adapter.c</FilePath>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+              <FileName>fsl_adapter_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/uart/fsl_adapter_lpuart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1690,9 +1614,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_K32L2B31A.s</FileName>
+              <FileName>startup_K32L2B31A.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.s</FilePath>
+              <FilePath>../../../../../../devices/K32L2B31A/arm/startup_K32L2B31A.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1703,6 +1627,11 @@
               <FileName>core_cm0plus.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm0plus.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -1720,19 +1649,14 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1740,29 +1664,9 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
+              <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1784,4 +1688,23 @@
       </Groups>
     </Target>
   </Targets>
+  <RTE>
+    <apis/>
+    <components/>
+    <files/>
+  </RTE>
+  <LayerInfo>
+    <Layers>
+      <Layer>
+        <LayName>&lt;Project Info&gt;</LayName>
+        <LayDesc/>
+        <LayUrl/>
+        <LayKeys/>
+        <LayCat/>
+        <LayLic/>
+        <LayTarg>0</LayTarg>
+        <LayPrjMark>1</LayPrjMark>
+      </Layer>
+    </Layers>
+  </LayerInfo>
 </Project>

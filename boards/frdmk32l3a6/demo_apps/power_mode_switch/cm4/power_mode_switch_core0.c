@@ -11,21 +11,22 @@
 #include "fsl_msmc.h"
 #include "fsl_lptmr.h"
 #include "fsl_llwu.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 #include "fsl_spm.h"
+#include "fsl_lpspi.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 #define APP_SMC SMC0
 
-#define APP_MU MUA
-#define APP_CORE1_BOOT_MODE kMU_CoreBootFromDflashBase
-#define APP_MU_IRQHandler MUA_IRQHandler
+#define APP_MU                        MUA
+#define APP_CORE1_BOOT_MODE           kMU_CoreBootFromDflashBase
+#define APP_MU_IRQHandler             MUA_IRQHandler
 #define APP_MU_XFER_CMD_CHANNEL_INDEX 0U
-#define APP_MU_SHAKE_HAND_VALUE 0xAAAAAAAA
+#define APP_MU_SHAKE_HAND_VALUE       0xAAAAAAAA
 
 #define APP_LLWU LLWU0
 #define APP_LLWU_LPTMR_IDX                                                               \
@@ -33,9 +34,14 @@
           Trigger*/
 #define APP_LLWU_IRQHandler LLWU0_IRQHandler
 
-#define APP_LPTMR LPTMR0
-#define APP_LPTMR_IRQn LPTMR0_IRQn
+#define APP_LPTMR            LPTMR0
+#define APP_LPTMR_IRQn       LPTMR0_IRQn
 #define APP_LPTMR_IRQHandler LPTMR0_IRQHandler
+
+#define FLASH_SPI_MASTER          LPSPI1
+#define FLASH_SPI_MASTER_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_Lpspi1)
+
+#define DPCommand 0xB9
 
 /* Power mode definition used in application. */
 typedef enum _app_power_mode
@@ -98,6 +104,25 @@ static void BOARD_InitDebugConsoleWithSirc(void)
     DbgConsole_Init(BOARD_DEBUG_UART_INSTANCE, BOARD_DEBUG_UART_BAUDRATE, BOARD_DEBUG_UART_TYPE, uartClkSrcFreq);
 }
 
+static void SetExternalFlashDPMode(void)
+{
+    uint32_t srcClock_Hz;
+    lpspi_master_config_t masterConfig = {0};
+
+    CLOCK_SetIpSrc(kCLOCK_Lpspi1, kCLOCK_IpSrcFircAsync);
+    CLOCK_EnableClock(kCLOCK_Lpspi1);
+
+    /*LPSPI config*/
+    LPSPI_MasterGetDefaultConfig(&masterConfig);
+    srcClock_Hz = FLASH_SPI_MASTER_CLK_FREQ;
+    LPSPI_MasterInit(FLASH_SPI_MASTER, &masterConfig, srcClock_Hz);
+
+    /*Send command of entering deep power-down*/
+    LPSPI_WriteData(FLASH_SPI_MASTER, DPCommand);
+
+    CLOCK_DisableClock(kCLOCK_Lpspi1);
+}
+
 /*!
  * @brief Application entry.
  */
@@ -112,9 +137,11 @@ int main()
         SPM_ClearPeriphIOIsolationFlag(SPM);
     }
     BOARD_InitPins_Core0();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     /* BOARD_InitDebugConsole(); */
     BOARD_InitDebugConsoleWithSirc();
+    /* Set external flash enter deep power-down */
+    SetExternalFlashDPMode();
     LPTMR_Configuration();
 
     /* Unlock the Very Low Power protection. */

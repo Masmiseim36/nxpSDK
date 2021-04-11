@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,38 +10,38 @@
 #include <stdlib.h>
 #include <string.h>
 #include "rpmsg_lite.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "mcmgr.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define RPMSG_LITE_LINK_ID (RL_PLATFORM_K32L3A60_M4_M0_LINK_ID)
 
 /* Address of memory, from which the secondary core will boot */
-#define CORE1_BOOT_ADDRESS (void *)0x01000000
+#define CORE1_BOOT_ADDRESS 0x01000000
 
-#define REMOTE_EPT_ADDR (30)
-#define LOCAL_EPT_ADDR (40)
-#define APP_RPMSG_READY_EVENT_DATA (1)
-#define APP_RPMSG_EP_READY_EVENT_DATA (2)
+#define REMOTE_EPT_ADDR               (30U)
+#define LOCAL_EPT_ADDR                (40U)
+#define APP_RPMSG_READY_EVENT_DATA    (1U)
+#define APP_RPMSG_EP_READY_EVENT_DATA (2U)
 
 typedef struct the_message
 {
     uint32_t DATA;
 } THE_MESSAGE, *THE_MESSAGE_PTR;
 
-#define SH_MEM_TOTAL_SIZE (6144)
+#define SH_MEM_TOTAL_SIZE (6144U)
 #if defined(__ICCARM__) /* IAR Workbench */
 #pragma location = "rpmsg_sh_mem_section"
-char rpmsg_lite_base[SH_MEM_TOTAL_SIZE];
+static char rpmsg_lite_base[SH_MEM_TOTAL_SIZE];
 #elif defined(__CC_ARM) || defined(__ARMCC_VERSION) /* Keil MDK */
-char rpmsg_lite_base[SH_MEM_TOTAL_SIZE] __attribute__((section("rpmsg_sh_mem_section")));
-#elif defined(__GNUC__) /* LPCXpresso */
-char rpmsg_lite_base[SH_MEM_TOTAL_SIZE] __attribute__((section(".noinit.$rpmsg_sh_mem")));
+static char rpmsg_lite_base[SH_MEM_TOTAL_SIZE] __attribute__((section("rpmsg_sh_mem_section")));
+#elif defined(__GNUC__)
+static char rpmsg_lite_base[SH_MEM_TOTAL_SIZE] __attribute__((section(".noinit.$rpmsg_sh_mem")));
 #else
 #error "RPMsg: Please provide your definition of rpmsg_lite_base[]!"
 #endif
@@ -54,21 +54,21 @@ char rpmsg_lite_base[SH_MEM_TOTAL_SIZE] __attribute__((section(".noinit.$rpmsg_s
  * Code
  ******************************************************************************/
 
-THE_MESSAGE volatile msg = {0};
+static THE_MESSAGE volatile msg = {0};
 
 /* This is the read callback, note we are in a task context when this callback
 is invoked, so kernel primitives can be used freely */
-static int my_ept_read_cb(void *payload, int payload_len, unsigned long src, void *priv)
+static int32_t my_ept_read_cb(void *payload, uint32_t payload_len, uint32_t src, void *priv)
 {
-    int *has_received = priv;
+    int32_t *has_received = priv;
 
     if (payload_len <= sizeof(THE_MESSAGE))
     {
-        memcpy((void *)&msg, payload, payload_len);
+        (void)memcpy((void *)&msg, payload, payload_len);
         *has_received = 1;
     }
-    PRINTF("Primary core received a msg\r\n");
-    PRINTF("Message: Size=%x, DATA = %i\r\n", payload_len, msg.DATA);
+    (void)PRINTF("Primary core received a msg\r\n");
+    (void)PRINTF("Message: Size=%x, DATA = %i\r\n", payload_len, msg.DATA);
     return RL_RELEASE;
 }
 
@@ -88,7 +88,7 @@ void SystemInitHook(void)
        function as close to the reset entry as possible to allow CoreUp event
        triggering. The SystemInitHook() weak function overloading is used in this
        application. */
-    MCMGR_EarlyInit();
+    (void)MCMGR_EarlyInit();
 }
 
 /*!
@@ -96,7 +96,7 @@ void SystemInitHook(void)
  */
 int main(void)
 {
-    volatile int has_received;
+    volatile int32_t has_received;
     volatile uint16_t RPMsgRemoteReadyEventData = 0;
     struct rpmsg_lite_ept_static_context my_ept_context;
     struct rpmsg_lite_endpoint *my_ept;
@@ -104,32 +104,34 @@ int main(void)
     struct rpmsg_lite_instance *my_rpmsg;
 
     /* Initialize standard SDK demo application pins */
-    BOARD_InitPins_Core0();
-    BOARD_BootClockRUN();
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
 #ifdef CORE1_IMAGE_COPY_TO_RAM
     /* Calculate size of the image */
     uint32_t core1_image_size;
     core1_image_size = get_core1_image_size();
-    PRINTF("Copy CORE1 image to address: 0x%x, size: %d\r\n", CORE1_BOOT_ADDRESS, core1_image_size);
+    (void)PRINTF("Copy CORE1 image to address: 0x%x, size: %d\r\n", (void *)(char *)CORE1_BOOT_ADDRESS,
+                 core1_image_size);
 
     /* Copy application from FLASH to RAM */
-    memcpy(CORE1_BOOT_ADDRESS, (void *)CORE1_IMAGE_START, core1_image_size);
+    (void)memcpy((void *)(char *)CORE1_BOOT_ADDRESS, (void *)CORE1_IMAGE_START, core1_image_size);
 #endif
 
     /* Initialize MCMGR before calling its API */
-    MCMGR_Init();
+    (void)MCMGR_Init();
 
     /* Register the application event before starting the secondary core */
-    MCMGR_RegisterEvent(kMCMGR_RemoteApplicationEvent, RPMsgRemoteReadyEventHandler,
-                        (void *)&RPMsgRemoteReadyEventData);
+    (void)MCMGR_RegisterEvent(kMCMGR_RemoteApplicationEvent, RPMsgRemoteReadyEventHandler,
+                              (void *)&RPMsgRemoteReadyEventData);
 
     /* Boot Secondary core application */
-    MCMGR_StartCore(kMCMGR_Core1, CORE1_BOOT_ADDRESS, (uint32_t)rpmsg_lite_base, kMCMGR_Start_Synchronous);
+    (void)MCMGR_StartCore(kMCMGR_Core1, (void *)(char *)CORE1_BOOT_ADDRESS, (uint32_t)rpmsg_lite_base,
+                          kMCMGR_Start_Synchronous);
 
     /* Print the initial banner */
-    PRINTF("\r\nRPMsg demo starts\r\n");
+    (void)PRINTF("\r\nRPMsg demo starts\r\n");
 
     /* Wait until the secondary core application signals the rpmsg remote has been initialized and is ready to
      * communicate. */
@@ -149,25 +151,26 @@ int main(void)
     };
 
     /* Send the first message to the remoteproc */
-    msg.DATA = 0;
-    rpmsg_lite_send(my_rpmsg, my_ept, REMOTE_EPT_ADDR, (char *)&msg, sizeof(THE_MESSAGE), RL_DONT_BLOCK);
+    msg.DATA = 0U;
+    (void)rpmsg_lite_send(my_rpmsg, my_ept, REMOTE_EPT_ADDR, (char *)&msg, sizeof(THE_MESSAGE), RL_DONT_BLOCK);
 
-    while (msg.DATA <= 100)
+    while (msg.DATA <= 100U)
     {
-        if (has_received)
+        if (1 == has_received)
         {
             has_received = 0;
             msg.DATA++;
-            rpmsg_lite_send(my_rpmsg, my_ept, REMOTE_EPT_ADDR, (char *)&msg, sizeof(THE_MESSAGE), RL_DONT_BLOCK);
+            (void)rpmsg_lite_send(my_rpmsg, my_ept, REMOTE_EPT_ADDR, (char *)&msg, sizeof(THE_MESSAGE), RL_DONT_BLOCK);
         }
     }
 
-    rpmsg_lite_destroy_ept(my_rpmsg, my_ept);
-    my_ept = NULL;
-    rpmsg_lite_deinit(my_rpmsg);
+    (void)rpmsg_lite_destroy_ept(my_rpmsg, my_ept);
+    my_ept = ((void *)0);
+    (void)rpmsg_lite_deinit(my_rpmsg);
 
-    // Print the ending banner
-    PRINTF("\r\nRPMsg demo ends\r\n");
-    while (1)
-        ;
+    /* Print the ending banner */
+    (void)PRINTF("\r\nRPMsg demo ends\r\n");
+    for (;;)
+    {
+    }
 }

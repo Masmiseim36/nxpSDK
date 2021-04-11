@@ -7,11 +7,11 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_rtc.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -99,11 +99,7 @@ void RTC_IRQHandler(void)
     else
     {
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -121,6 +117,7 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+
     /* Init RTC */
     /*
      * rtcConfig.wakeupSelect = false;
@@ -143,6 +140,12 @@ int main(void)
         EXAMPLE_WaitOSCReady(EXAMPLE_OSC_WAIT_TIME_MS);
     }
 #endif /* FSL_FEATURE_RTC_HAS_NO_CR_OSCE */
+#if (defined(EXAMPLE_CAP_LOAD_VALUE) && EXAMPLE_CAP_LOAD_VALUE)
+#if (defined(FSL_FEATURE_RTC_HAS_OSC_SCXP) && FSL_FEATURE_RTC_HAS_OSC_SCXP)
+    /* Change the RTC oscillator capacity load value. */
+    RTC_SetOscCapLoad(RTC, EXAMPLE_CAP_LOAD_VALUE);
+#endif /* FSL_FEATURE_RTC_HAS_OSC_SCXP */
+#endif /* EXAMPLE_CAP_LOAD_VALUE */
 
     PRINTF("RTC example: set up time to wake up an alarm\r\n");
 
@@ -199,7 +202,8 @@ int main(void)
         /* Read the RTC seconds register to get current time in seconds */
         currSeconds = RTC->TSR;
 
-        /* Add alarm seconds to current time */
+        /* Add alarm seconds to current time, because RTC alarm will happen when RTC->TAR = RTC->TSR and RTC->TSR
+        increments, thus there's possible 1 second maximum delay here. */
         currSeconds += sec;
 
         /* Set alarm time in seconds */

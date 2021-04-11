@@ -7,10 +7,10 @@ Actually, this use case is usually used in the connectivity application, and the
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- MCUXpresso  11.0.1
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -34,9 +34,6 @@ Prepare the demo
 4.  Build the project and download the image into the board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-Prepare the Demo
-================
-
 Running the demo
 ================
 
@@ -53,6 +50,3 @@ vBatteryValue: 37600
 vBatteryMv   : 3342
 
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

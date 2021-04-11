@@ -10,6 +10,9 @@ for additional custom peripherals and for custom MCUs using same prototypes.
 Versions
 ================================================================================
 
+Version 1.4.4
+AML TMR updated to support MCUXpresso SDK 2.9.
+
 Version 1.4.3
 Fixed compiler errors in MDK v6.
 

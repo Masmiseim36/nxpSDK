@@ -5,10 +5,10 @@ The SLCD example shows how to use SLCD driver.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -36,9 +36,6 @@ Running the demo
 ================
 
 In this example, the SLCD displays as below.
-1. All segments on.
-2. Blink.
-3. All segments off.
-Customization options
-=====================
-
+1. Show digital numbers.
+2. Show the icons one by one.
+3. All segments on, blink, then turn off.

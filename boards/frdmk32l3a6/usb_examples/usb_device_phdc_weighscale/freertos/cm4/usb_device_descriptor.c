@@ -31,15 +31,21 @@
 usb_device_endpoint_struct_t g_UsbDevicePhdcWeightScaleEndpoints[USB_PHDC_WEIGHT_SCALE_ENDPOINT_COUNT] = {
     {
         USB_PHDC_INTERRUPT_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
-        USB_ENDPOINT_INTERRUPT, FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE,FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL,
+        USB_ENDPOINT_INTERRUPT,
+        FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE,
+        FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL,
     },
     {
-        USB_PHDC_BULK_ENDPOINT_OUT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
-        FS_USB_PHDC_BULK_ENDPOINT_OUT_PACKET_SIZE,0U,
+        USB_PHDC_BULK_ENDPOINT_OUT | (USB_OUT << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
+        USB_ENDPOINT_BULK,
+        FS_USB_PHDC_BULK_ENDPOINT_OUT_PACKET_SIZE,
+        0U,
     },
     {
-        USB_PHDC_BULK_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT), USB_ENDPOINT_BULK,
-        FS_USB_PHDC_BULK_ENDPOINT_IN_PACKET_SIZE,0U,
+        USB_PHDC_BULK_ENDPOINT_IN | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT),
+        USB_ENDPOINT_BULK,
+        FS_USB_PHDC_BULK_ENDPOINT_IN_PACKET_SIZE,
+        0U,
     },
 };
 
@@ -60,7 +66,7 @@ usb_device_interfaces_struct_t g_UsbDevicePhdcWeightScaleInterfaces[USB_PHDC_WEI
     USB_PHDC_PROTOCOL,                     /* the PHDC protocol code */
     USB_PHDC_WEIGHT_SCALE_INTERFACE_INDEX, /* the interface number */
     g_UsbDevicePhdcWeightScaleInterface,   /* the interface handle */
-    sizeof(g_UsbDevicePhdcWeightScaleInterface) / sizeof(usb_device_interfaces_struct_t),
+    sizeof(g_UsbDevicePhdcWeightScaleInterface) / sizeof(usb_device_interface_struct_t),
 }};
 
 /*! @brief PHDC weight scale interface list */
@@ -86,13 +92,14 @@ uint8_t g_UsbDeviceDescriptor[] = {
     USB_SHORT_GET_LOW(USB_DEVICE_SPECIFIC_BCD_VERSION), USB_SHORT_GET_HIGH(USB_DEVICE_SPECIFIC_BCD_VERSION),
     /* USB Specification Release Number in
        Binary-Coded Decimal (i.e., 2.10 is 210H). */
-    USB_DEVICE_CLASS,            /* Class code (assigned by the USB-IF). */
-    USB_DEVICE_SUBCLASS,         /* Subclass code (assigned by the USB-IF). */
-    USB_DEVICE_PROTOCOL,         /* Protocol code (assigned by the USB-IF). */
-    USB_CONTROL_MAX_PACKET_SIZE, /* Maximum packet size for endpoint zero
-                                    (only 8, 16, 32, or 64 are valid) */
-    0xC9U, 0x1FU,                /* Vendor ID (assigned by the USB-IF) */
-    0x96U, 0x00U,                /* Product ID (assigned by the manufacturer) */
+    USB_DEVICE_CLASS,                                                      /* Class code (assigned by the USB-IF). */
+    USB_DEVICE_SUBCLASS,                                                   /* Subclass code (assigned by the USB-IF). */
+    USB_DEVICE_PROTOCOL,                                                   /* Protocol code (assigned by the USB-IF). */
+    USB_CONTROL_MAX_PACKET_SIZE,                                           /* Maximum packet size for endpoint zero
+                                                                              (only 8, 16, 32, or 64 are valid) */
+    USB_SHORT_GET_LOW(USB_DEVICE_VID), USB_SHORT_GET_HIGH(USB_DEVICE_VID), /* Vendor ID (assigned by the USB-IF) */
+    USB_SHORT_GET_LOW(USB_DEVICE_PID),
+    USB_SHORT_GET_HIGH(USB_DEVICE_PID), /* Product ID (assigned by the manufacturer) */
     USB_SHORT_GET_LOW(USB_DEVICE_DEMO_BCD_VERSION),
     USB_SHORT_GET_HIGH(USB_DEVICE_DEMO_BCD_VERSION), /* Device release number in binary-coded decimal */
     0x01U,                                           /* Index of string descriptor describing manufacturer */
@@ -290,12 +297,17 @@ uint8_t *g_UsbDeviceStringDescriptorArray[USB_DEVICE_STRING_COUNT + 1U] = {g_Usb
 
 /*! @brief PHDC USB language */
 usb_language_t g_UsbDeviceLanguage[USB_DEVICE_LANGUAGE_COUNT] = {{
-    g_UsbDeviceStringDescriptorArray, g_UsbDeviceStringDescriptorLength, (uint16_t)0x0409U,
+    g_UsbDeviceStringDescriptorArray,
+    g_UsbDeviceStringDescriptorLength,
+    (uint16_t)0x0409U,
 }};
 
 /*! @brief PHDC USB language list */
 usb_language_list_t g_UsbDeviceLanguageList = {
-    g_UsbDeviceString0, sizeof(g_UsbDeviceString0), g_UsbDeviceLanguage, USB_DEVICE_LANGUAGE_COUNT,
+    g_UsbDeviceString0,
+    sizeof(g_UsbDeviceString0),
+    g_UsbDeviceLanguage,
+    USB_DEVICE_LANGUAGE_COUNT,
 };
 
 /*******************************************************************************
@@ -362,7 +374,7 @@ usb_status_t USB_DeviceGetStringDescriptor(usb_device_handle handle,
     }
     else
     {
-        uint8_t languageId = 0U;
+        uint8_t languageId    = 0U;
         uint8_t languageIndex = USB_DEVICE_STRING_COUNT;
 
         for (; languageId < USB_DEVICE_LANGUAGE_COUNT; languageId++)
@@ -420,7 +432,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
                 if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                     (USB_PHDC_INTERRUPT_ENDPOINT_IN ==
-                    (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
+                     (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
                 {
                     pDescStart->endpoint.bInterval = HS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE,
@@ -451,7 +463,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
                 if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                     (USB_PHDC_INTERRUPT_ENDPOINT_IN ==
-                    (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
+                     (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
                 {
                     pDescStart->endpoint.bInterval = FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE,
@@ -488,7 +500,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             if (USB_ENDPOINT_INTERRUPT == g_UsbDevicePhdcWeightScaleEndpoints[i].transferType)
             {
                 g_UsbDevicePhdcWeightScaleEndpoints[i].maxPacketSize = HS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE;
-                g_UsbDevicePhdcWeightScaleEndpoints[i].interval = HS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
+                g_UsbDevicePhdcWeightScaleEndpoints[i].interval      = HS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
             }
             else if (g_UsbDevicePhdcWeightScaleEndpoints[i].endpointAddress &
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
@@ -505,7 +517,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             if (USB_ENDPOINT_INTERRUPT == g_UsbDevicePhdcWeightScaleEndpoints[i].transferType)
             {
                 g_UsbDevicePhdcWeightScaleEndpoints[i].maxPacketSize = FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE;
-                g_UsbDevicePhdcWeightScaleEndpoints[i].interval = FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
+                g_UsbDevicePhdcWeightScaleEndpoints[i].interval      = FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
             }
             else if (g_UsbDevicePhdcWeightScaleEndpoints[i].endpointAddress &
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)

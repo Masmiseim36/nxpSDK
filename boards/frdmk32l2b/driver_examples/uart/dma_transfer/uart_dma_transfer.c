@@ -6,24 +6,24 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_uart_dma.h"
 #include "fsl_dmamux.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_UART UART2
-#define DEMO_UART_CLKSRC kCLOCK_BusClk
-#define DEMO_UART_CLK_FREQ CLOCK_GetFreq(kCLOCK_BusClk)
-#define UART_TX_DMA_CHANNEL 0U
-#define UART_RX_DMA_CHANNEL 1U
+#define DEMO_UART                    UART2
+#define DEMO_UART_CLKSRC             kCLOCK_BusClk
+#define DEMO_UART_CLK_FREQ           CLOCK_GetFreq(kCLOCK_BusClk)
+#define UART_TX_DMA_CHANNEL          0U
+#define UART_RX_DMA_CHANNEL          1U
 #define EXAMPLE_UART_DMAMUX_BASEADDR DMAMUX0
-#define EXAMPLE_UART_DMA_BASEADDR DMA0
-#define UART_TX_DMA_REQUEST kDmaRequestMux0UART2Tx
-#define UART_RX_DMA_REQUEST kDmaRequestMux0UART2Rx
+#define EXAMPLE_UART_DMA_BASEADDR    DMA0
+#define UART_TX_DMA_REQUEST          kDmaRequestMux0UART2Tx
+#define UART_RX_DMA_REQUEST          kDmaRequestMux0UART2Rx
 #define ECHO_BUFFER_LENGTH 8
 
 /*******************************************************************************

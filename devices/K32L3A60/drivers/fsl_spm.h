@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019, NXP
+ * Copyright 2016-2020, NXP
  * All rights reserved.
  *
  *
@@ -22,8 +22,9 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief SPM driver version */
-#define FSL_SPM_DRIVER_VERSION (MAKE_VERSION(2, 2, 0)) /*!< Version 2.2.0. */
-                                                       /*@}*/
+#define FSL_SPM_DRIVER_VERSION (MAKE_VERSION(2, 3, 0)) /*!< Version 2.3.0. */
+
+/*@}*/
 
 /*!
  * @brief IP version ID definition.
@@ -272,7 +273,7 @@ typedef enum _spm_dcdc_drive_strength
     kSPM_DcdcDriveStrengthWithNormal                   = 0U,  /*!< No additional FET setting. */
     kSPM_DcdcDriveStrengthWithHalfFETs                 = 0x4, /*!< Half FETs. */
     kSPM_DcdcDriveStrengthWithDoubleFETs               = 0x2, /*!< Double FETs. */
-    kSPM_DcdcDriveStrengthWithExtraHalfFETs            = 0x1, /*!< Half FETs. */
+    kSPM_DcdcDriveStrengthWithExtraDoubleFETs          = 0x1, /*!< Extra Double FETs. */
     kSPM_DcdcDriveStrengthWithHalfAndDoubleFETs        = 0x6, /*!< Half + Double FETs. */
     kSPM_DcdcDriveStrengthWithHalfAndExtraDoubleFETs   = 0x5, /*!< Half + Extra Double FETs. */
     kSPM_DcdcDriveStrengthWithDoubleAndExtraDoubleFETs = 0x3, /*!< Double + Extra Double FETs. */
@@ -289,6 +290,19 @@ enum _spm_dcdc_flags
         SPM_DCDCSC_CLKFLT_FAULT_MASK, /*!< Asserts if DCDC detect a clk fault. Will cause a system lvd reset to assert.
                                        */
 };
+
+/*!
+ * @brief Loop control configuration.
+ */
+typedef struct _spm_dcdc_loop_control_config
+{
+    bool enableCommonHysteresis; /*!< Enable hysteresis in switching converter differential mode analog comparators.
+                                      This feature improves transient supply ripple and efficiency. */
+    bool enableDifferentialHysteresis; /*!< Enable hysteresis in switching converter common mode analog comparators.
+                                            This feature improves transient supply ripple and efficiency. */
+    bool invertHysteresisSign;         /*!< Invert the sign of the hysteresis in DC-DC analog comparators.
+                                            Should be enabled when in Pulsed mode. */
+} spm_dcdc_loop_control_config_t;
 
 /*******************************************************************************
  * API
@@ -312,7 +326,7 @@ extern "C" {
  */
 static inline void SPM_GetVersionId(SPM_Type *base, spm_version_id_t *versionId)
 {
-    *((uint32_t *)versionId) = base->VERID;
+    *((uint32_t *)(uint32_t)versionId) = base->VERID;
 }
 
 /*!
@@ -373,7 +387,7 @@ static inline void SPM_EnableRegulatorInLowPowerMode(SPM_Type *base, bool enable
  * @brief Configures the CORE LDO working in run modes.
  *
  * @param base SPM peripheral base address.
- * @param conifgMask Mask value of configuration items. See to #_spm_core_ldo_run_mode_config.
+ * @param configMask Mask value of configuration items. See to #_spm_core_ldo_run_mode_config.
  */
 static inline void SPM_SetCoreLdoRunModeConfig(SPM_Type *base, uint32_t configMask)
 {
@@ -384,7 +398,7 @@ static inline void SPM_SetCoreLdoRunModeConfig(SPM_Type *base, uint32_t configMa
  * @brief Configures the CORE LDO working in low power modes.
  *
  * @param base SPM peripheral base address.
- * @param conifgMask Mask value of configuration items. See to #_spm_core_ldo_low_power_mode_config.
+ * @param configMask Mask value of configuration items. See to #_spm_core_ldo_low_power_mode_config.
  */
 static inline void SPM_SetCoreLdoLowPowerModeConfig(SPM_Type *base, uint32_t configMask)
 {
@@ -401,6 +415,29 @@ static inline void SPM_SetCoreLdoLowPowerModeConfig(SPM_Type *base, uint32_t con
 static inline bool SPM_GetCoreLdoInRunRegulationFlag(SPM_Type *base)
 {
     return (SPM_CORESC_REGONS_MASK == (SPM_CORESC_REGONS_MASK & base->CORESC));
+}
+
+/*!
+ * @brief Force the Core LDO to an offset voltage level.
+ *
+ * @note Please make sure Core LDO Aux LDO and DCDC regulator both have been enabled before invoking
+ *       this function.
+ *
+ * @param base SPM peripheral base address.
+ * @param enable Enable/Disable Core Ldo voltage offset.
+ *                  true    -   Apply Core LDO offset.
+ *                  false   -   Don't apply Core LDO offset.
+ */
+static inline void SPM_ForceCoreLdoOffset(SPM_Type *base, bool enable)
+{
+    if (enable)
+    {
+        base->CORESC |= SPM_CORESC_VSEL_OFFSET_MASK;
+    }
+    else
+    {
+        base->CORESC &= ~SPM_CORESC_VSEL_OFFSET_MASK;
+    }
 }
 
 /*!
@@ -603,9 +640,31 @@ static inline void SPM_ClearHighVoltDetectFlag(SPM_Type *base)
  * @brief Configures the AUX LDO.
  *
  * @param base SPM peripheral base address.
- * @param config Pointer to configuration structure, see to #spm_rf_ldo_config_t.
+ * @param config Pointer to configuration structure, see to spm_rf_ldo_config_t.
  */
 void SPM_SetAuxLdoConfig(SPM_Type *base, const spm_aux_ldo_config_t *config);
+
+/*!
+ * @brief Force auxiliary regulator voltage to an offset level.
+ *
+ * @note Please make sure DCDC has been enabled before involing this function.
+ *
+ * @param base SPM peripheral base address.
+ * @param enable Enable/Disable AUX Ldo voltage offset.
+ *                  true    -   Force auxiliary regulator voltage to an offset level.
+ *                  false   -   Do not force auxiliary regulator voltage to an offset level.
+ */
+static inline void SPM_ForceAuxLdoOffset(SPM_Type *base, bool enable)
+{
+    if (enable)
+    {
+        base->AUXLDOSC |= SPM_AUXLDOSC_AUXREGVSEL_OFFSET_MASK;
+    }
+    else
+    {
+        base->AUXLDOSC &= ~SPM_AUXLDOSC_AUXREGVSEL_OFFSET_MASK;
+    }
+}
 
 /*! @name DCDC Control APIs*/
 /*@{*/
@@ -665,12 +724,20 @@ static inline uint32_t SPM_GetDcdcStatusFlags(SPM_Type *base)
 }
 
 /*!
- * brief Disable stepping for VDD1P8 and VDD1P2.
+ * @brief Set DCDC loop control config.
+ *
+ * @param base SPM peripheral base address.
+ * @param config The Pointer to the structure @ref spm_dcdc_loop_control_config_t.
+ */
+void SPM_SetDcdcLoopControlConfig(SPM_Type *base, const spm_dcdc_loop_control_config_t *config);
+
+/*!
+ * @brief Disable stepping for VDD1P8 and VDD1P2.
  *
  * Must lock the step for VDD1P8 and VDD1P2 before enteing low power modes.
  *
- * param base SPM peripheral base address.
- * param enable Enable the lock or not to VDDx stepping.
+ * @param base SPM peripheral base address.
+ * @param enable Enable the lock or not to VDDx stepping.
  */
 static inline void SPM_EnableVddxStepLock(SPM_Type *base, bool enable)
 {
@@ -703,6 +770,28 @@ static inline void SPM_SetDcdcDriveStrength(SPM_Type *base, spm_dcdc_drive_stren
 }
 
 /*!
+ * @brief Split the frequency of DCDC's clock to min the power of DCDC.
+ *
+ * @note The function can only be invoked in continous mode.
+ *
+ * @param base SPM peripheral base address.
+ * @param enable Split the DCDC clock frequency.
+ *                  true    -   Set DCDC clock to half frequency for the continous mode.
+ *                  false   -   Do not set DCDC clock to half frequency for the continous mode.
+ */
+static inline void SPM_SplitDcdcClockFreq(SPM_Type *base, bool enable)
+{
+    if (enable)
+    {
+        base->DCDCC3 |= SPM_DCDCC3_DCDC_MINPWR_DC_HALFCLK_MASK;
+    }
+    else
+    {
+        base->DCDCC3 &= ~SPM_DCDCC3_DCDC_MINPWR_DC_HALFCLK_MASK;
+    }
+}
+
+/*!
  * @brief Bypasses the ADC measure value
  *
  * Forces DCDC to bypass the adc measuring state and loads the user-defined value in this function.
@@ -719,19 +808,42 @@ void SPM_BypassDcdcBattMonitor(SPM_Type *base, bool enable, uint32_t value);
  * Integrator value can be loaded in pulsed mode. Software can program this value according to
  * battery voltage and VDDCORE output target value before goes to the pulsed mode.
  *
- @code
+ * @code
     spm_dcdc_integrator_config_t SpmDcdcIntegratorConfigStruct =
     {
         .vddCoreValue = 1.25f,
         .vBatValue    = 3.34f
     };
- @endcode
+ * @endcode
  *
  * @param base SPM peripheral base address.
  * @param config Pointer to configuration structure, see to #spm_dcdc_integrator_config_t.
  *               Passing NULL would clear all user-defined setting and use hardware default setting.
  */
 void SPM_SetDcdcIntegratorConfig(SPM_Type *base, const spm_dcdc_integrator_config_t *config);
+
+/*!
+ * @brief Bypass the ADC measure or not.
+ *
+ * @note If forced to bypass the ADC measure, please invoke SPM_SetDcdcIntegratorConfig()
+ *       function to select the integrator value.
+ *
+ * @param base SPM peripheral base address.
+ * @param bypass Bypass or not bypass the ADC measure
+ *          true    -   Force DCDC to bypass the ADC measuring state.
+ *          false   -   Don't force DCDC to bypass the ADC measuring state.
+ */
+static inline void SPC_BypassDcdcAdcMeasure(SPM_Type *base, bool bypass)
+{
+    if (bypass)
+    {
+        base->DCDCC3 |= SPM_DCDCC3_DCDC_BYPASS_ADC_MEAS_MASK;
+    }
+    else
+    {
+        base->DCDCC3 &= ~SPM_DCDCC3_DCDC_BYPASS_ADC_MEAS_MASK;
+    }
+}
 
 /*!
  * @brief Sets the target value of VDD1P2 in buck HSRUN mode.
@@ -742,11 +854,11 @@ void SPM_SetDcdcIntegratorConfig(SPM_Type *base, const spm_dcdc_integrator_confi
  * SPM_SetDcdcVdd1p2ValueBuck().
  *
  * @param base SPM peripheral base address.
- * @param value Setting value of VDD1P2 in buck HSRUN mode.
+ * @param trimCode Setting value of VDD1P2 in buck HSRUN mode. Please refer to the reference mannual for details.
  */
-static inline void SPM_SetDcdcVdd1p2ValueHsrun(SPM_Type *base, uint32_t value)
+static inline void SPM_SetDcdcVdd1p2ValueHsrun(SPM_Type *base, uint32_t trimCode)
 {
-    base->DCDCC6 = (base->DCDCC6 & ~SPM_DCDCC6_DCDC_HSVDD_TRIM_MASK) | SPM_DCDCC6_DCDC_HSVDD_TRIM(value);
+    base->DCDCC6 = (base->DCDCC6 & ~SPM_DCDCC6_DCDC_HSVDD_TRIM_MASK) | SPM_DCDCC6_DCDC_HSVDD_TRIM(trimCode);
 }
 
 /*!
@@ -755,12 +867,12 @@ static inline void SPM_SetDcdcVdd1p2ValueHsrun(SPM_Type *base, uint32_t value)
  * Sets the target value of VDD1P2 in buck mode, 25 mV each step from 0x00 to 0x0F.
  *
  * @param base SPM peripheral base address.
- * @param value Setting value of VDD1P2 in buck mode.
+ * @param trimCode Setting value of VDD1P2 in buck mode. Please refer to the reference mannual for details.
  */
-static inline void SPM_SetDcdcVdd1p2ValueBuck(SPM_Type *base, uint32_t value)
+static inline void SPM_SetDcdcVdd1p2ValueBuck(SPM_Type *base, uint32_t trimCode)
 {
     base->DCDCC6 =
-        (base->DCDCC6 & ~SPM_DCDCC6_DCDC_VDD1P2CTRL_TRG_BUCK_MASK) | SPM_DCDCC6_DCDC_VDD1P2CTRL_TRG_BUCK(value);
+        (base->DCDCC6 & ~SPM_DCDCC6_DCDC_VDD1P2CTRL_TRG_BUCK_MASK) | SPM_DCDCC6_DCDC_VDD1P2CTRL_TRG_BUCK(trimCode);
 }
 
 /*!
@@ -769,11 +881,11 @@ static inline void SPM_SetDcdcVdd1p2ValueBuck(SPM_Type *base, uint32_t value)
  * Sets the target value of VDD1P8 in buck mode, 25 mV each step from 0x00 to 0x3F.
  *
  * @param base SPM peripheral base address.
- * @param value Setting value of VDD1P8 output.
+ * @param trimCode Setting the trimCode of VDD1P8 output. Please refer to the reference mannual for details.
  */
-static inline void SPM_SetDcdcVdd1p8Value(SPM_Type *base, uint32_t value)
+static inline void SPM_SetDcdcVdd1p8Value(SPM_Type *base, uint32_t trimCode)
 {
-    base->DCDCC6 = (base->DCDCC6 & ~SPM_DCDCC6_DCDC_VDD1P8CTRL_TRG_MASK) | SPM_DCDCC6_DCDC_VDD1P8CTRL_TRG(value);
+    base->DCDCC6 = (base->DCDCC6 & ~SPM_DCDCC6_DCDC_VDD1P8CTRL_TRG_MASK) | SPM_DCDCC6_DCDC_VDD1P8CTRL_TRG(trimCode);
 }
 
 /*@}*/

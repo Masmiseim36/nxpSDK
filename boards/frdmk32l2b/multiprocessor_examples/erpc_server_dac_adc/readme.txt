@@ -29,10 +29,10 @@ and run in each of them: python setup.py install
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- MCUXpresso  11.0.1
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -84,7 +84,4 @@ Read value from Accelerometer:
 ->Press '1' for DAC ADC conversion
 ->Press '2' for GPIO LED
 ->Press '3' for Accelerometer
-
-Customization options
-=====================
 

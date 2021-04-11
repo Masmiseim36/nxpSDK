@@ -12,6 +12,9 @@
 /*
  * Change log:
  *
+ * 1.0.2:
+ *   - Fix MISRA 2012 issues.
+ *
  * 1.0.1:
  *   - Add macro SLCD_ENGINE_PIN_VAL.
  *

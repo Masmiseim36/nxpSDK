@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -9,14 +9,14 @@
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
 #include "fsl_mu.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_gpio.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define APP_MU MUA
+#define APP_MU              MUA
 #define APP_CORE1_BOOT_MODE kMU_CoreBootFromDflashBase
 
 /* Flag indicates Core Boot Up*/
@@ -34,6 +34,12 @@
 #ifndef CORE0_BOOT_CORE1
 #define CORE0_BOOT_CORE1 1
 #endif
+
+/* Use MU to boot core 1. */
+#ifndef BOOT_CORE1_BY_MU
+#define BOOT_CORE1_BY_MU 1
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -104,6 +110,29 @@ static bool ValidateMsgRecv(void)
 }
 
 /*!
+ * @brief Function to copy core1 image to execution address.
+ */
+static void APP_CopyCore1Image(void)
+{
+#ifdef CORE1_IMAGE_COPY_TO_RAM
+    /* Calculate size of the image  - not required on MCUXpresso IDE. MCUXpresso copies the secondary core
+       image to the target memory during startup automatically */
+    uint32_t core1_image_size = get_core1_image_size();
+
+    PRINTF("Copy Secondary core image to address: 0x%x, size: %d\r\n", CORE1_BOOT_ADDRESS, core1_image_size);
+
+    /* Copy Secondary core application from FLASH to the target memory. */
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    SCB_CleanInvalidateDCache_by_Addr((void *)CORE1_BOOT_ADDRESS, core1_image_size);
+#endif
+    memcpy((void *)CORE1_BOOT_ADDRESS, (void *)CORE1_IMAGE_START, core1_image_size);
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    SCB_CleanInvalidateDCache_by_Addr((void *)CORE1_BOOT_ADDRESS, core1_image_size);
+#endif
+#endif
+}
+
+/*!
  * @brief Main function
  */
 int main(void)
@@ -116,12 +145,18 @@ int main(void)
     BOARD_InitDebugConsole();
     BOARD_InitLedPin();
 
+    APP_CopyCore1Image();
+
     /* MUA init */
     MU_Init(APP_MU);
 
 #if CORE0_BOOT_CORE1
     /* Boot core 1. */
+#if BOOT_CORE1_BY_MU
     MU_BootCoreB(APP_MU, APP_CORE1_BOOT_MODE);
+#else
+    APP_BootCore1();
+#endif
 #endif
 
     /* Print the initial banner */

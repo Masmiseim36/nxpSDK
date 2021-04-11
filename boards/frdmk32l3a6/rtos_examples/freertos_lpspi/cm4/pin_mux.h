@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,11 +32,29 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
+/*! @name PORTC7 (coord N2), U40[1]/K32L_UART0_RX
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_DEBUG_UART0_RX_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_DEBUG_UART0_RX_PIN 7U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_DEBUG_UART0_RX_PIN_MASK (1U << 7U)      /*!<@brief PORT pin mask */
+                                                               /* @} */
+
+/*! @name PORTC8 (coord P3), U11[1]/K32L_UART0_TX
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_DEBUG_UART0_TX_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_DEBUG_UART0_TX_PIN 8U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_DEBUG_UART0_TX_PIN_MASK (1U << 8U)      /*!<@brief PORT pin mask */
+                                                               /* @} */
+
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
-void BOARD_InitPins(void);
+void BOARD_InitPins(void); /* Function assigned for the Cortex-M4F */
 
 #if defined(__cplusplus)
 }

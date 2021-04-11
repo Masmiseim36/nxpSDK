@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief MSMC driver version 2.1.0. */
-#define FSL_MSMC_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*! @brief MSMC driver version. */
+#define FSL_MSMC_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
 /*@}*/
 
 /*!
@@ -106,7 +106,7 @@ typedef enum _smc_partial_stop_mode
 /*!
  * @brief SMC configuration status
  */
-enum _smc_status
+enum
 {
     kStatus_SMC_StopAbort = MAKE_STATUS(kStatusGroup_POWER, 0), /*!< Entering Stop mode is abort*/
 };
@@ -242,6 +242,7 @@ extern "C" {
  * use SMC_SetPowerModeProtection(kSMC_AllowPowerModeLls | kSMC_AllowPowerModeVlls).
  * To allow all modes, use SMC_SetPowerModeProtection(kSMC_AllowPowerModeAll).
  *
+ * @param base SMC peripheral base address.
  * @param allowedModes Bitmap of the allowed power modes.
  */
 static inline void SMC_SetPowerModeProtection(SMC_Type *base, uint8_t allowedModes)
@@ -265,7 +266,7 @@ static inline void SMC_SetPowerModeProtection(SMC_Type *base, uint8_t allowedMod
  */
 static inline smc_power_state_t SMC_GetPowerModeState(SMC_Type *base)
 {
-    return (smc_power_state_t)((base->PMSTAT & SMC_PMSTAT_PMSTAT_MASK) >> SMC_PMSTAT_PMSTAT_SHIFT);
+    return (smc_power_state_t)(uint32_t)((base->PMSTAT & SMC_PMSTAT_PMSTAT_MASK) >> SMC_PMSTAT_PMSTAT_SHIFT);
 }
 
 #if (defined(FSL_FEATURE_SMC_HAS_PMSTAT_STOPSTAT) && FSL_FEATURE_SMC_HAS_PMSTAT_STOPSTAT)
@@ -279,7 +280,8 @@ static inline smc_power_state_t SMC_GetPowerModeState(SMC_Type *base)
  */
 static inline smc_power_stop_entry_status_t SMC_GetStopEntryStatus(SMC_Type *base)
 {
-    return (smc_power_stop_entry_status_t)((base->PMSTAT & SMC_PMSTAT_STOPSTAT_MASK) >> SMC_PMSTAT_STOPSTAT_SHIFT);
+    return (smc_power_stop_entry_status_t)(uint32_t)((base->PMSTAT & SMC_PMSTAT_STOPSTAT_MASK) >>
+                                                     SMC_PMSTAT_STOPSTAT_SHIFT);
 }
 
 /*!
@@ -443,17 +445,22 @@ status_t SMC_SetPowerModeVlls(SMC_Type *base);
  * This function gets the current reset source status. Use source masks
  * defined in the smc_reset_source_t to get the desired source status.
  *
- * Example:
+ * Example: To get all reset source statuses.
+   @code
+   resetStatus = SMC_GetPreviousResetSources(SMC0) & kSMC_SourceAll;
+   @endcode
+
+   Example: To test whether the MCU is reset using Watchdog.
    @code
    uint32_t resetStatus;
 
-   // To get all reset source statuses.
-   resetStatus = SMC_GetPreviousResetSources(SMC0) & kSMC_SourceAll;
-
-   // To test whether the MCU is reset using Watchdog.
    resetStatus = SMC_GetPreviousResetSources(SMC0) & kSMC_SourceWdog;
+   @endcode
 
-   // To test multiple reset sources.
+   Example: To test multiple reset sources.
+   @code
+   uint32_t resetStatus;
+
    resetStatus = SMC_GetPreviousResetSources(SMC0) & (kSMC_SourceWdog | kSMC_SourcePin);
    @endcode
  *
@@ -471,17 +478,24 @@ static inline uint32_t SMC_GetPreviousResetSources(SMC_Type *base)
  * This function gets the current reset source status that has not been cleared
  * by software for some specific source.
  *
- * Example:
+ * Example: To get all reset source statuses.
    @code
    uint32_t resetStatus;
 
-   // To get all reset source statuses.
    resetStatus = SMC_GetStickyResetSources(SMC0) & kSMC_SourceAll;
+   @endcode
 
-   // To test whether the MCU is reset using Watchdog.
+   Example, To test whether the MCU is reset using Watchdog.
+   @code
+   uint32_t resetStatus;
+
    resetStatus = SMC_GetStickyResetSources(SMC0) & kSMC_SourceWdog;
+   @endcode
 
-   // To test multiple reset sources.
+   Example To test multiple reset sources.
+   @code
+   uint32_t resetStatus;
+
    resetStatus = SMC_GetStickyResetSources(SMC0) & (kSMC_SourceWdog | kSMC_SourcePin);
    @endcode
  *
@@ -498,9 +512,8 @@ static inline uint32_t SMC_GetStickyResetSources(SMC_Type *base)
  *
  * This function clears the sticky system reset flags indicated by source masks.
  *
- * Example:
+ * Example: Clears multiple reset sources.
    @code
-   // Clears multiple reset sources.
    SMC_ClearStickyResetSources(SMC0, (kSMC_SourceWdog | kSMC_SourcePin));
    @endcode
  *
@@ -547,17 +560,24 @@ static inline void SMC_SetSystemResetInterruptConfig(SMC_Type *base, uint32_t in
  * This function gets the source status of the reset interrupt. Use source masks
  * defined in the smc_interrupt_enable_t to get the desired source status.
  *
- * Example:
+ * Example: To get all reset interrupt source statuses.
    @code
    uint32_t interruptStatus;
 
-   // To get all reset interrupt source statuses.
    interruptStatus = SMC_GetResetInterruptSourcesStatus(SMC0) & kSMC_IntAll;
+   @endcode
 
-   // To test whether the reset interrupt of Watchdog is pending.
+   Example: To test whether the reset interrupt of Watchdog is pending.
+   @code
+   uint32_t interruptStatus;
+
    interruptStatus = SMC_GetResetInterruptSourcesStatus(SMC0) & kSMC_IntWdog;
+   @endcode
 
-   // To test multiple reset interrupt sources.
+   Example: To test multiple reset interrupt sources.
+   @code
+   uint32_t interruptStatus;
+
    interruptStatus = SMC_GetResetInterruptSourcesStatus(SMC0) & (kSMC_IntWdog | kSMC_IntPin);
    @endcode
  *
@@ -575,22 +595,29 @@ static inline uint32_t SMC_GetResetInterruptSourcesStatus(SMC_Type *base)
  * This function clears the source status of the reset interrupt. Use source masks
  * defined in the smc_interrupt_enable_t to get the desired source status.
  *
- * Example:
+ * Example: To clear all reset interrupt source statuses.
    @code
    uint32_t interruptStatus;
 
-   // To clear all reset interrupt source statuses.
    MMC_ClearResetInterruptSourcesStatus(SMC0, kSMC_IntAll);
+   @endcode
 
-   // To clear the reset interrupt of Watchdog.
+   Example, To clear the reset interrupt of Watchdog.
+   @code
+   uint32_t interruptStatus;
+
    SMC_ClearResetInterruptSourcesStatus(SMC0, kSMC_IntWdog);
+   @endcode
 
-   // To clear multiple reset interrupt sources status.
+   Example, To clear multiple reset interrupt sources status.
+   @code
+   uint32_t interruptStatus;
+
    SMC_ClearResetInterruptSourcesStatus(SMC0, (kSMC_IntWdog | kSMC_IntPin));
    @endcode
  *
  * @param base SMC peripheral base address.
- * @param All reset interrupt source status bit map to clear.
+ * @param intMask All reset interrupt source status bit map to clear.
  */
 static inline void SMC_ClearResetInterruptSourcesStatus(SMC_Type *base, uint32_t intMask)
 {

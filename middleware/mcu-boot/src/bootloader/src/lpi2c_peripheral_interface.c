@@ -6,13 +6,13 @@
  */
 
 #include <assert.h>
-#include "bootloader/bl_context.h"
+#include "bl_context.h"
 #include "bootloader_common.h"
-#include "bootloader/bl_peripheral_interface.h"
-#include "packet/command_packet.h"
+#include "bl_peripheral_interface.h"
+#include "command_packet.h"
 #include "fsl_lpi2c.h"
 #include "fsl_device_registers.h"
-#include "packet/serial_packet.h"
+#include "serial_packet.h"
 
 //! @addtogroup lpi2c_peripheral
 //! @{

@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.0, 2019-07-30
-**     Build:               b190925
+**     Build:               b200921
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -177,16 +177,22 @@
 /* @brief Number of DMA channels. */
 #define FSL_FEATURE_DMA_MODULE_CHANNEL (4)
 /* @brief Total number of DMA channels on all modules. */
-#define FSL_FEATURE_DMA_DMAMUX_CHANNELS (FSL_FEATURE_SOC_DMA_COUNT * 4)
+#define FSL_FEATURE_DMA_DMAMUX_CHANNELS (4)
 
 /* DMAMUX module features */
 
 /* @brief Number of DMA channels (related to number of register CHCFGn). */
 #define FSL_FEATURE_DMAMUX_MODULE_CHANNEL (4)
 /* @brief Total number of DMA channels on all modules. */
-#define FSL_FEATURE_DMAMUX_DMAMUX_CHANNELS (FSL_FEATURE_SOC_DMAMUX_COUNT * 4)
+#define FSL_FEATURE_DMAMUX_DMAMUX_CHANNELS (4)
 /* @brief Has the periodic trigger capability for the triggered DMA channel (register bit CHCFG0[TRIG]). */
 #define FSL_FEATURE_DMAMUX_HAS_TRIG (1)
+/* @brief Register CHCFGn width. */
+#define FSL_FEATURE_DMAMUX_CHCFG_REGISTER_WIDTH (8)
+
+/* FGPIO module features */
+
+/* No feature definitions */
 
 /* FLEXIO module features */
 
@@ -410,12 +416,8 @@
 
 /* GPIO module features */
 
-/* @brief Has fast (single cycle) access capability via a dedicated memory region. */
-#define FSL_FEATURE_GPIO_HAS_FAST_GPIO (1)
-/* @brief Has port input disable register (PIDR). */
-#define FSL_FEATURE_GPIO_HAS_INPUT_DISABLE (0)
-/* @brief Has dedicated interrupt vector. */
-#define FSL_FEATURE_GPIO_HAS_PORT_INTERRUPT_VECTOR (1)
+/* @brief Has GPIO attribute checker register (GACR). */
+#define FSL_FEATURE_GPIO_HAS_ATTRIBUTE_CHECKER (0)
 
 /* I2C module features */
 
@@ -745,10 +747,6 @@
 #define FSL_FEATURE_LPUART_IS_SCI (1)
 /* @brief Capacity (number of entries) of the transmit/receive FIFO (or zero if no FIFO is available). */
 #define FSL_FEATURE_LPUART_FIFO_SIZEn(x) (0)
-/* @brief Maximal data width without parity bit. */
-#define FSL_FEATURE_LPUART_MAX_DATA_WIDTH_WITH_NO_PARITY (10)
-/* @brief Maximal data width with parity bit. */
-#define FSL_FEATURE_LPUART_MAX_DATA_WIDTH_WITH_PARITY (9)
 /* @brief Supports two match addresses to filter incoming frames. */
 #define FSL_FEATURE_LPUART_HAS_ADDRESS_MATCHING (1)
 /* @brief Has transmitter/receiver DMA enable bits C5[TDMAE]/C5[RDMAE] (or BAUD[TDMAE]/BAUD[RDMAE] if the registers are 32-bit wide). */
@@ -1243,6 +1241,8 @@
 #define FSL_FEATURE_SMC_HAS_SRS_TAMPER (0)
 /* @brief Has security violation reset (register bit SRS[SECVIO]). */
 #define FSL_FEATURE_SMC_HAS_SRS_SECVIO (0)
+/* @brief Width of SMC registers. */
+#define FSL_FEATURE_SMC_REG_WIDTH (8)
 
 /* SPI module features */
 
@@ -1342,10 +1342,6 @@
 #define FSL_FEATURE_UART_IS_SCI (0)
 /* @brief Capacity (number of entries) of the transmit/receive FIFO (or zero if no FIFO is available). */
 #define FSL_FEATURE_UART_FIFO_SIZEn(x) (0)
-/* @brief Maximal data width without parity bit. */
-#define FSL_FEATURE_UART_MAX_DATA_WIDTH_WITH_NO_PARITY (9)
-/* @brief Maximal data width with parity bit. */
-#define FSL_FEATURE_UART_MAX_DATA_WIDTH_WITH_PARITY (10)
 /* @brief Supports two match addresses to filter incoming frames. */
 #define FSL_FEATURE_UART_HAS_ADDRESS_MATCHING (1)
 /* @brief Has transmitter/receiver DMA enable bits C5[TDMAE]/C5[RDMAE] (or BAUD[TDMAE]/BAUD[RDMAE] if the registers are 32-bit wide). */

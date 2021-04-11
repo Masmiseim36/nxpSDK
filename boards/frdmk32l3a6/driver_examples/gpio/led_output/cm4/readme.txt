@@ -8,10 +8,10 @@ example take turns to shine the LED.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- MCUXpresso  11.0.1
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -43,6 +43,3 @@ GPIO Driver example
 The LED is blinking.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 And you will find the LED RED is taking turns to shine.
-Customization options
-=====================
-

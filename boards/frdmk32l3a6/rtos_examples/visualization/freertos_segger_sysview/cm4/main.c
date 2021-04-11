@@ -17,13 +17,13 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 /* Include internal header to get SEGGER_RTT_CB */
 #include "SEGGER_RTT.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -54,7 +54,7 @@ extern const SEGGER_SYSVIEW_OS_API SYSVIEW_X_OS_TraceAPI;
 #endif
 
 /* Task priorities. */
-#define FIRST_TASK_PRIORITY (configMAX_PRIORITIES - 1)
+#define FIRST_TASK_PRIORITY  (configMAX_PRIORITIES - 1)
 #define SECOND_TASK_PRIORITY (configMAX_PRIORITIES - 2)
 
 /*******************************************************************************
@@ -94,7 +94,7 @@ int main(void)
 {
     /* Init board hardware. */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     SEGGER_SYSVIEW_Conf();

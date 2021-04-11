@@ -7,13 +7,13 @@
  */
 
 #include "fsl_common.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_xrdc.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
 #include "fsl_lptmr.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -39,7 +39,7 @@ volatile bool g_hardfaultFlag = false;
 
 /* The memory for MRC test, here use the SRAM0 address. */
 #define MEM_REGION_START 0x08000000U
-#define MEM_REGION_END 0x08003FFFU
+#define MEM_REGION_END   0x08003FFFU
 
 #define APP_DOMAIN_ID 1
 

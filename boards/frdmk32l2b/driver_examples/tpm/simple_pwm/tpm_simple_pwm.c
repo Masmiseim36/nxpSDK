@@ -7,10 +7,10 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_tpm.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -22,8 +22,8 @@
 
 /* Interrupt number and interrupt handler for the TPM instance used */
 #define TPM_INTERRUPT_NUMBER TPM0_IRQn
-#define TPM_CHANNEL_FLAG kTPM_Chnl5Flag
-#define TPM_LED_HANDLER TPM0_IRQHandler
+#define TPM_CHANNEL_FLAG     kTPM_Chnl5Flag
+#define TPM_LED_HANDLER      TPM0_IRQHandler
 
 /* Get source clock for TPM driver */
 #define TPM_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_McgIrc48MClk)

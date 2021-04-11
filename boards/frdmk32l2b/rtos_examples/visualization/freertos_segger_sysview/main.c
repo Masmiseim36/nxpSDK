@@ -17,18 +17,18 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 
 /* Include internal header to get SEGGER_RTT_CB */
 #include "SEGGER_RTT.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 #define SYSVIEW_DEVICE_NAME "FRDMK32L2B Cortex-M0Plus"
-#define SYSVIEW_RAM_BASE (0x1FFFE000)
+#define SYSVIEW_RAM_BASE    (0x1FFFE000)
 
 extern SEGGER_RTT_CB _SEGGER_RTT;
 extern const SEGGER_SYSVIEW_OS_API SYSVIEW_X_OS_TraceAPI;
@@ -55,7 +55,7 @@ extern const SEGGER_SYSVIEW_OS_API SYSVIEW_X_OS_TraceAPI;
 #endif
 
 /* Task priorities. */
-#define FIRST_TASK_PRIORITY (configMAX_PRIORITIES - 1)
+#define FIRST_TASK_PRIORITY  (configMAX_PRIORITIES - 1)
 #define SECOND_TASK_PRIORITY (configMAX_PRIORITIES - 2)
 
 /*******************************************************************************

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2014-2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -22,12 +22,12 @@
 #define MCMGR_MU_CHANNEL 3
 
 /* MU TR/RR $MCMGR_MU_CHANNEL is managed by MCMGR */
-#define MU_RX_ISR_Handler(x) MU_RX_ISR(x)
-#define MU_RX_ISR(number) MU_Rx##number##FullFlagISR
+#define MU_RX_ISR_Handler(x)     MU_RX_ISR(x)
+#define MU_RX_ISR(number)        MU_Rx##number##FullFlagISR
 #define mcmgr_mu_channel_handler MU_RX_ISR_Handler(MCMGR_MU_CHANNEL)
-#define MU_RX_ISR_FLAG_Mask(x) MU_RX_ISR_FLAG(x)
-#define MU_RX_ISR_FLAG(number) kMU_Rx##number##FullInterruptEnable
-#define mcmgr_mu_channel_flag MU_RX_ISR_FLAG_Mask(MCMGR_MU_CHANNEL)
+#define MU_RX_ISR_FLAG_Mask(x)   MU_RX_ISR_FLAG(x)
+#define MU_RX_ISR_FLAG(number)   kMU_Rx##number##FullInterruptEnable
+#define mcmgr_mu_channel_flag    MU_RX_ISR_FLAG_Mask(MCMGR_MU_CHANNEL)
 
 /* MCMGR boot address of RAM */
 #define MCMGR_BOOT_ADDRESS_RAM (0x09000000U)
@@ -35,8 +35,8 @@
 /* MCMGR boot address of flash memory */
 #define MCMGR_BOOT_ADDRESS_FLASH (0x01000000U)
 
-volatile mcmgr_core_context_t s_mcmgrCoresContext[MCMGR_CORECOUNT] = {{.state = kMCMGR_ResetCoreState, .startupData = 0},
-                                                                      {.state = kMCMGR_ResetCoreState, .startupData = 0}};
+volatile mcmgr_core_context_t s_mcmgrCoresContext[MCMGR_CORECOUNT] = {
+    {.state = kMCMGR_ResetCoreState, .startupData = 0}, {.state = kMCMGR_ResetCoreState, .startupData = 0}};
 
 /* Initialize structure with informations of all cores */
 static const mcmgr_core_info_t s_mcmgrCores[MCMGR_CORECOUNT] = {
@@ -67,18 +67,16 @@ mcmgr_status_t mcmgr_early_init_internal(mcmgr_core_t coreNum)
     }
 
     /* Trigger core up event here, core is starting! */
-    MCMGR_TriggerEvent(kMCMGR_RemoteCoreUpEvent, 0);
-
-    return kStatus_MCMGR_Success;
+    return MCMGR_TriggerEvent(kMCMGR_RemoteCoreUpEvent, 0);
 }
 
 mcmgr_status_t mcmgr_late_init_internal(mcmgr_core_t coreNum)
 {
 #if defined(FSL_FEATURE_MU_SIDE_A)
-    MU_EnableInterrupts(MUA, mcmgr_mu_channel_flag);
+    MU_EnableInterrupts(MUA, (uint32_t)mcmgr_mu_channel_flag);
 
 #if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
-    MU_EnableInterrupts(MUA, kMU_ResetAssertInterruptEnable);
+    MU_EnableInterrupts(MUA, (uint32_t)kMU_ResetAssertInterruptEnable);
 #endif
 
     NVIC_SetPriority(MUA_IRQn, 2);
@@ -86,10 +84,10 @@ mcmgr_status_t mcmgr_late_init_internal(mcmgr_core_t coreNum)
     NVIC_EnableIRQ(MUA_IRQn);
 
 #elif defined(FSL_FEATURE_MU_SIDE_B)
-    MU_EnableInterrupts(MUB, mcmgr_mu_channel_flag);
+    MU_EnableInterrupts(MUB, (uint32_t)mcmgr_mu_channel_flag);
 
 #if (defined(FSL_FEATURE_MU_HAS_RESET_INT) && FSL_FEATURE_MU_HAS_RESET_INT)
-    MU_EnableInterrupts(MUB, kMU_ResetAssertInterruptEnable);
+    MU_EnableInterrupts(MUB, (uint32_t)kMU_ResetAssertInterruptEnable);
 #endif
 
     NVIC_SetPriority(MUB_IRQn, 2);
@@ -108,17 +106,17 @@ mcmgr_status_t mcmgr_start_core_internal(mcmgr_core_t coreNum, void *bootAddress
         return kStatus_MCMGR_Error;
     }
 #if defined(FSL_FEATURE_MU_SIDE_A)
-    if (MU_GetStatusFlags(MUA) & MU_SR_RDIP_MASK)
+    if (0UL != (MU_GetStatusFlags(MUA) & MU_SR_RDIP_MASK))
     {
         /* cannot start already started core... */
         return kStatus_MCMGR_Error;
     }
 
-    if (bootAddress == (void *)MCMGR_BOOT_ADDRESS_RAM)
+    if (bootAddress == (void *)(char *)MCMGR_BOOT_ADDRESS_RAM)
     {
         MU_BootCoreB(MUA, kMU_CoreBootFromCM0PRamBase);
     }
-    else if (bootAddress == (void *)MCMGR_BOOT_ADDRESS_FLASH)
+    else if (bootAddress == (void *)(char *)MCMGR_BOOT_ADDRESS_FLASH)
     {
         MU_BootCoreB(MUA, kMU_CoreBootFromDflashBase);
     }
@@ -137,7 +135,7 @@ mcmgr_status_t mcmgr_get_startup_data_internal(mcmgr_core_t coreNum, uint32_t *s
     {
         return kStatus_MCMGR_Error;
     }
-    if (!startupData)
+    if (startupData == ((void *)0))
     {
         return kStatus_MCMGR_Error;
     }
@@ -160,7 +158,7 @@ mcmgr_status_t mcmgr_stop_core_internal(mcmgr_core_t coreNum)
         return kStatus_MCMGR_Error;
     }
 #if defined(FSL_FEATURE_MU_SIDE_A)
-    if (!(MU_GetStatusFlags(MUA) & MU_SR_RDIP_MASK))
+    if (0U == (MU_GetStatusFlags(MUA) & MU_SR_RDIP_MASK))
     {
         /* cannot stop already stopped core... */
         return kStatus_MCMGR_Error;
@@ -176,7 +174,7 @@ mcmgr_status_t mcmgr_get_core_property_internal(mcmgr_core_t coreNum,
                                                 void *value,
                                                 uint32_t *length)
 {
-    if (value == NULL)
+    if (value == ((void *)0))
     {
         /* If value is null set only length */
         switch (property)
@@ -215,7 +213,7 @@ mcmgr_status_t mcmgr_get_core_property_internal(mcmgr_core_t coreNum,
 /* Read BRS value from MU_SR, 0-processor is not in reset, 1-processor is in reset */
 #if defined(FSL_FEATURE_MU_SIDE_A)
                     uint32_t reg = MUA->CR;
-                    if (reg & (1 << 7))
+                    if (0UL != (reg & (1u << 7u)))
                     {
                         *((mcmgr_core_status_t *)value) = kMCMGR_InReset;
                     }
@@ -224,6 +222,10 @@ mcmgr_status_t mcmgr_get_core_property_internal(mcmgr_core_t coreNum,
                         *((mcmgr_core_status_t *)value) = kMCMGR_NotInReset;
                     }
 #endif
+                }
+                else
+                {
+                    /* should not happen */
                 }
                 break;
 
@@ -243,7 +245,7 @@ mcmgr_status_t mcmgr_get_core_property_internal(mcmgr_core_t coreNum,
                 {
                     return kStatus_MCMGR_Error;
                 }
-                *((mcmgr_core_type_t *)value) = g_mcmgrSystem.cores[coreNum].coreType;
+                *((mcmgr_core_type_t *)value) = g_mcmgrSystem.cores[(uint32_t)coreNum].coreType;
                 break;
 
             default:
@@ -265,7 +267,7 @@ mcmgr_status_t mcmgr_trigger_event_internal(uint32_t remoteData, bool forcedWrit
 {
     /* When forcedWrite is false, execute the blocking call, i.e. wait until previously
        sent data is processed. Otherwise, run the non-blocking version of the MU send function. */
-    if(false == forcedWrite)
+    if (false == forcedWrite)
     {
         /* This is a blocking call */
 #if defined(FSL_FEATURE_MU_SIDE_A)
@@ -273,7 +275,9 @@ mcmgr_status_t mcmgr_trigger_event_internal(uint32_t remoteData, bool forcedWrit
 #elif defined(FSL_FEATURE_MU_SIDE_B)
         MU_SendMsg(MUB, MCMGR_MU_CHANNEL, remoteData);
 #endif
-    } else {
+    }
+    else
+    {
         /* This is a non-blocking call */
 #if defined(FSL_FEATURE_MU_SIDE_A)
         MU_SendMsgNonBlocking(MUA, MCMGR_MU_CHANNEL, remoteData);
@@ -296,7 +300,7 @@ void mcmgr_mu_channel_handler(void)
     uint16_t eventData;
 
     /* Non-blocking version of the receive function needs to be called here to avoid
-       deadlock in ISR. The RX register must contain the payload now because the RX flag/event 
+       deadlock in ISR. The RX register must contain the payload now because the RX flag/event
        has been identified before reaching this point (mcmgr_mu_channel_handler function). */
 #if defined(FSL_FEATURE_MU_SIDE_A)
     data = MU_ReceiveMsgNonBlocking(MUA, MCMGR_MU_CHANNEL);
@@ -304,14 +308,20 @@ void mcmgr_mu_channel_handler(void)
     data = MU_ReceiveMsgNonBlocking(MUB, MCMGR_MU_CHANNEL);
 #endif
 
-    eventType = data >> 16;
-    eventData = data & 0xFFFF;
-
-    if (eventType < kMCMGR_EventTableLength)
+    /* To be MISRA compliant, return value needs to be checked even it could not never be 0 */
+    if (0U != data)
     {
-        if (MCMGR_eventTable[eventType].callback != NULL)
+        eventType = (uint16_t)(data >> 16u);
+        eventData = (uint16_t)(data & 0x0000FFFFu);
+
+        if (((mcmgr_event_type_t)eventType >= kMCMGR_RemoteCoreUpEvent) &&
+            ((mcmgr_event_type_t)eventType < kMCMGR_EventTableLength))
         {
-            MCMGR_eventTable[eventType].callback(eventData, MCMGR_eventTable[eventType].callbackData);
+            if (MCMGR_eventTable[(mcmgr_event_type_t)eventType].callback != ((void *)0))
+            {
+                MCMGR_eventTable[(mcmgr_event_type_t)eventType].callback(
+                    eventData, MCMGR_eventTable[(mcmgr_event_type_t)eventType].callbackData);
+            }
         }
     }
 }
@@ -321,8 +331,8 @@ void mcmgr_mu_channel_handler(void)
 void DefaultISR(void)
 {
     uint32_t exceptionNumber = __get_IPSR();
-    MCMGR_TriggerEvent(kMCMGR_RemoteExceptionEvent, (uint16_t)exceptionNumber);
-    while (1)
+    (void)MCMGR_TriggerEvent(kMCMGR_RemoteExceptionEvent, (uint16_t)exceptionNumber);
+    for (;;)
     {
     } /* stop here */
 }
@@ -355,4 +365,4 @@ void UsageFault_Handler(void)
 }
 #endif
 
-#endif
+#endif /* MCMGR_HANDLE_EXCEPTIONS */

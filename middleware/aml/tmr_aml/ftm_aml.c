@@ -434,19 +434,15 @@ status_t TMR_AML_Init(aml_instance_t instance, const tmr_sdk_config_t *sdkConfig
         uint32_t mod;
         uint32_t ftmClock = (pwmConf->srcClck_Hz / (1U << (g_ftmBase[instance]->SC & FTM_SC_PS_MASK)));
 
-        switch (pwmConf->mode)
+        if (pwmConf->mode == kFTM_CenterAlignedPwm)
         {
-            case kFTM_EdgeAlignedPwm:
-            case kFTM_CombinedPwm:
-                g_ftmBase[instance]->SC &= ~FTM_SC_CPWMS_MASK;
-                mod = (ftmClock / pwmConf->pwmFreq_Hz) - 1;
-                break;
-            case kFTM_CenterAlignedPwm:
-                g_ftmBase[instance]->SC |= FTM_SC_CPWMS_MASK;
-                mod = ftmClock / (pwmConf->pwmFreq_Hz * 2);
-                break;
-            default:
-                return kStatus_Fail;
+            g_ftmBase[instance]->SC |= FTM_SC_CPWMS_MASK;
+            mod = ftmClock / (pwmConf->pwmFreq_Hz * 2);
+        }
+		else
+        {
+            g_ftmBase[instance]->SC &= ~FTM_SC_CPWMS_MASK;
+            mod = (ftmClock / pwmConf->pwmFreq_Hz) - 1;
         }
 
         /* Return an error in case we overflow the registers, probably would require changing

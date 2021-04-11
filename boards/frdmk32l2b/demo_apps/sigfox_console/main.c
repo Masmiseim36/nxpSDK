@@ -15,10 +15,10 @@
  * Sigfox SDK SW driver is used to access/communicate with OL2385 device.
  */
 #include <stdio.h>
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_debug_console.h"
+#include "board.h"
 
 /* Sigfox */
 #include "sf.h"
@@ -46,19 +46,19 @@ static status_t SetupSigfoxDriver(sf_drv_data_t *drvData)
     /* GPIOs initialization.
      * Note: GPIO settings are place in pin_mux.h file. */
     /* ACK pin. */
-    drvData->gpioConfig.ackPin.gpioInstance = SF_ACK_INST;
-    drvData->gpioConfig.ackPin.gpioPinNumber = SF_ACK_PIN;
+    drvData->gpioConfig.ackPin.gpioInstance = instanceD;
+    drvData->gpioConfig.ackPin.gpioPinNumber = 2U;
 
     /* CS pin. */
-    drvData->gpioConfig.csPin.gpioInstance = SF_CS_INST;
-    drvData->gpioConfig.csPin.gpioPinNumber = SF_CS_PIN;
+    drvData->gpioConfig.csPin.gpioInstance = instanceD;
+    drvData->gpioConfig.csPin.gpioPinNumber = 4U;
 
     SF_SetupGPIOs(&(drvData->gpioConfig));
 
     /* SPI initialization. */
     drvData->spiConfig.baudRate = 125000U;
     drvData->spiConfig.sourceClkHz = GET_SPI_MODULE_CLK();
-    drvData->spiConfig.spiInstance = SF_SPI_INST;
+    drvData->spiConfig.spiInstance = 1U;
 
     SF_SetupSPI(&(drvData->spiConfig), NULL);
 

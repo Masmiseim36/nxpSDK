@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_intmux.h"
 #include "fsl_lpuart_cmsis.h"
 /*******************************************************************************
@@ -78,7 +78,6 @@ int main(void)
     INTMUX_Init(INTMUX1);
     /* Enable LPUART0 intmux source on INTMUX channel 0 */
     INTMUX_EnableInterrupt(INTMUX1, 0, LPUART0_IRQn);
-
     CLOCK_SetIpSrc(kCLOCK_Lpuart0, kCLOCK_IpSrcFircAsync);
 
     DEMO_USART.Initialize(USART_SignalEvent_t);

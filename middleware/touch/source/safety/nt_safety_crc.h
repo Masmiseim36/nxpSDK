@@ -20,7 +20,7 @@
 extern "C" {
 #endif
 
-/**
+/*
  * \brief Calculate CRC checksum on the System configuration data
  * \return the status of the calculation
  *   - NT_SUCCESS if the calculation was properly done
@@ -35,7 +35,7 @@ extern "C" {
  */
 int32_t nt_safety_calc_cfg_crc(const struct nt_system *system, uint16_t *crc_val);
 
-/**
+/*
  * \brief Check the System configuration data.
  * \return the status of the operation
  *   - NT_SUCCESS if the check was properly done

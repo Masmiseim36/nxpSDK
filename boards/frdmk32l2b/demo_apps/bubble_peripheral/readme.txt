@@ -17,23 +17,8 @@ For more details about the demo itself, please refer to the readme under SDK_PAT
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.1
-
-Hardware requirements
-=====================
-
-Board settings
-==============
-
-Prepare the Demo
-================
-
-Running the demo
-================
-
-Customization options
-=====================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 

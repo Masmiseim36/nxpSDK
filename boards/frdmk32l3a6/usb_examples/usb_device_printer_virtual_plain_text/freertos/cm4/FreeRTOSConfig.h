@@ -129,7 +129,15 @@
 #define INCLUDE_xTaskAbortDelay 0
 #define INCLUDE_xTaskGetHandle 0
 #define INCLUDE_xTaskResumeFromISR 1
+#define INCLUDE_xSemaphoreGetMutexHolder 1
 
+
+
+#if defined(__ICCARM__)||defined(__CC_ARM)||defined(__GNUC__)
+    /* Clock manager provides in this variable system core clock frequency */
+    #include <stdint.h>
+    extern uint32_t SystemCoreClock;
+#endif
 
 /* Interrupt nesting behaviour configuration. Cortex-M specific. */
 #ifdef __NVIC_PRIO_BITS

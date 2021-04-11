@@ -9,9 +9,9 @@ In this example , one lpi2c instance used as lpi2c master and another lpi2c inst
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -74,6 +74,3 @@ Master received data :
 
 End of I2C example .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

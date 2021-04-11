@@ -9,16 +9,16 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_spi_cmsis.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define DRIVER_MASTER_SPI Driver_SPI0
 
-#define TRANSFER_SIZE 64U         /* Transfer dataSize */
+#define TRANSFER_SIZE     64U     /* Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /* Transfer baudrate - 500k */
 
 /*******************************************************************************

@@ -15,8 +15,9 @@
 #include "usb_device_descriptor.h"
 #include "device_printer.h"
 #include "fsl_device_registers.h"
-#include "clock_config.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
@@ -27,7 +28,6 @@
 #endif
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -136,11 +136,11 @@ static usb_status_t USB_DevicePrinterAppCallback(class_handle_t classHandle, uin
                 {
                     s_PrinterClassBuffer[len] = g_PrinterID[len];
                 }
-                len = sizeof(g_PrinterID) - 1;
+                len                     = sizeof(g_PrinterID) - 1;
                 s_PrinterClassBuffer[0] = ((uint8_t)(len >> 8));
                 s_PrinterClassBuffer[1] = (uint8_t)len;
-                classRequest->buffer = s_PrinterClassBuffer;
-                classRequest->length = len;
+                classRequest->buffer    = s_PrinterClassBuffer;
+                classRequest->length    = len;
             }
             else
             {
@@ -150,10 +150,10 @@ static usb_status_t USB_DevicePrinterAppCallback(class_handle_t classHandle, uin
             break;
 
         case kUSB_DevicePrinterEventGetPortStatus:
-            classRequest = (usb_device_printer_class_request_t *)param;
+            classRequest            = (usb_device_printer_class_request_t *)param;
             s_PrinterClassBuffer[0] = g_DevicePrinterApp.printerPortStatus;
-            classRequest->buffer = s_PrinterClassBuffer;
-            classRequest->length = 1U;
+            classRequest->buffer    = s_PrinterClassBuffer;
+            classRequest->length    = 1U;
             break;
 
         case kUSB_DevicePrinterEventSoftReset:
@@ -163,9 +163,9 @@ static usb_status_t USB_DevicePrinterAppCallback(class_handle_t classHandle, uin
             message = (usb_device_endpoint_callback_message_struct_t *)param;
             if ((g_DevicePrinterApp.attach) && (g_DevicePrinterApp.prnterTaskState == kPrinter_Receiving))
             {
-                if ((message != NULL) && (message->length != USB_UNINITIALIZED_VAL_32))
+                if ((message != NULL) && (message->length != USB_CANCELLED_TRANSFER_LENGTH))
                 {
-                    g_DevicePrinterApp.printerState = kPrinter_Received;
+                    g_DevicePrinterApp.printerState      = kPrinter_Received;
                     g_DevicePrinterApp.dataReceiveLength = message->length;
                 }
                 else
@@ -191,19 +191,19 @@ static usb_status_t USB_DevicePrinterAppCallback(class_handle_t classHandle, uin
 static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *param)
 {
     usb_status_t status = kStatus_USB_Error;
-    uint8_t *param8p = (uint8_t *)param;
-    uint16_t *param16p = (uint16_t *)param;
+    uint8_t *param8p    = (uint8_t *)param;
+    uint16_t *param16p  = (uint16_t *)param;
     uint8_t interface;
 
     switch (event)
     {
         case kUSB_DeviceEventBusReset:
-            g_DevicePrinterApp.attach = 0U;
-            g_DevicePrinterApp.printerState = kPrinter_Idle;
-            g_DevicePrinterApp.prnterTaskState = kPrinter_Idle;
-            g_DevicePrinterApp.stateChanged = 1;
-            g_DevicePrinterApp.sendBuffer = NULL;
-            g_DevicePrinterApp.sendLength = 0;
+            g_DevicePrinterApp.attach               = 0U;
+            g_DevicePrinterApp.printerState         = kPrinter_Idle;
+            g_DevicePrinterApp.prnterTaskState      = kPrinter_Idle;
+            g_DevicePrinterApp.stateChanged         = 1;
+            g_DevicePrinterApp.sendBuffer           = NULL;
+            g_DevicePrinterApp.sendLength           = 0;
             g_DevicePrinterApp.currentConfiguration = 0U;
 #if (defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)) || \
     (defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U))
@@ -220,6 +220,8 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
 
         case kUSB_DeviceEventAttach:
             usb_echo("USB device attached.\r\n");
+            /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+            SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
             USB_DeviceRun(g_DevicePrinterApp.deviceHandle);
             break;
 
@@ -231,19 +233,19 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
 #endif
 
         case kUSB_DeviceEventSetConfiguration:
-            if (0U ==(*param8p))
+            if (0U == (*param8p))
             {
-                g_DevicePrinterApp.attach = 0U;
+                g_DevicePrinterApp.attach               = 0U;
                 g_DevicePrinterApp.currentConfiguration = 0U;
-                g_DevicePrinterApp.printerState = kPrinter_Idle;
-                g_DevicePrinterApp.stateChanged = 1;
-                g_DevicePrinterApp.sendBuffer = NULL;
-                g_DevicePrinterApp.sendLength = 0;
+                g_DevicePrinterApp.printerState         = kPrinter_Idle;
+                g_DevicePrinterApp.stateChanged         = 1;
+                g_DevicePrinterApp.sendBuffer           = NULL;
+                g_DevicePrinterApp.sendLength           = 0;
             }
             else if (USB_PRINTER_CONFIGURE_INDEX == *param8p)
             {
                 /* Set device configuration request */
-                g_DevicePrinterApp.attach = 1U;
+                g_DevicePrinterApp.attach               = 1U;
                 g_DevicePrinterApp.currentConfiguration = *param8p;
 
                 /* demo run */
@@ -264,7 +266,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 g_DevicePrinterApp.stateChanged = 1;
                 g_DevicePrinterApp.printerState = kPrinter_Idle;
                 /* Set device interface request */
-                interface = (uint8_t)((*param16p & 0xFF00U) >> 0x08U);
+                interface                = (uint8_t)((*param16p & 0xFF00U) >> 0x08U);
                 uint8_t alternateSetting = (uint8_t)(*param16p & 0x00FFU);
 
                 if (interface < USB_PRINTER_INTERFACE_COUNT)
@@ -288,7 +290,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
             {
                 /* Get current configuration request */
                 *param8p = g_DevicePrinterApp.currentConfiguration;
-                status = kStatus_USB_Success;
+                status   = kStatus_USB_Success;
             }
             break;
 
@@ -300,7 +302,7 @@ static usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event,
                 if (interface < USB_PRINTER_INTERFACE_COUNT)
                 {
                     *param16p = (*param16p & 0xFF00U) | g_DevicePrinterApp.currentInterfaceAlternateSetting[interface];
-                    status = kStatus_USB_Success;
+                    status    = kStatus_USB_Success;
                 }
                 else
                 {
@@ -350,13 +352,13 @@ static void USB_DeviceApplicationInit(void)
 
     /* set printer app to default state */
     g_DevicePrinterApp.printerPortStatus = USB_DEVICE_PRINTER_PORT_STATUS_DEFAULT_VALUE;
-    g_DevicePrinterApp.printerState = kPrinter_Idle;
-    g_DevicePrinterApp.prnterTaskState = kPrinter_Idle;
-    g_DevicePrinterApp.speed = USB_SPEED_FULL;
-    g_DevicePrinterApp.attach = 0U;
-    g_DevicePrinterApp.classHandle = (uint32_t)NULL;
-    g_DevicePrinterApp.deviceHandle = NULL;
-    g_DevicePrinterApp.printerBuffer = s_PrinterBuffer;
+    g_DevicePrinterApp.printerState      = kPrinter_Idle;
+    g_DevicePrinterApp.prnterTaskState   = kPrinter_Idle;
+    g_DevicePrinterApp.speed             = USB_SPEED_FULL;
+    g_DevicePrinterApp.attach            = 0U;
+    g_DevicePrinterApp.classHandle       = (void *)NULL;
+    g_DevicePrinterApp.deviceHandle      = NULL;
+    g_DevicePrinterApp.printerBuffer     = s_PrinterBuffer;
 
     /* Initialize the usb stack and class drivers */
     if (kStatus_USB_Success !=
@@ -376,13 +378,15 @@ static void USB_DeviceApplicationInit(void)
     USB_DeviceIsrEnable();
 
     /* Start USB printer demo */
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    SDK_DelayAtLeastUs(5000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
     USB_DeviceRun(g_DevicePrinterApp.deviceHandle);
 }
 
 void USB_DevicePrinterAppTask(void *parameter)
 {
     usb_device_printer_app_t *printerApp = (usb_device_printer_app_t *)parameter;
-    usb_status_t status = kStatus_USB_Error;
+    usb_status_t status                  = kStatus_USB_Error;
     uint32_t irqMaskValue;
 
     if (printerApp->attach)

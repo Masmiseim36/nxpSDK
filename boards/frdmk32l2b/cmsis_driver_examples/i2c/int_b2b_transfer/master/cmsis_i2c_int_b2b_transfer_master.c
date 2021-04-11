@@ -8,22 +8,22 @@
 /*  Standard C Included Files */
 #include <string.h>
 /*  SDK Included Files */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
 #include "Driver_I2C.h"
 #include "fsl_i2c_cmsis.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_I2C_DMAMUX_BASEADDR DMAMUX
-#define EXAMPLE_I2C_DMA_BASEADDR DMA0
-#define EXAMPLE_I2C_MASTER Driver_I2C0
+#define EXAMPLE_I2C_DMA_BASEADDR    DMA0
+#define EXAMPLE_I2C_MASTER          Driver_I2C0
 #define I2C_MASTER_SLAVE_ADDR 0x7EU
-#define I2C_DATA_LENGTH 32U
+#define I2C_DATA_LENGTH       32U
 
 /*******************************************************************************
  * Prototypes

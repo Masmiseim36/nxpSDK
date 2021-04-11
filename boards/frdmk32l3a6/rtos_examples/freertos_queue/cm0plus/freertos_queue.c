@@ -18,10 +18,10 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -53,7 +53,7 @@ static void log_task(void *pvParameters);
 int main(void)
 {
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
     /* Initialize logger for 10 logs with maximum lenght of one log 20 B */
     log_init(10, MAX_LOG_LENGTH);

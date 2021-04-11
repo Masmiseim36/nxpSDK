@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -88,16 +88,18 @@ int32_t nt_control_matrix_set_gesture(const struct nt_control *control, uint8_t 
     struct nt_control_matrix_data *ram = control_data->data.matrix;
     NT_ASSERT(ram != NULL);
 
-    if (gesture < NT_MATRIX_UNLOCK_GESTURES) /* gesture number can not be higher then size of gesture array */
+    if (gesture < (uint16_t)NT_MATRIX_UNLOCK_GESTURES) /* gesture number can not be higher then size of gesture array */
     {
         ram->select_gesture =
-            gesture + 1; /* select_gesture must be higher then zero to store new gesture or replace old one */
+            gesture + 1U; /* select_gesture must be higher then zero to store new gesture or replace old one */
         if (gesture >= ram->gesture_number)    /* check if real stored number of gesture is lover or equal to required
                                                   store gesture */
-            ram->gesture_number = gesture + 1; /* if not then new gesture will be created */
-        return NT_SUCCESS;
+        {  
+            ram->gesture_number = gesture + 1U; /* if not then new gesture will be created */
+        }
+        return (int32_t) NT_SUCCESS;
     }
-    return NT_FAILURE;
+    return (int32_t) NT_FAILURE;
 }
 
 /* Position recognition for specific axis and one or two finger positions.
@@ -112,16 +114,16 @@ int32_t nt_control_matrix_set_gesture(const struct nt_control *control, uint8_t 
 void _nt_control_matrix_get_position(uint8_t *position1, uint8_t *position2, uint32_t state, uint8_t *add_val)
 
 {
-    uint8_t actual_position[2] = {0, 0};
-    uint8_t position           = 1;
-    uint8_t finger             = 0;
+    uint8_t actual_position[2] = {0U, 0U};
+    uint8_t position           = 1U;
+    uint8_t finger             = 0U;
 
-    while (state)
+    while ((bool)state)
     {
-        if (finger > 1) /* maximum two finger are detected */
-            finger = 1; /* the next finger would be rewritten */
-
-        uint32_t state_cut = state & 0x0007;
+        if (finger > 1U) /* maximum two finger are detected */
+        {   finger = 1U; /* the next finger would be rewritten */
+        }
+        uint32_t state_cut = state & 0x0007U;
         switch (state_cut) /* three nearest electrodes are touched simultaneously */
         {
             case 0x0007:
@@ -174,22 +176,22 @@ uint16_t _nt_control_matrix_gesture_recognition_square(nt_coordinates64_xy *buff
     uint64_t temp_buffer;
     uint64_t temp_gesture;
     int16_t temp16;
-    uint16_t temp_return = 0;
-    uint16_t n           = 0;
-    uint16_t size        = 0;
+    uint16_t temp_return = 0U;
+    uint16_t n           = 0U;
+    uint16_t size        = 0U;
 
     temp_buffer  = buffer->x;
     temp_gesture = gesture->x;
 
-    if (temp_buffer > 0xffff)
+    if (temp_buffer > 0xffffU)
     {
-        for (n = 0; n < 2; n++)
+        for (n = 0; n < 2U; n++)
         {
             temp16 = 0;
             if (temp_buffer != 0) /* calculate clb for captured unlock gesture only if not zero */
             {
                 temp64 = temp_buffer;
-                while (!(temp64 & 0xf000000000000000))
+                while (!(bool)(temp64 & 0xf000000000000000U))
                 {
                     temp64 <<= 4;
                     temp16++;
@@ -199,10 +201,10 @@ uint16_t _nt_control_matrix_gesture_recognition_square(nt_coordinates64_xy *buff
             {
                 temp16 += 16;
             }
-            if (temp_gesture != 0) /* calculate clb difference between capture and stored gesture only if not zero */
+            if (temp_gesture != 0U) /* calculate clb difference between capture and stored gesture only if not zero */
             {
                 temp64 = temp_gesture;
-                while (!(temp64 & 0xf000000000000000))
+                while (!(bool)(temp64 & 0xf000000000000000U))
                 {
                     temp64 <<= 4;
                     temp16--;
@@ -213,16 +215,19 @@ uint16_t _nt_control_matrix_gesture_recognition_square(nt_coordinates64_xy *buff
                 temp16 += 16;
             }
             if (temp16 < 0) /* absolute value of clf difference */
-                temp16 = -temp16;
+            {   temp16 = -temp16;
+            }
             if (temp16 > 31) /* difference overflow */
-                temp16 = 0;
+            {   temp16 = 0;
+            }
             if (temp16 > 2) /* difference is too high */
-                return 0x7fff;
+            {   return 0x7fff;
+            }
 
             temp64 = temp_buffer & temp_gesture;
-            while (temp64)
+            while ((bool)temp64)
             {
-                temp16 = (temp_buffer & (uint64_t)0xf) - (temp_gesture & (uint64_t)0xf);
+                temp16 = (uint16_t)((temp_buffer & (uint64_t)0xf) - (temp_gesture & (uint64_t)0xf));
                 temp16 *= temp16;
                 temp_return += (uint16_t)temp16;
                 temp_buffer >>= 4;
@@ -257,47 +262,50 @@ uint16_t _nt_control_matrix_horiz_vertic_recognition(nt_coordinates64_xy *buffer
     int8_t sum_x          = 0;
     int8_t sum_y          = 0;
 
-    if ((buffer->x | buffer->y) > 0xfff) /* too short gesture - shorter than 3 point changes will not be recognized */
+    if ((buffer->x | buffer->y) > 0xfffU) /* too short gesture - shorter than 3 point changes will not be recognized */
     {
         temp64 = buffer->x;
-        while (temp64) /* Calculation of captured points lie in each column for captured gesture */
+        while ((bool)temp64) /* Calculation of captured points lie in each column for captured gesture */
         {
             temp16 = (temp64 & (uint64_t)0xf); /* Separate position from the first stored */
             sum_buff_x[temp16]++;              /* Find out the number of unchanged positions */
             temp64 >>= 4;                      /* Move to next position change in buffer */
         }
         temp64 = 16;
-        while (temp64--) /* Activated position calculation for x coordinate */
+        while ((bool)(temp64--)) /* Activated position calculation for x coordinate */
         {
-            if (sum_buff_x[temp64])
-                sum_x++;
+            if ((bool)sum_buff_x[temp64])
+            {   sum_x++;
+            }    
         }
 
         temp64 = buffer->y;
-        while (temp64) /* Calculation of captured points lie in each row for captured gesture */
+        while ((bool)temp64) /* Calculation of captured points lie in each row for captured gesture */
         {
             temp16 = (temp64 & (uint64_t)0xf); /* Separate position from the first stored */
             sum_buff_y[temp16]++;              /* Find out the number of unchanged positions */
             temp64 >>= 4;                      /* Move to next position change in buffer */
         }
         temp64 = 16;
-        while (temp64--) /* Activated position calculation for y coordinate */
+        while ((bool)(temp64--)) /* Activated position calculation for y coordinate */
         {
-            if (sum_buff_y[temp64])
-                sum_y++;
+            if ((bool)sum_buff_y[temp64])
+            {   sum_y++;
+            }    
         }
 
         if (sum_x > sum_y) /* Dominant direction determination */
-        {
-            sum_y <<= 1;
+        {    sum_y <<= 1U;
             if (sum_x >= sum_y) /* Projection to x axis is double y axis - gesture is enough horiz/vertic */
-                return 0;
+            {   return 0;
+            }    
         }
         else
         {
-            sum_x <<= 1;
+            sum_x <<= 1U;
             if (sum_y >= sum_x) /* Projection to y axis is double x axis - gesture is enough horiz/vertic */
-                return 0;
+            {   return 0;
+            }    
         }
     }
     return 0x7fff; /* return max error if gesture is too short or is not enough horiz/vertic */
@@ -324,25 +332,30 @@ enum nt_control_matrix_control_gestures _nt_control_matrix_zoom_recognition(nt_c
     uint8_t zoom_in         = 0;
     uint8_t zoom_out        = 0;
 
-    if ((buffer->x | buffer->y) > 0xfff) /* Skip the zoom recognition if gesture is too short */
+    if ((buffer->x | buffer->y) > 0xfffU) /* Skip the zoom recognition if gesture is too short */
     {
-        while ((p_1x | p_1y) && (p_2x | p_2y)) /* Fingers distance calculation for each position change */
+        while ((bool)(p_1x | p_1y) && (bool)(p_2x | p_2y)) /* Fingers distance calculation for each position change */
         {
-            int16_t temp = ((p_2x & 0xf) - (p_1x & 0xf)); /* X coordinate distance calculation */
+            int16_t temp = (int16_t)((p_2x & 0xfU) - (p_1x & 0xfU)); /* X coordinate distance calculation */
             temp *= temp;                                 /* X distance squared */
-            square_dist = temp;                           /* Store the X distance squared */
+            square_dist = (uint8_t)temp;                           /* Store the X distance squared */
 
-            temp = ((p_2y & 0xf) - (p_1y & 0xf)); /* Y coordinate distance calculation */
+            temp = (int16_t)((p_2y & 0xfU) - (p_1y & 0xfU)); /* Y coordinate distance calculation */
             temp *= temp;                         /* Y distance squared power of two */
-            square_dist += temp;                  /* Store points distance */
+            square_dist += (uint8_t)temp;                  /* Store points distance */
                                                   /* Store the point to point distance squared */
             if (p_1x != buffer->x)                /* Skip the first step, no previous points distance */
             {
-                temp = (uint16_t)square_dist - (uint16_t)square_dist_k_1; /* The change of distance calculation */
+                temp = (int16_t)((uint16_t)square_dist - (uint16_t)square_dist_k_1); /* The change of distance calculation */
                 if (temp > 15)                                            /* Points distance increased  */
-                    zoom_in++;                                            /* Increase zoom in counter */
+                {   zoom_in++;                                            /* Increase zoom in counter */
+                }
                 else if (temp < -15)                                      /* Points distance decreased */
-                    zoom_out++;                                           /* Increase zoom out counter */
+                {   zoom_out++;                                           /* Increase zoom out counter */
+                }
+                else
+                {   /* no command to avoid Misra issue */
+                }
             }
             square_dist_k_1 = square_dist; /* Store previous position change for future step */
             p_2x >>= 4;                    /* Shift the buffered X coordinate for next captured position calculation */
@@ -350,11 +363,17 @@ enum nt_control_matrix_control_gestures _nt_control_matrix_zoom_recognition(nt_c
             p_1x >>= 4;                    /* Shift the buffered X coordinate for next captured position calculation */
             p_1y >>= 4;                    /* Shift the buffered Y coordinate for next captured position calculation */
         }
-        if (zoom_in > 1 && zoom_in >= zoom_out << 1) /* Check the condition for zoom in control gesture recognition */
-            return NT_MATRIX_ZOOM_IN;                /* Zoom in gesture detected */
-        else if (zoom_out > 1 &&
-                 zoom_out >= zoom_in << 1) /* Check the condition for zoom out control gesture recognition */
-            return NT_MATRIX_ZOOM_OUT;     /* Zoom out gesture detected */
+        if ((bool)(zoom_in > 1U) && (bool)(zoom_in >= zoom_out << 1U)) /* Check the condition for zoom in control gesture recognition */
+        {   return NT_MATRIX_ZOOM_IN;                /* Zoom in gesture detected */
+        }
+        else if ((bool)(zoom_out > 1) &&
+        		(bool)(zoom_out >= zoom_in << 1U)) /* Check the condition for zoom out control gesture recognition */
+        {   return NT_MATRIX_ZOOM_OUT;     /* Zoom out gesture detected */
+        }  
+        else
+        {  /* avoid Misra issue */
+        }  
+
     }
     return NT_MATRIX_NO_GESTURE; /* No zoom gesture detected */
 }
@@ -371,23 +390,23 @@ static int32_t _nt_control_matrix_init(struct nt_control_data *control)
     struct nt_control_matrix *rom = (struct nt_control_matrix *)control->rom->control_params.matrix;
 
     if (rom->touchpad_size_horizontal > 15U || rom->touchpad_size_horizontal == 0U ||
-        rom->touchpad_size_vertical > 15 || rom->touchpad_size_vertical == 0 || rom->touchpad_size_vertical == 0U ||
-        (rom->touchpad_size_horizontal > 8U && rom->increase_resolution > 0) ||
-        (rom->touchpad_size_vertical > 8U && rom->increase_resolution > 0) || rom->dissimilarity_max > 500)
+        rom->touchpad_size_vertical > 15U || rom->touchpad_size_vertical == 0U || rom->touchpad_size_vertical == 0U ||
+        (rom->touchpad_size_horizontal > 8U && rom->increase_resolution > 0U) ||
+        (rom->touchpad_size_vertical > 8U && rom->increase_resolution > 0U) || rom->dissimilarity_max > 500U)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
     control->data.matrix = _nt_mem_alloc(sizeof(struct nt_control_matrix_data));
 
     if (control->data.matrix == NULL)
     {
-        return NT_OUT_OF_MEMORY;
+        return (int32_t) NT_OUT_OF_MEMORY;
     }
 
-    if (_nt_control_check_data(control) != NT_SUCCESS)
+    if ((bool)_nt_control_check_data(control) != (bool) NT_SUCCESS)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
     NT_ASSERT(control->data.matrix != NULL);
@@ -395,25 +414,29 @@ static int32_t _nt_control_matrix_init(struct nt_control_data *control)
 
     ram->touchpad_mask_horizontal = 0;
     for (n = 0; n < control->rom->control_params.matrix->touchpad_size_horizontal; n++)
-        ram->touchpad_mask_horizontal |= (1 << n);
+    {   ram->touchpad_mask_horizontal |= (uint16_t)(1U << n);
+    }
 
     /* Calculate touch pad mask */
     ram->touchpad_mask = 0;
-    if (rom->sensing_mode)
+    if ((bool)rom->sensing_mode)
     { /* mask for mutual-cap touch pad */
         pins = rom->touchpad_size_horizontal * rom->touchpad_size_vertical;
         if (pins > 36) /* Maximum TSI mutual-cap channel restriction */
-            pins = 36;
+        {   pins = 36;
+        }    
     }
     else
     { /* mask for self-cap touch pad */
         pins = rom->touchpad_size_horizontal + rom->touchpad_size_vertical;
         if (pins > 25) /* Maximum TSI self-cap channel restriction */
-            pins = 25;
+        {   pins = 25;
+        }
     }
     /* Set touch pad mask from touch pad sizes and touch pad sensing mode */
     for (n = 0; n < pins; n++)
-        ram->touchpad_mask |= (1 << n);
+    {   ram->touchpad_mask |= (uint64_t)((uint64_t)1 << n);
+    }
 
     /* clear the quantities */
     ram->buffer_position = 0;
@@ -427,16 +450,17 @@ static int32_t _nt_control_matrix_init(struct nt_control_data *control)
     /* Evaluate how many gestures was defined */
     ram->gesture_number  = 0;
     nt_points64 *gesture = rom->gesture;
-    while (*(uint64_t *)gesture++ != 0) /* repeat to find empty gesture {{0,0},{0,0}}} */
+    while (*(uint64_t *)gesture++ != 0U) /* repeat to find empty gesture {{0,0},{0,0}}} */
     {                                   /* Storing second finger movement */
-        if (rom->gesture[ram->gesture_number][1].x ||
-            rom->gesture[ram->gesture_number][1].y)                     /* if second finger has data */
-            ram->two_points_gesture_flag |= 0x1 << ram->gesture_number; /* set two finger gesture flag */
+        if ((bool)(rom->gesture[ram->gesture_number][1U].x) ||
+        	 (bool)(rom->gesture[ram->gesture_number][1].y))                     /* if second finger has data */
+        {   ram->two_points_gesture_flag |= (uint16_t)(0x1U << ram->gesture_number); /* set two finger gesture flag */
+        }        
         ram->gesture_number++;                                          /* increment gesture counter */
     }
 
     /* Initialize constant for get_position function due to increase_resolution mode selected */
-    if (rom->increase_resolution)
+    if ((bool)rom->increase_resolution)
     {
         ram->get_position_add_val[0] = 2;
         ram->get_position_add_val[1] = 6;
@@ -454,7 +478,7 @@ static int32_t _nt_control_matrix_init(struct nt_control_data *control)
         ram->get_position_add_val[4] = 1;
         ram->get_position_add_val[5] = 1;
     }
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 /* Matrix process function */
@@ -470,12 +494,12 @@ static int32_t _nt_control_matrix_process(struct nt_control_data *control)
     NT_ASSERT(ram != NULL);
     NT_ASSERT(rom != NULL);
 
-    if (!_nt_control_get_flag(control, NT_CONTROL_EN_FLAG))
+    if (!(bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_EN_FLAG))
     {
-        return NT_FAILURE; /* not enabled or data not ready */
+        return (int32_t) NT_FAILURE; /* not enabled or data not ready */
     }
 
-    if (_nt_control_get_flag(control, NT_CONTROL_NEW_DATA_FLAG))
+    if ((bool)_nt_control_get_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG))
     { /* touch pad electrode state for matrix processing */
         uint64_t state = _nt_control_get_electrodes_state(control) & control->data.matrix->touchpad_mask;
         uint32_t state_x, state_y;
@@ -483,21 +507,21 @@ static int32_t _nt_control_matrix_process(struct nt_control_data *control)
         /*** ONE OR MORE TOUCHPAD ELECTRODE CHANGED ***/
         /* Can detect position loss of the finger or one finger movement only,
         and recognize the release event.*/
-        if (state ^ ram->last_electode_states)
+        if ((bool)(state ^ ram->last_electode_states))
         { /* Store last electrode states, x and y together. */
             ram->last_electode_states = state;
 
             /*** COVER ***/
             if (state == (uint64_t)ram->touchpad_mask) /* all touch pad electrode are active */
             {
-                _nt_control_set_flag(control, NT_MATRIX_GET_CONTROL_GESTURE_FLAG);
-                _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE, NULL, NT_MATRIX_COVER);
-                _nt_control_clear_flag(control, NT_CONTROL_NEW_DATA_FLAG); /* data processed */
-                return NT_SUCCESS;
+                _nt_control_set_flag(control, (int32_t) NT_MATRIX_GET_CONTROL_GESTURE_FLAG);
+                _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE, NULL, (int32_t) NT_MATRIX_COVER);
+                _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+                return (int32_t) NT_SUCCESS;
             }
 
             /*** X / Y POSITION MUTUAL ***/
-            if (rom->sensing_mode)
+            if ((bool)rom->sensing_mode)
             { /* x, y states for mutual-capacitance mode */
                 uint16_t line_segment;
                 uint16_t line;
@@ -507,10 +531,11 @@ static int32_t _nt_control_matrix_process(struct nt_control_data *control)
                 /* line to line calculations */
                 for (line = 0; line < rom->touchpad_size_vertical; line++)
                 { /* cut current state to line segments by right shifts AND operation */
-                    line_segment = (state >> (line << 2)) & control->data.matrix->touchpad_mask_horizontal;
+                    line_segment = (uint16_t)((state >> (line << 2)) & control->data.matrix->touchpad_mask_horizontal);
                     state_x |= line_segment; /* store current state x values for each line */
-                    if (line_segment >= 1)   /* store current state y values for line with pressed key */
-                        state_y |= 1 << line;
+                    if (line_segment >= 1U)   /* store current state y values for line with pressed key */
+                    {   state_y |= (uint32_t)1 << line;
+                    }    
                 }
             }
             else /*** X / Y POSITION SELF-CAP ***/
@@ -523,22 +548,26 @@ static int32_t _nt_control_matrix_process(struct nt_control_data *control)
             /*** TOUCH OR MOVEMENT ***/
             /* At least one finger is touched or finger is moving. At least one position with x and y values is
              * recognized.*/
-            if (state_x && state_y)
+            if ((bool)state_x && (bool)state_y)
             { /* Detect position of one or two finger in x and y coordinates. */
                 _nt_control_matrix_get_position(&ram->actual_position[0].x, &ram->actual_position[1].x, state_x,
                                                 &ram->get_position_add_val[0]);
                 _nt_control_matrix_get_position(&ram->actual_position[0].y, &ram->actual_position[1].y, state_y,
                                                 &ram->get_position_add_val[0]);
                 /* fill in not complete position for second finger if at lest one component is zero)*/
-                if ((ram->actual_position[1].x != 0) && (ram->actual_position[1].y == 0))
-                    ram->actual_position[1].y = ram->actual_position[0].y; /* copy y from first finger (shared one) */
-                else if ((ram->actual_position[1].x == 0) && (ram->actual_position[1].y != 0))
-                    ram->actual_position[1].x = ram->actual_position[0].x; /* copy x from first finger (shared one) */
-
+                if ((ram->actual_position[1].x != 0U) && (ram->actual_position[1].y == 0U))
+                {   ram->actual_position[1].y = ram->actual_position[0].y; /* copy y from first finger (shared one) */
+                }    
+                else if ((ram->actual_position[1].x == 0U) && (ram->actual_position[1].y != 0U))
+                {   ram->actual_position[1].x = ram->actual_position[0].x; /* copy x from first finger (shared one) */
+                }        
+                else
+                {           
+                }
                 /*** TOUCH OR MOVEMENT - UNLOCK GESTURE BUFFERING INITIALIZATINON & DOUBLE TAB RECOGNITION ***/
-                if (ram->buffer_position == 0)
+                if (ram->buffer_position == 0U)
                 { /* CONTROL GESTURE DELAY */
-                    if (_nt_control_get_flag(control, NT_MATRIX_GET_CONTROL_GESTURE_FLAG))
+                    if ((bool)_nt_control_get_flag(control, (int32_t) NT_MATRIX_GET_CONTROL_GESTURE_FLAG))
                     { /* Control gesture recognized, after push up hand after cover event the electrodes are changing
                          states randomly therefore some delay is inserted before control flag clear and then matrix
                          processes continues */
@@ -546,28 +575,28 @@ static int32_t _nt_control_matrix_process(struct nt_control_data *control)
                         if (counter > ram->double_tap_next_time) /* Get time counter */
                         {
                             _nt_control_clear_flag(control,
-                                                   NT_MATRIX_GET_CONTROL_GESTURE_FLAG); /* clear flag after delay */
+                                                   (uint32_t)NT_MATRIX_GET_CONTROL_GESTURE_FLAG); /* clear flag after delay */
                         }
-                        _nt_control_clear_flag(control, NT_CONTROL_NEW_DATA_FLAG); /* data processed */
-                        return NT_SUCCESS;                                         /* jump to avoid matrix processes */
+                        _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+                        return (int32_t) NT_SUCCESS;                                         /* jump to avoid matrix processes */
                     }
-                    _nt_control_clear_flag(control, NT_MATRIX_RELEASE_FLAG);
-                    _nt_control_set_flag(control, NT_MATRIX_TOUCH_FLAG);
+                    _nt_control_clear_flag(control, (int32_t) NT_MATRIX_RELEASE_FLAG);
+                    _nt_control_set_flag(control, (int32_t) NT_MATRIX_TOUCH_FLAG);
                     _nt_control_matrix_clean(&ram->buffer);
 
                     /*** TOUCH OR MOVEMENT - DOUBLE TAB RECOGNITION */
                     if (nt_system_get_time_counter() <= ram->double_tap_next_time)
                     { /* Check if previous and current position are the same plus minus one position */
-                        if ((_nt_abs_int32(ram->actual_position[0].x - ram->touch_position[0].x) <= 1) &&
-                            (_nt_abs_int32(ram->actual_position[0].y - ram->touch_position[0].y) <= 1))
+                        if ((bool)((uint32_t)_nt_abs_int32((int32_t)(ram->actual_position[0].x - ram->touch_position[0].x)) <= 1U) &&
+                                  ((uint32_t)_nt_abs_int32((int32_t)(ram->actual_position[0].y - ram->touch_position[0].y)) <= 1U))
                         { /* delete second finger - only one finger double tab is recognized */
                             ram->touch_position[1].x = 0;
                             ram->touch_position[1].y = 0;
-                            _nt_control_set_flag(control, NT_MATRIX_GET_CONTROL_GESTURE_FLAG);
+                            _nt_control_set_flag(control, (int32_t) NT_MATRIX_GET_CONTROL_GESTURE_FLAG);
                             _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE,
-                                                               &ram->touch_position[0], NT_MATRIX_DOUBLE_TAP);
-                            _nt_control_clear_flag(control, NT_CONTROL_NEW_DATA_FLAG); /* data processed */
-                            return NT_SUCCESS;
+                                                               &ram->touch_position[0], (int32_t) NT_MATRIX_DOUBLE_TAP);
+                            _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+                            return (int32_t) NT_SUCCESS;
                         }
                     }
                     else /*** TOUCH OR MOVEMENT - DOUBLE NOT RECOGNIZED */
@@ -582,40 +611,40 @@ static int32_t _nt_control_matrix_process(struct nt_control_data *control)
                     ram->buffer[0].y = ((uint64_t)ram->actual_position[0].y);
                     ram->buffer[1].x = ((uint64_t)ram->actual_position[1].x);
                     ram->buffer[1].y = ((uint64_t)ram->actual_position[1].y);
-                    ram->buffer_position += 4;
+                    ram->buffer_position += 4U;
                 }
                 else /*** TOUCH OR MOVEMENT - UNLOCK GESTURE BUFFERING PROCESSES OR MOVEMENT ***/
                 {
-                    _nt_control_clear_flag(control, NT_MATRIX_TOUCH_FLAG);
-                    _nt_control_clear_flag(control, NT_MATRIX_GET_UNLOCK_GESTURE_FLAG);
-                    _nt_control_clear_flag(control, NT_MATRIX_SET_UNLOCK_GESTURE_FLAG);
-                    if (_nt_control_get_flag(control, NT_MATRIX_GET_CONTROL_GESTURE_FLAG))
+                    _nt_control_clear_flag(control, (int32_t) NT_MATRIX_TOUCH_FLAG);
+                    _nt_control_clear_flag(control, (int32_t) NT_MATRIX_GET_UNLOCK_GESTURE_FLAG);
+                    _nt_control_clear_flag(control, (int32_t) NT_MATRIX_SET_UNLOCK_GESTURE_FLAG);
+                    if ((bool)_nt_control_get_flag(control, (int32_t) NT_MATRIX_GET_CONTROL_GESTURE_FLAG))
                     {
                         ram->buffer_position      = 0;
                         ram->double_tap_next_time = nt_system_get_time_counter() + rom->double_tap_interval;
-                        _nt_control_clear_flag(control, NT_CONTROL_NEW_DATA_FLAG); /* data processed */
-                        return NT_SUCCESS;
+                        _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+                        return (int32_t) NT_SUCCESS;
                     }
                     else
                     {
-                        _nt_control_set_flag(control, NT_MATRIX_MOVEMENT_FLAG);
+                        _nt_control_set_flag(control, (int32_t) NT_MATRIX_MOVEMENT_FLAG);
                         _nt_control_matrix_invoke_callback(control, NT_MATRIX_MOVEMENT, &ram->actual_position[0],
                                                            ram->recognized_gesture);
                     }
-                    if (ram->buffer_position < 64) /* Store the cached gesture which not exceed the buffer size */
+                    if (ram->buffer_position < 64U) /* Store the cached gesture which not exceed the buffer size */
                     {                              /* store recognized second and following positions to buffer */
-                        uint8_t prev_position = ram->buffer_position - 4;
+                        uint8_t prev_position = (uint8_t)(ram->buffer_position - 4);
                         uint64_t is_changed   = 0;
                         /* detect whether at least one coordinate is changed (position was changed) and not only near
                          * electrode was changed */
-                        for (uint8_t n = 0; n < 2; n++)
+                        for (uint8_t n = 0; n < 2U; n++)
                         {
-                            is_changed |= (ram->buffer[n].x & (0xf << prev_position)) ^
+                            is_changed |= (ram->buffer[n].x & (uint64_t)(0xfU << prev_position)) ^
                                           (uint64_t)ram->actual_position[n].x << prev_position;
-                            is_changed |= (ram->buffer[n].y & (0xf << prev_position)) ^
+                            is_changed |= (ram->buffer[n].y & (uint64_t)(0xfU << prev_position)) ^
                                           (uint64_t)ram->actual_position[n].y << prev_position;
                         }
-                        if (is_changed) /* Store new position to buffer in case that position was changed */
+                        if ((bool)is_changed) /* Store new position to buffer in case that position was changed */
                         {
                             ram->buffer[0].x |= ((uint64_t)ram->actual_position[0].x << ram->buffer_position);
                             ram->buffer[0].y |= ((uint64_t)ram->actual_position[0].y << ram->buffer_position);
@@ -639,7 +668,7 @@ static int32_t _nt_control_matrix_process(struct nt_control_data *control)
 
             /*** END TOUCH OR MOVEMENT ***/
             /*** RELEASE ***/
-            else if (!(state_x || state_y))
+            else if (!((bool)state_x || (bool)state_y))
             {
                 uint16_t n;
                 uint16_t temp;
@@ -647,49 +676,49 @@ static int32_t _nt_control_matrix_process(struct nt_control_data *control)
 
                 _nt_control_matrix_copy(&ram->release_position, &ram->actual_position);
 
-                _nt_control_clear_flag(control, NT_MATRIX_MOVEMENT_FLAG);
+                _nt_control_clear_flag(control, (int32_t) NT_MATRIX_MOVEMENT_FLAG);
                 /* Set time for control gesture delay (avoid random electrode changing during hand pushing up after
                  * cover */
                 ram->double_tap_next_time = nt_system_get_time_counter() + rom->double_tap_interval;
 
-                if (_nt_control_get_flag(control, NT_MATRIX_GET_CONTROL_GESTURE_FLAG))
+                if ((bool)_nt_control_get_flag(control, (int32_t) NT_MATRIX_GET_CONTROL_GESTURE_FLAG))
                 {
                     ram->buffer_position = 0; /*Init unlock gesture buffer when control gesture recognized */
-                    _nt_control_clear_flag(control, NT_CONTROL_NEW_DATA_FLAG); /* data processed */
-                    return NT_SUCCESS;                                         /* jump out gesture recognized */
+                    _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+                    return (int32_t) NT_SUCCESS;                                         /* jump out gesture recognized */
                 }
                 else
                 {
-                    _nt_control_set_flag(control, NT_MATRIX_RELEASE_FLAG);
+                    _nt_control_set_flag(control, (int32_t) NT_MATRIX_RELEASE_FLAG);
                 }
 
                 /*** RELEASE - STORING UNLOCK GESTURE FROM BUFFER ***/
                 /* Unlock gesture recording defined by selected gesture number, if zero value no record */
-                if (ram->select_gesture > 0)
+                if (ram->select_gesture > 0U)
                 { /* Gesture for storing must be enough long for reliable recognition and the gesture size must not
                      exceed buffer size */
-                    if ((ram->buffer[0].x > 0xffff) && (ram->buffer[0].y > 0xffff) && (ram->buffer_position < 64))
+                    if ((ram->buffer[0].x > 0xffffU) && (ram->buffer[0].y > 0xffffU) && (ram->buffer_position < 64U))
                     { /* Zero value means no gesture storing therefore gesture minus one */
-                        uint16_t select_gesture = ram->select_gesture - 1;
+                        uint16_t select_gesture = (uint16_t)(ram->select_gesture - 1U);
 
-                        ram->two_points_gesture_flag &= ~(0x1 << (select_gesture)); /* clear two finger gesture flag */
-                        _nt_control_set_flag(control, NT_MATRIX_SET_UNLOCK_GESTURE_FLAG); /* set set_gesture flag */
+                        ram->two_points_gesture_flag &= (uint16_t)~(0x1U << (select_gesture)); /* clear two finger gesture flag */
+                        _nt_control_set_flag(control, (int32_t) NT_MATRIX_SET_UNLOCK_GESTURE_FLAG); /* set set_gesture flag */
 
                         /* store first and second x and y finger coordinates */
                         _nt_control_matrix_copy_64(&rom->gesture[select_gesture], &ram->buffer);
 
                         /* Storing second finger movement */
-                        if (ram->buffer[1].x || ram->buffer[1].y) /* if second finger has data */
+                        if ((bool)(ram->buffer[1].x) || (bool)(ram->buffer[1].y)) /* if second finger has data */
                         {
-                            ram->two_points_gesture_flag |= 0x1 << (select_gesture); /* set two finger gesture flag */
+                            ram->two_points_gesture_flag |= (uint16_t)(0x1U << select_gesture); /* set two finger gesture flag */
                         }
-                        _nt_control_set_flag(control, NT_MATRIX_RELEASE_SET_GESTURE);
+                        _nt_control_set_flag(control, (int32_t) NT_MATRIX_RELEASE_SET_GESTURE);
                         _nt_control_matrix_invoke_callback(control, NT_MATRIX_RELEASE_SET_GESTURE,
                                                            &ram->release_position[0], ram->select_gesture);
                         ram->select_gesture = 0; /* clear gesture number value */
                     }
-                    _nt_control_clear_flag(control, NT_CONTROL_NEW_DATA_FLAG); /* data processed */
-                    return NT_SUCCESS;
+                    _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+                    return (int32_t) NT_SUCCESS;
                 }
 
                 /*** RELEASE - UNLOCK GESTURE RECOGNITION ***/
@@ -702,7 +731,7 @@ static int32_t _nt_control_matrix_process(struct nt_control_data *control)
                     ram->gesture_diff[n] =
                         _nt_control_matrix_gesture_recognition_square(&ram->buffer[0], &rom->gesture[n][0], 0);
                     /* In case of two point gestures compare the second finger movement as well */
-                    if (ram->two_points_gesture_flag & (0x1 << n))
+                    if ((bool)(ram->two_points_gesture_flag & (uint16_t)(0x1U << n)))
                     { /* Adding dissimilarity for second finger */
                         ram->gesture_diff[n] +=
                             _nt_control_matrix_gesture_recognition_square(&ram->buffer[1], &rom->gesture[n][1], 1);
@@ -712,74 +741,83 @@ static int32_t _nt_control_matrix_process(struct nt_control_data *control)
 
                     /* Dissimilarities is under determine level - gesture recognized, if gesture is similar to
                        more stored gestures the more similar gesture is used, avoid recognition after storing */
-                    if ((ram->gesture_diff[n] < temp) && !_nt_control_get_flag(control, NT_MATRIX_RELEASE_SET_GESTURE))
+                    if ((ram->gesture_diff[n] < temp) && !(bool)_nt_control_get_flag(control, (int32_t) NT_MATRIX_RELEASE_SET_GESTURE))
                     {
                         temp                    = ram->gesture_diff[n];
-                        ram->recognized_gesture = n + 1;
+                        ram->recognized_gesture = (uint8_t)(n + 1U);
                     }
                     else
                     {
                         if (ram->gesture_diff[n] == temp) /* gestures with same dissimilarity */
-                            ram->recognized_gesture = 0;  /* no gesture recognized */
+                        {   ram->recognized_gesture = 0;  /* no gesture recognized */
+                        }
                     }
                 }
                 ram->buffer_position = 0;
 
                 /*** RELEASE - UNLOCK GESTURE NOT RECOGNIZED - SIMILAR GESTURES ***/
                 /* Avoiding doubts when two or more gestures have similar dissimilarity */
-                if (ram->recognized_gesture > 0)
+                if (ram->recognized_gesture > 0U)
                 { /* adding dissimilarity others to recognized gesture to assign new level*/
-                    uint16_t lowDissCount = 0; /* Counter for low dissimilarity */
+                    uint16_t lowDissCount = 0U; /* Counter for low dissimilarity */
                     for (temp1 = 0; temp1 < ram->gesture_number; temp1++)
                     { /* new level is compared with all gesture */
                         if ((int32_t)ram->gesture_diff[temp1] < (int32_t)temp)
-                            lowDissCount++; /* incrementing counter when dissimilarity is under new level */
+                        {   lowDissCount++; /* incrementing counter when dissimilarity is under new level */
+                        }    
                     }
-                    if (lowDissCount > 1) /* two gestures are under level (one is always - recognized gesture)*/
+                    if (lowDissCount > 1U) /* two gestures are under level (one is always - recognized gesture)*/
                     {
-                        _nt_control_clear_flag(control, NT_MATRIX_GET_UNLOCK_GESTURE_FLAG); /* Clear get gesture flag */
+                        _nt_control_clear_flag(control, (int32_t) NT_MATRIX_GET_UNLOCK_GESTURE_FLAG); /* Clear get gesture flag */
                         ram->recognized_gesture = 0; /* clean gesture information */
                     }
                     else
                     {
-                        _nt_control_set_flag(control, NT_MATRIX_GET_UNLOCK_GESTURE_FLAG); /* Set get gesture flag */
+                        _nt_control_set_flag(control, (int32_t) NT_MATRIX_GET_UNLOCK_GESTURE_FLAG); /* Set get gesture flag */
                         /* Callback function with recognized or unrecognised parameter. */
                         _nt_control_matrix_invoke_callback(control, NT_MATRIX_RELEASE_GET_GESTURE,
                                                            &ram->release_position[0], ram->recognized_gesture);
                     }
                 }
-                else if (ram->select_gesture ==
-                         0) /*** RELEASE - SWIPE GESTURE RECOGNITION - UNLOCK GESTURE NOT RECOGNIZED ***/
+                else if (ram->select_gesture == 0U)
+                	        /*** RELEASE - SWIPE GESTURE RECOGNITION - UNLOCK GESTURE NOT RECOGNIZED ***/
                 {           /* SWIPE CONTROL GESTURES RECOGNITION IF ONE FINGER CAPTURED IN BUFFER */
-                    if (ram->buffer[1].x == 0 && ram->buffer[1].y == 0)
+                    if (ram->buffer[1].x == 0U && ram->buffer[1].y == 0U)
                     { /* Check if drawn track is enough horizontal or vertical for swipe gestures, skip after gesture
                          stored*/
                         uint16_t swipe_diff = _nt_control_matrix_horiz_vertic_recognition(&ram->buffer[0], 0);
-                        if (swipe_diff == 0 && !_nt_control_get_flag(control, NT_MATRIX_RELEASE_SET_GESTURE))
+                        if (swipe_diff == 0U && !(bool)_nt_control_get_flag(control, (int32_t) NT_MATRIX_RELEASE_SET_GESTURE))
                         { /* calculate the swipe direction */
                             int16_t dir_diff_x =
                                 (int16_t)ram->release_position[0].x - (int16_t)ram->touch_position[0].x;
                             int16_t dir_diff_y =
                                 (int16_t)ram->release_position[0].y - (int16_t)ram->touch_position[0].y;
-                            _nt_control_set_flag(control, NT_MATRIX_GET_CONTROL_GESTURE_FLAG);
+                            _nt_control_set_flag(control, (int32_t) NT_MATRIX_GET_CONTROL_GESTURE_FLAG);
                             /* evaluate swipe type according to direction */
                             if (dir_diff_y < dir_diff_x && dir_diff_y > -dir_diff_x && dir_diff_x > 0)
-                                _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE,
-                                                                   &ram->release_position[0], NT_MATRIX_SWIPE_RIGHT);
+                            {   _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE,
+                                                                   &ram->release_position[0], (int32_t) NT_MATRIX_SWIPE_RIGHT);
+                            }
                             else if (dir_diff_y < -dir_diff_x && dir_diff_y > dir_diff_x && dir_diff_x < 0)
-                                _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE,
-                                                                   &ram->release_position[0], NT_MATRIX_SWIPE_LEFT);
+                            {   _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE,
+                                                                   &ram->release_position[0], (int32_t) NT_MATRIX_SWIPE_LEFT);
+                            }
                             else if (dir_diff_x < dir_diff_y && dir_diff_x > -dir_diff_y && dir_diff_y > 0)
-                                _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE,
-                                                                   &ram->release_position[0], NT_MATRIX_SWIPE_UP);
+                            {   _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE,
+                                                                   &ram->release_position[0], (int32_t) NT_MATRIX_SWIPE_UP);
+                            }
                             else if (dir_diff_x < -dir_diff_y && dir_diff_x > dir_diff_y && dir_diff_y < 0)
-                                _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE,
-                                                                   &ram->release_position[0], NT_MATRIX_SWIPE_DOWN);
+                            {   _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE,
+                                                                   &ram->release_position[0], (int32_t) NT_MATRIX_SWIPE_DOWN);
+                            }
+                            else
+                            {           
+                            }
                             _nt_control_matrix_clean(&ram->buffer);
                         }
                         else /*** RELEASE - NO GESTURE RECOGNIZED ***/
                         {    /* activate control gesture recognition after storing */
-                            _nt_control_clear_flag(control, NT_MATRIX_RELEASE_SET_GESTURE);
+                            _nt_control_clear_flag(control, (int32_t) NT_MATRIX_RELEASE_SET_GESTURE);
                             _nt_control_matrix_invoke_callback(control, NT_MATRIX_RELEASE, &ram->release_position[0],
                                                                ram->recognized_gesture);
                         }
@@ -792,38 +830,41 @@ static int32_t _nt_control_matrix_process(struct nt_control_data *control)
                         {
                             case NT_MATRIX_ZOOM_IN:
                                 _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE,
-                                                                   &ram->release_position[0], NT_MATRIX_ZOOM_IN);
+                                                                   &ram->release_position[0], (int32_t) NT_MATRIX_ZOOM_IN);
                                 break;
                             case NT_MATRIX_ZOOM_OUT:
                                 _nt_control_matrix_invoke_callback(control, NT_MATRIX_GET_CONTROL_GESTURE,
-                                                                   &ram->release_position[0], NT_MATRIX_ZOOM_OUT);
+                                                                   &ram->release_position[0], (int32_t) NT_MATRIX_ZOOM_OUT);
                                 break;
                             default:
                                 /* activate control gesture recognition after storing */
-                                _nt_control_clear_flag(control, NT_MATRIX_RELEASE_SET_GESTURE);
+                                _nt_control_clear_flag(control, (int32_t) NT_MATRIX_RELEASE_SET_GESTURE);
                                 _nt_control_matrix_invoke_callback(control, NT_MATRIX_RELEASE,
-                                                                   &ram->release_position[0], NT_MATRIX_NO_GESTURE);
+                                                                   &ram->release_position[0], (int32_t) NT_MATRIX_NO_GESTURE);
                                 break;
                         }
                         _nt_control_matrix_clean(&ram->buffer);
                     } /* ZOOM CONTROL GESTURES RECOGNITION IN CASE OF TWO FINGERS CAPTURED IN BUFFER */
                 }     /*** RELEASE - SWIPE GESTURE RECOGNITION - UNLOCK GESTURE NOT RECOGNIZED ***/
+                else
+                {           
+                }        
             }         /*** RELEASE ***/
             else      /*** UNKNOWN POSITION - TOUCH ON X OR Y ***/
             {
-                _nt_control_clear_flag(control, NT_MATRIX_RELEASE_FLAG); /* Clear release flag */
+                _nt_control_clear_flag(control, (int32_t) NT_MATRIX_RELEASE_FLAG); /* Clear release flag */
             }
         }                                                          /*** ONE OR MORE TOUCHPAD ELECTRODE CHANGED ***/
-        _nt_control_clear_flag(control, NT_CONTROL_NEW_DATA_FLAG); /* data processed */
+        _nt_control_clear_flag(control, (int32_t) NT_CONTROL_NEW_DATA_FLAG); /* data processed */
     }
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 void _nt_control_matrix_clean(nt_points64 *buffer)
 {
     uint64_t *buffer1 = (uint64_t *)buffer;
     uint8_t n         = 4;
-    while (n--)
+    while ((bool)(n--))
     {
         *buffer1 = 0;
         buffer1++;
@@ -836,7 +877,7 @@ void _nt_control_matrix_copy(nt_points8 *buffer_copy, nt_points8 *buffer_orig)
     uint8_t *buffer_copy1 = (uint8_t *)buffer_copy;
     uint8_t *buffer_orig1 = (uint8_t *)buffer_orig;
     uint8_t n             = 4;
-    while (n--)
+    while ((bool)(n--))
     {
         *buffer_copy1++ = *buffer_orig1++;
     }
@@ -848,7 +889,7 @@ void _nt_control_matrix_copy_64(nt_points64 *buffer_copy, nt_points64 *buffer_or
     uint64_t *buffer_copy1 = (uint64_t *)buffer_copy;
     uint64_t *buffer_orig1 = (uint64_t *)buffer_orig;
     uint8_t n              = 4;
-    while (n--)
+    while ((bool)(n--))
     {
         *buffer_copy1++ = *buffer_orig1++;
     }

@@ -16,10 +16,10 @@ configuration with enabling interrupt setting would be used for each conversion.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
-- MCUXpresso  11.0.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -65,6 +65,3 @@ ADC Value: 1543
 ADC Interrupt Count: 5
 ADC Value: 1579
 ADC Interrupt Count: 6
-Customization options
-=====================
-

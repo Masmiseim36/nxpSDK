@@ -12,8 +12,8 @@
 #include "audio_generator.h"
 #include "mouse.h"
 /*******************************************************************************
-* Definitions
-******************************************************************************/
+ * Definitions
+ ******************************************************************************/
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
 #define CONTROLLER_ID kUSB_ControllerEhci0
 #endif
@@ -40,8 +40,8 @@ typedef struct _usb_device_composite_struct
 } usb_device_composite_struct_t;
 
 /*******************************************************************************
-* API
-******************************************************************************/
+ * API
+ ******************************************************************************/
 /*!
  * @brief Audio class specific callback function.
  *

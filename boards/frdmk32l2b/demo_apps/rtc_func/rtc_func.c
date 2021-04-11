@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -10,10 +10,10 @@
 #include "fsl_debug_console.h"
 #include "fsl_common.h"
 #include "fsl_rtc.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 #include "fsl_port.h"
 /*******************************************************************************
  * Definitions
@@ -233,6 +233,12 @@ int main(void)
      */
     RTC_GetDefaultConfig(&rtcConfig);
     RTC_Init(RTC, &rtcConfig);
+#if (defined(EXAMPLE_CAP_LOAD_VALUE) && EXAMPLE_CAP_LOAD_VALUE)
+#if (defined(FSL_FEATURE_RTC_HAS_OSC_SCXP) && FSL_FEATURE_RTC_HAS_OSC_SCXP)
+    /* Change the RTC oscillator capacity load value. */
+    RTC_SetOscCapLoad(RTC, EXAMPLE_CAP_LOAD_VALUE);
+#endif /* FSL_FEATURE_RTC_HAS_OSC_SCXP */
+#endif /* EXAMPLE_CAP_LOAD_VALUE */
 #if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
 
     /* Select RTC clock source */

@@ -164,10 +164,10 @@ Additional information:
 #endif
 
 #if SEGGER_SYSVIEW_RTT_CHANNEL > 0
-#define CHANNEL_ID_UP SEGGER_SYSVIEW_RTT_CHANNEL
+#define CHANNEL_ID_UP   SEGGER_SYSVIEW_RTT_CHANNEL
 #define CHANNEL_ID_DOWN SEGGER_SYSVIEW_RTT_CHANNEL
 #else
-#define CHANNEL_ID_UP _SYSVIEW_Globals.UpChannel
+#define CHANNEL_ID_UP   _SYSVIEW_Globals.UpChannel
 #define CHANNEL_ID_DOWN _SYSVIEW_Globals.DownChannel
 #endif
 
@@ -196,14 +196,14 @@ Additional information:
  *
  **********************************************************************
  */
-#define ENABLE_STATE_OFF 0
-#define ENABLE_STATE_ON 1
+#define ENABLE_STATE_OFF      0
+#define ENABLE_STATE_ON       1
 #define ENABLE_STATE_DROPPING 2
 
 #define FORMAT_FLAG_LEFT_JUSTIFY (1u << 0)
-#define FORMAT_FLAG_PAD_ZERO (1u << 1)
-#define FORMAT_FLAG_PRINT_SIGN (1u << 2)
-#define FORMAT_FLAG_ALTERNATE (1u << 3)
+#define FORMAT_FLAG_PAD_ZERO     (1u << 1)
+#define FORMAT_FLAG_PRINT_SIGN   (1u << 2)
+#define FORMAT_FLAG_ALTERNATE    (1u << 3)
 
 #define MODULE_EVENT_OFFSET (512)
 

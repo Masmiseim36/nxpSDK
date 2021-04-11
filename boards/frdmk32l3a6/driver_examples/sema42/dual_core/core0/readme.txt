@@ -14,10 +14,10 @@ after it received the flag.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
-- Keil MDK  5.27
-- MCUXpresso  11.0.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -43,9 +43,6 @@ Prepare the demo
 4.  Download the core0 program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-Prepare the Demo
-================
-
 Running the demo
 ================
 When the demo runs successfully, the log would be seen on the OpenSDA terminal like below
@@ -64,6 +61,3 @@ Now the LED should be turned off
 
 Sema42 example succeed!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

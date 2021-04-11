@@ -7,24 +7,24 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_dac.h"
 #include "fsl_dma.h"
 #include "fsl_pit.h"
 #include "fsl_dmamux.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_DAC_BASEADDR DAC0
-#define DAC_DATA_REG_ADDR 0x4003F000U
+#define DEMO_DAC_BASEADDR    DAC0
+#define DAC_DATA_REG_ADDR    0x4003F000U
 #define DEMO_DMAMUX_BASEADDR DMAMUX0
-#define DEMO_DMA_CHANNEL 0U
-#define DEMO_DMA_DAC_SOURCE 45U
-#define DEMO_DMA_BASEADDR DMA0
-#define DEMO_DMA_IRQ_ID DMA0_IRQn
+#define DEMO_DMA_CHANNEL     0U
+#define DEMO_DMA_DAC_SOURCE  45U
+#define DEMO_DMA_BASEADDR    DMA0
+#define DEMO_DMA_IRQ_ID      DMA0_IRQn
 /* Get source clock for PIT driver */
 #define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
 #define DEMO_DAC_USED_BUFFER_SIZE 32U

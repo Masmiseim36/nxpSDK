@@ -9,25 +9,25 @@
 #include "fsl_debug_console.h"
 #include "fsl_spi.h"
 #include "fsl_flexio_spi.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO
+#define BOARD_FLEXIO_BASE   FLEXIO
 #define FLEXIO_SPI_MOSI_PIN 6U
 #define FLEXIO_SPI_MISO_PIN 7U
-#define FLEXIO_SPI_SCK_PIN 5U
+#define FLEXIO_SPI_SCK_PIN  5U
 #define FLEXIO_SPI_PCS0_PIN 4U
 
 #define BOARD_SPI_MASTER_BASE SPI0
-#define SPI_MASTER_CLK_SRC SPI0_CLK_SRC
-#define SPI_MASTER_CLK_FREQ CLOCK_GetFreq(SPI0_CLK_SRC)
-#define SLAVE_SPI_IRQ UART2_FLEXIO_IRQn
-#define MASTER_SPI_IRQ SPI0_IRQn
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define SPI_MASTER_CLK_SRC    SPI0_CLK_SRC
+#define SPI_MASTER_CLK_FREQ   CLOCK_GetFreq(SPI0_CLK_SRC)
+#define SLAVE_SPI_IRQ         UART2_FLEXIO_IRQn
+#define MASTER_SPI_IRQ        SPI0_IRQn
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************

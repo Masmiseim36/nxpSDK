@@ -8,10 +8,10 @@ Then the slave core prepares the resource (data, message, etc) into the somewher
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- GCC ARM Embedded  8.2.1
-- Keil MDK  5.27
-- MCUXpresso  11.0.1
+- IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -32,12 +32,6 @@ Prepare the demo
 6.  Press the reset button on your board to begin running the demo.
 7.  Don't debug dual core at the same time, because cm0plus is in VLLS0 and could not be
     connected.
-
-Board settings
-==============
-
-Prepare the Demo
-================
 
 Running the demo
 ================
@@ -67,6 +61,3 @@ Shake hands done.
  - J: kAPP_PowerModeHsrun
 Input A to J:
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

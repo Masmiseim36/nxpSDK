@@ -15,6 +15,9 @@
 /*
  * Change log:
  *
+ * 1.0.2:
+ *   - Fix MISRA 2012 issues.
+ *
  * 1.0.1:
  *   - Move SLCD_ENGINE_PIN_VAL to panel driver.
  *

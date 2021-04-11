@@ -9,15 +9,15 @@
 #include "fsl_common.h"
 #include "fsl_mu.h"
 #include "fsl_gpio.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_INIT() LED1_INIT(LOGIC_LED_OFF)
-#define LED_TOGGLE() LED1_TOGGLE()
-#define APP_MU MUB
+#define LED_INIT()        LED1_INIT(LOGIC_LED_OFF)
+#define LED_TOGGLE()      LED1_TOGGLE()
+#define APP_MU            MUB
 #define APP_MU_IRQHandler MUB_IRQHandler
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U
@@ -92,11 +92,7 @@ void APP_MU_IRQHandler(void)
             MU_DisableInterrupts(APP_MU, kMU_Tx0EmptyInterruptEnable);
         }
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

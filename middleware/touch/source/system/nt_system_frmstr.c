@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -74,8 +74,6 @@
 #elif FMSTR_USE_TSA_DYNAMIC == 0
 #error The FreeMASTER TSA dynamic tables are disabled, the NT required this functionality, enable FMSTR_USE_TSA_DYNAMIC option.
 #endif
-
-extern struct nt_kernel nt_kernel_data;
 
 FMSTR_TSA_TABLE_BEGIN(nt_frmstr_tsa_table)
 
@@ -513,27 +511,26 @@ FMSTR_TSA_TABLE_END()
 int32_t _nt_freemaster_init(void)
 {
     /* This is workaround, here could be code that recognise count of really used interfaces */
-#define NT_MAXIMAL_COUNT_OF_INTERFACES 12
+#define NT_MAXIMAL_COUNT_OF_INTERFACES 12U
 
     uint8_t *p_freemaster_tsa_buffer = _nt_mem_alloc(NT_MAXIMAL_COUNT_OF_INTERFACES * sizeof(FMSTR_TSA_ENTRY));
 
     if (p_freemaster_tsa_buffer == NULL)
     {
-        return NT_OUT_OF_MEMORY;
+        return (int32_t)NT_OUT_OF_MEMORY;
     }
+    FMSTR_BOOL bTemp = FMSTR_SetUpTsaBuff(p_freemaster_tsa_buffer, NT_MAXIMAL_COUNT_OF_INTERFACES * sizeof(FMSTR_TSA_ENTRY));
 
-    FMSTR_SetUpTsaBuff(p_freemaster_tsa_buffer, NT_MAXIMAL_COUNT_OF_INTERFACES * sizeof(FMSTR_TSA_ENTRY));
-
-    return NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 int32_t _nt_freemaster_add_variable(const char *name, const char *type_name, void *address, uint32_t size)
 {
-    if (FMSTR_TsaAddVar(name, type_name, address, size, FMSTR_TSA_INFO_RO_VAR) == 0)
+    if (FMSTR_TsaAddVar(name, type_name, address, size, FMSTR_TSA_INFO_RO_VAR) == 0U)
     {
-        return NT_FAILURE;
+        return (int32_t)NT_FAILURE;
     }
-    return NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 #else
@@ -541,7 +538,7 @@ int32_t _nt_freemaster_add_variable(const char *name, const char *type_name, voi
 
 int32_t _nt_freemaster_init(void)
 {
-    return NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 int32_t _nt_freemaster_add_variable(const char *name, const char *type_name, void *address, uint32_t size)
@@ -551,7 +548,7 @@ int32_t _nt_freemaster_add_variable(const char *name, const char *type_name, voi
     (void)address;
     (void)size;
 
-    return NT_SUCCESS;
+    return (int32_t)NT_SUCCESS;
 }
 
 #endif

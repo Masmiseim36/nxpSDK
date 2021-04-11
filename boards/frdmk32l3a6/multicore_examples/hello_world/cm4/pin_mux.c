@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -14,11 +14,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v5.0
+product: Pins v7.0
 processor: K32L3A60xxx
 package_id: K32L3A60VPJ1A
 mcu_data: ksdk2_0
-processor_version: 0.0.0
+processor_version: 0.0.9
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -47,10 +47,9 @@ BOARD_InitPins_Core0:
   - {pin_num: N2, peripheral: LPUART0, signal: RX, pin_signal: LPCMP0_IN0/PTC7/LLWU_P15/LPSPI0_PCS3/LPUART0_RX/LPI2C1_HREQ/TPM0_CH0/LPTMR1_ALT1}
   - {pin_num: P3, peripheral: LPUART0, signal: TX, pin_signal: LPCMP0_IN1/PTC8/LPSPI0_SCK/LPUART0_TX/LPI2C0_HREQ/TPM0_CH1}
   - {pin_num: D6, peripheral: GPIOA, signal: 'GPIO, 24', pin_signal: PTA24/LPSPI2_PCS0/LPSPI1_SCK/LPI2C2_SCL/FB_OE_b/TPM2_CH0}
-  - {pin_num: B10, peripheral: GPIOA, signal: 'GPIO, 0', pin_signal: PTA0/NMI_b, slew_rate: fast, open_drain: disable, drive_strength: high, pull_select: up, pull_enable: enable,
-    passive_filter: disable}
+  - {pin_num: B10, peripheral: GPIOA, signal: 'GPIO, 0', pin_signal: PTA0/NMI_b, slew_rate: fast, open_drain: disable, pull_select: up, pull_enable: enable, passive_filter: disable}
   - {pin_num: L12, peripheral: GPIOE, signal: 'GPIO, 12', pin_signal: PTE12/LLWU_P26/SDHC0_D2/LPI2C3_SDAS/TPM3_CLKIN/FXIO0_D2, slew_rate: fast, open_drain: disable,
-    drive_strength: low, pull_select: up, pull_enable: enable, passive_filter: disable}
+    pull_select: up, pull_enable: enable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -61,6 +60,7 @@ BOARD_InitPins_Core0:
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
+/* Function assigned for the Cortex-M4F */
 void BOARD_InitPins_Core0(void)
 {
     /* Clock Gate Control: Clock enabled. The current clock selection and divider options are locked. */

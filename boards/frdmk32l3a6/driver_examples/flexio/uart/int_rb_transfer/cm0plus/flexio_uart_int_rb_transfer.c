@@ -6,22 +6,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_flexio_uart.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 #include "fsl_intmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO0
-#define FLEXIO_UART_TX_PIN 25U
-#define FLEXIO_UART_RX_PIN 24U
+#define BOARD_FLEXIO_BASE      FLEXIO0
+#define FLEXIO_UART_TX_PIN     25U
+#define FLEXIO_UART_RX_PIN     24U
 #define FLEXIO_CLOCK_FREQUENCY CLOCK_GetFreq(kCLOCK_ScgFircAsyncDiv2Clk)
 
 #define RX_RING_BUFFER_SIZE 20U
-#define ECHO_BUFFER_SIZE 8U
+#define ECHO_BUFFER_SIZE    8U
 
 /*******************************************************************************
  * Prototypes

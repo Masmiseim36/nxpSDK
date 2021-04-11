@@ -6,9 +6,9 @@ The pflash example shows how to use flash driver to operate program flash:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -49,6 +49,3 @@ These instructions are displayed/shown on the terminal window:
  Successfully Programmed and Verified Location 0xfe000 -> 0xfe010
  End of PFlash Example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

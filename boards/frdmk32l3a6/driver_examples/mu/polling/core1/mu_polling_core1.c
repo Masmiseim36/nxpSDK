@@ -9,15 +9,15 @@
 #include "fsl_common.h"
 #include "fsl_mu.h"
 #include "fsl_gpio.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define LED_INIT() LED1_INIT(LOGIC_LED_OFF)
+#define LED_INIT()   LED1_INIT(LOGIC_LED_OFF)
 #define LED_TOGGLE() LED1_TOGGLE()
-#define APP_MU MUB
+#define APP_MU       MUB
 /* Flag indicates Core Boot Up*/
 #define BOOT_FLAG 0x01U
 

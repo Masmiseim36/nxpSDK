@@ -7,17 +7,17 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_tpm.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define BOARD_TPM_BASEADDR TPM0
 
-#define BOARD_FIRST_TPM_CHANNEL 1U
+#define BOARD_FIRST_TPM_CHANNEL  1U
 #define BOARD_SECOND_TPM_CHANNEL 0U
 
 /* Get source clock for TPM driver */

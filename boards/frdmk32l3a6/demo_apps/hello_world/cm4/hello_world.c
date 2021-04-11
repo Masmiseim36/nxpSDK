@@ -8,10 +8,10 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -33,7 +33,7 @@ int main(void)
 
     /* Init board hardware. */
     BOARD_InitPins();
-    BOARD_BootClockRUN();
+    BOARD_InitBootClocks();
     BOARD_InitDebugConsole();
 
     PRINTF("hello world.\r\n");

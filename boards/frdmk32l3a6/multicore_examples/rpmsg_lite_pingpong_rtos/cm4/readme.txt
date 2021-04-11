@@ -16,10 +16,10 @@ address is then exported from the linker to the application.
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  8.2.1
-- Keil MDK  5.27
-- IAR embedded Workbench  8.32.3
-- MCUXpresso  11.0.1
+- GCC ARM Embedded  9.3.1
+- Keil MDK  5.33
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -65,6 +65,3 @@ Message: Size=4, DATA = 101
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

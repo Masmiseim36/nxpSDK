@@ -9,34 +9,34 @@
 #include "fsl_debug_console.h"
 #include "fsl_spi.h"
 #include "fsl_flexio_spi_dma.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_dmamux.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_FLEXIO_BASE FLEXIO
-#define FLEXIO_SPI_MOSI_PIN 6U
-#define FLEXIO_SPI_MISO_PIN 7U
-#define FLEXIO_SPI_SCK_PIN 5U
-#define FLEXIO_SPI_PCS0_PIN 4U
-#define FLEXIO_CLOCK_FREQUENCY 48000000U
-#define FLEXIO_DMA_REQUEST_BASE kDmaRequestMux0FlexIOChannel0
+#define BOARD_FLEXIO_BASE                  FLEXIO
+#define FLEXIO_SPI_MOSI_PIN                6U
+#define FLEXIO_SPI_MISO_PIN                7U
+#define FLEXIO_SPI_SCK_PIN                 5U
+#define FLEXIO_SPI_PCS0_PIN                4U
+#define FLEXIO_CLOCK_FREQUENCY             48000000U
+#define FLEXIO_DMA_REQUEST_BASE            kDmaRequestMux0FlexIOChannel0
 #define EXAMPLE_FLEXIO_SPI_DMAMUX_BASEADDR DMAMUX0
-#define EXAMPLE_FLEXIO_SPI_DMA_BASEADDR DMA0
-#define FLEXIO_SPI_TX_DMA_CHANNEL 0U
-#define FLEXIO_SPI_RX_DMA_CHANNEL 1U
-#define FLEXIO_TX_SHIFTER_INDEX 0U
-#define FLEXIO_RX_SHIFTER_INDEX 1U
-#define EXAMPLE_TX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_TX_SHIFTER_INDEX)
-#define EXAMPLE_RX_DMA_SOURCE (FLEXIO_DMA_REQUEST_BASE + FLEXIO_RX_SHIFTER_INDEX)
+#define EXAMPLE_FLEXIO_SPI_DMA_BASEADDR    DMA0
+#define FLEXIO_SPI_TX_DMA_CHANNEL          0U
+#define FLEXIO_SPI_RX_DMA_CHANNEL          1U
+#define FLEXIO_TX_SHIFTER_INDEX            0U
+#define FLEXIO_RX_SHIFTER_INDEX            1U
+#define EXAMPLE_TX_DMA_SOURCE              (FLEXIO_DMA_REQUEST_BASE + FLEXIO_TX_SHIFTER_INDEX)
+#define EXAMPLE_RX_DMA_SOURCE              (FLEXIO_DMA_REQUEST_BASE + FLEXIO_RX_SHIFTER_INDEX)
 
 #define BOARD_SPI_SLAVE_BASE SPI0
-#define SLAVE_SPI_IRQ SPI0_IRQn
-#define MASTER_SPI_IRQ UART2_FLEXIO_IRQn
-#define TRANSFER_SIZE 256U        /*! Transfer dataSize */
+#define SLAVE_SPI_IRQ        SPI0_IRQn
+#define MASTER_SPI_IRQ       UART2_FLEXIO_IRQn
+#define TRANSFER_SIZE     256U    /*! Transfer dataSize */
 #define TRANSFER_BAUDRATE 500000U /*! Transfer baudrate - 500k */
 
 /*******************************************************************************

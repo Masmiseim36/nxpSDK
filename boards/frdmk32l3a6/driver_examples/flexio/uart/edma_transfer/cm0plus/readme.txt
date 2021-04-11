@@ -7,9 +7,9 @@ that PC send to the board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.32.3
-- Keil MDK  5.27
-- GCC ARM Embedded  8.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -47,6 +47,3 @@ Flexio uart edma example
 Board receives 8 characters then sends them out
 Now please input:
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

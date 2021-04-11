@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -19,24 +19,21 @@
 #include "nt_safety.h"
 #include "../source/safety/nt_safety_prv.h"
 
-uint32_t _nt_module_count_electrodes(const struct nt_module *module);
 static int32_t _nt_module_data_check(const struct nt_module_data *module);
 static int32_t _nt_module_init_electrode(struct nt_module_data *module, uint32_t index);
-
-int32_t _nt_module_check_electrodes(struct nt_module_data *module);
 
 static int32_t _nt_module_data_check(const struct nt_module_data *module)
 {
     if (module->rom == NULL)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
     if (module->rom->electrodes == NULL)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 uint32_t _nt_module_count_electrodes(const struct nt_module *module)
@@ -56,7 +53,7 @@ uint32_t _nt_module_get_electrodes_state(struct nt_module_data *module)
     uint32_t elec_counter  = module->electrodes_cnt;
     uint32_t current_state = 0U;
 
-    while (elec_counter--)
+    while ((bool)(elec_counter--))
     {
         uint32_t electrode_state = _nt_electrode_is_touched(module->electrodes[elec_counter]);
         /* all elec status in a bit field */
@@ -94,7 +91,7 @@ static int32_t _nt_module_init_electrode(struct nt_module_data *module, uint32_t
 
     if (elec == NULL)
     {
-        return NT_OUT_OF_MEMORY;
+        return (int32_t) NT_OUT_OF_MEMORY;
     }
 
     module->electrodes[index] = elec;
@@ -102,19 +99,19 @@ static int32_t _nt_module_init_electrode(struct nt_module_data *module, uint32_t
 
     NT_ASSERT(elec->rom->keydetector_interface->nt_keydetector_init != NULL);
 
-    if (elec->rom->keydetector_interface->nt_keydetector_init(elec) != NT_SUCCESS)
+    if (elec->rom->keydetector_interface->nt_keydetector_init(elec) != (int32_t) NT_SUCCESS)
     {
-        return NT_OUT_OF_MEMORY;
+        return (int32_t) NT_OUT_OF_MEMORY;
     } /* Initialization keydetectors data */
 
     if (_nt_freemaster_add_variable(elec->rom->keydetector_interface->name, "nt_keydetector_interface",
                                     (void *)elec->rom->keydetector_interface,
-                                    sizeof(struct nt_keydetector_interface)) != NT_SUCCESS)
+                                    sizeof(struct nt_keydetector_interface)) != (int32_t) NT_SUCCESS)
     {
-        return NT_OUT_OF_MEMORY;
+        return (int32_t) NT_OUT_OF_MEMORY;
     }
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 struct nt_module_data *_nt_module_init(const struct nt_module *module)
@@ -144,7 +141,7 @@ struct nt_module_data *_nt_module_init(const struct nt_module *module)
 
     _this->rom = module;
 
-    if (_nt_module_data_check(_this) < NT_SUCCESS)
+    if (_nt_module_data_check(_this) < (int32_t) NT_SUCCESS)
     {
         return NULL;
     }
@@ -175,7 +172,7 @@ struct nt_module_data *_nt_module_init(const struct nt_module *module)
             {                                                /* hot fix of multiple sh electrode initialization */
                 if (_this->electrodes[j]->status_index == 0) /* Electrode was not initialized yet */
                 {
-                    if (_nt_module_init_electrode(_this, j) != NT_SUCCESS)
+                    if (_nt_module_init_electrode(_this, (uint32_t)j) != (int32_t) NT_SUCCESS)
                     {
                         return NULL;
                     }
@@ -183,31 +180,31 @@ struct nt_module_data *_nt_module_init(const struct nt_module *module)
             }
         }
 
-        if (_nt_module_init_electrode(_this, i) != NT_SUCCESS)
+        if (_nt_module_init_electrode(_this, i) != (int32_t) NT_SUCCESS)
         {
             return NULL;
         }
     }
 
-    if (module->interface->init)
+    if ((bool)(module->interface->init))
     {
-        if (module->interface->init(_this) != NT_SUCCESS)
+        if (module->interface->init(_this) != (int32_t) NT_SUCCESS)
         {
             return NULL;
         }
     }
 
     if (_nt_freemaster_add_variable(module->interface->name, "nt_module_interface", (void *)module->interface,
-                                    sizeof(struct nt_module_interface)) != NT_SUCCESS)
+                                    sizeof(struct nt_module_interface)) != (int32_t) NT_SUCCESS)
     {
         return NULL;
     }
 
     /* Initialization the safety functions */
-    if (module->safety_interface)
+    if ((bool)(module->safety_interface))
     {
         NT_ASSERT(module->safety_interface->init != NULL);
-        if (module->safety_interface->init(_this) != NT_SUCCESS)
+        if (module->safety_interface->init(_this) != (int32_t) NT_SUCCESS)
         {
             return NULL;
         }
@@ -222,24 +219,24 @@ int32_t _nt_module_trigger(struct nt_module_data *module)
 
     int32_t result;
 
-    if (_nt_module_get_flag(module, NT_MODULE_TRIGGER_DISABLED_FLAG))
+    if ((bool)(_nt_module_get_flag(module, NT_MODULE_TRIGGER_DISABLED_FLAG)))
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
-    _nt_module_clear_flag(module, NT_MODULE_NEW_DATA_FLAG);
+    _nt_module_clear_flag(module, (uint32_t) NT_MODULE_NEW_DATA_FLAG);
 
-    if (module->rom->interface->trigger)
+    if ((bool)(module->rom->interface->trigger))
     {
         _nt_module_set_flag(module, NT_MODULE_BUSY_FLAG);
 
-        if ((result = module->rom->interface->trigger(module)) != NT_SUCCESS)
+        if ((result = module->rom->interface->trigger(module)) != (int32_t) NT_SUCCESS)
         {
             return result;
         }
     }
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 #if (NT_SAFETY_SUPPORT == 1)
 int32_t _nt_module_process_safety(struct nt_module_data *module)
@@ -261,16 +258,16 @@ int32_t _nt_module_process_safety(struct nt_module_data *module)
                 /* disable triggering, while safety test in progress */
                 _nt_module_set_flag(module, NT_MODULE_TRIGGER_DISABLED_FLAG);
 
-                if (module->rom->safety_interface->process(module) != NT_SUCCESS)
+                if (module->rom->safety_interface->process(module) != (int32_t) NT_SUCCESS)
                 {
                     _nt_module_clear_flag(module, NT_MODULE_TRIGGER_DISABLED_FLAG);
-                    return NT_FAILURE; /* safety failure */
+                    return (int32_t) NT_FAILURE; /* safety failure */
                 }
                 _nt_module_clear_flag(module, NT_MODULE_TRIGGER_DISABLED_FLAG); /* re-enable trigger */
             }
         }
     }
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 #endif /* NT_SAFETY_SUPPORT */
 
@@ -278,24 +275,24 @@ int32_t _nt_module_process(struct nt_module_data *module)
 {
     NT_ASSERT(module != NULL);
 
-    if (!_nt_module_get_flag(module, NT_MODULE_NEW_DATA_FLAG))
+    if (!_nt_module_get_flag(module, (uint32_t) NT_MODULE_NEW_DATA_FLAG))
     {
-        return NT_FAILURE; /* no data to be processed */
+        return (int32_t) NT_FAILURE; /* no data to be processed */
     }
 
     /* Give chance to any specific process inside of used module. */
-    if (module->rom->interface->process)
+    if ((bool)(module->rom->interface->process))
     {
-        if (module->rom->interface->process(module) != NT_SUCCESS)
+        if ((bool)(module->rom->interface->process(module)) != (int32_t) NT_SUCCESS)
         {
-            return NT_FAILURE;
+            return (int32_t) NT_FAILURE;
         }
     }
     else
     {
         uint32_t el_counter = module->electrodes_cnt;
 
-        while (el_counter--)
+        while ((bool)(el_counter--))
         {
             struct nt_electrode_data *elec = module->electrodes[el_counter];
             {
@@ -307,8 +304,8 @@ int32_t _nt_module_process(struct nt_module_data *module)
         }
     }
 
-    _nt_module_clear_flag(module, NT_MODULE_NEW_DATA_FLAG);
-    return NT_SUCCESS;
+    _nt_module_clear_flag(module,(uint32_t) NT_MODULE_NEW_DATA_FLAG);
+    return (int32_t) NT_SUCCESS;
 }
 
 uint32_t nt_module_recalibrate(const struct nt_module *module)
@@ -316,12 +313,12 @@ uint32_t nt_module_recalibrate(const struct nt_module *module)
     NT_ASSERT(module != NULL);
     NT_ASSERT(module->recalib_config != NULL);
 
-    if (module->interface->recalibrate)
+    if ((bool)(module->interface->recalibrate))
     {
         return (uint32_t)module->interface->recalibrate(_nt_module_get_data(module), (void *)module->recalib_config);
     }
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 int32_t nt_module_change_mode(struct nt_module *module,
@@ -351,24 +348,25 @@ int32_t nt_module_change_mode(struct nt_module *module,
 
     if (module->interface->change_mode == NULL)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
     for (mode_ix = 0; mode_ix < 3; mode_ix++)
     {
         if (mode_flags[mode_ix].mode == mode)
-            break;
+        {   break;
+        }
     }
 
     if (mode_ix >= 3)
     {
-        return NT_FAILURE;
+        return (int32_t) NT_FAILURE;
     }
 
     _nt_module_set_flag(module_data, mode_flags[mode_ix].flags_set);
 
     int32_t result;
-    if ((result = (module->interface->change_mode(module_data, mode, electrode))) != NT_SUCCESS)
+    if ((result = (module->interface->change_mode(module_data, mode, electrode))) != (int32_t) NT_SUCCESS)
     {
         _nt_module_clear_flag(module_data, mode_flags[mode_ix].flags_set);
         return result;
@@ -383,7 +381,7 @@ int32_t nt_module_change_mode(struct nt_module *module,
 
     _nt_module_set_mode(module_data, mode);
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 int32_t nt_module_load_configuration(struct nt_module *module, const enum nt_module_mode mode, const void *config)
@@ -396,17 +394,17 @@ int32_t nt_module_load_configuration(struct nt_module *module, const enum nt_mod
     NT_ASSERT(module_data != NULL);
     int32_t result;
 
-    if (module->interface->load_configuration)
+    if ((bool)(module->interface->load_configuration))
     {
         result = module->interface->load_configuration(module_data, mode, config);
 
-        if (result != NT_SUCCESS)
+        if (result != (int32_t) NT_SUCCESS)
         {
             return result;
         }
     }
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 int32_t nt_module_save_configuration(struct nt_module *module, const enum nt_module_mode mode, void *config)
@@ -419,17 +417,17 @@ int32_t nt_module_save_configuration(struct nt_module *module, const enum nt_mod
     NT_ASSERT(module_data != NULL);
     int32_t result;
 
-    if (module->interface->save_configuration)
+    if ((bool)(module->interface->save_configuration))
     {
         result = module->interface->save_configuration(module_data, mode, config);
 
-        if (result != NT_SUCCESS)
+        if (result != (int32_t) NT_SUCCESS)
         {
             return result;
         }
     }
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }
 
 int32_t _nt_module_check_signal_levels(struct nt_module_data *module)
@@ -449,7 +447,7 @@ int32_t _nt_module_check_signal_levels(struct nt_module_data *module)
         wtrmark_high = NT_MODULE_SIGNAL_WTRMARK_HIGH;
     }
 
-    while (el_counter--)
+    while ((bool)(el_counter--))
     {
         struct nt_electrode_data *elec = module->electrodes[el_counter];
         if (elec->signal < wtrmark_low)
@@ -464,5 +462,5 @@ int32_t _nt_module_check_signal_levels(struct nt_module_data *module)
         }
     }
 
-    return NT_SUCCESS;
+    return (int32_t) NT_SUCCESS;
 }

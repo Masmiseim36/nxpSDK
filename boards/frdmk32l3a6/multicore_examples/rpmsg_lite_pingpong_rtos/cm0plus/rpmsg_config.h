@@ -2,14 +2,14 @@
  * Copyright (c) 2014, Mentor Graphics Corporation
  * Copyright (c) 2015 Xilinx, Inc.
  * Copyright (c) 2016 Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef _RPMSG_CONFIG_H
-#define _RPMSG_CONFIG_H
+#ifndef RPMSG_CONFIG_H_
+#define RPMSG_CONFIG_H_
 
 /*!
  * @addtogroup config
@@ -30,14 +30,14 @@
 //!
 //! Size of the buffer payload, it must be equal to (240, 496, 1008, ...)
 //! [2^n - 16].
-//! The default value is 496.
-#define RL_BUFFER_PAYLOAD_SIZE (496)
+//! The default value is 496U.
+#define RL_BUFFER_PAYLOAD_SIZE (496U)
 
 //! @def RL_BUFFER_COUNT
 //!
 //! Number of the buffers, it must be power of two (2, 4, ...).
-//! The default value is 2.
-#define RL_BUFFER_COUNT (2)
+//! The default value is 2U.
+#define RL_BUFFER_COUNT (2U)
 
 //! @def RL_API_HAS_ZEROCOPY
 //!
@@ -73,11 +73,10 @@
 //! The default value is 0 (no context, saves some RAM).
 #define RL_USE_ENVIRONMENT_CONTEXT (0)
 
-
 //! @def RL_DEBUG_CHECK_BUFFERS
 //!
 //! Do not use in RPMsg-Lite to Linux configuration
 #define RL_DEBUG_CHECK_BUFFERS (0)
 //@}
 
-#endif /* _RPMSG_CONFIG_H */
+#endif /* RPMSG_CONFIG_H_ */

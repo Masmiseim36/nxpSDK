@@ -7,18 +7,18 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_dac.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_DAC_BASEADDR LPDAC0
-#define DEMO_DAC_IRQ_ID LPDAC0_IRQn
+#define DEMO_DAC_BASEADDR         LPDAC0
+#define DEMO_DAC_IRQ_ID           LPDAC0_IRQn
 #define DEMO_DAC_IRQ_HANDLER_FUNC LPDAC0_IRQHandler
-#define DEMO_DAC_VREF kDAC_ReferenceVoltageSourceAlt2
+#define DEMO_DAC_VREF             kDAC_ReferenceVoltageSourceAlt2
 #define DEMO_DAC_VALUE_ARRAY_SIZE 32U
 
 /*******************************************************************************
@@ -111,9 +111,5 @@ void DEMO_DAC_IRQ_HANDLER_FUNC(void)
         }
     }
     g_DacInterruptDone = true;
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }

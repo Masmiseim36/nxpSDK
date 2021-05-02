@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT595" name="EVK-MIMXRT595" brief="This is SDK version 2.9.1 manifest file. It describes the content of the EVK-MIMXRT595 and additional settings for tools that support SDK version 2.9.1" format_version="3.8" api_version="2.0.0" configuration="d0e3c6670642d80d8fe49237eaaddc81" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
-  <!--Timestamp (UTC): 2021-02-23 11:44:59.074532-->
-  <!--This manifest is generated based on sdk repo commit: 479d972308cf2526662eb4cbbd8db4c4b11f07fe-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_EVK-MIMXRT595" name="EVK-MIMXRT595" brief="This is SDK version 2.9.2 manifest file. It describes the content of the EVK-MIMXRT595 and additional settings for tools that support SDK version 2.9.2" format_version="3.8" api_version="2.0.0" configuration="7bc543a19ed6307ff5e2264225011d53" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
+  <!--Timestamp (UTC): 2021-04-29 16:06:52.577802-->
+  <!--This manifest is generated based on sdk repo commit: d93015309d29539624470664dc44f701fae13aca-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
@@ -9,7 +9,7 @@
   <externalDefinitions>
     <definition extID="valmimxrt500"/>
   </externalDefinitions>
-  <ksdk id="MCUXpresso291" name="MCUXpresso291" version="2.9.1" revision="449 2021-02-23"/>
+  <ksdk id="MCUXpresso292" name="MCUXpresso292" version="2.9.2" revision="469 2021-04-29"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -10497,10 +10497,12 @@ ${load}</script>
         <files mask="lv_gpu_stm32_dma2d.h"/>
         <files mask="lv_gpu_nxp_pxp.h"/>
         <files mask="lv_gpu_nxp_pxp_osa.h"/>
+        <files mask="lv_gpu_nxp_vglite.h"/>
       </source>
       <source relative_path="lvgl/src/lv_gpu" project_relative_path="./lvgl/src/lv_gpu" type="src">
         <files mask="lv_gpu_nxp_pxp.c"/>
         <files mask="lv_gpu_nxp_pxp_osa.c"/>
+        <files mask="lv_gpu_nxp_vglite.c"/>
       </source>
       <source relative_path="lvgl/src/lv_hal" project_relative_path="./lvgl/src/lv_hal" type="c_include">
         <files mask="lv_hal.h"/>

@@ -712,16 +712,24 @@ int mbedtls_aes_setkey_enc(mbedtls_aes_context *ctx, const unsigned char *key, u
 #ifdef MBEDTLS_AES_ALT_NO_192
     if (keybits == 192u)
     {
+#if defined(MBEDTLS_AES192_ALT_SW)
+        return mbedtls_aes_setkey_enc_sw(ctx, key, keybits);
+#else
         return (MBEDTLS_ERR_AES_FEATURE_UNAVAILABLE);
+#endif /* MBEDTLS_AES_ALT_SW */
     }
-#endif
+#endif /* MBEDTLS_AES_ALT_NO_192 */
 
 #ifdef MBEDTLS_AES_ALT_NO_256
     if (keybits == 256u)
     {
+#if defined(MBEDTLS_AES256_ALT_SW)
+        return mbedtls_aes_setkey_enc_sw(ctx, key, keybits);
+#else
         return (MBEDTLS_ERR_AES_FEATURE_UNAVAILABLE);
+#endif /* MBEDTLS_AES_ALT_SW */
     }
-#endif
+#endif /* MBEDTLS_AES_ALT_NO_256 */
 
 #if defined(MBEDTLS_FREESCALE_LTC_AES) || defined(MBEDTLS_FREESCALE_LPC_AES) || defined(MBEDTLS_FREESCALE_CAU3_AES) || \
     defined(MBEDTLS_FREESCALE_CAAM_AES) || defined(MBEDTLS_FREESCALE_DCP_AES)
@@ -782,14 +790,22 @@ int mbedtls_aes_setkey_dec(mbedtls_aes_context *ctx, const unsigned char *key, u
 #ifdef MBEDTLS_AES_ALT_NO_192
     if (keybits == 192u)
     {
+#if defined(MBEDTLS_AES192_ALT_SW) && defined(MBEDTLS_FREESCALE_DCP_AES)
+        return mbedtls_aes_setkey_dec_sw(ctx, key, keybits);
+#else
         return (MBEDTLS_ERR_AES_FEATURE_UNAVAILABLE);
+#endif /* defined(MBEDTLS_AES_ALT_SW) && defined(MBEDTLS_FREESCALE_DCP_AES) */
     }
 #endif
 
 #ifdef MBEDTLS_AES_ALT_NO_256
     if (keybits == 256u)
     {
+#if defined(MBEDTLS_AES256_ALT_SW) && defined(MBEDTLS_FREESCALE_DCP_AES)
+        return mbedtls_aes_setkey_dec_sw(ctx, key, keybits);
+#else
         return (MBEDTLS_ERR_AES_FEATURE_UNAVAILABLE);
+#endif /* defined(MBEDTLS_AES_ALT_SW) && defined(MBEDTLS_FREESCALE_DCP_AES) */
     }
 #endif
 
@@ -848,8 +864,15 @@ int mbedtls_aes_setkey_dec(mbedtls_aes_context *ctx, const unsigned char *key, u
 int mbedtls_internal_aes_encrypt(mbedtls_aes_context *ctx, const unsigned char input[16], unsigned char output[16])
 {
     uint8_t *key;
-
     key = (uint8_t *)ctx->rk;
+
+#if defined(MBEDTLS_FREESCALE_DCP_AES) && (defined(MBEDTLS_AES192_ALT_SW) || defined(MBEDTLS_AES256_ALT_SW))
+    if(ctx->nr == 12 || ctx->nr == 14)
+    {
+        return mbedtls_internal_aes_encrypt_sw(ctx, input, output);
+    }
+#endif /* defined(MBEDTLS_FREESCALE_DCP_AES) && defined(MBEDTLS_AES_ALT_SW) */
+    
 #if defined(MBEDTLS_FREESCALE_LTC_AES)
     LTC_AES_EncryptEcb(LTC_INSTANCE, input, output, 16, key, ctx->nr);
 #elif defined(MBEDTLS_FREESCALE_MMCAU_AES)
@@ -932,8 +955,15 @@ int mbedtls_internal_aes_encrypt(mbedtls_aes_context *ctx, const unsigned char i
 int mbedtls_internal_aes_decrypt(mbedtls_aes_context *ctx, const unsigned char input[16], unsigned char output[16])
 {
     uint8_t *key;
-
     key = (uint8_t *)ctx->rk;
+
+#if defined(MBEDTLS_FREESCALE_DCP_AES) && (defined(MBEDTLS_AES192_ALT_SW) || defined(MBEDTLS_AES256_ALT_SW))
+    if(ctx->nr == 12 || ctx->nr == 14)
+    {
+        return mbedtls_internal_aes_decrypt_sw(ctx, input, output);
+    }
+#endif /* defined(MBEDTLS_FREESCALE_DCP_AES) && defined(MBEDTLS_AES_ALT_SW) */
+
 #if defined(MBEDTLS_FREESCALE_LTC_AES)
     LTC_AES_DecryptEcb(LTC_INSTANCE, input, output, 16, key, ctx->nr, kLTC_EncryptKey);
 #elif defined(MBEDTLS_FREESCALE_MMCAU_AES)
@@ -1115,6 +1145,13 @@ int mbedtls_aes_crypt_cbc(mbedtls_aes_context *ctx,
 
     if (0U !=(length % 16U))
         return (MBEDTLS_ERR_AES_INVALID_INPUT_LENGTH);
+
+#if defined(MBEDTLS_AES_CBC_ALT_SW)
+    if(ctx->nr == 12 || ctx->nr == 14)
+    {
+        return mbedtls_aes_crypt_cbc_sw(ctx, mode, length, iv, input, output);
+    }
+#endif /* MBEDTLS_AES_CBC_ALT_SW */
 
 #if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U) && defined(DCP_USE_DCACHE) && (DCP_USE_DCACHE == 1U)
     if((!IS_IN_NONCACHED((uint32_t)input, length)) && (!IS_CACHE_ALIGNED((uint32_t)input)))

@@ -1288,6 +1288,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_pxp_osa.c</FilePath>
             </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -3371,6 +3381,16 @@
               <FileName>lv_gpu_nxp_pxp_osa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_pxp_osa.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5456,6 +5476,16 @@
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_pxp_osa.c</FilePath>
             </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -7539,6 +7569,16 @@
               <FileName>lv_gpu_nxp_pxp_osa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_pxp_osa.c</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.h</FilePath>
+            </File>
+            <File>
+              <FileName>lv_gpu_nxp_vglite.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.c</FilePath>
             </File>
           </Files>
         </Group>

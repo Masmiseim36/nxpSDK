@@ -117,6 +117,8 @@ typedef enum _osa_status
 #define USE_RTOS (1)
 #elif defined(FSL_RTOS_UCOSIII)
 #define USE_RTOS (1)
+#elif defined(FSL_RTOS_THREADX)
+#define USE_RTOS (1)
 #else
 #define USE_RTOS (0)
 #if (defined(GENERIC_LIST_LIGHT) && (GENERIC_LIST_LIGHT > 0U))
@@ -212,6 +214,11 @@ typedef enum _osa_status
     osThreadStackDef(name, stackSz, instances) osa_task_def_t os_thread_def_##name = { \
         (name), (priority), (instances), (stackSz), osThreadStackArray(name), NULL, (uint8_t *)#name, (useFloat)}
 #endif
+#elif defined(FSL_RTOS_THREADX)
+#define OSA_TASK_DEFINE(name, priority, instances, stackSz, useFloat)                   \
+    uint32_t s_stackBuffer##name[(stackSz + sizeof(uint32_t) - 1U) / sizeof(uint32_t)]; \
+    static const osa_task_def_t os_thread_def_##name = {                                \
+        (name), (priority), (instances), (stackSz), s_stackBuffer##name, NULL, (uint8_t *)#name, (useFloat)}
 #else
 #define OSA_TASK_DEFINE(name, priority, instances, stackSz, useFloat)                             \
     const osa_task_def_t os_thread_def_##name = {(name), (priority), (instances),      (stackSz), \
@@ -222,7 +229,7 @@ typedef enum _osa_status
  */
 #define OSA_TASK(name) (const osa_task_def_t *)&os_thread_def_##name
 
-#define OSA_TASK_PROTO(name) externosa_task_def_t os_thread_def_##name
+#define OSA_TASK_PROTO(name) extern osa_task_def_t os_thread_def_##name
 /*  ==== Timer Management  ====
  * Define a Timer object.
  * \param         name          name of the timer object.
@@ -337,6 +344,8 @@ typedef enum _osa_status
 
 #if defined(FSL_RTOS_FREE_RTOS)
 #include "fsl_os_abstraction_free_rtos.h"
+#elif defined(FSL_RTOS_THREADX)
+#include "fsl_os_abstraction_threadx.h"
 #else
 #include "fsl_os_abstraction_bm.h"
 #endif
@@ -399,6 +408,34 @@ void OSA_ExitCritical(uint32_t sr);
  * @name Task management
  * @{
  */
+
+/*!
+ * @brief Initialize OSA.
+ *
+ * This function is used to setup the basic services.
+ *
+ * Example below shows how to use this API to create the task handle.
+ * @code
+ *   OSA_Init();
+ * @endcode
+ */
+#if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
+void OSA_Init(void);
+#endif
+
+/*!
+ * @brief Start OSA schedule.
+ *
+ * This function is used to start OSA scheduler.
+ *
+ * Example below shows how to use this API to start osa schedule.
+ * @code
+ *   OSA_Start();
+ * @endcode
+ */
+#if (defined(FSL_OSA_TASK_ENABLE) && (FSL_OSA_TASK_ENABLE > 0U))
+void OSA_Start(void);
+#endif
 
 /*!
  * @brief Creates a task.

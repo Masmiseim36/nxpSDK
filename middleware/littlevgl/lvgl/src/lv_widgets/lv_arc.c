@@ -84,9 +84,11 @@ lv_obj_t * lv_arc_create(lv_obj_t * par, const lv_obj_t * copy)
     ext->arc_angle_end   = 270;
     ext->type = LV_ARC_TYPE_NORMAL;
     ext->cur_value = -1;
+    ext->min_close = 1;
     ext->min_value = 0;
     ext->max_value = 100;
     ext->dragging = false;
+    ext->adjustable = false;
     ext->chg_rate = 540;
     ext->last_tick = lv_tick_get();
     ext->last_angle = ext->arc_angle_end;
@@ -119,6 +121,7 @@ lv_obj_t * lv_arc_create(lv_obj_t * par, const lv_obj_t * copy)
         ext->min_value = copy_ext->min_value;
         ext->max_value = copy_ext->max_value;
         ext->dragging = copy_ext->dragging;
+        ext->adjustable = copy_ext->adjustable;
         ext->chg_rate = copy_ext->chg_rate;
         ext->last_tick = copy_ext->last_tick;
         ext->last_angle = copy_ext->last_angle;
@@ -469,6 +472,24 @@ void lv_arc_set_chg_rate(lv_obj_t * arc, uint16_t rate)
     ext->chg_rate = rate;
 }
 
+/**
+ * Set whether the arc is adjustable.
+ * @param arc pointer to a arc object
+ * @param adjustable whether the arc has a knob that can be dragged
+ */
+void lv_arc_set_adjustable(lv_obj_t * arc, bool adjustable)
+{
+    LV_ASSERT_OBJ(arc, LV_OBJX_NAME);
+
+    lv_arc_ext_t *ext = (lv_arc_ext_t *)lv_obj_get_ext_attr(arc);
+    if(ext->adjustable == adjustable)
+        return;
+
+    ext->adjustable = adjustable;
+    if(!adjustable)
+        ext->dragging = false;
+    lv_obj_invalidate(arc);
+}
 
 /*=====================
  * Getter functions
@@ -596,6 +617,19 @@ lv_arc_type_t lv_arc_get_type(const lv_obj_t * arc)
     return ext->type;
 }
 
+/**
+ * Get whether the arc is adjustable.
+ * @param arc pointer to a arc object
+ * @return whether the arc has a knob that can be dragged
+ */
+bool lv_arc_get_adjustable(lv_obj_t * arc)
+{
+    LV_ASSERT_OBJ(arc, LV_OBJX_NAME);
+
+    lv_arc_ext_t *ext = (lv_arc_ext_t *)lv_obj_get_ext_attr(arc);
+    return ext->adjustable;
+}
+
 /*=====================
  * Other functions
  *====================*/
@@ -666,14 +700,16 @@ static lv_design_res_t lv_arc_design(lv_obj_t * arc, const lv_area_t * clip_area
                         &arc_dsc);
         }
 
-        lv_area_t knob_area;
-        get_knob_area(arc, &center, arc_r, &knob_area);
+        if(ext->adjustable) {
+            lv_area_t knob_area;
+            get_knob_area(arc, &center, arc_r, &knob_area);
 
-        lv_draw_rect_dsc_t knob_rect_dsc;
-        lv_draw_rect_dsc_init(&knob_rect_dsc);
-        lv_obj_init_draw_rect_dsc(arc, LV_ARC_PART_KNOB, &knob_rect_dsc);
+            lv_draw_rect_dsc_t knob_rect_dsc;
+            lv_draw_rect_dsc_init(&knob_rect_dsc);
+            lv_obj_init_draw_rect_dsc(arc, LV_ARC_PART_KNOB, &knob_rect_dsc);
 
-        lv_draw_rect(&knob_area, clip_area, &knob_rect_dsc);
+            lv_draw_rect(&knob_area, clip_area, &knob_rect_dsc);
+        }
 
     }
     /*Post draw when the children are drawn*/
@@ -709,6 +745,9 @@ static lv_res_t lv_arc_signal(lv_obj_t * arc, lv_signal_t sign, void * param)
     lv_arc_ext_t * ext = lv_obj_get_ext_attr(arc);
 
     if(sign == LV_SIGNAL_PRESSING) {
+        /* Only adjustable arcs can be dragged */
+        if(!ext->adjustable) return res;
+
         lv_indev_t * indev = lv_indev_get_act();
         if(indev == NULL) return res;
 
@@ -741,6 +780,9 @@ static lv_res_t lv_arc_signal(lv_obj_t * arc, lv_signal_t sign, void * param)
         /*It must be in "dragging" mode to turn the arc*/
         if(ext->dragging == false) return res;
 
+        /*No angle can be determined if exactly the middle of the arc is being pressed*/
+        if(p.x == 0 && p.y == 0) return res;
+
         /*Calculate the angle of the pressed point*/
         int16_t angle;
         int16_t bg_end = ext->bg_angle_end;
@@ -748,13 +790,30 @@ static lv_res_t lv_arc_signal(lv_obj_t * arc, lv_signal_t sign, void * param)
             bg_end = ext->bg_angle_end + 360;
         }
 
-        angle = 360 - _lv_atan2(p.x, p.y) + 90; /*Some transformation is required*/
+
+        angle = _lv_atan2(p.y, p.x);
         angle -= ext->rotation_angle;
-        if(angle < ext->bg_angle_start) angle = ext->bg_angle_start;
-        if(angle > bg_end) angle = bg_end;
+        angle -= ext->bg_angle_start;   /*Make the angle relative to the start angle*/
+        if(angle < 0) angle += 360;
+
+        int16_t deg_range = bg_end - ext->bg_angle_start;
+
+        int16_t last_angle_rel = ext->last_angle - ext->bg_angle_start;
+        int16_t delta_angle = angle - last_angle_rel;
+
+        /* Do not allow big jumps.
+         * It's mainly to avoid jumping to the opposite end if the "dead" range between min. an max. is crossed.
+         * Check which and was closer on the last valid press (ext->min_close) and prefer that end */
+        if(LV_MATH_ABS(delta_angle) > 180) {
+            if(ext->min_close) angle = 0;
+            else angle = deg_range;
+        } else {
+            if(angle < deg_range / 2) ext->min_close = 1;
+            else ext->min_close = 0;
+        }
 
         /*Calculate the slew rate limited angle based on change rate (degrees/sec)*/
-        int16_t delta_angle = angle - ext->last_angle;
+        delta_angle = angle - last_angle_rel;
         uint32_t delta_tick = lv_tick_elaps(ext->last_tick);
         int16_t delta_angle_max = (ext->chg_rate * delta_tick) / 1000;
 
@@ -765,12 +824,14 @@ static lv_res_t lv_arc_signal(lv_obj_t * arc, lv_signal_t sign, void * param)
             delta_angle = -delta_angle_max;
         }
 
-        angle = ext->last_angle + delta_angle; /*Apply the limited angle change*/
+        angle = last_angle_rel + delta_angle; /*Apply the limited angle change*/
 
         /*Rounding for symmetry*/
         int32_t round = ((bg_end - ext->bg_angle_start) * 8) / (ext->max_value - ext->min_value);
         round = (round + 4) >> 4;
         angle += round;
+
+        angle += ext->bg_angle_start;   /*Make the angle absolute again*/
 
         /*Set the new value*/
         int16_t old_value = ext->cur_value;
@@ -804,6 +865,8 @@ static lv_res_t lv_arc_signal(lv_obj_t * arc, lv_signal_t sign, void * param)
 
     }
     else if(sign == LV_SIGNAL_CONTROL) {
+        if(!ext->adjustable) return res;
+
         char c = *((char *)param);
 
         int16_t old_value = ext->cur_value;

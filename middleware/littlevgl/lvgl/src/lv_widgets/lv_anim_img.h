@@ -34,8 +34,9 @@ typedef struct {
     lv_img_ext_t img;
     lv_anim_t anim;
     /*picture sequence */
-    lv_img_dsc_t **dsc;
+    lv_img_dsc_t ** dsc;
     int8_t      pic_count;
+    lv_coord_t last_index;
 
 } lv_anim_img_ext_t;
 

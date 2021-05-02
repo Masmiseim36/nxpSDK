@@ -17,7 +17,13 @@
 #include "../lv_misc/lv_gc.h"
 #include "../lv_draw/lv_draw.h"
 #include "../lv_font/lv_font_fmt_txt.h"
-#include "../lv_gpu/lv_gpu_stm32_dma2d.h"
+#if LV_USE_GPU_NXP_PXP
+    #include "../lv_gpu/lv_gpu_nxp_pxp.h"
+#elif LV_USE_GPU_NXP_VG_LITE
+    #include "../lv_gpu/lv_gpu_nxp_vglite.h"
+#elif LV_USE_GPU_STM32_DMA2D
+    #include "../lv_gpu/lv_gpu_stm32_dma2d.h"
+#endif
 
 #if LV_USE_PERF_MONITOR
     #include "../lv_widgets/lv_label.h"
@@ -240,6 +246,44 @@ void _lv_disp_refr_task(lv_task_t * task)
                                                 lv_area_get_height(&disp_refr->inv_areas[a]));
 #else
 
+#if LV_USE_GPU_NXP_PXP
+                        if(lv_area_get_size(&(disp_refr->inv_areas[a])) >= LV_GPU_NXP_PXP_BUFF_SYNC_BLIT_SIZE_LIMIT) {
+                            lv_gpu_nxp_pxp_blit((lv_color_t *)(buf_act + start_offs), disp_refr->driver.hor_res,
+                                                (lv_color_t *)(buf_ina + start_offs), disp_refr->driver.hor_res,
+                                                lv_area_get_width(&disp_refr->inv_areas[a]),
+                                                lv_area_get_height(&disp_refr->inv_areas[a]),
+                                                LV_OPA_COVER);
+                            continue ; /* to next area */
+                        }
+                        /* Fall down to SW copy for small areas */
+#elif LV_USE_GPU_NXP_VG_LITE
+                        if(lv_area_get_size(&(disp_refr->inv_areas[a])) >= LV_GPU_NXP_VG_LITE_BUFF_SYNC_BLIT_SIZE_LIMIT) {
+                            lv_gpu_nxp_vglite_blit_info_t blit;
+
+                            blit.src = (const lv_color_t *) buf_ina;
+                            blit.src_width = disp_refr->driver.hor_res;
+                            blit.src_height = disp_refr->driver.ver_res;
+                            blit.src_stride = disp_refr->driver.hor_res * sizeof(lv_color_t);
+                            blit.src_area.x1 = disp_refr->inv_areas[a].x1;
+                            blit.src_area.y1 = disp_refr->inv_areas[a].y1;
+                            blit.src_area.x2 = disp_refr->inv_areas[a].x2;
+                            blit.src_area.y2 = disp_refr->inv_areas[a].y2;
+
+
+                            blit.dst = (const lv_color_t *) buf_act;
+                            blit.dst_width = disp_refr->driver.hor_res;
+                            blit.dst_height = disp_refr->driver.ver_res;
+                            blit.dst_stride = disp_refr->driver.hor_res * sizeof(lv_color_t);
+                            blit.dst_area = blit.src_area;
+
+                            blit.opa = LV_OPA_COVER;
+
+                            if(lv_gpu_nxp_vglite_blit(&blit) == LV_RES_OK) {
+                                continue; /* to next area */
+                            }
+                            /* Fall down to SW render in case of error, or for small areas */
+                        }
+#endif
                         lv_coord_t y;
                         uint32_t line_length = lv_area_get_width(&disp_refr->inv_areas[a]) * sizeof(lv_color_t);
 

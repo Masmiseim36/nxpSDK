@@ -49,6 +49,7 @@ if(NOT MIDDLEWARE_LITTLEVGL_MIMXRT595S_cm33_INCLUDED)
         ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/lv_font/lv_font_unscii_8.c
         ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/lv_gpu/lv_gpu_nxp_pxp.c
         ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/lv_gpu/lv_gpu_nxp_pxp_osa.c
+        ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.c
         ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/lv_hal/lv_hal_disp.c
         ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/lv_hal/lv_hal_indev.c
         ${CMAKE_CURRENT_LIST_DIR}/lvgl/src/lv_hal/lv_hal_tick.c

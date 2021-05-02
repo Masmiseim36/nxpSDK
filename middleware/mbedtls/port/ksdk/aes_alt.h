@@ -77,6 +77,28 @@ typedef struct
 mbedtls_aes_context;
 #endif /* MBEDTLS_FREESCALE_HASHCRYPT_AES */
 
+/* AES SW prototypes for AES192 and AES256 while using DCP HW accelerator */
+#if defined(MBEDTLS_AES_SETKEY_ENC_ALT) && (defined(MBEDTLS_AES192_ALT_SW) || defined(MBEDTLS_AES256_ALT_SW))
+int mbedtls_aes_setkey_enc_sw( mbedtls_aes_context *ctx, const unsigned char *key,
+                    unsigned int keybits );
+int mbedtls_aes_setkey_dec_sw( mbedtls_aes_context *ctx, const unsigned char *key,
+                    unsigned int keybits );
+int mbedtls_internal_aes_encrypt_sw( mbedtls_aes_context *ctx,
+                                  const unsigned char input[16],
+                                  unsigned char output[16] );
+int mbedtls_internal_aes_decrypt_sw( mbedtls_aes_context *ctx,
+                                  const unsigned char input[16],
+                                  unsigned char output[16] );
+#endif /* MBEDTLS_AES_SETKEY_ENC_ALT && (MBEDTLS_AES192_ALT_SW || MBEDTLS_AES256_ALT_SW) */
+#if defined(MBEDTLS_AES_CRYPT_CBC_ALT) && defined(MBEDTLS_AES_CBC_ALT_SW)
+int mbedtls_aes_crypt_cbc_sw( mbedtls_aes_context *ctx,
+                    int mode,
+                    size_t length,
+                    unsigned char iv[16],
+                    const unsigned char *input,
+                    unsigned char *output );
+#endif /* MBEDTLS_AES_CRYPT_CBC_ALT && MBEDTLS_AES_CBC_ALT_SW */  
+
 #endif /* MBEDTLS_AES_ALT */
 
 #ifdef __cplusplus

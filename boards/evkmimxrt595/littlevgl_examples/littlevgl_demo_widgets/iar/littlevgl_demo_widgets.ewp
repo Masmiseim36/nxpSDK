@@ -230,6 +230,32 @@
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>LV_EX_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>VG_RESOLVE_ENGINE=0</state>
+          <state>VG_PE_COLOR_KEY=0</state>
+          <state>VG_IM_INDEX_FORMAT=0</state>
+          <state>VG_AYUV_INPUT_OUTPUT=0</state>
+          <state>VG_DOUBLE_IMAGE=0</state>
+          <state>VG_RECTANGLE_STRIP_MODE=0</state>
+          <state>VG_MMU=0</state>
+          <state>VG_IM_FILTER=0</state>
+          <state>VG_IM_YUV_PACKET=1</state>
+          <state>VG_IM_YUV_PLANAR=0</state>
+          <state>VG_PE_YUV_PACKET=1</state>
+          <state>VG_TARGET_TILED=1</state>
+          <state>VG_COMMAND_CALL=1</state>
+          <state>VG_SHARE_BUFFER_IM_16K=0</state>
+          <state>VG_OFFLINE_MODE=0</state>
+          <state>VG_RESOLUTION_2880=0</state>
+          <state>VG_PE_PREMULTIPLY=0</state>
+          <state>VG_POST_CONVERTER=0</state>
+          <state>VG_PRE_CONVERTER=0</state>
+          <state>VG_RENDER_BY_MESH=0</state>
+          <state>VG_TARGET_FAST_CLEAR=0</state>
+          <state>VG_BUFFER_NUMBER_OF_TARGET=0</state>
+          <state>VG_VIDEO_CLEAR_CONTROL=0</state>
+          <state>VG_VIDEO_CONTROL=0</state>
+          <state>VGLITE_TST_FIRMWARE=0</state>
+          <state>VG_LITE_SYS_GPU_CTRL=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
@@ -377,6 +403,12 @@
           <state>$PROJ_DIR$/../../../../../components/ft3267</state>
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/inc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/font</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/rtos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl</state>
@@ -1294,6 +1326,32 @@
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>LV_EX_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>VG_RESOLVE_ENGINE=0</state>
+          <state>VG_PE_COLOR_KEY=0</state>
+          <state>VG_IM_INDEX_FORMAT=0</state>
+          <state>VG_AYUV_INPUT_OUTPUT=0</state>
+          <state>VG_DOUBLE_IMAGE=0</state>
+          <state>VG_RECTANGLE_STRIP_MODE=0</state>
+          <state>VG_MMU=0</state>
+          <state>VG_IM_FILTER=0</state>
+          <state>VG_IM_YUV_PACKET=1</state>
+          <state>VG_IM_YUV_PLANAR=0</state>
+          <state>VG_PE_YUV_PACKET=1</state>
+          <state>VG_TARGET_TILED=1</state>
+          <state>VG_COMMAND_CALL=1</state>
+          <state>VG_SHARE_BUFFER_IM_16K=0</state>
+          <state>VG_OFFLINE_MODE=0</state>
+          <state>VG_RESOLUTION_2880=0</state>
+          <state>VG_PE_PREMULTIPLY=0</state>
+          <state>VG_POST_CONVERTER=0</state>
+          <state>VG_PRE_CONVERTER=0</state>
+          <state>VG_RENDER_BY_MESH=0</state>
+          <state>VG_TARGET_FAST_CLEAR=0</state>
+          <state>VG_BUFFER_NUMBER_OF_TARGET=0</state>
+          <state>VG_VIDEO_CLEAR_CONTROL=0</state>
+          <state>VG_VIDEO_CONTROL=0</state>
+          <state>VGLITE_TST_FIRMWARE=0</state>
+          <state>VG_LITE_SYS_GPU_CTRL=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
@@ -1441,6 +1499,12 @@
           <state>$PROJ_DIR$/../../../../../components/ft3267</state>
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/inc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/font</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/rtos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl</state>
@@ -2357,6 +2421,32 @@
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>LV_EX_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>VG_RESOLVE_ENGINE=0</state>
+          <state>VG_PE_COLOR_KEY=0</state>
+          <state>VG_IM_INDEX_FORMAT=0</state>
+          <state>VG_AYUV_INPUT_OUTPUT=0</state>
+          <state>VG_DOUBLE_IMAGE=0</state>
+          <state>VG_RECTANGLE_STRIP_MODE=0</state>
+          <state>VG_MMU=0</state>
+          <state>VG_IM_FILTER=0</state>
+          <state>VG_IM_YUV_PACKET=1</state>
+          <state>VG_IM_YUV_PLANAR=0</state>
+          <state>VG_PE_YUV_PACKET=1</state>
+          <state>VG_TARGET_TILED=1</state>
+          <state>VG_COMMAND_CALL=1</state>
+          <state>VG_SHARE_BUFFER_IM_16K=0</state>
+          <state>VG_OFFLINE_MODE=0</state>
+          <state>VG_RESOLUTION_2880=0</state>
+          <state>VG_PE_PREMULTIPLY=0</state>
+          <state>VG_POST_CONVERTER=0</state>
+          <state>VG_PRE_CONVERTER=0</state>
+          <state>VG_RENDER_BY_MESH=0</state>
+          <state>VG_TARGET_FAST_CLEAR=0</state>
+          <state>VG_BUFFER_NUMBER_OF_TARGET=0</state>
+          <state>VG_VIDEO_CLEAR_CONTROL=0</state>
+          <state>VG_VIDEO_CONTROL=0</state>
+          <state>VGLITE_TST_FIRMWARE=0</state>
+          <state>VG_LITE_SYS_GPU_CTRL=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
@@ -2504,6 +2594,12 @@
           <state>$PROJ_DIR$/../../../../../components/ft3267</state>
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/inc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/font</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/rtos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl</state>
@@ -3421,6 +3517,32 @@
           <state>LV_CONF_INCLUDE_SIMPLE=1</state>
           <state>LV_EX_CONF_INCLUDE_SIMPLE=1</state>
           <state>SDK_I2C_BASED_COMPONENT_USED=1</state>
+          <state>VG_RESOLVE_ENGINE=0</state>
+          <state>VG_PE_COLOR_KEY=0</state>
+          <state>VG_IM_INDEX_FORMAT=0</state>
+          <state>VG_AYUV_INPUT_OUTPUT=0</state>
+          <state>VG_DOUBLE_IMAGE=0</state>
+          <state>VG_RECTANGLE_STRIP_MODE=0</state>
+          <state>VG_MMU=0</state>
+          <state>VG_IM_FILTER=0</state>
+          <state>VG_IM_YUV_PACKET=1</state>
+          <state>VG_IM_YUV_PLANAR=0</state>
+          <state>VG_PE_YUV_PACKET=1</state>
+          <state>VG_TARGET_TILED=1</state>
+          <state>VG_COMMAND_CALL=1</state>
+          <state>VG_SHARE_BUFFER_IM_16K=0</state>
+          <state>VG_OFFLINE_MODE=0</state>
+          <state>VG_RESOLUTION_2880=0</state>
+          <state>VG_PE_PREMULTIPLY=0</state>
+          <state>VG_POST_CONVERTER=0</state>
+          <state>VG_PRE_CONVERTER=0</state>
+          <state>VG_RENDER_BY_MESH=0</state>
+          <state>VG_TARGET_FAST_CLEAR=0</state>
+          <state>VG_BUFFER_NUMBER_OF_TARGET=0</state>
+          <state>VG_VIDEO_CLEAR_CONTROL=0</state>
+          <state>VG_VIDEO_CONTROL=0</state>
+          <state>VGLITE_TST_FIRMWARE=0</state>
+          <state>VG_LITE_SYS_GPU_CTRL=0</state>
           <state>SERIAL_PORT_TYPE_UART=1</state>
           <state>FSL_RTOS_FREE_RTOS</state>
         </option>
@@ -3568,6 +3690,12 @@
           <state>$PROJ_DIR$/../../../../../components/ft3267</state>
           <state>$PROJ_DIR$/../../../../../components/gt911</state>
           <state>$PROJ_DIR$/../../../../../components/ft5406</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/inc</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/font</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/rtos</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel</state>
+          <state>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src</state>
           <state>$PROJ_DIR$/../../../../../middleware/littlevgl</state>
@@ -4562,6 +4690,12 @@
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_pxp_osa.c</name>
           </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.c</name>
+          </file>
         </group>
         <group>
           <name>lv_hal</name>
@@ -5306,6 +5440,156 @@
     <file>
       <name>$PROJ_DIR$/../../../../../components/ft5406/fsl_ft5406.c</name>
     </file>
+  </group>
+  <group>
+    <name>vglite</name>
+    <group>
+      <name>inc</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/inc/vg_lite.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/inc/vg_lite_hal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/inc/vg_lite_text.h</name>
+      </file>
+    </group>
+    <group>
+      <name>VGLite</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/vg_lite.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/vg_lite_image.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/vg_lite_matrix.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/vg_lite_path.c</name>
+      </file>
+      <group>
+        <name>rtos</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/rtos/vg_lite_os.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLite/rtos/vg_lite_os.c</name>
+        </file>
+      </group>
+    </group>
+    <group>
+      <name>font</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/font/buf_reader.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/font/buf_reader.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/font/fonts.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/font/rle_font_read.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/font/vft_debug.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/font/vft_debug.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/font/vft_draw.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/font/vft_draw.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/font/vg_lite_text.c</name>
+      </file>
+      <group>
+        <name>mcufont</name>
+        <group>
+          <name>decoder</name>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mcufont.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_bwfont.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_bwfont.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_config.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_encoding.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_encoding.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_font.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_font.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_justify.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_justify.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_kerning.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_kerning.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_rlefont.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_rlefont.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_scaledfont.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_scaledfont.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_wordwrap.c</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/vglite/font/mcufont/decoder/mf_wordwrap.h</name>
+          </file>
+        </group>
+      </group>
+    </group>
+    <group>
+      <name>VGLiteKernel</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/vg_lite_hw.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/vg_lite_kernel.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/vg_lite_kernel.c</name>
+      </file>
+      <group>
+        <name>rtos</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos/vg_lite_hal.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../middleware/vglite/VGLiteKernel/rtos/vg_lite_platform.h</name>
+        </file>
+      </group>
+    </group>
   </group>
   <group>
     <name>device</name>

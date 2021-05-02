@@ -83,6 +83,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../components/ft3267
     ${ProjDirPath}/../../../../../components/gt911
     ${ProjDirPath}/../../../../../components/ft5406
+    ${ProjDirPath}/../../../../../middleware/vglite
     ${ProjDirPath}/../../../../../middleware/littlevgl
     ${ProjDirPath}/../../../../../devices/MIMXRT595S
     ${ProjDirPath}/../../../../../devices/MIMXRT595S/utilities
@@ -150,6 +151,8 @@ include(driver_gt911_MIMXRT595S_cm33)
 include(driver_mipi_dsi_smartdma_MIMXRT595S_cm33)
 
 include(driver_ft5406_MIMXRT595S_cm33)
+
+include(middleware_vglite_MIMXRT595S_cm33)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT595S_cm33)
 

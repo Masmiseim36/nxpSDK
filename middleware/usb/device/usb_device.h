@@ -9,6 +9,8 @@
 #ifndef __USB_DEVICE_H__
 #define __USB_DEVICE_H__
 
+#include "usb.h"
+
 /*!
  * @addtogroup usb_device_driver
  * @{

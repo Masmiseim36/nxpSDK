@@ -4535,6 +4535,12 @@
           <file>
             <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_pxp_osa.c</name>
           </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.h</name>
+          </file>
+          <file>
+            <name>$PROJ_DIR$/../../../../../middleware/littlevgl/lvgl/src/lv_gpu/lv_gpu_nxp_vglite.c</name>
+          </file>
         </group>
         <group>
           <name>lv_hal</name>

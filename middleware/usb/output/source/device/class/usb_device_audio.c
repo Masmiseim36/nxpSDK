@@ -1515,7 +1515,7 @@ usb_status_t USB_DeviceAudioGetControlTerminal(usb_device_audio_struct_t *audioH
  * @param controlRequest       The pointer of the control request structure.
  * @param terminal_type        The terminal type:: input terminal or output terminal
 *
- * @return A USB error code or kStatus_USB_Success.
+ * @return A USB error code, kStatus_USB_Success or kStatus_USB_InvalidRequest.
  */
 usb_status_t USB_DeviceAudioSetControlTerminal(usb_device_audio_struct_t *audioHandle,
                                                usb_device_control_request_struct_t *controlRequest, uint8_t terminal_type)
@@ -1537,7 +1537,7 @@ usb_status_t USB_DeviceAudioSetControlTerminal(usb_device_audio_struct_t *audioH
                     }
                     else
                     {
-                       return kStatus_USB_Error; /* Output Terminals only support the Set Terminal Copy Protect Control request */
+                       return kStatus_USB_InvalidRequest; /* Output Terminals only support the Set Terminal Copy Protect Control request */
                     }
                     break;
                 default:
@@ -1555,7 +1555,7 @@ usb_status_t USB_DeviceAudioSetControlTerminal(usb_device_audio_struct_t *audioH
                     }
                     else
                     {
-                       return kStatus_USB_Error; /* Output Terminals only support the Set Terminal Copy Protect Control request */
+                       return kStatus_USB_InvalidRequest; /* Output Terminals only support the Set Terminal Copy Protect Control request */
                     }
                     break;
                 default:

@@ -3,6 +3,9 @@
 
 @section LittlevGL LittlevGL for KSDK
 
+  - 7.4.0_rev2
+    - Added VGLite hardware acceleration.
+
   - 7.4.0_rev1
     - Integrate LittlevGL 7.4.0 to SDK.
 

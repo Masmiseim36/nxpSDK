@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT533S" name="MIMXRT533S" brief="This is SDK version 2.9.1 manifest file. It describes the content of the MIMXRT533S and additional settings for tools that support SDK version 2.9.1" format_version="3.8" api_version="2.0.0" configuration="c79a5f291eed7aa4ea12fa1bf3d2788a" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
-  <!--Timestamp (UTC): 2021-02-27 09:08:20.334604-->
-  <!--This manifest is generated based on sdk repo commit: 479d972308cf2526662eb4cbbd8db4c4b11f07fe-->
+<ksdk:manifest xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="SDK_2.x_MIMXRT533S" name="MIMXRT533S" brief="This is SDK version 2.9.2 manifest file. It describes the content of the MIMXRT533S and additional settings for tools that support SDK version 2.9.2" format_version="3.8" api_version="2.0.0" configuration="b702b3b2f86187d8606e2f7e2315a0c0" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd http://nxp.com/mcuxpresso/sdk/sdk_manifest_v3.8.xsd">
+  <!--Timestamp (UTC): 2021-05-02 18:19:03.525459-->
+  <!--This manifest is generated based on sdk repo commit: d93015309d29539624470664dc44f701fae13aca-->
   <defines>
     <define name="CPU_$|package|" value=""/>
     <define name="CPU_$|package|_$|core|" value=""/>
@@ -9,7 +9,7 @@
   <externalDefinitions>
     <definition extID="valmimxrt500"/>
   </externalDefinitions>
-  <ksdk id="MCUXpresso291" name="MCUXpresso291" version="2.9.1" revision="449 2021-02-23"/>
+  <ksdk id="MCUXpresso292" name="MCUXpresso292" version="2.9.2" revision="469 2021-04-29"/>
   <compilers>
     <compiler id="compiler_armclang" name="armclang" type="armclang"/>
     <compiler id="compiler_gcc" name="gcc" type="gcc"/>
@@ -10543,10 +10543,12 @@ ${load}</script>
         <files mask="lv_gpu_stm32_dma2d.h"/>
         <files mask="lv_gpu_nxp_pxp.h"/>
         <files mask="lv_gpu_nxp_pxp_osa.h"/>
+        <files mask="lv_gpu_nxp_vglite.h"/>
       </source>
       <source relative_path="lvgl/src/lv_gpu" project_relative_path="./lvgl/src/lv_gpu" type="src">
         <files mask="lv_gpu_nxp_pxp.c"/>
         <files mask="lv_gpu_nxp_pxp_osa.c"/>
+        <files mask="lv_gpu_nxp_vglite.c"/>
       </source>
       <source relative_path="lvgl/src/lv_hal" project_relative_path="./lvgl/src/lv_hal" type="c_include">
         <files mask="lv_hal.h"/>

@@ -37,7 +37,6 @@
  **********************/
 static lv_design_res_t lv_anim_img_design(lv_obj_t * img, const lv_area_t * clip_area, lv_design_mode_t mode);
 static lv_res_t lv_anim_img_signal(lv_obj_t * img, lv_signal_t sign, void * param);
-static lv_style_list_t * lv_anim_img_get_style(lv_obj_t * img, uint8_t type);
 static void index_change(lv_obj_t * obj, lv_anim_value_t index);
 
 /**********************
@@ -83,6 +82,7 @@ lv_obj_t * lv_animimg_create(lv_obj_t * par, const lv_obj_t * copy)
 
     ext->dsc       = NULL;
     ext->pic_count = -1;
+    ext->last_index = -1;
 
     /*Init the new object*/
     lv_obj_set_signal_cb(img, lv_anim_img_signal);
@@ -91,23 +91,22 @@ lv_obj_t * lv_animimg_create(lv_obj_t * par, const lv_obj_t * copy)
     if(copy == NULL) {
         //initial animation
         //      lv_obj_t * im
-          lv_anim_init(&ext->anim);
-          lv_anim_set_var(&ext->anim, img);
-          lv_anim_set_time(&ext->anim, 30);
-          lv_anim_set_exec_cb(&ext->anim, (lv_anim_exec_xcb_t)index_change);
-          lv_anim_set_values(&ext->anim, 0 , 1);
-          lv_anim_set_playback_time(&ext->anim, 100);
-          lv_anim_set_repeat_count(&ext->anim, LV_ANIM_REPEAT_INFINITE);
-
-
+        lv_anim_init(&ext->anim);
+        lv_anim_set_var(&ext->anim, img);
+        lv_anim_set_time(&ext->anim, 30);
+        lv_anim_set_exec_cb(&ext->anim, (lv_anim_exec_xcb_t)index_change);
+        lv_anim_set_values(&ext->anim, 0, 1);
+        lv_anim_set_playback_time(&ext->anim, 0);
+        lv_anim_set_repeat_count(&ext->anim, LV_ANIM_REPEAT_INFINITE);
     }
     else {
         lv_anim_img_ext_t * copy_ext = lv_obj_get_ext_attr(copy);
         ext->dsc         = copy_ext->dsc;
         ext->pic_count   = copy_ext->pic_count;
+        ext->last_index   = copy_ext->last_index;
         _lv_memcpy(&(ext->anim), &(copy_ext->anim), sizeof(lv_anim_t));
 
-//        lv_anim_img_set_src(img, copy_ext->src);
+        //        lv_anim_img_set_src(img, copy_ext->src);
     }
 
     LV_LOG_INFO("animation image created");
@@ -121,7 +120,7 @@ lv_obj_t * lv_animimg_create(lv_obj_t * par, const lv_obj_t * copy)
  */
 void lv_set_anim_img_sources(lv_obj_t * img,  lv_img_dsc_t ** dsc)
 {
-    lv_anim_img_ext_t* ext = lv_obj_get_ext_attr(img);
+    lv_anim_img_ext_t * ext = lv_obj_get_ext_attr(img);
     ext->dsc = dsc;
 }
 
@@ -131,7 +130,7 @@ void lv_set_anim_img_sources(lv_obj_t * img,  lv_img_dsc_t ** dsc)
  */
 void lv_anim_img_startup(lv_obj_t * img)
 {
-    lv_anim_img_ext_t* ext = lv_obj_get_ext_attr(img);
+    lv_anim_img_ext_t * ext = lv_obj_get_ext_attr(img);
     lv_anim_start(&ext->anim);
 }
 
@@ -147,9 +146,9 @@ void lv_anim_img_startup(lv_obj_t * img)
  */
 void lv_set_anim_img_numbers(lv_obj_t * img, uint8_t numbers)
 {
-    lv_anim_img_ext_t* ext = lv_obj_get_ext_attr(img);
+    lv_anim_img_ext_t * ext = lv_obj_get_ext_attr(img);
     ext->pic_count = numbers;
-    lv_anim_set_values(&ext->anim, 0 , numbers);
+    lv_anim_set_values(&ext->anim, 0, numbers);
 }
 /**
  * Set the  image animation wait before repeat. unit:ms
@@ -157,7 +156,7 @@ void lv_set_anim_img_numbers(lv_obj_t * img, uint8_t numbers)
  */
 void lv_set_anim_img_repeat_delay(lv_obj_t * img, uint32_t delay)
 {
-    lv_anim_img_ext_t* ext = lv_obj_get_ext_attr(img);
+    lv_anim_img_ext_t * ext = lv_obj_get_ext_attr(img);
     ext->anim.repeat_delay = delay;
 }
 
@@ -167,7 +166,7 @@ void lv_set_anim_img_repeat_delay(lv_obj_t * img, uint32_t delay)
  */
 void lv_set_anim_img_duration(lv_obj_t * img, uint32_t duration)
 {
-    lv_anim_img_ext_t* ext = lv_obj_get_ext_attr(img);
+    lv_anim_img_ext_t * ext = lv_obj_get_ext_attr(img);
     lv_anim_set_time(&ext->anim, duration);
 }
 
@@ -177,7 +176,7 @@ void lv_set_anim_img_duration(lv_obj_t * img, uint32_t duration)
  */
 void lv_set_anim_img_playback_time(lv_obj_t * img, uint16_t interval)
 {
-    lv_anim_img_ext_t* ext = lv_obj_get_ext_attr(img);
+    lv_anim_img_ext_t * ext = lv_obj_get_ext_attr(img);
     lv_anim_set_playback_time(&ext->anim, interval);
 }
 
@@ -187,7 +186,7 @@ void lv_set_anim_img_playback_time(lv_obj_t * img, uint16_t interval)
  */
 void lv_set_anim_img_startup_repeat_count(lv_obj_t * img, uint16_t count)
 {
-    lv_anim_img_ext_t* ext = lv_obj_get_ext_attr(img);
+    lv_anim_img_ext_t * ext = lv_obj_get_ext_attr(img);
     lv_anim_set_repeat_count(&ext->anim, count);
 }
 
@@ -270,7 +269,7 @@ void lv_anim_img_set_angle(lv_obj_t * img, int16_t angle)
  */
 void lv_anim_img_set_zoom(lv_obj_t * img, uint16_t zoom)
 {
-   lv_img_set_zoom(img, zoom);
+    lv_img_set_zoom(img, zoom);
 }
 
 /**
@@ -401,10 +400,12 @@ static lv_design_res_t lv_anim_img_design(lv_obj_t * img, const lv_area_t * clip
         return LV_DESIGN_RES_COVER;
     }
     else if(mode == LV_DESIGN_DRAW_MAIN) {
+        lv_obj_invalidate(lv_obj_get_parent(img));
         ancestor_design(img, clip_area, mode);
 
     }
     else if(mode == LV_DESIGN_DRAW_POST) {
+        lv_obj_invalidate(lv_obj_get_parent(img));
         ancestor_design(img, clip_area, mode);
     }
 
@@ -429,34 +430,17 @@ static lv_res_t lv_anim_img_signal(lv_obj_t * img, lv_signal_t sign, void * para
 }
 
 
-static lv_style_list_t * lv_anim_img_get_style(lv_obj_t * img, uint8_t type)
-{
-    lv_style_list_t * style_dsc_p;
-    switch(type) {
-        case LV_ANIM_IMG_PART_MAIN:
-            style_dsc_p = &img->style_list;
-            break;
-        default:
-            style_dsc_p = NULL;
-    }
-
-    return style_dsc_p;
-}
-
 static void index_change(lv_obj_t * obj, lv_anim_value_t index)
 {
-    static lv_coord_t last_index = -1;
-    lv_anim_img_ext_t* ext_attr = lv_obj_get_ext_attr(obj);
+    lv_anim_img_ext_t * ext_attr = lv_obj_get_ext_attr(obj);
 
-    if(index == ext_attr->pic_count)
-    {
+    if(index == ext_attr->pic_count) {
         return;
     }
 
-    if(last_index != index)
-    {
+    if(ext_attr->last_index != index) {
         lv_anim_img_set_src(obj, ext_attr->dsc[index]);
-        last_index = index;
+        ext_attr->last_index = index;
     }
 
 }

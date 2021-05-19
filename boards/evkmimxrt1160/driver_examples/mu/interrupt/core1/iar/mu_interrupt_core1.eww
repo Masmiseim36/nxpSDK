@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>mu_interrupt_core1</project>
+        <configuration>release</configuration>
+      </member>
+      <member>
+        <project>mu_interrupt_core1</project>
+        <configuration>debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>release</name>
+      <member>
+        <project>mu_interrupt_core1</project>
+        <configuration>release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>debug</name>
+      <member>
+        <project>mu_interrupt_core1</project>
+        <configuration>debug</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/mu_interrupt_core1.ewp</path>
+  </project>
+</workspace>

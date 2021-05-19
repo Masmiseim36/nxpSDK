@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<workspace>
+  <batchBuild>
+    <batchDefinition>
+      <name>all</name>
+      <member>
+        <project>openvg_tiger_freertos</project>
+        <configuration>sdram_release</configuration>
+      </member>
+      <member>
+        <project>openvg_tiger_freertos</project>
+        <configuration>sdram_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_release</name>
+      <member>
+        <project>openvg_tiger_freertos</project>
+        <configuration>sdram_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_debug</name>
+      <member>
+        <project>openvg_tiger_freertos</project>
+        <configuration>sdram_debug</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+  <project>
+    <path>$WS_DIR$/openvg_tiger_freertos.ewp</path>
+  </project>
+</workspace>

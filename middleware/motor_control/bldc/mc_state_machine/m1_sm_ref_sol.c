@@ -292,10 +292,10 @@ static void M1_StateStopFast(void)
 
     /* calculate BEMF voltage from phase voltage */
     g_sM1Drive.sCtrlBLDC.f16UPhaseBemf =
-        MLIB_Sub_F16(g_sM1Drive.sCtrlBLDC.f16UPhase, (g_sM1Drive.sCtrlBLDC.f16UDcBus >> 1));
+        MLIB_Sub_F16(g_sM1Drive.sCtrlBLDC.f16UPhase, (g_sM1Drive.sCtrlBLDC.f16UDcBus >> 1U));
 
     /* if the user switches on or set non-zero speed */
-    if ((g_bM1SwitchAppOnOff != 0) || (g_sM1Drive.sCtrlBLDC.f16SpeedCmd != 0))
+    if ((g_bM1SwitchAppOnOff != (bool_t)0) || (g_sM1Drive.sCtrlBLDC.f16SpeedCmd != (bool_t)0))
     {
         /* Set the switch on */
         g_bM1SwitchAppOnOff = 1;
@@ -324,7 +324,7 @@ static void M1_StateStopFast(void)
 static void M1_StateRunFast(void)
 {
     /* read timer counter and value registers */
-    M1_MCDRV_TMR_CMT_GET(&g_sM1CmtTmr);
+	M1_MCDRV_TMR_CMT_GET(&g_sM1CmtTmr);
 
     /* type the code to do when in the RUN state */
     /* check application main switch */
@@ -338,7 +338,7 @@ static void M1_StateRunFast(void)
     M1_FaultDetection();
 
     /* If a fault occurred */
-    if (g_sM1Drive.sFaultIdPending != 0)
+    if (g_sM1Drive.sFaultIdPending != 0U)
     {
         /* Switches to the FAULT state */
         g_sM1Ctrl.uiCtrl |= SM_CTRL_FAULT;
@@ -363,7 +363,7 @@ static void M1_StateRunFast(void)
 
     /* calculate BEMF voltage from phase voltage */
     g_sM1Drive.sCtrlBLDC.f16UPhaseBemf =
-        MLIB_Sub_F16(g_sM1Drive.sCtrlBLDC.f16UPhase, (g_sM1Drive.sCtrlBLDC.f16UDcBus >> 1));
+        MLIB_Sub_F16(g_sM1Drive.sCtrlBLDC.f16UPhase, (g_sM1Drive.sCtrlBLDC.f16UDcBus >> 1U));
 
     /* Run sub-state function */
     s_M1_STATE_RUN_TABLE_FAST[s_eM1StateRun]();
@@ -384,7 +384,7 @@ static void M1_StateFaultSlow(void)
     /* after fault condition ends wait defined time to clear fault state */
     if (!MC_FAULT_ANY(g_sM1Drive.sFaultIdPending))
     {
-        if (--g_sM1Drive.ui16CounterState == 0)
+        if (--g_sM1Drive.ui16CounterState == 0U)
         {
             /* Clear fault state */
             g_sM1Ctrl.uiCtrl |= SM_CTRL_FAULT_CLEAR;
@@ -453,7 +453,7 @@ static void M1_TransInitFault(void)
 {
     /* type the code to do when going from the INIT to the FAULT state */
     /* disable PWM outputs */
-    M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
+	M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
 
     /* clear required speed */
     g_sM1Drive.sCtrlBLDC.f16SpeedCmd = 0;
@@ -470,7 +470,7 @@ static void M1_TransInitStop(void)
 {
     /* type the code to do when going from the INIT to the FAULT state */
     /* disable PWM outputs */
-    M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
+	M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
 }
 
 /*!
@@ -523,10 +523,10 @@ static void M1_TransRunFault(void)
     /* type the code to do when going from the RUN to the FAULT state */
 
     /* disable PWM outputs */
-    M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
+	M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
 
     /* turn off application */
-    g_bM1SwitchAppOnOff = 0;
+    g_bM1SwitchAppOnOff = (bool_t)0;
 
     /* clear required speed */
     g_sM1Drive.sCtrlBLDC.f16SpeedCmd = FRAC16(0.0);
@@ -620,7 +620,7 @@ static void M1_StateRunAlignFast(void)
  */
 static void M1_StateRunStartupFast(void)
 {
-    if (g_sM1Drive.ui16CounterStartCmt == 0)
+    if (g_sM1Drive.ui16CounterStartCmt == 0U)
     {
         /* Transition to the RUN STARTUP sub-state */
         M1_TransRunStartupSpin();
@@ -643,7 +643,7 @@ static void M1_StateRunSpinFast(void)
     if ((uint16_t)MLIB_SubSat_F16(g_sM1Drive.ui16TimeCurrent, g_sM1Drive.ui16TimeOfCmt) >= g_sM1Drive.ui16PeriodToff)
     {
         /* mirror BEMF voltage according to the sector (change falling BEMF to rising BEMF) */
-        if (!((g_sM1Drive.sCtrlBLDC.i16SectorCmt ^ g_sM1Drive.sCtrlBLDC.ui16MotorDir) & 1))
+        if (!((g_sM1Drive.sCtrlBLDC.i16SectorCmt ^ g_sM1Drive.sCtrlBLDC.ui16MotorDir) & 1U))
             g_sM1Drive.sCtrlBLDC.f16UPhaseBemf = MLIB_Neg_F16(g_sM1Drive.sCtrlBLDC.f16UPhaseBemf);
 
         /* integrate if positive BEMF voltage */
@@ -663,7 +663,7 @@ static void M1_StateRunSpinFast(void)
             if ((uint16_t)MLIB_SubSat_F16(g_sM1Drive.ui16TimeCurrent, g_sM1Drive.ui16TimeOfCmt) < (M1_CMT_PER_MIN >> 1))
             {
                 /* PWM output disable request - actual commutation period was shorter than minimum */
-                M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
+            	M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
 
                 /* set long free-wheel period */
                 g_sM1Drive.ui16CounterState = g_sM1Drive.ui16PeriodFreewheelLong;
@@ -700,7 +700,7 @@ static void M1_StateRunSpinFast(void)
             g_sM1Drive.f32UBemfIntegSum = 0;
 
             /* decrement commutation error counter */
-            if (g_sM1Drive.ui16CounterCmtError > 0)
+            if (g_sM1Drive.ui16CounterCmtError > 0U)
                 g_sM1Drive.ui16CounterCmtError--;
 
             /* raise sensorless commutation flag */
@@ -732,13 +732,13 @@ static void M1_StateRunCalibSlow(void)
     /* type the code to do when in the RUN CALIB sub-state */
 
     /* integrate DC-bus current offset */
-    M1_MCDRV_CURR_CALIB(&g_sM1AdcSensor);
+	M1_MCDRV_CURR_CALIB(&g_sM1AdcSensor);
 
     /* wait until the calibration duration passes */
     if (--g_sM1Drive.ui16CounterState == 0)
     {
         /* set the DC-bus measurement offset value */
-        M1_MCDRV_CURR_CALIB_SET(&g_sM1AdcSensor);
+    	M1_MCDRV_CURR_CALIB_SET(&g_sM1AdcSensor);
 
         /* Transition to the RUN READY sub-state */
         M1_TransRunCalibReady();
@@ -936,7 +936,7 @@ static void M1_TransRunAlignStartup(void)
     M1_MCDRV_TMR_CMT_SET(&g_sM1CmtTmr, g_sM1Drive.ui16TimeNextEvent);
 
     /* select next sector based on required spin direction */
-    if (g_sM1Drive.sCtrlBLDC.ui16MotorDir == 0)
+    if (g_sM1Drive.sCtrlBLDC.ui16MotorDir == 0U)
         g_sM1Drive.sCtrlBLDC.i16SectorCmt = 2;
     else
         g_sM1Drive.sCtrlBLDC.i16SectorCmt = 5;
@@ -998,7 +998,7 @@ static void M1_TransRunStartupSpin(void)
     g_sM1Drive.ui16CounterCmtError = 0;
 
     /* initialize speed ramp based on spin direction */
-    if (g_sM1Drive.sCtrlBLDC.ui16MotorDir == 0)
+    if (g_sM1Drive.sCtrlBLDC.ui16MotorDir == 0U)
     {
         /* forward */
         g_sM1Drive.sCtrlBLDC.sSpeedRampParams.f32State = MLIB_Conv_F32s(M1_N_START_TRH);
@@ -1098,7 +1098,7 @@ static void M1_TransRunFreewheelReady(void)
 void M1_TimeEvent(void)
 {
     /* read timer counter and value registers */
-    M1_MCDRV_TMR_CMT_GET(&g_sM1CmtTmr);
+	M1_MCDRV_TMR_CMT_GET(&g_sM1CmtTmr);
 
     /* take action based on current RUN sub-state */
     switch (s_eM1StateRun)
@@ -1129,10 +1129,10 @@ void M1_TimeEvent(void)
                 return;
 
             /* check commutation stability (number of commutation errors) */
-            if (g_sM1Drive.ui16CounterCmtError > (M1_MAX_CMT_ERRORS * 3))
+            if (g_sM1Drive.ui16CounterCmtError > (M1_MAX_CMT_ERRORS * 3U))
             {
                 /* unstable or very low speed - PWM output disable request */
-                M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
+            	M1_MCDRV_PWM3PH_SET_PWM_OUTPUT(&g_sM1Pwm3ph, 7);
 
                 /* set long free-wheel time period */
                 g_sM1Drive.ui16CounterState = g_sM1Drive.ui16PeriodFreewheelLong;
@@ -1147,7 +1147,7 @@ void M1_TimeEvent(void)
             else
             {
                 /* increment error counter */
-                g_sM1Drive.ui16CounterCmtError += 3;
+                g_sM1Drive.ui16CounterCmtError += 3U;
             }
 
             /* calculate next commutation time and period */
@@ -1187,7 +1187,7 @@ void M1_TimeEvent(void)
  *
  * @return None
  */
-void M1_FaultDetection(void)
+static void M1_FaultDetection(void)
 {
     /* Clearing actual faults before detecting them again  */
     /* Clear all faults */
@@ -1248,7 +1248,7 @@ bool_t M1_GetAppSwitch(void)
  *
  * @return uint16_t Return current application state
  */
-uint16_t M1_GetAppState()
+uint16_t M1_GetAppState(void)
 {
     return ((uint16_t)g_sM1Ctrl.eState);
 }

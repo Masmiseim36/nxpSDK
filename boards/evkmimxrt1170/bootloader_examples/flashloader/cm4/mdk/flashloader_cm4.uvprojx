@@ -1034,9 +1034,9 @@
               <FilePath>../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/bootloader_config.h</FilePath>
             </File>
             <File>
-              <FileName>clock_config_MIMXRT1176.c</FileName>
+              <FileName>clock_cfg_MIMXRT1176.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/clock_config_MIMXRT1176.c</FilePath>
+              <FilePath>../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/clock_cfg_MIMXRT1176.c</FilePath>
             </File>
             <File>
               <FileName>external_memory_property_map_MIMXRT1176.c</FileName>

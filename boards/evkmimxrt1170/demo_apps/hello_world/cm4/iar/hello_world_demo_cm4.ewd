@@ -4931,7 +4931,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>flexspi_nor_sdram_debug</name>
+    <name>sdram_txt_debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -4985,11 +4985,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--macro_param enable_core=1</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -6574,7 +6574,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>sdram_txt_debug</name>
+    <name>flexspi_nor_sdram_debug</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -6632,7 +6632,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1170_connect_cm4_cm4side.jlinkscript</state>
+          <state>--macro_param enable_core=1</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -6903,7 +6903,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>5</state>
+          <state>1</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -8271,11 +8271,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--macro_param enable_core=1</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -8546,7 +8546,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>5</state>
+          <state>1</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -14789,7 +14789,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>flexspi_nor_sdram_release</name>
+    <name>sdram_txt_release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -14843,11 +14843,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--macro_param enable_core=1</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -16432,7 +16432,7 @@
     </debuggerPlugins>
   </configuration>
   <configuration>
-    <name>sdram_txt_release</name>
+    <name>flexspi_nor_sdram_release</name>
     <toolchain>
       <name>ARM</name>
     </toolchain>
@@ -16490,7 +16490,7 @@
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state>--jlink_script_file=$PROJ_DIR$/../evkmimxrt1170_connect_cm4_cm4side.jlinkscript</state>
+          <state>--macro_param enable_core=1</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -16761,7 +16761,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>5</state>
+          <state>1</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>
@@ -18129,11 +18129,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--macro_param enable_core=1</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -18404,7 +18404,7 @@
         <option>
           <name>CMSISDAPResetList</name>
           <version>1</version>
-          <state>5</state>
+          <state>1</state>
         </option>
         <option>
           <name>CMSISDAPHWResetDuration</name>

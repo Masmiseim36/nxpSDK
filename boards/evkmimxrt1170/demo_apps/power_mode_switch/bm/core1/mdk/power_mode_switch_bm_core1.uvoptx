@@ -108,7 +108,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1170_ram_cm4.ini</tIfile>
+        <tIfile>.\debug_CM4.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -272,7 +272,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1170_ram_cm4.ini</tIfile>
+        <tIfile>.\debug_CM4.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

@@ -32,7 +32,7 @@ void MID_alignment(mid_align_t *sAlignmentFcn)
     sAlignmentFcn->ui16LoopCounter--;
 
     /* single position alignment */
-    if (sAlignmentFcn->ui16LoopCounter > 0)
+    if (sAlignmentFcn->ui16LoopCounter > 0U)
     {
         /* require d-axis voltage for an alignment */
         *(sAlignmentFcn->pfltIdReq) = sAlignmentFcn->fltCurrentAlign;

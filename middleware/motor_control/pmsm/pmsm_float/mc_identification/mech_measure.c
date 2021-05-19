@@ -24,9 +24,9 @@ static void MIDpenLoopStartUpA1(mid_ol_startup_t *psStartUp);
  */
 void MID_getMech(mid_get_mech_t *sMechMeasFcn)
 {
-    float_t fltJtemp            = 0;
-    float_t fltTautemp          = 0;
-    float_t fltInertiaConsttemp = 0;
+    float_t fltJtemp            = 0.0F;
+    float_t fltTautemp          = 0.0F;
+    float_t fltInertiaConsttemp = 0.0F;
 
     /* Initialization */
     if (sMechMeasFcn->ui16Active == FALSE)
@@ -189,7 +189,7 @@ void MID_getMech(mid_get_mech_t *sMechMeasFcn)
                 }
 
                 /* Repeat the measurement unless all measurements done */
-                if (--(sMechMeasFcn->ui16MeasNr) == 0)
+                if (--(sMechMeasFcn->ui16MeasNr) == 0U)
                 {
                     /* Calculate average values */
                     sMechMeasFcn->fltTauMech      = sMechMeasFcn->fltTauMech / ((float_t)(MID_MECH_MEAS_NR - 1));
@@ -227,6 +227,7 @@ void MID_getMech(mid_get_mech_t *sMechMeasFcn)
 
             /* When finished exit the function */
             sMechMeasFcn->ui16Active = FALSE;
+            break;
     }
 }
 
@@ -266,5 +267,7 @@ static void MIDpenLoopStartUpA1(mid_ol_startup_t *psStartUp)
 
     /* clear open loop flag */
     if (psStartUp->f16RatioMerging == FRAC16(1.0))
+    {
         psStartUp->bOpenLoop = FALSE;
+    }
 }

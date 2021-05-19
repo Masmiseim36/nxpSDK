@@ -65,6 +65,7 @@
           <value>XIP_BOOT_HEADER_DCD_ENABLE=1</value>
           <value>USE_SDRAM</value>
           <value>DATA_SECTION_IS_CACHEABLE=1</value>
+          <value>USB_STACK_BM</value>
           <value>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</value>
         </option>
         <option id="com.crt.advproject.gas.fpu" type="enum">

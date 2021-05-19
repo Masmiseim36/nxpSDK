@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,7 +17,7 @@ product: Pins v9.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 0.9.3
+processor_version: 0.9.6
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -58,6 +58,8 @@ BOARD_InitPins:
     open_drain: Disable}
   - {pin_num: F17, peripheral: FLEXSPI1, signal: FLEXSPI_A_SS0_B, pin_signal: GPIO_SD_B2_06, software_input_on: Enable, pull_down_pull_up_config: Pull_Down, pdrv_config: Normal_Driver,
     open_drain: Disable}
+  - {pin_num: D6, peripheral: ARM, signal: arm_trace_swo, pin_signal: GPIO_DISP_B2_07, software_input_on: Disable, pull_up_down_config: Pull_Down, pull_keeper_select: Keeper,
+    open_drain: Disable, drive_strength: High, slew_rate: Slow}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -75,6 +77,9 @@ void BOARD_InitPins(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_25_LPUART1_RXD,          /* GPIO_AD_25 is configured as LPUART1_RXD */
+      0U);                                    /* Software Input On Field: Input Path is determined by functionality */
+  IOMUXC_SetPinMux(
+      IOMUXC_GPIO_DISP_B2_07_ARM_TRACE_SWO,   /* GPIO_DISP_B2_07 is configured as ARM_TRACE_SWO */
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_SD_B2_05_FLEXSPI1_A_DQS,    /* GPIO_SD_B2_05 is configured as FLEXSPI1_A_DQS */
@@ -108,6 +113,15 @@ void BOARD_InitPins(void) {
                                                  Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_25_LPUART1_RXD,          /* GPIO_AD_25 PAD functional properties : */
+      0x02U);                                 /* Slew Rate Field: Slow Slew Rate
+                                                 Drive Strength Field: high drive strength
+                                                 Pull / Keep Select Field: Pull Disable, Highz
+                                                 Pull Up / Down Config. Field: Weak pull down
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
+  IOMUXC_SetPinConfig(
+      IOMUXC_GPIO_DISP_B2_07_ARM_TRACE_SWO,   /* GPIO_DISP_B2_07 PAD functional properties : */
       0x02U);                                 /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz

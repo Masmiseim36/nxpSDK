@@ -20,15 +20,15 @@
  ******************************************************************************/
 /* SAI instance and clock */
 #define DEMO_CODEC_WM8960
-#define DEMO_CODEC_VOLUME     0x18U
-#define DEMO_SAI SAI1
-#define DEMO_SAI_CHANNEL (0)
-#define DEMO_SAI_BITWIDTH (kSAI_WordWidth16bits)
-#define DEMO_SAI_IRQ SAI1_IRQn
+#define DEMO_CODEC_VOLUME     100U
+#define DEMO_SAI              SAI1
+#define DEMO_SAI_CHANNEL      (0)
+#define DEMO_SAI_BITWIDTH     (kSAI_WordWidth16bits)
+#define DEMO_SAI_IRQ          SAI1_IRQn
 #define DEMO_SAI_TX_SYNC_MODE kSAI_ModeAsync
 #define DEMO_SAI_RX_SYNC_MODE kSAI_ModeSync
 #define DEMO_SAI_MASTER_SLAVE kSAI_Master
-#define SAI_UserIRQHandler SAI1_IRQHandler
+#define SAI_UserIRQHandler    SAI1_IRQHandler
 
 /* demo audio master clock */
 #define DEMO_AUDIO_MASTER_CLOCK DEMO_SAI_CLK_FREQ
@@ -38,12 +38,12 @@
 #define DEMO_SAI_RX_IRQ SAI1_IRQn
 
 /* DMA */
-#define DEMO_DMA DMA0
-#define DEMO_DMAMUX DMAMUX0
+#define DEMO_DMA             DMA0
+#define DEMO_DMAMUX          DMAMUX0
 #define DEMO_TX_EDMA_CHANNEL (0U)
 #define DEMO_RX_EDMA_CHANNEL (1U)
-#define DEMO_SAI_TX_SOURCE kDmaRequestMuxSai1Tx
-#define DEMO_SAI_RX_SOURCE kDmaRequestMuxSai1Rx
+#define DEMO_SAI_TX_SOURCE   kDmaRequestMuxSai1Tx
+#define DEMO_SAI_RX_SOURCE   kDmaRequestMuxSai1Rx
 
 /* Get frequency of sai1 clock */
 #define DEMO_SAI_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Sai1)
@@ -342,8 +342,11 @@ int main(void)
     {
         assert(false);
     }
-    CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
-                    DEMO_CODEC_VOLUME);
+    if (CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
+                        DEMO_CODEC_VOLUME) != kStatus_Success)
+    {
+        assert(false);
+    }
 
     /* Enable interrupt to handle FIFO error */
     SAI_TxEnableInterrupts(DEMO_SAI, kSAI_FIFOErrorInterruptEnable);

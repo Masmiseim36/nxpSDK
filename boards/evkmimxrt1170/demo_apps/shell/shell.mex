@@ -87,6 +87,16 @@
                         <pin_feature name="slew_rate" value="Slow"/>
                      </pin_features>
                   </pin>
+                  <pin peripheral="ARM" signal="arm_trace_swo" pin_num="D6" pin_signal="GPIO_DISP_B2_07">
+                     <pin_features>
+                        <pin_feature name="software_input_on" value="Disable"/>
+                        <pin_feature name="pull_up_down_config" value="Pull_Down"/>
+                        <pin_feature name="pull_keeper_select" value="Keeper"/>
+                        <pin_feature name="open_drain" value="Disable"/>
+                        <pin_feature name="drive_strength" value="High"/>
+                        <pin_feature name="slew_rate" value="Slow"/>
+                     </pin_features>
+                  </pin>
                </pins>
             </function>
          </functions_list>
@@ -121,7 +131,7 @@
                   <clock_output id="CSI2_UI_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="CSI_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="CSSYS_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
-                  <clock_output id="CSTRACE_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CSTRACE_CLK_ROOT.outFreq" value="132 MHz" locked="false" accuracy=""/>
                   <clock_output id="ELCDIF_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="EMV1_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="EMV2_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
@@ -176,7 +186,7 @@
                   <clock_output id="LPUART7_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="LPUART8_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="LPUART9_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
-                  <clock_output id="M4_CLK_ROOT.outFreq" value="4320/11 MHz" locked="false" accuracy=""/>
+                  <clock_output id="M4_CLK_ROOT.outFreq" value="240 MHz" locked="false" accuracy=""/>
                   <clock_output id="M4_SYSTICK_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="M7_CLK_ROOT.outFreq" value="996 MHz" locked="false" accuracy=""/>
                   <clock_output id="M7_SYSTICK_CLK_ROOT.outFreq" value="100 kHz" locked="false" accuracy=""/>
@@ -245,7 +255,8 @@
                   <setting id="ANADIG_PLL_SYS_PLL3_CTRL_POWERUP_CFG" value="Enabled" locked="false"/>
                   <setting id="ANADIG_PLL_SYS_PLL3_CTRL_SYS_PLL3_DIV2_CFG" value="Enabled" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT0.MUX.sel" value="ANADIG_PLL.ARM_PLL_CLK" locked="false"/>
-                  <setting id="CCM.CLOCK_ROOT1.MUX.sel" value="ANADIG_PLL.SYS_PLL3_PFD3_CLK" locked="false"/>
+                  <setting id="CCM.CLOCK_ROOT1.DIV.scale" value="2" locked="true"/>
+                  <setting id="CCM.CLOCK_ROOT1.MUX.sel" value="ANADIG_PLL.SYS_PLL3_CLK" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT2.DIV.scale" value="2" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT2.MUX.sel" value="ANADIG_PLL.SYS_PLL3_CLK" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT25.DIV.scale" value="22" locked="false"/>
@@ -256,6 +267,8 @@
                   <setting id="CCM.CLOCK_ROOT3.MUX.sel" value="ANADIG_PLL.SYS_PLL3_CLK" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT4.DIV.scale" value="3" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT4.MUX.sel" value="ANADIG_PLL.SYS_PLL2_PFD1_CLK" locked="false"/>
+                  <setting id="CCM.CLOCK_ROOT6.DIV.scale" value="4" locked="true"/>
+                  <setting id="CCM.CLOCK_ROOT6.MUX.sel" value="ANADIG_PLL.SYS_PLL2_CLK" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT68.DIV.scale" value="2" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT68.MUX.sel" value="ANADIG_PLL.PLL_VIDEO_CLK" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT8.DIV.scale" value="240" locked="false"/>

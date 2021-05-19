@@ -189,6 +189,7 @@
           <state>BOARD_ACCEL_FXOS</state>
           <state>SDK_I2C_BASED_COMPONENT_USED</state>
           <state>LWIP_ENET_FLEXIBLE_CONFIGURATION</state>
+          <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>USE_RTOS=1</state>
           <state>MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h"</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
@@ -1226,6 +1227,7 @@
           <state>BOARD_ACCEL_FXOS</state>
           <state>SDK_I2C_BASED_COMPONENT_USED</state>
           <state>LWIP_ENET_FLEXIBLE_CONFIGURATION</state>
+          <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>USE_RTOS=1</state>
           <state>MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h"</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>

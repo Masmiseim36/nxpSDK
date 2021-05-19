@@ -132,6 +132,17 @@ status_t bootloader_property_load_user_config(void)
     return kStatus_Success;
 }
 
+// Get bugfix incremental version
+static int get_bugfix_inc_ver(void)
+{
+#ifdef BUGFIX_INC_VER_RETRIEVER
+    static const uint32_t retriever[] = BUGFIX_INC_VER_RETRIEVER;
+    return ((int (*)())(((size_t)retriever) | 0x1))()+1;
+#else
+    return 0;
+#endif
+}
+
 // See property.h for documentation on this function.
 status_t bootloader_property_init(void)
 {
@@ -153,7 +164,7 @@ status_t bootloader_property_init(void)
     propertyStore->targetVersion.name = kTarget_Version_Name;
     propertyStore->targetVersion.major = kTarget_Version_Major;
     propertyStore->targetVersion.minor = kTarget_Version_Minor;
-    propertyStore->targetVersion.bugfix = kTarget_Version_Bugfix;
+    propertyStore->targetVersion.bugfix = kTarget_Version_Bugfix + get_bugfix_inc_ver();
 
     propertyStore->verifyWrites = true;
 
@@ -194,6 +205,9 @@ status_t bootloader_property_init(void)
 #if defined(K32H844P_SERIES)
     propertyStore->UniqueDeviceId.uid[0] = OCOTP->CFG[0].CFG;
     propertyStore->UniqueDeviceId.uid[1] = OCOTP->CFG[1].CFG;
+#elif defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1166_cm4_SERIES) || defined(MIMXRT1166_cm7_SERIES)
+    propertyStore->UniqueDeviceId.uid[0] = OCOTP->FUSEN[16].FUSE;
+    propertyStore->UniqueDeviceId.uid[1] = OCOTP->FUSEN[17].FUSE;
 #else
     propertyStore->UniqueDeviceId.uid[0] = OCOTP->CFG0;
     propertyStore->UniqueDeviceId.uid[1] = OCOTP->CFG1;

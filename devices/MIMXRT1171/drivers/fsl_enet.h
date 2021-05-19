@@ -24,7 +24,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief Defines the driver version. */
-#define FSL_ENET_DRIVER_VERSION (MAKE_VERSION(2, 4, 1))
+#define FSL_ENET_DRIVER_VERSION (MAKE_VERSION(2, 4, 3))
 /*@}*/
 
 /*! @name ENET DESCRIPTOR QUEUE */

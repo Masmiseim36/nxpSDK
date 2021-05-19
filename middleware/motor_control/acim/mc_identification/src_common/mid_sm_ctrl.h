@@ -16,21 +16,21 @@
  ******************************************************************************/
 /* state machine control command flags */
 /* maximum eight of _ACK/_DONE flag pairs  */
-#define MID_SM_CTRL_NONE 0x00000000
-#define MID_SM_CTRL_START_ACK 0x00000001
-#define MID_SM_CTRL_START_DONE ((MID_SM_CTRL_START_ACK)*0x10000)
-#define MID_SM_CTRL_STOP_ACK 0x00000002
-#define MID_SM_CTRL_STOP_DONE ((MID_SM_CTRL_STOP_ACK)*0x10000)
-#define MID_SM_CTRL_PWR_STG_CHARACT_ACK 0x00000004
-#define MID_SM_CTRL_PWR_STG_CHARACT_DONE ((MID_SM_CTRL_PWR_STG_CHARACT_ACK)*0x10000)
-#define MID_SM_CTRL_RS_ACK 0x00000008
-#define MID_SM_CTRL_RS_DONE ((MID_SM_CTRL_RS_ACK)*0x10000)
-#define MID_SM_CTRL_NOLOAD_ACK 0x00000010
-#define MID_SM_CTRL_NOLOAD_DONE ((MID_SM_CTRL_NOLOAD_ACK)*0x10000)
-#define MID_SM_CTRL_BLOCKED_ACK 0x00000020
-#define MID_SM_CTRL_BLOCKED_DONE ((MID_SM_CTRL_BLOCKED_ACK)*0x10000)
-#define MID_SM_CTRL_MECH_ACK 0x00000040
-#define MID_SM_CTRL_MECH_DONE ((MID_SM_CTRL_MECH_ACK)*0x10000)
+#define MID_SM_CTRL_NONE 0x00000000U
+#define MID_SM_CTRL_START_ACK 0x00000001U
+#define MID_SM_CTRL_START_DONE ((MID_SM_CTRL_START_ACK)*0x10000U)
+#define MID_SM_CTRL_STOP_ACK 0x00000002U
+#define MID_SM_CTRL_STOP_DONE ((MID_SM_CTRL_STOP_ACK)*0x10000U)
+#define MID_SM_CTRL_PWR_STG_CHARACT_ACK 0x00000004U
+#define MID_SM_CTRL_PWR_STG_CHARACT_DONE ((MID_SM_CTRL_PWR_STG_CHARACT_ACK)*0x10000U)
+#define MID_SM_CTRL_RS_ACK 0x00000008U
+#define MID_SM_CTRL_RS_DONE ((MID_SM_CTRL_RS_ACK)*0x10000U)
+#define MID_SM_CTRL_NOLOAD_ACK 0x00000010U
+#define MID_SM_CTRL_NOLOAD_DONE ((MID_SM_CTRL_NOLOAD_ACK)*0x10000U)
+#define MID_SM_CTRL_BLOCKED_ACK 0x00000020U
+#define MID_SM_CTRL_BLOCKED_DONE ((MID_SM_CTRL_BLOCKED_ACK)*0x10000U)
+#define MID_SM_CTRL_MECH_ACK 0x00000040U
+#define MID_SM_CTRL_MECH_DONE ((MID_SM_CTRL_MECH_ACK)*0x10000U)
 
 /* application state identification enum */
 typedef enum
@@ -112,12 +112,12 @@ static inline void MID_SM_StateMachine(mid_sm_app_ctrl_t *sAppCtrl)
     g_MID_SM_STATE_TABLE[sAppCtrl->eState](sAppCtrl);
 
     /* check fail state */
-    if (g_sMID.ui16FaultMID != 0)
+    if (g_sMID.ui16FaultMID != 0U)
     {
         /* run transition function */
         sAppCtrl->psTrans->MID_All2Stop();
 
-        if ((sAppCtrl->uiCtrl & MID_SM_CTRL_STOP_ACK) > 0)
+        if ((sAppCtrl->uiCtrl & MID_SM_CTRL_STOP_ACK) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             sAppCtrl->uiCtrl &= ~(MID_SM_CTRL_STOP_ACK);

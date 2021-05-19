@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  *
@@ -13,6 +13,16 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+typedef struct _flexspi_cache_status
+{
+#if (defined __CORTEX_M) && (__CORTEX_M == 7U)
+    volatile bool DCacheEnableFlag;
+    volatile bool ICacheEnableFlag;
+#elif (defined __CORTEX_M) && (__CORTEX_M == 4U)
+    volatile bool codeCacheEnableFlag;
+    volatile bool systemCacheEnableFlag;
+#endif
+} flexspi_cache_status_t;
 
 /*******************************************************************************
  * Prototypes
@@ -27,9 +37,80 @@ static volatile bool g_completionFlag = false;
 extern edma_handle_t dmaTxHandle;
 extern edma_handle_t dmaRxHandle;
 static flexspi_edma_handle_t flexspiHandle;
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
+void flexspi_nor_disable_cache(flexspi_cache_status_t *cacheStatus)
+{
+#if (defined __CORTEX_M) && (__CORTEX_M == 7U)
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    /* Disable D cache. */
+    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR))
+    {
+        SCB_DisableDCache();
+        cacheStatus->DCacheEnableFlag = true;
+    }
+#endif /* __DCACHE_PRESENT */
+
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    /* Disable I cache. */
+    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
+    {
+        SCB_DisableICache();
+        cacheStatus->ICacheEnableFlag = true;
+    }
+#endif /* __ICACHE_PRESENT */
+
+#elif (defined __CORTEX_M) && (__CORTEX_M == 4U)
+    /* Disable code bus cache and system bus cache */
+    if (LMEM_PCCCR_ENCACHE_MASK == (LMEM_PCCCR_ENCACHE_MASK & LMEM->PCCCR))
+    {
+        L1CACHE_DisableCodeCache();
+        cacheStatus->codeCacheEnableFlag = true;
+    }
+    if (LMEM_PSCCR_ENCACHE_MASK == (LMEM_PSCCR_ENCACHE_MASK & LMEM->PSCCR))
+    {
+        L1CACHE_DisableSystemCache();
+        cacheStatus->systemCacheEnableFlag = true;
+    }
+#endif
+}
+
+void flexspi_nor_enable_cache(flexspi_cache_status_t cacheStatus)
+{
+#if (defined __CORTEX_M) && (__CORTEX_M == 7U)
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    if (cacheStatus.DCacheEnableFlag)
+    {
+        /* Enable D cache. */
+        SCB_EnableDCache();
+    }
+#endif /* __DCACHE_PRESENT */
+
+#if defined(__ICACHE_PRESENT) && (__ICACHE_PRESENT == 1U)
+    if (cacheStatus.ICacheEnableFlag)
+    {
+        /* Enable I cache. */
+        SCB_EnableICache();
+    }
+#endif /* __ICACHE_PRESENT */
+
+#elif (defined __CORTEX_M) && (__CORTEX_M == 4U)
+    if (cacheStatus.codeCacheEnableFlag)
+    {
+        /* Enable code cache. */
+        L1CACHE_EnableCodeCache();
+    }
+
+    if (cacheStatus.systemCacheEnableFlag)
+    {
+        /* Enable system cache. */
+        L1CACHE_EnableSystemCache();
+    }
+#endif
+}
+
 static void flexspi_callback(FLEXSPI_Type *base, flexspi_edma_handle_t *handle, status_t status, void *userData)
 {
     /* Signal transfer success when received success status. */
@@ -118,6 +199,11 @@ status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
     status_t status;
     uint32_t writeValue = FLASH_QUAD_ENABLE;
 
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
+
     /* Make sure external flash is not in busy status. */
     status = flexspi_nor_wait_bus_busy(base);
     if (status != kStatus_Success)
@@ -159,6 +245,10 @@ status_t flexspi_nor_enable_quad_mode(FLEXSPI_Type *base)
     FLEXSPI_SoftwareReset(base);
 #endif
 
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
+
     return status;
 }
 
@@ -166,6 +256,11 @@ status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address)
 {
     status_t status;
     flexspi_transfer_t flashXfer;
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
 
     /* Make sure external flash is not in busy status. */
     status = flexspi_nor_wait_bus_busy(base);
@@ -211,6 +306,10 @@ status_t flexspi_nor_flash_erase_sector(FLEXSPI_Type *base, uint32_t address)
     FLEXSPI_SoftwareReset(base);
 #endif
 
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
+
     return status;
 }
 
@@ -221,6 +320,11 @@ status_t flexspi_nor_flash_program(FLEXSPI_Type *base, uint32_t dstAddr, const u
 
     /* Flash program limits program size smaller than flash page size for one program command sequence. */
     assert(length <= FLASH_PAGE_SIZE);
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
 
     /* Make sure external flash is not in busy status. */
     status = flexspi_nor_wait_bus_busy(base);
@@ -271,6 +375,10 @@ status_t flexspi_nor_flash_program(FLEXSPI_Type *base, uint32_t dstAddr, const u
     FLEXSPI_SoftwareReset(base);
 #endif
 
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
+
     return status;
 }
 
@@ -278,6 +386,11 @@ status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, co
 {
     status_t status;
     flexspi_transfer_t flashXfer;
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
 
     /* Make sure external flash is not in busy status. */
     status = flexspi_nor_wait_bus_busy(base);
@@ -326,6 +439,10 @@ status_t flexspi_nor_flash_page_program(FLEXSPI_Type *base, uint32_t dstAddr, co
     base->AHBCR &= ~(FLEXSPI_AHBCR_CLRAHBRXBUF_MASK | FLEXSPI_AHBCR_CLRAHBTXBUF_MASK);
 #else
     FLEXSPI_SoftwareReset(base);
+#endif
+
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
 #endif
 
     return status;
@@ -405,6 +522,11 @@ status_t flexspi_nor_erase_chip(FLEXSPI_Type *base)
     status_t status;
     flexspi_transfer_t flashXfer;
 
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
+
     /* Write enable */
     status = flexspi_nor_write_enable(base, 0);
 
@@ -428,6 +550,10 @@ status_t flexspi_nor_erase_chip(FLEXSPI_Type *base)
 
     status = flexspi_nor_wait_bus_busy(base);
 
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
+
     return status;
 }
 
@@ -435,15 +561,10 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
 {
     flexspi_config_t config;
 
-#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    bool DCacheEnableFlag = false;
-    /* Disable D cache. */
-    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR))
-    {
-        SCB_DisableDCache();
-        DCacheEnableFlag = true;
-    }
-#endif /* __DCACHE_PRESENT */
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_cache_status_t cacheStatus;
+    flexspi_nor_disable_cache(&cacheStatus);
+#endif
 
     flexspi_clock_init();
 
@@ -471,11 +592,7 @@ void flexspi_nor_flash_init(FLEXSPI_Type *base)
     FLEXSPI_TransferCreateHandleEDMA(EXAMPLE_FLEXSPI, &flexspiHandle, flexspi_callback, NULL, &dmaTxHandle,
                                      &dmaRxHandle);
 
-#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
-    if (DCacheEnableFlag)
-    {
-        /* Enable D cache. */
-        SCB_EnableDCache();
-    }
-#endif /* __DCACHE_PRESENT */
+#if defined(CACHE_MAINTAIN) && CACHE_MAINTAIN
+    flexspi_nor_enable_cache(cacheStatus);
+#endif
 }

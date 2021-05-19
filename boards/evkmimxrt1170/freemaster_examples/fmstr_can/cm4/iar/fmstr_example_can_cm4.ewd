@@ -1699,11 +1699,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--macro_param enable_core=1</state>
         </option>
         <option>
           <name>CFpuProcessor</name>
@@ -8271,11 +8271,11 @@
         </option>
         <option>
           <name>CExtraOptionsCheck</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CExtraOptions</name>
-          <state/>
+          <state>--macro_param enable_core=1</state>
         </option>
         <option>
           <name>CFpuProcessor</name>

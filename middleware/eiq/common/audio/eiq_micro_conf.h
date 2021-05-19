@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,7 +32,7 @@
 #define DEMO_SAI1_CLOCK_SOURCE_DIVIDER (63U)
 
 /* Get frequency of sai1 clock */
-#ifdef CPU_MIMXRT1176DVMAA_cm7
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
 #define DEMO_SAI_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Sai1)
 #else
 #define DEMO_SAI_CLK_FREQ                                                        \
@@ -43,7 +43,7 @@
 /* I2C instance and clock */
 
 /* Get frequency of sai1 clock */
-#ifdef CPU_MIMXRT1176DVMAA_cm7
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
 #define DEMO_I2C LPI2C5
 #else
 #define DEMO_I2C LPI2C1
@@ -54,7 +54,7 @@
 /* Clock divider for master lpi2c clock source */
 #define DEMO_LPI2C_CLOCK_SOURCE_DIVIDER (5U)
 /* Get frequency of lpi2c clock */
-#ifdef CPU_MIMXRT1176DVMAA_cm7
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
 #define DEMO_I2C_CLK_FREQ CLOCK_GetRootClockFreq(kCLOCK_Root_Lpi2c5)
 #else
   #define DEMO_I2C_CLK_FREQ ((CLOCK_GetFreq(kCLOCK_Usb1PllClk) / 8) / (DEMO_LPI2C_CLOCK_SOURCE_DIVIDER + 1U))

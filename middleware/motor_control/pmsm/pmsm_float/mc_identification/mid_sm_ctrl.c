@@ -49,7 +49,7 @@ static void MID_SM_StateStart(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Start();
 
     /* if START_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_START_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_START_DONE) > 0U)
     {
         /* clear state's _ACK & _DONE SM control flags */
         psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_START_DONE | MID_SM_CTRL_START_ACK);
@@ -104,12 +104,12 @@ static void MID_SM_StatePwrStgCharact(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_PwrStgCharact();
 
     /* if PWR_STG_CHARACT_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PWR_STG_CHARACT_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PWR_STG_CHARACT_DONE) > 0U)
     {
         /* Run transition function */
         psAppCtrl->psTrans->MID_All2Stop();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PWR_STG_CHARACT_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PWR_STG_CHARACT_DONE) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_PWR_STG_CHARACT_DONE | MID_SM_CTRL_PWR_STG_CHARACT_ACK);
@@ -133,12 +133,12 @@ static void MID_SM_StateRs(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Rs();
 
     /* if RS_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_RS_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_RS_DONE) > 0U)
     {
         /* Run transition function */
         psAppCtrl->psTrans->MID_Rs2Ld();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_RS_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_RS_DONE) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_RS_DONE | MID_SM_CTRL_RS_ACK);
@@ -162,12 +162,12 @@ static void MID_SM_StateLd(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Ld();
 
     /* if LD_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LD_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LD_DONE) > 0U)
     {
         /* Run transition function */
         psAppCtrl->psTrans->MID_Ld2Lq();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LD_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LD_DONE) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_LD_DONE | MID_SM_CTRL_LD_ACK);
@@ -191,12 +191,12 @@ static void MID_SM_StateLq(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Lq();
 
     /* if LQ_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LQ_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LQ_DONE) > 0U)
     {
         /* Run transition function */
         psAppCtrl->psTrans->MID_Lq2Ke();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LQ_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_LQ_DONE) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_LQ_DONE | MID_SM_CTRL_LQ_ACK);
@@ -220,12 +220,12 @@ static void MID_SM_StatePp(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Pp();
 
     /* if PP_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PP_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PP_DONE) > 0U)
     {
         /* Run transition function */
         psAppCtrl->psTrans->MID_All2Stop();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PP_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PP_DONE) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_PP_DONE | MID_SM_CTRL_PP_ACK);
@@ -249,12 +249,12 @@ static void MID_SM_StateKe(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Ke();
 
     /* if KE_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_KE_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_KE_DONE) > 0U)
     {
         /* Run transition function */
         psAppCtrl->psTrans->MID_All2Stop();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_KE_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_KE_DONE) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_KE_DONE | MID_SM_CTRL_KE_ACK);
@@ -278,12 +278,12 @@ static void MID_SM_StateMech(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Mech();
 
     /* if MECH_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_MECH_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_MECH_DONE) > 0U)
     {
         /* Run transition function */
         psAppCtrl->psTrans->MID_All2Stop();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_MECH_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_MECH_DONE) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_MECH_DONE | MID_SM_CTRL_MECH_ACK);
@@ -307,12 +307,12 @@ static void MID_SM_StateHall(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Hall();
 
     /* if HALL_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_HALL_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_HALL_DONE) > 0U)
     {
         /* Run transition function */
         psAppCtrl->psTrans->MID_All2Stop();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_HALL_DONE) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_HALL_DONE) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_HALL_DONE | MID_SM_CTRL_HALL_ACK);

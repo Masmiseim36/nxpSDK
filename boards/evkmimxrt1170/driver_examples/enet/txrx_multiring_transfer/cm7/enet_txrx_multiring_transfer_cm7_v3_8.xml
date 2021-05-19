@@ -86,6 +86,10 @@
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
         </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=SRAM_DTC_cm7;type=.data</value>
+          <value>isd=*(NonCacheable);region=SRAM_DTC_cm7;type=.bss</value>
+        </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0x1000&amp;Stack:Default;Default;0x1000</value>
         </option>

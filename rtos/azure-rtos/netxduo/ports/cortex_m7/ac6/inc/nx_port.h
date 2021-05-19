@@ -53,9 +53,6 @@
 
 /* Determine if the optional NetX user define file should be used.  */
 
-/* 
-#define NX_INCLUDE_USER_DEFINE_FILE
-*/
 #ifdef NX_INCLUDE_USER_DEFINE_FILE
 
 
@@ -69,14 +66,12 @@
 /* Default to little endian, since this is what most ARM targets are.  */
 
 #define NX_LITTLE_ENDIAN    1
-#define FEATURE_NX_IPV6
 
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-#define NX_SECURE_ENABLE
 
 /* Define various constants for the port.  */ 
 
@@ -134,35 +129,6 @@
 #endif /* htonl */
 #endif
 
-
-/* The device driver enables the checksum offload feature. Therefore the following symbols must be
-   defined when building the NetX library. */
-
-#define NX_PACKET_ALIGNMENT 32
-
-#define NX_DISABLE_ICMPV4_RX_CHECKSUM
-#define NX_DISABLE_ICMPV4_TX_CHECKSUM  
-#define NX_DISABLE_IP_RX_CHECKSUM
-#define NX_DISABLE_IP_TX_CHECKSUM
-#define NX_DISABLE_TCP_RX_CHECKSUM
-#define NX_DISABLE_TCP_TX_CHECKSUM
-#define NX_DISABLE_UDP_RX_CHECKSUM
-#define NX_DISABLE_UDP_TX_CHECKSUM
-
-#define NX_DISABLE_ERROR_CHECKING
-#define NX_TCP_ACK_EVERY_N_PACKETS  2
-#define NX_DISABLE_RX_SIZE_CHECKING
-#define NX_DISABLE_ARP_INFO
-#define NX_DISABLE_IP_INFO
-#define NX_DISABLE_ICMP_INFO
-#define NX_DISABLE_IGMPV2
-#define NX_DISABLE_IGMP_INFO
-#define NX_DISABLE_PACKET_INFO
-#define NX_DISABLE_RARP_INFO
-#define NX_DISABLE_TCP_INFO
-#define NX_DISABLE_UDP_INFO
-#define NX_DISABLE_EXTENDED_NOTIFY_SUPPORT
-#define NX_DISABLE_INCLUDE_SOURCE_CODE
 
 /* Define several macros for the error checking shell in NetX.  */
 

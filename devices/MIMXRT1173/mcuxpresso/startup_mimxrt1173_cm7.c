@@ -1,7 +1,7 @@
 //*****************************************************************************
 // MIMXRT1173_cm7 startup code for use with MCUXpresso IDE
 //
-// Version : 030221
+// Version : 020421
 //*****************************************************************************
 //
 // Copyright 2016-2021 NXP
@@ -162,11 +162,11 @@ WEAK void SAI3_TX_IRQHandler(void);
 WEAK void SAI4_RX_IRQHandler(void);
 WEAK void SAI4_TX_IRQHandler(void);
 WEAK void SPDIF_IRQHandler(void);
-WEAK void ANATOP_TEMP_INT_IRQHandler(void);
-WEAK void ANATOP_TEMP_LOW_HIGH_IRQHandler(void);
-WEAK void ANATOP_TEMP_PANIC_IRQHandler(void);
-WEAK void ANATOP_LP8_BROWNOUT_IRQHandler(void);
-WEAK void ANATOP_LP0_BROWNOUT_IRQHandler(void);
+WEAK void TMPSNS_INT_IRQHandler(void);
+WEAK void TMPSNS_LOW_HIGH_IRQHandler(void);
+WEAK void TMPSNS_PANIC_IRQHandler(void);
+WEAK void LPSR_LP8_BROWNOUT_IRQHandler(void);
+WEAK void LPSR_LP0_BROWNOUT_IRQHandler(void);
 WEAK void ADC1_IRQHandler(void);
 WEAK void ADC2_IRQHandler(void);
 WEAK void USBPHY1_IRQHandler(void);
@@ -218,8 +218,8 @@ WEAK void USB_OTG2_IRQHandler(void);
 WEAK void USB_OTG1_IRQHandler(void);
 WEAK void ENET_IRQHandler(void);
 WEAK void ENET_1588_Timer_IRQHandler(void);
-WEAK void ENET_MAC0_Tx_Rx_Done_0_IRQHandler(void);
-WEAK void ENET_MAC0_Tx_Rx_Done_1_IRQHandler(void);
+WEAK void ENET_1G_MAC0_Tx_Rx_1_IRQHandler(void);
+WEAK void ENET_1G_MAC0_Tx_Rx_2_IRQHandler(void);
 WEAK void ENET_1G_IRQHandler(void);
 WEAK void ENET_1G_1588_Timer_IRQHandler(void);
 WEAK void XBAR1_IRQ_0_1_IRQHandler(void);
@@ -387,11 +387,11 @@ void SAI3_TX_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void SAI4_RX_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void SAI4_TX_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void SPDIF_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void ANATOP_TEMP_INT_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void ANATOP_TEMP_LOW_HIGH_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void ANATOP_TEMP_PANIC_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void ANATOP_LP8_BROWNOUT_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void ANATOP_LP0_BROWNOUT_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void TMPSNS_INT_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void TMPSNS_LOW_HIGH_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void TMPSNS_PANIC_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void LPSR_LP8_BROWNOUT_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void LPSR_LP0_BROWNOUT_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void ADC1_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void ADC2_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void USBPHY1_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
@@ -443,8 +443,8 @@ void USB_OTG2_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void USB_OTG1_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void ENET_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void ENET_1588_Timer_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void ENET_MAC0_Tx_Rx_Done_0_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
-void ENET_MAC0_Tx_Rx_Done_1_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void ENET_1G_MAC0_Tx_Rx_1_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
+void ENET_1G_MAC0_Tx_Rx_2_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void ENET_1G_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void ENET_1G_1588_Timer_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
 void XBAR1_IRQ_0_1_DriverIRQHandler(void) ALIAS(IntDefaultHandler);
@@ -655,11 +655,11 @@ void (* const g_pfnVectors[])(void) = {
     SAI4_RX_IRQHandler,                  // 96 : SAI4 interrupt
     SAI4_TX_IRQHandler,                  // 97 : SAI4 interrupt
     SPDIF_IRQHandler,                    // 98 : SPDIF interrupt
-    ANATOP_TEMP_INT_IRQHandler,          // 99 : ANATOP interrupt
-    ANATOP_TEMP_LOW_HIGH_IRQHandler,     // 100: ANATOP interrupt
-    ANATOP_TEMP_PANIC_IRQHandler,        // 101: ANATOP interrupt
-    ANATOP_LP8_BROWNOUT_IRQHandler,      // 102: ANATOP interrupt
-    ANATOP_LP0_BROWNOUT_IRQHandler,      // 103: ANATOP interrupt
+    TMPSNS_INT_IRQHandler,               // 99 : TMPSNS interrupt
+    TMPSNS_LOW_HIGH_IRQHandler,          // 100: TMPSNS low high interrupt
+    TMPSNS_PANIC_IRQHandler,             // 101: TMPSNS panic interrupt
+    LPSR_LP8_BROWNOUT_IRQHandler,        // 102: LPSR 1p8 brownout interrupt
+    LPSR_LP0_BROWNOUT_IRQHandler,        // 103: LPSR 1p0 brownout interrupt
     ADC1_IRQHandler,                     // 104: ADC1 interrupt
     ADC2_IRQHandler,                     // 105: ADC2 interrupt
     USBPHY1_IRQHandler,                  // 106: USBPHY1 interrupt
@@ -711,8 +711,8 @@ void (* const g_pfnVectors[])(void) = {
     USB_OTG1_IRQHandler,                 // 152: USBO2 USB OTG1
     ENET_IRQHandler,                     // 153: ENET interrupt
     ENET_1588_Timer_IRQHandler,          // 154: ENET_1588_Timer interrupt
-    ENET_MAC0_Tx_Rx_Done_0_IRQHandler,   // 155: ENET 1G MAC0 transmit/receive done 0
-    ENET_MAC0_Tx_Rx_Done_1_IRQHandler,   // 156: ENET 1G MAC0 transmit/receive done 1
+    ENET_1G_MAC0_Tx_Rx_1_IRQHandler,     // 155: ENET 1G MAC0 transmit/receive 1
+    ENET_1G_MAC0_Tx_Rx_2_IRQHandler,     // 156: ENET 1G MAC0 transmit/receive 2
     ENET_1G_IRQHandler,                  // 157: ENET 1G interrupt
     ENET_1G_1588_Timer_IRQHandler,       // 158: ENET_1G_1588_Timer interrupt
     XBAR1_IRQ_0_1_IRQHandler,            // 159: XBAR1 interrupt
@@ -1324,24 +1324,24 @@ WEAK void SPDIF_IRQHandler(void)
 {   SPDIF_DriverIRQHandler();
 }
 
-WEAK void ANATOP_TEMP_INT_IRQHandler(void)
-{   ANATOP_TEMP_INT_DriverIRQHandler();
+WEAK void TMPSNS_INT_IRQHandler(void)
+{   TMPSNS_INT_DriverIRQHandler();
 }
 
-WEAK void ANATOP_TEMP_LOW_HIGH_IRQHandler(void)
-{   ANATOP_TEMP_LOW_HIGH_DriverIRQHandler();
+WEAK void TMPSNS_LOW_HIGH_IRQHandler(void)
+{   TMPSNS_LOW_HIGH_DriverIRQHandler();
 }
 
-WEAK void ANATOP_TEMP_PANIC_IRQHandler(void)
-{   ANATOP_TEMP_PANIC_DriverIRQHandler();
+WEAK void TMPSNS_PANIC_IRQHandler(void)
+{   TMPSNS_PANIC_DriverIRQHandler();
 }
 
-WEAK void ANATOP_LP8_BROWNOUT_IRQHandler(void)
-{   ANATOP_LP8_BROWNOUT_DriverIRQHandler();
+WEAK void LPSR_LP8_BROWNOUT_IRQHandler(void)
+{   LPSR_LP8_BROWNOUT_DriverIRQHandler();
 }
 
-WEAK void ANATOP_LP0_BROWNOUT_IRQHandler(void)
-{   ANATOP_LP0_BROWNOUT_DriverIRQHandler();
+WEAK void LPSR_LP0_BROWNOUT_IRQHandler(void)
+{   LPSR_LP0_BROWNOUT_DriverIRQHandler();
 }
 
 WEAK void ADC1_IRQHandler(void)
@@ -1548,12 +1548,12 @@ WEAK void ENET_1588_Timer_IRQHandler(void)
 {   ENET_1588_Timer_DriverIRQHandler();
 }
 
-WEAK void ENET_MAC0_Tx_Rx_Done_0_IRQHandler(void)
-{   ENET_MAC0_Tx_Rx_Done_0_DriverIRQHandler();
+WEAK void ENET_1G_MAC0_Tx_Rx_1_IRQHandler(void)
+{   ENET_1G_MAC0_Tx_Rx_1_DriverIRQHandler();
 }
 
-WEAK void ENET_MAC0_Tx_Rx_Done_1_IRQHandler(void)
-{   ENET_MAC0_Tx_Rx_Done_1_DriverIRQHandler();
+WEAK void ENET_1G_MAC0_Tx_Rx_2_IRQHandler(void)
+{   ENET_1G_MAC0_Tx_Rx_2_DriverIRQHandler();
 }
 
 WEAK void ENET_1G_IRQHandler(void)

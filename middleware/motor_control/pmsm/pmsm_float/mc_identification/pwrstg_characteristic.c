@@ -27,7 +27,7 @@ float_t fltIdfbckFilt;      /* Filtered Id feedback value */
 void MID_GetTransferCharacteristic(mid_get_char_t *sTransferCharFcn)
 {
     /* Initialisation */
-    if (sTransferCharFcn->ui16Active == 0)
+    if (sTransferCharFcn->ui16Active == 0U)
     {
         sTransferCharFcn->ui16Active                 = TRUE;
         sTransferCharFcn->ui16LoopCounter            = 0;
@@ -48,19 +48,19 @@ void MID_GetTransferCharacteristic(mid_get_char_t *sTransferCharFcn)
     fltIdfbckFilt = GDFLIB_FilterMA_FLT(*(sTransferCharFcn->pfltIdfbck), &sTransferCharFcn->sIdfbckMA32Filter);
 
     /* After 600ms settling of Id start calculation */
-    if (sTransferCharFcn->ui16LoopCounter >= MID_TIME_600MS)
+    if (sTransferCharFcn->ui16LoopCounter >= (uint16_t)MID_TIME_600MS)
     {
         /* Faults */
         /* Check if Rs is low enough to reach 2A */
         if ((MLIB_Abs_FLT(*(sTransferCharFcn->pfltIdfbck)) < (sTransferCharFcn->fltIdCalib - MID_K_I_50MA)) &&
-            (sTransferCharFcn->ui16LUTIndex == 0))
+            (sTransferCharFcn->ui16LUTIndex == 0U))
         {
             g_sMID.ui16FaultMID |= MID_FAULT_TOO_HIGH_RS;
             sTransferCharFcn->ui16Active   = FALSE;
             *(sTransferCharFcn->pfltIdReq) = 0.0;
         }
         /* Check if motor is connected */
-        if ((MLIB_Abs_FLT(*(sTransferCharFcn->pfltIdfbck)) < MID_K_I_50MA) && (sTransferCharFcn->ui16LUTIndex == 0))
+        if ((MLIB_Abs_FLT(*(sTransferCharFcn->pfltIdfbck)) < MID_K_I_50MA) && (sTransferCharFcn->ui16LUTIndex == 0U))
         {
             g_sMID.ui16FaultMID |= MID_FAULT_NO_MOTOR;
             sTransferCharFcn->ui16Active   = FALSE;

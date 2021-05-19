@@ -1,0 +1,9 @@
+/*!
+@page OpenVG Driver Change Log
+
+@section OpenVG OPENVG
+  Current OpenVG driver version is 6.4.0.p2
+
+  - 6.4.0.p2
+    - Initial version.
+*/

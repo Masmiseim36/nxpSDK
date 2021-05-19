@@ -87,7 +87,7 @@ Toolchain supported
 ===================
 - Keil MDK  5.33
 - IAR embedded Workbench  8.50.9
-- MCUXpresso  11.3.0
+- MCUXpresso  11.3.1
 - GCC ARM Embedded  9.3.1
 
 Hardware requirements

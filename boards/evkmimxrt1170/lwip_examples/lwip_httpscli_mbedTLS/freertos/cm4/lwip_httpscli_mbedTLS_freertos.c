@@ -227,11 +227,9 @@ int main(void)
     GPIO_WritePinOutput(GPIO11, 14, 1);
     SDK_DelayAtLeastUs(30000, CLOCK_GetFreq(kCLOCK_CpuClk));
 
-    EnableIRQ(ENET_MAC0_Tx_Rx_Done_0_IRQn);
-    EnableIRQ(ENET_MAC0_Tx_Rx_Done_1_IRQn);
+    EnableIRQ(ENET_1G_MAC0_Tx_Rx_1_IRQn);
+    EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
 #endif
-    /* Data cache disabled because of CAAM driver */
-    L1CACHE_DisableSystemCache();
     CRYPTO_InitHardware();
 
     mdioHandle.resource.csrClock_Hz = EXAMPLE_CLOCK_FREQ;

@@ -13,7 +13,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v7.0
+product: Pins v9.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
@@ -73,12 +73,13 @@ BOARD_InitPins:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitPins
+ * Function Name : BOARD_InitPins, assigned for the Cortex-M7F core.
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* LPCG on: LPCG is ON. */
+  CLOCK_EnableClock(kCLOCK_Iomuxc_Lpsr);      /* LPCG on: LPCG is ON. */
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_12_GPIO9_IO11,           /* GPIO_AD_12 is configured as GPIO9_IO11 */
@@ -129,97 +130,125 @@ void BOARD_InitPins(void) {
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_12_GPIO9_IO11,           /* GPIO_AD_12 PAD functional properties : */
       0x06U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
+                                                 Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled */
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_24_LPUART1_TXD,          /* GPIO_AD_24 PAD functional properties : */
       0x06U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
+                                                 Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled */
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_AD_25_LPUART1_RXD,          /* GPIO_AD_25 PAD functional properties : */
       0x06U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
+                                                 Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled */
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_02_ENET_TX_DATA00,  /* GPIO_DISP_B2_02 PAD functional properties : */
       0x02U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
+                                                 Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled */
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_03_ENET_TX_DATA01,  /* GPIO_DISP_B2_03 PAD functional properties : */
       0x02U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
+                                                 Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled */
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_04_ENET_TX_EN,      /* GPIO_DISP_B2_04 PAD functional properties : */
       0x02U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
+                                                 Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled */
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_05_ENET_REF_CLK,    /* GPIO_DISP_B2_05 PAD functional properties : */
       0x02U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
+                                                 Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Disable, Highz
                                                  Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled */
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_06_ENET_RX_DATA00,  /* GPIO_DISP_B2_06 PAD functional properties : */
       0x06U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
+                                                 Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled */
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_07_ENET_RX_DATA01,  /* GPIO_DISP_B2_07 PAD functional properties : */
       0x06U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
+                                                 Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled */
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_08_ENET_RX_EN,      /* GPIO_DISP_B2_08 PAD functional properties : */
       0x06U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
+                                                 Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled */
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_DISP_B2_09_ENET_RX_ER,      /* GPIO_DISP_B2_09 PAD functional properties : */
       0x06U);                                 /* Slew Rate Field: Slow Slew Rate
-                                                 Drive Strength Field: high driver
+                                                 Drive Strength Field: high drive strength
                                                  Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull down
-                                                 Open Drain Field: Disabled */
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_EMC_B2_19_ENET_MDC,         /* GPIO_EMC_B2_19 PAD functional properties : */
-      0x08U);                                 /* PDRV Field: high driver
-                                                 Pull Down Pull Up Field: PD
-                                                 Open Drain Field: Disabled */
+      0x08U);                                 /* PDRV Field: high drive strength
+                                                 Pull Down Pull Up Field: Internal pulldown resistor enabled
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_EMC_B2_20_ENET_MDIO,        /* GPIO_EMC_B2_20 PAD functional properties : */
-      0x08U);                                 /* PDRV Field: high driver
-                                                 Pull Down Pull Up Field: PD
-                                                 Open Drain Field: Disabled */
+      0x08U);                                 /* PDRV Field: high drive strength
+                                                 Pull Down Pull Up Field: Internal pulldown resistor enabled
+                                                 Open Drain Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
   IOMUXC_SetPinConfig(
       IOMUXC_GPIO_LPSR_12_GPIO12_IO12,        /* GPIO_LPSR_12 PAD functional properties : */
       0x0EU);                                 /* Slew Rate Field: Slow Slew Rate
                                                  Drive Strength Field: high driver
-                                                 Pull / Keep Select Field: Pull
+                                                 Pull / Keep Select Field: Pull Enable
                                                  Pull Up / Down Config. Field: Weak pull up
-                                                 Open Drain LPSR Field: Disabled */
+                                                 Open Drain LPSR Field: Disabled
+                                                 Domain write protection: Both cores are allowed
+                                                 Domain write protection lock: Neither of DWP bits is locked */
 }
 
 /***********************************************************************************************************************

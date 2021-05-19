@@ -4,7 +4,7 @@
 ;            MIMXRT1172
 ;  @version: 1.0
 ;  @date:    2020-12-29
-;  @build:   b210203
+;  @build:   b210402
 ; -------------------------------------------------------------------------
 ;
 ; Copyright 1997-2016 Freescale Semiconductor, Inc.
@@ -152,11 +152,11 @@ __vector_table_0x1c
         DCD     SAI4_RX_IRQHandler                            ;SAI4 interrupt
         DCD     SAI4_TX_IRQHandler                            ;SAI4 interrupt
         DCD     SPDIF_IRQHandler                              ;SPDIF interrupt
-        DCD     ANATOP_TEMP_INT_IRQHandler                    ;ANATOP interrupt
-        DCD     ANATOP_TEMP_LOW_HIGH_IRQHandler               ;ANATOP interrupt
-        DCD     ANATOP_TEMP_PANIC_IRQHandler                  ;ANATOP interrupt
-        DCD     ANATOP_LP8_BROWNOUT_IRQHandler                ;ANATOP interrupt
-        DCD     ANATOP_LP0_BROWNOUT_IRQHandler                ;ANATOP interrupt
+        DCD     TMPSNS_INT_IRQHandler                         ;TMPSNS interrupt
+        DCD     TMPSNS_LOW_HIGH_IRQHandler                    ;TMPSNS low high interrupt
+        DCD     TMPSNS_PANIC_IRQHandler                       ;TMPSNS panic interrupt
+        DCD     LPSR_LP8_BROWNOUT_IRQHandler                  ;LPSR 1p8 brownout interrupt
+        DCD     LPSR_LP0_BROWNOUT_IRQHandler                  ;LPSR 1p0 brownout interrupt
         DCD     ADC1_IRQHandler                               ;ADC1 interrupt
         DCD     ADC2_IRQHandler                               ;ADC2 interrupt
         DCD     USBPHY1_IRQHandler                            ;USBPHY1 interrupt
@@ -208,8 +208,8 @@ __vector_table_0x1c
         DCD     USB_OTG1_IRQHandler                           ;USBO2 USB OTG1
         DCD     ENET_IRQHandler                               ;ENET interrupt
         DCD     ENET_1588_Timer_IRQHandler                    ;ENET_1588_Timer interrupt
-        DCD     ENET_MAC0_Tx_Rx_Done_0_IRQHandler             ;ENET 1G MAC0 transmit/receive done 0
-        DCD     ENET_MAC0_Tx_Rx_Done_1_IRQHandler             ;ENET 1G MAC0 transmit/receive done 1
+        DCD     ENET_1G_MAC0_Tx_Rx_1_IRQHandler               ;ENET 1G MAC0 transmit/receive 1
+        DCD     ENET_1G_MAC0_Tx_Rx_2_IRQHandler               ;ENET 1G MAC0 transmit/receive 2
         DCD     ENET_1G_IRQHandler                            ;ENET 1G interrupt
         DCD     ENET_1G_1588_Timer_IRQHandler                 ;ENET_1G_1588_Timer interrupt
         DCD     XBAR1_IRQ_0_1_IRQHandler                      ;XBAR1 interrupt
@@ -836,11 +836,11 @@ SPDIF_IRQHandler
         LDR     R0, =SPDIF_DriverIRQHandler
         BX      R0
 
-        PUBWEAK ANATOP_TEMP_INT_IRQHandler
-        PUBWEAK ANATOP_TEMP_LOW_HIGH_IRQHandler
-        PUBWEAK ANATOP_TEMP_PANIC_IRQHandler
-        PUBWEAK ANATOP_LP8_BROWNOUT_IRQHandler
-        PUBWEAK ANATOP_LP0_BROWNOUT_IRQHandler
+        PUBWEAK TMPSNS_INT_IRQHandler
+        PUBWEAK TMPSNS_LOW_HIGH_IRQHandler
+        PUBWEAK TMPSNS_PANIC_IRQHandler
+        PUBWEAK LPSR_LP8_BROWNOUT_IRQHandler
+        PUBWEAK LPSR_LP0_BROWNOUT_IRQHandler
         PUBWEAK ADC1_IRQHandler
         PUBWEAK ADC2_IRQHandler
         PUBWEAK USBPHY1_IRQHandler
@@ -946,18 +946,18 @@ ENET_1588_Timer_IRQHandler
         LDR     R0, =ENET_1588_Timer_DriverIRQHandler
         BX      R0
 
-        PUBWEAK ENET_MAC0_Tx_Rx_Done_0_IRQHandler
-        PUBWEAK ENET_MAC0_Tx_Rx_Done_0_DriverIRQHandler
+        PUBWEAK ENET_1G_MAC0_Tx_Rx_1_IRQHandler
+        PUBWEAK ENET_1G_MAC0_Tx_Rx_1_DriverIRQHandler
         SECTION .text:CODE:REORDER:NOROOT(2)
-ENET_MAC0_Tx_Rx_Done_0_IRQHandler
-        LDR     R0, =ENET_MAC0_Tx_Rx_Done_0_DriverIRQHandler
+ENET_1G_MAC0_Tx_Rx_1_IRQHandler
+        LDR     R0, =ENET_1G_MAC0_Tx_Rx_1_DriverIRQHandler
         BX      R0
 
-        PUBWEAK ENET_MAC0_Tx_Rx_Done_1_IRQHandler
-        PUBWEAK ENET_MAC0_Tx_Rx_Done_1_DriverIRQHandler
+        PUBWEAK ENET_1G_MAC0_Tx_Rx_2_IRQHandler
+        PUBWEAK ENET_1G_MAC0_Tx_Rx_2_DriverIRQHandler
         SECTION .text:CODE:REORDER:NOROOT(2)
-ENET_MAC0_Tx_Rx_Done_1_IRQHandler
-        LDR     R0, =ENET_MAC0_Tx_Rx_Done_1_DriverIRQHandler
+ENET_1G_MAC0_Tx_Rx_2_IRQHandler
+        LDR     R0, =ENET_1G_MAC0_Tx_Rx_2_DriverIRQHandler
         BX      R0
 
         PUBWEAK ENET_1G_IRQHandler
@@ -1194,11 +1194,11 @@ SAI3_TX_DriverIRQHandler
 SAI4_RX_DriverIRQHandler
 SAI4_TX_DriverIRQHandler
 SPDIF_DriverIRQHandler
-ANATOP_TEMP_INT_IRQHandler
-ANATOP_TEMP_LOW_HIGH_IRQHandler
-ANATOP_TEMP_PANIC_IRQHandler
-ANATOP_LP8_BROWNOUT_IRQHandler
-ANATOP_LP0_BROWNOUT_IRQHandler
+TMPSNS_INT_IRQHandler
+TMPSNS_LOW_HIGH_IRQHandler
+TMPSNS_PANIC_IRQHandler
+LPSR_LP8_BROWNOUT_IRQHandler
+LPSR_LP0_BROWNOUT_IRQHandler
 ADC1_IRQHandler
 ADC2_IRQHandler
 USBPHY1_IRQHandler
@@ -1250,8 +1250,8 @@ USB_OTG2_IRQHandler
 USB_OTG1_IRQHandler
 ENET_DriverIRQHandler
 ENET_1588_Timer_DriverIRQHandler
-ENET_MAC0_Tx_Rx_Done_0_DriverIRQHandler
-ENET_MAC0_Tx_Rx_Done_1_DriverIRQHandler
+ENET_1G_MAC0_Tx_Rx_1_DriverIRQHandler
+ENET_1G_MAC0_Tx_Rx_2_DriverIRQHandler
 ENET_1G_DriverIRQHandler
 ENET_1G_1588_Timer_DriverIRQHandler
 XBAR1_IRQ_0_1_IRQHandler

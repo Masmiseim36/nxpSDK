@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,7 +22,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief FlexCAN driver version. */
-#define FSL_FLEXCAN_DRIVER_VERSION (MAKE_VERSION(2, 6, 1))
+#define FSL_FLEXCAN_DRIVER_VERSION (MAKE_VERSION(2, 6, 2))
 /*@}*/
 
 #if !(defined(FLEXCAN_WAIT_TIMEOUT) && FLEXCAN_WAIT_TIMEOUT)
@@ -193,7 +193,7 @@ typedef enum _flexcan_rx_fifo_filter_type
 
 #if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
 /*!
- * @brief FlexCAN Message Buffer Data Size.
+ * @brief FlexCAN Message Buffer Payload size.
  */
 typedef enum _flexcan_mb_size
 {
@@ -202,6 +202,34 @@ typedef enum _flexcan_mb_size
     kFLEXCAN_32BperMB = 0x2U, /*!< Selects 32 bytes per Message Buffer. */
     kFLEXCAN_64BperMB = 0x3U, /*!< Selects 64 bytes per Message Buffer. */
 } flexcan_mb_size_t;
+
+/*!
+ * @brief FlexCAN CAN FD frame supporting data length (available DLC values).
+ *
+ * For Tx, when the Data size corresponding to DLC value stored in the MB selected for transmission is larger than the
+ * MB Payload size, FlexCAN adds the necessary number of bytes with constant 0xCC pattern to complete the expected DLC.
+ * For Rx, when the Data size corresponding to DLC value received from the CAN bus is larger than the MB Payload size,
+ * the high order bytes that do not fit the Payload size will lose.
+ */
+enum _flexcan_fd_frame_length
+{
+    kFLEXCAN_0BperFrame = 0x0U, /*!< Frame contains 0 valid data bytes. */
+    kFLEXCAN_1BperFrame,        /*!< Frame contains 1 valid data bytes. */
+    kFLEXCAN_2BperFrame,        /*!< Frame contains 2 valid data bytes. */
+    kFLEXCAN_3BperFrame,        /*!< Frame contains 3 valid data bytes. */
+    kFLEXCAN_4BperFrame,        /*!< Frame contains 4 valid data bytes. */
+    kFLEXCAN_5BperFrame,        /*!< Frame contains 5 valid data bytes. */
+    kFLEXCAN_6BperFrame,        /*!< Frame contains 6 valid data bytes. */
+    kFLEXCAN_7BperFrame,        /*!< Frame contains 7 valid data bytes. */
+    kFLEXCAN_8BperFrame,        /*!< Frame contains 8 valid data bytes. */
+    kFLEXCAN_12BperFrame,       /*!< Frame contains 12 valid data bytes. */
+    kFLEXCAN_16BperFrame,       /*!< Frame contains 16 valid data bytes. */
+    kFLEXCAN_20BperFrame,       /*!< Frame contains 20 valid data bytes. */
+    kFLEXCAN_24Bperrame,        /*!< Frame contains 24 valid data bytes. */
+    kFLEXCAN_32BperFrame,       /*!< Frame contains 32 valid data bytes. */
+    kFLEXCAN_48BperFrame,       /*!< Frame contains 48 valid data bytes. */
+    kFLEXCAN_64BperFrame,       /*!< Frame contains 64 valid data bytes. */
+};
 #endif
 
 /*!
@@ -425,7 +453,7 @@ typedef struct _flexcan_frame
     struct
     {
         uint32_t timestamp : 16; /*!< FlexCAN internal Free-Running Counter Time Stamp. */
-        uint32_t length : 4;     /*!< CAN frame payload length in bytes(Range: 0~8). */
+        uint32_t length : 4;     /*!< CAN frame data length in bytes(Range: 0~8). */
         uint32_t type : 1;       /*!< CAN Frame Type(DATA or REMOTE). */
         uint32_t format : 1;     /*!< CAN Frame Identifier(STD or EXT format). */
         uint32_t : 1;            /*!< Reserved. */
@@ -458,13 +486,17 @@ typedef struct _flexcan_frame
 } flexcan_frame_t;
 
 #if (defined(FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE) && FSL_FEATURE_FLEXCAN_HAS_FLEXIBLE_DATA_RATE)
-/*! @brief CAN FDmessage frame structure. */
+/*! @brief CAN FD message frame structure.
+ *
+ * The CAN FD message supporting up to sixty four bytes can be used for a data frame, depending on the length
+ * selected for the message buffers. The length should be a enumeration member, see @ref _flexcan_fd_frame_length.
+ */
 typedef struct _flexcan_fd_frame
 {
     struct
     {
         uint32_t timestamp : 16; /*!< FlexCAN internal Free-Running Counter Time Stamp. */
-        uint32_t length : 4;     /*!< CAN frame payload length in bytes(Range: 0~8). */
+        uint32_t length : 4;     /*!< CAN frame data length in bytes, range see @ref _flexcan_fd_frame_length. */
         uint32_t type : 1;       /*!< CAN Frame Type(DATA or REMOTE). */
         uint32_t format : 1;     /*!< CAN Frame Identifier(STD or EXT format). */
         uint32_t srr : 1;        /*!< Substitute Remote request. */
@@ -533,7 +565,7 @@ typedef struct _flexcan_config
     bool enableLoopBack;                /*!< Enable or Disable Loop Back Self Test Mode. */
     bool enableTimerSync;               /*!< Enable or Disable Timer Synchronization. */
     bool enableSelfWakeup;              /*!< Enable or Disable Self Wakeup Mode. */
-    bool enableIndividMask;             /*!< Enable or Disable Rx Individual Mask. */
+    bool enableIndividMask;             /*!< Enable or Disable Rx Individual Mask and Queue feature. */
     bool disableSelfReception;          /*!< Enable or Disable Self Reflection. */
     bool enableListenOnlyMode;          /*!< Enable or Disable Listen Only Mode. */
 #if (defined(FSL_FEATURE_FLEXCAN_HAS_DOZE_MODE_SUPPORT) && FSL_FEATURE_FLEXCAN_HAS_DOZE_MODE_SUPPORT)

@@ -91,6 +91,7 @@
           <value>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</value>
           <value>LWIP_ENET_FLEXIBLE_CONFIGURATION</value>
           <value>MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</value>
+          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
           <value>USE_RTOS=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>HTTPSRV_CFG_WEBSOCKET_ENABLED=1</value>

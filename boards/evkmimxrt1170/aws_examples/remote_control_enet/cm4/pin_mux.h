@@ -43,13 +43,11 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_USER_LED_GPIO_PIN                                      3U   /*!< GPIO pin number */
 #define BOARD_INITPINS_USER_LED_GPIO_PIN_MASK                         (1U << 3U)   /*!< GPIO pin mask */
 
-
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void BOARD_InitPins(void);                    /* Function assigned for the Cortex-M7F */
-
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -57,13 +55,11 @@ void BOARD_InitPins(void);                    /* Function assigned for the Corte
  */
 void BOARD_I2C_ConfigurePins(void);           /* Function assigned for the Cortex-M7F */
 
-
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
  *
  */
 void BOARD_InitEnetPins(void);                /* Function assigned for the Cortex-M7F */
-
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

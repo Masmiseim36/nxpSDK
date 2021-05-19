@@ -31,7 +31,7 @@ static tENERGY_CNT wh_cnt, varh_cnt;
 void MID_CalcPwr(mid_calc_power_a1_t *sCalcPower)
 {
     /* data processing */
-    METERLIBLP3PH_ProcSamples(
+	(void)METERLIBLP3PH_ProcSamples(
         &mlib, FRAC24(sCalcPower->fltUphA * (1.0F / (float)U_MAX)),
         FRAC24(*sCalcPower->pfltIphA * (1.0F / (float)I_MAX)), FRAC24(sCalcPower->fltUphB * (1.0F / (float)U_MAX)),
         FRAC24(*sCalcPower->pfltIphB * (1.0F / (float)I_MAX)), FRAC24(sCalcPower->fltUphC * (1.0F / (float)U_MAX)),

@@ -42,10 +42,12 @@ void MID_getMech(void)
 
     /* wait until rotor is unlocked (reset by MCAT) */
     if (g_sMID.bRotBlocked)
+    {
         return;
+    }
 
     /* increment loop counter */
-    g_sMID.ui32LoopCntr += 1;
+    g_sMID.ui32LoopCntr += 1U;
 
     /* filter speed */
     g_sMID.sMech.fltSpdLPF += g_sMID.sMech.fltLPFCoeff * ((*g_sMID.sIO.pfltSpeedEl) - g_sMID.sMech.fltSpdLPF);
@@ -124,6 +126,10 @@ void MID_getMech(void)
                 g_sMID.ui16FaultMID = MID_FAULT_MECH_TIMEOUT;
                 /* end measurement */
                 g_sMID.sMech.eState = kMID_MechEndOfMeas;
+            }
+            else
+            {
+            	;
             }
 
             /* check whether the speed dropped to 63pct of maximum*/

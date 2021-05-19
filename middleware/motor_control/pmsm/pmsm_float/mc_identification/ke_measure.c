@@ -32,8 +32,8 @@ void MID_getKe(mid_get_ke_t *sKeMeasFcn)
         sKeMeasFcn->ui16Active                   = TRUE;
         sKeMeasFcn->ui16LoopCounter              = 0;
         sKeMeasFcn->fltFreqElRamp                = 0.0;
-        sKeMeasFcn->sFreqElRampParam.fltRampUp   = sKeMeasFcn->fltFreqElReq / MID_SPEED_RAMP_TIME / 10000;
-        sKeMeasFcn->sFreqElRampParam.fltRampDown = sKeMeasFcn->fltFreqElReq / MID_SPEED_RAMP_TIME / 10000;
+        sKeMeasFcn->sFreqElRampParam.fltRampUp   = sKeMeasFcn->fltFreqElReq / MID_SPEED_RAMP_TIME / 10000.0F;
+        sKeMeasFcn->sFreqElRampParam.fltRampDown = sKeMeasFcn->fltFreqElReq / MID_SPEED_RAMP_TIME / 10000.0F;
         sKeMeasFcn->sEdMA32Filter.fltLambda      = 1.0 / 10.0;
         GDFLIB_FilterMAInit_FLT(0.0, &sKeMeasFcn->sEdMA32Filter);
         sKeMeasFcn->sEqMA32Filter.fltLambda = 1.0 / 10.0;
@@ -58,7 +58,7 @@ void MID_getKe(mid_get_ke_t *sKeMeasFcn)
     {
         sKeMeasFcn->ui16LoopCounter++;
 
-        if (sKeMeasFcn->ui16LoopCounter > MID_TIME_2400MS)
+        if (sKeMeasFcn->ui16LoopCounter > (uint16_t)MID_TIME_2400MS)
         {
             /* Total Bemf calculation */
             fltEdFiltSquare = MLIB_Mul_FLT(fltEdFilt, fltEdFilt);
@@ -71,7 +71,9 @@ void MID_getKe(mid_get_ke_t *sKeMeasFcn)
             /* Check Faults */
             /* Check if Ke is negative or saturated*/
             if (sKeMeasFcn->fltKe < 0.0)
+            {
                 g_sMID.ui16WarnMID |= MID_WARN_KE_OUT_OF_RANGE;
+            }
 
             /* When finished exit the function */
             sKeMeasFcn->ui16Active = FALSE;

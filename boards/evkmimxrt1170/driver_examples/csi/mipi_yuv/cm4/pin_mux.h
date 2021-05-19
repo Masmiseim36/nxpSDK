@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -39,19 +39,37 @@ void BOARD_InitBootPins(void);
 void BOARD_InitLpuartPins(void);              /* Function assigned for the Cortex-M7F */
 
 /* GPIO_AD_30 (coord K17), DISP_BL */
-#define BOARD_INITMIPIPANELPINS_DISP_BL_GPIO                               GPIO9   /*!< GPIO device name: GPIO9 */
-#define BOARD_INITMIPIPANELPINS_DISP_BL_PORT                               GPIO9   /*!< PORT device name: GPIO9 */
-#define BOARD_INITMIPIPANELPINS_DISP_BL_PIN                                  29U   /*!< GPIO9 pin index: 29 */
+/* Routed pin properties */
+#define BOARD_INITMIPIPANELPINS_DISP_BL_PERIPHERAL                         GPIO9   /*!< Peripheral name */
+#define BOARD_INITMIPIPANELPINS_DISP_BL_SIGNAL                           gpio_io   /*!< Signal name */
+#define BOARD_INITMIPIPANELPINS_DISP_BL_CHANNEL                              29U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITMIPIPANELPINS_DISP_BL_GPIO                               GPIO9   /*!< GPIO peripheral base pointer */
+#define BOARD_INITMIPIPANELPINS_DISP_BL_GPIO_PIN                             29U   /*!< GPIO pin number */
+#define BOARD_INITMIPIPANELPINS_DISP_BL_GPIO_PIN_MASK                (1U << 29U)   /*!< GPIO pin mask */
 
 /* GPIO_AD_02 (coord R13), DISP_RST */
-#define BOARD_INITMIPIPANELPINS_DISP_RST_GPIO                              GPIO9   /*!< GPIO device name: GPIO9 */
-#define BOARD_INITMIPIPANELPINS_DISP_RST_PORT                              GPIO9   /*!< PORT device name: GPIO9 */
-#define BOARD_INITMIPIPANELPINS_DISP_RST_PIN                                  1U   /*!< GPIO9 pin index: 1 */
+/* Routed pin properties */
+#define BOARD_INITMIPIPANELPINS_DISP_RST_PERIPHERAL                        GPIO9   /*!< Peripheral name */
+#define BOARD_INITMIPIPANELPINS_DISP_RST_SIGNAL                          gpio_io   /*!< Signal name */
+#define BOARD_INITMIPIPANELPINS_DISP_RST_CHANNEL                              1U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITMIPIPANELPINS_DISP_RST_GPIO                              GPIO9   /*!< GPIO peripheral base pointer */
+#define BOARD_INITMIPIPANELPINS_DISP_RST_GPIO_PIN                             1U   /*!< GPIO pin number */
+#define BOARD_INITMIPIPANELPINS_DISP_RST_GPIO_PIN_MASK                (1U << 1U)   /*!< GPIO pin mask */
 
 /* GPIO_DISP_B2_15 (coord A4), DISP_POWER */
-#define BOARD_INITMIPIPANELPINS_DISP_POWER_GPIO                           GPIO11   /*!< GPIO device name: GPIO11 */
-#define BOARD_INITMIPIPANELPINS_DISP_POWER_PORT                           GPIO11   /*!< PORT device name: GPIO11 */
-#define BOARD_INITMIPIPANELPINS_DISP_POWER_PIN                               16U   /*!< GPIO11 pin index: 16 */
+/* Routed pin properties */
+#define BOARD_INITMIPIPANELPINS_DISP_POWER_PERIPHERAL                     GPIO11   /*!< Peripheral name */
+#define BOARD_INITMIPIPANELPINS_DISP_POWER_SIGNAL                        gpio_io   /*!< Signal name */
+#define BOARD_INITMIPIPANELPINS_DISP_POWER_CHANNEL                           16U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITMIPIPANELPINS_DISP_POWER_GPIO                           GPIO11   /*!< GPIO peripheral base pointer */
+#define BOARD_INITMIPIPANELPINS_DISP_POWER_GPIO_PIN                          16U   /*!< GPIO pin number */
+#define BOARD_INITMIPIPANELPINS_DISP_POWER_GPIO_PIN_MASK             (1U << 16U)   /*!< GPIO pin mask */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -60,15 +78,26 @@ void BOARD_InitLpuartPins(void);              /* Function assigned for the Corte
 void BOARD_InitMipiPanelPins(void);           /* Function assigned for the Cortex-M7F */
 
 /* GPIO_AD_26 (coord L14), CAMERA_PWDN */
-#define BOARD_INITMIPICAMERAPINS_CAMERA_PWDN_GPIO                          GPIO9   /*!< GPIO device name: GPIO9 */
-#define BOARD_INITMIPICAMERAPINS_CAMERA_PWDN_PORT                          GPIO9   /*!< PORT device name: GPIO9 */
-#define BOARD_INITMIPICAMERAPINS_CAMERA_PWDN_PIN                             25U   /*!< GPIO9 pin index: 25 */
+/* Routed pin properties */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_PWDN_PERIPHERAL                    GPIO9   /*!< Peripheral name */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_PWDN_SIGNAL                      gpio_io   /*!< Signal name */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_PWDN_CHANNEL                         25U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_PWDN_GPIO                          GPIO9   /*!< GPIO peripheral base pointer */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_PWDN_GPIO_PIN                        25U   /*!< GPIO pin number */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_PWDN_GPIO_PIN_MASK           (1U << 25U)   /*!< GPIO pin mask */
 
 /* GPIO_DISP_B2_14 (coord A7), CAMERA_RST */
-#define BOARD_INITMIPICAMERAPINS_CAMERA_RST_GPIO                          GPIO11   /*!< GPIO device name: GPIO11 */
-#define BOARD_INITMIPICAMERAPINS_CAMERA_RST_PORT                          GPIO11   /*!< PORT device name: GPIO11 */
-#define BOARD_INITMIPICAMERAPINS_CAMERA_RST_PIN                              15U   /*!< GPIO11 pin index: 15 */
+/* Routed pin properties */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_RST_PERIPHERAL                    GPIO11   /*!< Peripheral name */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_RST_SIGNAL                       gpio_io   /*!< Signal name */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_RST_CHANNEL                          15U   /*!< Signal channel */
 
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_RST_GPIO                          GPIO11   /*!< GPIO peripheral base pointer */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_RST_GPIO_PIN                         15U   /*!< GPIO pin number */
+#define BOARD_INITMIPICAMERAPINS_CAMERA_RST_GPIO_PIN_MASK            (1U << 15U)   /*!< GPIO pin mask */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

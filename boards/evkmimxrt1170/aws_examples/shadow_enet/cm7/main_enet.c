@@ -285,10 +285,9 @@ int main(void)
     GPIO_WritePinOutput(GPIO11, 14, 1);
     SDK_DelayAtLeastUs(30000, CLOCK_GetFreq(kCLOCK_CpuClk));
 
-    EnableIRQ(ENET_MAC0_Tx_Rx_Done_0_IRQn);
-    EnableIRQ(ENET_MAC0_Tx_Rx_Done_1_IRQn);
+    EnableIRQ(ENET_1G_MAC0_Tx_Rx_1_IRQn);
+    EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
 #endif
-    SCB_DisableDCache();
     CRYPTO_InitHardware();
 
     xLoggingTaskInitialize(LOGGING_TASK_STACK_SIZE, LOGGING_TASK_PRIORITY, LOGGING_QUEUE_LENGTH);

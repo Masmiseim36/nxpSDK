@@ -30,16 +30,16 @@
  * Definitions
  ******************************************************************************/
 /* MID Fault numbers */
-#define MID_FAULT_ABORT (1)
-#define MID_FAULT_NO_MOTOR (2)
-#define MID_FAULT_TOO_HIGH_RS (4)
-#define MID_FAULT_MECH_TIMEOUT (8)
+#define MID_FAULT_ABORT (1U)
+#define MID_FAULT_NO_MOTOR (2U)
+#define MID_FAULT_TOO_HIGH_RS (4U)
+#define MID_FAULT_MECH_TIMEOUT (8U)
 
-#define MID_WARN_DC_CUR_NOT_REACHED (1)
-#define MID_WARN_AC_CUR_NOT_REACHED (2)
-#define MID_WARN_RS_OUT_OF_RANGE (4)
-#define MID_WARN_LS_OUT_OF_RANGE (8)
-#define MID_WARN_KE_OUT_OF_RANGE (16)
+#define MID_WARN_DC_CUR_NOT_REACHED (1U)
+#define MID_WARN_AC_CUR_NOT_REACHED (2U)
+#define MID_WARN_RS_OUT_OF_RANGE (4U)
+#define MID_WARN_LS_OUT_OF_RANGE (8U)
+#define MID_WARN_KE_OUT_OF_RANGE (16U)
 
 /* Current controllers' coefficients ensuring slow response for variable parameters */
 #define MID_KP_GAIN (0.0884654752228F)
@@ -49,7 +49,7 @@
 #define MID_SPEED_RAMP_TIME (1.0)
 
 /* MID characteristic parameters */
-#define MID_CHAR_CURRENT_POINT_NUMBERS (65)
+#define MID_CHAR_CURRENT_POINT_NUMBERS (65U)
 
 /* Time quantities in units of fast loop ticks */
 #define MID_TIME_50MS (0.050 * M1_PWM_FREQ / M1_FOC_FREQ_VS_PWM_FREQ)
@@ -64,7 +64,7 @@
 #define MID_K_I_50MA (0.05)
 
 /* Number of mechanical param measurements */
-#define MID_MECH_MEAS_NR (5)
+#define MID_MECH_MEAS_NR (5U)
 
 /* MID I/O structure - WARNING all pointers must be initialized */
 typedef struct

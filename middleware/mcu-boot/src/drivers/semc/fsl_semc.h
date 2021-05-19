@@ -140,7 +140,7 @@ typedef enum _semc_clock_freq
 // i.MX RT1020
 #define SEMC_MAX_CLK_FREQ kSemcClkFreq_133MHz
 #define SEMC_2ND_MAX_CLK_FREQ kSemcClkFreq_108MHz
-#elif defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1176_cm7_SERIES)
+#elif defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1176_cm7_SERIES) || defined(MIMXRT1166_cm4_SERIES) || defined(MIMXRT1166_cm7_SERIES)
 #define SEMC_MAX_CLK_FREQ kSemcClkFreq_200MHz
 #define SEMC_2ND_MAX_CLK_FREQ kSemcClkFreq_166MHz
 #else

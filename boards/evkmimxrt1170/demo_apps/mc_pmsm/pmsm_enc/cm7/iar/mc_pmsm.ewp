@@ -182,6 +182,7 @@
           <name>CCDefines</name>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>USB_STACK_BM</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
@@ -1177,6 +1178,7 @@
           <state>USE_SDRAM</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>USB_STACK_BM</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
@@ -2169,6 +2171,7 @@
           <state>XIP_EXTERNAL_FLASH=1</state>
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>USB_STACK_BM</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
@@ -3161,6 +3164,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>DEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>USB_STACK_BM</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
@@ -4151,6 +4155,7 @@
           <name>CCDefines</name>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>USB_STACK_BM</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
@@ -5146,6 +5151,7 @@
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>USB_STACK_BM</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
@@ -6138,6 +6144,7 @@
           <state>XIP_BOOT_HEADER_ENABLE=1</state>
           <state>NDEBUG</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>USB_STACK_BM</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>
@@ -7130,6 +7137,7 @@
           <state>USE_SDRAM</state>
           <state>DATA_SECTION_IS_CACHEABLE=1</state>
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
+          <state>USB_STACK_BM</state>
           <state>FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1</state>
         </option>
         <option>

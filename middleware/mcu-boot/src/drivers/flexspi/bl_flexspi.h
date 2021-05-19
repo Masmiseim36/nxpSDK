@@ -124,8 +124,6 @@ typedef enum _FlexSpiIpCmdError
 /* status code for flexspi */
 enum _flexspi_status
 {
-    kStatus_FLEXSPI_SequenceExecutionTimeout =
-        MAKE_STATUS(kStatusGroup_FLEXSPI, 0),                               //!< Status for Sequence Execution timeout
     kStatus_FLEXSPI_InvalidSequence = MAKE_STATUS(kStatusGroup_FLEXSPI, 1), //!< Status for Invalid Sequence
     kStatus_FLEXSPI_DeviceTimeout = MAKE_STATUS(kStatusGroup_FLEXSPI, 2),   //!< Status for Device timeout
 };

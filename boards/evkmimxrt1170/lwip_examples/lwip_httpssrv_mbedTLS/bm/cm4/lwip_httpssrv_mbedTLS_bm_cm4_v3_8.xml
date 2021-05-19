@@ -73,6 +73,7 @@
           <value>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</value>
           <value>LWIP_ENET_FLEXIBLE_CONFIGURATION</value>
           <value>MBEDTLS_SSL_CIPHERSUITES=MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</value>
+          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>MBEDTLS_CONFIG_FILE='"ksdk_mbedtls_config.h"'</value>
           <value>CRYPTO_USE_DRIVER_CAAM</value>
@@ -104,6 +105,10 @@
         </option>
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
+        </option>
+        <option id="com.crt.advproject.link.memory.sections" type="stringList">
+          <value>isd=*(NonCacheable.init);region=NCACHE_REGION;type=.data</value>
+          <value>isd=*(NonCacheable);region=NCACHE_REGION;type=.bss</value>
         </option>
         <option id="com.crt.advproject.link.memory.heapAndStack" type="string">
           <value>&amp;Heap:Default;Default;0xc350&amp;Stack:Default;Default;0x3e8</value>

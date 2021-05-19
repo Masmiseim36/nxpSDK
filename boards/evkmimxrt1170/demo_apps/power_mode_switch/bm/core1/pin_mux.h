@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -33,10 +33,15 @@ extern "C" {
 void BOARD_InitBootPins(void);
 
 /* WAKEUP (coord T8), USER_BUTTON */
-#define BOARD_INITPINS_USER_BUTTON_GPIO                                   GPIO13   /*!< GPIO device name: GPIO13 */
-#define BOARD_INITPINS_USER_BUTTON_PORT                                   GPIO13   /*!< PORT device name: GPIO13 */
-#define BOARD_INITPINS_USER_BUTTON_PIN                                        0U   /*!< GPIO13 pin index: 0 */
+/* Routed pin properties */
+#define BOARD_INITPINS_USER_BUTTON_PERIPHERAL                             GPIO13   /*!< Peripheral name */
+#define BOARD_INITPINS_USER_BUTTON_SIGNAL                                gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_USER_BUTTON_CHANNEL                                    0U   /*!< Signal channel */
 
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_USER_BUTTON_GPIO                                   GPIO13   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_USER_BUTTON_GPIO_PIN                                   0U   /*!< GPIO pin number */
+#define BOARD_INITPINS_USER_BUTTON_GPIO_PIN_MASK                      (1U << 0U)   /*!< GPIO pin mask */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

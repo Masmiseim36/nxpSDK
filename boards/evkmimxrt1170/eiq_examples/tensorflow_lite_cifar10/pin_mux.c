@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v7.0
+product: Pins v9.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 0.0.2
+processor_version: 0.9.3
 pin_labels:
 - {pin_num: K17, pin_signal: GPIO_AD_30, label: DISP_BL, identifier: DISP_BL}
 - {pin_num: R13, pin_signal: GPIO_AD_02, label: DISP_RST, identifier: DISP_RST}
@@ -33,12 +33,13 @@ pin_labels:
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
- *
- * Function Name : BOARD_InitPins
- * Description   : Configures pin routing and optionally pin electrical features.
- *
+ * 
+ * Function Name : BOARD_InitBootPins
+ * Description   : Calls initialization functions.
+ * 
  * END ****************************************************************************************************************/
-void BOARD_InitPins(void) {
+void BOARD_InitBootPins(void) {
+    BOARD_InitLpuartPins();
 }
 
 /*
@@ -53,7 +54,7 @@ BOARD_InitLpuartPins:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitLpuartPins
+ * Function Name : BOARD_InitLpuartPins, assigned for the Cortex-M7F core.
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
@@ -71,7 +72,7 @@ void BOARD_InitLpuartPins(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitMipiPanelPins:
+BOARD_InitLCDPins:
 - options: {callFromInitBoot: 'false', coreID: cm7, enableClock: 'true'}
 - pin_list:
   - {pin_num: K17, peripheral: GPIO9, signal: 'gpio_io, 29', pin_signal: GPIO_AD_30, direction: OUTPUT}
@@ -82,7 +83,7 @@ BOARD_InitMipiPanelPins:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitMipiPanelPins
+ * Function Name : BOARD_InitLCDPins, assigned for the Cortex-M7F core.
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
@@ -130,7 +131,7 @@ void BOARD_InitLCDPins(void) {
 
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-BOARD_InitMipiCameraPins:
+BOARD_InitCSIPins:
 - options: {callFromInitBoot: 'false', coreID: cm7, enableClock: 'true'}
 - pin_list:
   - {pin_num: L14, peripheral: GPIO9, signal: 'gpio_io, 25', pin_signal: GPIO_AD_26, direction: OUTPUT}
@@ -142,12 +143,13 @@ BOARD_InitMipiCameraPins:
 
 /* FUNCTION ************************************************************************************************************
  *
- * Function Name : BOARD_InitMipiCameraPins
+ * Function Name : BOARD_InitCSIPins, assigned for the Cortex-M7F core.
  * Description   : Configures pin routing and optionally pin electrical features.
  *
  * END ****************************************************************************************************************/
 void BOARD_InitCSIPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* LPCG on: LPCG is ON. */
+  CLOCK_EnableClock(kCLOCK_Iomuxc_Lpsr);      /* LPCG on: LPCG is ON. */
 
   /* GPIO configuration of CAMERA_PWDN on GPIO_AD_26 (pin L14) */
   gpio_pin_config_t CAMERA_PWDN_config = {
@@ -175,10 +177,10 @@ void BOARD_InitCSIPins(void) {
       0U);                                    /* Software Input On Field: Input Path is determined by functionality */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_LPSR_06_LPI2C6_SDA,         /* GPIO_LPSR_06 is configured as LPI2C6_SDA */
-      1U);                                    /* Software Input On Field: Force input path of pad GPIO_LPSR_07 */
+      1U);                                    /* Software Input On Field: Force input path of pad GPIO_LPSR_06 */
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_LPSR_07_LPI2C6_SCL,         /* GPIO_LPSR_07 is configured as LPI2C6_SCL */
-      1U);                                    /* Software Input On Field: Force input path of pad GPIO_LPSR_06 */
+      1U);                                    /* Software Input On Field: Force input path of pad GPIO_LPSR_07 */
 }
 
 /***********************************************************************************************************************

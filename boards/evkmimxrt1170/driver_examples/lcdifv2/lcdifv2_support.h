@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -52,7 +52,7 @@
 #define DEMO_BUFFER_COUNT          3
 #define DEMO_BUFFER_BYTE_PER_PIXEL 2
 
-extern MIPI_DSI_Type g_mipiDsi;
+extern const MIPI_DSI_Type g_mipiDsi;
 #define DEMO_MIPI_DSI          (&g_mipiDsi)
 #define DEMO_MIPI_DSI_LANE_NUM 2
 

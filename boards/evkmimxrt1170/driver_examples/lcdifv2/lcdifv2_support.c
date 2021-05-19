@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,14 +17,12 @@ uint32_t mipiDsiDphyBitClkFreq_Hz;
 uint32_t mipiDsiDphyRefClkFreq_Hz;
 uint32_t mipiDsiDpiClkFreq_Hz;
 
-MIPI_DSI_Type g_mipiDsi =
-{
-    .host = MIPI_DSI__DSI_HOST,
-    .apb = MIPI_DSI__DSI_HOST_APB_PKT_IF,
-    .dpi = MIPI_DSI__DSI_HOST_DPI_INTFC,
-    .dphy = MIPI_DSI__DSI_HOST_DPHY_INTFC,
+const MIPI_DSI_Type g_mipiDsi = {
+    .host = DSI_HOST,
+    .apb  = DSI_HOST_APB_PKT_IF,
+    .dpi  = DSI_HOST_DPI_INTFC,
+    .dphy = DSI_HOST_DPHY_INTFC,
 };
-
 
 AT_NONCACHEABLE_SECTION_ALIGN(
     uint8_t s_frameBuffer[DEMO_BUFFER_COUNT][DEMO_PANEL_HEIGHT][DEMO_PANEL_WIDTH][DEMO_BUFFER_BYTE_PER_PIXEL],
@@ -176,9 +174,7 @@ static void BOARD_InitMipiDsiClock(void)
     mipiDsiEscClkFreq_Hz = CLOCK_GetRootClockFreq(kCLOCK_Root_Mipi_Esc);
 
     const clock_group_config_t mipiEscClockGroupConfig = {
-        .clockOff = false,
-        .resetDiv = 1,
-        .div0     = 1, /* TX esc clock. */
+        .clockOff = false, .resetDiv = 1, .div0 = 1, /* TX esc clock. */
     };
 
     CLOCK_SetGroupConfig(kCLOCK_Group_MipiDsi, &mipiEscClockGroupConfig);

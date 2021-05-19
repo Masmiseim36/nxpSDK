@@ -155,6 +155,9 @@
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
     </source>
+    <source path="boards/evkmimxrt1170/demo_apps/hello_world_virtual_com/cm7" project_relative_path="evkmimxrt1170/demo_apps/hello_world_virtual_com/cm7" type="binary">
+      <files mask="hello_world_virtual_com_cm7.bin" hidden="true"/>
+    </source>
     <source path="boards/evkmimxrt1170/demo_apps/hello_world_virtual_com/cm7" project_relative_path="source" type="src">
       <files mask="hello_world.c"/>
     </source>

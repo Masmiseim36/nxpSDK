@@ -15,7 +15,7 @@
       arm_simulator_memory_simulation_parameter="RAM;0x00000000;0x00020000;RAM;0x20000000;0x00020000;RAM;0x20200000;0x00040000;ROM;0x60000000;0x00040000"
       arm_target_loader_applicable_loaders=""
       arm_target_loader_default_loader=""
-      c_preprocessor_definitions="XIP_EXTERNAL_FLASH=1;XIP_BOOT_HEADER_ENABLE=1;NDEBUG;FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0;CPU_MIMXRT1062DVL6A"
+      c_preprocessor_definitions="NDEBUG;FSL_DRIVER_TRANSFER_DOUBLE_WEAK_IRQ=0;SERIAL_PORT_TYPE_UART=1"
       c_system_include_directories="$(StudioDir)/include;$(PackagesDir)/include;$(TargetsDir)/iMXRT"
       c_user_include_directories=";./..;./../../../../..;./../../../../../../../CMSIS/Include;./../../../../../../../devices;./../../../../../../../devices/MIMXRT1062/drivers;./../../../../../../../devices/MIMXRT1062/drivers;./../../../../../../../devices/MIMXRT1062/drivers;./../../../../../../../devices/MIMXRT1062/drivers;./../../../../../../../devices/MIMXRT1062;./../../../../../../../devices/MIMXRT1062/utilities/str;./../../../../../../../devices/MIMXRT1062/utilities/debug_console;./../../../../../../../components/uart;./../../../../../../../components/serial_manager;./../../../../../../../components/serial_manager;./../../../../../../../devices/MIMXRT1062/drivers;./../../../../../../../components/lists;./../../../../../../../devices/MIMXRT1062/drivers;./../../../../../../../devices/MIMXRT1062/drivers;./../../../../../../../devices/MIMXRT1062/xip;./../../../../../xip"
       debug_register_definition_file="$(TargetsDir)/iMXRT/XML/$(DeviceName)_registers.xml"

@@ -2,9 +2,9 @@
 ** ###################################################################
 **     Processor:           MIMXRT1173CVM8A_cm4
 **     Compiler:            GNU C Compiler
-**     Reference manual:    IMXRT1170RM, Rev 0, 12/2020
+**     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210202
+**     Build:               b210402
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler

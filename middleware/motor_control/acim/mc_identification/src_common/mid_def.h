@@ -66,15 +66,15 @@
 
 /* do not change following constants */
 /* MID fault codes */
-#define MID_FAULT_ABORT (1)
-#define MID_FAULT_NO_MOTOR (2)
-#define MID_FAULT_TOO_HIGH_RS (4)
-#define MID_FAULT_MECH_TIMEOUT (8)
+#define MID_FAULT_ABORT (1U)
+#define MID_FAULT_NO_MOTOR (2U)
+#define MID_FAULT_TOO_HIGH_RS (4U)
+#define MID_FAULT_MECH_TIMEOUT (8U)
 /* MID warning codes */
-#define MID_WARN_DC_CUR_NOT_REACHED (1)
-#define MID_WARN_U_RMS_NOT_REACHED (2)
-#define MID_WARN_I_RMS_NOT_REACHED (4)
-#define MID_WARN_TOO_LOW_PREC (8)
+#define MID_WARN_DC_CUR_NOT_REACHED (1U)
+#define MID_WARN_U_RMS_NOT_REACHED (2U)
+#define MID_WARN_I_RMS_NOT_REACHED (4U)
+#define MID_WARN_TOO_LOW_PREC (8U)
 
 /* MID motor parameters structure */
 typedef struct

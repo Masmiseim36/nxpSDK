@@ -37,7 +37,7 @@ typedef void (*usdhc_isr_t)(USDHC_Type *base, usdhc_handle_t *handle);
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-#if defined(MIMXRT1176_cm4_SERIES)
+#if defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1166_cm4_SERIES)
 /*!
  * @brief Convert M4 address to M7 address.
  *
@@ -45,7 +45,7 @@ typedef void (*usdhc_isr_t)(USDHC_Type *base, usdhc_handle_t *handle);
  * @return M7 address.
  */
 extern status_t USDHC_MemorySpaceConvert(uint32_t *realAddress, uint32_t origAddress, uint32_t size);
-#endif // #if defined(MIMXRT1176_cm4_SERIES)
+#endif // defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1166_cm4_SERIES)
 
 /*!
  * @brief Get the instance.
@@ -1201,7 +1201,7 @@ status_t USDHC_SetADMA2Descriptor(
         }
 
 /* Each descriptor for ADMA2 is 64-bit in length */
-#if defined(MIMXRT1176_cm4_SERIES)
+#if defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1166_cm4_SERIES)
         /* M7 ITCM locates at address 0x0, avoid to use NULL */
         uint32_t dataAddress = 0xF0000000;
         if (USDHC_MemorySpaceConvert(&dataAddress, (uint32_t)data, dmaBufferLen) != kStatus_Success)
@@ -1235,7 +1235,7 @@ status_t USDHC_SetADMA2Descriptor(
  * ADMA
  * engine will not stop at block gap.
  */
-#if defined(MIMXRT1176_cm4_SERIES)
+#if defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1166_cm4_SERIES)
         /* M7 ITCM locates at address 0x0, avoid to use NULL */
         uint32_t usdhcBootDummyWordAddress = 0xF0000000;
         if (USDHC_MemorySpaceConvert(&usdhcBootDummyWordAddress, (uint32_t)&s_usdhcBootDummyWord,
@@ -1292,7 +1292,7 @@ status_t USDHC_SetInternalDmaConfig(USDHC_Type *base,
     {
         /* When use ADMA, disable simple DMA */
         base->DS_ADDR = 0U;
-#if defined(MIMXRT1176_cm4_SERIES)
+#if defined(MIMXRT1176_cm4_SERIES) || defined(MIMXRT1166_cm4_SERIES)
         /* M7 ITCM locates at address 0x0, avoid to use NULL */
         uint32_t admaTableAddress = 0xF0000000;
         if (USDHC_MemorySpaceConvert(&admaTableAddress, (uint32_t)(dmaConfig->admaTable), dmaConfig->admaTableWords) !=

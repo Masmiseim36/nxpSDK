@@ -53,7 +53,9 @@
 #define BOARD_MasterClockConfig()
 #define BUFFER_SIZE   (1024)
 #define BUFFER_NUMBER (2)
-
+#ifndef DEMO_CODEC_VOLUME
+#define DEMO_CODEC_VOLUME 100U
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -240,7 +242,11 @@ int main(void)
     {
         assert(false);
     }
-
+    if (CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
+                        DEMO_CODEC_VOLUME) != kStatus_Success)
+    {
+        assert(false);
+    }
     config.bitClock.bclkSource = (sai_bclk_source_t)DEMO_SAI_CLOCK_SOURCE;
     SAI_TransferTxSetConfigEDMA(DEMO_SAI, &s_saiTxHandle, &config);
 

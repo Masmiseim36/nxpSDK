@@ -35,7 +35,9 @@ void MID_testBlocked(void)
 
     /* wait until rotor is locked (set by MCAT) */
     if (!g_sMID.bRotBlocked)
+    {
         return;
+    }
 
     /* pass speed to open loop scalar control */
     *g_sMID.sIO.pfltFreqReq = g_sMID.sBlocked.fltFMeas;
@@ -44,7 +46,7 @@ void MID_testBlocked(void)
     *g_sMID.sIO.pfltUdReq = g_sMID.sBlocked.fltUMeas;
 
     /* increment loop counter */
-    g_sMID.ui32LoopCntr += 1;
+    g_sMID.ui32LoopCntr += 1U;
 
     /* finish blocked-rotor test after 4.8 s */
     if (g_sMID.ui32LoopCntr >= g_sMID.sBlocked.ui32TimeMeas)
@@ -60,7 +62,9 @@ void MID_testBlocked(void)
 
         /* check if 90% of nominal rms current was reached */
         if (g_sMID.sBlocked.fltIrms < (0.9F * g_sMID.sBlocked.fltIrmsMeas))
+        {
             g_sMID.ui16WarningMID |= MID_WARN_I_RMS_NOT_REACHED;
+        }
 
         g_sMID.sBlocked.fltUMeas   = 0.0F;
         g_sMID.sBlocked.fltFMeas   = 0.0F;

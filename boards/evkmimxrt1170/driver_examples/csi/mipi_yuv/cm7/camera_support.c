@@ -17,7 +17,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_CSI_CLK_FREQ (CLOCK_GetFreqFromObs(CCM_OBS_BUS_CLK_ROOT))
+#define DEMO_CSI_CLK_FREQ          (CLOCK_GetFreqFromObs(CCM_OBS_BUS_CLK_ROOT))
 #define DEMO_MIPI_CSI2_UI_CLK_FREQ (CLOCK_GetFreqFromObs(CCM_OBS_CSI2_UI_CLK_ROOT))
 
 /*******************************************************************************
@@ -164,6 +164,9 @@ void BOARD_InitMipiCsi(void)
         {
         }
     }
+
+    /* MIPI DPHY power on and isolation off. */
+    PGMC_BPC4->BPC_POWER_CTRL |= (PGMC_BPC_BPC_POWER_CTRL_PSW_ON_SOFT_MASK | PGMC_BPC_BPC_POWER_CTRL_ISO_OFF_SOFT_MASK);
 
     /*
      * Initialize the MIPI CSI2

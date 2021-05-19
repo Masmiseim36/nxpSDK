@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -40,7 +40,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief CLOCK driver version. */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 3, 0))
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 4, 0))
 
 /* Definition for delay API in clock driver, users can redefine it to the real application. */
 #ifndef SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY
@@ -2734,6 +2734,16 @@ void CLOCK_InitSysPll2(const clock_sys_pll2_config_t *config);
 void CLOCK_DeinitSysPll2(void);
 
 /*!
+ * @brief Check if Sys PLL2 PFD is enabled
+ *
+ * @param pfd PFD control name
+ * @return PFD bypass status.
+ *         - true: power on.
+ *         - false: power off.
+ */
+bool CLOCK_IsSysPll2PfdEnabled(clock_pfd_t pfd);
+
+/*!
  * @brief Initialize the System PLL3.
  *
  * This function initializes the System PLL3 with specific settings
@@ -2745,6 +2755,16 @@ void CLOCK_InitSysPll3(void);
  * @brief De-initialize the System PLL3.
  */
 void CLOCK_DeinitSysPll3(void);
+
+/*!
+ * @brief Check if Sys PLL3 PFD is enabled
+ *
+ * @param pfd PFD control name
+ * @return PFD bypass status.
+ *         - true: power on.
+ *         - false: power off.
+ */
+bool CLOCK_IsSysPll3PfdEnabled(clock_pfd_t pfd);
 
 /*!
  * @name PLL/PFD operations

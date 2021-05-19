@@ -150,9 +150,6 @@
       <files mask="host_msd_fatfs_bm_cm7.uvoptx"/>
       <files mask="host_msd_fatfs_bm_cm7.uvmpw"/>
     </source>
-    <source path="boards/evkmimxrt1170/usb_examples/usb_host_msd_fatfs/bm/cm7" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
-      <files mask="readme.txt"/>
-    </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_host_msd_fatfs/bm/cm7" project_relative_path="evkmimxrt1170/usb_examples/usb_host_msd_fatfs/bm" type="doc">
       <files mask="readme.pdf" hidden="true"/>
     </source>
@@ -167,7 +164,10 @@
       <files mask="host_msd_fatfs.c"/>
     </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_host_msd_fatfs/bm/cm7" project_relative_path="evkmimxrt1170/usb_examples/usb_host_msd_fatfs/bm/cm7" type="binary">
-      <files mask="host_msd_fatfs_bm.bin" hidden="true"/>
+      <files mask="host_msd_fatfs_bm_cm7.bin" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1170/usb_examples/usb_host_msd_fatfs/bm/cm7" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
+      <files mask="readme.txt"/>
     </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_host_msd_fatfs/bm/cm7" project_relative_path="board" type="src">
       <files mask="board.c"/>

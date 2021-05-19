@@ -151,9 +151,6 @@
     <source path="boards/evkmimxrt1170/demo_apps/ecompass/cm4" project_relative_path="." type="other">
       <files mask="ecompass.mex" hidden="true"/>
     </source>
-    <source path="boards/evkmimxrt1170/demo_apps/ecompass/cm4" project_relative_path="evkmimxrt1170/demo_apps/ecompass/cm4" type="binary">
-      <files mask="ecompass.bin" hidden="true"/>
-    </source>
     <source path="boards/evkmimxrt1170/demo_apps/ecompass/cm4" project_relative_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>

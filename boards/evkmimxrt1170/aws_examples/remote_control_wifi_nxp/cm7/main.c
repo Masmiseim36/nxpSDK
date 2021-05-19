@@ -280,7 +280,6 @@ int main(void)
     BOARD_InitDebugConsole();
 
     BOARD_InitLEDs();
-    SCB_DisableDCache();
     CRYPTO_InitHardware();
 
 #if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)

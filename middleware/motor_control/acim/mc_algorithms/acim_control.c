@@ -48,9 +48,13 @@ void MCS_ACIMOpenLoopScalarCtrlA1(mcs_acim_foc_a1_t *psFocACIM, mcs_scalar_a1_t 
 
     /* limit angle to -pi to pi range */
     if (psScalarACIM->fltPosEl > FLOAT_PI)
+    {
         psScalarACIM->fltPosEl -= (2.0F * FLOAT_PI);
+    }
     if (psScalarACIM->fltPosEl < -FLOAT_PI)
+    {
         psScalarACIM->fltPosEl += (2.0F * FLOAT_PI);
+    }
 
     /* calculate required stator voltage */
     psFocACIM->sUDQReq.fltD = 0.0F;
@@ -84,9 +88,13 @@ void MCS_ACIMOpenLoopScalarCtrlA2(mcs_acim_foc_a1_t *psFocACIM, mcs_scalar_a1_t 
 
     /* limit angle to -pi to pi range */
     if (psScalarACIM->fltPosEl > FLOAT_PI)
-        psScalarACIM->fltPosEl -= (2 * FLOAT_PI);
+    {
+        psScalarACIM->fltPosEl -= ((float_t)2 * FLOAT_PI);
+    }
     if (psScalarACIM->fltPosEl < -FLOAT_PI)
+    {
         psScalarACIM->fltPosEl += (2 * FLOAT_PI);
+    }
 
     /* limit required voltage */
     psFocACIM->sUDQReq.fltD =
@@ -295,7 +303,9 @@ void MCS_ACIMSpeedFluxCtrlA1(mcs_acim_foc_a1_t *psFocACIM, mcs_speed_flux_a1_t *
 
         /* check for end of startup */
         if (MLIB_Abs_FLT(psSpdFlux->fltSpdMeFilt) > psSpdFlux->fltSpdMeReqMin)
+        {
             psSpdFlux->bStartupDone = TRUE;
+        }
     }
     else
     {
@@ -319,7 +329,7 @@ void MCS_ACIMSpeedFluxCtrlA1(mcs_acim_foc_a1_t *psFocACIM, mcs_speed_flux_a1_t *
     if (psSpdFlux->fltSpdMeReq != psSpdFlux->sRampParSpdMe.fltTarget)
     {
         /* recalculate new S-ramp */
-        GFLIB_FlexSRampCalcIncr_FLT(psSpdFlux->fltSpdMeReq, psSpdFlux->fltSRampDuration, &psSpdFlux->sRampParSpdMe);
+    	(void)GFLIB_FlexSRampCalcIncr_FLT(psSpdFlux->fltSpdMeReq, psSpdFlux->fltSRampDuration, &psSpdFlux->sRampParSpdMe);
     }
     psSpdFlux->fltSpdMeRamp = GFLIB_FlexSRamp_FLT(&psSpdFlux->sRampParSpdMe);
 
@@ -361,23 +371,35 @@ static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp, GMCLIB_3COOR_T_FLT
     /* compensate phase A */
     i16CurrSign = (sIABC->fltA > DTCOMP_I_RANGE) - (sIABC->fltA < -DTCOMP_I_RANGE);
     if (!i16CurrSign)
+    {
         sUABCErr.fltA = GFLIB_Lut1D_FLT(sIABC->fltA, pfltUDtComp, &sLUTUDtComp);
+    }
     else
+    {
         sUABCErr.fltA = i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltA) - DTCOMP_I_RANGE) * DTCOMP_LINCOEFF - fltUerrMax);
+    }
 
     /* compensate phase B */
     i16CurrSign = (sIABC->fltB > DTCOMP_I_RANGE) - (sIABC->fltB < -DTCOMP_I_RANGE);
     if (!i16CurrSign)
+    {
         sUABCErr.fltB = GFLIB_Lut1D_FLT(sIABC->fltB, pfltUDtComp, &sLUTUDtComp);
+    }
     else
+    {
         sUABCErr.fltB = i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltB) - DTCOMP_I_RANGE) * DTCOMP_LINCOEFF - fltUerrMax);
+    }
 
     /* compensate phase C */
     i16CurrSign = (sIABC->fltC > DTCOMP_I_RANGE) - (sIABC->fltC < -DTCOMP_I_RANGE);
     if (!i16CurrSign)
+    {
         sUABCErr.fltC = GFLIB_Lut1D_FLT(sIABC->fltC, pfltUDtComp, &sLUTUDtComp);
+    }
     else
+    {
         sUABCErr.fltC = i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltC) - DTCOMP_I_RANGE) * DTCOMP_LINCOEFF - fltUerrMax);
+    }
 
     /* add compensation voltages */
     sUAlBeDTComp->fltAlpha +=

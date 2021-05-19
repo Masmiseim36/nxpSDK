@@ -5412,7 +5412,7 @@ ULONG         message_word;
     
         /* It does. Did the Client ask for a requested option? Only provide information 
            if there are no status errors from the server. */
-        if ((dhcpv6_client_ptr -> nx_dhcpv6_option_request.nx_op_request) &&
+        if ((dhcpv6_client_ptr -> nx_dhcpv6_option_request.nx_op_request[0] != 0) &&
             (dhcpv6_client_ptr -> nx_dhcpv6_iana_status.nx_status_code == NX_DHCPV6_STATUS_SUCCESS))
         {
     

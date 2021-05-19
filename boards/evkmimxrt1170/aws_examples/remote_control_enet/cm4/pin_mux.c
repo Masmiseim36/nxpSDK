@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v8.0
+product: Pins v9.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 0.9.1
+processor_version: 0.9.6
 pin_labels:
 - {pin_num: M13, pin_signal: GPIO_AD_04, label: USER_LED, identifier: USER_LED}
 - {pin_num: T8, pin_signal: WAKEUP, label: USER_BUTTON, identifier: USER_BUTTON}
@@ -97,6 +97,7 @@ BOARD_I2C_ConfigurePins:
  *
  * END ****************************************************************************************************************/
 void BOARD_I2C_ConfigurePins(void) {
+  CLOCK_EnableClock(kCLOCK_Iomuxc_Lpsr);      /* LPCG on: LPCG is ON. */
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_LPSR_04_LPI2C5_SDA,         /* GPIO_LPSR_04 is configured as LPI2C5_SDA */
@@ -145,6 +146,7 @@ BOARD_InitEnetPins:
  * END ****************************************************************************************************************/
 void BOARD_InitEnetPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* LPCG on: LPCG is ON. */
+  CLOCK_EnableClock(kCLOCK_Iomuxc_Lpsr);      /* LPCG on: LPCG is ON. */
 
   IOMUXC_SetPinMux(
       IOMUXC_GPIO_AD_12_GPIO9_IO11,           /* GPIO_AD_12 is configured as GPIO9_IO11 */

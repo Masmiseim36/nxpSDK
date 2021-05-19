@@ -159,7 +159,9 @@ static void MID_StateBlocked(void)
 {
     /* type the code to do when in the BLOCKED state */
     if (g_sMID.eCalcElPar == kMID_CalcWait)
+    {
         MID_testBlocked();
+    }
 
     /* when blocked-rotor test  and parameter calculation done,
        go to STOP state */
@@ -195,7 +197,9 @@ static void MID_StateMech(void)
 
     /* call mech measurement routine */
     if (g_sMID.eCalcMechPar == kMID_CalcWait)
+    {
         MID_getMech();
+    }
 
     /* when the MECH measurement is finished, set the MECH_DONE flag */
     if ((g_sMID.sMech.ui16Active == FALSE) && (g_sMID.eCalcMechPar == kMID_CalcDone))

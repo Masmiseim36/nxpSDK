@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019 - 2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -282,11 +282,27 @@ void CLOCK_DeinitSysPll2(void)
     ANADIG_PLL->SYS_PLL2_SS &= ~ANADIG_PLL_SYS_PLL2_SS_ENABLE_MASK;
 }
 
+/*!
+ * brief Check if Sys PLL2 PFD is enabled
+ *
+ * param pfd PFD control name
+ * return PFD bypass status.
+ *         - true: power on.
+ *         - false: power off.
+ */
+bool CLOCK_IsSysPll2PfdEnabled(clock_pfd_t pfd)
+{
+    return ((ANADIG_PLL->SYS_PLL2_PFD & (uint32_t)ANADIG_PLL_SYS_PLL2_PFD_PFD0_DIV1_CLKGATE_MASK
+                                            << (8UL * (uint8_t)pfd)) != 0U);
+}
+
 #define PFD_FRAC_MIN 12U
 #define PFD_FRAC_MAX 35U
 void CLOCK_InitPfd(clock_pll_t pll, clock_pfd_t pfd, uint8_t frac)
 {
     volatile uint32_t *pfdCtrl = NULL, *pfdUpdate = NULL, stable;
+    uint8_t regFracVal;
+    bool pfdGated;
 
     assert(frac <= (uint8_t)PFD_FRAC_MAX && frac >= (uint8_t)PFD_FRAC_MIN);
 
@@ -304,6 +320,15 @@ void CLOCK_InitPfd(clock_pll_t pll, clock_pfd_t pfd, uint8_t frac)
             assert(false);
             break;
     }
+    regFracVal =
+        ((*pfdCtrl) & (ANADIG_PLL_SYS_PLL2_PFD_PFD0_FRAC_MASK << (8UL * (uint32_t)pfd))) >> (8UL * (uint32_t)pfd);
+    pfdGated = (bool)(((*pfdCtrl) & (ANADIG_PLL_SYS_PLL2_PFD_PFD0_DIV1_CLKGATE_MASK << (8UL * (uint32_t)pfd))) >>
+                      (8UL >> (uint32_t)pfd));
+    if ((regFracVal == frac) && (!pfdGated))
+    {
+        return;
+    }
+
     stable = *pfdCtrl & ((uint32_t)ANADIG_PLL_SYS_PLL2_PFD_PFD0_STABLE_MASK << (8UL * (uint32_t)pfd));
     *pfdCtrl |= ((uint32_t)ANADIG_PLL_SYS_PLL2_PFD_PFD0_DIV1_CLKGATE_MASK << (8UL * (uint32_t)pfd));
 
@@ -437,6 +462,20 @@ void CLOCK_DeinitSysPll3(void)
     ANADIG_PLL->SYS_PLL3_CTRL |= ANADIG_PLL_SYS_PLL3_CTRL_SYS_PLL3_GATE_MASK;
     ANADIG_PLL->SYS_PLL3_CTRL &= ~(ANADIG_PLL_SYS_PLL3_CTRL_ENABLE_CLK_MASK | ANADIG_PLL_SYS_PLL3_CTRL_POWERUP_MASK |
                                    ANADIG_PLL_SYS_PLL3_CTRL_PLL_REG_EN_MASK);
+}
+
+/*!
+ * brief Check if Sys PLL3 PFD is enabled
+ *
+ * param pfd PFD control name
+ * return PFD bypass status.
+ *         - true: power on.
+ *         - false: power off.
+ */
+bool CLOCK_IsSysPll3PfdEnabled(clock_pfd_t pfd)
+{
+    return ((ANADIG_PLL->SYS_PLL3_PFD & (uint32_t)ANADIG_PLL_SYS_PLL3_PFD_PFD0_DIV1_CLKGATE_MASK
+                                            << (8UL * (uint8_t)pfd)) != 0U);
 }
 
 void CLOCK_SetPllBypass(clock_pll_t pll, bool bypass)
@@ -1485,6 +1524,9 @@ uint32_t CLOCK_GetFreq(clock_name_t name)
         case kCLOCK_SysPll3Out:
         case kCLOCK_SysPll3:
             freq = CLOCK_GetPllFreq(kCLOCK_PllSys3);
+            break;
+        case kCLOCK_SysPll3Div2:
+            freq = (CLOCK_GetPllFreq(kCLOCK_PllSys3) / 2UL);
             break;
         case kCLOCK_SysPll3Pfd0:
             freq = CLOCK_GetPfdFreq(kCLOCK_PllSys3, kCLOCK_Pfd0);

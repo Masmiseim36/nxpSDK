@@ -186,12 +186,14 @@ uint32_t SDMMCHOST_CardDetectStatus(sdmmchost_t *host)
 
     if (sdCD->type == kSD_DetectCardByHostDATA3)
     {
-        USDHC_CardDetectByData3(host->hostController.base, true);
         if (sdCD->dat3PullFunc != NULL)
         {
             sdCD->dat3PullFunc(kSD_DAT3PullDown);
             SDMMC_OSADelay(1U);
         }
+        USDHC_CardDetectByData3(host->hostController.base, true);
+        /* Added 1ms delay after host enabled the DAT3 function to avoid CPU missing synchronization with host */
+        SDMMC_OSADelay(1U);
     }
     else
     {
@@ -224,8 +226,8 @@ status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardS
     sd_detect_card_t *cd = host->cd;
     uint32_t event       = 0U;
 
-    if (((SDMMCHOST_CardDetectStatus(host) == (uint32_t)kSD_Inserted) && (waitCardStatus == (uint32_t)kSD_Inserted)) ||
-        ((SDMMCHOST_CardDetectStatus(host) == (uint32_t)kSD_Removed) && (waitCardStatus == (uint32_t)kSD_Removed)))
+    if (((waitCardStatus == (uint32_t)kSD_Inserted) && (SDMMCHOST_CardDetectStatus(host) == (uint32_t)kSD_Inserted)) ||
+        (((waitCardStatus == (uint32_t)kSD_Removed) && SDMMCHOST_CardDetectStatus(host) == (uint32_t)kSD_Removed)))
     {
         return kStatus_Success;
     }

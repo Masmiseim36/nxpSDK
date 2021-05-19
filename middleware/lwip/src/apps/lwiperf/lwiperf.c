@@ -99,7 +99,7 @@
 #define CLOCK_RESOLUTION_US 1000u
 #endif
 
-#if (!defined(LWIP_TIMEVAL_PRIVATE)) || (LWIP_TIMEVAL_PRIVATE != 0)
+#ifndef LWIP_TIMEVAL_PRIVATE
 /** Added for compatibility */
 struct timespec {
   long tv_sec;

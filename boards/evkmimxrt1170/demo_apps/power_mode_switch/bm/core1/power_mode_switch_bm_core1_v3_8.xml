@@ -163,9 +163,6 @@
     <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core1/armgcc" project_relative_path="MIMXRT1176/gcc" type="linker" toolchain="armgcc">
       <files mask="MIMXRT1176xxxxx_cm4_ram.ld"/>
     </source>
-    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core1/mdk" project_relative_path="evkmimxrt1170" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1170_ram_cm4.ini"/>
-    </source>
     <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core1" project_relative_path="evkmimxrt1170" type="other" toolchain="iar armgcc">
       <files mask="evkmimxrt1170_connect_cm4_cm4side.jlinkscript"/>
     </source>

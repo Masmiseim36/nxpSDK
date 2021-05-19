@@ -1,13 +1,13 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b201229
+**     Build:               b210329
 **
 **     Abstract:
 **         Chip specific module features.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2020 NXP
+**     Copyright 2016-2021 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -41,6 +41,8 @@
 #define FSL_FEATURE_SOC_CAU_COUNT (1)
 /* @brief CCM availability on the SoC. */
 #define FSL_FEATURE_SOC_CCM_COUNT (1)
+/* @brief CDOG availability on the SoC. */
+#define FSL_FEATURE_SOC_CDOG_COUNT (1)
 /* @brief DAC availability on the SoC. */
 #define FSL_FEATURE_SOC_DAC_COUNT (1)
 /* @brief DCDC availability on the SoC. */
@@ -310,6 +312,11 @@
 /* @brief Register CHCFGn width. */
 #define FSL_FEATURE_DMAMUX_CHCFG_REGISTER_WIDTH (32)
 
+/* DSI_HOST module features */
+
+/* @brief Has separate submodules */
+#define FSL_FEATURE_MIPI_DSI_HAS_SEPARATE_SUBMODULE (1)
+
 /* ENET module features */
 
 /* @brief Support Interrupt Coalesce */
@@ -575,11 +582,6 @@
 /* @brief If MIPI_CSI2RX registers don't have prefix. */
 #define FSL_FEATURE_CSI2RX_HAS_NO_REG_PREFIX (1)
 
-/* DSI_HOST module features */
-
-/* @brief Has separate submodules */
-#define FSL_FEATURE_MIPI_DSI_HAS_SEPARATE_SUBMODULE (1)
-
 /* MU module features */
 
 /* @brief MU side for current core */
@@ -612,6 +614,13 @@
 #define FSL_FEATURE_MU_HAS_RESET_ASSERT_INT (0)
 /* @brief MU supports reset de-assert interrupt. CR[RDIE] or BCR[RDIE]. */
 #define FSL_FEATURE_MU_HAS_RESET_DEASSERT_INT (0)
+
+/* interrupt module features */
+
+/* @brief Lowest interrupt request number. */
+#define FSL_FEATURE_INTERRUPT_IRQ_MIN (-14)
+/* @brief Highest interrupt request number. */
+#define FSL_FEATURE_INTERRUPT_IRQ_MAX (105)
 
 /* OCOTP module features */
 
@@ -758,8 +767,10 @@
 
 /* @brief Has Secure Real Time Counter Enabled and Valid (bit field LPCR[SRTC_ENV]). */
 #define FSL_FEATURE_SNVS_HAS_SRTC (1)
-/* @brief Has No SV3 (bit field HPSICR[SV3_EN]). */
-#define FSL_FEATURE_SNVS_HAS_NO_SV3 (1)
+/* @brief Has Passive Tamper Filter (regitser LPTGFCR). */
+#define FSL_FEATURE_SNVS_PASSIVE_TAMPER_FILTER (1)
+/* @brief Has Active Tampers (regitser LPATCTLR, LPATCLKR, LPATRCnR). */
+#define FSL_FEATURE_SNVS_HAS_ACTIVE_TAMPERS (1)
 /* @brief Number of TAMPER. */
 #define FSL_FEATURE_SNVS_HAS_MULTIPLE_TAMPER (10)
 

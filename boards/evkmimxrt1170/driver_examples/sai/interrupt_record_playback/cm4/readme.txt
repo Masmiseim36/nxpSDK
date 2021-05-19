@@ -8,7 +8,7 @@ Toolchain supported
 ===================
 - IAR embedded Workbench  8.50.9
 - Keil MDK  5.33
-- MCUXpresso  11.3.0
+- MCUXpresso  11.3.1
 - GCC ARM Embedded  9.3.1
 
 Hardware requirements
@@ -20,7 +20,7 @@ Hardware requirements
 
 Board settings
 ==============
-To make the examples works, please remove resistors:
+To make the examples works, please remove below resistors if on board wifi chip is not DNP:
 R228,R229,R232,R234
 
 Prepare the Demo

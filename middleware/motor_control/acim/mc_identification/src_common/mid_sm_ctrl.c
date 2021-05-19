@@ -47,10 +47,12 @@ static void MID_SM_StateStart(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Start();
 
     if (g_sMID.ui16FaultMID)
+    {
         return;
+    }
 
     /* if START_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_START_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_START_DONE) > 0U)
     {
         /* clear state's _ACK & _DONE SM control flags */
         psAppCtrl->uiCtrl &= ~MID_SM_CTRL_START_DONE;
@@ -83,15 +85,17 @@ static void MID_SM_StateRs(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Rs();
 
     if (g_sMID.ui16FaultMID)
+    {
         return;
+    }
 
     /* if RS_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_RS_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_RS_DONE) > 0U)
     {
         /* run transition function */
         psAppCtrl->psTrans->MID_Rs2NoLoad();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_NOLOAD_ACK) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_NOLOAD_ACK) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_RS_DONE | MID_SM_CTRL_NOLOAD_ACK);
@@ -115,15 +119,17 @@ static void MID_SM_StateNoLoad(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_NoLoad();
 
     if (g_sMID.ui16FaultMID)
+    {
         return;
+    }
 
     /* if NOLOAD_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_NOLOAD_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_NOLOAD_DONE) > 0U)
     {
         /* Run transition function */
         psAppCtrl->psTrans->MID_NoLoad2Blocked();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_BLOCKED_ACK) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_BLOCKED_ACK) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_NOLOAD_DONE | MID_SM_CTRL_BLOCKED_ACK);
@@ -147,15 +153,17 @@ static void MID_SM_StateBlocked(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Blocked();
 
     if (g_sMID.ui16FaultMID)
+    {
         return;
+    }
 
     /* if BLOCKED_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_BLOCKED_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_BLOCKED_DONE) > 0U)
     {
         /* Run transition function */
         psAppCtrl->psTrans->MID_Blocked2Mech();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_MECH_ACK) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_MECH_ACK) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_BLOCKED_DONE | MID_SM_CTRL_MECH_ACK);
@@ -179,15 +187,17 @@ static void MID_SM_StateMech(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_Mech();
 
     if (g_sMID.ui16FaultMID)
+    {
         return;
+    }
 
     /* if MECH_DONE flag is set or STOP flag received */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_MECH_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_MECH_DONE) > 0U)
     {
         /* run transition function */
         psAppCtrl->psTrans->MID_Mech2Stop();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_STOP_ACK) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_STOP_ACK) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_MECH_DONE | MID_SM_CTRL_STOP_ACK);
@@ -211,15 +221,17 @@ static void MID_SM_StatePwrStgCharact(mid_sm_app_ctrl_t *psAppCtrl)
     psAppCtrl->psState->MID_PwrStgCharact();
 
     if (g_sMID.ui16FaultMID)
-        return;
+    {
+    	return;
+    }
 
     /* if PWR_STG_CHARACT_DONE flag is set */
-    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PWR_STG_CHARACT_DONE) > 0)
+    if ((psAppCtrl->uiCtrl & MID_SM_CTRL_PWR_STG_CHARACT_DONE) > 0U)
     {
         /* Run transition function */
         psAppCtrl->psTrans->MID_PwrStgCharact2Stop();
 
-        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_STOP_ACK) > 0)
+        if ((psAppCtrl->uiCtrl & MID_SM_CTRL_STOP_ACK) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             psAppCtrl->uiCtrl &= ~(MID_SM_CTRL_PWR_STG_CHARACT_DONE | MID_SM_CTRL_STOP_ACK);

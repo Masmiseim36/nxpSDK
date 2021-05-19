@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017, 2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,6 +8,10 @@
 
 #include "fsl_caam.h"
 #include "fsl_clock.h"
+
+#if defined(FSL_FEATURE_HAS_L1CACHE) || defined(__DCACHE_PRESENT)
+#include "fsl_cache.h"
+#endif
 
 /*******************************************************************************
  * Definitions
@@ -363,6 +367,21 @@ bool caam_check_key_size(const uint32_t keySize)
 
 static status_t caam_in_job_ring_add(CAAM_Type *base, caam_job_ring_t jobRing, void *descaddr)
 {
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    bool DCacheEnableFlag = false;
+    /* Disable D cache. */
+    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR))
+    {
+        SCB_DisableDCache();
+        DCacheEnableFlag = true;
+    }
+#endif /* __DCACHE_PRESENT */
+#if defined(FSL_FEATURE_LMEM_HAS_SYSTEMBUS_CACHE) && (FSL_FEATURE_LMEM_HAS_SYSTEMBUS_CACHE > 0U)
+#if defined(FSL_FEATURE_HAS_L1CACHE) && (FSL_FEATURE_HAS_L1CACHE > 0U)
+    L1CACHE_DisableSystemCache();
+#endif /* FSL_FEATURE_LMEM_HAS_SYSTEMBUS_CACHE */
+#endif /* FSL_FEATURE_HAS_L1CACHE */
+
     /* adding new job to the s_inJobRing[] must be atomic
      * as this is global variable
      */
@@ -411,6 +430,20 @@ static status_t caam_in_job_ring_add(CAAM_Type *base, caam_job_ring_t jobRing, v
 
     caam_input_ring_set_jobs_added(base, jobRing, 1);
     EnableGlobalIRQ(currPriMask);
+
+#if defined(__DCACHE_PRESENT) && (__DCACHE_PRESENT == 1U)
+    if (DCacheEnableFlag)
+    {
+        /* Enable D cache. */
+        SCB_EnableDCache();
+    }
+#endif /* __DCACHE_PRESENT */
+#if defined(FSL_FEATURE_LMEM_HAS_SYSTEMBUS_CACHE) && (FSL_FEATURE_LMEM_HAS_SYSTEMBUS_CACHE > 0U)
+#if defined(FSL_FEATURE_HAS_L1CACHE) && (FSL_FEATURE_HAS_L1CACHE > 0U)
+    L1CACHE_EnableSystemCache();
+#endif /* FSL_FEATURE_LMEM_HAS_SYSTEMBUS_CACHE */
+#endif /* FSL_FEATURE_HAS_L1CACHE */
+
     return kStatus_Success;
 }
 
@@ -1651,6 +1684,7 @@ status_t CAAM_Init(CAAM_Type *base, const caam_config_t *config)
         return status;
     }
 
+    /* Note: Secure key is cleared only during POR reset */
     status = CAAM_RNG_GenerateSecureKey(base, &handle, NULL);
     if (status != kStatus_Success)
     {
@@ -2542,15 +2576,15 @@ static status_t caam_hash_schedule_input_data(CAAM_Type *base,
     caam_memcpy(descriptor, templateHash, sizeof(templateHash));
 
     /* MDHA is always Class 2 CHA, AESA configured at build time as Class 1 CHA */
-    uint32_t class = isSha ? 0x04000000u : CAAM_AES_MAC_CLASS;
+    uint32_t hashClass = isSha ? 0x04000000u : CAAM_AES_MAC_CLASS;
 
     /* add class to all commands that need it */
-    descriptor[1] |= class;
-    descriptor[3] |= class;
-    descriptor[5] |= class;
-    descriptor[6] |= class;
-    descriptor[8] |= class;
-    descriptor[10] |= class;
+    descriptor[1] |= hashClass;
+    descriptor[3] |= hashClass;
+    descriptor[5] |= hashClass;
+    descriptor[6] |= hashClass;
+    descriptor[8] |= hashClass;
+    descriptor[10] |= hashClass;
 
     /* add descriptor size */
     descriptor[0] |= (descriptorSize & DESC_SIZE_MASK);

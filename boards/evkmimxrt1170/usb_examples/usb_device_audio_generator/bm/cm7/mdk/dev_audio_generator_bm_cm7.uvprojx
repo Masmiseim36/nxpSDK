@@ -381,7 +381,7 @@
             <File>
               <FileName>audio_data.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../cm7cm7/audio_data.c</FilePath>
+              <FilePath>../audio_data.c</FilePath>
             </File>
             <File>
               <FileName>audio_generator.c</FileName>
@@ -1270,7 +1270,7 @@
             <File>
               <FileName>audio_data.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../cm7cm7/audio_data.c</FilePath>
+              <FilePath>../audio_data.c</FilePath>
             </File>
             <File>
               <FileName>audio_generator.c</FileName>
@@ -2159,7 +2159,7 @@
             <File>
               <FileName>audio_data.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../cm7cm7/audio_data.c</FilePath>
+              <FilePath>../audio_data.c</FilePath>
             </File>
             <File>
               <FileName>audio_generator.c</FileName>
@@ -3048,7 +3048,7 @@
             <File>
               <FileName>audio_data.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../cm7cm7/audio_data.c</FilePath>
+              <FilePath>../audio_data.c</FilePath>
             </File>
             <File>
               <FileName>audio_generator.c</FileName>
@@ -3937,7 +3937,7 @@
             <File>
               <FileName>audio_data.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../cm7cm7/audio_data.c</FilePath>
+              <FilePath>../audio_data.c</FilePath>
             </File>
             <File>
               <FileName>audio_generator.c</FileName>
@@ -4826,7 +4826,7 @@
             <File>
               <FileName>audio_data.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../cm7cm7/audio_data.c</FilePath>
+              <FilePath>../audio_data.c</FilePath>
             </File>
             <File>
               <FileName>audio_generator.c</FileName>

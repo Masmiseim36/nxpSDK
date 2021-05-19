@@ -444,9 +444,6 @@ int main(int argc, char *argv[])
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-
-    /* Data cache must be temporarily disabled to be able to use sdram */
-    L1CACHE_DisableSystemCache();
     CRYPTO_InitHardware();
 #endif
     bench_print_features();

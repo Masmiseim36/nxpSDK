@@ -1562,7 +1562,7 @@
       <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/bootloader_config.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/clock_config_MIMXRT1176.c</name>
+      <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/clock_cfg_MIMXRT1176.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MIMXRT1176/src/external_memory_property_map_MIMXRT1176.c</name>

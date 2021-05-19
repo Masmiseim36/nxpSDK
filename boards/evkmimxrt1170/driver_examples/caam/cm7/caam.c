@@ -15,6 +15,9 @@
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
+#if defined(FSL_FEATURE_HAS_L1CACHE) || defined(__DCACHE_PRESENT)
+#include "fsl_cache.h"
+#endif
 
 #include "fsl_caam.h"
 
@@ -33,17 +36,29 @@
  * Variables
  ******************************************************************************/
 
+#if defined(FSL_FEATURE_HAS_L1CACHE) || defined(__DCACHE_PRESENT)
+/* Note: Usually the output data are not cached, because CAAM driver cleans them before scheduling job */
+/* and invalidate right after that, but in some cases the computing can take longer time and data could be written */
+/* to memory by CAAM after invalidate happen, so it's recommended to invalidate CAAM output data again, */
+/* right before their usage, as shown in AES example. Or move them to non-cache memory as shown in SHA example */
+/*! @brief CAAM job ring interface 0 in system memory. */
+AT_NONCACHEABLE_SECTION(static caam_job_ring_interface_t s_jrif0);
+/*! @brief CAAM job ring interface 1 in system memory. */
+AT_NONCACHEABLE_SECTION(static caam_job_ring_interface_t s_jrif1);
+/*! @brief CAAM job ring interface 2 in system memory. */
+AT_NONCACHEABLE_SECTION(static caam_job_ring_interface_t s_jrif2);
+/*! @brief CAAM job ring interface 3 in system memory. */
+AT_NONCACHEABLE_SECTION(static caam_job_ring_interface_t s_jrif3);
+#else
 /*! @brief CAAM job ring interface 0 in system memory. */
 static caam_job_ring_interface_t s_jrif0;
-
 /*! @brief CAAM job ring interface 1 in system memory. */
 static caam_job_ring_interface_t s_jrif1;
-
 /*! @brief CAAM job ring interface 2 in system memory. */
 static caam_job_ring_interface_t s_jrif2;
-
 /*! @brief CAAM job ring interface 3 in system memory. */
 static caam_job_ring_interface_t s_jrif3;
+#endif /* __DCACHE_PRESENT || FSL_FEATURE_HAS_L1CACHE */
 
 /*! @brief 16 bytes key for CBC method: "ultrapassword123". */
 static uint8_t s_CbcKey128[] = {0x75, 0x6c, 0x74, 0x72, 0x61, 0x70, 0x61, 0x73,
@@ -62,7 +77,7 @@ static uint8_t s_CbcKey256[] = {0x54, 0x68, 0x69, 0x73, 0x70, 0x61, 0x73, 0x73, 
  * @brief Plaintext for CBC method.
  * 16-byte multiple, last '\0' is not used.
  */
-AT_NONCACHEABLE_SECTION_ALIGN_INIT(static const uint8_t s_CbcPlain[], FSL_FEATURE_L1ICACHE_LINESIZE_BYTE) =
+static uint8_t s_CbcPlain[] =
     "Be that word our sign of parting, bird or fiend! I shrieked upstarting"
     "Get thee back into the tempest and the Nights Plutonian shore!"
     "Leave no black plume as a token of that lie thy soul hath spoken!"
@@ -185,7 +200,7 @@ static const uint8_t s_GcmTagExpected[] = {0x5b, 0xc9, 0x4f, 0xbc, 0x32, 0x21, 0
 static uint8_t s_GcmTag[sizeof(s_GcmTagExpected)];
 
 /*! @brief Plaintext for SHA. */
-AT_NONCACHEABLE_SECTION_ALIGN_INIT(static const uint8_t s_ShaPlain[], FSL_FEATURE_L1ICACHE_LINESIZE_BYTE) =
+static uint8_t s_ShaPlain[] =
     "Be that word our sign of parting, bird or fiend! I shrieked upstarting"
     "Get thee back into the tempest and the Nights Plutonian shore!"
     "Leave no black plume as a token of that lie thy soul hath spoken!"
@@ -198,6 +213,8 @@ static const unsigned char s_ShaExpected[] = {0x63, 0x76, 0xea, 0xcc, 0xc9, 0xa2
                                               0x34, 0x69, 0xb3, 0x0c, 0xf5, 0x28, 0x63, 0x5c, 0xfa, 0xa5, 0x65,
                                               0x60, 0xef, 0x59, 0x7b, 0xd9, 0x1c, 0xac, 0xaa, 0x31, 0xf7};
 
+/*! @brief Output buffer for SHA. */
+uint8_t AT_NONCACHEABLE_SECTION(sha_output[20U]);
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -246,6 +263,8 @@ static void EncryptDecryptCbc(
         return;
     }
 
+    /* Executed only if DCACHE present, sizeof(s_CbcCipher) is multiple of 32 */
+    DCACHE_InvalidateByRange((uint32_t)s_CbcCipher, sizeof(s_CbcCipher));
     if (memcmp(s_CbcCipher, cipherExpected, sizeof(s_CbcCipher)) == 0)
     {
         PRINTF("done successfully.\r\n");
@@ -266,6 +285,8 @@ static void EncryptDecryptCbc(
         return;
     }
 
+    /* Executed only if DCACHE present, sizeof(s_CbcPlainDecrypted) is multiple of 32 */
+    DCACHE_InvalidateByRange((uint32_t)s_CbcPlainDecrypted, sizeof(s_CbcPlainDecrypted));
     if (memcmp(s_CbcPlainDecrypted, s_CbcPlain, sizeof(s_CbcPlainDecrypted)) == 0)
     {
         PRINTF("done successfully.\r\n\r\n");
@@ -342,7 +363,6 @@ static void RunShaExamples(CAAM_Type *base, caam_handle_t *handle)
 {
     status_t status;
     caam_hash_ctx_t ctx;
-    unsigned char output[32];
 
     PRINTF("SHA:");
 
@@ -364,7 +384,7 @@ static void RunShaExamples(CAAM_Type *base, caam_handle_t *handle)
         return;
     }
 
-    status = CAAM_HASH_Finish(&ctx, output, NULL);
+    status = CAAM_HASH_Finish(&ctx, sha_output, NULL);
 
     if (status != kStatus_Success)
     {
@@ -372,7 +392,7 @@ static void RunShaExamples(CAAM_Type *base, caam_handle_t *handle)
         return;
     }
 
-    if (memcmp(output, s_ShaExpected, 32u) != 0)
+    if (memcmp(sha_output, s_ShaExpected, 32u) != 0)
     {
         PRINTF("- failed: unexpected Hash output!\r\n\r\n");
         return;
@@ -396,9 +416,6 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-    /* Data cache must be temporarily disabled to be able to use sdram */
-    SCB_DisableDCache();
-
     /* Get default configuration. */
     CAAM_GetDefaultConfig(&caamConfig);
 
@@ -412,7 +429,11 @@ int main(void)
     caamConfig.jobRingInterface[3] = &s_jrif3;
 
     /* Init CAAM driver, including CAAM's internal RNG */
-    CAAM_Init(base, &caamConfig);
+    if (CAAM_Init(base, &caamConfig) != kStatus_Success)
+    {
+        /* Make sure that RNG is not already instantiated (reset otherwise) */
+        PRINTF("- failed to init CAAM&RNG!\r\n\r\n");
+    }
 
     PRINTF("CAAM AES Peripheral Driver Example\r\n\r\n");
 
@@ -446,6 +467,13 @@ int main(void)
 
     /* Example of AES GCM */
     RunAesGcmExamples(base, &caamHandle);
+
+    /* Deinit RNG */
+    caamHandle.jobRing = kCAAM_JobRing0;
+    if (CAAM_RNG_Deinit(CAAM, &caamHandle, kCAAM_RngStateHandle0) != kStatus_Success)
+    {
+        PRINTF("- failed to deinit RNG!\r\n\r\n");
+    }
 
     while (1)
     {

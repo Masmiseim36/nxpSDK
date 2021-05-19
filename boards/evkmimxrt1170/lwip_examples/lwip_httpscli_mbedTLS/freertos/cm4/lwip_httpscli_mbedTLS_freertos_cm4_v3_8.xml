@@ -92,6 +92,7 @@
           <value>XIP_BOOT_HEADER_ENABLE=0</value>
           <value>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</value>
           <value>LWIP_ENET_FLEXIBLE_CONFIGURATION</value>
+          <value>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</value>
           <value>PRINTF_ADVANCED_ENABLE=1</value>
           <value>USE_RTOS=1</value>
           <value>LWIP_DNS=1</value>

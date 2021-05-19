@@ -8,11 +8,23 @@
 /* clang-format off */
 
 #include <stdint.h>
-#include "guider_lv_conf.h"
+#include "littlevgl_support.h"
 
 /*====================
    Graphical settings
  *====================*/
+
+/* Maximal horizontal and vertical resolution to support by the library.*/
+#define LV_HOR_RES_MAX          (LCD_WIDTH)
+#define LV_VER_RES_MAX          (LCD_HEIGHT)
+
+/* Color depth:
+ * - 1:  1 byte per pixel
+ * - 8:  RGB332
+ * - 16: RGB565
+ * - 32: ARGB8888
+ */
+#define LV_COLOR_DEPTH     16
 
 /* Swap the 2 bytes of RGB565 color.
  * Useful if the display has a 8 bit interface (e.g. SPI)*/
@@ -32,6 +44,11 @@
 /* Default display refresh period.
  * Can be changed in the display driver (`lv_disp_drv_t`).*/
 #define LV_DISP_DEF_REFR_PERIOD      30      /*[ms]*/
+
+/* Dot Per Inch: used to initialize default sizes.
+ * E.g. a button with width = LV_DPI / 2 -> half inch wide
+ * (Not so important, you can adjust it to modify default sizes and spaces)*/
+#define LV_DPI              100     /*[px]*/
 
 /* The the real width of the display changes some default values:
  * default object sizes, layout of examples, etc.
@@ -53,6 +70,27 @@ typedef int16_t lv_coord_t;
 
 /* LittelvGL's internal memory manager's settings.
  * The graphical objects and other related data are stored here. */
+
+/* 1: use custom malloc/free, 0: use the built-in `lv_mem_alloc` and `lv_mem_free` */
+#define LV_MEM_CUSTOM      1
+#if LV_MEM_CUSTOM == 0
+/* Size of the memory used by `lv_mem_alloc` in bytes (>= 2kB)*/
+#  define LV_MEM_SIZE    (32U * 1024U)
+
+/* Complier prefix for a big array declaration */
+#  define LV_MEM_ATTR
+
+/* Set an address for the memory pool instead of allocating it as an array.
+ * Can be in external SRAM too. */
+#  define LV_MEM_ADR          0
+
+/* Automatically defrag. on free. Defrag. means joining the adjacent free cells. */
+#  define LV_MEM_AUTO_DEFRAG  1
+#else       /*LV_MEM_CUSTOM*/
+#  define LV_MEM_CUSTOM_INCLUDE "FreeRTOS.h"   /*Header for the dynamic memory function*/
+#  define LV_MEM_CUSTOM_ALLOC   pvPortMalloc   /*Wrapper to malloc*/
+#  define LV_MEM_CUSTOM_FREE    vPortFree      /*Wrapper to free*/
+#endif     /*LV_MEM_CUSTOM*/
 
 /* Use the standard memcpy and memset instead of LVGL's own functions.
  * The standard functions might or might not be faster depending on their implementation. */
@@ -145,6 +183,27 @@ typedef void * lv_anim_user_data_t;
 typedef void * lv_group_user_data_t;
 #endif  /*LV_USE_GROUP*/
 
+/* 1: Enable GPU interface*/
+#define LV_USE_GPU              1   /*Only enables `gpu_fill_cb` and `gpu_blend_cb` in the disp. drv- */
+#define LV_USE_GPU_STM32_DMA2D  0
+/*If enabling LV_USE_GPU_STM32_DMA2D, LV_GPU_DMA2D_CMSIS_INCLUDE must be defined to include path of CMSIS header of target processor
+e.g. "stm32f769xx.h" or "stm32f429xx.h" */
+#define LV_GPU_DMA2D_CMSIS_INCLUDE
+
+/* 1: Use PXP for CPU off-load on NXP platforms */
+#define LV_USE_GPU_NXP_PXP      0
+
+
+/*1: Add default bare metal and FreeRTOS interrupt handling routines for PXP (lv_gpu_nxp_pxp_osa.c)
+ *      and call lv_gpu_nxp_pxp_init() automatically during lv_init(). Note that symbol FSL_RTOS_FREE_RTOS
+ *      has to be defined in order to use FreeRTOS OSA, otherwise bare-metal implementation is selected.
+ *0: lv_gpu_nxp_pxp_init() has to be called manually before lv_init()
+ * */
+#define LV_USE_GPU_NXP_PXP_AUTO_INIT 1
+
+/*1: Use VG-Lite for CPU offload on NXP RTxxx platforms */
+#define LV_USE_GPU_NXP_VG_LITE   1
+
 /* 1: Enable file system (might be required for images */
 #define LV_USE_FILESYSTEM       0
 #if LV_USE_FILESYSTEM
@@ -198,6 +257,9 @@ typedef void * lv_img_decoder_user_data_t;
 
 /* Define a custom attribute to `lv_disp_flush_ready` function */
 #define LV_ATTRIBUTE_FLUSH_READY
+
+/* Required alignment size for buffers */
+#define LV_ATTRIBUTE_MEM_ALIGN_SIZE (LV_COLOR_DEPTH * 16 / 8) /* VGLITE requires 16-pixel alignment. */
 
 /* With size optimization (-Os) the compiler might not align data to
  * 4 or 8 byte boundary. This alignment will be explicitly applied where needed.
@@ -303,6 +365,72 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
  *    FONT USAGE
  *===================*/
 
+/* The built-in fonts contains the ASCII range and some Symbols with  4 bit-per-pixel.
+ * The symbols are available via `LV_SYMBOL_...` defines
+ * More info about fonts: https://docs.lvgl.com/#Fonts
+ * To create a new font go to: https://lvgl.com/ttf-font-to-c-array
+ */
+
+/* Montserrat fonts with bpp = 4
+ * https://fonts.google.com/specimen/Montserrat  */
+#define LV_FONT_MONTSERRAT_12    1
+#define LV_FONT_MONTSERRAT_14    0
+#define LV_FONT_MONTSERRAT_16    0
+#define LV_FONT_MONTSERRAT_18    0
+#define LV_FONT_MONTSERRAT_20    0
+#define LV_FONT_MONTSERRAT_22    0
+#define LV_FONT_MONTSERRAT_24    0
+#define LV_FONT_MONTSERRAT_26    0
+#define LV_FONT_MONTSERRAT_28    0
+#define LV_FONT_MONTSERRAT_30    0
+#define LV_FONT_MONTSERRAT_32    0
+#define LV_FONT_MONTSERRAT_34    0
+#define LV_FONT_MONTSERRAT_36    0
+#define LV_FONT_MONTSERRAT_38    0
+#define LV_FONT_MONTSERRAT_40    0
+#define LV_FONT_MONTSERRAT_42    0
+#define LV_FONT_MONTSERRAT_44    0
+#define LV_FONT_MONTSERRAT_46    0
+#define LV_FONT_MONTSERRAT_48    0
+
+/* Demonstrate special features */
+#define LV_FONT_MONTSERRAT_12_SUBPX      0
+#define LV_FONT_MONTSERRAT_28_COMPRESSED 0  /*bpp = 3*/
+#define LV_FONT_DEJAVU_16_PERSIAN_HEBREW 0  /*Hebrew, Arabic, PErisan letters and all their forms*/
+#define LV_FONT_SIMSUN_16_CJK            0  /*1000 most common CJK radicals*/
+
+/*Pixel perfect monospace font
+ * http://pelulamu.net/unscii/ */
+#define LV_FONT_UNSCII_8     0
+
+/* Optionally declare your custom fonts here.
+ * You can use these fonts as default font too
+ * and they will be available globally. E.g.
+ * #define LV_FONT_CUSTOM_DECLARE LV_FONT_DECLARE(my_font_1) \
+ *                                LV_FONT_DECLARE(my_font_2)
+ */
+#define LV_FONT_CUSTOM_DECLARE
+
+/* Enable it if you have fonts with a lot of characters.
+ * The limit depends on the font size, font face and bpp
+ * but with > 10,000 characters if you see issues probably you need to enable it.*/
+#define LV_FONT_FMT_TXT_LARGE   0
+
+/* Enables/disables support for compressed fonts. If it's disabled, compressed
+ * glyphs cannot be processed by the library and won't be rendered.
+ */
+#define LV_USE_FONT_COMPRESSED 1
+
+/* Enable subpixel rendering */
+#define LV_USE_FONT_SUBPX 1
+#if LV_USE_FONT_SUBPX
+/* Set the pixel order of the display.
+ * Important only if "subpx fonts" are used.
+ * With "normal" font it doesn't matter.
+ */
+#define LV_FONT_SUBPX_BGR    0
+#endif
+
 /*Declare the type of the user data of fonts (can be e.g. `void *`, `int`, `struct`)*/
 typedef void * lv_font_user_data_t;
 
@@ -341,6 +469,10 @@ typedef void * lv_font_user_data_t;
 #define LV_THEME_DEFAULT_COLOR_PRIMARY      LV_COLOR_RED
 #define LV_THEME_DEFAULT_COLOR_SECONDARY    LV_COLOR_BLUE
 #define LV_THEME_DEFAULT_FLAG               LV_THEME_MATERIAL_FLAG_LIGHT
+#define LV_THEME_DEFAULT_FONT_SMALL         &lv_font_montserrat_12
+#define LV_THEME_DEFAULT_FONT_NORMAL        &lv_font_montserrat_12
+#define LV_THEME_DEFAULT_FONT_SUBTITLE      &lv_font_montserrat_12
+#define LV_THEME_DEFAULT_FONT_TITLE         &lv_font_montserrat_12
 
 /*=================
  *  Text settings

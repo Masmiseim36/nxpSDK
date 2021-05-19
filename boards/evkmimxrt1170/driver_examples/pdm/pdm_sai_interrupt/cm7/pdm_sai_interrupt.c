@@ -42,6 +42,9 @@
 #define BOARD_MasterClockConfig()
 #define BUFFER_SIZE   (DEMO_PDM_FIFO_WATERMARK * FSL_FEATURE_PDM_FIFO_WIDTH * 2U)
 #define BUFFER_NUMBER (256U)
+#ifndef DEMO_CODEC_VOLUME
+#define DEMO_CODEC_VOLUME 100U
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -227,7 +230,11 @@ int main(void)
     {
         assert(false);
     }
-
+    if (CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
+                        DEMO_CODEC_VOLUME) != kStatus_Success)
+    {
+        assert(false);
+    }
     /* Set up pdm */
     PDM_Init(DEMO_PDM, &pdmConfig);
     PDM_SetChannelConfig(DEMO_PDM, DEMO_PDM_ENABLE_CHANNEL_LEFT, &channelConfig);

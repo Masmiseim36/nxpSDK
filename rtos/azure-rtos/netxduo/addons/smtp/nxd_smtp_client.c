@@ -1828,7 +1828,7 @@ UINT        auth_length;
 
 
     /* Initialize authentication flags.  */
-    carriage_return_linefeed_ptr = (CHAR)0x0;
+    carriage_return_linefeed_ptr = NX_NULL;
 
     /* Get the server response to the AUTH command.  */
     status   =  _nx_smtp_utility_read_server_code(client_ptr, NX_SMTP_ENVELOPE_TIMEOUT, NX_TRUE);

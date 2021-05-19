@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,7 +31,7 @@
 #define DEMO_FRAME_BUFFER_ALIGN 64
 #define EIQ_DEFAULT_CAPTURE_RATE 50
 
-#elif defined( CPU_MIMXRT1176DVMAA_cm7 )
+#elif defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
 
 #define DEMO_PANEL DEMO_PANEL_RK055AHD091
 //#define DEMO_PANEL DEMO_PANEL_RK055IQH091

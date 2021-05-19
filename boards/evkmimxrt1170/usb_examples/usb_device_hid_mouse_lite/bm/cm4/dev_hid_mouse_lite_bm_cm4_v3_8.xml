@@ -175,9 +175,6 @@
       <files mask="usb_device_hid.h"/>
       <files mask="usb_device_config.h"/>
     </source>
-    <source path="boards/evkmimxrt1170/usb_examples/usb_device_hid_mouse_lite/bm/cm4" project_relative_path="evkmimxrt1170/usb_examples/usb_device_hid_mouse_lite/bm/cm4" type="binary">
-      <files mask="dev_hid_mouse_lite_bm.bin" hidden="true"/>
-    </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_device_hid_mouse_lite/bm/cm4" project_relative_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>

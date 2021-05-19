@@ -6,9 +6,9 @@
 **                          MIMXRT1175DVMAA_cm7
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    IMXRT1170RM, Rev 0, 12/2020
+**     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210202
+**     Build:               b210402
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -43,8 +43,8 @@
 #define m_text_start                   0x30002400
 #define m_text_size                    0x00FBDC00
 
-#define m_text2_start                  0x00000000
-#define m_text2_size                   0x00040000
+#define m_qacode_start                 0x00000000
+#define m_qacode_size                  0x00040000
 
 #define m_interrupts_ram_start         0x20000000
 #define m_interrupts_ram_size          __ram_vector_table_size__
@@ -126,7 +126,7 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   RW_m_ncache_unused m_rpmsg_sh_mem_start+m_rpmsg_sh_mem_size EMPTY 0 { ; Empty region added for MPU configuration
   }
 #else
-  RW_m_ram_text m_text2_start m_text2_size { ;
+  RW_m_ram_text m_qacode_start m_qacode_size { ;
     * (CodeQuickAccess)
   }
   RW_m_ncache m_data2_start EMPTY 0 {

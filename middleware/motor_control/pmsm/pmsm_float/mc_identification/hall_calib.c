@@ -23,7 +23,7 @@
 void MID_calibHall(mid_calib_hall_t *sHallCalibFcn)
 {
     /* Initialization */
-    if (sHallCalibFcn->ui16Active == 0)
+    if (sHallCalibFcn->ui16Active == 0U)
     {
         sHallCalibFcn->ui16Active = TRUE;
     }

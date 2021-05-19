@@ -53,7 +53,7 @@
  * Using card detect pin for card detection is recommended.
  */
 #ifndef BOARD_SDMMC_SD_CD_TYPE
-#define BOARD_SDMMC_SD_CD_TYPE kSD_DetectCardByHostDATA3
+#define BOARD_SDMMC_SD_CD_TYPE kSD_DetectCardByGpioCD
 #endif
 #define BOARD_SDMMC_SD_CARD_DETECT_DEBOUNCE_DELAY_MS (100U)
 /*! @brief SD power reset */

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -861,7 +861,7 @@ void FLEXCAN_Init(CAN_Type *base, const flexcan_config_t *pConfig, uint32_t sour
     mcrTemp = (kFLEXCAN_WakeupSrcFiltered == pConfig->wakeupSrc) ? (mcrTemp | CAN_MCR_WAKSRC_MASK) :
                                                                    (mcrTemp & ~CAN_MCR_WAKSRC_MASK);
 
-    /* Enable Individual Rx Masking? */
+    /* Enable Individual Rx Masking and Queue feature? */
     mcrTemp = (pConfig->enableIndividMask) ? (mcrTemp | CAN_MCR_IRMQ_MASK) : (mcrTemp & ~CAN_MCR_IRMQ_MASK);
 
     /* Disable Self Reception? */

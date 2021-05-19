@@ -173,7 +173,7 @@
       <files mask="host_app.h"/>
     </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_pin_detect_hid_msd/bm/cm7" project_relative_path="evkmimxrt1170/usb_examples/usb_pin_detect_hid_msd/bm/cm7" type="binary">
-      <files mask="pin_detect_hid_msd_bm.bin" hidden="true"/>
+      <files mask="pin_detect_hid_msd_bm_cm7.bin" hidden="true"/>
     </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_pin_detect_hid_msd/bm/cm7" project_relative_path="board" type="src">
       <files mask="board.c"/>

@@ -72,6 +72,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/video/display/dc/lcdifv2
     ${ProjDirPath}/../../../../../../components/gt911
     ${ProjDirPath}/../../../../../../components/video/display/dc/elcdif
+    ${ProjDirPath}/../../../../../../middleware/vglite
     ${ProjDirPath}/../../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../../middleware/littlevgl
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
@@ -114,6 +115,8 @@ include(driver_pxp_MIMXRT1176_cm4)
 include(driver_elcdif_MIMXRT1176_cm4)
 
 include(driver_dc-fb-elcdif_MIMXRT1176_cm4)
+
+include(middleware_vglite_MIMXRT1176_cm4)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1176_cm4)
 

@@ -5918,12 +5918,6 @@
     </settings>
   </configuration>
   <group>
-    <name>doc</name>
-    <file>
-      <name>$PROJ_DIR$/../readme.txt</name>
-    </file>
-  </group>
-  <group>
     <name>source</name>
     <file>
       <name>$PROJ_DIR$/../app.h</name>
@@ -5942,6 +5936,12 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../usb_host_config.h</name>
+    </file>
+  </group>
+  <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.txt</name>
     </file>
   </group>
   <group>

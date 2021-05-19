@@ -281,8 +281,6 @@ int main(void)
     BOARD_InitDebugConsole();
 
     BOARD_InitLEDs();
-
-    L1CACHE_DisableSystemCache();
     CRYPTO_InitHardware();
 
 #if defined(BOARD_ACCEL_FXOS) || defined(BOARD_ACCEL_MMA)

@@ -10,7 +10,7 @@ Toolchain supported
 - IAR embedded Workbench  8.50.9
 - Keil MDK  5.33
 - GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- MCUXpresso  11.3.1
 
 Hardware requirements
 =====================
@@ -34,8 +34,7 @@ Prepare the Demo
     - One stop bit
     - No flow control
 3.  Build the project, the project uses RK055AHD091 by default, to use panel RK055IQH091,
-    change the macro DEMO_PANEL to DEMO_PANEL_RK055IQH091 in display_support.h,
-    change LV_HOR_RES_MAX to 540, LV_VER_RES_MAX to 960 in guider_lv_conf.h.
+    change the macro DEMO_PANEL to DEMO_PANEL_RK055IQH091 in display_support.h.
 4.  Download the program to the target board.
 5.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 

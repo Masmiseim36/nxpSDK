@@ -101,6 +101,11 @@ void BOARD_SDCardDAT3PullFunction(uint32_t status)
     {
         IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B1_05_USDHC1_DATA3,
                             0xCU); /* no pull in IOMUX configuration, 100K pull down externally is required. */
+        /* power reset the card to clear DAT3 legacy status */
+        BOARD_SDCardPowerControl(false);
+        SDK_DelayAtLeastUs(1000U, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
+        /* make sure the card is power on for DAT3 pull up */
+        BOARD_SDCardPowerControl(true);
     }
     else
     {
@@ -146,8 +151,6 @@ void BOARD_SDCardDetectInit(sd_cd_t cd, void *userData)
     if (BOARD_SDMMC_SD_CD_TYPE == kSD_DetectCardByHostDATA3)
     {
         s_cd.dat3PullFunc = BOARD_SDCardDAT3PullFunction;
-        /* make sure the card is power on for DAT3 pull up */
-        BOARD_SDCardPowerControl(true);
     }
 }
 
@@ -169,12 +172,7 @@ void BOARD_SDCardPowerControl(bool enable)
     }
     else
     {
-        /* Power off the card only when the card is inserted, since the card detect circuit is depend on the power on
-         * the EVK, card detect will not work if the power is off */
-        if (BOARD_SDCardGetDetectStatus() == true)
-        {
-            GPIO_PinWrite(BOARD_SDMMC_SD_POWER_RESET_GPIO_BASE, BOARD_SDMMC_SD_POWER_RESET_GPIO_PIN, 1);
-        }
+        GPIO_PinWrite(BOARD_SDMMC_SD_POWER_RESET_GPIO_BASE, BOARD_SDMMC_SD_POWER_RESET_GPIO_PIN, 1);
     }
 }
 #endif

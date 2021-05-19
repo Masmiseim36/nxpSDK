@@ -52,12 +52,14 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
     if (sLsMeasFcn->i16AmplitudeOK != TRUE)
     {
         /* Apply sine voltage (start with 10V/1kHz) for 300ms */
-        if (sLsMeasFcn->ui16LoopCounter < MID_TIME_300MS)
+        if (sLsMeasFcn->ui16LoopCounter < (uint16_t)MID_TIME_300MS)
+        {
             *(sLsMeasFcn->pfltUdReq) =
                 MLIB_Mul_FLT(sLsMeasFcn->fltUdAmplitude, GFLIB_Sin_FLTa((acc32_t)sLsMeasFcn->f16Angle));
+        }
 
         /* If current f16Idfbck > f16MeasCurrentAmp, proceed to frequency adjusting */
-        if ((sLsMeasFcn->ui16LoopCounter > MID_TIME_100MS) &&
+        if ((sLsMeasFcn->ui16LoopCounter > (uint16_t)MID_TIME_100MS) &&
             (*(sLsMeasFcn->pfltIdfbck) > sLsMeasFcn->fltIdAmplitudeReq))
         {
             sLsMeasFcn->i16AmplitudeOK  = TRUE;
@@ -66,7 +68,7 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
         }
 
         /* After 300ms */
-        if (sLsMeasFcn->ui16LoopCounter >= MID_TIME_300MS)
+        if (sLsMeasFcn->ui16LoopCounter >= (uint16_t)MID_TIME_300MS)
         {
             /* Increase voltage amplitude by f16Ls_Volt_Increment */
             sLsMeasFcn->fltUdAmplitude += sLsMeasFcn->fltUdIncrement;
@@ -87,12 +89,14 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
     if (sLsMeasFcn->i16AmplitudeOK == TRUE && sLsMeasFcn->i16FrequencyOK != TRUE)
     {
         /* Apply voltage with frequency for 300ms */
-        if (sLsMeasFcn->ui16LoopCounter < MID_TIME_300MS)
+        if (sLsMeasFcn->ui16LoopCounter < (uint16_t)MID_TIME_300MS)
+        {
             *(sLsMeasFcn->pfltUdReq) =
                 MLIB_Mul_FLT(sLsMeasFcn->fltUdAmplitude, GFLIB_Sin_FLTa((acc32_t)sLsMeasFcn->f16Angle));
+        }
 
         /* If current f16Idfbck > f16MeasCurrentAmp, proceed to measurement */
-        if ((sLsMeasFcn->ui16LoopCounter > MID_TIME_100MS) &&
+        if ((sLsMeasFcn->ui16LoopCounter > (uint16_t)MID_TIME_100MS) &&
             (*(sLsMeasFcn->pfltIdfbck) > sLsMeasFcn->fltIdAmplitudeReq))
         {
             sLsMeasFcn->i16FrequencyOK  = TRUE;
@@ -101,7 +105,7 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
         }
 
         /* After 300ms */
-        if (sLsMeasFcn->ui16LoopCounter >= MID_TIME_300MS)
+        if (sLsMeasFcn->ui16LoopCounter >= (uint16_t)MID_TIME_300MS)
         {
             /* Decrease frequency by f16Ls_Freq_Decrement */
             sLsMeasFcn->fltFreqActual -= sLsMeasFcn->fltFreqDecrement;
@@ -122,7 +126,7 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
     if (sLsMeasFcn->i16AmplitudeOK == TRUE && sLsMeasFcn->i16FrequencyOK == TRUE)
     {
         /* Apply measuring signal */
-        if (sLsMeasFcn->ui16LoopCounter <= MID_TIME_300MS)
+        if (sLsMeasFcn->ui16LoopCounter <= (uint16_t)MID_TIME_300MS)
         {
             /* Sine to d_axis */
             *(sLsMeasFcn->pfltUdReq) =
@@ -131,7 +135,9 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
             /* Current amplitudes after 100ms delay */
             if ((sLsMeasFcn->ui16LoopCounter > MID_TIME_100MS) &&
                 (*(sLsMeasFcn->pfltIdfbck) > sLsMeasFcn->fltIdAmplitude))
+            {
                 sLsMeasFcn->fltIdAmplitude = *(sLsMeasFcn->pfltIdfbck);
+            }
         }
 
         /* Inductance calculation */
@@ -158,19 +164,27 @@ void MID_getLs(mid_get_ls_t *sLsMeasFcn)
             /* Check Faults */
             /* Check if f16MeasCurrentAmp was reached (95% of the f16MeasCurrentAmp) */
             if (sLsMeasFcn->fltIdAmplitude < MLIB_Mul_FLT(sLsMeasFcn->fltIdAmplitudeReq, 0.95))
+            {
                 g_sMID.ui16WarnMID |= MID_WARN_AC_CUR_NOT_REACHED;
+            }
 
             /* Check negative result or saturation of Z*/
             if (fltZtotal < 0.0)
+            {
                 g_sMID.ui16WarnMID |= MID_WARN_LS_OUT_OF_RANGE;
+            }
 
             /* Check negative result or saturation of Ls*/
             if (sLsMeasFcn->fltLs < 0.0)
+            {
                 g_sMID.ui16WarnMID |= MID_WARN_LS_OUT_OF_RANGE;
+            }
 
             /* Check if motor is connected */
             if (sLsMeasFcn->fltIdAmplitude < MID_K_I_50MA)
+            {
                 g_sMID.ui16FaultMID |= MID_FAULT_NO_MOTOR;
+            }
         }
     }
 }

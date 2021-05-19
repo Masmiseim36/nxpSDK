@@ -33,7 +33,7 @@ Please reference user manual for the detail of the feature.
 
 Toolchain supported
 ===================
-- MCUXpresso  11.3.0
+- MCUXpresso  11.3.1
 - IAR embedded Workbench  8.50.9
 - Keil MDK  5.33
 - GCC ARM Embedded  9.3.1

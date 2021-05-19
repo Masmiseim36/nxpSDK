@@ -21,6 +21,11 @@
 @/**************************************************************************/
 @
 @
+
+#ifndef TX_ENABLE_FPU_SUPPORT
+#define TX_ENABLE_FPU_SUPPORT
+#endif
+
     .global     _tx_thread_current_ptr
     .global     _tx_thread_execute_ptr
     .global     _tx_timer_time_slice

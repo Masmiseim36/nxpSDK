@@ -87,13 +87,13 @@ void USB_DeviceClockInit(void)
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
     if (CONTROLLER_ID == kSerialManager_UsbControllerEhci0)
     {
-        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 480000000U);
+        CLOCK_EnableUsbhs0PhyPllClock(kCLOCK_Usbphy480M, 24000000U);
+        CLOCK_EnableUsbhs0Clock(kCLOCK_Usb480M, 24000000U);
     }
     else
     {
-        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, 480000000U);
-        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 480000000U);
+        CLOCK_EnableUsbhs1PhyPllClock(kCLOCK_Usbphy480M, 24000000U);
+        CLOCK_EnableUsbhs1Clock(kCLOCK_Usb480M, 24000000U);
     }
     USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ, &phyConfig);
 #endif

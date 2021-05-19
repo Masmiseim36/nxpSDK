@@ -34,10 +34,12 @@ void MID_testNoLoad(void)
 
     /* wait until rotor is unlocked (set by MCAT) */
     if (g_sMID.bRotBlocked)
+    {
         return;
+    }
 
     /* increment loop counter */
-    g_sMID.ui32LoopCntr += 1;
+    g_sMID.ui32LoopCntr += 1U;
 
     /* wait for preset time */
     if (g_sMID.ui32LoopCntr < g_sMID.sNoLoad.ui32TimeMeas)
@@ -76,6 +78,8 @@ void MID_testNoLoad(void)
 
         /* check if 90% of nominal voltage was reached */
         if (g_sMID.sNoLoad.fltUrms < (0.9F * g_sMID.sNoLoad.fltUMeas * 1.414213562F))
+        {
             g_sMID.ui16WarningMID |= MID_WARN_U_RMS_NOT_REACHED;
+        }
     }
 }

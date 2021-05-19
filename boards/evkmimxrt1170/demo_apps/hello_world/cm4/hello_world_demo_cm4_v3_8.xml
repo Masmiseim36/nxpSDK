@@ -149,14 +149,14 @@
       <files mask="CMakeLists.txt"/>
       <files mask="flags.cmake"/>
       <files mask="config.cmake"/>
-      <files mask="build_sdram_txt_debug.bat"/>
-      <files mask="build_sdram_txt_debug.sh"/>
-      <files mask="build_sdram_txt_release.bat"/>
-      <files mask="build_sdram_txt_release.sh"/>
       <files mask="build_flexspi_nor_sdram_debug.bat"/>
       <files mask="build_flexspi_nor_sdram_debug.sh"/>
       <files mask="build_flexspi_nor_sdram_release.bat"/>
       <files mask="build_flexspi_nor_sdram_release.sh"/>
+      <files mask="build_sdram_txt_debug.bat"/>
+      <files mask="build_sdram_txt_debug.sh"/>
+      <files mask="build_sdram_txt_release.bat"/>
+      <files mask="build_sdram_txt_release.sh"/>
       <files mask="build_debug.bat"/>
       <files mask="build_debug.sh"/>
       <files mask="build_release.bat"/>
@@ -170,45 +170,13 @@
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
     </source>
-    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4/iar" project_relative_path="MIMXRT1176/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT1176xxxxx_cm4_sdram_txt.icf"/>
-      <files mask="MIMXRT1176xxxxx_cm4_ram.icf"/>
-      <files mask="MIMXRT1176xxxxx_cm4_sdram.icf"/>
-      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor.icf"/>
-      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor_sdram.icf"/>
-    </source>
     <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4/iar" project_relative_path="evkmimxrt1170/demo_apps/hello_world/linker" type="linker" toolchain="iar">
       <files mask="MIMXRT1176xxxxx_cm4_ram_0x1400.icf"/>
-    </source>
-    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4/mdk" project_relative_path="MIMXRT1176/arm" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1176xxxxx_cm4_sdram_txt.scf"/>
-      <files mask="MIMXRT1176xxxxx_cm4_ram.scf"/>
-      <files mask="MIMXRT1176xxxxx_cm4_sdram.scf"/>
-      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor.scf"/>
-      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor_sdram.scf"/>
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4/mdk" project_relative_path="evkmimxrt1170/demo_apps/hello_world/linker" type="linker" toolchain="mdk">
       <files mask="MIMXRT1176xxxxx_cm4_ram_0x1400.scf"/>
     </source>
-    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4/armgcc" project_relative_path="MIMXRT1176/gcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1176xxxxx_cm4_sdram_txt.ld"/>
-      <files mask="MIMXRT1176xxxxx_cm4_ram.ld"/>
-      <files mask="MIMXRT1176xxxxx_cm4_sdram.ld"/>
-      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor.ld"/>
-      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor_sdram.ld"/>
-    </source>
-    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4" project_relative_path="evkmimxrt1170" type="other" toolchain="iar armgcc">
-      <files mask="evkmimxrt1170_connect_cm4_cm4side.jlinkscript"/>
-      <files mask="evkmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript"/>
-    </source>
-    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4" project_relative_path="evkmimxrt1170" type="other" toolchain="mcuxpresso">
-      <files mask="evkmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript"/>
-    </source>
-    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4/iar" project_relative_path="evkmimxrt1170" type="other" toolchain="iar">
-      <files mask="evkmimxrt1170_connect_cm4_sdram.mac"/>
-    </source>
     <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4/mdk" project_relative_path="evkmimxrt1170" type="configuration" toolchain="mdk">
-      <files mask="evkmimxrt1170_sdram_txt_init.ini"/>
       <files mask="evkmimxrt1170_ram_0x1400.ini"/>
       <files mask="evkmimxrt1170_ram_cm4.ini"/>
       <files mask="evkmimxrt1170_cm4_sdram_init.ini"/>
@@ -230,9 +198,6 @@
     <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4" project_relative_path="." type="other">
       <files mask="hello_world.mex" hidden="true"/>
     </source>
-    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4" project_relative_path="evkmimxrt1170/demo_apps/hello_world/cm4" type="binary">
-      <files mask="hello_world.bin" hidden="true"/>
-    </source>
     <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4" project_relative_path="board" type="src">
       <files mask="board.c"/>
       <files mask="clock_config.c"/>
@@ -245,6 +210,37 @@
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4/iar" project_relative_path="MIMXRT1176/iar" type="linker" toolchain="iar">
+      <files mask="MIMXRT1176xxxxx_cm4_ram.icf"/>
+      <files mask="MIMXRT1176xxxxx_cm4_sdram.icf"/>
+      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor.icf"/>
+      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor_sdram.icf"/>
+      <files mask="MIMXRT1176xxxxx_cm4_sdram_txt.icf"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4/mdk" project_relative_path="MIMXRT1176/arm" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1176xxxxx_cm4_ram.scf"/>
+      <files mask="MIMXRT1176xxxxx_cm4_sdram.scf"/>
+      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor.scf"/>
+      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor_sdram.scf"/>
+      <files mask="MIMXRT1176xxxxx_cm4_sdram_txt.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4/armgcc" project_relative_path="MIMXRT1176/gcc" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1176xxxxx_cm4_ram.ld"/>
+      <files mask="MIMXRT1176xxxxx_cm4_sdram.ld"/>
+      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor.ld"/>
+      <files mask="MIMXRT1176xxxxx_cm4_flexspi_nor_sdram.ld"/>
+      <files mask="MIMXRT1176xxxxx_cm4_sdram_txt.ld"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4/iar" project_relative_path="evkmimxrt1170" type="other" toolchain="iar">
+      <files mask="evkmimxrt1170_connect_cm4_sdram.mac"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4" project_relative_path="evkmimxrt1170" type="other" toolchain="iar armgcc">
+      <files mask="evkmimxrt1170_connect_cm4_cm4side.jlinkscript"/>
+      <files mask="evkmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/hello_world/cm4" project_relative_path="evkmimxrt1170" type="other" toolchain="mcuxpresso">
+      <files mask="evkmimxrt1170_connect_cm4_cm4side_sdram.jlinkscript"/>
     </source>
   </example>
 </ksdk:examples>

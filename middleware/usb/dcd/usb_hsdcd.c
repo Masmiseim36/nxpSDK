@@ -53,7 +53,7 @@ typedef struct _usb_hsdcd_state_struct
  * Variables
  ******************************************************************************/
 
-static const uint32_t s_hsdcdBaseAddrs[FSL_FEATURE_SOC_USBHSDCD_COUNT] = USBHSDCD_BASE_ADDRS;
+static const uint32_t s_hsdcdBaseAddrs[] = USBHSDCD_BASE_ADDRS;
 
 /* Apply for device dcd state structure */
 static usb_hsdcd_state_struct_t s_UsbDeviceDcdHSState[FSL_FEATURE_SOC_USBHSDCD_COUNT];
@@ -64,12 +64,21 @@ static usb_hsdcd_state_struct_t s_UsbDeviceDcdHSState[FSL_FEATURE_SOC_USBHSDCD_C
 static uint32_t USB_HSDCD_GetInstance(USBHSDCD_Type *base)
 {
     uint32_t i;
+    uint32_t index = 0;
 
-    for (i = 0U; i < (uint32_t)(FSL_FEATURE_SOC_USBHSDCD_COUNT); i++)
+    for (i = 0U; i < (uint32_t)(sizeof(s_hsdcdBaseAddrs) / sizeof(s_hsdcdBaseAddrs[0])); i++)
     {
-        if ((uint32_t)base == s_hsdcdBaseAddrs[i])
+        if (0U == s_hsdcdBaseAddrs[i])
         {
-            return i;
+            continue;
+        }
+        else
+        {
+            if ((uint32_t)base == s_hsdcdBaseAddrs[i])
+            {
+                return index;
+            }
+            index++;
         }
     }
     return 0xFF;
@@ -103,7 +112,7 @@ usb_hsdcd_status_t USB_HSDCD_Init(USBHSDCD_Type *base, usb_hsdcd_config_struct_t
     else
     {
 #if (defined(FSL_FEATURE_USBPHY_HAS_DCD_ANALOG) && (FSL_FEATURE_USBPHY_HAS_DCD_ANALOG > 0U))
-        dcdHSState->phyBase = (void *)(uint8_t*)phyBase[index];
+        dcdHSState->phyBase = (void *)(uint8_t *)phyBase[index];
 #endif
         dcdHSState->dcdCallbackParam = config->dcdCallbackParam;
         /*initialize the dcd controller*/
@@ -269,7 +278,6 @@ void USB_HSDcdIsrFunction(usb_hsdcd_handle handle)
 
     event  = kUSB_DcdError;
     status = dcdHSState->dcdRegisterBase->STATUS;
-
 
     if (0U != (status & USBHSDCD_STATUS_ERR_MASK))
     {

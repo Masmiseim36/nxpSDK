@@ -38,13 +38,15 @@ add_executable(${MCUX_SDK_PROJECT_NAME}
 "${ProjDirPath}/../lv_conf.h"
 "${ProjDirPath}/../pin_mux.c"
 "${ProjDirPath}/../pin_mux.h"
+"${ProjDirPath}/../../generated/images/images.c"
+"${ProjDirPath}/../../generated/guider_fonts/guider_fonts.h"
+"${ProjDirPath}/../../generated/guider_customer_fonts/guider_customer_fonts.h"
 "${ProjDirPath}/../../generated/gui_guider.c"
 "${ProjDirPath}/../../generated/gui_guider.h"
 "${ProjDirPath}/../../generated/events_init.c"
 "${ProjDirPath}/../../generated/events_init.h"
 "${ProjDirPath}/../../custom/custom.c"
 "${ProjDirPath}/../../custom/custom.h"
-"${ProjDirPath}/../../generated/guider_lv_conf.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
 "${ProjDirPath}/../clock_config.c"
@@ -62,6 +64,8 @@ target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
     ${ProjDirPath}/..
     ${ProjDirPath}/../../generated
     ${ProjDirPath}/../../custom
+    ${ProjDirPath}/../../generated/guider_customer_fonts
+    ${ProjDirPath}/../../generated/guider_fonts
     ${ProjDirPath}/../../..
 )
 
@@ -75,6 +79,7 @@ set(CMAKE_MODULE_PATH
     ${ProjDirPath}/../../../../../../components/video/display/dc/lcdifv2
     ${ProjDirPath}/../../../../../../components/gt911
     ${ProjDirPath}/../../../../../../components/video/display/dc/elcdif
+    ${ProjDirPath}/../../../../../../middleware/vglite
     ${ProjDirPath}/../../../../../../rtos/freertos
     ${ProjDirPath}/../../../../../../middleware/littlevgl
     ${ProjDirPath}/../../../../../../devices/MIMXRT1176
@@ -117,6 +122,8 @@ include(driver_pxp_MIMXRT1176_cm4)
 include(driver_elcdif_MIMXRT1176_cm4)
 
 include(driver_dc-fb-elcdif_MIMXRT1176_cm4)
+
+include(middleware_vglite_MIMXRT1176_cm4)
 
 include(middleware_freertos-kernel_heap_4_MIMXRT1176_cm4)
 

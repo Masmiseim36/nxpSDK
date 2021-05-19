@@ -9,7 +9,7 @@ Toolchain supported
 - IAR embedded Workbench  8.50.9
 - Keil MDK  5.33
 - GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- MCUXpresso  11.3.1
 
 Hardware requirements
 =====================
@@ -20,9 +20,6 @@ Hardware requirements
 Board settings
 ==============
 No special settings are required.
-
-Note:
-This example can't run pass on MCUXpresso IDE v10.2.1, it will be fixed in MCUXpresso IDE v10.3.0.
 Prepare the Demo
 ================
 Connect a serial cable from the debug UART port of the target board to the PC. Start TeraTerm (http://ttssh2.osdn.jp)

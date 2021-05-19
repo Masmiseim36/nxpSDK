@@ -15,26 +15,26 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define MID_SM_CTRL_NONE 0x00000000
-#define MID_SM_CTRL_START_ACK 0x00000002
+#define MID_SM_CTRL_NONE 0x00000000U
+#define MID_SM_CTRL_START_ACK 0x00000002U
 #define MID_SM_CTRL_START_DONE ((MID_SM_CTRL_START_ACK) << 16)
-#define MID_SM_CTRL_PWR_STG_CHARACT_ACK 0x00000004
+#define MID_SM_CTRL_PWR_STG_CHARACT_ACK 0x00000004U
 #define MID_SM_CTRL_PWR_STG_CHARACT_DONE ((MID_SM_CTRL_PWR_STG_CHARACT_ACK) << 16)
-#define MID_SM_CTRL_RS_ACK 0x00000008
+#define MID_SM_CTRL_RS_ACK 0x00000008U
 #define MID_SM_CTRL_RS_DONE ((MID_SM_CTRL_RS_ACK) << 16)
-#define MID_SM_CTRL_LD_ACK 0x00000010
+#define MID_SM_CTRL_LD_ACK 0x00000010U
 #define MID_SM_CTRL_LD_DONE ((MID_SM_CTRL_LD_ACK) << 16)
-#define MID_SM_CTRL_LQ_ACK 0x00000020
+#define MID_SM_CTRL_LQ_ACK 0x00000020U
 #define MID_SM_CTRL_LQ_DONE ((MID_SM_CTRL_LQ_ACK) << 16)
-#define MID_SM_CTRL_PP_ACK 0x00000040
+#define MID_SM_CTRL_PP_ACK 0x00000040U
 #define MID_SM_CTRL_PP_DONE ((MID_SM_CTRL_PP_ACK) << 16)
-#define MID_SM_CTRL_KE_ACK 0x00000080
+#define MID_SM_CTRL_KE_ACK 0x00000080U
 #define MID_SM_CTRL_KE_DONE ((MID_SM_CTRL_KE_ACK) << 16)
-#define MID_SM_CTRL_MECH_ACK 0x00000100
+#define MID_SM_CTRL_MECH_ACK 0x00000100U
 #define MID_SM_CTRL_MECH_DONE ((MID_SM_CTRL_MECH_ACK) << 16)
-#define MID_SM_CTRL_HALL_ACK 0x00000200
+#define MID_SM_CTRL_HALL_ACK 0x00000200U
 #define MID_SM_CTRL_HALL_DONE ((MID_SM_CTRL_HALL_ACK) << 16)
-#define MID_SM_CTRL_STOP_ACK 0x00000400
+#define MID_SM_CTRL_STOP_ACK 0x00000400U
 #define MID_SM_CTRL_STOP_DONE ((MID_SM_CTRL_STOP_ACK) << 16)
 
 /*! @brief States of machine enumeration */
@@ -129,12 +129,12 @@ static inline void MID_SM_StateMachine(mid_sm_app_ctrl_t *sAppCtrl)
     g_MID_SM_STATE_TABLE[sAppCtrl->eState](sAppCtrl);
 
     /* check fail state */
-    if (g_sMID.ui16FaultMID != 0)
+    if (g_sMID.ui16FaultMID != 0U)
     {
         /* run transition function */
         sAppCtrl->psTrans->MID_All2Stop();
 
-        if ((sAppCtrl->uiCtrl & MID_SM_CTRL_STOP_ACK) > 0)
+        if ((sAppCtrl->uiCtrl & MID_SM_CTRL_STOP_ACK) > 0U)
         {
             /* clear state's _ACK & _DONE SM control flags */
             sAppCtrl->uiCtrl &= ~(MID_SM_CTRL_STOP_ACK);

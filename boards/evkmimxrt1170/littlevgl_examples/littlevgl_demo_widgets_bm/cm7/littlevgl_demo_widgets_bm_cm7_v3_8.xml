@@ -55,16 +55,14 @@
     </projects>
     <memory>
       <memoryBlock id="BOARD_FLASH_evkmimxrt1170" name="BOARD_FLASH" addr="30000000" size="01000000" type="ExtFlash" access="RO"/>
-      <memoryBlock id="BOARD_SDRAM_evkmimxrt1170" name="BOARD_SDRAM" addr="80000000" size="04000000" type="RAM" access="RW"/>
-      <memoryBlock id="SRAM_DTC_cm4_evkmimxrt1170" name="SRAM_DTC_cm4" addr="20000000" size="00020000" type="RAM" access="RW"/>
-      <memoryBlock id="SRAM_ITC_cm4_evkmimxrt1170" name="SRAM_ITC_cm4" addr="1ffe0000" size="00020000" type="RAM" access="RW"/>
-      <memoryBlock id="SRAM_OC1_evkmimxrt1170" name="SRAM_OC1" addr="20240000" size="00080000" type="RAM" access="RW"/>
-      <memoryBlock id="SRAM_OC2_evkmimxrt1170" name="SRAM_OC2" addr="202C0000" size="00040000" type="RAM" access="RW"/>
-      <memoryBlock id="NCACHE_REGION_evkmimxrt1170" name="NCACHE_REGION" addr="20300000" size="00040000" type="RAM" access="RW"/>
-      <memoryBlock id="SRAM_OC_ECC1_evkmimxrt1170" name="SRAM_OC_ECC1" addr="20340000" size="00010000" type="RAM" access="RW"/>
-      <memoryBlock id="SRAM_OC_ECC2_evkmimxrt1170" name="SRAM_OC_ECC2" addr="20350000" size="00010000" type="RAM" access="RW"/>
+      <memoryBlock id="BOARD_SDRAM_evkmimxrt1170" name="BOARD_SDRAM" addr="80000000" size="03000000" type="RAM" access="RW"/>
+      <memoryBlock id="NCACHE_REGION_evkmimxrt1170" name="NCACHE_REGION" addr="83000000" size="01000000" type="RAM" access="RW"/>
       <memoryBlock id="SRAM_DTC_cm7_evkmimxrt1170" name="SRAM_DTC_cm7" addr="20000000" size="00040000" type="RAM" access="RW"/>
       <memoryBlock id="SRAM_ITC_cm7_evkmimxrt1170" name="SRAM_ITC_cm7" addr="00000000" size="00040000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_OC1_evkmimxrt1170" name="SRAM_OC1" addr="20240000" size="00080000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_OC2_evkmimxrt1170" name="SRAM_OC2" addr="202C0000" size="00080000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_OC_ECC1_evkmimxrt1170" name="SRAM_OC_ECC1" addr="20340000" size="00010000" type="RAM" access="RW"/>
+      <memoryBlock id="SRAM_OC_ECC2_evkmimxrt1170" name="SRAM_OC_ECC2" addr="20350000" size="00010000" type="RAM" access="RW"/>
     </memory>
     <toolchainSettings>
       <toolchainSetting id_refs="com.nxp.mcuxpresso">

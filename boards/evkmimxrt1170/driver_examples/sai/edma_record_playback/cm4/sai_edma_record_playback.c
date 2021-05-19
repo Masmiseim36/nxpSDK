@@ -69,6 +69,9 @@
 #define BOARD_MASTER_CLOCK_CONFIG()
 #define BUFFER_SIZE   (1024U)
 #define BUFFER_NUMBER (4U)
+#ifndef DEMO_CODEC_VOLUME
+#define DEMO_CODEC_VOLUME 100U
+#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -221,7 +224,11 @@ int main(void)
     {
         assert(false);
     }
-
+    if (CODEC_SetVolume(&codecHandle, kCODEC_PlayChannelHeadphoneLeft | kCODEC_PlayChannelHeadphoneRight,
+                        DEMO_CODEC_VOLUME) != kStatus_Success)
+    {
+        assert(false);
+    }
     while (1)
     {
         if (emptyBlock > 0)

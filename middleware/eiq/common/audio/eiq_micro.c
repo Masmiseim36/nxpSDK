@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2019 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -120,7 +120,7 @@ static void init(void)
   wm8960Config.i2cConfig.codecI2CInstance = BOARD_CODEC_I2C_INSTANCE;
   wm8960Config.i2cConfig.codecI2CSourceClock = BOARD_CODEC_I2C_CLOCK_FREQ;
   wm8960Config.route            = kWM8960_RoutePlaybackandRecord;
-#ifdef CPU_MIMXRT1176DVMAA_cm7
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
   wm8960Config.leftInputSource  = kWM8960_InputDifferentialMicInput3,
   wm8960Config.rightInputSource = kWM8960_InputDifferentialMicInput2,
 #else
@@ -129,7 +129,7 @@ static void init(void)
   wm8960Config.playSource       = kWM8960_PlaySourceDAC;
   wm8960Config.slaveAddress     = WM8960_I2C_ADDR;
   wm8960Config.bus              = kWM8960_BusI2S;
-#ifdef CPU_MIMXRT1176DVMAA_cm7
+#if defined( CPU_MIMXRT1176DVMAA_cm7 ) || defined( CPU_MIMXRT1166DVM6A_cm7 )
   wm8960Config.format.mclk_HZ   = 24576000U;
 #else
   wm8960Config.format.mclk_HZ = 6144000U;

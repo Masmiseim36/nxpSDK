@@ -38,12 +38,9 @@
         EXTERN  _tx_execution_isr_enter
         EXTERN  _tx_execution_isr_exit
         EXTERN  systick_cycles
+        EXTERN  HEAD$$Limit
 ;
 ;
-    RSEG    FREE_MEM:DATA
-    PUBLIC  __tx_free_memory_start
-__tx_free_memory_start
-    DS32    4        
 ;
 ;
         SECTION `.text`:CODE:NOROOT(2)
@@ -101,7 +98,7 @@ _tx_initialize_low_level:
 ;
 ;    /* Set base of available memory to end of non-initialised RAM area.  */
 ;     
-    LDR     r0, =__tx_free_memory_start             ; Get end of non-initialized RAM area
+    LDR     r0, =HEAD$$Limit                        ; Get end of non-initialized RAM area
     LDR     r2, =_tx_initialize_unused_memory       ; Build address of unused memory pointer
     STR     r0, [r2, #0]                            ; Save first free memory address
 ;

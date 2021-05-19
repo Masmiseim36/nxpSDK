@@ -5,9 +5,9 @@
 **                          MIMXRT1175DVMAA_cm4
 **
 **     Compiler:            GNU C Compiler
-**     Reference manual:    IMXRT1170RM, Rev 0, 12/2020
+**     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210226
+**     Build:               b210402
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
@@ -67,9 +67,9 @@ SECTIONS
   .ivt : AT(ivt_begin)
   {
     . = ALIGN(4);
-      KEEP(* (.boot_hdr.ivt))           /* ivt section */
-      KEEP(* (.boot_hdr.boot_data))     /* boot section */
-      KEEP(* (.boot_hdr.dcd_data))      /* dcd section */
+    KEEP(* (.boot_hdr.ivt))           /* ivt section */
+    KEEP(* (.boot_hdr.boot_data))     /* boot section */
+    KEEP(* (.boot_hdr.dcd_data))      /* dcd section */
     . = ALIGN(4);
   } > m_ivt
 

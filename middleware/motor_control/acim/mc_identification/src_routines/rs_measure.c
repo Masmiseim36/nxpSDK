@@ -34,7 +34,7 @@ void MID_getRs(void)
     }
 
     /* loop counter for time keeping */
-    g_sMID.ui32LoopCntr += 1;
+    g_sMID.ui32LoopCntr += 1U;
 
     /* filter measured current at 50Hz */
     g_sMID.sRs.fltILPF += (0.031F * ((*g_sMID.sIO.pfltId) - g_sMID.sRs.fltILPF));
@@ -50,19 +50,27 @@ void MID_getRs(void)
 
         /* check if motor is connected */
         if (MLIB_Abs_FLT(g_sMID.sRs.fltILPF) < MID_RS_MIN_CURR)
+        {
             g_sMID.ui16FaultMID |= MID_FAULT_NO_MOTOR;
+        }
 
         /* check if measuring current was reached */
         if (*g_sMID.sIO.pfltId < (g_sMID.sRs.fltIMeas - MID_RS_MIN_CURR))
+        {
             g_sMID.ui16WarningMID |= MID_WARN_DC_CUR_NOT_REACHED;
+        }
 
         /* check whether the precision of measurement was not too low */
         if ((*g_sMID.sIO.pfltUdReq < (M1_U_MAX * MID_RS_MEAS_MIN_LVL)) ||
             (g_sMID.sRs.fltILPF < (M1_I_MAX * MID_RS_MEAS_MIN_LVL)))
+        {
             g_sMID.ui16WarningMID |= MID_WARN_TOO_LOW_PREC;
+        }
     }
 
     /* wait additional time to settle d-axis current at zero and exit */
     if (g_sMID.ui32LoopCntr > g_sMID.sRs.ui32TimeSettle)
+    {
         g_sMID.sRs.ui16Active = FALSE;
+    }
 }

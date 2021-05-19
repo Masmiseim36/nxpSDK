@@ -221,8 +221,8 @@ int main(void)
     GPIO_WritePinOutput(GPIO11, 14, 1);
     SDK_DelayAtLeastUs(30000, SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY);
 
-    EnableIRQ(ENET_MAC0_Tx_Rx_Done_0_IRQn);
-    EnableIRQ(ENET_MAC0_Tx_Rx_Done_1_IRQn);
+    EnableIRQ(ENET_1G_MAC0_Tx_Rx_1_IRQn);
+    EnableIRQ(ENET_1G_MAC0_Tx_Rx_2_IRQn);
 
     for (index = 0; index < ENET_QOS_RXBD_NUM; index++)
     {

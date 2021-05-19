@@ -100,7 +100,7 @@ SHELL_COMMAND_DEFINE(del,
                      DeleteFileInDir,
                      1);
 
-SHELL_COMMAND_DEFINE(format, "\r\n\"format\":\r\nformat the file system\r\n", FormatFileSystem, 1);
+SHELL_COMMAND_DEFINE(format, "\r\n\"format\":\r\nformat the file system\r\n", FormatFileSystem, 0);
 
 SDK_ALIGN(static uint8_t s_shellHandleBuffer[SHELL_HANDLE_SIZE], 4);
 static shell_handle_t s_shellHandle;
@@ -176,24 +176,58 @@ void BOARD_InitMem(void)
     semcMemConfig.clkSrc_Hz = CLOCK_GetRootClockFreq(kCLOCK_Root_Semc);
 }
 
+/* MPU configuration. */
+void BOARD_ReconfigMPU(void)
+{
+#if defined(__ICACHE_PRESENT) && __ICACHE_PRESENT
+    /* Disable I cache and D cache */
+    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR))
+    {
+        SCB_DisableICache();
+    }
+#endif
+#if defined(__DCACHE_PRESENT) && __DCACHE_PRESENT
+    if (SCB_CCR_DC_Msk == (SCB_CCR_DC_Msk & SCB->CCR))
+    {
+        SCB_DisableDCache();
+    }
+#endif
+
+    /* Disable MPU */
+    ARM_MPU_Disable();
+
+    /* Region 9 setting: Memory with Normal type, not shareable, outer/inner write through. */
+    MPU->RBAR = ARM_MPU_RBAR(9, 0x80000000U);
+    MPU->RASR = ARM_MPU_RASR(0, ARM_MPU_AP_FULL, 0, 0, 1, 0, 0, ARM_MPU_REGION_SIZE_512MB);
+
+    /* Enable MPU */
+    ARM_MPU_Enable(MPU_CTRL_PRIVDEFENA_Msk);
+
+    /* Enable I cache and D cache */
+#if defined(__DCACHE_PRESENT) && __DCACHE_PRESENT
+    SCB_EnableDCache();
+#endif
+#if defined(__ICACHE_PRESENT) && __ICACHE_PRESENT
+    SCB_EnableICache();
+#endif
+}
+
 static shell_status_t FormatFileSystem(shell_handle_t shellHandle, int32_t argc, char **argv)
 {
-    char c;
     shell_status_t status = kStatus_SHELL_Success;
 
-    SHELL_Printf("\r\nDo you really want to format?(Y/N)\r\n");
-    c = GETCHAR();
+    xSemaphoreTake(s_dharaIoSemaphore, portMAX_DELAY);
+
     SHELL_Printf("\r\n");
 
-    if (c == 'Y')
-    {
-        status = createFileSystem();
-    }
+    status = createFileSystem();
 
     if (!status)
     {
         SHELL_Printf("\r\nFormat done.\r\n");
     }
+
+    xSemaphoreGive(s_dharaIoSemaphore);
 
     return status;
 }
@@ -204,13 +238,18 @@ static shell_status_t GetFreeCluster(shell_handle_t shellHandle, int32_t argc, c
     FATFS *fs;
     shell_status_t status = kStatus_SHELL_Success;
 
+    xSemaphoreTake(s_dharaIoSemaphore, portMAX_DELAY);
+
     if (FR_OK != f_getfree((char const *)&g_driverNumberBuffer[0U], &freeCluster, &fs))
     {
         PRINTF("\r\nGet free cluster failed.\r\n");
+        xSemaphoreGive(s_dharaIoSemaphore);
         return kStatus_SHELL_Error;
     }
 
     SHELL_Printf("\r\nFile system free cluster: %d\r\n", freeCluster);
+
+    xSemaphoreGive(s_dharaIoSemaphore);
 
     return status;
 }
@@ -492,6 +531,8 @@ static void shell_task(void *pvParameters)
 static void gc_task(void *pvParameters)
 {
     dhara_error_t err;
+    /* Block for 100ms. */
+    const TickType_t xDelay = 100U / portTICK_PERIOD_MS;
 
     while (1)
     {
@@ -504,7 +545,7 @@ static void gc_task(void *pvParameters)
 
         xSemaphoreGive(s_dharaIoSemaphore);
 
-        vTaskDelay(10);
+        vTaskDelay(xDelay);
     }
 }
 
@@ -563,6 +604,7 @@ int main(void)
     config.div                 = 4;
 
     BOARD_ConfigMPU();
+    BOARD_ReconfigMPU();
     BOARD_InitPins();
     BOARD_BootClockRUN();
     /* Set semc clock to 166 MHz(rootclock/div: 664.62 / 4 = 166.1MHz).

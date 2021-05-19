@@ -4,7 +4,7 @@
 /*            MIMXRT1173_cm4                                                 */
 /*  @version: 1.0                                                            */
 /*  @date:    2020-12-29                                                     */
-/*  @build:   b210203                                                        */
+/*  @build:   b210402                                                        */
 /* ------------------------------------------------------------------------- */
 /*                                                                           */
 /* Copyright 1997-2016 Freescale Semiconductor, Inc.                         */
@@ -124,11 +124,11 @@ __Vectors:
     .long   SAI4_RX_IRQHandler                              /* SAI4 interrupt*/
     .long   SAI4_TX_IRQHandler                              /* SAI4 interrupt*/
     .long   SPDIF_IRQHandler                                /* SPDIF interrupt*/
-    .long   ANATOP_TEMP_INT_IRQHandler                      /* ANATOP interrupt*/
-    .long   ANATOP_TEMP_LOW_HIGH_IRQHandler                 /* ANATOP interrupt*/
-    .long   ANATOP_TEMP_PANIC_IRQHandler                    /* ANATOP interrupt*/
-    .long   ANATOP_LP8_BROWNOUT_IRQHandler                  /* ANATOP interrupt*/
-    .long   ANATOP_LP0_BROWNOUT_IRQHandler                  /* ANATOP interrupt*/
+    .long   TMPSNS_INT_IRQHandler                           /* TMPSNS interrupt*/
+    .long   TMPSNS_LOW_HIGH_IRQHandler                      /* TMPSNS low high interrupt*/
+    .long   TMPSNS_PANIC_IRQHandler                         /* TMPSNS panic interrupt*/
+    .long   LPSR_LP8_BROWNOUT_IRQHandler                    /* LPSR 1p8 brownout interrupt*/
+    .long   LPSR_LP0_BROWNOUT_IRQHandler                    /* LPSR 1p0 brownout interrupt*/
     .long   ADC1_IRQHandler                                 /* ADC1 interrupt*/
     .long   ADC2_IRQHandler                                 /* ADC2 interrupt*/
     .long   USBPHY1_IRQHandler                              /* USBPHY1 interrupt*/
@@ -180,8 +180,8 @@ __Vectors:
     .long   USB_OTG1_IRQHandler                             /* USBO2 USB OTG1*/
     .long   ENET_IRQHandler                                 /* ENET interrupt*/
     .long   ENET_1588_Timer_IRQHandler                      /* ENET_1588_Timer interrupt*/
-    .long   ENET_MAC0_Tx_Rx_Done_0_IRQHandler               /* ENET 1G MAC0 transmit/receive done 0*/
-    .long   ENET_MAC0_Tx_Rx_Done_1_IRQHandler               /* ENET 1G MAC0 transmit/receive done 1*/
+    .long   ENET_1G_MAC0_Tx_Rx_1_IRQHandler                 /* ENET 1G MAC0 transmit/receive 1*/
+    .long   ENET_1G_MAC0_Tx_Rx_2_IRQHandler                 /* ENET 1G MAC0 transmit/receive 2*/
     .long   ENET_1G_IRQHandler                              /* ENET 1G interrupt*/
     .long   ENET_1G_1588_Timer_IRQHandler                   /* ENET_1G_1588_Timer interrupt*/
     .long   XBAR1_IRQ_0_1_IRQHandler                        /* XBAR1 interrupt*/
@@ -942,21 +942,21 @@ ENET_1588_Timer_IRQHandler:
 
     .align 1
     .thumb_func
-    .weak ENET_MAC0_Tx_Rx_Done_0_IRQHandler
-    .type ENET_MAC0_Tx_Rx_Done_0_IRQHandler, %function
-ENET_MAC0_Tx_Rx_Done_0_IRQHandler:
-    ldr   r0,=ENET_MAC0_Tx_Rx_Done_0_DriverIRQHandler
+    .weak ENET_1G_MAC0_Tx_Rx_1_IRQHandler
+    .type ENET_1G_MAC0_Tx_Rx_1_IRQHandler, %function
+ENET_1G_MAC0_Tx_Rx_1_IRQHandler:
+    ldr   r0,=ENET_1G_MAC0_Tx_Rx_1_DriverIRQHandler
     bx    r0
-    .size ENET_MAC0_Tx_Rx_Done_0_IRQHandler, . - ENET_MAC0_Tx_Rx_Done_0_IRQHandler
+    .size ENET_1G_MAC0_Tx_Rx_1_IRQHandler, . - ENET_1G_MAC0_Tx_Rx_1_IRQHandler
 
     .align 1
     .thumb_func
-    .weak ENET_MAC0_Tx_Rx_Done_1_IRQHandler
-    .type ENET_MAC0_Tx_Rx_Done_1_IRQHandler, %function
-ENET_MAC0_Tx_Rx_Done_1_IRQHandler:
-    ldr   r0,=ENET_MAC0_Tx_Rx_Done_1_DriverIRQHandler
+    .weak ENET_1G_MAC0_Tx_Rx_2_IRQHandler
+    .type ENET_1G_MAC0_Tx_Rx_2_IRQHandler, %function
+ENET_1G_MAC0_Tx_Rx_2_IRQHandler:
+    ldr   r0,=ENET_1G_MAC0_Tx_Rx_2_DriverIRQHandler
     bx    r0
-    .size ENET_MAC0_Tx_Rx_Done_1_IRQHandler, . - ENET_MAC0_Tx_Rx_Done_1_IRQHandler
+    .size ENET_1G_MAC0_Tx_Rx_2_IRQHandler, . - ENET_1G_MAC0_Tx_Rx_2_IRQHandler
 
     .align 1
     .thumb_func
@@ -1163,11 +1163,11 @@ ENET_QOS_PMT_IRQHandler:
     def_irq_handler    SAI4_RX_DriverIRQHandler
     def_irq_handler    SAI4_TX_DriverIRQHandler
     def_irq_handler    SPDIF_DriverIRQHandler
-    def_irq_handler    ANATOP_TEMP_INT_IRQHandler
-    def_irq_handler    ANATOP_TEMP_LOW_HIGH_IRQHandler
-    def_irq_handler    ANATOP_TEMP_PANIC_IRQHandler
-    def_irq_handler    ANATOP_LP8_BROWNOUT_IRQHandler
-    def_irq_handler    ANATOP_LP0_BROWNOUT_IRQHandler
+    def_irq_handler    TMPSNS_INT_IRQHandler
+    def_irq_handler    TMPSNS_LOW_HIGH_IRQHandler
+    def_irq_handler    TMPSNS_PANIC_IRQHandler
+    def_irq_handler    LPSR_LP8_BROWNOUT_IRQHandler
+    def_irq_handler    LPSR_LP0_BROWNOUT_IRQHandler
     def_irq_handler    ADC1_IRQHandler
     def_irq_handler    ADC2_IRQHandler
     def_irq_handler    USBPHY1_IRQHandler
@@ -1219,8 +1219,8 @@ ENET_QOS_PMT_IRQHandler:
     def_irq_handler    USB_OTG1_IRQHandler
     def_irq_handler    ENET_DriverIRQHandler
     def_irq_handler    ENET_1588_Timer_DriverIRQHandler
-    def_irq_handler    ENET_MAC0_Tx_Rx_Done_0_DriverIRQHandler
-    def_irq_handler    ENET_MAC0_Tx_Rx_Done_1_DriverIRQHandler
+    def_irq_handler    ENET_1G_MAC0_Tx_Rx_1_DriverIRQHandler
+    def_irq_handler    ENET_1G_MAC0_Tx_Rx_2_DriverIRQHandler
     def_irq_handler    ENET_1G_DriverIRQHandler
     def_irq_handler    ENET_1G_1588_Timer_DriverIRQHandler
     def_irq_handler    XBAR1_IRQ_0_1_IRQHandler

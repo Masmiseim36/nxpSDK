@@ -1194,7 +1194,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_ramfunc.scf</ScatterFile>
+            <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>--remove --keep=*(*core1_code) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>
@@ -2852,7 +2852,7 @@
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase/>
-            <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor_ramfunc.scf</ScatterFile>
+            <ScatterFile>MIMXRT1176xxxxx_cm7_flexspi_nor.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
             <Misc>--remove --keep=*(*core1_code) --predefine="-DXIP_BOOT_HEADER_ENABLE=1"</Misc>

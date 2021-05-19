@@ -187,6 +187,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>LWIP_ENET_FLEXIBLE_CONFIGURATION</state>
+          <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>USE_RTOS=1</state>
           <state>MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h"</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>
@@ -1220,6 +1221,7 @@
           <state>CPU_MIMXRT1176DVMAA_cm7</state>
           <state>FSL_FEATURE_PHYKSZ8081_USE_RMII50M_MODE</state>
           <state>LWIP_ENET_FLEXIBLE_CONFIGURATION</state>
+          <state>FSL_SDK_ENABLE_DRIVER_CACHE_CONTROL=1</state>
           <state>USE_RTOS=1</state>
           <state>MBEDTLS_CONFIG_FILE="aws_mbedtls_config.h"</state>
           <state>CRYPTO_USE_DRIVER_CAAM</state>

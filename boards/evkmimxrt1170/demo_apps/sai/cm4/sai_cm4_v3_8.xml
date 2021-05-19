@@ -199,9 +199,6 @@
     <source path="boards/evkmimxrt1170/demo_apps/sai" project_relative_path="." type="other">
       <files mask="sai.mex" hidden="true"/>
     </source>
-    <source path="boards/evkmimxrt1170/demo_apps/sai/cm4" project_relative_path="evkmimxrt1170/demo_apps/sai/cm4" type="binary">
-      <files mask="sai.bin" hidden="true"/>
-    </source>
     <source path="boards/evkmimxrt1170/demo_apps/sai/cm4" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso armgcc">
       <files mask="readme.txt"/>
     </source>

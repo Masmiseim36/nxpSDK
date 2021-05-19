@@ -647,7 +647,7 @@ emwin                      Name: emWin
                            WIN-GRAPHICS-LIBRARY                              
 
 freemaster                 Name: FreeMASTER                                  
-                           Version: 3.0.3                                    
+                           Version: 3.0.4                                    
                            Outgoing License: LA_OPT_NXP_Software_License.txt 
                            - Additional distribution license granted -       
                            License in Section 2.3 applies                    
@@ -660,7 +660,7 @@ freemaster                 Name: FreeMASTER
                            Origin: NXP                                       
 
 freemaster-examples        Name: FreeMASTER                                  
-                           Version: 3.0.3                                    
+                           Version: 3.0.4                                    
                            Outgoing License: BSD-3-Clause                    
                            License File: COPYING-BSD-3                       
                            Format: source code & header files                
@@ -752,6 +752,16 @@ mcufont                    Name: mcufont
                            (https://github.com/PetteriAimonen)               
                            Url: https://github.com/mcufont/mcufont           
 
+openvg                     Name: openvg                                      
+                           Version: 6.4.0.p2                                 
+                           Outgoing License: MIT                             
+                           License File: middleware/openvg/LICENSE.txt       
+                           Format: binary                                    
+                           Description: OpenVG Graphics library              
+                           Location: middleware/openvg                       
+                           Origin: VeriSilicon (http://www.verisilicon.com/) 
+                           Url: http://www.verisilicon.com/                  
+
 LittleFS                   Name: LittleFS                                    
                            Version: 2.2.1                                    
                            Outgoing License: BSD-3-Clause                    
@@ -764,12 +774,24 @@ LittleFS                   Name: LittleFS
                            (https://github.com/geky/)                        
                            Url: https://github.com/littlefs-project/littlefs 
 
+Dhara                      Name: Dhara                                       
+                           Version: 2.0.0                                    
+                           Outgoing License: ISC                             
+                           License File: middleware/dhara/LICENSE.md         
+                           Format: source code                               
+                           Description: Dhara - Dhara is a small flash       
+                           translation layer designed to be used in          
+                           resource-constrained systems for managing NAND    
+                           flash.                                            
+                           Location: middleware/dhara                        
+                           Origin: Daniel Beer (https://github.com/dlbeer/)  
+                           Url: https://github.com/dlbeer/dhara              
+
 TinyCBOR                   Name: TinyCBOR                                    
                            Version: 0.5.2                                    
                            Outgoing License: MIT                             
                            License File:                                     
-                           rtos/freertos/libraries/3rdparty/tinycbor/src/LICE
-                           NSE                                               
+                           rtos/freertos/libraries/3rdparty/tinycbor/LICENSE 
                            Format: source code                               
                            Description: TinyCBOR                             
                            Location:                                         
@@ -964,7 +986,7 @@ azure_rtos_netxduo         Name: Azure RTOS NetX Duo
                            https://azure.microsoft.com/en-us/services/rtos/  
 
 azure_rtos_guix            Name: Azure RTOS GUIX                             
-                           Version: 6.1.0                                    
+                           Version: 6.1.2                                    
                            Outgoing License: MICROSOFT SOFTWARE LICENSE      
                            License File: rtos/azure-rtos/guix/LICENSE.txt    
                            Format: source code                               
@@ -1141,6 +1163,34 @@ Glow Utils                 Name: Glow Utils
                            Glow NN Compiler.                                 
                            Location: middleware/eiq/glow                     
                            Origin: NXP (BSD-3-Clause)                        
+
+DeepviewRT Library         Name: DeepviewRT Library                          
+                           Version: 2.4.20                                   
+                           Outgoing License: LA_OPT_NXP_Software_License -   
+                           Additional distribution license granted, license  
+                           in Section 2.3 applies.                           
+                           License File:                                     
+                           middleware/eiq/deepviewrt/LICENSE.txt             
+                           Format: machine learning library and header file  
+                           Description: Au-Zone DeepViewRT and ModelRunner   
+                           License.                                          
+                           Location: middleware/eiq/deepviewrt/lib           
+                           Origin: Au-Zone (proprietary)                     
+                           Url: https://embeddedml.com                       
+
+DeepviewRT Sample          Name: DeepviewRT Sample                           
+                           Version: 1.0.0                                    
+                           Outgoing License: LA_OPT_NXP_Software_License -   
+                           Additional distribution license granted, license  
+                           in Section 2.3 applies.                           
+                           License File:                                     
+                           middleware/eiq/deepviewrt/LICENSE.txt             
+                           Format: source code                               
+                           Description: Utilities and project examples for   
+                           deepviewRT.                                       
+                           Location: middleware/eiq/deepviewrt               
+                           Origin: NXP (Proprietary)/Au-Zone (proprietary)   
+                           Url: https://embeddedml.com                       
 
 safety_iec60730b           Name: safety iec60730b                            
                            Version: 4.1                                      
@@ -1600,3 +1650,46 @@ audio_streamer             Name: Audio Streamer
                            Description: MCU Audio Streamer Framework         
                            Location: middleware/audio_streamer               
                            Origin: NXP                                       
+
+vera_sans_font             Name: Bitstream Vera Sans Font                    
+                           Version: NA                                       
+                           Outgoing License: Bitstream Vera License          
+                           License File:                                     
+                           boards/${board}/azure_rtos_examples/guix_washing_m
+                           achine_hd/cm7/fonts/verasans/vera_license.txt     
+                           Format: binary                                    
+                           Description: a free font for GUI application      
+                           Location:                                         
+                           boards/${board}/azure_rtos_examples/guix_washing_m
+                           achine_hd/cm7/fonts/verasans                      
+                           Origin: Bitstream                                 
+
+vera_serif_font            Name: Bitstream Vera Serif Font                   
+                           Version: NA                                       
+                           Outgoing License: Bitstream Vera License          
+                           License File:                                     
+                           boards/${board}/azure_rtos_examples/guix_washing_m
+                           achine_hd/cm7/fonts/veraserif/vera_license.txt    
+                           Format: binary                                    
+                           Description: a free font for GUI application      
+                           Location:                                         
+                           boards/${board}/azure_rtos_examples/guix_washing_m
+                           achine_hd/cm7/fonts/veraserif                     
+                           Origin: Bitstream                                 
+
+noto_sans_cjk_sc_font      Name: Noto Sans CJK Simplified Chinese Font       
+                           Version: NA                                       
+                           Outgoing License: SIL OPEN FONT LICENSE Version   
+                           1.1                                               
+                           License File:                                     
+                           boards/${board}/azure_rtos_examples/guix_washing_m
+                           achine_hd/cm7/fonts/NotoSansCJKsc-Regular_license.
+                           txt                                               
+                           Format: binary                                    
+                           Description: a free font of simplified chinese for
+                           GUI application                                   
+                           Location:                                         
+                           boards/${board}/azure_rtos_examples/guix_washing_m
+                           achine_hd/cm7/fonts                               
+                           Origin: Google                                    
+                           Url: https://www.google.com/get/noto/help/cjk/    

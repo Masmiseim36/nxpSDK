@@ -196,48 +196,15 @@ void GPC_ConfigROSC()
     GPC_SET_POINT_CTRL->SP_ROSC_CTRL = ~OSC_RC_16M_STBY_VAL;
 }
 
-void GPC_ConfigCore0WakeupPowerStep()
-{
-    gpc_tran_step_config_t tranStepConfig;
-
-    tranStepConfig.cntMode    = kGPC_StepCounterDelayMode;
-    tranStepConfig.stepCount  = 0x1fff;
-    tranStepConfig.enableStep = true;
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_0, kGPC_CM_WakeupPower, &tranStepConfig);
-}
-
-void GPC_ConfigCore1WakeupPowerStep()
-{
-    gpc_tran_step_config_t tranStepConfig;
-
-    tranStepConfig.cntMode    = kGPC_StepCounterDelayMode;
-    tranStepConfig.stepCount  = 0x1fff;
-    tranStepConfig.enableStep = true;
-    GPC_CM_ConfigCpuModeTransitionStep(GPC_CPU_MODE_CTRL_1, kGPC_CM_WakeupPower, &tranStepConfig);
-}
-
-void GPC_ConfigSetpointPowerOnStep()
-{
-    gpc_tran_step_config_t tranStepConfig;
-
-    tranStepConfig.cntMode    = kGPC_StepCounterDelayMode;
-    tranStepConfig.stepCount  = 0x1fff;
-    tranStepConfig.enableStep = true;
-    GPC_SP_ConfigSetPointTransitionStep(GPC_SET_POINT_CTRL, kGPC_SP_PowerOn, &tranStepConfig);
-}
-
 void GPC_InitConfig()
 {
     GPC_ConfigCore0SetpointMapping();
     GPC_ConfigCore0CpuModeTransitionFlow();
-    GPC_ConfigCore0WakeupPowerStep();
 #ifndef SINGLE_CORE_M7
     GPC_ConfigCore1SetpointMapping();
     GPC_ConfigCore1CpuModeTransitionFlow();
-    GPC_ConfigCore1WakeupPowerStep();
 #endif
     GPC_ConfigSetpointTransitionFlow();
-    GPC_ConfigSetpointPowerOnStep();
     GPC_ConfigStbyTransitionFlow();
     GPC_ConfigROSC();
 }
@@ -766,7 +733,7 @@ void SSARC_InitConfig(void)
     groupConfig.saveOrder       = kSSARC_ProcessFromStartToEnd;
     groupConfig.savePriority    = 0U;
     groupConfig.restoreOrder    = kSSARC_ProcessFromStartToEnd;
-    groupConfig.restorePriority = 1U;
+    groupConfig.restorePriority = 0U;
     groupConfig.powerDomain     = kSSARC_WAKEUPMIXPowerDomain;
     groupConfig.cpuDomain       = kSSARC_CM7Core;
     SSARC_GroupInit(SSARC_LP, groupIndex++, &groupConfig);
@@ -782,7 +749,7 @@ void SSARC_InitConfig(void)
     groupConfig.saveOrder       = kSSARC_ProcessFromStartToEnd;
     groupConfig.savePriority    = 0U;
     groupConfig.restoreOrder    = kSSARC_ProcessFromStartToEnd;
-    groupConfig.restorePriority = 2U;
+    groupConfig.restorePriority = 1U;
     groupConfig.powerDomain     = kSSARC_WAKEUPMIXPowerDomain;
     groupConfig.cpuDomain       = kSSARC_CM7Core;
     SSARC_GroupInit(SSARC_LP, groupIndex++, &groupConfig);

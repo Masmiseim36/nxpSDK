@@ -9,7 +9,7 @@ Toolchain supported
 ===================
 - IAR embedded Workbench  8.50.9
 - Keil MDK  5.33
-- MCUXpresso  11.3.0
+- MCUXpresso  11.3.1
 - GCC ARM Embedded  9.3.1
 
 Board settings
@@ -33,13 +33,8 @@ When the example runs successfully, the following message is displayed in the te
 ~~~~~~~~~~~~~~~~~~~~~~~~
 TMPSNS driver example. 
 The chip initial temperature is 23.4 ℃. 
-The chip temperature has reached high temperature that is 27.2 ℃. 
-The chip will to be waiting a desired cool down temperature . 
-The chip temperature has reached high temperature that is 27.2 ℃. 
-The chip will to be waiting a desired cool down temperature . 
-The chip temperature has reached high temperature that is 27.2 ℃. 
-The chip will to be waiting a desired cool down temperature . 
-......
+The chip temperature has reached high temperature that is 30.9 ℃. 
+
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Note 1:

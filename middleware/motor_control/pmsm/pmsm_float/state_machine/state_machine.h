@@ -16,14 +16,14 @@
  ******************************************************************************/
 
 /* State machine control command flags */
-#define SM_CTRL_NONE 0x0
-#define SM_CTRL_FAULT 0x1
-#define SM_CTRL_FAULT_CLEAR 0x2
-#define SM_CTRL_INIT_DONE 0x4
-#define SM_CTRL_STOP 0x8
-#define SM_CTRL_START 0x10
-#define SM_CTRL_STOP_ACK 0x20
-#define SM_CTRL_RUN_ACK 0x40
+#define SM_CTRL_NONE 0x0U
+#define SM_CTRL_FAULT 0x1U
+#define SM_CTRL_FAULT_CLEAR 0x2U
+#define SM_CTRL_INIT_DONE 0x4U
+#define SM_CTRL_STOP 0x8U
+#define SM_CTRL_START 0x10U
+#define SM_CTRL_STOP_ACK 0x20U
+#define SM_CTRL_RUN_ACK 0x40U
 
 typedef uint16_t sm_app_ctrl;
 typedef uint32_t sm_app_fault;

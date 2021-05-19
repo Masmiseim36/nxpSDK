@@ -2,9 +2,9 @@
 ** ###################################################################
 **     Processor:           MIMXRT1173CVM8A_cm7
 **     Compiler:            GNU C Compiler
-**     Reference manual:    IMXRT1170RM, Rev 0, 12/2020
+**     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210202
+**     Build:               b210402
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
@@ -36,7 +36,7 @@ MEMORY
   m_ivt                 (RX)  : ORIGIN = 0x30001000, LENGTH = 0x00001000
   m_interrupts          (RX)  : ORIGIN = 0x30002000, LENGTH = 0x00000400
   m_text                (RX)  : ORIGIN = 0x30002400, LENGTH = 0x00FBDC00
-  m_text2               (RX)  : ORIGIN = 0x00000000, LENGTH = 0x00040000
+  m_qacode              (RX)  : ORIGIN = 0x00000000, LENGTH = 0x00040000
   m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00040000
   m_data2               (RW)  : ORIGIN = 0x202C0000 + RPMSG_SHMEM_SIZE, LENGTH = 0x00080000 - RPMSG_SHMEM_SIZE
   rpmsg_sh_mem          (RW)  : ORIGIN = 0x202C0000, LENGTH = RPMSG_SHMEM_SIZE
@@ -62,9 +62,9 @@ SECTIONS
   .ivt : AT(ivt_begin)
   {
     . = ALIGN(4);
-      KEEP(* (.boot_hdr.ivt))           /* ivt section */
-      KEEP(* (.boot_hdr.boot_data))     /* boot section */
-      KEEP(* (.boot_hdr.dcd_data))      /* dcd section */
+    KEEP(* (.boot_hdr.ivt))           /* ivt section */
+    KEEP(* (.boot_hdr.boot_data))     /* boot section */
+    KEEP(* (.boot_hdr.dcd_data))      /* dcd section */
     . = ALIGN(4);
   } > m_ivt
 
@@ -211,6 +211,7 @@ SECTIONS
     . = ALIGN(4);
     __data_end__ = .;        /* define a global symbol at data end */
   } > m_data
+
   __ram_function_flash_start = __DATA_ROM + (__data_end__ - __data_start__); /* Symbol is used by startup for TCM data initialization */
 
   .ram_function : AT(__ram_function_flash_start)
@@ -220,7 +221,7 @@ SECTIONS
     *(CodeQuickAccess)
     . = ALIGN(128);
     __ram_function_end__ = .;
-  } > m_text2
+  } > m_qacode
 
   __NDATA_ROM = __ram_function_flash_start + (__ram_function_end__ - __ram_function_start__);
   .ncache.init : AT(__NDATA_ROM)

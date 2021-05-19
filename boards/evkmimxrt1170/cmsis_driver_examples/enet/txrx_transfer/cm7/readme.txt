@@ -15,7 +15,7 @@ Toolchain supported
 - IAR embedded Workbench  8.50.9
 - Keil MDK  5.33
 - GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- MCUXpresso  11.3.1
 
 Hardware requirements
 =====================
@@ -28,7 +28,8 @@ Hardware requirements
 
 Board settings
 ==============
-Need to populate a 22pf capacitor to C66.
+If Rx frame CRC error occurs, try to populate a suitable C66. The REV C/C1 boards populate 22pF which is high and may result in CRC
+errors on some of boards, if this is the case C66 may be removed or replaced by a smaller capacitor.
 
 Prepare the Demo
 ================

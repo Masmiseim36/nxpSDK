@@ -149,18 +149,16 @@
       <files mask="dev_audio_generator_bm_cm7.uvoptx"/>
       <files mask="dev_audio_generator_bm_cm7.uvmpw"/>
     </source>
-    <source path="boards/evkmimxrt1170/usb_examples/usb_device_audio_generator/bm/cm7cm7" project_relative_path="source" type="src">
+    <source path="boards/evkmimxrt1170/usb_examples/usb_device_audio_generator/bm/cm7" project_relative_path="source" type="src">
       <files mask="audio_data.c"/>
+      <files mask="audio_generator.c"/>
+      <files mask="usb_device_descriptor.c"/>
     </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_device_audio_generator/bm/cm7" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_device_audio_generator/bm/cm7" project_relative_path="evkmimxrt1170/usb_examples/usb_device_audio_generator/bm" type="doc">
       <files mask="readme.pdf" hidden="true"/>
-    </source>
-    <source path="boards/evkmimxrt1170/usb_examples/usb_device_audio_generator/bm/cm7" project_relative_path="source" type="src">
-      <files mask="audio_generator.c"/>
-      <files mask="usb_device_descriptor.c"/>
     </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_device_audio_generator/bm/cm7" project_relative_path="source" type="c_include">
       <files mask="audio_generator.h"/>

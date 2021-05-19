@@ -136,8 +136,8 @@
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
     </source>
-    <source path="boards/evkmimxrt1170/demo_apps/shell" project_relative_path="." type="other">
-      <files mask="shell.mex" hidden="true"/>
+    <source path="boards/evkmimxrt1170/demo_apps/shell/cm7" project_relative_path="evkmimxrt1170/demo_apps/shell/cm7" type="binary">
+      <files mask="shell_cm7.bin" hidden="true"/>
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/shell/cm7" project_relative_path="source" type="src">
       <files mask="shell.c"/>
@@ -150,9 +150,6 @@
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/shell/cm7" project_relative_path="." type="other">
       <files mask="shell.mex" hidden="true"/>
-    </source>
-    <source path="boards/evkmimxrt1170/demo_apps/shell/cm7" project_relative_path="evkmimxrt1170/demo_apps/shell/cm7" type="binary">
-      <files mask="shell.bin" hidden="true"/>
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/shell/cm7" project_relative_path="board" type="src">
       <files mask="board.c"/>

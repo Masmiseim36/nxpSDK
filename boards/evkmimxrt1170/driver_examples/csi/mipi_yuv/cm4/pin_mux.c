@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,11 +13,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v8.0
+product: Pins v9.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 0.8.1
+processor_version: 0.9.6
 pin_labels:
 - {pin_num: K17, pin_signal: GPIO_AD_30, label: DISP_BL, identifier: DISP_BL}
 - {pin_num: R13, pin_signal: GPIO_AD_02, label: DISP_RST, identifier: DISP_RST}
@@ -149,6 +149,7 @@ BOARD_InitMipiCameraPins:
  * END ****************************************************************************************************************/
 void BOARD_InitMipiCameraPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           /* LPCG on: LPCG is ON. */
+  CLOCK_EnableClock(kCLOCK_Iomuxc_Lpsr);      /* LPCG on: LPCG is ON. */
 
   /* GPIO configuration of CAMERA_PWDN on GPIO_AD_26 (pin L14) */
   gpio_pin_config_t CAMERA_PWDN_config = {

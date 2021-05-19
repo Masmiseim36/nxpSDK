@@ -147,9 +147,6 @@
       <files mask="dev_dfu_lite_bm_cm7.uvoptx"/>
       <files mask="dev_dfu_lite_bm_cm7.uvmpw"/>
     </source>
-    <source path="boards/evkmimxrt1170/usb_examples/usb_device_dfu_lite/bm/cm7" project_relative_path="evkmimxrt1170/usb_examples/usb_device_dfu_lite/bm" type="binary">
-      <files mask="dev_dfu_lite_bm_cm7.bin" hidden="true"/>
-    </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_device_dfu_lite/bm/cm7" project_relative_path="utility" type="c_include">
       <files mask="usb_flash.h"/>
     </source>
@@ -179,6 +176,9 @@
     </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_device_dfu_lite/inf" project_relative_path="usb/example/usb_device_dfu_lite/inf" type="other">
       <files mask="dfu.cat" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1170/usb_examples/usb_device_dfu_lite/bm/cm7" project_relative_path="evkmimxrt1170/usb_examples/usb_device_dfu_lite/bm/cm7" type="binary">
+      <files mask="dev_hid_mouse_bm.bin" hidden="true"/>
     </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_device_dfu_lite/bm/cm7" project_relative_path="board" type="src">
       <files mask="board.c"/>

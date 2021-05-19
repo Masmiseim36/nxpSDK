@@ -6,9 +6,9 @@ terminal.
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
 - IAR embedded Workbench  8.50.9
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.1
 - Keil MDK  5.33
 
 Hardware requirements

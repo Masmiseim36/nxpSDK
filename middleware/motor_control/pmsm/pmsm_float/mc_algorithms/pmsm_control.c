@@ -49,9 +49,13 @@ void MCS_PMSMFocCtrl(mcs_pmsm_foc_t *psFocPMSM)
     /* pass electrical position from outside function if enabled else estimated
      * electrical position is selected */
     if (psFocPMSM->bPosExtOn)
+    {
         psFocPMSM->f16PosEl = psFocPMSM->f16PosElExt;
+    }
     else
+    {
         psFocPMSM->f16PosEl = psFocPMSM->f16PosElEst;
+    }
 
     /* Position angle of the last PWM update */
     psFocPMSM->sAnglePosEl.fltSin = GFLIB_Sin_FLTa((acc32_t)psFocPMSM->f16PosElEst);
@@ -230,7 +234,9 @@ void MCS_PMSMOpenLoopStartUp(mcs_pmsm_startup_t *psStartUp)
 
     /* clear open loop flag */
     if (psStartUp->f16RatioMerging == FRAC16(1.0))
+    {
         psStartUp->bOpenLoop = FALSE;
+    }
 }
 
 /*!
@@ -288,26 +294,38 @@ static void MCS_DTComp(GMCLIB_2COOR_ALBE_T_FLT *sUAlBeDTComp,
     /* compensate phase A */
     i16CurrSign = (sIABC->fltA > fltPwrStgCharIRange) - (sIABC->fltA < -fltPwrStgCharIRange);
     if (!i16CurrSign)
+    {
         sUABCErr.fltA = GFLIB_Lut1D_FLT(sIABC->fltA, pfltUDtComp, &sLUTUDtComp);
+    }
     else
+    {
         sUABCErr.fltA =
             i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltA) - fltPwrStgCharIRange) * fltPwrStgCharLinCoeff - fltUerrMax);
+    }
 
     /* compensate phase B */
     i16CurrSign = (sIABC->fltB > fltPwrStgCharIRange) - (sIABC->fltB < -fltPwrStgCharIRange);
     if (!i16CurrSign)
+    {
         sUABCErr.fltB = GFLIB_Lut1D_FLT(sIABC->fltB, pfltUDtComp, &sLUTUDtComp);
+    }
     else
+    {
         sUABCErr.fltB =
             i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltB) - fltPwrStgCharIRange) * fltPwrStgCharLinCoeff - fltUerrMax);
+    }
 
     /* compensate phase C */
     i16CurrSign = (sIABC->fltC > fltPwrStgCharIRange) - (sIABC->fltC < -fltPwrStgCharIRange);
     if (!i16CurrSign)
+    {
         sUABCErr.fltC = GFLIB_Lut1D_FLT(sIABC->fltC, pfltUDtComp, &sLUTUDtComp);
+    }
     else
+    {
         sUABCErr.fltC =
             i16CurrSign * ((MLIB_Abs_FLT(sIABC->fltC) - fltPwrStgCharIRange) * fltPwrStgCharLinCoeff - fltUerrMax);
+    }
 
     /* add compensation voltages */
     sUAlBeDTComp->fltAlpha +=

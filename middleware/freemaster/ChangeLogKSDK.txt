@@ -2,7 +2,7 @@
 @page middleware_log Middleware Change Log
 
 @section fmstr FreeMASTER Communication Driver
-  Current version is 3.0.3. Visit https://www.nxp.com/freemaster for more information.
+  Current version is 3.0.4. Visit https://www.nxp.com/freemaster for more information.
   Reach out for a support at https://community.nxp.com/community/freemaster.
   
   - 3.0.0
@@ -29,4 +29,8 @@
     - New example.pmp project file embedded into application flash storage.
     - USB-CDC implementation fixed, new JTAG EOnCE communication interface added to DSC 56F800E family.
     - Use with FreeMASTER PC Host tool version 3.0.3 or later. Version 3.1.x is recommended.
+
+  - 3.0.4
+    - Fixed component dependency logic of FreeMASTER driver. 
+    - Use with FreeMASTER PC Host tool version 3.1.x
 */

@@ -6,9 +6,9 @@
 **                          MIMXRT1175DVMAA_cm4
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    IMXRT1170RM, Rev 0, 12/2020
+**     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210202
+**     Build:               b210402
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -30,6 +30,9 @@
 
 #define m_text_start                   0x80000400
 #define m_text_size                    0x001FFC00
+
+#define m_qacode_start                 0x1FFE0000
+#define m_qacode_size                  0x00020000
 
 #define m_data_start                   0x20240000
 #define m_data_size                    0x00080000
@@ -80,6 +83,9 @@ LR_m_text m_interrupts_start m_text_start+m_text_size-m_interrupts_start {   ; l
   }
 #endif
   ARM_LIB_STACK m_data_start+m_data_size EMPTY -Stack_Size { ; Stack region growing down
+  }
+  RW_m_ram_text m_qacode_start m_qacode_size { ;
+    * (CodeQuickAccess)
   }
 #if (defined(__heap_noncacheable__))
   RW_m_ncache m_ncache_start m_ncache_size - Heap_Size { ; ncache data

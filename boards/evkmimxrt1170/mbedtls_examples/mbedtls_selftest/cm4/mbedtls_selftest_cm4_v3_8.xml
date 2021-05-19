@@ -30,9 +30,9 @@
     <definition extID="platform.Include_common.MIMXRT1176"/>
     <definition extID="platform.Include_dsp.MIMXRT1176"/>
     <definition extID="platform.devices.MIMXRT1176_system.MIMXRT1176"/>
+    <definition extID="iar"/>
     <definition extID="armgcc"/>
     <definition extID="mcuxpresso"/>
-    <definition extID="iar"/>
     <definition extID="mdk"/>
     <definition extID="com.nxp.mcuxpresso"/>
     <definition extID="com.crt.advproject.config.exe.debug"/>
@@ -112,6 +112,11 @@
       <include_path path="boards/evkmimxrt1170/mbedtls_examples/mbedtls_selftest/cm4" project_relative_path="board" type="c_include"/>
       <include_path path="boards/evkmimxrt1170/mbedtls_examples/mbedtls_selftest/cm4" project_relative_path="evkmimxrt1170/mbedtls_examples/mbedtls_selftest/cm4" type="c_include"/>
     </include_paths>
+    <source path="boards/evkmimxrt1170/mbedtls_examples/mbedtls_selftest/cm4/iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="mbedtls_selftest_cm4.ewd"/>
+      <files mask="mbedtls_selftest_cm4.ewp"/>
+      <files mask="mbedtls_selftest_cm4.eww"/>
+    </source>
     <source path="boards/evkmimxrt1170/mbedtls_examples/mbedtls_selftest/cm4/armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
       <files mask="build_all.bat"/>
       <files mask="build_all.sh"/>
@@ -132,11 +137,6 @@
       <files mask="build_flexspi_nor_debug.sh"/>
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
-    </source>
-    <source path="boards/evkmimxrt1170/mbedtls_examples/mbedtls_selftest/cm4/iar" project_relative_path="./" type="workspace" toolchain="iar">
-      <files mask="mbedtls_selftest_cm4.ewd"/>
-      <files mask="mbedtls_selftest_cm4.ewp"/>
-      <files mask="mbedtls_selftest_cm4.eww"/>
     </source>
     <source path="boards/evkmimxrt1170/mbedtls_examples/mbedtls_selftest/cm4/mdk" project_relative_path="./" type="workspace" toolchain="mdk">
       <files mask="mbedtls_selftest_cm4.uvprojx"/>

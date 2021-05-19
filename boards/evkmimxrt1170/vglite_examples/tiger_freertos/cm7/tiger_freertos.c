@@ -43,39 +43,39 @@ static vg_lite_matrix_t matrix;
 #if (CUSTOM_VGLITE_MEMORY_CONFIG != 1)
 #error "Application must be compiled with CUSTOM_VGLITE_MEMORY_CONFIG=1"
 #else
+
 #define VGLITE_COMMAND_BUFFER_SZ (128 * 1024)
-/* On RT595S */
-#if defined(CPU_MIMXRT595SFFOA_cm33)
+
+#if defined(CPU_MIMXRT595SFFOC_cm33)
+	/* RT500 platform */
 	#define VGLITE_HEAP_SZ 3955776 /* 3.8 MB */
-/* On RT1170 */
-#elif defined(CPU_MIMXRT1176DVMAA_cm7)
-	#define VGLITE_HEAP_SZ 8912896 /* 8.5 MB */
 #else
-	#error "Unsupported CPU !"
+	/* RT1170 or RT1160 platform */
+	#define VGLITE_HEAP_SZ 8912896 /* 8.5 MB */
 #endif
+
 #if (720 * 1280 == (DEMO_PANEL_WIDTH) * (DEMO_PANEL_HEIGHT))
 	#define TW             720
-/* On RT595S */
-#if defined(CPU_MIMXRT595SFFOA_cm33)
-	/* Tessellation window = 720 x 640 */
+#if defined(CPU_MIMXRT595SFFOC_cm33)
+	/* On RT500, use a tessellation window of 720 x 640 */
 	#define TH             640
-/* On RT1170 */
-#elif defined(CPU_MIMXRT1176DVMAA_cm7)
-	/* Tessellation window = 720 x 1280 */
-	#define TH             1280
 #else
-	#error "Unsupported CPU !"
+	/* On RT1160 and RT1170, use a tessellation window of 720 x 1280 */
+	#define TH             1280
 #endif
+
 /* Panel RM67162. Supported only by platform RT595S. */
 #elif (400 * 400 == (DEMO_PANEL_WIDTH) * (DEMO_PANEL_HEIGHT))
 /* Tessellation window = 400 x 400 */
 #define TW             400
 #define TH             400
+
 #else
 /* Tessellation window = 256 x 256 */
 #define TW             256
 #define TH             256
 #endif
+
 /* Allocate the heap and set the command buffer(s) size */
 AT_NONCACHEABLE_SECTION_ALIGN(uint8_t vglite_heap[VGLITE_HEAP_SZ], 64);
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.9 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.9.xsd" uuid="2789973b-4e08-461b-a604-ca74c2c2a2cf" version="1.9" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.9 http://mcuxpresso.nxp.com/XSD/mex_configuration_1.9.xsd" uuid="9263d292-b28a-415a-9bc1-4e2a9c3a4a1c" version="1.9" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MIMXRT1176xxxxx</processor>
       <package>MIMXRT1176DVMAA</package>
@@ -18,7 +18,7 @@
    <tools>
       <pins name="Pins" version="9.0" enabled="true" update_project_code="true">
          <pins_profile>
-            <processor_version>0.9.2</processor_version>
+            <processor_version>0.9.11</processor_version>
             <power_domains/>
             <pin_labels>
                <pin_label pin_num="M13" pin_signal="GPIO_AD_04" label="USER_LED" identifier="USER_LED"/>
@@ -34,28 +34,7 @@
                   <coreID>cm7</coreID>
                   <enableClock>true</enableClock>
                </options>
-               <dependencies>
-                  <dependency resourceType="Peripheral" resourceId="LPUART1" description="Peripheral LPUART1 is not initialized" problem_level="1" source="Pins:BOARD_InitPins">
-                     <feature name="initialized" evaluation="equal">
-                        <data>true</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
-                     <feature name="enabled" evaluation="equal" configuration="cm7">
-                        <data>true</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.iomuxc" description="Pins initialization requires the IOMUXC Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
-                     <feature name="enabled" evaluation="equal" configuration="cm7">
-                        <data>true</data>
-                     </feature>
-                  </dependency>
-                  <dependency resourceType="SWComponent" resourceId="platform.drivers.igpio" description="Pins initialization requires the IGPIO Driver in the project." problem_level="2" source="Pins:BOARD_InitPins">
-                     <feature name="enabled" evaluation="equal" configuration="cm7">
-                        <data>true</data>
-                     </feature>
-                  </dependency>
-               </dependencies>
+               <dependencies/>
                <pins>
                   <pin peripheral="LPUART1" signal="RXD" pin_num="M15" pin_signal="GPIO_AD_25">
                      <pin_features>
@@ -81,6 +60,16 @@
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
                         <pin_feature name="gpio_init_state" value="false"/>
+                        <pin_feature name="software_input_on" value="Disable"/>
+                        <pin_feature name="pull_up_down_config" value="Pull_Down"/>
+                        <pin_feature name="pull_keeper_select" value="Keeper"/>
+                        <pin_feature name="open_drain" value="Disable"/>
+                        <pin_feature name="drive_strength" value="High"/>
+                        <pin_feature name="slew_rate" value="Slow"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="ARM" signal="arm_trace_swo" pin_num="D6" pin_signal="GPIO_DISP_B2_07">
+                     <pin_features>
                         <pin_feature name="software_input_on" value="Disable"/>
                         <pin_feature name="pull_up_down_config" value="Pull_Down"/>
                         <pin_feature name="pull_keeper_select" value="Keeper"/>
@@ -142,7 +131,7 @@
       </pins>
       <clocks name="Clocks" version="7.0" enabled="true" update_project_code="true">
          <clocks_profile>
-            <processor_version>0.8.1</processor_version>
+            <processor_version>0.9.11</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN">
@@ -170,7 +159,7 @@
                   <clock_output id="CSI2_UI_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="CSI_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="CSSYS_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
-                  <clock_output id="CSTRACE_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
+                  <clock_output id="CSTRACE_CLK_ROOT.outFreq" value="132 MHz" locked="false" accuracy=""/>
                   <clock_output id="ELCDIF_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="EMV1_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
                   <clock_output id="EMV2_CLK_ROOT.outFreq" value="24 MHz" locked="false" accuracy=""/>
@@ -305,6 +294,8 @@
                   <setting id="CCM.CLOCK_ROOT3.MUX.sel" value="ANADIG_PLL.SYS_PLL3_CLK" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT4.DIV.scale" value="3" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT4.MUX.sel" value="ANADIG_PLL.SYS_PLL2_PFD1_CLK" locked="false"/>
+                  <setting id="CCM.CLOCK_ROOT6.DIV.scale" value="4" locked="true"/>
+                  <setting id="CCM.CLOCK_ROOT6.MUX.sel" value="ANADIG_PLL.SYS_PLL2_CLK" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT68.DIV.scale" value="2" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT68.MUX.sel" value="ANADIG_PLL.PLL_VIDEO_CLK" locked="false"/>
                   <setting id="CCM.CLOCK_ROOT8.DIV.scale" value="240" locked="false"/>
@@ -315,7 +306,7 @@
       </clocks>
       <dcdx name="DCDx" version="3.0" enabled="true" update_project_code="true">
          <dcdx_profile>
-            <processor_version>0.9.2</processor_version>
+            <processor_version>0.9.11</processor_version>
             <output_format>c_array</output_format>
          </dcdx_profile>
          <dcdx_configurations>
@@ -325,7 +316,7 @@
                <command_groups>
                   <command_group name="Imported Commands" enabled="true">
                      <commands>
-                        <command type="write_value" address="CCM_CLOCK_ROOT4_CONTROL" value="0x602" value_width="4"/>
+                        <command type="write_value" address="CCM_CLOCK_ROOT4_CONTROL" value="0x703" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_B1_00" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_B1_01" value="0x00" value_width="4"/>
                         <command type="write_value" address="IOMUXC_SW_MUX_CTL_PAD_GPIO_EMC_B1_02" value="0x00" value_width="4"/>
@@ -492,8 +483,6 @@
                         <command type="nop"/>
                         <command type="nop"/>
                         <command type="write_value" address="SEMC_INTR" value="0x03" value_width="4"/>
-                        <command type="write_value" address="SEMC_DCCR" value="0x17" value_width="4"/>
-                        <command type="nop"/>
                         <command type="write_value" address="SEMC_SDRAMCR3" value="0x21210409" value_width="4"/>
                      </commands>
                   </command_group>
@@ -503,30 +492,123 @@
       </dcdx>
       <periphs name="Peripherals" version="9.0" enabled="true" update_project_code="true">
          <peripherals_profile>
-            <processor_version>0.9.2</processor_version>
+            <processor_version>0.9.11</processor_version>
          </peripherals_profile>
          <functional_groups>
             <functional_group name="BOARD_InitPeripherals" uuid="7ee8fc36-68c9-403c-a923-44701e1362da" called_from_default_init="true" id_prefix="" core="cm7">
                <description></description>
                <options/>
                <dependencies/>
-               <instances/>
+               <instances>
+                  <instance name="TIMER" uuid="d8e01b68-ef1e-471b-8f04-ec2cc0f5f22e" type="qtmr" type_id="qtmr_460dd7aa3f3371843c2548acd54252b0" mode="general" peripheral="TMR3" enabled="true" comment="" custom_name_enabled="true" editing_lock="false">
+                     <config_set name="fsl_qtmr">
+                        <setting name="clockSource" value="BusInterfaceClock"/>
+                        <setting name="clockSourceFreq" value="BOARD_BootClockRUN"/>
+                        <array name="qtmr_channels">
+                           <struct name="0">
+                              <setting name="channel_prefix_id" value="Channel_0"/>
+                              <setting name="channel" value="kQTMR_Channel_0"/>
+                              <setting name="primarySource" value="kQTMR_ClockDivide_128"/>
+                              <setting name="secondarySource" value="kQTMR_Counter0InputPin"/>
+                              <setting name="countingMode" value="kQTMR_PriSrcRiseEdge"/>
+                              <setting name="enableMasterMode" value="false"/>
+                              <setting name="enableExternalForce" value="false"/>
+                              <setting name="faultFilterCount" value="3"/>
+                              <setting name="faultFilterPeriod" value="0"/>
+                              <setting name="debugMode" value="kQTMR_RunNormalInDebug"/>
+                              <setting name="timerModeInit" value="pwmOutput"/>
+                              <struct name="pwmMode">
+                                 <setting name="freq_value_str" value="37"/>
+                                 <setting name="dutyCyclePercent" value="50"/>
+                                 <setting name="outputPolarity" value="false"/>
+                              </struct>
+                              <setting name="dmaIntMode" value="interrupt"/>
+                              <set name="interrupts">
+                                 <selected>
+                                    <id>kQTMR_Compare1InterruptEnable</id>
+                                    <id>kQTMR_Compare2InterruptEnable</id>
+                                 </selected>
+                              </set>
+                           </struct>
+                        </array>
+                        <struct name="interruptVector">
+                           <setting name="enable_irq" value="true"/>
+                           <struct name="interrupt">
+                              <setting name="IRQn" value="TMR3_IRQn"/>
+                              <setting name="enable_interrrupt" value="enabled"/>
+                              <setting name="enable_priority" value="false"/>
+                              <setting name="priority" value="0"/>
+                              <setting name="enable_custom_name" value="true"/>
+                              <setting name="handler_custom_name" value="TIMER_IRQ_HANDLER"/>
+                           </struct>
+                        </struct>
+                     </config_set>
+                  </instance>
+                  <instance name="ACCEL_I2C" uuid="9b01e9ae-69b7-43bc-a194-5da0fe30d9ab" type="lpi2c" type_id="lpi2c_6b71962515c3208facfccd030afebc98" mode="master" peripheral="LPI2C1" enabled="true" comment="" custom_name_enabled="true" editing_lock="false">
+                     <config_set name="main" quick_selection="qs_interrupt">
+                        <setting name="clockSource" value="Lpi2cClock"/>
+                        <setting name="clockSourceFreq" value="BOARD_BootClockRUN"/>
+                     </config_set>
+                     <config_set name="interrupt_vector"/>
+                     <config_set name="master">
+                        <setting name="mode" value="transfer"/>
+                        <struct name="config">
+                           <setting name="enableMaster" value="true"/>
+                           <setting name="enableDoze" value="true"/>
+                           <setting name="debugEnable" value="false"/>
+                           <setting name="ignoreAck" value="false"/>
+                           <setting name="pinConfig" value="kLPI2C_2PinOpenDrain"/>
+                           <setting name="baudRate_Hz" value="100000"/>
+                           <setting name="busIdleTimeout_ns" value="0"/>
+                           <setting name="pinLowTimeout_ns" value="0"/>
+                           <setting name="sdaGlitchFilterWidth_ns" value="0"/>
+                           <setting name="sclGlitchFilterWidth_ns" value="0"/>
+                           <struct name="hostRequest">
+                              <setting name="enable" value="false"/>
+                              <setting name="source" value="kLPI2C_HostRequestExternalPin"/>
+                              <setting name="polarity" value="kLPI2C_HostRequestPinActiveHigh"/>
+                           </struct>
+                           <set name="edmaRequestSources">
+                              <selected/>
+                           </set>
+                        </struct>
+                        <struct name="transfer">
+                           <setting name="blocking" value="false"/>
+                           <setting name="enable_custom_handle" value="false"/>
+                           <struct name="callback">
+                              <setting name="name" value=""/>
+                              <setting name="userData" value=""/>
+                           </struct>
+                           <set name="flags">
+                              <selected/>
+                           </set>
+                           <setting name="slaveAddress" value="0"/>
+                           <setting name="direction" value="kLPI2C_Write"/>
+                           <setting name="subaddress" value="0"/>
+                           <setting name="subaddressSize" value="1"/>
+                           <setting name="blocking_buffer" value="false"/>
+                           <setting name="enable_custom_buffer" value="false"/>
+                           <setting name="dataSize" value="1"/>
+                        </struct>
+                     </config_set>
+                  </instance>
+               </instances>
             </functional_group>
          </functional_groups>
          <components>
-            <component name="system" uuid="58d02eb0-c8a1-4795-aa02-b881f9b49f65" type_id="system_54b53072540eeeb8f8e9343e71f28176">
+            <component name="system" uuid="04741d95-ba2f-4ff4-b132-b963b3aab7dc" type_id="system_54b53072540eeeb8f8e9343e71f28176">
                <config_set_global name="global_system_definitions">
                   <setting name="user_definitions" value=""/>
                   <setting name="user_includes" value=""/>
                </config_set_global>
             </component>
-            <component name="msg" uuid="fef81701-6364-47eb-be4e-1ff685c6f487" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
+            <component name="msg" uuid="615cc425-408e-4c72-8c8f-9cf251faa122" type_id="msg_6e2baaf3b97dbeef01c0043275f9a0e7">
                <config_set_global name="global_messages"/>
             </component>
-            <component name="generic_uart" uuid="82bb7638-b911-4bff-8d51-e85a18d5f0c8" type_id="generic_uart_8cae00565451cf2346eb1b8c624e73a6">
+            <component name="generic_uart" uuid="daae939b-adae-472f-ae56-8865b0ab5057" type_id="generic_uart_8cae00565451cf2346eb1b8c624e73a6">
                <config_set_global name="global_uart"/>
             </component>
-            <component name="generic_can" uuid="72d70388-6163-458b-9bd7-e49b1b8c0e60" type_id="generic_can_1bfdd78b1af214566c1f23cf6a582d80">
+            <component name="generic_can" uuid="8abdcaf1-456b-4719-92c5-98ee89a20312" type_id="generic_can_1bfdd78b1af214566c1f23cf6a582d80">
                <config_set_global name="global_can"/>
             </component>
          </components>

@@ -6,7 +6,7 @@
 
     .global     _tx_initialize_unused_memory
     .global     _tx_timer_interrupt
-    .global     __HeapLimit
+    .global     _pvHeapLimit
     .global     systick_cycles
 
     .text 32
@@ -18,7 +18,7 @@
 _tx_initialize_low_level:
     /* Set base of available memory to end of non-initialised RAM area. */
     LDR     r0, =_tx_initialize_unused_memory
-    LDR     r1, =__HeapLimit
+    LDR     r1, =_pvHeapLimit
     ADD     r1, r1, #4
     STR     r1, [r0]
 

@@ -1639,8 +1639,8 @@ static void ENET_UpdateReadBuffers(ENET_Type *base, enet_handle_t *handle, uint8
     assert(FSL_FEATURE_ENET_INSTANCE_QUEUEn(base) != -1);
     assert(ringId < (uint8_t)FSL_FEATURE_ENET_INSTANCE_QUEUEn(base));
 
-    volatile enet_rx_bd_struct_t *curBuffDescrip =
-        handle->rxBdRing[ringId].rxBdBase + handle->rxBdRing[ringId].rxGenIdx;
+    enet_rx_bd_ring_t *rxBdRing                  = &handle->rxBdRing[ringId];
+    volatile enet_rx_bd_struct_t *curBuffDescrip = rxBdRing->rxBdBase + rxBdRing->rxGenIdx;
 
     /* Clears status. */
     curBuffDescrip->control &= ENET_BUFFDESCRIPTOR_RX_WRAP_MASK;
@@ -1648,8 +1648,7 @@ static void ENET_UpdateReadBuffers(ENET_Type *base, enet_handle_t *handle, uint8
     curBuffDescrip->control |= ENET_BUFFDESCRIPTOR_RX_EMPTY_MASK;
 
     /* Increase current buffer descriptor to the next one. */
-    handle->rxBdRing[ringId].rxGenIdx =
-        ENET_IncreaseIndex(handle->rxBdRing[ringId].rxGenIdx, handle->rxBdRing[ringId].rxRingLen);
+    rxBdRing->rxGenIdx = ENET_IncreaseIndex(rxBdRing->rxGenIdx, rxBdRing->rxRingLen);
 
     /* Ensure previous data update is completed with Data Synchronization Barrier before activing Rx BD. */
     __DSB();
@@ -3442,14 +3441,14 @@ void ENET_1G_DriverIRQHandler(void)
     ENET_CommonFrame0IRQHandler(ENET_1G);
     SDK_ISR_EXIT_BARRIER;
 }
-void ENET_MAC0_Tx_Rx_Done_0_DriverIRQHandler(void);
-void ENET_MAC0_Tx_Rx_Done_0_DriverIRQHandler(void)
+void ENET_1G_MAC0_Tx_Rx_1_DriverIRQHandler(void);
+void ENET_1G_MAC0_Tx_Rx_1_DriverIRQHandler(void)
 {
     ENET_CommonFrame1IRQHandler(ENET_1G);
     SDK_ISR_EXIT_BARRIER;
 }
-void ENET_MAC0_Tx_Rx_Done_1_DriverIRQHandler(void);
-void ENET_MAC0_Tx_Rx_Done_1_DriverIRQHandler(void)
+void ENET_1G_MAC0_Tx_Rx_2_DriverIRQHandler(void);
+void ENET_1G_MAC0_Tx_Rx_2_DriverIRQHandler(void)
 {
     ENET_CommonFrame2IRQHandler(ENET_1G);
     SDK_ISR_EXIT_BARRIER;

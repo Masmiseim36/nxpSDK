@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017, 2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -27,9 +27,9 @@ enum _caam_status
  */
 /*! @name Driver version */
 /*@{*/
-/*! @brief CAAM driver version. Version 2.0.3.
+/*! @brief CAAM driver version. Version 2.1.1.
  *
- * Current version: 2.0.3
+ * Current version: 2.1.1
  *
  * Change log:
  * - Version 2.0.0
@@ -44,8 +44,10 @@ enum _caam_status
  *   - Correct descriptor size mask.
  * - Version 2.1.0
  *   - Add return codes check and handling.
+ * - Version 2.1.1
+ *   - Add DCACHE support.
  */
-#define FSL_CAAM_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+#define FSL_CAAM_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 /*! @brief CAAM callback function. */

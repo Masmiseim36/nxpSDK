@@ -15,6 +15,7 @@
 #include "lvgl.h"
 #include "gui_guider.h"
 #include "events_init.h"
+#include "custom.h"
 
 #include "fsl_soc_src.h"
 /*******************************************************************************
@@ -41,6 +42,7 @@ static void AppTask(void *param)
 
     setup_ui(&guider_ui);
     events_init(&guider_ui);
+    custom_init(&guider_ui);
 
     for (;;)
     {

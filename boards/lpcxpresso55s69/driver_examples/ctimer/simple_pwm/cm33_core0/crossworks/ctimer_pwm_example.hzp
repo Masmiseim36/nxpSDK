@@ -1,0 +1,150 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="ctimer_pwm_example" target="8" version="2">
+  <project Name="ctimer_pwm_example">
+    <configuration
+      CMSIS_CORE="Yes"
+      Name="Common"
+      Placement="Flash"
+      Target="LPC55S69_core0"
+      arm_architecture="v8M_Mainline"
+      arm_core_type="Cortex-M33"
+      arm_fpu_type="FPv5-SP-D16"
+      arm_linker_heap_size="1024"
+      arm_linker_stack_size="1024"
+      arm_target_debug_interface_type="ADIv5"
+      arm_target_interface_type="SWD"
+      arm_target_loader_applicable_loaders="Flash"
+      arm_target_loader_default_loader="Flash"
+      arm_v8M_has_cmse="Yes"
+      arm_v8M_has_dsp="Yes"
+      c_preprocessor_definitions="NDEBUG;CPU_LPC55S69JBD100_cm33_core0;SERIAL_PORT_TYPE_UART=1"
+      c_user_include_directories=";./..;./../..;./../../../../..;./../../../../../../../CMSIS/Include;./../../../../../../../devices;./../../../../../../../devices/LPC55S69;./../../../../../../../devices/LPC55S69/drivers;./../../../../../../../devices/LPC55S69/utilities/str;./../../../../../../../devices/LPC55S69/utilities/debug_console;./../../../../../../../components/uart;./../../../../../../../components/serial_manager;./../../../../../../../components/lists;./../../../../../../../devices/LPC55S69/utilities"
+      debug_memory_upload_page_size="512"
+      debug_register_definition_file="$(TargetsDir)/LPC5500/LPC55S69_cm33_core0_registers.xml"
+      linker_additional_files="./../../../../../../../devices/LPC55S69/iar/iar_lib_power_cm33_core0.a"
+      linker_memory_map_file="$(TargetsDir)/LPC5500/LPC55S69_MemoryMap.xml"
+      linker_section_placement_file="$(StudioDir)/targets/Cortex_M/flash_placement.xml"
+      macros="SYSTEM=$(TargetsDir)/LPC5500/devices/LPC55S69/system_LPC55S69_cm33_core0.c;VECTORS=$(TargetsDir)/LPC5500/LPC5500_Vectors.s;POWERLIB=libs"
+      project_directory=""
+      project_type="Executable"
+      property_groups_file_path="$(TargetsDir)/LPC5500/propertyGroups.xml"
+      target_connect_script="Connect()"
+      target_get_partname_script="GetPartName()"
+      target_reset_script="Reset()"
+      target_script_file="$(TargetsDir)/LPC5500/LPC5500_Target.js"
+      target_trace_initialize_script="EnableTrace(&quot;$(TraceInterfaceType)&quot;)" />
+    <configuration
+      Name="Flash"
+      arm_target_flash_loader_file_path="$(TargetsDir)/LPC5500/Loader/Loader.elf"
+      arm_target_loader_can_erase_all="No"
+      arm_target_loader_can_lock_all="No"
+      arm_target_loader_can_lock_range="No"
+      arm_target_loader_can_unlock_all="No"
+      arm_target_loader_can_unlock_range="No" />
+    <folder Name="System Files">
+      <file file_name="$(StudioDir)/source/thumb_crt0.s" />
+      <file file_name="$(TargetsDir)/LPC5500/LPC5500_Startup.s" />
+      <file file_name="$(TargetsDir)/NXP_LPCXpresso55S69/ctl_board_LPC5500.c" />
+      <file file_name="$(SYSTEM)" />
+      <file file_name="$(VECTORS)" />
+      <file file_name="$(TargetsDir)/LPC5500/devices/LPC55S69/system_LPC55S69_cm33_core0.h" />
+      <file file_name="$(TargetsDir)/LPC5500/devices/LPC55S69/fsl_device_registers.h" />
+      <file file_name="$(TargetsDir)/LPC5500/devices/LPC55S69/LPC55S69_cm33_core0.h" />
+      <file file_name="$(TargetsDir)/LPC5500/devices/LPC55S69/LPC55S69_cm33_core0_features.h" />
+      <file file_name="$(TargetsDir)/LPC5500/LPC5500_Target.js" />
+    </folder>
+    <folder Name="source">
+      <file file_name="./../simple_pwm.c" />
+    </folder>
+    <folder Name="board">
+      <file file_name="./../pin_mux.c" />
+      <file file_name="./../pin_mux.h" />
+      <file file_name="./../board.c" />
+      <file file_name="./../board.h" />
+      <file file_name="./../clock_config.c" />
+      <file file_name="./../clock_config.h" />
+    </folder>
+    <folder Name="doc">
+      <file file_name="./../readme.txt" />
+    </folder>
+    <folder Name="drivers">
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_usart.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_usart.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_ctimer.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_ctimer.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_common.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_common.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_clock.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_clock.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_power.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_power.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_iocon.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_gpio.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_gpio.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_inputmux.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_inputmux.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_flexcomm.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_flexcomm.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_reset.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_reset.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/drivers/fsl_inputmux_connections.h" />
+    </folder>
+    <folder Name="device">
+      <file file_name="./../../../../../../../devices/LPC55S69/LPC55S69_cm33_core0.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/LPC55S69_cm33_core0_features.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/fsl_device_registers.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/system_LPC55S69_cm33_core0.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/system_LPC55S69_cm33_core0.h" />
+    </folder>
+    <folder Name="utilities">
+      <file file_name="./../../../../../../../devices/LPC55S69/utilities/fsl_assert.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/utilities/debug_console/fsl_debug_console.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/utilities/debug_console/fsl_debug_console.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/utilities/debug_console/fsl_debug_console_conf.h" />
+      <file file_name="./../../../../../../../devices/LPC55S69/utilities/str/fsl_str.c" />
+      <file file_name="./../../../../../../../devices/LPC55S69/utilities/str/fsl_str.h" />
+    </folder>
+    <folder Name="component">
+      <folder Name="uart">
+        <file file_name="./../../../../../../../components/uart/uart.h" />
+        <file file_name="./../../../../../../../components/uart/usart_adapter.c" />
+      </folder>
+      <folder Name="serial_manager">
+        <file file_name="./../../../../../../../components/serial_manager/serial_manager.c" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_manager.h" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_port_internal.h" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_port_uart.c" />
+        <file file_name="./../../../../../../../components/serial_manager/serial_port_uart.h" />
+      </folder>
+      <folder Name="lists">
+        <file file_name="./../../../../../../../components/lists/generic_list.c" />
+        <file file_name="./../../../../../../../components/lists/generic_list.h" />
+      </folder>
+    </folder>
+  </project>
+  <configuration Name="THUMB Debug" inherited_configurations="THUMB;Debug" />
+  <configuration
+    Name="THUMB"
+    Platform="ARM"
+    arm_instruction_set="Thumb"
+    arm_library_instruction_set="Thumb"
+    c_preprocessor_definitions="__THUMB"
+    hidden="Yes" />
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="None"
+    hidden="Yes" />
+  <configuration
+    Name="THUMB Release"
+    inherited_configurations="THUMB;Release" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="None"
+    gcc_omit_frame_pointer="Yes"
+    gcc_optimization_level="Level 1"
+    hidden="Yes" />
+</solution>

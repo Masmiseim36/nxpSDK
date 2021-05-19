@@ -134,7 +134,7 @@ static void M1_StateFaultFast(void)
 {
     /* read ADC results (ADC triggered by HW trigger from PDB) */
     /* get all adc samples - DC-bus voltage, current, and raw IPM temperature */
-    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+	M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
 
     /* convert voltages from fractional measured values to float */
     g_sM1Drive.sFocACIM.fltUDcBus = MLIB_ConvSc_FLTsf(g_sM1Drive.sFocACIM.f16UDcBus, g_fltM1DCBvoltageScale);
@@ -145,9 +145,13 @@ static void M1_StateFaultFast(void)
 
     /* Braking resistor control */
     if (g_sM1Drive.sFocACIM.fltUDcBusFilt > g_sM1Drive.sFaultThresholds.fltUDcBusTrip)
+    {
         M1_BRAKE_SET();
+    }
     else
+    {
         M1_BRAKE_CLEAR();
+    }
 
     /* Disable user application switch */
     g_bM1SwitchAppOnOff = FALSE;
@@ -358,7 +362,7 @@ static void M1_StateInitFast(void)
 static void M1_StateStopFast(void)
 {
     /* read 3-phase motor currents, DC-bus voltage and raw IPM temperature */
-    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+	M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
 
     /* convert voltages from fractional measured values to float */
     g_sM1Drive.sFocACIM.fltUDcBus = MLIB_ConvSc_FLTsf(g_sM1Drive.sFocACIM.f16UDcBus, g_fltM1DCBvoltageScale);
@@ -368,7 +372,7 @@ static void M1_StateStopFast(void)
         GDFLIB_FilterIIR1_FLT(g_sM1Drive.sFocACIM.fltUDcBus, &g_sM1Drive.sFocACIM.sFiltParUDcBus);
 
     /* If the user switches on  or set non-zero speed*/
-    if ((g_bM1SwitchAppOnOff != 0) || (g_sM1Drive.sSpdFlux.fltSpdMeReq != 0.0F))
+    if ((g_bM1SwitchAppOnOff != (bool_t)0) || (g_sM1Drive.sSpdFlux.fltSpdMeReq != 0.0F))
     {
         /* Set the switch on */
         g_bM1SwitchAppOnOff = TRUE;
@@ -379,9 +383,13 @@ static void M1_StateStopFast(void)
 
     /* Braking resistor control */
     if (g_sM1Drive.sFocACIM.fltUDcBusFilt > g_sM1Drive.sFaultThresholds.fltUDcBusTrip)
+    {
         M1_BRAKE_SET();
+    }
     else
+    {
         M1_BRAKE_CLEAR();
+    }
 
     /* MID: check for motor parameter update request */
     if (g_sMID.bMeasSuccDone)
@@ -395,6 +403,10 @@ static void M1_StateStopFast(void)
         {
             M1_MIDApplyPar(&g_sMID.sAlgBck);
             g_sMID.bParRestoreOld = FALSE;
+        }
+        else
+        {
+        	;
         }
     }
 
@@ -422,7 +434,7 @@ static void M1_StateStopFast(void)
 static void M1_StateRunFast(void)
 {
     /* read 3-phase motor currents, DC-bus voltage and raw IPM temperature */
-    M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
+	M1_MCDRV_ADC_GET(&g_sM1AdcSensor);
 
     /* If the user switches off */
     if (!g_bM1SwitchAppOnOff)
@@ -435,7 +447,7 @@ static void M1_StateRunFast(void)
     M1_FaultDetection();
 
     /* If a fault occurred */
-    if (g_sM1Drive.sFaultIdPending != 0)
+    if (g_sM1Drive.sFaultIdPending != 0U)
     {
         /* Switches to the FAULT state */
         g_sM1Ctrl.uiCtrl |= SM_CTRL_FAULT;
@@ -455,9 +467,13 @@ static void M1_StateRunFast(void)
 
     /* Braking resistor control */
     if (g_sM1Drive.sFocACIM.fltUDcBusFilt > g_sM1Drive.sFaultThresholds.fltUDcBusTrip)
+    {
         M1_BRAKE_SET();
+    }
     else
+    {
         M1_BRAKE_CLEAR();
+    }
 
     /* read speed */
     g_sM1Drive.sSpdFlux.fltSpdMeFilt = g_sM1Drive.sFocACIM.sSpdObs.fltSpeedMeIIR1;
@@ -565,7 +581,7 @@ static void M1_TransFaultStop(void)
 static void M1_TransInitFault(void)
 {
     /* disable PWM outputs */
-    M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
+	(void)M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
     g_sM1Drive.ui32CounterState = g_sM1Drive.ui32TimeFaultRelease;
 }
 
@@ -580,7 +596,7 @@ static void M1_TransInitStop(void)
 {
     /* type the code to do when going from the INIT to the STOP state */
     /* disable PWM outputs */
-    M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
+	(void)M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
 }
 
 /*!
@@ -642,7 +658,7 @@ static void M1_TransRunFault(void)
 {
     /* type the code to do when going from the RUN to the FAULT state */
     /* disable PWM output */
-    M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
+	M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
 
     /* Clear FOC variables */
     M1_ClearFOCVariables();
@@ -659,7 +675,7 @@ static void M1_TransRunStop(void)
 {
     /* type the code to do when going from the RUN to the STOP state */
     /* disable PWM outputs */
-    M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
+	M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
 
     /* clear FOC variables */
     M1_ClearFOCVariables();
@@ -681,11 +697,13 @@ static void M1_StateRunCalibFast(void)
        performing ADC offset calibration */
 
     /* call offset measurement */
-    M1_MCDRV_CURR_3PH_CALIB(&g_sM1AdcSensor);
+	M1_MCDRV_CURR_3PH_CALIB(&g_sM1AdcSensor);
 
     /* change SVM sector in range <1;6> to measure all AD channel mapping combinations */
-    if (++g_sM1Drive.sFocACIM.ui16SectorSVM > 6)
+    if (++g_sM1Drive.sFocACIM.ui16SectorSVM > 6U)
+    {
         g_sM1Drive.sFocACIM.ui16SectorSVM = 1;
+    }
 }
 
 /*!
@@ -700,7 +718,9 @@ static void M1_StateRunMeasureFast(void)
 {
     /* check whether abort flag was set */
     if (g_sMID.bAbort)
+    {
         g_sMID.ui16FaultMID |= MID_FAULT_ABORT;
+    }
 
     /* motor parameters measurement state machine */
     MID_SM_StateMachine(&g_g_sMIDCtrl);
@@ -732,9 +752,13 @@ static void M1_StateRunMeasureFast(void)
     {
         /* check whether startup is done */
         if (g_sMID.sMech.eState == kMID_MechInit)
+        {
             g_sM1Drive.sFocACIM.bFlagSpdStart = TRUE;
+        }
         else
+        {
             g_sM1Drive.sFocACIM.bFlagSpdStart = FALSE;
+        }
 
         /* current control routine */
         MCS_ACIMFocCtrlCurrentA1(&g_sM1Drive.sFocACIM);
@@ -754,9 +778,13 @@ static void M1_StateRunMeasureFast(void)
         /* if the measurement was unsuccessful set flag, otherwise revoke
            previous parameters */
         if (!g_sMID.ui16FaultMID)
+        {
             g_sMID.bMeasSuccDone = TRUE;
+        }
         else
+        {
             M1_MIDApplyPar(&g_sMID.sAlgBck);
+        }
 
         g_bM1SwitchAppOnOff   = FALSE;
         g_sMID.ui16EnableMeas = 0;
@@ -790,7 +818,7 @@ static void M1_StateRunReadyFast(void)
             break;
 
         case kControlMode_VoltageFOC:
-            if ((g_sM1Drive.sFocACIM.sUDQReq.fltD != 0) && (g_sM1Drive.sFocACIM.sUDQReq.fltQ != 0))
+            if ((g_sM1Drive.sFocACIM.sUDQReq.fltD != 0.0F) && (g_sM1Drive.sFocACIM.sUDQReq.fltQ != 0.0F))
             {
                 /* Transition to the RUN STARTUP sub-state */
                 M1_TransRunReadyStartup();
@@ -798,7 +826,7 @@ static void M1_StateRunReadyFast(void)
             break;
 
         case kControlMode_CurrentFOC:
-            if ((g_sM1Drive.sFocACIM.sIDQReq.fltD != 0) && (g_sM1Drive.sFocACIM.sIDQReq.fltQ != 0))
+            if ((g_sM1Drive.sFocACIM.sIDQReq.fltD != 0.0F) && (g_sM1Drive.sFocACIM.sIDQReq.fltQ != 0.0F))
             {
                 /* Transition to the RUN STARTUP sub-state */
                 M1_TransRunReadyStartup();
@@ -825,6 +853,7 @@ static void M1_StateRunReadyFast(void)
                 /* transition to the RUN STARTUP sub-state */
                 M1_TransRunReadyStartup();
             }
+            break;
     }
 }
 
@@ -973,12 +1002,16 @@ static void M1_StateRunCalibSlow(void)
         /* write calibrated offset values */
         M1_MCDRV_CURR_3PH_CALIB_SET(&g_sM1AdcSensor);
 
-        if (g_sMID.ui16EnableMeas != 0)
+        if (g_sMID.ui16EnableMeas != 0U)
+        {
             /* To switch to the RUN MEASURE sub-state */
             M1_TransRunCalibMeasure();
+        }
         else
+        {
             /* To switch to the RUN READY sub-state */
             M1_TransRunCalibReady();
+        }
     }
 }
 
@@ -1267,7 +1300,7 @@ static void M1_TransRunStartupFreewheel(void)
        sub-state */
 
     /* turn off all transistors */
-    M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
+	M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
 
     /* clear application parameters */
     M1_ClearFOCVariables();
@@ -1292,7 +1325,7 @@ static void M1_TransRunSpinFreewheel(void)
     /* set 50% PWM duty cycle */
 
     /* turn off all transistors */
-    M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
+	M1_MCDRV_PWM3PH_DIS(&g_sM1Pwm3ph);
 
     /* clear application parameters */
     M1_ClearFOCVariables();
@@ -1316,7 +1349,7 @@ static void M1_TransRunFreewheelReady(void)
     /* Type the code to do when going from the RUN kRunState_FreeWheel to the RUN kRunState_Ready sub-state */
 
     /* enable PWM output */
-    M1_MCDRV_PWM3PH_EN(&g_sM1Pwm3ph);
+	M1_MCDRV_PWM3PH_EN(&g_sM1Pwm3ph);
 
     /* Sub-state RUN READY */
     g_eM1StateRun = kRunState_Ready;
@@ -1491,7 +1524,7 @@ bool_t M1_GetAppSwitch(void)
  *
  * @return uint16_t Return current application state
  */
-uint16_t M1_GetAppState()
+uint16_t M1_GetAppState(void)
 {
     return ((uint16_t)g_sM1Ctrl.eState);
 }
@@ -1503,7 +1536,7 @@ uint16_t M1_GetAppState()
  *
  * @return None
  */
-void M1_SetSpeed(float fltSpdMeReq)
+void M1_SetSpeed(float_t fltSpdMeReq)
 {
     if (g_bM1SwitchAppOnOff)
     {
@@ -1535,7 +1568,7 @@ void M1_SetSpeed(float fltSpdMeReq)
  *
  * @return frac16_t Fractional value of the current speed
  */
-float M1_GetSpeed(void)
+float_t M1_GetSpeed(void)
 {
     /* return speed */
     return g_sM1Drive.sSpdFlux.fltSpdMeReq;
@@ -1548,7 +1581,7 @@ float M1_GetSpeed(void)
  *
  * @return None
  */
-void M1_FaultDetection(void)
+static void M1_FaultDetection(void)
 {
     /* clearing actual faults before detecting them again */
 
@@ -1557,20 +1590,28 @@ void M1_FaultDetection(void)
 
     /* fault: DC-bus over-current */
     if (M1_MCDRV_PWM3PH_FLT_GET(&g_sM1Pwm3ph))
+    {
         M1_FAULT_SET(g_sM1Drive.sFaultIdPending, M1_FAULT_I_DCBUS_OVER);
+    }
 
     /* fault: DC-bus over-voltage */
     if (g_sM1Drive.sFocACIM.fltUDcBusFilt > g_sM1Drive.sFaultThresholds.fltUDcBusOver)
+    {
         M1_FAULT_SET(g_sM1Drive.sFaultIdPending, M1_FAULT_U_DCBUS_OVER);
+    }
 
     /* fault: DC-bus under-voltage */
     if (g_sM1Drive.sFocACIM.fltUDcBusFilt < g_sM1Drive.sFaultThresholds.fltUDcBusUnder)
+    {
         M1_FAULT_SET(g_sM1Drive.sFaultIdPending, M1_FAULT_U_DCBUS_UNDER);
+    }
 
     /* fault: over-speed  */
     if ((MLIB_Abs_FLT(g_sM1Drive.sSpdFlux.fltSpdMeFilt) > g_sM1Drive.sFaultThresholds.fltSpeedOver) &&
         g_sM1Drive.sSpdFlux.bStartupDone && (g_eM1StateRun == kRunState_Spin))
+    {
         M1_FAULT_SET(g_sM1Drive.sFaultIdPending, M1_FAULT_SPEED_OVER);
+    }
 
     /* pass fault to fault ID */
     g_sM1Drive.sFaultIdCaptured |= g_sM1Drive.sFaultIdPending;

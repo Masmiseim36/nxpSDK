@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  *
@@ -220,7 +220,7 @@ float TMPSNS_GetCurrentTemperature(TMPSNS_Type *base)
     statusVal = TMPSNS_AIReadAccess((uint32_t) & (base->STATUS0));
 
     /* Clear the FINISH flag */
-    TMPSNS_AIWriteAccess((uint32_t) & (base->STATUS0), statusVal & (~TMPSNS_STATUS0_FINISH_MASK));
+    TMPSNS_AIWriteAccess((uint32_t) & (base->STATUS0), statusVal | TMPSNS_STATUS0_FINISH_MASK);
 
     return actualTempVal;
 }

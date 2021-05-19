@@ -376,16 +376,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>source</GroupName>
           <Files>
             <File>
@@ -417,6 +407,16 @@
               <FileName>usb_host_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_host_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -1330,16 +1330,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>source</GroupName>
           <Files>
             <File>
@@ -1371,6 +1361,16 @@
               <FileName>usb_host_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_host_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -2284,16 +2284,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>source</GroupName>
           <Files>
             <File>
@@ -2325,6 +2315,16 @@
               <FileName>usb_host_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_host_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -3238,16 +3238,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>source</GroupName>
           <Files>
             <File>
@@ -3279,6 +3269,16 @@
               <FileName>usb_host_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_host_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -4192,16 +4192,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>source</GroupName>
           <Files>
             <File>
@@ -4233,6 +4223,16 @@
               <FileName>usb_host_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_host_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -5146,16 +5146,6 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>doc</GroupName>
-          <Files>
-            <File>
-              <FileName>readme.txt</FileName>
-              <FileType>5</FileType>
-              <FilePath>../readme.txt</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>source</GroupName>
           <Files>
             <File>
@@ -5187,6 +5177,16 @@
               <FileName>usb_host_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../usb_host_config.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>readme.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>../readme.txt</FilePath>
             </File>
           </Files>
         </Group>

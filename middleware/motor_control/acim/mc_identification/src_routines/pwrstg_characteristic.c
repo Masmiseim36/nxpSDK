@@ -21,7 +21,7 @@
 void MID_GetTrfChar(void)
 {
     /* initialization */
-    if (g_sMID.sPwrStgCh.ui16Active == 0)
+    if (g_sMID.sPwrStgCh.ui16Active == 0U)
     {
         g_sMID.sPwrStgCh.ui16Active     = TRUE;
         g_sMID.ui32LoopCntr             = 0;
@@ -33,7 +33,7 @@ void MID_GetTrfChar(void)
     }
 
     /* increment loop counter */
-    g_sMID.ui32LoopCntr += 1;
+    g_sMID.ui32LoopCntr += 1U;
 
     /* calculate and filter error voltage */
     g_sMID.sPwrStgCh.pfltUErrLUT[g_sMID.sPwrStgCh.ui16LUTId] +=
@@ -45,7 +45,7 @@ void MID_GetTrfChar(void)
     {
         /* check if Rs is low enough to reach 2A */
         if ((MLIB_Abs_FLT(*g_sMID.sIO.pfltId) < (g_sMID.sPwrStgCh.fltICal - MID_RS_MIN_CURR)) &&
-            (g_sMID.sPwrStgCh.ui16LUTId == 0))
+            (g_sMID.sPwrStgCh.ui16LUTId == 0U))
         {
             g_sMID.ui16FaultMID |= MID_FAULT_TOO_HIGH_RS;
             *g_sMID.sIO.pfltIdReq       = 0.0F;
@@ -53,7 +53,7 @@ void MID_GetTrfChar(void)
         }
 
         /* check if motor is connected */
-        if ((MLIB_Abs_FLT(*g_sMID.sIO.pfltId) < MID_RS_MIN_CURR) && (g_sMID.sPwrStgCh.ui16LUTId == 0))
+        if ((MLIB_Abs_FLT(*g_sMID.sIO.pfltId) < MID_RS_MIN_CURR) && (g_sMID.sPwrStgCh.ui16LUTId == 0U))
         {
             g_sMID.ui16FaultMID |= MID_FAULT_NO_MOTOR;
             *g_sMID.sIO.pfltIdReq       = 0.0F;
@@ -76,6 +76,8 @@ void MID_GetTrfChar(void)
             *g_sMID.sIO.pfltIdReq       = 0.0F;
         }
         else
+        {
             g_sMID.sPwrStgCh.pfltUErrLUT[g_sMID.sPwrStgCh.ui16LUTId] = 0.0F;
+        }
     }
 }

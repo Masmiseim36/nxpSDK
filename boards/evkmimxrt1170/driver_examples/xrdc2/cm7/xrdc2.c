@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 NXP
+ * Copyright 2019-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -210,7 +210,7 @@ void DEMO_Mem(void)
     s_demoState = kDEMO_StateMem;
 
     /* Set the unaccessible memory region. */
-    PRINTF("Set the memory not accessiable\r\n");
+    PRINTF("Set the memory not accessible\r\n");
     DEMO_SetMemoryUnaccessible();
 
     /*
@@ -236,7 +236,7 @@ void DEMO_Mem(void)
     {
     }
 
-    PRINTF("The memory is accessiable now\r\n");
+    PRINTF("The memory is accessible now\r\n");
 }
 
 void DEMO_SetPeriphUnaccessible(void)
@@ -256,7 +256,7 @@ void DEMO_Periph(void)
     s_demoState = kDEMO_StatePeriph;
 
     /* Set unaccessible. */
-    PRINTF("Set the peripheral not accessiable\r\n");
+    PRINTF("Set the peripheral not accessible\r\n");
     DEMO_SetPeriphUnaccessible();
 
     /* Touch the memory, there will be hardfault. */
@@ -269,7 +269,7 @@ void DEMO_Periph(void)
     {
     }
 
-    PRINTF("The peripheral is accessiable now\r\n");
+    PRINTF("The peripheral is accessible now\r\n");
 }
 
 void DEMO_SetMemSlotUnaccessible(void)
@@ -289,7 +289,7 @@ void DEMO_MemSlot(void)
     s_demoState = kDEMO_StateMemSlot;
 
     /* Set unaccessible. */
-    PRINTF("Set the memory slot not accessiable\r\n");
+    PRINTF("Set the memory slot not accessible\r\n");
     DEMO_SetMemSlotUnaccessible();
 
     /*
@@ -315,7 +315,7 @@ void DEMO_MemSlot(void)
     {
     }
 
-    PRINTF("The memory slot is accessiable now\r\n");
+    PRINTF("The memory slot is accessible now\r\n");
 }
 
 /*!

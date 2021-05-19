@@ -136,9 +136,6 @@
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
     </source>
-    <source path="boards/evkmimxrt1170/demo_apps/led_blinky" project_relative_path="." type="other">
-      <files mask="led_blinky.mex" hidden="true"/>
-    </source>
     <source path="boards/evkmimxrt1170/demo_apps/led_blinky/cm4" project_relative_path="source" type="src">
       <files mask="led_blinky.c"/>
     </source>
@@ -150,9 +147,6 @@
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/led_blinky/cm4" project_relative_path="." type="other">
       <files mask="iled_blinky.mex" hidden="true"/>
-    </source>
-    <source path="boards/evkmimxrt1170/demo_apps/led_blinky/cm4" project_relative_path="evkmimxrt1170/demo_apps/led_blinky/cm4" type="binary">
-      <files mask="iled_blinky.bin" hidden="true"/>
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/led_blinky/cm4" project_relative_path="board" type="src">
       <files mask="board.c"/>

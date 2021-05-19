@@ -17,7 +17,7 @@ product: Peripherals v9.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 0.9.2
+processor_version: 0.9.11
 functionalGroups:
 - name: BOARD_InitPeripherals
   UUID: 7ee8fc36-68c9-403c-a923-44701e1362da
@@ -123,20 +123,15 @@ instance:
 - type: 'lpi2c'
 - mode: 'master'
 - custom_name_enabled: 'true'
-- type_id: 'lpi2c_db68d4f4f06a22e25ab51fe9bd6db4d2'
+- type_id: 'lpi2c_6b71962515c3208facfccd030afebc98'
 - functional_group: 'BOARD_InitPeripherals'
 - peripheral: 'LPI2C1'
 - config_sets:
   - main:
     - clockSource: 'Lpi2cClock'
     - clockSourceFreq: 'BOARD_BootClockRUN'
-    - interrupt:
-      - IRQn: 'LPI2C1_IRQn'
-      - enable_interrrupt: 'enabled'
-      - enable_priority: 'false'
-      - priority: '0'
-      - enable_custom_name: 'false'
     - quick_selection: 'qs_interrupt'
+  - interrupt_vector: []
   - master:
     - mode: 'transfer'
     - config:
@@ -169,7 +164,6 @@ instance:
       - blocking_buffer: 'false'
       - enable_custom_buffer: 'false'
       - dataSize: '1'
-    - quick_selection: 'qs_master_transfer'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 const lpi2c_master_config_t ACCEL_I2C_masterConfig = {

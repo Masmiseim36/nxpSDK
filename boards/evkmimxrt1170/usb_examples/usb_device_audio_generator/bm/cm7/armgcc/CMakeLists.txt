@@ -31,7 +31,7 @@ include(${ProjDirPath}/flags.cmake)
 include(${ProjDirPath}/config.cmake)
 
 add_executable(${MCUX_SDK_PROJECT_NAME} 
-"${ProjDirPath}/../../cm7cm7/audio_data.c"
+"${ProjDirPath}/../audio_data.c"
 "${ProjDirPath}/../audio_generator.c"
 "${ProjDirPath}/../audio_generator.h"
 "${ProjDirPath}/../usb_device_descriptor.c"

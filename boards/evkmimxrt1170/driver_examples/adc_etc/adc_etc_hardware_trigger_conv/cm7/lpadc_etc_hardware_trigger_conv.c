@@ -36,8 +36,13 @@
 #define DEMO_XBARA_INPUT_PITCH0   kXBARA1_InputPit1Trigger0
 #define DEMO_XBARA_OUTPUT_ADC_ETC kXBARA1_OutputAdcEtc0Coco0
 
+/*
+ * Clock source:
+ * PIT1: Bus clock
+ * PIT2: Bus LPSR clock
+ */
 #define DEMO_PIT_BASE         PIT1
-#define DEMO_PIT_CLOCK_SOURCE CLOCK_GetFreq(kCLOCK_OscRc48M)
+#define DEMO_PIT_CLOCK_SOURCE CLOCK_GetRootClockFreq(kCLOCK_Root_Bus)
 
 /*******************************************************************************
  * Prototypes

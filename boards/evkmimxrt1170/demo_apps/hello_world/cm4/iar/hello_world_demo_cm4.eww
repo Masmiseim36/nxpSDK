@@ -13,14 +13,6 @@
       </member>
       <member>
         <project>hello_world_demo_cm4</project>
-        <configuration>sdram_txt_debug</configuration>
-      </member>
-      <member>
-        <project>hello_world_demo_cm4</project>
-        <configuration>sdram_txt_release</configuration>
-      </member>
-      <member>
-        <project>hello_world_demo_cm4</project>
         <configuration>release</configuration>
       </member>
       <member>
@@ -30,6 +22,14 @@
       <member>
         <project>hello_world_demo_cm4</project>
         <configuration>flexspi_nor_sdram_release</configuration>
+      </member>
+      <member>
+        <project>hello_world_demo_cm4</project>
+        <configuration>sdram_txt_debug</configuration>
+      </member>
+      <member>
+        <project>hello_world_demo_cm4</project>
+        <configuration>sdram_txt_release</configuration>
       </member>
       <member>
         <project>hello_world_demo_cm4</project>
@@ -67,20 +67,6 @@
       </member>
     </batchDefinition>
     <batchDefinition>
-      <name>sdram_txt_debug</name>
-      <member>
-        <project>hello_world_demo_cm4</project>
-        <configuration>sdram_txt_debug</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
-      <name>sdram_txt_release</name>
-      <member>
-        <project>hello_world_demo_cm4</project>
-        <configuration>sdram_txt_release</configuration>
-      </member>
-    </batchDefinition>
-    <batchDefinition>
       <name>release</name>
       <member>
         <project>hello_world_demo_cm4</project>
@@ -99,6 +85,20 @@
       <member>
         <project>hello_world_demo_cm4</project>
         <configuration>flexspi_nor_sdram_release</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_txt_debug</name>
+      <member>
+        <project>hello_world_demo_cm4</project>
+        <configuration>sdram_txt_debug</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>sdram_txt_release</name>
+      <member>
+        <project>hello_world_demo_cm4</project>
+        <configuration>sdram_txt_release</configuration>
       </member>
     </batchDefinition>
     <batchDefinition>

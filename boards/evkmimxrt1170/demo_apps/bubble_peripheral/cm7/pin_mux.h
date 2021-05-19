@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -43,9 +43,15 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_UART1_TXD_SIGNAL                                      TXD   /*!< Signal name */
 
 /* GPIO_AD_04 (coord M13), USER_LED */
-#define BOARD_INITPINS_USER_LED_GPIO                                       GPIO9   /*!< GPIO device name: GPIO9 */
-#define BOARD_INITPINS_USER_LED_PORT                                       GPIO9   /*!< PORT device name: GPIO9 */
-#define BOARD_INITPINS_USER_LED_PIN                                           3U   /*!< GPIO9 pin index: 3 */
+/* Routed pin properties */
+#define BOARD_INITPINS_USER_LED_PERIPHERAL                                 GPIO9   /*!< Peripheral name */
+#define BOARD_INITPINS_USER_LED_SIGNAL                                   gpio_io   /*!< Signal name */
+#define BOARD_INITPINS_USER_LED_CHANNEL                                       3U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_USER_LED_GPIO                                       GPIO9   /*!< GPIO peripheral base pointer */
+#define BOARD_INITPINS_USER_LED_GPIO_PIN                                      3U   /*!< GPIO pin number */
+#define BOARD_INITPINS_USER_LED_GPIO_PIN_MASK                         (1U << 3U)   /*!< GPIO pin mask */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

@@ -144,24 +144,6 @@
       <files mask="build_flexspi_nor_release.bat"/>
       <files mask="build_flexspi_nor_release.sh"/>
     </source>
-    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/iar" project_relative_path="MIMXRT1176/iar" type="linker" toolchain="iar">
-      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor_ramfunc.icf"/>
-    </source>
-    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/mdk" project_relative_path="MIMXRT1176/arm" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor_ramfunc.scf"/>
-    </source>
-    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/armgcc" project_relative_path="MIMXRT1176/gcc" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor_ramfunc.ld"/>
-    </source>
-    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/iar" project_relative_path="evkmimxrt1170/demo_apps/power_mode_switch/bm/linker" type="linker" toolchain="iar">
-      <files mask="MIMXRT1176xxxxx_cm7_ram.icf"/>
-    </source>
-    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/mdk" project_relative_path="evkmimxrt1170/demo_apps/power_mode_switch/bm/linker" type="linker" toolchain="mdk">
-      <files mask="MIMXRT1176xxxxx_cm7_ram.scf"/>
-    </source>
-    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/armgcc" project_relative_path="evkmimxrt1170/demo_apps/power_mode_switch/bm/linker" type="linker" toolchain="armgcc">
-      <files mask="MIMXRT1176xxxxx_cm7_ram.ld"/>
-    </source>
     <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0" project_relative_path="source" type="src">
       <files mask="power_mode_switch_core0.c"/>
     </source>
@@ -181,6 +163,24 @@
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0" project_relative_path="." type="other">
       <files mask="power_mode_switch.mex" hidden="true"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/iar" project_relative_path="MIMXRT1176/iar" type="linker" toolchain="iar">
+      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor.icf"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/mdk" project_relative_path="MIMXRT1176/arm" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/armgcc" project_relative_path="MIMXRT1176/gcc" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1176xxxxx_cm7_flexspi_nor.ld"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/iar" project_relative_path="evkmimxrt1170/demo_apps/power_mode_switch/bm/linker" type="linker" toolchain="iar">
+      <files mask="MIMXRT1176xxxxx_cm7_ram.icf"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/mdk" project_relative_path="evkmimxrt1170/demo_apps/power_mode_switch/bm/linker" type="linker" toolchain="mdk">
+      <files mask="MIMXRT1176xxxxx_cm7_ram.scf"/>
+    </source>
+    <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0/armgcc" project_relative_path="evkmimxrt1170/demo_apps/power_mode_switch/bm/linker" type="linker" toolchain="armgcc">
+      <files mask="MIMXRT1176xxxxx_cm7_ram.ld"/>
     </source>
     <source path="boards/evkmimxrt1170/demo_apps/power_mode_switch/bm/core0" project_relative_path="board" type="src">
       <files mask="board.c"/>

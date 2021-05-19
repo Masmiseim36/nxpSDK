@@ -17,7 +17,7 @@ product: Pins v8.0
 processor: MIMXRT1176xxxxx
 package_id: MIMXRT1176DVMAA
 mcu_data: ksdk2_0
-processor_version: 0.9.2
+processor_version: 9.0.1
 pin_labels:
 - {pin_num: T17, pin_signal: GPIO_AD_07, label: TP, identifier: TP}
 - {pin_num: R15, pin_signal: GPIO_AD_08, label: TP, identifier: TP}
@@ -157,12 +157,12 @@ void BOARD_InitPWM(void) {
 BOARD_InitADC:
 - options: {callFromInitBoot: 'true', coreID: cm7, enableClock: 'true'}
 - pin_list:
-  - {pin_num: R17, peripheral: ADC1, signal: 'A, 1_2', pin_signal: GPIO_AD_10}
-  - {pin_num: P16, peripheral: ADC1, signal: 'B, 1_2', pin_signal: GPIO_AD_11}
-  - {pin_num: P17, peripheral: ADC1, signal: 'A, 1_3', pin_signal: GPIO_AD_12}
-  - {pin_num: L12, peripheral: ADC1, signal: 'B, 1_3', pin_signal: GPIO_AD_13}
-  - {pin_num: P17, peripheral: ADC2, signal: 'A, 2_3', pin_signal: GPIO_AD_12}
-  - {pin_num: L12, peripheral: ADC2, signal: 'B, 2_3', pin_signal: GPIO_AD_13}
+  - {pin_num: R17, peripheral: LPADC1, signal: 'A, 1_2', pin_signal: GPIO_AD_10}
+  - {pin_num: P16, peripheral: LPADC1, signal: 'B, 1_2', pin_signal: GPIO_AD_11}
+  - {pin_num: P17, peripheral: LPADC1, signal: 'A, 1_3', pin_signal: GPIO_AD_12}
+  - {pin_num: L12, peripheral: LPADC1, signal: 'B, 1_3', pin_signal: GPIO_AD_13}
+  - {pin_num: P17, peripheral: LPADC2, signal: 'A, 2_3', pin_signal: GPIO_AD_12}
+  - {pin_num: L12, peripheral: LPADC2, signal: 'B, 2_3', pin_signal: GPIO_AD_13}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 

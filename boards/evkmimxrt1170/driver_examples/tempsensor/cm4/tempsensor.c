@@ -15,10 +15,10 @@
  * Definitions
  ******************************************************************************/
 #define DEMO_TEMP_SENSOR              TMPSNS
-#define DEMO_TEMP_LOW_HIGH_IRQn       ANATOP_TEMP_LOW_HIGH_IRQn
-#define DEMO_TEMP_PANIC_IRQn          ANATOP_TEMP_PANIC_IRQn
-#define DEMO_TEMP_LOW_HIGH_IRQHandler ANATOP_TEMP_LOW_HIGH_IRQHandler
-#define DEMO_TEMP_PANIC_IRQHandler    ANATOP_TEMP_PANIC_IRQHandler
+#define DEMO_TEMP_LOW_HIGH_IRQn       TMPSNS_LOW_HIGH_IRQn
+#define DEMO_TEMP_PANIC_IRQn          TMPSNS_PANIC_IRQn
+#define DEMO_TEMP_LOW_HIGH_IRQHandler TMPSNS_LOW_HIGH_IRQHandler
+#define DEMO_TEMP_PANIC_IRQHandler    TMPSNS_PANIC_IRQHandler
 #define DEMO_HIGH_ALARM_TEMP          27U
 
 
@@ -90,7 +90,11 @@ int main(void)
             TMPSNS_EnableInterrupt(DEMO_TEMP_SENSOR, kTEMPSENSOR_HighTempInterruptStatusEnable);
 
             PRINTF("The chip temperature has reached high temperature that is %.1f celsius degree. \r\n", temperature);
-            PRINTF("The chip will to be waiting a desired cool down temperature . \r\n");
+            break;
         }
+    }
+
+    while (1)
+    {
     }
 }

@@ -146,6 +146,9 @@
       <files mask="dev_cdc_vcom_lite_bm_cm7.uvoptx"/>
       <files mask="dev_cdc_vcom_lite_bm_cm7.uvmpw"/>
     </source>
+    <source path="boards/evkmimxrt1170/usb_examples/usb_device_cdc_vcom_lite/bm/cm7" project_relative_path="evkmimxrt1170/usb_examples/usb_device_cdc_vcom_lite/bm/cm7" type="binary">
+      <files mask="dev_cdc_vcom_lite_bm_cm7.bin" hidden="true"/>
+    </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_device_cdc_vcom_lite/bm/cm7" project_relative_path="doc" type="doc" toolchain="iar mdk mcuxpresso">
       <files mask="readme.txt"/>
     </source>
@@ -170,9 +173,6 @@
     </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_device_cdc_vcom_lite/inf" project_relative_path="usb/example/usb_device_cdc_vcom_lite/inf" type="other">
       <files mask="cdc.cat" hidden="true"/>
-    </source>
-    <source path="boards/evkmimxrt1170/usb_examples/usb_device_cdc_vcom_lite/bm/cm7" project_relative_path="evkmimxrt1170/usb_examples/usb_device_cdc_vcom_lite/bm/cm7" type="binary">
-      <files mask="dev_cdc_vcom_lite_bm.bin" hidden="true"/>
     </source>
     <source path="boards/evkmimxrt1170/usb_examples/usb_device_cdc_vcom_lite/bm/cm7" project_relative_path="board" type="src">
       <files mask="board.c"/>

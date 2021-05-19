@@ -26,19 +26,19 @@
 #define M1_FAULT_SPEED_OVER 3    /* Over speed fault flag */
 
 /* Sets the fault bit defined by faultid in the faults variable */
-#define M1_FAULT_SET(faults, faultid) (faults |= ((mcdef_fault_t)1 << faultid))
+#define M1_FAULT_SET(faults, faultid) ((faults) |= ((mcdef_fault_t)1 << (faultid)))
 
 /* Clears the fault bit defined by faultid in the faults variable */
-#define M1_FAULT_CLEAR(faults, faultid) (faults &= ~((mcdef_fault_t)1 << faultid))
+#define M1_FAULT_CLEAR(faults, faultid) ((faults) &= ~((mcdef_fault_t)1 << (faultid)))
 
 /* Check the fault bit defined by faultid in the faults variable, returns 1 or 0 */
-#define M1_FAULT_CHECK(faults, faultid) ((faults & ((mcdef_fault_t)1 << faultid)) >> faultid)
+#define M1_FAULT_CHECK(faults, faultid) (((faults) & ((mcdef_fault_t)1 << (faultid))) >> (faultid))
 
 /* Clears all fault bits in the faults variable */
-#define M1_FAULT_CLEAR_ALL(faults) (faults = 0)
+#define M1_FAULT_CLEAR_ALL(faults) ((faults) = 0)
 
 /* Check if a fault bit is set in the faults variable, 0 = no fault */
-#define M1_FAULT_ANY(faults) (faults > 0)
+#define M1_FAULT_ANY(faults) ((faults) > 0U)
 
 /*! @brief device fault typedef */
 typedef uint16_t mcdef_fault_t;

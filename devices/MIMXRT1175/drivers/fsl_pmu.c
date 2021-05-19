@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 NXP
+ * Copyright 2020-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -84,24 +84,44 @@
             PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(LDO_LPSR_DIG_TRG_SP3)  \
     }
 
+#if (defined(PMU_HAS_FBB) && PMU_HAS_FBB)
 #define PMU_BODY_BIAS_ENABLE_REGISTERS                                                                             \
     {                                                                                                              \
         PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(FBB_M7_ENABLE_SP), PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_SOC_ENABLE_SP), \
             PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_LPSR_ENABLE_SP)                                                  \
     }
+#else
+#define PMU_BODY_BIAS_ENABLE_REGISTERS                                                                              \
+    {                                                                                                               \
+        PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_SOC_ENABLE_SP), PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_LPSR_ENABLE_SP) \
+    }
+#endif /* PMU_HAS_FBB */
 
+#if (defined(PMU_HAS_FBB) && PMU_HAS_FBB)
 #define PMU_BODY_BIAS_STBY_EN_REGISTERS                                                                              \
     {                                                                                                                \
         PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(FBB_M7_STBY_EN_SP), PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_SOC_STBY_EN_SP), \
             PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_LPSR_STBY_EN_SP)                                                   \
     }
+#else
+#define PMU_BODY_BIAS_STBY_EN_REGISTERS                                                                               \
+    {                                                                                                                 \
+        PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_SOC_STBY_EN_SP), PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_LPSR_STBY_EN_SP) \
+    }
+#endif /* PMU_HAS_FBB */
 
+#if (defined(PMU_HAS_FBB) && PMU_HAS_FBB)
 #define PMU_BODY_BIAS_CONFIGURE_REGISTERS                                                                          \
     {                                                                                                              \
         PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(FBB_M7_CONFIGURE), PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_SOC_CONFIGURE), \
             PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_LPSR_CONFIGURE)                                                  \
     }
-
+#else
+#define PMU_BODY_BIAS_CONFIGURE_REGISTERS                                                                           \
+    {                                                                                                               \
+        PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_SOC_CONFIGURE), PMU_GET_ANADIG_PMU_MEMBER_ADDRESS(RBB_LPSR_CONFIGURE) \
+    }
+#endif /* PMU_HAS_FBB */
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -591,11 +611,11 @@ void PMU_GPCEnableLdoBypassMode(pmu_ldo_name_t name, uint32_t setpointMap)
 }
 
 /*!
- * brief Controls the ON/OFF of the selected LDOs' Standby mode in the certain setpoints with GPC mode.
+ * brief When STBY assert, enable/disable the selected LDO enter it's Low power mode.
  *
  * param name The name of the selected ldo. Please see the enumeration pmu_ldo_name_t for details.
- * param setpointMap The map of setpoints that the LDO Standby mode will be enabled in those setpoints, this value
- * should be the OR'ed Value of @ref _pmu_setpoint_map.
+ * param setpointMap The map of setpoints that the LDO low power mode will be enabled in those setpoints if STBY
+ * assert, this value should be the OR'ed Value of @ref _pmu_setpoint_map.
  */
 void PMU_GPCEnableLdoStandbyMode(pmu_ldo_name_t name, uint32_t setpointMap)
 {
@@ -762,6 +782,7 @@ void PMU_SetBodyBiasControlMode(ANADIG_PMU_Type *base, pmu_body_bias_name_t name
 
     switch (name)
     {
+#if (defined(PMU_HAS_FBB) && PMU_HAS_FBB)
         case kPMU_FBB_CM7:
         {
             temp32 = base->PMU_BIAS_CTRL2;
@@ -770,6 +791,7 @@ void PMU_SetBodyBiasControlMode(ANADIG_PMU_Type *base, pmu_body_bias_name_t name
             base->PMU_BIAS_CTRL2 = temp32;
             break;
         }
+#endif /* PMU_HAS_FBB */
         case kPMU_RBB_SOC:
         {
             temp32 = base->PMU_BIAS_CTRL2;
@@ -800,6 +822,7 @@ void PMU_EnableBodyBias(ANADIG_PMU_Type *base, pmu_body_bias_name_t name, bool e
     {
         switch (name)
         {
+#if (defined(PMU_HAS_FBB) && PMU_HAS_FBB)
             case kPMU_FBB_CM7:
             {
                 tmp32 = base->PMU_BIAS_CTRL;
@@ -818,6 +841,7 @@ void PMU_EnableBodyBias(ANADIG_PMU_Type *base, pmu_body_bias_name_t name, bool e
                 }
                 break;
             }
+#endif /* PMU_HAS_FBB */
             case kPMU_RBB_SOC:
             {
                 tmp32 = base->PMU_BIAS_CTRL;
@@ -877,10 +901,10 @@ void PMU_GPCEnableBodyBias(pmu_body_bias_name_t name, uint32_t setpointMap)
 }
 
 /*!
- * brief Controls the ON/OFF of the selected Body Bias' Standby mode in the certain setpoints with GPC mode.
+ * brief Controls the ON/OFF of the selected Body Bias' Wbias power switch in certain setpoints with GPC mode.
  *
  * param name The name of the selected body bias. Please see the enumeration pmu_body_bias_name_t for details.
- * param setpointMap The map of setpoints that the specific body bias standby mode will be enabled in those
+ * param setpointMap The map of setpoints that the specific body bias's wbias power switch will be turn on in those
  * setpoints, this value should be the OR'ed Value of @ref _pmu_setpoint_map.
  */
 void PMU_GPCEnableBodyBiasStandbyMode(pmu_body_bias_name_t name, uint32_t setpointMap)
@@ -919,11 +943,12 @@ void PMU_GPCSetBodyBiasConfig(pmu_body_bias_name_t name, const pmu_gpc_body_bias
     uint32_t temp32;
 
     temp32 = (*(volatile uint32_t *)bodyBiasConfigRegArray[(uint8_t)name]);
-    temp32 &= ~(ANADIG_PMU_FBB_M7_CONFIGURE_WB_CFG_PW_MASK | ANADIG_PMU_FBB_M7_CONFIGURE_WB_CFG_NW_MASK |
-                ANADIG_PMU_FBB_M7_CONFIGURE_OSCILLATOR_BITS_MASK | ANADIG_PMU_FBB_M7_CONFIGURE_REGULATOR_STRENGTH_MASK);
-    temp32 |= ANADIG_PMU_FBB_M7_CONFIGURE_WB_CFG_PW(config->PWELLRegulatorSize) |
-              ANADIG_PMU_FBB_M7_CONFIGURE_WB_CFG_NW(config->NWELLRegulatorSize) |
-              ANADIG_PMU_FBB_M7_CONFIGURE_OSCILLATOR_BITS(config->oscillatorSize) |
-              ANADIG_PMU_FBB_M7_CONFIGURE_REGULATOR_STRENGTH(config->regulatorStrength);
+    temp32 &=
+        (ANADIG_PMU_RBB_SOC_CONFIGURE_WB_CFG_PW_MASK | ANADIG_PMU_RBB_SOC_CONFIGURE_WB_CFG_NW_MASK |
+         ANADIG_PMU_RBB_SOC_CONFIGURE_OSCILLATOR_BITS_MASK | ANADIG_PMU_RBB_SOC_CONFIGURE_REGULATOR_STRENGTH_MASK);
+    temp32 |= ANADIG_PMU_RBB_SOC_CONFIGURE_WB_CFG_PW(config->PWELLRegulatorSize) |
+              ANADIG_PMU_RBB_SOC_CONFIGURE_WB_CFG_NW(config->NWELLRegulatorSize) |
+              ANADIG_PMU_RBB_SOC_CONFIGURE_OSCILLATOR_BITS(config->oscillatorSize) |
+              ANADIG_PMU_RBB_SOC_CONFIGURE_REGULATOR_STRENGTH(config->regulatorStrength);
     (*(volatile uint32_t *)bodyBiasConfigRegArray[(uint8_t)name]) = temp32;
 }

@@ -53,7 +53,7 @@ if (isdefinedsymbol(__use_shmem__)) {
   define symbol m_data2_end                      = 0x2033FFFF;
 
   define exported symbol __NCACHE_REGION_START   = m_data2_start;
-  define exported symbol __NCACHE_REGION_SIZE    = 0x0;
+  define exported symbol __NCACHE_REGION_SIZE    = 0x2000;
 }
 
 define exported symbol m_boot_hdr_conf_start = 0x30000400;
@@ -119,7 +119,7 @@ place in TEXT_region                        { readonly };
 place in DATA_region                        { block RW };
 place in DATA_region                        { block ZI };
 place in DATA_region                        { last block HEAP };
-place in DATA_region                        { block NCACHE_VAR };
+place in DATA2_region                       { block NCACHE_VAR };
 place in CSTACK_region                      { block CSTACK };
 if (isdefinedsymbol(__use_shmem__)) {
   place in rpmsg_sh_mem_region                { section rpmsg_sh_mem_section };

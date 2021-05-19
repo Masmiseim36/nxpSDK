@@ -45,11 +45,10 @@ static volatile bool isRxFinished = false;
 AT_NONCACHEABLE_SECTION_ALIGN(uint8_t audioBuff[BUFFER_SIZE * BUFFER_NUM], 4);
 static volatile uint32_t beginCount   = 0;
 static volatile uint32_t sendCount    = 0;
-static volatile uint32_t receiveCount = 0;
 static volatile uint8_t emptyBlock    = BUFFER_NUM;
-
-static spdif_transfer_t txXfer = {0};
-static spdif_transfer_t rxXfer = {0};
+static volatile uint32_t receiveCount = 0;
+static spdif_transfer_t txXfer        = {0};
+static spdif_transfer_t rxXfer        = {0};
 
 /*******************************************************************************
  * Code
@@ -80,8 +79,8 @@ static void rxCallback(SPDIF_Type *base, spdif_handle_t *handle, status_t status
 
     if (status == kStatus_SPDIF_RxIdle)
     {
-        receiveCount++;
         emptyBlock--;
+        receiveCount++;
 
         if (receiveCount == beginCount)
         {

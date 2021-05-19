@@ -4,7 +4,7 @@ if(NOT MIDDLEWARE_MCU-BOOT_MIMXRT1176_SOURCES_MIMXRT1176_cm7_INCLUDED)
 
     target_sources(${MCUX_SDK_PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/middleware/mcu-boot/targets/MIMXRT1176/src/bl_lpuart_irq_config_MIMXRT1176.c
-        ${CMAKE_CURRENT_LIST_DIR}/middleware/mcu-boot/targets/MIMXRT1176/src/clock_config_MIMXRT1176.c
+        ${CMAKE_CURRENT_LIST_DIR}/middleware/mcu-boot/targets/MIMXRT1176/src/clock_cfg_MIMXRT1176.c
         ${CMAKE_CURRENT_LIST_DIR}/middleware/mcu-boot/targets/MIMXRT1176/src/external_memory_property_map_MIMXRT1176.c
         ${CMAKE_CURRENT_LIST_DIR}/middleware/mcu-boot/targets/MIMXRT1176/src/flexspi_config_MIMXRT1176.c
         ${CMAKE_CURRENT_LIST_DIR}/middleware/mcu-boot/targets/MIMXRT1176/src/flexspi_nand_config_MIMXRT1176.c

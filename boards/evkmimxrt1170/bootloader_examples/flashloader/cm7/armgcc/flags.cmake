@@ -1,4 +1,5 @@
 SET(CMAKE_ASM_FLAGS_RELEASE " \
+    ${CMAKE_ASM_FLAGS_RELEASE} \
     -DNDEBUG \
     -D__STARTUP_CLEAR_BSS \
     -g \
@@ -15,6 +16,7 @@ SET(CMAKE_ASM_FLAGS_RELEASE " \
     -std=gnu99 \
 ")
 SET(CMAKE_C_FLAGS_RELEASE " \
+    ${CMAKE_C_FLAGS_RELEASE} \
     -DNDEBUG \
     -DCPU_MIMXRT1176DVMAA_cm7 \
     -DCPU_IS_ARM_CORTEX_M7=1 \
@@ -38,6 +40,7 @@ SET(CMAKE_C_FLAGS_RELEASE " \
     -std=gnu99 \
 ")
 SET(CMAKE_CXX_FLAGS_RELEASE " \
+    ${CMAKE_CXX_FLAGS_RELEASE} \
     -DNDEBUG \
     -g \
     -Os \
@@ -57,6 +60,7 @@ SET(CMAKE_CXX_FLAGS_RELEASE " \
     -fno-exceptions \
 ")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE " \
+    ${CMAKE_EXE_LINKER_FLAGS_RELEASE} \
     -g \
     -mcpu=cortex-m7 \
     -mfloat-abi=hard \

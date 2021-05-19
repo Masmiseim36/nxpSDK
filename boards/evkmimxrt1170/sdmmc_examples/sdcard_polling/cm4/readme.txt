@@ -9,7 +9,7 @@ Toolchain supported
 ===================
 - IAR embedded Workbench  8.50.9
 - Keil MDK  5.33
-- MCUXpresso  11.3.0
+- MCUXpresso  11.3.1
 - GCC ARM Embedded  9.3.1
 
 Hardware requirements
@@ -21,7 +21,7 @@ Hardware requirements
 
 Board settings
 ==============
-
+Please make sure R136 is weld for GPIO card detect.
 
 Prepare the Demo
 ================

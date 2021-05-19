@@ -624,6 +624,26 @@ static inline void PGMC_MIF_LockLowPowerConfigurationFields(PGMC_MIF_Type *base)
  */
 
 /*!
+ * @brief Trigger PMIC standby ON/OFF.
+ *
+ * @param base PMIC module base address.
+ * @param enable Trigger on/off PMIC standby.
+ *          - \b true Trigger PMIC standby ON.
+ *          - \b false Trigger PMIC standby OFF.
+ */
+static inline void PGMC_PPC_TriggerPMICStandbySoftMode(PGMC_PPC_Type *base, bool enable)
+{
+    if (enable)
+    {
+        PGMC_PPC0->PPC_STBY_CM_CTRL |= PGMC_PPC_PPC_STBY_CM_CTRL_STBY_ON_SOFT_MASK;
+    }
+    else
+    {
+        PGMC_PPC0->PPC_STBY_CM_CTRL |= PGMC_PPC_PPC_STBY_CM_CTRL_STBY_OFF_SOFT_MASK;
+    }
+}
+
+/*!
  * @brief Makes the PMIC module controlled by the target CPU power mode, such as Wait mode.
  *
  * @param base PMIC module base address.

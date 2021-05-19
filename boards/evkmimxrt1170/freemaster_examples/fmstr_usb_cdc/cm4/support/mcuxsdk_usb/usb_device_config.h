@@ -165,6 +165,58 @@
     /*! @brief LPC USB IP3511 HS instance count */
     #define USB_DEVICE_CONFIG_LPCIP3511HS (0U)
 
+#elif defined(MIMXRT595S_cm33_SERIES)
+
+    /*! brief USB interrupt vector name */
+    #define USB_MCU_INT_HANDLER USB0_IRQHandler
+
+    /*! brief USB interrupt vectors indexes */
+    #define USB_IRQS_LIST USBHSD_IRQS
+
+    /*! brief Controller Identificator */
+    #define CONTROLLER_ID kUSB_ControllerLpcIp3511Hs0
+
+        /*! brief Controller Peripheral Index */
+    #define USB_CONTROLLER_IX 0
+
+    /*! @brief KHCI instance count */
+    #define USB_DEVICE_CONFIG_KHCI (0U)
+
+    /*! @brief EHCI instance count */
+    #define USB_DEVICE_CONFIG_EHCI (0U)
+
+    /*! @brief LPC USB IP3511 FS instance count */
+    #define USB_DEVICE_CONFIG_LPCIP3511FS (0U)
+
+    /*! @brief LPC USB IP3511 HS instance count */
+    #define USB_DEVICE_CONFIG_LPCIP3511HS (1U)
+
+#elif defined(MIMXRT685S_cm33_SERIES)
+
+    /*! brief USB interrupt vector name */
+    #define USB_MCU_INT_HANDLER USB_IRQHandler
+
+    /*! brief USB interrupt vectors indexes */
+    #define USB_IRQS_LIST USBHSD_IRQS
+
+    /*! brief Controller Identificator */
+    #define CONTROLLER_ID kUSB_ControllerLpcIp3511Hs0
+
+        /*! brief Controller Peripheral Index */
+    #define USB_CONTROLLER_IX 0
+
+    /*! @brief KHCI instance count */
+    #define USB_DEVICE_CONFIG_KHCI (0U)
+
+    /*! @brief EHCI instance count */
+    #define USB_DEVICE_CONFIG_EHCI (0U)
+
+    /*! @brief LPC USB IP3511 FS instance count */
+    #define USB_DEVICE_CONFIG_LPCIP3511FS (0U)
+
+    /*! @brief LPC USB IP3511 HS instance count */
+    #define USB_DEVICE_CONFIG_LPCIP3511HS (1U)
+
 #else
 #error Add the new MCU here!
 #endif

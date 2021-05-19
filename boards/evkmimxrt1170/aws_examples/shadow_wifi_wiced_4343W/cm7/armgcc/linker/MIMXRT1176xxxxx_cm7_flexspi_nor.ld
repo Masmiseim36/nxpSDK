@@ -40,8 +40,9 @@ MEMORY
   m_interrupts          (RX)  : ORIGIN = 0x30002000, LENGTH = 0x00000400
   m_text                (RX)  : ORIGIN = 0x30002400, LENGTH = 0x00D8DC00
   m_data                (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00040000
-  m_data2               (RW)  : ORIGIN = 0x202C0000 + RPMSG_SHMEM_SIZE, LENGTH = 0x00080000 - RPMSG_SHMEM_SIZE
-  rpmsg_sh_mem          (RW)  : ORIGIN = 0x202C0000, LENGTH = RPMSG_SHMEM_SIZE
+  m_ncache              (RW)  : ORIGIN = 0x202C0000, LENGTH = 0x00002000
+  m_data2               (RW)  : ORIGIN = 0x202C2000 + RPMSG_SHMEM_SIZE, LENGTH = 0x0007E000 - RPMSG_SHMEM_SIZE
+  rpmsg_sh_mem          (RW)  : ORIGIN = 0x202C2000, LENGTH = RPMSG_SHMEM_SIZE
   m_core1_image         (RX)  : ORIGIN = 0x30FC0000, LENGTH = 0x00040000
 }
 
@@ -50,8 +51,8 @@ MEMORY
 /* Define output sections */
 SECTIONS
 {
-  __NCACHE_REGION_START = ORIGIN(rpmsg_sh_mem);
-  __NCACHE_REGION_SIZE  = LENGTH(rpmsg_sh_mem);
+  __NCACHE_REGION_START = ORIGIN(m_ncache);
+  __NCACHE_REGION_SIZE  = LENGTH(m_ncache);
 
   .flash_config :
   {
@@ -235,14 +236,14 @@ SECTIONS
     *(NonCacheable.init)
     . = ALIGN(4);
     __noncachedata_init_end__ = .;   /* create a global symbol at initialized ncache data end */
-  } > m_data
+  } > m_ncache
   . = __noncachedata_init_end__;
   .ncache :
   {
     *(NonCacheable)
     . = ALIGN(4);
     __noncachedata_end__ = .;     /* define a global symbol at ncache data end */
-  } > m_data
+  } > m_ncache
 
   __DATA_END = __NDATA_ROM + (__noncachedata_init_end__ - __noncachedata_start__);
   text_end = ORIGIN(m_text) + LENGTH(m_text);

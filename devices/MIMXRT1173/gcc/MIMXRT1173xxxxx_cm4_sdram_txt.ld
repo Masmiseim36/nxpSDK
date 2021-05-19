@@ -2,9 +2,9 @@
 ** ###################################################################
 **     Processor:           MIMXRT1173CVM8A_cm4
 **     Compiler:            GNU C Compiler
-**     Reference manual:    IMXRT1170RM, Rev 0, 12/2020
+**     Reference manual:    IMXRT1170RM, Rev 1, 02/2021
 **     Version:             rev. 1.0, 2020-12-29
-**     Build:               b210202
+**     Build:               b210402
 **
 **     Abstract:
 **         Linker file for the GNU C Compiler
@@ -34,6 +34,7 @@ MEMORY
 {
   m_interrupts          (RX)  : ORIGIN = 0x80000000, LENGTH = 0x00000400
   m_text                (RX)  : ORIGIN = 0x80000400, LENGTH = 0x001FFC00
+  m_qacode              (RX)  : ORIGIN = 0x1FFE0000, LENGTH = 0x00020000
   m_data                (RW)  : ORIGIN = 0x20240000, LENGTH = DEFINED(__heap_noncacheable__) ? 0x00080000 : 0x00080000 - HEAP_SIZE
   m_data2               (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00020000
   m_data3               (RW)  : ORIGIN = 0x80200000, LENGTH = 0x02E00000
@@ -161,7 +162,19 @@ SECTIONS
     . = ALIGN(4);
     __data_end__ = .;        /* define a global symbol at data end */
   } > m_data
-  __NDATA_ROM = __DATA_ROM + (__data_end__ - __data_start__);
+
+  __ram_function_flash_start = __DATA_ROM + (__data_end__ - __data_start__); /* Symbol is used by startup for TCM data initialization */
+
+  .ram_function : AT(__ram_function_flash_start)
+  {
+    . = ALIGN(32);
+    __ram_function_start__ = .;
+    *(CodeQuickAccess)
+    . = ALIGN(128);
+    __ram_function_end__ = .;
+  } > m_qacode
+
+  __NDATA_ROM = __ram_function_flash_start + (__ram_function_end__ - __ram_function_start__);
   .ncache.init : AT(__NDATA_ROM)
   {
     __noncachedata_start__ = .;   /* create a global symbol at ncache data start */

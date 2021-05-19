@@ -48,8 +48,8 @@ MEMORY
 /* Define output sections */
 SECTIONS
 {
-  __NCACHE_REGION_START = ORIGIN(rpmsg_sh_mem);
-  __NCACHE_REGION_SIZE  = LENGTH(rpmsg_sh_mem);
+  __NCACHE_REGION_START = ORIGIN(m_data2);
+  __NCACHE_REGION_SIZE  = 0x2000;
 
   .flash_config :
   {
@@ -220,14 +220,14 @@ SECTIONS
     *(NonCacheable.init)
     . = ALIGN(4);
     __noncachedata_init_end__ = .;   /* create a global symbol at initialized ncache data end */
-  } > m_data
+  } > m_data2
   . = __noncachedata_init_end__;
   .ncache :
   {
     *(NonCacheable)
     . = ALIGN(4);
     __noncachedata_end__ = .;     /* define a global symbol at ncache data end */
-  } > m_data
+  } > m_data2
 
   __DATA_END = __NDATA_ROM + (__noncachedata_init_end__ - __noncachedata_start__);
   text_end = ORIGIN(m_text) + LENGTH(m_text);

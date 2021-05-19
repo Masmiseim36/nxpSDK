@@ -191,7 +191,7 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
 #define LV_GPU_DMA2D_CMSIS_INCLUDE
 
 /* 1: Use PXP for CPU off-load on NXP platforms */
-#define LV_USE_GPU_NXP_PXP      1
+#define LV_USE_GPU_NXP_PXP      0
 
 
 /*1: Add default bare metal and FreeRTOS interrupt handling routines for PXP (lv_gpu_nxp_pxp_osa.c)
@@ -200,6 +200,9 @@ e.g. "stm32f769xx.h" or "stm32f429xx.h" */
  *0: lv_gpu_nxp_pxp_init() has to be called manually before lv_init()
  * */
 #define LV_USE_GPU_NXP_PXP_AUTO_INIT 1
+
+/*1: Use VG-Lite for CPU offload on NXP RTxxx platforms */
+#define LV_USE_GPU_NXP_VG_LITE   1
 
 /* 1: Enable file system (might be required for images */
 #define LV_USE_FILESYSTEM       0
@@ -254,6 +257,9 @@ typedef void * lv_img_decoder_user_data_t;
 
 /* Define a custom attribute to `lv_disp_flush_ready` function */
 #define LV_ATTRIBUTE_FLUSH_READY
+
+/* Required alignment size for buffers */
+#define LV_ATTRIBUTE_MEM_ALIGN_SIZE (LV_COLOR_DEPTH * 16 / 8) /* VGLITE requires 16-pixel alignment. */
 
 /* With size optimization (-Os) the compiler might not align data to
  * 4 or 8 byte boundary. This alignment will be explicitly applied where needed.

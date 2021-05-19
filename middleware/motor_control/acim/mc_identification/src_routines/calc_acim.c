@@ -87,7 +87,9 @@ void MID_CalcElPar(void)
     g_sMID.sAlgNew.fltIdMax = (g_sMID.sNoLoad.fltUMeasMax * 0.1591549F) / /* set maximal d-axis current */
                               (g_sMID.sPar.fltLm * g_sMID.sPar.fltFreqN);
     if (g_sMID.sAlgNew.fltIdMax > g_sMID.sPar.fltIphN) /* if calculated value is bigger than nominal, limit it */
-        g_sMID.sAlgNew.fltIdMax = g_sMID.sPar.fltIphN;
+    {
+    	g_sMID.sAlgNew.fltIdMax = g_sMID.sPar.fltIphN;
+    }
     g_sMID.sAlgNew.fltIdMin   = MID_CALC_ID_MIN2MAX_RATIO * g_sMID.sAlgNew.fltIdMax; /* set minimal d-axis current */
     g_sMID.sAlgNew.fltIdStart = g_sMID.sAlgNew.fltIdMax; /* set startup d-axis current equal to maximal value */
     g_sMID.sAlgNew.fltIMax =

@@ -524,7 +524,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>hello_world_demo_cm4 flexspi_nor_sdram_debug</TargetName>
+    <TargetName>hello_world_demo_cm4 sdram_txt_debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -693,7 +693,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>hello_world_demo_cm4 sdram_txt_debug</TargetName>
+    <TargetName>hello_world_demo_cm4 flexspi_nor_sdram_debug</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -759,7 +759,7 @@
         <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
         <sRbox>1</sRbox>
-        <tLdApp>0</tLdApp>
+        <tLdApp>1</tLdApp>
         <tGomain>0</tGomain>
         <tRbreak>1</tRbreak>
         <tRwatch>1</tRwatch>
@@ -784,7 +784,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1170_sdram_txt_init.ini</tIfile>
+        <tIfile>evkmimxrt1170_flexspi_nor_sdram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
@@ -1523,7 +1523,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>hello_world_demo_cm4 flexspi_nor_sdram_release</TargetName>
+    <TargetName>hello_world_demo_cm4 sdram_txt_release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -1687,7 +1687,7 @@
     </TargetOption>
   </Target>
   <Target>
-    <TargetName>hello_world_demo_cm4 sdram_txt_release</TargetName>
+    <TargetName>hello_world_demo_cm4 flexspi_nor_sdram_release</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -1753,7 +1753,7 @@
         <sRmem>1</sRmem>
         <sRfunc>1</sRfunc>
         <sRbox>1</sRbox>
-        <tLdApp>0</tLdApp>
+        <tLdApp>1</tLdApp>
         <tGomain>1</tGomain>
         <tRbreak>1</tRbreak>
         <tRwatch>1</tRwatch>
@@ -1778,7 +1778,7 @@
         <tDllPa/>
         <tDlgDll/>
         <tDlgPa/>
-        <tIfile>evkmimxrt1170_sdram_txt_init.ini</tIfile>
+        <tIfile>evkmimxrt1170_flexspi_nor_sdram.ini</tIfile>
         <pMon>BIN\CMSIS_AGDI.dll</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>

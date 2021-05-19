@@ -827,7 +827,7 @@ status_t flexspi_init(uint32_t instance, flexspi_mem_config_t *config)
         // Set Clock divider and sample clock source
         mcr0 = base->MCR0 & (uint32_t) ~(FLEXSPI_MCR0_RXCLKSRC_MASK | FLEXSPI_MCR0_IPGRANTWAIT_MASK |
                                          FLEXSPI_MCR0_AHBGRANTWAIT_MASK | FLEXSPI_MCR0_COMBINATIONEN_MASK
-#if !defined(MIMXRT685S_cm33_SERIES) && !defined(MIMXRT595S_cm33_SERIES)
+#if !defined(MIMXRT685S_cm33_SERIES)
                                          | FLEXSPI_MCR0_ATDFEN_MASK | FLEXSPI_MCR0_ARDFEN_MASK
 #endif
                             );
@@ -1166,7 +1166,7 @@ status_t flexspi_command_xfer(uint32_t instance, flexspi_xfer_t *xfer)
                     status = kStatus_FLEXSPI_InvalidSequence;
                     break;
                 case kFlexSpiIpCmdError_SequenceExecutionTimeout:
-                    status = kStatus_FLEXSPI_SequenceExecutionTimeout;
+                    status = kStatus_FLEXSPI_DeviceTimeout;
                     break;
             }
         }

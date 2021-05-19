@@ -9,7 +9,7 @@ Toolchain supported
 - IAR embedded Workbench  8.50.9
 - Keil MDK  5.33
 - GCC ARM Embedded  9.3.1
-- MCUXpresso  11.3.0
+- MCUXpresso  11.3.1
 
 Hardware requirements
 =====================
@@ -25,7 +25,7 @@ Board settings
 ==============
 1. Connect the RK055AHD091-CTG LCD board to J48.
 2. Unzip the pics.zip, place the jpg pictures to the SD card.
-3. Insert the SDCARD into card slot(J15).
+3. Please make sure R136 is weld for GPIO card detect and then insert the SDCARD into card slot(J15).
 
 
 Prepare the Demo

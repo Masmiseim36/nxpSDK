@@ -2,20 +2,20 @@
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lpuart.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPUART LPUART2
-#define DEMO_LPUART_CLKSRC kCLOCK_ScgSysOscClk
+#define DEMO_LPUART          LPUART2
+#define DEMO_LPUART_CLKSRC   kCLOCK_ScgSysOscClk
 #define DEMO_LPUART_CLK_FREQ CLOCK_GetFreq(kCLOCK_ScgSysOscClk)
 
 /*******************************************************************************
@@ -26,7 +26,7 @@
  * Variables
  ******************************************************************************/
 
-uint8_t txbuff[] = "Lpuart polling example with seven data bits\r\nBoard will send back received characters\r\n";
+uint8_t txbuff[]   = "Lpuart polling example with seven data bits\r\nBoard will send back received characters\r\n";
 uint8_t rxbuff[20] = {0};
 
 /*******************************************************************************
@@ -55,11 +55,11 @@ int main(void)
      * config.enableRx = false;
      */
     LPUART_GetDefaultConfig(&config);
-    config.baudRate_Bps = BOARD_DEBUG_UART_BAUDRATE;
-    config.enableTx = true;
-    config.enableRx = true;
+    config.baudRate_Bps  = BOARD_DEBUG_UART_BAUDRATE;
+    config.enableTx      = true;
+    config.enableRx      = true;
     config.dataBitsCount = kLPUART_SevenDataBits;
-    config.isMsb = false;
+    config.isMsb         = false;
 
     LPUART_Init(DEMO_LPUART, &config, DEMO_LPUART_CLK_FREQ);
 

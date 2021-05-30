@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -77,12 +77,12 @@
 #define M1_N_MIN FRAC16(0.056818181818)
 #define M1_N_START_TRH FRAC16(0.081818181818)
 #define M1_STARTUP_CMT_CNT (2)
-#define M1_STARTUP_CMT_PER (18750)//(28125)//(18750)
+#define M1_STARTUP_CMT_PER (18750)
 #define M1_CMT_T_OFF FRAC16(0.22)
 #define M1_FREEWHEEL_T_LONG (1000)
 #define M1_FREEWHEEL_T_SHORT (500)
-#define M1_SPEED_SCALE_CONST (2557)//(2557)
-#define M1_CMT_PER_MIN (426)//(426)
+#define M1_SPEED_SCALE_CONST (2557)
+#define M1_CMT_PER_MIN (426)
 #define M1_START_CMT_ACCELER FRAC16(0.277777777778)
 #define M1_INTEG_TRH (163841)
 

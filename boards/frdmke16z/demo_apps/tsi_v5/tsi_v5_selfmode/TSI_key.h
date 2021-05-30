@@ -23,8 +23,8 @@ extern "C" {
 /*! @brief TSI scan mode. */
 enum _tsi_scanmode
 {
-    kTSI_SelfMode = 0,
-    kTSI_MutualMode = 1,
+    kTSI_SelfMode    = 0,
+    kTSI_MutualMode  = 1,
     kTSI_InvalidMode = 2
 };
 

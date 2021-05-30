@@ -3,13 +3,14 @@ Overview
 The SDCARD FatFs FreeRTOS project is a demonstration program that uses the SDK software. It reads/writes
 /erases the SD card continuously. The purpose of this example is to show how to use SDCARD driver
 with FatFs and freeRTOS in SDK software to access SD card.
+Note: The output log of the case is not constant, since difference of card access speed and platform will affect the behavior of card access task.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- MCUXpresso  11.2.0
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -56,6 +57,3 @@ TASK2: file access is blocking.
 TASK1: finsied.
 TASK2: finsied.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

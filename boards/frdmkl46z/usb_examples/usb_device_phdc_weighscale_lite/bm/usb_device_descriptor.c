@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 , 2018 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -51,7 +55,8 @@
 uint8_t g_currentConfigure = 0U;
 uint8_t g_interface[1U];
 /*! @brief USB device descriptor */
-uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_DEVICE, /* size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_DEVICE,   /* DEVICE descriptor type */
     USB_SHORT_GET_LOW(USB_DEVICE_SPECIFIC_BCD_VERSION), USB_SHORT_GET_HIGH(USB_DEVICE_SPECIFIC_BCD_VERSION),
@@ -74,11 +79,20 @@ uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
 };
 
 /*! @brief PHDC configuration descriptor */
-uint8_t g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_CONFIGURE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_CONFIGURE,   /* CONFIGURATION Descriptor Type */
-    USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL),
-    USB_SHORT_GET_HIGH(USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL),
+    USB_SHORT_GET_LOW(
+        USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_CLASS_FUNCTION +
+        USB_DESCRIPTOR_LENGTH_FUNCTION_EXTENSION + USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_QOS +
+        USB_DESCRIPTOR_LENGTH_METADATA_BULK_IN + USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_QOS +
+        USB_DESCRIPTOR_LENGTH_METADATA_BULK_OUT + USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_QOS),
+    USB_SHORT_GET_HIGH(
+        USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_CLASS_FUNCTION +
+        USB_DESCRIPTOR_LENGTH_FUNCTION_EXTENSION + USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_QOS +
+        USB_DESCRIPTOR_LENGTH_METADATA_BULK_IN + USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_QOS +
+        USB_DESCRIPTOR_LENGTH_METADATA_BULK_OUT + USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_QOS),
     /* Total length of data returned for this configuration. */
     USB_PHDC_WEIGHT_SCALE_INTERFACE_COUNT, /* Number of interfaces supported by this configuration */
     USB_PHDC_WEIGHT_SCALE_CONFIGURE_INDEX, /* Value to use as an argument to the
@@ -177,120 +191,70 @@ uint8_t g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURATION_A
 };
 
 /*! @brief PHDC string 0 descriptor */
-uint8_t g_UsbDeviceString0[USB_DESCRIPTOR_LENGTH_STRING0] = {sizeof(g_UsbDeviceString0), USB_DESCRIPTOR_TYPE_STRING,
-                                                             0x09U, 0x04U};
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString0[] = {2U + 2U, USB_DESCRIPTOR_TYPE_STRING, 0x09U, 0x04U};
 
 /*! @brief PHDC string 1 descriptor */
-uint8_t g_UsbDeviceString1[USB_DESCRIPTOR_LENGTH_STRING1] = {
-    sizeof(g_UsbDeviceString1),
-    USB_DESCRIPTOR_TYPE_STRING,
-    'N',
-    0x00U,
-    'X',
-    0x00U,
-    'P',
-    0x00U,
-    ' ',
-    0x00U,
-    'S',
-    0x00U,
-    'E',
-    0x00U,
-    'M',
-    0x00U,
-    'I',
-    0x00U,
-    'C',
-    0x00U,
-    'O',
-    0x00U,
-    'N',
-    0x00U,
-    'D',
-    0x00U,
-    'U',
-    0x00U,
-    'C',
-    0x00U,
-    'T',
-    0x00U,
-    'O',
-    0x00U,
-    'R',
-    0x00U,
-    'S',
-    0x00U,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString1[] = {
+    2U + 2U * 18U, USB_DESCRIPTOR_TYPE_STRING,
+    'N',           0x00U,
+    'X',           0x00U,
+    'P',           0x00U,
+    ' ',           0x00U,
+    'S',           0x00U,
+    'E',           0x00U,
+    'M',           0x00U,
+    'I',           0x00U,
+    'C',           0x00U,
+    'O',           0x00U,
+    'N',           0x00U,
+    'D',           0x00U,
+    'U',           0x00U,
+    'C',           0x00U,
+    'T',           0x00U,
+    'O',           0x00U,
+    'R',           0x00U,
+    'S',           0x00U,
 };
 
 /*! @brief PHDC string 2 descriptor */
-uint8_t g_UsbDeviceString2[USB_DESCRIPTOR_LENGTH_STRING2] = {sizeof(g_UsbDeviceString2),
-                                                             USB_DESCRIPTOR_TYPE_STRING,
-                                                             ' ',
-                                                             0x00U,
-                                                             'U',
-                                                             0x00U,
-                                                             'S',
-                                                             0x00U,
-                                                             'B',
-                                                             0x00U,
-                                                             ' ',
-                                                             0x00U,
-                                                             'P',
-                                                             0x00U,
-                                                             'H',
-                                                             0x00U,
-                                                             'D',
-                                                             0x00U,
-                                                             'C',
-                                                             0x00U,
-                                                             ' ',
-                                                             0x00U,
-                                                             'D',
-                                                             0x00U,
-                                                             'E',
-                                                             0x00U,
-                                                             'M',
-                                                             0x00U,
-                                                             'O',
-                                                             0x00U,
-                                                             ' ',
-                                                             0x00U};
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString2[] = {2U + 2U * 15U, USB_DESCRIPTOR_TYPE_STRING,
+                                ' ',           0x00U,
+                                'U',           0x00U,
+                                'S',           0x00U,
+                                'B',           0x00U,
+                                ' ',           0x00U,
+                                'P',           0x00U,
+                                'H',           0x00U,
+                                'D',           0x00U,
+                                'C',           0x00U,
+                                ' ',           0x00U,
+                                'D',           0x00U,
+                                'E',           0x00U,
+                                'M',           0x00U,
+                                'O',           0x00U,
+                                ' ',           0x00U};
 
 /*! @brief PHDC string 3 descriptor */
-uint8_t g_UsbDeviceStringN[USB_DESCRIPTOR_LENGTH_STRING_ERROR] = {sizeof(g_UsbDeviceStringN),
-                                                                  USB_DESCRIPTOR_TYPE_STRING,
-                                                                  'B',
-                                                                  0x00U,
-                                                                  'A',
-                                                                  0x00U,
-                                                                  'D',
-                                                                  0x00U,
-                                                                  ' ',
-                                                                  0x00U,
-                                                                  'S',
-                                                                  0x00U,
-                                                                  'T',
-                                                                  0x00U,
-                                                                  'R',
-                                                                  0x00U,
-                                                                  'I',
-                                                                  0x00U,
-                                                                  'N',
-                                                                  0x00U,
-                                                                  'G',
-                                                                  0x00U,
-                                                                  ' ',
-                                                                  0x00U,
-                                                                  'I',
-                                                                  0x00U,
-                                                                  'N',
-                                                                  0x00U,
-                                                                  'D',
-                                                                  0x00U,
-                                                                  'E',
-                                                                  0x00U,
-                                                                  'X',
-                                                                  0x00U};
+uint8_t g_UsbDeviceStringN[] = {2U + 2U * 16U, USB_DESCRIPTOR_TYPE_STRING,
+                                'B',           0x00U,
+                                'A',           0x00U,
+                                'D',           0x00U,
+                                ' ',           0x00U,
+                                'S',           0x00U,
+                                'T',           0x00U,
+                                'R',           0x00U,
+                                'I',           0x00U,
+                                'N',           0x00U,
+                                'G',           0x00U,
+                                ' ',           0x00U,
+                                'I',           0x00U,
+                                'N',           0x00U,
+                                'D',           0x00U,
+                                'E',           0x00U,
+                                'X',           0x00U};
 
 /*! @brief PHDC string descriptor length */
 uint32_t g_UsbDeviceStringDescriptorLength[USB_DEVICE_STRING_COUNT + 1U] = {
@@ -487,14 +451,16 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
         {
             if (USB_SPEED_HIGH == speed)
             {
-                if (USB_PHDC_INTERRUPT_ENDPOINT_IN ==
-                    (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
+                    (USB_PHDC_INTERRUPT_ENDPOINT_IN ==
+                    (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
                 {
                     pDescStart->endpoint.bInterval = HS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE,
                                                        pDescStart->endpoint.wMaxPacketSize);
                 }
-                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                          (USB_PHDC_BULK_ENDPOINT_IN ==
                           (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -502,7 +468,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_USB_PHDC_BULK_ENDPOINT_IN_PACKET_SIZE,
                                                        pDescStart->endpoint.wMaxPacketSize);
                 }
-                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) ==
+                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) &&
                          (USB_PHDC_BULK_ENDPOINT_OUT ==
                           (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -516,14 +482,16 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
             }
             else
             {
-                if (USB_PHDC_INTERRUPT_ENDPOINT_IN ==
-                    (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
+                    (USB_PHDC_INTERRUPT_ENDPOINT_IN ==
+                    (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
                 {
                     pDescStart->endpoint.bInterval = FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE,
                                                        pDescStart->endpoint.wMaxPacketSize);
                 }
-                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                          (USB_PHDC_BULK_ENDPOINT_IN ==
                           (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -531,7 +499,7 @@ usb_status_t USB_DeviceSetSpeed(uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_USB_PHDC_BULK_ENDPOINT_IN_PACKET_SIZE,
                                                        pDescStart->endpoint.wMaxPacketSize);
                 }
-                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) ==
+                else if (((pDescStart->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT) &&
                          (USB_PHDC_BULK_ENDPOINT_OUT ==
                           (pDescStart->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))

@@ -30,11 +30,12 @@
  * Includes
  ******************************************************************************/
 /* SDK Included Files */
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "ksdk_mbedtls.h"
-#include "pin_mux.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 /* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -46,7 +47,6 @@
 #include "aws_demo.h"
 
 #include "fsl_device_registers.h"
-#include "clock_config.h"
 #include "fsl_phyksz8081.h"
 #include "fsl_enet_mdio.h"
 #include "fsl_phy.h"

@@ -21,8 +21,8 @@
 #define FMSTR_DEMO_LARGE_ROM   1    /* Platform has large ROM enough to store the extended data structures used in FreeMASTER demo */
 #define FMSTR_DEMO_SUPPORT_I64 1    /* support for long long type */
 #define FMSTR_DEMO_SUPPORT_FLT 1    /* support for float type */
-#define FMSTR_DEMO_SUPPORT_DBL 1    /* support for double type */
-
+#define FMSTR_DEMO_SUPPORT_DBL 0    /* support for double type, disabled on this platform to make the
+                                       demo run faster and communicate well also in polled mode  */
 
 //! Enable/Disable FreeMASTER support as a whole
 #define FMSTR_DISABLE           0   // To disable all FreeMASTER functionalities

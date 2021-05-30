@@ -2,17 +2,15 @@ Overview
 ========
 The bubble application demonstrates basic usage of the on-board accelerometer to implement a
 bubble level. A bubble level utilizes two axes to visually show deviation from a level plane
-(0 degrees) on a given access. This demo uses the FTM/TPM to modulate the duty cycle of two onboard LEDs
-to gradually increase LED intensity as the board deviates from a level state.
+(0 degrees) on a given access.
 
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- Keil MDK 5.24a
+- IAR embedded Workbench 8.22.2
+- GCC ARM Embedded 7-2017-q4-major
+- MCUXpresso10.2.0
 
 Hardware requirements
 =====================
@@ -38,27 +36,22 @@ Prepare the Demo
 
 Running the demo
 ================
-  When the board is programmed, simply tilt the board to see the LED illuminate. One LED color
+
 indicates X-axis angle while another indicates Y-axis angle.
 
   When the demo runs successfully, the following message is displayed in the terminal:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Welcome to BUBBLE example
+Welcome to the BUBBLE example
 
-You will see the change of LED brightness when change angles of board
+You will see angle data change in the console when change the angles of board
 
-x= -72 y = -328
-
-x= -16 y = -268
-
-x= -40 y = -296
-
-x= -40 y = -296
-
-x= -96 y = -288
-
-x= -96 y = -288
+x=  6 y = 22
+x=  8 y = 26
+x= 10 y = 28
+x= 10 y = 28
+x= 11 y = 29
+x= 11 y = 29
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Customization options
 =====================

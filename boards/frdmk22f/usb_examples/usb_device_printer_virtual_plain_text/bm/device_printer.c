@@ -15,8 +15,9 @@
 #include "usb_device_descriptor.h"
 #include "device_printer.h"
 #include "fsl_device_registers.h"
-#include "clock_config.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
@@ -27,7 +28,6 @@
 #endif
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -166,7 +166,7 @@ static usb_status_t USB_DevicePrinterAppCallback(class_handle_t classHandle, uin
             message = (usb_device_endpoint_callback_message_struct_t *)param;
             if ((g_DevicePrinterApp.attach) && (g_DevicePrinterApp.prnterTaskState == kPrinter_Receiving))
             {
-                if ((message != NULL) && (message->length != USB_UNINITIALIZED_VAL_32))
+                if ((message != NULL) && (message->length != USB_CANCELLED_TRANSFER_LENGTH))
                 {
                     g_DevicePrinterApp.printerState      = kPrinter_Received;
                     g_DevicePrinterApp.dataReceiveLength = message->length;

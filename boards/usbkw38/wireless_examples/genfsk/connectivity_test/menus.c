@@ -69,6 +69,7 @@ char * const cu8MainMenu[] =
   "\r -Press [1] Continuous tests\n",
   "\r -Press [2] Packet Error Rate test\n",
   "\r -Press [3] Range test\n",
+  "\r -Press [4] Adjust RTC XTAL\n"
   "\r -Press [!] Reset MCU\n\r\n",
   NULL
 };
@@ -83,6 +84,10 @@ char * const cu8ShortCutsBar[] =
   "\r                                                              \n",
   "\r  [n] Pyld+  [d] XtalTrim+                                    \n",  
   "\r  [m] Pyld-  [f] XtalTrim-                                    \n",  
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+  "\r                                                              \n",
+  "\r  [g] Ext. PA gain or bypass  [i] Ext. PA antenna 1 or 2      \n",  
+#endif  
   "\r--------------------------------------------------------------\r\n",
   NULL
 };
@@ -242,6 +247,21 @@ char * const cu8ContMessages[] =
     " Mod PN",
     " Unmod",
     "\r\n\r\n Continuous ED stopped. Press [ENTER] to continue\r\n",
+};
+
+char * const cu8RTCTrimMenu[] =
+{
+  "\n\r"
+  "\r __________________________\n",
+  "\r|                          |\n",
+  "\r|   Adjust RTC XTAL Menu   |\n",
+  "\r|__________________________|\n\r\n",
+  "\r-Press [1] Increment Capacitance Level\n",
+  "\r-Press [2] Decrement Capacitance Level\n",
+  "\r-Press [3] Move MCG from FEI to FEE\n",
+  "\r-Press [4] Move MCG from FEE to FEI\n",
+  "\r-Press [p] Previous Menu\n\r\n",
+  NULL
 };
 
 /************************************************************************************

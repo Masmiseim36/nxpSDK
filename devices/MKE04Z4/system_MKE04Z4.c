@@ -4,15 +4,15 @@
 **                          MKE04Z8VTG4
 **                          MKE04Z8VWJ4
 **
-**     Compilers:           Keil ARM C/C++ Compiler
-**                          Freescale C/C++ for Embedded ARM
+**     Compilers:           Freescale C/C++ for Embedded ARM
 **                          GNU C Compiler
 **                          IAR ANSI C/C++ Compiler for ARM
+**                          Keil ARM C/C++ Compiler
 **                          MCUXpresso Compiler
 **
 **     Reference manual:    MKE04P24M48SF0RM Rev 4
 **     Version:             rev. 1.0, 2017-05-19
-**     Build:               b180802
+**     Build:               b201123
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -20,7 +20,8 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2018 NXP
+**     Copyright 2016-2020 NXP
+**     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
 **
@@ -67,7 +68,7 @@ void SystemInit (void) {
   WDOG->CNT = WDOG_UPDATE_KEY2;
   WDOG->TOVAL = 0xFFFFU;
   WDOG->CS1 = (uint8_t) ((WDOG->CS1) & ~WDOG_CS1_EN_MASK) | WDOG_CS1_UPDATE_MASK;
-  WDOG->CS2 |= 0;
+  WDOG->CS2 |= 0U;
 #endif /* (DISABLE_WDOG) */
 
   SystemInitHook();
@@ -83,22 +84,22 @@ void SystemCoreClockUpdate (void) {
   uint16_t Divider;
   uint16_t Temp;
 
-  Divider = (0x01U) << ((ICS->C2 & ICS_C2_BDIV_MASK) >> ICS_C2_BDIV_SHIFT);
+  Divider = (uint16_t)(0x01U) << (((uint16_t)ICS->C2 & ICS_C2_BDIV_MASK) >> ICS_C2_BDIV_SHIFT);
 
   switch ((ICS->C1 & ICS_C1_CLKS_MASK) >> ICS_C1_CLKS_SHIFT) {
     case 0x0:
       /* FLL */
-      if(ICS->C1 & ICS_C1_IREFS_MASK)
+      if((ICS->C1 & ICS_C1_IREFS_MASK) != 0x0U)
       {
           ICSOUTClock = CPU_INT_IRC_CLK_HZ * 1280UL;
       }
       else
       {
           /* Reference Divider */
-          Temp = (ICS->C1 & ICS_C1_RDIV_MASK) >> ICS_C1_RDIV_SHIFT;
-          Temp = (Temp + 1) * ((OSC->CR & OSC_CR_RANGE_MASK) ? 32 : 1);
+          Temp = ((uint16_t)ICS->C1 & ICS_C1_RDIV_MASK) >> ICS_C1_RDIV_SHIFT;
+          Temp = (Temp + 1U) * (((OSC->CR & OSC_CR_RANGE_MASK) != 0x0U) ? 32U : 1U);
 
-          ICSOUTClock = CPU_XTAL_CLK_HZ / Temp * 1280L;
+          ICSOUTClock = CPU_XTAL_CLK_HZ / Temp * 1280UL;
       }
       break;
 
@@ -113,7 +114,8 @@ void SystemCoreClockUpdate (void) {
       break;
 
     default:
-      return;
+      ICSOUTClock = 0U;
+      break;
   }
   SystemCoreClock = (ICSOUTClock / Divider);
 

@@ -36,10 +36,10 @@ To run PC side as a server with a board connected as a client to COM3 execute:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- MCUXpresso  11.2.0
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -65,6 +65,3 @@ Running the demo
 ================
 When the demo runs successfully, the log can be captured on the PC side (python console).
 The matrix multiplication can be issued repeatedly when pressing a SW board button.
-Customization options
-=====================
-

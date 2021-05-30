@@ -32,6 +32,7 @@ extern char * const cu8PerTxMessages[];
 extern char * const cu8RangeRxMessages[];
 extern char * const cu8RangeTxMessages[];
 extern char * const cu8ContMessages[];
+extern char * const cu8RTCTrimMenu [];
 /************************************************************************************
 *************************************************************************************
 * Module macros

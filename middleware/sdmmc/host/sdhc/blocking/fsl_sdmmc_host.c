@@ -36,8 +36,10 @@ status_t SDMMCHOST_CardIntInit(sdmmchost_t *host, void *sdioInt)
 
 status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd)
 {
-    SDHC_Type *base = host->hostController.base;
-    if (cd == NULL)
+    SDHC_Type *base        = host->hostController.base;
+    sd_detect_card_t *sdCD = (sd_detect_card_t *)cd;
+
+    if ((cd == NULL) || (sdCD->type != kSD_DetectCardByHostDATA3))
     {
         return kStatus_Fail;
     }
@@ -55,9 +57,25 @@ status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd)
 
 uint32_t SDMMCHOST_CardDetectStatus(sdmmchost_t *host)
 {
-    return (SDHC_GetInterruptStatusFlags(host->hostController.base) & (uint32_t)kSDHC_CardInsertionFlag) != 0U ?
-               kSD_Inserted :
-               kSD_Removed;
+    sd_detect_card_t *sdCD = (sd_detect_card_t *)(host->cd);
+    uint32_t insertStatus  = kSD_Removed;
+
+    if (sdCD->dat3PullFunc != NULL)
+    {
+        sdCD->dat3PullFunc(kSD_DAT3PullDown);
+        SDMMC_OSADelay(1U);
+    }
+
+    if ((SDHC_GetPresentStatusFlags(host->hostController.base) & (uint32_t)kSDHC_CardInsertedFlag) != 0U)
+    {
+        insertStatus = kSD_Inserted;
+        if (sdCD->dat3PullFunc != NULL)
+        {
+            sdCD->dat3PullFunc(kSD_DAT3PullUp);
+        }
+    }
+
+    return insertStatus;
 }
 
 status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardStatus, uint32_t timeout)
@@ -72,20 +90,20 @@ status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardS
     do
     {
         cardInsertedStatus = SDMMCHOST_CardDetectStatus(host);
-        if ((waitCardStatus == kSD_Inserted) && (cardInsertedStatus == kSD_Inserted))
+        if ((waitCardStatus == (uint32_t)kSD_Inserted) && (cardInsertedStatus == (uint32_t)kSD_Inserted))
         {
             SDMMC_OSADelay(cd->cdDebounce_ms);
-            if (cardInsertedStatus)
+            if (SDMMCHOST_CardDetectStatus(host) == (uint32_t)kSD_Inserted)
             {
                 break;
             }
         }
 
-        if ((cardInsertedStatus == kSD_Inserted) && (waitCardStatus == kSD_Removed))
+        if ((cardInsertedStatus == (uint32_t)kSD_Inserted) && (waitCardStatus == (uint32_t)kSD_Removed))
         {
             break;
         }
-    } while (1U);
+    } while (true);
 
     return kStatus_Success;
 }
@@ -153,16 +171,16 @@ static void SDMMCHOST_ErrorRecovery(SDHC_Type *base)
     /* get host present status */
     status = SDHC_GetPresentStatusFlags(base);
     /* check command inhibit status flag */
-    if ((status & kSDHC_CommandInhibitFlag) != 0U)
+    if ((status & (uint32_t)kSDHC_CommandInhibitFlag) != 0U)
     {
         /* reset command line */
-        SDHC_Reset(base, kSDHC_ResetCommand, 100U);
+        (void)SDHC_Reset(base, kSDHC_ResetCommand, 100U);
     }
     /* check data inhibit status flag */
-    if ((status & kSDHC_DataInhibitFlag) != 0U)
+    if ((status & (uint32_t)kSDHC_DataInhibitFlag) != 0U)
     {
         /* reset data line */
-        SDHC_Reset(base, kSDHC_ResetData, 100U);
+        (void)SDHC_Reset(base, kSDHC_ResetData, 100U);
     }
 }
 
@@ -174,7 +192,6 @@ void SDMMCHOST_SetCardPower(sdmmchost_t *host, bool enable)
 status_t SDMMCHOST_Init(sdmmchost_t *host)
 {
     assert(host != NULL);
-    assert(host->hostEvent != NULL);
 
     sdhc_host_t *sdhcHost = &(host->hostController);
 
@@ -195,10 +212,11 @@ void SDMMCHOST_Reset(sdmmchost_t *host)
 
 void SDMMCHOST_SetCardBusWidth(sdmmchost_t *host, uint32_t dataBusWidth)
 {
-    SDHC_SetDataBusWidth(host->hostController.base,
-                         dataBusWidth == kSDMMC_BusWdith1Bit ?
-                             kSDHC_DataBusWidth1Bit :
-                             dataBusWidth == kSDMMC_BusWdith4Bit ? kSDHC_DataBusWidth4Bit : kSDHC_DataBusWidth8Bit);
+    SDHC_SetDataBusWidth(host->hostController.base, dataBusWidth == (uint32_t)kSDMMC_BusWdith1Bit ?
+                                                        kSDHC_DataBusWidth1Bit :
+                                                        dataBusWidth == (uint32_t)kSDMMC_BusWdith4Bit ?
+                                                        kSDHC_DataBusWidth4Bit :
+                                                        kSDHC_DataBusWidth8Bit);
 }
 
 void SDMMCHOST_Deinit(sdmmchost_t *host)

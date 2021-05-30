@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPSPI driver version 2.0.3. */
-#define FSL_LPSPI_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
+/*! @brief LPSPI driver version. */
+#define FSL_LPSPI_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
 /*@}*/
 
 #ifndef LPSPI_DUMMY_DATA
@@ -30,31 +30,37 @@
 #define LPSPI_DUMMY_DATA (0x00U) /*!< Dummy data used for tx if there is not txData. */
 #endif
 
+/*! @brief Retry times for waiting flag. */
+#ifndef SPI_RETRY_TIMES
+#define SPI_RETRY_TIMES 0U /* Define to zero means keep waiting until the flag is assert/deassert. */
+#endif
+
 /*! @brief Global variable for dummy data value setting. */
 extern volatile uint8_t g_lpspiDummyData[];
 
 /*! @brief Status for the LPSPI driver.*/
-enum _lpspi_status
+enum
 {
-    kStatus_LPSPI_Busy = MAKE_STATUS(kStatusGroup_LPSPI, 0),      /*!< LPSPI transfer is busy.*/
-    kStatus_LPSPI_Error = MAKE_STATUS(kStatusGroup_LPSPI, 1),     /*!< LPSPI driver error. */
-    kStatus_LPSPI_Idle = MAKE_STATUS(kStatusGroup_LPSPI, 2),      /*!< LPSPI is idle.*/
-    kStatus_LPSPI_OutOfRange = MAKE_STATUS(kStatusGroup_LPSPI, 3) /*!< LPSPI transfer out Of range. */
+    kStatus_LPSPI_Busy       = MAKE_STATUS(kStatusGroup_LPSPI, 0), /*!< LPSPI transfer is busy.*/
+    kStatus_LPSPI_Error      = MAKE_STATUS(kStatusGroup_LPSPI, 1), /*!< LPSPI driver error. */
+    kStatus_LPSPI_Idle       = MAKE_STATUS(kStatusGroup_LPSPI, 2), /*!< LPSPI is idle.*/
+    kStatus_LPSPI_OutOfRange = MAKE_STATUS(kStatusGroup_LPSPI, 3), /*!< LPSPI transfer out Of range. */
+    kStatus_LPSPI_Timeout    = MAKE_STATUS(kStatusGroup_LPSPI, 4)  /*!< LPSPI timeout polling status flags. */
 };
 
 /*! @brief LPSPI status flags in SPIx_SR register.*/
 enum _lpspi_flags
 {
-    kLPSPI_TxDataRequestFlag = LPSPI_SR_TDF_MASK,    /*!< Transmit data flag */
-    kLPSPI_RxDataReadyFlag = LPSPI_SR_RDF_MASK,      /*!< Receive data flag */
-    kLPSPI_WordCompleteFlag = LPSPI_SR_WCF_MASK,     /*!< Word Complete flag */
-    kLPSPI_FrameCompleteFlag = LPSPI_SR_FCF_MASK,    /*!< Frame Complete flag */
+    kLPSPI_TxDataRequestFlag    = LPSPI_SR_TDF_MASK, /*!< Transmit data flag */
+    kLPSPI_RxDataReadyFlag      = LPSPI_SR_RDF_MASK, /*!< Receive data flag */
+    kLPSPI_WordCompleteFlag     = LPSPI_SR_WCF_MASK, /*!< Word Complete flag */
+    kLPSPI_FrameCompleteFlag    = LPSPI_SR_FCF_MASK, /*!< Frame Complete flag */
     kLPSPI_TransferCompleteFlag = LPSPI_SR_TCF_MASK, /*!< Transfer Complete flag */
-    kLPSPI_TransmitErrorFlag = LPSPI_SR_TEF_MASK,    /*!< Transmit Error flag (FIFO underrun) */
-    kLPSPI_ReceiveErrorFlag = LPSPI_SR_REF_MASK,     /*!< Receive Error flag (FIFO overrun) */
-    kLPSPI_DataMatchFlag = LPSPI_SR_DMF_MASK,        /*!< Data Match flag */
-    kLPSPI_ModuleBusyFlag = LPSPI_SR_MBF_MASK,       /*!< Module Busy flag */
-    kLPSPI_AllStatusFlag = (LPSPI_SR_TDF_MASK | LPSPI_SR_RDF_MASK | LPSPI_SR_WCF_MASK | LPSPI_SR_FCF_MASK |
+    kLPSPI_TransmitErrorFlag    = LPSPI_SR_TEF_MASK, /*!< Transmit Error flag (FIFO underrun) */
+    kLPSPI_ReceiveErrorFlag     = LPSPI_SR_REF_MASK, /*!< Receive Error flag (FIFO overrun) */
+    kLPSPI_DataMatchFlag        = LPSPI_SR_DMF_MASK, /*!< Data Match flag */
+    kLPSPI_ModuleBusyFlag       = LPSPI_SR_MBF_MASK, /*!< Module Busy flag */
+    kLPSPI_AllStatusFlag        = (LPSPI_SR_TDF_MASK | LPSPI_SR_RDF_MASK | LPSPI_SR_WCF_MASK | LPSPI_SR_FCF_MASK |
                             LPSPI_SR_TCF_MASK | LPSPI_SR_TEF_MASK | LPSPI_SR_REF_MASK | LPSPI_SR_DMF_MASK |
                             LPSPI_SR_MBF_MASK) /*!< Used for clearing all w1c status flags */
 };
@@ -62,14 +68,14 @@ enum _lpspi_flags
 /*! @brief LPSPI interrupt source.*/
 enum _lpspi_interrupt_enable
 {
-    kLPSPI_TxInterruptEnable = LPSPI_IER_TDIE_MASK,               /*!< Transmit data interrupt enable */
-    kLPSPI_RxInterruptEnable = LPSPI_IER_RDIE_MASK,               /*!< Receive data interrupt enable */
-    kLPSPI_WordCompleteInterruptEnable = LPSPI_IER_WCIE_MASK,     /*!< Word complete interrupt enable */
-    kLPSPI_FrameCompleteInterruptEnable = LPSPI_IER_FCIE_MASK,    /*!< Frame complete interrupt enable */
+    kLPSPI_TxInterruptEnable               = LPSPI_IER_TDIE_MASK, /*!< Transmit data interrupt enable */
+    kLPSPI_RxInterruptEnable               = LPSPI_IER_RDIE_MASK, /*!< Receive data interrupt enable */
+    kLPSPI_WordCompleteInterruptEnable     = LPSPI_IER_WCIE_MASK, /*!< Word complete interrupt enable */
+    kLPSPI_FrameCompleteInterruptEnable    = LPSPI_IER_FCIE_MASK, /*!< Frame complete interrupt enable */
     kLPSPI_TransferCompleteInterruptEnable = LPSPI_IER_TCIE_MASK, /*!< Transfer complete interrupt enable */
-    kLPSPI_TransmitErrorInterruptEnable = LPSPI_IER_TEIE_MASK,    /*!< Transmit error interrupt enable(FIFO underrun)*/
-    kLPSPI_ReceiveErrorInterruptEnable = LPSPI_IER_REIE_MASK,     /*!< Receive Error interrupt enable (FIFO overrun) */
-    kLPSPI_DataMatchInterruptEnable = LPSPI_IER_DMIE_MASK,        /*!< Data Match interrupt enable */
+    kLPSPI_TransmitErrorInterruptEnable    = LPSPI_IER_TEIE_MASK, /*!< Transmit error interrupt enable(FIFO underrun)*/
+    kLPSPI_ReceiveErrorInterruptEnable     = LPSPI_IER_REIE_MASK, /*!< Receive Error interrupt enable (FIFO overrun) */
+    kLPSPI_DataMatchInterruptEnable        = LPSPI_IER_DMIE_MASK, /*!< Data Match interrupt enable */
     kLPSPI_AllInterruptEnable =
         (LPSPI_IER_TDIE_MASK | LPSPI_IER_RDIE_MASK | LPSPI_IER_WCIE_MASK | LPSPI_IER_FCIE_MASK | LPSPI_IER_TCIE_MASK |
          LPSPI_IER_TEIE_MASK | LPSPI_IER_REIE_MASK | LPSPI_IER_DMIE_MASK) /*!< All above interrupts enable.*/
@@ -86,7 +92,7 @@ enum _lpspi_dma_enable
 typedef enum _lpspi_master_slave_mode
 {
     kLPSPI_Master = 1U, /*!< LPSPI peripheral operates in master mode.*/
-    kLPSPI_Slave = 0U   /*!< LPSPI peripheral operates in slave mode.*/
+    kLPSPI_Slave  = 0U  /*!< LPSPI peripheral operates in slave mode.*/
 } lpspi_master_slave_mode_t;
 
 /*! @brief LPSPI Peripheral Chip Select (PCS) configuration (which PCS to configure).*/
@@ -102,24 +108,24 @@ typedef enum _lpspi_which_pcs_config
 typedef enum _lpspi_pcs_polarity_config
 {
     kLPSPI_PcsActiveHigh = 1U, /*!< PCS Active High (idles low) */
-    kLPSPI_PcsActiveLow = 0U   /*!< PCS Active Low (idles high) */
+    kLPSPI_PcsActiveLow  = 0U  /*!< PCS Active Low (idles high) */
 } lpspi_pcs_polarity_config_t;
 
 /*! @brief LPSPI Peripheral Chip Select (PCS) Polarity.*/
 enum _lpspi_pcs_polarity
 {
-    kLPSPI_Pcs0ActiveLow = 1U << 0, /*!< Pcs0 Active Low (idles high). */
-    kLPSPI_Pcs1ActiveLow = 1U << 1, /*!< Pcs1 Active Low (idles high). */
-    kLPSPI_Pcs2ActiveLow = 1U << 2, /*!< Pcs2 Active Low (idles high). */
-    kLPSPI_Pcs3ActiveLow = 1U << 3, /*!< Pcs3 Active Low (idles high). */
-    kLPSPI_PcsAllActiveLow = 0xFU   /*!< Pcs0 to Pcs5 Active Low (idles high). */
+    kLPSPI_Pcs0ActiveLow   = 1U << 0, /*!< Pcs0 Active Low (idles high). */
+    kLPSPI_Pcs1ActiveLow   = 1U << 1, /*!< Pcs1 Active Low (idles high). */
+    kLPSPI_Pcs2ActiveLow   = 1U << 2, /*!< Pcs2 Active Low (idles high). */
+    kLPSPI_Pcs3ActiveLow   = 1U << 3, /*!< Pcs3 Active Low (idles high). */
+    kLPSPI_PcsAllActiveLow = 0xFU     /*!< Pcs0 to Pcs5 Active Low (idles high). */
 };
 
 /*! @brief LPSPI clock polarity configuration.*/
 typedef enum _lpspi_clock_polarity
 {
     kLPSPI_ClockPolarityActiveHigh = 0U, /*!< CPOL=0. Active-high LPSPI clock (idles low)*/
-    kLPSPI_ClockPolarityActiveLow = 1U   /*!< CPOL=1. Active-low LPSPI clock (idles high)*/
+    kLPSPI_ClockPolarityActiveLow  = 1U  /*!< CPOL=1. Active-low LPSPI clock (idles high)*/
 } lpspi_clock_polarity_t;
 
 /*! @brief LPSPI clock phase configuration.*/
@@ -141,20 +147,20 @@ typedef enum _lpspi_shift_direction
 /*! @brief LPSPI Host Request select configuration. */
 typedef enum _lpspi_host_request_select
 {
-    kLPSPI_HostReqExtPin = 0U,         /*!< Host Request is an ext pin. */
-    kLPSPI_HostReqInternalTrigger = 1U /*!< Host Request is an internal trigger. */
+    kLPSPI_HostReqExtPin          = 0U, /*!< Host Request is an ext pin. */
+    kLPSPI_HostReqInternalTrigger = 1U  /*!< Host Request is an internal trigger. */
 } lpspi_host_request_select_t;
 
 /*! @brief LPSPI Match configuration options. */
 typedef enum _lpspi_match_config
 {
-    kLPSI_MatchDisabled = 0x0U,                     /*!< LPSPI Match Disabled. */
-    kLPSI_1stWordEqualsM0orM1 = 0x2U,               /*!< LPSPI Match Enabled. */
-    kLPSI_AnyWordEqualsM0orM1 = 0x3U,               /*!< LPSPI Match Enabled. */
+    kLPSI_MatchDisabled                     = 0x0U, /*!< LPSPI Match Disabled. */
+    kLPSI_1stWordEqualsM0orM1               = 0x2U, /*!< LPSPI Match Enabled. */
+    kLPSI_AnyWordEqualsM0orM1               = 0x3U, /*!< LPSPI Match Enabled. */
     kLPSI_1stWordEqualsM0and2ndWordEqualsM1 = 0x4U, /*!< LPSPI Match Enabled. */
     kLPSI_AnyWordEqualsM0andNxtWordEqualsM1 = 0x5U, /*!< LPSPI Match Enabled. */
-    kLPSI_1stWordAndM1EqualsM0andM1 = 0x6U,         /*!< LPSPI Match Enabled. */
-    kLPSI_AnyWordAndM1EqualsM0andM1 = 0x7U,         /*!< LPSPI Match Enabled. */
+    kLPSI_1stWordAndM1EqualsM0andM1         = 0x6U, /*!< LPSPI Match Enabled. */
+    kLPSI_AnyWordAndM1EqualsM0andM1         = 0x7U, /*!< LPSPI Match Enabled. */
 } lpspi_match_config_t;
 
 /*! @brief LPSPI pin (SDO and SDI) configuration. */
@@ -177,8 +183,8 @@ typedef enum _lpspi_data_out_config
 typedef enum _lpspi_transfer_width
 {
     kLPSPI_SingleBitXfer = 0U, /*!< 1-bit shift at a time, data out on SDO, in on SDI (normal mode) */
-    kLPSPI_TwoBitXfer = 1U,    /*!< 2-bits shift out on SDO/SDI and in on SDO/SDI */
-    kLPSPI_FourBitXfer = 2U    /*!< 4-bits shift out on SDO/SDI/PCS[3:2] and in on SDO/SDI/PCS[3:2] */
+    kLPSPI_TwoBitXfer    = 1U, /*!< 2-bits shift out on SDO/SDI and in on SDO/SDI */
+    kLPSPI_FourBitXfer   = 2U  /*!< 4-bits shift out on SDO/SDI/PCS[3:2] and in on SDO/SDI/PCS[3:2] */
 } lpspi_transfer_width_t;
 
 /*! @brief LPSPI delay type selection.*/
@@ -189,8 +195,8 @@ typedef enum _lpspi_delay_type
     kLPSPI_BetweenTransfer /*!< Delay between transfers. */
 } lpspi_delay_type_t;
 
-#define LPSPI_MASTER_PCS_SHIFT (4U)   /*!< LPSPI master PCS shift macro , internal used. */
-#define LPSPI_MASTER_PCS_MASK (0xF0U) /*!< LPSPI master PCS shift macro , internal used. */
+#define LPSPI_MASTER_PCS_SHIFT (4U)    /*!< LPSPI master PCS shift macro , internal used. */
+#define LPSPI_MASTER_PCS_MASK  (0xF0U) /*!< LPSPI master PCS shift macro , internal used. */
 
 /*! @brief Use this enumeration for LPSPI master transfer configFlags. */
 enum _lpspi_transfer_config_flag_for_master
@@ -204,21 +210,21 @@ enum _lpspi_transfer_config_flag_for_master
 
     kLPSPI_MasterByteSwap =
         1U << 22 /*!< Is master swap the byte.
-                       * For example, when want to send data 1 2 3 4 5 6 7 8 (suppose you set
-                       * lpspi_shift_direction_t to MSB).
-                       * 1. If you set bitPerFrame = 8 , no matter the kLPSPI_MasterByteSwapyou flag is used
-                       * or not, the waveform is 1 2 3 4 5 6 7 8.
-                       * 2. If you set bitPerFrame = 16 :
-                       * (1) the waveform is 2 1 4 3 6 5 8 7 if you do not use the kLPSPI_MasterByteSwap flag.
-                       * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_MasterByteSwap flag.
-                       * 3. If you set bitPerFrame = 32 :
-                       * (1) the waveform is 4 3 2 1 8 7 6 5 if you do not use the kLPSPI_MasterByteSwap flag.
-                       * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_MasterByteSwap flag.
-                       */
+                  * For example, when want to send data 1 2 3 4 5 6 7 8 (suppose you set
+                  * lpspi_shift_direction_t to MSB).
+                  * 1. If you set bitPerFrame = 8 , no matter the kLPSPI_MasterByteSwapyou flag is used
+                  * or not, the waveform is 1 2 3 4 5 6 7 8.
+                  * 2. If you set bitPerFrame = 16 :
+                  * (1) the waveform is 2 1 4 3 6 5 8 7 if you do not use the kLPSPI_MasterByteSwap flag.
+                  * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_MasterByteSwap flag.
+                  * 3. If you set bitPerFrame = 32 :
+                  * (1) the waveform is 4 3 2 1 8 7 6 5 if you do not use the kLPSPI_MasterByteSwap flag.
+                  * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_MasterByteSwap flag.
+                  */
 };
 
-#define LPSPI_SLAVE_PCS_SHIFT (4U)   /*!< LPSPI slave PCS shift macro , internal used. */
-#define LPSPI_SLAVE_PCS_MASK (0xF0U) /*!< LPSPI slave PCS shift macro , internal used. */
+#define LPSPI_SLAVE_PCS_SHIFT (4U)    /*!< LPSPI slave PCS shift macro , internal used. */
+#define LPSPI_SLAVE_PCS_MASK  (0xF0U) /*!< LPSPI slave PCS shift macro , internal used. */
 
 /*! @brief Use this enumeration for LPSPI slave transfer configFlags. */
 enum _lpspi_transfer_config_flag_for_slave
@@ -230,17 +236,17 @@ enum _lpspi_transfer_config_flag_for_slave
 
     kLPSPI_SlaveByteSwap =
         1U << 22 /*!< Is slave swap the byte.
-                        * For example, when want to send data 1 2 3 4 5 6 7 8 (suppose you set
-                        * lpspi_shift_direction_t to MSB).
-                        * 1. If you set bitPerFrame = 8 , no matter the kLPSPI_SlaveByteSwap flag is used
-                        * or not, the waveform is 1 2 3 4 5 6 7 8.
-                        * 2. If you set bitPerFrame = 16 :
-                        * (1) the waveform is 2 1 4 3 6 5 8 7 if you do not use the kLPSPI_SlaveByteSwap flag.
-                        * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_SlaveByteSwap flag.
-                        * 3. If you set bitPerFrame = 32 :
-                        * (1) the waveform is 4 3 2 1 8 7 6 5 if you do not use the kLPSPI_SlaveByteSwap flag.
-                        * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_SlaveByteSwap flag.
-                        */
+                  * For example, when want to send data 1 2 3 4 5 6 7 8 (suppose you set
+                  * lpspi_shift_direction_t to MSB).
+                  * 1. If you set bitPerFrame = 8 , no matter the kLPSPI_SlaveByteSwap flag is used
+                  * or not, the waveform is 1 2 3 4 5 6 7 8.
+                  * 2. If you set bitPerFrame = 16 :
+                  * (1) the waveform is 2 1 4 3 6 5 8 7 if you do not use the kLPSPI_SlaveByteSwap flag.
+                  * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_SlaveByteSwap flag.
+                  * 3. If you set bitPerFrame = 32 :
+                  * (1) the waveform is 4 3 2 1 8 7 6 5 if you do not use the kLPSPI_SlaveByteSwap flag.
+                  * (2) the waveform is 1 2 3 4 5 6 7 8 if you use the kLPSPI_SlaveByteSwap flag.
+                  */
 };
 
 /*! @brief LPSPI transfer state, which is used for LPSPI transactional API state machine. */
@@ -264,9 +270,8 @@ typedef struct _lpspi_master_config
                                             It sets the boundary value if out of range.*/
     uint32_t lastSckToPcsDelayInNanoSec; /*!< Last SCK to PCS delay time in nanoseconds, setting to 0 sets the minimum
                                             delay. It sets the boundary value if out of range.*/
-    uint32_t
-        betweenTransferDelayInNanoSec; /*!< After the SCK delay time with nanoseconds, setting to 0 sets the minimum
-                                        delay. It sets the boundary value if out of range.*/
+    uint32_t betweenTransferDelayInNanoSec; /*!< After the SCK delay time with nanoseconds, setting to 0 sets the
+                                             minimum delay. It sets the boundary value if out of range.*/
 
     lpspi_which_pcs_t whichPcs;                     /*!< Desired Peripheral Chip Select (PCS). */
     lpspi_pcs_polarity_config_t pcsActiveHighOrLow; /*!< Desired PCS active high or low */
@@ -297,13 +302,13 @@ typedef struct _lpspi_slave_config
 } lpspi_slave_config_t;
 
 /*!
-* @brief Forward declaration of the _lpspi_master_handle typedefs.
-*/
+ * @brief Forward declaration of the _lpspi_master_handle typedefs.
+ */
 typedef struct _lpspi_master_handle lpspi_master_handle_t;
 
 /*!
-* @brief Forward declaration of the _lpspi_slave_handle typedefs.
-*/
+ * @brief Forward declaration of the _lpspi_slave_handle typedefs.
+ */
 typedef struct _lpspi_slave_handle lpspi_slave_handle_t;
 
 /*!
@@ -339,10 +344,9 @@ typedef struct _lpspi_transfer
     uint8_t *rxData;          /*!< Receive buffer. */
     volatile size_t dataSize; /*!< Transfer bytes. */
 
-    uint32_t
-        configFlags; /*!< Transfer transfer configuration flags. Set from _lpspi_transfer_config_flag_for_master if the
-                        transfer is used for master or _lpspi_transfer_config_flag_for_slave enumeration if the transfer
-                        is used for slave.*/
+    uint32_t configFlags; /*!< Transfer transfer configuration flags. Set from _lpspi_transfer_config_flag_for_master if
+                             the transfer is used for master or _lpspi_transfer_config_flag_for_slave enumeration if the
+                             transfer is used for slave.*/
 } lpspi_transfer_t;
 
 /*! @brief LPSPI master transfer handle structure used for transactional API. */
@@ -479,8 +483,16 @@ void LPSPI_Deinit(LPSPI_Type *base);
  * sets all registers to reset state. As a result, the LPSPI module can't work after calling
  * this API.
  * @param base LPSPI peripheral address.
-*/
+ */
 void LPSPI_Reset(LPSPI_Type *base);
+
+/*!
+ * @brief Get the LPSPI instance from peripheral base address.
+ *
+ * @param base LPSPI peripheral base address.
+ * @return LPSPI instance.
+ */
+uint32_t LPSPI_GetInstance(LPSPI_Type *base);
 
 /*!
  * @brief Enables the LPSPI peripheral and sets the MCR MDIS to 0.
@@ -502,7 +514,7 @@ static inline void LPSPI_Enable(LPSPI_Type *base, bool enable)
 
 /*!
  *@}
-*/
+ */
 
 /*!
  * @name Status
@@ -524,7 +536,7 @@ static inline uint32_t LPSPI_GetStatusFlags(LPSPI_Type *base)
  * @param base LPSPI peripheral address.
  * @return The LPSPI Tx FIFO size.
  */
-static inline uint32_t LPSPI_GetTxFifoSize(LPSPI_Type *base)
+static inline uint8_t LPSPI_GetTxFifoSize(LPSPI_Type *base)
 {
     return (1U << ((base->PARAM & LPSPI_PARAM_TXFIFO_MASK) >> LPSPI_PARAM_TXFIFO_SHIFT));
 }
@@ -534,7 +546,7 @@ static inline uint32_t LPSPI_GetTxFifoSize(LPSPI_Type *base)
  * @param base LPSPI peripheral address.
  * @return The LPSPI Rx FIFO size.
  */
-static inline uint32_t LPSPI_GetRxFifoSize(LPSPI_Type *base)
+static inline uint8_t LPSPI_GetRxFifoSize(LPSPI_Type *base)
 {
     return (1U << ((base->PARAM & LPSPI_PARAM_RXFIFO_MASK) >> LPSPI_PARAM_RXFIFO_SHIFT));
 }
@@ -579,7 +591,7 @@ static inline void LPSPI_ClearStatusFlags(LPSPI_Type *base, uint32_t statusFlags
 
 /*!
  *@}
-*/
+ */
 
 /*!
  * @name Interrupts
@@ -621,7 +633,7 @@ static inline void LPSPI_DisableInterrupts(LPSPI_Type *base, uint32_t mask)
 
 /*!
  *@}
-*/
+ */
 
 /*!
  * @name DMA Control
@@ -692,7 +704,7 @@ static inline uint32_t LPSPI_GetRxRegisterAddress(LPSPI_Type *base)
 
 /*!
  *@}
-*/
+ */
 
 /*!
  * @name Bus Operations
@@ -700,13 +712,13 @@ static inline uint32_t LPSPI_GetRxRegisterAddress(LPSPI_Type *base)
  */
 
 /*!
-* @brief Check the argument for transfer .
-*
-* @param transfer the transfer struct to be used.
-* @param bitPerFrame The bit size of one frame.
-* @param bytePerFrame The byte size of one frame.
-* @return Return true for right and false for wrong.
-*/
+ * @brief Check the argument for transfer .
+ *
+ * @param transfer the transfer struct to be used.
+ * @param bitsPerFrame The bit size of one frame.
+ * @param bytesPerFrame The byte size of one frame.
+ * @return Return true for right and false for wrong.
+ */
 bool LPSPI_CheckTransferArgument(lpspi_transfer_t *transfer, uint32_t bitsPerFrame, uint32_t bytesPerFrame);
 
 /*!
@@ -720,6 +732,40 @@ bool LPSPI_CheckTransferArgument(lpspi_transfer_t *transfer, uint32_t bitsPerFra
 static inline void LPSPI_SetMasterSlaveMode(LPSPI_Type *base, lpspi_master_slave_mode_t mode)
 {
     base->CFGR1 = (base->CFGR1 & (~LPSPI_CFGR1_MASTER_MASK)) | LPSPI_CFGR1_MASTER(mode);
+}
+
+/*!
+ * @brief Configures the peripheral chip select used for the transfer.
+ *
+ * @param base LPSPI peripheral address.
+ * @param select LPSPI Peripheral Chip Select (PCS) configuration.
+ */
+static inline void LPSPI_SelectTransferPCS(LPSPI_Type *base, lpspi_which_pcs_t select)
+{
+    base->TCR = (base->TCR & (~LPSPI_TCR_PCS_MASK)) | LPSPI_TCR_PCS((uint8_t)select);
+}
+
+/*!
+ * @brief Set the PCS signal to continuous or uncontinuous mode.
+ *
+ * @note In master mode, continuous transfer will keep the PCS asserted at the end of the frame size, until a command
+ * word is received that starts a new frame. So PCS must be set back to uncontinuous when transfer finishes.
+ * In slave mode, when continuous transfer is enabled, the LPSPI will only transmit the first frame size bits, after
+ * that the LPSPI will transmit received data back (assuming a 32-bit shift register).
+ *
+ * @param base LPSPI peripheral address.
+ * @param IsContinous True to set the transfer PCS to continuous mode, false to set to uncontinuous mode.
+ */
+static inline void LPSPI_SetPCSContinous(LPSPI_Type *base, bool IsContinous)
+{
+    if (IsContinous)
+    {
+        base->TCR |= LPSPI_TCR_CONT_MASK;
+    }
+    else
+    {
+        base->TCR &= LPSPI_TCR_CONT_MASK;
+    }
 }
 
 /*!
@@ -801,7 +847,7 @@ static inline void LPSPI_SetAllPcsPolarity(LPSPI_Type *base, uint32_t mask)
  */
 static inline void LPSPI_SetFrameSize(LPSPI_Type *base, uint32_t frameSize)
 {
-    base->TCR = (base->TCR & ~LPSPI_TCR_FRAMESZ_MASK) | LPSPI_TCR_FRAMESZ(frameSize - 1);
+    base->TCR = (base->TCR & ~LPSPI_TCR_FRAMESZ_MASK) | LPSPI_TCR_FRAMESZ(frameSize - 1U);
 }
 
 /*!
@@ -934,7 +980,7 @@ void LPSPI_SetDummyData(LPSPI_Type *base, uint8_t dummyData);
 
 /*!
  *@}
-*/
+ */
 
 /*!
  * @name Transactional
@@ -1099,13 +1145,12 @@ void LPSPI_SlaveTransferHandleIRQ(LPSPI_Type *base, lpspi_slave_handle_t *handle
 
 /*!
  *@}
-*/
+ */
 
 #if defined(__cplusplus)
 }
-#endif /*_cplusplus*/
-       /*!
-        *@}
-       */
+#endif
+
+/*! @}*/
 
 #endif /*_FSL_LPSPI_H_*/

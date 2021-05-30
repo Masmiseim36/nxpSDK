@@ -5,7 +5,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -21,12 +23,11 @@
 #include "video_data.h"
 
 #include "fsl_device_registers.h"
+#include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
-#include "fsl_debug_console.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
@@ -35,7 +36,6 @@
 #include "usb_phy.h"
 #endif
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -76,6 +76,7 @@ USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static usb_device_video_still_probe_and_commit_controls_struct_t s_StillCommitStruct;
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
 static uint32_t s_ClassRequestBuffer[(sizeof(usb_device_video_probe_and_commit_controls_struct_t) >> 2U) + 1U];
+/* this buffer is used to do transfer */
 USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_ImageBuffer[HS_STREAM_IN_PACKET_SIZE];
 usb_video_virtual_camera_struct_t g_UsbDeviceVideoVirtualCamera;
 
@@ -177,16 +178,18 @@ static void USB_DeviceVideoPrepareVideoData(void)
     usb_device_video_mjpeg_payload_header_struct_t *payloadHeader;
     uint32_t maxPacketSize;
     uint32_t temp32dwFrameInterval;
-
+    /* update the current time counter, add 1 ms in this case */
     g_UsbDeviceVideoVirtualCamera.currentTime += 10000U;
-
+    /* get payload header buffer from imageBuffer */
     payloadHeader = (usb_device_video_mjpeg_payload_header_struct_t *)&g_UsbDeviceVideoVirtualCamera.imageBuffer[0];
-
+    /* set payload header length */
     payloadHeader->bHeaderLength                = sizeof(usb_device_video_mjpeg_payload_header_struct_t);
     payloadHeader->headerInfoUnion.bmheaderInfo = 0U;
+    /* set frame id */
     payloadHeader->headerInfoUnion.headerInfoBits.frameIdentifier = g_UsbDeviceVideoVirtualCamera.currentFrameId;
     g_UsbDeviceVideoVirtualCamera.imageBufferLength = sizeof(usb_device_video_mjpeg_payload_header_struct_t);
 
+    /* the current frame need to be still image */
     if (g_UsbDeviceVideoVirtualCamera.stillImageTransmission)
     {
         payloadHeader->headerInfoUnion.headerInfoBits.stillImage = 1U;
@@ -199,32 +202,42 @@ static void USB_DeviceVideoPrepareVideoData(void)
             USB_LONG_FROM_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoVirtualCamera.commitStruct->dwMaxPayloadTransferSize);
     }
 
+    /* wait for the next frame interval */
     if (g_UsbDeviceVideoVirtualCamera.waitForNewInterval)
     {
         temp32dwFrameInterval =
             USB_LONG_FROM_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoVirtualCamera.commitStruct->dwFrameInterval);
+        /* the current time is still in transferred frame, return to continue waiting */
         if (g_UsbDeviceVideoVirtualCamera.currentTime < temp32dwFrameInterval)
         {
             return;
         }
-        else
+        else /* next frame time */
         {
+            /* before the new frame starts transfer, set endOfFrame of the current frame is 1, this frame may not have payload */
+            payloadHeader->headerInfoUnion.headerInfoBits.endOfFrame = 1U;
+            /* prepare to transfer new frame, reset the current time */
             g_UsbDeviceVideoVirtualCamera.currentTime                = 0U;
             g_UsbDeviceVideoVirtualCamera.waitForNewInterval         = 0U;
-            payloadHeader->headerInfoUnion.headerInfoBits.endOfFrame = 1U;
+            /* clear the still image transmission flag */
             g_UsbDeviceVideoVirtualCamera.stillImageTransmission     = 0U;
+            /* toggle frame id for the next frame */
             g_UsbDeviceVideoVirtualCamera.currentFrameId ^= 1U;
+            /* next frame is still image */
             if (USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_TRANSMIT_STILL_IMAGE ==
                 g_UsbDeviceVideoVirtualCamera.stillImageTriggerControl)
             {
+                /* reset the image trigger control as normal operation */
                 g_UsbDeviceVideoVirtualCamera.stillImageTriggerControl =
                     USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_NORMAL_OPERATION;
+                /* still image starts transfer */
                 g_UsbDeviceVideoVirtualCamera.stillImageTransmission = 1U;
             }
             return;
         }
     }
 
+    /* copy paypoad to image buffer, copy size is maxPacketSize every time */
     for (; g_UsbDeviceVideoVirtualCamera.imageBufferLength < maxPacketSize;
          g_UsbDeviceVideoVirtualCamera.imageBufferLength++)
     {
@@ -232,30 +245,39 @@ static void USB_DeviceVideoPrepareVideoData(void)
             g_UsbDeviceVideoMjpegData[g_UsbDeviceVideoVirtualCamera.imageIndex];
         g_UsbDeviceVideoVirtualCamera.imageIndex++;
 
+        /* the end of one frame */
         if ((0xFFU == g_UsbDeviceVideoMjpegData[g_UsbDeviceVideoVirtualCamera.imageIndex - 2]) &&
             (0xD9U == g_UsbDeviceVideoMjpegData[g_UsbDeviceVideoVirtualCamera.imageIndex - 1U]))
         {
+            /* get the negotiated frame interval */
             temp32dwFrameInterval =
                 USB_LONG_FROM_LITTLE_ENDIAN_DATA(g_UsbDeviceVideoVirtualCamera.commitStruct->dwFrameInterval);
+            /* back to the start of stream mjpeg data if reach to the end of the video data buffer */
             if (g_UsbDeviceVideoVirtualCamera.imageIndex >= g_UsbDeviceVideoMjpegLength)
             {
                 g_UsbDeviceVideoVirtualCamera.imageIndex = 0U;
             }
+            /* finish to transfer this frame, if there is still time left, start transfer in next frame interval */
             if (g_UsbDeviceVideoVirtualCamera.currentTime < temp32dwFrameInterval)
             {
                 g_UsbDeviceVideoVirtualCamera.waitForNewInterval = 1U;
             }
-            else
+            else /* the current fame is finished, next frame can start */
             {
-                g_UsbDeviceVideoVirtualCamera.currentTime                = 0U;
+                /* before the new frame starts transfer, set endOfFrame of the current frame is 1, this frame may not have payload */
                 payloadHeader->headerInfoUnion.headerInfoBits.endOfFrame = 1U;
+                /* prepare to transfer new frame, reset the current time */
+                g_UsbDeviceVideoVirtualCamera.currentTime                = 0U;
                 g_UsbDeviceVideoVirtualCamera.stillImageTransmission     = 0U;
+                /* toggle frame id for the next frame */
                 g_UsbDeviceVideoVirtualCamera.currentFrameId ^= 1U;
                 if (USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_TRANSMIT_STILL_IMAGE ==
                     g_UsbDeviceVideoVirtualCamera.stillImageTriggerControl)
                 {
+                    /* reset the image trigger control as normal operation */
                     g_UsbDeviceVideoVirtualCamera.stillImageTriggerControl =
                         USB_DEVICE_VIDEO_STILL_IMAGE_TRIGGER_NORMAL_OPERATION;
+                    /* still image starts transfer */
                     g_UsbDeviceVideoVirtualCamera.stillImageTransmission = 1U;
                 }
             }

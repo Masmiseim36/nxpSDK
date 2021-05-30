@@ -1,13 +1,10 @@
-Overview
-========
-
 
 Toolchain supported
 ===================
-- MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
+- MCUXpresso  11.3.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -29,12 +26,3 @@ For SE050
 - The Plug & Trust MW package can be downloaded from
 https://www.nxp.com/products/security-and-authentication/authentication/:SE050?tab=Design_Tools_Tab
 - Please refer to the RST file in the doc folder for additional details about the example.
-Prepare the Demo
-================
-
-Running the demo
-================
-
-Customization options
-=====================
-

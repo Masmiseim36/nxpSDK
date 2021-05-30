@@ -7,28 +7,28 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_pdb.h"
 #include "fsl_adc12.h"
 #include "fsl_trgmux.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_PDB_BASE PDB0
-#define DEMO_PDB_IRQ_ID PDB0_IRQn
+#define DEMO_PDB_BASE        PDB0
+#define DEMO_PDB_IRQ_ID      PDB0_IRQn
 #define DEMO_PDB_IRQ_HANDLER PDB0_IRQHandler
 
-#define DEMO_PDB_ADC_TRIGGER_CHANNEL kPDB_ADCTriggerChannel0 /* For ADC0. */
-#define DEMO_PDB_ADC_PRETRIGGER_CHANNEL kPDB_ADCPreTrigger0  /* For ADC0_SC1[0]. */
+#define DEMO_PDB_ADC_TRIGGER_CHANNEL    kPDB_ADCTriggerChannel0 /* For ADC0. */
+#define DEMO_PDB_ADC_PRETRIGGER_CHANNEL kPDB_ADCPreTrigger0     /* For ADC0_SC1[0]. */
 
-#define DEMO_ADC12_BASE ADC0
+#define DEMO_ADC12_BASE          ADC0
 #define DEMO_ADC12_CHANNEL_GROUP 0U
-#define DEMO_ADC12_USER_CHANNEL 0U
-#define DEMO_ADC12_IRQ_ID ADC0_IRQn
-#define DEMO_ADC12_IRQ_HANDLER ADC0_IRQHandler
+#define DEMO_ADC12_USER_CHANNEL  0U
+#define DEMO_ADC12_IRQ_ID        ADC0_IRQn
+#define DEMO_ADC12_IRQ_HANDLER   ADC0_IRQHandler
 
 /*******************************************************************************
  * Prototypes
@@ -60,7 +60,7 @@ void static DEMO_InitPDB_ADC(void)
     ADC12_Init(DEMO_ADC12_BASE, &adc12ConfigStruct);
     ADC12_EnableHardwareTrigger(DEMO_ADC12_BASE, true);
 
-    adc12ChannelConfigStruct.channelNumber = DEMO_ADC12_USER_CHANNEL;
+    adc12ChannelConfigStruct.channelNumber                        = DEMO_ADC12_USER_CHANNEL;
     adc12ChannelConfigStruct.enableInterruptOnConversionCompleted = true; /* Enable the interrupt. */
     ADC12_SetChannelConfig(DEMO_ADC12_BASE, DEMO_ADC12_CHANNEL_GROUP, &adc12ChannelConfigStruct);
 }
@@ -73,11 +73,7 @@ void DEMO_PDB_IRQ_HANDLER(void)
     PDB_ClearStatusFlags(DEMO_PDB_BASE, kPDB_DelayEventFlag);
     g_PdbDelayInterruptCounter++;
     g_PdbDelayInterruptFlag = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -89,11 +85,7 @@ void DEMO_ADC12_IRQ_HANDLER(void)
     g_Adc12ConvValue = ADC12_GetChannelConversionValue(DEMO_ADC12_BASE, DEMO_ADC12_CHANNEL_GROUP);
     g_Adc12InterruptCounter++;
     g_Adc12InterruptFlag = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -126,8 +118,8 @@ int main(void)
     PDB_EnableInterrupts(DEMO_PDB_BASE, kPDB_DelayInterruptEnable);
 
     /* Configure the ADC Pre-Trigger. */
-    pdbAdcPreTriggerConfigStruct.enablePreTriggerMask = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
-    pdbAdcPreTriggerConfigStruct.enableOutputMask = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
+    pdbAdcPreTriggerConfigStruct.enablePreTriggerMask          = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
+    pdbAdcPreTriggerConfigStruct.enableOutputMask              = 1U << DEMO_PDB_ADC_PRETRIGGER_CHANNEL;
     pdbAdcPreTriggerConfigStruct.enableBackToBackOperationMask = 0U;
     PDB_SetADCPreTriggerConfig(DEMO_PDB_BASE, DEMO_PDB_ADC_TRIGGER_CHANNEL, &pdbAdcPreTriggerConfigStruct);
     PDB_SetADCPreTriggerDelayValue(DEMO_PDB_BASE, DEMO_PDB_ADC_TRIGGER_CHANNEL, DEMO_PDB_ADC_PRETRIGGER_CHANNEL, 200U);
@@ -139,7 +131,7 @@ int main(void)
     DEMO_InitPDB_ADC();
 
     g_PdbDelayInterruptCounter = 0U;
-    g_Adc12InterruptCounter = 0U;
+    g_Adc12InterruptCounter    = 0U;
 
     PRINTF("ADC Full Range: %d\r\n", g_Adc12_8bitFullRange);
     PRINTF("\r\nType any key into terminal to trigger the PDB and then trigger the ADC12's conversion ...\r\n");
@@ -149,7 +141,7 @@ int main(void)
         GETCHAR();
 
         g_PdbDelayInterruptFlag = false;
-        g_Adc12InterruptFlag = false;
+        g_Adc12InterruptFlag    = false;
         PDB_DoSoftwareTrigger(DEMO_PDB_BASE);
         while ((!g_PdbDelayInterruptFlag) || (!g_Adc12InterruptFlag))
         {

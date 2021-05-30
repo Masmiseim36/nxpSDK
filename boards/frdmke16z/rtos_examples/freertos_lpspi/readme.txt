@@ -16,6 +16,14 @@ With board to board connection, one LPSPI instance on one board is used as LPSPI
     For board used as LPSPI slave:
         #define SPI_MASTER_SLAVE isSLAVE
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -110,11 +118,3 @@ LPSPI_master -- LPSPI_slave
 LPSPI slave transfer completed successfully.
 LPSPI transfer all data matched !
 ~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

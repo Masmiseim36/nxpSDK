@@ -1,19 +1,19 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /***************************************************************************/ /*!
-                                                                               *
-                                                                               * @file   freemaster_cfg.h
-                                                                               *
-                                                                               * @brief  FreeMASTER Serial Communication
-                                                                               *Driver configuration file
-                                                                               *
-                                                                               *******************************************************************************/
+*
+* @file   freemaster_cfg.h
+*
+* @brief  FreeMASTER Serial Communication
+*Driver configuration file
+*
+*******************************************************************************/
 
 #ifndef _FREEMASTER_CFG_H_
 #define _FREEMASTER_CFG_H_

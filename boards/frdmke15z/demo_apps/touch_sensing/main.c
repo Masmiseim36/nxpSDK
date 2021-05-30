@@ -1,6 +1,6 @@
 /*
  * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2020 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -15,11 +15,11 @@
 #include "fsl_lpit.h"
 
 #include "main.h"
-#include "board.h"
 #include "freemaster.h"
 #include "freemaster_serial_lpuart.h"
 #include "fsl_lpuart.h"
 #include "pin_mux.h"
+#include "board.h"
 
 extern void TSI_DRV_IRQHandler(uint32_t instance);
 

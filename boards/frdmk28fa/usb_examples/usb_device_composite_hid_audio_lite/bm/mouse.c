@@ -5,7 +5,9 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
+#include <stdio.h>
+#include <stdlib.h>
+/*${standard_header_anchor}*/
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -20,9 +22,6 @@
 #include "fsl_device_registers.h"
 #include "clock_config.h"
 #include "board.h"
-
-#include <stdio.h>
-#include <stdlib.h>
 
 #include "composite.h"
 

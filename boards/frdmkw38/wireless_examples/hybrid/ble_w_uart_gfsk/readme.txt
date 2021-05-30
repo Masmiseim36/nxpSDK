@@ -21,3 +21,8 @@ Prepare the Demo
 1.  Connect a mini/micro USB cable between the PC host and the OpenSDA USB port on the board.
 3.  Download the program to the target board.
 4.  Press the reset button on your board to begin running the demo.
+
+Low Power
+========
+When enabling low power, SW3 is used to get the board out of low power. Then you have 3s time to exercise the commands 
+available in the BLE Demo Applications User's Guide, after which the board goes back to sleep.

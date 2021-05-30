@@ -8,6 +8,14 @@ as round-robin checker channel. The example will enter stop mode and wait user t
 of round-robin checker channel. It will exit stop mode after the voltage of round-robin checker
 channel changed by user.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -40,19 +48,12 @@ When the demo runs successfully, following information can be seen on the OpenSD
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Example to demonstrate low power wakeup by round robin comparison!
-
 In order to wakeup the MCU, please change the analog input voltage to be different from original pre-state setting.
+
+Press S for enter: Stop Mode
 
 The system entered into stop mode.
 
 The system exited from stop mode!
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

@@ -70,6 +70,7 @@
 #define mReadTimeCharInterval_c         (3600U)         /* interval between time sync in seconds */
 #define mCharReadBufferLength_c         (13U)           /* length of the buffer */
 #define mInitialTime_c                  (1451606400U)   /* initial timestamp - 01/01/2016 00:00:00 GMT */
+
 /************************************************************************************
 *************************************************************************************
 * Private type definitions
@@ -88,6 +89,18 @@ typedef struct advState_tag{
     bool_t      advOn;
     advType_t   advType;
 }advState_t;
+
+/*! Events posted to application task from Timer callbacks */
+typedef enum
+{
+    gAdvTmrCallbackEvent_c = 0,
+    gTmrMeasurementCallbackEvent_c,
+    gBattMeasurementCallbackEvent_c,
+    gLocalTimeTickCallbackEvent_c,
+#if gAppUseTimeService_d
+    gReadTimeCharCallbackEvent_c,
+#endif
+} tmrCallbackEvent_t;
 
 /************************************************************************************
 *************************************************************************************
@@ -155,6 +168,9 @@ static void ReadTimeCharTimerCallback (void *pParam);
 #endif
 
 static void BleApp_Advertise(void);
+
+/* Handles Timer callbacks */
+static void BleApp_HandleTimerCallback(appCallbackParam_t pParam);
 
 /************************************************************************************
 *************************************************************************************
@@ -283,6 +299,114 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
 * Private functions
 *************************************************************************************
 ************************************************************************************/
+
+/*! *********************************************************************************
+* \brief        Handles the events posted from Timer callbacks to application task
+*
+********************************************************************************** */
+static void BleApp_HandleTimerCallback(appCallbackParam_t pParam)
+{
+    switch((tmrCallbackEvent_t)(uint32_t)pParam)
+    {
+        case gAdvTmrCallbackEvent_c:
+        {
+            /* Stop and restart advertising with new parameters */
+            (void)Gap_StopAdvertising();
+
+            switch (mAdvState.advType)
+            {
+#if gAppUseBonding_d
+                case fastWhiteListAdvState_c:
+                {
+                    mAdvState.advType = fastAdvState_c;
+                }
+                break;
+#endif
+                case fastAdvState_c:
+                {
+                    mAdvState.advType = slowAdvState_c;
+                }
+                break;
+
+                default:
+                    ; /* For MISRA compliance */
+                break;
+            }
+            BleApp_Advertise();
+        }
+        break;
+
+        case gTmrMeasurementCallbackEvent_c:
+        {
+            uint32_t randomNumber = 0;
+            htsMeasurement_t tempMeas;
+            ctsDayDateTime_t timeMeas;
+
+            RNG_GetRandomNo(&randomNumber);
+
+            tempMeas.tempTypePresent = TRUE;
+            tempMeas.tempType = gHts_Armpit_c;
+
+            tempMeas.timeStampPresent = TRUE;
+
+            tempMeas.unit = gHts_UnitInCelsius_c;
+            timeMeas = Cts_EpochToDayDateTime(localTime);
+            FLib_MemCpy(&tempMeas.timeStamp, &timeMeas.dateTime, sizeof(ctsDateTime_t));
+            tempMeas.temperature = 35U + (randomNumber & 0x07U);
+
+            if (mIntermediateTempCounter < 4U)
+            {
+                (void)Hts_RecordIntermediateTemperature((uint16_t)service_health_therm, &tempMeas);
+            }
+            else
+            {
+                (void)Hts_RecordTemperatureMeasurement((uint16_t)service_health_therm, &tempMeas);
+            }
+
+            mIntermediateTempCounter += 1U;
+            mIntermediateTempCounter = mIntermediateTempCounter % 5U;
+        }
+        break;
+
+        case gBattMeasurementCallbackEvent_c:
+        {
+            basServiceConfig.batteryLevel = BOARD_GetBatteryLevel();
+            (void)Bas_RecordBatteryMeasurement(&basServiceConfig);
+        }
+        break;
+
+        case gLocalTimeTickCallbackEvent_c:
+        {
+            localTime++;
+        }
+        break;
+
+#if gAppUseTimeService_d
+        case gReadTimeCharCallbackEvent_c:
+        {
+            bleUuid_t uuid = { .uuid16 = gBleSig_CurrentTime_d };
+
+            /* Read CTS Characteristic. If the device doesn't have time services
+               gAttErrCodeAttributeNotFound_c will be received. */
+            GattClient_ReadUsingCharacteristicUuid
+            (
+                mPeerDeviceId,
+                gBleUuidType16_c,
+                &uuid,
+                NULL,
+                mOutCharReadBuffer,
+                mCharReadBufferLength_c,
+                &mOutCharReadByteCount
+            );
+        }
+        break;
+#endif
+
+        default:
+            ; /* For MISRA compliance */
+        break;
+    }
+}
 
 /*! *********************************************************************************
 * \brief        Configures BLE Stack after initialization. Usually used for
@@ -430,8 +554,8 @@ static void BleApp_AdvertisingCallback (gapAdvertisingEvent_t* pAdvertisingEvent
 ********************************************************************************** */
 static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEvent_t* pConnectionEvent)
 {
-	/* Connection Manager to handle Host Stack interactions */
-	BleConnManager_GapPeripheralEvent(peerDeviceId, pConnectionEvent);
+    /* Connection Manager to handle Host Stack interactions */
+    BleConnManager_GapPeripheralEvent(peerDeviceId, pConnectionEvent);
 
     switch (pConnectionEvent->eventType)
     {
@@ -618,9 +742,9 @@ static void BleApp_GattServerCallback (deviceId_t deviceId, gattServerEvent_t* p
 * \brief        Handles GATT client callback from host stack.
 *
 * \param[in]    serverDeviceId          GATT Server device ID.
-* \param[in]    procedureType    	Procedure type.
-* \param[in]    procedureResult    	Procedure result.
-* \param[in]    error    		Callback result.
+* \param[in]    procedureType       Procedure type.
+* \param[in]    procedureResult     Procedure result.
+* \param[in]    error           Callback result.
 ********************************************************************************** */
 #if gAppUseTimeService_d
 static void BleApp_GattClientCallback(
@@ -689,29 +813,7 @@ static void BleApp_GattClientCallback(
 ********************************************************************************** */
 static void AdvertisingTimerCallback(void * pParam)
 {
-    /* Stop and restart advertising with new parameters */
-    (void)Gap_StopAdvertising();
-
-    switch (mAdvState.advType)
-    {
-#if gAppUseBonding_d
-        case fastWhiteListAdvState_c:
-        {
-            mAdvState.advType = fastAdvState_c;
-        }
-        break;
-#endif
-        case fastAdvState_c:
-        {
-            mAdvState.advType = slowAdvState_c;
-        }
-        break;
-
-        default:
-            ; /* For MISRA compliance */
-        break;
-    }
-    BleApp_Advertise();
+    App_PostCallbackMessage(BleApp_HandleTimerCallback, (void*)(gAdvTmrCallbackEvent_c));
 }
 
 /*! *********************************************************************************
@@ -721,34 +823,7 @@ static void AdvertisingTimerCallback(void * pParam)
 ********************************************************************************** */
 static void TimerMeasurementCallback(void * pParam)
 {
-    uint32_t randomNumber = 0;
-    htsMeasurement_t tempMeas;
-    ctsDayDateTime_t timeMeas;
-
-    RNG_GetRandomNo(&randomNumber);
-
-    tempMeas.tempTypePresent = TRUE;
-    tempMeas.tempType = gHts_Armpit_c;
-
-    tempMeas.timeStampPresent = TRUE;
-
-    tempMeas.unit = gHts_UnitInCelsius_c;
-    timeMeas = Cts_EpochToDayDateTime(localTime);
-    FLib_MemCpy(&tempMeas.timeStamp, &timeMeas.dateTime, sizeof(ctsDateTime_t));
-    tempMeas.temperature = 35U + (randomNumber & 0x07U);
-
-    if (mIntermediateTempCounter < 4U)
-    {
-        (void)Hts_RecordIntermediateTemperature((uint16_t)service_health_therm, &tempMeas);
-    }
-    else
-    {
-        (void)Hts_RecordTemperatureMeasurement((uint16_t)service_health_therm, &tempMeas);
-    }
-
-    mIntermediateTempCounter += 1U;
-    mIntermediateTempCounter = mIntermediateTempCounter % 5U;
-
+    App_PostCallbackMessage(BleApp_HandleTimerCallback, (void*)(gTmrMeasurementCallbackEvent_c));
 }
 
 /*! *********************************************************************************
@@ -758,32 +833,18 @@ static void TimerMeasurementCallback(void * pParam)
 ********************************************************************************** */
 static void BatteryMeasurementTimerCallback(void * pParam)
 {
-    basServiceConfig.batteryLevel = BOARD_GetBatteryLevel();
-    (void)Bas_RecordBatteryMeasurement(&basServiceConfig);
+    App_PostCallbackMessage(BleApp_HandleTimerCallback, (void*)(gBattMeasurementCallbackEvent_c));
 }
 
 static void LocalTimeTickTimerCallback (void * pParam)
 {
-    localTime++;
+    App_PostCallbackMessage(BleApp_HandleTimerCallback, (void*)(gLocalTimeTickCallbackEvent_c));
 }
 
 #if gAppUseTimeService_d
 static void ReadTimeCharTimerCallback (void * pParam)
 {
-    bleUuid_t uuid = { .uuid16 = gBleSig_CurrentTime_d };
-
-    /* Read CTS Characteristic. If the device doesn't have time services
-     gAttErrCodeAttributeNotFound_c will be received. */
-    GattClient_ReadUsingCharacteristicUuid
-    (
-        mPeerDeviceId,
-        gBleUuidType16_c,
-        &uuid,
-        NULL,
-        mOutCharReadBuffer,
-        13,
-        &mOutCharReadByteCount
-    );
+    App_PostCallbackMessage(BleApp_HandleTimerCallback, (void*)(gReadTimeCharCallbackEvent_c));
 }
 #endif
 

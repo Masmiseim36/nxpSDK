@@ -7,13 +7,13 @@
  */
 
 /*  SDK Included Files */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
 #include "Driver_I2C.h"
 #include "fsl_i2c_cmsis.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 //#include "fsl_gpio.h"
 #include "fsl_port.h"
 /*******************************************************************************

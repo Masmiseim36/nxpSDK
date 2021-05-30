@@ -8,12 +8,12 @@
 
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_tsi_v5.h"
 #include "TSI_key.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

@@ -2,7 +2,15 @@
 @page middleware_log Middleware Change Log
 
 @section host_sdhc Host SDHC driver for MCUXpresso SDK
-The current driver version is 2.3.0.
+The current driver version is 2.3.1.
+
+  - 2.3.1
+    - Improvements
+      - Enabled DAT3 card detect feature.
+      - Added host instance capability macro.
+      - Added clear card inserted/removed event when card removed/inserted interrupt generated.
+    - Bug Fixes
+      - Fixed violations of MISRA C-2012 rule 11.9, 15.7, 4.7, 16.4, 10.1, 10.3, 10.4, 11.3, 14.4, 10.6, 17.7, 16.1, 16.3.
 
   - 2.3.0
     - Improvements

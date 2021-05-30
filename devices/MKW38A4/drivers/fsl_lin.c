@@ -51,7 +51,7 @@ static inline uint8_t BIT(const uint8_t A, uint8_t B)
  *
  *  Theader_Maximum = 1.4 * THeader_Nominal, THeader_Nominal = 34 * TBit,
  * ( 13 nominal bits of breack;   1 nominal bit of break delimiter; 10 bits for SYNC and 10 bits of PID)
- * The function is not include time for conveying break and break delimeter
+ * The function is not include time for conveying break and break delimiter
  * TIME_OUT_UNIT is in micro second
  * param baudRate baudrate
  *
@@ -62,7 +62,7 @@ uint32_t LIN_CalcMaxHeaderTimeoutCnt(uint32_t baudRate)
 }
 
 /*!
- * brief Calculates maximal header time lenght
+ * brief Calculates maximal header time length
  *
  *  TResponse_Maximum = 1.4 * TResponse_Nominal, TResponse_Nominal = 10 * (NData+ 1) * TBit
  *
@@ -738,15 +738,18 @@ uint8_t LIN_MakeChecksumByte(const uint8_t *buffer, uint8_t sizeBuffer, uint8_t 
     uint16_t checksum;
 
     assert(0U != PID);
-    /* For PID is 0x3C or 0x3D apply classic checksum, and for other PID: Enhanced checksum */
-    if ((0x3CU != PID) && (0x3DU != PID))
+    /* Frame identifier(ID) 0x3C(PID 0x3C) is reserved for the Master Request frame and
+       ID 0x3D(PID 0x7D) is reserved for the Slave Response frame, they should be applied with
+       classic checksum which PID value is not included in the calculation; for other PID values
+       enhanced checksum should be applied which PID value is included. */
+    if ((0x3CU != PID) && (0x7DU != PID))
     {
         /* For PID other than 0x3c and 0x7D: Add PID in checksum calculation */
         checksum = PID;
     }
     else
     {
-        /* For 0x3C and 0x3D: Do not add PID in checksum calculation */
+        /* For 0x3C and 0x7D: Do not add PID in checksum calculation */
         checksum = 0U;
     }
 

@@ -69,9 +69,8 @@ static void CLOCK_CONFIG_FircSafeConfig(const scg_firc_config_t *fircConfig)
 {
     scg_sys_clk_config_t curConfig;
     const scg_sirc_config_t scgSircConfig       = {.enableMode = kSCG_SircEnable,
-                                             .div1       = kSCG_AsyncClkDisable,
-                                             .div2       = kSCG_AsyncClkDivBy2,
-                                             .range      = kSCG_SircRangeHigh};
+                                                   .div2       = kSCG_AsyncClkDivBy2,
+                                                   .range      = kSCG_SircRangeHigh};
     scg_sys_clk_config_t sysClkSafeConfigSource = {
         .divSlow = kSCG_SysClkDivBy4, /* Slow clock divider */
         .divCore = kSCG_SysClkDivBy1, /* Core clock divider */

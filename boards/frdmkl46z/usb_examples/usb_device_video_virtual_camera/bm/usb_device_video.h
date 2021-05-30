@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -789,7 +793,7 @@ struct _usb_device_video_probe_and_commit_controls_struct
 {
     union
     {
-        uint16_t bmHint; /*!< Bit-field control indicating to the function what fields shall be kept fixed. */
+        uint8_t bmHint; /*!< Bit-field control indicating to the function what fields shall be kept fixed. */
         struct
         {
             uint8_t dwFrameInterval : 1U; /*!< dwFrameInterval field.*/
@@ -797,8 +801,17 @@ struct _usb_device_video_probe_and_commit_controls_struct
             uint8_t wPFrameRate : 1U;     /*!< wPFrameRate field.*/
             uint8_t wCompQuality : 1U;    /*!< wCompQuality field.*/
             uint8_t wCompWindowSize : 1U; /*!< wCompWindowSize field.*/
+            uint8_t reserved : 3U;        /*!< Reserved field.*/
         } hintBitmap;
     } hintUnion;
+    union
+    {
+        uint8_t bmHint; /*!< Bit-field control indicating to the function what fields shall be kept fixed. */
+        struct
+        {
+            uint8_t reserved : 8U; /*!< Reserved field.*/
+        } hintBitmap;
+    } hintUnion1;
     uint8_t bFormatIndex;     /*!< Video format index from a format descriptor.*/
     uint8_t bFrameIndex;      /*!< Video frame index from a frame descriptor.*/
     uint32_t dwFrameInterval; /*!< Frame interval in 100ns units.*/
@@ -940,7 +953,8 @@ extern usb_status_t USB_DeviceVideoDeinit(class_handle_t handle);
 /*!
  * @brief Handles the event passed to the video class.
  *
- * This function handles the event passed to the video class. This function can only be called by the #USB_DeviceClassEvent.
+ * This function handles the event passed to the video class. This function can only be called by the
+ * #USB_DeviceClassEvent.
  *
  * @param[in] handle          The video class handle received from the usb_device_class_config_struct_t::classHandle.
  * @param[in] event           The event codes. See the enumeration #usb_device_class_event_t.
@@ -976,7 +990,8 @@ extern usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *par
  * Currently, only one transfer request can be supported for a specific endpoint.
  * If there is a specific requirement to support multiple transfer requests for a specific endpoint, the application
  * should implement a queue in the application level.
- * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the endpoint
+ * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the
+ * endpoint
  * callback).
  */
 extern usb_status_t USB_DeviceVideoSend(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);
@@ -999,7 +1014,8 @@ extern usb_status_t USB_DeviceVideoSend(class_handle_t handle, uint8_t ep, uint8
  * Currently, only one transfer request can be supported for a specific endpoint.
  * If there is a specific requirement to support multiple transfer requests for a specific endpoint. The application
  * should implement a queue in the application level.
- * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the endpoint
+ * The subsequent transfer can begin only when the previous transfer is done (a notification is received through the
+ * endpoint
  * callback).
  */
 extern usb_status_t USB_DeviceVideoRecv(class_handle_t handle, uint8_t ep, uint8_t *buffer, uint32_t length);

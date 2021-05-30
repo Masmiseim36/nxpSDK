@@ -1,6 +1,6 @@
 /*
  *
- * Copyright  2016-2019 NXP
+ * Copyright  2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -26,8 +26,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LIN driver version 2.1.1 */
-#define FSL_LIN_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
+/*! @brief LIN driver version */
+#define FSL_LIN_DRIVER_VERSION (MAKE_VERSION(2, 2, 0))
 
 /* node is slave */
 #define LIN_SLAVE 0U
@@ -105,22 +105,23 @@ typedef struct
  */
 typedef enum
 {
-    LIN_NO_EVENT             = 0x00U, /*!< No event yet */
-    LIN_WAKEUP_SIGNAL        = 0x01U, /*!< Received a wakeup signal */
-    LIN_BAUDRATE_ADJUSTED    = 0x02U, /*!< Indicate that baudrate was adjusted to Master's baudrate */
-    LIN_RECV_BREAK_FIELD_OK  = 0x03U, /*!< Indicate that correct Break Field was received */
-    LIN_SYNC_OK              = 0x04U, /*!< Sync byte is correct */
-    LIN_SYNC_ERROR           = 0x05U, /*!< Sync byte is incorrect */
-    LIN_PID_OK               = 0x06U, /*!< PID correct */
-    LIN_PID_ERROR            = 0x07U, /*!< PID incorrect */
-    LIN_FRAME_ERROR          = 0x08U, /*!< Framing Error */
-    LIN_READBACK_ERROR       = 0x09U, /*!< Readback data is incorrect */
-    LIN_CHECKSUM_ERROR       = 0x0AU, /*!< Checksum byte is incorrect */
-    LIN_TX_COMPLETED         = 0x0BU, /*!< Sending data completed */
-    LIN_RX_COMPLETED         = 0x0CU, /*!< Receiving data completed */
-    LIN_NO_DATA_TIMEOUT      = 0x0DU, /*!< No data timeout */
-    LIN_BUS_ACTIVITY_TIMEOUT = 0x0EU, /*!< Bus activity timeout */
-    LIN_TIMEOUT_ERROR        = 0x0FU  /*!< Indicate that timeout has occurred */
+    LIN_NO_EVENT                  = 0x00U, /*!< No event yet */
+    LIN_WAKEUP_SIGNAL             = 0x01U, /*!< Received a wakeup signal */
+    LIN_BAUDRATE_ADJUSTED         = 0x02U, /*!< Indicate that baudrate was adjusted to Master's baudrate */
+    LIN_RECV_BREAK_FIELD_OK       = 0x03U, /*!< Indicate that correct Break Field was received */
+    LIN_SYNC_OK                   = 0x04U, /*!< Sync byte is correct */
+    LIN_SYNC_ERROR                = 0x05U, /*!< Sync byte is incorrect */
+    LIN_PID_OK                    = 0x06U, /*!< PID correct */
+    LIN_PID_ERROR                 = 0x07U, /*!< PID incorrect */
+    LIN_FRAME_ERROR               = 0x08U, /*!< Framing Error */
+    LIN_READBACK_ERROR            = 0x09U, /*!< Readback data is incorrect */
+    LIN_CHECKSUM_ERROR            = 0x0AU, /*!< Checksum byte is incorrect */
+    LIN_TX_COMPLETED              = 0x0BU, /*!< Sending data completed */
+    LIN_RX_COMPLETED              = 0x0CU, /*!< Receiving data completed */
+    LIN_NO_DATA_TIMEOUT           = 0x0DU, /*!< No data timeout */
+    LIN_BUS_ACTIVITY_TIMEOUT      = 0x0EU, /*!< Bus activity timeout */
+    LIN_TIMEOUT_ERROR             = 0x0FU, /*!< Indicate that timeout has occurred */
+    LIN_LAST_RESPONSE_SHORT_ERROR = 0x10U  /*!< Indicate that the last frame was to0 short */
 } lin_event_id_t;
 
 /*!
@@ -281,22 +282,23 @@ typedef struct
 typedef struct
 {
     /* LIN data pointer */
-    uint16_t baud_rate;                  /*!< Adjusted baud rate */
-    uint8_t *response_buffer_ptr;        /*!< Response buffer */
-    uint8_t response_length;             /*!< Response length  */
-    uint8_t successful_transfer;         /*!< Transfer flag */
-    uint8_t error_in_response;           /*!< Error response */
-    uint8_t timeout_in_response;         /*!< Error response */
-    bool go_to_sleep_flg;                /*!< Go to sleep flag */
-    uint8_t current_id;                  /*!< Current PID */
+    uint16_t baud_rate;           /*!< Adjusted baud rate */
+    uint8_t *response_buffer_ptr; /*!< Response buffer */
+    uint8_t response_length;      /*!< Response length  */
+    uint8_t successful_transfer;  /*!< Sets when frame is transferred successfully */
+    uint8_t error_in_response;   /*!< Sets when frame received/transmitter by the node contains an error in the response
+                                    field */
+    uint8_t timeout_in_response; /*!< Timeout response */
+    bool go_to_sleep_flg;        /*!< Go to sleep flag */
+    uint8_t current_id;          /*!< Current PID */
     uint8_t num_of_processed_frame;      /*!< Number of processed frames */
     uint8_t num_of_successfull_frame;    /*!< Number of processed frames */
     uint8_t next_transmit_tick;          /*!< Used to count the next transmit tick */
     bool save_config_flg;                /*!< Set when save configuration request has been received */
     lin_diagnostic_mode diagnostic_mode; /*!< Diagnostic mode */
     uint16_t frame_timeout_cnt;          /*!< Frame timeout counter */
-    uint16_t idle_timeout_cnt;           /*!< Idle timeout counter */
-    bool transmit_error_resp_sig_flg;    /*!< Flag indicates that the error reponse signal is going to be sent */
+    uint16_t idle_timeout_cnt;           /*!< Idle timeout counter, node will go to sleep when count down to 0 */
+    bool transmit_error_resp_sig_flg;    /*!< Flag indicates that the error response signal is going to be sent */
     bool event_trigger_collision_flg;    /*!< Flag indicates collision on bus */
 } lin_protocol_state_t;
 
@@ -309,9 +311,9 @@ typedef struct
     uint8_t initial_NAD;         /*!< Initial NAD */
     lin_product_id product_id;   /*!< Product ID */
     /* TODO */
-    lin_serial_number serial_number;    /*!< Serial number */
-    uint8_t *resp_err_frm_id_ptr;       /*!< List index of frame contain response error signal */
-    uint8_t num_frame_have_esignal;     /*!< Number of frame contain error signal */
+    lin_serial_number serial_number; /*!< Serial number */
+    uint8_t *resp_err_frm_id_ptr;    /*!< Pointer to the list of index of frames that carries response error signal */
+    uint8_t num_frame_have_esignal;  /*!< The count of frames that carry response error signal */
     uint8_t response_error_byte_offset; /*!< Byte offset of response error signal */
     uint8_t response_error_bit_offset;  /*!< Bit offset of response error signal */
     uint8_t num_of_fault_state_signal;  /*!< Number of Fault state signal */
@@ -372,14 +374,14 @@ extern "C" {
  *
  *  Theader_Maximum = 1.4 * THeader_Nominal, THeader_Nominal = 34 * TBit,
  * ( 13 nominal bits of breack;   1 nominal bit of break delimiter; 10 bits for SYNC and 10 bits of PID)
- * The function is not include time for conveying break and break delimeter
+ * The function is not include time for conveying break and break delimiter
  * TIME_OUT_UNIT is in micro second
  * @param baudRate baudrate
  *
  */
 uint32_t LIN_CalcMaxHeaderTimeoutCnt(uint32_t baudRate);
 /*!
- * @brief Calculates maximal header time lenght
+ * @brief Calculates maximal header time length
  *
  *  TResponse_Maximum = 1.4 * TResponse_Nominal, TResponse_Nominal = 10 * (NData+ 1) * TBit
  *

@@ -2,24 +2,24 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_acmp.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ACMP_BASEADDR CMP0
+#define DEMO_ACMP_BASEADDR     CMP0
 #define DEMO_ACMP_USER_CHANNEL 0U
-#define LED_INIT() LED_GREEN1_INIT(LOGIC_LED_OFF)
-#define LED_ON() LED_GREEN1_ON()
-#define LED_OFF() LED_GREEN1_OFF()
+#define LED_INIT()             LED_GREEN1_INIT(LOGIC_LED_OFF)
+#define LED_ON()               LED_GREEN1_ON()
+#define LED_OFF()              LED_GREEN1_OFF()
 
 /*******************************************************************************
  * Prototypes
@@ -60,18 +60,22 @@ int main(void)
     ACMP_GetDefaultConfig(&acmpConfigStruct);
     ACMP_Init(DEMO_ACMP_BASEADDR, &acmpConfigStruct);
 
-    /* Configure channel. Select the positive port input from DAC and negative port input from minus mux input. */
+/* Configure channel. Select the positive port input from DAC and negative port input from minus mux input. */
+#if defined(FSL_FEATURE_ACMP_HAS_C1_INPSEL_BIT) && (FSL_FEATURE_ACMP_HAS_C1_INPSEL_BIT == 1U)
     channelConfigStruct.positivePortInput = kACMP_PortInputFromDAC;
+#endif /* FSL_FEATURE_ACMP_HAS_C1_INPSEL_BIT */
+#if defined(FSL_FEATURE_ACMP_HAS_C1_INNSEL_BIT) && (FSL_FEATURE_ACMP_HAS_C1_INNSEL_BIT == 1U)
     channelConfigStruct.negativePortInput = kACMP_PortInputFromMux;
+#endif /* FSL_FEATURE_ACMP_HAS_C1_INNSEL_BIT */
     channelConfigStruct.minusMuxInput = DEMO_ACMP_USER_CHANNEL;
-    channelConfigStruct.plusMuxInput = 0U; /* Dummy channel. */
+    channelConfigStruct.plusMuxInput  = 0U; /* Dummy channel. */
     ACMP_SetChannelConfig(DEMO_ACMP_BASEADDR, &channelConfigStruct);
 
     /* Configure DAC. */
     dacConfigStruct.referenceVoltageSource = kACMP_VrefSourceVin1;
-    dacConfigStruct.DACValue = 0x7FU; /* Half of referene voltage. */
+    dacConfigStruct.DACValue               = 0x7FU; /* Half of referene voltage. */
 #if defined(FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT) && (FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT == 1U)
-    dacConfigStruct.enableOutput = false;
+    dacConfigStruct.enableOutput = true;
 #endif /* FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT */
 #if defined(FSL_FEATURE_ACMP_HAS_C1_DMODE_BIT) && (FSL_FEATURE_ACMP_HAS_C1_DMODE_BIT == 1U)
     dacConfigStruct.workMode = kACMP_DACWorkLowSpeedMode;

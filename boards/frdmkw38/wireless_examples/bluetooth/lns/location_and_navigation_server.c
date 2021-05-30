@@ -302,6 +302,7 @@ static void BleApp_Config(void)
     mAdvTimerId = TMR_AllocateTimer();
     mBatteryMeasurementTimerId = TMR_AllocateTimer();
     mLocAndSpeedMeasurementTimerId = TMR_AllocateTimer();
+    mNavigationMeasurementTimerId = TMR_AllocateTimer();
     mPositionQualityReadTimerId = TMR_AllocateTimer();
     mLocalTimeTickTimerId = TMR_AllocateTimer();
 

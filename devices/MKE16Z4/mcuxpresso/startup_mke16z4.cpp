@@ -1,10 +1,10 @@
 //*****************************************************************************
 // MKE16Z4 startup code for use with MCUXpresso IDE
 //
-// Version : 250918
+// Version : 160420
 //*****************************************************************************
 //
-// Copyright 2016-2018 NXP
+// Copyright 2016-2020 NXP
 // All rights reserved.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -173,6 +173,9 @@ extern void _vStackTop(void);
 // The vector table.
 // This relies on the linker script to place at correct location in memory.
 //*****************************************************************************
+
+
+
 extern void (* const g_pfnVectors[])(void);
 extern void * __Vectors __attribute__ ((alias ("g_pfnVectors")));
 
@@ -230,6 +233,7 @@ void (* const g_pfnVectors[])(void) = {
     MSCAN_Rx_IRQHandler,     // 46: MSCAN Rx Interrupt
     MSCAN_ORed_IRQHandler,   // 47: MSCAN Tx, Err and Wake-up interrupt
 
+
 }; /* End of g_pfnVectors */
 
 //*****************************************************************************
@@ -278,6 +282,7 @@ void ResetISR(void) {
     // Disable interrupts
     __asm volatile ("cpsid i");
 
+
 #if defined (__USE_CMSIS)
 // If __USE_CMSIS defined, then call CMSIS SystemInit code
     SystemInit();
@@ -318,6 +323,7 @@ void ResetISR(void) {
         bss_init(ExeAddr, SectionLen);
     }
 
+
 #if !defined (__USE_CMSIS)
 // Assume that if __USE_CMSIS defined, then CMSIS SystemInit code
 // will setup the VTOR register
@@ -331,7 +337,6 @@ void ResetISR(void) {
         *pSCB_VTOR = (unsigned int)g_pfnVectors;
     }
 #endif // (__USE_CMSIS)
-
 #if defined (__cplusplus)
     //
     // Call C++ library initialisation

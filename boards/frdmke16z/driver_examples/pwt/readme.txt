@@ -4,6 +4,14 @@ The PWT project is a simple demonstration program of the SDK PWT driver. It sets
 hardware block to edge detection, capture control part and detects measurement trigger edges and
 controls when and which pulse width register(s) will be updated. Once the input signal is received,
 this example will print overflow flag status, positive pulse width and negative pulse width.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -53,11 +61,3 @@ Positive pulse width=11 usec
 Negative pulse width=17 usec
 
 ~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -33,6 +33,9 @@ enum _spi_dma_states_t
 
 /*<! Private handle only used for internally. */
 static spi_dma_private_handle_t s_dmaPrivateHandle[FSL_FEATURE_SOC_SPI_COUNT];
+
+/* If the RX data is not required, save it to this variable. */
+static uint16_t s_spiDmaRxDrop;
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -128,8 +131,7 @@ void SPI_MasterTransferCreateHandleDMA(SPI_Type *base,
                                        dma_handle_t *rxHandle)
 {
     assert(handle != NULL);
-    dma_transfer_config_t config = {0};
-    uint32_t instance            = SPI_GetInstance(base);
+    uint32_t instance = SPI_GetInstance(base);
 
     /* Zero the handle */
     (void)memset(handle, 0, sizeof(*handle));
@@ -164,30 +166,6 @@ void SPI_MasterTransferCreateHandleDMA(SPI_Type *base,
     }
 
 #endif /* FSL_FEATURE_SPI_HAS_FIFO */
-
-    /* Set the non-change attribute for Tx DMA transfer, to improve efficiency */
-    config.destAddr            = SPI_GetDataRegisterAddress(base);
-    config.enableDestIncrement = false;
-    config.enableSrcIncrement  = true;
-    if (handle->bytesPerFrame == 1U)
-    {
-        config.srcSize  = kDMA_Transfersize8bits;
-        config.destSize = kDMA_Transfersize8bits;
-    }
-    else
-    {
-        config.srcSize  = kDMA_Transfersize16bits;
-        config.destSize = kDMA_Transfersize16bits;
-    }
-
-    (void)DMA_SubmitTransfer(handle->txHandle, &config, 1U);
-
-    /* Set non-change attribute for Rx DMA */
-    config.srcAddr             = SPI_GetDataRegisterAddress(base);
-    config.destAddr            = 0U;
-    config.enableDestIncrement = true;
-    config.enableSrcIncrement  = false;
-    (void)DMA_SubmitTransfer(handle->rxHandle, &config, 1U);
 
     /* Install callback for Tx dma channel */
     DMA_SetCallback(handle->txHandle, SPI_TxDMACallback, &s_dmaPrivateHandle[instance]);
@@ -229,9 +207,7 @@ status_t SPI_MasterTransferDMA(SPI_Type *base, spi_dma_handle_t *handle, spi_tra
     SPI_Enable(base, false);
     SPI_Enable(base, true);
 
-    /* Configure tx transfer DMA */
-    config.destAddr            = SPI_GetDataRegisterAddress(base);
-    config.enableDestIncrement = false;
+    /* Configure DMA transfer. */
     if (handle->bytesPerFrame == 1U)
     {
         config.srcSize  = kDMA_Transfersize8bits;
@@ -243,6 +219,10 @@ status_t SPI_MasterTransferDMA(SPI_Type *base, spi_dma_handle_t *handle, spi_tra
         config.destSize = kDMA_Transfersize16bits;
     }
     config.transferSize = xfer->dataSize;
+
+    /* Configure tx transfer DMA */
+    config.destAddr            = SPI_GetDataRegisterAddress(base);
+    config.enableDestIncrement = false;
     /* Configure DMA channel */
     if (xfer->txData != NULL)
     {
@@ -257,27 +237,37 @@ status_t SPI_MasterTransferDMA(SPI_Type *base, spi_dma_handle_t *handle, spi_tra
     }
     (void)DMA_SubmitTransfer(handle->txHandle, &config, 1U);
 
-    /* Handle rx transfer */
+    /*
+     * Configure rx transfer DMA.
+     * To make sure TX data has been sent out to bus, SPI DMA driver
+     * checks the RX data count. When the RX data reaches the
+     * desired count, it means TX data has been sent out to bus.
+     * So DMA RX is enabled even when RX data is not desired,
+     * and the data is saved to variable and dropped.
+     */
+    config.srcAddr            = SPI_GetDataRegisterAddress(base);
+    config.enableSrcIncrement = false;
+
     if (xfer->rxData != NULL)
     {
-        /* Set the source address */
-        DMA_SetDestinationAddress(handle->rxHandle->base, handle->rxHandle->channel, (uint32_t)(xfer->rxData));
-
-        /* Set the transfer size */
-        DMA_SetTransferSize(handle->rxHandle->base, handle->rxHandle->channel, xfer->dataSize);
+        config.destAddr            = (uint32_t)(xfer->rxData);
+        config.enableDestIncrement = true;
     }
+    else
+    {
+        config.destAddr            = (uint32_t)(&s_spiDmaRxDrop);
+        config.enableDestIncrement = false;
+    }
+    (void)DMA_SubmitTransfer(handle->rxHandle, &config, (uint32_t)kDMA_EnableInterrupt);
 
     /* Change the state of handle */
     handle->transferSize = xfer->dataSize;
     handle->state        = (uint32_t)kSPI_Busy;
 
-    /* Start Rx transfer if needed */
-    if (xfer->rxData != NULL)
-    {
-        handle->rxInProgress = true;
-        SPI_EnableDMA(base, (uint8_t)kSPI_RxDmaEnable, true);
-        DMA_StartTransfer(handle->rxHandle);
-    }
+    /* Start Rx transfer */
+    handle->rxInProgress = true;
+    SPI_EnableDMA(base, (uint8_t)kSPI_RxDmaEnable, true);
+    DMA_StartTransfer(handle->rxHandle);
 
     /* Always start Tx transfer */
     handle->txInProgress = true;

@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2013 - 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -45,8 +49,7 @@
 #define _FSL_DEBUGCONSOLE_H_
 
 #include "fsl_common.h"
-
-/*
+/*!
  * @addtogroup debugconsole
  * @{
  */
@@ -60,29 +63,17 @@
 #define SDK_DEBUGCONSOLE 1U
 #endif
 
+/*! @brief Definition to select redirect toolchain printf, scanf to uart or not. */
+#ifndef SDK_DEBUGCONSOLE_UART
+/* mcux will handle this macro, not define it here */
+#if (!defined(__MCUXPRESSO))
+#define SDK_DEBUGCONSOLE_UART
+#endif
+#endif
+
 #if defined(SDK_DEBUGCONSOLE) && !(SDK_DEBUGCONSOLE)
 #include <stdio.h>
 #endif
-
-/*! @brief Definition to printf the float number. */
-#ifndef PRINTF_FLOAT_ENABLE
-#define PRINTF_FLOAT_ENABLE 0U
-#endif /* PRINTF_FLOAT_ENABLE */
-
-/*! @brief Definition to scanf the float number. */
-#ifndef SCANF_FLOAT_ENABLE
-#define SCANF_FLOAT_ENABLE 0U
-#endif /* SCANF_FLOAT_ENABLE */
-
-/*! @brief Definition to support advanced format specifier for printf. */
-#ifndef PRINTF_ADVANCED_ENABLE
-#define PRINTF_ADVANCED_ENABLE 0U
-#endif /* PRINTF_ADVANCED_ENABLE */
-
-/*! @brief Definition to support advanced format specifier for scanf. */
-#ifndef SCANF_ADVANCED_ENABLE
-#define SCANF_ADVANCED_ENABLE 0U
-#endif /* SCANF_ADVANCED_ENABLE */
 
 #if SDK_DEBUGCONSOLE /* Select printf, scanf, putchar, getchar of SDK version. */
 #define PRINTF DbgConsole_Printf
@@ -108,7 +99,7 @@ extern "C" {
 /* @{ */
 
 /*!
- * @brief Initializes the the peripheral used for debug messages.
+ * @brief Initializes the peripheral used for debug messages.
  *
  * Call this function to enable debug log messages to be output via the specified peripheral,
  * frequency of peripheral source clock, and base address at the specified baud rate.
@@ -179,6 +170,29 @@ int DbgConsole_Scanf(char *fmt_ptr, ...);
  * @return Returns the character read.
  */
 int DbgConsole_Getchar(void);
+
+/*!
+ * @brief Debug console flush log.
+ *
+ * Call this function to wait the buffer empty and io idle before.
+ * If interrupt transfer is using, make sure the global IRQ is enable before call this function
+ * This function should be called when
+ * 1, before enter power down mode
+ * 2, log is required to print to terminal immediately
+ * @return Indicates whether wait idle was successful or not.
+ */
+status_t DbgConsole_Flush(void);
+
+#ifdef DEBUG_CONSOLE_TRANSFER_NON_BLOCKING
+/*!
+ * @brief Debug console try to get char
+ * This function provide a api which will not block current task, if character is
+ * avaliable return it , otherwise return fail.
+ * @param ch the address of char to receive
+ * @return Indicates get char was successful or not.
+ */
+status_t DbgConsole_TryGetchar(char *ch);
+#endif
 
 #endif /* SDK_DEBUGCONSOLE */
 

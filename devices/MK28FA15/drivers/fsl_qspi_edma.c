@@ -133,7 +133,7 @@ void QSPI_TransferTxCreateHandleEDMA(QuadSPI_Type *base,
                                      void *userData,
                                      edma_handle_t *dmaHandle)
 {
-    assert(handle);
+    assert(NULL != handle);
 
     uint32_t instance = QSPI_GetInstance(base);
 
@@ -170,7 +170,7 @@ void QSPI_TransferRxCreateHandleEDMA(QuadSPI_Type *base,
                                      void *userData,
                                      edma_handle_t *dmaHandle)
 {
-    assert(handle);
+    assert(NULL != handle);
 
     uint32_t instance = QSPI_GetInstance(base);
 
@@ -202,7 +202,7 @@ void QSPI_TransferRxCreateHandleEDMA(QuadSPI_Type *base,
  */
 status_t QSPI_TransferSendEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle, qspi_transfer_t *xfer)
 {
-    assert(handle && (handle->dmaHandle));
+    assert((NULL != handle) && (NULL != handle->dmaHandle));
 
     edma_transfer_config_t xferConfig;
     status_t status;
@@ -255,7 +255,7 @@ status_t QSPI_TransferSendEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle, q
  */
 status_t QSPI_TransferReceiveEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle, qspi_transfer_t *xfer)
 {
-    assert(handle && (handle->dmaHandle));
+    assert((NULL != handle) && (NULL != handle->dmaHandle));
 
     edma_transfer_config_t xferConfig;
     status_t status;
@@ -305,7 +305,7 @@ status_t QSPI_TransferReceiveEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle
  */
 void QSPI_TransferAbortSendEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle)
 {
-    assert(handle && (handle->dmaHandle));
+    assert((NULL != handle) && (NULL != handle->dmaHandle));
 
     /* Disable QSPI TX EDMA. */
     QSPI_EnableDMA(base, (uint32_t)kQSPI_TxBufferFillDMAEnable, false);
@@ -326,7 +326,7 @@ void QSPI_TransferAbortSendEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle)
  */
 void QSPI_TransferAbortReceiveEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle)
 {
-    assert(handle && (handle->dmaHandle));
+    assert((NULL != handle) && (NULL != handle->dmaHandle));
 
     /* Disable QSPI RX EDMA. */
     QSPI_EnableDMA(base, (uint32_t)kQSPI_RxBufferDrainDMAEnable, false);
@@ -348,7 +348,7 @@ void QSPI_TransferAbortReceiveEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handl
  */
 status_t QSPI_TransferGetSendCountEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle, size_t *count)
 {
-    assert(handle);
+    assert(NULL != handle);
 
     status_t status = kStatus_Success;
 
@@ -377,7 +377,7 @@ status_t QSPI_TransferGetSendCountEDMA(QuadSPI_Type *base, qspi_edma_handle_t *h
  */
 status_t QSPI_TransferGetReceiveCountEDMA(QuadSPI_Type *base, qspi_edma_handle_t *handle, size_t *count)
 {
-    assert(handle);
+    assert(NULL != handle);
 
     status_t status = kStatus_Success;
 

@@ -34,11 +34,19 @@
 #define gTmrTaskStackSize_c  384
 
 /* Defines pools by block size and number of blocks. Must be aligned to 4 bytes.*/
+#ifndef GCOV_DO_COVERAGE
 #define AppPoolsDetails_c \
          _block_size_  32  _number_of_blocks_    6  _pool_id_(0) _eol_  \
          _block_size_  64  _number_of_blocks_    3  _pool_id_(0) _eol_  \
          _block_size_ 128  _number_of_blocks_   10  _pool_id_(0) _eol_  \
          _block_size_ 512  _number_of_blocks_   40  _pool_id_(0) _eol_
+#else /* GCOV_DO_COVERAGE */
+#define AppPoolsDetails_c \
+         _block_size_  32  _number_of_blocks_    6  _pool_id_(0) _eol_  \
+         _block_size_  64  _number_of_blocks_    3  _pool_id_(0) _eol_  \
+         _block_size_ 128  _number_of_blocks_    5  _pool_id_(0) _eol_  \
+         _block_size_ 512  _number_of_blocks_    5  _pool_id_(0) _eol_
+#endif /* GCOV_DO_COVERAGE */
 
 /* Defines number of timers needed by the application */
 #define gTmrApplicationTimers_c         0
@@ -77,6 +85,11 @@
 #define gLlScanPeriodicAdvertiserListSize_c (8U)
 /* disable autonomous feature exchange */
 #define gL1AutonomousFeatureExchange_d 0
+
+#ifdef GCOV_DO_COVERAGE
+#define gLlMaxExtAdvDataLength_c             512U	//255U
+#endif /* GCOV_DO_COVERAGE */
+
 
 /*
  * Specific configuration of LL pools by block size and number of blocks for this application.

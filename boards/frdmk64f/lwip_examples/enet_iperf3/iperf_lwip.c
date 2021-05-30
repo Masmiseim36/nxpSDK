@@ -40,13 +40,11 @@ void iperf_hw_init(struct iperf_ctx *ctx)
     assert(NULL != ctx->recv_buf);
     memset(ctx->recv_buf, 0, IPERF_BUFFER_MAX);
 
-    iperf_ip_to_ip(&ctx->server_ip, &ctx->sock_ip);
-
     memset(&s_addr, 0, sizeof(struct sockaddr_in));
-    s_addr.sin_family      = AF_INET;
-    s_addr.sin_addr.s_addr = ctx->sock_ip;
-    s_addr.sin_port        = htons(SENDER_PORT_NUM);
-    s_addr.sin_len         = sizeof(s_addr);
+    s_addr.sin_family = AF_INET;
+    s_addr.sin_port   = htons(SENDER_PORT_NUM);
+    s_addr.sin_len    = sizeof(s_addr);
+    iperf_ip_to_ip(&ctx->server_ip, &s_addr.sin_addr.s_addr);
 
     ctx->addr     = &s_addr;
     ctx->addr_len = sizeof(s_addr);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -18,7 +18,7 @@ const l_u32 g_lin_virtual_ifc[LIN_NUM_OF_IFCS]                 = {1};
 volatile l_u8 g_buffer_backup_data[8];
 
 /* Frame data buffer of signal array. */
-l_u8 g_lin_frame_data_buffer[LIN_FRAME_BUF_SIZE] = {
+volatile l_u8 g_lin_frame_data_buffer[LIN_FRAME_BUF_SIZE] = {
     0xfc, /* 0 : 11111100, Frame LI0_Motor1Control. */
     0x00, /* 1 : 00000101, Frame LI0_Motor1State_Cycl. */
     0x00, /* 2 : 00000000 */
@@ -40,7 +40,7 @@ l_u8 g_lin_frame_data_buffer[LIN_FRAME_BUF_SIZE] = {
 };
 
 /* Flag handle table of signal array */
-l_u8 g_lin_flag_handle_tbl[LIN_FLAG_BUF_SIZE] = {
+volatile l_u8 g_lin_flag_handle_tbl[LIN_FLAG_BUF_SIZE] = {
     0x00, /* 0: start of flag frame LI0_Motor1Control */
     0x00, /* 1: start of flag frame LI0_Motor1State_Cycl */
     0x00, /* 2: start of flag frame LI0_Motor1State_Event */
@@ -48,7 +48,7 @@ l_u8 g_lin_flag_handle_tbl[LIN_FLAG_BUF_SIZE] = {
 };
 
 /* Frame flag table. */
-l_bool g_lin_frame_flag_handle_tbl[LIN_NUM_OF_FRMS] = {0, 0, 0, 0, 0, 0, 0};
+volatile l_bool g_lin_frame_flag_handle_tbl[LIN_NUM_OF_FRMS] = {0, 0, 0, 0, 0, 0, 0};
 
 /* Frame flag for updating signal in frame. */
 volatile l_u8 g_lin_frame_updating_flag_tbl[LIN_NUM_OF_FRMS] = {0, 0, 0, 0, 0, 0, 0};

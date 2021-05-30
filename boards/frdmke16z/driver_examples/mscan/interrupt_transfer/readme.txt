@@ -1,11 +1,19 @@
 Overview
 ========
-The mscan_interrupt_transfer example shows how to use MSCAN driver in none-blocking interrupt way:
+The mscan_interrupt example shows how to use MSCAN driver in none-blocking interrupt way:
 
 In this example, 2 boards are connected through CAN bus. Endpoint A(board A) send a CAN Message to
 Endpoint B(board B) when user press space key in terminal. Endpoint B receive the message, print
 the message content to terminal and echo back the message. Endpoint A will increase the received
 message and waiting for the next transmission of the user initiated.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cables
@@ -80,11 +88,3 @@ Wait Node A to trigger the next transmission!
 Rx MB ID: 0x321, Rx MB data: , Time stamp: 8877
 Wait Node A to trigger the next transmission!
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

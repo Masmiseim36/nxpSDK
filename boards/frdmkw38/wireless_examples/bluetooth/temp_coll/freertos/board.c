@@ -42,6 +42,7 @@
 #include "Keyboard.h"
 #include "SerialManager.h"
 #include "Flash_Adapter.h"
+#include "fsl_rtc.h"
 
 
 /*******************************************************************************
@@ -596,6 +597,12 @@ void BOARD_RTC_Init(void)
         /* set optimized Cload configuration to avoid high clock drift */
         RTC->CR |= BOARD_32KHZ_CLOAD_DEFAULT;
     }
+
+    /* We don t use RTC module for now, just the OSC32K. Make sure Interrupts are disabled */
+    RTC_DisableInterrupts( RTC, (uint32_t)kRTC_TimeInvalidInterruptEnable
+                | (uint32_t)kRTC_TimeOverflowInterruptEnable
+                | (uint32_t)kRTC_AlarmInterruptEnable
+                | (uint32_t)kRTC_SecondsInterruptEnable    );
 }
 
 
@@ -606,6 +613,11 @@ void BOARD_RTC_Deinit(void)
         /* switch off 32kHz oscillator */
         RTC->CR &= ~RTC_CR_OSCE_MASK;
     }
+
+    RTC_DisableInterrupts( RTC, (uint32_t)kRTC_TimeInvalidInterruptEnable
+                | (uint32_t)kRTC_TimeOverflowInterruptEnable
+                | (uint32_t)kRTC_AlarmInterruptEnable
+                | (uint32_t)kRTC_SecondsInterruptEnable    );
 }
 
 void BOARD_SetCoreClock48Mhz(void)

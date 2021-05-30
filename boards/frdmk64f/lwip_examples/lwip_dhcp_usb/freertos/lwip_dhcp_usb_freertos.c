@@ -19,14 +19,16 @@
 #include "lwip/ip_addr.h"
 #include "lwip/prot/dhcp.h"
 #include "lwip/tcpip.h"
-#include "ping.h"
 #include "lwip/api.h"
 #include "lwip/sys.h"
-#include "netif/etharp.h"
-#include "netifapi.h"
-#include "usb_ethernetif.h"
+#include "lwip/netifapi.h"
 #include "lwip/priv/api_msg.h"
 #include "lwip/netifapi.h"
+#include "netif/etharp.h"
+#include "usb_ethernetif.h"
+#include "ping.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_device_registers.h"
@@ -35,8 +37,6 @@
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

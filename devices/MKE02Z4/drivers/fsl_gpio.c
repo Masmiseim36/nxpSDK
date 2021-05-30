@@ -214,12 +214,17 @@ uint32_t GPIO_PinRead(gpio_port_num_t port, uint8_t pin)
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+/*!
+ * @brief Enable the FGPIO clock.
+ *
+ * @param port FGPIO PORT number.
+ */
+static void FGPIO_EnableClock(gpio_port_num_t port);
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
-
-void FGPIO_PortInit(gpio_port_num_t port)
+static void FGPIO_EnableClock(gpio_port_num_t port)
 {
 #if defined(FSL_FEATURE_PCC_HAS_FGPIO_CLOCK_GATE_CONTROL) && FSL_FEATURE_PCC_HAS_FGPIO_CLOCK_GATE_CONTROL
     uint8_t instance = (uint8_t)port / PORT_NUMBERS_EACH_GPIO;
@@ -230,6 +235,11 @@ void FGPIO_PortInit(gpio_port_num_t port)
     CLOCK_EnableClock(s_fgpioClockName[FGPIO_GetInstance(base)]);
 #endif /* FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL */
 #endif /* FSL_FEATURE_PCC_HAS_FGPIO_CLOCK_GATE_CONTROL */
+}
+
+void FGPIO_PortInit(gpio_port_num_t port)
+{
+    FGPIO_EnableClock(port);
 }
 
 /*!
@@ -269,6 +279,8 @@ void FGPIO_PinInit(gpio_port_num_t port, uint8_t pin, const gpio_pin_config_t *c
     uint8_t instance = (uint8_t)port / PORT_NUMBERS_EACH_GPIO;
     uint8_t shift    = (uint8_t)port % PORT_NUMBERS_EACH_GPIO;
     FGPIO_Type *base = s_fgpioBases[instance];
+
+    FGPIO_EnableClock(port);
 
     if (config->pinDirection == kGPIO_DigitalInput)
     {

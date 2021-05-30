@@ -11,17 +11,19 @@
 // Includes
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "board.h"
 #include "pin_mux.h"
 #include "fsl_uart.h"
 #include "fsl_common.h"
+#include "usb.h"
+#include "usb_phy.h"
+#include "board.h"
 
 #include "usb_device_config.h"
 
 #include "freemaster.h"
+#include "freemaster_usb.h"
 
 #include "freemaster_example.h"
-#include "freemaster_usb.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables
@@ -55,7 +57,7 @@ int main(void)
     /* This example uses shared code from FreeMASTER generic example application */
     FMSTR_Example_Init();
 
-    while(1)
+    while (1)
     {
         // FreeMASTER example increments several variables periodically,
         // use the FreeMASTER PC Host tool to visualize the variables

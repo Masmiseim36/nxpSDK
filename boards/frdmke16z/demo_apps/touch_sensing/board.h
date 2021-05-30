@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2013 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2013 - 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -79,11 +79,12 @@ TSI_CH 2   3   6   7   23  22
 /*! @brief The UART to use for debug messages. */
 #define BOARD_USE_UART
 #define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
-#define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART0
-#define BOARD_DEBUG_UART_INSTANCE 0U
+#define BOARD_DEBUG_UART_BASEADDR LPUART1
+#define BOARD_DEBUG_UART_INSTANCE 1U
 #define BOARD_DEBUG_UART_CLKSRC kCLOCK_IpSrcSysOscAsync
-#define BOARD_UART_IRQ LPUART0_IRQn
-#define BOARD_UART_IRQ_HANDLER LPUART0_IRQHandler
+#define BOARD_DEBUG_UART_CLK_FREQ CLOCK_GetIpFreq(kCLOCK_Lpuart1)
+#define BOARD_UART_IRQ LPUART1_IRQn
+#define BOARD_UART_IRQ_HANDLER LPUART1_IRQHandler
 
     /* @Brief Board accelerator sensor configuration */
 #define BOARD_ACCEL_I2C_BASEADDR LPI2C0

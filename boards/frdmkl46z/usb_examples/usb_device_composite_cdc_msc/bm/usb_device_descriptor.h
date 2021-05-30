@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2017 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -105,8 +109,8 @@
 #define USB_CDC_TELEPHONE_CONTROL_FUNC_DESC (0x18)
 #define USB_CDC_OBEX_SERVICE_ID_FUNC_DESC (0x19)
 
-/* usb descritpor length */
-#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (98)
+/* usb descriptor length */
+#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 #define USB_MSC_DISK_REPORT_DESCRIPTOR_LENGTH (63)
 #define USB_CDC_VCOM_REPORT_DESCRIPTOR_LENGTH (33)
 #define USB_IAD_DESC_SIZE (8)
@@ -168,11 +172,11 @@
 #define FS_CDC_VCOM_BULK_OUT_PACKET_SIZE (64)
 
 /* String descriptor length. */
-#define USB_DESCRIPTOR_LENGTH_STRING0 (4)
-#define USB_DESCRIPTOR_LENGTH_STRING1 (38)
-#define USB_DESCRIPTOR_LENGTH_STRING2 (38)
-#define USB_DESCRIPTOR_LENGTH_STRING3 (34)
-#define USB_DESCRIPTOR_LENGTH_STRING4 (36)
+#define USB_DESCRIPTOR_LENGTH_STRING0 (sizeof(g_UsbDeviceString0))
+#define USB_DESCRIPTOR_LENGTH_STRING1 (sizeof(g_UsbDeviceString1))
+#define USB_DESCRIPTOR_LENGTH_STRING2 (sizeof(g_UsbDeviceString2))
+#define USB_DESCRIPTOR_LENGTH_STRING3 (sizeof(g_UsbDeviceString3))
+#define USB_DESCRIPTOR_LENGTH_STRING4 (sizeof(g_UsbDeviceString4))
 
 #define USB_DESCRIPTOR_TYPE_CDC_CS_INTERFACE (0x24)
 #define USB_DESCRIPTOR_TYPE_CDC_CS_ENDPOINT (0x25)
@@ -205,7 +209,11 @@
  * @return A USB error code or kStatus_USB_Success.
  */
 extern usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed);
-
+#if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
+/* Get device qualifier descriptor request */
+usb_status_t USB_DeviceGetDeviceQualifierDescriptor(
+    usb_device_handle handle, usb_device_get_device_qualifier_descriptor_struct_t *deviceQualifierDescriptor);
+#endif
 /*!
  * @brief USB device get device descriptor function.
  *

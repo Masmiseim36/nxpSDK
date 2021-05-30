@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -111,7 +115,7 @@ void AGENT_SendAssociationRequest(uint32_t handle, uint8_t *associationData, uin
             /* the first time for sending the association request to host */
             if (AGENT_SendData(handle, AGENT_SEND_DATA_QOS, (uint8_t *)associationData, size))
             {
-#if _DEBUG
+#if _USB_DEBUG
                 usb_echo("Send association request error\n\r");
 #endif
             }
@@ -119,7 +123,7 @@ void AGENT_SendAssociationRequest(uint32_t handle, uint8_t *associationData, uin
     }
     else
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("Cannot get agent device \n\r");
 #endif
     }
@@ -174,7 +178,7 @@ void AGENT_SendConfig(uint32_t handle, uint8_t *config, uint32_t size)
             /* the first time for sending the association request to host */
             if (AGENT_SendData(handle, AGENT_SEND_DATA_QOS, (uint8_t *)config, size))
             {
-#if _DEBUG
+#if _USB_DEBUG
                 usb_echo("Send configuration error\n\r");
 #endif
             }
@@ -182,7 +186,7 @@ void AGENT_SendConfig(uint32_t handle, uint8_t *config, uint32_t size)
     }
     else
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("Cannot get agent device \n\r");
 #endif
     }
@@ -234,14 +238,14 @@ void AGENT_SendAssociationAbortRequest(uint32_t handle, abort_reason_t abortReas
         pApdu->u.abrt.reason = USB_SHORT_FROM_BIG_ENDIAN(abortReason);
         if (AGENT_SendData(pAgent->agentHandle, AGENT_SEND_DATA_QOS, (uint8_t *)pApdu, (uint32_t)size))
         {
-#if _DEBUG
+#if _USB_DEBUG
             usb_echo("Send abort request error\n\r");
 #endif
         }
     }
     else
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("Cannot find the agent device\n\r");
 #endif
     }
@@ -276,14 +280,14 @@ void AGENT_SendAssociationRleaseRequest(uint32_t handle, release_request_reason_
         pApdu->u.rlrq.reason = USB_SHORT_FROM_BIG_ENDIAN(releaseReason);
         if (AGENT_SendData(pAgent->agentHandle, AGENT_SEND_DATA_QOS, (uint8_t *)pApdu, (uint32_t)size))
         {
-#if _DEBUG
+#if _USB_DEBUG
             usb_echo("Send release request error\n\r");
 #endif
         }
     }
     else
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("Cannot find agent device\n\r");
 #endif
     }
@@ -318,14 +322,14 @@ static void AGENT_SendAssociationReleaseResponse(uint32_t handle, release_reques
         pApdu->u.rlre.reason = USB_SHORT_FROM_BIG_ENDIAN(releaseReason);
         if (AGENT_SendData(handle, AGENT_SEND_DATA_QOS, (uint8_t *)pApdu, (uint32_t)size))
         {
-#if _DEBUG
+#if _USB_DEBUG
             usb_echo("Send release response error\n\r");
 #endif
         }
     }
     else
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("Cannot find the agent device\n\r");
 #endif
     }
@@ -386,48 +390,48 @@ void AGENT_SetAgentState(uint32_t handle, uint8_t state)
                 }
 #endif
                 pAgent->agentState = state;
-#if _DEBUG
+#if _USB_DEBUG
                 usb_echo("\n\r11073Agent: ENTER DISCONNECTED state");
 #endif
                 break;
             case AGENT_STATE_CON_UNASSOCIATED:
                 pAgent->agentState = state;
-#if _DEBUG
+#if _USB_DEBUG
                 usb_echo("\n\r11073Agent: ENTER UNASSOCIATED state");
 #endif
                 break;
             case AGENT_STATE_CON_ASSOCIATING:
                 pAgent->agentState = state;
-#if _DEBUG
+#if _USB_DEBUG
                 usb_echo("\n\r11073Agent: ENTER ASSOCIATING state");
 #endif
                 break;
             case AGENT_STATE_CON_ASSOC_CFG_SENDING_CONFIG:
                 pAgent->agentState = state;
-#if _DEBUG
+#if _USB_DEBUG
                 usb_echo("\n\r11073Agent: ENTER CONFIGURING SENDING CONFIG state");
 #endif
                 break;
             case AGENT_STATE_CON_ASSOC_CFG_WAITING_APPROVAL:
                 pAgent->agentState = state;
-#if _DEBUG
+#if _USB_DEBUG
                 usb_echo("\n\r11073Agent: ENTER CONFIGURING WAITING APPROVAL state");
 #endif
                 break;
             case AGENT_STATE_CON_ASSOC_OPERATING:
                 pAgent->agentState = state;
-#if _DEBUG
+#if _USB_DEBUG
                 usb_echo("\n\r11073Agent: ENTER OPERATING state");
 #endif
                 break;
             case AGENT_STATE_CON_DISASSOCIATING:
                 pAgent->agentState = state;
-#if _DEBUG
+#if _USB_DEBUG
                 usb_echo("\n\r11073Agent: ENTER DISASSOCIATING state");
 #endif
                 break;
             default:
-#if _DEBUG
+#if _USB_DEBUG
                 usb_echo("\n\r11073Agent: Error invalid state");
 #endif
                 break;
@@ -435,7 +439,7 @@ void AGENT_SetAgentState(uint32_t handle, uint8_t state)
     }
     else
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("\n\r11073Agent: Error invalid param");
 #endif
     }
@@ -463,7 +467,7 @@ void AGENT_Init(uint32_t handle)
     }
     if (0U == isNonActiveAgent)
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("ERROR: Users need to increase the max number of agent devices!\n\r");
 #endif
     }
@@ -552,7 +556,7 @@ void AGENT_Callback(uint32_t handle, uint8_t request, uint8_t *data, uint32_t si
     }
     else
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("Cannot the Agent device\n\r");
 #endif
     }
@@ -699,7 +703,7 @@ static void AGENT_RecvComplete(uint32_t handle, uint8_t *dataBuffer, uint32_t si
     }
     else
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("Cannot find the Agent device\n\r");
 #endif
     }
@@ -745,7 +749,7 @@ static void AGENT_RecvAssociationResponse(uint32_t handle, aare_apdu_t *associai
     }
     else
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("Cannot find the Agent device\n\r");
 #endif
     }
@@ -912,7 +916,7 @@ static void AGENT_RecvPresentationProtocolDataUnit(uint32_t handle, prst_apdu_t 
     }
     else
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("Cannot find the Agent device\n\r");
 #endif
     }
@@ -958,14 +962,14 @@ static void AGENT_SendRoer(uint32_t handle, error_result_t *errorResult)
         }
         if (AGENT_SendData(handle, AGENT_SEND_DATA_QOS, (uint8_t *)pApdu, (uint32_t)size))
         {
-#if _DEBUG
+#if _USB_DEBUG
             usb_echo("Send release response error\n\r");
 #endif
         }
     }
     else
     {
-#if _DEBUG
+#if _USB_DEBUG
         usb_echo("Cannot find the agent device\n\r");
 #endif
     }

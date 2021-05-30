@@ -1,10 +1,10 @@
 //*****************************************************************************
 // MK24F12 startup code for use with MCUXpresso IDE
 //
-// Version : 180919
+// Version : 160420
 //*****************************************************************************
 //
-// Copyright 2016-2019 NXP
+// Copyright 2016-2020 NXP
 // All rights reserved.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -273,6 +273,9 @@ extern void _vStackTop(void);
 // The vector table.
 // This relies on the linker script to place at correct location in memory.
 //*****************************************************************************
+
+
+
 extern void (* const g_pfnVectors[])(void);
 extern void * __Vectors __attribute__ ((alias ("g_pfnVectors")));
 
@@ -379,6 +382,7 @@ void (* const g_pfnVectors[])(void) = {
     CAN0_Rx_Warning_IRQHandler,           // 95: CAN0 Rx warning interrupt
     CAN0_Wake_Up_IRQHandler,              // 96: CAN0 wake up interrupt
     SDHC_IRQHandler,                      // 97: SDHC interrupt
+
 
 }; /* End of g_pfnVectors */
 

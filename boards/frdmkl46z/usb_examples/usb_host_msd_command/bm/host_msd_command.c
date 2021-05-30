@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -32,6 +36,7 @@
 #include "usb_host.h"
 #include "usb_host_msd.h"
 #include "host_msd_command.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
@@ -97,10 +102,12 @@ volatile uint8_t ufiIng;
 /* command callback status */
 volatile usb_status_t ufiStatus;
 
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_TestUfiBuffer[512]; /*!< test buffer */
+
 #if MSD_THROUGHPUT_TEST_ENABLE
-static uint32_t testThroughputBuffer[THROUGHPUT_BUFFER_SIZE / 4]; /* the buffer for throughput test */
-uint32_t testSizeArray[] = {50 * 1024, 50 * 1024};                /* test time and test size (uint: K) */
-#endif                                                            /* MSD_THROUGHPUT_TEST_ENABLE */
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint32_t testThroughputBuffer[THROUGHPUT_BUFFER_SIZE / 4]; /* the buffer for throughput test */
+uint32_t testSizeArray[] = {50 * 1024, 50 * 1024}; /* test time and test size (uint: K) */
+#endif                                             /* MSD_THROUGHPUT_TEST_ENABLE */
 
 /*******************************************************************************
  * Code
@@ -116,10 +123,10 @@ static void USB_HostMsdControlCallback(void *param, uint8_t *data, uint32_t data
 {
     usb_host_msd_command_instance_t *msdCommandInstance = (usb_host_msd_command_instance_t *)param;
 
-    if (msdCommandInstance->runWaitState == kRunWaitSetInterface) /* set interface finish */
+    if (msdCommandInstance->runWaitState == kUSB_HostMsdRunWaitSetInterface) /* set interface finish */
     {
-        msdCommandInstance->runWaitState = kRunIdle;
-        msdCommandInstance->runState = kRunMassStorageTest;
+        msdCommandInstance->runWaitState = kUSB_HostMsdRunIdle;
+        msdCommandInstance->runState = kUSB_HostMsdRunMassStorageTest;
     }
 }
 
@@ -148,15 +155,14 @@ static void USB_HostMsdCommandTest(usb_host_msd_command_instance_t *msdCommandIn
 {
     usb_status_t status;
     uint32_t blockSize = 512;
-    uint8_t maxLunNumber;
     uint32_t address;
 
     usb_echo("........................test start....................\r\n");
 
     usb_echo("get max logical units....");
     ufiIng = 1;
-    status = USB_HostMsdGetMaxLun(msdCommandInstance->classHandle, &maxLunNumber, USB_HostMsdUfiCallback,
-                                  msdCommandInstance);
+    status = USB_HostMsdGetMaxLun(msdCommandInstance->classHandle, msdCommandInstance->testUfiBuffer,
+                                  USB_HostMsdUfiCallback, msdCommandInstance);
     if (status != kStatus_USB_Success)
     {
         usb_echo("error\r\n");
@@ -169,7 +175,7 @@ static void USB_HostMsdCommandTest(usb_host_msd_command_instance_t *msdCommandIn
     }
     if (ufiStatus == kStatus_USB_Success) /* print the command result */
     {
-        usb_echo("success, logical units: %d\r\n", maxLunNumber);
+        usb_echo("success, logical units: %d\r\n", msdCommandInstance->testUfiBuffer[0]);
     }
     else
     {
@@ -499,12 +505,12 @@ void USB_HostMsdTask(void *arg)
                     usb_echo("usb host msd init fail\r\n");
                     return;
                 }
-                msdCommandInstance->runState = kRunSetInterface;
+                msdCommandInstance->runState = kUSB_HostMsdRunSetInterface;
                 break;
 
             case kStatus_DEV_Detached: /* device is detached */
                 msdCommandInstance->deviceState = kStatus_DEV_Idle;
-                msdCommandInstance->runState = kRunIdle;
+                msdCommandInstance->runState = kUSB_HostMsdRunIdle;
                 USB_HostMsdDeinit(msdCommandInstance->deviceHandle,
                                   msdCommandInstance->classHandle); /* msd class de-initialization */
                 msdCommandInstance->classHandle = NULL;
@@ -520,12 +526,12 @@ void USB_HostMsdTask(void *arg)
     /* run state */
     switch (msdCommandInstance->runState)
     {
-        case kRunIdle:
+        case kUSB_HostMsdRunIdle:
             break;
 
-        case kRunSetInterface: /* set msd interface */
-            msdCommandInstance->runState = kRunIdle;
-            msdCommandInstance->runWaitState = kRunWaitSetInterface;
+        case kUSB_HostMsdRunSetInterface: /* set msd interface */
+            msdCommandInstance->runState = kUSB_HostMsdRunIdle;
+            msdCommandInstance->runWaitState = kUSB_HostMsdRunWaitSetInterface;
             status = USB_HostMsdSetInterface(msdCommandInstance->classHandle, msdCommandInstance->interfaceHandle, 0,
                                              USB_HostMsdControlCallback, msdCommandInstance);
             if (status != kStatus_USB_Success)
@@ -534,9 +540,9 @@ void USB_HostMsdTask(void *arg)
             }
             break;
 
-        case kRunMassStorageTest:                       /* set interface succeed */
+        case kUSB_HostMsdRunMassStorageTest:            /* set interface succeed */
             USB_HostMsdCommandTest(msdCommandInstance); /* test msd device */
-            msdCommandInstance->runState = kRunIdle;
+            msdCommandInstance->runState = kUSB_HostMsdRunIdle;
             break;
 
         default:
@@ -583,6 +589,7 @@ usb_status_t USB_HostMsdEvent(usb_device_handle deviceHandle,
                     if (g_MsdCommandInstance.deviceState == kStatus_DEV_Idle)
                     {
                         /* the interface is supported by the application */
+                        g_MsdCommandInstance.testUfiBuffer = s_TestUfiBuffer;
                         g_MsdCommandInstance.deviceHandle = deviceHandle;
                         g_MsdCommandInstance.interfaceHandle = interface;
                         g_MsdCommandInstance.configHandle = configurationHandle;

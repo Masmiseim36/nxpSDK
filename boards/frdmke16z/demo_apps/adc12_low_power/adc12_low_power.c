@@ -10,19 +10,19 @@
 #include "fsl_smc.h"
 #include "fsl_pmc.h"
 #include "fsl_adc12.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lptmr.h"
 
 #include "fsl_trgmux.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ADC12_BASEADDR ADC0
+#define DEMO_ADC12_BASEADDR      ADC0
 #define DEMO_ADC12_CHANNEL_GROUP 0U
 
-#define DEMO_ADC12_IRQ_ID ADC0_IRQn
+#define DEMO_ADC12_IRQ_ID           ADC0_IRQn
 #define DEMO_ADC12_IRQ_HANDLER_FUNC ADC0_IRQHandler
 
 /*
@@ -30,17 +30,17 @@
  * LPTMR may use LPO 1KHz or LPO 128KHz clock as prescaler/glitch filter clock, this is chip specific.
  */
 #define LPTMR_COMPARE_VALUE (500 * 128U)
-#define DEMO_LPTMR_BASE LPTMR0
+#define DEMO_LPTMR_BASE     LPTMR0
 
 #define DEMO_ADC12_CLOCK_NAME kCLOCK_Adc0
 
 #define LED1_INIT() LED_RED1_INIT(LOGIC_LED_OFF)
-#define LED1_ON() LED_RED1_ON()
-#define LED1_OFF() LED_RED1_OFF()
+#define LED1_ON()   LED_RED1_ON()
+#define LED1_OFF()  LED_RED1_OFF()
 
 #define LED2_INIT() LED_GREEN1_INIT(LOGIC_LED_OFF)
-#define LED2_ON() LED_GREEN1_ON()
-#define LED2_OFF() LED_GREEN1_OFF()
+#define LED2_ON()   LED_GREEN1_ON()
+#define LED2_OFF()  LED_GREEN1_OFF()
 #define kAdcChannelTemperature (26U) /*! ADC channel of temperature sensor */
 
 #define UPPER_VALUE_LIMIT (1U) /*! This value/10 is going to be added to current Temp to set the upper boundary*/
@@ -52,8 +52,8 @@
               To know the Time it will take, multiply this value times LPTMR_COMPARE_VALUE*/
 
 /*!
-* @brief Boundaries struct
-*/
+ * @brief Boundaries struct
+ */
 typedef struct lowPowerAdcBoundaries
 {
     int32_t upperBoundary; /*! upper boundary of ADC sensor value */
@@ -103,36 +103,28 @@ volatile bool conversionCompleted = false; /*! Conversion is completed Flag */
  ******************************************************************************/
 void APP_BootClockRUN(void)
 {
-    const scg_sosc_config_t g_scgSysOscConfig = {.freq = BOARD_XTAL0_CLK_HZ,
-                                                 .enableMode = kSCG_SysOscEnable | kSCG_SysOscEnableInLowPower,
+    const scg_sosc_config_t g_scgSysOscConfig = {.freq        = BOARD_XTAL0_CLK_HZ,
+                                                 .enableMode  = kSCG_SysOscEnable | kSCG_SysOscEnableInLowPower,
                                                  .monitorMode = kSCG_SysOscMonitorDisable,
-                                                 .div1 = kSCG_AsyncClkDivBy1,
-                                                 .div2 = kSCG_AsyncClkDivBy1,
-                                                 .workMode = kSCG_SysOscModeOscLowPower};
+                                                 .div2        = kSCG_AsyncClkDivBy1,
+                                                 .workMode    = kSCG_SysOscModeOscLowPower};
 
     const scg_sys_clk_config_t g_sysClkConfigSircSource = {
         .divSlow = kSCG_SysClkDivBy4, .divCore = kSCG_SysClkDivBy1, .src = kSCG_SysClkSrcSirc};
 
-    const scg_firc_config_t g_scgFircConfig = {.enableMode = kSCG_FircEnable,
-                                               .div1 = kSCG_AsyncClkDivBy1,
-                                               .div2 = kSCG_AsyncClkDivBy1,
-                                               .range = kSCG_FircRange48M,
-                                               .trimConfig = NULL};
+    const scg_firc_config_t g_scgFircConfig = {
+        .enableMode = kSCG_FircEnable, .div2 = kSCG_AsyncClkDivBy1, .range = kSCG_FircRange48M, .trimConfig = NULL};
 
-    const scg_lpfll_config_t g_scgLpFllConfig = {.enableMode = kSCG_LpFllEnable,
-                                                 .div1 = kSCG_AsyncClkDivBy1,
-                                                 .div2 = kSCG_AsyncClkDivBy2,
-                                                 .range = kSCG_LpFllRange48M,
-                                                 .trimConfig = NULL};
+    const scg_lpfll_config_t g_scgLpFllConfig = {
+        .enableMode = kSCG_LpFllEnable, .div2 = kSCG_AsyncClkDivBy2, .range = kSCG_LpFllRange48M, .trimConfig = NULL};
 
     const scg_sys_clk_config_t g_sysClkConfigNormalRun = {
         .divSlow = kSCG_SysClkDivBy3, .divCore = kSCG_SysClkDivBy1, .src = kSCG_SysClkSrcLpFll};
 
     const scg_sirc_config_t scgSircConfig = {
         .enableMode = kSCG_SircEnable | kSCG_SircEnableInLowPower | kSCG_SircEnableInStop,
-        .div1 = kSCG_AsyncClkDivBy1,
-        .div2 = kSCG_AsyncClkDivBy2,
-        .range = kSCG_SircRangeHigh};
+        .div2       = kSCG_AsyncClkDivBy2,
+        .range      = kSCG_SircRangeHigh};
 
     scg_sys_clk_config_t curConfig;
 
@@ -209,18 +201,18 @@ static void ADC12_InitHardwareTrigger(ADC_Type *base)
     adc12_channel_config_t adcChnConfig;
 
     /*
-    * Initialization ADC for
-    * 12bit resolution, interrupt mode, hw trigger enabled.
-    * 13 Sample Time ADC clock cycles, VREFH/L as reference,
-    * disable continuous convert mode.
-    */
+     * Initialization ADC for
+     * 12bit resolution, interrupt mode, hw trigger enabled.
+     * 13 Sample Time ADC clock cycles, VREFH/L as reference,
+     * disable continuous convert mode.
+     */
     ADC12_GetDefaultConfig(&adcUserConfig);
-    adcUserConfig.resolution = kADC12_Resolution12Bit;
-    adcUserConfig.clockSource = kADC12_ClockSourceAlt0;
-    adcUserConfig.clockDivider = kADC12_ClockDivider1;
+    adcUserConfig.resolution             = kADC12_Resolution12Bit;
+    adcUserConfig.clockSource            = kADC12_ClockSourceAlt0;
+    adcUserConfig.clockDivider           = kADC12_ClockDivider1;
     adcUserConfig.referenceVoltageSource = kADC12_ReferenceVoltageSourceVref;
     /* The temperature sensor channel needs long sample time */
-    adcUserConfig.sampleClockCount = 255U;
+    adcUserConfig.sampleClockCount           = 255U;
     adcUserConfig.enableContinuousConversion = false;
     ADC12_Init(base, &adcUserConfig);
     /* Set to hardware trigger mode. */
@@ -232,7 +224,7 @@ static void ADC12_InitHardwareTrigger(ADC_Type *base)
         PRINTF("ADC calibration failed!\r\n");
     }
 
-    adcChnConfig.channelNumber = kAdcChannelTemperature;
+    adcChnConfig.channelNumber                        = kAdcChannelTemperature;
     adcChnConfig.enableInterruptOnConversionCompleted = true;
     /* Configure channel */
     ADC12_SetChannelConfig(base, DEMO_ADC12_CHANNEL_GROUP, &adcChnConfig);
@@ -270,11 +262,7 @@ void DEMO_ADC12_IRQ_HANDLER_FUNC(void)
     adcValue = ADC12_GetChannelConversionValue(DEMO_ADC12_BASEADDR, DEMO_ADC12_CHANNEL_GROUP);
     /* Set conversionCompleted flag. This prevents an wrong conversion in main function */
     conversionCompleted = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -325,7 +313,7 @@ int main(void)
     }
 
     /* Temp Sensor Calibration */
-    boundaries = TempSensorCalibration(updateBoundariesCounter, tempArray);
+    boundaries              = TempSensorCalibration(updateBoundariesCounter, tempArray);
     updateBoundariesCounter = 0;
 
     /* Two LED is turned on indicating calibration is done */
@@ -367,7 +355,7 @@ int main(void)
         /* Call update function */
         if (updateBoundariesCounter >= (UPDATE_BOUNDARIES_TIME))
         {
-            boundaries = TempSensorCalibration(updateBoundariesCounter, tempArray);
+            boundaries              = TempSensorCalibration(updateBoundariesCounter, tempArray);
             updateBoundariesCounter = 0;
         }
         else

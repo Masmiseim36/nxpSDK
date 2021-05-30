@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_tsi_v5.h"
 #include "fsl_debug_console.h"
 #include "fsl_lptmr.h"
 #include "fsl_trgmux.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -23,15 +23,15 @@
 
 /* IRQ related redefinitions for specific SOC */
 #define TSI0_IRQHandler TSI_IRQHandler
-#define TSI0_IRQn TSI_IRQn
+#define TSI0_IRQn       TSI_IRQn
 
 /* Define the delta value to indicate a touch event */
 #define TOUCH_DELTA_VALUE 100U
 
 /* TSI indication led of electrode 1 */
-#define LED1_INIT() LED_BLUE_INIT(LOGIC_LED_OFF)
+#define LED1_INIT()   LED_BLUE_INIT(LOGIC_LED_OFF)
 #define LED1_TOGGLE() LED_BLUE_TOGGLE()
-#define LED2_INIT() LED_RED1_INIT(LOGIC_LED_OFF)
+#define LED2_INIT()   LED_RED1_INIT(LOGIC_LED_OFF)
 
 /* Get source clock for LPTMR driver */
 #define LPTMR_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_LpoClk)
@@ -66,11 +66,7 @@ void TSI0_IRQHandler(void)
 
     /* Clear endOfScan flag */
     TSI_ClearStatusFlags(s_tsiBases[0], kTSI_EndOfScanFlag);
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!

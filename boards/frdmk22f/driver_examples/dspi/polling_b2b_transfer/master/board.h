@@ -143,6 +143,7 @@
     GPIO_PortToggle(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Toggle on target LED_BLUE */
 
 /* ERPC DSPI configuration */
+#define ERPC_BOARD_SPI_SLAVE_READY_USE_GPIO (1)
 #define ERPC_BOARD_DSPI_BASEADDR            SPI0
 #define ERPC_BOARD_DSPI_BAUDRATE            500000U
 #define ERPC_BOARD_DSPI_CLKSRC              DSPI0_CLK_SRC

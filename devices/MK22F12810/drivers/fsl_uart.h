@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief UART driver version 2.3.0. */
-#define FSL_UART_DRIVER_VERSION (MAKE_VERSION(2, 3, 0))
+/*! @brief UART driver version 2.4.0. */
+#define FSL_UART_DRIVER_VERSION (MAKE_VERSION(2, 4, 0))
 /*@}*/
 
 /*! @brief Retry times for waiting flag. */
@@ -119,7 +119,7 @@ enum _uart_interrupt_enable
  *
  * This provides constants for the UART status flags for use in the UART functions.
  */
-enum _uart_flags
+enum
 {
     kUART_TxDataRegEmptyFlag       = (UART_S1_TDRE_MASK), /*!< TX data register empty flag. */
     kUART_TransmissionCompleteFlag = (UART_S1_TC_MASK),   /*!< Transmission complete flag. */
@@ -299,6 +299,91 @@ void UART_GetDefaultConfig(uart_config_t *config);
  */
 status_t UART_SetBaudRate(UART_Type *base, uint32_t baudRate_Bps, uint32_t srcClock_Hz);
 
+/*!
+ * @brief Enable 9-bit data mode for UART.
+ *
+ * This function set the 9-bit mode for UART module. The 9th bit is not used for parity thus can be modified by user.
+ *
+ * @param base UART peripheral base address.
+ * @param enable true to enable, flase to disable.
+ */
+void UART_Enable9bitMode(UART_Type *base, bool enable);
+
+#if defined(FSL_FEATURE_UART_HAS_ADDRESS_MATCHING) && FSL_FEATURE_UART_HAS_ADDRESS_MATCHING
+/*!
+ * @brief Set the UART slave address.
+ *
+ * This function configures the address for UART module that works as slave in 9-bit data mode. One or two address
+ * fields can be configured. When the address field's match enable bit is set, the frame it receices with MSB being
+ * 1 is considered as an address frame, otherwise it is considered as data frame. Once the address frame matches one
+ * of slave's own addresses, this slave is addressed. This address frame and its following data frames are stored in
+ * the receive buffer, otherwise the frames will be discarded. To un-address a slave, just send an address frame with
+ * unmatched address.
+ *
+ * @note Any UART instance joined in the multi-slave system can work as slave. The position of the address mark is the
+ * same as the parity bit when parity is enabled for 8 bit and 9 bit data formats.
+ *
+ * @param base UART peripheral base address.
+ * @param address1 UART slave address 1.
+ * @param address2 UART slave address 2.
+ */
+static inline void UART_SetMatchAddress(UART_Type *base, uint8_t address1, uint8_t address2)
+{
+    /* Configure match address. */
+    base->MA1 = address1;
+    base->MA2 = address2;
+}
+
+/*!
+ * @brief Enable the UART match address feature.
+ *
+ * @param base UART peripheral base address.
+ * @param match1 true to enable match address1, false to disable.
+ * @param match2 true to enable match address2, false to disable.
+ */
+static inline void UART_EnableMatchAddress(UART_Type *base, bool match1, bool match2)
+{
+    /* Configure match address1 enable bit. */
+    if (match1)
+    {
+        base->C4 |= (uint8_t)UART_C4_MAEN1_MASK;
+    }
+    else
+    {
+        base->C4 &= ~(uint8_t)UART_C4_MAEN1_MASK;
+    }
+    /* Configure match address2 enable bit. */
+    if (match2)
+    {
+        base->C4 |= (uint8_t)UART_C4_MAEN2_MASK;
+    }
+    else
+    {
+        base->C4 &= ~(uint8_t)UART_C4_MAEN2_MASK;
+    }
+}
+#endif
+
+/*!
+ * @brief Set UART 9th transmit bit.
+ *
+ * @param base UART peripheral base address.
+ */
+static inline void UART_Set9thTransmitBit(UART_Type *base)
+{
+    base->C3 |= (uint8_t)UART_C3_T8_MASK;
+}
+
+/*!
+ * @brief Clear UART 9th transmit bit.
+ *
+ * @param base UART peripheral base address.
+ */
+static inline void UART_Clear9thTransmitBit(UART_Type *base)
+{
+    base->C3 &= ~(uint8_t)UART_C3_T8_MASK;
+}
+
 /* @} */
 
 /*!
@@ -310,8 +395,8 @@ status_t UART_SetBaudRate(UART_Type *base, uint32_t baudRate_Bps, uint32_t srcCl
  * @brief Gets UART status flags.
  *
  * This function gets all UART status flags. The flags are returned as the logical
- * OR value of the enumerators @ref _uart_flags. To check a specific status,
- * compare the return value with enumerators in @ref _uart_flags.
+ * OR value of the enumerators _uart_flags. To check a specific status,
+ * compare the return value with enumerators in _uart_flags.
  * For example, to check whether the TX is empty, do the following.
  * @code
  *     if (kUART_TxDataRegEmptyFlag & UART_GetStatusFlags(UART1))
@@ -334,10 +419,10 @@ uint32_t UART_GetStatusFlags(UART_Type *base);
  *    kUART_TxDataRegEmptyFlag, kUART_TransmissionCompleteFlag, kUART_RxDataRegFullFlag,
  *    kUART_RxActiveFlag, kUART_NoiseErrorInRxDataRegFlag, kUART_ParityErrorInRxDataRegFlag,
  *    kUART_TxFifoEmptyFlag,kUART_RxFifoEmptyFlag
- * Note that this API should be called when the Tx/Rx is idle. Otherwise it has no effect.
+ * @note that this API should be called when the Tx/Rx is idle. Otherwise it has no effect.
  *
  * @param base UART peripheral base address.
- * @param mask The status flags to be cleared; it is logical OR value of @ref _uart_flags.
+ * @param mask The status flags to be cleared; it is logical OR value of _uart_flags.
  * @retval kStatus_UART_FlagCannotClearManually The flag can't be cleared by this function but
  *         it is cleared automatically by hardware.
  * @retval kStatus_Success Status in the mask is cleared.
@@ -559,6 +644,16 @@ static inline uint8_t UART_ReadByte(UART_Type *base)
 {
     return base->D;
 }
+
+#if defined(FSL_FEATURE_UART_HAS_ADDRESS_MATCHING) && FSL_FEATURE_UART_HAS_ADDRESS_MATCHING
+/*!
+ * @brief Transmit an address frame in 9-bit data mode.
+ *
+ * @param base UART peripheral base address.
+ * @param address UART slave address.
+ */
+void UART_SendAddress(UART_Type *base, uint8_t address);
+#endif
 
 /*!
  * @brief Writes to the TX register using a blocking method.

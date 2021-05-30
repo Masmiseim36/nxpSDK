@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2018 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,8 +20,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief MsCAN driver version 2.0.1. */
-#define FSL_MSCAN_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
+/*! @brief MsCAN driver version. */
+#define FSL_MSCAN_DRIVER_VERSION (MAKE_VERSION(2, 0, 6))
 /*@}*/
 
 /*! @brief MsCAN Rx Message Buffer Mask helper macro. */
@@ -34,34 +34,34 @@
                 (((uint32_t)(id)&0x7F) << 1))) /*!< Extend Rx Message Buffer Mask helper macro. */
 
 /*! @brief FlexCAN transfer status. */
-enum _flexcan_status
+enum
 {
-    kStatus_MSCAN_TxBusy = MAKE_STATUS(kStatusGroup_MSCAN, 0), /*!< Tx Message Buffer is Busy. */
-    kStatus_MSCAN_TxIdle = MAKE_STATUS(kStatusGroup_MSCAN, 1), /*!< Tx Message Buffer is Idle. */
+    kStatus_MSCAN_TxBusy       = MAKE_STATUS(kStatusGroup_MSCAN, 0), /*!< Tx Message Buffer is Busy. */
+    kStatus_MSCAN_TxIdle       = MAKE_STATUS(kStatusGroup_MSCAN, 1), /*!< Tx Message Buffer is Idle. */
     kStatus_MSCAN_TxSwitchToRx = MAKE_STATUS(
         kStatusGroup_MSCAN, 2), /*!< Remote Message is send out and Message buffer changed to Receive one. */
-    kStatus_MSCAN_RxBusy = MAKE_STATUS(kStatusGroup_MSCAN, 3),         /*!< Rx Message Buffer is Busy. */
-    kStatus_MSCAN_RxIdle = MAKE_STATUS(kStatusGroup_MSCAN, 4),         /*!< Rx Message Buffer is Idle. */
-    kStatus_MSCAN_RxOverflow = MAKE_STATUS(kStatusGroup_MSCAN, 5),     /*!< Rx Message Buffer is Overflowed. */
-    kStatus_MSCAN_RxFifoBusy = MAKE_STATUS(kStatusGroup_MSCAN, 6),     /*!< Rx Message FIFO is Busy. */
-    kStatus_MSCAN_RxFifoIdle = MAKE_STATUS(kStatusGroup_MSCAN, 7),     /*!< Rx Message FIFO is Idle. */
-    kStatus_MSCAN_RxFifoOverflow = MAKE_STATUS(kStatusGroup_MSCAN, 8), /*!< Rx Message FIFO is overflowed. */
-    kStatus_MSCAN_RxFifoWarning = MAKE_STATUS(kStatusGroup_MSCAN, 9),  /*!< Rx Message FIFO is almost overflowed. */
-    kStatus_MSCAN_ErrorStatus = MAKE_STATUS(kStatusGroup_MSCAN, 10),   /*!< FlexCAN Module Error and Status. */
-    kStatus_MSCAN_UnHandled = MAKE_STATUS(kStatusGroup_MSCAN, 11),     /*!< UnHadled Interrupt asserted. */
+    kStatus_MSCAN_RxBusy         = MAKE_STATUS(kStatusGroup_MSCAN, 3),  /*!< Rx Message Buffer is Busy. */
+    kStatus_MSCAN_RxIdle         = MAKE_STATUS(kStatusGroup_MSCAN, 4),  /*!< Rx Message Buffer is Idle. */
+    kStatus_MSCAN_RxOverflow     = MAKE_STATUS(kStatusGroup_MSCAN, 5),  /*!< Rx Message Buffer is Overflowed. */
+    kStatus_MSCAN_RxFifoBusy     = MAKE_STATUS(kStatusGroup_MSCAN, 6),  /*!< Rx Message FIFO is Busy. */
+    kStatus_MSCAN_RxFifoIdle     = MAKE_STATUS(kStatusGroup_MSCAN, 7),  /*!< Rx Message FIFO is Idle. */
+    kStatus_MSCAN_RxFifoOverflow = MAKE_STATUS(kStatusGroup_MSCAN, 8),  /*!< Rx Message FIFO is overflowed. */
+    kStatus_MSCAN_RxFifoWarning  = MAKE_STATUS(kStatusGroup_MSCAN, 9),  /*!< Rx Message FIFO is almost overflowed. */
+    kStatus_MSCAN_ErrorStatus    = MAKE_STATUS(kStatusGroup_MSCAN, 10), /*!< FlexCAN Module Error and Status. */
+    kStatus_MSCAN_UnHandled      = MAKE_STATUS(kStatusGroup_MSCAN, 11), /*!< UnHadled Interrupt asserted. */
 };
 
 /*! @brief MsCAN frame format. */
 typedef enum _mscan_frame_format
 {
     kMSCAN_FrameFormatStandard = 0x0U, /*!< Standard frame format attribute. */
-    kMSCAN_FrameFormatExtend = 0x1U,   /*!< Extend frame format attribute. */
+    kMSCAN_FrameFormatExtend   = 0x1U, /*!< Extend frame format attribute. */
 } mscan_frame_format_t;
 
 /*! @brief MsCAN frame type. */
 typedef enum _mscan_frame_type
 {
-    kMSCAN_FrameTypeData = 0x0U,   /*!< Data frame type attribute. */
+    kMSCAN_FrameTypeData   = 0x0U, /*!< Data frame type attribute. */
     kMSCAN_FrameTypeRemote = 0x1U, /*!< Remote frame type attribute. */
 } mscan_frame_type_t;
 
@@ -76,7 +76,7 @@ typedef enum _mscan_clock_source
 typedef enum _mscan_busoffrec_mode
 {
     kMSCAN_BusoffrecAuto = 0x0U, /*!< MsCAN automatic bus-off recovery. */
-    kMSCAN_BusoffrecUsr = 0x1U,  /*!< MsCAN bus-off recovery upon user request. */
+    kMSCAN_BusoffrecUsr  = 0x1U, /*!< MsCAN bus-off recovery upon user request. */
 } mscan_busoffrec_mode_t;
 
 /*! @brief MsCAN Tx buffer empty flag. */
@@ -85,7 +85,7 @@ enum _mscan_tx_buffer_empty_flag
     kMSCAN_TxBuf0Empty = 0x1U, /*!< MsCAN Tx Buffer 0 empty. */
     kMSCAN_TxBuf1Empty = 0x2U, /*!< MsCAN Tx Buffer 1 empty. */
     kMSCAN_TxBuf2Empty = 0x4U, /*!< MsCAN Tx Buffer 2 empty. */
-    kMSCAN_TxBufFull = 0x0U,   /*!< MsCAN Tx Buffer all not empty. */
+    kMSCAN_TxBufFull   = 0x0U, /*!< MsCAN Tx Buffer all not empty. */
 };
 
 /*! @brief MsCAN id filter mode. */
@@ -93,7 +93,7 @@ typedef enum _mscan_id_filter_mode
 {
     kMSCAN_Filter32Bit = 0x0U, /*!< Two 32-bit acceptance filters. */
     kMSCAN_Filter16Bit = 0x1U, /*!< Four 16-bit acceptance filters. */
-    kMSCAN_Filter8Bit = 0x2U,  /*!< Eight 8-bit acceptance filters. */
+    kMSCAN_Filter8Bit  = 0x2U, /*!< Eight 8-bit acceptance filters. */
     kMSCAN_FilterClose = 0x3U, /*!< Filter closed. */
 } mscan_id_filter_mode_t;
 
@@ -104,13 +104,13 @@ typedef enum _mscan_id_filter_mode
  */
 enum _mscan_interrupt_enable
 {
-    kMSCAN_WakeUpInterruptEnable = MSCAN_CANRIER_WUPIE_MASK,          /*!< Wake Up interrupt. */
-    kMSCAN_StatusChangeInterruptEnable = MSCAN_CANRIER_CSCIE_MASK,    /*!< Status change interrupt. */
+    kMSCAN_WakeUpInterruptEnable         = MSCAN_CANRIER_WUPIE_MASK,  /*!< Wake Up interrupt. */
+    kMSCAN_StatusChangeInterruptEnable   = MSCAN_CANRIER_CSCIE_MASK,  /*!< Status change interrupt. */
     kMSCAN_RxStatusChangeInterruptEnable = MSCAN_CANRIER_RSTATE_MASK, /*!< Rx status change interrupt. */
     kMSCAN_TxStatusChangeInterruptEnable = MSCAN_CANRIER_TSTATE_MASK, /*!< Tx status change interrupt. */
-    kMSCAN_OverrunInterruptEnable = MSCAN_CANRIER_OVRIE_MASK,         /*!< Overrun interrupt. */
-    kMSCAN_RxFullInterruptEnable = MSCAN_CANRIER_RXFIE_MASK,          /*!< Rx buffer full interrupt. */
-    kMSCAN_TxEmptyInterruptEnable = MSCAN_CANTIER_TXEIE_MASK,         /*!< Tx buffer empty interrupt. */
+    kMSCAN_OverrunInterruptEnable        = MSCAN_CANRIER_OVRIE_MASK,  /*!< Overrun interrupt. */
+    kMSCAN_RxFullInterruptEnable         = MSCAN_CANRIER_RXFIE_MASK,  /*!< Rx buffer full interrupt. */
+    kMSCAN_TxEmptyInterruptEnable        = MSCAN_CANTIER_TXEIE_MASK,  /*!< Tx buffer empty interrupt. */
 };
 
 #if defined(__CC_ARM)
@@ -644,7 +644,7 @@ static inline void MSCAN_Enable(MSCAN_Type *base, bool enable)
     }
     else
     {
-        base->CANCTL1 &= ~MSCAN_CANCTL1_CANE_MASK;
+        base->CANCTL1 &= ~((uint8_t)MSCAN_CANCTL1_CANE_MASK);
     }
 }
 
@@ -656,11 +656,11 @@ static inline void MSCAN_Enable(MSCAN_Type *base, bool enable)
  * that the function returns immediately.
  *
  * @param base MsCAN peripheral base address.
- * @param txFrame Pointer to CAN message frame to be sent.
+ * @param pTxFrame Pointer to CAN message frame to be sent.
  * @retval kStatus_Success - Write Tx Message Buffer Successfully.
  * @retval kStatus_Fail    - Tx Message Buffer is currently in use.
  */
-status_t MSCAN_WriteTxMb(MSCAN_Type *base, mscan_frame_t *txFrame);
+status_t MSCAN_WriteTxMb(MSCAN_Type *base, mscan_frame_t *pTxFrame);
 
 /*!
  * @brief Reads a MsCAN Message from Receive Message Buffer.
@@ -671,11 +671,11 @@ status_t MSCAN_WriteTxMb(MSCAN_Type *base, mscan_frame_t *txFrame);
  * The function returns immediately.
  *
  * @param base MsCAN peripheral base address.
- * @param rxFrame Pointer to CAN message frame structure for reception.
+ * @param pRxFrame Pointer to CAN message frame structure for reception.
  * @retval kStatus_Success            - Rx Message Buffer is full and has been read successfully.
  * @retval kStatus_Fail               - Rx Message Buffer is empty.
  */
-status_t MSCAN_ReadRxMb(MSCAN_Type *base, mscan_frame_t *rxFrame);
+status_t MSCAN_ReadRxMb(MSCAN_Type *base, mscan_frame_t *pRxFrame);
 
 /* @} */
 
@@ -707,11 +707,11 @@ void MSCAN_TransferCreateHandle(MSCAN_Type *base,
  * Note that a transfer handle does not need to be created before calling this API.
  *
  * @param base MsCAN peripheral base pointer.
- * @param txFrame Pointer to CAN message frame to be sent.
+ * @param pTxFrame Pointer to CAN message frame to be sent.
  * @retval kStatus_Success - Write Tx Message Buffer Successfully.
  * @retval kStatus_Fail    - Tx Message Buffer is currently in use.
  */
-status_t MSCAN_TransferSendBlocking(MSCAN_Type *base, mscan_frame_t *txFrame);
+status_t MSCAN_TransferSendBlocking(MSCAN_Type *base, mscan_frame_t *pTxFrame);
 
 /*!
  * @brief Performs a polling receive transaction on the CAN bus.
@@ -719,11 +719,11 @@ status_t MSCAN_TransferSendBlocking(MSCAN_Type *base, mscan_frame_t *txFrame);
  * Note that a transfer handle does not need to be created before calling this API.
  *
  * @param base MsCAN peripheral base pointer.
- * @param rxFrame Pointer to CAN message frame to be received.
+ * @param pRxFrame Pointer to CAN message frame to be received.
  * @retval kStatus_Success - Read Rx Message Buffer Successfully.
  * @retval kStatus_Fail    - Tx Message Buffer is currently in use.
  */
-status_t MSCAN_TransferReceiveBlocking(MSCAN_Type *base, mscan_frame_t *rxFrame);
+status_t MSCAN_TransferReceiveBlocking(MSCAN_Type *base, mscan_frame_t *pRxFrame);
 
 /*!
  * @brief Sends a message using IRQ.

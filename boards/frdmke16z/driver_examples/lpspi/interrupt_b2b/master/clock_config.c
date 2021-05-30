@@ -69,14 +69,13 @@ extern uint32_t SystemCoreClock;
 static void CLOCK_CONFIG_FircSafeConfig(const scg_firc_config_t *fircConfig)
 {
     scg_sys_clk_config_t curConfig;
-    const scg_sirc_config_t scgSircConfig = {.enableMode = kSCG_SircEnable,
-                                             .div1 = kSCG_AsyncClkDisable,
-                                             .div2 = kSCG_AsyncClkDivBy2,
-                                             .range = kSCG_SircRangeHigh};
+    const scg_sirc_config_t scgSircConfig       = {.enableMode = kSCG_SircEnable,
+                                                   .div2       = kSCG_AsyncClkDivBy2,
+                                                   .range      = kSCG_SircRangeHigh};
     scg_sys_clk_config_t sysClkSafeConfigSource = {
         .divSlow = kSCG_SysClkDivBy4, /* Slow clock divider */
         .divCore = kSCG_SysClkDivBy1, /* Core clock divider */
-        .src = kSCG_SysClkSrcSirc     /* System clock source */
+        .src     = kSCG_SysClkSrcSirc /* System clock source */
     };
     /* Init Sirc. */
     CLOCK_InitSirc(&scgSircConfig);
@@ -155,33 +154,33 @@ sources:
  * Variables for BOARD_BootClockRUN configuration
  ******************************************************************************/
 const scg_sys_clk_config_t g_sysClkConfig_BOARD_BootClockRUN = {
-    .divSlow = kSCG_SysClkDivBy2, /* Slow Clock Divider: divided by 2 */
-    .divCore = kSCG_SysClkDivBy1, /* Core Clock Divider: divided by 1 */
-    .src = kSCG_SysClkSrcLpFll,   /* Low power FLL is selected as System Clock Source */
+    .divSlow = kSCG_SysClkDivBy2,   /* Slow Clock Divider: divided by 2 */
+    .divCore = kSCG_SysClkDivBy1,   /* Core Clock Divider: divided by 1 */
+    .src     = kSCG_SysClkSrcLpFll, /* Low power FLL is selected as System Clock Source */
 };
 const scg_sosc_config_t g_scgSysOscConfig_BOARD_BootClockRUN = {
-    .freq = 8000000U, /* System Oscillator frequency: 8000000Hz */
+    .freq       = 8000000U, /* System Oscillator frequency: 8000000Hz */
     .enableMode = kSCG_SysOscEnable |
                   kSCG_SysOscEnableInLowPower, /* Enable System OSC clock, Enable System OSC in low power mode */
     .monitorMode = kSCG_SysOscMonitorDisable,  /* Monitor disabled */
-    .div2 = kSCG_AsyncClkDivBy1,               /* System OSC Clock Divider 2: divided by 1 */
-    .workMode = kSCG_SysOscModeOscLowPower,    /* Oscillator low power */
+    .div2        = kSCG_AsyncClkDivBy1,        /* System OSC Clock Divider 2: divided by 1 */
+    .workMode    = kSCG_SysOscModeOscLowPower, /* Oscillator low power */
 };
 const scg_sirc_config_t g_scgSircConfig_BOARD_BootClockRUN = {
-    .enableMode = kSCG_SircEnable, /* Enable SIRC clock */
-    .div2 = kSCG_AsyncClkDivBy2,   /* Slow IRC Clock Divider 2: divided by 2 */
-    .range = kSCG_SircRangeHigh,   /* Slow IRC high range clock (8 MHz) */
+    .enableMode = kSCG_SircEnable,     /* Enable SIRC clock */
+    .div2       = kSCG_AsyncClkDivBy2, /* Slow IRC Clock Divider 2: divided by 2 */
+    .range      = kSCG_SircRangeHigh,  /* Slow IRC high range clock (8 MHz) */
 };
 const scg_firc_config_t g_scgFircConfig_BOARD_BootClockRUN = {
-    .enableMode = kSCG_FircEnable, /* Enable FIRC clock */
-    .div2 = kSCG_AsyncClkDivBy1,   /* Fast IRC Clock Divider 2: divided by 1 */
-    .range = kSCG_FircRange48M,    /* Fast IRC is trimmed to 48MHz */
-    .trimConfig = NULL,            /* Fast IRC Trim disabled */
+    .enableMode = kSCG_FircEnable,     /* Enable FIRC clock */
+    .div2       = kSCG_AsyncClkDivBy1, /* Fast IRC Clock Divider 2: divided by 1 */
+    .range      = kSCG_FircRange48M,   /* Fast IRC is trimmed to 48MHz */
+    .trimConfig = NULL,                /* Fast IRC Trim disabled */
 };
 const scg_lpfll_config_t g_scgLpFllConfig_BOARD_BootClockRUN = {
-    .enableMode = kSCG_LpFllEnable, /* Enable LPFLL clock */
-    .div2 = kSCG_AsyncClkDivBy2,    /* Low Power FLL Clock Divider 2: divided by 2 */
-    .range = kSCG_LpFllRange48M,    /* LPFLL is trimmed to 48MHz */
+    .enableMode = kSCG_LpFllEnable,    /* Enable LPFLL clock */
+    .div2       = kSCG_AsyncClkDivBy2, /* Low Power FLL Clock Divider 2: divided by 2 */
+    .range      = kSCG_LpFllRange48M,  /* LPFLL is trimmed to 48MHz */
     .trimConfig = NULL,
 };
 /*******************************************************************************
@@ -257,33 +256,33 @@ sources:
  * Variables for BOARD_BootClockVLPR configuration
  ******************************************************************************/
 const scg_sys_clk_config_t g_sysClkConfig_BOARD_BootClockVLPR = {
-    .divSlow = kSCG_SysClkDivBy4, /* Slow Clock Divider: divided by 4 */
-    .divCore = kSCG_SysClkDivBy2, /* Core Clock Divider: divided by 2 */
-    .src = kSCG_SysClkSrcSysOsc,  /* System OSC is selected as System Clock Source */
+    .divSlow = kSCG_SysClkDivBy4,    /* Slow Clock Divider: divided by 4 */
+    .divCore = kSCG_SysClkDivBy2,    /* Core Clock Divider: divided by 2 */
+    .src     = kSCG_SysClkSrcSysOsc, /* System OSC is selected as System Clock Source */
 };
 const scg_sosc_config_t g_scgSysOscConfig_BOARD_BootClockVLPR = {
-    .freq = 8000000U, /* System Oscillator frequency: 8000000Hz */
+    .freq       = 8000000U, /* System Oscillator frequency: 8000000Hz */
     .enableMode = kSCG_SysOscEnable |
                   kSCG_SysOscEnableInLowPower, /* Enable System OSC clock, Enable System OSC in low power mode */
     .monitorMode = kSCG_SysOscMonitorDisable,  /* Monitor disabled */
-    .div2 = kSCG_AsyncClkDivBy1,               /* System OSC Clock Divider 2: divided by 1 */
-    .workMode = kSCG_SysOscModeOscLowPower,    /* Oscillator low power */
+    .div2        = kSCG_AsyncClkDivBy1,        /* System OSC Clock Divider 2: divided by 1 */
+    .workMode    = kSCG_SysOscModeOscLowPower, /* Oscillator low power */
 };
 const scg_sirc_config_t g_scgSircConfig_BOARD_BootClockVLPR = {
-    .enableMode = kSCG_SircEnable, /* Enable SIRC clock */
-    .div2 = kSCG_AsyncClkDivBy2,   /* Slow IRC Clock Divider 2: divided by 2 */
-    .range = kSCG_SircRangeHigh,   /* Slow IRC high range clock (8 MHz) */
+    .enableMode = kSCG_SircEnable,     /* Enable SIRC clock */
+    .div2       = kSCG_AsyncClkDivBy2, /* Slow IRC Clock Divider 2: divided by 2 */
+    .range      = kSCG_SircRangeHigh,  /* Slow IRC high range clock (8 MHz) */
 };
 const scg_firc_config_t g_scgFircConfig_BOARD_BootClockVLPR = {
-    .enableMode = kSCG_FircEnable, /* Enable FIRC clock */
-    .div2 = kSCG_AsyncClkDivBy1,   /* Fast IRC Clock Divider 2: divided by 1 */
-    .range = kSCG_FircRange48M,    /* Fast IRC is trimmed to 48MHz */
-    .trimConfig = NULL,            /* Fast IRC Trim disabled */
+    .enableMode = kSCG_FircEnable,     /* Enable FIRC clock */
+    .div2       = kSCG_AsyncClkDivBy1, /* Fast IRC Clock Divider 2: divided by 1 */
+    .range      = kSCG_FircRange48M,   /* Fast IRC is trimmed to 48MHz */
+    .trimConfig = NULL,                /* Fast IRC Trim disabled */
 };
 const scg_lpfll_config_t g_scgLpFllConfig_BOARD_BootClockVLPR = {
-    .enableMode = kSCG_LpFllEnable, /* Enable LPFLL clock */
-    .div2 = kSCG_AsyncClkDivBy2,    /* Low Power FLL Clock Divider 2: divided by 2 */
-    .range = kSCG_LpFllRange48M,    /* LPFLL is trimmed to 48MHz */
+    .enableMode = kSCG_LpFllEnable,    /* Enable LPFLL clock */
+    .div2       = kSCG_AsyncClkDivBy2, /* Low Power FLL Clock Divider 2: divided by 2 */
+    .range      = kSCG_LpFllRange48M,  /* LPFLL is trimmed to 48MHz */
     .trimConfig = NULL,
 };
 /*******************************************************************************

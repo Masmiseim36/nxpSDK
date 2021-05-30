@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -33,47 +33,59 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
-/*!
- * @brief Configures pin routing and optionally pin electrical features.
- *
- */
-void BOARD_InitPins(void);
-
 /*! @name PORTB12 (number 68), J3[15]/MC_PWM_AT
   @{ */
-#define PINTOOL_PWM_MC_PWM_AT_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define PINTOOL_PWM_MC_PWM_AT_PIN 12U    /*!<@brief PORTB pin index: 12 */
-                                         /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_PWM_MC_PWM_AT_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_PWM_MC_PWM_AT_PIN 12U                   /*!<@brief PORT pin number */
+#define PINTOOL_PWM_MC_PWM_AT_PIN_MASK (1U << 12U)      /*!<@brief PORT pin mask */
+                                                        /* @} */
 
 /*! @name PORTB13 (number 67), J3[13]/J6[8]/MC_PWM_AB/RF_GPIO_IRQ
   @{ */
-#define PINTOOL_PWM_MC_PWM_AB_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define PINTOOL_PWM_MC_PWM_AB_PIN 13U    /*!<@brief PORTB pin index: 13 */
-                                         /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_PWM_MC_PWM_AB_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_PWM_MC_PWM_AB_PIN 13U                   /*!<@brief PORT pin number */
+#define PINTOOL_PWM_MC_PWM_AB_PIN_MASK (1U << 13U)      /*!<@brief PORT pin mask */
+                                                        /* @} */
 
 /*! @name PORTB14 (number 66), J3[11]/J6[5]/MC_PWM_BT/RF_SPI1_SCK
   @{ */
-#define PINTOOL_PWM_MC_PWM_BT_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define PINTOOL_PWM_MC_PWM_BT_PIN 14U    /*!<@brief PORTB pin index: 14 */
-                                         /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_PWM_MC_PWM_BT_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_PWM_MC_PWM_BT_PIN 14U                   /*!<@brief PORT pin number */
+#define PINTOOL_PWM_MC_PWM_BT_PIN_MASK (1U << 14U)      /*!<@brief PORT pin mask */
+                                                        /* @} */
 
 /*! @name PORTB15 (number 65), J3[9]/J6[7]/MC_PWM_BB/RF_SPI1_SIN
   @{ */
-#define PINTOOL_PWM_MC_PWM_BB_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define PINTOOL_PWM_MC_PWM_BB_PIN 15U    /*!<@brief PORTB pin index: 15 */
-                                         /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_PWM_MC_PWM_BB_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_PWM_MC_PWM_BB_PIN 15U                   /*!<@brief PORT pin number */
+#define PINTOOL_PWM_MC_PWM_BB_PIN_MASK (1U << 15U)      /*!<@brief PORT pin mask */
+                                                        /* @} */
 
 /*! @name PORTB16 (number 64), J3[7]/J6[6]/MC_PWM_CT/RF_SPI1_SOUT
   @{ */
-#define PINTOOL_PWM_MC_PWM_CT_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define PINTOOL_PWM_MC_PWM_CT_PIN 16U    /*!<@brief PORTB pin index: 16 */
-                                         /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_PWM_MC_PWM_CT_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_PWM_MC_PWM_CT_PIN 16U                   /*!<@brief PORT pin number */
+#define PINTOOL_PWM_MC_PWM_CT_PIN_MASK (1U << 16U)      /*!<@brief PORT pin mask */
+                                                        /* @} */
 
 /*! @name PORTB17 (number 63), J3[5]/J6[4]/MC_PWM_CB/RF_SPI1_PCS3
   @{ */
-#define PINTOOL_PWM_MC_PWM_CB_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define PINTOOL_PWM_MC_PWM_CB_PIN 17U    /*!<@brief PORTB pin index: 17 */
-                                         /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_PWM_MC_PWM_CB_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_PWM_MC_PWM_CB_PIN 17U                   /*!<@brief PORT pin number */
+#define PINTOOL_PWM_MC_PWM_CB_PIN_MASK (1U << 17U)      /*!<@brief PORT pin mask */
+                                                        /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -83,35 +95,59 @@ void PinTool_PWM(void);
 
 /*! @name PORTD3 (number 70), SW3
   @{ */
-#define PINTOOL_MISC_SW3_FGPIO FGPIOD /*!<@brief FGPIO device name: FGPIOD */
-#define PINTOOL_MISC_SW3_GPIO GPIOD /*!<@brief GPIO device name: GPIOD */
-#define PINTOOL_MISC_SW3_PORT PORTD /*!<@brief PORT device name: PORTD */
-#define PINTOOL_MISC_SW3_PIN 3U     /*!<@brief PORTD pin index: 3 */
-                                    /* @} */
+
+/* Symbols to be used with GPIO driver */
+#define PINTOOL_MISC_SW3_FGPIO FGPIOD             /*!<@brief FGPIO peripheral base pointer */
+#define PINTOOL_MISC_SW3_GPIO GPIOD               /*!<@brief GPIO peripheral base pointer */
+#define PINTOOL_MISC_SW3_GPIO_PIN_MASK (1U << 3U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_MISC_SW3_PORT PORTD               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_MISC_SW3_PIN 3U                   /*!<@brief PORT pin number */
+#define PINTOOL_MISC_SW3_PIN_MASK (1U << 3U)      /*!<@brief PORT pin mask */
+                                                  /* @} */
 
 /*! @name PORTD0 (number 4), D4[1]/RGB_RED
   @{ */
-#define PINTOOL_MISC_LED_RED_FGPIO FGPIOD /*!<@brief FGPIO device name: FGPIOD */
-#define PINTOOL_MISC_LED_RED_GPIO GPIOD /*!<@brief GPIO device name: GPIOD */
-#define PINTOOL_MISC_LED_RED_PORT PORTD /*!<@brief PORT device name: PORTD */
-#define PINTOOL_MISC_LED_RED_PIN 0U     /*!<@brief PORTD pin index: 0 */
-                                        /* @} */
+
+/* Symbols to be used with GPIO driver */
+#define PINTOOL_MISC_LED_RED_FGPIO FGPIOD             /*!<@brief FGPIO peripheral base pointer */
+#define PINTOOL_MISC_LED_RED_GPIO GPIOD               /*!<@brief GPIO peripheral base pointer */
+#define PINTOOL_MISC_LED_RED_GPIO_PIN_MASK (1U << 0U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_MISC_LED_RED_PORT PORTD               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_MISC_LED_RED_PIN 0U                   /*!<@brief PORT pin number */
+#define PINTOOL_MISC_LED_RED_PIN_MASK (1U << 0U)      /*!<@brief PORT pin mask */
+                                                      /* @} */
 
 /*! @name PORTD16 (number 21), D4[4]/RGB_GREEN
   @{ */
-#define PINTOOL_MISC_LED_GREEN_FGPIO FGPIOD /*!<@brief FGPIO device name: FGPIOD */
-#define PINTOOL_MISC_LED_GREEN_GPIO GPIOD /*!<@brief GPIO device name: GPIOD */
-#define PINTOOL_MISC_LED_GREEN_PORT PORTD /*!<@brief PORT device name: PORTD */
-#define PINTOOL_MISC_LED_GREEN_PIN 16U    /*!<@brief PORTD pin index: 16 */
-                                          /* @} */
+
+/* Symbols to be used with GPIO driver */
+#define PINTOOL_MISC_LED_GREEN_FGPIO FGPIOD              /*!<@brief FGPIO peripheral base pointer */
+#define PINTOOL_MISC_LED_GREEN_GPIO GPIOD                /*!<@brief GPIO peripheral base pointer */
+#define PINTOOL_MISC_LED_GREEN_GPIO_PIN_MASK (1U << 16U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_MISC_LED_GREEN_PORT PORTD                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_MISC_LED_GREEN_PIN 16U                   /*!<@brief PORT pin number */
+#define PINTOOL_MISC_LED_GREEN_PIN_MASK (1U << 16U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
 
 /*! @name PORTB11 (number 74), SW2
   @{ */
-#define PINTOOL_MISC_SW2_FGPIO FGPIOB /*!<@brief FGPIO device name: FGPIOB */
-#define PINTOOL_MISC_SW2_GPIO GPIOB /*!<@brief GPIO device name: GPIOB */
-#define PINTOOL_MISC_SW2_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define PINTOOL_MISC_SW2_PIN 11U    /*!<@brief PORTB pin index: 11 */
-                                    /* @} */
+
+/* Symbols to be used with GPIO driver */
+#define PINTOOL_MISC_SW2_FGPIO FGPIOB              /*!<@brief FGPIO peripheral base pointer */
+#define PINTOOL_MISC_SW2_GPIO GPIOB                /*!<@brief GPIO peripheral base pointer */
+#define PINTOOL_MISC_SW2_GPIO_PIN_MASK (1U << 11U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_MISC_SW2_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_MISC_SW2_PIN 11U                   /*!<@brief PORT pin number */
+#define PINTOOL_MISC_SW2_PIN_MASK (1U << 11U)      /*!<@brief PORT pin mask */
+                                                   /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
@@ -121,15 +157,21 @@ void PinTool_Misc(void);
 
 /*! @name PORTC6 (number 81), UART1_RX_TGTMCU
   @{ */
-#define PINTOOL_LPUART_DEBUG_UART_RX_PORT PORTC /*!<@brief PORT device name: PORTC */
-#define PINTOOL_LPUART_DEBUG_UART_RX_PIN 6U     /*!<@brief PORTC pin index: 6 */
-                                                /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_LPUART_DEBUG_UART_RX_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_LPUART_DEBUG_UART_RX_PIN 6U                   /*!<@brief PORT pin number */
+#define PINTOOL_LPUART_DEBUG_UART_RX_PIN_MASK (1U << 6U)      /*!<@brief PORT pin mask */
+                                                              /* @} */
 
 /*! @name PORTC7 (number 80), UART1_TX_TGTMCU
   @{ */
-#define PINTOOL_LPUART_DEBUG_UART_TX_PORT PORTC /*!<@brief PORT device name: PORTC */
-#define PINTOOL_LPUART_DEBUG_UART_TX_PIN 7U     /*!<@brief PORTC pin index: 7 */
-                                                /* @} */
+
+/* Symbols to be used with PORT driver */
+#define PINTOOL_LPUART_DEBUG_UART_TX_PORT PORTC               /*!<@brief PORT peripheral base pointer */
+#define PINTOOL_LPUART_DEBUG_UART_TX_PIN 7U                   /*!<@brief PORT pin number */
+#define PINTOOL_LPUART_DEBUG_UART_TX_PIN_MASK (1U << 7U)      /*!<@brief PORT pin mask */
+                                                              /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

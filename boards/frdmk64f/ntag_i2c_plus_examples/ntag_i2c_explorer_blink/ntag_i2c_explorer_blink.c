@@ -6,6 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  *
  */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
@@ -14,8 +16,6 @@
 #include "ntag_bridge.h"
 #include "HAL_I2C_driver.h"
 #include "fsl_device_registers.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

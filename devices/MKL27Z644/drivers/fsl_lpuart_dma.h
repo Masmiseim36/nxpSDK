@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief LPUART DMA driver version 2.3.0. */
-#define FSL_LPUART_DMA_DRIVER_VERSION (MAKE_VERSION(2, 3, 0))
+/*! @brief LPUART DMA driver version 2.4.0. */
+#define FSL_LPUART_DMA_DRIVER_VERSION (MAKE_VERSION(2, 4, 0))
 /*@}*/
 
 /* Forward declaration of the handle typedef. */

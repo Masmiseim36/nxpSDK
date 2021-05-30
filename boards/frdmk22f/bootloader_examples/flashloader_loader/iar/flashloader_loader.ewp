@@ -181,7 +181,7 @@
         <option>
           <name>CCDefines</name>
           <state>DEBUG</state>
-          <state>CPU_MK22FN512VDC12</state>
+          <state>CPU_MK22FN512VLH12</state>
           <state>CPU_IS_ARM_CORTEX_M4=1</state>
           <state>BL_TARGET_FLASH</state>
           <state>FRDM_K22F</state>
@@ -314,22 +314,14 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../flashloader/iar</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MK22F51212/src</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK22F51212</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/crc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MK22F51212/src</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -744,7 +736,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MK22FN512xxx12_flashloader_loader.icf</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/linker/iar/MK22F51212/MK22FN512xxx12_flashloader_loader.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1156,7 +1148,7 @@
         <option>
           <name>CCDefines</name>
           <state>NDEBUG</state>
-          <state>CPU_MK22FN512VDC12</state>
+          <state>CPU_MK22FN512VLH12</state>
           <state>CPU_IS_ARM_CORTEX_M4=1</state>
           <state>BL_TARGET_FLASH</state>
           <state>FRDM_K22F</state>
@@ -1289,22 +1281,14 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../flashloader/iar</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MK22F51212/src</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK22F51212</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/include</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
           <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/crc</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/drivers/microseconds</state>
-          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MK22F51212/src</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/startup</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1719,7 +1703,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MK22FN512xxx12_flashloader_loader.icf</state>
+          <state>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/common/linker/iar/MK22F51212/MK22FN512xxx12_flashloader_loader.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -1952,6 +1936,12 @@
     </settings>
   </configuration>
   <group>
+    <name>doc</name>
+    <file>
+      <name>$PROJ_DIR$/../readme.txt</name>
+    </file>
+  </group>
+  <group>
     <name>MK22F51212</name>
     <file>
       <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/targets/MK22F51212/src/bootloader_config.h</name>
@@ -1963,26 +1953,29 @@
   <group>
     <name>drivers</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_clock.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_uart.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_uart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_uart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_common.h</name>
     </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/drivers/fsl_common.c</name>
+    </file>
   </group>
   <group>
     <name>device</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/fsl_device_registers.h</name>
+    </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/MK22F51212.h</name>
     </file>
@@ -1990,13 +1983,10 @@
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/MK22F51212_features.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/fsl_device_registers.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/system_MK22F51212.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../devices/MK22F51212/system_MK22F51212.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK22F51212/system_MK22F51212.h</name>
     </file>
   </group>
   <group>
@@ -2019,10 +2009,10 @@
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/flashloader_image.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_exception_handler.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_flashloader.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_flashloader.c</name>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/bootloader/src/bl_exception_handler.c</name>
       </file>
     </group>
     <group>
@@ -2039,21 +2029,24 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/fsl_assert.h</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
+      </file>
       <group>
         <name>src</name>
         <file>
           <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/src/fsl_assert.c</name>
         </file>
       </group>
-      <file>
-        <name>$PROJ_DIR$/../../../../../middleware/mcu-boot/src/utilities/vector_table_info.h</name>
-      </file>
     </group>
   </group>
   <group>
     <name>CMSIS</name>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -2065,31 +2058,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv81mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>

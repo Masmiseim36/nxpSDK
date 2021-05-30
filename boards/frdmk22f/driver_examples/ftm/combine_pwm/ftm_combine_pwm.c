@@ -7,11 +7,11 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_ftm.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -104,7 +104,8 @@ int main(void)
     ftmParam.level                 = pwmLevel;
     ftmParam.dutyCyclePercent      = updatedDutycycle;
     ftmParam.firstEdgeDelayPercent = 0U;
-    ftmParam.enableDeadtime        = false;
+    ftmParam.enableComplementary   = true;
+    ftmParam.enableDeadtime        = true;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -120,19 +121,13 @@ int main(void)
     /* Update deadTimePrescale for fast clock*/
     ftmInfo.deadTimePrescale = kFTM_Deadtime_Prescale_16;
     /* Need a deadtime value of about 650nsec */
-    ftmInfo.deadTimeValue = ((uint64_t)FTM_SOURCE_CLOCK * 650) / 1000000000;
+    ftmInfo.deadTimeValue = ((uint64_t)FTM_SOURCE_CLOCK * 650) / 1000000000 / 16;
 
     /* Initialize FTM module */
     FTM_Init(BOARD_FTM_BASEADDR, &ftmInfo);
 
     /* Setup output of a combined PWM signal */
-    FTM_SetupPwm(BOARD_FTM_BASEADDR, &ftmParam, 1U, kFTM_CombinedPwm, 24000U, FTM_SOURCE_CLOCK);
-
-    /* Enable complementary output on the channel pair */
-    FTM_SetComplementaryEnable(BOARD_FTM_BASEADDR, BOARD_FTM_CHANNEL_PAIR, true);
-
-    /* Enable Deadtime insertion on the channel pair */
-    FTM_SetDeadTimeEnable(BOARD_FTM_BASEADDR, BOARD_FTM_CHANNEL_PAIR, true);
+    FTM_SetupPwm(BOARD_FTM_BASEADDR, &ftmParam, 1U, kFTM_EdgeAlignedCombinedPwm, 24000U, FTM_SOURCE_CLOCK);
 
     /* Enable interrupt flag on one of the channels from the pair */
     FTM_EnableInterrupts(BOARD_FTM_BASEADDR, FTM_CHANNEL_INTERRUPT_ENABLE);
@@ -157,7 +152,8 @@ int main(void)
             FTM_UpdateChnlEdgeLevelSelect(BOARD_FTM_BASEADDR, (ftm_chnl_t)((BOARD_FTM_CHANNEL_PAIR * 2) + 1), 0U);
 
             /* Update PWM duty cycle on the channel pair */
-            FTM_UpdatePwmDutycycle(BOARD_FTM_BASEADDR, BOARD_FTM_CHANNEL_PAIR, kFTM_CombinedPwm, updatedDutycycle);
+            FTM_UpdatePwmDutycycle(BOARD_FTM_BASEADDR, BOARD_FTM_CHANNEL_PAIR, kFTM_EdgeAlignedCombinedPwm,
+                                   updatedDutycycle);
 
             /* Software trigger to update registers */
             FTM_SetSoftwareTrigger(BOARD_FTM_BASEADDR, true);

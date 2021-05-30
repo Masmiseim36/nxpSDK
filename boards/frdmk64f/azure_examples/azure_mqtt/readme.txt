@@ -5,10 +5,10 @@ Azure_mqtt demo shows basic communication with iot-hub via mqtt protocol.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- MCUXpresso  11.2.0
-- GCC ARM Embedded  9.2.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
+- Keil MDK  5.33
 
 Hardware requirements
 =====================
@@ -97,7 +97,4 @@ Confirmation[4] received for message tracking id = 4 with result = IOTHUB_CLIENT
 
 
 
-
-Customization options
-=====================
 

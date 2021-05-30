@@ -15,6 +15,8 @@ The example supports IPerf version 2.0.5. JPerf2, downloaded from the link above
 Therefore the iperf.exe version has to be updated when using MS Windows. IPerf 2.0.5b for Windows can be downloaded from the following link:
 https://iperf.fr/download/windows/iperf-2.0.5b-win32.zip
 The contents of the downloaded archive have to be unpacked into jperf-2.0.0/bin folder, overwriting iperf.exe.
+The application has been tested also with IPerf 2.0.10, which can be downloaded here:
+https://sourceforge.net/projects/iperf2/files/
 
 To experiment with the receive throughput, try to increase the value of TCP_WND in the file lwipopts.h and make sure
 that the PBUF_POOL_SIZE is larger than (TCP_WND / TCP_MSS). Increase the PBUF_POOL_SIZE if necessary.
@@ -23,10 +25,10 @@ For RTOS applications, DEFAULT_THREAD_PRIO and TCPIP_THREAD_PRIO values can have
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -68,16 +70,13 @@ Running the demo
         ************************************************
         Please select one of the following modes to run IPERF with:
 
-            1: TCP server mode (RX only test)
-            2: TCP client mode (TX only test)
-            3: TCP client dual mode (TX and RX in parallel)
-            4: TCP client tradeoff mode (TX and RX sequentially)
-            5: UDP server mode (RX only test)
-            6: UDP client mode (TX only test)
-            7: UDP client dual mode (TX and RX in parallel)
-            8: UDP client tradeoff mode (TX and RX sequentially)
+            1: TCP server mode (RX test)
+            2: TCP client mode (TX test)
+            3: UDP server mode (RX test)
+            4: UDP client mode (TX test)
 
         Enter mode number:
+
 2. Start the JPerf application, using the jperf-2.0.0/jperf.bat batch file.
     It can be downloaded here: https://sourceforge.net/projects/iperf/files/jperf/jperf%202.0.0/jperf-2.0.0.zip/download.
     When using Windows, replace the content of the jperf-2.0.0/bin folder with the files from the following zip: https://iperf.fr/download/windows/iperf-2.0.5b-win32.zip.
@@ -93,56 +92,30 @@ Running the demo
         bin/iperf.exe -s -P 0 -i 1 -p 5001 -f k
         ------------------------------------------------------------
         Server listening on TCP port 5001
-        TCP window size: 64.0 KByte (default)
+        TCP window size: 63.0 KByte (default)
         ------------------------------------------------------------
-        OpenSCManager failed - Access is denied. (0x5)
-        [404] local 192.168.0.100 port 5001 connected with 192.168.0.102 port 49153
-        ------------------------------------------------------------
-        Client connecting to 192.168.0.102, TCP port 5001
-        TCP window size: 64.0 KByte (default)
-        ------------------------------------------------------------
-        [452] local 192.168.0.100 port 58998 connected with 192.168.0.102 port 5001
+        [  4] local 192.168.0.100 port 5001 connected with 192.168.0.102 port 49156
         [ ID] Interval       Transfer     Bandwidth
-        [404]  0.0- 1.0 sec  N    KBytes  N     Kbits/sec
-        [452]  0.0- 1.0 sec  N    KBytes  N     Kbits/sec
-        [404]  1.0- 2.0 sec  N    KBytes  N     Kbits/sec
-        [452]  1.0- 2.0 sec  N    KBytes  N     Kbits/sec
-        [404]  2.0- 3.0 sec  N    KBytes  N     Kbits/sec
-        [452]  2.0- 3.0 sec  N    KBytes  N     Kbits/sec
-        [404]  3.0- 4.0 sec  N    KBytes  N     Kbits/sec
-        [452]  3.0- 4.0 sec  N    KBytes  N     Kbits/sec
-        [404]  4.0- 5.0 sec  N    KBytes  N     Kbits/sec
-        [452]  4.0- 5.0 sec  N    KBytes  N     Kbits/sec
-        [404]  5.0- 6.0 sec  N    KBytes  N     Kbits/sec
-        [452]  5.0- 6.0 sec  N    KBytes  N     Kbits/sec
-        [404]  6.0- 7.0 sec  N    KBytes  N     Kbits/sec
-        [452]  6.0- 7.0 sec  N    KBytes  N     Kbits/sec
-        [404]  7.0- 8.0 sec  N    KBytes  N     Kbits/sec
-        [452]  7.0- 8.0 sec  N    KBytes  N     Kbits/sec
-        [404]  8.0- 9.0 sec  N    KBytes  N     Kbits/sec
-        [452]  8.0- 9.0 sec  N    KBytes  N     Kbits/sec
-        [404]  9.0-10.0 sec  N    KBytes  N     Kbits/sec
-        [404]  0.0-10.0 sec  N    KBytes  N     Kbits/sec
-        [ ID] Interval       Transfer     Bandwidth
-        [452]  9.0-10.0 sec  N    KBytes  N     Kbits/sec
-        [452]  0.0-10.0 sec  N    KBytes  N     Kbits/sec
-        Done.
+        [  4]  0.0- 1.0 sec  N    KBytes  N     Kbits/sec
+        [  4]  1.0- 2.0 sec  N    KBytes  N     Kbits/sec
+        [  4]  2.0- 3.0 sec  N    KBytes  N     Kbits/sec
+        [  4]  3.0- 4.0 sec  N    KBytes  N     Kbits/sec
+        [  4]  4.0- 5.0 sec  N    KBytes  N     Kbits/sec
+        [  4]  5.0- 6.0 sec  N    KBytes  N     Kbits/sec
+        [  4]  6.0- 7.0 sec  N    KBytes  N     Kbits/sec
+        [  4]  7.0- 8.0 sec  N    KBytes  N     Kbits/sec
+        [  4]  8.0- 9.0 sec  N    KBytes  N     Kbits/sec
+        [  4]  0.0-10.0 sec  N    KBytes  N     Kbits/sec
 
 8. Also, when the test is finished, the log would be seen on the terminal like below,
 	where occurrences of the symbol "N" would be replaced by actual measured values.
     The log will vary depending on the selected mode:
-        Enter mode number: 3
+        Enter mode number: 2
+        Press SPACE to abort the test and return to main menu
         -------------------------------------------------
          TCP_DONE_CLIENT (TX)
-         Local address : 192.168.0.102  Port 49153
+         Local address : 192.168.0.102  Port 49156
          Remote address : 192.168.0.100  Port 5001
-         Bytes Transferred N
-         Duration (ms) N
-         Bandwidth (kbitpsec) N
-        -------------------------------------------------
-         TCP_DONE_SERVER (RX)
-         Local address : 192.168.0.102  Port 5001
-         Remote address : 192.168.0.100  Port 58998
          Bytes Transferred N
          Duration (ms) N
          Bandwidth (kbitpsec) N
@@ -151,6 +124,3 @@ Running the demo
     If it is pressed when test is in progress, the running test will be aborted
     and the main menu will appear. If the test is already finished, the main menu
     will appear directly. From the main menu, new test can be run.
-Customization options
-=====================
-

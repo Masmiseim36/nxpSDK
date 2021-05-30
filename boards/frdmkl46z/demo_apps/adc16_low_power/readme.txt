@@ -7,11 +7,10 @@ If the core temperature is higher or lower than average, the LEDs change state r
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 7.80.4
-- Keil MDK 5.21a
-- GCC ARM Embedded 2016-5.4-q3
-- Kinetis Development Studio IDE 3.2.0
-- MCUXpresso0.8
+- Keil MDK 5.24a
+- IAR embedded Workbench 8.22.2
+- GCC ARM Embedded 7-2017-q4-major
+- MCUXpresso10.2.0
 
 Hardware requirements
 =====================
@@ -40,6 +39,7 @@ Running the demo
 When the demo runs successfully, the following message is displayed in the terminal:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ADC16_DoAutoCalibration() Done.
 ADC LOW POWER DEMO
  The Low Power ADC project is designed to work with the Tower System or in a stand alone setting
  1. Set your target board in a place where the temperature is constant.

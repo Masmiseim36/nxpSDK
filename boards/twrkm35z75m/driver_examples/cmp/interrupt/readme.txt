@@ -15,10 +15,10 @@ detecting the output's falling edge.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -55,6 +55,3 @@ CMP polling Example
 Then change CMP analog input, and watch the change of LED.
     - CMP0_IN1 (Jump A63 on Elevator Tower) connected to VCC=3.3V (Jump B3 on Elevator Tower): LED ORANGE on
     - CMP0_IN1 (Jump A63 on Elevator Tower) connected to GND ( Jump B2 on Elevator Tower): LED ORANGE off
-Customization options
-=====================
-

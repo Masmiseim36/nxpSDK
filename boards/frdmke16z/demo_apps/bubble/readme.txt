@@ -4,6 +4,14 @@ The bubble application demonstrates basic usage of the on-board accelerometer to
 bubble level. A bubble level utilizes two axes to visually show deviation from a level plane
 (0 degrees) on a given access. 
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -43,11 +51,3 @@ x= 10 y = 28
 x= 11 y = 29
 x= 11 y = 29
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

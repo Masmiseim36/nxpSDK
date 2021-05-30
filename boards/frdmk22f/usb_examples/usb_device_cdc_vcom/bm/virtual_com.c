@@ -5,13 +5,14 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
-#include "fsl_device_registers.h"
-#include "clock_config.h"
-#include "board.h"
-
 #include <stdio.h>
 #include <stdlib.h>
+/*${standard_header_anchor}*/
+#include "fsl_device_registers.h"
+#include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 
 #include "usb_device_config.h"
 #include "usb.h"
@@ -20,7 +21,6 @@
 #include "usb_device_class.h"
 #include "usb_device_cdc_acm.h"
 #include "usb_device_ch9.h"
-#include "fsl_debug_console.h"
 
 #include "usb_device_descriptor.h"
 #include "virtual_com.h"
@@ -37,7 +37,6 @@
 extern uint8_t USB_EnterLowpowerMode(void);
 #endif
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -541,7 +540,8 @@ void APPTask(void)
     if ((1 == s_cdcVcom.attach) && (1 == s_cdcVcom.startTransactions))
     {
         /* User Code */
-        if ((0 != s_recvSize) && (0xFFFFFFFFU != s_recvSize))
+        /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+        if ((0 != s_recvSize) && (USB_CANCELLED_TRANSFER_LENGTH != s_recvSize))
         {
             int32_t i;
 

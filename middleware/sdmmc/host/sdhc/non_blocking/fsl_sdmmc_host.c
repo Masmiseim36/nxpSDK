@@ -54,7 +54,9 @@ static void SDMMCHOST_DetectCardInsertByHost(SDHC_Type *base, void *userData)
 {
     sd_detect_card_t *cd = NULL;
 
-    SDMMC_OSAEventSet(((sdmmchost_t *)userData)->hostEvent, SDMMC_OSA_EVENT_CARD_INSERTED);
+    (void)SDMMC_OSAEventSet(&(((sdmmchost_t *)userData)->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED);
+    (void)SDMMC_OSAEventClear(&(((sdmmchost_t *)userData)->hostEvent), SDMMC_OSA_EVENT_CARD_REMOVED);
+
     /* disable card insert insterrupt */
     SDHC_DisableInterruptSignal(base, kSDHC_CardInsertionFlag);
 
@@ -67,6 +69,11 @@ static void SDMMCHOST_DetectCardInsertByHost(SDHC_Type *base, void *userData)
             {
                 cd->callback(true, cd->userData);
             }
+
+            if (cd->dat3PullFunc != NULL)
+            {
+                cd->dat3PullFunc(kSD_DAT3PullUp);
+            }
         }
     }
 }
@@ -75,7 +82,10 @@ static void SDMMCHOST_DetectCardRemoveByHost(SDHC_Type *base, void *userData)
 {
     sd_detect_card_t *cd = NULL;
 
-    SDMMC_OSAEventSet(((sdmmchost_t *)userData)->hostEvent, SDMMC_OSA_EVENT_CARD_REMOVED);
+    (void)SDMMC_OSAEventSet(&(((sdmmchost_t *)userData)->hostEvent), SDMMC_OSA_EVENT_CARD_REMOVED);
+    (void)SDMMC_OSAEventClear(&(((sdmmchost_t *)userData)->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED);
+
+    SDHC_DisableInterruptSignal(base, kSDHC_CardRemovalFlag);
 
     if (userData != NULL)
     {
@@ -118,7 +128,7 @@ status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd)
 {
     SDHC_Type *base        = host->hostController.base;
     sd_detect_card_t *sdCD = (sd_detect_card_t *)cd;
-    if (cd == NULL)
+    if ((cd == NULL) || (sdCD->type != kSD_DetectCardByHostDATA3))
     {
         return kStatus_Fail;
     }
@@ -128,18 +138,23 @@ status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd)
     /* enable card detect through DATA3 */
     SDHC_CardDetectByData3(base, true);
     /* enable card detect interrupt */
-    SDHC_EnableInterruptStatus(base, kSDHC_CardInsertionFlag);
     SDHC_EnableInterruptStatus(base, kSDHC_CardRemovalFlag);
-    SDHC_EnableInterruptSignal(base, kSDHC_CardInsertionFlag);
-    SDHC_EnableInterruptSignal(base, kSDHC_CardRemovalFlag);
+    SDHC_ClearInterruptStatusFlags(base, (uint32_t)kSDHC_CardInsertionFlag | (uint32_t)kSDHC_CardRemovalFlag);
 
-    if ((SDHC_GetInterruptStatusFlags(base) & (uint32_t)kSDHC_CardInsertionFlag) != 0U)
+    if (SDMMCHOST_CardDetectStatus(host) == (uint32_t)kSD_Inserted)
     {
+        (void)SDMMC_OSAEventSet(&(host->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED);
         /* notify application about the card insertion status */
-        if (sdCD->callback)
+        if (sdCD->callback != NULL)
         {
             sdCD->callback(true, sdCD->userData);
         }
+    }
+    else
+    {
+        (void)SDMMC_OSAEventSet(&(host->hostEvent), SDMMC_OSA_EVENT_CARD_REMOVED);
+        SDHC_EnableInterruptStatus(base, kSDHC_CardInsertionFlag);
+        SDHC_EnableInterruptSignal(base, kSDHC_CardInsertionFlag);
     }
 
     return kStatus_Success;
@@ -147,16 +162,25 @@ status_t SDMMCHOST_CardDetectInit(sdmmchost_t *host, void *cd)
 
 uint32_t SDMMCHOST_CardDetectStatus(sdmmchost_t *host)
 {
-    uint32_t event = 0U;
+    sd_detect_card_t *sdCD = (sd_detect_card_t *)(host->cd);
+    uint32_t insertStatus  = kSD_Removed;
 
-    SDMMC_OSAEventGet(host->hostEvent, SDMMC_OSA_EVENT_CARD_INSERTED | SDMMC_OSA_EVENT_CARD_REMOVED, &event);
-
-    if ((event & SDMMC_OSA_EVENT_CARD_INSERTED) == SDMMC_OSA_EVENT_CARD_INSERTED)
+    if (sdCD->dat3PullFunc != NULL)
     {
-        return kSD_Inserted;
+        sdCD->dat3PullFunc(kSD_DAT3PullDown);
+        SDMMC_OSADelay(1U);
     }
 
-    return kSD_Removed;
+    if ((SDHC_GetPresentStatusFlags(host->hostController.base) & (uint32_t)kSDHC_CardInsertedFlag) != 0U)
+    {
+        insertStatus = kSD_Inserted;
+        if (sdCD->dat3PullFunc != NULL)
+        {
+            sdCD->dat3PullFunc(kSD_DAT3PullUp);
+        }
+    }
+
+    return insertStatus;
 }
 
 status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardStatus, uint32_t timeout)
@@ -167,7 +191,11 @@ status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardS
     sd_detect_card_t *cd = host->cd;
     uint32_t event       = 0U;
 
-    if (SDMMCHOST_CardDetectStatus(host) == waitCardStatus)
+    (void)SDMMC_OSAEventGet(&(host->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED | SDMMC_OSA_EVENT_CARD_REMOVED, &event);
+    if ((((event & SDMMC_OSA_EVENT_CARD_INSERTED) == SDMMC_OSA_EVENT_CARD_INSERTED) &&
+         (waitCardStatus == (uint32_t)kSD_Inserted)) ||
+        (((event & SDMMC_OSA_EVENT_CARD_REMOVED) == SDMMC_OSA_EVENT_CARD_REMOVED) &&
+         (waitCardStatus == (uint32_t)kSD_Removed)))
     {
         return kStatus_Success;
     }
@@ -175,18 +203,18 @@ status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardS
     /* Wait card inserted. */
     do
     {
-        if (SDMMC_OSAEventWait(host->hostEvent, SDMMC_OSA_EVENT_CARD_INSERTED | SDMMC_OSA_EVENT_CARD_REMOVED, timeout,
-                               &event) != kStatus_Success)
+        if (SDMMC_OSAEventWait(&(host->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED | SDMMC_OSA_EVENT_CARD_REMOVED,
+                               timeout, &event) != kStatus_Success)
         {
             return kStatus_Fail;
         }
         else
         {
-            if ((waitCardStatus == kSD_Inserted) &&
+            if ((waitCardStatus == (uint32_t)kSD_Inserted) &&
                 ((event & SDMMC_OSA_EVENT_CARD_INSERTED) == SDMMC_OSA_EVENT_CARD_INSERTED))
             {
                 SDMMC_OSADelay(cd->cdDebounce_ms);
-                SDMMC_OSAEventGet(host->hostEvent, SDMMC_OSA_EVENT_CARD_INSERTED, &event);
+                (void)SDMMC_OSAEventGet(&(host->hostEvent), SDMMC_OSA_EVENT_CARD_INSERTED, &event);
                 if ((event & SDMMC_OSA_EVENT_CARD_INSERTED) == SDMMC_OSA_EVENT_CARD_INSERTED)
                 {
                     break;
@@ -194,12 +222,12 @@ status_t SDMMCHOST_PollingCardDetectStatus(sdmmchost_t *host, uint32_t waitCardS
             }
 
             if (((event & SDMMC_OSA_EVENT_CARD_REMOVED) == SDMMC_OSA_EVENT_CARD_REMOVED) &&
-                (waitCardStatus == kSD_Removed))
+                (waitCardStatus == (uint32_t)kSD_Removed))
             {
                 break;
             }
         }
-    } while (1U);
+    } while (true);
 
     return kStatus_Success;
 }
@@ -238,7 +266,7 @@ static void SDMMCHOST_TransferCompleteCallback(SDHC_Type *base, sdhc_handle_t *h
         eventStatus = SDMMC_OSA_EVENT_TRANSFER_CMD_SUCCESS;
     }
 
-    SDMMC_OSAEventSet(((sdmmchost_t *)userData)->hostEvent, eventStatus);
+    (void)SDMMC_OSAEventSet(&(((sdmmchost_t *)userData)->hostEvent), eventStatus);
 }
 
 status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *content)
@@ -247,9 +275,9 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
     uint32_t event = 0U;
 
     /* clear redundant transfer event flag */
-    SDMMC_OSAEventClear(host->hostEvent, SDMMC_OSA_EVENT_TRANSFER_CMD_SUCCESS | SDMMC_OSA_EVENT_TRANSFER_CMD_FAIL |
-                                             SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS |
-                                             SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL);
+    (void)SDMMC_OSAEventClear(&(host->hostEvent),
+                              SDMMC_OSA_EVENT_TRANSFER_CMD_SUCCESS | SDMMC_OSA_EVENT_TRANSFER_CMD_FAIL |
+                                  SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS | SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL);
 
     do
     {
@@ -257,36 +285,38 @@ status_t SDMMCHOST_TransferFunction(sdmmchost_t *host, sdmmchost_transfer_t *con
                                          host->dmaDesBufferWordsNum, content);
     } while (error == kStatus_SDHC_BusyTransferring);
 
-    /* wait command event */
-    if ((kStatus_Fail ==
-         SDMMC_OSAEventWait(host->hostEvent,
-                            SDMMC_OSA_EVENT_TRANSFER_CMD_SUCCESS | SDMMC_OSA_EVENT_TRANSFER_CMD_FAIL |
-                                SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS | SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL,
-                            SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT, &event)) ||
-        ((event & SDMMC_OSA_EVENT_TRANSFER_CMD_FAIL) != 0U))
+    if (error == kStatus_Success)
     {
-        error = kStatus_Fail;
-    }
-    else
-    {
-        if (content->data != NULL)
+        /* wait command event */
+        if ((kStatus_Fail ==
+             SDMMC_OSAEventWait(&(host->hostEvent),
+                                SDMMC_OSA_EVENT_TRANSFER_CMD_SUCCESS | SDMMC_OSA_EVENT_TRANSFER_CMD_FAIL |
+                                    SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS | SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL,
+                                SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT, &event)) ||
+            ((event & SDMMC_OSA_EVENT_TRANSFER_CMD_FAIL) != 0U))
         {
-            if ((event & SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS) == 0U)
+            error = kStatus_Fail;
+        }
+        else
+        {
+            if (content->data != NULL)
             {
-                if (((event & SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL) != 0U) ||
-                    (kStatus_Fail ==
-                         SDMMC_OSAEventWait(host->hostEvent,
-                                            SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS | SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL,
-                                            SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT, &event) ||
-                     ((event & SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL) != 0U)))
+                if ((event & SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS) == 0U)
                 {
-                    error = kStatus_Fail;
+                    if (((event & SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL) != 0U) ||
+                        (kStatus_Fail == SDMMC_OSAEventWait(
+                                             &(host->hostEvent),
+                                             SDMMC_OSA_EVENT_TRANSFER_DATA_SUCCESS | SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL,
+                                             SDMMCHOST_TRANSFER_COMPLETE_TIMEOUT, &event) ||
+                         ((event & SDMMC_OSA_EVENT_TRANSFER_DATA_FAIL) != 0U)))
+                    {
+                        error = kStatus_Fail;
+                    }
                 }
             }
         }
     }
-
-    if (error != kStatus_Success)
+    else
     {
         error = kStatus_Fail;
         /* host error recovery */
@@ -302,16 +332,16 @@ static void SDMMCHOST_ErrorRecovery(SDHC_Type *base)
     /* get host present status */
     status = SDHC_GetPresentStatusFlags(base);
     /* check command inhibit status flag */
-    if ((status & kSDHC_CommandInhibitFlag) != 0U)
+    if ((status & (uint32_t)kSDHC_CommandInhibitFlag) != 0U)
     {
         /* reset command line */
-        SDHC_Reset(base, kSDHC_ResetCommand, 100U);
+        (void)SDHC_Reset(base, kSDHC_ResetCommand, 100U);
     }
     /* check data inhibit status flag */
-    if ((status & kSDHC_DataInhibitFlag) != 0U)
+    if ((status & (uint32_t)kSDHC_DataInhibitFlag) != 0U)
     {
         /* reset data line */
-        SDHC_Reset(base, kSDHC_ResetData, 100U);
+        (void)SDHC_Reset(base, kSDHC_ResetData, 100U);
     }
 }
 
@@ -347,7 +377,6 @@ void SDMMCHOST_PowerOnCard(SDMMCHOST_TYPE *base, const sdmmchost_pwr_card_t *pwr
 status_t SDMMCHOST_Init(sdmmchost_t *host)
 {
     assert(host != NULL);
-    assert(host->hostEvent != NULL);
 
     sdhc_transfer_callback_t sdhcCallback = {0};
     sdhc_host_t *sdhcHost                 = &(host->hostController);
@@ -369,7 +398,7 @@ status_t SDMMCHOST_Init(sdmmchost_t *host)
     SDHC_TransferCreateHandle(sdhcHost->base, &host->handle, &sdhcCallback, host);
 
     /* Create transfer event. */
-    if (kStatus_Success != SDMMC_OSAEventCreate(host->hostEvent))
+    if (kStatus_Success != SDMMC_OSAEventCreate(&(host->hostEvent)))
     {
         return kStatus_Fail;
     }
@@ -384,17 +413,18 @@ void SDMMCHOST_Reset(sdmmchost_t *host)
 
 void SDMMCHOST_SetCardBusWidth(sdmmchost_t *host, uint32_t dataBusWidth)
 {
-    SDHC_SetDataBusWidth(host->hostController.base,
-                         dataBusWidth == kSDMMC_BusWdith1Bit ?
-                             kSDHC_DataBusWidth1Bit :
-                             dataBusWidth == kSDMMC_BusWdith4Bit ? kSDHC_DataBusWidth4Bit : kSDHC_DataBusWidth8Bit);
+    SDHC_SetDataBusWidth(host->hostController.base, dataBusWidth == (uint32_t)kSDMMC_BusWdith1Bit ?
+                                                        kSDHC_DataBusWidth1Bit :
+                                                        dataBusWidth == (uint32_t)kSDMMC_BusWdith4Bit ?
+                                                        kSDHC_DataBusWidth4Bit :
+                                                        kSDHC_DataBusWidth8Bit);
 }
 
 void SDMMCHOST_Deinit(sdmmchost_t *host)
 {
     sdhc_host_t *sdhcHost = &host->hostController;
     SDHC_Deinit(sdhcHost->base);
-    SDMMC_OSAEventDestroy(host->hostEvent);
+    (void)SDMMC_OSAEventDestroy(&(host->hostEvent));
 }
 
 status_t SDMMCHOST_StartBoot(sdmmchost_t *host,

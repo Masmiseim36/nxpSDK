@@ -10,20 +10,20 @@
 #include "fsl_port.h"
 #include "fsl_gpio.h"
 #include "fsl_common.h"
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_LED_GPIO BOARD_LED_RED_GPIO
-#define BOARD_LED_GPIO_PIN BOARD_LED_RED_GPIO_PIN
-#define BOARD_SW_GPIO BOARD_SW3_GPIO
-#define BOARD_SW_PORT BOARD_SW3_PORT
-#define BOARD_SW_GPIO_PIN BOARD_SW3_GPIO_PIN
-#define BOARD_SW_IRQ BOARD_SW3_IRQ
+#define BOARD_LED_GPIO       BOARD_LED_RED_GPIO
+#define BOARD_LED_GPIO_PIN   BOARD_LED_RED_GPIO_PIN
+#define BOARD_SW_GPIO        BOARD_SW3_GPIO
+#define BOARD_SW_PORT        BOARD_SW3_PORT
+#define BOARD_SW_GPIO_PIN    BOARD_SW3_GPIO_PIN
+#define BOARD_SW_IRQ         BOARD_SW3_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
-#define BOARD_SW_NAME BOARD_SW3_NAME
+#define BOARD_SW_NAME        BOARD_SW3_NAME
 
 /*******************************************************************************
  * Prototypes
@@ -45,15 +45,16 @@ volatile bool g_ButtonPress = false;
  */
 void BOARD_SW_IRQ_HANDLER(void)
 {
+#if (defined(FSL_FEATURE_PORT_HAS_NO_INTERRUPT) && FSL_FEATURE_PORT_HAS_NO_INTERRUPT)
+    /* Clear external interrupt flag. */
+    GPIO_GpioClearInterruptFlags(BOARD_SW_GPIO, 1U << BOARD_SW_GPIO_PIN);
+#else
     /* Clear external interrupt flag. */
     GPIO_PortClearInterruptFlags(BOARD_SW_GPIO, 1U << BOARD_SW_GPIO_PIN);
+#endif
     /* Change state of button. */
     g_ButtonPress = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -63,12 +64,14 @@ int main(void)
 {
     /* Define the init structure for the input switch pin */
     gpio_pin_config_t sw_config = {
-        kGPIO_DigitalInput, 0,
+        kGPIO_DigitalInput,
+        0,
     };
 
     /* Define the init structure for the output LED pin */
     gpio_pin_config_t led_config = {
-        kGPIO_DigitalOutput, 0,
+        kGPIO_DigitalOutput,
+        0,
     };
 
     BOARD_InitPins();

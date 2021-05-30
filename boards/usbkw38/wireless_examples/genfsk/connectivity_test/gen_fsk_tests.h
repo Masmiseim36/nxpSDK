@@ -82,7 +82,13 @@ typedef enum ct_conf_param_idx_tag
     gConfParamPower     = 4,
     gConfParamPayload   = 5,
     gConfParamXtalTrim  = 6,
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+    gConfParamExPaGain  = 7,
+    gConfParamExPaAnt   = 8,
+    gConfParamTypeMax   = 9,
+#else
     gConfParamTypeMax   = 7,
+#endif
     gConfParamIdxMax
 }ct_conf_param_idx;
 /*! *********************************************************************************
@@ -135,7 +141,6 @@ typedef enum ct_conf_param_idx_tag
 #define gRateMaxNbr             (3)
 #endif
 
-
 #define gMinRate_c     gRateGenfsk250Kbps_c
 #define gDefaultRate_c gRateGenfsk1Mbps_c
 
@@ -154,7 +159,13 @@ typedef enum ct_conf_param_idx_tag
 #define gGenFskMaxChannel_c     (0x7F)
 #define gGenFskMinChannel_c     (0x00)
 #define gGenFskDefaultChannel_c (0x2A)
-                                        
+      
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+/* these setting should match the default pin config */
+#define gDefaultExPaMode_c      (0)
+#define gDefaultExPaAnt_c       (1)
+#endif
+
 /*network address*/
 #ifdef TEST_DTM_LIKE
 #define gGenFskDefaultSyncAddress_c  (0x71764129) //DTM sync address
@@ -234,6 +245,7 @@ extern app_status_t CT_GenFskInit(pHookAppNotification pFunc, pTmrHookNotificati
 extern bool_t CT_PacketErrorRate(ct_event_t evType, void* pAssociatedValue);
 extern bool_t CT_RangeTest(ct_event_t evType, void* pAssociatedValue);
 extern bool_t CT_ContinuousTests(ct_event_t evType, void* pAssociatedValue);
+extern bool_t CT_TrimAdjust(ct_event_t evType, void* pAssociatedValue);
 
 extern bool_t CT_UpdateShortcutKeyParam(uint8_t u8PressedKey);
 extern bool_t CT_IsShortcutMenuEnabled(void);

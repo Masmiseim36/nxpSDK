@@ -7,12 +7,12 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_ftm.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -101,6 +101,7 @@ int main(void)
     ftmParam.level                 = pwmLevel;
     ftmParam.dutyCyclePercent      = updatedDutycycle;
     ftmParam.firstEdgeDelayPercent = 0U;
+    ftmParam.enableComplementary   = false;
     ftmParam.enableDeadtime        = false;
 
     /* Board pin, clock, debug console init */

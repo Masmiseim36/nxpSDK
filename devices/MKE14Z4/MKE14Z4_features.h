@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
-**     Version:             rev. 2.0, 2020-01-22
-**     Build:               b200326
+**     Version:             rev. 1.0, 2018-05-09
+**     Build:               b200927
 **
 **     Abstract:
 **         Chip specific module features.
@@ -18,8 +18,6 @@
 **     Revisions:
 **     - rev. 1.0 (2018-05-09)
 **         Initial version.
-**     - rev. 2.0 (2020-01-22)
-**         Add 40 pins part numbers.
 **
 ** ###################################################################
 */
@@ -93,7 +91,9 @@
 /* ADC12 module features */
 
 /* @brief Has DMA support (bit SC2[DMAEN]. */
-#define FSL_FEATURE_ADC12_HAS_DMA (0)
+#define FSL_FEATURE_ADC12_HAS_DMA_SUPPORT (0)
+/* @brief Conversion control count (related to number of registers SC1n and Rn). */
+#define FSL_FEATURE_ADC12_CONVERSION_CONTROL_COUNT (4)
 
 /* ACMP module features */
 
@@ -122,9 +122,13 @@
 /* EWM module features */
 
 /* @brief Has clock select (register CLKCTRL). */
-#define FSL_FEATURE_EWM_HAS_CLOCK_SELECT  (0)
+#define FSL_FEATURE_EWM_HAS_CLOCK_SELECT (0)
 /* @brief Has clock prescaler (register CLKPRESCALER). */
-#define FSL_FEATURE_EWM_HAS_PRESCALER  (1)
+#define FSL_FEATURE_EWM_HAS_PRESCALER (1)
+
+/* FGPIO module features */
+
+/* No feature definitions */
 
 /* FLASH module features */
 
@@ -173,8 +177,12 @@
     #define FSL_FEATURE_FLASH_PFLASH_PROTECTION_REGION_COUNT (32)
     /* @brief Has FlexNVM memory. */
     #define FSL_FEATURE_FLASH_HAS_FLEX_NVM (0)
+    /* @brief Has FlexNVM alias. */
+    #define FSL_FEATURE_FLASH_HAS_FLEX_NVM_ALIAS (0)
     /* @brief FlexNVM start address. (Valid only if FlexNVM is available.) */
     #define FSL_FEATURE_FLASH_FLEX_NVM_START_ADDRESS (0x00000000)
+    /* @brief FlexNVM alias start address. (Valid only if FlexNVM alias is available.) */
+    #define FSL_FEATURE_FLASH_FLEX_NVM_ALIAS_START_ADDRESS (0x00000000)
     /* @brief FlexNVM block count. */
     #define FSL_FEATURE_FLASH_FLEX_NVM_BLOCK_COUNT (0)
     /* @brief FlexNVM block size. */
@@ -362,8 +370,12 @@
     #define FSL_FEATURE_FLASH_PFLASH_PROTECTION_REGION_COUNT (32)
     /* @brief Has FlexNVM memory. */
     #define FSL_FEATURE_FLASH_HAS_FLEX_NVM (0)
+    /* @brief Has FlexNVM alias. */
+    #define FSL_FEATURE_FLASH_HAS_FLEX_NVM_ALIAS (0)
     /* @brief FlexNVM start address. (Valid only if FlexNVM is available.) */
     #define FSL_FEATURE_FLASH_FLEX_NVM_START_ADDRESS (0x00000000)
+    /* @brief FlexNVM alias start address. (Valid only if FlexNVM alias is available.) */
+    #define FSL_FEATURE_FLASH_FLEX_NVM_ALIAS_START_ADDRESS (0x00000000)
     /* @brief FlexNVM block count. */
     #define FSL_FEATURE_FLASH_FLEX_NVM_BLOCK_COUNT (0)
     /* @brief FlexNVM block size. */
@@ -512,8 +524,8 @@
 
 /* @brief Number of channels. */
 #define FSL_FEATURE_FTM_CHANNEL_COUNTn(x) \
-    ((x) == FTM0 ? (6) : \
-    ((x) == FTM1 ? (2) : (-1)))
+    (((x) == FTM0) ? (6) : \
+    (((x) == FTM1) ? (2) : (-1)))
 /* @brief Has counter reset by the selected input capture event (register bits C0SC[ICRST], C1SC[ICRST], ...). */
 #define FSL_FEATURE_FTM_HAS_COUNTER_RESET_BY_CAPTURE_EVENT (1)
 /* @brief Has extended deadtime value. */
@@ -532,15 +544,13 @@
 #define FSL_FEATURE_FTM_HAS_CHANNEL6_TRIGGER (0)
 /* @brief If channel 7 is used to generate channel trigger, bitfield EXTTRIG[CH7TRIG]. */
 #define FSL_FEATURE_FTM_HAS_CHANNEL7_TRIGGER (0)
+/* @brief If instance has only TPM function. */
+#define FSL_FEATURE_FTM_IS_TPM_ONLY_INSTANCEn(x) (0)
 
 /* GPIO module features */
 
-/* @brief Has fast (single cycle) access capability via a dedicated memory region. */
-#define FSL_FEATURE_GPIO_HAS_FAST_GPIO (0)
-/* @brief Has port input disable register (PIDR). */
-#define FSL_FEATURE_GPIO_HAS_INPUT_DISABLE (0)
-/* @brief Has dedicated interrupt vector. */
-#define FSL_FEATURE_GPIO_HAS_PORT_INTERRUPT_VECTOR (1)
+/* @brief Has GPIO attribute checker register (GACR). */
+#define FSL_FEATURE_GPIO_HAS_ATTRIBUTE_CHECKER (0)
 
 /* LPI2C module features */
 
@@ -555,8 +565,6 @@
 #define FSL_FEATURE_LPIT_TIMER_COUNT (2)
 /* @brief Has lifetime timer (related to existence of registers LTMR64L and LTMR64H). */
 #define FSL_FEATURE_LPIT_HAS_LIFETIME_TIMER (0)
-/* @brief Has chain mode (related to existence of register bit field TCTRLn[CHN]). */
-#define FSL_FEATURE_LPIT_HAS_CHAIN_MODE (0)
 /* @brief Has shared interrupt handler (has not individual interrupt handler for each channel). */
 #define FSL_FEATURE_LPIT_HAS_SHARED_IRQ_HANDLER (1)
 
@@ -610,10 +618,6 @@
 #define FSL_FEATURE_LPUART_IS_SCI (1)
 /* @brief Capacity (number of entries) of the transmit/receive FIFO (or zero if no FIFO is available). */
 #define FSL_FEATURE_LPUART_FIFO_SIZEn(x) (4)
-/* @brief Maximal data width without parity bit. */
-#define FSL_FEATURE_LPUART_MAX_DATA_WIDTH_WITH_NO_PARITY (10)
-/* @brief Maximal data width with parity bit. */
-#define FSL_FEATURE_LPUART_MAX_DATA_WIDTH_WITH_PARITY (9)
 /* @brief Supports two match addresses to filter incoming frames. */
 #define FSL_FEATURE_LPUART_HAS_ADDRESS_MATCHING (1)
 /* @brief Has transmitter/receiver DMA enable bits C5[TDMAE]/C5[RDMAE] (or BAUD[TDMAE]/BAUD[RDMAE] if the registers are 32-bit wide). */
@@ -660,12 +664,18 @@
 
 /* PDB module features */
 
-/* @brief Define the count of supporting ADC pre-trigger for each channel. */
-#define FSL_FEATURE_PDB_ADC_PRE_CHANNEL_COUNT (2)
 /* @brief Has DAC support. */
 #define FSL_FEATURE_PDB_HAS_DAC (0)
 /* @brief Has shared interrupt handler (has not individual interrupt handler for each channel). */
 #define FSL_FEATURE_PDB_HAS_SHARED_IRQ_HANDLER (0)
+/* @brief PDB channel number). */
+#define FSL_FEATURE_PDB_CHANNEL_COUNT (1)
+/* @brief Channel pre-trigger nunmber (related to number of registers CHmDLYn). */
+#define FSL_FEATURE_PDB_CHANNEL_PRE_TRIGGER_COUNT (4)
+/* @brief DAC interval trigger number). */
+#define FSL_FEATURE_PDB_DAC_INTERVAL_TRIGGER_COUNT (0)
+/* @brief Pulse out number). */
+#define FSL_FEATURE_PDB_PULSE_OUT_COUNT (1)
 
 /* PMC module features */
 
@@ -823,18 +833,26 @@
 #define FSL_FEATURE_SCG_HAS_OSC_ERCLK (1)
 /* @brief Has CLKOUT configure register SCG_CLKOUTCNFG. */
 #define FSL_FEATURE_SCG_HAS_CLKOUTCNFG (1)
+/* @brief Has SCG_SOSCDIV[SOSCDIV1]. */
+#define FSL_FEATURE_SCG_HAS_SOSCDIV1 (0)
 /* @brief Has SCG_SOSCDIV[SOSCDIV3]. */
 #define FSL_FEATURE_SCG_HAS_SOSCDIV3 (0)
+/* @brief Has SCG_SIRCDIV[SIRCDIV1]. */
+#define FSL_FEATURE_SCG_HAS_SIRCDIV1 (0)
 /* @brief Has SCG_SIRCDIV[SIRCDIV3]. */
 #define FSL_FEATURE_SCG_HAS_SIRCDIV3 (0)
 /* @brief Has SCG_SIRCCSR[LPOPO]. */
 #define FSL_FEATURE_SCG_HAS_SIRC_LPOPO (0)
+/* @brief Has SCG_FIRCDIV[FIRCDIV1]. */
+#define FSL_FEATURE_SCG_HAS_FIRCDIV1 (0)
 /* @brief Has SCG_FIRCDIV[FIRCDIV3]. */
 #define FSL_FEATURE_SCG_HAS_FIRCDIV3 (0)
 /* @brief Has SCG_FIRCCSR[FIRCLPEN]. */
 #define FSL_FEATURE_SCG_HAS_FIRCLPEN (1)
 /* @brief Has SCG_FIRCCSR[FIRCREGOFF]. */
 #define FSL_FEATURE_SCG_HAS_FIRCREGOFF (1)
+/* @brief Has SCG_SPLLDIV[SPLLDIV1]. */
+#define FSL_FEATURE_SCG_HAS_SPLLDIV1 (0)
 /* @brief Has SCG_SPLLDIV[SPLLDIV3]. */
 #define FSL_FEATURE_SCG_HAS_SPLLDIV3 (0)
 /* @brief Has SCG_SPLLCFG[PLLPOSTDIV1]. */
@@ -849,6 +867,8 @@
 #define FSL_FEATURE_SCG_HAS_SPLL_PFDSEL (0)
 /* @brief Has SCG_SPLLCSR[SPLLCM]. */
 #define FSL_FEATURE_SCG_HAS_SPLL_MONITOR (0)
+/* @brief Has SCG_LPFLLDIV[FLLDIV1]. */
+#define FSL_FEATURE_SCG_HAS_FLLDIV1 (0)
 /* @brief Has SCG_LPFLLDIV[FLLDIV3]. */
 #define FSL_FEATURE_SCG_HAS_FLLDIV3 (0)
 /* @brief Has low power FLL, SCG_LPFLLCSR. */
@@ -918,6 +938,8 @@
 #define FSL_FEATURE_SMC_HAS_SRS_TAMPER (0)
 /* @brief Has security violation reset (register bit SRS[SECVIO]). */
 #define FSL_FEATURE_SMC_HAS_SRS_SECVIO (0)
+/* @brief Width of SMC registers. */
+#define FSL_FEATURE_SMC_REG_WIDTH (32)
 
 /* SysTick module features */
 

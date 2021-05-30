@@ -8,13 +8,13 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
-#include "serial_port_usb.h"
-#include "clock_config.h"
+#include "fsl_component_serial_port_usb.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

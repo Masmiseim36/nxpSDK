@@ -127,8 +127,12 @@ static appPeerInfo_t maPeerInformation[gAppMaxConnections_c];
 static gapRole_t     mGapRole;
 
 /* Adv Parameters */
+#if gWuart_PeripheralRole_c == 1
 static advState_t mAdvState;
+#endif
+#if gWuart_CentralRole_c == 1
 static bool_t   mScanningOn = FALSE;
+#endif
 
 static uint16_t mCharMonitoredHandles[1] = { (uint16_t)value_uart_stream };
 
@@ -162,8 +166,14 @@ static uint8_t mSwitchPressCnt = 0;
  ************************************************************************************/
 
 /* Gatt and Att callbacks */
+#if gWuart_PeripheralRole_c == 1
 static void BleApp_AdvertisingCallback(gapAdvertisingEvent_t *pAdvertisingEvent);
+#endif
+
+#if gWuart_CentralRole_c == 1
 static void BleApp_ScanningCallback(gapScanningEvent_t *pScanningEvent);
+#endif
+
 static void BleApp_ConnectionCallback
 (
     deviceId_t peerDeviceId,
@@ -190,7 +200,10 @@ static void BleApp_ServiceDiscoveryCallback
 );
 
 static void BleApp_Config(void);
+
+#if gWuart_PeripheralRole_c == 1
 static void BleApp_Advertise(void);
+#endif
 
 void BleApp_StateMachineHandler
 (
@@ -203,10 +216,16 @@ static void BleApp_StoreServiceHandles
     deviceId_t       peerDeviceId,
     gattService_t   *pService
 );
+
+#if gWuart_CentralRole_c == 1
 static bool_t BleApp_CheckScanEvent(gapScannedDevice_t *pData);
+#endif
 
 /* Timer Callbacks */
+
+#if gWuart_CentralRole_c == 1
 static void ScanningTimerCallback(void *pParam);
+#endif
 static void UartStreamFlushTimerCallback(void *pData);
 static void BatteryMeasurementTimerCallback(void *pParam);
 #if (gKBD_KeysCount_c == 1)
@@ -273,32 +292,34 @@ void BleApp_Start(gapRole_t gapRole)
 {
     switch (gapRole)
     {
+#if gWuart_CentralRole_c == 1
         case gGapCentral_c:
         {
             (void)Serial_Print(gAppSerMgrIf, "\n\rScanning...\n\r", gAllowToBlock_d);
             mAppUartNewLine = TRUE;
 #if defined(gUseControllerNotifications_c) && (gUseControllerNotifications_c)
             Gap_ControllerEnhancedNotification(gNotifScanEventOver_c | gNotifScanAdvPktRx_c |
-                                               gNotifScanRspRx_c | gNotifScanReqTx_c, 0);
+                                               gNotifScanRspRx_c | gNotifScanReqTx_c | gNotifConnCreated_c, 0);
 #endif
             gPairingParameters.localIoCapabilities = gIoKeyboardDisplay_c;
             (void)App_StartScanning(&gScanParams, BleApp_ScanningCallback, gGapDuplicateFilteringEnable_c, gGapScanContinuously_d, gGapScanPeriodicDisabled_d);
             break;
         }
-
+#endif
+#if gWuart_PeripheralRole_c == 1
         case gGapPeripheral_c:
         {
             (void)Serial_Print(gAppSerMgrIf, "\n\rAdvertising...\n\r", gAllowToBlock_d);
             mAppUartNewLine = TRUE;
 #if defined(gUseControllerNotifications_c) && (gUseControllerNotifications_c)
             Gap_ControllerEnhancedNotification(gNotifAdvEventOver_c | gNotifAdvTx_c |
-                                               gNotifAdvScanReqRx_c | gNotifAdvConnReqRx_c, 0);
+                                               gNotifAdvScanReqRx_c | gNotifAdvConnReqRx_c | gNotifConnCreated_c, 0);
 #endif
             gPairingParameters.localIoCapabilities = gIoDisplayOnly_c;
             BleApp_Advertise();
             break;
         }
-
+#endif
         default:
         {
             ; /* No action required */
@@ -353,6 +374,7 @@ void BleApp_HandleKeys(key_event_t events)
             break;
         }
 
+#if (gWuart_CentralRole_c == 1) && (gWuart_PeripheralRole_c == 1)
         case gKBD_EventPressPB2_c:
         {
             /* Switch current role */
@@ -371,7 +393,7 @@ void BleApp_HandleKeys(key_event_t events)
 
             break;
         }
-
+#endif
         case gKBD_EventLongPB2_c:
             break;
 
@@ -401,6 +423,7 @@ void BleApp_GenericCallback(gapGenericEvent_t *pGenericEvent)
         }
         break;
 
+#if gWuart_PeripheralRole_c == 1
         case gAdvertisingParametersSetupComplete_c:
         {
             (void)Gap_SetAdvertisingData(&gAppAdvertisingData, &gAppScanRspData);
@@ -418,6 +441,7 @@ void BleApp_GenericCallback(gapGenericEvent_t *pGenericEvent)
             panic(0,0,0,0);
         }
         break;
+#endif
 
 #if defined(gUseControllerNotifications_c) && (gUseControllerNotifications_c)
         case gControllerNotificationEvent_c:
@@ -478,7 +502,11 @@ static void BleApp_Config(void)
     }
 
     /* By default, always start node as GAP central */
+#if gWuart_CentralRole_c == 1
     mGapRole = gGapCentral_c;
+#else
+    mGapRole = gGapPeripheral_c;
+#endif
 
 #if (gKBD_KeysCount_c == 1)
     (void)Serial_Print(gAppSerMgrIf, "\n\rWireless UART starting as GAP Central.\n\r", gAllowToBlock_d);
@@ -486,12 +514,19 @@ static void BleApp_Config(void)
     (void)Serial_Print(gAppSerMgrIf, " - double press the switch to change the role or\n\r", gAllowToBlock_d);
     (void)Serial_Print(gAppSerMgrIf, " - single press to start the application with the selected role.\n\r", gAllowToBlock_d);
 #else
+#if gWuart_CentralRole_c == 1
     (void)Serial_Print(gAppSerMgrIf, "\n\rWireless UART starting as GAP Central, press the role switch to change it.\n\r", gAllowToBlock_d);
+#else
+    (void)Serial_Print(gAppSerMgrIf, "\n\rWireless UART starting as GAP Peripheral.\n\r", gAllowToBlock_d);
+#endif
+#endif
+#if gWuart_PeripheralRole_c == 1
+    mAdvState.advOn = FALSE;
 #endif
 
-    mAdvState.advOn = FALSE;
+#if gWuart_CentralRole_c == 1
     mScanningOn = FALSE;
-
+#endif
     /* Start services */
     (void)Wus_Start(&mWuServiceConfig);
 
@@ -519,17 +554,20 @@ static void BleApp_Config(void)
 *               the parameters are set.
 *
 ********************************************************************************** */
+#if gWuart_PeripheralRole_c == 1
 static void BleApp_Advertise(void)
 {
     /* Set advertising parameters*/
     (void)Gap_SetAdvertisingParameters(&gAdvParams);
 }
+#endif
 
 /*! *********************************************************************************
  * \brief        Handles BLE Scanning callback from host stack.
  *
  * \param[in]    pScanningEvent    Pointer to gapScanningEvent_t.
  ********************************************************************************** */
+#if gWuart_CentralRole_c == 1
 static void BleApp_ScanningCallback(gapScanningEvent_t *pScanningEvent)
 {
     switch (pScanningEvent->eventType)
@@ -593,12 +631,14 @@ static void BleApp_ScanningCallback(gapScanningEvent_t *pScanningEvent)
         }
     }
 }
+#endif
 
 /*! *********************************************************************************
 * \brief        Handles BLE Advertising callback from host stack.
 *
 * \param[in]    pAdvertisingEvent    Pointer to gapAdvertisingEvent_t.
 ********************************************************************************** */
+#if gWuart_PeripheralRole_c == 1
 static void BleApp_AdvertisingCallback(gapAdvertisingEvent_t *pAdvertisingEvent)
 {
     switch (pAdvertisingEvent->eventType)
@@ -631,6 +671,7 @@ static void BleApp_AdvertisingCallback(gapAdvertisingEvent_t *pAdvertisingEvent)
         break;
     }
 }
+#endif
 
 /*! *********************************************************************************
 * \brief        Handles BLE Connection callback from host stack.
@@ -648,7 +689,9 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
             maPeerInformation[peerDeviceId].deviceId = peerDeviceId;
 
             /* Advertising stops when connected */
+#if gWuart_PeripheralRole_c == 1
             mAdvState.advOn = FALSE;
+#endif
 
             /* Subscribe client*/
             (void)Wus_Subscribe(peerDeviceId);
@@ -682,6 +725,12 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
                     /* Restored custom connection information. Encrypt link */
                     (void)Gap_EncryptLink(peerDeviceId);
                 }
+                else
+                {
+                    /* Pair after connect if not bonded - it is possible that a
+                       Slave Security Request will not arrive. */
+                    (void)Gap_Pair(peerDeviceId, &gPairingParameters);
+                }
             }
 
 #endif /* gAppUseBonding_d*/
@@ -702,7 +751,7 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
             mAppUartNewLine = TRUE;
 
 #if defined(gUseControllerNotifications_c) && (gUseControllerNotifications_c)
-            Gap_ControllerEnhancedNotification(gNotifConnRxPdu_c, peerDeviceId);
+            Gap_ControllerEnhancedNotification(gNotifConnRxPdu_c | gNotifConnEventOver_c | gNotifConnCreated_c, peerDeviceId);
 #endif
 
             maPeerInformation[peerDeviceId].gapRole = mGapRole;
@@ -774,6 +823,16 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
             }
         }
         break;
+
+        case gConnEvtAuthenticationRejected_c:
+        {
+            if (mGapRole == gGapCentral_c)
+            {
+                (void)Gap_Pair(peerDeviceId, &gPairingParameters);
+            }
+        }
+        break;
+
 #endif /* gAppUsePairing_d */
 
         default:
@@ -786,13 +845,16 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
     /* Connection Manager to handle Host Stack interactions */
     switch (maPeerInformation[peerDeviceId].gapRole)
     {
+#if gWuart_CentralRole_c == 1
         case gGapCentral_c:
             BleConnManager_GapCentralEvent(peerDeviceId, pConnectionEvent);
             break;
-
+#endif
+#if gWuart_PeripheralRole_c == 1
         case gGapPeripheral_c:
             BleConnManager_GapPeripheralEvent(peerDeviceId, pConnectionEvent);
             break;
+#endif
 
         default:
             ; /* No action required */
@@ -924,7 +986,7 @@ static void BleApp_GattServerCallback(
     }
 }
 
-
+#if gWuart_CentralRole_c == 1
 static bool_t MatchDataInAdvElementList(gapAdStructure_t *pElement,
                                         void *pData,
                                         uint8_t iDataLen)
@@ -943,12 +1005,14 @@ static bool_t MatchDataInAdvElementList(gapAdStructure_t *pElement,
 
     return status;
 }
+#endif
 
 /*! *********************************************************************************
  * \brief        Checks Scan data for a device to connect.
  *
  * \param[in]    pData    Pointer to gapScannedDevice_t.
  ********************************************************************************** */
+#if gWuart_CentralRole_c == 1
 static bool_t BleApp_CheckScanEvent(gapScannedDevice_t *pData)
 {
     uint8_t index = 0;
@@ -957,11 +1021,9 @@ static bool_t BleApp_CheckScanEvent(gapScannedDevice_t *pData)
     while (index < pData->dataLength)
     {
         gapAdStructure_t adElement;
-
         adElement.length = pData->data[index];
         adElement.adType = (gapAdType_t) pData->data[index + 1U];
         adElement.aData = &pData->data[index + 2U];
-
         /* Search for Wireless UART Service */
         if ((adElement.adType == gAdIncomplete128bitServiceList_c)
             || (adElement.adType == gAdComplete128bitServiceList_c))
@@ -976,6 +1038,7 @@ static bool_t BleApp_CheckScanEvent(gapScannedDevice_t *pData)
 
     return foundMatch;
 }
+#endif
 
 /*! *********************************************************************************
  * \brief        Stores handles used by the application.
@@ -1153,12 +1216,13 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, appEvent_t event)
  *
  * \param[in]    pParam        Callback parameters.
  ********************************************************************************** */
+#if gWuart_CentralRole_c == 1
 static void ScanningTimerCallback(void *pParam)
 {
     /* Stop scanning */
     (void)Gap_StopScanning();
 }
-
+#endif
 /*! *********************************************************************************
  * \brief        Handles the switch press timer callback.
  *
@@ -1167,6 +1231,7 @@ static void ScanningTimerCallback(void *pParam)
 #if (gKBD_KeysCount_c == 1)
 static void SwitchPressTimerCallback(void *pParam)
 {
+#if (gWuart_CentralRole_c == 1) && (gWuart_PeripheralRole_c == 1)
   if(mSwitchPressCnt >= gSwitchPressThreshold_c)
   {
       /* Switch the current role */
@@ -1190,12 +1255,11 @@ static void SwitchPressTimerCallback(void *pParam)
       Led1Flashing();
       BleApp_Start(mGapRole);
   }
-
   /* reset the switch press counter */
   mSwitchPressCnt = 0;
+#endif
 }
 #endif
-
 static void BleApp_FlushUartStream(void *pParam)
 {
     uint8_t *pMsg = NULL;
@@ -1557,7 +1621,6 @@ static void BleApp_ControllerNotificationCallback(bleCtrlNotificationEvent_t *pN
     }
 }
 #endif
-
 #endif
 
 /*! *********************************************************************************

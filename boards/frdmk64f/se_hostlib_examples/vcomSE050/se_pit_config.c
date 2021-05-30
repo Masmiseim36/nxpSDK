@@ -30,7 +30,7 @@
 
 #if FSL_FEATURE_SOC_PIT_COUNT
 #define SE_PIT_RESET_HANDLER PIT0_IRQHandler
-#ifdef CPU_MIMXRT1052DVL6B
+#ifdef CPU_MIMXRT1062DVL6A
 #define PIT_IRQ_ID PIT_IRQn
 /* Get source clock for PIT driver */
 #define PIT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_OscClk)

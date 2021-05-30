@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ksdk:examples xmlns:ksdk="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://nxp.com/ksdk/2.0/ksdk_manifest_v3.0.xsd manifest.xsd">
+  <externalDefinitions>
+    <definition extID="platform.drivers.clock.MK66F18"/>
+    <definition extID="platform.drivers.flash.MK66F18"/>
+    <definition extID="device.MK66F18_CMSIS.MK66F18"/>
+    <definition extID="platform.drivers.uart.MK66F18"/>
+    <definition extID="platform.drivers.gpio.MK66F18"/>
+    <definition extID="platform.drivers.i2c.MK66F18"/>
+    <definition extID="platform.drivers.port.MK66F18"/>
+    <definition extID="platform.drivers.dspi.MK66F18"/>
+    <definition extID="platform.drivers.crc.MK66F18"/>
+    <definition extID="middleware.baremetal.MK66F18"/>
+    <definition extID="middleware.usb.device.controller.driver.MK66F18"/>
+    <definition extID="component.osa.MK66F18"/>
+    <definition extID="middleware.usb.device_controller_khci.MK66F18"/>
+    <definition extID="middleware.usb.device_controller_ehci.MK66F18"/>
+    <definition extID="middleware.mcu-boot.MK66F18_startup.MK66F18"/>
+    <definition extID="middleware.mcu-boot.bootsources.MK66F18"/>
+    <definition extID="middleware.mcu-boot.bootsources_kinetis.MK66F18"/>
+    <definition extID="middleware.mcu-boot.MK66F18_sources.MK66F18"/>
+    <definition extID="middleware.mcu-boot.src_bm_usb.MK66F18"/>
+    <definition extID="middleware.mcu-boot.drv_mmcau.MK66F18"/>
+    <definition extID="middleware.mcu-boot.src_security.MK66F18"/>
+    <definition extID="middleware.mcu-boot.src_startup.MK66F18"/>
+    <definition extID="middleware.mcu-boot.drv_microseconds_pit.MK66F18"/>
+    <definition extID="platform.drivers.common.MK66F18"/>
+    <definition extID="platform.Include_core_cm4.MK66F18"/>
+    <definition extID="platform.Include_common.MK66F18"/>
+    <definition extID="platform.Include_dsp.MK66F18"/>
+    <definition extID="component.lists.MK66F18"/>
+    <definition extID="middleware.usb.device.common_header.MK66F18"/>
+    <definition extID="middleware.usb.common_header.MK66F18"/>
+    <definition extID="middleware.usb.phy.MK66F18"/>
+    <definition extID="iar"/>
+    <definition extID="mdk"/>
+    <definition extID="armgcc"/>
+    <definition extID="mcuxpresso"/>
+    <definition extID="com.nxp.mcuxpresso"/>
+  </externalDefinitions>
+  <example id="frdmk66f_freedom_bootloader" name="freedom_bootloader" dependency="platform.drivers.clock.MK66F18 platform.drivers.flash.MK66F18 device.MK66F18_CMSIS.MK66F18 platform.drivers.uart.MK66F18 platform.drivers.gpio.MK66F18 platform.drivers.i2c.MK66F18 platform.drivers.port.MK66F18 platform.drivers.dspi.MK66F18 platform.drivers.crc.MK66F18 middleware.baremetal.MK66F18 middleware.usb.device.controller.driver.MK66F18 component.osa.MK66F18 middleware.usb.device_controller_khci.MK66F18 middleware.usb.device_controller_ehci.MK66F18 middleware.mcu-boot.MK66F18_startup.MK66F18 middleware.mcu-boot.bootsources.MK66F18 middleware.mcu-boot.bootsources_kinetis.MK66F18 middleware.mcu-boot.MK66F18_sources.MK66F18 middleware.mcu-boot.src_bm_usb.MK66F18 middleware.mcu-boot.drv_mmcau.MK66F18 middleware.mcu-boot.src_security.MK66F18 middleware.mcu-boot.src_startup.MK66F18 middleware.mcu-boot.drv_microseconds_pit.MK66F18 platform.drivers.common.MK66F18 platform.Include_core_cm4.MK66F18 platform.Include_common.MK66F18 platform.Include_dsp.MK66F18 component.lists.MK66F18 middleware.usb.device.common_header.MK66F18 middleware.usb.common_header.MK66F18 middleware.usb.phy.MK66F18" category="bootloader_examples">
+    <projects>
+      <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
+    </projects>
+    <toolchainSettings>
+      <toolchainSetting id_refs="com.nxp.mcuxpresso">
+        <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
+          <value>CPU_MK66FN2M0VMD18</value>
+          <value>__SEMIHOST_HARDFAULT_DISABLE=1</value>
+          <value>FREEDOM</value>
+          <value>BL_TARGET_FLASH</value>
+          <value>FRDM_K66F</value>
+          <value>USB_STACK_BM</value>
+          <value>FSL_OSA_BM_TIMER_CONFIG=FSL_OSA_BM_TIMER_NONE</value>
+        </option>
+        <option id="com.crt.advproject.gas.fpu" type="enum">
+          <value>com.crt.advproject.gas.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.debugging.level" type="enum">
+          <value>gnu.c.debugging.level.default</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.debug.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
+          <value>com.crt.advproject.gcc.fpu.fpv4.hard</value>
+        </option>
+        <option id="gnu.c.compiler.option.optimization.flags" type="string">
+          <value>-fno-common</value>
+        </option>
+        <option id="com.crt.advproject.c.misc.dialect" type="enum">
+          <value>com.crt.advproject.misc.dialect.gnu99</value>
+        </option>
+        <option id="com.crt.advproject.gcc.exe.release.option.optimization.level" type="enum">
+          <value>gnu.c.optimization.level.size</value>
+        </option>
+        <option id="gnu.c.compiler.option.misc.other" type="string">
+          <value>-c -ffunction-sections -fdata-sections -ffreestanding -fno-builtin</value>
+        </option>
+        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
+          <value>false</value>
+        </option>
+        <option id="com.crt.advproject.link.fpu" type="enum">
+          <value>com.crt.advproject.link.fpu.fpv4.hard</value>
+        </option>
+        <option id="com.crt.advproject.gas.hdrlib" type="enum">
+          <value>com.crt.advproject.gas.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gas.specs" type="enum">
+          <value>com.crt.advproject.gas.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.hdrlib.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.gcc.specs" type="enum">
+          <value>com.crt.advproject.gcc.specs.newlibnano</value>
+        </option>
+        <option id="com.crt.advproject.link.gcc.hdrlib" type="enum">
+          <value>com.crt.advproject.gcc.link.hdrlib.newlibnano.none</value>
+        </option>
+        <option id="gnu.c.link.option.nostdlibs" type="boolean">
+          <value>true</value>
+        </option>
+        <option id="gnu.c.link.option.other" type="stringList">
+          <value>--gc-sections</value>
+          <value>-Map=${BuildArtifactFileBaseName}.map</value>
+        </option>
+      </toolchainSetting>
+    </toolchainSettings>
+    <include_paths>
+      <include_path path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="board" type="c_include"/>
+      <include_path path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/class/hid" type="c_include"/>
+      <include_path path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/class/msc" type="c_include"/>
+      <include_path path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/source" type="c_include"/>
+      <include_path path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/class" type="c_include"/>
+    </include_paths>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader/iar" project_relative_path="./" type="workspace" toolchain="iar">
+      <files mask="freedom_bootloader.ewd"/>
+      <files mask="freedom_bootloader.ewp"/>
+      <files mask="freedom_bootloader.eww"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader/mdk" project_relative_path="./" type="workspace" toolchain="mdk">
+      <files mask="freedom_bootloader.uvprojx"/>
+      <files mask="freedom_bootloader.uvoptx"/>
+      <files mask="freedom_bootloader.uvmpw"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader/armgcc" project_relative_path="./" type="workspace" toolchain="armgcc">
+      <files mask="build_all.bat"/>
+      <files mask="build_all.sh"/>
+      <files mask="clean.bat"/>
+      <files mask="clean.sh"/>
+      <files mask="CMakeLists.txt"/>
+      <files mask="flags.cmake"/>
+      <files mask="config.cmake"/>
+      <files mask="build_debug.bat"/>
+      <files mask="build_debug.sh"/>
+      <files mask="build_release.bat"/>
+      <files mask="build_release.sh"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="board" type="src">
+      <files mask="pin_mux.c"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="board" type="c_include">
+      <files mask="pin_mux.h"/>
+    </source>
+    <source path="middleware/mcu-boot/targets/common/linker/iar/MK66F18" project_relative_path="middleware/mcu-boot" type="linker" toolchain="iar">
+      <files mask="MK66FN2M0xxx18_application_0x0000.icf"/>
+    </source>
+    <source path="middleware/mcu-boot/targets/common/linker/arm/MK66F18" project_relative_path="middleware/mcu-boot" type="linker" toolchain="mdk">
+      <files mask="MK66FN2M0xxx18_application_0x0000.scf"/>
+    </source>
+    <source path="middleware/mcu-boot/targets/common/linker/mcuxpresso/MK66F18" project_relative_path="middleware/mcu-boot" type="linker" toolchain="mcuxpresso">
+      <files mask="MK66FN2M0xxx18_application_0x0000.ld"/>
+    </source>
+    <source path="middleware/mcu-boot/targets/common/linker/gcc/MK66F18" project_relative_path="middleware/mcu-boot" type="linker" toolchain="armgcc">
+      <files mask="MK66FN2M0xxx18_application_0x0000.ld"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/class/hid" type="src">
+      <files mask="usb_device_hid.c"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/class/hid" type="c_include">
+      <files mask="usb_device_hid.h"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/class/msc" type="src">
+      <files mask="usb_device_msc.c"/>
+      <files mask="usb_device_msc_ufi.c"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/class/msc" type="c_include">
+      <files mask="usb_device_msc.h"/>
+      <files mask="usb_device_msc_ufi.h"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/source" type="src">
+      <files mask="usb_device_ch9.c"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/source" type="c_include">
+      <files mask="usb_device_ch9.h"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/class" type="src">
+      <files mask="usb_device_class.c"/>
+    </source>
+    <source path="boards/frdmk66f/bootloader_examples/freedom_bootloader" project_relative_path="usb/device/class" type="c_include">
+      <files mask="usb_device_class.h"/>
+    </source>
+  </example>
+</ksdk:examples>

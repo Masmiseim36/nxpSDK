@@ -41,9 +41,8 @@
  * SIRCDIV2_CLK output  : 4MHz
  */
 const scg_sirc_config_t s_scgSircConfig = {.enableMode = kSCG_SircEnable | kSCG_SircEnableInLowPower,
-                                           .div1 = kSCG_AsyncClkDivBy1,
-                                           .div2 = kSCG_AsyncClkDivBy2,
-                                           .range = kSCG_SircRangeHigh};
+                                           .div2       = kSCG_AsyncClkDivBy2,
+                                           .range      = kSCG_SircRangeHigh};
 
 /*
  * FIRC clock setting.
@@ -51,11 +50,8 @@ const scg_sirc_config_t s_scgSircConfig = {.enableMode = kSCG_SircEnable | kSCG_
  * FIRCDIV1_CLK output  : 48MHz
  * FIRCDIV2_CLK output  : 48MHz
  */
-const scg_firc_config_t s_scgFircConfig = {.enableMode = kSCG_FircEnable,
-                                           .div2 = kSCG_AsyncClkDivBy1,
-                                           .div1 = kSCG_AsyncClkDivBy1,
-                                           .range = kSCG_FircRange48M,
-                                           .trimConfig = NULL};
+const scg_firc_config_t s_scgFircConfig = {
+    .enableMode = kSCG_FircEnable, .div2 = kSCG_AsyncClkDivBy1, .range = kSCG_FircRange48M, .trimConfig = NULL};
 
 /*
  * LPFLL clock setting in RUN mode.
@@ -63,11 +59,8 @@ const scg_firc_config_t s_scgFircConfig = {.enableMode = kSCG_FircEnable,
  * LPFLLDIV1 output  : 48MHz
  * LPFLLDIV2 output  : 24MHz
  */
-const scg_lpfll_config_t s_scgSysLpFllConfig = {.enableMode = kSCG_LpFllEnable,
-                                                .div1 = kSCG_AsyncClkDivBy1,
-                                                .div2 = kSCG_AsyncClkDivBy2,
-                                                .range = kSCG_LpFllRange48M,
-                                                .trimConfig = NULL};
+const scg_lpfll_config_t s_scgSysLpFllConfig = {
+    .enableMode = kSCG_LpFllEnable, .div2 = kSCG_AsyncClkDivBy2, .range = kSCG_LpFllRange48M, .trimConfig = NULL};
 
 /*
  * System clock configuration while using SIRC in RUN mode.
@@ -77,7 +70,7 @@ const scg_lpfll_config_t s_scgSysLpFllConfig = {.enableMode = kSCG_LpFllEnable,
 const scg_sys_clk_config_t s_sysClkConfigSircInRun = {
     .divSlow = kSCG_SysClkDivBy2, /* Slow clock divider. */
     .divCore = kSCG_SysClkDivBy1, /* Core clock divider. */
-    .src = kSCG_SysClkSrcSirc     /* System clock source. */
+    .src     = kSCG_SysClkSrcSirc /* System clock source. */
 };
 /*
  * System clock configuration while using SIRC in VLPR mode.
@@ -86,7 +79,7 @@ const scg_sys_clk_config_t s_sysClkConfigSircInRun = {
  */
 const scg_sys_clk_config_t s_sysClkConfigSircInVlpr = {.divSlow = kSCG_SysClkDivBy8, /* Slow clock divider. */
                                                        .divCore = kSCG_SysClkDivBy2, /* Core clock divider. */
-                                                       .src = kSCG_SysClkSrcSirc};
+                                                       .src     = kSCG_SysClkSrcSirc};
 
 /*
  * System clock configuration while using LPFLL in RUN mode.
@@ -94,9 +87,9 @@ const scg_sys_clk_config_t s_sysClkConfigSircInVlpr = {.divSlow = kSCG_SysClkDiv
  * Slow clock : 24MHz
  */
 const scg_sys_clk_config_t s_sysClkConfigLpFllInRun = {
-    .divSlow = kSCG_SysClkDivBy2, /* Slow clock divider. */
-    .divCore = kSCG_SysClkDivBy1, /* Core clock divider. */
-    .src = kSCG_SysClkSrcLpFll    /* System clock source. */
+    .divSlow = kSCG_SysClkDivBy2,  /* Slow clock divider. */
+    .divCore = kSCG_SysClkDivBy1,  /* Core clock divider. */
+    .src     = kSCG_SysClkSrcLpFll /* System clock source. */
 };
 
 /*

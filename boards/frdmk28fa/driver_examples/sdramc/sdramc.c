@@ -6,13 +6,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_device_registers.h"
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_sdram.h"
-#include "pin_mux.h"
 
-#include "fsl_common.h"
+#include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+#include "fsl_common.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

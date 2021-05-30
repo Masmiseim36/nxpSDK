@@ -11,6 +11,14 @@ consumer and producer must be prepared to enable transaction.
 
 
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -52,11 +60,3 @@ Producer released item.
 Consumer 1 accepted item.
 Producer released item.
 Consumer 2 accepted item.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

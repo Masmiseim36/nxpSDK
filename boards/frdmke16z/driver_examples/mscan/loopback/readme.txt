@@ -6,6 +6,14 @@ To demonstrates this example, only one board is needed. The example will configu
 buffer and Rx buffer with same ID.
 After that, the example will send a CAN Message from the Tx Buffer to the Rx Buffer
 throuth internal loopback interconnect and print out the Message payload to terminal.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -45,11 +53,3 @@ rx word1 = 0x88776655
 
 ==MSCAN loopback functional example -- Finish.==
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

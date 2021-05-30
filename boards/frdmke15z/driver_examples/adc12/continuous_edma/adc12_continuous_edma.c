@@ -12,10 +12,10 @@
 #include "fsl_adc12.h"
 #include "fsl_dmamux.h"
 #include "fsl_edma.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

@@ -8,6 +8,14 @@ sample input. When run the example, the ADC is triggered by TRGMUX and gets the 
 Conversion Complete (COCO) Interrupt. The LPIT is configured as periodic counter which will output pre-trigger and
 tigger signal to TRGMUX periodically.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -46,11 +54,3 @@ ADC12 Conversion Completed, result value: 4056
 ADC12 Interrupt Counter: 2
 ADC12 Conversion Completed, result value: 781
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

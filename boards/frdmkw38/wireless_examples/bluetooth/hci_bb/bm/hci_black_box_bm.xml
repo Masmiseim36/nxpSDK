@@ -65,8 +65,8 @@
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <memory>
-      <memoryBlock addr="00000000" size="0007b800" access="RO" type="Flash" id="PROGRAM_FLASH_" name="PROGRAM_FLASH"/>
-      <memoryBlock addr="0007b800" size="00004000" access="RO" type="Flash" id="NVM_region_" name="NVM_region"/>
+      <memoryBlock addr="00000000" size="0007d800" access="RO" type="Flash" id="PROGRAM_FLASH_" name="PROGRAM_FLASH"/>
+      <memoryBlock addr="0007d800" size="00002000" access="RO" type="Flash" id="NVM_region_" name="NVM_region"/>
       <memoryBlock addr="0007f800" size="00000800" access="RO" type="Flash" id="FREESCALE_PROD_DATA_" name="FREESCALE_PROD_DATA"/>
       <memoryBlock addr="1fffc6c0" size="0000f940" access="RW" type="RAM" id="SRAM_" name="SRAM"/>
       <memoryBlock addr="1fffc0c0" size="00000600" access="RW" type="RAM" id="STACKSRAM_" name="STACKSRAM"/>

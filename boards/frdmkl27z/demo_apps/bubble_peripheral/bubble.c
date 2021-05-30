@@ -6,12 +6,12 @@
  */
 
 #include "fsl_debug_console.h"
-#include "board.h"
 #include "math.h"
 #include "fsl_mma.h"
-#include "peripherals.h"
-
 #include "pin_mux.h"
+#include "peripherals.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

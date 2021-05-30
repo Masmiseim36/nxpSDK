@@ -506,6 +506,54 @@ status_t UART_SetBaudRate(UART_Type *base, uint32_t baudRate_Bps, uint32_t srcCl
 }
 
 /*!
+ * brief Enable 9-bit data mode for UART.
+ *
+ * This function set the 9-bit mode for UART module. The 9th bit is not used for parity thus can be modified by user.
+ *
+ * param base UART peripheral base address.
+ * param enable true to enable, flase to disable.
+ */
+void UART_Enable9bitMode(UART_Type *base, bool enable)
+{
+    assert(base != NULL);
+
+    uint8_t temp = 0U;
+
+    if (enable)
+    {
+        /* Set UART_C1_M for 9-bit mode, clear UART_C1_PT and UART_C1_PE to disable parity. */
+        temp = base->C1 & ~((uint8_t)UART_C1_PE_MASK | (uint8_t)UART_C1_PT_MASK | (uint8_t)UART_C1_M_MASK);
+        temp |= (uint8_t)UART_C1_M_MASK;
+        base->C1 = temp;
+    }
+    else
+    {
+        /* Clear UART_C1_M. */
+        base->C1 &= ~(uint8_t)UART_C1_M_MASK;
+    }
+}
+
+#if defined(FSL_FEATURE_UART_HAS_ADDRESS_MATCHING) && FSL_FEATURE_UART_HAS_ADDRESS_MATCHING
+/*!
+ * brief Transmit an address frame in 9-bit data mode.
+ *
+ * param base UART peripheral base address.
+ * param address UART slave address.
+ */
+void UART_SendAddress(UART_Type *base, uint8_t address)
+{
+    assert(base != NULL);
+
+    /* Set address mark. */
+    UART_Set9thTransmitBit(base);
+    /* Send address. */
+    UART_WriteByte(base, address);
+    /* Clear address mark for following data transfer. */
+    UART_Clear9thTransmitBit(base);
+}
+#endif
+
+/*!
  * brief Enables UART interrupts according to the provided mask.
  *
  * This function enables the UART interrupts according to the provided mask. The mask
@@ -1711,6 +1759,7 @@ void UART_TransferHandleErrorIRQ(UART_Type *base, uart_handle_t *handle)
 }
 
 #if defined(FSL_FEATURE_UART_HAS_SHARED_IRQ0_IRQ1_IRQ2_IRQ3) && FSL_FEATURE_UART_HAS_SHARED_IRQ0_IRQ1_IRQ2_IRQ3
+void UART0_UART1_UART2_UART3_DriverIRQHandler(void);
 void UART0_UART1_UART2_UART3_DriverIRQHandler(void)
 {
     for (uint32_t instance = 0U; instance < 4U; instance++)
@@ -1725,12 +1774,14 @@ void UART0_UART1_UART2_UART3_DriverIRQHandler(void)
 #if defined(UART0)
 #if ((!(defined(FSL_FEATURE_SOC_LPSCI_COUNT))) || \
      ((defined(FSL_FEATURE_SOC_LPSCI_COUNT)) && (FSL_FEATURE_SOC_LPSCI_COUNT == 0)))
+void UART0_DriverIRQHandler(void);
 void UART0_DriverIRQHandler(void)
 {
     s_uartIsr(UART0, s_uartHandle[0]);
     SDK_ISR_EXIT_BARRIER;
 }
 
+void UART0_RX_TX_DriverIRQHandler(void);
 void UART0_RX_TX_DriverIRQHandler(void)
 {
     UART0_DriverIRQHandler();
@@ -1740,12 +1791,14 @@ void UART0_RX_TX_DriverIRQHandler(void)
 #endif
 
 #if defined(UART1)
+void UART1_DriverIRQHandler(void);
 void UART1_DriverIRQHandler(void)
 {
     s_uartIsr(UART1, s_uartHandle[1]);
     SDK_ISR_EXIT_BARRIER;
 }
 
+void UART1_RX_TX_DriverIRQHandler(void);
 void UART1_RX_TX_DriverIRQHandler(void)
 {
     UART1_DriverIRQHandler();
@@ -1754,12 +1807,14 @@ void UART1_RX_TX_DriverIRQHandler(void)
 #endif
 
 #if defined(UART2)
+void UART2_DriverIRQHandler(void);
 void UART2_DriverIRQHandler(void)
 {
     s_uartIsr(UART2, s_uartHandle[2]);
     SDK_ISR_EXIT_BARRIER;
 }
 
+void UART2_RX_TX_DriverIRQHandler(void);
 void UART2_RX_TX_DriverIRQHandler(void)
 {
     UART2_DriverIRQHandler();
@@ -1768,12 +1823,14 @@ void UART2_RX_TX_DriverIRQHandler(void)
 #endif
 
 #if defined(UART3)
+void UART3_DriverIRQHandler(void);
 void UART3_DriverIRQHandler(void)
 {
     s_uartIsr(UART3, s_uartHandle[3]);
     SDK_ISR_EXIT_BARRIER;
 }
 
+void UART3_RX_TX_DriverIRQHandler(void);
 void UART3_RX_TX_DriverIRQHandler(void)
 {
     UART3_DriverIRQHandler();
@@ -1783,12 +1840,14 @@ void UART3_RX_TX_DriverIRQHandler(void)
 #endif
 
 #if defined(UART4)
+void UART4_DriverIRQHandler(void);
 void UART4_DriverIRQHandler(void)
 {
     s_uartIsr(UART4, s_uartHandle[4]);
     SDK_ISR_EXIT_BARRIER;
 }
 
+void UART4_RX_TX_DriverIRQHandler(void);
 void UART4_RX_TX_DriverIRQHandler(void)
 {
     UART4_DriverIRQHandler();
@@ -1797,12 +1856,14 @@ void UART4_RX_TX_DriverIRQHandler(void)
 #endif
 
 #if defined(UART5)
+void UART5_DriverIRQHandler(void);
 void UART5_DriverIRQHandler(void)
 {
     s_uartIsr(UART5, s_uartHandle[5]);
     SDK_ISR_EXIT_BARRIER;
 }
 
+void UART5_RX_TX_DriverIRQHandler(void);
 void UART5_RX_TX_DriverIRQHandler(void)
 {
     UART5_DriverIRQHandler();

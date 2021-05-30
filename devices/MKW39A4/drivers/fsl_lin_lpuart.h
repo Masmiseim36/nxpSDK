@@ -177,24 +177,6 @@ typedef enum
 extern "C" {
 #endif
 
-/*!
- * @brief Initializes an LIN_LPUART instance for LIN Network.
- *
- * The caller provides memory for the driver state structures during initialization.
- * The user must select the LIN_LPUART clock source in the application to initialize the LIN_LPUART.
- * This function initializes a LPUART instance for operation.
- * This function will initialize the run-time state structure to keep track of
- * the on-going transfers, initialize the module to user defined settings and
- * default settings, set break field length to be 13 bit times minimum, enable
- * the break detect interrupt, Rx complete interrupt, frame error detect interrupt,
- * and enable the LPUART module transmitter and receiver
- *
- * @param instance LIN_LPUART instance number
- * @param linUserConfig user configuration structure of type #lin_user_config_t
- * @param linCurrentState pointer to the LIN_LPUART driver state structure
- * @return An error code or lin_status_t
- */
-
 static inline bool LIN_LPUART_GetRxDataPolarity(const LPUART_Type *base)
 {
     return (((base->STAT >> LPUART_STAT_RXINV_SHIFT) & 1U) > 0U);
@@ -216,10 +198,45 @@ static inline void LIN_LPUART_ReadByte(const LPUART_Type *base, uint8_t *readDat
     *readData = (uint8_t)base->DATA;
 }
 
+/*!
+ * @brief Calculates the best osr and sbr value for configured baudrate
+ *
+ * @param base LPUART peripheral base address
+ * @param baudRate_Bps user configuration structure of type #lin_user_config_t
+ * @param srcClock_Hz pointer to the LIN_LPUART driver state structure
+ * @param osr pointer to osr value
+ * @param sbr pointer to sbr value
+ * @return An error code or lin_status_t
+ */
 status_t LIN_LPUART_CalculateBaudRate(
     LPUART_Type *base, uint32_t baudRate_Bps, uint32_t srcClock_Hz, uint32_t *osr, uint16_t *sbr);
+
+/*!
+ * @brief Configure baudrate according to osr and sbr value
+ *
+ * @param base LPUART peripheral base address
+ * @param osr pointer to osr value
+ * @param sbr pointer to sbr value
+ */
 void LIN_LPUART_SetBaudRate(LPUART_Type *base, uint32_t *osr, uint16_t *sbr);
 
+/*!
+ * @brief Initializes an LIN_LPUART instance for LIN Network.
+ *
+ * The caller provides memory for the driver state structures during initialization.
+ * The user must select the LIN_LPUART clock source in the application to initialize the LIN_LPUART.
+ * This function initializes a LPUART instance for operation.
+ * This function will initialize the run-time state structure to keep track of
+ * the on-going transfers, initialize the module to user defined settings and
+ * default settings, set break field length to be 13 bit times minimum, enable
+ * the break detect interrupt, Rx complete interrupt, frame error detect interrupt,
+ * and enable the LPUART module transmitter and receiver
+ *
+ * @param base LPUART peripheral base address
+ * @param linUserConfig user configuration structure of type #lin_user_config_t
+ * @param linCurrentState pointer to the LIN_LPUART driver state structure
+ * @return An error code or lin_status_t
+ */
 lin_status_t LIN_LPUART_Init(LPUART_Type *base,
                              lin_user_config_t *linUserConfig,
                              lin_state_t *linCurrentState,
@@ -228,7 +245,7 @@ lin_status_t LIN_LPUART_Init(LPUART_Type *base,
 /*!
  * @brief Shuts down the LIN_LPUART by disabling interrupts and transmitter/receiver.
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_Deinit(LPUART_Type *base);
@@ -238,7 +255,7 @@ lin_status_t LIN_LPUART_Deinit(LPUART_Type *base);
  *  This function will calculate the checksum byte and send it with the frame data.
  *  Blocking means that the function does not return until the transmission is complete.
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @param txBuff  source buffer containing 8-bit data chars to send
  * @param txSize the number of bytes to send
  * @param timeoutMSec timeout value in milli seconds
@@ -256,7 +273,7 @@ lin_status_t LIN_LPUART_SendFrameDataBlocking(LPUART_Type *base,
  *  The application has to get the transmit status to know when the transmit is complete.
  *  This function will calculate the checksum byte and send it with the frame data.
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @param txBuff  source buffer containing 8-bit data chars to send
  * @param txSize  the number of bytes to send
  * @return An error code or lin_status_t
@@ -271,7 +288,7 @@ lin_status_t LIN_LPUART_SendFrameData(LPUART_Type *base, const uint8_t *txBuff, 
  *  if timeout has occurred, or return LIN_SUCCESS when the transmission is complete.
  *  The bytesRemaining shows number of bytes that still needed to transmit.
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @param bytesRemaining  Number of bytes still needed to transmit
  * @return lin_status_t LIN_TX_BUSY, LIN_SUCCESS or LIN_TIMEOUT
  */
@@ -283,7 +300,7 @@ lin_status_t LIN_LPUART_GetTransmitStatus(LPUART_Type *base, uint8_t *bytesRemai
  *  will receive the frame data. Blocking means that the function does
  *  not return until the reception is complete.
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @param rxBuff  buffer containing 8-bit received data
  * @param rxSize the number of bytes to receive
  * @param timeoutMSec timeout value in milli seconds
@@ -292,12 +309,12 @@ lin_status_t LIN_LPUART_GetTransmitStatus(LPUART_Type *base, uint8_t *bytesRemai
 lin_status_t LIN_LPUART_RecvFrmDataBlocking(LPUART_Type *base, uint8_t *rxBuff, uint8_t rxSize, uint32_t timeoutMSec);
 
 /*!
- * @brief Receives frame data through the LIN_LPUART module using non- blocking method.
+ * @brief Receives frame data through the LIN_LPUART module using non-blocking method.
  *  This function will check the checksum byte. If the checksum is correct, it will receive it with the frame data.
  *  Non-blocking  means that the function returns immediately.
  *  The application has to get the receive status to know when the reception is complete.
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @param rxBuff  buffer containing 8-bit received data
  * @param rxSize the number of bytes to receive
  * @return An error code or lin_status_t
@@ -309,7 +326,7 @@ lin_status_t LIN_LPUART_RecvFrmData(LPUART_Type *base, uint8_t *rxBuff, uint8_t 
  *  While performing a non-blocking transferring data, users can call this function
  *  to terminate immediately the transferring.
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_AbortTransferData(LPUART_Type *base);
@@ -322,7 +339,7 @@ lin_status_t LIN_LPUART_AbortTransferData(LPUART_Type *base);
  *  and return LIN_SUCCESS, or timeout (LIN_TIMEOUT) when the reception is complete.
  *  The bytesRemaining shows number of bytes that still needed to receive.
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @param bytesRemaining  Number of bytes still needed to receive
  * @return lin_status_t LIN_RX_BUSY, LIN_TIMEOUT or LIN_SUCCESS
  */
@@ -332,7 +349,7 @@ lin_status_t LIN_LPUART_GetReceiveStatus(LPUART_Type *base, uint8_t *bytesRemain
  * @brief This function puts current node to sleep mode
  * This function changes current node state to LIN_NODE_STATE_SLEEP_MODE
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_GoToSleepMode(LPUART_Type *base);
@@ -341,7 +358,7 @@ lin_status_t LIN_LPUART_GoToSleepMode(LPUART_Type *base);
  * @brief Puts current LIN node to Idle state
  * This function changes current node state to LIN_NODE_STATE_IDLE
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_GotoIdleState(LPUART_Type *base);
@@ -349,7 +366,7 @@ lin_status_t LIN_LPUART_GotoIdleState(LPUART_Type *base);
 /*!
  * @brief Sends a wakeup signal through the LIN_LPUART interface
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_SendWakeupSignal(LPUART_Type *base);
@@ -359,7 +376,7 @@ lin_status_t LIN_LPUART_SendWakeupSignal(LPUART_Type *base);
  *  This function sends LIN Break field, sync field then the ID with
  *  correct parity.
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @param id  Frame Identifier
  * @return An error code or lin_status_t
  */
@@ -368,7 +385,7 @@ lin_status_t LIN_LPUART_MasterSendHeader(LPUART_Type *base, uint8_t id);
 /*!
  * @brief Enables LIN_LPUART hardware interrupts.
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_EnableIRQ(LPUART_Type *base);
@@ -376,7 +393,7 @@ lin_status_t LIN_LPUART_EnableIRQ(LPUART_Type *base);
 /*!
  * @brief Disables LIN_LPUART hardware interrupts.
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_DisableIRQ(LPUART_Type *base);
@@ -395,7 +412,7 @@ lin_status_t LIN_LPUART_AutoBaudCapture(uint32_t instance);
 /*!
  * @brief LIN_LPUART RX TX interrupt handler
  *
- * @param instance LIN_LPUART instance number
+ * @param base LPUART peripheral base address
  * @return void
  */
 void LIN_LPUART_IRQHandler(LPUART_Type *base);

@@ -13,7 +13,7 @@
 **
 **     Reference manual:    KE1xZP48M48SF0RM, Rev. 1, Sep. 2018
 **     Version:             rev. 3.0, 2020-01-22
-**     Build:               b200122
+**     Build:               b201012
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -69,8 +69,16 @@ uint32_t SystemCoreClock = DEFAULT_SYSTEM_CLOCK;
 void SystemInit (void) {
 
 #if (DISABLE_WDOG)
-  WDOG->CNT = WDOG_UPDATE_KEY;
-  WDOG->TOVAL = 0xFFFF;
+  if ((WDOG->CS & WDOG_CS_CMD32EN_MASK) != 0U)
+  {
+      WDOG->CNT = WDOG_UPDATE_KEY;
+  }
+  else
+  {
+      WDOG->CNT = WDOG_UPDATE_KEY & 0xFFFFU;
+      WDOG->CNT = (WDOG_UPDATE_KEY >> 16U) & 0xFFFFU;
+  }
+  WDOG->TOVAL = 0xFFFFU;
   WDOG->CS = (uint32_t) ((WDOG->CS) & ~WDOG_CS_EN_MASK) | WDOG_CS_UPDATE_MASK;
 #endif /* (DISABLE_WDOG) */
 
@@ -85,7 +93,7 @@ void SystemCoreClockUpdate (void) {
 
   uint32_t SCGOUTClock;                                 /* Variable to store output clock frequency of the SCG module */
   uint16_t Divider;
-  Divider = ((SCG->CSR & SCG_CSR_DIVCORE_MASK) >> SCG_CSR_DIVCORE_SHIFT) + 1;
+  Divider = (uint16_t)(((SCG->CSR & SCG_CSR_DIVCORE_MASK) >> SCG_CSR_DIVCORE_SHIFT) + 1U);
 
   switch ((SCG->CSR & SCG_CSR_SCS_MASK) >> SCG_CSR_SCS_SHIFT) {
     case 0x1:
@@ -94,18 +102,19 @@ void SystemCoreClockUpdate (void) {
       break;
     case 0x2:
       /* Slow IRC */
-      SCGOUTClock = (((SCG->SIRCCFG & SCG_SIRCCFG_RANGE_MASK) >> SCG_SIRCCFG_RANGE_SHIFT) ? 8000000 : 2000000);
+      SCGOUTClock = ((((SCG->SIRCCFG & SCG_SIRCCFG_RANGE_MASK) >> SCG_SIRCCFG_RANGE_SHIFT) != 0U) ? 8000000U : 2000000U);
       break;
     case 0x3:
       /* Fast IRC */
-      SCGOUTClock = 48000000 + ((SCG->FIRCCFG & SCG_FIRCCFG_RANGE_MASK) >> SCG_FIRCCFG_RANGE_SHIFT) * 4000000;
+      SCGOUTClock = 48000000U + ((SCG->FIRCCFG & SCG_FIRCCFG_RANGE_MASK) >> SCG_FIRCCFG_RANGE_SHIFT) * 4000000U;
       break;
     case 0x5:
       /* Low Power FLL */
-      SCGOUTClock = 48000000 + ((SCG->LPFLLCFG & SCG_LPFLLCFG_FSEL_MASK) >> SCG_LPFLLCFG_FSEL_SHIFT) * 24000000;
+      SCGOUTClock = 48000000U + ((SCG->LPFLLCFG & SCG_LPFLLCFG_FSEL_MASK) >> SCG_LPFLLCFG_FSEL_SHIFT) * 24000000U;
       break;
     default:
-      return;
+      SCGOUTClock = 0U;
+      break;
   }
   SystemCoreClock = (SCGOUTClock / Divider);
 

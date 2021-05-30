@@ -3,6 +3,14 @@ Overview
 The FTM project is a demonstration program of the SDK FTM driver's input capture feature.
 The example sets up a FTM channel for dual-edge capture. Once the input signal is received,
 this example will print the capture value.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -36,11 +44,3 @@ Once the input signal is received the input capture value is printed
 
 Capture value C(n)V=baaa
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

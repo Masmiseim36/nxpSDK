@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -28,42 +32,30 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
-PinsProfile:
-- !!product 'Pins v2.0'
-- !!processor 'MKL46Z256xxx4'
-- !!package 'MKL46Z256VLL4'
-- !!mcu_data 'ksdk2_0'
-- !!processor_version '1.1.0'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE PINS TOOL ***
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+!!GlobalInfo
+product: Pins v3.0
+processor: MKL46Z256xxx4
+package_id: MKL46Z256VLL4
+mcu_data: ksdk2_0
+processor_version: 0.0.9
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
+/* clang-format on */
 
 #include "fsl_common.h"
 #include "fsl_port.h"
 #include "pin_mux.h"
 
-#define PIN0_IDX                         0u   /*!< Pin number for pin 0 in a port */
-#define PIN1_IDX                         1u   /*!< Pin number for pin 1 in a port */
-#define PIN2_IDX                         2u   /*!< Pin number for pin 2 in a port */
-#define PIN4_IDX                         4u   /*!< Pin number for pin 4 in a port */
-#define PIN5_IDX                         5u   /*!< Pin number for pin 5 in a port */
-#define PIN7_IDX                         7u   /*!< Pin number for pin 7 in a port */
-#define PIN8_IDX                         8u   /*!< Pin number for pin 8 in a port */
-#define PIN10_IDX                       10u   /*!< Pin number for pin 10 in a port */
-#define PIN11_IDX                       11u   /*!< Pin number for pin 11 in a port */
-#define PIN17_IDX                       17u   /*!< Pin number for pin 17 in a port */
-#define PIN18_IDX                       18u   /*!< Pin number for pin 18 in a port */
-#define PIN21_IDX                       21u   /*!< Pin number for pin 21 in a port */
-#define PIN22_IDX                       22u   /*!< Pin number for pin 22 in a port */
-#define PIN23_IDX                       23u   /*!< Pin number for pin 23 in a port */
-#define SOPT5_UART0RXSRC_UART_RX      0x00u   /*!< UART0 Receive Data Source Select: UART_RX pin */
-#define SOPT5_UART0TXSRC_UART_TX      0x00u   /*!< UART0 Transmit Data Source Select: UART0_TX pin */
 
+
+/* clang-format off */
 /*
- * TEXT BELOW IS USED AS SETTING FOR THE PINS TOOL *****************************
+ * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {coreID: singlecore, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: '35', peripheral: UART0, signal: RX, pin_signal: TSI0_CH2/PTA1/UART0_RX/TPM2_CH0}
   - {pin_num: '36', peripheral: UART0, signal: TX, pin_signal: TSI0_CH3/PTA2/UART0_TX/TPM2_CH1}
@@ -79,43 +71,81 @@ BOARD_InitPins:
   - {pin_num: '69', peripheral: LCD, signal: 'P, 19', pin_signal: LCD_P19/PTB23/LCD_P19_Fault}
   - {pin_num: '91', peripheral: LCD, signal: 'P, 37', pin_signal: LCD_P37/PTC17/LCD_P37_Fault}
   - {pin_num: '92', peripheral: LCD, signal: 'P, 38', pin_signal: LCD_P38/PTC18/LCD_P38_Fault}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE PINS TOOL ***
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
+/* clang-format on */
 
-/*FUNCTION**********************************************************************
+/* FUNCTION ************************************************************************************************************
  *
  * Function Name : BOARD_InitPins
  * Description   : Configures pin routing and optionally pin electrical features.
  *
- *END**************************************************************************/
-void BOARD_InitPins(void) {
-  CLOCK_EnableClock(kCLOCK_PortA);                           /* Port A Clock Gate Control: Clock enabled */
-  CLOCK_EnableClock(kCLOCK_PortB);                           /* Port B Clock Gate Control: Clock enabled */
-  CLOCK_EnableClock(kCLOCK_PortC);                           /* Port C Clock Gate Control: Clock enabled */
-  CLOCK_EnableClock(kCLOCK_PortD);                           /* Port D Clock Gate Control: Clock enabled */
-  CLOCK_EnableClock(kCLOCK_PortE);                           /* Port E Clock Gate Control: Clock enabled */
+ * END ****************************************************************************************************************/
+void BOARD_InitPins(void)
+{
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
+    /* Port B Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortB);
+    /* Port C Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortC);
+    /* Port D Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortD);
+    /* Port E Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortE);
 
-  PORT_SetPinMux(PORTA, PIN1_IDX, kPORT_MuxAlt2);            /* PORTA1 (pin 35) is configured as UART0_RX */
-  PORT_SetPinMux(PORTA, PIN2_IDX, kPORT_MuxAlt2);            /* PORTA2 (pin 36) is configured as UART0_TX */
-  PORT_SetPinMux(PORTB, PIN10_IDX, kPORT_PinDisabledOrAnalog); /* PORTB10 (pin 60) is configured as LCD_P10 */
-  PORT_SetPinMux(PORTB, PIN11_IDX, kPORT_PinDisabledOrAnalog); /* PORTB11 (pin 61) is configured as LCD_P11 */
-  PORT_SetPinMux(PORTB, PIN21_IDX, kPORT_PinDisabledOrAnalog); /* PORTB21 (pin 67) is configured as LCD_P17 */
-  PORT_SetPinMux(PORTB, PIN22_IDX, kPORT_PinDisabledOrAnalog); /* PORTB22 (pin 68) is configured as LCD_P18 */
-  PORT_SetPinMux(PORTB, PIN23_IDX, kPORT_PinDisabledOrAnalog); /* PORTB23 (pin 69) is configured as LCD_P19 */
-  PORT_SetPinMux(PORTB, PIN7_IDX, kPORT_PinDisabledOrAnalog); /* PORTB7 (pin 57) is configured as LCD_P7 */
-  PORT_SetPinMux(PORTB, PIN8_IDX, kPORT_PinDisabledOrAnalog); /* PORTB8 (pin 58) is configured as LCD_P8 */
-  PORT_SetPinMux(PORTC, PIN17_IDX, kPORT_PinDisabledOrAnalog); /* PORTC17 (pin 91) is configured as LCD_P37 */
-  PORT_SetPinMux(PORTC, PIN18_IDX, kPORT_PinDisabledOrAnalog); /* PORTC18 (pin 92) is configured as LCD_P38 */
-  PORT_SetPinMux(PORTD, PIN0_IDX, kPORT_PinDisabledOrAnalog); /* PORTD0 (pin 93) is configured as LCD_P40 */
-  PORT_SetPinMux(PORTE, PIN4_IDX, kPORT_PinDisabledOrAnalog); /* PORTE4 (pin 5) is configured as LCD_P52 */
-  PORT_SetPinMux(PORTE, PIN5_IDX, kPORT_PinDisabledOrAnalog); /* PORTE5 (pin 6) is configured as LCD_P53 */
-  SIM->SOPT5 = ((SIM->SOPT5 &
-    (~(SIM_SOPT5_UART0TXSRC_MASK | SIM_SOPT5_UART0RXSRC_MASK))) /* Mask bits to zero which are setting */
-      | SIM_SOPT5_UART0TXSRC(SOPT5_UART0TXSRC_UART_TX)       /* UART0 Transmit Data Source Select: UART0_TX pin */
-      | SIM_SOPT5_UART0RXSRC(SOPT5_UART0RXSRC_UART_RX)       /* UART0 Receive Data Source Select: UART_RX pin */
-    );
+    /* PORTA1 (pin 35) is configured as UART0_RX */
+    PORT_SetPinMux(PORTA, 1U, kPORT_MuxAlt2);
+
+    /* PORTA2 (pin 36) is configured as UART0_TX */
+    PORT_SetPinMux(PORTA, 2U, kPORT_MuxAlt2);
+
+    /* PORTB10 (pin 60) is configured as LCD_P10 */
+    PORT_SetPinMux(PORTB, 10U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTB11 (pin 61) is configured as LCD_P11 */
+    PORT_SetPinMux(PORTB, 11U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTB21 (pin 67) is configured as LCD_P17 */
+    PORT_SetPinMux(PORTB, 21U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTB22 (pin 68) is configured as LCD_P18 */
+    PORT_SetPinMux(PORTB, 22U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTB23 (pin 69) is configured as LCD_P19 */
+    PORT_SetPinMux(PORTB, 23U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTB7 (pin 57) is configured as LCD_P7 */
+    PORT_SetPinMux(PORTB, 7U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTB8 (pin 58) is configured as LCD_P8 */
+    PORT_SetPinMux(PORTB, 8U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTC17 (pin 91) is configured as LCD_P37 */
+    PORT_SetPinMux(PORTC, 17U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTC18 (pin 92) is configured as LCD_P38 */
+    PORT_SetPinMux(PORTC, 18U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTD0 (pin 93) is configured as LCD_P40 */
+    PORT_SetPinMux(PORTD, 0U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTE4 (pin 5) is configured as LCD_P52 */
+    PORT_SetPinMux(PORTE, 4U, kPORT_PinDisabledOrAnalog);
+
+    /* PORTE5 (pin 6) is configured as LCD_P53 */
+    PORT_SetPinMux(PORTE, 5U, kPORT_PinDisabledOrAnalog);
+
+    SIM->SOPT5 = ((SIM->SOPT5 &
+                   /* Mask bits to zero which are setting */
+                   (~(SIM_SOPT5_UART0TXSRC_MASK | SIM_SOPT5_UART0RXSRC_MASK)))
+
+                  /* UART0 Transmit Data Source Select: UART0_TX pin. */
+                  | SIM_SOPT5_UART0TXSRC(SOPT5_UART0TXSRC_UART_TX)
+
+                  /* UART0 Receive Data Source Select: UART_RX pin. */
+                  | SIM_SOPT5_UART0RXSRC(SOPT5_UART0RXSRC_UART_RX));
 }
-
-/*******************************************************************************
+/***********************************************************************************************************************
  * EOF
- ******************************************************************************/
+ **********************************************************************************************************************/

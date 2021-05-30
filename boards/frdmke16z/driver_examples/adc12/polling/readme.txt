@@ -12,6 +12,14 @@ configuration structure's setting in application to fit the special requirement.
 The auto-calibration is not essential but strongly recommended. It can help to adjust the converter itself and improve the
 ADC12's performance.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -41,11 +49,3 @@ When the example runs successfully, following information can be seen on the Ope
 ADC12 polling Example.
 ADC Full Range: 256
 Press any key to get user channel's ADC value ...
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

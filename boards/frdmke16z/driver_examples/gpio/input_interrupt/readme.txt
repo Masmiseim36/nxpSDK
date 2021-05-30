@@ -4,6 +4,14 @@ The GPIO Example project is a demonstration program that uses the KSDK software 
 outputs.
 The example is supported by the set, clear, and toggle write-only registers for each port output data register. The 
 example uses the software button to control/toggle the LED.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -39,11 +47,3 @@ If you press the SW3, the LED will be toggled, and "SW3 is pressed" is shown on 
  SW3 is pressed
  ......
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

@@ -53,27 +53,13 @@ char clientcredentialMQTT_BROKER_ENDPOINT[MAX_LENGTH_AWS_ENDPOINT] = {0};
 char clientcredentialIOT_THING_NAME[MAX_LENGTH_AWS_THING_NAME] = {0};
 
 /* Flash structure */
-mflash_file_t g_file_table[] = {{.path       = pkcs11configFILE_NAME_CLIENT_CERTIFICATE,
-                                 .flash_addr = MFLASH_FILE_BASEADDR,
-                                 .max_size   = MFLASH_FILE_SIZE},
-                                {.path       = pkcs11configFILE_NAME_KEY,
-                                 .flash_addr = MFLASH_FILE_BASEADDR + MFLASH_FILE_SIZE,
-                                 .max_size   = MFLASH_FILE_SIZE},
-                                {.path       = FILENAME_AWS_THING_NAME,
-                                 .flash_addr = MFLASH_FILE_BASEADDR + 2 * MFLASH_FILE_SIZE,
-                                 .max_size   = MFLASH_FILE_SIZE},
-                                {.path       = FILENAME_AWS_ENDPOINT,
-                                 .flash_addr = MFLASH_FILE_BASEADDR + 3 * MFLASH_FILE_SIZE,
-                                 .max_size   = MFLASH_FILE_SIZE},
-                                {.path       = FILENAME_MDNS_HOSTNAME,
-                                 .flash_addr = MFLASH_FILE_BASEADDR + 4 * MFLASH_FILE_SIZE,
-                                 .max_size   = MFLASH_FILE_SIZE},
-                                {.path       = FILENAME_LOGIN_PASSWORD,
-                                 .flash_addr = MFLASH_FILE_BASEADDR + 5 * MFLASH_FILE_SIZE,
-                                 .max_size   = MFLASH_FILE_SIZE},
-                                {.path       = FILENAME_WIFI_PARAMS,
-                                 .flash_addr = MFLASH_FILE_BASEADDR + 6 * MFLASH_FILE_SIZE,
-                                 .max_size   = MFLASH_FILE_SIZE},
+mflash_file_t g_file_table[] = {{.path = pkcs11configFILE_NAME_CLIENT_CERTIFICATE, .max_size = 2000},
+                                {.path = pkcs11configFILE_NAME_KEY, .max_size = 2000},
+                                {.path = FILENAME_AWS_THING_NAME, .max_size = 200},
+                                {.path = FILENAME_AWS_ENDPOINT, .max_size = 200},
+                                {.path = FILENAME_MDNS_HOSTNAME, .max_size = 200},
+                                {.path = FILENAME_LOGIN_PASSWORD, .max_size = 200},
+                                {.path = FILENAME_WIFI_PARAMS, .max_size = 200},
                                 {0}};
 
 static SSLSRV_TLS_PARAM_STRUCT tls_params;
@@ -99,7 +85,7 @@ static int init_device_info(char *thing_name, bool has_set_credentials, connecti
         /* Read parameters of Wifi network */
         uint8_t *fileData = NULL;
         uint32_t dataSize = 0;
-        if (mflash_read_file(FILENAME_WIFI_PARAMS, &fileData, &dataSize) != pdTRUE)
+        if (mflash_file_mmap(FILENAME_WIFI_PARAMS, &fileData, &dataSize) != kStatus_Success)
         {
             return -1;
         }
@@ -225,7 +211,7 @@ static int mdns_init(char *hostname, struct netif *netif, connection_type_t con_
     char *thing_name  = "";
     uint8_t *fileData = NULL;
     uint32_t dataSize = 0;
-    if (mflash_read_file(FILENAME_AWS_THING_NAME, &fileData, &dataSize) == pdTRUE)
+    if (mflash_file_mmap(FILENAME_AWS_THING_NAME, &fileData, &dataSize) == kStatus_Success)
     {
         thing_name = (char *)fileData;
     }
@@ -293,13 +279,13 @@ static int save_file(char *file_name, char *buffer, size_t data_len)
     int ret_val = -1;
 
     /* Write the data to file. */
-    if (pdFALSE == mflash_save_file(file_name, (uint8_t *)buffer, data_len))
+    if (kStatus_Success != mflash_file_save(file_name, (uint8_t *)buffer, data_len))
     {
-        DEV_CFG_PRINTF("mflash_save_file failed\n");
+        DEV_CFG_PRINTF("mflash_file_save failed\n");
     }
     else
     {
-        DEV_CFG_PRINTF("mflash_save_file success\n");
+        DEV_CFG_PRINTF("mflash_file_save success\n");
         ret_val = 0;
     }
 
@@ -308,7 +294,7 @@ static int save_file(char *file_name, char *buffer, size_t data_len)
 
 int dev_cfg_init()
 {
-    if (mflash_init(g_file_table, 1) != pdTRUE)
+    if (mflash_init(g_file_table, 1) != kStatus_Success)
     {
         /* Error in mflash_init */
         return -1;
@@ -330,7 +316,7 @@ int dev_cfg_init_config_server(struct netif *netif, connection_type_t con_type)
     /* Try read mDNS hostname from file */
     uint8_t *fileData = NULL;
     uint32_t dataSize = 0;
-    if (mflash_read_file(FILENAME_MDNS_HOSTNAME, &fileData, &dataSize) == pdTRUE)
+    if (mflash_file_mmap(FILENAME_MDNS_HOSTNAME, &fileData, &dataSize) == kStatus_Success)
     {
         /* Find hostneme in the file, replace the default hostname by data from file */
         mdns_hostname = (char *)fileData;
@@ -347,21 +333,21 @@ int dev_cfg_check_aws_credentials()
     /* Try read device certificate */
     uint8_t *fileData = NULL;
     uint32_t dataSize = 0;
-    if (mflash_read_file(pkcs11configFILE_NAME_CLIENT_CERTIFICATE, &fileData, &dataSize) != pdTRUE)
+    if (mflash_file_mmap(pkcs11configFILE_NAME_CLIENT_CERTIFICATE, &fileData, &dataSize) != kStatus_Success)
     {
         DEV_CFG_PRINTF("Device has not set certificate\n");
         return -1;
     }
 
     /* Try read device private key */
-    if (mflash_read_file(pkcs11configFILE_NAME_KEY, &fileData, &dataSize) != pdTRUE)
+    if (mflash_file_mmap(pkcs11configFILE_NAME_KEY, &fileData, &dataSize) != kStatus_Success)
     {
         DEV_CFG_PRINTF("Device has not set private key\n");
         return -1;
     }
 
     /* Try read aws iot thing name */
-    if (mflash_read_file(FILENAME_AWS_THING_NAME, &fileData, &dataSize) != pdTRUE)
+    if (mflash_file_mmap(FILENAME_AWS_THING_NAME, &fileData, &dataSize) != kStatus_Success)
     {
         DEV_CFG_PRINTF("Device has not set aws iot endpoint address\n");
         return -1;
@@ -373,7 +359,7 @@ int dev_cfg_check_aws_credentials()
     memcpy(clientcredentialIOT_THING_NAME, fileData, dataSize);
 
     /* Try read aws iot endpoint address */
-    if (mflash_read_file(FILENAME_AWS_ENDPOINT, &fileData, &dataSize) != pdTRUE)
+    if (mflash_file_mmap(FILENAME_AWS_ENDPOINT, &fileData, &dataSize) != kStatus_Success)
     {
         DEV_CFG_PRINTF("Device has not set aws iot endpoint address\n");
         return -1;
@@ -395,7 +381,7 @@ int dev_cfg_check_login_password(void *data, int data_len)
     uint8_t *fileData    = NULL;
     uint32_t dataSize    = 0;
     char *login_password = DEFAULT_LOGIN_PASSWORD;
-    if (mflash_read_file(FILENAME_LOGIN_PASSWORD, &fileData, &dataSize) == pdTRUE)
+    if (mflash_file_mmap(FILENAME_LOGIN_PASSWORD, &fileData, &dataSize) == kStatus_Success)
     {
         login_password = (char *)fileData;
     }
@@ -502,7 +488,7 @@ int dev_cfg_get_wifi_params(WIFINetworkParams_t *network_params)
     uint32_t dataSize = 0;
 
     /* Try read parameters of wifi network */
-    if (mflash_read_file(FILENAME_WIFI_PARAMS, &fileData, &dataSize) != pdTRUE)
+    if (mflash_file_mmap(FILENAME_WIFI_PARAMS, &fileData, &dataSize) != kStatus_Success)
     {
         DEV_CFG_PRINTF("Device has not set parameters of wifi network\n");
         return -1;

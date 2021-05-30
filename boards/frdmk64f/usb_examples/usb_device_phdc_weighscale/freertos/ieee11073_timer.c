@@ -6,14 +6,14 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#if ((defined IEEE_MAX_TIMER_OBJECTS) && (IEEE_MAX_TIMER_OBJECTS > 0))
+#include <stdio.h>
+#include <string.h>
 #include "usb_device_config.h"
 #include "usb.h"
 #include "timers.h"
-#include "board.h"
 #include "ieee11073_timer.h"
-#if ((defined IEEE_MAX_TIMER_OBJECTS) && (IEEE_MAX_TIMER_OBJECTS > 0))
-#include "stdio.h"
-#include "string.h"
+#include "board.h"
 
 /*******************************************************************************
  * Definitions

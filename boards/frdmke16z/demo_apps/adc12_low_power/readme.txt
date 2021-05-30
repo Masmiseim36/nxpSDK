@@ -6,6 +6,14 @@ the ADC module and takes the current temperature sensor value of the microcontro
 temperature remains within boundaries, both LEDs are on. If the temperature is higher or lower than
 average, a led comes off. This demo provides an example to show how ADC works during a VLPS mode and
 a simple debugging.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -49,11 +57,3 @@ ADC LOW POWER DEMO
 Note:
  - when the temperature is raised: LED RED on, LED GREEN off.
  - when the temperature is reduced: LED GREEN on, LED RED off.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

@@ -8,10 +8,10 @@
 #include "sai.h"
 
 #include "fsl_dialog7212.h"
-#include "peripherals.h"
 #include "pin_mux.h"
-#include "board.h"
 #include "clock_config.h"
+#include "peripherals.h"
+#include "board.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
 #include "fsl_sysmpu.h"
@@ -81,7 +81,6 @@ AT_NONCACHEABLE_SECTION(FIL g_fileObject);   /* File object */
 AT_NONCACHEABLE_SECTION(BYTE work[FF_MAX_SS]);
 extern sd_card_t g_sd; /* sd card descriptor */
 #endif
-sai_transceiver_t config;
 codec_handle_t codecHandle;
 
 /*******************************************************************************
@@ -216,7 +215,10 @@ int main(void)
     PRINTF("SAI Demo started!\n\r");
 
     /* Use default setting to init codec */
-    CODEC_Init(&codecHandle, &boardCodecConfig);
+    if (CODEC_Init(&codecHandle, &boardCodecConfig) != kStatus_Success)
+    {
+        assert(false);
+    }
 
     /* Enable interrupt to handle FIFO error */
     SAI_TxEnableInterrupts(DEMO_SAI_PERIPHERAL, kSAI_FIFOErrorInterruptEnable);
@@ -285,7 +287,10 @@ int main(void)
         userItem = 1U;
     }
 
-    CODEC_Deinit(&codecHandle);
+    if (CODEC_Deinit(&codecHandle) != kStatus_Success)
+    {
+        assert(false);
+    }
     PRINTF("\n\r SAI demo finished!\n\r ");
     while (1)
     {

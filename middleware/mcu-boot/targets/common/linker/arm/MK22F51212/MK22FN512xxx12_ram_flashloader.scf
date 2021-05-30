@@ -1,4 +1,4 @@
-#! armcc -E
+#!armclang --target=arm-arm-none-eabi -mcpu=cortex-m4 -E -x c
 /*
 ** ###################################################################
 **     Processors:          MK22FN512CAP12
@@ -9,9 +9,6 @@
 **                          MK22FN512VMP12
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    K22P121M120SF7RM, Rev. 1, March 24, 2014
-**     Version:             rev. 2.9, 2016-03-21
-**     Build:               b171205
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -61,7 +58,7 @@ LR_m_text m_text_start m_text_size {   ; load region size_region
 
 LR_m_interrupts m_interrupts_start m_interrupts_size {
   VECTOR_ROM m_interrupts_start m_interrupts_size { ; load address = execution address
-    * (RESET,+FIRST)
+    * (.isr_vector,+FIRST)
   }
 }
 

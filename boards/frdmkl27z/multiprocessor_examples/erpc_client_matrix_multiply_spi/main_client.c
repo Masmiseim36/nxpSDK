@@ -6,6 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "erpc_client_setup.h"
 #include "erpc_error_handler.h"
@@ -13,8 +15,6 @@
 #include "fsl_debug_console.h"
 #include <stdlib.h>
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

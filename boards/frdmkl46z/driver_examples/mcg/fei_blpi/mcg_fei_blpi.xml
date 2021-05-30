@@ -12,30 +12,24 @@
     <definition extID="platform.drivers.port.MKL46Z4"/>
     <definition extID="platform.drivers.smc.MKL46Z4"/>
     <definition extID="platform.drivers.uart.MKL46Z4"/>
+    <definition extID="platform.utilities.assert.MKL46Z4"/>
     <definition extID="platform.utilities.debug_console.MKL46Z4"/>
     <definition extID="iar"/>
     <definition extID="mdk"/>
-    <definition extID="armgcc"/>
-    <definition extID="kds"/>
+    <definition extID="atl"/>
     <definition extID="mcuxpresso"/>
-    <definition extID="drt"/>
+    <definition extID="armgcc"/>
   </externalDefinitions>
-  <example id="frdmkl46z_driver_examples_mcg_fei_blpi" name="fei_blpi" category="driver_examples/mcg" dependency="platform.drivers.lpsci.MKL46Z4 platform.drivers.uart.MKL46Z4 platform.drivers.port.MKL46Z4 platform.drivers.gpio.MKL46Z4 platform.drivers.common.MKL46Z4 platform.utilities.debug_console.MKL46Z4 platform.devices.MKL46Z4_CMSIS.MKL46Z4 platform.drivers.smc.MKL46Z4 platform.drivers.flash.MKL46Z4 platform.drivers.clock.MKL46Z4 platform.devices.MKL46Z4_startup.MKL46Z4" toolchain="iar mdk armgcc kds mcuxpresso drt">
+  <example id="frdmkl46z_mcg_fei_blpi" name="mcg_fei_blpi" category="driver_examples/mcg" dependency="platform.drivers.clock.MKL46Z4 platform.drivers.flash.MKL46Z4 platform.drivers.common.MKL46Z4 platform.devices.MKL46Z4_CMSIS.MKL46Z4 platform.devices.MKL46Z4_startup.MKL46Z4 platform.drivers.lpsci.MKL46Z4 platform.drivers.uart.MKL46Z4 platform.drivers.port.MKL46Z4 platform.drivers.smc.MKL46Z4 platform.utilities.debug_console.MKL46Z4 platform.drivers.gpio.MKL46Z4 platform.utilities.assert.MKL46Z4" toolchain="mdk iar armgcc mcuxpresso">
     <projects>
       <project type="com.crt.advproject.projecttype.exe" nature="org.eclipse.cdt.core.cnature"/>
     </projects>
     <toolchainSettings>
-      <!-- Curently, mcux just supports one common settings set for both debug and release -->
       <toolchainSetting id_refs="com.nxp.mcuxpresso">
-        <!-- asm compiler -->
         <option id="com.crt.advproject.gas.fpu" type="enum">
           <value>com.crt.advproject.gas.fpu.none</value>
         </option>
-        <option id="gnu.both.asm.option.warnings.nowarn" type="boolean">
-          <value>false</value>
-        </option>
-        <!-- gcc compiler -->
-        <option id="com.crt.advproject.gcc.fpu" type="string">
+        <option id="com.crt.advproject.gcc.fpu" type="enum">
           <value>com.crt.advproject.gcc.fpu.none</value>
         </option>
         <option id="com.crt.advproject.c.misc.dialect" type="enum">
@@ -47,23 +41,7 @@
         <option id="com.crt.advproject.gcc.exe.release.option.debugging.level" type="enum">
           <value>gnu.c.debugging.level.default</value>
         </option>
-        <option id="gnu.c.compiler.option.warnings.nowarn" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.compiler.option.warnings.allwarn" type="boolean">
-          <value>true</value>
-        </option>
-        <option id="gnu.c.compiler.option.warnings.extrawarn" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.compiler.option.warnings.wconversion" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.compiler.option.warnings.toerrors" type="boolean">
-          <value>false</value>
-        </option>
         <option id="gnu.c.compiler.option.preprocessor.def.symbols" type="stringList">
-          <value>DEBUG</value>
           <value>CPU_MKL46Z256VLL4</value>
           <value>FRDM_KL46Z</value>
           <value>FREEDOM</value>
@@ -71,47 +49,32 @@
         <option id="gnu.c.compiler.option.optimization.flags" type="string">
           <value>-fno-common</value>
         </option>
-        <option id="gnu.c.compiler.option.misc.other" type="enum">
+        <option id="gnu.c.compiler.option.misc.other" type="string">
           <value>-c  -ffunction-sections  -fdata-sections  -ffreestanding  -fno-builtin</value>
         </option>
-        <option id="gnu.c.compiler.option.preprocessor.nostdinc" type="boolean">
-          <value>false</value>
-        </option>
-        <!-- gcc linker -->
         <option id="com.crt.advproject.link.fpu" type="enum">
           <value>com.crt.advproject.link.fpu.none</value>
-        </option>
-        <option id="gnu.c.link.option.nostart" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.link.option.nodeflibs" type="boolean">
-          <value>false</value>
         </option>
         <option id="gnu.c.link.option.nostdlibs" type="boolean">
           <value>true</value>
         </option>
-        <option id="gnu.c.link.option.strip" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.link.option.noshared" type="boolean">
-          <value>false</value>
-        </option>
-        <option id="gnu.c.link.option.other" type="stringList">
-          <value>--gc-sections</value>
-        </option>
       </toolchainSetting>
     </toolchainSettings>
-    <source path="boards/frdmkl46z/driver_examples/mcg/fei_blpi" target_path="board" type="c_include">
+    <source path="boards/frdmkl46z/driver_examples/mcg/fei_blpi" target_path="board/src" type="c_include">
       <files mask="board.h"/>
       <files mask="clock_config.h"/>
+    </source>
+    <source path="boards/frdmkl46z/driver_examples/mcg/fei_blpi" target_path="board/src" type="src">
+      <files mask="board.c"/>
+      <files mask="clock_config.c"/>
+    </source>
+    <source path="boards/frdmkl46z/driver_examples/mcg/fei_blpi" target_path="board" type="c_include">
       <files mask="pin_mux.h"/>
     </source>
     <source path="boards/frdmkl46z/driver_examples/mcg/fei_blpi" target_path="board" type="src">
-      <files mask="board.c"/>
-      <files mask="clock_config.c"/>
       <files mask="pin_mux.c"/>
     </source>
-    <source path="boards/frdmkl46z/driver_examples/mcg/fei_blpi" target_path="doc" type="doc">
+    <source path="boards/frdmkl46z/driver_examples/mcg/fei_blpi" target_path="doc" type="doc" toolchain="iar mdk atl mcuxpresso">
       <files mask="readme.txt"/>
     </source>
     <source path="boards/frdmkl46z/driver_examples/mcg/fei_blpi" target_path="source" type="src">

@@ -7,21 +7,21 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "math.h"
 #include "fsl_ftm.h"
 #include "fsl_fxos.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* The Flextimer instance/channel used for board */
-#define BOARD_FTM_BASEADDR FTM0
-#define BOARD_FIRST_TIMER_CHANNEL 3U
+#define BOARD_FTM_BASEADDR         FTM0
+#define BOARD_FIRST_TIMER_CHANNEL  3U
 #define BOARD_SECOND_TIMER_CHANNEL 5U
 
 /* Get source clock for FTM driver */
@@ -32,7 +32,7 @@
 
 /* Accelerometer Reset PIN */
 #define BOARD_ACCEL_RESET_GPIO GPIOE
-#define BOARD_ACCEL_RESET_PIN 6U
+#define BOARD_ACCEL_RESET_PIN  6U
 
 /*******************************************************************************
  * Prototypes
@@ -58,7 +58,7 @@ void BOARD_ACCEL_Reset(void)
 
     /* Reset sensor by reset pin*/
     pin_config.pinDirection = kGPIO_DigitalOutput;
-    pin_config.outputLogic = 1;
+    pin_config.outputLogic  = 1;
     GPIO_PinInit(BOARD_ACCEL_RESET_GPIO, BOARD_ACCEL_RESET_PIN, &pin_config);
     GPIO_PinWrite(BOARD_ACCEL_RESET_GPIO, BOARD_ACCEL_RESET_PIN, 1);
     /* Delay to ensure reliable sensor reset */
@@ -81,15 +81,17 @@ static void Timer_Init(void)
     ftm_chnl_pwm_signal_param_t ftmParam[2];
 
     /* Configure ftm params with frequency 24kHZ */
-    ftmParam[0].chnlNumber = (ftm_chnl_t)BOARD_FIRST_TIMER_CHANNEL;
-    ftmParam[0].level = kFTM_LowTrue;
-    ftmParam[0].dutyCyclePercent = 0U;
+    ftmParam[0].chnlNumber            = (ftm_chnl_t)BOARD_FIRST_TIMER_CHANNEL;
+    ftmParam[0].level                 = kFTM_LowTrue;
+    ftmParam[0].dutyCyclePercent      = 0U;
     ftmParam[0].firstEdgeDelayPercent = 0U;
+    ftmParam[0].enableDeadtime        = false;
 
-    ftmParam[1].chnlNumber = (ftm_chnl_t)BOARD_SECOND_TIMER_CHANNEL;
-    ftmParam[1].level = kFTM_LowTrue;
-    ftmParam[1].dutyCyclePercent = 0U;
+    ftmParam[1].chnlNumber            = (ftm_chnl_t)BOARD_SECOND_TIMER_CHANNEL;
+    ftmParam[1].level                 = kFTM_LowTrue;
+    ftmParam[1].dutyCyclePercent      = 0U;
     ftmParam[1].firstEdgeDelayPercent = 0U;
+    ftmParam[1].enableDeadtime        = false;
 
     FTM_GetDefaultConfig(&ftmInfo);
 
@@ -113,15 +115,15 @@ static void Board_UpdatePwm(uint16_t x, uint16_t y)
 int main(void)
 {
     fxos_handle_t fxosHandle = {0};
-    fxos_data_t sensorData = {0};
-    fxos_config_t config = {0};
-    uint8_t sensorRange = 0;
-    uint8_t dataScale = 0;
-    int16_t xData = 0;
-    int16_t yData = 0;
-    uint8_t i = 0;
-    uint8_t array_addr_size = 0;
-    status_t result = kStatus_Fail;
+    fxos_data_t sensorData   = {0};
+    fxos_config_t config     = {0};
+    uint8_t sensorRange      = 0;
+    uint8_t dataScale        = 0;
+    int16_t xData            = 0;
+    int16_t yData            = 0;
+    uint8_t i                = 0;
+    uint8_t array_addr_size  = 0;
+    status_t result          = kStatus_Fail;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -136,7 +138,7 @@ int main(void)
     /* I2C initialize */
     BOARD_Accel_I2C_Init();
     /* Configure the I2C function */
-    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_SendFunc    = BOARD_Accel_I2C_Send;
     config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
     /* Initialize sensor devices */

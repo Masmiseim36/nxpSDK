@@ -14,7 +14,9 @@ Hardware requirements
 
 Board settings
 ==============
-No special board setting.
+The details for switching between USB-KW38 dongle as a Bluetooth Low Energy sniffer
+and USB-KW38 as a development platform can be found at the bellow link:
+https://www.nxp.com/document/guide/getting-started-with-the-usb-kw38:GS-USB-KW38
 
 Known Issues
 ============

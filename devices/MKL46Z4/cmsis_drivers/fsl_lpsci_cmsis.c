@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
+ * Copyright 2016-2017 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -14,37 +16,16 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 #include "fsl_lpsci_cmsis.h"
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.lpsci_cmsis"
+#endif
+
 
 #if ((RTE_USART0) && defined(UART0))
 
@@ -69,9 +50,7 @@ typedef struct _cmsis_lpsci_interrupt_driver_state
     cmsis_lpsci_resource_t *resource; /*!< Basic LPSCI resource. */
     lpsci_handle_t *handle;           /*!< Interupt transfer handle. */
     ARM_USART_SignalEvent_t cb_event; /*!< Callback function.     */
-    bool isInitialized;               /*!< Is initialized or not. */
-    bool isPowerOn;                   /*!< Is power on or not.    */
-    bool isConfigured;                /*!< Configured to work or not. */
+    uint8_t flags;                    /*!< Control and state flags. */
 } cmsis_lpsci_interrupt_driver_state_t;
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
@@ -96,9 +75,7 @@ typedef struct _cmsis_lpsci_dma_driver_state
     dma_handle_t *rxHandle;                  /*!< DMA RX handle.             */
     dma_handle_t *txHandle;                  /*!< DMA TX handle.             */
     ARM_USART_SignalEvent_t cb_event;        /*!< Callback function.     */
-    bool isInitialized;                      /*!< Is initialized or not.      */
-    bool isPowerOn;                          /*!< Is power on or not.         */
-    bool isConfigured;                       /*!< Configured to work or not.  */
+    uint8_t flags;                           /*!< Control and state flags. */
 } cmsis_lpsci_dma_driver_state_t;
 #endif
 
@@ -140,7 +117,10 @@ static const ARM_USART_CAPABILITIES s_lpsciDriverCapabilities = {
 /*
  * Common control function used by LPSCI_NonBlockingControl/LPSCI_DmaControl/LPSCI_EdmaControl
  */
-static int32_t LPSCI_CommonControl(uint32_t control, uint32_t arg, cmsis_lpsci_resource_t *resource, bool *isConfigured)
+static int32_t LPSCI_CommonControl(uint32_t control,
+                                   uint32_t arg,
+                                   cmsis_lpsci_resource_t *resource,
+                                   uint8_t *isConfigured)
 {
     lpsci_config_t config;
 
@@ -215,10 +195,10 @@ static int32_t LPSCI_CommonControl(uint32_t control, uint32_t arg, cmsis_lpsci_r
     }
 
     /* If LPSCI is already configured, deinit it first. */
-    if (*isConfigured)
+    if ((*isConfigured) & USART_FLAG_CONFIGURED)
     {
         LPSCI_Deinit(resource->base);
-        *isConfigured = false;
+        *isConfigured &= ~USART_FLAG_CONFIGURED;
     }
 
     config.enableTx = true;
@@ -229,7 +209,7 @@ static int32_t LPSCI_CommonControl(uint32_t control, uint32_t arg, cmsis_lpsci_r
         return ARM_USART_ERROR_BAUDRATE;
     }
 
-    *isConfigured = true;
+    *isConfigured |= USART_FLAG_CONFIGURED;
 
     return ARM_DRIVER_OK;
 }
@@ -257,6 +237,7 @@ static ARM_USART_MODEM_STATUS LPSCI_GetModemStatus(void)
     modem_status.dsr = 0U;
     modem_status.ri = 0U;
     modem_status.dcd = 0U;
+    modem_status.reserved = 0U;
 
     return modem_status;
 }
@@ -288,21 +269,18 @@ void KSDK_LPSCI_DmaCallback(UART0_Type *base, lpsci_dma_handle_t *handle, status
 
 static int32_t LPSCI_DmaInitialize(ARM_USART_SignalEvent_t cb_event, cmsis_lpsci_dma_driver_state_t *lpsci)
 {
-    if (lpsci->isInitialized)
+    if (!(lpsci->flags & USART_FLAG_INIT))
     {
-        /* Driver is already initialized */
-        return ARM_DRIVER_OK;
+        lpsci->cb_event = cb_event;
+        lpsci->flags = USART_FLAG_INIT;
     }
-
-    lpsci->cb_event = cb_event;
-    lpsci->isInitialized = true;
 
     return ARM_DRIVER_OK;
 }
 
 static int32_t LPSCI_DmaUninitialize(cmsis_lpsci_dma_driver_state_t *lpsci)
 {
-    lpsci->isInitialized = false;
+    lpsci->flags = USART_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
@@ -314,13 +292,12 @@ static int32_t LPSCI_DmaPowerControl(ARM_POWER_STATE state, cmsis_lpsci_dma_driv
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (lpsci->isPowerOn)
+            if (lpsci->flags & USART_FLAG_POWER)
             {
                 LPSCI_Deinit(lpsci->resource->base);
                 DMAMUX_DisableChannel(lpsci->dmaResource->rxDmamuxBase, lpsci->dmaResource->rxDmaChannel);
                 DMAMUX_DisableChannel(lpsci->dmaResource->txDmamuxBase, lpsci->dmaResource->txDmaChannel);
-                lpsci->isPowerOn = false;
-                lpsci->isConfigured = false;
+                lpsci->flags = USART_FLAG_INIT;
             }
             break;
 
@@ -329,36 +306,38 @@ static int32_t LPSCI_DmaPowerControl(ARM_POWER_STATE state, cmsis_lpsci_dma_driv
 
         case ARM_POWER_FULL:
             /* Must be initialized first. */
-            if (!lpsci->isInitialized)
+            if (lpsci->flags == USART_FLAG_UNINIT)
             {
                 return ARM_DRIVER_ERROR;
             }
 
-            if (!lpsci->isPowerOn)
+            if (lpsci->flags & USART_FLAG_POWER)
             {
-                LPSCI_GetDefaultConfig(&config);
-                config.enableTx = true;
-                config.enableRx = true;
-
-                dmaResource = lpsci->dmaResource;
-
-                /* Set up DMA setting. */
-                DMA_CreateHandle(lpsci->rxHandle, dmaResource->rxDmaBase, dmaResource->rxDmaChannel);
-                DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxDmaChannel, dmaResource->rxDmaRequest);
-                DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxDmaChannel);
-
-                DMA_CreateHandle(lpsci->txHandle, dmaResource->txDmaBase, dmaResource->txDmaChannel);
-                DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txDmaChannel, dmaResource->txDmaRequest);
-                DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txDmaChannel);
-
-                /* Setup the LPSCI. */
-                LPSCI_Init(lpsci->resource->base, &config, lpsci->resource->GetFreq());
-                LPSCI_TransferCreateHandleDMA(lpsci->resource->base, lpsci->handle, KSDK_LPSCI_DmaCallback,
-                                              (void *)lpsci->cb_event, lpsci->txHandle, lpsci->rxHandle);
-
-                lpsci->isPowerOn = true;
-                lpsci->isConfigured = true;
+                /* Driver already powered */
+                break;
             }
+
+            LPSCI_GetDefaultConfig(&config);
+            config.enableTx = true;
+            config.enableRx = true;
+
+            dmaResource = lpsci->dmaResource;
+
+            /* Set up DMA setting. */
+            DMA_CreateHandle(lpsci->rxHandle, dmaResource->rxDmaBase, dmaResource->rxDmaChannel);
+            DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxDmaChannel, dmaResource->rxDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxDmaChannel);
+
+            DMA_CreateHandle(lpsci->txHandle, dmaResource->txDmaBase, dmaResource->txDmaChannel);
+            DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txDmaChannel, dmaResource->txDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txDmaChannel);
+
+            /* Setup the LPSCI. */
+            LPSCI_Init(lpsci->resource->base, &config, lpsci->resource->GetFreq());
+            LPSCI_TransferCreateHandleDMA(lpsci->resource->base, lpsci->handle, KSDK_LPSCI_DmaCallback,
+                                          (void *)lpsci->cb_event, lpsci->txHandle, lpsci->rxHandle);
+
+            lpsci->flags |= (USART_FLAG_POWER | USART_FLAG_CONFIGURED);
             break;
 
         default:
@@ -471,7 +450,7 @@ static uint32_t LPSCI_DmaGetRxCount(cmsis_lpsci_dma_driver_state_t *lpsci)
 static int32_t LPSCI_DmaControl(uint32_t control, uint32_t arg, cmsis_lpsci_dma_driver_state_t *lpsci)
 {
     /* Must be power on. */
-    if (!lpsci->isPowerOn)
+    if (!(lpsci->flags & USART_FLAG_POWER))
     {
         return ARM_DRIVER_ERROR;
     }
@@ -498,7 +477,7 @@ static int32_t LPSCI_DmaControl(uint32_t control, uint32_t arg, cmsis_lpsci_dma_
             break;
     }
 
-    return LPSCI_CommonControl(control, arg, lpsci->resource, &lpsci->isConfigured);
+    return LPSCI_CommonControl(control, arg, lpsci->resource, &lpsci->flags);
 }
 
 static ARM_USART_STATUS LPSCI_DmaGetStatus(cmsis_lpsci_dma_driver_state_t *lpsci)
@@ -518,6 +497,7 @@ static ARM_USART_STATUS LPSCI_DmaGetStatus(cmsis_lpsci_dma_driver_state_t *lpsci
 #endif
     stat.rx_framing_error = (!(!(ksdk_lpsci_status & kLPSCI_FramingErrorFlag)));
     stat.rx_parity_error = (!(!(ksdk_lpsci_status & kLPSCI_ParityErrorFlag)));
+    stat.reserved = 0U;
 
     return stat;
 }
@@ -565,21 +545,18 @@ void KSDK_LPSCI_NonBlockingCallback(UART0_Type *base, lpsci_handle_t *handle, st
 static int32_t LPSCI_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event,
                                            cmsis_lpsci_interrupt_driver_state_t *lpsci)
 {
-    if (lpsci->isInitialized)
+    if (!(lpsci->flags & USART_FLAG_INIT))
     {
-        /* Driver is already initialized */
-        return ARM_DRIVER_OK;
+        lpsci->cb_event = cb_event;
+        lpsci->flags = USART_FLAG_INIT;
     }
-
-    lpsci->cb_event = cb_event;
-    lpsci->isInitialized = true;
 
     return ARM_DRIVER_OK;
 }
 
 static int32_t LPSCI_NonBlockingUninitialize(cmsis_lpsci_interrupt_driver_state_t *lpsci)
 {
-    lpsci->isInitialized = false;
+    lpsci->flags = USART_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
@@ -590,11 +567,10 @@ static int32_t LPSCI_NonBlockingPowerControl(ARM_POWER_STATE state, cmsis_lpsci_
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (lpsci->isPowerOn)
+            if (lpsci->flags & USART_FLAG_POWER)
             {
                 LPSCI_Deinit(lpsci->resource->base);
-                lpsci->isPowerOn = false;
-                lpsci->isConfigured = false;
+                lpsci->flags = USART_FLAG_INIT;
             }
             break;
 
@@ -603,23 +579,26 @@ static int32_t LPSCI_NonBlockingPowerControl(ARM_POWER_STATE state, cmsis_lpsci_
 
         case ARM_POWER_FULL:
             /* Must be initialized first. */
-            if (!lpsci->isInitialized)
+            if (lpsci->flags == USART_FLAG_UNINIT)
             {
                 return ARM_DRIVER_ERROR;
             }
 
-            if (!lpsci->isPowerOn)
+            if (lpsci->flags & USART_FLAG_POWER)
             {
-                LPSCI_GetDefaultConfig(&config);
-                config.enableTx = true;
-                config.enableRx = true;
-
-                LPSCI_Init(lpsci->resource->base, &config, lpsci->resource->GetFreq());
-                LPSCI_TransferCreateHandle(lpsci->resource->base, lpsci->handle, KSDK_LPSCI_NonBlockingCallback,
-                                           (void *)lpsci->cb_event);
-                lpsci->isPowerOn = true;
-                lpsci->isConfigured = true;
+                /* Driver already powered */
+                break;
             }
+
+            LPSCI_GetDefaultConfig(&config);
+            config.enableTx = true;
+            config.enableRx = true;
+
+            LPSCI_Init(lpsci->resource->base, &config, lpsci->resource->GetFreq());
+            LPSCI_TransferCreateHandle(lpsci->resource->base, lpsci->handle, KSDK_LPSCI_NonBlockingCallback,
+                                       (void *)lpsci->cb_event);
+            lpsci->flags |= (USART_FLAG_POWER | USART_FLAG_CONFIGURED);
+
             break;
 
         default:
@@ -732,7 +711,7 @@ static uint32_t LPSCI_NonBlockingGetRxCount(cmsis_lpsci_interrupt_driver_state_t
 static int32_t LPSCI_NonBlockingControl(uint32_t control, uint32_t arg, cmsis_lpsci_interrupt_driver_state_t *lpsci)
 {
     /* Must be power on. */
-    if (!lpsci->isPowerOn)
+    if (!(lpsci->flags & USART_FLAG_POWER))
     {
         return ARM_DRIVER_ERROR;
     }
@@ -759,7 +738,7 @@ static int32_t LPSCI_NonBlockingControl(uint32_t control, uint32_t arg, cmsis_lp
             break;
     }
 
-    return LPSCI_CommonControl(control, arg, lpsci->resource, &lpsci->isConfigured);
+    return LPSCI_CommonControl(control, arg, lpsci->resource, &lpsci->flags);
 }
 
 static ARM_USART_STATUS LPSCI_NonBlockingGetStatus(cmsis_lpsci_interrupt_driver_state_t *lpsci)
@@ -779,6 +758,7 @@ static ARM_USART_STATUS LPSCI_NonBlockingGetStatus(cmsis_lpsci_interrupt_driver_
 #endif
     stat.rx_framing_error = (!(!(ksdk_lpsci_status & kLPSCI_FramingErrorFlag)));
     stat.rx_parity_error = (!(!(ksdk_lpsci_status & kLPSCI_ParityErrorFlag)));
+    stat.reserved = 0U;
 
     return stat;
 }
@@ -787,8 +767,8 @@ static ARM_USART_STATUS LPSCI_NonBlockingGetStatus(cmsis_lpsci_interrupt_driver_
 
 #if defined(UART0) && RTE_USART0
 
-/* User needs to provide the implementation for UART0_GetFreq/InitPins/DeinitPins 
-in the application for enabling according instance. */ 
+/* User needs to provide the implementation for UART0_GetFreq/InitPins/DeinitPins
+in the application for enabling according instance. */
 extern uint32_t UART0_GetFreq(void);
 extern void UART0_InitPins(void);
 extern void UART0_DeinitPins(void);

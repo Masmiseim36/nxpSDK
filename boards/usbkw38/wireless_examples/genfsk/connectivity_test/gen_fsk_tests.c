@@ -26,6 +26,12 @@ SPDX-License-Identifier: BSD-3-Clause
 #include "genfsk_utils.h"
 #endif
 #include "menus.h"
+#include "LED.h"
+#include "clock_config.h"
+
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+#include "board_extPA.h"
+#endif
 
 /*! *********************************************************************************
 *************************************************************************************
@@ -77,6 +83,11 @@ uint8_t targetRate[gMaxRate_c+1]    = {gGenfskDR250Kbps, gGenfskDR500Kbps, gGenf
 #else
 uint8_t targetRate[gMaxRate_c+1]    = {gGenfskDR250Kbps, gGenfskDR500Kbps, gGenfskDR1Mbps,
                                        gGenfskDR1Mbps};
+#endif
+
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+char* strExtPaModeDesc[]   = {"Gain", "Bypass"};
+char* strExtPaAntDesc[]    = {"uFL", "Printed"};
 #endif
 
 /*! *********************************************************************************
@@ -221,6 +232,11 @@ static GENFSK_nwk_addr_match_t ntwkAddr =
 /* Xtal trim set to invalid value*/
 static uint8_t xtalTrim = 0xFFU; /**/
 
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+static uint8_t extPaMode = gDefaultExPaMode_c;
+static uint8_t extPaAnt = gDefaultExPaAnt_c;
+#endif
+
 /**********************************************************************************/
 app_status_t CT_GenFskInit(pHookAppNotification pFunc, pTmrHookNotification pTmrFunc)
 {
@@ -270,6 +286,18 @@ app_status_t CT_GenFskInit(pHookAppNotification pFunc, pTmrHookNotification pTmr
     xtalTrim = GENFSK_GetSavedXtalTrim();
     gaConfigParams[gConfParamXtalTrim].paramValue.decValue = xtalTrim;
     
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+    gaConfigParams[gConfParamExPaGain].paramType = gParamTypeMixed_c;
+    FLib_MemCpy(gaConfigParams[gConfParamExPaGain].paramName, "PaMode", 7);
+    gaConfigParams[gConfParamExPaGain].id = gDefaultExPaMode_c;
+    gaConfigParams[gConfParamExPaGain].ptr = strExtPaModeDesc;
+    
+    gaConfigParams[gConfParamExPaAnt].paramType = gParamTypeMixed_c;
+    FLib_MemCpy(gaConfigParams[gConfParamExPaAnt].paramName, "PaAnt", 6);
+    gaConfigParams[gConfParamExPaAnt].id = gDefaultExPaAnt_c;
+    gaConfigParams[gConfParamExPaAnt].ptr = strExtPaAntDesc;
+#endif
+
     gaConfigParams[gConfParamTypeMax].paramType = gParamTypeMaxType_c;
     /* allocate once to use for the entire application */
     gRxBuffer  = MEM_BufferAlloc(gGenFskDefaultMaxBufferSize_c + 
@@ -1588,6 +1616,9 @@ bool_t CT_ContinuousTests(ct_event_t evType, void* pAssociatedValue)
         CT_WrapperRadioModeAndDataRate(p_currConfig, &radioModeIn, &dataRate);
         GENFSK_GetXcvrConfig(radioModeIn, dataRate, &p_xcvr_config);
         XCVR_DftTxPatternReg(chanNum, &p_xcvr_config, &rbme_config,0xFFFFFFFFU);
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+        (void) BOARD_ExtPaXcvrInit(FALSE);
+#endif
 #else
         XcvrFskLoadPattern(0xFFFFFFFFU);
         XcvrFskModTx();
@@ -1601,6 +1632,9 @@ bool_t CT_ContinuousTests(ct_event_t evType, void* pAssociatedValue)
         CT_WrapperRadioModeAndDataRate(p_currConfig, &radioModeIn, &dataRate);
         GENFSK_GetXcvrConfig(radioModeIn, dataRate, &p_xcvr_config);
         XCVR_DftTxPatternReg(chanNum, &p_xcvr_config, &rbme_config, 0x00000000);
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+        (void) BOARD_ExtPaXcvrInit(FALSE);
+#endif
 #else
         XcvrFskLoadPattern(0x00000000);
         XcvrFskModTx();
@@ -1614,6 +1648,9 @@ bool_t CT_ContinuousTests(ct_event_t evType, void* pAssociatedValue)
         CT_WrapperRadioModeAndDataRate(p_currConfig, &radioModeIn, &dataRate);
         GENFSK_GetXcvrConfig(radioModeIn, dataRate, &p_xcvr_config);
         XCVR_DftTxLfsrReg(chanNum, &p_xcvr_config, &rbme_config, 3U /* arbitrary choice */);
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+        (void) BOARD_ExtPaXcvrInit(FALSE);
+#endif
 #else
         XcvrFskTxRand();
 #endif
@@ -1625,6 +1662,9 @@ bool_t CT_ContinuousTests(ct_event_t evType, void* pAssociatedValue)
 #if defined (RADIO_IS_GEN_3P5)
         uint32_t rf_freq = (2360U + chanNum)*1000000U; /* In Hertz */
         XCVR_DftTxCW(rf_freq);
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+        (void) BOARD_ExtPaXcvrInit(FALSE);
+#endif
 #else
         XcvrFskNoModTx();
 #endif
@@ -1865,6 +1905,19 @@ bool_t CT_UpdateShortcutKeyParam(uint8_t u8PressedKey)
     case '\r':
         /* Print configuration parameters. */
         break;
+        
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+    case 'g':
+        pConfig = &gaConfigParams[gConfParamExPaGain];
+        pConfig->id ^=1;
+        break;
+
+    case 'i':
+        pConfig = &gaConfigParams[gConfParamExPaAnt];
+        pConfig->id ^=1;
+        break;
+#endif
+
     default:
         bReturnFlag = FALSE;
         break;
@@ -2129,7 +2182,7 @@ static bool_t CT_ApplyPrintRateParams(void)
             }
         }
     }
-  
+        
     return bParamsUpdated;
 }
 /*! *********************************************************************************
@@ -2220,7 +2273,39 @@ static bool_t CT_ApplyPrintConfigParams(void)
                 xtalTrim = gaConfigParams[gConfParamXtalTrim].paramValue.decValue;
                 bParamsUpdated = TRUE;
             }
+        } 
+        
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d > 0)
+        if( gaConfigParams[gConfParamExPaGain].id != extPaMode )
+        {
+            if( gaConfigParams[gConfParamExPaGain].id == 0 )
+            {
+                BOARD_ExtPaBypassDisable();           
+            }
+            else
+            {
+                BOARD_ExtPaBypassEnable();
+            }
+            extPaMode = gaConfigParams[gConfParamExPaGain].id;
+            bParamsUpdated = TRUE;
+            Serial_Print(mAppSerId, " ggggggggg ", gAllowToBlock_d);
         }
+
+        if( gaConfigParams[gConfParamExPaAnt].id != extPaAnt )
+        {
+            if( gaConfigParams[gConfParamExPaAnt].id == 0 )
+            {
+                BOARD_ExtPaSelAnt1();
+            }
+            else
+            {
+                BOARD_ExtPaSelAnt2();
+            }
+            extPaAnt = gaConfigParams[gConfParamExPaAnt].id;
+            bParamsUpdated = TRUE;
+            Serial_Print(mAppSerId, " iiiiiiiiii ", gAllowToBlock_d);
+        }
+#endif
 
         PrintTestParams(gaConfigParams, TRUE, mAppSerId);
     }
@@ -2257,3 +2342,128 @@ static void CT_WrapperRadioModeAndDataRate(xcvr_currConfig_t * pCurrConfig, genf
     }
 }
 #endif
+
+/********************************************************************************
+*****************************Adjust RTC XTAL Menu********************************
+********************************************************************************/
+bool_t CT_TrimAdjust(ct_event_t evType, void* pAssociatedValue)
+{
+    static ct_trim_test_states_t trimStateTest = gTrimStateInit_c;
+    bool_t bReturnFromSM = FALSE;
+    uint8_t u8UartData = 0xFF;
+    static uint8_t aTrimValue;
+    uint8_t aWRTrimValue;
+
+    switch (trimStateTest)
+    {
+        case gTrimStateInit_c:
+        {
+            /* Print Menu, Stop Flash All LEDs and configure PTB3 for frequency measurement */
+            PrintMenu(cu8RTCTrimMenu, mAppSerId);
+            LED_StopFlashingAllLeds();
+            LED_UnInit();
+            CLOCK_EnableClock(kCLOCK_Rtc0);                                             /*Enable RTC clock gating*/
+            CLOCK_EnableClock(kCLOCK_PortB);                                            /*Enable PORTB clock gating*/
+            PORTB->PCR[3] = (PORTB->PCR[3] & ~PORT_PCR_MUX_MASK) | PORT_PCR_MUX(7);     /*Mux the RTC_CLKOUT to PTB3*/
+            SIM->SOPT1 |= SIM_SOPT1_OSC32KOUT(1);                                       /*Select the 32kHz reference for RTC_CLKOUT signal*/
+            aTrimValue = RTC->CR;
+            aTrimValue = (((aTrimValue & RTC_CR_SC2P_MASK)>>13U) |                         /*Get the RTC Trim Value*/
+                         ((aTrimValue & RTC_CR_SC4P_MASK)>>11U)  |
+                         ((aTrimValue & RTC_CR_SC8P_MASK)>>9U)   |
+                         ((aTrimValue & RTC_CR_SC16P_MASK)>>7U));
+            /* Print Trim Value */
+            Serial_Print(mAppSerId, "\rTrim RTC Capacitance Value ", gAllowToBlock_d);
+            Serial_PrintDec(mAppSerId, aTrimValue);
+            Serial_Print(mAppSerId, " pF ", gAllowToBlock_d);
+            /* Move to the next state */
+            trimStateTest = gTrimStateRun_c;
+        }
+        break;
+
+        case gTrimStateRun_c:
+        {
+            if(gCtEvtUart_c == evType)
+            {
+                u8UartData = *((uint8_t*)pAssociatedValue);
+
+                /* Increment Trim Value */
+                if('1' == u8UartData)
+                {
+                    if(aTrimValue<0xF)
+                    {
+                        aTrimValue++;
+
+                        /* Reverse the trim value to fit in the register fields */
+                        aWRTrimValue = (aTrimValue & 0x1)<<3;
+                        aWRTrimValue |= (aTrimValue & 0x2)<<1;
+                        aWRTrimValue |= (aTrimValue & 0x4)>>1;
+                        aWRTrimValue |= (aTrimValue & 0x8)>>3;
+
+                        RTC->CR &= ~RTC_CR_OSCE_MASK;
+                        RTC->CR = (RTC->CR & ~(RTC_CR_SC2P_MASK | RTC_CR_SC4P_MASK | RTC_CR_SC8P_MASK | RTC_CR_SC16P_MASK)) | (aWRTrimValue<<10U);
+                        RTC->CR |= RTC_CR_OSCE_MASK;
+                    }
+                }
+                /* Decrement Trim Value */
+                else if('2' == u8UartData)
+                {
+                    if(aTrimValue>0x0)
+                    {
+                        aTrimValue--;
+
+                        /* Reverse the trim value to fit in the register fields */
+                        aWRTrimValue = (aTrimValue & 0x1)<<3;
+                        aWRTrimValue |= (aTrimValue & 0x2)<<1;
+                        aWRTrimValue |= (aTrimValue & 0x4)>>1;
+                        aWRTrimValue |= (aTrimValue & 0x8)>>3;
+
+                        RTC->CR &= ~RTC_CR_OSCE_MASK;
+                        RTC->CR = (RTC->CR & ~(RTC_CR_SC2P_MASK | RTC_CR_SC4P_MASK | RTC_CR_SC8P_MASK | RTC_CR_SC16P_MASK)) | (aWRTrimValue<<10U);
+                        RTC->CR |= RTC_CR_OSCE_MASK;
+                    }
+                }
+                /* Move MGC from FEI to FEE */
+                else if('3' == u8UartData)
+                {
+                    BOARD_MoveClocktoFEE();
+                    Serial_Print(mAppSerId, "\rThe MCG moved from FEI to FEE mode successfully! ", gAllowToBlock_d);
+                    break;
+                }
+                /* Move MGC from FEE to FEI */
+                else if('4' == u8UartData)
+                {
+                    BOARD_BootClockRUN();
+                    Serial_Print(mAppSerId, "\rThe MCG moved from FEE to FEI mode successfully! ", gAllowToBlock_d);
+                    break;
+                }
+                /* Exit from Trim RTC menu */
+                else if('p' == u8UartData)
+                {
+                    /* Start Flash all LEDs, Stop PTB3 for frequency measurement */
+                    SIM->SOPT1 &= ~SIM_SOPT1_OSC32KOUT(1);
+                    CLOCK_DisableClock(kCLOCK_Rtc0); /*Enable RTC clock gating*/
+                    LED_Init();
+                    LED_StartSerialFlash(LED1);
+                    trimStateTest = gTrimStateInit_c;
+                    bReturnFromSM = TRUE;
+                    break;
+                }
+                else
+                {
+                    break;
+                }
+
+                /* Print Trim Value */
+                Serial_Print(mAppSerId, "\rTrim RTC Capacitance Value ", gAllowToBlock_d);
+                Serial_PrintDec(mAppSerId, aTrimValue * 2U);
+                Serial_Print(mAppSerId, " pF ", gAllowToBlock_d);
+            }
+        }
+        break;
+
+        default:
+        break;
+    }
+
+    return bReturnFromSM;
+}

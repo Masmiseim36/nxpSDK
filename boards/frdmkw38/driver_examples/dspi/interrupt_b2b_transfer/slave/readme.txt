@@ -30,7 +30,7 @@ Pin Name   Board pin               Pin Name  Board pin
 SCK        J1  pin 7               SCK       J1  pin 7
 SIN        J1  pin 5               SOUT      J2  pin 1
 SOUT       J2  pin 1               SIN       J1  pin 5
-PCS0       J2  pin 3               PCS0      J2  pin 3
+PCS0       J1  pin 6               PCS0      J1  pin 6
 GND        J3  pin 6               GND       J3  pin 6
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -6,6 +6,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <stdio.h>
+#include <stdbool.h>
 #include "usb_device_config.h"
 #include "usb.h"
 #include "usb_device.h"
@@ -17,14 +19,13 @@
 #include "ieee11073_timer.h"
 #include "ieee11073_types.h"
 #include "ieee11073_agent.h"
-#include <stdio.h>
-#include <stdbool.h>
 #include "usb_shim_agent.h"
 #include "weighscale.h"
 #include "fsl_device_registers.h"
+#include "fsl_common.h"
+#include "pin_mux.h"
 #include "clock_config.h"
 #include "board.h"
-#include "fsl_common.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
@@ -33,7 +34,6 @@
 #include "usb_phy.h"
 #endif
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -668,7 +668,8 @@ static usb_status_t USB_DeviceWeightScaleCallback(void *handle, uint32_t event, 
         {
             usb_device_endpoint_callback_message_struct_t *message =
                 (usb_device_endpoint_callback_message_struct_t *)param;
-            if ((NULL != message) && (message->length == USB_UNINITIALIZED_VAL_32))
+            /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+            if ((NULL != message) && (message->length == USB_CANCELLED_TRANSFER_LENGTH))
             {
                 error = kStatus_USB_Error;
             }

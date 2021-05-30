@@ -452,6 +452,9 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             }
             else
             {
+                /* Reset link loss alert level to No Alert */
+                Lls_SetAlertLevel(serviceLinkLossConfig.serviceHandle, gLls_NoAlert_c);
+
                 /* Restart advertising */
                 BleApp_Start();
             }

@@ -7,17 +7,17 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_adc16.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define DEMO_ADC16_BASE          ADC0
 #define DEMO_ADC16_CHANNEL_GROUP 0U
-#define DEMO_ADC16_USER_CHANNEL  26U /* Internal temperature sensor */
+#define DEMO_ADC16_USER_CHANNEL  8U /* PTB0, ADC0_SE8 */
 
 /*******************************************************************************
  * Prototypes

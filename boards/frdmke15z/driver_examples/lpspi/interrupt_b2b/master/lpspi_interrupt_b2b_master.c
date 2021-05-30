@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 NXP
+ * Copyright 2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,10 +8,10 @@
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -42,7 +42,7 @@ uint8_t masterTxData[TRANSFER_SIZE] = {0U};
 
 volatile uint32_t masterTxCount;
 volatile uint32_t masterRxCount;
-uint8_t g_masterRxWatermark;
+volatile uint8_t g_masterRxWatermark;
 uint8_t g_masterFifoSize;
 
 volatile bool isMasterTransferCompleted = false;
@@ -55,12 +55,9 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
 {
     if (masterRxCount < TRANSFER_SIZE)
     {
-        /* First, disable the interrupt to avoid potentially triggering another interrupt
-         * while reading out the RX FIFO as more data may be coming into the RX FIFO. We'll
+        /* While reading out the RX FIFO as more data may be coming into the RX FIFO. We'll
          * re-enable the interrupts after reading out the FIFO.
          */
-        LPSPI_DisableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_RxInterruptEnable);
-
         while (LPSPI_GetRxFifoCount(EXAMPLE_LPSPI_MASTER_BASEADDR))
         {
             /* Read out the data. */
@@ -69,15 +66,9 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
 
             if (masterRxCount == TRANSFER_SIZE)
             {
+                LPSPI_DisableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_RxInterruptEnable);
                 break;
             }
-        }
-
-        /* Re-enable the interrupts only if rxCount indicates there is more data to receive,
-         * otherwise we may get a spurious interrupt. */
-        if (masterRxCount < TRANSFER_SIZE)
-        {
-            LPSPI_EnableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_RxInterruptEnable);
         }
     }
 
@@ -101,6 +92,8 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
 
             if (masterTxCount == TRANSFER_SIZE)
             {
+                /* Set the PCS back to uncontinuous to finish the transfer. */
+                LPSPI_SetPCSContinous(EXAMPLE_LPSPI_MASTER_BASEADDR, false);
                 break;
             }
         }
@@ -109,9 +102,8 @@ void EXAMPLE_LPSPI_MASTER_IRQHandler(void)
     /* Check if we're done with this transfer.*/
     if ((masterTxCount == TRANSFER_SIZE) && (masterRxCount == TRANSFER_SIZE))
     {
+        /* Complete the transfer. */
         isMasterTransferCompleted = true;
-        /* Complete the transfer and disable the interrupts */
-        LPSPI_DisableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_AllInterruptEnable);
     }
     SDK_ISR_EXIT_BARRIER;
 }
@@ -142,7 +134,7 @@ int main(void)
     uint32_t srcClock_Hz;
     uint32_t errorCount;
     uint32_t i;
-    uint32_t whichPcs;
+    lpspi_which_pcs_t whichPcs;
     uint8_t txWatermark;
     lpspi_master_config_t masterConfig;
 
@@ -193,10 +185,8 @@ int main(void)
     LPSPI_ClearStatusFlags(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_AllStatusFlag);
     LPSPI_DisableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_AllInterruptEnable);
 
-    EXAMPLE_LPSPI_MASTER_BASEADDR->TCR =
-        (EXAMPLE_LPSPI_MASTER_BASEADDR->TCR & ~(LPSPI_TCR_CONT_MASK | LPSPI_TCR_CONTC_MASK | LPSPI_TCR_RXMSK_MASK |
-                                                LPSPI_TCR_TXMSK_MASK | LPSPI_TCR_PCS_MASK)) |
-        LPSPI_TCR_CONT(0) | LPSPI_TCR_CONTC(0) | LPSPI_TCR_RXMSK(0) | LPSPI_TCR_TXMSK(0) | LPSPI_TCR_PCS(whichPcs);
+    LPSPI_SelectTransferPCS(EXAMPLE_LPSPI_MASTER_BASEADDR, whichPcs);
+    LPSPI_SetPCSContinous(EXAMPLE_LPSPI_MASTER_BASEADDR, true);
 
     /* Enable the NVIC for LPSPI peripheral. Note that below code is useless if the LPSPI interrupt is in INTMUX ,
      * and you should also enable the INTMUX interupt in your application.
@@ -217,10 +207,12 @@ int main(void)
 
         if (masterTxCount == TRANSFER_SIZE)
         {
+            /* Set the PCS back to uncontinuous to finish the transfer if all tx data are pushed to FIFO. */
+            LPSPI_SetPCSContinous(EXAMPLE_LPSPI_MASTER_BASEADDR, false);
             break;
         }
     }
-    LPSPI_EnableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_RxInterruptEnable | kLPSPI_RxInterruptEnable);
+    LPSPI_EnableInterrupts(EXAMPLE_LPSPI_MASTER_BASEADDR, kLPSPI_RxInterruptEnable);
 
     /******************Wait for master and slave transfer completed.******************/
     while (!isMasterTransferCompleted)

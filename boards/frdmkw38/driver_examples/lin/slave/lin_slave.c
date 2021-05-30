@@ -1,5 +1,5 @@
 /*
- * Copyright  2016-2019 NXP
+ * Copyright  2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -21,6 +21,8 @@
 #define LIN_CLOCK_NAME kCLOCK_Osc0ErClk
 #define TJA_WAKEUP 1
 #define TIMER_TPM 1
+/* Whether to disable the PrintBuffer function */
+#define DISABLE_PRINT_BUFFER 0
 
 #define DEMO_TPM_BASEADDR TPM0
 #define DEMO_TPM_IRQn TPM0_IRQn
@@ -55,12 +57,15 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
+#if !DISABLE_PRINT_BUFFER
 /*!
  * This function prints response content
  * @param instance LIN instance
  * @param id frame ID
  */
 static void PrintBuffer(uint8_t instance, uint8_t id);
+#endif
+
 /*!
  * This timer returns the count of nanoseconds between two consequencing bits.
  * @param ns number of nanoseconds between two bits, return parameter
@@ -205,6 +210,7 @@ static inline uint8_t SlaveGetFrameIndex(uint8_t instance, uint8_t id)
     return retVal;
 }
 
+#if !DISABLE_PRINT_BUFFER
 static void PrintBuffer(uint8_t instance, uint8_t id)
 {
     uint8_t i = 0;
@@ -227,6 +233,7 @@ static void PrintBuffer(uint8_t instance, uint8_t id)
     }
     PRINTF("\r\n");
 }
+#endif
 
 /*!
  * This interrupt routine handles LIN bus low level communication
@@ -340,7 +347,8 @@ void CallbackHandler(uint32_t instance, void *linState)
     if (linCurrentState->timeoutCounterFlag == (bool)1U)
     {
         /* set timeout error event id */
-        linCurrentState->currentEventId = LIN_TIMEOUT_ERROR;
+        linCurrentState->currentEventId     = LIN_TIMEOUT_ERROR;
+        linCurrentState->timeoutCounterFlag = false;
     }
 
     /* check event id */
@@ -367,7 +375,7 @@ void CallbackHandler(uint32_t instance, void *linState)
         case LIN_TIMEOUT_ERROR:
             /* check for remaining bytes */
             (void)LIN_GetReceiveStatus(instance, &bytesRemaining);
-            if (linCurrentState->rxSize > bytesRemaining)
+            if (bytesRemaining > 0U)
             {
                 /* report timeout to higher level */
                 SlaveHandleError(instance, LIN_NO_DATA_TIMEOUT, linCurrentState->currentId);
@@ -378,6 +386,7 @@ void CallbackHandler(uint32_t instance, void *linState)
         case LIN_CHECKSUM_ERROR:
         case LIN_READBACK_ERROR:
         case LIN_SYNC_ERROR:
+        case LIN_LAST_RESPONSE_SHORT_ERROR:
             /* report error to higher level */
             SlaveHandleError(instance, linCurrentState->currentEventId, linCurrentState->currentId);
             break;
@@ -487,7 +496,7 @@ void SlaveProcessId(uint8_t instance, uint8_t id)
         /* get frame buffer pointer */
         lin_frame_ptr = &(prot_user_config_ptr->frame_tbl_ptr[frame_index]);
         /* check if id represents a supported frame */
-        if ((id > 0) && (id < 0x3B))
+        if (id <= 0x3BU)
         {
             response_length               = lin_frame_ptr->frm_len;
             lin_max_frame_res_timeout_val = LIN_CalcMaxResTimeoutCnt(prot_state_ptr->baud_rate, response_length);
@@ -554,15 +563,17 @@ void SlaveProcesUncdFrame(uint8_t instance, uint8_t id, uint8_t type)
         frame_byte_offset = prot_user_config_ptr->frame_tbl_ptr[frame_index].frm_offset;
 
         /* check for frame type */
+        /* Make frames */
         if (LIN_MAKE_UNCONDITIONAL_FRAME == type)
         {
             node_attr_ptr = &g_lin_node_attribute_array[HARDWARE_INSTANCE];
 
             for (i = 0U; i < node_attr_ptr->num_frame_have_esignal; i++)
             {
-                /* Check if frame contains error signal */
+                /* Check if this frame carries response error signal */
                 if (id == node_attr_ptr->resp_err_frm_id_ptr[i])
                 {
+                    /* Set the flag that is used to indicate the reponse error signal is going to be sent. */
                     prot_state_ptr->transmit_error_resp_sig_flg = (bool)1U;
                     break;
                 }
@@ -571,6 +582,23 @@ void SlaveProcesUncdFrame(uint8_t instance, uint8_t id, uint8_t type)
             for (i = 0U; i < prot_state_ptr->response_length; i++)
             {
                 response_buffer_ptr[i] = g_lin_frame_data_buffer[frame_byte_offset + i];
+            }
+            /* If this frame carries the response error signal */
+            if (prot_state_ptr->transmit_error_resp_sig_flg)
+            {
+                if (prot_state_ptr->error_in_response)
+                {
+                    /* If error occured during response, set the bit that is used to carry response error to
+                     * indicate error happened */
+                    response_buffer_ptr[node_attr_ptr->response_error_byte_offset] |=
+                        (1U << node_attr_ptr->response_error_bit_offset);
+                }
+                else
+                {
+                    /* Otherwise clear the bit that is used to carry response error */
+                    response_buffer_ptr[node_attr_ptr->response_error_byte_offset] &=
+                        ~(1U << node_attr_ptr->response_error_bit_offset);
+                }
             }
         }
         /* update unconditional frame */
@@ -599,17 +627,19 @@ void SlaveUpdateTx(uint8_t instance, uint8_t id)
     /* check whether error signal was transmitted */
     if ((bool)1U == prot_state_ptr->transmit_error_resp_sig_flg)
     {
-        /* Set error in response */
+        /* Clear error in response status once the response error signal is sent */
         prot_state_ptr->error_in_response = 0U;
         /* clear error flag */
         prot_state_ptr->transmit_error_resp_sig_flg = (bool)0U;
     }
     /* check for valid id of unconditional frame */
-    if ((id > 0U) && (id < 0x3BU))
+    if (id <= 0x3BU)
     {
         /* increase a number of succesfull frames */
         prot_state_ptr->num_of_successfull_frame++;
+#if !DISABLE_PRINT_BUFFER
         PrintBuffer(instance, id);
+#endif
     }
 }
 
@@ -629,7 +659,7 @@ void SlaveUpdateRx(uint8_t instance, uint8_t id)
     }
 
     frame_index = SlaveGetFrameIndex(instance, id);
-    if ((id > 0U) && (id < 0x3BU))
+    if (id <= 0x3BU)
     {
         /* increase a number of succesfull frames */
         prot_state_ptr->num_of_successfull_frame++;
@@ -644,8 +674,10 @@ void SlaveUpdateRx(uint8_t instance, uint8_t id)
             g_lin_flag_handle_tbl[flag_offset] = 0xFFU;
             flag_offset++;
         }
+#if !DISABLE_PRINT_BUFFER
         /* print received response */
         PrintBuffer(instance, id);
+#endif
     }
     else
     {
@@ -733,6 +765,7 @@ void SlaveHandleError(uint8_t instance, lin_event_id_t event_id, uint8_t id)
         case LIN_CHECKSUM_ERROR:
         case LIN_READBACK_ERROR:
         case LIN_SYNC_ERROR:
+        case LIN_LAST_RESPONSE_SHORT_ERROR:
             /* Set response error */
             prot_state_ptr->error_in_response += 1U;
             break;

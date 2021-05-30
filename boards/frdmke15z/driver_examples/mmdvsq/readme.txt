@@ -15,10 +15,10 @@ Quotient of 10 and 5 is 2
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -60,6 +60,3 @@ Remainder of 12 and 3 is 0
 
 Quotient of 12 and 3 is 4
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

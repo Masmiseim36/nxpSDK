@@ -952,7 +952,7 @@ static HLSE_RET_CODE a71ch_AllocateKeyObject(sss_a71ch_key_store_t *keyStore,
             HLSE_ATTRIBUTE attr[3];
             HLSE_OBJECT_HANDLE handle = 0;
             void *pMem;
-            pMem = malloc(keyByteLenMax);
+            pMem = SSS_MALLOC(keyByteLenMax);
             if (NULL != pMem) {
                 attr[0].type     = HLSE_ATTR_OBJECT_TYPE;
                 attr[0].value    = &objType;
@@ -972,7 +972,7 @@ static HLSE_RET_CODE a71ch_AllocateKeyObject(sss_a71ch_key_store_t *keyStore,
                     hlseret = HLSE_SW_OK;
             }
             if (NULL != pMem) {
-                free(pMem);
+                SSS_FREE(pMem);
             }
             break;
         }

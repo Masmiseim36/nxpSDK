@@ -2,30 +2,30 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_lptmr.h"
 #include "fsl_gpio.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_LPTMR_BASE LPTMR0
-#define DEMO_LPTMR_IRQn PWT_LPTMR0_IRQn
+#define DEMO_LPTMR_BASE   LPTMR0
+#define DEMO_LPTMR_IRQn   PWT_LPTMR0_IRQn
 #define LPTMR_LED_HANDLER PWT_LPTMR0_IRQHandler
 /* Get source clock for LPTMR driver */
 #define LPTMR_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_LpoClk)
 /* Define LPTMR microseconds counts value */
 #define LPTMR_USEC_COUNT 500000U
-#define LED_INIT() LED_RED1_INIT(LOGIC_LED_ON)
-#define LED_TOGGLE() LED_RED1_TOGGLE()
+#define LED_INIT()       LED_RED1_INIT(LOGIC_LED_ON)
+#define LED_TOGGLE()     LED_RED1_TOGGLE()
 
 /*******************************************************************************
  * Prototypes
@@ -62,8 +62,6 @@ int main(void)
     uint32_t currentCounter = 0U;
     lptmr_config_t lptmrConfig;
 
-    LED_INIT();
-
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -71,6 +69,8 @@ int main(void)
 
     /* Set the source for the LPIT module */
     CLOCK_SetIpSrc(kCLOCK_Lpit0, kCLOCK_IpSrcSircAsync);
+
+    LED_INIT();
 
     /* Configure LPTMR */
     /*
@@ -90,7 +90,7 @@ int main(void)
     /*
      * Set timer period.
      * Note : the parameter "ticks" of LPTMR_SetTimerPeriod should be equal or greater than 1.
-    */
+     */
     LPTMR_SetTimerPeriod(DEMO_LPTMR_BASE, USEC_TO_COUNT(LPTMR_USEC_COUNT, LPTMR_SOURCE_CLOCK));
 
     /* Enable timer interrupt */

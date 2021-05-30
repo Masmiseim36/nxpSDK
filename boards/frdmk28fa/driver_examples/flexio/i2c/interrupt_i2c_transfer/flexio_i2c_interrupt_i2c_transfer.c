@@ -10,9 +10,9 @@
 #include "fsl_i2c.h"
 #include "fsl_flexio_i2c_master.h"
 
-#include "board.h"
-#include "clock_config.h"
 #include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

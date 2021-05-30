@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
- *
+ * All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -33,6 +37,12 @@
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.sai_dma"
+#endif
+
 /*<! Structure definition for sai_dma_private_handle_t. The structure is private. */
 typedef struct _sai_dma_private_handle
 {
@@ -46,8 +56,10 @@ enum _sai_dma_states
     kSAI_Busy = 0x1U,
 };
 
+static I2S_Type *const s_saiBases[] = I2S_BASE_PTRS;
+
 /*<! Private handle only used for internally. */
-static sai_dma_private_handle_t s_dmaPrivateHandle[FSL_FEATURE_SOC_I2S_COUNT][2];
+static sai_dma_private_handle_t s_dmaPrivateHandle[ARRAY_SIZE(s_saiBases)][2];
 
 /*******************************************************************************
  * Prototypes
@@ -57,7 +69,7 @@ static sai_dma_private_handle_t s_dmaPrivateHandle[FSL_FEATURE_SOC_I2S_COUNT][2]
  *
  * @param base SAI base pointer.
  */
-extern uint32_t SAI_GetInstance(I2S_Type *base);
+static uint32_t SAI_GetInstance(I2S_Type *base);
 
 /*!
  * @brief SAI EDMA callback for send.
@@ -78,6 +90,24 @@ static void SAI_RxDMACallback(dma_handle_t *handle, void *userData);
 /*******************************************************************************
 * Code
 ******************************************************************************/
+static uint32_t SAI_GetInstance(I2S_Type *base)
+{
+    uint32_t instance;
+
+    /* Find the instance index from base address mappings. */
+    for (instance = 0; instance < ARRAY_SIZE(s_saiBases); instance++)
+    {
+        if (s_saiBases[instance] == base)
+        {
+            break;
+        }
+    }
+
+    assert(instance < ARRAY_SIZE(s_saiBases));
+
+    return instance;
+}
+
 static void SAI_TxDMACallback(dma_handle_t *handle, void *userData)
 {
     sai_dma_private_handle_t *privHandle = (sai_dma_private_handle_t *)userData;

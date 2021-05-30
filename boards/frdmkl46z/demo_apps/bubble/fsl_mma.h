@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
- *
+ * All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -32,11 +36,9 @@
 #define _FSL_MMA8451Q_H_
 
 #include "fsl_common.h"
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT > 0)
-#include "fsl_lpi2c.h"
-#else
-#include "fsl_i2c.h"
-#endif
+
+#define WHO_AM_I_REG kMMA8451_WHO_AM_I
+#define MMA8451Q_ACCEL_RESOLUTION_BITS 14
 
 /*!
  * @brief Register definitions for the MMA8451.
@@ -74,19 +76,33 @@ typedef struct _mma_data
     uint8_t accelZLSB;
 } mma_data_t;
 
+/*! @brief Define I2C access function. */
+typedef status_t (*I2C_SendFunc_t)(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize,
+                         uint32_t txBuff);
+typedef status_t (*I2C_ReceiveFunc_t)(uint8_t deviceAddress, uint32_t subAddress, uint8_t subaddressSize,
+                            uint8_t *rxBuff, uint8_t rxBuffSize);
+
 /*! @brief mma8451q configure definition. This structure should be global.*/
 typedef struct _mma_handle
 {
-#if defined(FSL_FEATURE_SOC_LPI2C_COUNT) && (FSL_FEATURE_SOC_LPI2C_COUNT)
-    LPI2C_Type *base;
-    lpi2c_master_transfer_t xfer;
-    lpi2c_master_handle_t *i2cHandle;
-#else
-    I2C_Type *base;                 /*!< I2C base. */
-    i2c_master_handle_t *i2cHandle; /*!< I2C master transfer context */
-    i2c_master_transfer_t xfer;     /*!< I2C master xfer */
-#endif
+    /* Pointer to the user-defined I2C Send Data function. */
+    I2C_SendFunc_t I2C_SendFunc;
+    /* Pointer to the user-defined I2C Receive Data function. */
+    I2C_ReceiveFunc_t I2C_ReceiveFunc;
+    /* The I2C slave address . */ 
+    uint8_t slaveAddress;
 } mma_handle_t;
+
+/*! @brief mma8451q configure structure.*/
+typedef struct _mma_config
+{
+    /* Pointer to the user-defined I2C Send Data function. */
+    I2C_SendFunc_t I2C_SendFunc;
+    /* Pointer to the user-defined I2C Receive Data function. */
+    I2C_ReceiveFunc_t I2C_ReceiveFunc;
+    /* The I2C slave address . */ 
+    uint8_t slaveAddress;   
+} mma_config_t;
 
 /*******************************************************************************
  * API
@@ -105,7 +121,7 @@ extern "C" {
  *
  * @return kStatus_Success if success or kStatus_Fail if error.
  */
-status_t MMA_Init(mma_handle_t *handle);
+status_t MMA_Init(mma_handle_t *handle, mma_config_t *config);
 
 /*!
  * @brief Read the current acceleration values.
@@ -139,6 +155,16 @@ status_t MMA_ReadReg(mma_handle_t *handle, uint8_t reg, uint8_t *val);
  * @return kStatus_Success if success or kStatus_Fail if error.
  */
 status_t MMA_WriteReg(mma_handle_t *handle, uint8_t reg, uint8_t val);
+
+/*!
+ * @brief Get device accelerator resolution bits.
+ *
+  * @return accelerator resolution bits.
+ */
+static inline uint8_t MMA_GetResolutionBits(void)
+{
+    return MMA8451Q_ACCEL_RESOLUTION_BITS;
+}
 
 #if defined(__cplusplus)
 }

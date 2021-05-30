@@ -13,10 +13,10 @@
 #include "fsl_dmamux.h"
 #include "fsl_lpit.h"
 #include "fsl_port.h"
-#include "board.h"
-#include "peripherals.h"
-#include "fsl_common.h"
 #include "pin_mux.h"
+#include "peripherals.h"
+#include "board.h"
+#include "fsl_common.h"
 #include "fsl_smc.h"
 /*******************************************************************************
  * Definitions
@@ -76,74 +76,8 @@ edma_tcd_t tcds[2];
 /*******************************************************************************
  * Code
  ******************************************************************************/
-void APP_BootClockRUN(void)
-{
-    const scg_sosc_config_t g_scgSysOscConfig = {.freq        = BOARD_XTAL0_CLK_HZ,
-                                                 .enableMode  = kSCG_SysOscEnable | kSCG_SysOscEnableInLowPower,
-                                                 .monitorMode = kSCG_SysOscMonitorDisable,
-                                                 .div1        = kSCG_AsyncClkDivBy1,
-                                                 .div2        = kSCG_AsyncClkDivBy1,
-                                                 .workMode    = kSCG_SysOscModeOscLowPower};
-
-    const scg_firc_config_t g_scgFircConfig = {.enableMode = kSCG_FircEnable,
-                                               .div1       = kSCG_AsyncClkDivBy1,
-                                               .div2       = kSCG_AsyncClkDivBy1,
-                                               .range      = kSCG_FircRange48M,
-                                               .trimConfig = NULL};
-
-    const scg_lpfll_config_t g_scgLpFllConfig = {.enableMode = kSCG_LpFllEnable,
-                                                 .div1       = kSCG_AsyncClkDivBy1,
-                                                 .div2       = kSCG_AsyncClkDivBy2,
-                                                 .range      = kSCG_LpFllRange72M,
-                                                 .trimConfig = NULL};
-
-    const scg_sys_clk_config_t g_sysClkConfigSircSource = {
-        .divSlow = kSCG_SysClkDivBy4, .divCore = kSCG_SysClkDivBy1, .src = kSCG_SysClkSrcSirc};
-
-    const scg_sys_clk_config_t g_sysClkConfigNormalRun = {
-        .divSlow = kSCG_SysClkDivBy3, .divCore = kSCG_SysClkDivBy1, .src = kSCG_SysClkSrcLpFll};
-    const scg_sirc_config_t scgSircConfig = {
-        .enableMode = kSCG_SircEnable | kSCG_SircEnableInLowPower | kSCG_SircEnableInStop,
-        .div1       = kSCG_AsyncClkDivBy1,
-        .div2       = kSCG_AsyncClkDivBy2,
-        .range      = kSCG_SircRangeHigh};
-    scg_sys_clk_config_t curConfig;
-
-    CLOCK_InitSysOsc(&g_scgSysOscConfig);
-    CLOCK_SetXtal0Freq(BOARD_XTAL0_CLK_HZ);
-
-    /* Init Sirc */
-    CLOCK_InitSirc(&scgSircConfig);
-
-    /* Change to use SIRC as system clock source to prepare to change FIRCCFG register */
-    CLOCK_SetRunModeSysClkConfig(&g_sysClkConfigSircSource);
-
-    /* Wait for clock source switch finished. */
-    do
-    {
-        CLOCK_GetCurSysClkConfig(&curConfig);
-    } while (curConfig.src != g_sysClkConfigSircSource.src);
-
-    /* Init Firc */
-    CLOCK_InitFirc(&g_scgFircConfig);
-
-    /* Init LPFLL */
-    CLOCK_InitLpFll(&g_scgLpFllConfig);
-
-    /* Use LPFLL as system clock source */
-    CLOCK_SetRunModeSysClkConfig(&g_sysClkConfigNormalRun);
-
-    /* Wait for clock source switch finished. */
-    do
-    {
-        CLOCK_GetCurSysClkConfig(&curConfig);
-    } while (curConfig.src != g_sysClkConfigNormalRun.src);
-
-    SystemCoreClock = 72000000U;
-}
-
 /* Initialize debug console. */
-void APP_InitDebugConsole(void)
+void DEMO_InitDebugConsole(void)
 {
     uint32_t uartClkSrcFreq;
 
@@ -342,14 +276,9 @@ int main(void)
     gpio_pin_config_t pin_config;
     uint32_t i;
 
-    BOARD_InitPins();
-    APP_BootClockRUN();
-    APP_InitDebugConsole();
-
-    /* Set LPI2C clock source, should work in stop mode */
-    CLOCK_SetIpSrc(kCLOCK_Lpi2c0, kCLOCK_IpSrcSircAsync);
-    /* Select the SIRC 8M as LPIT clock, SIRC enabled in stop mode */
-    CLOCK_SetIpSrc(kCLOCK_Lpit0, kCLOCK_IpSrcSircAsync);
+    BOARD_InitBootPins();
+    BOARD_InitBootClocks();
+    DEMO_InitDebugConsole();
 
     /* Reset sensor by reset pin*/
     pin_config.pinDirection = kGPIO_DigitalOutput;

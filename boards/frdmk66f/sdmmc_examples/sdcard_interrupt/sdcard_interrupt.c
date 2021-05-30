@@ -8,13 +8,13 @@
 
 #include <stdio.h>
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_sd.h"
 #include "sdmmc_config.h"
 #include "fsl_sysmpu.h"
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -184,12 +184,12 @@ int main(void)
     while (ch != 'q')
     {
         PRINTF("\r\nPlease insert a card into board.\r\n");
-        /* power off card */
-        SD_SetCardPower(card, false);
         /* wait card insert */
         while (!s_cardInserted)
         {
         }
+        /* power off card */
+        SD_SetCardPower(card, false);
         /* power on the card */
         SD_SetCardPower(card, true);
 
@@ -216,6 +216,7 @@ int main(void)
                 if (SD_IsCardPresent(card) == false)
                 {
                     SD_HostDoReset(card);
+                    s_cardInserted = false;
                     PRINTF("\r\nCard removed\r\n");
                     PRINTF(
                         "\r\nInput 'q' to quit read/write/erase process.\

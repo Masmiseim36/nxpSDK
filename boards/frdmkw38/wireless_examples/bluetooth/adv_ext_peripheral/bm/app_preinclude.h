@@ -68,6 +68,8 @@
 /*! specifies whether the phy update procedure is going to be initiated in connection or not */
 #define gConnInitiatePhyUpdateRequest_c            (0U)
 
+/*! Repeated Attempts - Mitigation for pairing attacks */
+#define gRepeatedAttempts_d             0
 /*! *********************************************************************************
  *     Framework Configuration
  ********************************************************************************** */
@@ -93,7 +95,11 @@
          _block_size_ 1680  _number_of_blocks_   1 _eol_    
 
 /* Defines number of timers needed by the application */
+#if gRepeatedAttempts_d
+#define gTmrApplicationTimers_c         5
+#else
 #define gTmrApplicationTimers_c         4
+#endif
 
 /* Set this define TRUE if the PIT frequency is an integer number of MHZ */
 #define gTMR_PIT_FreqMultipleOfMHZ_d    0

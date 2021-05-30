@@ -9,12 +9,12 @@
 #include <stdio.h>
 #include <string.h>
 #include "slcd_engine.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_slcd.h"
 #include "fsl_rnga.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -430,7 +430,7 @@ static void SLCD_Guess_Num(tSLCD_Engine *slcd_engine)
  */
 int main(void)
 {
-    tSLCD_Engine slcd_engine;
+    tSLCD_Engine slcdEngine;
 
     /* Init hardware. */
     BOARD_InitPins();
@@ -448,12 +448,12 @@ int main(void)
     /* SLCD Initialization. */
     SLCD_APP_Init();
 
-    memset(&slcd_engine, 0, sizeof(tSLCD_Engine));
-    SLCD_Engine_Init(&slcd_engine, SLCD_SetLCDPin);
+    memset(&slcdEngine, 0, sizeof(tSLCD_Engine));
+    SLCD_Engine_Init(&slcdEngine, SLCD_SetLCDPin);
 
-    SLCD_Basic_Test(&slcd_engine);
+    SLCD_Basic_Test(&slcdEngine);
 
-    SLCD_Guess_Num(&slcd_engine);
+    SLCD_Guess_Num(&slcdEngine);
 
     while (1)
     {

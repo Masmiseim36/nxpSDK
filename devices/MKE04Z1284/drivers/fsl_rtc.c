@@ -244,7 +244,8 @@ void RTC_Init(RTC_Type *base, const rtc_config_t *config)
 
     /* Set RTC module value */
     RTC_SetModuloValue(
-        base, (uint32_t)USEC_TO_COUNT(config->time_us, (uint64_t)srcClock_Hz / (uint64_t)RTC_GetDivideValue(base)));
+        base,
+        (uint32_t)(USEC_TO_COUNT(config->time_us, (uint64_t)srcClock_Hz / (uint64_t)RTC_GetDivideValue(base)) - 1U));
 }
 
 /*!
@@ -404,9 +405,17 @@ void RTC_SetAlarmCallback(rtc_alarm_callback_t callback)
     s_RtcAlarmCallback = callback;
 }
 
+void RTC_DriverIRQHandler(void);
 void RTC_DriverIRQHandler(void)
 {
     uint32_t alarmTimeSeconds = s_AlarmTimeSeconds; /* Fix the order of volatile accesses undefined issue. */
+
+    if ((RTC_GetInterruptFlags(RTC) & (uint32_t)kRTC_InterruptFlag) != 0U)
+    {
+        s_CurrentTimeSeconds++;
+        /* Clear second interrupt flag */
+        RTC_ClearInterruptFlags(RTC, (uint32_t)kRTC_InterruptFlag);
+    }
 
     if (alarmTimeSeconds == s_CurrentTimeSeconds)
     {
@@ -414,12 +423,5 @@ void RTC_DriverIRQHandler(void)
         {
             s_RtcAlarmCallback();
         }
-    }
-
-    if ((RTC_GetInterruptFlags(RTC) & (uint32_t)kRTC_InterruptFlag) != 0U)
-    {
-        s_CurrentTimeSeconds++;
-        /* Clear second interrupt flag */
-        RTC_ClearInterruptFlags(RTC, (uint32_t)kRTC_InterruptFlag);
     }
 }

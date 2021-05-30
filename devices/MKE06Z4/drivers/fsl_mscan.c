@@ -574,27 +574,27 @@ status_t MSCAN_WriteTxMb(MSCAN_Type *base, mscan_frame_t *pTxFrame)
     if (kMSCAN_FrameFormatExtend == pTxFrame->format)
     {
         /* Deal with Extended frame. */
-        sIDR1.IDR1.EID20_18_OR_SID2_0 = pTxFrame->ID_Type.ExtID.EID20_18;
+        sIDR1.IDR1.EID20_18_OR_SID2_0 = (uint8_t)pTxFrame->ID_Type.ExtID.EID20_18;
         sIDR1.IDR1.R_TSRR             = 1U;
         sIDR1.IDR1.R_TEIDE            = 1U;
-        sIDR1.IDR1.EID17_15           = pTxFrame->ID_Type.ExtID.EID17_15;
-        sIDR3.IDR3.EID6_0             = pTxFrame->ID_Type.ExtID.EID6_0;
+        sIDR1.IDR1.EID17_15           = (uint8_t)pTxFrame->ID_Type.ExtID.EID17_15;
+        sIDR3.IDR3.EID6_0             = (uint8_t)pTxFrame->ID_Type.ExtID.EID6_0;
         sIDR3.IDR3.ERTR               = (kMSCAN_FrameTypeRemote == pTxFrame->type) ? 1U : 0U;
         /* Write into MB structure. */
-        mb.EIDR0 = pTxFrame->ID_Type.ExtID.EID28_21;
+        mb.EIDR0 = (uint8_t)pTxFrame->ID_Type.ExtID.EID28_21;
         mb.EIDR1 = sIDR1.Bytes;
-        mb.EIDR2 = pTxFrame->ID_Type.ExtID.EID14_7;
+        mb.EIDR2 = (uint8_t)pTxFrame->ID_Type.ExtID.EID14_7;
         mb.EIDR3 = sIDR3.Bytes;
     }
     else
     {
         /* Deal with Standard frame. */
-        sIDR1.IDR1.EID20_18_OR_SID2_0 = pTxFrame->ID_Type.StdID.EID2_0;
+        sIDR1.IDR1.EID20_18_OR_SID2_0 = (uint8_t)pTxFrame->ID_Type.StdID.EID2_0;
         sIDR1.IDR1.R_TSRR             = 0U;
         sIDR1.IDR1.R_TEIDE            = 0U;
         sIDR1.IDR1.EID17_15           = 0U; /* Reserved for Standard frame*/
         /* Write into MB structure. */
-        mb.EIDR0 = pTxFrame->ID_Type.StdID.EID10_3;
+        mb.EIDR0 = (uint8_t)pTxFrame->ID_Type.StdID.EID10_3;
         mb.EIDR1 = sIDR1.Bytes;
     }
     /* Write DLR, BPR */
@@ -1032,6 +1032,7 @@ void MSCAN_TransferHandleIRQ(MSCAN_Type *base, mscan_handle_t *handle)
 }
 
 #if defined(MSCAN)
+void MSCAN_DriverIRQHandler(void);
 void MSCAN_DriverIRQHandler(void)
 {
     assert(NULL != s_mscanHandle[0]);

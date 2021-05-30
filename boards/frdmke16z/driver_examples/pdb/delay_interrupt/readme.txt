@@ -5,6 +5,14 @@ The pdb_delay_interrupt example show how to use the PDB as a general programmabl
 
 The PDB is triggered by software, and other external triggers are generated from PDB in this project,
 so that user can see just a general counter is working with interrupt.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -44,11 +52,3 @@ PDB Delay Interrupt Counter: 2
 
 Type any key into terminal to trigger the PDB counter ...
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

@@ -1,8 +1,6 @@
-INCLUDE(CMakeForceCompiler)
-
 # CROSS COMPILER SETTING
 SET(CMAKE_SYSTEM_NAME Generic)
-CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED (VERSION 3.1.1)
 
 # THE VERSION NUMBER
 SET (Tutorial_VERSION_MAJOR 1)
@@ -17,360 +15,22 @@ SET(CMAKE_STATIC_LIBRARY_SUFFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_PREFIX)
 SET(CMAKE_EXECUTABLE_LIBRARY_SUFFIX)
 
- 
 # CURRENT DIRECTORY
 SET(ProjDirPath ${CMAKE_CURRENT_SOURCE_DIR})
 
+SET(EXECUTABLE_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
+SET(LIBRARY_OUTPUT_PATH ${ProjDirPath}/${CMAKE_BUILD_TYPE})
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -DDEBUG")
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -D__STARTUP_CLEAR_BSS")
+project(fxos8700_poll_mult2b)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -g")
+set(MCUX_SDK_PROJECT_NAME fxos8700_poll_mult2b.elf)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -Wall")
+include(${ProjDirPath}/flags.cmake)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fno-common")
+include(${ProjDirPath}/config.cmake)
 
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mcpu=cortex-m4")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_DEBUG "${CMAKE_ASM_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -D__STARTUP_CLEAR_BSS")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -std=gnu99")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mcpu=cortex-m4")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_ASM_FLAGS_RELEASE "${CMAKE_ASM_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DDEBUG")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DCPU_MK64FN1M0VLL12")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFRDM_K64F")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DFREEDOM")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -DPRINTF_ADVANCED_ENABLE")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O0")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -Wall")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-common")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mcpu=cortex-m4")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MMD")
-
-SET(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -MP")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DCPU_MK64FN1M0VLL12")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFRDM_K64F")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DFREEDOM")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -DPRINTF_ADVANCED_ENABLE")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Os")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -std=gnu99")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mcpu=cortex-m4")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MMD")
-
-SET(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -MP")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCPU_MK64FN1M0VLL12")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mcpu=cortex-m4")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MMD")
-
-SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -MP")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DCPU_MK64FN1M0VLL12")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Os")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-rtti")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -fno-exceptions")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mcpu=cortex-m4")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MMD")
-
-SET(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -MP")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -g")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Map=output.map")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mcpu=cortex-m4")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -mfpu=fpv4-sp-d16")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nano.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --specs=nosys.specs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wall")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fno-common")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -ffunction-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fdata-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -ffreestanding")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -fno-builtin")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mthumb")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mapcs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} --gc-sections")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -static")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -z")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} muldefs")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Xlinker")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Map=output.map")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mcpu=cortex-m4")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfloat-abi=hard")
-
-SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -mfpu=fpv4-sp-d16")
-
-include_directories(${ProjDirPath}/../../../../..)
-
-include_directories(${ProjDirPath}/..)
-
-include_directories(${ProjDirPath}/../../../../../../../CMSIS/Include)
-
-include_directories(${ProjDirPath}/../../../../../../../devices)
-
-include_directories(${ProjDirPath}/../../../../../../../platform/drivers)
-
-include_directories(${ProjDirPath}/../../../../../../frdmk64f)
-
-include_directories(${ProjDirPath}/../../../../../../../devices/MK64F12/drivers)
-
-include_directories(${ProjDirPath}/../../../../../../../devices/MK64F12/cmsis_drivers)
-
-include_directories(${ProjDirPath}/../../../../../../../middleware/issdk/drivers/systick)
-
-include_directories(${ProjDirPath}/../../../../../../../middleware/issdk/drivers/gpio)
-
-include_directories(${ProjDirPath}/../../../../../../../middleware/issdk/drivers/gpio/kinetis)
-
-include_directories(${ProjDirPath}/../../../../../../../middleware/issdk/sensors)
-
-include_directories(${ProjDirPath}/../../../../../../../devices/MK64F12/utilities/str)
-
-include_directories(${ProjDirPath}/../../../../../../../devices/MK64F12/utilities/debug_console)
-
-include_directories(${ProjDirPath}/../../../../../../../components/uart)
-
-include_directories(${ProjDirPath}/../../../../../../../components/serial_manager)
-
-include_directories(${ProjDirPath}/../../../../../../../components/lists)
-
-include_directories(${ProjDirPath}/../../../../../../../devices/MK64F12)
-
-include_directories(${ProjDirPath}/../../../../../../../CMSIS/Driver/Include)
-
-include_directories(${ProjDirPath}/../../../../../../../devices/MK64F12/template)
-
-add_executable(fxos8700_poll_mult2b.elf 
+add_executable(${MCUX_SDK_PROJECT_NAME} 
 "${ProjDirPath}/../../../../../frdm_k64f.c"
 "${ProjDirPath}/../../../../../frdm_k64f.h"
 "${ProjDirPath}/../../../../../frdm_fxs_mult2b_shield.h"
@@ -383,134 +43,118 @@ add_executable(fxos8700_poll_mult2b.elf
 "${ProjDirPath}/../clock_config.h"
 "${ProjDirPath}/../board.c"
 "${ProjDirPath}/../board.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_port.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_uart.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_uart.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_gpio.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_gpio.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_i2c.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_i2c.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_i2c_edma.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_i2c_edma.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_dmamux.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_dmamux.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_edma.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_edma.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_dspi.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_dspi.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_dspi_edma.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_dspi_edma.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_dspi_cmsis.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_dspi_cmsis.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_smc.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_smc.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_pit.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_pit.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_uart_edma.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_uart_edma.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.h"
-"${ProjDirPath}/../../../../../../../middleware/issdk/drivers/systick/systick_utils.c"
-"${ProjDirPath}/../../../../../../../middleware/issdk/drivers/systick/systick_utils.h"
-"${ProjDirPath}/../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h"
-"${ProjDirPath}/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c"
-"${ProjDirPath}/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h"
-"${ProjDirPath}/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/register_io_i2c.c"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/register_io_i2c.h"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/register_io_spi.c"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/register_io_spi.h"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/sensor_drv.h"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/sensor_io_spi.c"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/sensor_io_spi.h"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/fxos8700.h"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/fxos8700_drv.c"
-"${ProjDirPath}/../../../../../../../middleware/issdk/sensors/fxos8700_drv.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_flash.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_clock.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_clock.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/utilities/str/fsl_str.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/utilities/str/fsl_str.h"
-"${ProjDirPath}/../../../../../../../components/uart/uart.h"
-"${ProjDirPath}/../../../../../../../components/uart/uart_adapter.c"
-"${ProjDirPath}/../../../../../../../components/serial_manager/serial_manager.c"
-"${ProjDirPath}/../../../../../../../components/serial_manager/serial_manager.h"
-"${ProjDirPath}/../../../../../../../components/serial_manager/serial_port_internal.h"
-"${ProjDirPath}/../../../../../../../components/serial_manager/serial_port_uart.c"
-"${ProjDirPath}/../../../../../../../components/serial_manager/serial_port_uart.h"
-"${ProjDirPath}/../../../../../../../components/lists/generic_list.c"
-"${ProjDirPath}/../../../../../../../components/lists/generic_list.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/MK64F12.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/MK64F12_features.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/fsl_device_registers.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/system_MK64F12.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/system_MK64F12.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_common.c"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/drivers/fsl_common.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/gcc/startup_MK64F12.S"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/utilities/fsl_assert.c"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/core_cm4.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/arm_common_tables.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/arm_const_structs.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/arm_math.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_armcc.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_armclang.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_compiler.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_gcc.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_iccarm.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/cmsis_version.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/core_armv8mbl.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/core_armv8mml.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/mpu_armv7.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Include/mpu_armv8.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Driver/Include/Driver_I2C.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Driver/Include/Driver_Common.h"
-"${ProjDirPath}/../../../../../../../devices/MK64F12/template/RTE_Device.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Driver/Include/Driver_SPI.h"
-"${ProjDirPath}/../../../../../../../CMSIS/Driver/Include/Driver_USART.h"
 )
 
+target_include_directories(${MCUX_SDK_PROJECT_NAME} PRIVATE
+    ${ProjDirPath}/../../../../..
+    ${ProjDirPath}/..
+)
 
-set(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -T${ProjDirPath}/MK64FN1M0xxx12_flash.ld -static")
+set(CMAKE_MODULE_PATH
+    ${ProjDirPath}/../../../../../../../middleware/issdk
+    ${ProjDirPath}/../../../../../../../devices/MK64F12/drivers
+    ${ProjDirPath}/../../../../../../../devices/MK64F12/cmsis_drivers
+    ${ProjDirPath}/../../../../../../../devices/MK64F12/utilities
+    ${ProjDirPath}/../../../../../../../components/uart
+    ${ProjDirPath}/../../../../../../../components/serial_manager
+    ${ProjDirPath}/../../../../../../../components/lists
+    ${ProjDirPath}/../../../../../../../devices/MK64F12
+    ${ProjDirPath}/../../../../../../../CMSIS/Include
+    ${ProjDirPath}/../../../../../../../CMSIS/Driver/Include
+)
 
-set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -T${ProjDirPath}/MK64FN1M0xxx12_flash.ld -static")
+# include modules
+include(middleware_issdk_drivers_gpio_kinetis_MK64F12)
 
-TARGET_LINK_LIBRARIES(fxos8700_poll_mult2b.elf -Wl,--start-group)
-target_link_libraries(fxos8700_poll_mult2b.elf debug m)
+include(driver_port_MK64F12)
 
-target_link_libraries(fxos8700_poll_mult2b.elf debug c)
+include(driver_uart_MK64F12)
 
-target_link_libraries(fxos8700_poll_mult2b.elf debug gcc)
+include(driver_gpio_MK64F12)
 
-target_link_libraries(fxos8700_poll_mult2b.elf debug nosys)
+include(driver_i2c_MK64F12)
 
-target_link_libraries(fxos8700_poll_mult2b.elf optimized m)
+include(driver_i2c_edma_MK64F12)
 
-target_link_libraries(fxos8700_poll_mult2b.elf optimized c)
+include(driver_cmsis_i2c_MK64F12)
 
-target_link_libraries(fxos8700_poll_mult2b.elf optimized gcc)
+include(driver_dmamux_MK64F12)
 
-target_link_libraries(fxos8700_poll_mult2b.elf optimized nosys)
+include(driver_edma_MK64F12)
 
-TARGET_LINK_LIBRARIES(fxos8700_poll_mult2b.elf -Wl,--end-group)
+include(driver_dspi_MK64F12)
 
-ADD_CUSTOM_COMMAND(TARGET fxos8700_poll_mult2b.elf POST_BUILD COMMAND ${CMAKE_OBJCOPY}
--Obinary ${EXECUTABLE_OUTPUT_PATH}/fxos8700_poll_mult2b.elf ${EXECUTABLE_OUTPUT_PATH}/K64F-MULT2B-FXOS8700-POLL.bin)
+include(driver_dspi_edma_MK64F12)
+
+include(driver_cmsis_dspi_MK64F12)
+
+include(driver_smc_MK64F12)
+
+include(driver_pit_MK64F12)
+
+include(driver_uart_edma_MK64F12)
+
+include(driver_cmsis_uart_MK64F12)
+
+include(middleware_issdk_drivers_systick_utils_MK64F12)
+
+include(middleware_issdk_sensor_interface_common_MK64F12)
+
+include(middleware_issdk_sensor_fxos8700_MK64F12)
+
+include(driver_flash_MK64F12)
+
+include(driver_clock_MK64F12)
+
+include(utility_debug_console_MK64F12)
+
+include(component_uart_adapter_MK64F12)
+
+include(component_serial_manager_MK64F12)
+
+include(driver_common_MK64F12)
+
+include(component_lists_MK64F12)
+
+include(component_serial_manager_uart_MK64F12)
+
+include(device_MK64F12_CMSIS_MK64F12)
+
+include(device_MK64F12_startup_MK64F12)
+
+include(utility_assert_MK64F12)
+
+include(CMSIS_Include_core_cm4_MK64F12)
+
+include(CMSIS_Include_common_MK64F12)
+
+include(CMSIS_Include_dsp_MK64F12)
+
+include(CMSIS_Driver_Include_I2C_MK64F12)
+
+include(CMSIS_Driver_Include_Common_MK64F12)
+
+include(CMSIS_Driver_Include_SPI_MK64F12)
+
+include(CMSIS_Driver_Include_USART_MK64F12)
+
+include(utilities_misc_utilities_MK64F12)
+
+include(device_MK64F12_system_MK64F12)
+
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--start-group)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE m)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE c)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE gcc)
+
+target_link_libraries(${MCUX_SDK_PROJECT_NAME} PRIVATE nosys)
+
+TARGET_LINK_LIBRARIES(${MCUX_SDK_PROJECT_NAME} PRIVATE -Wl,--end-group)
+
+ADD_CUSTOM_COMMAND(TARGET ${MCUX_SDK_PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_OBJCOPY}
+-Obinary ${EXECUTABLE_OUTPUT_PATH}/${MCUX_SDK_PROJECT_NAME} ${EXECUTABLE_OUTPUT_PATH}/K64F-MULT2B-FXOS8700-POLL.bin)
+

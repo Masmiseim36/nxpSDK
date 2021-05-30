@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -10,9 +10,9 @@
 #include "fsl_debug_console.h"
 #include "fsl_common.h"
 #include "fsl_rtc.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -53,7 +53,7 @@ static void ReceiveFromConsole(char *buf, uint32_t size);
  * Variables
  ******************************************************************************/
 volatile uint8_t g_AlarmPending = 0U;
-volatile bool g_SecsFlag = false;
+volatile bool g_SecsFlag        = false;
 
 static char g_StrMenu[] =
     "\r\n"
@@ -229,6 +229,12 @@ int main(void)
      */
     RTC_GetDefaultConfig(&rtcConfig);
     RTC_Init(RTC, &rtcConfig);
+#if (defined(EXAMPLE_CAP_LOAD_VALUE) && EXAMPLE_CAP_LOAD_VALUE)
+#if (defined(FSL_FEATURE_RTC_HAS_OSC_SCXP) && FSL_FEATURE_RTC_HAS_OSC_SCXP)
+    /* Change the RTC oscillator capacity load value. */
+    RTC_SetOscCapLoad(RTC, EXAMPLE_CAP_LOAD_VALUE);
+#endif /* FSL_FEATURE_RTC_HAS_OSC_SCXP */
+#endif /* EXAMPLE_CAP_LOAD_VALUE */
 #if !(defined(FSL_FEATURE_RTC_HAS_NO_CR_OSCE) && FSL_FEATURE_RTC_HAS_NO_CR_OSCE)
 
     /* Select RTC clock source */
@@ -236,10 +242,10 @@ int main(void)
 #endif /* FSL_FEATURE_RTC_HAS_NO_CR_OSCE */
 
     /* Set a start date time and start RTC */
-    date.year = 2015U;
-    date.month = 11U;
-    date.day = 11U;
-    date.hour = 11U;
+    date.year   = 2015U;
+    date.month  = 11U;
+    date.day    = 11U;
+    date.hour   = 11U;
     date.minute = 11U;
     date.second = 11U;
 
@@ -285,10 +291,10 @@ int main(void)
                     PRINTF(g_StrInvalid);
                     break;
                 }
-                date.year = (uint16_t)year;
-                date.month = (uint8_t)month;
-                date.day = (uint8_t)day;
-                date.hour = (uint8_t)hour;
+                date.year   = (uint16_t)year;
+                date.month  = (uint8_t)month;
+                date.day    = (uint8_t)day;
+                date.hour   = (uint8_t)hour;
                 date.minute = (uint8_t)minute;
                 date.second = (uint8_t)second;
 

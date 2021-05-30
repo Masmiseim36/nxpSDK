@@ -210,14 +210,14 @@ static usb_status_t USB_DevicePrinterEndpointsInit(usb_device_printer_struct_t *
              USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT) == USB_IN)
         {
             epCallback.callbackFn               = USB_DevicePrinterBulkInCallback;
-            printerHandle->bulkInPipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+            printerHandle->bulkInPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
             printerHandle->bulkInPipeStall      = 0U;
             printerHandle->bulkInPipeDataLen    = 0U;
         }
         else
         {
             epCallback.callbackFn                = USB_DevicePrinterBulkOutCallback;
-            printerHandle->bulkOutPipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+            printerHandle->bulkOutPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
             printerHandle->bulkOutPipeStall      = 0U;
             printerHandle->bulkOutPipeDataLen    = 0U;
         }
@@ -449,7 +449,7 @@ usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *param)
                         if (0U != printerHandle->bulkInPipeStall)
                         {
                             printerHandle->bulkInPipeStall = 0U;
-                            if ((uint8_t *)USB_UNINITIALIZED_VAL_32 != printerHandle->bulkInPipeDataBuffer)
+                            if ((uint8_t *)USB_INVALID_TRANSFER_BUFFER != printerHandle->bulkInPipeDataBuffer)
                             {
                                 status = USB_DeviceSendRequest(
                                     printerHandle->deviceHandle,
@@ -465,7 +465,7 @@ usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *param)
                                     (void)USB_DevicePrinterBulkInCallback(printerHandle->deviceHandle,
                                                                           (void *)&endpointCallbackMessage, handle);
                                 }
-                                printerHandle->bulkInPipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+                                printerHandle->bulkInPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
                                 printerHandle->bulkInPipeDataLen    = 0U;
                             }
                         }
@@ -475,7 +475,7 @@ usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *param)
                         if (printerHandle->bulkOutPipeStall == 1U)
                         {
                             printerHandle->bulkOutPipeStall = 0U;
-                            if ((uint8_t *)USB_UNINITIALIZED_VAL_32 != printerHandle->bulkOutPipeDataBuffer)
+                            if ((uint8_t *)USB_INVALID_TRANSFER_BUFFER != printerHandle->bulkOutPipeDataBuffer)
                             {
                                 status = USB_DeviceRecvRequest(
                                     printerHandle->deviceHandle,
@@ -491,7 +491,7 @@ usb_status_t USB_DevicePrinterEvent(void *handle, uint32_t event, void *param)
                                     (void)USB_DevicePrinterBulkInCallback(printerHandle->deviceHandle,
                                                                           (void *)&endpointCallbackMessage, handle);
                                 }
-                                printerHandle->bulkOutPipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+                                printerHandle->bulkOutPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
                                 printerHandle->bulkOutPipeDataLen    = 0U;
                             }
                         }

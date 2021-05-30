@@ -1,5 +1,5 @@
 /*
- * Copyright  2019 NXP
+ * Copyright 2019,2021 NXP
  * All rights reserved.
  *
  *
@@ -28,8 +28,8 @@
 /*! @name Driver version */
 /*@{*/
 
-/*! @brief LIN stack driver version 2.1.1 */
-#define FSL_LIN_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
+/*! @brief LIN stack driver version */
+#define FSL_LIN_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
 
 /* One time unit is 500 us */
 #define LIN_TIME_OUT_UNIT_US 500U
@@ -61,20 +61,21 @@ typedef struct
  */
 typedef enum
 {
-    LIN_NO_EVENT            = 0x00U, /*!< No event yet */
-    LIN_WAKEUP_SIGNAL       = 0x01U, /*!< Received a wakeup signal */
-    LIN_BAUDRATE_ADJUSTED   = 0x02U, /*!< Indicate that baudrate was adjusted to Master's baudrate */
-    LIN_RECV_BREAK_FIELD_OK = 0x03U, /*!< Indicate that correct Break Field was received */
-    LIN_SYNC_OK             = 0x04U, /*!< Sync byte is correct */
-    LIN_SYNC_ERROR          = 0x05U, /*!< Sync byte is incorrect */
-    LIN_PID_OK              = 0x06U, /*!< PID correct */
-    LIN_PID_ERROR           = 0x07U, /*!< PID incorrect */
-    LIN_FRAME_ERROR         = 0x08U, /*!< Framing Error */
-    LIN_READBACK_ERROR      = 0x09U, /*!< Readback data is incorrect */
-    LIN_CHECKSUM_ERROR      = 0x0AU, /*!< Checksum byte is incorrect */
-    LIN_TX_COMPLETED        = 0x0BU, /*!< Sending data completed */
-    LIN_RX_COMPLETED        = 0x0CU, /*!< Receiving data completed */
-    LIN_RX_OVERRUN          = 0x0DU  /*!< Rx overrun flag. */
+    LIN_NO_EVENT                  = 0x00U, /*!< No event yet */
+    LIN_WAKEUP_SIGNAL             = 0x01U, /*!< Received a wakeup signal */
+    LIN_BAUDRATE_ADJUSTED         = 0x02U, /*!< Indicate that baudrate was adjusted to Master's baudrate */
+    LIN_RECV_BREAK_FIELD_OK       = 0x03U, /*!< Indicate that correct Break Field was received */
+    LIN_SYNC_OK                   = 0x04U, /*!< Sync byte is correct */
+    LIN_SYNC_ERROR                = 0x05U, /*!< Sync byte is incorrect */
+    LIN_PID_OK                    = 0x06U, /*!< PID correct */
+    LIN_PID_ERROR                 = 0x07U, /*!< PID incorrect */
+    LIN_FRAME_ERROR               = 0x08U, /*!< Framing Error */
+    LIN_READBACK_ERROR            = 0x09U, /*!< Readback data is incorrect */
+    LIN_CHECKSUM_ERROR            = 0x0AU, /*!< Checksum byte is incorrect */
+    LIN_TX_COMPLETED              = 0x0BU, /*!< Sending data completed */
+    LIN_RX_COMPLETED              = 0x0CU, /*!< Receiving data completed */
+    LIN_RX_OVERRUN                = 0x0DU, /*!< Rx overrun flag. */
+    LIN_LAST_RESPONSE_SHORT_ERROR = 0x0EU  /*!< Indicate that the last frame was too short */
 } lin_event_id_t;
 
 /*!

@@ -92,6 +92,8 @@ gapAdvertisingParameters_t gAdvParams = {
 };
 
 /* Scanning and Advertising Data */
+#if (!defined(gAppAdvNoPayload_d) || (gAppAdvNoPayload_d == 0)) ||\
+    (defined(gAppUseScanRsp) && (gAppUseScanRsp == 1))
 static const uint8_t adData0[1] =  { (uint8_t)gLeGeneralDiscoverableMode_c | (uint8_t)gBrEdrNotSupported_c };
 static const gapAdStructure_t advScanStruct[3] = {
   {
@@ -110,6 +112,7 @@ static const gapAdStructure_t advScanStruct[3] = {
     .aData = (uint8_t*)"NXP_TEMP"
   }
 };
+#endif /* gAppAdvNoPayload_d gAppUseScanRsp */
 
 /* Set ADV payload  */
 gapAdvertisingData_t gAppAdvertisingData =

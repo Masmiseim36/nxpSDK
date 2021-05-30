@@ -5,6 +5,14 @@ Integrated Circuit.
 The example uses two instances of LPI2C, one in configured as master and the other one as slave.
 The LPI2C master sends data to LPI2C slave. The slave will check the data it receives and shows the log.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -99,12 +107,4 @@ Slave received data :
 0x10  0x11  0x12  0x13  0x14  0x15  0x16  0x17  
 0x18  0x19  0x1a  0x1b  0x1c  0x1d  0x1e  0x1f 
 ~~~~~~~~~~~~~
-
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
 

@@ -7,11 +7,11 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_rtc.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -116,6 +116,7 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+
     /* Init RTC */
     /*
      * rtcConfig.wakeupSelect = false;
@@ -200,7 +201,8 @@ int main(void)
         /* Read the RTC seconds register to get current time in seconds */
         currSeconds = RTC->TSR;
 
-        /* Add alarm seconds to current time */
+        /* Add alarm seconds to current time, because RTC alarm will happen when RTC->TAR = RTC->TSR and RTC->TSR
+        increments, thus there's possible 1 second maximum delay here. */
         currSeconds += sec;
 
         /* Set alarm time in seconds */

@@ -1,22 +1,22 @@
 /*
  * Copyright 2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpspi_cmsis.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define EXAMPLE_LPSPI_SLAVE_IRQN (LPSPI0_IRQn)
-#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME (kCLOCK_Lpspi0)
+#define EXAMPLE_LPSPI_SLAVE_IRQN         (LPSPI0_IRQn)
+#define EXAMPLE_LPSPI_SLAVE_CLOCK_NAME   (kCLOCK_Lpspi0)
 #define EXAMPLE_LPSPI_SLAVE_CLOCK_SOURCE (kCLOCK_IpSrcFircAsync)
 
 #define DRIVER_SLAVE_SPI Driver_SPI0
@@ -34,8 +34,8 @@ void LPSPI_SlaveSignalEvent_t(uint32_t event);
 uint8_t slaveRxData[TRANSFER_SIZE] = {0U};
 
 volatile bool isTransferCompleted = false;
-volatile bool isSlaveOnTransmit = false;
-volatile bool isSlaveOnReceive = false;
+volatile bool isSlaveOnTransmit   = false;
+volatile bool isSlaveOnReceive    = false;
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -93,7 +93,7 @@ int main(void)
             slaveRxData[i] = 0U;
         }
         isTransferCompleted = false;
-        isSlaveOnReceive = true;
+        isSlaveOnReceive    = true;
         /* Set slave transfer to receive data */
         DRIVER_SLAVE_SPI.Receive(slaveRxData, TRANSFER_SIZE);
 
@@ -102,7 +102,7 @@ int main(void)
         }
 
         isTransferCompleted = false;
-        isSlaveOnTransmit = true;
+        isSlaveOnTransmit   = true;
         /* Set slave transfer to send back data */
         DRIVER_SLAVE_SPI.Send(slaveRxData, TRANSFER_SIZE);
 

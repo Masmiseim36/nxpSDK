@@ -15,7 +15,9 @@ Hardware requirements
 
 Board settings
 ==============
-No special board setting.
+The details for switching between USB-KW38 dongle as a Bluetooth Low Energy sniffer
+and USB-KW38 as a development platform can be found at the bellow link:
+https://www.nxp.com/document/guide/getting-started-with-the-usb-kw38:GS-USB-KW38
 
 Known Issues
 ============
@@ -24,7 +26,7 @@ Workaround: use external debugger and press SW3 while starting the debugger unti
 
 Prepare the Demo
 ================
-1.  Plug USBKW38 to PC USB port
+1.  Plug USB-KW38 to PC USB port
 2.  Download the program to the target board.
 3.  Press the reset button SW2 on your board to begin running the demo.
 4.  Open Test Tool 12 and use the following settings with the detected serial device:

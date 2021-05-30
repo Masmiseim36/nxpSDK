@@ -8,10 +8,10 @@ data using AES-CBC, DES3-CBC and Hash algorithms MD5, SHA1 and SHA256.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -24,9 +24,6 @@ Board settings
 This Example project does not call for any special hardware configurations.
 Although not required, the recommendation is to leave the development board's jumper settings
 and configurations in default state when running this example.
-Prepare the Demo
-================
-
 Running the demo
 ================
 When the demo runs successfully, from the terminal you can see:
@@ -98,7 +95,4 @@ Computed MD5:
 9e107d9d372bb6826bd81d3542a419d6
 
 .............. THE  END  OF  THE  MMCAU  DRIVER  EXAMPLE ................................
-
-Customization options
-=====================
 

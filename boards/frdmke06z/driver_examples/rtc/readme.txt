@@ -7,10 +7,10 @@ and time.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -36,20 +36,18 @@ Prepare the Demo
 
 Running the demo
 ================
-When the example runs successfully, you can see the similar information from the terminal as below.
+When the example runs successfully, you can see the similar information from the terminal as below. Taking input second '3' as an example.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 RTC example: set up time to wake up an alarm.
 Current datetime: 2014-12-25 19:00:00
 Please input the number of second to wait for alarm
 The second must be positive value
-Alarm will occur at: 2014-12-25 19:01:11
+3
+Alarm will occur at: 2014-12-25 19:00:06
 
-Alarm occurs !!!! Current datetime: 2014-12-25 19:01:12
+ Alarm occurs !!!! Current datetime: 2014-12-25 19:00:06
 Please input the number of second to wait for alarm
 The second must be positive value
 ...............................................
 ...............................................
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

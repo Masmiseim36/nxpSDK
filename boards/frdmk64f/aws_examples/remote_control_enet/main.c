@@ -30,11 +30,12 @@
 //  Includes
 ///////////////////////////////////////////////////////////////////////////////
 /* SDK Included Files */
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "ksdk_mbedtls.h"
-#include "pin_mux.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 /* FreeRTOS Demo Includes */
 #include "FreeRTOS.h"
 #include "task.h"
@@ -61,7 +62,6 @@
 #include "enet_ethernetif.h"
 #include "lwip/netifapi.h"
 #include "fsl_device_registers.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
 #include "fsl_phyksz8081.h"

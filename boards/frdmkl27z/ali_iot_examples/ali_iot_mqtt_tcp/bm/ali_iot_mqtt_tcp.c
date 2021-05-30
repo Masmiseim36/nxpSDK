@@ -8,6 +8,8 @@
 
 #include <string.h>
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "infra_compat.h"
 #include "dev_sign_api.h"
@@ -18,8 +20,6 @@
 #endif
 #include "ali_iot_config.h"
 #include "fsl_device_registers.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_gpio.h"
 /*******************************************************************************
  * Definitions

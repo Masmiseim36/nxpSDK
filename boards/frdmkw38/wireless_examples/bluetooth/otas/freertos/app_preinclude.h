@@ -48,7 +48,8 @@
 
 #define gPasskeyValue_c                999999
 
-
+/*! Repeated Attempts - Mitigation for pairing attacks */
+#define gRepeatedAttempts_d             0
 /*! *********************************************************************************
  *     Framework Configuration
  ********************************************************************************** */
@@ -69,11 +70,15 @@
          _block_size_  64  _number_of_blocks_   10 _eol_  \
          _block_size_ 120  _number_of_blocks_    3 _eol_  \
          _block_size_ 256  _number_of_blocks_    2 _eol_  \
-         _block_size_ 312  _number_of_blocks_    3 _eol_  \
+         _block_size_ 312  _number_of_blocks_   10 _eol_  \
          _block_size_ 392  _number_of_blocks_    1 _eol_
 
 /* Defines number of timers needed by the application */
+#if gRepeatedAttempts_d
+#define gTmrApplicationTimers_c         5
+#else
 #define gTmrApplicationTimers_c         4
+#endif
 
 /* Set this define TRUE if the PIT frequency is an integer number of MHZ */
 #define gTMR_PIT_FreqMultipleOfMHZ_d    0
@@ -109,6 +114,8 @@
 
 /* Use Misra Compliant version of FSCI module */
 #define gFsciUseDedicatedTask_c         1
+
+#define gFsciTaskStackSize_c            1400
 /*! *********************************************************************************
  *     RTOS Configuration
  ********************************************************************************** */
@@ -122,7 +129,7 @@
 #define gMainThreadStackSize_c  1200
 
 /* Defines total heap size used by the OS */
-#define gTotalHeapSize_c        12400
+#define gTotalHeapSize_c        12800
 
 /*! *********************************************************************************
  *     BLE Stack Configuration

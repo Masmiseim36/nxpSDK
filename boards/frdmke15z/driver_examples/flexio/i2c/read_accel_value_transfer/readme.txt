@@ -10,10 +10,10 @@ the virtual serial port on board.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -74,6 +74,3 @@ status_reg = 0xff , x =   507 , y =   -67 , z =  2066
 
 End of I2C example .
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

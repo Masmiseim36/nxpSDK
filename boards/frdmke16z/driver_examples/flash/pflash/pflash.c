@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -11,20 +11,20 @@
  ******************************************************************************/
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
-#include "board.h"
+#include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 #include "fsl_flash.h"
 #if defined(FSL_FEATURE_HAS_L1CACHE) && FSL_FEATURE_HAS_L1CACHE
 #include "fsl_cache.h"
 #endif /* FSL_FEATURE_HAS_L1CACHE */
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-
-#define BUFFER_LEN 4
+#define FSL_SUPPORT_ERASE_SECTOR_NON_BLOCKING 1U
+#define BUFFER_LEN                            4
 
 /*******************************************************************************
  * Prototypes
@@ -51,10 +51,10 @@ static uint32_t s_buffer_rbc[BUFFER_LEN];
  ******************************************************************************/
 
 /*
-* @brief Gets called when an error occurs.
-*
-* @details Print error message and trap forever.
-*/
+ * @brief Gets called when an error occurs.
+ *
+ * @details Print error message and trap forever.
+ */
 void error_trap(void)
 {
     PRINTF("\r\n\r\n\r\n\t---- HALTED DUE TO FLASH ERROR! ----");
@@ -64,10 +64,10 @@ void error_trap(void)
 }
 
 /*
-* @brief Gets called when the app is complete.
-*
-* @details Print finshed message and trap forever.
-*/
+ * @brief Gets called when the app is complete.
+ *
+ * @details Print finshed message and trap forever.
+ */
 void app_finalize(void)
 {
     /* Print finished message. */
@@ -88,12 +88,12 @@ void app_finalize(void)
 int main(void)
 {
     ftfx_security_state_t securityStatus = kFTFx_SecurityStateNotSecure; /* Return protection status */
-    status_t result;    /* Return code from each flash driver function */
-    uint32_t destAdrss; /* Address of the target location */
+    status_t result;   /* Return code from each flash driver function */
+    uint32_t destAddr; /* Address of the target location */
     uint32_t i, failAddr, failDat;
 
-    uint32_t pflashBlockBase = 0;
-    uint32_t pflashTotalSize = 0;
+    uint32_t pflashBlockBase  = 0;
+    uint32_t pflashTotalSize  = 0;
     uint32_t pflashSectorSize = 0;
 
     /* Init hardware */
@@ -162,7 +162,6 @@ int main(void)
         /* Erase several sectors on upper pflash block where there is no code */
         PRINTF("\r\n Erase a sector of flash");
 
-
 /* In case of the protected sectors at the end of the pFlash just select
 the block from the end of pFlash to be used for operations
 SECTOR_INDEX_FROM_END = 1 means the last sector,
@@ -173,33 +172,20 @@ SECTOR_INDEX_FROM_END = 2 means the last 4 sectors back
 with width of 2 sectors ...
 */
 #ifndef SECTOR_INDEX_FROM_END
-  #define SECTOR_INDEX_FROM_END 1U
+#define SECTOR_INDEX_FROM_END 1U
 #endif
 
-/* Erase a sector from destAdrss. */
+#ifdef TEST_TARGET_ADDRESS
+        destAddr = TEST_TARGET_ADDRESS;
+#else
+/* Erase a sector from destAddr. */
 #if defined(FSL_FEATURE_FLASH_HAS_PFLASH_BLOCK_SWAP) && FSL_FEATURE_FLASH_HAS_PFLASH_BLOCK_SWAP
         /* Note: we should make sure that the sector shouldn't be swap indicator sector*/
-        destAdrss = pflashBlockBase + (pflashTotalSize - (SECTOR_INDEX_FROM_END * pflashSectorSize * 2));
+        destAddr = pflashBlockBase + (pflashTotalSize - (SECTOR_INDEX_FROM_END * pflashSectorSize * 2));
 #else
-        destAdrss = pflashBlockBase + (pflashTotalSize - (SECTOR_INDEX_FROM_END * pflashSectorSize));
+        destAddr = pflashBlockBase + (pflashTotalSize - (SECTOR_INDEX_FROM_END * pflashSectorSize));
 #endif
-
-        result = FLASH_Erase(&s_flashDriver, destAdrss, pflashSectorSize, kFTFx_ApiEraseKey);
-        if (kStatus_FTFx_Success != result)
-        {
-            error_trap();
-        }
-
-        /* Verify sector if it's been erased. */
-        result = FLASH_VerifyErase(&s_flashDriver, destAdrss, pflashSectorSize, kFTFx_MarginValueUser);
-        if (kStatus_FTFx_Success != result)
-        {
-            error_trap();
-        }
-
-        /* Print message for user. */
-        PRINTF("\r\n Successfully Erased Sector 0x%x -> 0x%x\r\n", destAdrss, (destAdrss + pflashSectorSize));
-
+#endif // TEST_TARGET_ADDRESS
         /* Print message for user. */
         PRINTF("\r\n Program a buffer to a sector of flash ");
         /* Prepare user buffer. */
@@ -208,16 +194,45 @@ with width of 2 sectors ...
             s_buffer[i] = i;
         }
 
+#if defined(FSL_SUPPORT_ERASE_SECTOR_NON_BLOCKING) && FSL_SUPPORT_ERASE_SECTOR_NON_BLOCKING
+        result = FLASH_EraseSectorNonBlocking(&s_flashDriver, destAddr, kFTFx_ApiEraseKey);
+        if (kStatus_FTFx_Success != result)
+        {
+            error_trap();
+        }
+        /* Before programming the flash, check whether the erase sector command is completed,*/
+        /* and get the flash status. */
+        result = FLASH_GetCommandState();
+        if (kStatus_FTFx_Success != result)
+        {
+            error_trap();
+        }
+#else
+        result   = FLASH_Erase(&s_flashDriver, destAddr, pflashSectorSize, kFTFx_ApiEraseKey);
+        if (kStatus_FTFx_Success != result)
+        {
+            error_trap();
+        }
+#endif
+        /* Verify sector if it's been erased. */
+        result = FLASH_VerifyErase(&s_flashDriver, destAddr, pflashSectorSize, kFTFx_MarginValueUser);
+        if (kStatus_FTFx_Success != result)
+        {
+            error_trap();
+        }
+        /* Print message for user. */
+        PRINTF("\r\n Successfully Erased Sector 0x%x -> 0x%x\r\n", destAddr, (destAddr + pflashSectorSize));
+
         /* Program user buffer into flash*/
-        result = FLASH_Program(&s_flashDriver, destAdrss, (uint8_t *)s_buffer, sizeof(s_buffer));
+        result = FLASH_Program(&s_flashDriver, destAddr, (uint8_t *)s_buffer, sizeof(s_buffer));
         if (kStatus_FTFx_Success != result)
         {
             error_trap();
         }
 
         /* Verify programming by Program Check command with user margin levels */
-        result = FLASH_VerifyProgram(&s_flashDriver, destAdrss, sizeof(s_buffer), (const uint8_t *)s_buffer, kFTFx_MarginValueUser,
-                                     &failAddr, &failDat);
+        result = FLASH_VerifyProgram(&s_flashDriver, destAddr, sizeof(s_buffer), (const uint8_t *)s_buffer,
+                                     kFTFx_MarginValueUser, &failAddr, &failDat);
         if (kStatus_FTFx_Success != result)
         {
             error_trap();
@@ -237,19 +252,19 @@ with width of 2 sectors ...
         /* Verify programming by reading back from flash directly*/
         for (uint32_t i = 0; i < BUFFER_LEN; i++)
         {
-            s_buffer_rbc[i] = *(volatile uint32_t *)(destAdrss + i * 4);
+            s_buffer_rbc[i] = *(volatile uint32_t *)(destAddr + i * 4);
             if (s_buffer_rbc[i] != s_buffer[i])
             {
                 error_trap();
             }
         }
 
-        PRINTF("\r\n Successfully Programmed and Verified Location 0x%x -> 0x%x \r\n", destAdrss,
-               (destAdrss + sizeof(s_buffer)));
+        PRINTF("\r\n Successfully Programmed and Verified Location 0x%x -> 0x%x \r\n", destAddr,
+               (destAddr + sizeof(s_buffer)));
 
         /* Erase the context we have progeammed before*/
         /* Note: we should make sure that the sector which will be set as swap indicator should be blank*/
-        FLASH_Erase(&s_flashDriver, destAdrss, pflashSectorSize, kFTFx_ApiEraseKey);
+        FLASH_Erase(&s_flashDriver, destAddr, pflashSectorSize, kFTFx_ApiEraseKey);
     }
     else
     {

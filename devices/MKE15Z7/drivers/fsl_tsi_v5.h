@@ -20,7 +20,7 @@
  ******************************************************************************/
 
 /*! @brief TSI driver version */
-#define FSL_TSI_DRIVER_VERSION (MAKE_VERSION(2, 1, 1)) /*!< Version 2.1.1 */
+#define FSL_TSI_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
 
 /*! @brief TSI status flags macro collection */
 #define ALL_FLAGS_MASK (TSI_GENCS_EOSF_MASK | TSI_GENCS_OUTRGF_MASK)
@@ -1085,7 +1085,7 @@ static inline void TSI_SetSscPrescaler(TSI_Type *base, tsi_ssc_prescaler_t presc
  */
 static inline void TSI_SetUsedTxChannel(TSI_Type *base, tsi_mutual_tx_channel_t txChannel)
 {
-    base->MUL0 = (base->MUL0) | (TSI_MUL0_M_TX_USED(1U << txChannel));
+    base->MUL0 = (base->MUL0) | (TSI_MUL0_M_TX_USED(1UL << (uint8_t)txChannel));
 }
 
 /*!
@@ -1097,7 +1097,7 @@ static inline void TSI_SetUsedTxChannel(TSI_Type *base, tsi_mutual_tx_channel_t 
  */
 static inline void TSI_ClearUsedTxChannel(TSI_Type *base, tsi_mutual_tx_channel_t txChannel)
 {
-    base->MUL0 &= ~TSI_MUL0_M_TX_USED(1U << txChannel);
+    base->MUL0 &= ~TSI_MUL0_M_TX_USED(1UL << (uint8_t)txChannel);
 }
 #endif
 

@@ -7,6 +7,14 @@ The lpi2c_read_accel_value example shows how to use LPI2C driver to communicate 
 
 In this example, the values of three-axis accelerometer print to the serial terminal on PC through
 the virtual serial port on board.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -62,11 +70,3 @@ status_reg = 0xff , x =    56 , y =   -79 , z =  2093
 
 End of LPI2C example .
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

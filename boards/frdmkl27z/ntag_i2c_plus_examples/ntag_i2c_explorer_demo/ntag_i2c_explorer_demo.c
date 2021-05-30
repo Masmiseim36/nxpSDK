@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_gpio.h"
 #include "fsl_adc16.h"
@@ -22,8 +24,6 @@
 #include "nfc_device.h"
 #include "ndef_message.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

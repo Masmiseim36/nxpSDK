@@ -413,7 +413,8 @@ status_t FTM_SetupPwm(FTM_Type *base,
         return kStatus_Fail;
     }
     /* Set the PWM period */
-    base->MOD = mod;
+    base->CNTIN = 0U;
+    base->MOD   = mod;
 
     /* Setup each FTM channel */
     for (i = 0; i < numOfChnls; i++)
@@ -422,6 +423,21 @@ status_t FTM_SetupPwm(FTM_Type *base,
         if (chnlParams->dutyCyclePercent > 100U)
         {
             return kStatus_Fail;
+        }
+
+        if (chnlParams->dutyCyclePercent == 0U)
+        {
+            /* Signal stays low */
+            cnv = 0;
+        }
+        else
+        {
+            cnv = (mod * chnlParams->dutyCyclePercent) / 100U;
+            /* For 100% duty cycle */
+            if (cnv >= mod)
+            {
+                cnv = mod + 1U;
+            }
         }
 
         if ((mode == kFTM_EdgeAlignedPwm) || (mode == kFTM_CenterAlignedPwm))
@@ -439,21 +455,6 @@ status_t FTM_SetupPwm(FTM_Type *base,
             /* Update the mode and edge level */
             base->CONTROLS[chnlParams->chnlNumber].CnSC = reg;
 
-            if (chnlParams->dutyCyclePercent == 0U)
-            {
-                /* Signal stays low */
-                cnv = 0;
-            }
-            else
-            {
-                cnv = (mod * chnlParams->dutyCyclePercent) / 100U;
-                /* For 100% duty cycle */
-                if (cnv >= mod)
-                {
-                    cnv = mod + 1U;
-                }
-            }
-
             base->CONTROLS[chnlParams->chnlNumber].CnV = cnv;
 #if defined(FSL_FEATURE_FTM_HAS_ENABLE_PWM_OUTPUT) && (FSL_FEATURE_FTM_HAS_ENABLE_PWM_OUTPUT)
             /* Set to output mode */
@@ -468,38 +469,38 @@ status_t FTM_SetupPwm(FTM_Type *base,
                 return kStatus_Fail;
             }
 
-            /* Return error if requested value is greater than the max allowed */
-            if (chnlParams->firstEdgeDelayPercent > 100U)
+            if (mode == kFTM_EdgeAlignedCombinedPwm)
             {
-                return kStatus_Fail;
-            }
-
-            /* Configure delay of the first edge */
-            if (chnlParams->firstEdgeDelayPercent == 0U)
-            {
-                /* No delay for the first edge */
                 cnvFirstEdge = 0;
+            }
+            else if (mode == kFTM_CenterAlignedCombinedPwm)
+            {
+                cnvFirstEdge = (mod - cnv) / 2U;
             }
             else
             {
-                cnvFirstEdge = (mod * chnlParams->firstEdgeDelayPercent) / 100U;
+                /* Return error if requested value is greater than the max allowed */
+                if (chnlParams->firstEdgeDelayPercent > 100U)
+                {
+                    return kStatus_Fail;
+                }
+                /* Configure delay of the first edge */
+                if (chnlParams->firstEdgeDelayPercent == 0U)
+                {
+                    /* No delay for the first edge */
+                    cnvFirstEdge = 0;
+                }
+                else
+                {
+                    cnvFirstEdge = (mod * chnlParams->firstEdgeDelayPercent) / 100U;
+                }
             }
 
-            /* Configure dutycycle */
+            /* Re-configure first edge when 0% duty cycle */
             if (chnlParams->dutyCyclePercent == 0U)
             {
                 /* Signal stays low */
-                cnv          = 0;
                 cnvFirstEdge = 0;
-            }
-            else
-            {
-                cnv = (mod * chnlParams->dutyCyclePercent) / 100U;
-                /* For 100% duty cycle */
-                if (cnv >= mod)
-                {
-                    cnv = mod + 1U;
-                }
             }
 
             /* Clear the current mode and edge level bits for channel n */
@@ -536,14 +537,10 @@ status_t FTM_SetupPwm(FTM_Type *base,
             FTM_SetPwmOutputEnable(base, (ftm_chnl_t)(uint8_t)((uint8_t)chnlParams->chnlNumber * 2U + 1U), true);
 #endif /* FSL_FEATURE_FTM_HAS_ENABLE_PWM_OUTPUT */
 
-            /* Setup for complementary mode. */
-            if (kFTM_ComplementaryPwm == mode)
-            {
-                /* Enable complementary mode. */
-                FTM_SetComplementaryEnable(base, chnlParams->chnlNumber, true);
-                /* Enable/disable dead time insertion. */
-                FTM_SetDeadTimeEnable(base, chnlParams->chnlNumber, chnlParams->enableDeadtime);
-            }
+            /* Enable/Disable complementary output on the channel pair */
+            FTM_SetComplementaryEnable(base, chnlParams->chnlNumber, chnlParams->enableComplementary);
+            /* Enable/Disable Deadtime insertion on the channel pair */
+            FTM_SetDeadTimeEnable(base, chnlParams->chnlNumber, chnlParams->enableDeadtime);
         }
         chnlParams++;
     }
@@ -573,7 +570,12 @@ void FTM_UpdatePwmDutycycle(FTM_Type *base,
     assert(-1 != FSL_FEATURE_FTM_CHANNEL_COUNTn(base));
 
     mod = base->MOD;
-    if ((currentPwmMode == kFTM_EdgeAlignedPwm) || (currentPwmMode == kFTM_CenterAlignedPwm))
+    if (dutyCyclePercent == 0U)
+    {
+        /* Signal stays low */
+        cnv = 0;
+    }
+    else
     {
         cnv = (mod * dutyCyclePercent) / 100U;
         /* For 100% duty cycle */
@@ -581,6 +583,10 @@ void FTM_UpdatePwmDutycycle(FTM_Type *base,
         {
             cnv = mod + 1U;
         }
+    }
+
+    if ((currentPwmMode == kFTM_EdgeAlignedPwm) || (currentPwmMode == kFTM_CenterAlignedPwm))
+    {
         base->CONTROLS[chnlNumber].CnV = cnv;
     }
     else
@@ -591,13 +597,15 @@ void FTM_UpdatePwmDutycycle(FTM_Type *base,
             return;
         }
 
-        cnv          = (mod * dutyCyclePercent) / 100U;
-        cnvFirstEdge = base->CONTROLS[((uint32_t)chnlNumber) * 2U].CnV;
-        /* For 100% duty cycle */
-        if (cnv >= mod)
+        if (currentPwmMode == kFTM_CenterAlignedCombinedPwm)
         {
-            cnv = mod + 1U;
+            cnvFirstEdge = (mod - cnv) / 2U;
         }
+        else
+        {
+            cnvFirstEdge = base->CONTROLS[((uint32_t)chnlNumber) * 2U].CnV;
+        }
+        base->CONTROLS[((uint32_t)chnlNumber * 2U)].CnV      = cnvFirstEdge;
         base->CONTROLS[((uint32_t)chnlNumber * 2U) + 1U].CnV = cnvFirstEdge + cnv;
     }
 }
@@ -648,13 +656,15 @@ status_t FTM_SetupPwmMode(FTM_Type *base,
     assert(-1 != FSL_FEATURE_FTM_CHANNEL_COUNTn(base));
 
     uint32_t reg;
+    uint32_t mod, cnvFirstEdge;
     uint8_t i;
 
     switch (mode)
     {
         case kFTM_EdgeAlignedPwm:
-        case kFTM_ComplementaryPwm:
-        case kFTM_CombinedPwm:
+        case kFTM_EdgeAlignedCombinedPwm:
+        case kFTM_CenterAlignedCombinedPwm:
+        case kFTM_AsymmetricalCombinedPwm:
             base->SC &= ~FTM_SC_CPWMS_MASK;
             break;
         case kFTM_CenterAlignedPwm:
@@ -665,6 +675,8 @@ status_t FTM_SetupPwmMode(FTM_Type *base,
             break;
     }
 
+    /* Get percent PWM period */
+    mod = base->MOD;
     /* Setup each FTM channel */
     for (i = 0; i < numOfChnls; i++)
     {
@@ -697,6 +709,31 @@ status_t FTM_SetupPwmMode(FTM_Type *base,
                 return kStatus_Fail;
             }
 
+            if (mode == kFTM_EdgeAlignedCombinedPwm)
+            {
+                cnvFirstEdge = 0;
+            }
+            else if (mode == kFTM_CenterAlignedCombinedPwm)
+            {
+                cnvFirstEdge = (mod - chnlParams->dutyValue) / 2U;
+            }
+            else
+            {
+                /* Return error if requested value is greater than the mod */
+                if (chnlParams->firstEdgeValue > mod)
+                {
+                    return kStatus_Fail;
+                }
+                cnvFirstEdge = chnlParams->firstEdgeValue;
+            }
+
+            /* Re-configure first edge when 0% duty cycle */
+            if (chnlParams->dutyValue == 0U)
+            {
+                /* Signal stays low */
+                cnvFirstEdge = 0;
+            }
+
             /* Clear the current mode and edge level bits for channel n */
             reg = base->CONTROLS[((uint32_t)chnlParams->chnlNumber) * 2U].CnSC;
             reg &= ~(FTM_CnSC_MSA_MASK | FTM_CnSC_MSB_MASK | FTM_CnSC_ELSA_MASK | FTM_CnSC_ELSB_MASK);
@@ -722,8 +759,8 @@ status_t FTM_SetupPwmMode(FTM_Type *base,
                 (1UL << (FTM_COMBINE_COMBINE0_SHIFT + (FTM_COMBINE_COMBINE1_SHIFT * (uint32_t)chnlParams->chnlNumber)));
 
             /* Set the channel pair values */
-            base->CONTROLS[((uint32_t)chnlParams->chnlNumber) * 2U].CnV        = chnlParams->firstEdgeValue;
-            base->CONTROLS[(((uint32_t)chnlParams->chnlNumber) * 2U) + 1U].CnV = chnlParams->dutyValue;
+            base->CONTROLS[((uint32_t)chnlParams->chnlNumber) * 2U].CnV        = cnvFirstEdge;
+            base->CONTROLS[(((uint32_t)chnlParams->chnlNumber) * 2U) + 1U].CnV = cnvFirstEdge + chnlParams->dutyValue;
 
 #if defined(FSL_FEATURE_FTM_HAS_ENABLE_PWM_OUTPUT) && (FSL_FEATURE_FTM_HAS_ENABLE_PWM_OUTPUT)
             /* Set to output mode */
@@ -731,12 +768,10 @@ status_t FTM_SetupPwmMode(FTM_Type *base,
             FTM_SetPwmOutputEnable(base, (ftm_chnl_t)(uint8_t)((uint8_t)chnlParams->chnlNumber * 2U + 1U), true);
 #endif /* FSL_FEATURE_FTM_HAS_ENABLE_PWM_OUTPUT */
 
-            /* Setup for complementary mode. */
-            if (kFTM_ComplementaryPwm == mode)
-            {
-                /* Enable complementary mode. */
-                FTM_SetComplementaryEnable(base, chnlParams->chnlNumber, true);
-            }
+            /* Enable/Disable complementary output on the channel pair */
+            FTM_SetComplementaryEnable(base, chnlParams->chnlNumber, chnlParams->enableComplementary);
+            /* Enable/Disable Deadtime insertion on the channel pair */
+            FTM_SetDeadTimeEnable(base, chnlParams->chnlNumber, chnlParams->enableDeadtime);
         }
         chnlParams++;
     }
@@ -946,15 +981,15 @@ void FTM_SetupQuadDecode(FTM_Type *base,
 }
 
 /*!
- * brief Sets up the working of the FTM fault protection.
+ * brief Sets up the working of the FTM fault inputs protection.
  *
- * FTM can have up to 4 fault inputs. This function sets up fault parameters, fault level, and a filter.
+ * FTM can have up to 4 fault inputs. This function sets up fault parameters, fault level, and input filter.
  *
  * param base        FTM peripheral base address
  * param faultNumber FTM fault to configure.
- * param faultParams Parameters passed in to set up the fault
+ * param faultParams Parameters passed in to set up the fault input
  */
-void FTM_SetupFault(FTM_Type *base, ftm_fault_input_t faultNumber, const ftm_fault_param_t *faultParams)
+void FTM_SetupFaultInput(FTM_Type *base, ftm_fault_input_t faultNumber, const ftm_fault_param_t *faultParams)
 {
     assert(faultParams != NULL);
 

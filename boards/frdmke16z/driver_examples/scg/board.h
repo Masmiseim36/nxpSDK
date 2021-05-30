@@ -40,15 +40,15 @@
 
 /*! @brief The UART to use for debug messages. */
 #define BOARD_USE_UART
-#define BOARD_DEBUG_UART_TYPE kSerialPort_Uart
+#define BOARD_DEBUG_UART_TYPE     kSerialPort_Uart
 #define BOARD_DEBUG_UART_BASEADDR (uint32_t) LPUART0
 #define BOARD_DEBUG_UART_INSTANCE 0U
-#define BOARD_DEBUG_UART_CLKSRC kCLOCK_IpSrcSysOscAsync
-#define BOARD_UART_IRQ LPUART0_IRQn
-#define BOARD_UART_IRQ_HANDLER LPUART0_IRQHandler
+#define BOARD_DEBUG_UART_CLKSRC   kCLOCK_IpSrcSysOscAsync
+#define BOARD_UART_IRQ            LPUART0_IRQn
+#define BOARD_UART_IRQ_HANDLER    LPUART0_IRQHandler
 
 /* @Brief Board accelerator sensor configuration */
-#define BOARD_ACCEL_I2C_BASEADDR LPI2C0
+#define BOARD_ACCEL_I2C_BASEADDR   LPI2C0
 #define BOARD_ACCEL_I2C_CLOCK_FREQ CLOCK_GetIpFreq(kCLOCK_Lpi2c0)
 
 #ifndef BOARD_DEBUG_UART_BAUDRATE
@@ -60,7 +60,7 @@
 
 /*! @brief The CMP instance/channel used for board. */
 #define BOARD_CMP_BASEADDR CMP0
-#define BOARD_CMP_CHANNEL 0U
+#define BOARD_CMP_CHANNEL  0U
 
 /*! @brief The rtc instance used for board. */
 #define BOARD_RTC_FUNC_BASEADDR RTC
@@ -87,12 +87,12 @@
 #ifndef BOARD_SW3_GPIO_PIN
 #define BOARD_SW3_GPIO_PIN 2U
 #endif
-#define BOARD_SW3_IRQ PORTBCD_IRQn
+#define BOARD_SW3_IRQ         PORTBCD_IRQn
 #define BOARD_SW3_IRQ_HANDLER PORTBCD_IRQHandler
-#define BOARD_SW3_NAME "SW3"
+#define BOARD_SW3_NAME        "SW3"
 
 /* Board RGB LED color mapping */
-#define LOGIC_LED_ON 0U
+#define LOGIC_LED_ON  0U
 #define LOGIC_LED_OFF 1U
 #ifndef BOARD_LED_RED_GPIO
 #define BOARD_LED_RED_GPIO GPIOB
@@ -118,9 +118,9 @@
 
 #define LED_RED1_INIT(output)                                          \
     GPIO_PinWrite(BOARD_LED_RED_GPIO, BOARD_LED_RED_GPIO_PIN, output); \
-    BOARD_LED_RED_GPIO->PDDR |= (1U << BOARD_LED_RED_GPIO_PIN)                         /*!< Enable target LED_RED1 */
-#define LED_RED1_ON() GPIO_PortClear(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Turn on target LED_RED1 */
-#define LED_RED1_OFF() GPIO_PortSet(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN)  /*!< Turn off target LED_RED1 */
+    BOARD_LED_RED_GPIO->PDDR |= (1U << BOARD_LED_RED_GPIO_PIN)                          /*!< Enable target LED_RED1 */
+#define LED_RED1_ON()  GPIO_PortClear(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Turn on target LED_RED1 */
+#define LED_RED1_OFF() GPIO_PortSet(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN)   /*!< Turn off target LED_RED1 */
 #define LED_RED1_TOGGLE() \
     GPIO_PortToggle(BOARD_LED_RED_GPIO, 1U << BOARD_LED_RED_GPIO_PIN) /*!< Toggle on target LED_RED1 */
 
@@ -139,10 +139,10 @@
     BOARD_LED_BLUE_GPIO->PDDR |= (1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Enable target LED_BLUE */
 #define LED_BLUE_ON()                                                                                     \
     GPIO_PortClear(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn on target LED_BLUE \ \ \ \
-                                                                             */
+                                                                        */
 #define LED_BLUE_OFF()                                                                                   \
     GPIO_PortSet(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Turn off target LED_BLUE \ \ \ \
-                                                                           */
+                                                                      */
 #define LED_BLUE_TOGGLE() \
     GPIO_PortToggle(BOARD_LED_BLUE_GPIO, 1U << BOARD_LED_BLUE_GPIO_PIN) /*!< Toggle on target LED_BLUE */
 

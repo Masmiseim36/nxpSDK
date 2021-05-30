@@ -17,10 +17,10 @@ cycle to ensure the new mark/space counter is prepared before each end of modula
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -73,6 +73,3 @@ The output waveform is captured on the oscilloscope like:
     - the period of the basic carrier generator signal is 25 microsecond
     - bit 1 is about four normal carrier signal period.
     - bit 0 is about one normal carrier signal period and three space carrier signal period.
-Customization options
-=====================
-

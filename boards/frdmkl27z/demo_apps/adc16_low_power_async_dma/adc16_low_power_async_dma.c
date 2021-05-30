@@ -11,13 +11,13 @@
 #include "fsl_pmc.h"
 #include "fsl_adc16.h"
 #include "fsl_dmamux.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lptmr.h"
 #include <stdlib.h>
 #include "fsl_dma.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

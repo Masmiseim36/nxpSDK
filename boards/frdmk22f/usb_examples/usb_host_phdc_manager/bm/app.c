@@ -10,25 +10,24 @@
 #include "usb_host.h"
 #include "fsl_device_registers.h"
 #include "usb_host_phdc.h"
-#include "board.h"
 #include "fsl_debug_console.h"
 #include "usb.h"
 #include "ieee11073_types.h"
 #include "ieee11073_nomenclature.h"
 #include "host_phdc_manager.h"
 #include "fsl_common.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 #include "app.h"
-#include "board.h"
 
 #if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
 #error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
 #endif
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

@@ -4,9 +4,6 @@
 **                          MK66FN2M0VMD18
 **
 **     Compiler:            IAR ANSI C/C++ Compiler for ARM
-**     Reference manual:    K66P144M180SF5RMV2, Rev. 1, Mar 2015
-**     Version:             rev. 3.0, 2015-03-25
-**     Build:               b171205
 **
 **     Abstract:
 **         Linker file for the IAR ANSI C/C++ Compiler for ARM

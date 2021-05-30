@@ -5,10 +5,10 @@ Azure_http_remote_control demo shows basic communication with iot-hub via http p
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- MCUXpresso  11.2.0
-- GCC ARM Embedded  9.2.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
+- Keil MDK  5.33
 
 Hardware requirements
 =====================
@@ -71,6 +71,3 @@ Initializing PHY...
  Info: Actual UTC time: Fri Nov 23 07:24:37 2018
 
  Starting the IoTHub client sample HTTP...
-Customization options
-=====================
-

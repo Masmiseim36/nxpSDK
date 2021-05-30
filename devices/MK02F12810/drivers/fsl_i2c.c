@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -277,10 +277,11 @@ static status_t I2C_InitTransferStateMachine(I2C_Type *base, i2c_master_handle_t
         }
 
         /* Wait for TCF bit and manually trigger tx interrupt. */
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
         uint32_t waitTimes = I2C_RETRY_TIMES;
-        while ((0U == (base->S & (uint8_t)kI2C_TransferCompleteFlag)) && (0U != --waitTimes))
+        while ((0U == (base->S & (uint8_t)kI2C_TransferCompleteFlag)) && (0U != waitTimes))
         {
+            waitTimes--;
         }
         if (0U == waitTimes)
         {
@@ -848,10 +849,11 @@ status_t I2C_MasterStart(I2C_Type *base, uint8_t address, i2c_direction_t direct
         base->C1 |= I2C_C1_MST_MASK | I2C_C1_TX_MASK;
 
 #if defined(FSL_FEATURE_I2C_HAS_DOUBLE_BUFFERING) && FSL_FEATURE_I2C_HAS_DOUBLE_BUFFERING
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
         uint32_t waitTimes = I2C_RETRY_TIMES;
-        while ((0U == (base->S2 & I2C_S2_EMPTY_MASK)) && (0U != --waitTimes))
+        while ((0U == (base->S2 & I2C_S2_EMPTY_MASK)) && (0U != waitTimes))
         {
+            waitTimes--;
         }
         if (0U == waitTimes)
         {
@@ -909,10 +911,11 @@ status_t I2C_MasterRepeatedStart(I2C_Type *base, uint8_t address, i2c_direction_
         }
 
 #if defined(FSL_FEATURE_I2C_HAS_DOUBLE_BUFFERING) && FSL_FEATURE_I2C_HAS_DOUBLE_BUFFERING
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
         uint32_t waitTimes = I2C_RETRY_TIMES;
-        while ((0U == (base->S2 & I2C_S2_EMPTY_MASK)) && (0U != --waitTimes))
+        while ((0U == (base->S2 & I2C_S2_EMPTY_MASK)) && (0U != waitTimes))
         {
+            waitTimes--;
         }
         if (0U == waitTimes)
         {
@@ -944,11 +947,12 @@ status_t I2C_MasterStop(I2C_Type *base)
     /* Issue the STOP command on the bus. */
     base->C1 &= ~(uint8_t)(I2C_C1_MST_MASK | I2C_C1_TX_MASK | I2C_C1_TXAK_MASK);
 
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
     uint32_t waitTimes = I2C_RETRY_TIMES;
     /* Wait until bus not busy. */
-    while ((0U != (base->S & (uint8_t)kI2C_BusBusyFlag)) && (0U != --waitTimes))
+    while ((0U != (base->S & (uint8_t)kI2C_BusBusyFlag)) && (0U != waitTimes))
     {
+        waitTimes--;
     }
 
     if (0U == waitTimes)
@@ -1011,11 +1015,12 @@ status_t I2C_MasterWriteBlocking(I2C_Type *base, const uint8_t *txBuff, size_t t
     status_t result     = kStatus_Success;
     uint8_t statusFlags = 0;
 
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
     uint32_t waitTimes = I2C_RETRY_TIMES;
     /* Wait until the data register is ready for transmit. */
-    while ((0U == (base->S & (uint8_t)kI2C_TransferCompleteFlag)) && (0U != --waitTimes))
+    while ((0U == (base->S & (uint8_t)kI2C_TransferCompleteFlag)) && (0U != waitTimes))
     {
+        waitTimes--;
     }
     if (0U == waitTimes)
     {
@@ -1039,11 +1044,12 @@ status_t I2C_MasterWriteBlocking(I2C_Type *base, const uint8_t *txBuff, size_t t
         /* Send a byte of data. */
         base->D = *txBuff++;
 
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
         waitTimes = I2C_RETRY_TIMES;
         /* Wait until data transfer complete. */
-        while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != --waitTimes))
+        while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != waitTimes))
         {
+            waitTimes--;
         }
         if (0U == waitTimes)
         {
@@ -1116,11 +1122,12 @@ status_t I2C_MasterReadBlocking(I2C_Type *base, uint8_t *rxBuff, size_t rxSize, 
     /* Add this to avoid build warning. */
     dummy++;
 
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
     uint32_t waitTimes = I2C_RETRY_TIMES;
     /* Wait until the data register is ready for transmit. */
-    while ((0U == (base->S & (uint8_t)kI2C_TransferCompleteFlag)) && (0U != --waitTimes))
+    while ((0U == (base->S & (uint8_t)kI2C_TransferCompleteFlag)) && (0U != waitTimes))
     {
+        waitTimes--;
     }
     if (0U == waitTimes)
     {
@@ -1157,11 +1164,12 @@ status_t I2C_MasterReadBlocking(I2C_Type *base, uint8_t *rxBuff, size_t rxSize, 
 
     while (0U != (rxSize--))
     {
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
         waitTimes = I2C_RETRY_TIMES;
         /* Wait until data transfer complete. */
-        while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != --waitTimes))
+        while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != waitTimes))
         {
+            waitTimes--;
         }
         if (0U == waitTimes)
         {
@@ -1238,11 +1246,12 @@ status_t I2C_MasterTransferBlocking(I2C_Type *base, i2c_master_transfer_t *xfer)
     /* Clear all status before transfer. */
     I2C_MasterClearStatusFlags(base, (uint32_t)kClearFlags);
 
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
     uint32_t waitTimes = I2C_RETRY_TIMES;
     /* Wait until the data register is ready for transmit. */
-    while ((0U == (base->S & kI2C_TransferCompleteFlag)) && (0U != --waitTimes))
+    while ((0U == (base->S & (uint8_t)kI2C_TransferCompleteFlag)) && (0U != waitTimes))
     {
+        waitTimes--;
     }
     if (0U == waitTimes)
     {
@@ -1287,11 +1296,12 @@ status_t I2C_MasterTransferBlocking(I2C_Type *base, i2c_master_transfer_t *xfer)
             return result;
         }
 
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
         waitTimes = I2C_RETRY_TIMES;
         /* Wait until data transfer complete. */
-        while ((0U == (base->S & kI2C_IntPendingFlag)) && (0U != --waitTimes))
+        while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != waitTimes))
         {
+            waitTimes--;
         }
         if (0U == waitTimes)
         {
@@ -1331,11 +1341,12 @@ status_t I2C_MasterTransferBlocking(I2C_Type *base, i2c_master_transfer_t *xfer)
             xfer->subaddressSize--;
             base->D = (uint8_t)((xfer->subaddress) >> (8U * xfer->subaddressSize));
 
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
             waitTimes = I2C_RETRY_TIMES;
             /* Wait until data transfer complete. */
-            while ((0U == (base->S & kI2C_IntPendingFlag)) && (0U != --waitTimes))
+            while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != waitTimes))
             {
+                waitTimes--;
             }
             if (0U == waitTimes)
             {
@@ -1377,11 +1388,12 @@ status_t I2C_MasterTransferBlocking(I2C_Type *base, i2c_master_transfer_t *xfer)
                 return result;
             }
 
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
             waitTimes = I2C_RETRY_TIMES;
             /* Wait until data transfer complete. */
-            while ((0U == (base->S & kI2C_IntPendingFlag)) && (0U != --waitTimes))
+            while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != waitTimes))
             {
+                waitTimes--;
             }
             if (0U == waitTimes)
             {
@@ -1538,7 +1550,7 @@ status_t I2C_MasterTransferAbort(I2C_Type *base, i2c_master_handle_t *handle)
     assert(NULL != handle);
 
     volatile uint8_t dummy = 0;
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
     uint32_t waitTimes = I2C_RETRY_TIMES;
 #endif
 
@@ -1562,10 +1574,11 @@ status_t I2C_MasterTransferAbort(I2C_Type *base, i2c_master_handle_t *handle)
     {
         base->C1 |= I2C_C1_TXAK_MASK;
 
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
         /* Wait until data transfer complete. */
-        while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != --waitTimes))
+        while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != waitTimes))
         {
+            waitTimes--;
         }
         if (0U == waitTimes)
         {
@@ -1584,10 +1597,11 @@ status_t I2C_MasterTransferAbort(I2C_Type *base, i2c_master_handle_t *handle)
     }
     else
     {
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
         /* Wait until data transfer complete. */
-        while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != --waitTimes))
+        while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != waitTimes))
         {
+            waitTimes--;
         }
         if (0U == waitTimes)
         {
@@ -1858,11 +1872,12 @@ status_t I2C_SlaveWriteBlocking(I2C_Type *base, const uint8_t *txBuff, size_t tx
     base->S = (uint8_t)kI2C_IntPendingFlag;
 #endif /* FSL_FEATURE_I2C_HAS_START_STOP_DETECT */
 
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
     uint32_t waitTimes = I2C_RETRY_TIMES;
     /* Wait until data transfer complete. */
-    while ((0U == (base->S & kI2C_AddressMatchFlag)) && (0U != --waitTimes))
+    while ((0U == (base->S & (uint8_t)kI2C_AddressMatchFlag)) && (0U != waitTimes))
     {
+        waitTimes--;
     }
     if (0U == waitTimes)
     {
@@ -1917,11 +1932,12 @@ status_t I2C_SlaveReadBlocking(I2C_Type *base, uint8_t *rxBuff, size_t rxSize)
     base->S = (uint8_t)kI2C_IntPendingFlag;
 #endif /* FSL_FEATURE_I2C_HAS_START_STOP_DETECT */
 
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
     uint32_t waitTimes = I2C_RETRY_TIMES;
     /* Wait for address match and int pending flag. */
-    while ((0U == (base->S & kI2C_AddressMatchFlag)) && (0U != --waitTimes))
+    while ((0U == (base->S & (uint8_t)kI2C_AddressMatchFlag)) && (0U != waitTimes))
     {
+        waitTimes--;
     }
     if (0U == waitTimes)
     {
@@ -1929,8 +1945,9 @@ status_t I2C_SlaveReadBlocking(I2C_Type *base, uint8_t *rxBuff, size_t rxSize)
     }
 
     waitTimes = I2C_RETRY_TIMES;
-    while ((0U == (base->S & kI2C_IntPendingFlag)) && (0U != --waitTimes))
+    while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != waitTimes))
     {
+        waitTimes--;
     }
     if (0U == waitTimes)
     {
@@ -1957,11 +1974,12 @@ status_t I2C_SlaveReadBlocking(I2C_Type *base, uint8_t *rxBuff, size_t rxSize)
 
     while (0U != (rxSize--))
     {
-#if I2C_RETRY_TIMES
+#if I2C_RETRY_TIMES != 0U
         waitTimes = I2C_RETRY_TIMES;
         /* Wait until data transfer complete. */
-        while ((0U == (base->S & kI2C_IntPendingFlag)) && (0U != --waitTimes))
+        while ((0U == (base->S & (uint8_t)kI2C_IntPendingFlag)) && (0U != waitTimes))
         {
+            waitTimes--;
         }
         if (0U == waitTimes)
         {
@@ -2382,6 +2400,7 @@ void I2C_SlaveTransferHandleIRQ(I2C_Type *base, void *i2cHandle)
 }
 
 #if defined(FSL_FEATURE_I2C_HAS_SHARED_IRQ0_IRQ1) && FSL_FEATURE_I2C_HAS_SHARED_IRQ0_IRQ1
+void I2C0_I2C1_DriverIRQHandler(void);
 void I2C0_I2C1_DriverIRQHandler(void)
 {
     for (uint32_t instance = 0U; instance < 2U; instance++)
@@ -2394,6 +2413,7 @@ void I2C0_I2C1_DriverIRQHandler(void)
 }
 #else
 #if defined(I2C0)
+void I2C0_DriverIRQHandler(void);
 void I2C0_DriverIRQHandler(void)
 {
     I2C_TransferCommonIRQHandler(I2C0, s_i2cHandle[0]);
@@ -2401,6 +2421,7 @@ void I2C0_DriverIRQHandler(void)
 #endif
 
 #if defined(I2C1)
+void I2C1_DriverIRQHandler(void);
 void I2C1_DriverIRQHandler(void)
 {
     I2C_TransferCommonIRQHandler(I2C1, s_i2cHandle[1]);
@@ -2409,6 +2430,7 @@ void I2C1_DriverIRQHandler(void)
 #endif
 
 #if defined(I2C2)
+void I2C2_DriverIRQHandler(void);
 void I2C2_DriverIRQHandler(void)
 {
     I2C_TransferCommonIRQHandler(I2C2, s_i2cHandle[2]);
@@ -2416,6 +2438,7 @@ void I2C2_DriverIRQHandler(void)
 #endif
 
 #if defined(I2C3)
+void I2C3_DriverIRQHandler(void);
 void I2C3_DriverIRQHandler(void)
 {
     I2C_TransferCommonIRQHandler(I2C3, s_i2cHandle[3]);

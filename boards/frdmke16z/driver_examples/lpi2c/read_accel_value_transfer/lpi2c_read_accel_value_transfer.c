@@ -2,36 +2,36 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 /*  SDK Included Files */
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define BOARD_ACCEL_I2C_BASEADDR LPI2C0
-#define LPI2C_CLOCK_FREQUENCY CLOCK_GetIpFreq(kCLOCK_Lpi2c0)
-#define I2C_BAUDRATE 100000U
+#define LPI2C_CLOCK_FREQUENCY    CLOCK_GetIpFreq(kCLOCK_Lpi2c0)
+#define I2C_BAUDRATE             100000U
 
 /* Accelerometer Reset PIN */
 #define BOARD_ACCEL_RESET_GPIO GPIOE
-#define BOARD_ACCEL_RESET_PIN 6U
+#define BOARD_ACCEL_RESET_PIN  6U
 
-#define I2C_BAUDRATE 100000U
-#define FXOS8700_WHOAMI 0xC7U
-#define MMA8451_WHOAMI 0x1AU
-#define ACCEL_STATUS 0x00U
+#define I2C_BAUDRATE       100000U
+#define FXOS8700_WHOAMI    0xC7U
+#define MMA8451_WHOAMI     0x1AU
+#define ACCEL_STATUS       0x00U
 #define ACCEL_XYZ_DATA_CFG 0x0EU
-#define ACCEL_CTRL_REG1 0x2AU
+#define ACCEL_CTRL_REG1    0x2AU
 /* FXOS8700 and MMA8451 have the same who_am_i register address. */
 #define ACCEL_WHOAMI_REG 0x0DU
 #define ACCEL_READ_TIMES 10U
@@ -57,7 +57,7 @@ lpi2c_master_handle_t g_m_handle;
 uint8_t g_accel_addr_found = 0x00U;
 
 volatile bool completionFlag = false;
-volatile bool nakFlag = false;
+volatile bool nakFlag        = false;
 
 /*******************************************************************************
  * Code
@@ -70,7 +70,7 @@ void BOARD_ACCEL_Reset(void)
 
     /* Reset sensor by reset pin*/
     pin_config.pinDirection = kGPIO_DigitalOutput;
-    pin_config.outputLogic = 1;
+    pin_config.outputLogic  = 1;
     GPIO_PinInit(BOARD_ACCEL_RESET_GPIO, BOARD_ACCEL_RESET_PIN, &pin_config);
     GPIO_PinWrite(BOARD_ACCEL_RESET_GPIO, BOARD_ACCEL_RESET_PIN, 1);
     /* Delay to ensure reliable sensor reset */
@@ -108,23 +108,23 @@ static bool LPI2C_ReadAccelWhoAmI(void)
     Start + Device_address_Write , who_am_I_register;
     Repeart_Start + Device_address_Read , who_am_I_value.
     */
-    uint8_t who_am_i_reg = ACCEL_WHOAMI_REG;
-    uint8_t who_am_i_value = 0x00;
+    uint8_t who_am_i_reg          = ACCEL_WHOAMI_REG;
+    uint8_t who_am_i_value        = 0x00;
     uint8_t accel_addr_array_size = 0x00;
-    bool result = false;
-    uint8_t i = 0;
-    status_t reVal = kStatus_Fail;
+    bool result                   = false;
+    uint8_t i                     = 0U;
+    status_t reVal                = kStatus_Fail;
 
     lpi2c_master_transfer_t masterXfer;
     memset(&masterXfer, 0, sizeof(masterXfer));
 
-    masterXfer.slaveAddress = g_accel_address[0];
-    masterXfer.direction = kLPI2C_Read;
-    masterXfer.subaddress = who_am_i_reg;
+    masterXfer.slaveAddress   = g_accel_address[0];
+    masterXfer.direction      = kLPI2C_Read;
+    masterXfer.subaddress     = who_am_i_reg;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = &who_am_i_value;
-    masterXfer.dataSize = 1;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = &who_am_i_value;
+    masterXfer.dataSize       = 1;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     accel_addr_array_size = sizeof(g_accel_address) / sizeof(g_accel_address[0]);
 
@@ -146,14 +146,17 @@ static bool LPI2C_ReadAccelWhoAmI(void)
 
         if (completionFlag == true)
         {
-            completionFlag = false;
             g_accel_addr_found = masterXfer.slaveAddress;
             break;
         }
+
+        /* Delay at least one clock cycle to make sure the bus is idle. */
+        SDK_DelayAtLeastUs(1000000UL / I2C_BAUDRATE, SystemCoreClock); 
     }
 
-    if (reVal == kStatus_Success)
+    if (completionFlag)
     {
+        completionFlag     = false;
         if (who_am_i_value == FXOS8700_WHOAMI)
         {
             PRINTF("Found an FXOS8700 on board , the device address is 0x%x . \r\n", masterXfer.slaveAddress);
@@ -187,13 +190,13 @@ static bool LPI2C_WriteAccelReg(LPI2C_Type *base, uint8_t device_addr, uint8_t r
 
     memset(&masterXfer, 0, sizeof(masterXfer));
 
-    masterXfer.slaveAddress = device_addr;
-    masterXfer.direction = kLPI2C_Write;
-    masterXfer.subaddress = reg_addr;
+    masterXfer.slaveAddress   = device_addr;
+    masterXfer.direction      = kLPI2C_Write;
+    masterXfer.subaddress     = reg_addr;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = &value;
-    masterXfer.dataSize = 1;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = &value;
+    masterXfer.dataSize       = 1;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     /*  direction=write : start+device_write;cmdbuff;xBuff; */
     /*  direction=recive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
@@ -229,13 +232,13 @@ static bool LPI2C_ReadAccelRegs(
     status_t reVal = kStatus_Fail;
 
     memset(&masterXfer, 0, sizeof(masterXfer));
-    masterXfer.slaveAddress = device_addr;
-    masterXfer.direction = kLPI2C_Read;
-    masterXfer.subaddress = reg_addr;
+    masterXfer.slaveAddress   = device_addr;
+    masterXfer.direction      = kLPI2C_Read;
+    masterXfer.subaddress     = reg_addr;
     masterXfer.subaddressSize = 1;
-    masterXfer.data = rxBuff;
-    masterXfer.dataSize = rxSize;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = rxBuff;
+    masterXfer.dataSize       = rxSize;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     /*  direction=write : start+device_write;cmdbuff;xBuff; */
     /*  direction=recive : start+device_write;cmdbuff;repeatStart+device_read;xBuff; */
@@ -299,13 +302,13 @@ int main(void)
     /*  read the accel xyz value if there is accel device on board */
     if (true == isThereAccel)
     {
-        uint8_t databyte = 0;
+        uint8_t databyte  = 0;
         uint8_t write_reg = 0;
         uint8_t readBuff[7];
         int16_t x, y, z;
         uint8_t status0_value = 0;
-        uint32_t i = 0U;
-        bool reTrans = false;
+        uint32_t i            = 0U;
+        bool reTrans          = false;
 
         /*  please refer to the "example FXOS8700CQ Driver Code" in FXOS8700 datasheet. */
         /*  write 0000 0000 = 0x00 to accelerometer control register 1 */
@@ -313,8 +316,8 @@ int main(void)
         /*  [7-1] = 0000 000 */
         /*  [0]: active=0 */
         write_reg = ACCEL_CTRL_REG1;
-        databyte = 0;
-        reTrans = LPI2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+        databyte  = 0;
+        reTrans   = LPI2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
         if (reTrans == false)
         {
             PRINTF("F1\n");
@@ -331,8 +334,8 @@ int main(void)
         /*  [1-0]: fs=01 for accelerometer range of +/-4g range with 0.488mg/LSB */
         /*  databyte = 0x01; */
         write_reg = ACCEL_XYZ_DATA_CFG;
-        databyte = 0x01;
-        reTrans = LPI2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+        databyte  = 0x01;
+        reTrans   = LPI2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
         if (reTrans == false)
         {
             PRINTF("F2\n");
@@ -347,8 +350,8 @@ int main(void)
         /*  [0]: active=1 to take the part out of standby and enable sampling */
         /*   databyte = 0x0D; */
         write_reg = ACCEL_CTRL_REG1;
-        databyte = 0x0d;
-        reTrans = LPI2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
+        databyte  = 0x0d;
+        reTrans   = LPI2C_WriteAccelReg(BOARD_ACCEL_I2C_BASEADDR, g_accel_addr_found, write_reg, databyte);
         if (reTrans == false)
         {
             PRINTF("F3\n");
@@ -383,9 +386,9 @@ int main(void)
             }
 
             status0_value = readBuff[0];
-            x = ((int16_t)(((readBuff[1] * 256U) | readBuff[2]))) / 4U;
-            y = ((int16_t)(((readBuff[3] * 256U) | readBuff[4]))) / 4U;
-            z = ((int16_t)(((readBuff[5] * 256U) | readBuff[6]))) / 4U;
+            x             = ((int16_t)(((readBuff[1] * 256U) | readBuff[2]))) / 4U;
+            y             = ((int16_t)(((readBuff[3] * 256U) | readBuff[4]))) / 4U;
+            z             = ((int16_t)(((readBuff[5] * 256U) | readBuff[6]))) / 4U;
 
             PRINTF("status_reg = 0x%x , x = %5d , y = %5d , z = %5d \r\n", status0_value, x, y, z);
         }

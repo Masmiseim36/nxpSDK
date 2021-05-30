@@ -8,10 +8,10 @@ And if the board do not support LEDs to show, the outputs can be observed by osc
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -49,6 +49,3 @@ If no LED is connected to the FTM pin, then probe the signal using an oscillosco
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Red led will change brightness.
 - Probe oscilloscope at PTC8 (J1-8) to see pwm signal.
-Customization options
-=====================
-

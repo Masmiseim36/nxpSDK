@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2017 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -48,6 +52,7 @@
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
+
 #if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0)
 #include "usb_phy.h"
 #endif
@@ -56,14 +61,17 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* USB clock source and frequency*/
-#define USB_FS_CLK_SRC kCLOCK_UsbSrcPll0
-#define USB_FS_CLK_FREQ CLOCK_GetFreq(kCLOCK_PllFllSelClk)
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
 void BOARD_InitHardware(void);
+void USB_DeviceClockInit(void);
+void USB_DeviceIsrEnable(void);
+#if USB_DEVICE_CONFIG_USE_TASK
+void USB_DeviceTaskFn(void *deviceHandle);
+#endif
+
 static void APP_WeightScaleSendData(uint32_t handle, weightscale_measurement_struct_t *measurementData);
 static usb_status_t USB_DeviceWeightScaleSetConfigure(usb_device_handle handle, uint8_t configure);
 static usb_status_t USB_DeviceWeightScaleClassRequest(usb_device_handle handle,
@@ -84,7 +92,8 @@ static usb_status_t USB_DeviceWeightScaleBulkOutCallback(usb_device_handle handl
  * Variables
  ******************************************************************************/
 
-USB_DATA_ALIGNMENT uint32_t s_RecvDataBuffer[(APDU_MAX_BUFFER_SIZE + 3) / 4];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint32_t s_RecvDataBuffer[(APDU_MAX_BUFFER_SIZE + 3) / 4];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_PhdcClassBuffer[4];
 /*! @brief agent instance */
 usb_shim_agent_struct_t g_shimAgent;
 
@@ -105,7 +114,7 @@ weightscale_measurement_struct_t measurement = {
 };
 
 /*! @brief association request data to send */
-USB_DATA_ALIGNMENT static uint8_t g_associationRequestData[ASSOCIATION_REQUEST_LENGTH] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t g_associationRequestData[ASSOCIATION_REQUEST_LENGTH] = {
     0xE2U, 0x00U,               /* APDU CHOICE Type (AarqApdu) */
     0x00U, 0x32U,               /* CHOICE.length = 50 */
     0x80U, 0x00U, 0x00U, 0x00U, /* assoc-version */
@@ -125,7 +134,7 @@ USB_DATA_ALIGNMENT static uint8_t g_associationRequestData[ASSOCIATION_REQUEST_L
 };
 
 /*! @brief remote operation invoke event report configuration data */
-USB_DATA_ALIGNMENT static uint8_t g_roivEventRepostConfigurationData[EVENT_REPORT_CONFIGURATION_LENGTH] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t g_roivEventRepostConfigurationData[EVENT_REPORT_CONFIGURATION_LENGTH] = {
     0xE7U, 0x00U, /* APDU CHOICE Type (PrstApdu) */
     0x00U, 0xA2U, /* CHOICE.length = 162 */
     0x00U, 0xA0U, /* OCTET STRING.length = 160 */
@@ -212,7 +221,7 @@ USB_DATA_ALIGNMENT static uint8_t g_roivEventRepostConfigurationData[EVENT_REPOR
 };
 
 /*! @brief remote operation response | Get with all MDS attributes */
-USB_DATA_ALIGNMENT static uint8_t g_rorsCmipGetData[EVENT_RESPONSE_GET_LENGTH] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t g_rorsCmipGetData[EVENT_RESPONSE_GET_LENGTH] = {
     0xE7U, 0x00U, /* APDU CHOICE Type (PrstApdu) */
     0x00U, 0x6EU, /* CHOICE.length = 110 */
     0x00U, 0x6CU, /* OCTET STRING.length = 108 */
@@ -253,7 +262,7 @@ USB_DATA_ALIGNMENT static uint8_t g_rorsCmipGetData[EVENT_RESPONSE_GET_LENGTH] =
     0x12U, 0x05U, 0x00U, 0x00};
 
 /*! @brief measurements to send */
-USB_DATA_ALIGNMENT static uint8_t g_eventReportData[EVENT_REPORT_DATA_LENGTH] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t g_eventReportData[EVENT_REPORT_DATA_LENGTH] = {
     0xE7U, 0x00U,               /* APDU CHOICE Type (PrstApdu) */
     0x00U, 0x5AU,               /* CHOICE.length = 90 */
     0x00U, 0x58U,               /* OCTET STRING.length = 88 */
@@ -289,6 +298,51 @@ USB_DATA_ALIGNMENT static uint8_t g_eventReportData[EVENT_REPORT_DATA_LENGTH] = 
 /*******************************************************************************
  * Code
  ******************************************************************************/
+#if (defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U))
+void USB0_IRQHandler(void)
+{
+    USB_DeviceKhciIsrFunction(g_shimAgent.deviceHandle);
+}
+#endif
+void USB_DeviceClockInit(void)
+{
+#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+    SystemCoreClockUpdate();
+    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcPll0, CLOCK_GetFreq(kCLOCK_PllFllSelClk));
+/*
+ * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
+ * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
+ * RAM can not be used and the memory can't be accessed.
+ */
+#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
+#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
+    for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
+    {
+        ((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
+    }
+#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
+#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
+#endif
+}
+void USB_DeviceIsrEnable(void)
+{
+    uint8_t irqNumber;
+#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+    uint8_t usbDeviceKhciIrq[] = USB_IRQS;
+    irqNumber = usbDeviceKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+#endif
+/* Install isr, set priority, and enable IRQ. */
+    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
+    EnableIRQ((IRQn_Type)irqNumber);
+}
+#if USB_DEVICE_CONFIG_USE_TASK
+void USB_DeviceTaskFn(void *deviceHandle)
+{
+#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
+    USB_DeviceKhciTaskFunction(deviceHandle);
+#endif
+}
+#endif
 
 /*!
  * @brief medical callback.
@@ -536,13 +590,13 @@ usb_status_t USB_DeviceCallback(usb_device_handle handle, uint32_t event, void *
 static usb_status_t USB_DeviceWeightScaleSetConfigure(usb_device_handle handle, uint8_t configure)
 {
     usb_device_endpoint_init_struct_t epInitStruct;
-    usb_device_endpoint_callback_struct_t endpointCallback;
+    usb_device_endpoint_callback_struct_t epCallback;
 
     if (USB_PHDC_WEIGHT_SCALE_CONFIGURE_INDEX == configure)
     {
         /* InterruptIN ep */
-        endpointCallback.callbackFn = USB_DeviceWeightScaleInterruptInCallback;
-        endpointCallback.callbackParam = handle;
+        epCallback.callbackFn = USB_DeviceWeightScaleInterruptInCallback;
+        epCallback.callbackParam = handle;
 
         epInitStruct.zlt = 0U;
         epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
@@ -556,11 +610,11 @@ static usb_status_t USB_DeviceWeightScaleSetConfigure(usb_device_handle handle, 
         {
             epInitStruct.maxPacketSize = FS_USB_PHDC_INTERRUPT_ENDPOINT_IN_PACKET_SIZE;
         }
-        USB_DeviceInitEndpoint(handle, &epInitStruct, &endpointCallback);
+        USB_DeviceInitEndpoint(handle, &epInitStruct, &epCallback);
 
         /* BulkOUT ep */
-        endpointCallback.callbackFn = USB_DeviceWeightScaleBulkOutCallback;
-        endpointCallback.callbackParam = handle;
+        epCallback.callbackFn = USB_DeviceWeightScaleBulkOutCallback;
+        epCallback.callbackParam = handle;
 
         epInitStruct.zlt = 0U;
         epInitStruct.transferType = USB_ENDPOINT_BULK;
@@ -574,11 +628,11 @@ static usb_status_t USB_DeviceWeightScaleSetConfigure(usb_device_handle handle, 
         {
             epInitStruct.maxPacketSize = FS_USB_PHDC_BULK_ENDPOINT_OUT_PACKET_SIZE;
         }
-        USB_DeviceInitEndpoint(handle, &epInitStruct, &endpointCallback);
+        USB_DeviceInitEndpoint(handle, &epInitStruct, &epCallback);
 
         /* BulkIN ep */
-        endpointCallback.callbackFn = USB_DeviceWeightScaleBulkInCallback;
-        endpointCallback.callbackParam = handle;
+        epCallback.callbackFn = USB_DeviceWeightScaleBulkInCallback;
+        epCallback.callbackParam = handle;
 
         epInitStruct.zlt = 0U;
         epInitStruct.transferType = USB_ENDPOINT_BULK;
@@ -592,7 +646,7 @@ static usb_status_t USB_DeviceWeightScaleSetConfigure(usb_device_handle handle, 
         {
             epInitStruct.maxPacketSize = FS_USB_PHDC_BULK_ENDPOINT_IN_PACKET_SIZE;
         }
-        USB_DeviceInitEndpoint(handle, &epInitStruct, &endpointCallback);
+        USB_DeviceInitEndpoint(handle, &epInitStruct, &epCallback);
     }
     return kStatus_USB_Error;
 }
@@ -904,7 +958,9 @@ static usb_status_t USB_DeviceWeightScaleClassRequest(usb_device_handle handle,
 #endif
             break;
         case USB_DEVICE_PHDC_REQUEST_GET_STATUS:
-            *buffer = (uint8_t *)(&g_shimAgent.endpointsHaveData);
+            g_shimAgent.classBuffer[0] = ((uint8_t *)(&g_shimAgent.endpointsHaveData))[0];
+            g_shimAgent.classBuffer[1] = ((uint8_t *)(&g_shimAgent.endpointsHaveData))[1];
+            *buffer = g_shimAgent.classBuffer;
             *length = 2U;
             break;
         default:
@@ -916,45 +972,6 @@ static usb_status_t USB_DeviceWeightScaleClassRequest(usb_device_handle handle,
 }
 
 /*!
- * @brief USB Interrupt service routine.
- * This function serves as the USB interrupt service routine.
- *
- * @return None.
- */
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-void USB0_IRQHandler(void)
-{
-    USB_DeviceKhciIsrFunction(g_shimAgent.deviceHandle);
-}
-#endif
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-void USBHS_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_shimAgent.deviceHandle);
-}
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 1U)
-#if defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 1U)
-void USB1_IRQHandler(void)
-{
-    USB_DeviceEhciIsrFunction(g_shimAgent.deviceHandle);
-}
-#endif
-#endif
-#endif
-#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
-void USB0_IRQHandler(void)
-{
-    USB_DeviceLpcIp3511IsrFunction(g_shimAgent.deviceHandle);
-}
-#endif
-#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
-void USB1_IRQHandler(void)
-{
-    USB_DeviceLpcIp3511IsrFunction(g_shimAgent.deviceHandle);
-}
-#endif
-
-/*!
  * @brief application initialization.
  * This function is the entry for the application (or other usage)
  *
@@ -962,85 +979,16 @@ void USB1_IRQHandler(void)
  */
 static void USB_DeviceApplicationInit(void)
 {
-    uint8_t irqNumber;
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-    uint8_t ehciIrq[] = USBHS_IRQS;
-    irqNumber = ehciIrq[CONTROLLER_ID - kUSB_ControllerEhci0];
-
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 1U)
-    if (CONTROLLER_ID == kUSB_ControllerEhci0)
-    {
-        CLOCK_EnableUsbhs0PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-        CLOCK_EnableUsbhs0Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-    }
-    else
-    {
-        CLOCK_EnableUsbhs1PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-        CLOCK_EnableUsbhs1Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-    }
-#else
-    CLOCK_EnableUsbhs0PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-    CLOCK_EnableUsbhs0Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-#endif
-
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ);
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-    uint8_t khciIrq[] = USB_IRQS;
-    irqNumber = khciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
-
-    SystemCoreClockUpdate();
-
-    CLOCK_EnableUsbfs0Clock(USB_FS_CLK_SRC, USB_FS_CLK_FREQ);
-#endif
-
-#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
-    uint8_t usbDeviceIP3511Irq[] = USB_IRQS;
-    irqNumber = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Fs0];
-
-    /* enable USB IP clock */
-    CLOCK_EnableUsbfs0DeviceClock(USB_FS_CLK_SRC, USB_FS_CLK_FREQ);
-#endif
-
-#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
-    uint8_t usbDeviceIP3511Irq[] = USBHSD_IRQS;
-    irqNumber = usbDeviceIP3511Irq[CONTROLLER_ID - kUSB_ControllerLpcIp3511Hs0];
-    /* enable USB IP clock */
-    CLOCK_EnableUsbhs0DeviceClock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-#endif
-
-#if (((defined(USB_DEVICE_CONFIG_LPCIP3511FS)) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)) || \
-     ((defined(USB_DEVICE_CONFIG_LPCIP3511HS)) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)))
-#if defined(FSL_FEATURE_USBHSD_USB_RAM) && (FSL_FEATURE_USBHSD_USB_RAM)
-    for (int i = 0; i < FSL_FEATURE_USBHSD_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USBHSD_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif
-#endif
-
+    USB_DeviceClockInit();
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
     SYSMPU_Enable(SYSMPU, 0);
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
-
-/*
- * If the SOC has USB KHCI dedicated RAM, the RAM memory needs to be clear after
- * the KHCI clock is enabled. When the demo uses USB EHCI IP, the USB KHCI dedicated
- * RAM can not be used and the memory can't be accessed.
- */
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM) && (FSL_FEATURE_USB_KHCI_USB_RAM > 0U))
-#if (defined(FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS) && (FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS > 0U))
-    for (int i = 0; i < FSL_FEATURE_USB_KHCI_USB_RAM; i++)
-    {
-        ((uint8_t *)FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS)[i] = 0x00U;
-    }
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM_BASE_ADDRESS */
-#endif /* FSL_FEATURE_USB_KHCI_USB_RAM */
 
     g_shimAgent.speed = USB_SPEED_FULL;
     g_shimAgent.attach = 0U;
     g_shimAgent.deviceHandle = NULL;
     g_shimAgent.recvDataBuffer = (uint8_t *)(&s_RecvDataBuffer[0]);
+    g_shimAgent.classBuffer = s_PhdcClassBuffer;
 
     if (kStatus_USB_Success != USB_DeviceInit(CONTROLLER_ID, USB_DeviceCallback, &g_shimAgent.deviceHandle))
     {
@@ -1052,13 +1000,8 @@ static void USB_DeviceApplicationInit(void)
         AGENT_Init((uint32_t)g_shimAgent.deviceHandle);
     }
 
-/* Install isr, set priority, and enable IRQ. */
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#else
-    NVIC_SetPriority((IRQn_Type)irqNumber, USB_DEVICE_INTERRUPT_PRIORITY);
-#endif
-    EnableIRQ((IRQn_Type)irqNumber);
+    /* Install isr, set priority, and enable IRQ. */
+    USB_DeviceIsrEnable();
 
     USB_DeviceRun(g_shimAgent.deviceHandle);
 }
@@ -1121,18 +1064,7 @@ void main(void)
     while (1U)
     {
 #if USB_DEVICE_CONFIG_USE_TASK
-#if defined(USB_DEVICE_CONFIG_EHCI) && (USB_DEVICE_CONFIG_EHCI > 0U)
-        USB_DeviceEhciTaskFunction(g_shimAgent.deviceHandle);
-#endif
-#if defined(USB_DEVICE_CONFIG_KHCI) && (USB_DEVICE_CONFIG_KHCI > 0U)
-        USB_DeviceKhciTaskFunction(g_shimAgent.deviceHandle);
-#endif
-#if defined(USB_DEVICE_CONFIG_LPCIP3511FS) && (USB_DEVICE_CONFIG_LPCIP3511FS > 0U)
-        USB_DeviceLpcIp3511TaskFunction(g_shimAgent.deviceHandle);
-#endif
-#if defined(USB_DEVICE_CONFIG_LPCIP3511HS) && (USB_DEVICE_CONFIG_LPCIP3511HS > 0U)
-        USB_DeviceLpcIp3511TaskFunction(g_shimAgent.deviceHandle);
-#endif
+        USB_DeviceTaskFn(g_shimAgent.deviceHandle);
 #endif
         USB_DeviceApplicationTask((uint32_t)g_shimAgent.deviceHandle);
     }

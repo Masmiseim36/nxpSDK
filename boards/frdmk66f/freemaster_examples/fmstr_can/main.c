@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -11,10 +11,10 @@
 // Includes
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "board.h"
 #include "pin_mux.h"
 #include "fsl_flexcan.h"
 #include "fsl_common.h"
+#include "board.h"
 
 #include "freemaster.h"
 #include "freemaster_flexcan.h"
@@ -85,6 +85,12 @@ static void init_freemaster_can(void)
 
     /* Register communication module used by FreeMASTER driver. */
     FMSTR_CanSetBaseAddress(CAN0);
+
+#if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
+    /* Enable CAN interrupt. */
+    EnableIRQ(CAN0_ORed_Message_buffer_IRQn);
+    EnableGlobalIRQ(0);
+#endif
 }
 
 #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR

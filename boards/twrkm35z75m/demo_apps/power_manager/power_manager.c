@@ -13,9 +13,9 @@
 #include "fsl_debug_console.h"
 #include "power_manager.h"
 #include "fsl_notifier.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 #include "fsl_pmc.h"
 #include "fsl_uart.h"
 /*******************************************************************************

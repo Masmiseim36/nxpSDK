@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2017 NXP. Not a Contribution.
+ * Copyright 2016-2017,2020 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -35,34 +35,34 @@
 #include "fsl_uart_edma.h"
 #endif
 
-#if defined(UART0)
+#if defined(UART0) && defined(RTE_USART0) && RTE_USART0
 extern ARM_DRIVER_USART Driver_USART0;
 #endif /* UART0 */
 
-#if defined(UART1)
+#if defined(UART1) && defined(RTE_USART1) && RTE_USART1
 extern ARM_DRIVER_USART Driver_USART1;
 #endif /* UART1 */
 
-#if defined(UART2)
+#if defined(UART2) && defined(RTE_USART2) && RTE_USART2
 extern ARM_DRIVER_USART Driver_USART2;
 #endif /* UART2 */
 
-#if defined(UART3)
+#if defined(UART3) && defined(RTE_USART3) && RTE_USART3
 extern ARM_DRIVER_USART Driver_USART3;
 #endif /* UART3 */
 
-#if defined(UART4)
+#if defined(UART4) && defined(RTE_USART4) && RTE_USART4
 extern ARM_DRIVER_USART Driver_USART4;
 #endif /* UART4 */
 
-#if defined(UART5)
+#if defined(UART5) && defined(RTE_USART5) && RTE_USART5
 extern ARM_DRIVER_USART Driver_USART5;
 #endif /* UART5 */
 
 /* USART Driver state flags */
-#define USART_FLAG_UNINIT     (0)
-#define USART_FLAG_INIT       (1 << 0)
-#define USART_FLAG_POWER      (1 << 1)
-#define USART_FLAG_CONFIGURED (1 << 2)
+#define USART_FLAG_UNINIT     (0UL)
+#define USART_FLAG_INIT       (1UL << 0)
+#define USART_FLAG_POWER      (1UL << 1)
+#define USART_FLAG_CONFIGURED (1UL << 2)
 
 #endif /* _FSL_UART_CMSIS_H_ */

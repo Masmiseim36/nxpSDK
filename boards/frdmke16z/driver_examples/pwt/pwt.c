@@ -2,22 +2,22 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_pwt.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* Interrupt number for the PWT instance used */
 #define PWT_INTERRUPT_NUMBER PWT_LPTMR0_IRQn
-#define PWT_EXAMPLE_HANDLER PWT_LPTMR0_IRQHandler
+#define PWT_EXAMPLE_HANDLER  PWT_LPTMR0_IRQHandler
 
 /* Get source clock for PWT driver */
 #define PWT_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
@@ -38,10 +38,10 @@ volatile bool overflowFlag;
  ******************************************************************************/
 
 /*!
-* @brief ISR for PWT interrupt
-*
-* This function changes the state of busyWait.
-*/
+ * @brief ISR for PWT interrupt
+ *
+ * This function changes the state of busyWait.
+ */
 void PWT_EXAMPLE_HANDLER(void)
 {
     if (PWT_GetStatusFlags(PWT) & kPWT_PulseWidthValidFlag)
@@ -60,6 +60,7 @@ void PWT_EXAMPLE_HANDLER(void)
         PWT_ClearStatusFlags(PWT, kPWT_CounterOverflowFlag);
         overflowFlag = true;
     }
+    __DSB();
 }
 
 /*!
@@ -93,7 +94,7 @@ int main(void)
     /* This loop will set the print the pulse width */
     while (1)
     {
-        busyWait = true;
+        busyWait     = true;
         overflowFlag = false;
 
         /* Enable PWT pulse ready interrupt */

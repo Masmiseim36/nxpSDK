@@ -8,12 +8,12 @@
 /*  Standard C Included Files */
 #include <stdio.h>
 #include <string.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -22,8 +22,9 @@
 
 #define EXAMPLE_I2C_SLAVE ((LPI2C_Type *)EXAMPLE_I2C_SLAVE_BASE)
 
-#define I2C_MASTER_SLAVE_ADDR_7BIT 0x7EU
-#define I2C_DATA_LENGTH            34U
+#define I2C_MASTER_SLAVE_ADDR_7BIT     0x7EU
+#define I2C_DATA_LENGTH                34U
+#define EXAMPLE_LPI2C_POLL_RETRY_TIMES 0xFFFFFFFFUL
 
 /*******************************************************************************
  * Prototypes
@@ -83,7 +84,8 @@ static void lpi2c_slave_callback(LPI2C_Type *base, lpi2c_slave_transfer_t *xfer,
 int main(void)
 {
     lpi2c_slave_config_t slaveConfig;
-    status_t reVal = kStatus_Fail;
+    status_t reVal     = kStatus_Fail;
+    uint32_t timeout_i = 0U;
 
     BOARD_InitPins();
     BOARD_BootClockRUN();
@@ -129,11 +131,18 @@ int main(void)
         return -1;
     }
 
-    /*  wait for transfer completed. */
-    while (!g_SlaveCompletionFlag)
+    /* Wait for transfer completion. */
+    while ((!g_SlaveCompletionFlag) && (++timeout_i < EXAMPLE_LPI2C_POLL_RETRY_TIMES))
     {
     }
+
     g_SlaveCompletionFlag = false;
+
+    if (timeout_i == EXAMPLE_LPI2C_POLL_RETRY_TIMES)
+    {
+        PRINTF("Slave transfer time out!\r\n");
+    }
+    timeout_i = 0U;
 
     PRINTF("Slave received data :");
     for (uint32_t i = 0U; i < g_slave_buff[1]; i++)
@@ -146,11 +155,17 @@ int main(void)
     }
     PRINTF("\r\n\r\n");
 
-    /* Wait for master receive completed.*/
-    while (!g_SlaveCompletionFlag)
+    /* Wait for master receive completion. */
+    while ((!g_SlaveCompletionFlag) && (++timeout_i < EXAMPLE_LPI2C_POLL_RETRY_TIMES))
     {
     }
+
     g_SlaveCompletionFlag = false;
+
+    if (timeout_i == EXAMPLE_LPI2C_POLL_RETRY_TIMES)
+    {
+        PRINTF("Slave transfer time out!");
+    }
 
     PRINTF("\r\nEnd of LPI2C example .\r\n");
 

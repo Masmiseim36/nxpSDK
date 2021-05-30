@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,9 +20,15 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief KBI driver version 2.0.0. */
-#define FSL_KBI_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief KBI driver version. */
+#define FSL_KBI_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
 /*@}*/
+
+#if (defined(FSL_FEATURE_KBI_REG_WIDTH) && (FSL_FEATURE_KBI_REG_WIDTH == 8))
+typedef uint8_t kbi_reg_t;
+#else
+typedef uint32_t kbi_reg_t;
+#endif
 
 /*! @brief KBI detection mode. */
 typedef enum _kbi_detect_mode
@@ -95,7 +101,7 @@ static inline void KBI_EnableInterrupts(KBI_Type *base)
  */
 static inline void KBI_DisableInterrupts(KBI_Type *base)
 {
-    base->SC &= ~KBI_SC_KBIE_MASK;
+    base->SC &= ~(kbi_reg_t)KBI_SC_KBIE_MASK;
 }
 
 /*!

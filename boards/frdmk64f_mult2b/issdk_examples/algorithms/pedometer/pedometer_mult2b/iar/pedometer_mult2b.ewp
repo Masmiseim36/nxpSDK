@@ -185,6 +185,7 @@
           <state>FRDM_K64F</state>
           <state>FREEDOM</state>
           <state>PRINTF_ADVANCED_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -261,7 +262,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -315,47 +316,21 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../../platform/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../frdmk64f</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/pedometer/source</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/pedometer/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/pedometer/include/libinclude</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/template</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
         </option>
         <option>
@@ -1192,6 +1167,7 @@
           <state>FRDM_K64F</state>
           <state>FREEDOM</state>
           <state>PRINTF_ADVANCED_ENABLE</state>
+          <state>SERIAL_PORT_TYPE_UART=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1322,47 +1298,21 @@
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/../../../../..</state>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices</state>
-          <state>$PROJ_DIR$/../../../../../../../platform/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../frdmk64f</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/pedometer/source</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers</state>
+          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/pedometer/include</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/pedometer/include/libinclude</state>
           <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
-          <state>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/str</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../../components/uart</state>
           <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../../../components/lists</state>
           <state>$PROJ_DIR$/../../../../../../../devices/MK64F12</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
-          <state>$PROJ_DIR$/../../../../../../../devices/MK64F12/template</state>
-          <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
+          <state>$PROJ_DIR$/../../../../../../../CMSIS/Include</state>
           <state>$PROJ_DIR$/../../../../../../../CMSIS/Driver/Include</state>
         </option>
         <option>
@@ -2050,9 +2000,6 @@
     <file>
       <name>$PROJ_DIR$/../board.h</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/template/RTE_Device.h</name>
-    </file>
   </group>
   <group>
     <name>source</name>
@@ -2070,39 +2017,54 @@
     </file>
   </group>
   <group>
+    <name>gpio_driver</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</name>
+    </file>
+  </group>
+  <group>
     <name>drivers</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_port.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_uart.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_uart.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_uart_edma.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_uart.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_uart_edma.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_uart_edma.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_gpio.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_gpio.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_i2c.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_gpio.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_i2c.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_i2c_edma.c</name>
@@ -2111,46 +2073,46 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_i2c_edma.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dmamux.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dmamux.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_edma.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dmamux.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_edma.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dspi.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_edma.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dspi.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dspi_edma.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dspi.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dspi_edma.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_dspi_cmsis.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_dspi_edma.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_dspi_cmsis.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_smc.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/cmsis_drivers/fsl_dspi_cmsis.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_smc.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_smc.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_pit.c</name>
@@ -2159,16 +2121,13 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_pit.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_flash.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.c</name>
@@ -2177,13 +2136,16 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.c</name>
@@ -2192,19 +2154,19 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_clock.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_flash.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_clock.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_common.c</name>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_clock.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/drivers/fsl_common.c</name>
     </file>
   </group>
   <group>
@@ -2216,6 +2178,12 @@
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/str/fsl_str.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/str/fsl_str.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c</name>
     </file>
     <file>
@@ -2225,40 +2193,19 @@
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/utilities/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
-    <name>gpio_driver</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</name>
     </file>
   </group>
   <group>
     <name>pedometer</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/pedometer/include/libinclude/KeynetikPedometer.h</name>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/pedometer/source/pedometer.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/pedometer/include/pedometer.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/pedometer/source/pedometer.c</name>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/algorithms/pedometer/include/libinclude/KeynetikPedometer.h</name>
     </file>
   </group>
   <group>
@@ -2267,28 +2214,28 @@
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_i2c.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_i2c.h</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_spi.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_spi.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_drv.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_spi.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/register_io_spi.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_spi.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/sensor_drv.h</name>
     </file>
   </group>
   <group>
@@ -2297,10 +2244,10 @@
       <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.c</name>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.h</name>
+      <name>$PROJ_DIR$/../../../../../../../middleware/issdk/sensors/fxos8700_drv.c</name>
     </file>
   </group>
   <group>
@@ -2308,50 +2255,50 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/uart/uart_adapter.c</name>
+        <name>$PROJ_DIR$/../../../../../../../components/uart/fsl_adapter_uart.c</name>
       </file>
     </group>
     <group>
       <name>serial_manager</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_manager.c</name>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_manager.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_manager.h</name>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_port_internal.h</name>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_manager.c</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_port_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/serial_port_uart.h</name>
+        <name>$PROJ_DIR$/../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
   <group>
     <name>device</name>
     <file>
+      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/fsl_device_registers.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/MK64F12.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/MK64F12_features.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/fsl_device_registers.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../devices/MK64F12/system_MK64F12.c</name>
@@ -2372,13 +2319,7 @@
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_common_tables.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_const_structs.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_math.h</name>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/mpu_armv7.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armcc.h</name>
@@ -2387,28 +2328,28 @@
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armclang.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_compiler.h</name>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_gcc.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_compiler.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_armv8mbl.h</name>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/core_armv8mml.h</name>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_common_tables.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/mpu_armv7.h</name>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_const_structs.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/mpu_armv8.h</name>
+      <name>$PROJ_DIR$/../../../../../../../CMSIS/Include/arm_math.h</name>
     </file>
   </group>
   <group>

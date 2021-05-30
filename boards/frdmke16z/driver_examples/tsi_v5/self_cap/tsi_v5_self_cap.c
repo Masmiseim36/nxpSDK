@@ -2,18 +2,18 @@
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_tsi_v5.h"
 #include "fsl_debug_console.h"
 #include "fsl_lptmr.h"
 #include "fsl_trgmux.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -23,13 +23,13 @@
 
 /* IRQ related redefinitions for specific SOC */
 #define TSI0_IRQHandler TSI_IRQHandler
-#define TSI0_IRQn TSI_IRQn
+#define TSI0_IRQn       TSI_IRQn
 
 /* Define the delta value to indicate a touch event */
 #define TOUCH_DELTA_VALUE 100U
 
 /* TSI indication led of electrode 1 */
-#define LED1_INIT() LED_GREEN1_INIT(LOGIC_LED_OFF)
+#define LED1_INIT()   LED_GREEN1_INIT(LOGIC_LED_OFF)
 #define LED1_TOGGLE() LED_GREEN1_TOGGLE()
 
 /* Get source clock for LPTMR driver */
@@ -55,19 +55,16 @@ void TSI0_IRQHandler(void)
 {
     if (TSI_GetSelfCapMeasuredChannel(s_tsiBases[0]) == BOARD_TSI_ELECTRODE_1)
     {
-        if (TSI_GetCounter(s_tsiBases[0]) < (uint16_t)(buffer.calibratedData[BOARD_TSI_ELECTRODE_1] - TOUCH_DELTA_VALUE))
+        if (TSI_GetCounter(s_tsiBases[0]) <
+            (uint16_t)(buffer.calibratedData[BOARD_TSI_ELECTRODE_1] - TOUCH_DELTA_VALUE))
         {
-            LED1_TOGGLE();    /* Toggle the touch event indicating LED */
+            LED1_TOGGLE(); /* Toggle the touch event indicating LED */
         }
     }
 
     /* Clear endOfScan flag */
     TSI_ClearStatusFlags(s_tsiBases[0], kTSI_EndOfScanFlag);
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -164,7 +161,8 @@ int main(void)
     TSI_EnableInterrupts(s_tsiBases[0], kTSI_EndOfScanInterruptEnable);
     TSI_ClearStatusFlags(s_tsiBases[0], kTSI_EndOfScanFlag);
 
-    TSI_SetSelfCapMeasuredChannel(s_tsiBases[0], BOARD_TSI_ELECTRODE_1); /* Select BOARD_TSI_ELECTRODE_1 as detecting electrode. */
+    TSI_SetSelfCapMeasuredChannel(s_tsiBases[0],
+                                  BOARD_TSI_ELECTRODE_1); /* Select BOARD_TSI_ELECTRODE_1 as detecting electrode. */
     TSI_EnableModule(s_tsiBases[0], true);
     TRGMUX_SetTriggerSource(TRGMUX0, kTRGMUX_Tsi, kTRGMUX_TriggerInput0, kTRGMUX_SourceLptmr0);
     LPTMR_StartTimer(LPTMR0); /* Start LPTMR triggering */

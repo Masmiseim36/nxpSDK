@@ -1,5 +1,5 @@
 /*
-* Copyright 2019-2020 NXP
+* Copyright 2019-2021 NXP
 *
 * SPDX-License-Identifier: BSD-3-Clause
 */
@@ -38,11 +38,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v6.0
+product: Clocks v7.0
 processor: MKW38A512xxx4
 package_id: MKW38A512VFT4
 mcu_data: ksdk2_0
-processor_version: 0.0.1
+processor_version: 8.0.0
 board: FRDM-KW38
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -266,6 +266,8 @@ void BOARD_BootClockRUN(void)
     CLOCK_SetSimSafeDivs();
     /* Enable RTC oscillator. */
     CLOCK_CONFIG_EnableRtcOsc(RTC_OSC_CAP_LOAD_0PF);
+    /* Configure RTC clock. */
+    CLOCK_CONFIG_SetRtcClock();
     /* Initializes OSC0 according to Ref OSC needs. */
     BOARD_InitOsc0();
     /* Set MCG to FEI mode. */
@@ -279,14 +281,12 @@ void BOARD_BootClockRUN(void)
 #endif
     /* Configure the Internal Reference clock (MCGIRCLK). */
     CLOCK_SetInternalRefClkConfig(mcgConfig_BOARD_BootClockRUN.irclkEnableMode,
-                                  mcgConfig_BOARD_BootClockRUN.ircs,
+                                  mcgConfig_BOARD_BootClockRUN.ircs, 
                                   mcgConfig_BOARD_BootClockRUN.fcrdiv);
     /* Select the MCG external reference clock. */
     CLOCK_SetExternalRefClkConfig(mcgConfig_BOARD_BootClockRUN.oscsel);
     /* Set the clock configuration in SIM module. */
     CLOCK_SetSimConfig(&simConfig_BOARD_BootClockRUN);
-    /* Configure RTC clock. */
-    CLOCK_CONFIG_SetRtcClock();
     /* Set SystemCoreClock variable. */
     SystemCoreClock = BOARD_BOOTCLOCKRUN_CORE_CLOCK;
     /* Set LPUART0 clock source. */

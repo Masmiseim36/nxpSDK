@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -14,19 +14,18 @@
 /*! @addtogroup trgmux */
 /*! @{ */
 
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief TRGMUX driver version 2.0.0. */
-#define FSL_TRGMUX_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief TRGMUX driver version. */
+#define FSL_TRGMUX_DRIVER_VERSION (MAKE_VERSION(2, 0, 1))
 /*@}*/
 
 /*! @brief TRGMUX configure status. */
-enum _trgmux_status
+enum
 {
     kStatus_TRGMUX_Locked = MAKE_STATUS(kStatusGroup_TRGMUX, 0), /*!< Configure failed for register is locked */
 };
@@ -66,7 +65,7 @@ extern "C" {
  *
  * @param base        TRGMUX peripheral base address.
  * @param index       The index of the TRGMUX register, see the enum trgmux_device_t
- *                    defined in <SOC>.h.
+ *                    defined in \<SOC\>.h.
  */
 static inline void TRGMUX_LockRegister(TRGMUX_Type *base, uint32_t index)
 {
@@ -83,17 +82,14 @@ static inline void TRGMUX_LockRegister(TRGMUX_Type *base, uint32_t index)
    @endcode
  * @param base        TRGMUX peripheral base address.
  * @param index       The index of the TRGMUX register, see the enum trgmux_device_t
- *                    defined in <SOC>.h.
+ *                    defined in \<SOC\>.h.
  * @param input       The MUX select for peripheral trigger input
  * @param trigger_src The trigger inputs for various peripherals. See the enum trgmux_source_t
- *                    defined in <SOC>.h.
+ *                    defined in \<SOC\>.h.
  * @retval  kStatus_Success  Configured successfully.
  * @retval  kStatus_TRGMUX_Locked   Configuration failed because the register is locked.
  */
-status_t TRGMUX_SetTriggerSource(TRGMUX_Type *base,
-                                 uint32_t index,
-                                 trgmux_trigger_input_t input,
-                                 uint32_t trigger_src);
+status_t TRGMUX_SetTriggerSource(TRGMUX_Type *base, uint32_t index, trgmux_trigger_input_t input, uint32_t trigger_src);
 
 /*@}*/
 

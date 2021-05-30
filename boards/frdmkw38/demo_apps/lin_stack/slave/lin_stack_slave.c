@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 NXP
+ * Copyright 2019-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -87,7 +87,7 @@
  ******************************************************************************/
 uint16_t timerOverflowInterruptCount = 0U;
 l_u8 g_motorSelectionCmd             = 0U;
-l_u8 g_motorTickCount                = 10U;
+volatile l_u8 g_motorTickCount                = 10U;
 volatile uint32_t capturedValue      = 0U;
 
 /*******************************************************************************

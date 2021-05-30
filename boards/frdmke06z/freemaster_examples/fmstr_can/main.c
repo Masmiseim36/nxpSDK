@@ -11,10 +11,10 @@
 // Includes
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "board.h"
 #include "pin_mux.h"
 #include "fsl_mscan.h"
 #include "fsl_common.h"
+#include "board.h"
 
 #include "freemaster.h"
 #include "freemaster_mscan.h"
@@ -64,7 +64,7 @@ int main(void)
 static void init_freemaster_can(void)
 {
     mscan_config_t mscanConfig;
-    
+
     /* Get MSCAN module default Configuration. */
     /*
      * mscanConfig.baudRate = 1000000U;
@@ -94,7 +94,7 @@ static void init_freemaster_can(void)
 
     /* Register communication module used by FreeMASTER driver. */
     FMSTR_CanSetBaseAddress(MSCAN);
-    
+
 #if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
     /* Enable RX fifo0 new message interrupt using interrupt line 0. */
     EnableIRQ(MSCAN_1_IRQn);

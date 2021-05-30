@@ -7,19 +7,19 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_mscan.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* CAN instance and clock */
-#define EXAMPLE_MSCAN MSCAN
-#define EXAMPLE_MSCAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_ScgSysOscAsyncDiv2Clk)
-#define EXAMPLE_MSCAN_IRQn MSCAN_Rx_IRQn
+#define EXAMPLE_MSCAN            MSCAN
+#define EXAMPLE_MSCAN_CLK_FREQ   CLOCK_GetFreq(kCLOCK_ScgSysOscAsyncDiv2Clk)
+#define EXAMPLE_MSCAN_IRQn       MSCAN_Rx_IRQn
 #define EXAMPLE_MSCAN_IRQHandler MSCAN_Rx_IRQHandler
 
-#define NODE_ID1 0x801
+#define NODE_ID1    0x801
 #define MSCAN_IDMR0 (MSCAN_REIDR3_RERTR_MASK | (MSCAN_REIDR1_RSRR_MASK | MSCAN_REIDR1_REIDE_MASK) << 16U)
 #define MSCAN_IDMR1 (MSCAN_REIDR3_RERTR_MASK | (MSCAN_REIDR1_RSRR_MASK | MSCAN_REIDR1_REIDE_MASK) << 16U)
 
@@ -46,11 +46,7 @@ void EXAMPLE_MSCAN_IRQHandler(void)
         MSCAN_ClearRxBufferFullFlag(EXAMPLE_MSCAN);
         rxComplete = true;
     }
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -87,11 +83,11 @@ int main(void)
 
     /* Prepare Tx Frame for sending. */
     txFrame.ID_Type.ID = NODE_ID1;
-    txFrame.format = kMSCAN_FrameFormatExtend;
-    txFrame.type = kMSCAN_FrameTypeData;
-    txFrame.DLR = 8;
-    txFrame.dataWord0 = 0x44332211;
-    txFrame.dataWord1 = 0x88776655;
+    txFrame.format     = kMSCAN_FrameFormatExtend;
+    txFrame.type       = kMSCAN_FrameTypeData;
+    txFrame.DLR        = 8;
+    txFrame.dataWord0  = 0x44332211;
+    txFrame.dataWord1  = 0x88776655;
 
     PRINTF("Send message!\r\n");
     PRINTF("tx word0 = 0x%x\r\n", txFrame.dataWord0);

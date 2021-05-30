@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -110,12 +114,13 @@
 #define USB_CDC_OBEX_SERVICE_ID_FUNC_DESC (0x19)
 
 /* usb descritpor length */
-#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (67)
+#define USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL (sizeof(g_UsbDeviceConfigurationDescriptor))
 #define USB_DESCRIPTOR_LENGTH_CDC_HEADER_FUNC (5)
 #define USB_DESCRIPTOR_LENGTH_CDC_CALL_MANAG (5)
 #define USB_DESCRIPTOR_LENGTH_CDC_ABSTRACT (4)
 #define USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC (5)
 
+/* Configuration, interface and endpoint. */
 #define USB_DEVICE_CONFIGURATION_COUNT (1)
 #define USB_DEVICE_STRING_COUNT (3)
 #define USB_DEVICE_LANGUAGE_COUNT (1)
@@ -131,6 +136,7 @@
 #define USB_CDC_VCOM_COMM_INTERFACE_INDEX (0)
 #define USB_CDC_VCOM_DATA_INTERFACE_INDEX (1)
 
+/* Packet size. */
 #define HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE (16)
 #define FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE (16)
 #define HS_CDC_VCOM_INTERRUPT_IN_INTERVAL (0x07) /* 2^(7-1) = 8ms */
@@ -140,13 +146,15 @@
 #define HS_CDC_VCOM_BULK_OUT_PACKET_SIZE (512)
 #define FS_CDC_VCOM_BULK_OUT_PACKET_SIZE (64)
 
-#define USB_DESCRIPTOR_LENGTH_STRING0 (4)
-#define USB_DESCRIPTOR_LENGTH_STRING1 (38)
-#define USB_DESCRIPTOR_LENGTH_STRING2 (42)
+/* String descriptor length. */
+#define USB_DESCRIPTOR_LENGTH_STRING0 (sizeof(g_UsbDeviceString0))
+#define USB_DESCRIPTOR_LENGTH_STRING1 (sizeof(g_UsbDeviceString1))
+#define USB_DESCRIPTOR_LENGTH_STRING2 (sizeof(g_UsbDeviceString2))
 
 #define USB_DESCRIPTOR_TYPE_CDC_CS_INTERFACE (0x24)
 #define USB_DESCRIPTOR_TYPE_CDC_CS_ENDPOINT (0x25)
 
+/* Class code. */
 #define USB_DEVICE_CLASS (0x02)
 #define USB_DEVICE_SUBCLASS (0x00)
 #define USB_DEVICE_PROTOCOL (0x00)

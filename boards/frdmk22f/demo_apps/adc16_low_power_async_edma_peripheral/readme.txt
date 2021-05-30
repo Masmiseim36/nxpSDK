@@ -7,10 +7,10 @@ user and toggle LED.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -53,6 +53,3 @@ ADC value: 16681
 
 Note:
  - LED will be toggled when the CPU wake up.
-Customization options
-=====================
-

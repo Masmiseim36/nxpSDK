@@ -261,7 +261,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -313,14 +313,13 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/MK64F12/src</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/startup</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src</state>
           <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/apps/led_demo/src</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK64F12</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/include</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/src/startup</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -486,6 +485,7 @@
         </option>
         <option>
           <name>ADefines</name>
+          <state>NDEBUG</state>
           <state>BL_HAS_BOOTLOADER_CONFIG</state>
         </option>
         <option>
@@ -733,7 +733,7 @@
         </option>
         <option>
           <name>IlinkIcfFile</name>
-          <state>$PROJ_DIR$/MK64FN1M0xxx12_application_0x0000.icf</state>
+          <state>$PROJ_DIR$/../../../../../../middleware/mcu-boot/targets/common/linker/iar/MK64F12/MK64FN1M0xxx12_application_0x0000.icf</state>
         </option>
         <option>
           <name>IlinkIcfFileSlave</name>
@@ -769,6 +769,8 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state> --redirect __aeabi_idiv=__iar_small___aeabi_idiv </state>
+          <state> --redirect __aeabi_idivmod=__iar_small___aeabi_idivmod </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -964,6 +966,15 @@
     </settings>
   </configuration>
   <group>
+    <name>board</name>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../pin_mux.h</name>
+    </file>
+  </group>
+  <group>
     <name>MK64F12</name>
     <file>
       <name>$PROJ_DIR$/../main.c</name>
@@ -979,6 +990,30 @@
     </file>
   </group>
   <group>
+    <name>drivers</name>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_port.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_gpio.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_common.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_clock.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_clock.c</name>
+    </file>
+  </group>
+  <group>
     <name>device</name>
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MK64F12/fsl_device_registers.h</name>
@@ -990,10 +1025,10 @@
       <name>$PROJ_DIR$/../../../../../../devices/MK64F12/MK64F12_features.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/system_MK64F12.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/system_MK64F12.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/system_MK64F12.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/system_MK64F12.c</name>
     </file>
   </group>
   <group>
@@ -1023,10 +1058,16 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
@@ -1038,13 +1079,7 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
@@ -1054,12 +1089,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

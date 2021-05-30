@@ -19,7 +19,7 @@ SDK_ALIGN(static uint32_t s_sdmmcHostDmaBuffer[BOARD_SDMMC_HOST_DMA_DESCRIPTOR_B
 static sd_detect_card_t s_cd;
 #endif
 static sdmmchost_t s_host;
-OSA_EVENT_HANDLE_DEFINE(s_event);
+
 /*******************************************************************************
  * Code
  ******************************************************************************/
@@ -42,6 +42,30 @@ void BOARD_SDMMC_SD_CD_PORT_IRQ_HANDLER(void)
     PORT_ClearPinsInterruptFlags(BOARD_SDMMC_SD_CD_PORT_BASE, ~0U);
 }
 
+void BOARD_SDCardDAT3PullFunction(uint32_t status)
+{
+    port_pin_config_t porte4_pinE3_config = {/* Internal pull-up resistor is enabled */
+                                             kPORT_PullUp,
+                                             /* Fast slew rate is configured */
+                                             kPORT_FastSlewRate,
+                                             /* Passive filter is disabled */
+                                             kPORT_PassiveFilterDisable,
+                                             /* Open drain is disabled */
+                                             kPORT_OpenDrainDisable,
+                                             /* Low drive strength is configured */
+                                             kPORT_LowDriveStrength,
+                                             /* Pin is configured as SDHC0_D3 */
+                                             kPORT_MuxAlt4,
+                                             /* Pin Control Register fields [15:0] are not locked */
+                                             kPORT_UnlockRegister};
+    if (status == kSD_DAT3PullDown)
+    {
+        porte4_pinE3_config.pullSelect = kPORT_PullDisable;
+    }
+
+    PORT_SetPinConfig(PORTE, 4U, &porte4_pinE3_config);
+}
+
 void BOARD_SDCardDetectInit(sd_cd_t cd, void *userData)
 {
     /* install card detect callback */
@@ -50,20 +74,30 @@ void BOARD_SDCardDetectInit(sd_cd_t cd, void *userData)
     s_cd.cardDetected  = BOARD_SDCardGetDetectStatus;
     s_cd.callback      = cd;
     s_cd.userData      = userData;
-    /* Card detection pin will generate interrupt on either eage */
-    PORT_SetPinInterruptConfig(BOARD_SDMMC_SD_CD_PORT_BASE, BOARD_SDMMC_SD_CD_GPIO_PIN,
-                               BOARD_SDMMC_SD_CD_INTTERUPT_TYPE);
-    /* set IRQ priority */
-    NVIC_SetPriority(BOARD_SDMMC_SD_CD_PORT_IRQ, BOARD_SDMMC_SD_CD_IRQ_PRIORITY);
-    /* Open card detection pin NVIC. */
-    EnableIRQ(BOARD_SDMMC_SD_CD_PORT_IRQ);
 
-    if (GPIO_PinRead(BOARD_SDMMC_SD_CD_GPIO_BASE, BOARD_SDMMC_SD_CD_GPIO_PIN) == BOARD_SDMMC_SD_CD_INSERT_LEVEL)
+    if (BOARD_SDMMC_SD_CD_TYPE == kSD_DetectCardByGpioCD)
     {
-        if (cd != NULL)
+        /* Card detection pin will generate interrupt on either eage */
+        PORT_SetPinInterruptConfig(BOARD_SDMMC_SD_CD_PORT_BASE, BOARD_SDMMC_SD_CD_GPIO_PIN,
+                                   BOARD_SDMMC_SD_CD_INTTERUPT_TYPE);
+        /* set IRQ priority */
+        NVIC_SetPriority(BOARD_SDMMC_SD_CD_PORT_IRQ, BOARD_SDMMC_SD_CD_IRQ_PRIORITY);
+        /* Open card detection pin NVIC. */
+        EnableIRQ(BOARD_SDMMC_SD_CD_PORT_IRQ);
+
+        if (GPIO_PinRead(BOARD_SDMMC_SD_CD_GPIO_BASE, BOARD_SDMMC_SD_CD_GPIO_PIN) == BOARD_SDMMC_SD_CD_INSERT_LEVEL)
         {
-            cd(true, userData);
+            if (cd != NULL)
+            {
+                cd(true, userData);
+            }
         }
+    }
+
+    /* register DAT3 pull function switch function pointer */
+    if (BOARD_SDMMC_SD_CD_TYPE == kSD_DetectCardByHostDATA3)
+    {
+        s_cd.dat3PullFunc = BOARD_SDCardDAT3PullFunction;
     }
 }
 #endif
@@ -79,8 +113,7 @@ void BOARD_SD_Config(void *card, sd_cd_t cd, uint32_t hostIRQPriority, void *use
     ((sd_card_t *)card)->host->hostController.base           = BOARD_SDMMC_SD_HOST_BASEADDR;
     ((sd_card_t *)card)->host->hostController.sourceClock_Hz = CLOCK_GetFreq(kCLOCK_CoreSysClk);
 
-    ((sd_card_t *)card)->host->hostEvent = &s_event;
-    ((sd_card_t *)card)->usrParam.cd     = &s_cd;
+    ((sd_card_t *)card)->usrParam.cd = &s_cd;
 
     BOARD_SDCardDetectInit(cd, userData);
 

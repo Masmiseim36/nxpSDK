@@ -15,7 +15,7 @@
 #include "board.h"
 #include "fsl_gpio.h"
 #include "fsl_ssd1963.h"
-#include "fsl_dbi_flexio.h"
+#include "fsl_dbi_flexio_edma.h"
 #include "fsl_flexio_mculcd.h"
 #include "fsl_i2c.h"
 #include "fsl_ft5406.h"
@@ -91,7 +91,7 @@ static volatile bool s_memWriteDone;
 /* SSD1963 LCD controller handle. */
 ssd1963_handle_t lcdHandle;
 /* DBI XFER handle. */
-dbi_flexio_xfer_handle_t g_dbiFlexioXferHandle;
+dbi_flexio_edma_xfer_handle_t g_dbiFlexioXferHandle;
 /* The FlexIO MCU LCD device. */
 FLEXIO_MCULCD_Type flexioLcdDev = {
     .flexioBase          = BOARD_FLEXIO,
@@ -225,7 +225,7 @@ status_t DEMO_InitLcdController(void)
     /* Create the DBI XFER handle. Because DMA transfer is not used, so don't
      * need to create DMA handle.
      */
-    status = DBI_FLEXIO_CreateXferHandle(&g_dbiFlexioXferHandle, &flexioLcdDev, NULL, NULL);
+    status = DBI_FLEXIO_EDMA_CreateXferHandle(&g_dbiFlexioXferHandle, &flexioLcdDev, NULL, NULL);
 
     if (kStatus_Success != status)
     {
@@ -247,7 +247,7 @@ status_t DEMO_InitLcdController(void)
 #endif
 
     status =
-        SSD1963_Init(&lcdHandle, &ssd1963Config, &g_dbiFlexioXferOps, &g_dbiFlexioXferHandle, BOARD_SSD1963_XTAL_FREQ);
+        SSD1963_Init(&lcdHandle, &ssd1963Config, &g_dbiFlexioEdmaXferOps, &g_dbiFlexioXferHandle, BOARD_SSD1963_XTAL_FREQ);
 
     if (status == kStatus_Success)
     {

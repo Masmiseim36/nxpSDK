@@ -378,10 +378,11 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             mPeerInformation[peerDeviceId].deviceId = peerDeviceId;
             mPeerInformation[peerDeviceId].isBonded = FALSE;
 
-#if gAppUseBonding_d
-            (void)Gap_CheckIfBonded(peerDeviceId, &mPeerInformation[peerDeviceId].isBonded, NULL);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            bool_t isBonded = FALSE;
+            (void)Gap_CheckIfBonded(peerDeviceId, &isBonded, NULL);
 
-            if ((mPeerInformation[peerDeviceId].isBonded) &&
+            if ((isBonded) &&
                 (gBleSuccess_c == Gap_LoadCustomPeerInformation(peerDeviceId,
                     (void*) &mPeerInformation[peerDeviceId].customInfo, 0, sizeof (appCustomInfo_t))))
             {
@@ -440,16 +441,28 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         {
             if (pConnectionEvent->eventData.pairingCompleteEvent.pairingSuccessful)
             {
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+                mPeerInformation[peerDeviceId].isBonded = TRUE;
+#endif
                 BleApp_StateMachineHandler(mPeerInformation[peerDeviceId].deviceId, mAppEvt_PairingComplete_c);
+                shell_write("\r\n-->  GAP Event: Device Paired.\r\n");
             }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            else
+            {
+                mPeerInformation[peerDeviceId].isBonded = FALSE;
+                shell_write("\r\n-->  GAP Event: Pairing Unsuccessful.\r\n");
+            }
+#endif
         }
         break;
 
-#if gAppUseBonding_d
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
         case gConnEvtEncryptionChanged_c:
         {
             if( pConnectionEvent->eventData.encryptionChangedEvent.newEncryptionState )
             {
+                mPeerInformation[peerDeviceId].isBonded = TRUE;
                 if ( (TRUE == mRestoringBondedLink) &&
                      (FALSE == mAuthRejected) )
                 {
@@ -527,32 +540,38 @@ static void BleApp_GattClientCallback(
     bleResult_t             error
 )
 {
-
-    if (procedureResult == gGattProcError_c)
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if ((mPeerInformation[serverDeviceId].isBonded) || (mPeerInformation[serverDeviceId].appState != mAppRunning_c))
     {
-        attErrorCode_t attError = (attErrorCode_t)((uint8_t)error);
-
-        if (attError == gAttErrCodeInsufficientEncryption_c     ||
-            attError == gAttErrCodeInsufficientAuthorization_c  ||
-            attError == gAttErrCodeInsufficientAuthentication_c)
+#endif
+        if (procedureResult == gGattProcError_c)
         {
-            /* Start Pairing Procedure */
-            (void)Gap_Pair(serverDeviceId, &gPairingParameters);
+            attErrorCode_t attError = (attErrorCode_t)((uint8_t)error);
+
+            if (attError == gAttErrCodeInsufficientEncryption_c     ||
+                attError == gAttErrCodeInsufficientAuthorization_c  ||
+                attError == gAttErrCodeInsufficientAuthentication_c)
+            {
+                /* Start Pairing Procedure */
+                (void)Gap_Pair(serverDeviceId, &gPairingParameters);
+            }
+
+            BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
+        }
+        else if (procedureResult == gGattProcSuccess_c)
+        {
+            BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
+        }
+        else
+        {
+            /* For MISRA Compliance */
         }
 
-        BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
+        /* Signal Service Discovery Module */
+        BleServDisc_SignalGattClientEvent(serverDeviceId, procedureType, procedureResult, error);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     }
-    else if (procedureResult == gGattProcSuccess_c)
-    {
-        BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
-    }
-    else
-    {
-        /* For MISRA Compliance */
-    }
-
-    /* Signal Service Discovery Module */
-    BleServDisc_SignalGattClientEvent(serverDeviceId, procedureType, procedureResult, error);
+#endif
 }
 
 /*! *********************************************************************************
@@ -571,22 +590,29 @@ static void BleApp_GattNotificationCallback
     uint16_t    valueLength
 )
 {
-    union {
-        uint8_t* aValueTemp;
-        mouseHidReport_t* pReportTemp;
-    }mouseValues;
-    mouseValues.aValueTemp = aValue;
-
-    if (characteristicValueHandle == mPeerInformation[serverDeviceId].customInfo.hidClientConfig.hHidReport)
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if (mPeerInformation[serverDeviceId].isBonded)
     {
-        mouseHidReport_t *pReport = mouseValues.pReportTemp;
-        shell_write("\r\nReceived HID Report from device ");
-        shell_writeDec(serverDeviceId);
-        shell_write(": X: ");
-        shell_writeHex(&pReport->xAxis, sizeof(uint8_t));
-        shell_write(" Y: ");
-        shell_writeHex(&pReport->yAxis, sizeof(uint8_t));
+#endif
+      union {
+          uint8_t* aValueTemp;
+          mouseHidReport_t* pReportTemp;
+      }mouseValues;
+      mouseValues.aValueTemp = aValue;
+
+      if (characteristicValueHandle == mPeerInformation[serverDeviceId].customInfo.hidClientConfig.hHidReport)
+      {
+          mouseHidReport_t *pReport = mouseValues.pReportTemp;
+          shell_write("\r\nReceived HID Report from device ");
+          shell_writeDec(serverDeviceId);
+          shell_write(": X: ");
+          shell_writeHex(&pReport->xAxis, sizeof(uint8_t));
+          shell_write(" Y: ");
+          shell_writeHex(&pReport->yAxis, sizeof(uint8_t));
+      }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     }
+#endif
 }
 
 /*! *********************************************************************************

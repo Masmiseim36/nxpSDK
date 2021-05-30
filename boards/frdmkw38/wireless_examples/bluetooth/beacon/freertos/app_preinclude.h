@@ -44,6 +44,8 @@
 #define mAdvertisingDefaultTxPower_c    0
 #endif /* gBeaconAE_c */
 
+/*! Repeated Attempts - Mitigation for pairing attacks */
+#define gRepeatedAttempts_d             0
 /*! *********************************************************************************
  *     Framework Configuration
  ********************************************************************************** */
@@ -71,7 +73,11 @@
 #endif
 
 /* Defines number of timers needed by the application */
+#if gRepeatedAttempts_d
+#define gTmrApplicationTimers_c         5
+#else
 #define gTmrApplicationTimers_c         4
+#endif
 
 /* Set this define TRUE if the PIT frequency is an integer number of MHZ */
 #define gTMR_PIT_FreqMultipleOfMHZ_d    0
@@ -101,7 +107,12 @@
 #define cPWR_DeepSleepDurationMs        30000
 
 /* Number of slots(625us) before the wake up instant before which the hardware needs to exit from deep sleep mode. */
+#if (gBeaconAE_c && gBeaconLargeExtAdvData_c)
+/* need 3 more slots to reload large extended advertising data */
+#define cPWR_BLE_LL_OffsetToWakeupInstant 6
+#else
 #define cPWR_BLE_LL_OffsetToWakeupInstant 3
+#endif
 
 /* Application Connection sleep mode */
 #define gAppDeepSleepMode_c             8

@@ -36,10 +36,10 @@ To run PC side as a client with a board connected as a server to COM3 execute:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- MCUXpresso  11.2.0
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
 
 Hardware requirements
 =====================
@@ -92,6 +92,3 @@ Result matrix
 
 Press Enter to initiate the next matrix multiplication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -13,29 +13,29 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_gpio.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #if defined(FSL_FEATURE_SOC_PORT_COUNT) && (FSL_FEATURE_SOC_PORT_COUNT > 0)
 #include "fsl_port.h"
 #endif
-#include "pin_mux.h"
 #include "fsl_device_registers.h"
 #include "fsl_common.h"
-#include "clock_config.h"
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
 #include "fsl_lptmr.h"
 #endif
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define BOARD_LED_GPIO BOARD_LED_RED_GPIO
+#define BOARD_LED_GPIO     BOARD_LED_RED_GPIO
 #define BOARD_LED_GPIO_PIN BOARD_LED_RED_GPIO_PIN
 
-#define BOARD_SW_GPIO BOARD_SW3_GPIO
-#define BOARD_SW_PORT BOARD_SW3_PORT
-#define BOARD_SW_GPIO_PIN BOARD_SW3_GPIO_PIN
-#define BOARD_SW_IRQ BOARD_SW3_IRQ
+#define BOARD_SW_GPIO        BOARD_SW3_GPIO
+#define BOARD_SW_PORT        BOARD_SW3_PORT
+#define BOARD_SW_GPIO_PIN    BOARD_SW3_GPIO_PIN
+#define BOARD_SW_IRQ         BOARD_SW3_IRQ
 #define BOARD_SW_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
-#define BOARD_SW_NAME BOARD_SW3_NAME
+#define BOARD_SW_NAME        BOARD_SW3_NAME
 /* Task priorities. */
 /* clang-format off */
 #define tickless_task_PRIORITY   ( configMAX_PRIORITIES - 2 )
@@ -64,6 +64,7 @@ SemaphoreHandle_t xSWSemaphore = NULL;
  * Code
  ******************************************************************************/
 
+#if configUSE_TICKLESS_IDLE == 2
 /*!
  * @brief Interrupt service fuction of LPT timer.
  *
@@ -95,6 +96,7 @@ IRQn_Type vPortGetLptmrIrqn(void)
 {
     return PWT_LPTMR0_IRQn;
 }
+#endif
 /*!
  * @brief Main function
  */
@@ -102,8 +104,7 @@ int main(void)
 {
 /* Define the init structure for the input switch pin */
 #ifdef BOARD_SW_NAME
-    gpio_pin_config_t sw_config =
-    {
+    gpio_pin_config_t sw_config = {
         kGPIO_DigitalInput,
         0,
 #if defined(FSL_FEATURE_SOC_IGPIO_COUNT) && (FSL_FEATURE_SOC_IGPIO_COUNT > 0)
@@ -111,7 +112,7 @@ int main(void)
 #endif
     };
 #endif
-#if configUSE_TICKLESS_IDLE
+#if configUSE_TICKLESS_IDLE == 2
     lptmr_config_t lptmrConfig;
 
     CLOCK_EnableClock(kCLOCK_Lptmr0);
@@ -160,19 +161,20 @@ int main(void)
 #endif
 
     /*Create tickless task*/
-    if (xTaskCreate(Tickless_task, "Tickless_task", configMINIMAL_STACK_SIZE + 38, NULL, tickless_task_PRIORITY,
+    if (xTaskCreate(Tickless_task, "Tickless_task", configMINIMAL_STACK_SIZE + 100, NULL, tickless_task_PRIORITY,
                     NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
             ;
     }
-    if (xTaskCreate(SW_task, "Switch_task", configMINIMAL_STACK_SIZE + 38, NULL, SW_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(SW_task, "Switch_task", configMINIMAL_STACK_SIZE + 100, NULL, SW_task_PRIORITY, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
             ;
     }
+    PRINTF("\r\nTick count :\r\n");
     /*Task Scheduler*/
     vTaskStartScheduler();
     for (;;)
@@ -182,7 +184,6 @@ int main(void)
 /* Tickless Task */
 static void Tickless_task(void *pvParameters)
 {
-    PRINTF("\r\nTick count :\r\n");
     for (;;)
     {
         PRINTF("%d\r\n", xTaskGetTickCount());
@@ -198,7 +199,7 @@ static void SW_task(void *pvParameters)
     {
         if (xSemaphoreTake(xSWSemaphore, portMAX_DELAY) == pdTRUE)
         {
-            PRINTF("CPU waked up by EXT interrupt\r\n");
+            PRINTF("CPU woken up by external interrupt\r\n");
         }
     }
 }

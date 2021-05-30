@@ -13,7 +13,7 @@
 **
 **     Reference manual:    KE1xZP100M72SF0RM, Rev. 2, Aug. 2016
 **     Version:             rev. 6.0, 2016-09-20
-**     Build:               b191113
+**     Build:               b201123
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that
@@ -21,7 +21,7 @@
 **         the oscillator (PLL) that is part of the microcontroller device.
 **
 **     Copyright 2016 Freescale Semiconductor, Inc.
-**     Copyright 2016-2019 NXP
+**     Copyright 2016-2020 NXP
 **     All rights reserved.
 **
 **     SPDX-License-Identifier: BSD-3-Clause
@@ -75,7 +75,7 @@ uint32_t SystemCoreClock = DEFAULT_SYSTEM_CLOCK;
 void SystemInit (void) {
 
   /* Redirect vector table to Flash, in case of boot from ROM without overwriting FOPT boot option */
-  RCM->MR = 3 << 1;
+  RCM->MR = 3UL << 1U;
 
 #if (DISABLE_WDOG)
   if ((WDOG->CS & WDOG_CS_CMD32EN_MASK) != 0U)
@@ -84,10 +84,10 @@ void SystemInit (void) {
   }
   else
   {
-      WDOG->CNT = WDOG_UPDATE_KEY & 0xFFFF;
-      WDOG->CNT = (WDOG_UPDATE_KEY >> 16) & 0xFFFF;
+      WDOG->CNT = WDOG_UPDATE_KEY & 0xFFFFU;
+      WDOG->CNT = (WDOG_UPDATE_KEY >> 16U) & 0xFFFFU;
   }
-  WDOG->TOVAL = 0xFFFF;
+  WDOG->TOVAL = 0xFFFFU;
   WDOG->CS = (uint32_t) ((WDOG->CS) & ~WDOG_CS_EN_MASK) | WDOG_CS_UPDATE_MASK;
 #endif /* (DISABLE_WDOG) */
 
@@ -122,7 +122,8 @@ void SystemCoreClockUpdate (void) {
       SCGOUTClock = 48000000U + ((SCG->LPFLLCFG & SCG_LPFLLCFG_FSEL_MASK) >> SCG_LPFLLCFG_FSEL_SHIFT) * 24000000U;
       break;
     default:
-      return;
+      SCGOUTClock = 0U;
+      break;
   }
   SystemCoreClock = (SCGOUTClock / Divider);
 

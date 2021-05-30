@@ -3,6 +3,14 @@ Overview
 The LPTMR project is a simple demonstration program of the SDK LPTMR driver. It sets up the LPTMR
 hardware block to trigger a periodic interrupt after every 1 second. When the LPTMR interrupt is triggered
 a message a printed on the UART terminal and an LED is toggled on the board.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -38,11 +46,3 @@ LPTMR interrupt No.3
 ....................
 ....................
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

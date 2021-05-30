@@ -8,10 +8,10 @@ Note: If DATA3 is used as the card detect PIN, please make sure DATA3 is pull do
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -56,6 +56,3 @@ Erase multiple data blocks......
 
 Input 'q' to quit card access task.            
 Input other char to read/write/erase data blocks again.
-Customization options
-=====================
-

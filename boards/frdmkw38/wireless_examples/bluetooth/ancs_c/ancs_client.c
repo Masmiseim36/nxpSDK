@@ -734,11 +734,12 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
             mPeerInformation.deviceId = peerDeviceId;
             mPeerInformation.isBonded = FALSE;
 
-#if gAppUseBonding_d
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            bool_t isBonded = FALSE;
             mSendDataAfterEncStart = FALSE;
 
-            if ((gBleSuccess_c == Gap_CheckIfBonded(peerDeviceId, &mPeerInformation.isBonded, NULL)) &&
-                (TRUE == mPeerInformation.isBonded))
+            if ((gBleSuccess_c == Gap_CheckIfBonded(peerDeviceId, &isBonded, NULL)) &&
+                (TRUE == isBonded))
             {
                 mSendDataAfterEncStart = TRUE;
                 Gap_LoadCustomPeerInformation(peerDeviceId, (void*) &mPeerInformation.customInfo, 0, sizeof (appCustomInfo_t));
@@ -857,6 +858,9 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
 
         case gConnEvtEncryptionChanged_c:
         {
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            mPeerInformation.isBonded = TRUE;
+#endif
 #if gAppUseTimeService_d
 
             if (isTimeSynchronized == FALSE)
@@ -921,6 +925,9 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
             if (pConnectionEvent->eventData.pairingCompleteEvent.pairingSuccessful)
             {
                 shell_write("\r\nPairing was successful!\r\n");
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+                mPeerInformation.isBonded = TRUE;
+#endif
                 BleApp_StateMachineHandler(peerDeviceId, mAppEvt_PairingComplete_c);
             }
             else
@@ -930,6 +937,9 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
                 shell_writeHex((uint8_t *)(&(pConnectionEvent->eventData.pairingCompleteEvent.pairingCompleteData.failReason)) + 1, 1);
                 shell_writeHex((uint8_t *)(&(pConnectionEvent->eventData.pairingCompleteEvent.pairingCompleteData.failReason)), 1);
                 shell_write("\r\n");
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+                 mPeerInformation.isBonded = FALSE;
+#endif
             }
         }
         break;
@@ -1364,10 +1374,17 @@ static void BleApp_GattNotificationCallback
     uint16_t    valueLength
 )
 {
-    BleApp_AttributeNotified(serverDeviceId,
-                             characteristicValueHandle,
-                             aValue,
-                             valueLength);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if (mPeerInformation.isBonded)
+    {
+#endif
+        BleApp_AttributeNotified(serverDeviceId,
+                                 characteristicValueHandle,
+                                 aValue,
+                                 valueLength);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    }
+#endif
 }
 
 
@@ -1379,19 +1396,22 @@ static void BleApp_AttributeNotified
     uint16_t    length
 )
 {
-    if (handle == mPeerInformation.customInfo.ancsClientConfig.hNotificationSource)
+    if (mPeerInformation.appState == mAppRunning_c)
     {
-        AncsClient_ProcessNsNotification(deviceId, pValue, length);
-        BleApp_StateMachineHandler(deviceId, mAppEvt_AncsNsNotificationReceived_c);
-    }
-    else if (handle == mPeerInformation.customInfo.ancsClientConfig.hDataSource)
-    {
-        AncsClient_ProcessDsNotification(deviceId, pValue, length);
-        BleApp_StateMachineHandler(deviceId, mAppEvt_AncsDsNotificationReceived_c);
-    }
-    else
-    {
-        ; /* For MISRA compliance */
+        if (handle == mPeerInformation.customInfo.ancsClientConfig.hNotificationSource)
+        {
+            AncsClient_ProcessNsNotification(deviceId, pValue, length);
+            BleApp_StateMachineHandler(deviceId, mAppEvt_AncsNsNotificationReceived_c);
+        }
+        else if (handle == mPeerInformation.customInfo.ancsClientConfig.hDataSource)
+        {
+            AncsClient_ProcessDsNotification(deviceId, pValue, length);
+            BleApp_StateMachineHandler(deviceId, mAppEvt_AncsDsNotificationReceived_c);
+        }
+        else
+        {
+            ; /* For MISRA compliance */
+        }
     }
 }
 
@@ -1441,7 +1461,11 @@ static void BleApp_ServiceDiscoveryCompleted(void)
     if (0U != mPeerInformation.customInfo.ancsClientConfig.hNotificationSourceCccd)
     {
         mPeerInformation.appState = mAppNsDescriptorSetup_c;
-        mpDescProcBuffer = MEM_BufferAlloc(sizeof(gattAttribute_t) + gAttDefaultMtu_c);
+
+        if (NULL == mpDescProcBuffer)
+        {
+            mpDescProcBuffer = MEM_BufferAlloc(sizeof(gattAttribute_t) + gAttDefaultMtu_c);
+        }
         /* Set notification bit for a CCCD descriptor. */
         uint16_t value = gCccdNotification_c;
 

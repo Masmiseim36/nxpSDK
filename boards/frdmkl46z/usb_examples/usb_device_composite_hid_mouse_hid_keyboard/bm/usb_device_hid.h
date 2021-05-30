@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -149,6 +153,10 @@ typedef struct _usb_device_hid_struct
     usb_device_handle handle;                       /*!< The device handle */
     usb_device_class_config_struct_t *configStruct; /*!< The configuration of the class. */
     usb_device_interface_struct_t *interfaceHandle; /*!< Current interface handle */
+    uint8_t *interruptInPipeDataBuffer;             /*!< IN pipe data buffer backup when stall */
+    uint32_t interruptInPipeDataLen;                /*!< IN pipe data length backup when stall  */
+    uint8_t *interruptOutPipeDataBuffer;             /*!< OUT pipe data buffer backup when stall */
+    uint32_t interruptOutPipeDataLen;                /*!< OUT pipe data length backup when stall  */
     uint8_t configuration;                          /*!< Current configuration */
     uint8_t interfaceNumber;                        /*!< The interface number of the class */
     uint8_t alternate;                              /*!< Current alternate setting of the interface */
@@ -156,6 +164,8 @@ typedef struct _usb_device_hid_struct
     uint8_t protocol;                               /*!< Current protocol */
     uint8_t interruptInPipeBusy;                    /*!< Interrupt IN pipe busy flag */
     uint8_t interruptOutPipeBusy;                   /*!< Interrupt OUT pipe busy flag */
+    uint8_t interruptInPipeStall;                    /*!< Interrupt IN pipe stall flag */
+    uint8_t interruptOutPipeStall;                   /*!< Interrupt OUT pipe stall flag */
 } usb_device_hid_struct_t;
 
 /*******************************************************************************

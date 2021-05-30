@@ -29,14 +29,14 @@
 #include "lwip/dns.h"
 #include "netif/etharp.h"
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_device_registers.h"
 #include "usb_host_config.h"
 #include "usb_host.h"
-#include "pin_mux.h"
 #include "usb_phy.h"
-#include "clock_config.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */

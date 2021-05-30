@@ -135,7 +135,9 @@ struct _dspi_slave_edma_handle
 extern "C" {
 #endif /*_cplusplus*/
 
-/*! @name Transactional APIs*/
+/*! @name Transactional APIs
+ * @{
+ */
 
 /*!
  * @brief Initializes the DSPI master eDMA handle.
@@ -285,6 +287,8 @@ void DSPI_SlaveTransferAbortEDMA(SPI_Type *base, dspi_slave_edma_handle_t *handl
  * @return status of status_t.
  */
 status_t DSPI_SlaveTransferGetCountEDMA(SPI_Type *base, dspi_slave_edma_handle_t *handle, size_t *count);
+
+/*!@}*/
 
 #if defined(__cplusplus)
 }

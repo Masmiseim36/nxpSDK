@@ -16,9 +16,9 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -107,7 +107,7 @@ static void read_task(void *pvParameters)
     {
         event_bits = xEventGroupWaitBits(event_group,    /* The event group handle. */
                                          B0 | B1,        /* The bit pattern the event group is waiting for. */
-                                         pdTRUE,         /* BIT_0 and BIT_4 will be cleared automatically. */
+                                         pdTRUE,         /* B0 and B1 will be cleared automatically. */
                                          pdFALSE,        /* Don't wait for both bits, either bit unblock task. */
                                          portMAX_DELAY); /* Block indefinitely to wait for the condition to be met. */
 

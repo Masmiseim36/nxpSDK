@@ -13,13 +13,13 @@
 #include "fsl_debug_console.h"
 #include "board.h"
 
-#include "led.h"
-#include "serial_manager.h"
+#include "fsl_component_led.h"
+#include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
 #if (defined(BUTTON_COUNT) && (BUTTON_COUNT > 0U))
-#include "button.h"
+#include "fsl_component_button.h"
 #endif
-#include "timer_manager.h"
+#include "fsl_component_timer_manager.h"
 
 #include "app.h"
 #include "fsl_os_abstraction.h"

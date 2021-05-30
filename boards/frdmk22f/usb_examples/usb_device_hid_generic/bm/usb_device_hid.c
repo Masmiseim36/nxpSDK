@@ -243,14 +243,14 @@ static usb_status_t USB_DeviceHidEndpointsInit(usb_device_hid_struct_t *hidHandl
                        USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT))
         {
             epCallback.callbackFn                = USB_DeviceHidInterruptIn;
-            hidHandle->interruptInPipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+            hidHandle->interruptInPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
             hidHandle->interruptInPipeStall      = 0U;
             hidHandle->interruptInPipeDataLen    = 0U;
         }
         else
         {
             epCallback.callbackFn                 = USB_DeviceHidInterruptOut;
-            hidHandle->interruptOutPipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+            hidHandle->interruptOutPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
             hidHandle->interruptOutPipeStall      = 0U;
             hidHandle->interruptOutPipeDataLen    = 0U;
         }
@@ -428,7 +428,7 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                         if (0U != hidHandle->interruptInPipeStall)
                         {
                             hidHandle->interruptInPipeStall = 0U;
-                            if ((uint8_t *)USB_UNINITIALIZED_VAL_32 != hidHandle->interruptInPipeDataBuffer)
+                            if ((uint8_t *)USB_INVALID_TRANSFER_BUFFER != hidHandle->interruptInPipeDataBuffer)
                             {
                                 error = USB_DeviceSendRequest(
                                     hidHandle->handle,
@@ -444,7 +444,7 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                                     (void)USB_DeviceHidInterruptIn(hidHandle->handle, (void *)&endpointCallbackMessage,
                                                                    handle);
                                 }
-                                hidHandle->interruptInPipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+                                hidHandle->interruptInPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
                                 hidHandle->interruptInPipeDataLen    = 0U;
                             }
                         }
@@ -454,7 +454,7 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                         if (0U != hidHandle->interruptOutPipeStall)
                         {
                             hidHandle->interruptOutPipeStall = 0U;
-                            if ((uint8_t *)USB_UNINITIALIZED_VAL_32 != hidHandle->interruptOutPipeDataBuffer)
+                            if ((uint8_t *)USB_INVALID_TRANSFER_BUFFER != hidHandle->interruptOutPipeDataBuffer)
                             {
                                 error = USB_DeviceRecvRequest(
                                     hidHandle->handle,
@@ -470,7 +470,7 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                                     (void)USB_DeviceHidInterruptOut(hidHandle->handle, (void *)&endpointCallbackMessage,
                                                                     handle);
                                 }
-                                hidHandle->interruptOutPipeDataBuffer = (uint8_t *)USB_UNINITIALIZED_VAL_32;
+                                hidHandle->interruptOutPipeDataBuffer = (uint8_t *)USB_INVALID_TRANSFER_BUFFER;
                                 hidHandle->interruptOutPipeDataLen    = 0U;
                             }
                         }

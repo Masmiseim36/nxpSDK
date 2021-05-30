@@ -10,6 +10,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Definitions
 ////////////////////////////////////////////////////////////////////////////////
+#define SIM_UIDH_UID SIM_UIDH_UID127_96
+#define SIM_UIDMH_UID SIM_UIDMH_UID95_64
+#define SIM_UIDML_UID SIM_UIDML_UID63_32
+#define SIM_UIDL_UID SIM_UIDL_UID31_0
 
 //! @brief Constants for clock frequencies.
 enum _target_clocks

@@ -8,12 +8,12 @@
 #include "fsl_debug_console.h"
 #include "fsl_smc.h"
 #include "fsl_pmc.h"
-#include "board.h"
-
-#include "fsl_trgmux.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "peripherals.h"
+#include "board.h"
+
+#include "fsl_trgmux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -73,31 +73,23 @@ void APP_BootClockRUN(void)
     const scg_sosc_config_t g_scgSysOscConfig = {.freq        = BOARD_XTAL0_CLK_HZ,
                                                  .enableMode  = kSCG_SysOscEnable | kSCG_SysOscEnableInLowPower,
                                                  .monitorMode = kSCG_SysOscMonitorDisable,
-                                                 .div1        = kSCG_AsyncClkDivBy1,
                                                  .div2        = kSCG_AsyncClkDivBy1,
                                                  .workMode    = kSCG_SysOscModeOscLowPower};
 
     const scg_sys_clk_config_t g_sysClkConfigSircSource = {
         .divSlow = kSCG_SysClkDivBy4, .divCore = kSCG_SysClkDivBy1, .src = kSCG_SysClkSrcSirc};
 
-    const scg_firc_config_t g_scgFircConfig = {.enableMode = kSCG_FircEnable,
-                                               .div1       = kSCG_AsyncClkDivBy1,
-                                               .div2       = kSCG_AsyncClkDivBy1,
-                                               .range      = kSCG_FircRange48M,
-                                               .trimConfig = NULL};
+    const scg_firc_config_t g_scgFircConfig = {
+        .enableMode = kSCG_FircEnable, .div2 = kSCG_AsyncClkDivBy1, .range = kSCG_FircRange48M, .trimConfig = NULL};
 
-    const scg_lpfll_config_t g_scgLpFllConfig = {.enableMode = kSCG_LpFllEnable,
-                                                 .div1       = kSCG_AsyncClkDivBy1,
-                                                 .div2       = kSCG_AsyncClkDivBy2,
-                                                 .range      = kSCG_LpFllRange72M,
-                                                 .trimConfig = NULL};
+    const scg_lpfll_config_t g_scgLpFllConfig = {
+        .enableMode = kSCG_LpFllEnable, .div2 = kSCG_AsyncClkDivBy2, .range = kSCG_LpFllRange72M, .trimConfig = NULL};
 
     const scg_sys_clk_config_t g_sysClkConfigNormalRun = {
         .divSlow = kSCG_SysClkDivBy3, .divCore = kSCG_SysClkDivBy1, .src = kSCG_SysClkSrcLpFll};
 
     const scg_sirc_config_t scgSircConfig = {
         .enableMode = kSCG_SircEnable | kSCG_SircEnableInLowPower | kSCG_SircEnableInStop,
-        .div1       = kSCG_AsyncClkDivBy1,
         .div2       = kSCG_AsyncClkDivBy2,
         .range      = kSCG_SircRangeHigh};
 

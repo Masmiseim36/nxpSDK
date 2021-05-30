@@ -365,7 +365,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>DEBUG, CPU_MK22FN512VLH12, USB_STACK_BM=1, FSL_OSA_TASK_ENABLE=1, FRDM_K22F, FREEDOM, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../devices/MK22F51212/drivers;../../../../../../components/pwm;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities;../../../../../../components/led;../../../../../../devices/MK22F51212/drivers;../../../../../../components/timer_manager;../../../../../../components/gpio;../../../../../../components/button;../../../../../../components/lists;../../../../../../components/timer;../../../../../../devices/MK22F51212/drivers;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/debug_console;../../../../../../components/uart;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities</IncludePath>
+              <IncludePath>..;../../../log/freertos;../../../../../../devices/MK22F51212/drivers;../../../../../../components/pwm;../../../../../../devices/MK22F51212/utilities;../../../../../../components/led;../../../../../../components/timer_manager;../../../../../../components/gpio;../../../../../../components/button;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MK22F51212;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/debug_console;../../../../../../components/uart;../../../../../../CMSIS/Include;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
@@ -385,7 +385,7 @@
               <MiscControls/>
               <Define>DEBUG</Define>
               <Undefine/>
-              <IncludePath>..;../../../..</IncludePath>
+              <IncludePath>..</IncludePath>
             </VariousControls>
             <uClangAs>1</uClangAs>
           </Aads>
@@ -504,19 +504,14 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -524,9 +519,9 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -534,9 +529,9 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
@@ -544,9 +539,9 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -554,19 +549,24 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_port.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -574,14 +574,14 @@
           <GroupName>component/pwm</GroupName>
           <Files>
             <File>
-              <FileName>pwm.h</FileName>
+              <FileName>fsl_adapter_pwm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/pwm/pwm.h</FilePath>
+              <FilePath>../../../../../../components/pwm/fsl_adapter_pwm.h</FilePath>
             </File>
             <File>
-              <FileName>pwm_ftm_adapter.c</FileName>
+              <FileName>fsl_adapter_pwm_ftm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/pwm/pwm_ftm_adapter.c</FilePath>
+              <FilePath>../../../../../../components/pwm/fsl_adapter_pwm_ftm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -599,6 +599,16 @@
               <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_shell.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -614,16 +624,6 @@
               <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
@@ -634,14 +634,14 @@
           <GroupName>component/led</GroupName>
           <Files>
             <File>
-              <FileName>led.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/led/led.c</FilePath>
+              <FileName>fsl_component_led.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/led/fsl_component_led.h</FilePath>
             </File>
             <File>
-              <FileName>led.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/led/led.h</FilePath>
+              <FileName>fsl_component_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/led/fsl_component_led.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -649,14 +649,14 @@
           <GroupName>component/timer_manager</GroupName>
           <Files>
             <File>
-              <FileName>timer_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer_manager/timer_manager.c</FilePath>
+              <FileName>fsl_component_timer_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer_manager/fsl_component_timer_manager.h</FilePath>
             </File>
             <File>
-              <FileName>timer_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer_manager/timer_manager.h</FilePath>
+              <FileName>fsl_component_timer_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer_manager/fsl_component_timer_manager.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -664,14 +664,14 @@
           <GroupName>component/gpio</GroupName>
           <Files>
             <File>
-              <FileName>gpio.h</FileName>
+              <FileName>fsl_adapter_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/gpio/gpio.h</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>gpio_adapter.c</FileName>
+              <FileName>fsl_adapter_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/gpio/gpio_adapter.c</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -679,29 +679,29 @@
           <GroupName>component/button</GroupName>
           <Files>
             <File>
-              <FileName>button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/button/button.c</FilePath>
+              <FileName>fsl_component_button.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/button/fsl_component_button.h</FilePath>
             </File>
             <File>
-              <FileName>button.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/button/button.h</FilePath>
+              <FileName>fsl_component_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/button/fsl_component_button.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -709,14 +709,14 @@
           <GroupName>component/timer</GroupName>
           <Files>
             <File>
-              <FileName>pit_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer/pit_adapter.c</FilePath>
+              <FileName>fsl_adapter_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_timer.h</FilePath>
             </File>
             <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer/timer.h</FilePath>
+              <FileName>fsl_adapter_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_pit.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -724,44 +724,44 @@
           <GroupName>component/panic</GroupName>
           <Files>
             <File>
-              <FileName>panic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/panic/panic.c</FilePath>
+              <FileName>fsl_component_panic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/panic/fsl_component_panic.h</FilePath>
             </File>
             <File>
-              <FileName>panic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/panic/panic.h</FilePath>
+              <FileName>fsl_component_panic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/panic/fsl_component_panic.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -774,6 +774,11 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
@@ -783,31 +788,31 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
             </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MK22F51212.h</FileName>
               <FileType>5</FileType>
@@ -817,11 +822,6 @@
               <FileName>MK22F51212_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/MK22F51212_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MK22F51212.c</FileName>
@@ -836,17 +836,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>uart.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>uart_adapter.c</FileName>
+              <FileName>fsl_adapter_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/uart_adapter.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -854,9 +854,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MK22F51212.s</FileName>
+              <FileName>startup_MK22F51212.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/arm/startup_MK22F51212.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -867,6 +867,11 @@
               <FileName>core_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -884,19 +889,14 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -904,29 +904,9 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
+              <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -946,152 +926,167 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>FreeRTOS.h</FileName>
+              <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>
@@ -1459,7 +1454,7 @@
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
               <Define>NDEBUG, CPU_MK22FN512VLH12, USB_STACK_BM=1, FSL_OSA_TASK_ENABLE=1, FRDM_K22F, FREEDOM, DEBUG_CONSOLE_RX_ENABLE=0, SERIAL_PORT_TYPE_UART=1, FSL_RTOS_FREE_RTOS</Define>
               <Undefine/>
-              <IncludePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F;..;../../../..;../../../../../../CMSIS/Include;../../../../../../devices;../../../../../../rtos/amazon-freertos/freertos_kernel/include;../../../../../../devices/MK22F51212/drivers;../../../../../../components/pwm;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities;../../../../../../components/led;../../../../../../devices/MK22F51212/drivers;../../../../../../components/timer_manager;../../../../../../components/gpio;../../../../../../components/button;../../../../../../components/lists;../../../../../../components/timer;../../../../../../devices/MK22F51212/drivers;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/debug_console;../../../../../../components/uart;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/drivers;../../../../../../devices/MK22F51212/utilities</IncludePath>
+              <IncludePath>..;../../../log/freertos;../../../../../../devices/MK22F51212/drivers;../../../../../../components/pwm;../../../../../../devices/MK22F51212/utilities;../../../../../../components/led;../../../../../../components/timer_manager;../../../../../../components/gpio;../../../../../../components/button;../../../../../../components/lists;../../../../../../components/timer;../../../../../../components/panic;../../../../../../components/serial_manager;../../../../../../components/osa;../../../../../../devices/MK22F51212;../../../../../../devices/MK22F51212/utilities/str;../../../../../../devices/MK22F51212/utilities/debug_console;../../../../../../components/uart;../../../../../../CMSIS/Include;../../../../../../rtos/freertos/freertos_kernel/include;../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F</IncludePath>
             </VariousControls>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
@@ -1479,7 +1474,7 @@
               <MiscControls/>
               <Define>NDEBUG</Define>
               <Undefine/>
-              <IncludePath>..;../../../..</IncludePath>
+              <IncludePath>..</IncludePath>
             </VariousControls>
             <uClangAs>1</uClangAs>
           </Aads>
@@ -1598,19 +1593,14 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_ftm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -1618,9 +1608,9 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -1628,9 +1618,9 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
@@ -1638,9 +1628,9 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1648,19 +1638,24 @@
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_lpuart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
+            </File>
+            <File>
               <FileName>fsl_port.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1668,14 +1663,14 @@
           <GroupName>component/pwm</GroupName>
           <Files>
             <File>
-              <FileName>pwm.h</FileName>
+              <FileName>fsl_adapter_pwm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/pwm/pwm.h</FilePath>
+              <FilePath>../../../../../../components/pwm/fsl_adapter_pwm.h</FilePath>
             </File>
             <File>
-              <FileName>pwm_ftm_adapter.c</FileName>
+              <FileName>fsl_adapter_pwm_ftm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/pwm/pwm_ftm_adapter.c</FilePath>
+              <FilePath>../../../../../../components/pwm/fsl_adapter_pwm_ftm.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1693,6 +1688,16 @@
               <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_shell.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1708,16 +1713,6 @@
               <FilePath>../../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
@@ -1728,14 +1723,14 @@
           <GroupName>component/led</GroupName>
           <Files>
             <File>
-              <FileName>led.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/led/led.c</FilePath>
+              <FileName>fsl_component_led.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/led/fsl_component_led.h</FilePath>
             </File>
             <File>
-              <FileName>led.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/led/led.h</FilePath>
+              <FileName>fsl_component_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/led/fsl_component_led.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1743,14 +1738,14 @@
           <GroupName>component/timer_manager</GroupName>
           <Files>
             <File>
-              <FileName>timer_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer_manager/timer_manager.c</FilePath>
+              <FileName>fsl_component_timer_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer_manager/fsl_component_timer_manager.h</FilePath>
             </File>
             <File>
-              <FileName>timer_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer_manager/timer_manager.h</FilePath>
+              <FileName>fsl_component_timer_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer_manager/fsl_component_timer_manager.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1758,14 +1753,14 @@
           <GroupName>component/gpio</GroupName>
           <Files>
             <File>
-              <FileName>gpio.h</FileName>
+              <FileName>fsl_adapter_gpio.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/gpio/gpio.h</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>gpio_adapter.c</FileName>
+              <FileName>fsl_adapter_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/gpio/gpio_adapter.c</FilePath>
+              <FilePath>../../../../../../components/gpio/fsl_adapter_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1773,29 +1768,29 @@
           <GroupName>component/button</GroupName>
           <Files>
             <File>
-              <FileName>button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/button/button.c</FilePath>
+              <FileName>fsl_component_button.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/button/fsl_component_button.h</FilePath>
             </File>
             <File>
-              <FileName>button.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/button/button.h</FilePath>
+              <FileName>fsl_component_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/button/fsl_component_button.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/lists</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/lists/generic_list.h</FilePath>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1803,14 +1798,14 @@
           <GroupName>component/timer</GroupName>
           <Files>
             <File>
-              <FileName>pit_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/timer/pit_adapter.c</FilePath>
+              <FileName>fsl_adapter_timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_timer.h</FilePath>
             </File>
             <File>
-              <FileName>timer.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/timer/timer.h</FilePath>
+              <FileName>fsl_adapter_pit.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/timer/fsl_adapter_pit.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1818,44 +1813,44 @@
           <GroupName>component/panic</GroupName>
           <Files>
             <File>
-              <FileName>panic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../components/panic/panic.c</FilePath>
+              <FileName>fsl_component_panic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/panic/fsl_component_panic.h</FilePath>
             </File>
             <File>
-              <FileName>panic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/panic/panic.h</FilePath>
+              <FileName>fsl_component_panic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../components/panic/fsl_component_panic.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.c</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
             </File>
             <File>
-              <FileName>serial_manager.h</FileName>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_manager.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
             </File>
             <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1868,6 +1863,11 @@
               <FilePath>../../../../../../components/osa/fsl_os_abstraction.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_os_abstraction_config.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_config.h</FilePath>
@@ -1877,31 +1877,31 @@
               <FileType>1</FileType>
               <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.c</FilePath>
             </File>
-            <File>
-              <FileName>fsl_os_abstraction_free_rtos.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../components/osa/fsl_os_abstraction_free_rtos.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-MemMang</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/MemMang</GroupName>
           <Files>
             <File>
               <FileName>heap_4.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/heap_4.c</FilePath>
             </File>
             <File>
               <FileName>ReadMe.url</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/MemMang/ReadMe.url</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MK22F51212.h</FileName>
               <FileType>5</FileType>
@@ -1911,11 +1911,6 @@
               <FileName>MK22F51212_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../devices/MK22F51212/MK22F51212_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MK22F51212.c</FileName>
@@ -1930,17 +1925,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>uart.h</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
             </File>
             <File>
-              <FileName>uart_adapter.c</FileName>
+              <FileName>fsl_adapter_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../components/uart/uart_adapter.c</FilePath>
+              <FilePath>../../../../../../components/uart/fsl_adapter_uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1948,9 +1943,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MK22F51212.s</FileName>
+              <FileName>startup_MK22F51212.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
+              <FilePath>../../../../../../devices/MK22F51212/arm/startup_MK22F51212.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1961,6 +1956,11 @@
               <FileName>core_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -1978,19 +1978,14 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -1998,29 +1993,9 @@
               <FilePath>../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
+              <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FilePath>../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -2040,152 +2015,167 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel</GroupName>
+          <GroupName>freertos/freertos_kernel</GroupName>
           <Files>
             <File>
               <FileName>event_groups.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/event_groups.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>croutine.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/croutine.c</FilePath>
             </File>
             <File>
               <FileName>list.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/list.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/list.c</FilePath>
             </File>
             <File>
               <FileName>queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/queue.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/queue.c</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/stream_buffer.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/stream_buffer.c</FilePath>
             </File>
             <File>
               <FileName>tasks.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/tasks.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/tasks.c</FilePath>
             </File>
             <File>
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/timers.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/timers.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-include</GroupName>
+          <GroupName>freertos/freertos_kernel/include</GroupName>
           <Files>
             <File>
-              <FileName>FreeRTOS.h</FileName>
+              <FileName>croutine.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/croutine.h</FilePath>
+            </File>
+            <File>
+              <FileName>StackMacros.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/StackMacros.h</FilePath>
             </File>
             <File>
               <FileName>atomic.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/atomic.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/atomic.h</FilePath>
             </File>
             <File>
               <FileName>deprecated_definitions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/deprecated_definitions.h</FilePath>
             </File>
             <File>
               <FileName>event_groups.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/event_groups.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/event_groups.h</FilePath>
+            </File>
+            <File>
+              <FileName>FreeRTOS.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/FreeRTOS.h</FilePath>
             </File>
             <File>
               <FileName>list.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/list.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/list.h</FilePath>
             </File>
             <File>
               <FileName>message_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/message_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/message_buffer.h</FilePath>
             </File>
             <File>
               <FileName>mpu_prototypes.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_prototypes.h</FilePath>
             </File>
             <File>
               <FileName>mpu_wrappers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/mpu_wrappers.h</FilePath>
             </File>
             <File>
               <FileName>portable.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/portable.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/portable.h</FilePath>
             </File>
             <File>
               <FileName>projdefs.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/projdefs.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/projdefs.h</FilePath>
             </File>
             <File>
               <FileName>queue.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/queue.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/queue.h</FilePath>
             </File>
             <File>
               <FileName>semphr.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/semphr.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/semphr.h</FilePath>
             </File>
             <File>
               <FileName>stack_macros.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stack_macros.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stack_macros.h</FilePath>
             </File>
             <File>
               <FileName>stream_buffer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/stream_buffer.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/stream_buffer.h</FilePath>
             </File>
             <File>
               <FileName>task.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/task.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/task.h</FilePath>
             </File>
             <File>
               <FileName>timers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/timers.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/timers.h</FilePath>
             </File>
             <File>
               <FileName>freertos_tasks_c_additions.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/include/freertos_tasks_c_additions.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable-GCC-ARM_CM4F</GroupName>
+          <GroupName>freertos/freertos_kernel/portable/GCC/ARM_CM4F</GroupName>
           <Files>
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/port.c</FilePath>
             </File>
             <File>
               <FileName>portmacro.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/GCC/ARM_CM4F/portmacro.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>amazon-freertos-freertos_kernel-portable</GroupName>
+          <GroupName>freertos/freertos_kernel/portable</GroupName>
           <Files>
             <File>
               <FileName>readme.txt</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../rtos/amazon-freertos/freertos_kernel/portable/readme.txt</FilePath>
+              <FilePath>../../../../../../rtos/freertos/freertos_kernel/portable/readme.txt</FilePath>
             </File>
           </Files>
         </Group>

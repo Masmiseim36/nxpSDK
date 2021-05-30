@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_afe.h"
 
-#include "pin_mux.h"
 #include "fsl_vref.h"
 /*******************************************************************************
  * Definitions

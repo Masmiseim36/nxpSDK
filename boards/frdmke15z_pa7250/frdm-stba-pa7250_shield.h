@@ -18,13 +18,13 @@
 #define SHIELD_NAME "FRDM-STBA-PA7250"
 
 // MPXV5004DP Sensor based parameters
-#define VCC (5.0)
-#define BIT12RES (4096)
+#define VCC               (5.0)
+#define BIT12RES          (4096)
 #define FXPS7250A4_OFFSET (20) /* Zero Error Offset. */
 
 /* Arduino Pin A0 (Sensor Analog Output Pin) maps to ADC0 Channel 0 on KE15Z
  * (PTA0). */
-#define FXPS7250A4_ADC12_CHANNEL 0U
+#define FXPS7250A4_ADC12_CHANNEL       0U
 #define FXPS7250A4_ADC12_CHANNEL_GROUP 0U
 
 #endif /* _FRDM_STBA_PA7250_SHIELD_H_ */

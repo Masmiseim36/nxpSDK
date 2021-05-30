@@ -37,7 +37,7 @@
 #endif
 
 /*! @brief Flash driver version for SDK*/
-#define FSL_FLASH_DRIVER_VERSION (MAKE_VERSION(2, 1, 0)) /*!< Version 2.1.0. */
+#define FSL_FLASH_DRIVER_VERSION (MAKE_VERSION(2, 1, 1)) /*!< Version 2.1.1. */
 
 /*! @brief Flash driver version for ROM*/
 enum _flash_driver_version_constants
@@ -45,7 +45,7 @@ enum _flash_driver_version_constants
     kFLASH_DriverVersionName   = 'F', /*!< Flash driver version name.*/
     kFLASH_DriverVersionMajor  = 2,   /*!< Major flash driver version.*/
     kFLASH_DriverVersionMinor  = 1,   /*!< Minor flash driver version.*/
-    kFLASH_DriverVersionBugfix = 0    /*!< Bugfix for flash driver version.*/
+    kFLASH_DriverVersionBugfix = 1    /*!< Bugfix for flash driver version.*/
 };
 /*@}*/
 

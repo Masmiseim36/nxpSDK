@@ -1,7 +1,7 @@
 /*
 ** ###################################################################
 **     Version:             rev. 1.0, 2017-05-19
-**     Build:               b200218
+**     Build:               b201014
 **
 **     Abstract:
 **         Chip specific module features.
@@ -246,6 +246,8 @@
 
 /* @brief KBI module has source pin. */
 #define FSL_FEATURE_KBI_HAS_SOURCE_PIN (0)
+/* @brief KBI register width. */
+#define FSL_FEATURE_KBI_REG_WIDTH (8)
 
 /* PIT module features */
 
@@ -311,10 +313,6 @@
 #define FSL_FEATURE_UART_IS_SCI (0)
 /* @brief Capacity (number of entries) of the transmit/receive FIFO (or zero if no FIFO is available). */
 #define FSL_FEATURE_UART_FIFO_SIZE (0)
-/* @brief Maximal data width without parity bit. */
-#define FSL_FEATURE_UART_MAX_DATA_WIDTH_WITH_NO_PARITY (9)
-/* @brief Maximal data width with parity bit. */
-#define FSL_FEATURE_UART_MAX_DATA_WIDTH_WITH_PARITY (8)
 /* @brief Supports two match addresses to filter incoming frames. */
 #define FSL_FEATURE_UART_HAS_ADDRESS_MATCHING (0)
 /* @brief Has transmitter/receiver DMA enable bits C5[TDMAE]/C5[RDMAE] (or BAUD[TDMAE]/BAUD[RDMAE] if the registers are

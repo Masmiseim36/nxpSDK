@@ -2,16 +2,16 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_lpit.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 #include "fsl_trgmux.h"
 /*******************************************************************************
  * Definitions
@@ -65,11 +65,11 @@ int main(void)
     /* Init lpit module */
     LPIT_Init(LPIT0, &lpitConfig);
 
-    lpitChannelConfig.chainChannel = false;
+    lpitChannelConfig.chainChannel          = false;
     lpitChannelConfig.enableReloadOnTrigger = false;
-    lpitChannelConfig.enableStartOnTrigger = false;
-    lpitChannelConfig.enableStopOnTimeout = false;
-    lpitChannelConfig.timerMode = kLPIT_DualPeriodicCounter;
+    lpitChannelConfig.enableStartOnTrigger  = false;
+    lpitChannelConfig.enableStopOnTimeout   = false;
+    lpitChannelConfig.timerMode             = kLPIT_DualPeriodicCounter;
     /* Set default values for the trigger source */
     lpitChannelConfig.triggerSelect = kLPIT_Trigger_TimerChn0;
     lpitChannelConfig.triggerSource = kLPIT_TriggerSource_External;

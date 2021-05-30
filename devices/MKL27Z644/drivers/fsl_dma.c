@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -252,6 +252,9 @@ void DMA_CreateHandle(dma_handle_t *handle, DMA_Type *base, uint32_t channel)
  * brief Prepares the DMA transfer configuration structure.
  *
  * This function prepares the transfer configuration structure according to the user input.
+ * The difference between this function and DMA_PrepareTransfer is that this function expose the address increment
+ * parameter to application, but in DMA_PrepareTransfer, only parts of the address increment option can be selected by
+ * dma_transfer_type_t.
  *
  * param config Pointer to the user configuration structure of type dma_transfer_config_t.
  * param srcAddr DMA transfer source address.
@@ -259,15 +262,17 @@ void DMA_CreateHandle(dma_handle_t *handle, DMA_Type *base, uint32_t channel)
  * param destAddr DMA transfer destination address.
  * param destWidth DMA transfer destination address width (byte).
  * param transferBytes DMA transfer bytes to be transferred.
- * param type DMA transfer type.
+ * param srcIncrement source address increment type.
+ * param destIncrement dest address increment type.
  */
-void DMA_PrepareTransfer(dma_transfer_config_t *config,
-                         void *srcAddr,
-                         uint32_t srcWidth,
-                         void *destAddr,
-                         uint32_t destWidth,
-                         uint32_t transferBytes,
-                         dma_transfer_type_t type)
+void DMA_PrepareTransferConfig(dma_transfer_config_t *config,
+                               void *srcAddr,
+                               uint32_t srcWidth,
+                               void *destAddr,
+                               uint32_t destWidth,
+                               uint32_t transferBytes,
+                               dma_addr_increment_t srcIncrement,
+                               dma_addr_increment_t destIncrement)
 {
     assert(config != NULL);
     assert(srcAddr != NULL);
@@ -308,21 +313,57 @@ void DMA_PrepareTransfer(dma_transfer_config_t *config,
         config->destSize = kDMA_Transfersize32bits;
     }
 
+    config->enableSrcIncrement  = srcIncrement == kDMA_AddrNoIncrement ? false : true;
+    config->enableDestIncrement = destIncrement == kDMA_AddrNoIncrement ? false : true;
+}
+
+/*!
+ * brief Prepares the DMA transfer configuration structure.
+ *
+ * This function prepares the transfer configuration structure according to the user input.
+ *
+ * param config Pointer to the user configuration structure of type dma_transfer_config_t.
+ * param srcAddr DMA transfer source address.
+ * param srcWidth DMA transfer source address width (byte).
+ * param destAddr DMA transfer destination address.
+ * param destWidth DMA transfer destination address width (byte).
+ * param transferBytes DMA transfer bytes to be transferred.
+ * param type DMA transfer type.
+ */
+void DMA_PrepareTransfer(dma_transfer_config_t *config,
+                         void *srcAddr,
+                         uint32_t srcWidth,
+                         void *destAddr,
+                         uint32_t destWidth,
+                         uint32_t transferBytes,
+                         dma_transfer_type_t type)
+{
+    assert(config != NULL);
+    assert(srcAddr != NULL);
+    assert(destAddr != NULL);
+    assert((srcWidth == 1UL) || (srcWidth == 2UL) || (srcWidth == 4UL));
+    assert((destWidth == 1UL) || (destWidth == 2UL) || (destWidth == 4UL));
+
+    dma_addr_increment_t srcIncrement = false, destIncrement = false;
+
     if (type == kDMA_MemoryToMemory)
     {
-        config->enableSrcIncrement  = true;
-        config->enableDestIncrement = true;
+        srcIncrement  = kDMA_AddrIncrementPerTransferWidth;
+        destIncrement = kDMA_AddrIncrementPerTransferWidth;
     }
     else if (type == kDMA_PeripheralToMemory)
     {
-        config->enableSrcIncrement  = false;
-        config->enableDestIncrement = true;
+        srcIncrement  = kDMA_AddrNoIncrement;
+        destIncrement = kDMA_AddrIncrementPerTransferWidth;
     }
     else
     {
-        config->enableSrcIncrement  = true;
-        config->enableDestIncrement = false;
+        srcIncrement  = kDMA_AddrIncrementPerTransferWidth;
+        destIncrement = kDMA_AddrNoIncrement;
     }
+
+    DMA_PrepareTransferConfig(config, srcAddr, srcWidth, destAddr, destWidth, transferBytes, srcIncrement,
+                              destIncrement);
 }
 
 /*!
@@ -413,24 +454,28 @@ void DMA_HandleIRQ(dma_handle_t *handle)
 }
 
 #if defined(FSL_FEATURE_DMA_MODULE_CHANNEL) && (FSL_FEATURE_DMA_MODULE_CHANNEL == 4U)
+void DMA0_DriverIRQHandler(void);
 void DMA0_DriverIRQHandler(void)
 {
     DMA_HandleIRQ(s_DMAHandle[0]);
     SDK_ISR_EXIT_BARRIER;
 }
 
+void DMA1_DriverIRQHandler(void);
 void DMA1_DriverIRQHandler(void)
 {
     DMA_HandleIRQ(s_DMAHandle[1]);
     SDK_ISR_EXIT_BARRIER;
 }
 
+void DMA2_DriverIRQHandler(void);
 void DMA2_DriverIRQHandler(void)
 {
     DMA_HandleIRQ(s_DMAHandle[2]);
     SDK_ISR_EXIT_BARRIER;
 }
 
+void DMA3_DriverIRQHandler(void);
 void DMA3_DriverIRQHandler(void)
 {
     DMA_HandleIRQ(s_DMAHandle[3]);

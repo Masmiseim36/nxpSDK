@@ -18,7 +18,7 @@ static void SPI_RTOS_Callback(SPI_Type *base, spi_master_handle_t *drv_handle, s
     spi_rtos_handle_t *handle = (spi_rtos_handle_t *)userData;
     BaseType_t reschedule;
     handle->async_status = status;
-    xSemaphoreGiveFromISR(handle->event, &reschedule);
+    (void)xSemaphoreGiveFromISR(handle->event, &reschedule);
     portYIELD_FROM_ISR(reschedule);
 }
 
@@ -48,7 +48,7 @@ status_t SPI_RTOS_Init(spi_rtos_handle_t *handle,
         return kStatus_InvalidArgument;
     }
 
-    memset(handle, 0, sizeof(spi_rtos_handle_t));
+    (void)memset(handle, 0, sizeof(spi_rtos_handle_t));
 #if (configSUPPORT_STATIC_ALLOCATION == 1)
     handle->mutex = xSemaphoreCreateMutexStatic(&handle->mutexBuffer);
 #else
@@ -116,7 +116,7 @@ status_t SPI_RTOS_Transfer(spi_rtos_handle_t *handle, spi_transfer_t *transfer)
     status = SPI_MasterTransferNonBlocking(handle->base, &handle->drv_handle, transfer);
     if (status != kStatus_Success)
     {
-        xSemaphoreGive(handle->mutex);
+        (void)xSemaphoreGive(handle->mutex);
         return status;
     }
 
@@ -130,7 +130,7 @@ status_t SPI_RTOS_Transfer(spi_rtos_handle_t *handle, spi_transfer_t *transfer)
     status = handle->async_status;
 
     /* Unlock resource mutex */
-    xSemaphoreGive(handle->mutex);
+    (void)xSemaphoreGive(handle->mutex);
 
     /* Translate status of underlying driver */
     if (status == kStatus_SPI_Idle)

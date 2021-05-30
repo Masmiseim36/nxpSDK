@@ -5,13 +5,14 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-#include "fsl_device_registers.h"
-#include "clock_config.h"
-#include "board.h"
-#include "fsl_debug_console.h"
-
 #include <stdio.h>
 #include <stdlib.h>
+/*${standard_header_anchor}*/
+#include "fsl_device_registers.h"
+#include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
+#include "board.h"
 
 #include "usb_device_config.h"
 #include "usb.h"
@@ -29,7 +30,6 @@
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
 
-#include "pin_mux.h"
 #include "fsl_common.h"
 /*******************************************************************************
  * Definitions
@@ -577,7 +577,7 @@ usb_status_t USB_DeviceVnicReceive(void)
         {
             buffer = (uint8_t *)g_cdcVnic.nicTrafficInfo.usbRxPartOneBuf;
             len    = g_cdcVnic.nicTrafficInfo.usbRxPartOneLen;
-            if (0xFFFFFFFFU == len)
+            if (USB_CANCELLED_TRANSFER_LENGTH == len)
             {
                 USB_DeviceVnicReceiveSetState(RX_IDLE);
                 break;
@@ -632,7 +632,7 @@ usb_status_t USB_DeviceVnicReceive(void)
         {
             buffer = (uint8_t *)g_cdcVnic.nicTrafficInfo.usbRxPartTwoBuf;
             len    = g_cdcVnic.nicTrafficInfo.usbRxPartTwoLen;
-            if (0xFFFFFFFFU == len)
+            if (USB_CANCELLED_TRANSFER_LENGTH == len)
             {
                 USB_DeviceVnicReceiveSetState(RX_IDLE);
                 break;

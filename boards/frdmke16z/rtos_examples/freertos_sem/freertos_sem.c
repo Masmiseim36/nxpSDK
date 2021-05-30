@@ -16,15 +16,15 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
-#define TASK_PRIO (configMAX_PRIORITIES - 1)
+#define TASK_PRIO          (configMAX_PRIORITIES - 1)
 #define CONSUMER_LINE_SIZE 3
 SemaphoreHandle_t xSemaphore_producer;
 SemaphoreHandle_t xSemaphore_consumer;
@@ -46,7 +46,7 @@ int main(void)
     BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
-    if (xTaskCreate(producer_task, "PRODUCER_TASK", configMINIMAL_STACK_SIZE + 64, NULL, TASK_PRIO, NULL) != pdPASS)
+    if (xTaskCreate(producer_task, "PRODUCER_TASK", configMINIMAL_STACK_SIZE + 128, NULL, TASK_PRIO, NULL) != pdPASS)
     {
         PRINTF("Task creation failed!.\r\n");
         while (1)
@@ -82,7 +82,7 @@ static void producer_task(void *pvParameters)
 
     for (i = 0; i < CONSUMER_LINE_SIZE; i++)
     {
-        if (xTaskCreate(consumer_task, "CONSUMER_TASK", configMINIMAL_STACK_SIZE + 64, (void *)i, TASK_PRIO, NULL) !=
+        if (xTaskCreate(consumer_task, "CONSUMER_TASK", configMINIMAL_STACK_SIZE + 128, (void *)i, TASK_PRIO, NULL) !=
             pdPASS)
         {
             PRINTF("Task creation failed!.\r\n");

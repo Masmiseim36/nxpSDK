@@ -8,10 +8,10 @@
 
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_sysmpu.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -64,6 +64,14 @@ void DisableWritebuffer(void)
 }
 
 /*!
+ * @brief The function is used to enable write buffer
+ */
+void EnableWritebuffer(void)
+{
+    CPU_REG_SCnSCB_ACTLR &= ~CPU_REG_SCnSCB_ACTLR_DISDEFWBUF;
+}
+
+/*!
  * @brief BusFault IRQ Handler
  */
 #if defined(KM34Z7_SERIES) || defined(KM35Z7_SERIES) || defined(KL81Z7_SERIES) || defined(KL82Z7_SERIES)
@@ -95,6 +103,10 @@ void BusFault_Handler(void)
 /*!
  * @brief Main function
  */
+#if APP_USING_CACHE
+#include "fsl_cache.h"
+#endif
+
 int main(void)
 {
     sysmpu_hardware_info_t hardwareInform;
@@ -177,6 +189,13 @@ int main(void)
         regionArray[i] = 0;
     }
 
+#if defined(KV58F24_SERIES) || defined(KV56F24_SERIES)
+    SCB_EnableDCache();
+#else
+    /* Enable write buffer. */
+    EnableWritebuffer();
+#endif
+
     while (1)
     {
         PRINTF("\r\nSet regionArray0 to un-writeable.\r\n");
@@ -187,6 +206,12 @@ int main(void)
         PRINTF("\r\nWrite %d to regionArray at No.%d.\r\n", g_count, g_count);
         /* Cannot write here, bus fault occur. */
         regionArray[g_count] = g_count;
+
+#if APP_USING_CACHE
+#if defined(KV58F24_SERIES) || defined(KV56F24_SERIES)
+        DCACHE_CleanByRange((uint32_t)regionArray, sizeof(uint32_t));
+#endif /* KV58F24_SERIES/KV56F24_SERIES */
+#endif /* APP_USING_CACHE */
 
         /* ISB to make sure the instruction execute sequence. */
         __ISB();
@@ -228,6 +253,12 @@ int main(void)
 
             /* Update again. */
             regionArray[g_count] = g_count;
+
+#if APP_USING_CACHE
+#if defined(KV58F24_SERIES) || defined(KV56F24_SERIES)
+            DCACHE_CleanByRange((uint32_t)regionArray, sizeof(uint32_t));
+#endif /* KV58F24_SERIES/KV56F24_SERIES */
+#endif /* APP_USING_CACHE */
 
             /* Bus fault occurs, regionArray is updated. */
             PRINTF("\r\nRegionArray[%d] = %d, updated now.\r\n", g_count, regionArray[g_count]);

@@ -17,21 +17,21 @@
 #include "timers.h"
 
 /* Freescale includes. */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 #include "fsl_lpi2c.h"
 #include "fsl_lpi2c_freertos.h"
 
 #include "fsl_device_registers.h"
-#include "pin_mux.h"
 #include <stdbool.h>
-#include "clock_config.h"
 #include "stdbool.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define EXAMPLE_CONNECT_I2C BOARD_TO_BOARD
-#define I2C_MASTER_SLAVE isMASTER /* Change to isSLAVE to run as slave. */
+#define I2C_MASTER_SLAVE    isMASTER /* Change to isSLAVE to run as slave. */
 
 #define EXAMPLE_I2C_MASTER_BASE (LPI2C0_BASE)
 #define EXAMPLE_I2C_MASTER_IRQN (LPI2C0_IRQn)
@@ -89,7 +89,7 @@ SemaphoreHandle_t lpi2c_sem;
  * Definitions
  ******************************************************************************/
 /* Task priorities. */
-#define slave_task_PRIORITY (configMAX_PRIORITIES - 2)
+#define slave_task_PRIORITY  (configMAX_PRIORITIES - 2)
 #define master_task_PRIORITY (configMAX_PRIORITIES - 1)
 
 /*******************************************************************************
@@ -117,7 +117,7 @@ int main(void)
 /* Set IRQ priority for freertos_lpi2c */
 #if (I2C_MASTER_SLAVE == isMASTER)
     NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 3);
-#elif(I2C_MASTER_SLAVE == isSLAVE)
+#elif (I2C_MASTER_SLAVE == isSLAVE)
     NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 2);
 #endif
     PRINTF("\r\nLPI2C example -- MasterInterrupt_SlaveInterrupt.\r\n");
@@ -128,7 +128,8 @@ int main(void)
         g_master_buff[i] = i;
     }
 
-    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 64, NULL, slave_task_PRIORITY, NULL) != pdPASS)
+    if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 100, NULL, slave_task_PRIORITY, NULL) !=
+        pdPASS)
     {
         PRINTF("Failed to create slave task");
         while (1)
@@ -156,12 +157,12 @@ typedef struct _callback_message_t
 static void lpi2c_slave_callback(LPI2C_Type *base, lpi2c_slave_transfer_t *xfer, void *userData)
 {
     callback_message_t *cb_msg = (callback_message_t *)userData;
-    BaseType_t reschedule;
+    BaseType_t reschedule      = 0;
 
     switch (xfer->event)
     {
         case kLPI2C_SlaveReceiveEvent:
-            xfer->data = g_slave_buff;
+            xfer->data     = g_slave_buff;
             xfer->dataSize = I2C_DATA_LENGTH;
             break;
         case kLPI2C_SlaveCompletionEvent:
@@ -184,7 +185,7 @@ static void slave_task(void *pvParameters)
     callback_message_t cb_msg;
 
     cb_msg.sem = xSemaphoreCreateBinary();
-    lpi2c_sem = cb_msg.sem;
+    lpi2c_sem  = cb_msg.sem;
     if (cb_msg.sem == NULL)
     {
         PRINTF("I2C slave: Error creating semaphore\r\n");
@@ -222,15 +223,19 @@ static void slave_task(void *pvParameters)
                                    kLPI2C_SlaveReceiveEvent | kLPI2C_SlaveCompletionEvent);
 #endif
 #if ((I2C_MASTER_SLAVE == isMASTER) || (EXAMPLE_CONNECT_I2C == SINGLE_BOARD))
-    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 64, NULL, master_task_PRIORITY, NULL) !=
+    if (xTaskCreate(master_task, "Master_task", configMINIMAL_STACK_SIZE + 100, NULL, master_task_PRIORITY, NULL) !=
         pdPASS)
     {
         vTaskSuspend(NULL);
         PRINTF("Failed to create master task");
     }
 #endif
+
     /* Wait for transfer to finish */
-    xSemaphoreTake(cb_msg.sem, portMAX_DELAY);
+    if (xSemaphoreTake(cb_msg.sem, portMAX_DELAY) != pdTRUE)
+    {
+        PRINTF("Failed to take semaphore.\r\n");
+    }
 
 #if ((I2C_MASTER_SLAVE == isSLAVE) || (EXAMPLE_CONNECT_I2C == SINGLE_BOARD))
     if (cb_msg.async_status == kStatus_Success)
@@ -314,13 +319,13 @@ static void master_task(void *pvParameters)
     }
 
     memset(&masterXfer, 0, sizeof(masterXfer));
-    masterXfer.slaveAddress = I2C_MASTER_SLAVE_ADDR_7BIT;
-    masterXfer.direction = kLPI2C_Write;
-    masterXfer.subaddress = 0;
+    masterXfer.slaveAddress   = I2C_MASTER_SLAVE_ADDR_7BIT;
+    masterXfer.direction      = kLPI2C_Write;
+    masterXfer.subaddress     = 0;
     masterXfer.subaddressSize = 0;
-    masterXfer.data = g_master_buff;
-    masterXfer.dataSize = I2C_DATA_LENGTH;
-    masterXfer.flags = kLPI2C_TransferDefaultFlag;
+    masterXfer.data           = g_master_buff;
+    masterXfer.dataSize       = I2C_DATA_LENGTH;
+    masterXfer.flags          = kLPI2C_TransferDefaultFlag;
 
     status = LPI2C_RTOS_Transfer(&master_rtos_handle, &masterXfer);
     if (status == kStatus_Success)

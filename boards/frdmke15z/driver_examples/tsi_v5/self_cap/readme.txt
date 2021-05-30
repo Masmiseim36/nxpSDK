@@ -10,10 +10,10 @@ In this example , we make use of the available electrodes on board to show drive
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -80,6 +80,3 @@ Channel 23 Normal mode counter is: 5072
 NOW, comes to the hardware trigger scan method!
 After running, touch pad E1 each time, you will see LED toggles.
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -296,7 +296,21 @@ static void LIN_LPUART_ProcessBreakDetect(uint32_t instance)
         /* If the current node is SLAVE */
         else
         {
-            /* Change the node's current state to RECEIVED BREAK FIELD */
+            /* If the current node state is still receive/send data when break detected, this indicate the lst frame's
+               response is not complete */
+            if ((linCurrentState->currentNodeState == LIN_NODE_STATE_RECV_DATA) ||
+                (linCurrentState->currentNodeState == LIN_NODE_STATE_SEND_DATA))
+            {
+                /* Change the node's current event to LAST RESPONSE TOO SHORT */
+                linCurrentState->currentEventId = LIN_LAST_RESPONSE_SHORT_ERROR;
+
+                /* Callback function */
+                if (linCurrentState->Callback != NULL)
+                {
+                    linCurrentState->Callback(instance, linCurrentState);
+                }
+            }
+            /* Change the node's current event to RECEIVED BREAK FIELD */
             linCurrentState->currentEventId = LIN_RECV_BREAK_FIELD_OK;
 
             /* Callback function */
@@ -605,7 +619,7 @@ static void LIN_LPUART_ProcessFrameHeader(uint32_t instance, uint8_t tmpByte)
                     /* Set current event ID to PID correct */
                     linCurrentState->currentEventId = LIN_PID_OK;
 
-                    /* Clear Bus bus flag */
+                    /* Clear Bus busy flag */
                     linCurrentState->isBusBusy = false;
 
                     if (linCurrentState->Callback != NULL)
@@ -702,11 +716,12 @@ static void LIN_LPUART_ProcessReceiveFrameData(uint32_t instance, uint8_t tmpByt
     {
         /* Restore rxBuffer pointer */
         linCurrentState->rxBuff -= linCurrentState->rxSize - 1U;
+        /* Regardless of the check sum calculation, the node state should be changed to receive data complete. */
+        linCurrentState->currentNodeState = LIN_NODE_STATE_RECV_DATA_COMPLETED;
         if (LIN_MakeChecksumByte(linCurrentState->rxBuff, linCurrentState->rxSize - 1U, linCurrentState->currentPid) ==
             linCurrentState->checkSum)
         {
-            linCurrentState->currentEventId   = LIN_RX_COMPLETED;
-            linCurrentState->currentNodeState = LIN_NODE_STATE_RECV_DATA_COMPLETED;
+            linCurrentState->currentEventId = LIN_RX_COMPLETED;
 
             /* callback function to handle RX COMPLETED */
             if (linCurrentState->Callback != NULL)
@@ -780,9 +795,12 @@ static void LIN_LPUART_ProcessSendFrameData(uint32_t instance, uint8_t tmpByte)
     }
     else
     {
-        tmpSize            = linCurrentState->txSize - linCurrentState->cntByte;
+        /* Remaining tx count. */
+        tmpSize = linCurrentState->txSize - linCurrentState->cntByte;
+        /* In send checksum state but the readback data is not equal to checksum */
         tmpCheckSumAndSize = (tmpSize == 1U) && (linCurrentState->checkSum != tmpByte);
-        tmpBuffAndSize     = (*linCurrentState->txBuff != tmpByte) && (tmpSize != 1U);
+        /* In send data state but the readback data is not equal to data to send */
+        tmpBuffAndSize = (*linCurrentState->txBuff != tmpByte) && (tmpSize != 1U);
         if (tmpBuffAndSize || tmpCheckSumAndSize)
         {
             linCurrentState->currentEventId = LIN_READBACK_ERROR;
@@ -858,8 +876,8 @@ lin_status_t LIN_LPUART_Init(LPUART_Type *base,
     uint32_t osrValue;
     uint16_t sbrValue;
     lin_status_t retVal = LIN_SUCCESS;
-    /* Assert parameters. */
 
+    /* Assert parameters. */
     assert(NULL != linUserConfig);
     assert(0U != linUserConfig->baudRate);
 
@@ -1038,11 +1056,12 @@ lin_status_t LIN_LPUART_Deinit(LPUART_Type *base)
 
 /*!
  * brief Sends Frame data out through the LIN_LPUART module using blocking method.
- *  This function will calculate the checksum byte and send it with the frame data.
- *  Blocking means that the function does not return until the transmission is complete.
  *
- * param instance LIN_LPUART instance number
- * param txBuff  source buffer containing 8-bit data chars to send
+ * This function calculates the checksum byte and send it after the frame data.
+ * Blocking means that the function does not return until the transmission is complete.
+ *
+ * param base LPUART peripheral base address
+ * param txBuff source buffer containing 8-bit data chars to send
  * param txSize the number of bytes to send
  * param timeoutMSec timeout value in milli seconds
  * return An error code or lin_status_t
@@ -1109,14 +1128,14 @@ lin_status_t LIN_LPUART_SendFrameDataBlocking(LPUART_Type *base,
 
 /*!
  * brief Sends frame data out through the LIN_LPUART module using non-blocking method.
- *  This enables an a-sync method for transmitting data.
- *  Non-blocking  means that the function returns immediately.
- *  The application has to get the transmit status to know when the transmit is complete.
- *  This function will calculate the checksum byte and send it with the frame data.
  *
- * param instance LIN_LPUART instance number
- * param txBuff  source buffer containing 8-bit data chars to send
- * param txSize  the number of bytes to send
+ * This enables an a sync method for transmitting data. Non-blocking means that the function returns immediately.
+ * The application has to get the transmit status to know when the transmit is complete.
+ * This function will calculate the checksum byte and send it with the frame data.
+ *
+ * param base LPUART peripheral base address
+ * param txBuff source buffer containing 8-bit data chars to send
+ * param txSize the number of bytes to send
  * return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_SendFrameData(LPUART_Type *base, const uint8_t *txBuff, uint8_t txSize)
@@ -1178,7 +1197,7 @@ lin_status_t LIN_LPUART_SendFrameData(LPUART_Type *base, const uint8_t *txBuff, 
  *  if timeout has occurred, or return LIN_SUCCESS when the transmission is complete.
  *  The bytesRemaining shows number of bytes that still needed to transmit.
  *
- * param instance LIN_LPUART instance number
+ * param base LPUART peripheral base address
  * param bytesRemaining  Number of bytes still needed to transmit
  * return lin_status_t LIN_TX_BUSY, LIN_SUCCESS or LIN_TIMEOUT
  */
@@ -1215,7 +1234,7 @@ lin_status_t LIN_LPUART_GetTransmitStatus(LPUART_Type *base, uint8_t *bytesRemai
  *  will receive the frame data. Blocking means that the function does
  *  not return until the reception is complete.
  *
- * param instance LIN_LPUART instance number
+ * param base LPUART peripheral base address
  * param rxBuff  buffer containing 8-bit received data
  * param rxSize the number of bytes to receive
  * param timeoutMSec timeout value in milli seconds
@@ -1275,6 +1294,18 @@ lin_status_t LIN_LPUART_RecvFrmDataBlocking(LPUART_Type *base, uint8_t *rxBuff, 
     return retVal;
 }
 
+/*!
+ * brief Receives frame data through the LIN_LPUART module using blocking method.
+ *  This function will check the checksum byte. If the checksum is correct, it
+ *  will receive the frame data. Blocking means that the function does
+ *  not return until the reception is complete.
+ *
+ * param base LPUART peripheral base address
+ * param rxBuff  buffer containing 8-bit received data
+ * param rxSize the number of bytes to receive
+ * param timeoutMSec timeout value in milli seconds
+ * return An error code or lin_status_t
+ */
 lin_status_t LIN_LPUART_RecvFrmData(LPUART_Type *base, uint8_t *rxBuff, uint8_t rxSize)
 {
     assert(NULL != rxBuff);
@@ -1333,7 +1364,7 @@ lin_status_t LIN_LPUART_RecvFrmData(LPUART_Type *base, uint8_t *rxBuff, uint8_t 
  *  While performing a non-blocking transferring data, users can call this function
  *  to terminate immediately the transferring.
  *
- * param instance LIN_LPUART instance number
+ * param base LPUART peripheral base address
  * return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_AbortTransferData(LPUART_Type *base)
@@ -1367,7 +1398,7 @@ lin_status_t LIN_LPUART_AbortTransferData(LPUART_Type *base)
  *  and return LIN_SUCCESS, or timeout (LIN_TIMEOUT) when the reception is complete.
  *  The bytesRemaining shows number of bytes that still needed to receive.
  *
- * param instance LIN_LPUART instance number
+ * param base LPUART peripheral base address
  * param bytesRemaining  Number of bytes still needed to receive
  * return lin_status_t LIN_RX_BUSY, LIN_TIMEOUT or LIN_SUCCESS
  */
@@ -1402,7 +1433,7 @@ lin_status_t LIN_LPUART_GetReceiveStatus(LPUART_Type *base, uint8_t *bytesRemain
  * brief This function puts current node to sleep mode
  * This function changes current node state to LIN_NODE_STATE_SLEEP_MODE
  *
- * param instance LIN_LPUART instance number
+ * param base LPUART peripheral base address
  * return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_GoToSleepMode(LPUART_Type *base)
@@ -1443,7 +1474,7 @@ lin_status_t LIN_LPUART_GoToSleepMode(LPUART_Type *base)
  * brief Puts current LIN node to Idle state
  * This function changes current node state to LIN_NODE_STATE_IDLE
  *
- * param instance LIN_LPUART instance number
+ * param base LPUART peripheral base address
  * return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_GotoIdleState(LPUART_Type *base)
@@ -1483,7 +1514,7 @@ lin_status_t LIN_LPUART_GotoIdleState(LPUART_Type *base)
 /*!
  * brief Sends a wakeup signal through the LIN_LPUART interface
  *
- * param instance LIN_LPUART instance number
+ * param base LPUART peripheral base address
  * return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_SendWakeupSignal(LPUART_Type *base)
@@ -1512,8 +1543,8 @@ lin_status_t LIN_LPUART_SendWakeupSignal(LPUART_Type *base)
  *  This function sends LIN Break field, sync field then the ID with
  *  correct parity.
  *
- * param instance LIN_LPUART instance number
- * param id  Frame Identifier
+ * param base LPUART peripheral base address
+ * param id Frame Identifier
  * return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_MasterSendHeader(LPUART_Type *base, uint8_t id)
@@ -1569,7 +1600,7 @@ lin_status_t LIN_LPUART_MasterSendHeader(LPUART_Type *base, uint8_t id)
 /*!
  * brief Enables LIN_LPUART hardware interrupts.
  *
- * param instance LIN_LPUART instance number
+ * param base LPUART peripheral base address
  * return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_EnableIRQ(LPUART_Type *base)
@@ -1606,7 +1637,7 @@ lin_status_t LIN_LPUART_EnableIRQ(LPUART_Type *base)
 /*!
  * brief Disables LIN_LPUART hardware interrupts.
  *
- * param instance LIN_LPUART instance number
+ * param base LPUART peripheral base address
  * return An error code or lin_status_t
  */
 lin_status_t LIN_LPUART_DisableIRQ(LPUART_Type *base)
@@ -1772,7 +1803,7 @@ lin_status_t LIN_LPUART_AutoBaudCapture(uint32_t instance)
 /*!
  * brief LIN_LPUART RX TX interrupt handler
  *
- * param instance LIN_LPUART instance number
+ * param base LPUART peripheral base address
  * return void
  */
 void LIN_LPUART_IRQHandler(LPUART_Type *base)

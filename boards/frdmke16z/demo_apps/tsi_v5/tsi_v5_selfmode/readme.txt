@@ -7,17 +7,14 @@ In this example , available electrodes on board is used to show how to realize t
 2. Then, start the periodical Software-Trigger scan using polling method to detect finger touch;
 3. Wait for the electrodes touched and deal with the event.
 
-Running the demo
-================
-When running successfully, LED will be turn on when the electrode on board touched and will be
-turn off when released. The log output in terminal shall be similar as below:
-~~~~~~~~~~~~~~~~~~~~~
-TSI self mode demo.
-TSI key touched.
-TSI key released.
-TSI key touched.
-TSI key released.
-~~~~~~~~~~~~~~~~~~~~~
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -40,11 +37,14 @@ Prepare the Demo
 3.  Download the program to the target board.
 4.  Either press the reset button on your board or launch the debugger in your IDE to begin running the demo.
 
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-
+Running the demo
+================
+When running successfully, LED will be turn on when the electrode on board touched and will be
+turn off when released. The log output in terminal shall be similar as below:
+~~~~~~~~~~~~~~~~~~~~~
+TSI self mode demo.
+TSI key touched.
+TSI key released.
+TSI key touched.
+TSI key released.
+~~~~~~~~~~~~~~~~~~~~~

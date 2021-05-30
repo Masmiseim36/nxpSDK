@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2018 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -140,7 +144,87 @@ usb_device_class_struct_t g_UsbDeviceHidMouseConfig = {
     USB_DEVICE_CONFIGURATION_COUNT,   /* The configuration count */
 };
 
-uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceHidMouseReportDescriptor[] = {
+    0x05U, 0x01U, /* Usage Page (Generic Desktop)*/
+    0x09U, 0x02U, /* Usage (Mouse) */
+    0xA1U, 0x01U, /* Collection (Application) */
+    0x09U, 0x01U, /* Usage (Pointer) */
+
+    0xA1U, 0x00U, /* Collection (Physical) */
+    0x05U, 0x09U, /* Usage Page (Buttons) */
+    0x19U, 0x01U, /* Usage Minimum (01U) */
+    0x29U, 0x03U, /* Usage Maximum (03U) */
+
+    0x15U, 0x00U, /* Logical Minimum (0U) */
+    0x25U, 0x01U, /* Logical Maximum (1U) */
+    0x95U, 0x03U, /* Report Count (3U) */
+    0x75U, 0x01U, /* Report Size (1U) */
+
+    0x81U, 0x02U, /* Input(Data, Variable, Absolute) 3U button bit fields */
+    0x95U, 0x01U, /* Report Count (1U) */
+    0x75U, 0x05U, /* Report Size (5U) */
+    0x81U, 0x01U, /* Input (Constant), 5U constant field */
+
+    0x05U, 0x01U, /* Usage Page (Generic Desktop) */
+    0x09U, 0x30U, /* Usage (X) */
+    0x09U, 0x31U, /* Usage (Y) */
+    0x09U, 0x38U, /* Usage (Z) */
+
+    0x15U, 0x81U, /* Logical Minimum (-127) */
+    0x25U, 0x7FU, /* Logical Maximum (127) */
+    0x75U, 0x08U, /* Report Size (8U) */
+    0x95U, 0x03U, /* Report Count (3U) */
+
+    0x81U, 0x06U, /* Input(Data, Variable, Relative), Three position bytes (X & Y & Z)*/
+    0xC0U,        /* End collection, Close Pointer collection*/
+    0xC0U         /* End collection, Close Mouse collection */
+};
+
+/* HID keyboard report descriptor */
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceHidKeyboardReportDescriptor[] = {
+    0x05U, 0x01U, /* Usage Page (Generic Desktop)*/
+    0x09U, 0x06U, /* Usage (Keyboard) */
+    0xA1U, 0x01U, /* Collection (Application) */
+    0x75U, 0x01U, /* Report Size (1U) */
+    0x95U, 0x08U, /* Report Count (8U) */
+    0x05U, 0x07U, /* Usage Page (Key Codes) */
+    0x19U, 0xE0U, /* Usage Minimum (224U) */
+    0x29U, 0xE7U, /* Usage Maximum (231U) */
+
+    0x15U, 0x00U, /* Logical Minimum (0U) */
+    0x25U, 0x01U, /* Logical Maximum (1U) */
+    0x81U, 0x02U, /* Input(Data, Variable, Absolute) Modifier byte */
+
+    0x95U, 0x01U, /* Report Count (1U) */
+    0x75U, 0x08U, /* Report Size (8U) */
+    0x81U, 0x01U, /* Input (Constant), Reserved byte */
+    0x95U, 0x05U, /* Report Count (5U) */
+    0x75U, 0x01U, /* Report Size (1U) */
+
+    0x05U, 0x08U, /* Usage Page (Page# for LEDs) */
+    0x19U, 0x01U, /* Usage Minimum (1U) */
+    0x29U, 0x05U, /* Usage Maximum (5U) */
+    0x91U, 0x02U, /* Output (Data, Variable, Absolute) LED report */
+    0x95U, 0x01U, /* Report Count (1U) */
+    0x75U, 0x03U, /* Report Size (3U) */
+    0x91U, 0x01U, /* Output (Constant), LED report padding */
+
+    0x95U, 0x06U, /* Report Count (6U) */
+    0x75U, 0x08U, /* Report Size (8U) */
+    0x15U, 0x00U, /* Logical Minimum (0U) */
+    0x25U, 0xFFU, /* Logical Maximum (255U) */
+    0x05U, 0x07U, /* Usage Page (Key Codes) */
+    0x19U, 0x00U, /* Usage Minimum (0U) */
+    0x29U, 0xFFU, /* Usage Maximum (255U) */
+
+    0x81U, 0x00U, /* Input(Data, Array), Key arrays(6U bytes)*/
+    0xC0U,        /* End collection */
+};
+
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_DEVICE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_DEVICE,   /* DEVICE Descriptor Type */
     USB_SHORT_GET_LOW(USB_DEVICE_SPECIFIC_BCD_VERSION),
@@ -162,16 +246,20 @@ uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
     USB_DEVICE_CONFIGURATION_COUNT,                  /* Number of possible configurations */
 };
 
-uint8_t g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     USB_DESCRIPTOR_LENGTH_CONFIGURE, /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_TYPE_CONFIGURE,   /* CONFIGURATION Descriptor Type */
-    USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL),
-    USB_SHORT_GET_HIGH(
-        USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL), /* Total length of data returned for this configuration. */
-    USB_COMPOSITE_INTERFACE_COUNT,                /* Number of interfaces supported by this configuration */
-    USB_COMPOSITE_CONFIGURE_INDEX,                /* Value to use as an argument to the
-                                                       SetConfiguration() request to select this configuration */
-    0x00U,                                        /* Index of string descriptor describing this configuration */
+    USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_HID +
+                      USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_HID +
+                      USB_DESCRIPTOR_LENGTH_ENDPOINT),
+    USB_SHORT_GET_HIGH(USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_HID +
+                       USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_HID +
+                       USB_DESCRIPTOR_LENGTH_ENDPOINT), /* Total length of data returned for this configuration. */
+    USB_COMPOSITE_INTERFACE_COUNT,                      /* Number of interfaces supported by this configuration */
+    USB_COMPOSITE_CONFIGURE_INDEX,                      /* Value to use as an argument to the
+                                                             SetConfiguration() request to select this configuration */
+    0x00U,                                              /* Index of string descriptor describing this configuration */
     (USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_D7_MASK) |
         (USB_DEVICE_CONFIG_SELF_POWER << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_SELF_POWERED_SHIFT) |
         (USB_DEVICE_CONFIG_REMOTE_WAKEUP << USB_DESCRIPTOR_CONFIGURE_ATTRIBUTE_REMOTE_WAKEUP_SHIFT),
@@ -267,243 +355,116 @@ uint8_t g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURATION_A
     FS_HID_KEYBOARD_INTERRUPT_IN_INTERVAL, /* Interval for polling endpoint for data transfers. */
 };
 
-uint8_t g_UsbDeviceHidMouseReportDescriptor[USB_DESCRIPTOR_LENGTH_HID_MOUSE_REPORT] = {
-    0x05U, 0x01U, /* Usage Page (Generic Desktop)*/
-    0x09U, 0x02U, /* Usage (Mouse) */
-    0xA1U, 0x01U, /* Collection (Application) */
-    0x09U, 0x01U, /* Usage (Pointer) */
+#if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceQualifierDescriptor[] = {
+    USB_DESCRIPTOR_LENGTH_DEVICE_QUALITIER, /* Size of this descriptor in bytes */
+    USB_DESCRIPTOR_TYPE_DEVICE_QUALITIER,   /* DEVICE Descriptor Type */
+    USB_SHORT_GET_LOW(USB_DEVICE_SPECIFIC_BCD_VERSION),
+    USB_SHORT_GET_HIGH(USB_DEVICE_SPECIFIC_BCD_VERSION), /* USB Specification Release Number in
+                                                            Binary-Coded Decimal (i.e., 2.10 is 210H). */
+    USB_DEVICE_CLASS,                                    /* Class code (assigned by the USB-IF). */
+    USB_DEVICE_SUBCLASS,                                 /* Subclass code (assigned by the USB-IF). */
+    USB_DEVICE_PROTOCOL,                                 /* Protocol code (assigned by the USB-IF). */
+    USB_CONTROL_MAX_PACKET_SIZE,                         /* Maximum packet size for endpoint zero
+                                                            (only 8, 16, 32, or 64 are valid) */
+    0x00U,                                               /* Number of Other-speed Configurations */
+    0x00U,                                               /* Reserved for future use, must be zero */
+};
+#endif
 
-    0xA1U, 0x00U, /* Collection (Physical) */
-    0x05U, 0x09U, /* Usage Page (Buttons) */
-    0x19U, 0x01U, /* Usage Minimum (01U) */
-    0x29U, 0x03U, /* Usage Maximum (03U) */
-
-    0x15U, 0x00U, /* logical Minimum (0U) */
-    0x25U, 0x01U, /* logical Maximum (1U) */
-    0x95U, 0x03U, /* Report Count (3U) */
-    0x75U, 0x01U, /* Report Size (1U) */
-
-    0x81U, 0x02U, /* Input(Data, Variable, Absolute) 3U button bit fields */
-    0x95U, 0x01U, /* Report count (1U) */
-    0x75U, 0x05U, /* Report Size (5U) */
-    0x81U, 0x01U, /* Input (Constant), 5U constant field */
-
-    0x05U, 0x01U, /* Usage Page (Generic Desktop) */
-    0x09U, 0x30U, /* Usage (X) */
-    0x09U, 0x31U, /* Usage (Y) */
-    0x09U, 0x38U, /* Usage (Z) */
-
-    0x15U, 0x81U, /* Logical Minimum (-127) */
-    0x25U, 0x7FU, /* Logical Maximum (127) */
-    0x75U, 0x08U, /* Report Size (8U) */
-    0x95U, 0x03U, /* Report Count (3U) */
-
-    0x81U, 0x06U, /* Input(Data, Variable, Relative), three position bytes (X & Y & Z)*/
-    0xC0U,        /* end collection, Close Pointer collection*/
-    0xC0U         /* end collection, Close Mouse collection */
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString0[] = {
+    2U + 2U, USB_DESCRIPTOR_TYPE_STRING, 0x09U, 0x04U,
 };
 
-/* HID keyboard report descriptor */
-uint8_t g_UsbDeviceHidKeyboardReportDescriptor[USB_DESCRIPTOR_LENGTH_HID_KEYBOARD_REPORT] = {
-    0x05U, 0x01U, /* Usage Page (Generic Desktop)*/
-    0x09U, 0x06U, /* Usage (Keyboard) */
-    0xA1U, 0x01U, /* Collection (Application) */
-    0x75U, 0x01U, /* Report Size (1U) */
-    0x95U, 0x08U, /* Report Count (8U) */
-    0x05U, 0x07U, /* Usage Page (Key Codes) */
-    0x19U, 0xE0U, /* Usage Minimum (224U) */
-    0x29U, 0xE7U, /* Usage Maximum (231U) */
-
-    0x15U, 0x00U, /* Logical Minimum (0U) */
-    0x25U, 0x01U, /* Logical Maximum (1U) */
-    0x81U, 0x02U, /* Input(Data, Variable, Absolute) Modifier byte */
-
-    0x95U, 0x01U, /* Report count (1U) */
-    0x75U, 0x08U, /* Report Size (8U) */
-    0x81U, 0x01U, /* Input (Constant), Reserved byte */
-    0x95U, 0x05U, /* Report count (5U) */
-    0x75U, 0x01U, /* Report Size (1U) */
-
-    0x05U, 0x08U, /* Usage Page (Page# for LEDs) */
-    0x19U, 0x01U, /* Usage Minimum (1U) */
-    0x29U, 0x05U, /* Usage Maximum (5U) */
-    0x91U, 0x02U, /* Output (Data, Variable, Absolute) LED report */
-    0x95U, 0x01U, /* Report count (1U) */
-    0x75U, 0x03U, /* Report Size (3U) */
-    0x91U, 0x01U, /* Output (Constant), LED report padding */
-
-    0x95U, 0x06U, /* Report count (6U) */
-    0x75U, 0x08U, /* Report Size (8U) */
-    0x15U, 0x00U, /* logical Minimum (0U) */
-    0x25U, 0xFFU, /* logical Maximum (255U) */
-    0x05U, 0x07U, /* Usage Page (Key Codes) */
-    0x19U, 0x00U, /* Usage Minimum (0U) */
-    0x29U, 0xFFU, /* Usage Maximum (255U) */
-
-    0x81U, 0x00U, /* Input(Data, Array), Key arrays(6U bytes)*/
-    0xC0U,        /* end collection */
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString1[] = {
+    2U + 2U * 18U, USB_DESCRIPTOR_TYPE_STRING,
+    'N',           0x00U,
+    'X',           0x00U,
+    'P',           0x00U,
+    ' ',           0x00U,
+    'S',           0x00U,
+    'E',           0x00U,
+    'M',           0x00U,
+    'I',           0x00U,
+    'C',           0x00U,
+    'O',           0x00U,
+    'N',           0x00U,
+    'D',           0x00U,
+    'U',           0x00U,
+    'C',           0x00U,
+    'T',           0x00U,
+    'O',           0x00U,
+    'R',           0x00U,
+    'S',           0x00U,
 };
 
-uint8_t g_UsbDeviceString0[USB_DESCRIPTOR_LENGTH_STRING0] = {
-    sizeof(g_UsbDeviceString0), USB_DESCRIPTOR_TYPE_STRING, 0x09U, 0x04U,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString2[] = {
+    2U + 2U * 16U, USB_DESCRIPTOR_TYPE_STRING,
+    'C',           0x00U,
+    'O',           0x00U,
+    'M',           0x00U,
+    'P',           0x00U,
+    'O',           0x00U,
+    'S',           0x00U,
+    'I',           0x00U,
+    'T',           0x00U,
+    'E',           0x00U,
+    ' ',           0x00U,
+    'D',           0x00U,
+    'E',           0x00U,
+    'V',           0x00U,
+    'I',           0x00U,
+    'C',           0x00U,
+    'E',           0x00U,
 };
 
-uint8_t g_UsbDeviceString1[USB_DESCRIPTOR_LENGTH_STRING1] = {
-    sizeof(g_UsbDeviceString1),
-    USB_DESCRIPTOR_TYPE_STRING,
-    'N',
-    0x00U,
-    'X',
-    0x00U,
-    'P',
-    0x00U,
-    ' ',
-    0x00U,
-    'S',
-    0x00U,
-    'E',
-    0x00U,
-    'M',
-    0x00U,
-    'I',
-    0x00U,
-    'C',
-    0x00U,
-    'O',
-    0x00U,
-    'N',
-    0x00U,
-    'D',
-    0x00U,
-    'U',
-    0x00U,
-    'C',
-    0x00U,
-    'T',
-    0x00U,
-    'O',
-    0x00U,
-    'R',
-    0x00U,
-    'S',
-    0x00U,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString3[] = {
+    2U + 2U * 16U, USB_DESCRIPTOR_TYPE_STRING,
+    'H',           0x00U,
+    'I',           0x00U,
+    'D',           0x00U,
+    ' ',           0x00U,
+    'M',           0x00U,
+    'O',           0x00U,
+    'U',           0x00U,
+    'S',           0x00U,
+    'E',           0x00U,
+    ' ',           0x00U,
+    'D',           0x00U,
+    'E',           0x00U,
+    'V',           0x00U,
+    'I',           0x00U,
+    'C',           0x00U,
+    'E',           0x00U,
 };
 
-uint8_t g_UsbDeviceString2[USB_DESCRIPTOR_LENGTH_STRING2] = {
-    sizeof(g_UsbDeviceString2),
-    USB_DESCRIPTOR_TYPE_STRING,
-    'C',
-    0x00U,
-    'O',
-    0x00U,
-    'M',
-    0x00U,
-    'P',
-    0x00U,
-    'O',
-    0x00U,
-    'S',
-    0x00U,
-    'I',
-    0x00U,
-    'T',
-    0x00U,
-    'E',
-    0x00U,
-    ' ',
-    0x00U,
-    'D',
-    0x00U,
-    'E',
-    0x00U,
-    'V',
-    0x00U,
-    'I',
-    0x00U,
-    'C',
-    0x00U,
-    'E',
-    0x00U,
-};
-
-uint8_t g_UsbDeviceString3[USB_DESCRIPTOR_LENGTH_STRING3] = {
-    sizeof(g_UsbDeviceString3),
-    USB_DESCRIPTOR_TYPE_STRING,
-    'H',
-    0x00U,
-    'I',
-    0x00U,
-    'D',
-    0x00U,
-    ' ',
-    0x00U,
-    'M',
-    0x00U,
-    'O',
-    0x00U,
-    'U',
-    0x00U,
-    'S',
-    0x00U,
-    'E',
-    0x00U,
-    ' ',
-    0x00U,
-    'D',
-    0x00U,
-    'E',
-    0x00U,
-    'V',
-    0x00U,
-    'I',
-    0x00U,
-    'C',
-    0x00U,
-    'E',
-    0x00U,
-};
-
-uint8_t g_UsbDeviceString4[USB_DESCRIPTOR_LENGTH_STRING4] = {
-    sizeof(g_UsbDeviceString4),
-    USB_DESCRIPTOR_TYPE_STRING,
-    'H',
-    0x00U,
-    'I',
-    0x00U,
-    'D',
-    0x00U,
-    ' ',
-    0x00U,
-    'K',
-    0x00U,
-    'E',
-    0x00U,
-    'Y',
-    0x00U,
-    'B',
-    0x00U,
-    'O',
-    0x00U,
-    'A',
-    0x00U,
-    'R',
-    0x00U,
-    'D',
-    0x00U,
-    ' ',
-    0x00U,
-    'D',
-    0x00U,
-    'E',
-    0x00U,
-    'V',
-    0x00U,
-    'I',
-    0x00U,
-    'C',
-    0x00U,
-    'E',
-    0x00U,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString4[] = {
+    2U + 2U * 19U, USB_DESCRIPTOR_TYPE_STRING,
+    'H',           0x00U,
+    'I',           0x00U,
+    'D',           0x00U,
+    ' ',           0x00U,
+    'K',           0x00U,
+    'E',           0x00U,
+    'Y',           0x00U,
+    'B',           0x00U,
+    'O',           0x00U,
+    'A',           0x00U,
+    'R',           0x00U,
+    'D',           0x00U,
+    ' ',           0x00U,
+    'D',           0x00U,
+    'E',           0x00U,
+    'V',           0x00U,
+    'I',           0x00U,
+    'C',           0x00U,
+    'E',           0x00U,
 };
 
 uint32_t g_UsbDeviceStringDescriptorLength[USB_DEVICE_STRING_COUNT] = {
@@ -535,7 +496,16 @@ usb_status_t USB_DeviceGetDeviceDescriptor(usb_device_handle handle,
     deviceDescriptor->length = USB_DESCRIPTOR_LENGTH_DEVICE;
     return kStatus_USB_Success;
 }
-
+#if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
+/* Get device qualifier descriptor request */
+usb_status_t USB_DeviceGetDeviceQualifierDescriptor(
+    usb_device_handle handle, usb_device_get_device_qualifier_descriptor_struct_t *deviceQualifierDescriptor)
+{
+    deviceQualifierDescriptor->buffer = g_UsbDeviceQualifierDescriptor;
+    deviceQualifierDescriptor->length = USB_DESCRIPTOR_LENGTH_DEVICE_QUALITIER;
+    return kStatus_USB_Success;
+}
+#endif
 /* Get device configuration descriptor request */
 usb_status_t USB_DeviceGetConfigurationDescriptor(
     usb_device_handle handle, usb_device_get_configuration_descriptor_struct_t *configurationDescriptor)
@@ -640,7 +610,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         {
             if (USB_SPEED_HIGH == speed)
             {
-                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                     (USB_HID_MOUSE_ENDPOINT_IN ==
                      (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -649,7 +619,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE,
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
-                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                          (USB_HID_KEYBOARD_ENDPOINT_IN ==
                           (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -664,7 +634,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             }
             else
             {
-                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                      USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                     (USB_HID_MOUSE_ENDPOINT_IN ==
                      (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))
@@ -673,7 +643,7 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_HID_MOUSE_INTERRUPT_IN_PACKET_SIZE,
                                                        descriptorHead->endpoint.wMaxPacketSize);
                 }
-                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) ==
+                else if (((descriptorHead->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
                           USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN) &&
                          (USB_HID_KEYBOARD_ENDPOINT_IN ==
                           (descriptorHead->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)))

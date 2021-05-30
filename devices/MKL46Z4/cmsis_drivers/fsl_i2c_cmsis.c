@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
+ * Copyright 2016-2017 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -14,37 +16,16 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 #include "fsl_i2c_cmsis.h"
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.i2c_cmsis"
+#endif
+
 
 #if ((RTE_I2C0 && defined(I2C0)) || (RTE_I2C1 && defined(I2C1)) || (RTE_I2C2 && defined(I2C2)) || \
      (RTE_I2C3 && defined(I2C3)))
@@ -77,7 +58,7 @@ typedef struct _cmsis_i2c_interrupt_driver_state
     cmsis_i2c_resource_t *resource; /*!< Basic I2C resource. */
     cmsis_i2c_handle_t *handle;
     ARM_I2C_SignalEvent_t cb_event; /*!< Callback function.     */
-    bool isInitialized;             /*!< Is initialized or not. */
+    uint8_t flags;                  /*!< Control and state flags. */
 } cmsis_i2c_interrupt_driver_state_t;
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
@@ -95,7 +76,7 @@ typedef struct _cmsis_i2c_dma_driver_state
     cmsis_i2c_dma_resource_t *dmaResource;      /*!< i2c DMA resource.        */
     i2c_master_dma_handle_t *master_dma_handle; /*!< i2c DMA transfer handle. */
     dma_handle_t *dmaHandle;                    /*!< DMA i2c handle.          */
-    bool isInitialized;                         /*!< Is initialized or not.   */
+    uint8_t flags;                              /*!< Control and state flags. */
 } cmsis_i2c_dma_driver_state_t;
 #endif
 
@@ -114,7 +95,7 @@ typedef struct _cmsis_i2c_edma_driver_state
     cmsis_i2c_edma_resource_t *edmaResource;      /*!< i2c EDMA resource.        */
     i2c_master_edma_handle_t *master_edma_handle; /*!< i2c EDMA transfer handle. */
     edma_handle_t *edmaHandle;                    /*!< EDMA i2c handle.          */
-    bool isInitialized;                           /*!< Is initialized or not.    */
+    uint8_t flags;                                /*!< Control and state flags. */
 } cmsis_i2c_edma_driver_state_t;
 #endif /* FSL_FEATURE_SOC_EDMA_COUNT */
 
@@ -163,7 +144,7 @@ void KSDK_I2C_MASTER_DmaCallback(I2C_Type *base, i2c_master_dma_handle_t *handle
 
 static int32_t I2C_Master_DmaInitialize(ARM_I2C_SignalEvent_t cb_event, cmsis_i2c_dma_driver_state_t *i2c)
 {
-    if (!(i2c->isInitialized))
+    if (!(i2c->flags & I2C_FLAG_INIT))
     {
         /* Configure DMAMUX channel */
         DMAMUX_SetSource(i2c->dmaResource->i2cDmamuxBase, i2c->dmaResource->i2cDmaChannel,
@@ -174,14 +155,14 @@ static int32_t I2C_Master_DmaInitialize(ARM_I2C_SignalEvent_t cb_event, cmsis_i2
         /* Create master_dma_handle. */
         I2C_MasterTransferCreateHandleDMA(i2c->resource->base, i2c->master_dma_handle, KSDK_I2C_MASTER_DmaCallback,
                                           (void *)cb_event, i2c->dmaHandle);
-        i2c->isInitialized = true;
+        i2c->flags = I2C_FLAG_INIT;
     }
     return ARM_DRIVER_OK;
 }
 
 int32_t I2C_Master_DmaUninitialize(cmsis_i2c_dma_driver_state_t *i2c)
 {
-    i2c->isInitialized = false;
+    i2c->flags = I2C_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
@@ -380,9 +361,14 @@ int32_t I2C_Master_DmaPowerControl(ARM_POWER_STATE state, cmsis_i2c_dma_driver_s
     {
         /* Terminates any pending data transfers, disable i2c moduole and i2c clock and related dma */
         case ARM_POWER_OFF:
-            I2C_Master_DmaControl(ARM_I2C_ABORT_TRANSFER, 0, i2c);
-            I2C_MasterDeinit(i2c->resource->base);
-            DMAMUX_DisableChannel(i2c->dmaResource->i2cDmamuxBase, i2c->dmaResource->i2cDmaChannel);
+            if (i2c->flags & I2C_FLAG_POWER)
+            {
+                I2C_Master_DmaControl(ARM_I2C_ABORT_TRANSFER, 0, i2c);
+                I2C_MasterDeinit(i2c->resource->base);
+                DMAMUX_DisableChannel(i2c->dmaResource->i2cDmamuxBase, i2c->dmaResource->i2cDmaChannel);
+                i2c->flags = I2C_FLAG_INIT;
+            }
+
             return ARM_DRIVER_OK;
 
         /* Not supported */
@@ -391,13 +377,27 @@ int32_t I2C_Master_DmaPowerControl(ARM_POWER_STATE state, cmsis_i2c_dma_driver_s
 
         /* Enable i2c moduole and i2c clock */
         case ARM_POWER_FULL:
+            if (i2c->flags == I2C_FLAG_UNINIT)
+            {
+                return ARM_DRIVER_ERROR;
+            }
+
+            if (i2c->flags & I2C_FLAG_POWER)
+            {
+                /* Driver already powered */
+                break;
+            }
             CLOCK_EnableClock(s_i2cClocks[I2C_GetInstance(i2c->resource->base)]);
             i2c->resource->base->C1 = I2C_C1_IICEN(1);
+            i2c->flags |= I2C_FLAG_POWER;
+
             return ARM_DRIVER_OK;
 
         default:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
+
+    return ARM_DRIVER_OK;
 }
 
 ARM_I2C_STATUS I2C_Master_DmaGetStatus(cmsis_i2c_dma_driver_state_t *i2c)
@@ -444,7 +444,7 @@ void KSDK_I2C_MASTER_EdmaCallback(I2C_Type *base, i2c_master_edma_handle_t *hand
 
 static int32_t I2C_Master_EdmaInitialize(ARM_I2C_SignalEvent_t cb_event, cmsis_i2c_edma_driver_state_t *i2c)
 {
-    if (!(i2c->isInitialized))
+    if (!(i2c->flags & I2C_FLAG_INIT))
     {
         /* Configure DMAMUX channel */
         DMAMUX_SetSource(i2c->edmaResource->i2cDmamuxBase, i2c->edmaResource->i2cEdmaChannel,
@@ -455,14 +455,14 @@ static int32_t I2C_Master_EdmaInitialize(ARM_I2C_SignalEvent_t cb_event, cmsis_i
         /* Create master_edma_handle. */
         I2C_MasterCreateEDMAHandle(i2c->resource->base, i2c->master_edma_handle, KSDK_I2C_MASTER_EdmaCallback,
                                    (void *)cb_event, i2c->edmaHandle);
-        i2c->isInitialized = true;
+        i2c->flags = I2C_FLAG_INIT;
     }
     return ARM_DRIVER_OK;
 }
 
 int32_t I2C_Master_EdmaUninitialize(cmsis_i2c_edma_driver_state_t *i2c)
 {
-    i2c->isInitialized = false;
+    i2c->flags = I2C_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
@@ -667,9 +667,13 @@ int32_t I2C_Master_EdmaPowerControl(ARM_POWER_STATE state, cmsis_i2c_edma_driver
     {
         /* Terminates any pending data transfers, disable i2c moduole and i2c clock and related edma */
         case ARM_POWER_OFF:
-            I2C_Master_EdmaControl(ARM_I2C_ABORT_TRANSFER, 0, i2c);
-            I2C_MasterDeinit(i2c->resource->base);
-            DMAMUX_DisableChannel(i2c->edmaResource->i2cDmamuxBase, i2c->edmaResource->i2cEdmaChannel);
+            if (i2c->flags & I2C_FLAG_POWER)
+            {
+                I2C_Master_EdmaControl(ARM_I2C_ABORT_TRANSFER, 0, i2c);
+                I2C_MasterDeinit(i2c->resource->base);
+                DMAMUX_DisableChannel(i2c->edmaResource->i2cDmamuxBase, i2c->edmaResource->i2cEdmaChannel);
+                i2c->flags = I2C_FLAG_INIT;
+            }
 
             return ARM_DRIVER_OK;
 
@@ -679,14 +683,28 @@ int32_t I2C_Master_EdmaPowerControl(ARM_POWER_STATE state, cmsis_i2c_edma_driver
 
         /* Enable i2c moduole and i2c clock */
         case ARM_POWER_FULL:
+            if (i2c->flags == I2C_FLAG_UNINIT)
+            {
+                return ARM_DRIVER_ERROR;
+            }
+
+            if (i2c->flags & I2C_FLAG_POWER)
+            {
+                /* Driver already powered */
+                break;
+            }
+
             CLOCK_EnableClock(s_i2cClocks[I2C_GetInstance(i2c->resource->base)]);
             i2c->resource->base->C1 = I2C_C1_IICEN(1);
+            i2c->flags |= I2C_FLAG_POWER;
 
             return ARM_DRIVER_OK;
 
         default:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
+
+    return ARM_DRIVER_OK;
 }
 
 ARM_I2C_STATUS I2C_Master_EdmaGetStatus(cmsis_i2c_edma_driver_state_t *i2c)
@@ -738,6 +756,7 @@ static void KSDK_I2C_SLAVE_InterruptCallback(I2C_Type *base, i2c_slave_transfer_
         ((ARM_I2C_SignalEvent_t)userData)(event);
     }
 }
+
 static void KSDK_I2C_MASTER_InterruptCallback(I2C_Type *base,
                                               i2c_master_handle_t *handle,
                                               status_t status,
@@ -773,13 +792,18 @@ static void KSDK_I2C_MASTER_InterruptCallback(I2C_Type *base,
 
 static int32_t I2C_InterruptInitialize(ARM_I2C_SignalEvent_t cb_event, cmsis_i2c_interrupt_driver_state_t *i2c)
 {
-    i2c->cb_event = cb_event; /* cb_event is CMSIS driver callback. */
+    if (!(i2c->flags & I2C_FLAG_INIT))
+    {
+        i2c->cb_event = cb_event; /* cb_event is CMSIS driver callback. */
+        i2c->flags = I2C_FLAG_INIT;
+    }
+
     return ARM_DRIVER_OK;
 }
 
 static int32_t I2C_InterruptUninitialize(cmsis_i2c_interrupt_driver_state_t *i2c)
 {
-    i2c->isInitialized = false;
+    i2c->flags = I2C_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
@@ -935,6 +959,7 @@ int32_t I2C_Slave_InterruptTransmit(const uint8_t *data, uint32_t num, cmsis_i2c
 
     return ret;
 }
+
 int32_t I2C_Slave_InterruptReceive(uint8_t *data, uint32_t num, cmsis_i2c_interrupt_driver_state_t *i2c)
 {
     int32_t status;
@@ -970,6 +995,7 @@ int32_t I2C_Slave_InterruptReceive(uint8_t *data, uint32_t num, cmsis_i2c_interr
 
     return ret;
 }
+
 int32_t I2C_InterruptGetDataCount(cmsis_i2c_interrupt_driver_state_t *i2c)
 {
     uint32_t cnt; /* The number of currently transferred data bytes */
@@ -1026,7 +1052,7 @@ int32_t I2C_InterruptControl(uint32_t control, uint32_t arg, cmsis_i2c_interrupt
 
         /* Aborts the data transfer between Master and Slave for Transmit or Receive */
         case ARM_I2C_ABORT_TRANSFER:
-            if (i2c->resource->base->C1 & I2C_C1_MST_MASK)
+            if (!i2c->resource->base->A1)
             {
                 /* Disable master interrupt and send STOP signal */
                 I2C_MasterTransferAbort(i2c->resource->base, &(i2c->handle->master_handle));
@@ -1062,10 +1088,14 @@ static int32_t I2C_InterruptPowerControl(ARM_POWER_STATE state, cmsis_i2c_interr
     {
         /* Terminates any pending data transfers, disable i2c moduole and i2c clock */
         case ARM_POWER_OFF:
+            if (i2c->flags & I2C_FLAG_POWER)
+            {
+                I2C_InterruptControl(ARM_I2C_ABORT_TRANSFER, 0, i2c);
 
-            I2C_InterruptControl(ARM_I2C_ABORT_TRANSFER, 0, i2c);
+                I2C_MasterDeinit(i2c->resource->base);
 
-            I2C_MasterDeinit(i2c->resource->base);
+                i2c->flags = I2C_FLAG_INIT;
+            }
 
             return ARM_DRIVER_OK;
 
@@ -1075,34 +1105,58 @@ static int32_t I2C_InterruptPowerControl(ARM_POWER_STATE state, cmsis_i2c_interr
 
         /* Enable i2c moduole and i2c clock */
         case ARM_POWER_FULL:
+            if (i2c->flags == I2C_FLAG_UNINIT)
+            {
+                return ARM_DRIVER_ERROR;
+            }
+
+            if (i2c->flags & I2C_FLAG_POWER)
+            {
+                /* Driver already powered */
+                break;
+            }
 
             CLOCK_EnableClock(s_i2cClocks[I2C_GetInstance(i2c->resource->base)]);
 
             i2c->resource->base->C1 = I2C_C1_IICEN(1);
+
+            i2c->flags |= I2C_FLAG_POWER;
 
             return ARM_DRIVER_OK;
 
         default:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
+
+    return ARM_DRIVER_OK;
 }
 
 ARM_I2C_STATUS I2C_InterruptGetStatus(cmsis_i2c_interrupt_driver_state_t *i2c)
 {
     ARM_I2C_STATUS stat = {0};
     uint32_t ksdk_i2c_status = I2C_SlaveGetStatusFlags(i2c->resource->base);
-    stat.busy = !(!(ksdk_i2c_status & kI2C_BusBusyFlag)); /* Busy flag.*/
+    uint32_t dataSize;
 
-    if (i2c->resource->base->C1 & I2C_C1_MST_MASK)
+    if (!i2c->resource->base->A1)
     {
+        dataSize = i2c->handle->master_handle.transfer.dataSize;
         stat.direction = !(!(ksdk_i2c_status & kI2C_TransferDirectionFlag)); /* Direction: 0=Transmitter, 1=Receiver.*/
         stat.mode = 1;                                                       /* Mode: 0=Slave, 1=Master.*/
     }
-
-    if (i2c->handle->slave_handle.isBusy)
+    else
     {
+        dataSize = i2c->handle->slave_handle.transfer.dataSize;
         stat.direction = !(ksdk_i2c_status & kI2C_TransferDirectionFlag); /* Direction: 0=Transmitter, 1=Receiver.*/
         stat.mode = 0;                                                    /* Mode: 0=Slave, 1=Master.*/
+    }
+
+    if (dataSize != 0)
+    {
+        stat.busy = 1; /* Busy flag.*/
+    }
+    else
+    {
+        stat.busy = 0; /* Busy flag.*/
     }
 
     stat.arbitration_lost =

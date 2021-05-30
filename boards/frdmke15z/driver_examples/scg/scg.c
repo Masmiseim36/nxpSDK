@@ -11,10 +11,10 @@
  ******************************************************************************/
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_smc.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -28,8 +28,10 @@
  * SIRCDIV3_CLK output  : 4MHz
  */
 const scg_sirc_config_t s_scgSircConfig = {.enableMode = kSCG_SircEnable | kSCG_SircEnableInLowPower,
-                                           .div1       = kSCG_AsyncClkDivBy1,
-                                           .div2       = kSCG_AsyncClkDivBy2,
+#if (defined(FSL_FEATURE_SCG_HAS_SIRCDIV1) && FSL_FEATURE_SCG_HAS_SIRCDIV1)
+                                           .div1 = kSCG_AsyncClkDivBy1,
+#endif
+                                           .div2 = kSCG_AsyncClkDivBy2,
 #if (defined(FSL_FEATURE_SCG_HAS_SIRCDIV3) && FSL_FEATURE_SCG_HAS_SIRCDIV3)
                                            .div3 = kSCG_AsyncClkDivBy2,
 #endif
@@ -46,8 +48,10 @@ const scg_firc_config_t s_scgFircConfig = {.enableMode = kSCG_FircEnable,
 #if (defined(FSL_FEATURE_SCG_HAS_FIRCDIV3) && FSL_FEATURE_SCG_HAS_FIRCDIV3)
                                            .div3 = kSCG_AsyncClkDivBy1,
 #endif
-                                           .div2       = kSCG_AsyncClkDivBy1,
-                                           .div1       = kSCG_AsyncClkDivBy1,
+                                           .div2 = kSCG_AsyncClkDivBy1,
+#if (defined(FSL_FEATURE_SCG_HAS_FIRCDIV1) && FSL_FEATURE_SCG_HAS_FIRCDIV1)
+                                           .div1 = kSCG_AsyncClkDivBy1,
+#endif
                                            .range      = kSCG_FircRange48M,
                                            .trimConfig = NULL};
 
@@ -61,8 +65,10 @@ const scg_firc_config_t s_scgFircConfig = {.enableMode = kSCG_FircEnable,
  */
 const scg_spll_config_t s_scgSysPllConfig = {.enableMode  = kSCG_SysPllEnable,
                                              .monitorMode = kSCG_SysPllMonitorDisable,
-                                             .div1        = kSCG_AsyncClkDivBy1,
-                                             .div2        = kSCG_AsyncClkDivBy2,
+#if (defined(FSL_FEATURE_SCG_HAS_SPLLDIV1) && FSL_FEATURE_SCG_HAS_SPLLDIV1)
+                                             .div1 = kSCG_AsyncClkDivBy1,
+#endif
+                                             .div2 = kSCG_AsyncClkDivBy2,
 #if (defined(FSL_FEATURE_SCG_HAS_SPLLDIV3) && FSL_FEATURE_SCG_HAS_SPLLDIV3)
                                              .div3 = kSCG_AsyncClkDivBy2,
 #endif
@@ -80,8 +86,10 @@ const scg_spll_config_t s_scgSysPllConfig = {.enableMode  = kSCG_SysPllEnable,
  * LPFLLDIV3 output  : 24MHz
  */
 const scg_lpfll_config_t s_scgLpFllConfig = {.enableMode = kSCG_LpFllEnable,
-                                             .div1       = kSCG_AsyncClkDivBy1,
-                                             .div2       = kSCG_AsyncClkDivBy2,
+#if (defined(FSL_FEATURE_SCG_HAS_FLLDIV1) && FSL_FEATURE_SCG_HAS_FLLDIV1)
+                                             .div1 = kSCG_AsyncClkDivBy1,
+#endif
+                                             .div2 = kSCG_AsyncClkDivBy2,
 #if (defined(FSL_FEATURE_SCG_HAS_FLLDIV3) && FSL_FEATURE_SCG_HAS_FLLDIV3)
                                              .div3 = kSCG_AsyncClkDivBy2,
 #endif

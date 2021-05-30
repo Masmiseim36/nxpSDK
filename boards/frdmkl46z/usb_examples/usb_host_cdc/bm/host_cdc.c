@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -34,7 +38,8 @@
 #include "host_cdc.h"
 #include "fsl_debug_console.h"
 #include "board.h"
-#include "usb_uart_drv.h"
+#include "usb_serial_port.h"
+#include "app.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -46,6 +51,9 @@
 /*******************************************************************************
   * Variables
   ******************************************************************************/
+
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t s_DataBuffer[USB_HOST_CDC_BUFFER_NUM * 2][USB_DATA_ALIGN_SIZE_MULTIPLE(USB_HOST_SEND_RECV_PER_TIME)];
 usb_uart_buffer_struct_t g_EmptyBuffer[USB_HOST_CDC_BUFFER_NUM];
 usb_uart_buffer_struct_t g_EmptySendBuffer[USB_HOST_CDC_BUFFER_NUM];
 
@@ -72,14 +80,14 @@ usb_host_class_handle cdcDataInterfaceHandle;
 usb_host_class_handle cdcControlIntfHandle;
 
 cdc_instance_struct_t g_cdc;
-usb_host_cdc_line_coding_struct_t g_LineCode;
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) usb_host_cdc_line_coding_struct_t g_LineCode;
 
 char usbRecvUart[USB_HOST_CDC_UART_RX_MAX_LEN];
 
 extern uint8_t g_AttachFlag;
-extern usb_uart_handle_t g_UartHandle;
-extern usb_xfer_t g_xfer;
-usb_xfer_t g_txfer;
+extern usb_serial_port_handle_t g_UartHandle;
+extern usb_serial_port_xfer_t g_xfer;
+usb_serial_port_xfer_t g_txfer;
 
 uint32_t g_UartActive;
 /*******************************************************************************
@@ -182,6 +190,43 @@ void insertNodeToQueue(usb_uart_buffer_struct_t **queue, usb_uart_buffer_struct_
     USB_BmExitCritical(usbOsaCurrentSr);
 }
 /*!
+ * @brief host cdc get buffer's corresponding state structure.
+ *
+ * This function is used to get the data buffer's state structure .
+ * the buffer and state structure relation is init in init function.
+  * @param p        the buffer pointer for data transfer.
+ */
+usb_uart_buffer_struct_t *getBufferNode(uint8_t *p)
+{
+    uint8_t(*temp)[(USB_DATA_ALIGN_SIZE_MULTIPLE(USB_HOST_SEND_RECV_PER_TIME))];
+    temp = (uint8_t(*)[(USB_DATA_ALIGN_SIZE_MULTIPLE(USB_HOST_SEND_RECV_PER_TIME))])p;
+    if (temp >= &s_DataBuffer[USB_HOST_CDC_BUFFER_NUM])
+    {
+        uint8_t number = (temp - &s_DataBuffer[USB_HOST_CDC_BUFFER_NUM]);
+        if (temp < &s_DataBuffer[2 * USB_HOST_CDC_BUFFER_NUM])
+        {
+            return &g_EmptySendBuffer[number];
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+    else
+    {
+        if (temp >= &s_DataBuffer[0])
+        {
+            uint8_t number = (temp - &s_DataBuffer[0]);
+            return &g_EmptyBuffer[number];
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+}
+
+/*!
  * @brief host cdc data transfer callback.
  *
  * This function is used as callback function for bulk in transfer .
@@ -196,7 +241,7 @@ void USB_HostCdcDataInCallback(void *param, uint8_t *data, uint32_t dataLength, 
     cdc_instance_struct_t *cdcInstance = (cdc_instance_struct_t *)param;
 
     usb_uart_buffer_struct_t *p;
-    p = (usb_uart_buffer_struct_t *)data;
+    p = getBufferNode(data);
 
     if ((p) && (dataLength))
     {
@@ -255,14 +300,14 @@ void USB_HostCdcDataOutCallback(void *param, uint8_t *data, uint32_t dataLength,
  * @param uartState           callback event code, please reference to enumeration host_event_t.
  *
  */
-void UART_UserCallback(USB_UartType *base, usb_uart_handle_t *handle, status_t status, void *param)
+void UART_UserCallback(void *handle, status_t status, void *param)
 {
-    if ((usb_uart_status_t)status == kStatus_USB_UART_RxIdle)
+    if ((usb_serial_port_status_t)status == kStatus_USB_SERIAL_PORT_RxIdle)
     {
         if (0 == g_AttachFlag)
         {
             /* prime the receive buffer for uart callback which is triggered the next time */
-            USB_UartReceiveDataIRQ((USB_UartType *)BOARD_DEBUG_UART_BASEADDR, &g_UartHandle, &g_xfer, NULL);
+            USB_SerialPortRecv(&g_UartHandle, &g_xfer, NULL);
             return;
         }
         g_UartActive = 0;
@@ -286,9 +331,9 @@ void UART_UserCallback(USB_UartType *base, usb_uart_handle_t *handle, status_t s
             /*if code run to here, it means buffer has been run out once, some data has been lost*/
             g_CurrentUartRecvNode = getNodeFromQueue(&g_EmptyQueue);
         }
-        USB_UartReceiveDataIRQ((USB_UartType *)BOARD_DEBUG_UART_BASEADDR, &g_UartHandle, &g_xfer, NULL);
+        USB_SerialPortRecv(&g_UartHandle, &g_xfer, NULL);
     }
-    else if ((usb_uart_status_t)status == kStatus_USB_UART_TxIdle)
+    else if ((usb_serial_port_status_t)status == kStatus_USB_SERIAL_PORT_TxIdle)
     {
         freeNodeToQueue(&g_EmptySendQueue, g_UartSendNode);
         g_UartSendNode = getNodeFromQueue(&g_UartSendQueue);
@@ -296,7 +341,7 @@ void UART_UserCallback(USB_UartType *base, usb_uart_handle_t *handle, status_t s
         {
             g_txfer.buffer = g_UartSendNode->buffer;
             g_txfer.size = g_UartSendNode->dataLength;
-            USB_UartSendNonBlocking((USB_UartType *)BOARD_DEBUG_UART_BASEADDR, &g_UartHandle, &g_txfer);
+            USB_SerialPortSend(&g_UartHandle, &g_txfer);
         }
         else
         {
@@ -319,7 +364,12 @@ void UART_UserCallback(USB_UartType *base, usb_uart_handle_t *handle, status_t s
  *END*--------------------------------------------------------------------*/
 void BOARD_UART_IRQ_HANDLER(void)
 {
-    USB_UartIRQHandler((USB_UartType *)BOARD_DEBUG_UART_BASEADDR, &g_UartHandle);
+    USB_SerialPortIRQHandler(&g_UartHandle);
+/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
+  exception return operation might vector to incorrect interrupt */
+#if defined __CORTEX_M && (__CORTEX_M == 4U)
+    __DSB();
+#endif
 }
 
 /*!
@@ -333,8 +383,18 @@ void BOARD_UART_IRQ_HANDLER(void)
 void USB_HostCdcInitBuffer(void)
 {
     uint8_t usbOsaCurrentSr;
+    uint8_t index;
 
     USB_BmEnterCritical(&usbOsaCurrentSr);
+    for (index = 0; index < USB_HOST_CDC_BUFFER_NUM; ++index)
+    {
+        g_EmptyBuffer[index].buffer = &s_DataBuffer[index][0];
+    }
+    for (index = 0; index < USB_HOST_CDC_BUFFER_NUM; ++index)
+    {
+        g_EmptySendBuffer[index].buffer = &s_DataBuffer[USB_HOST_CDC_BUFFER_NUM + index][0];
+    }
+
     g_EmptyQueue = &g_EmptyBuffer[0];
     usb_uart_buffer_struct_t *p;
     p = g_EmptyQueue;
@@ -420,27 +480,27 @@ void USB_HostCdcControlCallback(void *param, uint8_t *data, uint32_t dataLength,
         return;
     }
 
-    if (cdcInstance->runWaitState == kRunWaitSetControlInterface)
+    if (cdcInstance->runWaitState == kUSB_HostCdcRunWaitSetControlInterface)
     {
-        cdcInstance->runState = kRunSetControlInterfaceDone;
+        cdcInstance->runState = kUSB_HostCdcRunSetControlInterfaceDone;
     }
-    else if (cdcInstance->runWaitState == kRunWaitSetDataInterface)
+    else if (cdcInstance->runWaitState == kUSB_HostCdcRunWaitSetDataInterface)
     {
-        cdcInstance->runState = kRunSetDataInterfaceDone;
+        cdcInstance->runState = kUSB_HostCdcRunSetDataInterfaceDone;
     }
-    else if (cdcInstance->runWaitState == kRunWaitGetLineCode)
+    else if (cdcInstance->runWaitState == kUSB_HostCdcRunWaitGetLineCode)
     {
-        cdcInstance->runState = kRunGetLineCodeDone;
+        cdcInstance->runState = kUSB_HostCdcRunGetLineCodeDone;
     }
 #if USB_HOST_UART_SUPPORT_HW_FLOW
-    else if (cdcInstance->runWaitState == kRunWaitSetCtrlState)
+    else if (cdcInstance->runWaitState == kUSB_HostCdcRunWaitSetCtrlState)
     {
-        cdcInstance->runState = kRunSetCtrlStateDone;
+        cdcInstance->runState = kUSB_HostCdcRunSetCtrlStateDone;
     }
 #endif
-    else if (cdcInstance->runWaitState == kRunWaitGetState)
+    else if (cdcInstance->runWaitState == kUSB_HostCdcRunWaitGetState)
     {
-        cdcInstance->runState = kRunGetStateDone;
+        cdcInstance->runState = kUSB_HostCdcRunGetStateDone;
     }
     else
     {
@@ -468,13 +528,13 @@ void USB_HosCdcTask(void *param)
             case kStatus_DEV_Idle:
                 break;
             case kStatus_DEV_Attached:
-                cdcInstance->runState = kRunSetControlInterface;
+                cdcInstance->runState = kUSB_HostCdcRunSetControlInterface;
                 status = USB_HostCdcInit(cdcInstance->deviceHandle, &cdcInstance->classHandle);
                 usb_echo("cdc device attached\r\n");
                 break;
             case kStatus_DEV_Detached:
                 cdcInstance->deviceState = kStatus_DEV_Idle;
-                cdcInstance->runState = kRunIdle;
+                cdcInstance->runState = kUSB_HostCdcRunIdle;
                 USB_HostCdcDeinit(cdcInstance->deviceHandle, cdcInstance->classHandle);
                 cdcInstance->dataInterfaceHandle = NULL;
                 cdcInstance->classHandle = NULL;
@@ -490,7 +550,7 @@ void USB_HosCdcTask(void *param)
     /* run state */
     switch (cdcInstance->runState)
     {
-        case kRunIdle:
+        case kUSB_HostCdcRunIdle:
             if (g_AttachFlag)
             {
                 if (!g_UsbSendBusy)
@@ -512,7 +572,7 @@ void USB_HosCdcTask(void *param)
                         g_txfer.buffer = g_UartSendNode->buffer;
                         g_txfer.size = g_UartSendNode->dataLength;
                         g_UartSendBusy = 1;
-                        USB_UartSendNonBlocking((USB_UartType *)BOARD_DEBUG_UART_BASEADDR, &g_UartHandle, &g_txfer);
+                        USB_SerialPortSend(&g_UartHandle, &g_txfer);
                     }
                 }
                 g_UartActive++;
@@ -531,18 +591,18 @@ void USB_HosCdcTask(void *param)
                 }
             }
             break;
-        case kRunSetControlInterface:
-            cdcInstance->runWaitState = kRunWaitSetControlInterface;
-            cdcInstance->runState = kRunIdle;
+        case kUSB_HostCdcRunSetControlInterface:
+            cdcInstance->runWaitState = kUSB_HostCdcRunWaitSetControlInterface;
+            cdcInstance->runState = kUSB_HostCdcRunIdle;
             if (USB_HostCdcSetControlInterface(cdcInstance->classHandle, cdcInstance->controlInterfaceHandle, 0,
                                                USB_HostCdcControlCallback, &g_cdc) != kStatus_USB_Success)
             {
                 usb_echo("set control interface error\r\n");
             }
             break;
-        case kRunSetControlInterfaceDone:
-            cdcInstance->runWaitState = kRunWaitSetDataInterface;
-            cdcInstance->runState = kRunIdle;
+        case kUSB_HostCdcRunSetControlInterfaceDone:
+            cdcInstance->runWaitState = kUSB_HostCdcRunWaitSetDataInterface;
+            cdcInstance->runState = kUSB_HostCdcRunIdle;
             if (USB_HostCdcSetDataInterface(cdcInstance->classHandle, cdcInstance->dataInterfaceHandle, 0,
                                             USB_HostCdcControlCallback, &g_cdc) != kStatus_USB_Success)
             {
@@ -551,9 +611,9 @@ void USB_HosCdcTask(void *param)
             cdcInstance->bulkInMaxPacketSize =
                 USB_HostCdcGetPacketsize(cdcInstance->classHandle, USB_ENDPOINT_BULK, USB_IN);
             break;
-        case kRunSetDataInterfaceDone:
+        case kUSB_HostCdcRunSetDataInterfaceDone:
             g_AttachFlag = 1;
-            cdcInstance->runState = kRunGetStateDone;
+            cdcInstance->runState = kUSB_HostCdcRunGetStateDone;
             /*get the class-specific descriptor */
             /*usb_host_cdc_head_function_desc_struct_t *headDesc = NULL;
             usb_host_cdc_call_manage_desc_struct_t *callManage = NULL;
@@ -568,23 +628,23 @@ void USB_HosCdcTask(void *param)
                 usb_echo("Error in USB_HostCdcInterruptRecv: %x\r\n", status);
             }
             break;
-        case kRunGetStateDone:
-            cdcInstance->runWaitState = kRunWaitSetCtrlState;
-            cdcInstance->runState = kRunIdle;
+        case kUSB_HostCdcRunGetStateDone:
+            cdcInstance->runWaitState = kUSB_HostCdcRunWaitSetCtrlState;
+            cdcInstance->runState = kUSB_HostCdcRunIdle;
 #if USB_HOST_UART_SUPPORT_HW_FLOW
             USB_HostCdcSetAcmCtrlState(cdcInstance->classHandle, 1, 1, USB_HostCdcControlCallback, (void *)cdcInstance);
 #else
-            cdcInstance->runState = kRunSetCtrlStateDone;
+            cdcInstance->runState = kUSB_HostCdcRunSetCtrlStateDone;
 #endif
             break;
-        case kRunSetCtrlStateDone:
-            cdcInstance->runWaitState = kRunWaitGetLineCode;
-            cdcInstance->runState = kRunIdle;
+        case kUSB_HostCdcRunSetCtrlStateDone:
+            cdcInstance->runWaitState = kUSB_HostCdcRunWaitGetLineCode;
+            cdcInstance->runState = kUSB_HostCdcRunIdle;
             USB_HostCdcGetAcmLineCoding(cdcInstance->classHandle, &g_LineCode, USB_HostCdcControlCallback,
                                         (void *)cdcInstance);
             break;
-        case kRunGetLineCodeDone:
-            cdcInstance->runState = kRunIdle;
+        case kUSB_HostCdcRunGetLineCodeDone:
+            cdcInstance->runState = kUSB_HostCdcRunIdle;
             break;
         default:
             break;
@@ -629,7 +689,7 @@ usb_status_t USB_HostCdcEvent(usb_device_handle deviceHandle,
                 {
                     continue;
                 }
-                /*judge whether the subclass code */
+                /*judge the subclass code */
                 /*            id = hostInterface->interfaceDesc->bInterfaceProtocol;
                             if (id != USB_HOST_CDC_PROTOCOL_CODE)
                             {

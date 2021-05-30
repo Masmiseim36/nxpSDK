@@ -15,9 +15,9 @@
 
 // KSDK  and ISSDK Headers
 #include "fsl_debug_console.h"  // KSDK header file for the debug interface
-#include "board.h"              // KSDK header file to define board configuration
 #include "pin_mux.h"            // KSDK header file for pin mux initialization functions
 #include "clock_config.h"       // KSDK header file for clock configuration
+#include "board.h"              // KSDK header file to define board configuration
 #ifndef CPU_LPC54114J256BD64_cm4
 #include "fsl_port.h"           // KSDK header file for Port I/O control
 #include "fsl_pit.h"            // KSDK header file for Periodic Interval Timer

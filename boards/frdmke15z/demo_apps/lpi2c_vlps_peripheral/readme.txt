@@ -7,10 +7,10 @@ It uses LPI2C to access the on board accelerometer sensor to read the Accelerome
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -43,6 +43,3 @@ LPI2C_VLPS demo start...
 X:    2,  Y: -148,  Z: 2107
 X:   -2,  Y:  -97,  Z: 2086
 ~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -1,56 +1,62 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "board.h"
-#include "mcdrv.h"
-#include "m1_sm_ref_sol.h"
-
 #include "fsl_common.h"
 #include "fsl_port.h"
-#include "pin_mux.h"
+#include "main.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-
-/* Three instruction added after interrupt flag clearing as required */
-#define M1_END_OF_ISR \
-    {                 \
-        __asm("nop"); \
-        __asm("nop"); \
-        __asm("nop"); \
-    }
 
 /*******************************************************************************
  * Variables
  ******************************************************************************/
 
-static bool_t bDemoMode;                /* demo mode enabled/disabled by SW2 button  */
-static uint32_t ui32SpeedStimulatorCnt; /* used for demo mode */
-static uint32_t ui32ButtonFilter;       /* counter for button pressing */
+/* CPU load measurement using Systick*/
+uint32_t g_ui32NumberOfCycles    = 0;
+uint32_t g_ui32MaxNumberOfCycles = 0;
+
+/* Demo mode enabled/disabled */
+bool_t bDemoMode = FALSE;
+
+/* Used for demo mode */
+static uint32_t ui32SpeedStimulatorCnt = 0;
+
+/* Counter for button pressing */
+static uint32_t ui32ButtonFilter = 0;
+
+/* Application and board ID  */
+app_ver_t g_sAppId = {
+    "frdm-ke16z", /* board id */
+    "bldc",       /* motor type */
+    MCRSP_VER,    /* sw version */
+};
+
+/* Structure used in FM to get required ID's */
+app_ver_t g_sAppIdFM;
 
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
-static void DemoSpeedStimulator(void);
 
 /*******************************************************************************
  * Code
  ******************************************************************************/
 
 /*!
-* @brief   Application main function processing peripheral function calling and
-*          infinite loop
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   Application main function processing peripheral function calling and
+ *          infinite loop
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 int main(void)
 {
     uint32_t ui32PrimaskReg;
@@ -58,73 +64,68 @@ int main(void)
     /* disable all interrupts before peripherals are initialized */
     ui32PrimaskReg = DisableGlobalIRQ();
 
-    /* init board hardware. */
-    /* LED pin configuration */
-#if 0 /* output pin config disabled, there are LEDs on frdm-ke16z board, 
-         but have conflict with PWM signals */
-    const gpio_pin_config_t output_pin_config = {
-        kGPIO_DigitalOutput, /* Set current pin as digital output */
-        (uint8_t)1U          /* Set default logic high */
-    };
-#endif
-    /* Initialize clock configuration */
-    BOARD_InitBootClocks();
-    
-    /* Init pins set in pin_mux file */
-    BOARD_InitBootPins();
+    /* disable demo mode after reset */
+    bDemoMode              = FALSE;
+    ui32SpeedStimulatorCnt = 0;
 
-    /* SW2 pin config - PTD3 */
-    PORT_SetPinInterruptConfig(PORTD, 3U, kPORT_InterruptRisingEdge); /* Enable interrupt */
-    
-    /* Enable & setup interrupts */
-    EnableIRQ(PORTBCD_IRQn);
-    NVIC_SetPriority(PORTBCD_IRQn, 4);
+    /* Pass actual demo id and board info to FM */
+    g_sAppIdFM = g_sAppId;
 
-    /* init application clock dependent variables */
-    InitClock();
+    /* Init board hardware. */
+    BOARD_Init();
 
     /* initialize peripheral motor control driver for motor M1*/
     MCDRV_Init_M1();
-    
-    /* disable demo mode after reset */
-    bDemoMode = FALSE;
-    ui32SpeedStimulatorCnt = 0;
 
-    /* enable interrupts  */
+    /* SysTick initialization for CPU load measurement */
+    BOARD_InitSysTick();
+
+    /* Enable interrupts */
     EnableGlobalIRQ(ui32PrimaskReg);
 
     /* infinite loop */
     while (1)
     {
-        
+        FMSTR_Poll();
     }
 }
 
 /*!
-* @brief   ADC conversion complete ISR called with 100us period processes
-*           - motor M1 fast application machine function
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   ADC conversion complete ISR called with 100us period processes
+ *           - motor M1 fast application machine function
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void ADC0_IRQHandler(void)
 {
-    /* StateMachine call */
+    /* Start CPU tick number couting */
+    SYSTICK_START_COUNT();
+
+    /* State machine */
     SM_StateMachineFast(&g_sM1Ctrl);
-    
-    /* add empty instructions for correct interrupt flag clearing */
+
+    /* stop CPU tick number couting and store actual and maximum ticks */
+    SYSTICK_STOP_COUNT(g_ui32NumberOfCycles);
+    g_ui32MaxNumberOfCycles =
+        g_ui32NumberOfCycles > g_ui32MaxNumberOfCycles ? g_ui32NumberOfCycles : g_ui32MaxNumberOfCycles;
+
+    /* Call FreeMASTER recorder */
+    FMSTR_Recorder(0);
+
+    /* Add empty instructions for correct interrupt flag clearing */
     M1_END_OF_ISR;
 }
 
 /*!
-* @brief   FTM1 interrupt service routine
-*          - Forced commutation control
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   FTM1 interrupt service routine
+ *          - Forced commutation control
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void FTM1_IRQHandler(void)
 {
     /* asynchronous time event processing */
@@ -138,19 +139,18 @@ void FTM1_IRQHandler(void)
 }
 
 /*!
-* @brief   LPIT reload ISR called with 1ms period and processes following functions:
-*           - motor M1 slow application machine function
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   LPIT reload ISR called with 1ms period and processes following functions:
+ *           - motor M1 slow application machine function
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void LPIT0_IRQHandler(void)
 {
-
     /* Slow StateMachine call */
     SM_StateMachineSlow(&g_sM1Ctrl);
-    
+
     /* Demo Speed Simulator */
     DemoSpeedStimulator();
 
@@ -162,13 +162,13 @@ void LPIT0_IRQHandler(void)
 }
 
 /*!
-* @brief   PDB_Error_ISR_Handler
-*           - handling the PDB error interrupt: reinitializes the PDB module
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   PDB_Error_ISR_Handler
+ *           - handling the PDB error interrupt: reinitializes the PDB module
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void PDB0_IRQHandler(void)
 {
     PDB0->SC &= (~PDB_SC_PDBEN_MASK);   /* Disable PDB */
@@ -178,12 +178,12 @@ void PDB0_IRQHandler(void)
 }
 
 /*!
-* @brief   Port interrupt handler
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   Port interrupt handler
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void PORTBCD_IRQHandler(void)
 {
     if (PORTD->PCR[3] & PORT_PCR_ISF_MASK)
@@ -197,14 +197,16 @@ void PORTBCD_IRQHandler(void)
             ui32ButtonFilter = 0;
             if (bDemoMode)
             {
+                /* Stop application */
                 M1_SetSpeed(0);
                 M1_SetAppSwitch(FALSE);
                 bDemoMode = FALSE;
             }
             else
             {
+                /* Start application */
                 M1_SetAppSwitch(TRUE);
-                bDemoMode = TRUE;
+                bDemoMode              = TRUE;
                 ui32SpeedStimulatorCnt = 0;
             }
         }
@@ -212,15 +214,15 @@ void PORTBCD_IRQHandler(void)
 }
 
 /*!
-* @brief   DemoSpeedStimulator
-*           - When demo mode is enabled it changes the required speed according
-*             to predefined profile
-*
-* @param   void
-*
-* @return  none
-*/
-static void DemoSpeedStimulator(void)
+ * @brief   DemoSpeedStimulator
+ *           - When demo mode is enabled it changes the required speed according
+ *             to predefined profile
+ *
+ * @param   void
+ *
+ * @return  none
+ */
+void DemoSpeedStimulator(void)
 {
     /* increase push button pressing counter  */
     if (ui32ButtonFilter < 1000)
@@ -231,7 +233,7 @@ static void DemoSpeedStimulator(void)
         ui32SpeedStimulatorCnt++;
         switch (ui32SpeedStimulatorCnt)
         {
-            case 1:
+            case 100:
                 M1_SetSpeed(FRAC16(1000.0 / M1_N_MAX));
                 break;
             case 2500:
@@ -253,4 +255,78 @@ static void DemoSpeedStimulator(void)
                 break;
         }
     }
+}
+
+/*!
+ * @brief   void BOARD_Init(void)
+ *           - Initialization of clocks, pins and GPIO
+ *
+ * @param   void
+ *
+ * @return  none
+ */
+void BOARD_Init(void)
+{
+    /* Initialize clock configuration */
+    BOARD_BootClockRUN();
+
+    /* Initialize pins configuration */
+    BOARD_InitBootPins();
+
+    /* Init GPIO pins */
+    BOARD_InitGPIO();
+
+    /* Init peripherals set in peripherals file */
+    BOARD_InitBootPeripherals();
+
+    /* Enable & setup interrupts */
+    EnableIRQ(PORTBCD_IRQn);
+    NVIC_SetPriority(PORTBCD_IRQn, 4);
+}
+
+/*!
+ * @brief   void BOARD_InitGPIO(void)
+ *           - Initialization of the GPIO peripherals
+ *
+ * @param   void
+ *
+ * @return  none
+ */
+void BOARD_InitGPIO(void)
+{
+    /* LED pin configuration */
+#if 0 /* output pin config disabled, there are LEDs on frdm-ke16z board, \
+         but have conflict with PWM signals */
+    const gpio_pin_config_t output_pin_config = {
+        kGPIO_DigitalOutput, /* Set current pin as digital output */
+        (uint8_t)1U          /* Set default logic high */
+    };
+#endif
+
+    /* SW2 pin config - PTD3 */
+    PORT_SetPinInterruptConfig(PORTD, 3U, kPORT_InterruptRisingEdge); /* Enable interrupt */
+
+    /* Enable & setup interrupts */
+    EnableIRQ(PORTBCD_IRQn);
+    NVIC_SetPriority(PORTBCD_IRQn, 4);
+}
+
+/*!
+ *@brief      SysTick initialization for CPU cycle measurement
+ *
+ *@param      none
+ *
+ *@return     none
+ */
+void BOARD_InitSysTick(void)
+{
+    /* Initialize SysTick core timer to run free */
+    /* Set period to maximum value 2^24*/
+    SysTick->LOAD = 0xFFFFFF;
+
+    /*Clock source - System Clock*/
+    SysTick->CTRL |= SysTick_CTRL_CLKSOURCE_Msk;
+
+    /*Start Sys Timer*/
+    SysTick->CTRL |= SysTick_CTRL_ENABLE_Msk;
 }

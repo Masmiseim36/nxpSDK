@@ -37,11 +37,6 @@ pin_labels:
 #define PIN17_IDX 17u
 #define PIN18_IDX 18u
 
-#define DTM_2WIRE_CONFIG                0x580
-#define BTLE_RF_DTM_2WIRE_CONFIG        (*(volatile uint16_t *) (BTLE_RF_BASE+DTM_2WIRE_CONFIG))
-#define CLOCK_CONFIG2                   0x51E
-#define BTLE_RF_CLOCK_CONFIG2           (*(volatile uint16_t *) (BTLE_RF_BASE+CLOCK_CONFIG2))
-
 /* FUNCTION ************************************************************************************************************
  *
  * Function Name : BOARD_InitBootPins
@@ -238,8 +233,6 @@ void BOARD_InitDTM(void)
   CLOCK_EnableClock(kCLOCK_PortC);                           /* Port C Clock Gate Control: Clock enabled*/
   PORT_SetPinMux(PORTC, PIN17_IDX, kPORT_MuxAlt7);           /* PORTC17 (pin 17) is configured as DTM_RX */
   PORT_SetPinMux(PORTC, PIN18_IDX, kPORT_MuxAlt7);           /* PORTC18 (pin 18) is configured as DTM_TX */
-  BTLE_RF_DTM_2WIRE_CONFIG = 0x0042;                         /* Set baudrate of 115200 on DTM pins */
-  BTLE_RF_CLOCK_CONFIG2 = 0x0001;                            /* Enable clock to DTM module */
 }
 
 /***********************************************************************************************************************

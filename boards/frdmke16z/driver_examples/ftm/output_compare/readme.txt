@@ -3,6 +3,14 @@ Overview
 The FTM project is a demonstration program of the SDK FTM driver's output compare feature.
 It sets up one FTM channel to toggle the output when a match occurs with the channel value. The user
 should probe the FTM output with a oscilloscope to see the signal toggling.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -36,11 +44,3 @@ You will see the output signal toggle
 Probe the signal using an oscilloscope
 ~~~~~~~~~~~~~~~~~~~~~~~
 - Probe oscilloscope at PTD1(J2-7) to see output signal.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

@@ -14,10 +14,10 @@ consumer and producer must be prepared to enable transaction.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -30,9 +30,6 @@ Board settings
 This example project does not call for any special hardware configurations.
 Although not required, the recommendation is to leave the development board's jumper settings
 and configurations in default state when running this example.
-Prepare the Demo
-================
-
 Running the demo
 ================
 After the board is flashed the Tera Term will show debug console output.
@@ -52,6 +49,3 @@ Producer released item.
 Consumer 1 accepted item.
 Producer released item.
 Consumer 2 accepted item.
-Customization options
-=====================
-

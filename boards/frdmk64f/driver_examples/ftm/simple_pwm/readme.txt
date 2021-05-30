@@ -10,10 +10,10 @@ Can be judged by FSL_FEATURE_FTM_IS_TPM_ONLY_INSTANCE(base) macro.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -47,6 +47,3 @@ FTM example to output center-aligned PWM signal
 You will see a change in LED brightness if an LED is connected to the FTM pin
 If no LED is connected to the FTM pin, then probe the signal using an oscilloscope
 ~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

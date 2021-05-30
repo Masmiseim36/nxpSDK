@@ -7,13 +7,13 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_lpit.h"
 #include "fsl_adc12.h"
 #include "fsl_trgmux.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -21,13 +21,13 @@
 /* PTA0, ADC0_SEL0 */
 #define DEMO_ADC12_USER_CHANNEL (0U)
 
-#define DEMO_ADC12_CHANNEL_GROUP (0U)
-#define DEMO_ADC12_IRQ_ID ADC0_IRQn
+#define DEMO_ADC12_CHANNEL_GROUP    (0U)
+#define DEMO_ADC12_IRQ_ID           ADC0_IRQn
 #define DEMO_ADC12_IRQ_HANDLER_FUNC ADC0_IRQHandler
 
-#define DEMO_LPIT_USER_CHANNEL kLPIT_Chnl_0
+#define DEMO_LPIT_USER_CHANNEL  kLPIT_Chnl_0
 #define DEMO_LPIT_USER_TIMER_CH kLPIT_Trigger_TimerChn0
-#define DEMO_LPIT_SOURCECLOCK CLOCK_GetIpFreq(kCLOCK_Lpit0)
+#define DEMO_LPIT_SOURCECLOCK   CLOCK_GetIpFreq(kCLOCK_Lpit0)
 /* LPIT triggers ADC every LPIT_TRIGGER_TIME us*/
 #define LPIT_TRIGGER_TIME (1000000U)
 /*******************************************************************************
@@ -70,11 +70,11 @@ static void DEMO_InitLpitTrigger(void)
     /* Init lpit module */
     LPIT_Init(LPIT0, &lpitConfig);
 
-    lpitChannelConfig.chainChannel = false;
+    lpitChannelConfig.chainChannel          = false;
     lpitChannelConfig.enableReloadOnTrigger = false;
-    lpitChannelConfig.enableStartOnTrigger = false;
-    lpitChannelConfig.enableStopOnTimeout = false;
-    lpitChannelConfig.timerMode = kLPIT_PeriodicCounter;
+    lpitChannelConfig.enableStartOnTrigger  = false;
+    lpitChannelConfig.enableStopOnTimeout   = false;
+    lpitChannelConfig.timerMode             = kLPIT_PeriodicCounter;
     /* Set default values for the trigger source */
     lpitChannelConfig.triggerSelect = DEMO_LPIT_USER_TIMER_CH;
     lpitChannelConfig.triggerSource = kLPIT_TriggerSource_External;
@@ -101,11 +101,7 @@ void DEMO_ADC12_IRQ_HANDLER_FUNC(void)
     g_Adc12ConvValue = ADC12_GetChannelConversionValue(DEMO_ADC12_BASEADDR, DEMO_ADC12_CHANNEL_GROUP);
     g_Adc12InterruptCounter++;
     g_Adc12ConversionCompletedFlag = true;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -131,8 +127,8 @@ int main(void)
 
     /* Initialize ADC. */
     ADC12_GetDefaultConfig(&adc12ConfigStruct);
-    adc12ConfigStruct.referenceVoltageSource = kADC12_ReferenceVoltageSourceVref;
-    adc12ConfigStruct.resolution = kADC12_Resolution12Bit;
+    adc12ConfigStruct.referenceVoltageSource     = kADC12_ReferenceVoltageSourceVref;
+    adc12ConfigStruct.resolution                 = kADC12_Resolution12Bit;
     adc12ConfigStruct.enableContinuousConversion = false;
     ADC12_Init(DEMO_ADC12_BASEADDR, &adc12ConfigStruct);
     /* Set to hardware trigger mode. */
@@ -144,7 +140,7 @@ int main(void)
         PRINTF("ADC calibration failed!\r\n");
     }
 
-    adc12ChannelConfigStruct.channelNumber = DEMO_ADC12_USER_CHANNEL;
+    adc12ChannelConfigStruct.channelNumber                        = DEMO_ADC12_USER_CHANNEL;
     adc12ChannelConfigStruct.enableInterruptOnConversionCompleted = true; /* Enable the interrupt. */
     ADC12_SetChannelConfig(DEMO_ADC12_BASEADDR, DEMO_ADC12_CHANNEL_GROUP, &adc12ChannelConfigStruct);
 

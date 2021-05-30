@@ -7,14 +7,14 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_mscan.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* UART instance and clock */
-#define EXAMPLE_MSCAN MSCAN
+#define EXAMPLE_MSCAN          MSCAN
 #define EXAMPLE_MSCAN_CLK_FREQ CLOCK_GetFreq(kCLOCK_ScgSysOscAsyncDiv2Clk)
 
 
@@ -101,14 +101,14 @@ int main(void)
 
     /* Get MSCAN module default Configuration. */
     /*
-   * mscanConfig.baudRate = 1000000U;
-   * mscanConfig.enableTimer = false;
-   * mscanConfig.enableWakeup = false;
-   * mscanConfig.clkSrc = kMSCAN_ClkSrcOsc;
-   * mscanConfig.enableLoopBack = false;
-   * mscanConfig.enableListen = false;
-   * mscanConfig.busoffrecMode = kMSCAN_BusoffrecAuto;
-   * mscanConfig.filterConfig.filterMode = kMSCAN_Filter32Bit;
+     * mscanConfig.baudRate = 1000000U;
+     * mscanConfig.enableTimer = false;
+     * mscanConfig.enableWakeup = false;
+     * mscanConfig.clkSrc = kMSCAN_ClkSrcOsc;
+     * mscanConfig.enableLoopBack = false;
+     * mscanConfig.enableListen = false;
+     * mscanConfig.busoffrecMode = kMSCAN_BusoffrecAuto;
+     * mscanConfig.filterConfig.filterMode = kMSCAN_Filter32Bit;
      */
     MSCAN_GetDefaultConfig(&mscanConfig);
 
@@ -146,13 +146,13 @@ registers CANIDMR1 and CANIDMR5 to don't care. */
 
             /* Prepare Tx Frame for sending. */
             frame.ID_Type.ID = txIdentifier;
-            frame.format = kMSCAN_FrameFormatStandard;
-            frame.type = kMSCAN_FrameTypeData;
-            frame.DLR = 1;
+            frame.format     = kMSCAN_FrameFormatStandard;
+            frame.type       = kMSCAN_FrameTypeData;
+            frame.DLR        = 1;
 
             /* Send data through Tx Message Buffer. */
             txXfer.frame = &frame;
-            txXfer.mask = kMSCAN_TxEmptyInterruptEnable;
+            txXfer.mask  = kMSCAN_TxEmptyInterruptEnable;
             MSCAN_TransferSendNonBlocking(EXAMPLE_MSCAN, &mscanHandle, &txXfer);
 
             while (!txComplete)
@@ -162,7 +162,7 @@ registers CANIDMR1 and CANIDMR5 to don't care. */
 
             /* Start receive data through Rx Message Buffer. */
             rxXfer.frame = &frame;
-            rxXfer.mask = kMSCAN_RxFullInterruptEnable;
+            rxXfer.mask  = kMSCAN_RxFullInterruptEnable;
             MSCAN_TransferReceiveNonBlocking(EXAMPLE_MSCAN, &mscanHandle, &rxXfer);
 
             /* Wait until Rx MB full. */
@@ -180,7 +180,7 @@ registers CANIDMR1 and CANIDMR5 to don't care. */
         {
             /* Start receive data through Rx Message Buffer. */
             rxXfer.frame = &frame;
-            rxXfer.mask = kMSCAN_RxFullInterruptEnable;
+            rxXfer.mask  = kMSCAN_RxFullInterruptEnable;
             MSCAN_TransferReceiveNonBlocking(EXAMPLE_MSCAN, &mscanHandle, &rxXfer);
 
             /* Wait until Rx receive full. */
@@ -194,8 +194,8 @@ registers CANIDMR1 and CANIDMR5 to don't care. */
 
             /* Send data through Tx Message Buffer. */
             frame.ID_Type.ID = txIdentifier;
-            txXfer.frame = &frame;
-            txXfer.mask = kMSCAN_TxEmptyInterruptEnable;
+            txXfer.frame     = &frame;
+            txXfer.mask      = kMSCAN_TxEmptyInterruptEnable;
             MSCAN_TransferSendNonBlocking(EXAMPLE_MSCAN, &mscanHandle, &txXfer);
 
             while (!txComplete)

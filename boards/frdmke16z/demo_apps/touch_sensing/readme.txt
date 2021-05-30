@@ -14,15 +14,15 @@ Key benefits of the NXP Touch solution include:
 
 Toolchain supported
 ===================
-- IAR embedded Workbench 8.30.1
-- Keil MDK 5.25
-- MCUXpresso IDE 10.2.1
+- IAR embedded Workbench 8.40
+- Keil MDK 5.28A
+- MCUXpresso IDE 11.1.0
 
 Hardware requirements
 =====================
 - Micro USB cable
 - FRDM-KE16Z board
-- NXP FRDM-TOUCH board
+- NXP FRDM-TOUCH board (expand the NXP Touch library features enabling to change LED’s hue or brightness and demonstrating mutual sensing keypad) 
 - Personal Computer
 
 Board settings
@@ -33,12 +33,14 @@ Prepare the Demo
 ===============
 1.  Connect a USB cable between the host PC and the OpenSDA USB port on the target board.
 2.  Download the program to the target board.
-3.  Download a FreeMASTER tool (from: http://www.nxp.com/freemaster) and install the FreeMASTER
+3.  Download a FreeMASTER tool (from: http://www.nxp.com/freemaster, version 2.5 or 3.0) and install the FreeMASTER
 4.  Open the FreeMASTER project NXPTouchKE16.pmp file from: MCUXpresso SDK\middleware\touch\freemaster\NXPTouchKE16.pmp and choose Project -> Options... from FreeMASTER menu.  
 5.  In Comm tab set the port with description: USB Serial Device.
 6.  Set the Speed to 115200 baud rate.
-7.  Continue with help of the NXP Touch Library Reference Manual (Chapter 8 Examples).
+7.  Continue with help of the NXP Touch Library Reference Manual (Chapter 8 Examples or Chapter 5 Touch GUI Tool).
 
 Running the demo
 ================
-The control page in FreeMASTER should show changing values from TSI measurement. The Led on FRDM-KE16Z board should change the colour after detected touch event. More information can be found in the NXP Touch Library Reference Manual (Chapter 8 Examples).
+The control page in FreeMASTER should show changing values from TSI measurement. The Led on FRDM-KE16Z board 
+should change the color after detected touch event. 
+More information can be found in the NXP Touch Library Reference Manual (Chapter 8 Examples).

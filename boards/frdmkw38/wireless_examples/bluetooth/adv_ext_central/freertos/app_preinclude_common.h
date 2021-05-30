@@ -64,7 +64,20 @@
     #error "Enable pairing to make use of bonding"
 #endif
 
+/* Number of devices identified by address to keep track of for Repeated Attempts */
+#ifndef gRepeatedAttemptsNoOfDevices_c
+    #define gRepeatedAttemptsNoOfDevices_c  (4U)
+#endif
 
+/* Minimum timeout after a pairing failure before the same peer can re-attempt it */
+#ifndef gRepeatedAttemptsTimeoutMin_c
+    #define gRepeatedAttemptsTimeoutMin_c   (10U) /* seconds */
+#endif
+
+/* Maximum timeout after a pairing failure before the same peer can re-attempt it */
+#ifndef gRepeatedAttemptsTimeoutMax_c
+    #define gRepeatedAttemptsTimeoutMax_c   (640U) /* seconds */
+#endif
 /*! *********************************************************************************
  *   Auto Configuration
  ********************************************************************************** */
@@ -86,7 +99,11 @@
 /* If the number of connection is not mentioned, set it to 1 as in ble_config.h. The MemManager
  * requires to know the number of connection for LL buffer sizing */
 #ifndef gAppMaxConnections_c
+#ifndef GCOV_DO_COVERAGE
 #define gAppMaxConnections_c           (1U)
+#else /* GCOV_DO_COVERAGE */
+#define gAppMaxConnections_c           (2U)
+#endif /* GCOV_DO_COVERAGE */
 #endif
 
 /*! Number of credit-based channels supported */

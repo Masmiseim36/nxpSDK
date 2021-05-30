@@ -7,11 +7,11 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_ftm.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -22,11 +22,11 @@
 
 /* Interrupt number and interrupt handler for the FTM base address used */
 #define FTM_INTERRUPT_NUMBER FTM0_IRQn
-#define FTM_LED_HANDLER FTM0_IRQHandler
+#define FTM_LED_HANDLER      FTM0_IRQHandler
 
 /* Interrupt to enable and flag to read */
 #define FTM_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl4InterruptEnable
-#define FTM_CHANNEL_FLAG kFTM_Chnl4Flag
+#define FTM_CHANNEL_FLAG             kFTM_Chnl4Flag
 
 /* Get source clock for FTM driver */
 #define FTM_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_CoreSysClk)
@@ -42,8 +42,8 @@ void delay(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool ftmIsrFlag = false;
-volatile bool brightnessUp = true; /* Indicate LED is brighter or dimmer */
+volatile bool ftmIsrFlag          = false;
+volatile bool brightnessUp        = true; /* Indicate LED is brighter or dimmer */
 volatile uint8_t updatedDutycycle = 10U;
 
 /*******************************************************************************
@@ -70,7 +70,7 @@ void FTM_LED_HANDLER(void)
         if (++updatedDutycycle >= 99U)
         {
             updatedDutycycle = 99U;
-            brightnessUp = false;
+            brightnessUp     = false;
         }
     }
     else
@@ -87,6 +87,7 @@ void FTM_LED_HANDLER(void)
         /* Clear interrupt flag.*/
         FTM_ClearStatusFlags(BOARD_FTM_BASEADDR, FTM_CHANNEL_FLAG);
     }
+    __DSB();
 }
 
 /*!
@@ -99,10 +100,12 @@ int main(void)
     ftm_pwm_level_select_t pwmLevel = kFTM_LowTrue;
 
     /* Configure ftm params with frequency 24kHZ */
-    ftmParam.chnlNumber = BOARD_FTM_CHANNEL_PAIR;
-    ftmParam.level = pwmLevel;
-    ftmParam.dutyCyclePercent = updatedDutycycle;
+    ftmParam.chnlNumber            = BOARD_FTM_CHANNEL_PAIR;
+    ftmParam.level                 = pwmLevel;
+    ftmParam.dutyCyclePercent      = updatedDutycycle;
     ftmParam.firstEdgeDelayPercent = 0U;
+    ftmParam.enableComplementary   = true;
+    ftmParam.enableDeadtime        = true;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -118,19 +121,13 @@ int main(void)
     /* Update deadTimePrescale for fast clock*/
     ftmInfo.deadTimePrescale = kFTM_Deadtime_Prescale_16;
     /* Need a deadtime value of about 650nsec */
-    ftmInfo.deadTimeValue = ((uint64_t)FTM_SOURCE_CLOCK * 650) / 1000000000;
+    ftmInfo.deadTimeValue = ((uint64_t)FTM_SOURCE_CLOCK * 650) / 1000000000 / 16;
 
     /* Initialize FTM module */
     FTM_Init(BOARD_FTM_BASEADDR, &ftmInfo);
 
     /* Setup output of a combined PWM signal */
-    FTM_SetupPwm(BOARD_FTM_BASEADDR, &ftmParam, 1U, kFTM_CombinedPwm, 24000U, FTM_SOURCE_CLOCK);
-
-    /* Enable complementary output on the channel pair */
-    FTM_SetComplementaryEnable(BOARD_FTM_BASEADDR, BOARD_FTM_CHANNEL_PAIR, true);
-
-    /* Enable Deadtime insertion on the channel pair */
-    FTM_SetDeadTimeEnable(BOARD_FTM_BASEADDR, BOARD_FTM_CHANNEL_PAIR, true);
+    FTM_SetupPwm(BOARD_FTM_BASEADDR, &ftmParam, 1U, kFTM_EdgeAlignedCombinedPwm, 24000U, FTM_SOURCE_CLOCK);
 
     /* Enable interrupt flag on one of the channels from the pair */
     FTM_EnableInterrupts(BOARD_FTM_BASEADDR, FTM_CHANNEL_INTERRUPT_ENABLE);
@@ -155,7 +152,8 @@ int main(void)
             FTM_UpdateChnlEdgeLevelSelect(BOARD_FTM_BASEADDR, (ftm_chnl_t)((BOARD_FTM_CHANNEL_PAIR * 2) + 1), 0U);
 
             /* Update PWM duty cycle on the channel pair */
-            FTM_UpdatePwmDutycycle(BOARD_FTM_BASEADDR, BOARD_FTM_CHANNEL_PAIR, kFTM_CombinedPwm, updatedDutycycle);
+            FTM_UpdatePwmDutycycle(BOARD_FTM_BASEADDR, BOARD_FTM_CHANNEL_PAIR, kFTM_EdgeAlignedCombinedPwm,
+                                   updatedDutycycle);
 
             /* Software trigger to update registers */
             FTM_SetSoftwareTrigger(BOARD_FTM_BASEADDR, true);

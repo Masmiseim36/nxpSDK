@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2017, 2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -8,23 +8,25 @@
 
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
-#include "fsl_dbi_flexio.h"
 #include "fsl_ssd1963.h"
 #include "fsl_ft5406.h"
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
 #include "fsl_dmamux.h"
 #endif
 #include "pictures.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
-#include "pin_mux.h"
 #include "fsl_gpio.h"
 #include "fsl_port.h"
 #include "fsl_qspi.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Using FLEXIO EDMA MCU LCD driver for DBI data transfer. */
+#define DEMO_USE_DBI_FLEXIO_EDMA 1
 
 /* Macros for the LCD controller. */
 #define DEMO_SSD1963_XTAL_FREQ     10000000U
@@ -106,6 +108,12 @@
 #define DEMO_ARROW_COLOR 0x00FF
 #endif
 
+#if DEMO_USE_DBI_FLEXIO_EDMA
+#include "fsl_dbi_flexio_edma.h"
+#else
+#error Currently only support FLEXIO MCULCD EDMA
+#endif
+
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -144,15 +152,18 @@ volatile bool touchFlag = false;
 /* Pictures filled with the arrow. */
 uint8_t picWithArrow[DEMO_PIC_NUM][DEMO_ARROW_SIZE * DEMO_ARROW_SIZE * DEMO_BYTE_PER_PIXEL];
 
-dbi_flexio_xfer_handle_t g_dbiFlexioXferHandle;
-
 /* FlexIO MCU LCD DMA handle. */
-#if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
+#if DEMO_USE_DBI_FLEXIO_EDMA
 static edma_handle_t rxDmaHandle;
 static edma_handle_t txDmaHandle;
-#else
-static dma_handle_t rxDmaHandle;
-static dma_handle_t txDmaHandle;
+#endif
+
+#if DEMO_USE_DBI_FLEXIO_EDMA
+
+dbi_flexio_edma_xfer_handle_t g_dbiFlexioXferHandle;
+
+#define g_dbiFlexioXferOps g_dbiFlexioEdmaXferOps
+
 #endif
 
 static volatile bool s_dbiMemoryDone = false;
@@ -310,7 +321,7 @@ void DEMO_TOUCH_INT_IRQHandler(void)
 
 void DEMO_InitDma(void)
 {
-#if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
+#if DEMO_USE_DBI_FLEXIO_EDMA
     edma_config_t edmaConfig;
 
     /*
@@ -331,16 +342,6 @@ void DEMO_InitDma(void)
 
     EDMA_CreateHandle(&rxDmaHandle, DEMO_DMA, DEMO_FLEXIO_RX_DMA_CHANNEL);
     EDMA_CreateHandle(&txDmaHandle, DEMO_DMA, DEMO_FLEXIO_TX_DMA_CHANNEL);
-
-#else
-
-    DMA_Init(DEMO_DMA);
-
-    DMA_EnableChannel(DEMO_DMA, DEMO_FLEXIO_RX_DMA_CHANNEL);
-    DMA_EnableChannel(DEMO_DMA, DEMO_FLEXIO_TX_DMA_CHANNEL);
-
-    DMA_CreateHandle(&rxDmaHandle, DEMO_DMA, DEMO_FLEXIO_RX_DMA_CHANNEL);
-    DMA_CreateHandle(&txDmaHandle, DEMO_DMA, DEMO_FLEXIO_TX_DMA_CHANNEL);
 #endif
 }
 
@@ -415,7 +416,9 @@ status_t DEMO_InitLcd(void)
     }
 
     /* Create the DBI XFER handle. */
-    status = DBI_FLEXIO_CreateXferHandle(&g_dbiFlexioXferHandle, &flexioLcdDev, &txDmaHandle, &rxDmaHandle);
+#if DEMO_USE_DBI_FLEXIO_EDMA
+    status = DBI_FLEXIO_EDMA_CreateXferHandle(&g_dbiFlexioXferHandle, &flexioLcdDev, &txDmaHandle, &rxDmaHandle);
+#endif
 
     if (kStatus_Success != status)
     {

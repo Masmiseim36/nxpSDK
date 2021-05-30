@@ -1,14 +1,10 @@
-/*******************************************************************************
+/*
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2021 NXP
+ * All rights reserved.
  *
- * Copyright 2015-2016 Freescale Semiconductor, Inc.
- *
- *
- * This software is owned or controlled by Freescale Semiconductor.
- * Use of this software is governed by the Freescale License
- * distributed with this Material.
- * See the LICENSE file distributed for more details.
- *
- ******************************************************************************/
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 /******************************************************************************
  * Filter-Based Metering Library Configuration File,
  * Created: Wed Aug 26 08:19:45 2015

@@ -186,9 +186,7 @@ void sys_check_core_locking(void);
 #endif
 
 /* ---------- DHCP options ---------- */
-/* Define LWIP_DHCP to 1 if you want DHCP configuration of
-   interfaces. DHCP is not implemented in lwIP 0.5.1, however, so
-   turning this on does currently not work. */
+/* Enable DHCP module. */
 #ifndef LWIP_DHCP
 #define LWIP_DHCP 1
 #endif

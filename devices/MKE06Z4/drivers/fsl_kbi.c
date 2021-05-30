@@ -1,5 +1,5 @@
 /*
- * Copyright 2017-2019 NXP
+ * Copyright 2017-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -67,7 +67,7 @@ void KBI_Init(KBI_Type *base, kbi_config_t *configure)
 {
     assert(configure);
 
-    uint8_t scReg;
+    kbi_reg_t scReg;
 
     uint32_t instance = KBI_GetInstance(base);
 
@@ -91,8 +91,8 @@ void KBI_Init(KBI_Type *base, kbi_config_t *configure)
     base->SC = scReg;
 
     /* Set KBI enable interrupts and KBI detect mode. */
-    scReg    = (uint8_t)base->SC;
-    base->SC = ((uint32_t)configure->mode & KBI_SC_KBMOD_MASK) | KBI_SC_KBIE_MASK | scReg;
+    scReg    = base->SC;
+    base->SC = ((kbi_reg_t)configure->mode & KBI_SC_KBMOD_MASK) | KBI_SC_KBIE_MASK | scReg;
     /* Enable NVIC interrupt. */
     (void)EnableIRQ(s_kbiIrqs[instance]);
 }
@@ -106,7 +106,7 @@ void KBI_Init(KBI_Type *base, kbi_config_t *configure)
  */
 void KBI_Deinit(KBI_Type *base)
 {
-    uint8_t scReg = KBI_SC_KBACK_MASK;
+    kbi_reg_t scReg = KBI_SC_KBACK_MASK;
 
 #if defined(FSL_FEATURE_KBI_HAS_SOURCE_PIN) && FSL_FEATURE_KBI_HAS_SOURCE_PIN
     /* Reset kbi sp register. */

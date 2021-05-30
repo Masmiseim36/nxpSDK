@@ -1467,6 +1467,7 @@ static void SPI_CommonIRQHandler(SPI_Type *base, uint32_t instance)
 }
 
 #if defined(FSL_FEATURE_SPI_HAS_SHARED_IRQ0_IRQ1_IRQ2) && FSL_FEATURE_SPI_HAS_SHARED_IRQ0_IRQ1_IRQ2
+void SPI0_SPI1_SPI2_DriverIRQHandler(void);
 void SPI0_SPI1_SPI2_DriverIRQHandler(void)
 {
     for (uint32_t instance = 0U; instance < 3U; instance++)
@@ -1478,6 +1479,7 @@ void SPI0_SPI1_SPI2_DriverIRQHandler(void)
     }
 }
 #elif defined(FSL_FEATURE_SPI_HAS_SHARED_IRQ0_IRQ1) && FSL_FEATURE_SPI_HAS_SHARED_IRQ0_IRQ1
+void SPI0_SPI1_DriverIRQHandler(void);
 void SPI0_SPI1_DriverIRQHandler(void)
 {
     for (uint32_t instance = 0U; instance < 2U; instance++)
@@ -1490,6 +1492,7 @@ void SPI0_SPI1_DriverIRQHandler(void)
 }
 #else
 #if defined(SPI0)
+void SPI0_DriverIRQHandler(void);
 void SPI0_DriverIRQHandler(void)
 {
     assert(s_spiHandle[0]);
@@ -1498,6 +1501,7 @@ void SPI0_DriverIRQHandler(void)
 #endif
 
 #if defined(SPI1)
+void SPI1_DriverIRQHandler(void);
 void SPI1_DriverIRQHandler(void)
 {
     assert(s_spiHandle[1]);
@@ -1506,6 +1510,7 @@ void SPI1_DriverIRQHandler(void)
 #endif
 
 #if defined(SPI2)
+void SPI2_DriverIRQHandler(void);
 void SPI2_DriverIRQHandler(void)
 {
     assert(s_spiHandle[2]);

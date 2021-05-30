@@ -983,7 +983,10 @@ static void BleApp_StateMachineHandler(deviceId_t peerDeviceId, appEvent_t event
                     BleApp_Advertise();
                 }
                 break;
-
+            case appEvt_AdvertiseStopped_c:
+                /* in case a second ADV stopped event happened before the state machine has run
+                    from host stack callback  -> do nothing               */
+                break;
             default:
                 {
                     /* should not get another event in this state */
@@ -1017,7 +1020,10 @@ static void BleApp_StateMachineHandler(deviceId_t peerDeviceId, appEvent_t event
                     BleApp_StopAdvertise();
                 }
                 break;
-
+            case appEvt_AdvertiseStarted_c:
+                /* in case a second ADV Start event happened before the state machine has run
+                    from host stack callback  -> do nothing               */
+                break;
             default:
                 {
                     /* should not get another event in this state */

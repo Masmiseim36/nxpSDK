@@ -67,10 +67,11 @@
 #include "mbedtls/ecdh.h"
 #endif
 #include <string.h>
-
 #if defined(MBEDTLS_PLATFORM_C)
 #if defined(FREESCALE_KSDK_BM)
+#include "pin_mux.h"
 #include "board.h"
+
 #include "fsl_debug_console.h"
 #if defined(MBEDTLS_NXP_SSSAPI)
 #include "sssapi_mbedtls.h"
@@ -101,7 +102,6 @@
 #include "mbedtls/memory_buffer_alloc.h"
 #endif
 
-#include "pin_mux.h"
 #include <stdbool.h>
 /*******************************************************************************
  * Definitions
@@ -344,6 +344,8 @@ static int bench_print_features(void)
     text = "DCP HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_HASHCRYPT_SHA256)
     text = "HASHCRYPT HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_CAAM_SHA256)
+    text = "CAAM HW accelerated";
 #elif defined(MBEDTLS_NXP_SENTINEL200)
     text = "S200 HW accelerated";
 #elif defined(MBEDTLS_NXP_SENTINEL300)
@@ -364,6 +366,8 @@ static int bench_print_features(void)
     text = "DCP HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_HASHCRYPT_AES)
     text = "HASHCRYPT HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_CAAM_AES)
+    text = "CAAM HW accelerated";
 #elif defined(MBEDTLS_NXP_SENTINEL200)
     text = "SW AES, S200 HW accelerated CCM and CMAC";
 #elif defined(MBEDTLS_NXP_SENTINEL300)
@@ -380,6 +384,8 @@ static int bench_print_features(void)
     text = "LPC HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_CAU3_AES)
     text = "CAU3 HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_CAAM_AES_GCM)
+    text = "CAAM HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -390,6 +396,8 @@ static int bench_print_features(void)
     text = "MMCAU HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_CAU3_DES)
     text = "CAU3 HW accelerated";
+#elif defined(MBEDTLS_FREESCALE_CAAM_DES)
+    text = "CAAM HW accelerated";
 #else
     text = "Software implementation";
 #endif
@@ -399,19 +407,18 @@ static int bench_print_features(void)
 #elif defined(MBEDTLS_FREESCALE_CAU3_PKHA)
     text = "CAU3 HW accelerated";
 #elif defined(MBEDTLS_FREESCALE_CASPER_PKHA)
-    text = "CASPER HW accelerated";
-#else
-    text = "Software implementation";
-#endif
-    mbedtls_printf("  Asymmetric encryption: %s\r\n", text);
-#if defined(MBEDTLS_NXP_SENTINEL200)
+    text = "CASPER HW accelerated ECC256/384/521 and RSA verify";
+#elif defined(MBEDTLS_FREESCALE_CAAM_PKHA)
+    text = "CAAM HW accelerated";
+#elif defined(MBEDTLS_NXP_SENTINEL200)
     text = "S200 HW accelerated ECDSA and ECDH";
 #elif defined(MBEDTLS_NXP_SENTINEL300)
     text = "S300 HW accelerated ECDSA and ECDH";
 #else
     text = "Software implementation";
 #endif
-    mbedtls_printf("  ECC: %s\r\n\n", text);
+    mbedtls_printf("  Asymmetric cryptography: %s\r\n", text);
+
     return 0;
 }
 

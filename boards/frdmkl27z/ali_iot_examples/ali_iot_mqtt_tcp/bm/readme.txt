@@ -11,10 +11,10 @@ The demo based on an created Aliyun account, so if you want to using your own ac
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
 
 Hardware requirements
 =====================
@@ -91,6 +91,3 @@ example_message_arrive|032 ::
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Note:
 If you rerun the demo with SIM800C power on, then the case may cost more times to establish the communication with remote server.
-Customization options
-=====================
-

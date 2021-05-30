@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -60,7 +64,8 @@ static usb_status_t USB_DeviceHidEndpointsDeinit(usb_device_hid_struct_t *hidHan
  * Variables
  ******************************************************************************/
 
-USB_GLOBAL static usb_device_hid_struct_t s_UsbDeviceHidHandle[USB_DEVICE_CONFIG_HID];
+USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_hid_struct_t
+    s_UsbDeviceHidHandle[USB_DEVICE_CONFIG_HID];
 
 /*******************************************************************************
  * Code
@@ -139,7 +144,8 @@ static usb_status_t USB_DeviceHidInterruptIn(usb_device_handle handle,
     hidHandle->interruptInPipeBusy = 0U;
     if ((NULL != hidHandle->configStruct) && (hidHandle->configStruct->classCallback))
     {
-        /* Notify the application data sent by calling the hid class callback. */
+        /* Notify the application data sent by calling the hid class callback. classCallback is initialized
+           in classInit of s_UsbDeviceClassInterfaceMap,it is from the second parameter of classInit */
         error =
             hidHandle->configStruct->classCallback((class_handle_t)hidHandle, kUSB_DeviceHidEventSendResponse, message);
     }
@@ -177,7 +183,8 @@ static usb_status_t USB_DeviceHidInterruptOut(usb_device_handle handle,
     hidHandle->interruptOutPipeBusy = 0U;
     if ((NULL != hidHandle->configStruct) && (hidHandle->configStruct->classCallback))
     {
-        /* Notify the application data received by calling the hid class callback. */
+        /* Notify the application data sent by calling the hid class callback. classCallback is initialized
+           in classInit of s_UsbDeviceClassInterfaceMap,it is from the second parameter of classInit */
         error =
             hidHandle->configStruct->classCallback((class_handle_t)hidHandle, kUSB_DeviceHidEventRecvResponse, message);
     }
@@ -249,7 +256,7 @@ static usb_status_t USB_DeviceHidEndpointsInit(usb_device_hid_struct_t *hidHandl
     for (int count = 0U; count < interface->endpointList.count; count++)
     {
         usb_device_endpoint_init_struct_t epInitStruct;
-        usb_device_endpoint_callback_struct_t ep_callback;
+        usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0U;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
@@ -258,15 +265,21 @@ static usb_status_t USB_DeviceHidEndpointsInit(usb_device_hid_struct_t *hidHandl
         if (USB_IN == ((epInitStruct.endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >>
                        USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT))
         {
-            ep_callback.callbackFn = USB_DeviceHidInterruptIn;
+            epCallback.callbackFn = USB_DeviceHidInterruptIn;
+            hidHandle->interruptInPipeDataBuffer = (uint8_t*)USB_UNINITIALIZED_VAL_32;
+            hidHandle->interruptInPipeStall = 0U;
+            hidHandle->interruptInPipeDataLen = 0U;
         }
         else
         {
-            ep_callback.callbackFn = USB_DeviceHidInterruptOut;
+            epCallback.callbackFn = USB_DeviceHidInterruptOut;
+            hidHandle->interruptOutPipeDataBuffer = (uint8_t*)USB_UNINITIALIZED_VAL_32;
+            hidHandle->interruptOutPipeStall = 0U;
+            hidHandle->interruptOutPipeDataLen = 0U;
         }
-        ep_callback.callbackParam = hidHandle;
+        epCallback.callbackParam = hidHandle;
 
-        error = USB_DeviceInitEndpoint(hidHandle->handle, &epInitStruct, &ep_callback);
+        error = USB_DeviceInitEndpoint(hidHandle->handle, &epInitStruct, &epCallback);
     }
     return error;
 }
@@ -402,6 +415,15 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                 if (*temp8 == hidHandle->interfaceHandle->endpointList.endpoint[count].endpointAddress)
                 {
                     /* Only stall the endpoint belongs to the class */
+                    if (USB_IN == ((hidHandle->interfaceHandle->endpointList.endpoint[count].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >>
+                       USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT))
+                    {
+                       hidHandle->interruptInPipeStall = 1U;
+                    }
+                    else
+                    {
+                        hidHandle->interruptOutPipeStall = 1U;
+                    }
                     error = USB_DeviceStallEndpoint(hidHandle->handle, *temp8);
                 }
             }
@@ -419,6 +441,51 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                 {
                     /* Only un-stall the endpoint belongs to the class */
                     error = USB_DeviceUnstallEndpoint(hidHandle->handle, *temp8);
+                    if (USB_IN == (((*temp8) & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >>
+                    USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT))
+                    {
+                        if (hidHandle->interruptInPipeStall)
+                        {
+                            hidHandle->interruptInPipeStall = 0U;
+                            if ((uint8_t*)USB_UNINITIALIZED_VAL_32 != hidHandle->interruptInPipeDataBuffer)
+                            {
+                                error = USB_DeviceSendRequest(hidHandle->handle, (hidHandle->interfaceHandle->endpointList.endpoint[count].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK),
+                                                              hidHandle->interruptInPipeDataBuffer, hidHandle->interruptInPipeDataLen);
+                                if (kStatus_USB_Success != error)
+                                {
+                                    usb_device_endpoint_callback_message_struct_t endpointCallbackMessage;
+                                    endpointCallbackMessage.buffer = hidHandle->interruptInPipeDataBuffer;
+                                    endpointCallbackMessage.length = hidHandle->interruptInPipeDataLen;
+                                    endpointCallbackMessage.isSetup = 0U;
+                                    USB_DeviceHidInterruptIn(hidHandle->handle,(void*)&endpointCallbackMessage, handle);
+                                }
+                                hidHandle->interruptInPipeDataBuffer = (uint8_t*)USB_UNINITIALIZED_VAL_32;
+                                hidHandle->interruptInPipeDataLen = 0U;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (hidHandle->interruptOutPipeStall)
+                        {
+                            hidHandle->interruptOutPipeStall = 0U;
+                            if ((uint8_t*)USB_UNINITIALIZED_VAL_32 != hidHandle->interruptOutPipeDataBuffer)
+                            {
+                                error = USB_DeviceRecvRequest(hidHandle->handle, (hidHandle->interfaceHandle->endpointList.endpoint[count].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_NUMBER_MASK),
+                                                              hidHandle->interruptOutPipeDataBuffer, hidHandle->interruptOutPipeDataLen);
+                                if (kStatus_USB_Success != error)
+                                {
+                                    usb_device_endpoint_callback_message_struct_t endpointCallbackMessage;
+                                    endpointCallbackMessage.buffer = hidHandle->interruptOutPipeDataBuffer;
+                                    endpointCallbackMessage.length = hidHandle->interruptOutPipeDataLen;
+                                    endpointCallbackMessage.isSetup = 0U;
+                                    USB_DeviceHidInterruptOut(hidHandle->handle, (void*)&endpointCallbackMessage, handle);
+                                }
+                                hidHandle->interruptOutPipeDataBuffer = (uint8_t*)USB_UNINITIALIZED_VAL_32;;
+                                hidHandle->interruptOutPipeDataLen = 0U;
+                            }
+                        }
+                    }
                 }
             }
             break;
@@ -445,19 +512,24 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                         /* Get report request */
                         report.reportType = (controlRequest->setup->wValue & 0xFF00U) >> 0x08U;
                         report.reportId = (controlRequest->setup->wValue & 0x00FFU);
+                        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                           it is from the second parameter of classInit */
                         error = hidHandle->configStruct->classCallback((class_handle_t)hidHandle,
                                                                        kUSB_DeviceHidEventGetReport, &report);
                         controlRequest->buffer = report.reportBuffer;
                         controlRequest->length = report.reportLength;
                         break;
                     case USB_DEVICE_HID_REQUEST_GET_IDLE:
-                        /* Get idle request */
+                        /* Get idle request, classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                           it is from the second parameter of classInit */
                         error = hidHandle->configStruct->classCallback(
                             (class_handle_t)hidHandle, kUSB_DeviceHidEventGetIdle, &hidHandle->idleRate);
                         controlRequest->buffer = &hidHandle->idleRate;
                         break;
                     case USB_DEVICE_HID_REQUEST_GET_PROTOCOL:
-                        /* Get protocol request */
+                        /* Get protocol request, classCallback is initialized in classInit of
+                           s_UsbDeviceClassInterfaceMap,
+                           it is from the second parameter of classInit */
                         error = hidHandle->configStruct->classCallback(
                             (class_handle_t)hidHandle, kUSB_DeviceHidEventGetIdle, &hidHandle->protocol);
                         controlRequest->buffer = &hidHandle->protocol;
@@ -469,6 +541,8 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                         if (controlRequest->isSetup)
                         {
                             report.reportLength = controlRequest->length;
+                            /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                               it is from the second parameter of classInit */
                             error = hidHandle->configStruct->classCallback(
                                 (class_handle_t)hidHandle, kUSB_DeviceHidEventRequestReportBuffer, &report);
                             controlRequest->buffer = report.reportBuffer;
@@ -478,6 +552,8 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                         {
                             report.reportBuffer = controlRequest->buffer;
                             report.reportLength = controlRequest->length;
+                            /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                               it is from the second parameter of classInit */
                             error = hidHandle->configStruct->classCallback((class_handle_t)hidHandle,
                                                                            kUSB_DeviceHidEventSetReport, &report);
                         }
@@ -486,14 +562,18 @@ usb_status_t USB_DeviceHidEvent(void *handle, uint32_t event, void *param)
                         /* Set idle request */
                         {
                             hidHandle->idleRate = (controlRequest->setup->wValue & 0xFF00U) >> 0x08U;
+                            /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                               it is from the second parameter of classInit */
                             error = hidHandle->configStruct->classCallback(
-                                (class_handle_t)hidHandle, kUSB_DeviceHidEventSetIdle, &controlRequest->setup->wValue);
+                                (class_handle_t)hidHandle, kUSB_DeviceHidEventSetIdle, &hidHandle->idleRate);
                         }
                         break;
                     case USB_DEVICE_HID_REQUEST_SET_PROTOCOL:
                         /* Set protocol request */
                         {
                             hidHandle->protocol = (controlRequest->setup->wValue & 0x00FFU);
+                            /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                               it is from the second parameter of classInit */
                             error = hidHandle->configStruct->classCallback(
                                 (class_handle_t)hidHandle, kUSB_DeviceHidEventSetProtocol, &hidHandle->protocol);
                         }
@@ -619,6 +699,13 @@ usb_status_t USB_DeviceHidSend(class_handle_t handle, uint8_t ep, uint8_t *buffe
     {
         return kStatus_USB_Busy;
     }
+    if (hidHandle->interruptInPipeStall)
+    {
+        hidHandle->interruptInPipeBusy = 1U;
+        hidHandle->interruptInPipeDataBuffer = buffer;
+        hidHandle->interruptInPipeDataLen = length;
+        return kStatus_USB_Success;
+    }
     error = USB_DeviceSendRequest(hidHandle->handle, ep, buffer, length);
     if (kStatus_USB_Success == error)
     {
@@ -662,6 +749,13 @@ usb_status_t USB_DeviceHidRecv(class_handle_t handle, uint8_t ep, uint8_t *buffe
     if (hidHandle->interruptOutPipeBusy)
     {
         return kStatus_USB_Busy;
+    }
+    if (hidHandle->interruptOutPipeStall)
+    {
+        hidHandle->interruptOutPipeBusy = 1U;
+        hidHandle->interruptOutPipeDataBuffer = buffer;
+        hidHandle->interruptOutPipeDataLen = length;
+        return kStatus_USB_Success;
     }
     error = USB_DeviceRecvRequest(hidHandle->handle, ep, buffer, length);
     if (kStatus_USB_Success == error)

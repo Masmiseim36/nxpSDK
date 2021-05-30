@@ -5,14 +5,13 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
-#include "fsl_device_registers.h"
-#include "clock_config.h"
-#include "board.h"
-#include "fsl_debug_console.h"
-
 #include <stdio.h>
 #include <stdlib.h>
+/*${standard_header_anchor}*/
+#include "fsl_device_registers.h"
+#include "clock_config.h"
+#include "fsl_debug_console.h"
+#include "board.h"
 
 #include "usb_device_config.h"
 #include "usb.h"
@@ -33,13 +32,13 @@
     OSA_ENTER_CRITICAL()
 #define USB_CDC_RNDIS_MUTEX_UNLOCK(_X_) OSA_EXIT_CRITICAL()
 #else
-#define USB_CDC_RNDIS_MUTEX_LOCK(_X_) USB_OsaMutexLock(_X_)
+#define USB_CDC_RNDIS_MUTEX_LOCK(_X_)   USB_OsaMutexLock(_X_)
 #define USB_CDC_RNDIS_MUTEX_UNLOCK(_X_) USB_OsaMutexUnlock(_X_)
 #endif
 
 #define USB_DEVICE_CDC_NOTIF_RESPONSE_AVAIL (0x01) /*!< The CDC class notify code for RESPONSE_AVAIL. */
-#define NOTIF_PACKET_SIZE (0x08)
-#define VENDOR_INFO_SIZE (16)
+#define NOTIF_PACKET_SIZE                   (0x08)
+#define VENDOR_INFO_SIZE                    (16)
 
 /*******************************************************************************
  * Prototypes

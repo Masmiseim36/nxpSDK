@@ -5,19 +5,22 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef __RTE_DEVICE_H
-#define __RTE_DEVICE_H
+#ifndef _RTE_DEVICE_H
+#define _RTE_DEVICE_H
+
+extern void LPUART0_InitPins();
+extern void LPUART0_DeinitPins();
 
 /* Driver name mapping. */
-#define RTE_USART0 1
-#define RTE_USART0_DMA_EN 0
-#define RTE_USART1 0
-#define RTE_USART1_DMA_EN 0
-#define RTE_USART2 0
-#define RTE_USART2_DMA_EN 0
+/* User needs to provide the implementation of LPUARTX_GetFreq/LPUARTX_InitPins/LPUARTX_DeinitPins for the enabled
+ * LPUART instance. */
+#define RTE_USART0            1
+#define RTE_USART0_PIN_INIT   LPUART0_InitPins
+#define RTE_USART0_PIN_DEINIT LPUART0_DeinitPins
+#define RTE_USART0_DMA_EN     0
 
 /* UART configuration. */
-#define USART_RX_BUFFER_LEN 64
+#define USART_RX_BUFFER_LEN     64
 #define USART0_RX_BUFFER_ENABLE 1
 
-#endif /* __RTE_DEVICE_H */
+#endif /* _RTE_DEVICE_H */

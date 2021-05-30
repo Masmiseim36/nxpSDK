@@ -1,10 +1,10 @@
 //*****************************************************************************
 // MK02F12810 startup code for use with MCUXpresso IDE
 //
-// Version : 180919
+// Version : 160420
 //*****************************************************************************
 //
-// Copyright 2016-2019 NXP
+// Copyright 2016-2020 NXP
 // All rights reserved.
 //
 // SPDX-License-Identifier: BSD-3-Clause
@@ -244,6 +244,9 @@ extern void _vStackTop(void);
 // The vector table.
 // This relies on the linker script to place at correct location in memory.
 //*****************************************************************************
+
+
+
 extern void (* const g_pfnVectors[])(void);
 extern void * __Vectors __attribute__ ((alias ("g_pfnVectors")));
 
@@ -333,6 +336,7 @@ void (* const g_pfnVectors[])(void) = {
     PORTD_IRQHandler,           // 78: Port D interrupt
     PORTE_IRQHandler,           // 79: Port E interrupt
     SWI_IRQHandler,             // 80: Software interrupt
+
 
 }; /* End of g_pfnVectors */
 

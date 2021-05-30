@@ -17,7 +17,7 @@
 **
 **     Reference manual:    KM35P144M75SF0RM, Rev.1, Dec 2019
 **     Version:             rev. 2.0, 2019-12-20
-**     Build:               b200113
+**     Build:               b201012
 **
 **     Abstract:
 **         Provides a system configuration function and a global variable that

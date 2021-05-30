@@ -159,7 +159,7 @@ instance:
   - ftm_edge_aligned_mode:
     - ftm_edge_aligned_channels_config:
       - 0:
-        - edge_aligned_mode: 'kFTM_CombinedPwm'
+        - edge_aligned_mode: 'kFTM_EdgeAlignedCombinedPwm'
         - combined_pwm:
           - chnlNumber: 'kFTM_Chnl_0'
           - level: 'kFTM_LowTrue'
@@ -189,7 +189,7 @@ void DEMO_FTM_init(void)
 {
     FTM_Init(DEMO_FTM_PERIPHERAL, &DEMO_FTM_config);
     FTM_SetupPwm(DEMO_FTM_PERIPHERAL, DEMO_FTM_combinedPwmSignalParams,
-                 sizeof(DEMO_FTM_combinedPwmSignalParams) / sizeof(ftm_chnl_pwm_signal_param_t), kFTM_CombinedPwm,
+                 sizeof(DEMO_FTM_combinedPwmSignalParams) / sizeof(ftm_chnl_pwm_signal_param_t), kFTM_EdgeAlignedCombinedPwm,
                  24000U, DEMO_FTM_CLOCK_SOURCE);
 }
 

@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -32,7 +36,6 @@
 #include "board.h"
 #include "math.h"
 #include "fsl_mma.h"
-#include "fsl_i2c.h"
 #include "fsl_tpm.h"
 
 #include "fsl_common.h"
@@ -49,8 +52,6 @@
 #define BOARD_TIMER_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_BusClk)
 #define TIMER_CLOCK_MODE 1U
 /* I2C source clock */
-#define ACCEL_I2C_CLK_SRC I2C0_CLK_SRC
-#define BOARD_ACCEL_I2C_BASEADDR I2C0
 #define I2C_BAUDRATE 100000U
 
 #define I2C_RELEASE_SDA_PORT PORTE
@@ -72,7 +73,6 @@ void BOARD_I2C_ReleaseBus(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-i2c_master_handle_t g_MasterHandle;
 /* MMA8451 device address */
 const uint8_t g_accel_address[] = {0x1CU, 0x1DU, 0x1EU, 0x1FU};
 
@@ -109,34 +109,34 @@ void BOARD_I2C_ReleaseBus(void)
     GPIO_PinInit(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, &pin_config);
 
     /* Drive SDA low first to simulate a start */
-    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
     i2c_release_bus_delay();
 
     /* Send 9 pulses on SCL and keep SDA high */
     for (i = 0; i < 9; i++)
     {
-        GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
+        GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
         i2c_release_bus_delay();
 
-        GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
+        GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
         i2c_release_bus_delay();
 
-        GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
+        GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
         i2c_release_bus_delay();
         i2c_release_bus_delay();
     }
 
     /* Send stop */
-    GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
+    GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 0U);
     i2c_release_bus_delay();
 
-    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 0U);
     i2c_release_bus_delay();
 
-    GPIO_WritePinOutput(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
+    GPIO_PinWrite(I2C_RELEASE_SCL_GPIO, I2C_RELEASE_SCL_PIN, 1U);
     i2c_release_bus_delay();
 
-    GPIO_WritePinOutput(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
+    GPIO_PinWrite(I2C_RELEASE_SDA_GPIO, I2C_RELEASE_SDA_PIN, 1U);
     i2c_release_bus_delay();
 }
 /* Initialize timer module */
@@ -177,18 +177,18 @@ int main(void)
 {
     mma_handle_t mmaHandle = {0};
     mma_data_t sensorData = {0};
-    i2c_master_config_t i2cConfig = {0};
+    mma_config_t config = {0}; 
+    status_t result; 
     uint8_t sensorRange = 0;
     uint8_t dataScale = 0;
-    uint32_t i2cSourceClock = 0;
     int16_t xData = 0;
     int16_t yData = 0;
     int16_t xAngle = 0;
     int16_t yAngle = 0;
+    int16_t xDuty = 0;
+    int16_t yDuty = 0;
     uint8_t i = 0;
-    uint8_t regResult = 0;
     uint8_t array_addr_size = 0;
-    bool foundDevice = false;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -197,39 +197,30 @@ int main(void)
     BOARD_I2C_ConfigurePins();
     BOARD_InitDebugConsole();
 
-    i2cSourceClock = CLOCK_GetFreq(ACCEL_I2C_CLK_SRC);
-    mmaHandle.base = BOARD_ACCEL_I2C_BASEADDR;
-    mmaHandle.i2cHandle = &g_MasterHandle;
+    /* I2C initialize */
+    BOARD_Accel_I2C_Init();
+    /* Configure the I2C function */
+    config.I2C_SendFunc = BOARD_Accel_I2C_Send;
+    config.I2C_ReceiveFunc = BOARD_Accel_I2C_Receive;
 
-    I2C_MasterGetDefaultConfig(&i2cConfig);
-    I2C_MasterInit(BOARD_ACCEL_I2C_BASEADDR, &i2cConfig, i2cSourceClock);
-    I2C_MasterTransferCreateHandle(BOARD_ACCEL_I2C_BASEADDR, &g_MasterHandle, NULL, NULL);
-
-    /* Find sensor devices */
+    /* Initialize sensor devices */
     array_addr_size = sizeof(g_accel_address) / sizeof(g_accel_address[0]);
     for (i = 0; i < array_addr_size; i++)
     {
-        mmaHandle.xfer.slaveAddress = g_accel_address[i];
-        if (MMA_ReadReg(&mmaHandle, kMMA8451_WHO_AM_I, &regResult) == kStatus_Success)
+        config.slaveAddress = g_accel_address[i];
+        /* Initialize accelerometer sensor */
+        result = MMA_Init(&mmaHandle, &config);
+        if (result == kStatus_Success)
         {
-            foundDevice = true;
             break;
         }
-        if ((i == (array_addr_size - 1)) && (!foundDevice))
-        {
-            PRINTF("\r\nDo not found sensor device\r\n");
-            while (1)
-            {
-            };
-        }
     }
 
-    /* Init accelerometer sensor */
-    if (MMA_Init(&mmaHandle) != kStatus_Success)
+    if (result != kStatus_Success)
     {
+        PRINTF("\r\nSensor device initialize failed!\r\n");
         return -1;
     }
-
     /* Get sensor range */
     if (MMA_ReadReg(&mmaHandle, kMMA8451_XYZ_DATA_CFG, &sensorRange) != kStatus_Success)
     {
@@ -254,8 +245,8 @@ int main(void)
     Timer_Init();
 
     /* Print a note to terminal */
-    PRINTF("\r\nWelcome to BUBBLE example\r\n");
-    PRINTF("\r\nYou will see the change of LED brightness when change angles of board\r\n");
+    PRINTF("\r\nWelcome to the BUBBLE example\r\n");
+    PRINTF("\r\nYou will see angle data change in the console when change the angles of board\r\n");
 
     /* Main loop. Get sensor data and update duty cycle */
     while (1)
@@ -281,28 +272,28 @@ int main(void)
         {
             yAngle *= -1;
         }
-        /* Update angles to turn on LEDs when angles ~ 90 */
+        /* Update duty cycle to turn on LEDs when angles ~ 90 */
         if (xAngle > ANGLE_UPPER_BOUND)
         {
-            xAngle = 100;
+            xDuty = 100;
         }
         if (yAngle > ANGLE_UPPER_BOUND)
         {
-            yAngle = 100;
+            yDuty = 100;
         }
-        /* Update angles to turn off LEDs when angles ~ 0 */
+        /* Update duty cycle to turn off LEDs when angles ~ 0 */
         if (xAngle < ANGLE_LOWER_BOUND)
         {
-            xAngle = 0;
+            xDuty = 0;
         }
         if (yAngle < ANGLE_LOWER_BOUND)
         {
-            yAngle = 0;
+            yDuty = 0;
         }
 
-        Board_UpdatePwm(xAngle, yAngle);
+        Board_UpdatePwm(xDuty, yDuty);
 
-        /* Print out the raw accelerometer data. */
-        PRINTF("x= %6d y = %6d\r\n", xData, yData);
+        /* Print out the angle data. */
+        PRINTF("x= %2d y = %2d\r\n", xAngle, yAngle);
     }
 }

@@ -40,8 +40,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.3.1. */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 3, 1))
+/*! @brief CLOCK driver version 2.4.0. */
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 4, 0))
 /*@}*/
 
 /*! @brief External XTAL0 (OSC0/SYSOSC) clock frequency.
@@ -229,10 +229,10 @@ typedef enum _clock_name
     kCLOCK_ErClk,     /*!< ERCLK. The external reference clock from SCG.       */
 } clock_name_t;
 
-#define kCLOCK_Osc0ErClk kCLOCK_ErClk
-#define kCLOCK_Er32kClk kCLOCK_Osc32kClk
-#define CLOCK_GetOsc0ErClkFreq CLOCK_GetErClkFreq    /*!< For compatible with other MCG platforms. */
-#define CLOCK_GetEr32kClkFreq CLOCK_GetOsc32kClkFreq /*!< For compatible with other MCG platforms. */
+#define kCLOCK_Osc0ErClk       kCLOCK_ErClk
+#define kCLOCK_Er32kClk        kCLOCK_Osc32kClk
+#define CLOCK_GetOsc0ErClkFreq CLOCK_GetErClkFreq     /*!< For compatible with other MCG platforms. */
+#define CLOCK_GetEr32kClkFreq  CLOCK_GetOsc32kClkFreq /*!< For compatible with other MCG platforms. */
 
 /*!
  * @brief Clock source for peripherals that support various clock selections.
@@ -384,7 +384,6 @@ typedef enum _clock_clkout_src
  */
 typedef enum _scg_async_clk
 {
-    kSCG_AsyncDiv1Clk, /*!< The async clock by DIV1, e.g. SOSCDIV1_CLK, SIRCDIV1_CLK. */
     kSCG_AsyncDiv2Clk, /*!< The async clock by DIV2, e.g. SOSCDIV2_CLK, SIRCDIV2_CLK. */
 } scg_async_clk_t;
 
@@ -440,7 +439,6 @@ typedef struct _scg_sosc_config
     scg_sosc_monitor_mode_t monitorMode; /*!< Clock monitor mode selected.     */
     uint8_t enableMode;                  /*!< Enable mode, OR'ed value of _scg_sosc_enable_mode.  */
 
-    scg_async_clk_div_t div1; /*!< SOSCDIV1 value.                          */
     scg_async_clk_div_t div2; /*!< SOSCDIV2 value.                          */
 
     scg_sosc_mode_t workMode; /*!< OSC work mode.                           */
@@ -469,7 +467,6 @@ enum
 typedef struct _scg_sirc_config
 {
     uint32_t enableMode;      /*!< Enable mode, OR'ed value of _scg_sirc_enable_mode. */
-    scg_async_clk_div_t div1; /*!< SIRCDIV1 value.                          */
     scg_async_clk_div_t div2; /*!< SIRCDIV2 value.                          */
 
     scg_sirc_range_t range; /*!< Slow IRC frequency range.                */
@@ -552,7 +549,6 @@ typedef struct _scg_firc_config_t
 {
     uint32_t enableMode; /*!< Enable mode, OR'ed value of _scg_firc_enable_mode. */
 
-    scg_async_clk_div_t div1; /*!< FIRCDIV1 value.                          */
     scg_async_clk_div_t div2; /*!< FIRCDIV2 value.                          */
 
     scg_firc_range_t range; /*!< Fast IRC frequency range.                 */
@@ -634,7 +630,6 @@ typedef struct _scg_lpfll_config
 {
     uint8_t enableMode; /*!< Enable mode, OR'ed value of _scg_lpfll_enable_mode */
 
-    scg_async_clk_div_t div1; /*!< LPFLLDIV1 value.                          */
     scg_async_clk_div_t div2; /*!< LPFLLDIV2 value.                          */
 
     scg_lpfll_range_t range; /*!< LPFLL frequency range.                     */
@@ -915,7 +910,8 @@ static inline void CLOCK_SetSysOscAsyncClkDiv(scg_async_clk_t asyncClk, scg_asyn
             reg = (reg & ~SCG_SOSCDIV_SOSCDIV2_MASK) | SCG_SOSCDIV_SOSCDIV2(divider);
             break;
         default:
-            reg = (reg & ~SCG_SOSCDIV_SOSCDIV1_MASK) | SCG_SOSCDIV_SOSCDIV1(divider);
+            /* All the cases have been listed above, the default clause should not be reached. */
+            assert(false);
             break;
     }
 
@@ -1038,7 +1034,8 @@ static inline void CLOCK_SetSircAsyncClkDiv(scg_async_clk_t asyncClk, scg_async_
             reg = (reg & ~SCG_SIRCDIV_SIRCDIV2_MASK) | SCG_SIRCDIV_SIRCDIV2(divider);
             break;
         default:
-            reg = (reg & ~SCG_SIRCDIV_SIRCDIV1_MASK) | SCG_SIRCDIV_SIRCDIV1(divider);
+            /* All the cases have been listed above, the default clause should not be reached. */
+            assert(false);
             break;
     }
 
@@ -1123,7 +1120,8 @@ static inline void CLOCK_SetFircAsyncClkDiv(scg_async_clk_t asyncClk, scg_async_
             reg = (reg & ~SCG_FIRCDIV_FIRCDIV2_MASK) | SCG_FIRCDIV_FIRCDIV2(divider);
             break;
         default:
-            reg = (reg & ~SCG_FIRCDIV_FIRCDIV1_MASK) | SCG_FIRCDIV_FIRCDIV1(divider);
+            /* All the cases have been listed above, the default clause should not be reached. */
+            assert(false);
             break;
     }
 
@@ -1225,7 +1223,8 @@ static inline void CLOCK_SetLpFllAsyncClkDiv(scg_async_clk_t asyncClk, scg_async
             reg = (reg & ~SCG_LPFLLDIV_LPFLLDIV2_MASK) | SCG_LPFLLDIV_LPFLLDIV2(divider);
             break;
         default:
-            reg = (reg & ~SCG_LPFLLDIV_LPFLLDIV1_MASK) | SCG_LPFLLDIV_LPFLLDIV1(divider);
+            /* All the cases have been listed above, the default clause should not be reached. */
+            assert(false);
             break;
     }
 

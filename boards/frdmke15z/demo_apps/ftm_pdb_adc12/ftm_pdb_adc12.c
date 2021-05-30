@@ -7,14 +7,14 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_pdb.h"
 #include "fsl_adc12.h"
 #include "fsl_ftm.h"
 #include "fsl_trgmux.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -151,6 +151,7 @@ static void DEMO_Init_FTM(void)
     ftmParam.level                 = pwmLevel;
     ftmParam.dutyCyclePercent      = 50U; /* Percent: 0 - 100. */
     ftmParam.firstEdgeDelayPercent = 0U;
+    ftmParam.enableComplementary   = false;
     ftmParam.enableDeadtime        = false;
     FTM_SetupPwm(DEMO_FTM_BASE, &ftmParam, 1U, kFTM_CenterAlignedPwm, DEMO_FTM_PWM_HZ, DEMO_FTM_COUNTER_CLOCK_HZ);
 }

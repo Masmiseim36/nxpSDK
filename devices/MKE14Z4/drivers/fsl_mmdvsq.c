@@ -39,14 +39,14 @@ int32_t MMDVSQ_GetDivideRemainder(MMDVSQ_Type *base, int32_t dividend, int32_t d
     /* Write setting to CSR register */
     base->CSR = temp;
     /* Write dividend to DEND register */
-    base->DEND = dividend;
+    base->DEND = (uint32_t)dividend;
     /* Write divisor to DSOR register and start calculation if Fast-Start is enabled */
-    base->DSOR = divisor;
+    base->DSOR = (uint32_t)divisor;
     /* Start calculation by writing 1 to SRT bit in case Fast-Start is disabled */
     base->CSR |= MMDVSQ_CSR_SRT_MASK;
     /* Return remainder, if divide-by-zero is enabled and occurred, reading from
-    * RES result is error terminated */
-    return base->RES;
+     * RES result is error terminated */
+    return (int32_t)base->RES;
 }
 
 /*!
@@ -71,14 +71,14 @@ int32_t MMDVSQ_GetDivideQuotient(MMDVSQ_Type *base, int32_t dividend, int32_t di
     /* Write setting mode to CSR register */
     base->CSR = temp;
     /* Write dividend to DEND register */
-    base->DEND = dividend;
+    base->DEND = (uint32_t)dividend;
     /* Write divisor to DSOR register and start calculation when Fast-Start is enabled */
-    base->DSOR = divisor;
+    base->DSOR = (uint32_t)divisor;
     /* Start calculation by writing 1 to SRT bit in case Fast-Start is disabled */
     base->CSR |= MMDVSQ_CSR_SRT_MASK;
     /* Return quotient, if divide-by-zero is enabled and occurred, reading from
-    * RES result is error terminated */
-    return base->RES;
+     * RES result is error terminated */
+    return (int32_t)base->RES;
 }
 
 /*!
@@ -96,5 +96,5 @@ uint16_t MMDVSQ_Sqrt(MMDVSQ_Type *base, uint32_t radicand)
     /* Write radicand to RCND register , and start calculation */
     base->RCND = radicand;
     /* Return result */
-    return base->RES;
+    return (uint16_t)base->RES;
 }

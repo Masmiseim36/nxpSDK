@@ -39,15 +39,21 @@ usb_status_t USB_DeviceAudioControlEndpointsInit(usb_device_audio_struct_t *audi
 usb_status_t USB_DeviceAudioControlEndpointsDeinit(usb_device_audio_struct_t *audioHandle);
 usb_status_t USB_DeviceAudioGetCurAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest);
+usb_status_t USB_DeviceAudioSetCurAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
+                                                   usb_device_control_request_struct_t *controlRequest);
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+usb_status_t USB_DeviceAudioGetRangeAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
+                                                   usb_device_control_request_struct_t *controlRequest);
+usb_status_t USB_DeviceAudioGetClockSource(usb_device_audio_struct_t *audioHandle,
+                                                   usb_device_control_request_struct_t *controlRequest);
+usb_status_t USB_DeviceAudioSetClockSource(usb_device_audio_struct_t *audioHandle,
+                                           usb_device_control_request_struct_t *controlRequest);
+#else
 usb_status_t USB_DeviceAudioGetMinAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest);
 usb_status_t USB_DeviceAudioGetMaxAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest);
 usb_status_t USB_DeviceAudioGetResAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
-                                                   usb_device_control_request_struct_t *controlRequest);
-usb_status_t USB_DeviceAudioSetControlTerminal(usb_device_audio_struct_t *audioHandle,
-                                               usb_device_control_request_struct_t *controlRequest);
-usb_status_t USB_DeviceAudioSetCurAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest);
 usb_status_t USB_DeviceAudioSetMinAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest);
@@ -55,14 +61,17 @@ usb_status_t USB_DeviceAudioSetMaxAudioFeatureUnit(usb_device_audio_struct_t *au
                                                    usb_device_control_request_struct_t *controlRequest);
 usb_status_t USB_DeviceAudioSetResAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                                    usb_device_control_request_struct_t *controlRequest);
+#endif
 usb_status_t USB_DeviceAudioSetFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                            usb_device_control_request_struct_t *controlRequest);
 usb_status_t USB_DeviceAudioSetRequestEndpoint(usb_device_audio_struct_t *audioHandle,
                                                usb_device_control_request_struct_t *controlRequest);
 usb_status_t USB_DeviceAudioGetRequestEndpoint(usb_device_audio_struct_t *audioHandle,
                                                usb_device_control_request_struct_t *controlRequest);
+usb_status_t USB_DeviceAudioSetControlTerminal(usb_device_audio_struct_t *audioHandle,
+                                               usb_device_control_request_struct_t *controlRequest, uint8_t terminal_type);
 usb_status_t USB_DeviceAudioGetControlTerminal(usb_device_audio_struct_t *audioHandle,
-                                               usb_device_control_request_struct_t *controlRequest);
+                                               usb_device_control_request_struct_t *controlRequest, uint8_t terminal_type);
 usb_status_t USB_DeviceAudioGetFeatureUnit(usb_device_audio_struct_t *audioHandle,
                                            usb_device_control_request_struct_t *controlRequest);
 usb_status_t USB_DeviceAudioSetRequestInterface(usb_device_audio_struct_t *audioHandle,
@@ -377,7 +386,7 @@ usb_status_t USB_DeviceAudioStreamEndpointsDeinit(usb_device_audio_struct_t *aud
         {
             if (0U != audioHandle->streamInPipeBusy)
             {
-                message.length = USB_UNINITIALIZED_VAL_32;
+                message.length = USB_CANCELLED_TRANSFER_LENGTH;
                 (void)USB_DeviceAudioIsochronousIn(audioHandle->handle, &message, audioHandle);
             }
         }
@@ -385,7 +394,7 @@ usb_status_t USB_DeviceAudioStreamEndpointsDeinit(usb_device_audio_struct_t *aud
         {
             if (0U != audioHandle->streamOutPipeBusy)
             {
-                message.length = USB_UNINITIALIZED_VAL_32;
+                message.length = USB_CANCELLED_TRANSFER_LENGTH;
                 (void)USB_DeviceAudioIsochronousOut(audioHandle->handle, &message, audioHandle);
             }
         }
@@ -516,7 +525,7 @@ usb_status_t USB_DeviceAudioControlEndpointsDeinit(usb_device_audio_struct_t *au
 }
 
 /*!
- * @brief Handle the audio device current volume/control feature unit request.
+ * @brief Handle the audio device GET CUR control feature unit request.
  *
  * This callback function provides flexibility to add class and vendor specific requests
  *
@@ -533,38 +542,38 @@ usb_status_t USB_DeviceAudioGetCurAudioFeatureUnit(usb_device_audio_struct_t *au
     uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
     uint32_t audioCommand   = 0U;
 
-    /* Select SET request Control Feature Unit Module */
+    /* Select GET CUR request Control Feature Unit Module */
     switch (controlSelector)
     {
-        case USB_DEVICE_AUDIO_MUTE_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL;
+        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_CUR_MUTE_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_VOLUME_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL;
+        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_CUR_VOLUME_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_BASS_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_CUR_BASS_CONTROL;
+        case USB_DEVICE_AUDIO_FU_BASS_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_CUR_BASS_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_MID_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_CUR_MID_CONTROL;
+        case USB_DEVICE_AUDIO_FU_MID_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_CUR_MID_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_TREBLE_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_CUR_TREBLE_CONTROL;
+        case USB_DEVICE_AUDIO_FU_TREBLE_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_CUR_TREBLE_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_CUR_GRAPHIC_EQUALIZER_CONTROL;
+        case USB_DEVICE_AUDIO_FU_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_CUR_GRAPHIC_EQUALIZER_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_AUTOMATIC_GAIN_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_CUR_AUTOMATIC_GAIN_CONTROL;
+        case USB_DEVICE_AUDIO_FU_AUTOMATIC_GAIN_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_CUR_AUTOMATIC_GAIN_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_DELAY_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_CUR_DELAY_CONTROL;
+        case USB_DEVICE_AUDIO_FU_DELAY_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_CUR_DELAY_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_BASS_BOOST_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_CUR_BASS_BOOST_CONTROL;
+        case USB_DEVICE_AUDIO_FU_BASS_BOOST_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_CUR_BASS_BOOST_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_LOUDNESS_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_CUR_LOUDNESS_CONTROL;
+        case USB_DEVICE_AUDIO_FU_LOUDNESS_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_CUR_LOUDNESS_CONTROL;
             break;
         default:
             /*no action*/
@@ -582,186 +591,7 @@ usb_status_t USB_DeviceAudioGetCurAudioFeatureUnit(usb_device_audio_struct_t *au
 }
 
 /*!
- * @brief Handle the audio device minimum volume/control feature unit request.
- *
- * This callback function provides flexibility to add class and vendor specific requests
- *
- * @param audioHandle          The device audio class handle. It equals the value returned from
- * usb_device_class_config_struct_t::classHandle.
- * @param controlRequest       The pointer of the control request structure.
- *
- * @return A USB error code or kStatus_USB_Success.
- */
-usb_status_t USB_DeviceAudioGetMinAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
-                                                   usb_device_control_request_struct_t *controlRequest)
-{
-    usb_status_t status     = kStatus_USB_Error;
-    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
-    uint32_t audioCommand   = 0U;
-
-    /* Select SET request Control Feature Unit Module */
-    switch (controlSelector)
-    {
-        case USB_DEVICE_AUDIO_VOLUME_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MIN_VOLUME_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_BASS_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MIN_BASS_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_MID_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MIN_MID_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_TREBLE_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MIN_TREBLE_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MIN_GRAPHIC_EQUALIZER_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_DELAY_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MIN_DELAY_CONTROL;
-            break;
-        default:
-            /* no action*/
-            break;
-    }
-    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
-        (NULL != audioHandle->configStruct->classCallback))
-    {
-        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
-        it is from the second parameter of classInit */
-        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
-    }
-    return status;
-}
-
-/*!
- * @brief Handle the audio device maximum volume/control feature unit request.
- *
- * This callback function provides flexibility to add class and vendor specific requests
- *
- * @param audioHandle          The device audio class handle. It equals the value returned from
- * usb_device_class_config_struct_t::classHandle.
- * @param controlRequest       The pointer of the control request structure.
- *
- * @return A USB error code or kStatus_USB_Success.
- */
-usb_status_t USB_DeviceAudioGetMaxAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
-                                                   usb_device_control_request_struct_t *controlRequest)
-{
-    usb_status_t status     = kStatus_USB_Error;
-    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
-    uint32_t audioCommand   = 0U;
-
-    /* Select SET request Control Feature Unit Module */
-    switch (controlSelector)
-    {
-        case USB_DEVICE_AUDIO_VOLUME_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MAX_VOLUME_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_BASS_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MAX_BASS_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_MID_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MAX_MID_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_TREBLE_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MAX_TREBLE_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MAX_GRAPHIC_EQUALIZER_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_DELAY_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_MAX_DELAY_CONTROL;
-            break;
-        default:
-            /*no action*/
-            break;
-    }
-    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
-        (NULL != audioHandle->configStruct->classCallback))
-    {
-        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
-        it is from the second parameter of classInit */
-        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
-    }
-    return status;
-}
-
-/*!
- * @brief Handle the audio device res volume/control feature unit request.
- *
- * This callback function provides flexibility to add class and vendor specific requests
- *
- * @param audioHandle          The device audio class handle. It equals the value returned from
- * usb_device_class_config_struct_t::classHandle.
- * @param controlRequest       The pointer of the control request structure.
- *
- * @return A USB error code or kStatus_USB_Success.
- */
-usb_status_t USB_DeviceAudioGetResAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
-                                                   usb_device_control_request_struct_t *controlRequest)
-{
-    usb_status_t status     = kStatus_USB_Error;
-    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
-    uint32_t audioCommand   = 0U;
-
-    /* Select SET request Control Feature Unit Module */
-    switch (controlSelector)
-    {
-        case USB_DEVICE_AUDIO_VOLUME_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_RES_VOLUME_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_BASS_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_RES_BASS_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_MID_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_RES_MID_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_TREBLE_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_RES_TREBLE_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_RES_GRAPHIC_EQUALIZER_CONTROL;
-            break;
-        case USB_DEVICE_AUDIO_DELAY_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_GET_RES_DELAY_CONTROL;
-            break;
-        default:
-            /*no action*/
-            break;
-    }
-    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
-        (NULL != audioHandle->configStruct->classCallback))
-    {
-        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
-  it is from the second parameter of classInit*/
-        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
-    }
-
-    return status;
-}
-
-/*!
- * @brief Handle the audio device set control terminal request.
- *
- * This callback function provides flexibility to add class and vendor specific requests
- *
- * @param audioHandle          The device audio class handle. It equals the value returned from
- * usb_device_class_config_struct_t::classHandle.
- * @param controlRequest       The pointer of the control request structure.
- *
- * @return A USB error code or kStatus_USB_Success.
- */
-usb_status_t USB_DeviceAudioSetControlTerminal(usb_device_audio_struct_t *audioHandle,
-                                               usb_device_control_request_struct_t *controlRequest)
-{
-    usb_status_t status = kStatus_USB_Error;
-
-    return status;
-}
-
-/*!
- * @brief Handle the audio device set current volume/control feature unit request.
+ * @brief Handle the audio device SET CUR control feature unit request.
  *
  * This callback function provides flexibility to add class and vendor specific requests
  *
@@ -778,37 +608,38 @@ usb_status_t USB_DeviceAudioSetCurAudioFeatureUnit(usb_device_audio_struct_t *au
     uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08U) & 0xFFU);
     uint32_t audioCommand   = 0;
 
+    /* Select SET CUR request Control Feature Unit Module */
     switch (controlSelector)
     {
-        case USB_DEVICE_AUDIO_MUTE_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL;
+        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_CUR_MUTE_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_VOLUME_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL;
+        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_CUR_VOLUME_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_BASS_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_CUR_BASS_CONTROL;
+        case USB_DEVICE_AUDIO_FU_BASS_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_CUR_BASS_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_MID_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_CUR_MID_CONTROL;
+        case USB_DEVICE_AUDIO_FU_MID_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_CUR_MID_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_TREBLE_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_CUR_TREBLE_CONTROL;
+        case USB_DEVICE_AUDIO_FU_TREBLE_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_CUR_TREBLE_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_CUR_GRAPHIC_EQUALIZER_CONTROL;
+        case USB_DEVICE_AUDIO_FU_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_CUR_GRAPHIC_EQUALIZER_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_AUTOMATIC_GAIN_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_CUR_AUTOMATIC_GAIN_CONTROL;
+        case USB_DEVICE_AUDIO_FU_AUTOMATIC_GAIN_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_CUR_AUTOMATIC_GAIN_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_DELAY_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_CUR_DELAY_CONTROL;
+        case USB_DEVICE_AUDIO_FU_DELAY_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_CUR_DELAY_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_BASS_BOOST_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_CUR_BASS_BOOST_CONTROL;
+        case USB_DEVICE_AUDIO_FU_BASS_BOOST_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_CUR_BASS_BOOST_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_LOUDNESS_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_CUR_LOUDNESS_CONTROL;
+        case USB_DEVICE_AUDIO_FU_LOUDNESS_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_CUR_LOUDNESS_CONTROL;
             break;
         default:
             /*no action*/
@@ -823,6 +654,259 @@ usb_status_t USB_DeviceAudioSetCurAudioFeatureUnit(usb_device_audio_struct_t *au
     }
     return status;
 }
+
+/*!
+ * @brief Handle the audio device GET feature unit request.
+ *
+ * This callback function provides flexibility to add class and vendor specific requests
+ *
+ * @param audioHandle          The device audio class handle. It equals the value returned from
+ * usb_device_class_config_struct_t::classHandle.
+ * @param controlRequest       The pointer of the control request structure.
+ *
+ * @return A USB error code or kStatus_USB_Success.
+ */
+usb_status_t USB_DeviceAudioGetFeatureUnit(usb_device_audio_struct_t *audioHandle,
+                                           usb_device_control_request_struct_t *controlRequest)
+{
+    usb_status_t status = kStatus_USB_Error;
+
+    /* Select GET request Control Feature Unit Module */
+    switch (controlRequest->setup->bRequest)
+    {
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_CUR_REQUEST:
+            status = USB_DeviceAudioGetCurAudioFeatureUnit(audioHandle, controlRequest);
+            break;
+        case USB_DEVICE_AUDIO_RANGE_REQUEST:
+            status = USB_DeviceAudioGetRangeAudioFeatureUnit(audioHandle, controlRequest);
+            break;
+        default:
+            /*no action*/
+            break;
+#else
+        case USB_DEVICE_AUDIO_GET_CUR_REQUEST:
+            status = USB_DeviceAudioGetCurAudioFeatureUnit(audioHandle, controlRequest);
+            break;
+        case USB_DEVICE_AUDIO_GET_MIN_REQUEST:
+            status = USB_DeviceAudioGetMinAudioFeatureUnit(audioHandle, controlRequest);
+            break;
+        case USB_DEVICE_AUDIO_GET_MAX_REQUEST:
+            status = USB_DeviceAudioGetMaxAudioFeatureUnit(audioHandle, controlRequest);
+            break;
+        case USB_DEVICE_AUDIO_GET_RES_REQUEST:
+            status = USB_DeviceAudioGetResAudioFeatureUnit(audioHandle, controlRequest);
+            break;
+        default:
+            /*no action*/
+            break;
+#endif
+    }
+    return status;
+}
+
+/*!
+ * @brief Handle the audio device SET feature unit request.
+ *
+ * This callback function provides flexibility to add class and vendor specific requests
+ *
+ * @param audioHandle          The device audio class handle. It equals the value returned from
+ * usb_device_class_config_struct_t::classHandle.
+ * @param controlRequest       The pointer of the control request structure.
+ *
+ * @return A USB error code or kStatus_USB_Success.
+ */
+usb_status_t USB_DeviceAudioSetFeatureUnit(usb_device_audio_struct_t *audioHandle,
+                                           usb_device_control_request_struct_t *controlRequest)
+{
+    usb_status_t status = kStatus_USB_Error;
+    /* Select SET request Control Feature Unit Module */
+    switch (controlRequest->setup->bRequest)
+    {
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_CUR_REQUEST:
+            status = USB_DeviceAudioSetCurAudioFeatureUnit(audioHandle, controlRequest);
+            break;
+        case USB_DEVICE_AUDIO_RANGE_REQUEST:
+            break;
+        default:
+            /*no action*/
+            break;
+#else
+        case USB_DEVICE_AUDIO_SET_CUR_REQUEST:
+            status = USB_DeviceAudioSetCurAudioFeatureUnit(audioHandle, controlRequest);
+            break;
+        case USB_DEVICE_AUDIO_SET_MIN_REQUEST:
+            status = USB_DeviceAudioSetMinAudioFeatureUnit(audioHandle, controlRequest);
+            break;
+        case USB_DEVICE_AUDIO_SET_MAX_REQUEST:
+            status = USB_DeviceAudioSetMaxAudioFeatureUnit(audioHandle, controlRequest);
+            break;
+        case USB_DEVICE_AUDIO_SET_RES_REQUEST:
+            status = USB_DeviceAudioSetResAudioFeatureUnit(audioHandle, controlRequest);
+            break;
+        default:
+            /*no action*/
+            break;
+#endif
+    }
+    return status;
+}
+
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+/*!
+ * @brief Handle the audio device GET RANGE control feature unit request.
+ *
+ * This callback function provides flexibility to add class and vendor specific requests
+ *
+ * @param audioHandle          The device audio class handle. It equals the value returned from
+ * usb_device_class_config_struct_t::classHandle.
+ * @param controlRequest       The pointer of the control request structure.
+ *
+ * @return A USB error code or kStatus_USB_Success.
+ */
+usb_status_t USB_DeviceAudioGetRangeAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
+                                                   usb_device_control_request_struct_t *controlRequest)
+{
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0U;
+
+    /* Select GET RANGE request Control Feature Unit Module */
+    switch (controlSelector)
+    {
+        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_RANGE_VOLUME_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_BASS_CONTROL_SELECTOR:
+            break;
+        default:
+            /*no action*/
+            break;      
+    }
+
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
+    {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+    }
+
+    return status;
+}
+
+/*!
+ * @brief Handle the audio device GET Clock Source control feature unit request.
+ *
+ * This callback function provides flexibility to add class and vendor specific requests
+ *
+ * @param audioHandle          The device audio class handle. It equals the value returned from
+ * usb_device_class_config_struct_t::classHandle.
+ * @param controlRequest       The pointer of the control request structure.
+ *
+ * @return A USB error code or kStatus_USB_Success.
+ */
+usb_status_t USB_DeviceAudioGetClockSource(usb_device_audio_struct_t *audioHandle,
+                                                   usb_device_control_request_struct_t *controlRequest)
+{
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0;
+    /* Select GET request Control Clock Source Module */
+    switch (controlRequest->setup->bRequest)
+    {
+        case USB_DEVICE_AUDIO_CUR_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_CS_GET_CUR_SAMPLING_FREQ_CONTROL;
+                    break;
+                case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_CS_GET_CUR_CLOCK_VALID_CONTROL;
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+            break;
+        case USB_DEVICE_AUDIO_RANGE_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_CS_GET_RANGE_SAMPLING_FREQ_CONTROL;
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+            break;
+        default:
+            /*no action*/
+            break;
+    }
+    
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
+    {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+    }
+    return status;
+}
+
+/*!
+ * @brief Handle the audio device SET Clock Source control feature unit request.
+ *
+ * This callback function provides flexibility to add class and vendor specific requests
+ *
+ * @param audioHandle          The device audio class handle. It equals the value returned from
+ * usb_device_class_config_struct_t::classHandle.
+ * @param controlRequest       The pointer of the control request structure.
+ *
+ * @return A USB error code or kStatus_USB_Success.
+ */
+usb_status_t USB_DeviceAudioSetClockSource(usb_device_audio_struct_t *audioHandle,
+                                           usb_device_control_request_struct_t *controlRequest)
+{
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0;
+    /* Select SET request Control Clock Source Module */
+    switch (controlRequest->setup->bRequest)
+    {
+        case USB_DEVICE_AUDIO_CUR_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_CS_SET_CUR_SAMPLING_FREQ_CONTROL;
+                    break;
+                case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_CS_SET_CUR_CLOCK_VALID_CONTROL;
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+            break;
+        case USB_DEVICE_AUDIO_RANGE_REQUEST:
+            break;
+        default:
+            /*no action*/
+            break;        
+    }
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+    (NULL != audioHandle->configStruct->classCallback))
+    {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+    }
+    return status;
+}
+
+#else
 
 /*!
  * @brief Handle the audio device set minimum volume/control feature unit request.
@@ -841,25 +925,27 @@ usb_status_t USB_DeviceAudioSetMinAudioFeatureUnit(usb_device_audio_struct_t *au
     usb_status_t status     = kStatus_USB_Error;
     uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
     uint32_t audioCommand   = 0U;
+    
+    /* Select SET MIN request Control Feature Unit Module */
     switch (controlSelector)
     {
-        case USB_DEVICE_AUDIO_VOLUME_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MIN_VOLUME_CONTROL;
+        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MIN_VOLUME_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_BASS_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MIN_BASS_CONTROL;
+        case USB_DEVICE_AUDIO_FU_BASS_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MIN_BASS_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_MID_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MIN_MID_CONTROL;
+        case USB_DEVICE_AUDIO_FU_MID_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MIN_MID_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_TREBLE_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MIN_TREBLE_CONTROL;
+        case USB_DEVICE_AUDIO_FU_TREBLE_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MIN_TREBLE_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MIN_GRAPHIC_EQUALIZER_CONTROL;
+        case USB_DEVICE_AUDIO_FU_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MIN_GRAPHIC_EQUALIZER_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_DELAY_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MIN_DELAY_CONTROL;
+        case USB_DEVICE_AUDIO_FU_DELAY_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MIN_DELAY_CONTROL;
             break;
         default:
             /*no action*/
@@ -893,25 +979,27 @@ usb_status_t USB_DeviceAudioSetMaxAudioFeatureUnit(usb_device_audio_struct_t *au
     usb_status_t status     = kStatus_USB_Error;
     uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
     uint32_t audioCommand   = 0;
+    
+    /* Select SET MAX request Control Feature Unit Module */
     switch (controlSelector)
     {
-        case USB_DEVICE_AUDIO_VOLUME_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MAX_VOLUME_CONTROL;
+        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MAX_VOLUME_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_BASS_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MAX_BASS_CONTROL;
+        case USB_DEVICE_AUDIO_FU_BASS_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MAX_BASS_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_MID_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MAX_MID_CONTROL;
+        case USB_DEVICE_AUDIO_FU_MID_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MAX_MID_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_TREBLE_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MAX_TREBLE_CONTROL;
+        case USB_DEVICE_AUDIO_FU_TREBLE_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MAX_TREBLE_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MAX_GRAPHIC_EQUALIZER_CONTROL;
+        case USB_DEVICE_AUDIO_FU_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MAX_GRAPHIC_EQUALIZER_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_DELAY_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_MAX_DELAY_CONTROL;
+        case USB_DEVICE_AUDIO_FU_DELAY_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_MAX_DELAY_CONTROL;
             break;
         default:
             /*no action*/
@@ -945,25 +1033,27 @@ usb_status_t USB_DeviceAudioSetResAudioFeatureUnit(usb_device_audio_struct_t *au
     usb_status_t status     = kStatus_USB_Error;
     uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
     uint32_t audioCommand   = 0;
+ 
+    /* Select SET RES request Control Feature Unit Module */
     switch (controlSelector)
     {
-        case USB_DEVICE_AUDIO_VOLUME_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_RES_VOLUME_CONTROL;
+        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_RES_VOLUME_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_BASS_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_RES_BASS_CONTROL;
+        case USB_DEVICE_AUDIO_FU_BASS_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_RES_BASS_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_MID_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_RES_MID_CONTROL;
+        case USB_DEVICE_AUDIO_FU_MID_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_RES_MID_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_TREBLE_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_RES_TREBLE_CONTROL;
+        case USB_DEVICE_AUDIO_FU_TREBLE_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_RES_TREBLE_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_RES_GRAPHIC_EQUALIZER_CONTROL;
+        case USB_DEVICE_AUDIO_FU_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_RES_GRAPHIC_EQUALIZER_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_DELAY_CONTROL_SELECTOR:
-            audioCommand = USB_DEVICE_AUDIO_SET_RES_DELAY_CONTROL;
+        case USB_DEVICE_AUDIO_FU_DELAY_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_SET_RES_DELAY_CONTROL;
             break;
         default:
             /*no action*/
@@ -980,7 +1070,7 @@ usb_status_t USB_DeviceAudioSetResAudioFeatureUnit(usb_device_audio_struct_t *au
 }
 
 /*!
- * @brief Handle the audio device set feature unit request.
+ * @brief Handle the audio device GET MIN control feature unit request.
  *
  * This callback function provides flexibility to add class and vendor specific requests
  *
@@ -990,34 +1080,158 @@ usb_status_t USB_DeviceAudioSetResAudioFeatureUnit(usb_device_audio_struct_t *au
  *
  * @return A USB error code or kStatus_USB_Success.
  */
-usb_status_t USB_DeviceAudioSetFeatureUnit(usb_device_audio_struct_t *audioHandle,
-                                           usb_device_control_request_struct_t *controlRequest)
+usb_status_t USB_DeviceAudioGetMinAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
+                                                   usb_device_control_request_struct_t *controlRequest)
 {
-    usb_status_t status = kStatus_USB_Error;
-    /* Select SET request Control Feature Unit Module */
-    switch (controlRequest->setup->bRequest)
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0U;
+
+    /* Select GET MIN request Control Feature Unit Module */
+    switch (controlSelector)
     {
-        case USB_DEVICE_AUDIO_SET_CUR_VOLUME_REQUEST:
-            status = USB_DeviceAudioSetCurAudioFeatureUnit(audioHandle, controlRequest);
+        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MIN_VOLUME_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_SET_MIN_VOLUME_REQUEST:
-            status = USB_DeviceAudioSetMinAudioFeatureUnit(audioHandle, controlRequest);
+        case USB_DEVICE_AUDIO_FU_BASS_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MIN_BASS_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_SET_MAX_VOLUME_REQUEST:
-            status = USB_DeviceAudioSetMaxAudioFeatureUnit(audioHandle, controlRequest);
+        case USB_DEVICE_AUDIO_FU_MID_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MIN_MID_CONTROL;
             break;
-        case USB_DEVICE_AUDIO_SET_RES_VOLUME_REQUEST:
-            status = USB_DeviceAudioSetResAudioFeatureUnit(audioHandle, controlRequest);
+        case USB_DEVICE_AUDIO_FU_TREBLE_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MIN_TREBLE_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MIN_GRAPHIC_EQUALIZER_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_DELAY_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MIN_DELAY_CONTROL;
             break;
         default:
-            /*no action*/
+            /* no action*/
             break;
+    }
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
+    {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
     }
     return status;
 }
 
 /*!
- * @brief Handle the audio device set request endpoint.
+ * @brief Handle the audio device GET MAX control feature unit request.
+ *
+ * This callback function provides flexibility to add class and vendor specific requests
+ *
+ * @param audioHandle          The device audio class handle. It equals the value returned from
+ * usb_device_class_config_struct_t::classHandle.
+ * @param controlRequest       The pointer of the control request structure.
+ *
+ * @return A USB error code or kStatus_USB_Success.
+ */
+usb_status_t USB_DeviceAudioGetMaxAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
+                                                   usb_device_control_request_struct_t *controlRequest)
+{
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0U;
+
+    /* Select GET MAX request Control Feature Unit Module */
+    switch (controlSelector)
+    {
+        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MAX_VOLUME_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_BASS_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MAX_BASS_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_MID_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MAX_MID_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_TREBLE_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MAX_TREBLE_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MAX_GRAPHIC_EQUALIZER_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_DELAY_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_MAX_DELAY_CONTROL;
+            break;
+        default:
+            /*no action*/
+            break;
+    }
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
+    {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+    }
+    return status;
+}
+
+/*!
+ * @brief Handle the audio device GET RES control feature unit request.
+ *
+ * This callback function provides flexibility to add class and vendor specific requests
+ *
+ * @param audioHandle          The device audio class handle. It equals the value returned from
+ * usb_device_class_config_struct_t::classHandle.
+ * @param controlRequest       The pointer of the control request structure.
+ *
+ * @return A USB error code or kStatus_USB_Success.
+ */
+usb_status_t USB_DeviceAudioGetResAudioFeatureUnit(usb_device_audio_struct_t *audioHandle,
+                                                   usb_device_control_request_struct_t *controlRequest)
+{
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0U;
+
+    /* Select GET RES request Control Feature Unit Module */
+    switch (controlSelector)
+    {
+        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_RES_VOLUME_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_BASS_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_RES_BASS_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_MID_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_RES_MID_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_TREBLE_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_RES_TREBLE_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_GRAPHIC_EQUALIZER_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_RES_GRAPHIC_EQUALIZER_CONTROL;
+            break;
+        case USB_DEVICE_AUDIO_FU_DELAY_CONTROL_SELECTOR:
+            audioCommand = USB_DEVICE_AUDIO_FU_GET_RES_DELAY_CONTROL;
+            break;
+        default:
+            /*no action*/
+            break;
+    }
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
+    {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+           it is from the second parameter of classInit*/
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+    }
+
+    return status;
+}
+#endif /* !USB_DEVICE_CONFIG_AUDIO_CLASS_2_0 */
+
+/*!
+ * @brief Handle the audio device SET request endpoint.
  *
  * This callback function provides flexibility to add class and vendor specific requests
  *
@@ -1034,50 +1248,66 @@ usb_status_t USB_DeviceAudioSetRequestEndpoint(usb_device_audio_struct_t *audioH
     uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
     uint32_t audioCommand   = 0;
 
-    /* Select SET request Control Feature Unit Module */
+    /* Select SET request Control for endpoint */
     switch (controlRequest->setup->bRequest)
     {
-        case USB_DEVICE_AUDIO_SET_CUR_VOLUME_REQUEST:
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_CUR_REQUEST:
             switch (controlSelector)
             {
-                case USB_DEVICE_AUDIO_SAMPLING_FREQ_CONTROL_SELECTOR:
-                    audioCommand = USB_DEVICE_AUDIO_SET_CUR_SAMPLING_FREQ_CONTROL;
-                    break;
-                case USB_DEVICE_AUDIO_PITCH_CONTROL_SELECTOR:
-                    audioCommand = USB_DEVICE_AUDIO_SET_CUR_PITCH_CONTROL;
+                case USB_DEVICE_AUDIO_EP_PITCH_CONTROL_SELECTOR_AUDIO20:
+                    audioCommand = USB_DEVICE_AUDIO_EP_PITCH_CONTROL_SELECTOR_AUDIO20;
                     break;
                 default:
                     /*no action*/
                     break;
             }
             break;
-        case USB_DEVICE_AUDIO_SET_MIN_VOLUME_REQUEST:
+        default:
+            /*no action*/
+            break;
+#else
+        case USB_DEVICE_AUDIO_SET_CUR_REQUEST:
             switch (controlSelector)
             {
-                case USB_DEVICE_AUDIO_SAMPLING_FREQ_CONTROL_SELECTOR:
-                    audioCommand = USB_DEVICE_AUDIO_SET_MIN_SAMPLING_FREQ_CONTROL;
+                case USB_DEVICE_AUDIO_EP_SAMPLING_FREQ_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_EP_SET_CUR_SAMPLING_FREQ_CONTROL;
+                    break;
+                case USB_DEVICE_AUDIO_EP_PITCH_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_EP_SET_CUR_PITCH_CONTROL;
                     break;
                 default:
                     /*no action*/
                     break;
             }
             break;
-        case USB_DEVICE_AUDIO_SET_MAX_VOLUME_REQUEST:
+        case USB_DEVICE_AUDIO_SET_MIN_REQUEST:
             switch (controlSelector)
             {
-                case USB_DEVICE_AUDIO_SAMPLING_FREQ_CONTROL_SELECTOR:
-                    audioCommand = USB_DEVICE_AUDIO_SET_MAX_SAMPLING_FREQ_CONTROL;
+                case USB_DEVICE_AUDIO_EP_SAMPLING_FREQ_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_EP_SET_MIN_SAMPLING_FREQ_CONTROL;
                     break;
                 default:
                     /*no action*/
                     break;
             }
             break;
-        case USB_DEVICE_AUDIO_SET_RES_VOLUME_REQUEST:
+        case USB_DEVICE_AUDIO_SET_MAX_REQUEST:
             switch (controlSelector)
             {
-                case USB_DEVICE_AUDIO_SAMPLING_FREQ_CONTROL_SELECTOR:
-                    audioCommand = USB_DEVICE_AUDIO_SET_RES_SAMPLING_FREQ_CONTROL;
+                case USB_DEVICE_AUDIO_EP_SAMPLING_FREQ_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_EP_SET_MAX_SAMPLING_FREQ_CONTROL;
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+            break;
+        case USB_DEVICE_AUDIO_SET_RES_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_EP_SAMPLING_FREQ_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_EP_SET_RES_SAMPLING_FREQ_CONTROL;
                     break;
                 default:
                     /*no action*/
@@ -1088,6 +1318,7 @@ usb_status_t USB_DeviceAudioSetRequestEndpoint(usb_device_audio_struct_t *audioH
         default:
             /*no action*/
             break;
+#endif /* USB_DEVICE_CONFIG_AUDIO_CLASS_2_0 */
     }
     if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
         (NULL != audioHandle->configStruct->classCallback))
@@ -1100,7 +1331,7 @@ usb_status_t USB_DeviceAudioSetRequestEndpoint(usb_device_audio_struct_t *audioH
 }
 
 /*!
- * @brief Handle the audio device get request endpoint.
+ * @brief Handle the audio device GET request endpoint.
  *
  * This callback function provides flexibility to add class and vendor specific requests
  *
@@ -1116,60 +1347,77 @@ usb_status_t USB_DeviceAudioGetRequestEndpoint(usb_device_audio_struct_t *audioH
     usb_status_t status     = kStatus_USB_Error;
     uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
     uint32_t audioCommand   = 0;
-    /* Select SET request Control Feature Unit Module */
+    /* Select GET request Control for endpoint */
     switch (controlRequest->setup->bRequest)
     {
-        case USB_DEVICE_AUDIO_GET_CUR_VOLUME_REQUEST:
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_CUR_REQUEST:
             switch (controlSelector)
             {
-                case USB_DEVICE_AUDIO_SAMPLING_FREQ_CONTROL_SELECTOR:
-
-                    audioCommand = USB_DEVICE_AUDIO_GET_CUR_SAMPLING_FREQ_CONTROL;
+                case USB_DEVICE_AUDIO_EP_DATA_OVERRUN_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_EP_GET_CUR_DATA_OVERRUN_CONTROL;
+                    break;
+                case USB_DEVICE_AUDIO_EP_DATA_UNDERRUN_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_EP_GET_CUR_DATA_UNDERRUN_CONTROL;
                     break;
                 default:
                     /*no action*/
                     break;
             }
-            break;
-        case USB_DEVICE_AUDIO_GET_MIN_VOLUME_REQUEST:
-            switch (controlSelector)
-            {
-                case USB_DEVICE_AUDIO_SAMPLING_FREQ_CONTROL_SELECTOR:
-                    audioCommand = USB_DEVICE_AUDIO_GET_MIN_SAMPLING_FREQ_CONTROL;
-                    break;
-                default:
-                    /*no action*/
-                    break;
-            }
-            break;
-        case USB_DEVICE_AUDIO_GET_MAX_VOLUME_REQUEST:
-            switch (controlSelector)
-            {
-                case USB_DEVICE_AUDIO_SAMPLING_FREQ_CONTROL_SELECTOR:
-
-                    audioCommand = USB_DEVICE_AUDIO_GET_MAX_SAMPLING_FREQ_CONTROL;
-                    break;
-                default:
-                    /*no action*/
-                    break;
-            }
-            break;
-        case USB_DEVICE_AUDIO_GET_RES_VOLUME_REQUEST:
-            switch (controlSelector)
-            {
-                case USB_DEVICE_AUDIO_SAMPLING_FREQ_CONTROL_SELECTOR:
-                    audioCommand = USB_DEVICE_AUDIO_GET_RES_SAMPLING_FREQ_CONTROL;
-
-                    break;
-                default:
-                    /*no action*/
-                    break;
-            }
-            break;
-
         default:
             /*no action*/
             break;
+#else
+        case USB_DEVICE_AUDIO_GET_CUR_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_EP_SAMPLING_FREQ_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_EP_GET_CUR_SAMPLING_FREQ_CONTROL;
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+            break;
+        case USB_DEVICE_AUDIO_GET_MIN_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_EP_SAMPLING_FREQ_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_EP_GET_MIN_SAMPLING_FREQ_CONTROL;
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+            break;
+        case USB_DEVICE_AUDIO_GET_MAX_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_EP_SAMPLING_FREQ_CONTROL_SELECTOR:
+
+                    audioCommand = USB_DEVICE_AUDIO_EP_GET_MAX_SAMPLING_FREQ_CONTROL;
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+            break;
+        case USB_DEVICE_AUDIO_GET_RES_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_EP_SAMPLING_FREQ_CONTROL_SELECTOR:
+                    audioCommand = USB_DEVICE_AUDIO_EP_GET_RES_SAMPLING_FREQ_CONTROL;
+
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+            break;
+        default:
+            /*no action*/
+            break;
+#endif
     }
     if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
         (NULL != audioHandle->configStruct->classCallback))
@@ -1182,7 +1430,7 @@ usb_status_t USB_DeviceAudioGetRequestEndpoint(usb_device_audio_struct_t *audioH
 }
 
 /*!
- * @brief Handle the audio device get control terminal request.
+ * @brief Handle the audio device GET control terminal request.
  *
  * This callback function provides flexibility to add class and vendor specific requests
  *
@@ -1193,47 +1441,138 @@ usb_status_t USB_DeviceAudioGetRequestEndpoint(usb_device_audio_struct_t *audioH
  * @return A USB error code or kStatus_USB_Success.
  */
 usb_status_t USB_DeviceAudioGetControlTerminal(usb_device_audio_struct_t *audioHandle,
-                                               usb_device_control_request_struct_t *controlRequest)
+                                               usb_device_control_request_struct_t *controlRequest, uint8_t terminal_type)
 {
-    usb_status_t status = kStatus_USB_Error;
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0;
+    /* Select GET request Control for endpoint */
+    switch (controlRequest->setup->bRequest)
+    {
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_CUR_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_TE_COPY_PROTECT_CONTROL:
+                    if (USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_INPUT_TERMINAL == terminal_type)
+                    {
+                        audioCommand = USB_DEVICE_AUDIO_TE_GET_CUR_COPY_PROTECT_CONTROL;
+                    }
+                    else
+                    {
+                        return kStatus_USB_Error; /* Input Terminals only support the Get Terminal Copy Protect Control request */
+                    }
+                    break;
+                case USB_DEVICE_AUDIO_TE_CONNECTOR_CONTROL:
+                    audioCommand = USB_DEVICE_AUDIO_TE_GET_CUR_CONNECTOR_CONTROL;
+                    break;
+                case USB_DEVICE_AUDIO_TE_OVERLOAD_CONTROL:
+                    audioCommand = USB_DEVICE_AUDIO_TE_GET_CUR_OVERLOAD_CONTROL;
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+#else
+        case USB_DEVICE_AUDIO_GET_CUR_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_TE_COPY_PROTECT_CONTROL:
+                    if (USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_INPUT_TERMINAL == terminal_type)
+                    {
+                        audioCommand = USB_DEVICE_AUDIO_TE_GET_CUR_COPY_PROTECT_CONTROL;
+                    }
+                    else
+                    {
+                        return kStatus_USB_Error; /* Input Terminals only support the Get Terminal Copy Protect Control request */
+                    }
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+#endif
+    }
+
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
+    {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+    }
 
     return status;
 }
 
 /*!
- * @brief Handle the audio device get feature unit request.
+ * @brief Handle the audio device SET control terminal request.
  *
  * This callback function provides flexibility to add class and vendor specific requests
  *
  * @param audioHandle          The device audio class handle. It equals the value returned from
  * usb_device_class_config_struct_t::classHandle.
  * @param controlRequest       The pointer of the control request structure.
- *
+ * @param terminal_type        The terminal type:: input terminal or output terminal
+*
  * @return A USB error code or kStatus_USB_Success.
  */
-usb_status_t USB_DeviceAudioGetFeatureUnit(usb_device_audio_struct_t *audioHandle,
-                                           usb_device_control_request_struct_t *controlRequest)
+usb_status_t USB_DeviceAudioSetControlTerminal(usb_device_audio_struct_t *audioHandle,
+                                               usb_device_control_request_struct_t *controlRequest, uint8_t terminal_type)
 {
-    usb_status_t status = kStatus_USB_Error;
-    /* Select SET request Control Feature Unit Module */
+    usb_status_t status     = kStatus_USB_Error;
+    uint8_t controlSelector = (uint8_t)((controlRequest->setup->wValue >> 0x08) & 0xFFU);
+    uint32_t audioCommand   = 0;
+    /* Select GET request Control for endpoint */
     switch (controlRequest->setup->bRequest)
     {
-        case USB_DEVICE_AUDIO_GET_CUR_VOLUME_REQUEST:
-            status = USB_DeviceAudioGetCurAudioFeatureUnit(audioHandle, controlRequest);
-            break;
-        case USB_DEVICE_AUDIO_GET_MIN_VOLUME_REQUEST:
-            status = USB_DeviceAudioGetMinAudioFeatureUnit(audioHandle, controlRequest);
-            break;
-        case USB_DEVICE_AUDIO_GET_MAX_VOLUME_REQUEST:
-            status = USB_DeviceAudioGetMaxAudioFeatureUnit(audioHandle, controlRequest);
-            break;
-        case USB_DEVICE_AUDIO_GET_RES_VOLUME_REQUEST:
-            status = USB_DeviceAudioGetResAudioFeatureUnit(audioHandle, controlRequest);
-            break;
-        default:
-            /*no action*/
-            break;
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+        case USB_DEVICE_AUDIO_CUR_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_TE_COPY_PROTECT_CONTROL:
+                    if (USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL == terminal_type)
+                    {
+                        audioCommand = USB_DEVICE_AUDIO_TE_SET_CUR_COPY_PROTECT_CONTROL;
+                    }
+                    else
+                    {
+                       return kStatus_USB_Error; /* Output Terminals only support the Set Terminal Copy Protect Control request */
+                    }
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+#else
+        case USB_DEVICE_AUDIO_GET_CUR_REQUEST:
+            switch (controlSelector)
+            {
+                case USB_DEVICE_AUDIO_TE_COPY_PROTECT_CONTROL:
+                    if (USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL == terminal_type)
+                    {
+                        audioCommand = USB_DEVICE_AUDIO_TE_SET_CUR_COPY_PROTECT_CONTROL;
+                    }
+                    else
+                    {
+                       return kStatus_USB_Error; /* Output Terminals only support the Set Terminal Copy Protect Control request */
+                    }
+                    break;
+                default:
+                    /*no action*/
+                    break;
+            }
+#endif
     }
+
+    if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
+        (NULL != audioHandle->configStruct->classCallback))
+    {
+        /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
+        status = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand, controlRequest);
+    }
+
     return status;
 }
 
@@ -1264,13 +1603,26 @@ usb_status_t USB_DeviceAudioSetRequestInterface(usb_device_audio_struct_t *audio
             switch (entity_list->entity[i].entityType)
             {
                 case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL:
+                case  USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_INPUT_TERMINAL:
                     /*Select SET Request Control Input Terminal Module */
-                    status = USB_DeviceAudioSetControlTerminal(audioHandle, controlRequest);
+                    status = USB_DeviceAudioSetControlTerminal(audioHandle, controlRequest, entity_list->entity[i].entityType);
                     break;
                 case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT:
                     /* Select SET request Control Feature Unit Module */
                     status = USB_DeviceAudioSetFeatureUnit(audioHandle, controlRequest);
                     break;
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+                case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_SOURCE_UNIT:
+                    /* Select SET request Control Clock Source Module */
+                    status = USB_DeviceAudioSetClockSource(audioHandle, controlRequest);
+                    break;
+                case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_SELECTOR_UNIT:
+                    /* Select SET request Control Clock Selector Module */
+                    break;
+                case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_MULTIPLIER_UNIT:
+                    /* Select SET request Control Clock multiplier Module */
+                    break;
+#endif
                 default:
                     /*no action*/
                     break;
@@ -1307,11 +1659,24 @@ usb_status_t USB_DeviceAudioGetRequestInterface(usb_device_audio_struct_t *audio
             switch (entity_list->entity[i].entityType)
             {
                 case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_INPUT_TERMINAL:
-                    status = USB_DeviceAudioGetControlTerminal(audioHandle, controlRequest);
+                case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL:
+                    status = USB_DeviceAudioGetControlTerminal(audioHandle, controlRequest, entity_list->entity[i].entityType);
                     break;
                 case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT:
                     status = USB_DeviceAudioGetFeatureUnit(audioHandle, controlRequest);
                     break;
+#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
+                case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_SOURCE_UNIT:
+                    /* Select SET request Control Clock Source Module */
+                    status = USB_DeviceAudioGetClockSource(audioHandle, controlRequest);
+                    break;
+                case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_SELECTOR_UNIT:
+                    /* Select SET request Control Clock Select Module */
+                    break;
+                case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_MULTIPLIER_UNIT:
+                    /* Select SET request Control Clock Multiplier Module */
+                    break;
+#endif
                 default:
                     /*no action*/
                     break;
@@ -1495,151 +1860,12 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
             }
             break;
         case kUSB_DeviceClassEventClassRequest:
-#if (USB_DEVICE_CONFIG_AUDIO_CLASS_2_0)
         {
             /* Handle the audio class specific request. */
             usb_device_control_request_struct_t *controlRequest = (usb_device_control_request_struct_t *)param;
-            usb_device_audio_entities_struct_t *entity_list;
-            uint8_t entityId        = (uint8_t)(controlRequest->setup->wIndex >> 0x08);
-            uint32_t audioCommand   = 0;
-            uint8_t interface_index = (uint8_t)controlRequest->setup->wIndex;
-
-            if (audioHandle->controlInterfaceNumber == interface_index)
-            {
-                entity_list = (usb_device_audio_entities_struct_t *)audioHandle->controlInterfaceHandle->classSpecific;
-                for (uint8_t i = 0; i < entity_list->count; i++)
-                {
-                    if (entityId == entity_list->entity[i].entityId)
-                    {
-                        switch (entity_list->entity[i].entityType)
-                        {
-                            case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_OUTPUT_TERMINAL:
-                                break;
-                            case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_FEATURE_UNIT:
-                                if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                                     USB_REQUEST_TYPE_DIR_IN))
-                                {
-                                    switch (controlRequest->setup->wValue >> 8)
-                                    {
-                                        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
-                                            audioCommand = USB_DEVICE_AUDIO_GET_CUR_MUTE_CONTROL_AUDIO20;
-                                            break;
-                                        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
-                                            if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
-                                            {
-                                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_VOLUME_CONTROL_AUDIO20;
-                                            }
-                                            else if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_RANGE)
-                                            {
-                                                audioCommand = USB_DEVICE_AUDIO_GET_RANGE_VOLUME_CONTROL_AUDIO20;
-                                            }
-                                            else
-                                            {
-                                                /*no action*/
-                                            }
-                                            break;
-                                        default:
-                                            /*no action*/
-                                            break;
-                                    }
-                                }
-                                else if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                                          USB_REQUEST_TYPE_DIR_OUT))
-                                {
-                                    switch (controlRequest->setup->wValue >> 8)
-                                    {
-                                        case USB_DEVICE_AUDIO_FU_MUTE_CONTROL:
-                                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_MUTE_CONTROL_AUDIO20;
-                                            break;
-                                        case USB_DEVICE_AUDIO_FU_VOLUME_CONTROL:
-                                            if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
-                                            {
-                                                audioCommand = USB_DEVICE_AUDIO_SET_CUR_VOLUME_CONTROL_AUDIO20;
-                                            }
-                                            break;
-                                        default:
-                                            /*no action*/
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    /*no action*/
-                                }
-                                break;
-                            case USB_DESCRIPTOR_SUBTYPE_AUDIO_CONTROL_CLOCK_SOURCE_UNIT:
-                                if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                                     USB_REQUEST_TYPE_DIR_IN))
-                                {
-                                    switch (controlRequest->setup->wValue >> 8)
-                                    {
-                                        case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
-                                            if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_CUR)
-                                            {
-                                                audioCommand = USB_DEVICE_AUDIO_GET_CUR_SAM_FREQ_CONTROL;
-                                            }
-                                            else if (controlRequest->setup->bRequest == USB_DEVICE_AUDIO_REQUEST_RANGE)
-                                            {
-                                                audioCommand = USB_DEVICE_AUDIO_GET_RANGE_SAM_FREQ_CONTROL;
-                                            }
-                                            else
-                                            {
-                                                /*no action*/
-                                            }
-                                            break;
-                                        case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
-                                            audioCommand = USB_DEVICE_AUDIO_GET_CUR_CLOCK_VALID_CONTROL;
-                                            break;
-                                        default:
-                                            /*no action*/
-                                            break;
-                                    }
-                                }
-                                else if (((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_DIR_MASK) ==
-                                          USB_REQUEST_TYPE_DIR_OUT))
-                                {
-                                    switch (controlRequest->setup->wValue >> 8)
-                                    {
-                                        case USB_DEVICE_AUDIO_CS_SAM_FREQ_CONTROL:
-                                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_SAM_FREQ_CONTROL;
-                                            break;
-                                        case USB_DEVICE_AUDIO_CS_CLOCK_VALID_CONTROL:
-                                            audioCommand = USB_DEVICE_AUDIO_SET_CUR_CLOCK_VALID_CONTROL;
-                                            break;
-                                        default:
-                                            /*no action*/
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    /*no action*/
-                                }
-                                break;
-                            default:
-                                /*no action*/
-                                break;
-                        }
-                    }
-                }
-                if ((0U != audioCommand) && (NULL != audioHandle->configStruct) &&
-                    (NULL != audioHandle->configStruct->classCallback))
-                {
-                    /* classCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
-                             it is from the second parameter of classInit*/
-                    error = audioHandle->configStruct->classCallback((class_handle_t)audioHandle, audioCommand,
-                                                                     controlRequest);
-                }
-            }
-        }
-        break;
-
-#else
-        {
-            /* Handle the audio class specific request. */
-            usb_device_control_request_struct_t *controlRequest = (usb_device_control_request_struct_t *)param;
-            if ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) !=
-                USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
+            
+            if ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) ==
+                USB_REQUEST_TYPE_RECIPIENT_ENDPOINT)
             {
                 if (USB_REQUEST_TYPE_TYPE_CLASS == (controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_TYPE_MASK))
                 {
@@ -1657,7 +1883,8 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
                     }
                 }
             }
-            else
+            else if ((controlRequest->setup->bmRequestType & USB_REQUEST_TYPE_RECIPIENT_MASK) ==
+                USB_REQUEST_TYPE_RECIPIENT_INTERFACE)
             {
                 uint8_t interface_index = (uint8_t)controlRequest->setup->wIndex;
 
@@ -1681,9 +1908,12 @@ usb_status_t USB_DeviceAudioEvent(void *handle, uint32_t event, void *param)
                     }
                 }
             }
+            else
+            {
+                /* no action */
+            }
         }
-        break;
-#endif
+            break;
         default:
             /*no action*/
             break;

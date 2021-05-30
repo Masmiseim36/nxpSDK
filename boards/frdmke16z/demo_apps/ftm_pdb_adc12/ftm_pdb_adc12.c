@@ -7,36 +7,36 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_pdb.h"
 #include "fsl_adc12.h"
 #include "fsl_ftm.h"
 #include "fsl_trgmux.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* For ADC. */
-#define DEMO_ADC_BASE ADC0
-#define DEMO_ADC_USER_CHANNEL 0U
+#define DEMO_ADC_BASE          ADC0
+#define DEMO_ADC_USER_CHANNEL  0U
 #define DEMO_ADC_CHANNEL_GROUP 0U
-#define DEMO_ADC_IRQ_ID ADC0_IRQn
-#define DEMO_ADC_IRQ_HANDLER ADC0_IRQHandler
+#define DEMO_ADC_IRQ_ID        ADC0_IRQn
+#define DEMO_ADC_IRQ_HANDLER   ADC0_IRQHandler
 
 /* For PDB. */
-#define DEMO_PDB_BASE PDB0
-#define DEMO_PDB_TRIGGER_CHANNEL kPDB_ADCTriggerChannel0
-#define DEMO_PDB_PRETRIGGER_CHANNEL kPDB_ADCPreTrigger0
-#define DEMO_PDB_MODULO_VALUE 2000U
+#define DEMO_PDB_BASE                   PDB0
+#define DEMO_PDB_TRIGGER_CHANNEL        kPDB_ADCTriggerChannel0
+#define DEMO_PDB_PRETRIGGER_CHANNEL     kPDB_ADCPreTrigger0
+#define DEMO_PDB_MODULO_VALUE           2000U
 #define DEMO_PDB_PRETRIGGER_DELAY_VALUE 500U
 
 /* For FTM. */
-#define DEMO_FTM_BASE FTM0
-#define DEMO_FTM_COUNTER_CLOCK_HZ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#define DEMO_FTM_BASE                 FTM0
+#define DEMO_FTM_COUNTER_CLOCK_HZ     CLOCK_GetFreq(kCLOCK_CoreSysClk)
 #define DEMO_FTM_COUNTER_CLOCK_SOURCE kFTM_SystemClock
-#define DEMO_FTM_PWM_HZ 24000U
+#define DEMO_FTM_PWM_HZ               24000U
 
 /*******************************************************************************
  * Prototypes
@@ -81,16 +81,12 @@ void DEMO_ADC_IRQ_HANDLER(void)
     }
     g_adc12InterruptFlag = true;
     FTM_StopTimer(DEMO_FTM_BASE); /* Stop the FTM counter. */
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*
-* Configure the two ADC instance with two hardware trigger command for each instance.
-*/
+ * Configure the two ADC instance with two hardware trigger command for each instance.
+ */
 void static DEMO_Init_ADC(void)
 {
     adc12_config_t adc12ConfigStruct;
@@ -110,7 +106,7 @@ void static DEMO_Init_ADC(void)
 
     /* Configure the ADC12 conversion channel with interrupt when the conversion is done. */
     adc12ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
-    adc12ChannelConfigStruct.channelNumber = DEMO_ADC_USER_CHANNEL;
+    adc12ChannelConfigStruct.channelNumber                        = DEMO_ADC_USER_CHANNEL;
     ADC12_SetChannelConfig(DEMO_ADC_BASE, DEMO_ADC_CHANNEL_GROUP, &adc12ChannelConfigStruct);
 
     /* Configure the NVIC to accept the interrupt from ADC12 module. */
@@ -132,7 +128,7 @@ static void DEMO_Init_PDB(void)
     PDB_SetADCPreTriggerDelayValue(DEMO_PDB_BASE, DEMO_PDB_TRIGGER_CHANNEL, DEMO_PDB_PRETRIGGER_CHANNEL,
                                    DEMO_PDB_PRETRIGGER_DELAY_VALUE);
     pdbAdcPreTriggerConfigStruct.enablePreTriggerMask = (1U << DEMO_PDB_PRETRIGGER_CHANNEL);
-    pdbAdcPreTriggerConfigStruct.enableOutputMask = (1U << DEMO_PDB_PRETRIGGER_CHANNEL);
+    pdbAdcPreTriggerConfigStruct.enableOutputMask     = (1U << DEMO_PDB_PRETRIGGER_CHANNEL);
     PDB_SetADCPreTriggerConfig(DEMO_PDB_BASE, DEMO_PDB_TRIGGER_CHANNEL, &pdbAdcPreTriggerConfigStruct);
 
     /* Load PDB counter registe. */
@@ -142,7 +138,7 @@ static void DEMO_Init_PDB(void)
 static void DEMO_Init_FTM(void)
 {
     ftm_config_t ftmConfigStruct;
-    ftm_chnl_pwm_signal_param_t pwmParam;
+    ftm_chnl_pwm_signal_param_t ftmParam;
     ftm_pwm_level_select_t pwmLevel = kFTM_LowTrue;
 
     /* Initialize FTM module. */
@@ -151,11 +147,13 @@ static void DEMO_Init_FTM(void)
     FTM_Init(DEMO_FTM_BASE, &ftmConfigStruct);
 
     /* Configure ftm params with frequency 24kHz */
-    pwmParam.chnlNumber = kFTM_Chnl_0;
-    pwmParam.level = pwmLevel;
-    pwmParam.dutyCyclePercent = 50U; /* Percent: 0 - 100. */
-    pwmParam.firstEdgeDelayPercent = 0U;
-    FTM_SetupPwm(DEMO_FTM_BASE, &pwmParam, 1U, kFTM_CenterAlignedPwm, DEMO_FTM_PWM_HZ, DEMO_FTM_COUNTER_CLOCK_HZ);
+    ftmParam.chnlNumber            = kFTM_Chnl_0;
+    ftmParam.level                 = pwmLevel;
+    ftmParam.dutyCyclePercent      = 50U; /* Percent: 0 - 100. */
+    ftmParam.firstEdgeDelayPercent = 0U;
+    ftmParam.enableComplementary   = false;
+    ftmParam.enableDeadtime        = false;
+    FTM_SetupPwm(DEMO_FTM_BASE, &ftmParam, 1U, kFTM_CenterAlignedPwm, DEMO_FTM_PWM_HZ, DEMO_FTM_COUNTER_CLOCK_HZ);
 }
 
 /*!
@@ -173,7 +171,7 @@ int main(void)
     PRINTF("\r\nftm_pdb_adc12 demo.\r\n");
 
     g_adc12InterruptCounter = 0U;
-    g_adc12InterruptFlag = false;
+    g_adc12InterruptFlag    = false;
 
     /* Initialize the hardware modules. */
     DEMO_Init_ADC();
@@ -186,9 +184,9 @@ int main(void)
     {
         GETCHAR();
         /*
-        * Start the FTM counter and finally trigger the ADC12's conversion.
-        * FTM_StartTimer() -> PDB PreTrigger -> ADC conversion done interrupt -> FTM_StopTimer().
-        */
+         * Start the FTM counter and finally trigger the ADC12's conversion.
+         * FTM_StartTimer() -> PDB PreTrigger -> ADC conversion done interrupt -> FTM_StopTimer().
+         */
         FTM_StartTimer(DEMO_FTM_BASE, DEMO_FTM_COUNTER_CLOCK_SOURCE);
         while (false == g_adc12InterruptFlag)
         {

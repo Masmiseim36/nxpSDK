@@ -70,6 +70,8 @@
 
 #define gPasskeyValue_c    999999
 
+/*! Repeated Attempts - Mitigation for pairing attacks */
+#define gRepeatedAttempts_d             0
 /*! *********************************************************************************
  *     Framework Configuration
  ********************************************************************************** */
@@ -92,9 +94,17 @@
 
 /* Defines number of timers needed by the application */
 #if (gKBD_KeysCount_c > 1)
+#if gRepeatedAttempts_d
+#define gTmrApplicationTimers_c         5
+#else
 #define gTmrApplicationTimers_c         4
+#endif /* gRepeatedAttempts_d */
+#else
+#if gRepeatedAttempts_d
+#define gTmrApplicationTimers_c         6
 #else
 #define gTmrApplicationTimers_c         5
+#endif /* gRepeatedAttempts_d */
 #endif
 
 /* Set this define TRUE if the PIT frequency is an integer number of MHZ */

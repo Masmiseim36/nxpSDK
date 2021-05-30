@@ -7,6 +7,8 @@
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_dac.h"
 #include "fsl_edma.h"
@@ -14,8 +16,6 @@
 #include "fsl_dmamux.h"
 
 #include "fsl_common.h"
-#include "clock_config.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

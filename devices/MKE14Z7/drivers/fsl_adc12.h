@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,7 +20,7 @@
  * Definitions
  ******************************************************************************/
 /*! @brief ADC12 driver version */
-#define FSL_ADC12_DRIVER_VERSION (MAKE_VERSION(2, 0, 4)) /*!< Version 2.0.4. */
+#define FSL_ADC12_DRIVER_VERSION (MAKE_VERSION(2, 0, 5)) /*!< Version 2.0.5. */
 
 /*!
  * @brief Channel status flags' mask.
@@ -227,7 +227,7 @@ void ADC12_SetChannelConfig(ADC_Type *base, uint32_t channelGroup, const adc12_c
  */
 static inline uint32_t ADC12_GetChannelConversionValue(ADC_Type *base, uint32_t channelGroup)
 {
-    assert(channelGroup < FSL_FEATURE_ADC12_CONVERSION_CONTROL_COUNT);
+    assert(channelGroup < (uint32_t)FSL_FEATURE_ADC12_CONVERSION_CONTROL_COUNT);
 
     return base->R[channelGroup];
 }

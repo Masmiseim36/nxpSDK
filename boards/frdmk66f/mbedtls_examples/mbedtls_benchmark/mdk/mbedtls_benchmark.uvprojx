@@ -7,6 +7,7 @@
       <TargetName>mbedtls_benchmark debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MK66FN2M0VMD18</Device>
@@ -16,7 +17,6 @@
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile>"STARTUP\Freescale\Kinetis\startup_MK66F18.s" ("Freescale MK66Xxxxxxx18 Startup Code")</StartupFile>
-          <FlashDriverDll>UL2CM3(-O2511 -S0 -C0 -FO15 -FD20000000 -FC4000 -FN1 -FF0MK_P1M0 -FS00 -FL0100000)</FlashDriverDll>
           <DeviceId>7425</DeviceId>
           <RegisterFile>MK66F18.H</RegisterFile>
           <MemoryEnv/>
@@ -347,7 +347,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -356,21 +356,22 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=177 --diag_suppress=1296,186</MiscControls>
-              <Define>DEBUG, CPU_MK66FN2M0VMD18, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', FRDM_K66F, FREEDOM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_MK66FN2M0VMD18, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', FRDM_K66F, FREEDOM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/mmcau;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18;../../../../../devices/MK66F18/utilities/str;../../../../../devices/MK66F18/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MK66F18/drivers;../../../../../components/lists;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers</IncludePath>
+              <IncludePath>..;../../../../../devices/MK66F18/drivers;../../../../../middleware/mmcau;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../devices/MK66F18/utilities/str;../../../../../devices/MK66F18/utilities/debug_console;../../../../../devices/MK66F18;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -382,9 +383,10 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>CPU_MK66FN2M0VMD18, DEBUG,__CC_ARM,KEIL,FRDM_K66F180M, FREEDOM, DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>CPU_MK66FN2M0VMD18, DEBUG, KEIL, FRDM_K66F180M, FREEDOM, DEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -402,7 +404,7 @@
             <ScatterFile>MK66FN2M0xxx18_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --keep=*(.FlashConfig) --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6238</DisabledWarnings>
           </LDads>
@@ -483,19 +485,14 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_flash.h</FilePath>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_adapter.h</FileName>
@@ -503,14 +500,14 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</FilePath>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileName>fsl_ftfx_features.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_controller.c</FileName>
@@ -523,11 +520,6 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_ftfx_flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</FilePath>
@@ -536,6 +528,16 @@
               <FileName>fsl_ftfx_flash.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_flexnvm.c</FileName>
@@ -548,14 +550,9 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileName>fsl_flash.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_flash.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -563,9 +560,9 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
@@ -573,9 +570,9 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -583,9 +580,9 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_smc.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
@@ -593,44 +590,94 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_smc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_smc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_gpio.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mmcau-mmcau_include</GroupName>
-          <Files>
             <File>
-              <FileName>cau_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mmcau/cau_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mmcau.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mmcau/fsl_mmcau.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mmcau-mmcau_source</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_mmcau.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mmcau/fsl_mmcau.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-mbedtls_include</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
+          <Files>
+            <File>
+              <FileName>ksdk_mbedtls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ksdk_mbedtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
+            </File>
+            <File>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mbedtls/include/mbedtls</GroupName>
           <Files>
             <File>
               <FileName>aes.h</FileName>
@@ -823,6 +870,11 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md.h</FilePath>
             </File>
             <File>
+              <FileName>md_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>md2.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md2.h</FilePath>
@@ -836,11 +888,6 @@
               <FileName>md5.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md5.h</FilePath>
-            </File>
-            <File>
-              <FileName>md_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md_internal.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.h</FileName>
@@ -888,6 +935,11 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pk_internal.h</FilePath>
             </File>
             <File>
+              <FileName>pkcs5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h</FilePath>
+            </File>
+            <File>
               <FileName>pkcs11.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs11.h</FilePath>
@@ -896,11 +948,6 @@
               <FileName>pkcs12.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs12.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -1025,7 +1072,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-mbedtls_source</GroupName>
+          <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
               <FileName>aes.c</FileName>
@@ -1088,16 +1135,6 @@
               <FilePath>../../../../../middleware/mbedtls/library/certs.c</FilePath>
             </File>
             <File>
-              <FileName>chacha20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/chacha20.c</FilePath>
-            </File>
-            <File>
-              <FileName>chachapoly.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
-            </File>
-            <File>
               <FileName>cipher.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/cipher.c</FilePath>
@@ -1106,6 +1143,16 @@
               <FileName>cipher_wrap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/cipher_wrap.c</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chacha20.c</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
               <FileName>cmac.c</FileName>
@@ -1198,6 +1245,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/md.c</FilePath>
             </File>
             <File>
+              <FileName>md_wrap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
+            </File>
+            <File>
               <FileName>md2.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/md2.c</FilePath>
@@ -1211,11 +1263,6 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/md5.c</FilePath>
-            </File>
-            <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -1258,6 +1305,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/pk_wrap.c</FilePath>
             </File>
             <File>
+              <FileName>pkcs5.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/pkcs5.c</FilePath>
+            </File>
+            <File>
               <FileName>pkcs11.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/pkcs11.c</FilePath>
@@ -1266,11 +1318,6 @@
               <FileName>pkcs12.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/pkcs12.c</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs5.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/pkcs5.c</FilePath>
             </File>
             <File>
               <FileName>pkparse.c</FileName>
@@ -1425,108 +1472,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-mbedtls_port</GroupName>
-          <Files>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>MK66F18.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/MK66F18.h</FilePath>
-            </File>
-            <File>
-              <FileName>MK66F18_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/MK66F18_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK66F18.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/system_MK66F18.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK66F18.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/system_MK66F18.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -1543,16 +1500,6 @@
               <FilePath>../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MK66F18/utilities/fsl_assert.c</FilePath>
@@ -1560,62 +1507,92 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>uart.h</FileName>
+              <FileName>fsl_device_registers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../devices/MK66F18/fsl_device_registers.h</FilePath>
             </File>
             <File>
-              <FileName>uart_adapter.c</FileName>
+              <FileName>MK66F18.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/MK66F18.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK66F18_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/MK66F18_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK66F18.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/uart_adapter.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/system_MK66F18.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK66F18.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/system_MK66F18.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1623,9 +1600,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MK66F18.s</FileName>
+              <FileName>startup_MK66F18.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MK66F18/arm/startup_MK66F18.s</FilePath>
+              <FilePath>../../../../../devices/MK66F18/arm/startup_MK66F18.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -1636,6 +1613,46 @@
               <FileName>core_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1652,55 +1669,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mmcau</GroupName>
+          <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
+              <FileName>cau_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../middleware/mmcau/cau_api.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang.h</FileName>
+              <FileName>fsl_mmcau.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../middleware/mmcau/fsl_mmcau.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FileName>fsl_mmcau.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mmcau/fsl_mmcau.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1710,6 +1697,7 @@
       <TargetName>mbedtls_benchmark release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MK66FN2M0VMD18</Device>
@@ -1719,7 +1707,6 @@
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile>"STARTUP\Freescale\Kinetis\startup_MK66F18.s" ("Freescale MK66Xxxxxxx18 Startup Code")</StartupFile>
-          <FlashDriverDll>UL2CM3(-O2511 -S0 -C0 -FO15 -FD20000000 -FC4000 -FN1 -FF0MK_P1M0 -FS00 -FL0100000)</FlashDriverDll>
           <DeviceId>7425</DeviceId>
           <RegisterFile>MK66F18.H</RegisterFile>
           <MemoryEnv/>
@@ -2050,7 +2037,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -2059,21 +2046,22 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=177 --diag_suppress=1296,186</MiscControls>
-              <Define>NDEBUG, CPU_MK66FN2M0VMD18, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', FRDM_K66F, FREEDOM</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_MK66FN2M0VMD18, PRINTF_ADVANCED_ENABLE=1, PRINTF_FLOAT_ENABLE=1, FREESCALE_KSDK_BM, MBEDTLS_CONFIG_FILE='\"ksdk_mbedtls_config.h\"', FRDM_K66F, FREEDOM, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>..;../../..;../../../../../CMSIS/Include;../../../../../devices;../../../../../middleware/mmcau;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/port/ksdk;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18;../../../../../devices/MK66F18/utilities/str;../../../../../devices/MK66F18/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/serial_manager;../../../../../devices/MK66F18/drivers;../../../../../components/lists;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers;../../../../../devices/MK66F18/drivers</IncludePath>
+              <IncludePath>..;../../../../../devices/MK66F18/drivers;../../../../../middleware/mmcau;../../../../../middleware/mbedtls/port/ksdk;../../../../../middleware/mbedtls/include;../../../../../middleware/mbedtls/library;../../../../../devices/MK66F18/utilities/str;../../../../../devices/MK66F18/utilities/debug_console;../../../../../devices/MK66F18;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -2085,9 +2073,10 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
-              <Define>CPU_MK66FN2M0VMI18, NDEBUG,__CC_ARM,KEIL,FRDM_K66F, FREEDOM, NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
+              <Define>CPU_MK66FN2M0VMI18, NDEBUG, KEIL,FRDM_K66F, FREEDOM, NDEBUG, __STARTUP_INITIALIZE_NONCACHEDATA</Define>
               <Undefine/>
               <IncludePath/>
             </VariousControls>
@@ -2105,7 +2094,7 @@
             <ScatterFile>MK66FN2M0xxx18_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
+            <Misc>../../../../../middleware/mmcau/asm-cm4-cm7/lib_mmcau.lib --remove --keep=*(.FlashConfig) --predefine="-D__stack_size__=0x2000" --predefine="-D__heap_size__=0x8000"</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314,6238</DisabledWarnings>
           </LDads>
@@ -2186,19 +2175,14 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_flash.h</FilePath>
+              <FileName>fsl_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_adapter.h</FileName>
@@ -2206,14 +2190,14 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_adapter.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</FilePath>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileName>fsl_ftfx_features.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_controller.c</FileName>
@@ -2226,11 +2210,6 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_controller.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_features.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_ftfx_flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.c</FilePath>
@@ -2239,6 +2218,16 @@
               <FileName>fsl_ftfx_flash.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_cache.h</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_flexnvm.c</FileName>
@@ -2251,14 +2240,9 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileName>fsl_flash.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_ftfx_utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_flash.h</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -2266,9 +2250,9 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
@@ -2276,9 +2260,9 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -2286,9 +2270,9 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_smc.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
@@ -2296,44 +2280,94 @@
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_smc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_smc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK66F18/drivers/fsl_gpio.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mmcau-mmcau_include</GroupName>
-          <Files>
             <File>
-              <FileName>cau_api.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mmcau/cau_api.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_mmcau.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mmcau/fsl_mmcau.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>mmcau-mmcau_source</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_mmcau.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mmcau/fsl_mmcau.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/drivers/fsl_gpio.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-mbedtls_include</GroupName>
+          <GroupName>mbedtls/port/ksdk</GroupName>
+          <Files>
+            <File>
+              <FileName>ksdk_mbedtls.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
+            </File>
+            <File>
+              <FileName>ksdk_mbedtls.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
+            </File>
+            <File>
+              <FileName>ksdk_mbedtls_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha1_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>sha256_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>des_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>aes_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_curves_alt.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
+            </File>
+            <File>
+              <FileName>ecp_alt_ksdk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mbedtls/include/mbedtls</GroupName>
           <Files>
             <File>
               <FileName>aes.h</FileName>
@@ -2526,6 +2560,11 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md.h</FilePath>
             </File>
             <File>
+              <FileName>md_internal.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md_internal.h</FilePath>
+            </File>
+            <File>
               <FileName>md2.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md2.h</FilePath>
@@ -2539,11 +2578,6 @@
               <FileName>md5.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md5.h</FilePath>
-            </File>
-            <File>
-              <FileName>md_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/md_internal.h</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.h</FileName>
@@ -2591,6 +2625,11 @@
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pk_internal.h</FilePath>
             </File>
             <File>
+              <FileName>pkcs5.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h</FilePath>
+            </File>
+            <File>
               <FileName>pkcs11.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs11.h</FilePath>
@@ -2599,11 +2638,6 @@
               <FileName>pkcs12.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs12.h</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/include/mbedtls/pkcs5.h</FilePath>
             </File>
             <File>
               <FileName>platform.h</FileName>
@@ -2728,7 +2762,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-mbedtls_source</GroupName>
+          <GroupName>mbedtls/library</GroupName>
           <Files>
             <File>
               <FileName>aes.c</FileName>
@@ -2791,16 +2825,6 @@
               <FilePath>../../../../../middleware/mbedtls/library/certs.c</FilePath>
             </File>
             <File>
-              <FileName>chacha20.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/chacha20.c</FilePath>
-            </File>
-            <File>
-              <FileName>chachapoly.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
-            </File>
-            <File>
               <FileName>cipher.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/cipher.c</FilePath>
@@ -2809,6 +2833,16 @@
               <FileName>cipher_wrap.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/cipher_wrap.c</FilePath>
+            </File>
+            <File>
+              <FileName>chacha20.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chacha20.c</FilePath>
+            </File>
+            <File>
+              <FileName>chachapoly.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/chachapoly.c</FilePath>
             </File>
             <File>
               <FileName>cmac.c</FileName>
@@ -2901,6 +2935,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/md.c</FilePath>
             </File>
             <File>
+              <FileName>md_wrap.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
+            </File>
+            <File>
               <FileName>md2.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/md2.c</FilePath>
@@ -2914,11 +2953,6 @@
               <FileName>md5.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/md5.c</FilePath>
-            </File>
-            <File>
-              <FileName>md_wrap.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/md_wrap.c</FilePath>
             </File>
             <File>
               <FileName>memory_buffer_alloc.c</FileName>
@@ -2961,6 +2995,11 @@
               <FilePath>../../../../../middleware/mbedtls/library/pk_wrap.c</FilePath>
             </File>
             <File>
+              <FileName>pkcs5.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mbedtls/library/pkcs5.c</FilePath>
+            </File>
+            <File>
               <FileName>pkcs11.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/pkcs11.c</FilePath>
@@ -2969,11 +3008,6 @@
               <FileName>pkcs12.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/mbedtls/library/pkcs12.c</FilePath>
-            </File>
-            <File>
-              <FileName>pkcs5.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/library/pkcs5.c</FilePath>
             </File>
             <File>
               <FileName>pkparse.c</FileName>
@@ -3128,108 +3162,18 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>mbedtls-mbedtls_port</GroupName>
-          <Files>
-            <File>
-              <FileName>aes_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>aes_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/aes_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>des_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/des_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_alt_ksdk.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_alt_ksdk.c</FilePath>
-            </File>
-            <File>
-              <FileName>ecp_curves_alt.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ecp_curves_alt.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.c</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls.h</FilePath>
-            </File>
-            <File>
-              <FileName>ksdk_mbedtls_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/ksdk_mbedtls_config.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha1_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha1_alt.h</FilePath>
-            </File>
-            <File>
-              <FileName>sha256_alt.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/mbedtls/port/ksdk/sha256_alt.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>MK66F18.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/MK66F18.h</FilePath>
-            </File>
-            <File>
-              <FileName>MK66F18_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/MK66F18_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK66F18.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/system_MK66F18.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK66F18.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/system_MK66F18.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>utilities</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK66F18/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/utilities/str/fsl_str.h</FilePath>
+            </File>
             <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
@@ -3246,16 +3190,6 @@
               <FilePath>../../../../../devices/MK66F18/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK66F18/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK66F18/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../devices/MK66F18/utilities/fsl_assert.c</FilePath>
@@ -3263,62 +3197,92 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>component-uart</GroupName>
+          <GroupName>device</GroupName>
           <Files>
             <File>
-              <FileName>uart.h</FileName>
+              <FileName>fsl_device_registers.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
+              <FilePath>../../../../../devices/MK66F18/fsl_device_registers.h</FilePath>
             </File>
             <File>
-              <FileName>uart_adapter.c</FileName>
+              <FileName>MK66F18.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/MK66F18.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK66F18_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/MK66F18_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK66F18.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/uart_adapter.c</FilePath>
+              <FilePath>../../../../../devices/MK66F18/system_MK66F18.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK66F18.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK66F18/system_MK66F18.h</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -3326,9 +3290,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MK66F18.s</FileName>
+              <FileName>startup_MK66F18.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../devices/MK66F18/arm/startup_MK66F18.s</FilePath>
+              <FilePath>../../../../../devices/MK66F18/arm/startup_MK66F18.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -3339,6 +3303,46 @@
               <FileName>core_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -3355,55 +3359,25 @@
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/arm_math.h</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>mmcau</GroupName>
+          <Files>
             <File>
-              <FileName>cmsis_armcc.h</FileName>
+              <FileName>cau_api.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+              <FilePath>../../../../../middleware/mmcau/cau_api.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_armclang.h</FileName>
+              <FileName>fsl_mmcau.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+              <FilePath>../../../../../middleware/mmcau/fsl_mmcau.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FileName>fsl_mmcau.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/mmcau/fsl_mmcau.c</FilePath>
             </File>
           </Files>
         </Group>

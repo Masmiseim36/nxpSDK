@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -21,21 +21,21 @@
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_RTC_DRIVER_VERSION (MAKE_VERSION(2, 1, 1)) /*!< Version 2.1.1 */
+#define FSL_RTC_DRIVER_VERSION (MAKE_VERSION(2, 2, 1)) /*!< Version 2.2.1 */
 /*@}*/
 
 /*! @brief List of RTC interrupts */
 typedef enum _rtc_interrupt_enable
 {
-    kRTC_TimeInvalidInterruptEnable = (1U << 0U),  /*!< Time invalid interrupt.*/
+    kRTC_TimeInvalidInterruptEnable  = (1U << 0U), /*!< Time invalid interrupt.*/
     kRTC_TimeOverflowInterruptEnable = (1U << 1U), /*!< Time overflow interrupt.*/
-    kRTC_AlarmInterruptEnable = (1U << 2U),        /*!< Alarm interrupt.*/
-    kRTC_SecondsInterruptEnable = (1U << 3U),      /*!< Seconds interrupt.*/
+    kRTC_AlarmInterruptEnable        = (1U << 2U), /*!< Alarm interrupt.*/
+    kRTC_SecondsInterruptEnable      = (1U << 3U), /*!< Seconds interrupt.*/
 #if defined(FSL_FEATURE_RTC_HAS_MONOTONIC) && (FSL_FEATURE_RTC_HAS_MONOTONIC)
     kRTC_MonotonicOverflowInterruptEnable = (1U << 4U), /*!< Monotonic Overflow Interrupt Enable */
 #endif                                                  /* FSL_FEATURE_RTC_HAS_MONOTONIC */
 #if (defined(FSL_FEATURE_RTC_HAS_TIR) && FSL_FEATURE_RTC_HAS_TIR)
-    kRTC_TestModeInterruptEnable = (1U << 5U),      /* test mode interrupt */
+    kRTC_TestModeInterruptEnable      = (1U << 5U), /* test mode interrupt */
     kRTC_FlashSecurityInterruptEnable = (1U << 6U), /* flash security interrupt */
 #if (defined(FSL_FEATURE_RTC_HAS_TIR_TPIE) && FSL_FEATURE_RTC_HAS_TIR_TPIE)
     kRTC_TamperPinInterruptEnable = (1U << 7U), /* Tamper pin interrupt */
@@ -52,9 +52,9 @@ typedef enum _rtc_interrupt_enable
 /*! @brief List of RTC flags */
 typedef enum _rtc_status_flags
 {
-    kRTC_TimeInvalidFlag = (1U << 0U),  /*!< Time invalid flag */
+    kRTC_TimeInvalidFlag  = (1U << 0U), /*!< Time invalid flag */
     kRTC_TimeOverflowFlag = (1U << 1U), /*!< Time overflow flag */
-    kRTC_AlarmFlag = (1U << 2U),        /*!< Alarm flag*/
+    kRTC_AlarmFlag        = (1U << 2U), /*!< Alarm flag*/
 #if defined(FSL_FEATURE_RTC_HAS_MONOTONIC) && (FSL_FEATURE_RTC_HAS_MONOTONIC)
     kRTC_MonotonicOverflowFlag = (1U << 3U), /*!< Monotonic Overflow Flag */
 #endif                                       /* FSL_FEATURE_RTC_HAS_MONOTONIC */
@@ -62,7 +62,7 @@ typedef enum _rtc_status_flags
     kRTC_TamperInterruptDetectFlag = (1U << 4U), /*!< Tamper interrupt detect flag */
 #endif                                           /* FSL_FEATURE_RTC_HAS_SR_TIDF */
 #if (defined(FSL_FEATURE_RTC_HAS_TDR) && FSL_FEATURE_RTC_HAS_TDR)
-    kRTC_TestModeFlag = (1U << 5U),      /* Test mode flag */
+    kRTC_TestModeFlag      = (1U << 5U), /* Test mode flag */
     kRTC_FlashSecurityFlag = (1U << 6U), /* Flash security flag */
 #if (defined(FSL_FEATURE_RTC_HAS_TDR_TPF) && FSL_FEATURE_RTC_HAS_TDR_TPF)
     kRTC_TamperPinFlag = (1U << 7U), /* Tamper pin flag */
@@ -81,9 +81,9 @@ typedef enum _rtc_status_flags
 /*! @brief List of RTC Oscillator capacitor load settings */
 typedef enum _rtc_osc_cap_load
 {
-    kRTC_Capacitor_2p = RTC_CR_SC2P_MASK,  /*!< 2 pF capacitor load */
-    kRTC_Capacitor_4p = RTC_CR_SC4P_MASK,  /*!< 4 pF capacitor load */
-    kRTC_Capacitor_8p = RTC_CR_SC8P_MASK,  /*!< 8 pF capacitor load */
+    kRTC_Capacitor_2p  = RTC_CR_SC2P_MASK, /*!< 2 pF capacitor load */
+    kRTC_Capacitor_4p  = RTC_CR_SC4P_MASK, /*!< 4 pF capacitor load */
+    kRTC_Capacitor_8p  = RTC_CR_SC8P_MASK, /*!< 8 pF capacitor load */
     kRTC_Capacitor_16p = RTC_CR_SC16P_MASK /*!< 16 pF capacitor load */
 } rtc_osc_cap_load_t;
 
@@ -457,6 +457,29 @@ status_t RTC_IncrementMonotonicCounter(RTC_Type *base);
 /*! @}*/
 
 #endif /* FSL_FEATURE_RTC_HAS_MONOTONIC */
+
+#if defined(FSL_FEATURE_RTC_HAS_WAKEUP_PIN) && (FSL_FEATURE_RTC_HAS_WAKEUP_PIN)
+/*!
+ * @brief Enables or disables the RTC Wakeup Pin Operation.
+ *
+ * This function enable or disable RTC Wakeup Pin.
+ * The wakeup pin is optional and not available on all devices.
+ *
+ * @param base RTC_Type base pointer.
+ * @param enable true to enable, false to disable.
+ */
+static inline void RTC_EnableWakeUpPin(RTC_Type *base, bool enable)
+{
+    if (enable)
+    {
+        base->CR |= RTC_CR_WPE_MASK;
+    }
+    else
+    {
+        base->CR &= ~RTC_CR_WPE_MASK;
+    }
+}
+#endif
 
 #if defined(__cplusplus)
 }

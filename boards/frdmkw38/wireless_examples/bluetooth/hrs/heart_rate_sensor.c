@@ -576,7 +576,9 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
                 #endif
              #else
                 PWR_ChangeDeepSleepMode(gAppDeepSleepMode_c);
+#if (!defined(CPU_MKW37A512VFT4) && !defined(CPU_MKW37Z512VFT4) && !defined(CPU_MKW38A512VFT4) && !defined(CPU_MKW38Z512VFT4) && !defined(CPU_MKW39A512VFT4) && !defined(CPU_MKW39Z512VFT4))
                 PWR_AllowDeviceToSleep();
+#endif /* CPU_MKW37xxx, CPU_MKW38xxx and CPU_MKW39xxx*/
              #endif
 #else
             /* UI */

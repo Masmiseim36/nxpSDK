@@ -16,6 +16,14 @@ Other hook types used for RTOS and resource statistics are also demonstrated in 
 * vApplicationMallocFailedHook
 
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -60,11 +68,3 @@ Event task is running.
 Receive message counter: 13.
 Receive message counter: 14.
 ...
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

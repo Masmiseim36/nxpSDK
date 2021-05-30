@@ -6,9 +6,9 @@
  */
  
 #include <stdio.h>
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
 
 #include "gpio_aml.h"
 #include "wait_aml/wait_aml.h"

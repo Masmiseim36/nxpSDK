@@ -5,8 +5,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef __RTE_DEVICE_H
-#define __RTE_DEVICE_H
+#ifndef _RTE_DEVICE_H
+#define _RTE_DEVICE_H
 
 /* ENET configuration. */
 #define RTE_ENET             1
@@ -16,4 +16,4 @@
 //   <e> RMII (Reduced Media Independent Interface)
 #define RTE_ENET_RMII 1
 
-#endif /* __RTE_DEVICE_H */
+#endif /* _RTE_DEVICE_H */

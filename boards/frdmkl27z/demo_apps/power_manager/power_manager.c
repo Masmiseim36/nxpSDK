@@ -15,10 +15,10 @@
 #include "fsl_debug_console.h"
 #include "power_manager.h"
 #include "fsl_notifier.h"
-#include "board.h"
-#include "peripherals.h"
 
 #include "pin_mux.h"
+#include "peripherals.h"
+#include "board.h"
 #include "fsl_lpuart.h"
 #include "fsl_pmc.h"
 /*******************************************************************************

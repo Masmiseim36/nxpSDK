@@ -1,13 +1,10 @@
-#! armcc -E
+#!armclang --target=arm-arm-none-eabi -mcpu=cortex-m4 -E -x c
 /*
 ** ###################################################################
 **     Processors:          MK66FN2M0VLQ18
 **                          MK66FN2M0VMD18
 **
 **     Compiler:            Keil ARM C/C++ Compiler
-**     Reference manual:    K66P144M180SF5RMV2, Rev. 1, Mar 2015
-**     Version:             rev. 3.0, 2015-03-25
-**     Build:               b171205
 **
 **     Abstract:
 **         Linker file for the Keil ARM C/C++ Compiler
@@ -27,8 +24,10 @@
 #define m_interrupts_start             0x1FFF0000
 #define m_interrupts_size              0x00000400
 
-#define m_text_start                   0x1FFF0400
-#define m_text_size                    0x0000FC00
+//#define m_text_start                   0x1FFF0400
+//#define m_text_size                    0x0000FC00
+#define m_text_start                   0x1FFF0800
+#define m_text_size                    0x0000F800
 
 /* Sizes */
 #if (defined(__stack_size__))
@@ -57,7 +56,7 @@ LR_m_text m_text_start m_text_size {   ; load region size_region
 
 LR_m_interrupts m_interrupts_start m_interrupts_size {
   VECTOR_ROM m_interrupts_start m_interrupts_size { ; load address = execution address
-    * (RESET,+FIRST)
+    * (.isr_vector,+FIRST)
   }
 }
 

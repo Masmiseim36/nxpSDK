@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2017 NXP. Not a Contribution.
+ * Copyright 2016-2017,2020 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,10 +25,11 @@
 #define FSL_COMPONENT_ID "platform.drivers.uart_cmsis"
 #endif
 
-#if ((RTE_USART0 && defined(UART0)) || (RTE_USART1 && defined(UART1)) || (RTE_USART2 && defined(UART2)) || \
-     (RTE_USART3 && defined(UART3)) || (RTE_USART4 && defined(UART4)) || (RTE_USART5 && defined(UART5)))
+#if ((defined(RTE_USART0) && RTE_USART0 && defined(UART0)) || (defined(RTE_USART1) && RTE_USART1 && defined(UART1)) || \
+     (defined(RTE_USART2) && RTE_USART2 && defined(UART2)) || (defined(RTE_USART3) && RTE_USART3 && defined(UART3)) || \
+     (defined(RTE_USART4) && RTE_USART4 && defined(UART4)) || (defined(RTE_USART5) && RTE_USART5 && defined(UART5)))
 
-#define ARM_UART_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 0)
+#define ARM_UART_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR((2), (1))
 
 /*
  * ARMCC does not support split the data section automatically, so the driver
@@ -148,8 +149,9 @@ static int32_t UART_CommonControl(uint32_t control,
                                   uint8_t *isConfigured)
 {
     uart_config_t config;
-
     UART_GetDefaultConfig(&config);
+    int32_t result  = ARM_DRIVER_OK;
+    bool isContinue = false;
 
     switch (control & ARM_USART_CONTROL_Msk)
     {
@@ -160,7 +162,7 @@ static int32_t UART_CommonControl(uint32_t control,
 
         /* TX/RX IO is controlled in application layer. */
         case ARM_USART_CONTROL_TX:
-            if (arg)
+            if (arg != 0U)
             {
                 UART_EnableTx(resource->base, true);
             }
@@ -168,10 +170,11 @@ static int32_t UART_CommonControl(uint32_t control,
             {
                 UART_EnableTx(resource->base, false);
             }
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         case ARM_USART_CONTROL_RX:
-            if (arg)
+            if (arg != 0U)
             {
                 UART_EnableRx(resource->base, true);
             }
@@ -180,10 +183,17 @@ static int32_t UART_CommonControl(uint32_t control,
                 UART_EnableRx(resource->base, false);
             }
 
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         default:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
+    }
+
+    if (!isContinue)
+    {
+        return result;
     }
 
     switch (control & ARM_USART_PARITY_Msk)
@@ -198,7 +208,12 @@ static int32_t UART_CommonControl(uint32_t control,
             config.parityMode = kUART_ParityOdd;
             break;
         default:
-            return ARM_USART_ERROR_PARITY;
+            result = ARM_USART_ERROR_PARITY;
+            break;
+    }
+    if (result == ARM_USART_ERROR_PARITY)
+    {
+        return result;
     }
 
     switch (control & ARM_USART_STOP_BITS_Msk)
@@ -212,14 +227,20 @@ static int32_t UART_CommonControl(uint32_t control,
             break;
 #endif
         default:
-            return ARM_USART_ERROR_STOP_BITS;
+            result = ARM_USART_ERROR_STOP_BITS;
+            break;
+    }
+
+    if (result == ARM_USART_ERROR_STOP_BITS)
+    {
+        return result;
     }
 
     /* If uart is already configured, deinit it first. */
-    if ((*isConfigured) & USART_FLAG_CONFIGURED)
+    if (((*isConfigured) & (uint8_t)USART_FLAG_CONFIGURED) != 0U)
     {
         UART_Deinit(resource->base);
-        *isConfigured &= ~USART_FLAG_CONFIGURED;
+        *isConfigured &= ~(uint8_t)USART_FLAG_CONFIGURED;
     }
 
     config.enableTx = true;
@@ -227,12 +248,13 @@ static int32_t UART_CommonControl(uint32_t control,
 
     if (kStatus_UART_BaudrateNotSupport == UART_Init(resource->base, &config, resource->GetFreq()))
     {
-        return ARM_USART_ERROR_BAUDRATE;
+        result = ARM_USART_ERROR_BAUDRATE;
     }
-
-    *isConfigured |= USART_FLAG_CONFIGURED;
-
-    return ARM_DRIVER_OK;
+    else
+    {
+        *isConfigured |= (uint8_t)USART_FLAG_CONFIGURED;
+    }
+    return result;
 }
 
 static ARM_DRIVER_VERSION UARTx_GetVersion(void)
@@ -265,12 +287,15 @@ static ARM_USART_MODEM_STATUS UARTx_GetModemStatus(void)
 
 #endif
 
-#if ((RTE_USART0_DMA_EN && defined(UART0)) || (RTE_USART1_DMA_EN && defined(UART1)) || \
-     (RTE_USART2_DMA_EN && defined(UART2)) || (RTE_USART3_DMA_EN && defined(UART3)) || \
-     (RTE_USART4_DMA_EN && defined(UART4)) || (RTE_USART5_DMA_EN && defined(UART5)))
+#if ((defined(UART0) && defined(RTE_USART0_DMA_EN) && RTE_USART0_DMA_EN) || \
+     (defined(UART1) && defined(RTE_USART1_DMA_EN) && RTE_USART1_DMA_EN) || \
+     (defined(UART2) && defined(RTE_USART2_DMA_EN) && RTE_USART2_DMA_EN) || \
+     (defined(UART3) && defined(RTE_USART3_DMA_EN) && RTE_USART3_DMA_EN) || \
+     (defined(UART4) && defined(RTE_USART4_DMA_EN) && RTE_USART4_DMA_EN) || \
+     (defined(UART5) && defined(RTE_USART5_DMA_EN) && RTE_USART5_DMA_EN))
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
-void KSDK_UART_DmaCallback(UART_Type *base, uart_dma_handle_t *handle, status_t status, void *userData)
+static void KSDK_UART_DmaCallback(UART_Type *base, uart_dma_handle_t *handle, status_t status, void *userData)
 {
     uint32_t event = 0U;
 
@@ -282,9 +307,13 @@ void KSDK_UART_DmaCallback(UART_Type *base, uart_dma_handle_t *handle, status_t 
     {
         event = ARM_USART_EVENT_RECEIVE_COMPLETE;
     }
+    else
+    {
+        /* Avoid MISRA 2012 15.7 violation */
+    }
 
     /* User data is actually CMSIS driver callback. */
-    if ((0U != event) && (userData))
+    if ((0U != event) && (userData != NULL))
     {
         ((ARM_USART_SignalEvent_t)userData)(event);
     }
@@ -292,10 +321,10 @@ void KSDK_UART_DmaCallback(UART_Type *base, uart_dma_handle_t *handle, status_t 
 
 static int32_t UART_DmaInitialize(ARM_USART_SignalEvent_t cb_event, cmsis_uart_dma_driver_state_t *uart)
 {
-    if (!(uart->flags & USART_FLAG_INIT))
+    if (0U == (uart->flags & (uint8_t)USART_FLAG_INIT))
     {
         uart->cb_event = cb_event;
-        uart->flags    = USART_FLAG_INIT;
+        uart->flags    = (uint8_t)USART_FLAG_INIT;
     }
 
     return ARM_DRIVER_OK;
@@ -303,7 +332,7 @@ static int32_t UART_DmaInitialize(ARM_USART_SignalEvent_t cb_event, cmsis_uart_d
 
 static int32_t UART_DmaUninitialize(cmsis_uart_dma_driver_state_t *uart)
 {
-    uart->flags = USART_FLAG_UNINIT;
+    uart->flags = (uint8_t)USART_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
@@ -311,28 +340,31 @@ static int32_t UART_DmaPowerControl(ARM_POWER_STATE state, cmsis_uart_dma_driver
 {
     uart_config_t config;
     cmsis_uart_dma_resource_t *dmaResource;
+    int32_t result = ARM_DRIVER_OK;
 
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (uart->flags & USART_FLAG_POWER)
+            if ((uart->flags & (uint8_t)USART_FLAG_POWER) != 0U)
             {
                 UART_Deinit(uart->resource->base);
                 DMAMUX_DisableChannel(uart->dmaResource->rxDmamuxBase, uart->dmaResource->rxDmaChannel);
                 DMAMUX_DisableChannel(uart->dmaResource->txDmamuxBase, uart->dmaResource->txDmaChannel);
-                uart->flags = USART_FLAG_INIT;
+                uart->flags = (uint8_t)USART_FLAG_INIT;
             }
             break;
         case ARM_POWER_LOW:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
         case ARM_POWER_FULL:
             /* Must be initialized first. */
-            if (uart->flags == USART_FLAG_UNINIT)
+            if (uart->flags == (uint8_t)USART_FLAG_UNINIT)
             {
-                return ARM_DRIVER_ERROR;
+                result = ARM_DRIVER_ERROR;
+                break;
             }
 
-            if (uart->flags & USART_FLAG_POWER)
+            if ((uart->flags & (uint8_t)USART_FLAG_POWER) != 0U)
             {
                 /* Driver already powered */
                 break;
@@ -354,17 +386,18 @@ static int32_t UART_DmaPowerControl(ARM_POWER_STATE state, cmsis_uart_dma_driver
             DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txDmaChannel);
 
             /* Setup the uart. */
-            UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
+            (void)UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
             UART_TransferCreateHandleDMA(uart->resource->base, uart->handle, KSDK_UART_DmaCallback,
                                          (void *)uart->cb_event, uart->txHandle, uart->rxHandle);
 
-            uart->flags |= (USART_FLAG_POWER | USART_FLAG_CONFIGURED);
+            uart->flags |= ((uint8_t)USART_FLAG_POWER | (uint8_t)USART_FLAG_CONFIGURED);
             break;
         default:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
     }
 
-    return ARM_DRIVER_OK;
+    return result;
 }
 
 static int32_t UART_DmaSend(const void *data, uint32_t num, cmsis_uart_dma_driver_state_t *uart)
@@ -460,14 +493,16 @@ static uint32_t UART_DmaGetRxCount(cmsis_uart_dma_driver_state_t *uart)
 
 static int32_t UART_DmaControl(uint32_t control, uint32_t arg, cmsis_uart_dma_driver_state_t *uart)
 {
+    int32_t result  = ARM_DRIVER_OK;
+    bool isContinue = false;
     /* Must be power on. */
-    if (uart->flags & USART_FLAG_POWER)
+    if ((uart->flags & (uint8_t)USART_FLAG_POWER) != 0U)
     {
         return ARM_DRIVER_ERROR;
     }
 
     /* Does not support these features. */
-    if (control & (ARM_USART_FLOW_CONTROL_Msk | ARM_USART_CPOL_Msk | ARM_USART_CPHA_Msk))
+    if ((control & (ARM_USART_FLOW_CONTROL_Msk | ARM_USART_CPOL_Msk | ARM_USART_CPHA_Msk)) != 0U)
     {
         return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
@@ -477,18 +512,25 @@ static int32_t UART_DmaControl(uint32_t control, uint32_t arg, cmsis_uart_dma_dr
         /* Abort Send */
         case ARM_USART_ABORT_SEND:
             UART_TransferAbortSendDMA(uart->resource->base, uart->handle);
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         /* Abort receive */
         case ARM_USART_ABORT_RECEIVE:
             UART_TransferAbortReceiveDMA(uart->resource->base, uart->handle);
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         default:
+            isContinue = true;
             break;
     }
 
-    return UART_CommonControl(control, arg, uart->resource, &uart->flags);
+    if (isContinue)
+    {
+        result = UART_CommonControl(control, arg, uart->resource, &uart->flags);
+    }
+    return result;
 }
 
 static ARM_USART_STATUS UART_DmaGetStatus(cmsis_uart_dma_driver_state_t *uart)
@@ -496,18 +538,18 @@ static ARM_USART_STATUS UART_DmaGetStatus(cmsis_uart_dma_driver_state_t *uart)
     ARM_USART_STATUS stat;
     uint32_t ksdk_uart_status = UART_GetStatusFlags(uart->resource->base);
 
-    stat.tx_busy = ((kuart_TxBusy == uart->handle->txState) ? (1U) : (0U));
-    stat.rx_busy = ((kuart_RxBusy == uart->handle->rxState) ? (1U) : (0U));
+    stat.tx_busy = (((uint8_t)kuart_TxBusy == uart->handle->txState) ? (1U) : (0U));
+    stat.rx_busy = (((uint8_t)kuart_RxBusy == uart->handle->rxState) ? (1U) : (0U));
 
     stat.tx_underflow = 0U;
-    stat.rx_overflow  = (!(!(ksdk_uart_status & kUART_RxOverrunFlag)));
+    stat.rx_overflow  = (uint32_t)(((ksdk_uart_status & (uint32_t)kUART_RxOverrunFlag)) != 0U);
 #if defined(FSL_FEATURE_uart_HAS_LIN_BREAK_DETECT) && FSL_FEATURE_uart_HAS_LIN_BREAK_DETECT
-    stat.rx_break = (!(!(ksdk_uart_status & kuart_LinBreakFlag)));
+    stat.rx_break = (uint32_t)(((ksdk_uart_status & (uint32_t)kuart_LinBreakFlag)) != 0U);
 #else
     stat.rx_break = 0U;
 #endif
-    stat.rx_framing_error = (!(!(ksdk_uart_status & kUART_FramingErrorFlag)));
-    stat.rx_parity_error  = (!(!(ksdk_uart_status & kUART_ParityErrorFlag)));
+    stat.rx_framing_error = (uint32_t)(((ksdk_uart_status & (uint32_t)kUART_FramingErrorFlag)) != 0U);
+    stat.rx_parity_error  = (uint32_t)(((ksdk_uart_status & (uint32_t)kUART_ParityErrorFlag)) != 0U);
     stat.reserved         = 0U;
 
     return stat;
@@ -515,7 +557,7 @@ static ARM_USART_STATUS UART_DmaGetStatus(cmsis_uart_dma_driver_state_t *uart)
 #endif
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
-void KSDK_UART_EdmaCallback(UART_Type *base, uart_edma_handle_t *handle, status_t status, void *userData)
+static void KSDK_UART_EdmaCallback(UART_Type *base, uart_edma_handle_t *handle, status_t status, void *userData)
 {
     uint32_t event = 0U;
 
@@ -529,7 +571,7 @@ void KSDK_UART_EdmaCallback(UART_Type *base, uart_edma_handle_t *handle, status_
     }
 
     /* User data is actually CMSIS driver callback. */
-    if ((0U != event) && (userData))
+    if ((0U != event) && (userData != NULL))
     {
         ((ARM_USART_SignalEvent_t)userData)(event);
     }
@@ -537,10 +579,10 @@ void KSDK_UART_EdmaCallback(UART_Type *base, uart_edma_handle_t *handle, status_
 
 static int32_t UART_EdmaInitialize(ARM_USART_SignalEvent_t cb_event, cmsis_uart_edma_driver_state_t *uart)
 {
-    if (!(uart->flags & USART_FLAG_INIT))
+    if (0U == (uart->flags & (uint8_t)USART_FLAG_INIT))
     {
         uart->cb_event = cb_event;
-        uart->flags    = USART_FLAG_INIT;
+        uart->flags    = (uint8_t)USART_FLAG_INIT;
     }
 
     return ARM_DRIVER_OK;
@@ -548,7 +590,7 @@ static int32_t UART_EdmaInitialize(ARM_USART_SignalEvent_t cb_event, cmsis_uart_
 
 static int32_t UART_EdmaUninitialize(cmsis_uart_edma_driver_state_t *uart)
 {
-    uart->flags = USART_FLAG_UNINIT;
+    uart->flags = (uint8_t)USART_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
@@ -556,27 +598,30 @@ static int32_t UART_EdmaPowerControl(ARM_POWER_STATE state, cmsis_uart_edma_driv
 {
     uart_config_t config;
     cmsis_uart_edma_resource_t *dmaResource;
+    int32_t result = ARM_DRIVER_OK;
 
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (uart->flags & USART_FLAG_POWER)
+            if ((uart->flags & (uint8_t)USART_FLAG_POWER) != 0U)
             {
                 UART_Deinit(uart->resource->base);
                 DMAMUX_DisableChannel(uart->dmaResource->rxDmamuxBase, uart->dmaResource->rxEdmaChannel);
                 DMAMUX_DisableChannel(uart->dmaResource->txDmamuxBase, uart->dmaResource->txEdmaChannel);
-                uart->flags = USART_FLAG_INIT;
+                uart->flags = (uint8_t)USART_FLAG_INIT;
             }
             break;
         case ARM_POWER_LOW:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
         case ARM_POWER_FULL:
-            if (uart->flags == USART_FLAG_UNINIT)
+            if (uart->flags == (uint8_t)USART_FLAG_UNINIT)
             {
-                return ARM_DRIVER_ERROR;
+                result = ARM_DRIVER_ERROR;
+                break;
             }
 
-            if (uart->flags & USART_FLAG_POWER)
+            if ((uart->flags & (uint8_t)USART_FLAG_POWER) != 0U)
             {
                 /* Driver already powered */
                 break;
@@ -598,17 +643,18 @@ static int32_t UART_EdmaPowerControl(ARM_POWER_STATE state, cmsis_uart_edma_driv
             DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txEdmaChannel);
 
             /* Setup the uart. */
-            UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
+            (void)UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
             UART_TransferCreateHandleEDMA(uart->resource->base, uart->handle, KSDK_UART_EdmaCallback,
                                           (void *)uart->cb_event, uart->txHandle, uart->rxHandle);
 
-            uart->flags |= (USART_FLAG_CONFIGURED | USART_FLAG_POWER);
+            uart->flags |= ((uint8_t)USART_FLAG_CONFIGURED | (uint8_t)USART_FLAG_POWER);
             break;
         default:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
     }
 
-    return ARM_DRIVER_OK;
+    return result;
 }
 
 static int32_t UART_EdmaSend(const void *data, uint32_t num, cmsis_uart_edma_driver_state_t *uart)
@@ -706,14 +752,16 @@ static uint32_t UART_EdmaGetRxCount(cmsis_uart_edma_driver_state_t *uart)
 
 static int32_t UART_EdmaControl(uint32_t control, uint32_t arg, cmsis_uart_edma_driver_state_t *uart)
 {
+    int32_t result  = ARM_DRIVER_OK;
+    bool isContinue = false;
     /* Must be power on. */
-    if (!(uart->flags & USART_FLAG_POWER))
+    if (0U == (uart->flags & (uint8_t)USART_FLAG_POWER))
     {
         return ARM_DRIVER_ERROR;
     }
 
     /* Does not support these features. */
-    if (control & (ARM_USART_FLOW_CONTROL_Msk | ARM_USART_CPOL_Msk | ARM_USART_CPHA_Msk))
+    if ((control & (ARM_USART_FLOW_CONTROL_Msk | ARM_USART_CPOL_Msk | ARM_USART_CPHA_Msk)) != 0U)
     {
         return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
@@ -723,18 +771,25 @@ static int32_t UART_EdmaControl(uint32_t control, uint32_t arg, cmsis_uart_edma_
         /* Abort Send */
         case ARM_USART_ABORT_SEND:
             UART_TransferAbortSendEDMA(uart->resource->base, uart->handle);
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         /* Abort receive */
         case ARM_USART_ABORT_RECEIVE:
             UART_TransferAbortReceiveEDMA(uart->resource->base, uart->handle);
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         default:
+            isContinue = true;
             break;
     }
 
-    return UART_CommonControl(control, arg, uart->resource, &uart->flags);
+    if (isContinue)
+    {
+        result = UART_CommonControl(control, arg, uart->resource, &uart->flags);
+    }
+    return result;
 }
 
 static ARM_USART_STATUS UART_EdmaGetStatus(cmsis_uart_edma_driver_state_t *uart)
@@ -742,18 +797,18 @@ static ARM_USART_STATUS UART_EdmaGetStatus(cmsis_uart_edma_driver_state_t *uart)
     ARM_USART_STATUS stat;
     uint32_t ksdk_uart_status = UART_GetStatusFlags(uart->resource->base);
 
-    stat.tx_busy = ((kuart_TxBusy == uart->handle->txState) ? (1U) : (0U));
-    stat.rx_busy = ((kuart_RxBusy == uart->handle->rxState) ? (1U) : (0U));
+    stat.tx_busy = (((uint8_t)kuart_TxBusy == uart->handle->txState) ? (1U) : (0U));
+    stat.rx_busy = (((uint8_t)kuart_RxBusy == uart->handle->rxState) ? (1U) : (0U));
 
     stat.tx_underflow = 0U;
-    stat.rx_overflow  = (!(!(ksdk_uart_status & kUART_RxOverrunFlag)));
+    stat.rx_overflow  = (uint32_t)(((ksdk_uart_status & (uint32_t)kUART_RxOverrunFlag)) != 0U);
 #if defined(FSL_FEATURE_uart_HAS_LIN_BREAK_DETECT) && FSL_FEATURE_uart_HAS_LIN_BREAK_DETECT
-    stat.rx_break = (!(!(ksdk_uart_status & kUART_LinBreakFlag)));
+    stat.rx_break = (uint32_t)(((ksdk_uart_status & (uint32_t)kUART_LinBreakFlag)) != 0U);
 #else
     stat.rx_break = 0U;
 #endif
-    stat.rx_framing_error = (!(!(ksdk_uart_status & kUART_FramingErrorFlag)));
-    stat.rx_parity_error  = (!(!(ksdk_uart_status & kUART_ParityErrorFlag)));
+    stat.rx_framing_error = (uint32_t)(((ksdk_uart_status & (uint32_t)kUART_FramingErrorFlag)) != 0U);
+    stat.rx_parity_error  = (uint32_t)(((ksdk_uart_status & (uint32_t)kUART_ParityErrorFlag)) != 0U);
     stat.reserved         = 0U;
 
     return stat;
@@ -762,13 +817,14 @@ static ARM_USART_STATUS UART_EdmaGetStatus(cmsis_uart_edma_driver_state_t *uart)
 
 #endif
 
-#if (((RTE_USART0 && !RTE_USART0_DMA_EN) && defined(UART0)) || \
-     ((RTE_USART1 && !RTE_USART1_DMA_EN) && defined(UART1)) || \
-     ((RTE_USART2 && !RTE_USART2_DMA_EN) && defined(UART2)) || \
-     ((RTE_USART3 && !RTE_USART3_DMA_EN) && defined(UART3)) || \
-     ((RTE_USART4 && !RTE_USART4_DMA_EN) && defined(UART4)) || ((RTE_USART5 && !RTE_USART5_DMA_EN) && defined(UART5)))
+#if (((defined(RTE_USART0) && RTE_USART0 && !(defined(RTE_USART0_DMA_EN) && RTE_USART0_DMA_EN)) && defined(UART0)) || \
+     ((defined(RTE_USART1) && RTE_USART1 && !(defined(RTE_USART1_DMA_EN) && RTE_USART1_DMA_EN)) && defined(UART1)) || \
+     ((defined(RTE_USART2) && RTE_USART2 && !(defined(RTE_USART2_DMA_EN) && RTE_USART2_DMA_EN)) && defined(UART2)) || \
+     ((defined(RTE_USART3) && RTE_USART3 && !(defined(RTE_USART3_DMA_EN) && RTE_USART3_DMA_EN)) && defined(UART3)) || \
+     ((defined(RTE_USART4) && RTE_USART4 && !(defined(RTE_USART4_DMA_EN) && RTE_USART4_DMA_EN)) && defined(UART4)) || \
+     ((defined(RTE_USART5) && RTE_USART5 && !(defined(RTE_USART5_DMA_EN) && RTE_USART5_DMA_EN)) && defined(UART5)))
 
-void KSDK_UART_NonBlockingCallback(UART_Type *base, uart_handle_t *handle, status_t status, void *userData)
+static void KSDK_UART_NonBlockingCallback(UART_Type *base, uart_handle_t *handle, status_t status, void *userData)
 {
     uint32_t event = 0U;
 
@@ -800,7 +856,7 @@ void KSDK_UART_NonBlockingCallback(UART_Type *base, uart_handle_t *handle, statu
     }
 
     /* User data is actually CMSIS driver callback. */
-    if ((0U != event) && (userData))
+    if ((0U != event) && (userData != NULL))
     {
         ((ARM_USART_SignalEvent_t)userData)(event);
     }
@@ -808,10 +864,10 @@ void KSDK_UART_NonBlockingCallback(UART_Type *base, uart_handle_t *handle, statu
 
 static int32_t UART_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event, cmsis_uart_interrupt_driver_state_t *uart)
 {
-    if (!(uart->flags & USART_FLAG_INIT))
+    if (0U == (uart->flags & (uint8_t)USART_FLAG_INIT))
     {
         uart->cb_event = cb_event;
-        uart->flags    = USART_FLAG_INIT;
+        uart->flags    = (uint8_t)USART_FLAG_INIT;
     }
 
     return ARM_DRIVER_OK;
@@ -819,33 +875,36 @@ static int32_t UART_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event, cmsi
 
 static int32_t UART_NonBlockingUninitialize(cmsis_uart_interrupt_driver_state_t *uart)
 {
-    uart->flags = USART_FLAG_UNINIT;
+    uart->flags = (uint8_t)USART_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
 static int32_t UART_NonBlockingPowerControl(ARM_POWER_STATE state, cmsis_uart_interrupt_driver_state_t *uart)
 {
     uart_config_t config;
+    int32_t result = ARM_DRIVER_OK;
 
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (uart->flags & USART_FLAG_POWER)
+            if ((uart->flags & (uint8_t)USART_FLAG_POWER) != 0U)
             {
                 UART_Deinit(uart->resource->base);
-                uart->flags = USART_FLAG_INIT;
+                uart->flags = (uint8_t)USART_FLAG_INIT;
             }
             break;
         case ARM_POWER_LOW:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
         case ARM_POWER_FULL:
             /* Must be initialized first. */
-            if (uart->flags == USART_FLAG_UNINIT)
+            if (uart->flags == (uint8_t)USART_FLAG_UNINIT)
             {
-                return ARM_DRIVER_ERROR;
+                result = ARM_DRIVER_ERROR;
+                break;
             }
 
-            if (uart->flags & USART_FLAG_POWER)
+            if ((uart->flags & (uint8_t)USART_FLAG_POWER) != 0U)
             {
                 /* Driver already powered */
                 break;
@@ -855,17 +914,18 @@ static int32_t UART_NonBlockingPowerControl(ARM_POWER_STATE state, cmsis_uart_in
             config.enableTx = true;
             config.enableRx = true;
 
-            UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
+            (void)UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
             UART_TransferCreateHandle(uart->resource->base, uart->handle, KSDK_UART_NonBlockingCallback,
                                       (void *)uart->cb_event);
-            uart->flags |= (USART_FLAG_POWER | USART_FLAG_CONFIGURED);
+            uart->flags |= ((uint8_t)USART_FLAG_POWER | (uint8_t)USART_FLAG_CONFIGURED);
 
             break;
         default:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
     }
 
-    return ARM_DRIVER_OK;
+    return result;
 }
 
 static int32_t UART_NonBlockingSend(const void *data, uint32_t num, cmsis_uart_interrupt_driver_state_t *uart)
@@ -964,14 +1024,16 @@ static uint32_t UART_NonBlockingGetRxCount(cmsis_uart_interrupt_driver_state_t *
 
 static int32_t UART_NonBlockingControl(uint32_t control, uint32_t arg, cmsis_uart_interrupt_driver_state_t *uart)
 {
+    int32_t result  = ARM_DRIVER_OK;
+    bool isContinue = false;
     /* Must be power on. */
-    if (!(uart->flags & USART_FLAG_POWER))
+    if (0U == (uart->flags & (uint8_t)USART_FLAG_POWER))
     {
         return ARM_DRIVER_ERROR;
     }
 
     /* Does not support these features. */
-    if (control & (ARM_USART_FLOW_CONTROL_Msk | ARM_USART_CPOL_Msk | ARM_USART_CPHA_Msk))
+    if ((control & (ARM_USART_FLOW_CONTROL_Msk | ARM_USART_CPOL_Msk | ARM_USART_CPHA_Msk)) != 0U)
     {
         return ARM_DRIVER_ERROR_UNSUPPORTED;
     }
@@ -981,18 +1043,24 @@ static int32_t UART_NonBlockingControl(uint32_t control, uint32_t arg, cmsis_uar
         /* Abort Send */
         case ARM_USART_ABORT_SEND:
             UART_TransferAbortSend(uart->resource->base, uart->handle);
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         /* Abort receive */
         case ARM_USART_ABORT_RECEIVE:
             UART_TransferAbortReceive(uart->resource->base, uart->handle);
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         default:
+            isContinue = true;
             break;
     }
-
-    return UART_CommonControl(control, arg, uart->resource, &uart->flags);
+    if (isContinue)
+    {
+        result = UART_CommonControl(control, arg, uart->resource, &uart->flags);
+    }
+    return result;
 }
 
 static ARM_USART_STATUS UART_NonBlockingGetStatus(cmsis_uart_interrupt_driver_state_t *uart)
@@ -1000,18 +1068,18 @@ static ARM_USART_STATUS UART_NonBlockingGetStatus(cmsis_uart_interrupt_driver_st
     ARM_USART_STATUS stat;
     uint32_t ksdk_uart_status = UART_GetStatusFlags(uart->resource->base);
 
-    stat.tx_busy = ((kuart_TxBusy == uart->handle->txState) ? (1U) : (0U));
-    stat.rx_busy = ((kuart_RxBusy == uart->handle->rxState) ? (1U) : (0U));
+    stat.tx_busy = (((uint8_t)kuart_TxBusy == uart->handle->txState) ? (1U) : (0U));
+    stat.rx_busy = (((uint8_t)kuart_RxBusy == uart->handle->rxState) ? (1U) : (0U));
 
     stat.tx_underflow = 0U;
-    stat.rx_overflow  = (!(!(ksdk_uart_status & kUART_RxOverrunFlag)));
+    stat.rx_overflow  = (uint32_t)(((ksdk_uart_status & (uint32_t)kUART_RxOverrunFlag)) != 0U);
 #if defined(FSL_FEATURE_uart_HAS_LIN_BREAK_DETECT) && FSL_FEATURE_uart_HAS_LIN_BREAK_DETECT
-    stat.rx_break = (!(!(ksdk_uart_status & kuart_LinBreakFlag)));
+    stat.rx_break = (uint32_t)(((ksdk_uart_status & (uint32_t)kUART_LinBreakFlag)) != 0U);
 #else
     stat.rx_break = 0U;
 #endif
-    stat.rx_framing_error = (!(!(ksdk_uart_status & kUART_FramingErrorFlag)));
-    stat.rx_parity_error  = (!(!(ksdk_uart_status & kUART_ParityErrorFlag)));
+    stat.rx_framing_error = (uint32_t)(((ksdk_uart_status & (uint32_t)kUART_FramingErrorFlag)) != 0U);
+    stat.rx_parity_error  = (uint32_t)(((ksdk_uart_status & (uint32_t)kUART_ParityErrorFlag)) != 0U);
     stat.reserved         = 0U;
 
     return stat;
@@ -1019,50 +1087,54 @@ static ARM_USART_STATUS UART_NonBlockingGetStatus(cmsis_uart_interrupt_driver_st
 
 #endif
 
-#if (FSL_FEATURE_SOC_LPSCI_COUNT == 0) && (FSL_FEATURE_SOC_LPUART_COUNT != 2)
+#if !(defined(FSL_FEATURE_SOC_LPSCI_COUNT) && FSL_FEATURE_SOC_LPSCI_COUNT) &&          \
+    ((defined(FSL_FEATURE_SOC_LPUART_COUNT) && (FSL_FEATURE_SOC_LPUART_COUNT != 2)) || \
+     (!defined(FSL_FEATURE_SOC_LPUART_COUNT)))
 
-#if defined(UART0) && RTE_USART0
+#if defined(UART0) && defined(RTE_USART0) && RTE_USART0
 
 /* User needs to provide the implementation for UART0_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t UART0_GetFreq(void);
-extern void UART0_InitPins(void);
-extern void UART0_DeinitPins(void);
 
-cmsis_uart_resource_t uart0_Resource = {UART0, UART0_GetFreq};
+static cmsis_uart_resource_t uart0_Resource = {UART0, UART0_GetFreq};
 
-#if RTE_USART0_DMA_EN
+#if defined(RTE_USART0_DMA_EN) && RTE_USART0_DMA_EN
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
-cmsis_uart_dma_resource_t uart0_DmaResource = {
+static cmsis_uart_dma_resource_t uart0_DmaResource = {
     RTE_USART0_DMA_TX_DMA_BASE, RTE_USART0_DMA_TX_CH, RTE_USART0_DMA_TX_DMAMUX_BASE, RTE_USART0_DMA_TX_PERI_SEL,
 
     RTE_USART0_DMA_RX_DMA_BASE, RTE_USART0_DMA_RX_CH, RTE_USART0_DMA_RX_DMAMUX_BASE, RTE_USART0_DMA_RX_PERI_SEL,
 };
 
-uart_dma_handle_t UART0_DmaHandle;
-dma_handle_t UART0_DmaRxHandle;
-dma_handle_t UART0_DmaTxHandle;
+static uart_dma_handle_t UART0_DmaHandle;
+static dma_handle_t UART0_DmaRxHandle;
+static dma_handle_t UART0_DmaTxHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart0_dma_driver_state")
-cmsis_uart_dma_driver_state_t uart0_DmaDriverState = {
+static cmsis_uart_dma_driver_state_t uart0_DmaDriverState = {
 #else
-cmsis_uart_dma_driver_state_t uart0_DmaDriverState   = {
+static cmsis_uart_dma_driver_state_t uart0_DmaDriverState   = {
 #endif
     &uart0_Resource, &uart0_DmaResource, &UART0_DmaHandle, &UART0_DmaRxHandle, &UART0_DmaTxHandle,
 };
 
 static int32_t UART0_DmaInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART0_InitPins();
+#ifdef RTE_USART0_PIN_INIT
+    RTE_USART0_PIN_INIT();
+#endif
     return UART_DmaInitialize(cb_event, &uart0_DmaDriverState);
 }
 
 static int32_t UART0_DmaUninitialize(void)
 {
-    UART0_DeinitPins();
+#ifdef RTE_USART0_PIN_DEINIT
+    RTE_USART0_PIN_DEINIT();
+#endif
     return UART_DmaUninitialize(&uart0_DmaDriverState);
 }
 
@@ -1110,34 +1182,38 @@ static ARM_USART_STATUS UART0_DmaGetStatus(void)
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
 
-cmsis_uart_edma_resource_t uart0_EdmaResource = {
+static cmsis_uart_edma_resource_t uart0_EdmaResource = {
     RTE_USART0_DMA_TX_DMA_BASE, RTE_USART0_DMA_TX_CH, RTE_USART0_DMA_TX_DMAMUX_BASE, RTE_USART0_DMA_TX_PERI_SEL,
 
     RTE_USART0_DMA_RX_DMA_BASE, RTE_USART0_DMA_RX_CH, RTE_USART0_DMA_RX_DMAMUX_BASE, RTE_USART0_DMA_RX_PERI_SEL,
 };
 
-uart_edma_handle_t UART0_EdmaHandle;
-edma_handle_t UART0_EdmaRxHandle;
-edma_handle_t UART0_EdmaTxHandle;
+static uart_edma_handle_t UART0_EdmaHandle;
+static edma_handle_t UART0_EdmaRxHandle;
+static edma_handle_t UART0_EdmaTxHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart0_edma_driver_state")
-cmsis_uart_edma_driver_state_t uart0_EdmaDriverState = {
+static cmsis_uart_edma_driver_state_t uart0_EdmaDriverState = {
 #else
-cmsis_uart_edma_driver_state_t uart0_EdmaDriverState = {
+static cmsis_uart_edma_driver_state_t uart0_EdmaDriverState = {
 #endif
     &uart0_Resource, &uart0_EdmaResource, &UART0_EdmaHandle, &UART0_EdmaRxHandle, &UART0_EdmaTxHandle,
 };
 
 static int32_t UART0_EdmaInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART0_InitPins();
+#ifdef RTE_USART0_PIN_INIT
+    RTE_USART0_PIN_INIT();
+#endif
     return UART_EdmaInitialize(cb_event, &uart0_EdmaDriverState);
 }
 
 static int32_t UART0_EdmaUninitialize(void)
 {
-    UART0_DeinitPins();
+#ifdef RTE_USART0_PIN_DEINIT
+    RTE_USART0_PIN_DEINIT();
+#endif
     return UART_EdmaUninitialize(&uart0_EdmaDriverState);
 }
 
@@ -1185,7 +1261,7 @@ static ARM_USART_STATUS UART0_EdmaGetStatus(void)
 
 #else
 
-uart_handle_t UART0_Handle;
+static uart_handle_t UART0_Handle;
 
 #if defined(USART0_RX_BUFFER_ENABLE) && (USART0_RX_BUFFER_ENABLE == 1)
 static uint8_t uart0_rxRingBuffer[USART_RX_BUFFER_LEN];
@@ -1193,9 +1269,9 @@ static uint8_t uart0_rxRingBuffer[USART_RX_BUFFER_LEN];
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart0_non_blocking_driver_state")
-cmsis_uart_interrupt_driver_state_t uart0_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart0_NonBlockingDriverState = {
 #else
-cmsis_uart_interrupt_driver_state_t uart0_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart0_NonBlockingDriverState = {
 #endif
     &uart0_Resource,
     &UART0_Handle,
@@ -1203,19 +1279,23 @@ cmsis_uart_interrupt_driver_state_t uart0_NonBlockingDriverState = {
 
 static int32_t UART0_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART0_InitPins();
+#ifdef RTE_USART0_PIN_INIT
+    RTE_USART0_PIN_INIT();
+#endif
     return UART_NonBlockingInitialize(cb_event, &uart0_NonBlockingDriverState);
 }
 
 static int32_t UART0_NonBlockingUninitialize(void)
 {
-    UART0_DeinitPins();
+#ifdef RTE_USART0_PIN_DEINIT
+    RTE_USART0_PIN_DEINIT();
+#endif
     return UART_NonBlockingUninitialize(&uart0_NonBlockingDriverState);
 }
 
 static int32_t UART0_NonBlockingPowerControl(ARM_POWER_STATE state)
 {
-    uint32_t result;
+    int32_t result;
 
     result = UART_NonBlockingPowerControl(state, &uart0_NonBlockingDriverState);
 
@@ -1267,13 +1347,14 @@ static int32_t UART0_NonBlockingControl(uint32_t control, uint32_t arg)
     if (uart0_NonBlockingDriverState.handle->rxRingBuffer != NULL)
     {
         /* Enable the interrupt to accept the data when user need the ring buffer. */
-        UART_EnableInterrupts(uart0_NonBlockingDriverState.resource->base, kUART_RxDataRegFullInterruptEnable |
-                                                                               kUART_RxOverrunInterruptEnable |
-                                                                               kUART_FramingErrorInterruptEnable);
+        UART_EnableInterrupts(uart0_NonBlockingDriverState.resource->base,
+                              (uint32_t)kUART_RxDataRegFullInterruptEnable | (uint32_t)kUART_RxOverrunInterruptEnable |
+                                  (uint32_t)kUART_FramingErrorInterruptEnable);
         /* Enable parity error interrupt when parity mode is enable*/
-        if (UART_C1_PE_MASK & uart0_NonBlockingDriverState.resource->base->C1)
+        if ((UART_C1_PE_MASK & uart0_NonBlockingDriverState.resource->base->C1) != 0U)
         {
-            UART_EnableInterrupts(uart0_NonBlockingDriverState.resource->base, kUART_ParityErrorInterruptEnable);
+            UART_EnableInterrupts(uart0_NonBlockingDriverState.resource->base,
+                                  (uint32_t)kUART_ParityErrorInterruptEnable);
         }
     }
     return ARM_DRIVER_OK;
@@ -1288,7 +1369,7 @@ static ARM_USART_STATUS UART0_NonBlockingGetStatus(void)
 
 ARM_DRIVER_USART Driver_USART0 = {
     UARTx_GetVersion,      UARTx_GetCapabilities,
-#if RTE_USART0_DMA_EN
+#if defined(RTE_USART0_DMA_EN) && RTE_USART0_DMA_EN
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
     UART0_EdmaInitialize,  UART0_EdmaUninitialize, UART0_EdmaPowerControl, UART0_EdmaSend,    UART0_EdmaReceive,
     UART0_EdmaTransfer,    UART0_EdmaGetTxCount,   UART0_EdmaGetRxCount,   UART0_EdmaControl, UART0_EdmaGetStatus,
@@ -1314,50 +1395,53 @@ ARM_DRIVER_USART Driver_USART0 = {
 
 #endif
 
-#if (FSL_FEATURE_SOC_LPUART_COUNT != 2)
+#if (defined(FSL_FEATURE_SOC_LPUART_COUNT) && (FSL_FEATURE_SOC_LPUART_COUNT != 2)) || \
+    (!defined(FSL_FEATURE_SOC_LPUART_COUNT))
 
-#if defined(UART1) && RTE_USART1
+#if defined(UART1) && defined(RTE_USART1) && RTE_USART1
 
 /* User needs to provide the implementation for UART1_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t UART1_GetFreq(void);
-extern void UART1_InitPins(void);
-extern void UART1_DeinitPins(void);
 
-cmsis_uart_resource_t uart1_Resource = {UART1, UART1_GetFreq};
+static cmsis_uart_resource_t uart1_Resource = {UART1, UART1_GetFreq};
 
-#if RTE_USART1_DMA_EN
+#if defined(RTE_USART1_DMA_EN) && RTE_USART1_DMA_EN
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
-cmsis_uart_dma_resource_t uart1_DmaResource = {
+static cmsis_uart_dma_resource_t uart1_DmaResource = {
     RTE_USART1_DMA_TX_DMA_BASE, RTE_USART1_DMA_TX_CH, RTE_USART1_DMA_TX_DMAMUX_BASE, RTE_USART1_DMA_TX_PERI_SEL,
 
     RTE_USART1_DMA_RX_DMA_BASE, RTE_USART1_DMA_RX_CH, RTE_USART1_DMA_RX_DMAMUX_BASE, RTE_USART1_DMA_RX_PERI_SEL,
 };
 
-uart_dma_handle_t UART1_DmaHandle;
-dma_handle_t UART1_DmaRxHandle;
-dma_handle_t UART1_DmaTxHandle;
+static uart_dma_handle_t UART1_DmaHandle;
+static dma_handle_t UART1_DmaRxHandle;
+static dma_handle_t UART1_DmaTxHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart1_dma_driver_state")
-cmsis_uart_dma_driver_state_t uart1_DmaDriverState = {
+static cmsis_uart_dma_driver_state_t uart1_DmaDriverState = {
 #else
-cmsis_uart_dma_driver_state_t uart1_DmaDriverState   = {
+static cmsis_uart_dma_driver_state_t uart1_DmaDriverState   = {
 #endif
     &uart1_Resource, &uart1_DmaResource, &UART1_DmaHandle, &UART1_DmaRxHandle, &UART1_DmaTxHandle,
 };
 
 static int32_t UART1_DmaInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART1_InitPins();
+#ifdef RTE_USART1_PIN_INIT
+    RTE_USART1_PIN_INIT();
+#endif
     return UART_DmaInitialize(cb_event, &uart1_DmaDriverState);
 }
 
 static int32_t UART1_DmaUninitialize(void)
 {
-    UART1_DeinitPins();
+#ifdef RTE_USART1_PIN_DEINIT
+    RTE_USART1_PIN_DEINIT();
+#endif
     return UART_DmaUninitialize(&uart1_DmaDriverState);
 }
 
@@ -1405,34 +1489,38 @@ static ARM_USART_STATUS UART1_DmaGetStatus(void)
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
 
-cmsis_uart_edma_resource_t uart1_EdmaResource = {
+static cmsis_uart_edma_resource_t uart1_EdmaResource = {
     RTE_USART1_DMA_TX_DMA_BASE, RTE_USART1_DMA_TX_CH, RTE_USART1_DMA_TX_DMAMUX_BASE, RTE_USART1_DMA_TX_PERI_SEL,
 
     RTE_USART1_DMA_RX_DMA_BASE, RTE_USART1_DMA_RX_CH, RTE_USART1_DMA_RX_DMAMUX_BASE, RTE_USART1_DMA_RX_PERI_SEL,
 };
 
-uart_edma_handle_t UART1_EdmaHandle;
-edma_handle_t UART1_EdmaRxHandle;
-edma_handle_t UART1_EdmaTxHandle;
+static uart_edma_handle_t UART1_EdmaHandle;
+static edma_handle_t UART1_EdmaRxHandle;
+static edma_handle_t UART1_EdmaTxHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart1_edma_driver_state")
-cmsis_uart_edma_driver_state_t uart1_EdmaDriverState = {
+static cmsis_uart_edma_driver_state_t uart1_EdmaDriverState = {
 #else
-cmsis_uart_edma_driver_state_t uart1_EdmaDriverState = {
+static cmsis_uart_edma_driver_state_t uart1_EdmaDriverState = {
 #endif
     &uart1_Resource, &uart1_EdmaResource, &UART1_EdmaHandle, &UART1_EdmaRxHandle, &UART1_EdmaTxHandle,
 };
 
 static int32_t UART1_EdmaInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART1_InitPins();
+#ifdef RTE_USART1_PIN_INIT
+    RTE_USART1_PIN_INIT();
+#endif
     return UART_EdmaInitialize(cb_event, &uart1_EdmaDriverState);
 }
 
 static int32_t UART1_EdmaUninitialize(void)
 {
-    UART1_DeinitPins();
+#ifdef RTE_USART1_PIN_DEINIT
+    RTE_USART1_PIN_DEINIT();
+#endif
     return UART_EdmaUninitialize(&uart1_EdmaDriverState);
 }
 
@@ -1480,7 +1568,7 @@ static ARM_USART_STATUS UART1_EdmaGetStatus(void)
 
 #else
 
-uart_handle_t UART1_Handle;
+static uart_handle_t UART1_Handle;
 
 #if defined(USART1_RX_BUFFER_ENABLE) && (USART1_RX_BUFFER_ENABLE == 1)
 static uint8_t uart1_rxRingBuffer[USART_RX_BUFFER_LEN];
@@ -1488,9 +1576,9 @@ static uint8_t uart1_rxRingBuffer[USART_RX_BUFFER_LEN];
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart1_non_blocking_driver_state")
-cmsis_uart_interrupt_driver_state_t uart1_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart1_NonBlockingDriverState = {
 #else
-cmsis_uart_interrupt_driver_state_t uart1_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart1_NonBlockingDriverState = {
 #endif
     &uart1_Resource,
     &UART1_Handle,
@@ -1498,19 +1586,23 @@ cmsis_uart_interrupt_driver_state_t uart1_NonBlockingDriverState = {
 
 static int32_t UART1_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART1_InitPins();
+#ifdef RTE_USART1_PIN_INIT
+    RTE_USART1_PIN_INIT();
+#endif
     return UART_NonBlockingInitialize(cb_event, &uart1_NonBlockingDriverState);
 }
 
 static int32_t UART1_NonBlockingUninitialize(void)
 {
-    UART1_DeinitPins();
+#ifdef RTE_USART1_PIN_DEINIT
+    RTE_USART1_PIN_DEINIT();
+#endif
     return UART_NonBlockingUninitialize(&uart1_NonBlockingDriverState);
 }
 
 static int32_t UART1_NonBlockingPowerControl(ARM_POWER_STATE state)
 {
-    uint32_t result;
+    int32_t result;
 
     result = UART_NonBlockingPowerControl(state, &uart1_NonBlockingDriverState);
 
@@ -1562,13 +1654,14 @@ static int32_t UART1_NonBlockingControl(uint32_t control, uint32_t arg)
     if (uart1_NonBlockingDriverState.handle->rxRingBuffer != NULL)
     {
         /* Enable the interrupt to accept the data when user need the ring buffer. */
-        UART_EnableInterrupts(uart1_NonBlockingDriverState.resource->base, kUART_RxDataRegFullInterruptEnable |
-                                                                               kUART_RxOverrunInterruptEnable |
-                                                                               kUART_FramingErrorInterruptEnable);
+        UART_EnableInterrupts(uart1_NonBlockingDriverState.resource->base,
+                              (uint32_t)kUART_RxDataRegFullInterruptEnable | (uint32_t)kUART_RxOverrunInterruptEnable |
+                                  (uint32_t)kUART_FramingErrorInterruptEnable);
         /* Enable parity error interrupt when parity mode is enable*/
-        if (UART_C1_PE_MASK & uart1_NonBlockingDriverState.resource->base->C1)
+        if ((UART_C1_PE_MASK & uart1_NonBlockingDriverState.resource->base->C1) != 0U)
         {
-            UART_EnableInterrupts(uart1_NonBlockingDriverState.resource->base, kUART_ParityErrorInterruptEnable);
+            UART_EnableInterrupts(uart1_NonBlockingDriverState.resource->base,
+                                  (uint32_t)kUART_ParityErrorInterruptEnable);
         }
     }
     return ARM_DRIVER_OK;
@@ -1583,7 +1676,7 @@ static ARM_USART_STATUS UART1_NonBlockingGetStatus(void)
 
 ARM_DRIVER_USART Driver_USART1 = {
     UARTx_GetVersion,      UARTx_GetCapabilities,
-#if RTE_USART1_DMA_EN
+#if defined(RTE_USART1_DMA_EN) && RTE_USART1_DMA_EN
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
     UART1_EdmaInitialize,  UART1_EdmaUninitialize, UART1_EdmaPowerControl, UART1_EdmaSend,    UART1_EdmaReceive,
     UART1_EdmaTransfer,    UART1_EdmaGetTxCount,   UART1_EdmaGetRxCount,   UART1_EdmaControl, UART1_EdmaGetStatus,
@@ -1609,48 +1702,50 @@ ARM_DRIVER_USART Driver_USART1 = {
 
 #endif
 
-#if defined(UART2) && RTE_USART2
+#if defined(UART2) && defined(RTE_USART2) && RTE_USART2
 
 /* User needs to provide the implementation for UART2_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t UART2_GetFreq(void);
-extern void UART2_InitPins(void);
-extern void UART2_DeinitPins(void);
 
-cmsis_uart_resource_t uart2_Resource = {UART2, UART2_GetFreq};
+static cmsis_uart_resource_t uart2_Resource = {UART2, UART2_GetFreq};
 
-#if RTE_USART2_DMA_EN
+#if defined(RTE_USART2_DMA_EN) && RTE_USART2_DMA_EN
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
-cmsis_uart_dma_resource_t uart2_DmaResource = {
+static cmsis_uart_dma_resource_t uart2_DmaResource = {
     RTE_USART2_DMA_TX_DMA_BASE, RTE_USART2_DMA_TX_CH, RTE_USART2_DMA_TX_DMAMUX_BASE, RTE_USART2_DMA_TX_PERI_SEL,
 
     RTE_USART2_DMA_RX_DMA_BASE, RTE_USART2_DMA_RX_CH, RTE_USART2_DMA_RX_DMAMUX_BASE, RTE_USART2_DMA_RX_PERI_SEL,
 };
 
-uart_dma_handle_t UART2_DmaHandle;
-dma_handle_t UART2_DmaRxHandle;
-dma_handle_t UART2_DmaTxHandle;
+static uart_dma_handle_t UART2_DmaHandle;
+static dma_handle_t UART2_DmaRxHandle;
+static dma_handle_t UART2_DmaTxHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart2_dma_driver_state")
-cmsis_uart_dma_driver_state_t uart2_DmaDriverState = {
+static cmsis_uart_dma_driver_state_t uart2_DmaDriverState = {
 #else
-cmsis_uart_dma_driver_state_t uart2_DmaDriverState = {
+static cmsis_uart_dma_driver_state_t uart2_DmaDriverState = {
 #endif
     &uart2_Resource, &uart2_DmaResource, &UART2_DmaHandle, &UART2_DmaRxHandle, &UART2_DmaTxHandle,
 };
 
 static int32_t UART2_DmaInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART2_InitPins();
+#ifdef RTE_USART2_PIN_INIT
+    RTE_USART2_PIN_INIT();
+#endif
     return UART_DmaInitialize(cb_event, &uart2_DmaDriverState);
 }
 
 static int32_t UART2_DmaUninitialize(void)
 {
-    UART2_DeinitPins();
+#ifdef RTE_USART2_PIN_DEINIT
+    RTE_USART2_PIN_DEINIT();
+#endif
     return UART_DmaUninitialize(&uart2_DmaDriverState);
 }
 
@@ -1698,34 +1793,38 @@ static ARM_USART_STATUS UART2_DmaGetStatus(void)
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
 
-cmsis_uart_edma_resource_t uart2_EdmaResource = {
+static cmsis_uart_edma_resource_t uart2_EdmaResource = {
     RTE_USART2_DMA_TX_DMA_BASE, RTE_USART2_DMA_TX_CH, RTE_USART2_DMA_TX_DMAMUX_BASE, RTE_USART2_DMA_TX_PERI_SEL,
 
     RTE_USART2_DMA_RX_DMA_BASE, RTE_USART2_DMA_RX_CH, RTE_USART2_DMA_RX_DMAMUX_BASE, RTE_USART2_DMA_RX_PERI_SEL,
 };
 
-uart_edma_handle_t UART2_EdmaHandle;
-edma_handle_t UART2_EdmaRxHandle;
-edma_handle_t UART2_EdmaTxHandle;
+static uart_edma_handle_t UART2_EdmaHandle;
+static edma_handle_t UART2_EdmaRxHandle;
+static edma_handle_t UART2_EdmaTxHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart2_edma_driver_state")
-cmsis_uart_edma_driver_state_t uart2_EdmaDriverState = {
+static cmsis_uart_edma_driver_state_t uart2_EdmaDriverState = {
 #else
-cmsis_uart_edma_driver_state_t uart2_EdmaDriverState = {
+static cmsis_uart_edma_driver_state_t uart2_EdmaDriverState = {
 #endif
     &uart2_Resource, &uart2_EdmaResource, &UART2_EdmaHandle, &UART2_EdmaRxHandle, &UART2_EdmaTxHandle,
 };
 
 static int32_t UART2_EdmaInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART2_InitPins();
+#ifdef RTE_USART2_PIN_INIT
+    RTE_USART2_PIN_INIT();
+#endif
     return UART_EdmaInitialize(cb_event, &uart2_EdmaDriverState);
 }
 
 static int32_t UART2_EdmaUninitialize(void)
 {
-    UART2_DeinitPins();
+#ifdef RTE_USART2_PIN_DEINIT
+    RTE_USART2_PIN_DEINIT();
+#endif
     return UART_EdmaUninitialize(&uart2_EdmaDriverState);
 }
 
@@ -1781,9 +1880,9 @@ static uint8_t uart2_rxRingBuffer[USART_RX_BUFFER_LEN];
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart2_non_blocking_driver_state")
-cmsis_uart_interrupt_driver_state_t uart2_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart2_NonBlockingDriverState = {
 #else
-cmsis_uart_interrupt_driver_state_t uart2_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart2_NonBlockingDriverState = {
 #endif
     &uart2_Resource,
     &UART2_Handle,
@@ -1791,19 +1890,23 @@ cmsis_uart_interrupt_driver_state_t uart2_NonBlockingDriverState = {
 
 static int32_t UART2_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART2_InitPins();
+#ifdef RTE_USART2_PIN_INIT
+    RTE_USART2_PIN_INIT();
+#endif
     return UART_NonBlockingInitialize(cb_event, &uart2_NonBlockingDriverState);
 }
 
 static int32_t UART2_NonBlockingUninitialize(void)
 {
-    UART2_DeinitPins();
+#ifdef RTE_USART2_PIN_DEINIT
+    RTE_USART2_PIN_DEINIT();
+#endif
     return UART_NonBlockingUninitialize(&uart2_NonBlockingDriverState);
 }
 
 static int32_t UART2_NonBlockingPowerControl(ARM_POWER_STATE state)
 {
-    uint32_t result;
+    int32_t result;
 
     result = UART_NonBlockingPowerControl(state, &uart2_NonBlockingDriverState);
 #if defined(USART2_RX_BUFFER_ENABLE) && (USART2_RX_BUFFER_ENABLE == 1)
@@ -1854,13 +1957,14 @@ static int32_t UART2_NonBlockingControl(uint32_t control, uint32_t arg)
     if (uart2_NonBlockingDriverState.handle->rxRingBuffer != NULL)
     {
         /* Enable the interrupt to accept the data when user need the ring buffer. */
-        UART_EnableInterrupts(uart2_NonBlockingDriverState.resource->base, kUART_RxDataRegFullInterruptEnable |
-                                                                               kUART_RxOverrunInterruptEnable |
-                                                                               kUART_FramingErrorInterruptEnable);
+        UART_EnableInterrupts(uart2_NonBlockingDriverState.resource->base,
+                              (uint32_t)kUART_RxDataRegFullInterruptEnable | (uint32_t)kUART_RxOverrunInterruptEnable |
+                                  (uint32_t)kUART_FramingErrorInterruptEnable);
         /* Enable parity error interrupt when parity mode is enable*/
-        if (UART_C1_PE_MASK & uart2_NonBlockingDriverState.resource->base->C1)
+        if ((UART_C1_PE_MASK & uart2_NonBlockingDriverState.resource->base->C1) != 0U)
         {
-            UART_EnableInterrupts(uart2_NonBlockingDriverState.resource->base, kUART_ParityErrorInterruptEnable);
+            UART_EnableInterrupts(uart2_NonBlockingDriverState.resource->base,
+                                  (uint32_t)kUART_ParityErrorInterruptEnable);
         }
     }
     return ARM_DRIVER_OK;
@@ -1875,7 +1979,7 @@ static ARM_USART_STATUS UART2_NonBlockingGetStatus(void)
 
 ARM_DRIVER_USART Driver_USART2 = {
     UARTx_GetVersion,      UARTx_GetCapabilities,
-#if RTE_USART2_DMA_EN
+#if defined(RTE_USART2_DMA_EN) && RTE_USART2_DMA_EN
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
     UART2_EdmaInitialize,  UART2_EdmaUninitialize, UART2_EdmaPowerControl, UART2_EdmaSend,    UART2_EdmaReceive,
     UART2_EdmaTransfer,    UART2_EdmaGetTxCount,   UART2_EdmaGetRxCount,   UART2_EdmaControl, UART2_EdmaGetStatus,
@@ -1899,47 +2003,49 @@ ARM_DRIVER_USART Driver_USART2 = {
 
 #endif /* uart2 */
 
-#if defined(UART3) && RTE_USART3
+#if defined(UART3) && defined(RTE_USART3) && RTE_USART3
 
 /* User needs to provide the implementation for UART3_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t UART3_GetFreq(void);
-extern void UART3_InitPins(void);
-extern void UART3_DeinitPins(void);
 
-cmsis_uart_resource_t uart3_Resource = {UART3, UART3_GetFreq};
+static cmsis_uart_resource_t uart3_Resource = {UART3, UART3_GetFreq};
 
-#if RTE_USART3_DMA_EN
+#if defined(RTE_USART3_DMA_EN) && RTE_USART3_DMA_EN
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
-cmsis_uart_dma_resource_t uart3_DmaResource = {
+static cmsis_uart_dma_resource_t uart3_DmaResource = {
     RTE_USART3_DMA_TX_DMA_BASE, RTE_USART3_DMA_TX_CH, RTE_USART3_DMA_TX_DMAMUX_BASE, RTE_USART3_DMA_TX_PERI_SEL,
 
     RTE_USART3_DMA_RX_DMA_BASE, RTE_USART3_DMA_RX_CH, RTE_USART3_DMA_RX_DMAMUX_BASE, RTE_USART3_DMA_RX_PERI_SEL,
 };
 
-uart_dma_handle_t UART3_DmaHandle;
-dma_handle_t UART3_DmaRxHandle;
-dma_handle_t UART3_DmaTxHandle;
+static uart_dma_handle_t UART3_DmaHandle;
+static dma_handle_t UART3_DmaRxHandle;
+static dma_handle_t UART3_DmaTxHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart3_dma_driver_state")
-cmsis_uart_dma_driver_state_t uart3_DmaDriverState = {
+static cmsis_uart_dma_driver_state_t uart3_DmaDriverState = {
 #else
-cmsis_uart_dma_driver_state_t uart3_DmaDriverState = {
+static cmsis_uart_dma_driver_state_t uart3_DmaDriverState = {
 #endif
     &uart3_Resource, &uart3_DmaResource, &UART3_DmaHandle, &UART3_DmaRxHandle, &UART3_DmaTxHandle};
 
 static int32_t UART3_DmaInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART3_InitPins();
+#ifdef RTE_USART3_PIN_INIT
+    RTE_USART3_PIN_INIT();
+#endif
     return UART_DmaInitialize(cb_event, &uart3_DmaDriverState);
 }
 
 static int32_t UART3_DmaUninitialize(void)
 {
-    UART3_DeinitPins();
+#ifdef RTE_USART3_PIN_DEINIT
+    RTE_USART3_PIN_DEINIT();
+#endif
     return UART_DmaUninitialize(&uart3_DmaDriverState);
 }
 
@@ -1986,7 +2092,7 @@ static int32_t UART3_DmaPowerControl(ARM_POWER_STATE state)
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
 
-    cmsis_uart_edma_resource_t uart3_EdmaResource = {
+    static cmsis_uart_edma_resource_t uart3_EdmaResource = {
         RTE_USART3_DMA_TX_DMA_BASE, RTE_USART3_DMA_TX_CH, RTE_USART3_DMA_TX_DMAMUX_BASE, RTE_USART3_DMA_TX_PERI_SEL,
 
         RTE_USART3_DMA_RX_DMA_BASE, RTE_USART3_DMA_RX_CH, RTE_USART3_DMA_RX_DMAMUX_BASE, RTE_USART3_DMA_RX_PERI_SEL,
@@ -1998,9 +2104,9 @@ static int32_t UART3_DmaPowerControl(ARM_POWER_STATE state)
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
     ARMCC_SECTION("uart3_edma_driver_state")
-    cmsis_uart_edma_driver_state_t uart3_EdmaDriverState = {
+    static cmsis_uart_edma_driver_state_t uart3_EdmaDriverState = {
 #else
-    cmsis_uart_edma_driver_state_t uart3_EdmaDriverState = {
+    static cmsis_uart_edma_driver_state_t uart3_EdmaDriverState = {
 #endif
         &uart3_Resource,
         &uart3_EdmaResource,
@@ -2011,13 +2117,17 @@ static int32_t UART3_DmaPowerControl(ARM_POWER_STATE state)
 
     static int32_t UART3_EdmaInitialize(ARM_USART_SignalEvent_t cb_event)
     {
-        UART3_InitPins();
+#ifdef RTE_USART3_PIN_INIT
+        RTE_USART3_PIN_INIT();
+#endif
         return UART_EdmaInitialize(cb_event, &uart3_EdmaDriverState);
     }
 
     static int32_t UART3_EdmaUninitialize(void)
     {
-        UART3_DeinitPins();
+#ifdef RTE_USART3_PIN_DEINIT
+        RTE_USART3_PIN_DEINIT();
+#endif
         return UART_EdmaUninitialize(&uart3_EdmaDriverState);
     }
 
@@ -2065,7 +2175,7 @@ static int32_t UART3_DmaPowerControl(ARM_POWER_STATE state)
 
 #else
 
-uart_handle_t UART3_Handle;
+static uart_handle_t UART3_Handle;
 
 #if defined(USART3_RX_BUFFER_ENABLE) && (USART3_RX_BUFFER_ENABLE == 1)
 static uint8_t uart3_rxRingBuffer[USART_RX_BUFFER_LEN];
@@ -2073,9 +2183,9 @@ static uint8_t uart3_rxRingBuffer[USART_RX_BUFFER_LEN];
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart3_non_blocking_driver_state")
-cmsis_uart_interrupt_driver_state_t uart3_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart3_NonBlockingDriverState = {
 #else
-cmsis_uart_interrupt_driver_state_t uart3_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart3_NonBlockingDriverState = {
 #endif
     &uart3_Resource,
     &UART3_Handle,
@@ -2083,19 +2193,23 @@ cmsis_uart_interrupt_driver_state_t uart3_NonBlockingDriverState = {
 
 static int32_t UART3_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART3_InitPins();
+#ifdef RTE_USART3_PIN_INIT
+    RTE_USART3_PIN_INIT();
+#endif
     return UART_NonBlockingInitialize(cb_event, &uart3_NonBlockingDriverState);
 }
 
 static int32_t UART3_NonBlockingUninitialize(void)
 {
-    UART3_DeinitPins();
+#ifdef RTE_USART3_PIN_DEINIT
+    RTE_USART3_PIN_DEINIT();
+#endif
     return UART_NonBlockingUninitialize(&uart3_NonBlockingDriverState);
 }
 
 static int32_t UART3_NonBlockingPowerControl(ARM_POWER_STATE state)
 {
-    uint32_t result;
+    int32_t result;
 
     result = UART_NonBlockingPowerControl(state, &uart3_NonBlockingDriverState);
 #if defined(USART3_RX_BUFFER_ENABLE) && (USART3_RX_BUFFER_ENABLE == 1)
@@ -2146,13 +2260,14 @@ static int32_t UART3_NonBlockingControl(uint32_t control, uint32_t arg)
     if (uart3_NonBlockingDriverState.handle->rxRingBuffer != NULL)
     {
         /* Enable the interrupt to accept the data when user need the ring buffer. */
-        UART_EnableInterrupts(uart3_NonBlockingDriverState.resource->base, kUART_RxDataRegFullInterruptEnable |
-                                                                               kUART_RxOverrunInterruptEnable |
-                                                                               kUART_FramingErrorInterruptEnable);
+        UART_EnableInterrupts(uart3_NonBlockingDriverState.resource->base,
+                              (uint32_t)kUART_RxDataRegFullInterruptEnable | (uint32_t)kUART_RxOverrunInterruptEnable |
+                                  (uint32_t)kUART_FramingErrorInterruptEnable);
         /* Enable parity error interrupt when parity mode is enable*/
-        if (UART_C1_PE_MASK & uart3_NonBlockingDriverState.resource->base->C1)
+        if ((UART_C1_PE_MASK & uart3_NonBlockingDriverState.resource->base->C1) != 0U)
         {
-            UART_EnableInterrupts(uart3_NonBlockingDriverState.resource->base, kUART_ParityErrorInterruptEnable);
+            UART_EnableInterrupts(uart3_NonBlockingDriverState.resource->base,
+                                  (uint32_t)kUART_ParityErrorInterruptEnable);
         }
     }
     return ARM_DRIVER_OK;
@@ -2168,7 +2283,7 @@ static ARM_USART_STATUS UART3_NonBlockingGetStatus(void)
     ARM_DRIVER_USART Driver_USART3 = {
         UARTx_GetVersion,
         UARTx_GetCapabilities,
-#if RTE_USART3_DMA_EN
+#if defined(RTE_USART3_DMA_EN) && RTE_USART3_DMA_EN
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
         UART3_EdmaInitialize,
         UART3_EdmaUninitialize,
@@ -2210,19 +2325,17 @@ static ARM_USART_STATUS UART3_NonBlockingGetStatus(void)
 
 #endif /* uart3 */
 
-#if defined(UART4) && RTE_USART4
+#if defined(UART4) && defined(RTE_USART4) && RTE_USART4
 
     extern uint32_t UART4_GetFreq(void);
-    extern void UART4_InitPins(void);
-    extern void UART4_DeinitPins(void);
 
     cmsis_uart_resource_t uart4_Resource = {UART4, UART4_GetFreq};
 
-#if RTE_USART4_DMA_EN
+#if defined(RTE_USART4_DMA_EN) && RTE_USART4_DMA_EN
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
-    cmsis_uart_dma_resource_t uart4_DmaResource = {
+    static cmsis_uart_dma_resource_t uart4_DmaResource = {
         RTE_USART4_DMA_TX_DMA_BASE, RTE_USART4_DMA_TX_CH, RTE_USART4_DMA_TX_DMAMUX_BASE, RTE_USART4_DMA_TX_PERI_SEL,
 
         RTE_USART4_DMA_RX_DMA_BASE, RTE_USART4_DMA_RX_CH, RTE_USART4_DMA_RX_DMAMUX_BASE, RTE_USART4_DMA_RX_PERI_SEL,
@@ -2234,9 +2347,9 @@ static ARM_USART_STATUS UART3_NonBlockingGetStatus(void)
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
     ARMCC_SECTION("uart4_dma_driver_state")
-    cmsis_uart_dma_driver_state_t uart4_DmaDriverState = {
+    static cmsis_uart_dma_driver_state_t uart4_DmaDriverState = {
 #else
-    cmsis_uart_dma_driver_state_t uart4_DmaDriverState = {
+    static cmsis_uart_dma_driver_state_t uart4_DmaDriverState = {
 #endif
         &uart4_Resource,
         &uart4_DmaResource,
@@ -2247,13 +2360,17 @@ static ARM_USART_STATUS UART3_NonBlockingGetStatus(void)
 
     static int32_t UART4_DmaInitialize(ARM_USART_SignalEvent_t cb_event)
     {
-        UART4_InitPins();
+#ifdef RTE_USART4_PIN_INIT
+        RTE_USART4_PIN_INIT();
+#endif
         return UART_DmaInitialize(cb_event, &uart4_DmaDriverState);
     }
 
     static int32_t UART4_DmaUninitialize(void)
     {
-        UART4_DeinitPins();
+#ifdef RTE_USART4_PIN_DEINIT
+        RTE_USART4_PIN_DEINIT();
+#endif
         return UART_DmaUninitialize(&uart4_DmaDriverState);
     }
 
@@ -2301,7 +2418,7 @@ static ARM_USART_STATUS UART3_NonBlockingGetStatus(void)
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
 
-    cmsis_uart_edma_resource_t uart4_EdmaResource = {
+    static cmsis_uart_edma_resource_t uart4_EdmaResource = {
         RTE_USART4_DMA_TX_DMA_BASE, RTE_USART4_DMA_TX_CH, RTE_USART4_DMA_TX_DMAMUX_BASE, RTE_USART4_DMA_TX_PERI_SEL,
 
         RTE_USART4_DMA_RX_DMA_BASE, RTE_USART4_DMA_RX_CH, RTE_USART4_DMA_RX_DMAMUX_BASE, RTE_USART4_DMA_RX_PERI_SEL,
@@ -2313,9 +2430,9 @@ static ARM_USART_STATUS UART3_NonBlockingGetStatus(void)
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
     ARMCC_SECTION("uart4_edma_driver_state")
-    cmsis_uart_edma_driver_state_t uart4_EdmaDriverState = {
+    static cmsis_uart_edma_driver_state_t uart4_EdmaDriverState = {
 #else
-    cmsis_uart_edma_driver_state_t uart4_EdmaDriverState = {
+    static cmsis_uart_edma_driver_state_t uart4_EdmaDriverState = {
 #endif
         &uart4_Resource,
         &uart4_EdmaResource,
@@ -2326,13 +2443,17 @@ static ARM_USART_STATUS UART3_NonBlockingGetStatus(void)
 
     static int32_t UART4_EdmaInitialize(ARM_USART_SignalEvent_t cb_event)
     {
-        UART4_InitPins();
+#ifdef RTE_USART4_PIN_INIT
+        RTE_USART4_PIN_INIT();
+#endif
         return UART_EdmaInitialize(cb_event, &uart4_EdmaDriverState);
     }
 
     static int32_t UART4_EdmaUninitialize(void)
     {
-        UART4_DeinitPins();
+#ifdef RTE_USART4_PIN_DEINIT
+        RTE_USART4_PIN_DEINIT();
+#endif
         return UART_EdmaUninitialize(&uart4_EdmaDriverState);
     }
 
@@ -2380,7 +2501,7 @@ static ARM_USART_STATUS UART3_NonBlockingGetStatus(void)
 
 #else
 
-uart_handle_t UART4_Handle;
+static uart_handle_t UART4_Handle;
 
 #if defined(USART4_RX_BUFFER_ENABLE) && (USART4_RX_BUFFER_ENABLE == 1)
 static uint8_t uart4_rxRingBuffer[USART_RX_BUFFER_LEN];
@@ -2388,9 +2509,9 @@ static uint8_t uart4_rxRingBuffer[USART_RX_BUFFER_LEN];
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart4_non_blocking_driver_state")
-cmsis_uart_interrupt_driver_state_t uart4_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart4_NonBlockingDriverState = {
 #else
-cmsis_uart_interrupt_driver_state_t uart4_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart4_NonBlockingDriverState = {
 #endif
     &uart4_Resource,
     &UART4_Handle,
@@ -2398,19 +2519,23 @@ cmsis_uart_interrupt_driver_state_t uart4_NonBlockingDriverState = {
 
 static int32_t UART4_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART4_InitPins();
+#ifdef RTE_USART4_PIN_INIT
+    RTE_USART4_PIN_INIT();
+#endif
     return UART_NonBlockingInitialize(cb_event, &uart4_NonBlockingDriverState);
 }
 
 static int32_t UART4_NonBlockingUninitialize(void)
 {
-    UART4_DeinitPins();
+#ifdef RTE_USART4_PIN_DEINIT
+    RTE_USART4_PIN_DEINIT();
+#endif
     return UART_NonBlockingUninitialize(&uart4_NonBlockingDriverState);
 }
 
 static int32_t UART4_NonBlockingPowerControl(ARM_POWER_STATE state)
 {
-    uint32_t result;
+    int32_t result;
 
     result = UART_NonBlockingPowerControl(state, &uart4_NonBlockingDriverState);
 #if defined(USART4_RX_BUFFER_ENABLE) && (USART4_RX_BUFFER_ENABLE == 1)
@@ -2461,13 +2586,14 @@ static int32_t UART4_NonBlockingControl(uint32_t control, uint32_t arg)
     if (uart4_NonBlockingDriverState.handle->rxRingBuffer != NULL)
     {
         /* Enable the interrupt to accept the data when user need the ring buffer. */
-        UART_EnableInterrupts(uart4_NonBlockingDriverState.resource->base, kUART_RxDataRegFullInterruptEnable |
-                                                                               kUART_RxOverrunInterruptEnable |
-                                                                               kUART_FramingErrorInterruptEnable);
+        UART_EnableInterrupts(uart4_NonBlockingDriverState.resource->base,
+                              (uint32_t)kUART_RxDataRegFullInterruptEnable | (uint32_t)kUART_RxOverrunInterruptEnable |
+                                  (uint32_t)kUART_FramingErrorInterruptEnable);
         /* Enable parity error interrupt when parity mode is enable*/
-        if (UART_C1_PE_MASK & uart4_NonBlockingDriverState.resource->base->C1)
+        if ((UART_C1_PE_MASK & uart4_NonBlockingDriverState.resource->base->C1) != 0U)
         {
-            UART_EnableInterrupts(uart4_NonBlockingDriverState.resource->base, kUART_ParityErrorInterruptEnable);
+            UART_EnableInterrupts(uart4_NonBlockingDriverState.resource->base,
+                                  (uint32_t)kUART_ParityErrorInterruptEnable);
         }
     }
     return ARM_DRIVER_OK;
@@ -2483,7 +2609,7 @@ static ARM_USART_STATUS UART4_NonBlockingGetStatus(void)
     ARM_DRIVER_USART Driver_USART4 = {
         UARTx_GetVersion,
         UARTx_GetCapabilities,
-#if RTE_USART4_DMA_EN
+#if defined(RTE_USART4_DMA_EN) && RTE_USART4_DMA_EN
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
         UART4_EdmaInitialize,
         UART4_EdmaUninitialize,
@@ -2525,19 +2651,17 @@ static ARM_USART_STATUS UART4_NonBlockingGetStatus(void)
 
 #endif /* uart4 */
 
-#if defined(UART5) && RTE_USART5
+#if defined(UART5) && defined(RTE_USART5) && RTE_USART5
 
     extern uint32_t UART5_GetFreq(void);
-    extern void UART5_InitPins(void);
-    extern void UART5_DeinitPins(void);
 
     cmsis_uart_resource_t uart5_Resource = {UART5, UART5_GetFreq};
 
-#if RTE_USART5_DMA_EN
+#if defined(RTE_USART5_DMA_EN) && RTE_USART5_DMA_EN
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
-    cmsis_uart_dma_resource_t uart5_DmaResource = {
+    static cmsis_uart_dma_resource_t uart5_DmaResource = {
         RTE_USART5_DMA_TX_DMA_BASE, RTE_USART5_DMA_TX_CH, RTE_USART5_DMA_TX_DMAMUX_BASE, RTE_USART5_DMA_TX_PERI_SEL,
 
         RTE_USART5_DMA_RX_DMA_BASE, RTE_USART5_DMA_RX_CH, RTE_USART5_DMA_RX_DMAMUX_BASE, RTE_USART5_DMA_RX_PERI_SEL,
@@ -2549,9 +2673,9 @@ static ARM_USART_STATUS UART4_NonBlockingGetStatus(void)
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
     ARMCC_SECTION("uart5_dma_driver_state")
-    cmsis_uart_dma_driver_state_t uart5_DmaDriverState = {
+    static cmsis_uart_dma_driver_state_t uart5_DmaDriverState = {
 #else
-    cmsis_uart_dma_driver_state_t uart5_DmaDriverState = {
+    static cmsis_uart_dma_driver_state_t uart5_DmaDriverState = {
 #endif
         &uart5_Resource,
         &uart5_DmaResource,
@@ -2562,13 +2686,17 @@ static ARM_USART_STATUS UART4_NonBlockingGetStatus(void)
 
     static int32_t UART5_DmaInitialize(ARM_USART_SignalEvent_t cb_event)
     {
-        UART5_InitPins();
+#ifdef RTE_USART5_PIN_INIT
+        RTE_USART5_PIN_INIT();
+#endif
         return UART_DmaInitialize(cb_event, &uart5_DmaDriverState);
     }
 
     static int32_t UART5_DmaUninitialize(void)
     {
-        UART5_DeinitPins();
+#ifdef RTE_USART5_PIN_DEINIT
+        RTE_USART5_PIN_DEINIT();
+#endif
         return UART_DmaUninitialize(&uart5_DmaDriverState);
     }
 
@@ -2616,7 +2744,7 @@ static ARM_USART_STATUS UART4_NonBlockingGetStatus(void)
 
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
 
-    cmsis_uart_edma_resource_t uart5_EdmaResource = {
+    static cmsis_uart_edma_resource_t uart5_EdmaResource = {
         RTE_USART5_DMA_TX_DMA_BASE, RTE_USART5_DMA_TX_CH, RTE_USART5_DMA_TX_DMAMUX_BASE, RTE_USART5_DMA_TX_PERI_SEL,
 
         RTE_USART5_DMA_RX_DMA_BASE, RTE_USART5_DMA_RX_CH, RTE_USART5_DMA_RX_DMAMUX_BASE, RTE_USART5_DMA_RX_PERI_SEL,
@@ -2628,9 +2756,9 @@ static ARM_USART_STATUS UART4_NonBlockingGetStatus(void)
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
     ARMCC_SECTION("uart5_edma_driver_state")
-    cmsis_uart_edma_driver_state_t uart5_EdmaDriverState = {
+    static cmsis_uart_edma_driver_state_t uart5_EdmaDriverState = {
 #else
-    cmsis_uart_edma_driver_state_t uart5_EdmaDriverState = {
+    static cmsis_uart_edma_driver_state_t uart5_EdmaDriverState = {
 #endif
         &uart5_Resource,
         &uart5_EdmaResource,
@@ -2641,13 +2769,17 @@ static ARM_USART_STATUS UART4_NonBlockingGetStatus(void)
 
     static int32_t UART5_EdmaInitialize(ARM_USART_SignalEvent_t cb_event)
     {
-        UART5_InitPins();
+#ifdef RTE_USART5_PIN_INIT
+        RTE_USART5_PIN_INIT();
+#endif
         return UART_EdmaInitialize(cb_event, &uart5_EdmaDriverState);
     }
 
     static int32_t UART5_EdmaUninitialize(void)
     {
-        UART5_DeinitPins();
+#ifdef RTE_USART5_PIN_DEINIT
+        RTE_USART5_PIN_DEINIT();
+#endif
         return UART_EdmaUninitialize(&uart5_EdmaDriverState);
     }
 
@@ -2695,7 +2827,7 @@ static ARM_USART_STATUS UART4_NonBlockingGetStatus(void)
 
 #else
 
-uart_handle_t UART5_Handle;
+static uart_handle_t UART5_Handle;
 
 #if defined(USART5_RX_BUFFER_ENABLE) && (USART5_RX_BUFFER_ENABLE == 1)
 static uint8_t uart5_rxRingBuffer[USART_RX_BUFFER_LEN];
@@ -2703,9 +2835,9 @@ static uint8_t uart5_rxRingBuffer[USART_RX_BUFFER_LEN];
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("uart5_non_blocking_driver_state")
-cmsis_uart_interrupt_driver_state_t uart5_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart5_NonBlockingDriverState = {
 #else
-cmsis_uart_interrupt_driver_state_t uart5_NonBlockingDriverState = {
+static cmsis_uart_interrupt_driver_state_t uart5_NonBlockingDriverState = {
 #endif
     &uart5_Resource,
     &UART5_Handle,
@@ -2713,19 +2845,23 @@ cmsis_uart_interrupt_driver_state_t uart5_NonBlockingDriverState = {
 
 static int32_t UART5_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event)
 {
-    UART5_InitPins();
+#ifdef RTE_USART5_PIN_INIT
+    RTE_USART5_PIN_INIT();
+#endif
     return UART_NonBlockingInitialize(cb_event, &uart5_NonBlockingDriverState);
 }
 
 static int32_t UART5_NonBlockingUninitialize(void)
 {
-    UART5_DeinitPins();
+#ifdef RTE_USART5_PIN_DEINIT
+    RTE_USART5_PIN_DEINIT();
+#endif
     return UART_NonBlockingUninitialize(&uart5_NonBlockingDriverState);
 }
 
 static int32_t UART5_NonBlockingPowerControl(ARM_POWER_STATE state)
 {
-    uint32_t result;
+    int32_t result;
 
     result = UART_NonBlockingPowerControl(state, &uart5_NonBlockingDriverState);
 #if defined(USART5_RX_BUFFER_ENABLE) && (USART5_RX_BUFFER_ENABLE == 1)
@@ -2776,13 +2912,14 @@ static int32_t UART5_NonBlockingControl(uint32_t control, uint32_t arg)
     if (uart5_NonBlockingDriverState.handle->rxRingBuffer != NULL)
     {
         /* Enable the interrupt to accept the data when user need the ring buffer. */
-        UART_EnableInterrupts(uart5_NonBlockingDriverState.resource->base, kUART_RxDataRegFullInterruptEnable |
-                                                                               kUART_RxOverrunInterruptEnable |
-                                                                               kUART_FramingErrorInterruptEnable);
+        UART_EnableInterrupts(uart5_NonBlockingDriverState.resource->base,
+                              (uint32_t)kUART_RxDataRegFullInterruptEnable | (uint32_t)kUART_RxOverrunInterruptEnable |
+                                  (uint32_t)kUART_FramingErrorInterruptEnable);
         /* Enable parity error interrupt when parity mode is enable*/
-        if (UART_C1_PE_MASK & uart5_NonBlockingDriverState.resource->base->C1)
+        if ((UART_C1_PE_MASK & uart5_NonBlockingDriverState.resource->base->C1) != 0U)
         {
-            UART_EnableInterrupts(uart5_NonBlockingDriverState.resource->base, kUART_ParityErrorInterruptEnable);
+            UART_EnableInterrupts(uart5_NonBlockingDriverState.resource->base,
+                                  (uint32_t)kUART_ParityErrorInterruptEnable);
         }
     }
     return ARM_DRIVER_OK;
@@ -2798,7 +2935,7 @@ static ARM_USART_STATUS UART5_NonBlockingGetStatus(void)
     ARM_DRIVER_USART Driver_USART5 = {
         UARTx_GetVersion,
         UARTx_GetCapabilities,
-#if RTE_USART5_DMA_EN
+#if defined(RTE_USART5_DMA_EN) && RTE_USART5_DMA_EN
 #if (defined(FSL_FEATURE_SOC_EDMA_COUNT) && FSL_FEATURE_SOC_EDMA_COUNT)
         UART5_EdmaInitialize,
         UART5_EdmaUninitialize,

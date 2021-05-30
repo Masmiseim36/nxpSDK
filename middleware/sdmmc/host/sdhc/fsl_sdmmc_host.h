@@ -24,24 +24,32 @@
 #define FSL_SDMMC_HOST_ADAPTER_VERSION (MAKE_VERSION(2U, 3U, 0U)) /*2.3.0*/
 
 /*!@brief host capability */
-#define SDMMCHOST_SUPPORT_HIGH_SPEED (1U)
-#define SDMMCHOST_SUPPORT_SUSPEND_RESUME (1U)
-#define SDMMCHOST_SUPPORT_VOLTAGE_3V3 (1U)
-#define SDMMCHOST_SUPPORT_VOLTAGE_3V0 (0U)
-#define SDMMCHOST_SUPPORT_VOLTAGE_1V8 (0U)
-#define SDMMCHOST_SUPPORT_VOLTAGE_1V2 (0U)
-#define SDMMCHOST_SUPPORT_4_BIT_WIDTH (1U)
-#define SDMMCHOST_SUPPORT_8_BIT_WIDTH (1U)
-#define SDMMCHOST_SUPPORT_DDR50 (0U)
-#define SDMMCHOST_SUPPORT_SDR104 (0U)
-#define SDMMCHOST_SUPPORT_SDR50 (0U)
-#define SDMMCHOST_SUPPORT_HS200 (0U)
-#define SDMMCHOST_SUPPORT_HS400 (0U)
+#define SDMMCHOST_SUPPORT_HIGH_SPEED           (1U)
+#define SDMMCHOST_SUPPORT_SUSPEND_RESUME       (1U)
+#define SDMMCHOST_SUPPORT_VOLTAGE_3V3          (1U)
+#define SDMMCHOST_SUPPORT_VOLTAGE_3V0          (0U)
+#define SDMMCHOST_SUPPORT_VOLTAGE_1V8          (0U)
+#define SDMMCHOST_SUPPORT_VOLTAGE_1V2          (0U)
+#define SDMMCHOST_SUPPORT_4_BIT_WIDTH          (1U)
+#define SDMMCHOST_SUPPORT_8_BIT_WIDTH          (1U)
+#define SDMMCHOST_SUPPORT_DDR50                (0U)
+#define SDMMCHOST_SUPPORT_SDR104               (0U)
+#define SDMMCHOST_SUPPORT_SDR50                (0U)
+#define SDMMCHOST_SUPPORT_HS200                (0U)
+#define SDMMCHOST_SUPPORT_HS400                (0U)
 #define SDMMCHOST_SUPPORT_DETECT_CARD_BY_DATA3 (1U)
-#define SDMMCHOST_SUPPORT_DETECT_CARD_BY_CD (0U)
-#define SDMMCHOST_SUPPORT_AUTO_CMD12 (1U)
-#define SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH (4096U)
-#define SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT (SDHC_MAX_BLOCK_COUNT)
+#define SDMMCHOST_SUPPORT_DETECT_CARD_BY_CD    (0U)
+#define SDMMCHOST_SUPPORT_AUTO_CMD12           (1U)
+#define SDMMCHOST_SUPPORT_MAX_BLOCK_LENGTH     (4096U)
+#define SDMMCHOST_SUPPORT_MAX_BLOCK_COUNT      (SDHC_MAX_BLOCK_COUNT)
+/*! @brief sdmmc host instance capability */
+#define SDMMCHOST_INSTANCE_SUPPORT_8_BIT_WIDTH(host) 1U
+#define SDMMCHOST_INSTANCE_SUPPORT_HS400(host)       0U
+#define SDMMCHOST_INSTANCE_SUPPORT_1V8_SIGNAL(host)  0U
+#define SDMMCHOST_INSTANCE_SUPPORT_HS200(host)       0U
+#define SDMMCHOST_INSTANCE_SUPPORT_SDR104(host)      0U
+#define SDMMCHOST_INSTANCE_SUPPORT_SDR50(host)       0U
+#define SDMMCHOST_INSTANCE_SUPPORT_DDR50(host)       0U
 
 /*!@brief SDMMC host dma descriptor buffer address align size */
 #define SDMMCHOST_DMA_DESCRIPTOR_BUFFER_ALIGN_SIZE (4U)
@@ -86,9 +94,9 @@ typedef struct _sdmmchost_
     uint32_t dmaDesBufferWordsNum; /*!< DMA descriptor buffer size in byte */
     sdhc_handle_t handle;          /*!< host controller handler */
 
-    void *hostEvent; /*!< host event handler pointer */
-    void *cd;        /*!< card detect */
-    void *cardInt;   /*!< call back function for card interrupt */
+    sdmmc_osa_event_t hostEvent; /*!< host event handler */
+    void *cd;                    /*!< card detect */
+    void *cardInt;               /*!< call back function for card interrupt */
 } sdmmchost_t;
 
 /*******************************************************************************

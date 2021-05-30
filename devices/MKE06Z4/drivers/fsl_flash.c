@@ -746,7 +746,7 @@ status_t FLASH_EraseEEprom(flash_config_t *config, uint32_t start, uint32_t leng
 
     /* re-calculate the endAddress and align it to the start of the next sector
      * which will be used in the comparison below */
-    if (endAddress % sectorSize)
+    if (0UL != (endAddress % sectorSize))
     {
         numberOfSectors = (endAddress / sectorSize) + 1UL;
         endAddress      = (numberOfSectors * sectorSize) - 1UL;
@@ -772,7 +772,7 @@ status_t FLASH_EraseEEprom(flash_config_t *config, uint32_t start, uint32_t leng
         returnCode = flash_command_sequence(config);
 
         /* calling flash callback function if it is available */
-        if (config->PFlashCallback)
+        if (config->PFlashCallback != NULL)
         {
             config->PFlashCallback();
         }

@@ -78,6 +78,11 @@
 #define mAppUartFlushIntervalInMs_c     (7)     /* Flush Timeout in Ms */
 
 #define mBatteryLevelReportInterval_c   (10)    /* battery level report interval in seconds  */
+
+#if !((defined(KW37A4_SERIES) || defined(KW37Z4_SERIES) || defined(KW38A4_SERIES) || defined(KW38Z4_SERIES) || defined(KW39A4_SERIES)))
+#define PWR_SetNewAppState(x)
+#endif
+
 /************************************************************************************
  *************************************************************************************
  * Private type definitions
@@ -822,6 +827,11 @@ static void BleApp_ConnectionCallback(deviceId_t peerDeviceId, gapConnectionEven
             {
                 BleApp_StateMachineHandler(peerDeviceId,
                                            mAppEvt_PairingComplete_c);
+                (void)Serial_Print(gAppSerMgrIf, "\r\n-->  GAP Event: Device Paired.\r\n", gAllowToBlock_d);
+            }
+            else
+            {
+                (void)Serial_Print(gAppSerMgrIf, "\r\n-->  GAP Event: Pairing Unsuccessful.\r\n", gAllowToBlock_d);
             }
         }
         break;

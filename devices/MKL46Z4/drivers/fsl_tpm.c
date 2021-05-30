@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -33,6 +37,12 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.tpm"
+#endif
+
 #define TPM_COMBINE_SHIFT (8U)
 
 /*******************************************************************************
@@ -96,7 +106,7 @@ void TPM_Init(TPM_Type *base, const tpm_config_t *config)
 
     /* Set the clock prescale factor */
     base->SC = TPM_SC_PS(config->prescale);
-
+#if !(defined(FSL_FEATURE_TPM_HAS_NO_CONF) && FSL_FEATURE_TPM_HAS_NO_CONF)
     /* Setup the counter operation */
     base->CONF = TPM_CONF_DOZEEN(config->enableDoze) | TPM_CONF_GTBEEN(config->useGlobalTimeBase) |
                  TPM_CONF_CROT(config->enableReloadOnTrigger) | TPM_CONF_CSOT(config->enableStartOnTrigger) |
@@ -116,12 +126,18 @@ void TPM_Init(TPM_Type *base, const tpm_config_t *config)
     {
         base->CONF &= ~TPM_CONF_DBGMODE_MASK;
     }
+#endif
 }
 
 void TPM_Deinit(TPM_Type *base)
 {
+#if defined(FSL_FEATURE_TPM_HAS_SC_CLKS) && FSL_FEATURE_TPM_HAS_SC_CLKS
+    /* Stop the counter */
+    base->SC &= ~TPM_SC_CLKS_MASK;
+#else
     /* Stop the counter */
     base->SC &= ~TPM_SC_CMOD_MASK;
+#endif 
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Gate the TPM clock */
     CLOCK_DisableClock(s_tpmClocks[TPM_GetInstance(base)]);
@@ -134,6 +150,7 @@ void TPM_GetDefaultConfig(tpm_config_t *config)
 
     /* TPM clock divide by 1 */
     config->prescale = kTPM_Prescale_Divide_1;
+#if !(defined(FSL_FEATURE_TPM_HAS_NO_CONF) && FSL_FEATURE_TPM_HAS_NO_CONF)
     /* Use internal TPM counter as timebase */
     config->useGlobalTimeBase = false;
     /* TPM counter continues in doze mode */
@@ -154,6 +171,7 @@ void TPM_GetDefaultConfig(tpm_config_t *config)
 #if defined(FSL_FEATURE_TPM_HAS_EXTERNAL_TRIGGER_SELECTION) && FSL_FEATURE_TPM_HAS_EXTERNAL_TRIGGER_SELECTION
     /* Choose external trigger source to control counter operation */
     config->triggerSource = kTPM_TriggerSource_External;
+#endif
 #endif
 }
 
@@ -406,6 +424,12 @@ void TPM_UpdatePwmDutycycle(TPM_Type *base,
             cnv = mod + 1;
         }
         base->CONTROLS[chnlNumber].CnV = cnv;
+#if defined(FSL_FEATURE_TPM_WAIT_CnV_REGISTER_UPDATE) && FSL_FEATURE_TPM_WAIT_CnV_REGISTER_UPDATE
+        while(!(cnv == base->CONTROLS[chnlNumber].CnV))
+        {
+        }
+#endif 
+        
 #if defined(FSL_FEATURE_TPM_HAS_COMBINE) && FSL_FEATURE_TPM_HAS_COMBINE
     }
 #endif
@@ -415,7 +439,11 @@ void TPM_UpdateChnlEdgeLevelSelect(TPM_Type *base, tpm_chnl_t chnlNumber, uint8_
 {
     assert(chnlNumber < FSL_FEATURE_TPM_CHANNEL_COUNTn(base));
 
-    uint32_t reg = base->CONTROLS[chnlNumber].CnSC & ~(TPM_CnSC_CHF_MASK);
+    uint32_t reg = base->CONTROLS[chnlNumber].CnSC
+#if !(defined(FSL_FEATURE_TPM_CnSC_CHF_WRITE_0_CLEAR) && FSL_FEATURE_TPM_CnSC_CHF_WRITE_0_CLEAR)   
+    & ~(TPM_CnSC_CHF_MASK)
+#endif
+    ;
 
     /* When switching mode, disable channel first  */
     base->CONTROLS[chnlNumber].CnSC &=
@@ -430,7 +458,7 @@ void TPM_UpdateChnlEdgeLevelSelect(TPM_Type *base, tpm_chnl_t chnlNumber, uint8_
     /* Clear the field and write the new level value */
     reg &= ~(TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
     reg |= ((uint32_t)level << TPM_CnSC_ELSA_SHIFT) & (TPM_CnSC_ELSA_MASK | TPM_CnSC_ELSB_MASK);
-
+    
     base->CONTROLS[chnlNumber].CnSC = reg;
 
     /* Wait till mode change is acknowledged */

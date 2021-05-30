@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -38,31 +42,23 @@
 /*! @brief buffer for receiving report descriptor and data */
 #define HID_BUFFER_SIZE 200
 
-/*! @brief host app device attach/detach status */
-typedef enum _usb_host_mouse_app_state
-{
-    kStatus_DEV_Idle = 0, /*!< there is no device attach/detach */
-    kStatus_DEV_Attached, /*!< device is attached */
-    kStatus_DEV_Detached, /*!< device is detached */
-} usb_host_mouse_app_state_t;
-
 /*! @brief host app run status */
-typedef enum _usb_host_mouse_run_state
+typedef enum _usb_host_hid_mouse_run_state
 {
-    kRunIdle = 0,                /*!< idle */
-    kRunSetInterface,            /*!< execute set interface code */
-    kRunWaitSetInterface,        /*!< wait set interface done */
-    kRunSetInterfaceDone,        /*!< set interface is done, execute next step */
-    kRunWaitSetIdle,             /*!< wait set idle done */
-    kRunSetIdleDone,             /*!< set idle is done, execute next step */
-    kRunWaitGetReportDescriptor, /*!< wait get report descriptor done */
-    kRunGetReportDescriptorDone, /*!< get report descriptor is done, execute next step */
-    kRunWaitSetProtocol,         /*!< wait set protocol done */
-    kRunSetProtocolDone,         /*!< set protocol is done, execute next step */
-    kRunWaitDataReceived,        /*!< wait interrupt in data */
-    kRunDataReceived,            /*!< interrupt in data received */
-    kRunPrimeDataReceive,        /*!< prime interrupt in receive */
-} usb_host_mouse_run_state_t;
+    kUSB_HostHidRunIdle = 0,                /*!< idle */
+    kUSB_HostHidRunSetInterface,            /*!< execute set interface code */
+    kUSB_HostHidRunWaitSetInterface,        /*!< wait set interface done */
+    kUSB_HostHidRunSetInterfaceDone,        /*!< set interface is done, execute next step */
+    kUSB_HostHidRunWaitSetIdle,             /*!< wait set idle done */
+    kUSB_HostHidRunSetIdleDone,             /*!< set idle is done, execute next step */
+    kUSB_HostHidRunWaitGetReportDescriptor, /*!< wait get report descriptor done */
+    kUSB_HostHidRunGetReportDescriptorDone, /*!< get report descriptor is done, execute next step */
+    kUSB_HostHidRunWaitSetProtocol,         /*!< wait set protocol done */
+    kUSB_HostHidRunSetProtocolDone,         /*!< set protocol is done, execute next step */
+    kUSB_HostHidRunWaitDataReceived,        /*!< wait interrupt in data */
+    kUSB_HostHidRunDataReceived,            /*!< interrupt in data received */
+    kUSB_HostHidRunPrimeDataReceive,        /*!< prime interrupt in receive */
+} usb_host_hid_mouse_run_state_t;
 
 /*! @brief USB host mouse instance structure */
 typedef struct _usb_host_mouse_instance
@@ -76,7 +72,7 @@ typedef struct _usb_host_mouse_instance
     uint8_t runState;                           /*!< mouse application run status */
     uint8_t runWaitState;   /*!< mouse application wait status, go to next run status when the wait status success */
     uint16_t maxPacketSize; /*!< Interrupt in max packet size */
-    uint8_t mouseBuffer[HID_BUFFER_SIZE]; /*!< use to receive report descriptor and data */
+    uint8_t *mouseBuffer;   /*!< use to receive report descriptor and data */
 } usb_host_mouse_instance_t;
 
 /*******************************************************************************

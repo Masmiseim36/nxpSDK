@@ -53,6 +53,8 @@ void BOARD_InitPins(void) {
     (~(SIM_SOPT5_UART1TXSRC_MASK)))                          /* Mask bits to zero which are setting */
       | SIM_SOPT5_UART1TXSRC(SOPT5_UART1TXSRC_UART_TX)       /* UART 1 transmit data source select: UART1_TX pin */
     );
+
+  I2C0_InitPins();
 }
 
 

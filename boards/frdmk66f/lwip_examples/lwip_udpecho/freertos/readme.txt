@@ -8,10 +8,10 @@ from the PC, which can be used to test whether a UDP connection is available.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -62,6 +62,3 @@ Running the demo
 		Reply from 192.168.0.102:7, time 0 ms OK
 
 		Statistics: Received=5, Corrupted=0
-Customization options
-=====================
-

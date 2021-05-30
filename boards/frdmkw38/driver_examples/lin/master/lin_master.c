@@ -1,5 +1,5 @@
 /*
- * Copyright  2016-2019 NXP
+ * Copyright  2016-2020 NXP
  * All rights reserved.
  *
  *
@@ -22,6 +22,8 @@
 #define LIN_CLOCK_NAME kCLOCK_Osc0ErClk
 #define TJA_WAKEUP 1
 #define TIMER_TPM 1
+/* Whether to disable the PrintBuffer function */
+#define DISABLE_PRINT_BUFFER 0
 #define DEMO_TPM_BASEADDR TPM2
 #define DEMO_TPM_IRQn TPM2_IRQn
 #define DEMO_TPM_IRQHandler TPM2_IRQHandler
@@ -60,13 +62,15 @@
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
-
+#if !DISABLE_PRINT_BUFFER
 /*!
  * This function prints response content
  * @param instance LIN instance
  * @param id frame ID
  */
 static void PrintBuffer(uint8_t instance, uint8_t id);
+#endif
+
 /*!
  * This timer returns the count of nanoseconds between two consequencing bits.
  * @param ns number of nanoseconds between two bits, return parameter
@@ -173,6 +177,7 @@ static inline uint8_t MasterGetFrameIndex(uint8_t instance, uint8_t id)
     return retVal;
 }
 
+#if !DISABLE_PRINT_BUFFER
 static void PrintBuffer(uint8_t instance, uint8_t id)
 {
     uint8_t i = 0;
@@ -195,6 +200,8 @@ static void PrintBuffer(uint8_t instance, uint8_t id)
     }
     PRINTF("\r\n");
 }
+#endif
+
 /*!
  * This interrupt routine handles LIN bus low level communication
  */
@@ -324,7 +331,8 @@ void CallbackHandler(uint32_t instance, void *linState)
     if (linCurrentState->timeoutCounterFlag == true)
     {
         /* set timeout error event id */
-        linCurrentState->currentEventId = LIN_TIMEOUT_ERROR;
+        linCurrentState->currentEventId     = LIN_TIMEOUT_ERROR;
+        linCurrentState->timeoutCounterFlag = false;
     }
     /* check event id */
     switch (linCurrentState->currentEventId)
@@ -350,7 +358,7 @@ void CallbackHandler(uint32_t instance, void *linState)
         case LIN_TIMEOUT_ERROR:
             /* check for remaining bytes */
             (void)LIN_GetReceiveStatus(instance, &bytesRemaining);
-            if (linCurrentState->rxSize > bytesRemaining)
+            if (bytesRemaining > 0U)
             {
                 /* report timeout to higher level */
                 MasterHandleError(instance, LIN_NO_DATA_TIMEOUT, linCurrentState->currentId);
@@ -499,7 +507,7 @@ void MasterProcessId(uint8_t instance, uint8_t id)
         /* get frame buffer pointer */
         lin_frame_ptr = &(prot_user_config_ptr->frame_tbl_ptr[frame_index]);
         /* check if id represents a supported frame */
-        if ((id > 0) && (id < 0x3B))
+        if (id <= 0x3BU)
         {
             response_length               = lin_frame_ptr->frm_len;
             lin_max_frame_res_timeout_val = LIN_CalcMaxResTimeoutCnt(prot_state_ptr->baud_rate, response_length);
@@ -610,8 +618,10 @@ void MasterUpdateTx(uint8_t instance, uint8_t id)
         /* increase a number of succesfull frames */
         prot_state_ptr->num_of_successfull_frame++;
     }
+#if !DISABLE_PRINT_BUFFER
     /* print received response */
     PrintBuffer(instance, id);
+#endif
     /* get index of current frame from RAM table */
     frame_index = MasterGetFrameIndex(instance, id);
     /* update Tx flags */
@@ -631,14 +641,16 @@ void MasterUpdateRx(uint8_t instance, uint8_t id)
         prot_state_ptr->num_of_processed_frame++;
     }
     /* check if id represents a supported frame */
-    if ((id > 0) && (id < 0x3B))
+    if (id <= 0x3BU)
     {
         /* make unconditional frame */
         MasterProcesUncdFrame(instance, id, LIN_UPDATE_UNCONDITIONAL_FRAME);
         /* increase a number of succesfull frames */
         prot_state_ptr->num_of_successfull_frame++;
+#if !DISABLE_PRINT_BUFFER
         /* print received response */
         PrintBuffer(instance, id);
+#endif
     }
     else
     {

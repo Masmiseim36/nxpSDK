@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2019 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,18 +31,6 @@ extern "C" {
  *
  */
 void BOARD_InitBootPins(void);
-
-/*! @name PORTB1 (number 26), UART0_TX_TGTMCU
-  @{ */
-#define BOARD_DEBUG_UART_TX_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define BOARD_DEBUG_UART_TX_PIN 1U     /*!<@brief PORTB pin index: 1 */
-                                       /* @} */
-
-/*! @name PORTB0 (number 27), UART0_RX_TGTMCU
-  @{ */
-#define BOARD_DEBUG_UART_RX_PORT PORTB /*!<@brief PORT device name: PORTB */
-#define BOARD_DEBUG_UART_RX_PIN 0U     /*!<@brief PORTB pin index: 0 */
-                                       /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

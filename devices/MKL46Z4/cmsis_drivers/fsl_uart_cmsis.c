@@ -1,5 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
+ * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
+ * Copyright 2016-2017 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -14,37 +16,16 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * o Redistributions of source code must retain the above copyright notice, this list
- *   of conditions and the following disclaimer.
- *
- * o Redistributions in binary form must reproduce the above copyright notice, this
- *   list of conditions and the following disclaimer in the documentation and/or
- *   other materials provided with the distribution.
- *
- * o Neither the name of the copyright holder nor the names of its
- *   contributors may be used to endorse or promote products derived from this
- *   software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 #include "fsl_uart_cmsis.h"
+
+/* Component ID definition, used by tools. */
+#ifndef FSL_COMPONENT_ID
+#define FSL_COMPONENT_ID "platform.drivers.uart_cmsis"
+#endif
+
 
 #if ((RTE_USART0 && defined(UART0)) || (RTE_USART1 && defined(UART1)) || (RTE_USART2 && defined(UART2)) || \
      (RTE_USART3 && defined(UART3)) || (RTE_USART4 && defined(UART4)) || (RTE_USART5 && defined(UART5)))
@@ -70,9 +51,7 @@ typedef struct _cmsis_uart_interrupt_driver_state
     cmsis_uart_resource_t *resource;  /*!< Basic uart resource. */
     uart_handle_t *handle;            /*!< Interupt transfer handle. */
     ARM_USART_SignalEvent_t cb_event; /*!< Callback function.     */
-    bool isInitialized;               /*!< Is initialized or not. */
-    bool isPowerOn;                   /*!< Is power on or not.    */
-    bool isConfigured;                /*!< Configured to work or not. */
+    uint8_t flags;                    /*!< Control and state flags. */
 } cmsis_uart_interrupt_driver_state_t;
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
@@ -97,9 +76,7 @@ typedef struct _cmsis_uart_dma_driver_state
     dma_handle_t *rxHandle;                 /*!< DMA RX handle.              */
     dma_handle_t *txHandle;                 /*!< DMA TX handle.              */
     ARM_USART_SignalEvent_t cb_event;       /*!< Callback function.     */
-    bool isInitialized;                     /*!< Is initialized or not.      */
-    bool isPowerOn;                         /*!< Is power on or not.         */
-    bool isConfigured;                      /*!< Configured to work or not.  */
+    uint8_t flags;                          /*!< Control and state flags. */
 } cmsis_uart_dma_driver_state_t;
 #endif
 
@@ -125,9 +102,7 @@ typedef struct _cmsis_uart_edma_driver_state
     edma_handle_t *rxHandle;                 /*!< EDMA RX handle.              */
     edma_handle_t *txHandle;                 /*!< EDMA TX handle.              */
     ARM_USART_SignalEvent_t cb_event;        /*!< Callback function.     */
-    bool isInitialized;                      /*!< Is initialized or not.      */
-    bool isPowerOn;                          /*!< Is power on or not.         */
-    bool isConfigured;                       /*!< Configured to work or not. */
+    uint8_t flags;                           /*!< Control and state flags. */
 } cmsis_uart_edma_driver_state_t;
 #endif
 
@@ -169,7 +144,10 @@ static const ARM_USART_CAPABILITIES s_uartDriverCapabilities = {
 /*
  * Common control function used by uart_NonBlockingControl/uart_DmaControl/uart_EdmaControl
  */
-static int32_t UART_CommonControl(uint32_t control, uint32_t arg, cmsis_uart_resource_t *resource, bool *isConfigured)
+static int32_t UART_CommonControl(uint32_t control,
+                                  uint32_t arg,
+                                  cmsis_uart_resource_t *resource,
+                                  uint8_t *isConfigured)
 {
     uart_config_t config;
 
@@ -240,10 +218,10 @@ static int32_t UART_CommonControl(uint32_t control, uint32_t arg, cmsis_uart_res
     }
 
     /* If uart is already configured, deinit it first. */
-    if (*isConfigured)
+    if ((*isConfigured) & USART_FLAG_CONFIGURED)
     {
         UART_Deinit(resource->base);
-        *isConfigured = false;
+        *isConfigured &= ~USART_FLAG_CONFIGURED;
     }
 
     config.enableTx = true;
@@ -254,7 +232,7 @@ static int32_t UART_CommonControl(uint32_t control, uint32_t arg, cmsis_uart_res
         return ARM_USART_ERROR_BAUDRATE;
     }
 
-    *isConfigured = true;
+    *isConfigured |= USART_FLAG_CONFIGURED;
 
     return ARM_DRIVER_OK;
 }
@@ -282,6 +260,7 @@ static ARM_USART_MODEM_STATUS UARTx_GetModemStatus(void)
     modem_status.dsr = 0U;
     modem_status.ri = 0U;
     modem_status.dcd = 0U;
+    modem_status.reserved = 0U;
 
     return modem_status;
 }
@@ -315,21 +294,18 @@ void KSDK_UART_DmaCallback(UART_Type *base, uart_dma_handle_t *handle, status_t 
 
 static int32_t UART_DmaInitialize(ARM_USART_SignalEvent_t cb_event, cmsis_uart_dma_driver_state_t *uart)
 {
-    if (uart->isInitialized)
+    if (!(uart->flags & USART_FLAG_INIT))
     {
-        /* Driver is already initialized */
-        return ARM_DRIVER_OK;
+        uart->cb_event = cb_event;
+        uart->flags = USART_FLAG_INIT;
     }
-
-    uart->cb_event = cb_event;
-    uart->isInitialized = true;
 
     return ARM_DRIVER_OK;
 }
 
 static int32_t UART_DmaUninitialize(cmsis_uart_dma_driver_state_t *uart)
 {
-    uart->isInitialized = false;
+    uart->flags = USART_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
@@ -341,49 +317,50 @@ static int32_t UART_DmaPowerControl(ARM_POWER_STATE state, cmsis_uart_dma_driver
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (uart->isPowerOn)
+            if (uart->flags & USART_FLAG_POWER)
             {
                 UART_Deinit(uart->resource->base);
                 DMAMUX_DisableChannel(uart->dmaResource->rxDmamuxBase, uart->dmaResource->rxDmaChannel);
                 DMAMUX_DisableChannel(uart->dmaResource->txDmamuxBase, uart->dmaResource->txDmaChannel);
-                uart->isPowerOn = false;
-                uart->isConfigured = false;
+                uart->flags = USART_FLAG_INIT;
             }
             break;
         case ARM_POWER_LOW:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
         case ARM_POWER_FULL:
             /* Must be initialized first. */
-            if (!uart->isInitialized)
+            if (uart->flags == USART_FLAG_UNINIT)
             {
                 return ARM_DRIVER_ERROR;
             }
 
-            if (!uart->isPowerOn)
+            if (uart->flags & USART_FLAG_POWER)
             {
-                UART_GetDefaultConfig(&config);
-                config.enableTx = true;
-                config.enableRx = true;
-
-                dmaResource = uart->dmaResource;
-
-                /* Set up DMA setting. */
-                DMA_CreateHandle(uart->rxHandle, dmaResource->rxDmaBase, dmaResource->rxDmaChannel);
-                DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxDmaChannel, dmaResource->rxDmaRequest);
-                DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxDmaChannel);
-
-                DMA_CreateHandle(uart->txHandle, dmaResource->txDmaBase, dmaResource->txDmaChannel);
-                DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txDmaChannel, dmaResource->txDmaRequest);
-                DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txDmaChannel);
-
-                /* Setup the uart. */
-                UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
-                UART_TransferCreateHandleDMA(uart->resource->base, uart->handle, KSDK_UART_DmaCallback,
-                                             (void *)uart->cb_event, uart->txHandle, uart->rxHandle);
-
-                uart->isPowerOn = true;
-                uart->isConfigured = true;
+                /* Driver already powered */
+                break;
             }
+
+            UART_GetDefaultConfig(&config);
+            config.enableTx = true;
+            config.enableRx = true;
+
+            dmaResource = uart->dmaResource;
+
+            /* Set up DMA setting. */
+            DMA_CreateHandle(uart->rxHandle, dmaResource->rxDmaBase, dmaResource->rxDmaChannel);
+            DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxDmaChannel, dmaResource->rxDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxDmaChannel);
+
+            DMA_CreateHandle(uart->txHandle, dmaResource->txDmaBase, dmaResource->txDmaChannel);
+            DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txDmaChannel, dmaResource->txDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txDmaChannel);
+
+            /* Setup the uart. */
+            UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
+            UART_TransferCreateHandleDMA(uart->resource->base, uart->handle, KSDK_UART_DmaCallback,
+                                         (void *)uart->cb_event, uart->txHandle, uart->rxHandle);
+
+            uart->flags |= (USART_FLAG_POWER | USART_FLAG_CONFIGURED);
             break;
         default:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
@@ -486,7 +463,7 @@ static uint32_t UART_DmaGetRxCount(cmsis_uart_dma_driver_state_t *uart)
 static int32_t UART_DmaControl(uint32_t control, uint32_t arg, cmsis_uart_dma_driver_state_t *uart)
 {
     /* Must be power on. */
-    if (!uart->isPowerOn)
+    if (uart->flags & USART_FLAG_POWER)
     {
         return ARM_DRIVER_ERROR;
     }
@@ -513,7 +490,7 @@ static int32_t UART_DmaControl(uint32_t control, uint32_t arg, cmsis_uart_dma_dr
             break;
     }
 
-    return UART_CommonControl(control, arg, uart->resource, &uart->isConfigured);
+    return UART_CommonControl(control, arg, uart->resource, &uart->flags);
 }
 
 static ARM_USART_STATUS UART_DmaGetStatus(cmsis_uart_dma_driver_state_t *uart)
@@ -533,6 +510,7 @@ static ARM_USART_STATUS UART_DmaGetStatus(cmsis_uart_dma_driver_state_t *uart)
 #endif
     stat.rx_framing_error = (!(!(ksdk_uart_status & kUART_FramingErrorFlag)));
     stat.rx_parity_error = (!(!(ksdk_uart_status & kUART_ParityErrorFlag)));
+    stat.reserved = 0U;
 
     return stat;
 }
@@ -561,21 +539,18 @@ void KSDK_UART_EdmaCallback(UART_Type *base, uart_edma_handle_t *handle, status_
 
 static int32_t UART_EdmaInitialize(ARM_USART_SignalEvent_t cb_event, cmsis_uart_edma_driver_state_t *uart)
 {
-    if (uart->isInitialized)
+    if (!(uart->flags & USART_FLAG_INIT))
     {
-        /* Driver is already initialized */
-        return ARM_DRIVER_OK;
+        uart->cb_event = cb_event;
+        uart->flags = USART_FLAG_INIT;
     }
-
-    uart->cb_event = cb_event;
-    uart->isInitialized = true;
 
     return ARM_DRIVER_OK;
 }
 
 static int32_t UART_EdmaUninitialize(cmsis_uart_edma_driver_state_t *uart)
 {
-    uart->isInitialized = false;
+    uart->flags = USART_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
@@ -587,49 +562,49 @@ static int32_t UART_EdmaPowerControl(ARM_POWER_STATE state, cmsis_uart_edma_driv
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (uart->isPowerOn)
+            if (uart->flags & USART_FLAG_POWER)
             {
                 UART_Deinit(uart->resource->base);
                 DMAMUX_DisableChannel(uart->dmaResource->rxDmamuxBase, uart->dmaResource->rxEdmaChannel);
                 DMAMUX_DisableChannel(uart->dmaResource->txDmamuxBase, uart->dmaResource->txEdmaChannel);
-                uart->isPowerOn = false;
-                uart->isConfigured = false;
+                uart->flags = USART_FLAG_INIT;
             }
             break;
         case ARM_POWER_LOW:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
         case ARM_POWER_FULL:
-            /* Must be initialized first. */
-            if (!uart->isInitialized)
+            if (uart->flags == USART_FLAG_UNINIT)
             {
                 return ARM_DRIVER_ERROR;
             }
 
-            if (!uart->isPowerOn)
+            if (uart->flags & USART_FLAG_POWER)
             {
-                UART_GetDefaultConfig(&config);
-                config.enableTx = true;
-                config.enableRx = true;
-
-                dmaResource = uart->dmaResource;
-
-                /* Set up EDMA setting. */
-                EDMA_CreateHandle(uart->rxHandle, dmaResource->rxEdmaBase, dmaResource->rxEdmaChannel);
-                DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxEdmaChannel, dmaResource->rxDmaRequest);
-                DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxEdmaChannel);
-
-                EDMA_CreateHandle(uart->txHandle, dmaResource->txEdmaBase, dmaResource->txEdmaChannel);
-                DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txEdmaChannel, dmaResource->txDmaRequest);
-                DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txEdmaChannel);
-
-                /* Setup the uart. */
-                UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
-                UART_TransferCreateHandleEDMA(uart->resource->base, uart->handle, KSDK_UART_EdmaCallback,
-                                              (void *)uart->cb_event, uart->txHandle, uart->rxHandle);
-
-                uart->isPowerOn = true;
-                uart->isConfigured = true;
+                /* Driver already powered */
+                break;
             }
+
+            UART_GetDefaultConfig(&config);
+            config.enableTx = true;
+            config.enableRx = true;
+
+            dmaResource = uart->dmaResource;
+
+            /* Set up EDMA setting. */
+            EDMA_CreateHandle(uart->rxHandle, dmaResource->rxEdmaBase, dmaResource->rxEdmaChannel);
+            DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxEdmaChannel, dmaResource->rxDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->rxDmamuxBase, dmaResource->rxEdmaChannel);
+
+            EDMA_CreateHandle(uart->txHandle, dmaResource->txEdmaBase, dmaResource->txEdmaChannel);
+            DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txEdmaChannel, dmaResource->txDmaRequest);
+            DMAMUX_EnableChannel(dmaResource->txDmamuxBase, dmaResource->txEdmaChannel);
+
+            /* Setup the uart. */
+            UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
+            UART_TransferCreateHandleEDMA(uart->resource->base, uart->handle, KSDK_UART_EdmaCallback,
+                                          (void *)uart->cb_event, uart->txHandle, uart->rxHandle);
+
+            uart->flags |= (USART_FLAG_CONFIGURED | USART_FLAG_POWER);
             break;
         default:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
@@ -734,7 +709,7 @@ static uint32_t UART_EdmaGetRxCount(cmsis_uart_edma_driver_state_t *uart)
 static int32_t UART_EdmaControl(uint32_t control, uint32_t arg, cmsis_uart_edma_driver_state_t *uart)
 {
     /* Must be power on. */
-    if (!uart->isPowerOn)
+    if (!(uart->flags & USART_FLAG_POWER))
     {
         return ARM_DRIVER_ERROR;
     }
@@ -761,7 +736,7 @@ static int32_t UART_EdmaControl(uint32_t control, uint32_t arg, cmsis_uart_edma_
             break;
     }
 
-    return UART_CommonControl(control, arg, uart->resource, &uart->isConfigured);
+    return UART_CommonControl(control, arg, uart->resource, &uart->flags);
 }
 
 static ARM_USART_STATUS UART_EdmaGetStatus(cmsis_uart_edma_driver_state_t *uart)
@@ -781,6 +756,7 @@ static ARM_USART_STATUS UART_EdmaGetStatus(cmsis_uart_edma_driver_state_t *uart)
 #endif
     stat.rx_framing_error = (!(!(ksdk_uart_status & kUART_FramingErrorFlag)));
     stat.rx_parity_error = (!(!(ksdk_uart_status & kUART_ParityErrorFlag)));
+    stat.reserved = 0U;
 
     return stat;
 }
@@ -834,21 +810,18 @@ void KSDK_UART_NonBlockingCallback(UART_Type *base, uart_handle_t *handle, statu
 
 static int32_t UART_NonBlockingInitialize(ARM_USART_SignalEvent_t cb_event, cmsis_uart_interrupt_driver_state_t *uart)
 {
-    if (uart->isInitialized)
+    if (!(uart->flags & USART_FLAG_INIT))
     {
-        /* Driver is already initialized */
-        return ARM_DRIVER_OK;
+        uart->cb_event = cb_event;
+        uart->flags = USART_FLAG_INIT;
     }
-
-    uart->cb_event = cb_event;
-    uart->isInitialized = true;
 
     return ARM_DRIVER_OK;
 }
 
 static int32_t UART_NonBlockingUninitialize(cmsis_uart_interrupt_driver_state_t *uart)
 {
-    uart->isInitialized = false;
+    uart->flags = USART_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
@@ -859,34 +832,36 @@ static int32_t UART_NonBlockingPowerControl(ARM_POWER_STATE state, cmsis_uart_in
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (uart->isPowerOn)
+            if (uart->flags & USART_FLAG_POWER)
             {
                 UART_Deinit(uart->resource->base);
-                uart->isPowerOn = false;
-                uart->isConfigured = false;
+                uart->flags = USART_FLAG_INIT;
             }
             break;
         case ARM_POWER_LOW:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
         case ARM_POWER_FULL:
             /* Must be initialized first. */
-            if (!uart->isInitialized)
+            if (uart->flags == USART_FLAG_UNINIT)
             {
                 return ARM_DRIVER_ERROR;
             }
 
-            if (!uart->isPowerOn)
+            if (uart->flags & USART_FLAG_POWER)
             {
-                UART_GetDefaultConfig(&config);
-                config.enableTx = true;
-                config.enableRx = true;
-
-                UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
-                UART_TransferCreateHandle(uart->resource->base, uart->handle, KSDK_UART_NonBlockingCallback,
-                                          (void *)uart->cb_event);
-                uart->isPowerOn = true;
-                uart->isConfigured = true;
+                /* Driver already powered */
+                break;
             }
+
+            UART_GetDefaultConfig(&config);
+            config.enableTx = true;
+            config.enableRx = true;
+
+            UART_Init(uart->resource->base, &config, uart->resource->GetFreq());
+            UART_TransferCreateHandle(uart->resource->base, uart->handle, KSDK_UART_NonBlockingCallback,
+                                      (void *)uart->cb_event);
+            uart->flags |= (USART_FLAG_POWER | USART_FLAG_CONFIGURED);
+
             break;
         default:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
@@ -992,7 +967,7 @@ static uint32_t UART_NonBlockingGetRxCount(cmsis_uart_interrupt_driver_state_t *
 static int32_t UART_NonBlockingControl(uint32_t control, uint32_t arg, cmsis_uart_interrupt_driver_state_t *uart)
 {
     /* Must be power on. */
-    if (!uart->isPowerOn)
+    if (!(uart->flags & USART_FLAG_POWER))
     {
         return ARM_DRIVER_ERROR;
     }
@@ -1019,7 +994,7 @@ static int32_t UART_NonBlockingControl(uint32_t control, uint32_t arg, cmsis_uar
             break;
     }
 
-    return UART_CommonControl(control, arg, uart->resource, &uart->isConfigured);
+    return UART_CommonControl(control, arg, uart->resource, &uart->flags);
 }
 
 static ARM_USART_STATUS UART_NonBlockingGetStatus(cmsis_uart_interrupt_driver_state_t *uart)
@@ -1039,6 +1014,7 @@ static ARM_USART_STATUS UART_NonBlockingGetStatus(cmsis_uart_interrupt_driver_st
 #endif
     stat.rx_framing_error = (!(!(ksdk_uart_status & kUART_FramingErrorFlag)));
     stat.rx_parity_error = (!(!(ksdk_uart_status & kUART_ParityErrorFlag)));
+    stat.reserved = 0U;
 
     return stat;
 }
@@ -1049,8 +1025,8 @@ static ARM_USART_STATUS UART_NonBlockingGetStatus(cmsis_uart_interrupt_driver_st
 
 #if defined(UART0) && RTE_USART0
 
-/* User needs to provide the implementation for UART0_GetFreq/InitPins/DeinitPins 
-in the application for enabling according instance. */ 
+/* User needs to provide the implementation for UART0_GetFreq/InitPins/DeinitPins
+in the application for enabling according instance. */
 extern uint32_t UART0_GetFreq(void);
 extern void UART0_InitPins(void);
 extern void UART0_DeinitPins(void);
@@ -1343,8 +1319,8 @@ ARM_DRIVER_USART Driver_USART0 = {
 
 #if defined(UART1) && RTE_USART1
 
-/* User needs to provide the implementation for UART1_GetFreq/InitPins/DeinitPins 
-in the application for enabling according instance. */ 
+/* User needs to provide the implementation for UART1_GetFreq/InitPins/DeinitPins
+in the application for enabling according instance. */
 extern uint32_t UART1_GetFreq(void);
 extern void UART1_InitPins(void);
 extern void UART1_DeinitPins(void);
@@ -1635,8 +1611,8 @@ ARM_DRIVER_USART Driver_USART1 = {
 
 #if defined(UART2) && RTE_USART2
 
-/* User needs to provide the implementation for UART2_GetFreq/InitPins/DeinitPins 
-in the application for enabling according instance. */ 
+/* User needs to provide the implementation for UART2_GetFreq/InitPins/DeinitPins
+in the application for enabling according instance. */
 extern uint32_t UART2_GetFreq(void);
 extern void UART2_InitPins(void);
 extern void UART2_DeinitPins(void);
@@ -1924,8 +1900,8 @@ ARM_DRIVER_USART Driver_USART2 = {
 
 #if defined(UART3) && RTE_USART3
 
-/* User needs to provide the implementation for UART3_GetFreq/InitPins/DeinitPins 
-in the application for enabling according instance. */ 
+/* User needs to provide the implementation for UART3_GetFreq/InitPins/DeinitPins
+in the application for enabling according instance. */
 extern uint32_t UART3_GetFreq(void);
 extern void UART3_InitPins(void);
 extern void UART3_DeinitPins(void);

@@ -3,6 +3,14 @@ Overview
 The LPUART example for FreeRTOS demonstrates the possibility to use the LPUART driver in the RTOS.
 The example uses single instance of LPUART IP and writes string into, then reads back chars.
 After every 4B received, these are sent back on LPUART.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -32,11 +40,3 @@ When the example runs successfully, the following message is displayed in the te
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 FreeRTOS LPUART driver example!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

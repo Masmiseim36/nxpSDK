@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2018 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -129,7 +133,8 @@ usb_device_class_struct_t g_UsbDeviceCdcVcomConfig = {
 };
 
 /* Define device descriptor */
-uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceDescriptor[] = {
     /* Size of this descriptor in bytes */
     USB_DESCRIPTOR_LENGTH_DEVICE,
     /* DEVICE Descriptor Type */
@@ -161,14 +166,25 @@ uint8_t g_UsbDeviceDescriptor[USB_DESCRIPTOR_LENGTH_DEVICE] = {
 };
 
 /* Define configuration descriptor */
-uint8_t g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL] = {
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceConfigurationDescriptor[] = {
     /* Configuration Descriptor Size*/
     USB_DESCRIPTOR_LENGTH_CONFIGURE,
     /* CONFIGURATION Descriptor Type */
     USB_DESCRIPTOR_TYPE_CONFIGURE,
     /* Total length of data returned for this configuration. */
-    USB_SHORT_GET_LOW(USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL),
-    USB_SHORT_GET_HIGH(USB_DESCRIPTOR_LENGTH_CONFIGURATION_ALL),
+    USB_SHORT_GET_LOW(
+        USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_IAD_DESC_SIZE + USB_DESCRIPTOR_LENGTH_INTERFACE +
+        USB_DESCRIPTOR_LENGTH_CDC_HEADER_FUNC + USB_DESCRIPTOR_LENGTH_CDC_CALL_MANAG +
+        USB_DESCRIPTOR_LENGTH_CDC_ABSTRACT + USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC + USB_DESCRIPTOR_LENGTH_ENDPOINT +
+        USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_ENDPOINT +
+        USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_ENDPOINT),
+    USB_SHORT_GET_HIGH(
+        USB_DESCRIPTOR_LENGTH_CONFIGURE + USB_IAD_DESC_SIZE + USB_DESCRIPTOR_LENGTH_INTERFACE +
+        USB_DESCRIPTOR_LENGTH_CDC_HEADER_FUNC + USB_DESCRIPTOR_LENGTH_CDC_CALL_MANAG +
+        USB_DESCRIPTOR_LENGTH_CDC_ABSTRACT + USB_DESCRIPTOR_LENGTH_CDC_UNION_FUNC + USB_DESCRIPTOR_LENGTH_ENDPOINT +
+        USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_ENDPOINT +
+        USB_DESCRIPTOR_LENGTH_INTERFACE + USB_DESCRIPTOR_LENGTH_ENDPOINT + USB_DESCRIPTOR_LENGTH_ENDPOINT),
     /* Number of interfaces supported by this configuration */
     USB_INTERFACE_COUNT,
     /* Value to use as an argument to the SetConfiguration() request to select this configuration */
@@ -265,162 +281,111 @@ uint8_t g_UsbDeviceConfigurationDescriptor[USB_DESCRIPTOR_LENGTH_CONFIGURATION_A
     USB_ENDPOINT_BULK, USB_SHORT_GET_LOW(FS_MSC_DISK_BULK_OUT_PACKET_SIZE),
     USB_SHORT_GET_HIGH(FS_MSC_DISK_BULK_OUT_PACKET_SIZE), 0x00 /* The polling interval value is every 0 Frames */
 };
-
+#if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceQualifierDescriptor[] = {
+    USB_DESCRIPTOR_LENGTH_DEVICE_QUALITIER, /* Size of this descriptor in bytes */
+    USB_DESCRIPTOR_TYPE_DEVICE_QUALITIER,   /* DEVICE Descriptor Type */
+    USB_SHORT_GET_LOW(USB_DEVICE_SPECIFIC_BCD_VERSION),
+    USB_SHORT_GET_HIGH(USB_DEVICE_SPECIFIC_BCD_VERSION), /* USB Specification Release Number in
+                                                            Binary-Coded Decimal (i.e., 2.10 is 210H). */
+    USB_DEVICE_CLASS,                                    /* Class code (assigned by the USB-IF). */
+    USB_DEVICE_SUBCLASS,                                 /* Subclass code (assigned by the USB-IF). */
+    USB_DEVICE_PROTOCOL,                                 /* Protocol code (assigned by the USB-IF). */
+    USB_CONTROL_MAX_PACKET_SIZE,                         /* Maximum packet size for endpoint zero
+                                                            (only 8, 16, 32, or 64 are valid) */
+    0x00U,                                               /* Number of Other-speed Configurations */
+    0x00U,                                               /* Reserved for future use, must be zero */
+};
+#endif
 /* Define string descriptor */
-uint8_t g_UsbDeviceString0[USB_DESCRIPTOR_LENGTH_STRING0] = {sizeof(g_UsbDeviceString0), USB_DESCRIPTOR_TYPE_STRING,
-                                                             0x09, 0x04};
-
-uint8_t g_UsbDeviceString1[USB_DESCRIPTOR_LENGTH_STRING1] = {
-    sizeof(g_UsbDeviceString1),
-    USB_DESCRIPTOR_TYPE_STRING,
-    'N',
-    0x00U,
-    'X',
-    0x00U,
-    'P',
-    0x00U,
-    ' ',
-    0x00U,
-    'S',
-    0x00U,
-    'E',
-    0x00U,
-    'M',
-    0x00U,
-    'I',
-    0x00U,
-    'C',
-    0x00U,
-    'O',
-    0x00U,
-    'N',
-    0x00U,
-    'D',
-    0x00U,
-    'U',
-    0x00U,
-    'C',
-    0x00U,
-    'T',
-    0x00U,
-    'O',
-    0x00U,
-    'R',
-    0x00U,
-    'S',
-    0x00U,
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString0[] = {
+    2U + 2U, USB_DESCRIPTOR_TYPE_STRING, 0x09U, 0x04U,
 };
 
-uint8_t g_UsbDeviceString2[USB_DESCRIPTOR_LENGTH_STRING2] = {sizeof(g_UsbDeviceString2),
-                                                             USB_DESCRIPTOR_TYPE_STRING,
-                                                             'U',
-                                                             0,
-                                                             'S',
-                                                             0,
-                                                             'B',
-                                                             0,
-                                                             ' ',
-                                                             0,
-                                                             'C',
-                                                             0,
-                                                             'O',
-                                                             0,
-                                                             'M',
-                                                             0,
-                                                             'P',
-                                                             0,
-                                                             'O',
-                                                             0,
-                                                             'S',
-                                                             0,
-                                                             'I',
-                                                             0,
-                                                             'T',
-                                                             0,
-                                                             'E',
-                                                             0,
-                                                             ' ',
-                                                             0,
-                                                             'D',
-                                                             0,
-                                                             'E',
-                                                             0,
-                                                             'M',
-                                                             0,
-                                                             'O',
-                                                             0};
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString1[] = {
+    2U + 2U * 18U, USB_DESCRIPTOR_TYPE_STRING,
+    'N',           0x00U,
+    'X',           0x00U,
+    'P',           0x00U,
+    ' ',           0x00U,
+    'S',           0x00U,
+    'E',           0x00U,
+    'M',           0x00U,
+    'I',           0x00U,
+    'C',           0x00U,
+    'O',           0x00U,
+    'N',           0x00U,
+    'D',           0x00U,
+    'U',           0x00U,
+    'C',           0x00U,
+    'T',           0x00U,
+    'O',           0x00U,
+    'R',           0x00U,
+    'S',           0x00U,
+};
 
-uint8_t g_UsbDeviceString3[USB_DESCRIPTOR_LENGTH_STRING3] = {sizeof(g_UsbDeviceString3),
-                                                             USB_DESCRIPTOR_TYPE_STRING,
-                                                             '0',
-                                                             0x00U,
-                                                             '1',
-                                                             0x00U,
-                                                             '2',
-                                                             0x00U,
-                                                             '3',
-                                                             0x00U,
-                                                             '4',
-                                                             0x00U,
-                                                             '5',
-                                                             0x00U,
-                                                             '6',
-                                                             0x00U,
-                                                             '7',
-                                                             0x00U,
-                                                             '8',
-                                                             0x00U,
-                                                             '9',
-                                                             0x00U,
-                                                             'A',
-                                                             0x00U,
-                                                             'B',
-                                                             0x00U,
-                                                             'C',
-                                                             0x00U,
-                                                             'D',
-                                                             0x00U,
-                                                             'E',
-                                                             0x00U,
-                                                             'F',
-                                                             0x00U};
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString2[] = {2U + 2U * 18U, USB_DESCRIPTOR_TYPE_STRING,
+                                'U',           0,
+                                'S',           0,
+                                'B',           0,
+                                ' ',           0,
+                                'C',           0,
+                                'O',           0,
+                                'M',           0,
+                                'P',           0,
+                                'O',           0,
+                                'S',           0,
+                                'I',           0,
+                                'T',           0,
+                                'E',           0,
+                                ' ',           0,
+                                'D',           0,
+                                'E',           0,
+                                'M',           0,
+                                'O',           0};
 
-uint8_t g_UsbDeviceString4[USB_DESCRIPTOR_LENGTH_STRING4] = {sizeof(g_UsbDeviceString4),
-                                                             USB_DESCRIPTOR_TYPE_STRING,
-                                                             'M',
-                                                             0,
-                                                             'C',
-                                                             0,
-                                                             'U',
-                                                             0,
-                                                             ' ',
-                                                             0,
-                                                             'R',
-                                                             0,
-                                                             'A',
-                                                             0,
-                                                             'M',
-                                                             0,
-                                                             ' ',
-                                                             0,
-                                                             'D',
-                                                             0,
-                                                             'I',
-                                                             0,
-                                                             'S',
-                                                             0,
-                                                             'K',
-                                                             0,
-                                                             ' ',
-                                                             0,
-                                                             'D',
-                                                             0,
-                                                             'E',
-                                                             0,
-                                                             'M',
-                                                             0,
-                                                             'O',
-                                                             0};
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString3[] = {2U + 2U * 16U, USB_DESCRIPTOR_TYPE_STRING,
+                                '0',           0x00U,
+                                '1',           0x00U,
+                                '2',           0x00U,
+                                '3',           0x00U,
+                                '4',           0x00U,
+                                '5',           0x00U,
+                                '6',           0x00U,
+                                '7',           0x00U,
+                                '8',           0x00U,
+                                '9',           0x00U,
+                                'A',           0x00U,
+                                'B',           0x00U,
+                                'C',           0x00U,
+                                'D',           0x00U,
+                                'E',           0x00U,
+                                'F',           0x00U};
+
+USB_DMA_INIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE)
+uint8_t g_UsbDeviceString4[] = {2U + 2U * 17U, USB_DESCRIPTOR_TYPE_STRING,
+                                'M',           0,
+                                'C',           0,
+                                'U',           0,
+                                ' ',           0,
+                                'R',           0,
+                                'A',           0,
+                                'M',           0,
+                                ' ',           0,
+                                'D',           0,
+                                'I',           0,
+                                'S',           0,
+                                'K',           0,
+                                ' ',           0,
+                                'D',           0,
+                                'E',           0,
+                                'M',           0,
+                                'O',           0};
 
 /* Define string descriptor size */
 uint32_t g_UsbDeviceStringDescriptorLength[USB_DEVICE_STRING_COUNT] = {
@@ -458,7 +423,16 @@ usb_status_t USB_DeviceGetDeviceDescriptor(usb_device_handle handle,
     deviceDescriptor->length = USB_DESCRIPTOR_LENGTH_DEVICE;
     return kStatus_USB_Success;
 }
-
+#if (defined(USB_DEVICE_CONFIG_CV_TEST) && (USB_DEVICE_CONFIG_CV_TEST > 0U))
+/* Get device qualifier descriptor request */
+usb_status_t USB_DeviceGetDeviceQualifierDescriptor(
+    usb_device_handle handle, usb_device_get_device_qualifier_descriptor_struct_t *deviceQualifierDescriptor)
+{
+    deviceQualifierDescriptor->buffer = g_UsbDeviceQualifierDescriptor;
+    deviceQualifierDescriptor->length = USB_DESCRIPTOR_LENGTH_DEVICE_QUALITIER;
+    return kStatus_USB_Success;
+}
+#endif
 /*!
  * @brief USB device get configuration descriptor function.
  *
@@ -557,28 +531,38 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
         {
             if (USB_SPEED_HIGH == speed)
             {
-                if (USB_CDC_VCOM_CIC_INTERRUPT_IN_ENDPOINT ==
-                    (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                if ((USB_CDC_VCOM_CIC_INTERRUPT_IN_ENDPOINT ==
+                    (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                    ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
                     ptr1->endpoint.bInterval = HS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE,
                                                        ptr1->endpoint.wMaxPacketSize);
                 }
-                else if (USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT ==
-                         (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                else if ((USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT ==
+                         (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                         ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_CDC_VCOM_BULK_IN_PACKET_SIZE, ptr1->endpoint.wMaxPacketSize);
                 }
-                else if (USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT ==
-                         (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                else if ((USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT ==
+                         (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                         ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT))
                 {
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_CDC_VCOM_BULK_OUT_PACKET_SIZE, ptr1->endpoint.wMaxPacketSize);
                 }
-                else if (USB_MSC_DISK_BULK_IN_ENDPOINT == (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                else if ((USB_MSC_DISK_BULK_IN_ENDPOINT == (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                         ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_MSC_DISK_BULK_IN_PACKET_SIZE, ptr1->endpoint.wMaxPacketSize);
                 }
-                else if (USB_MSC_DISK_BULK_OUT_ENDPOINT == (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                else if ((USB_MSC_DISK_BULK_OUT_ENDPOINT == (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))&&
+                         ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT))
                 {
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(HS_MSC_DISK_BULK_OUT_PACKET_SIZE, ptr1->endpoint.wMaxPacketSize);
                 }
@@ -588,28 +572,38 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
             }
             else
             {
-                if (USB_CDC_VCOM_CIC_INTERRUPT_IN_ENDPOINT ==
-                    (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                if ((USB_CDC_VCOM_CIC_INTERRUPT_IN_ENDPOINT ==
+                    (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                    ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
                     ptr1->endpoint.bInterval = FS_CDC_VCOM_INTERRUPT_IN_INTERVAL;
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_CDC_VCOM_INTERRUPT_IN_PACKET_SIZE,
                                                        ptr1->endpoint.wMaxPacketSize);
                 }
-                else if (USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT ==
-                         (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                else if ((USB_CDC_VCOM_DIC_BULK_IN_ENDPOINT ==
+                          (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                         ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_CDC_VCOM_BULK_IN_PACKET_SIZE, ptr1->endpoint.wMaxPacketSize);
                 }
-                else if (USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT ==
-                         (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                else if ((USB_CDC_VCOM_DIC_BULK_OUT_ENDPOINT ==
+                         (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                         ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT))
                 {
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_CDC_VCOM_BULK_OUT_PACKET_SIZE, ptr1->endpoint.wMaxPacketSize);
                 }
-                else if (USB_MSC_DISK_BULK_IN_ENDPOINT == (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                else if ((USB_MSC_DISK_BULK_IN_ENDPOINT == (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                         ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_IN))
                 {
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_MSC_DISK_BULK_IN_PACKET_SIZE, ptr1->endpoint.wMaxPacketSize);
                 }
-                else if (USB_MSC_DISK_BULK_OUT_ENDPOINT == (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK))
+                else if ((USB_MSC_DISK_BULK_OUT_ENDPOINT == (ptr1->endpoint.bEndpointAddress & USB_ENDPOINT_NUMBER_MASK)) &&
+                         ((ptr1->endpoint.bEndpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) ==
+                     USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_OUT))
                 {
                     USB_SHORT_TO_LITTLE_ENDIAN_ADDRESS(FS_MSC_DISK_BULK_OUT_PACKET_SIZE, ptr1->endpoint.wMaxPacketSize);
                 }
@@ -637,11 +631,25 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
     {
         if (USB_SPEED_HIGH == speed)
         {
-            g_cdcVcomDicEndpoints[i].maxPacketSize = HS_CDC_VCOM_BULK_IN_PACKET_SIZE;
+            if (g_cdcVcomDicEndpoints[i].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
+            {
+                g_cdcVcomDicEndpoints[i].maxPacketSize = HS_CDC_VCOM_BULK_IN_PACKET_SIZE;
+            }
+            else
+            {
+                g_cdcVcomDicEndpoints[i].maxPacketSize = HS_CDC_VCOM_BULK_OUT_PACKET_SIZE;
+            }
         }
         else
         {
-            g_cdcVcomDicEndpoints[i].maxPacketSize = FS_CDC_VCOM_BULK_IN_PACKET_SIZE;
+            if (g_cdcVcomDicEndpoints[i].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
+            {
+                g_cdcVcomDicEndpoints[i].maxPacketSize = FS_CDC_VCOM_BULK_IN_PACKET_SIZE;
+            }
+            else
+            {
+                g_cdcVcomDicEndpoints[i].maxPacketSize = FS_CDC_VCOM_BULK_OUT_PACKET_SIZE;
+            }
         }
     }
 
@@ -649,11 +657,25 @@ usb_status_t USB_DeviceSetSpeed(usb_device_handle handle, uint8_t speed)
     {
         if (USB_SPEED_HIGH == speed)
         {
-            g_mscDiskEndpoints[i].maxPacketSize = HS_MSC_DISK_BULK_IN_PACKET_SIZE;
+            if (g_mscDiskEndpoints[i].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
+            {
+                g_mscDiskEndpoints[i].maxPacketSize = HS_MSC_DISK_BULK_IN_PACKET_SIZE;
+            }
+            else
+            {
+                g_mscDiskEndpoints[i].maxPacketSize = HS_MSC_DISK_BULK_OUT_PACKET_SIZE;
+            }
         }
         else
         {
-            g_mscDiskEndpoints[i].maxPacketSize = FS_MSC_DISK_BULK_IN_PACKET_SIZE;
+            if (g_mscDiskEndpoints[i].endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK)
+            {
+                g_mscDiskEndpoints[i].maxPacketSize = FS_MSC_DISK_BULK_IN_PACKET_SIZE;
+            }
+            else
+            {
+                g_mscDiskEndpoints[i].maxPacketSize = FS_MSC_DISK_BULK_OUT_PACKET_SIZE;
+            }
         }
     }
 

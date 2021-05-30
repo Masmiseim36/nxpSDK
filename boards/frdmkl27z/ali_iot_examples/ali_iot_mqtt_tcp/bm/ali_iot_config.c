@@ -6,7 +6,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 #include "ali_iot_config.h"
-#include "timer.h"
+#include "fsl_adapter_timer.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

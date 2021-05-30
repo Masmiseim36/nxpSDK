@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -57,10 +61,10 @@ typedef struct _usb_audio_generator_struct
     class_handle_t audioHandle;     /* USB AUDIO GENERATOR class handle.    */
     uint8_t copyProtect;
     uint8_t curMute;
-    uint8_t curVolume[2];
-    uint8_t minVolume[2];
-    uint8_t maxVolume[2];
-    uint8_t resVolume[2];
+    uint8_t curVolume[2]; /* need to consider the endians */
+    uint8_t minVolume[2]; /* need to consider the endians */
+    uint8_t maxVolume[2]; /* need to consider the endians */
+    uint8_t resVolume[2]; /* need to consider the endians */
     uint8_t curBass;
     uint8_t minBass;
     uint8_t maxBass;
@@ -74,15 +78,15 @@ typedef struct _usb_audio_generator_struct
     uint8_t maxTreble;
     uint8_t resTreble;
     uint8_t curAutomaticGain;
-    uint8_t curDelay[2];
-    uint8_t minDelay[2];
-    uint8_t maxDelay[2];
-    uint8_t resDelay[2];
+    uint8_t curDelay[2]; /* need to consider the endians */
+    uint8_t minDelay[2]; /* need to consider the endians */
+    uint8_t maxDelay[2]; /* need to consider the endians */
+    uint8_t resDelay[2]; /* need to consider the endians */
     uint8_t curLoudness;
-    uint8_t curSamplingFrequency[3];
-    uint8_t minSamplingFrequency[3];
-    uint8_t maxSamplingFrequency[3];
-    uint8_t resSamplingFrequency[3];
+    uint8_t curSamplingFrequency[3]; /* need to consider the endians */
+    uint8_t minSamplingFrequency[3]; /* need to consider the endians */
+    uint8_t maxSamplingFrequency[3]; /* need to consider the endians */
+    uint8_t resSamplingFrequency[3]; /* need to consider the endians */
     uint8_t currentConfiguration;
     uint8_t currentInterfaceAlternateSetting[USB_AUDIO_GENERATOR_INTERFACE_COUNT];
     uint8_t speed;

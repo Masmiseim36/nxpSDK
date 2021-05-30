@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -22,8 +22,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief DMA driver version 2.0.2. */
-#define FSL_DMA_DRIVER_VERSION (MAKE_VERSION(2, 0, 2))
+/*! @brief DMA driver version 2.1.0. */
+#define FSL_DMA_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
 /*@}*/
 
 /*! @brief _dma_channel_status_flags status flag for the DMA driver. */
@@ -92,6 +92,13 @@ typedef enum _dma_transfer_options
     kDMA_NoOptions = 0x0U, /*!< Transfer without options. */
     kDMA_EnableInterrupt,  /*!< Enable interrupt while transfer complete. */
 } dma_transfer_options_t;
+
+/*! @brief dma addre increment type */
+typedef enum _dma_addr_increment
+{
+    kDMA_AddrNoIncrement               = 0x0U, /*!< Transfer address not increment. */
+    kDMA_AddrIncrementPerTransferWidth = 0x1U, /*!< Transfer address increment per transfer width */
+} dma_addr_increment_t;
 
 /*! @brief _dma_transfer_status DMA transfer status */
 enum
@@ -402,6 +409,27 @@ static inline void DMA_TriggerChannelStart(DMA_Type *base, uint32_t channel)
     base->DMA[channel].DCR |= DMA_DCR_START_MASK;
 }
 
+/*!
+ * @brief Starts the DMA enable/disable auto disable request.
+ *
+ * @param base DMA peripheral base address.
+ * @param channel The DMA channel number.
+ * @param enable true is enable, false is disable.
+ */
+static inline void DMA_EnableAutoStopRequest(DMA_Type *base, uint32_t channel, bool enable)
+{
+    assert(channel < (uint32_t)FSL_FEATURE_DMAMUX_MODULE_CHANNEL);
+
+    if (enable)
+    {
+        base->DMA[channel].DCR |= DMA_DCR_D_REQ(1);
+    }
+    else
+    {
+        base->DMA[channel].DCR &= ~DMA_DCR_D_REQ_MASK;
+    }
+}
+
 /* @} */
 /*!
  * @name DMA Channel Status Operation
@@ -485,6 +513,32 @@ void DMA_CreateHandle(dma_handle_t *handle, DMA_Type *base, uint32_t channel);
  * @param userData Parameter for callback function. If it is not needed, just set to NULL.
  */
 void DMA_SetCallback(dma_handle_t *handle, dma_callback callback, void *userData);
+
+/*!
+ * @brief Prepares the DMA transfer configuration structure.
+ *
+ * This function prepares the transfer configuration structure according to the user input.
+ * The difference between this function and DMA_PrepareTransfer is that this function expose the address increment
+ * parameter to application, but in DMA_PrepareTransfer, only parts of the address increment option can be selected by
+ * dma_transfer_type_t.
+ *
+ * @param config Pointer to the user configuration structure of type dma_transfer_config_t.
+ * @param srcAddr DMA transfer source address.
+ * @param srcWidth DMA transfer source address width (byte).
+ * @param destAddr DMA transfer destination address.
+ * @param destWidth DMA transfer destination address width (byte).
+ * @param transferBytes DMA transfer bytes to be transferred.
+ * @param srcIncrement source address increment type.
+ * @param destIncrement dest address increment type.
+ */
+void DMA_PrepareTransferConfig(dma_transfer_config_t *config,
+                               void *srcAddr,
+                               uint32_t srcWidth,
+                               void *destAddr,
+                               uint32_t destWidth,
+                               uint32_t transferBytes,
+                               dma_addr_increment_t srcIncrement,
+                               dma_addr_increment_t destIncrement);
 
 /*!
  * @brief Prepares the DMA transfer configuration structure.

@@ -6,10 +6,10 @@ In the example, you can send characters to the console back and they will be pri
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -32,9 +32,6 @@ No special settings are required.
 3.  Download the program to the target board.
 4.  Reset the SoC and run the project.
 
-Prepare the Demo
-================
-
 Running the demo
 ================
 When the example runs successfully, the log would be seen on the UART Terminal port which connected to the USB2COM like:
@@ -44,6 +41,3 @@ LPUART RX ring buffer example
 Send back received data
 Echo every 8 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

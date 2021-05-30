@@ -62,4 +62,10 @@ typedef enum ct_cont_tests_states_tag
     gContStateInvalid_c
 }ct_cont_tests_states_t;
 
+typedef enum ct_trim_test_states_tag
+{
+    gTrimStateInit_c = 0,
+    gTrimStateRun_c
+}ct_trim_test_states_t;
+
 #endif

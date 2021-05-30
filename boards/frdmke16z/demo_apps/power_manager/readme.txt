@@ -1,10 +1,13 @@
 Overview
 ========
-The Power manager demo application demonstrates the use of power modes in the KSDK. The demo use the notification mechanism
-and prints the power mode menu through the debug console, where the user can set the MCU to a specific power mode. The user
-can also set the wakeup source by following the debug console prompts. The purpose of this demo is to demonstrate the
-implementation of a power mode manager. The callback can be registered to the framework. If a power mode transition happens,
-the callback will be called and user can do something.
+The power manager demo application demonstrates how to change power modes in the KSDK. The difference between this demo
+and power_mode_switch is, this demo uses a notification framework to inform application about the mode change.
+Application could register callback to the notification framework, when power mode changes, the callback
+function is called and user can do something, such as closing debug console before entering low power mode, and
+opening debug console after exiting low power mode.
+
+When this demo runs, the power mode menu is shown in the debug console, where the user can set the MCU to a specific power mode.
+User can also set the wakeup source following the debug console prompts.
 
  Tips:
  This demo is to show how the various power mode can switch to each other. However, in actual low power use case, to save energy and reduce the consumption even more, many things can be done including:
@@ -12,6 +15,14 @@ the callback will be called and user can do something.
  - Disable the function for unnecessary part of a module when other part would keep working in low power mode. At the most time, more powerful function means more power consumption. For example, disable the digital function for the unnecessary pin mux, and so on.
  - Set the proper pin state (direction and logic level) according to the actual application hardware. Otherwise, the pin cirrent would be activied unexpectedly waste some energy.
  - Other low power consideration based on the actual application hardware.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -58,11 +69,3 @@ Press  F for enter: VLPS     - Very Low Power Stop mode
 
 Waiting for power mode select..
 ~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

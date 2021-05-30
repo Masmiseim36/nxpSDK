@@ -7,11 +7,11 @@
 
 #include <stdio.h>
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "peripherals.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/

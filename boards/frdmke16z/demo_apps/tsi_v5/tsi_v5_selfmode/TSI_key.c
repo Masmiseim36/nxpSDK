@@ -16,10 +16,10 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-uint8_t g_keyId = 0U;
-static uint8_t tsi_currentmode = kTSI_InvalidMode;
+uint8_t g_keyId                 = 0U;
+static uint8_t tsi_currentmode  = kTSI_InvalidMode;
 static uint8_t g_tsi_sample_cnt = 0;
-uint8_t g_key_baseline_freq = BASELINE_UPDATE_FREQ;
+uint8_t g_key_baseline_freq     = BASELINE_UPDATE_FREQ;
 
 /*******************************************************************************
  * Code
@@ -43,20 +43,20 @@ void TSI_Init_SelfMode(void)
     tsi_currentmode = kTSI_SelfMode;
 
     TSI_GetSelfCapModeDefaultConfig(&config);
-    config.commonConfig.mode = kTSI_SensingModeSlection_Self;
-    config.commonConfig.mainClock = kTSI_MainClockSlection_1;     // 16.65MHz
-    config.commonConfig.dvolt = kTSI_DvoltOption_0;               /* DVOLT option value  */
-    config.commonConfig.cutoff = kTSI_SincCutoffDiv_0;            /* Cutoff divider  */
-    config.commonConfig.order = kTSI_SincFilterOrder_2;           /* SINC filter order */
-    config.commonConfig.decimation = kTSI_SincDecimationValue_8;  /* SINC decimation value */
-    config.commonConfig.chargeNum = kTSI_SscChargeNumValue_7;     /* SSC output bit0's period setting */
+    config.commonConfig.mode        = kTSI_SensingModeSlection_Self;
+    config.commonConfig.mainClock   = kTSI_MainClockSlection_1;   // 16.65MHz
+    config.commonConfig.dvolt       = kTSI_DvoltOption_0;         /* DVOLT option value  */
+    config.commonConfig.cutoff      = kTSI_SincCutoffDiv_0;       /* Cutoff divider  */
+    config.commonConfig.order       = kTSI_SincFilterOrder_2;     /* SINC filter order */
+    config.commonConfig.decimation  = kTSI_SincDecimationValue_8; /* SINC decimation value */
+    config.commonConfig.chargeNum   = kTSI_SscChargeNumValue_7;   /* SSC output bit0's period setting */
     config.commonConfig.noChargeNum = kTSI_SscNoChargeNumValue_5; /* SSC output bit1's period setting */
 
-    config.enableSensitivity = 0;                             /* Enable sensitivity boost of self-cap or not */
-    config.xdn = kTSI_SensitivityXdnOption_1;                 /* Sensitivity XDN option   */
-    config.ctrim = kTSI_SensitivityCtrimOption_7;             /* Sensitivity CTRIM option */
-    config.inputCurrent = kTSI_CurrentMultipleInputValue_0;   /* Input current multiple   */
-    config.chargeCurrent = kTSI_CurrentMultipleChargeValue_1; /* Charge/Discharge current multiple */
+    config.enableSensitivity = 0;                                 /* Enable sensitivity boost of self-cap or not */
+    config.xdn               = kTSI_SensitivityXdnOption_1;       /* Sensitivity XDN option   */
+    config.ctrim             = kTSI_SensitivityCtrimOption_7;     /* Sensitivity CTRIM option */
+    config.inputCurrent      = kTSI_CurrentMultipleInputValue_0;  /* Input current multiple   */
+    config.chargeCurrent     = kTSI_CurrentMultipleChargeValue_1; /* Charge/Discharge current multiple */
 
     /* If the TSI moudle has been enabled before, the TSI_InitXxxMode will disable the moudle and re-config TSI IP. */
     TSI_InitSelfCapMode(TSI, &config);
@@ -82,24 +82,24 @@ void TSI_Init_MutualMode(void)
     tsi_currentmode = kTSI_MutualMode;
 
     TSI_GetMutualCapModeDefaultConfig(&config);
-    config.commonConfig.mode = kTSI_SensingModeSlection_Mutual;
-    config.commonConfig.mainClock = kTSI_MainClockSlection_1;
-    config.commonConfig.dvolt = kTSI_DvoltOption_0;               /* DVOLT option value  */
-    config.commonConfig.cutoff = kTSI_SincCutoffDiv_0;            /* Cutoff divider  */
-    config.commonConfig.order = kTSI_SincFilterOrder_1;           /* SINC filter order */
-    config.commonConfig.decimation = kTSI_SincDecimationValue_8;  /* SINC decimation value */
-    config.commonConfig.chargeNum = kTSI_SscChargeNumValue_4;     /* SSC output bit0's period setting */
+    config.commonConfig.mode        = kTSI_SensingModeSlection_Mutual;
+    config.commonConfig.mainClock   = kTSI_MainClockSlection_1;
+    config.commonConfig.dvolt       = kTSI_DvoltOption_0;         /* DVOLT option value  */
+    config.commonConfig.cutoff      = kTSI_SincCutoffDiv_0;       /* Cutoff divider  */
+    config.commonConfig.order       = kTSI_SincFilterOrder_1;     /* SINC filter order */
+    config.commonConfig.decimation  = kTSI_SincDecimationValue_8; /* SINC decimation value */
+    config.commonConfig.chargeNum   = kTSI_SscChargeNumValue_4;   /* SSC output bit0's period setting */
     config.commonConfig.noChargeNum = kTSI_SscNoChargeNumValue_2; /* SSC output bit1's period setting */
 
-    config.preCurrent = kTSI_MutualPreCurrent_4uA;
-    config.preResistor = kTSI_MutualPreResistor_4k;
+    config.preCurrent    = kTSI_MutualPreCurrent_4uA;
+    config.preResistor   = kTSI_MutualPreResistor_4k;
     config.senseResistor = kTSI_MutualSenseResistor_10k;
 
-    config.boostCurrent = kTSI_MutualSenseBoostCurrent_0uA;
-    config.txDriveMode = kTSI_MutualTxDriveModeOption_0;
-    config.pmosLeftCurrent = kTSI_MutualPmosCurrentMirrorLeft_32;
+    config.boostCurrent     = kTSI_MutualSenseBoostCurrent_0uA;
+    config.txDriveMode      = kTSI_MutualTxDriveModeOption_0;
+    config.pmosLeftCurrent  = kTSI_MutualPmosCurrentMirrorLeft_32;
     config.pmosRightCurrent = kTSI_MutualPmosCurrentMirrorRight_1;
-    config.nmosCurrent = kTSI_MutualNmosCurrentMirror_1;
+    config.nmosCurrent      = kTSI_MutualNmosCurrentMirror_1;
 
     TSI_InitMutualCapMode(TSI, &config);
 
@@ -137,7 +137,7 @@ uint8_t TSI_KeyDetect(uint8_t *current_key_id)
     {
         /* Reach the end of key_TSI[] array. Re-start the TSI scan from the first key */
         g_keyId = 0U;
-        key = &key_TSI[g_keyId];
+        key     = &key_TSI[g_keyId];
 
         /* record the total rounds of TSI scan */
         g_tsi_sample_cnt++;
@@ -145,10 +145,10 @@ uint8_t TSI_KeyDetect(uint8_t *current_key_id)
 
     TSI_channel = key->TSI_CH.TSI_channel; /* TSI channel for self-mode or TX channel for mutual mode */
 
-    key_state_temp = key->key_state;
+    key_state_temp          = key->key_state;
     key_state_debounce_temp = key->key_state_debounce;
-    key_baseline_temp = key->key_baseline;
-    key_value_sum_temp = key->key_value_sum;
+    key_baseline_temp       = key->key_baseline;
+    key_value_sum_temp      = key->key_value_sum;
 
     /* TSI_channel_rx = 0xFF indicates TSI self mode */
     if (key->TSI_channel_rx == 0xFFU)
@@ -183,7 +183,7 @@ uint8_t TSI_KeyDetect(uint8_t *current_key_id)
         /* TSI mutual mode */
         TSI_Init_MutualMode();
 
-        TSI_channel = key->TSI_CH.TSI_channel_tx - kTSI_Chnl_0;
+        TSI_channel    = key->TSI_CH.TSI_channel_tx - kTSI_Chnl_0;
         TSI_channel_rx = key->TSI_channel_rx - kTSI_Chnl_6;
 
         TSI_SetMutualCapTxChannel(TSI, (tsi_mutual_tx_channel_t)TSI_channel);
@@ -215,7 +215,7 @@ uint8_t TSI_KeyDetect(uint8_t *current_key_id)
     if (g_tsi_sample_cnt % g_key_baseline_freq == 0)
     {
         /* calculate the average value and update baseline in idle state process */
-        key_value_average = (uint16_t)(key_value_sum_temp / g_key_baseline_freq);
+        key_value_average  = (uint16_t)(key_value_sum_temp / g_key_baseline_freq);
         key_value_sum_temp = 0;
     }
 
@@ -231,8 +231,8 @@ uint8_t TSI_KeyDetect(uint8_t *current_key_id)
             if (key_state_debounce_temp > MAX_TOUCH_DEBOUNCE)
             {
                 key_state_debounce_temp = 0U;
-                key_event = kKey_Event_Touch; /*Indicates the TSI channel is touched*/
-                key_state_temp = kKey_State_Touched;
+                key_event               = kKey_Event_Touch; /*Indicates the TSI channel is touched*/
+                key_state_temp          = kKey_State_Touched;
             }
         }
         else /* Idle state, update baseline at baseline_freq. */
@@ -272,8 +272,8 @@ uint8_t TSI_KeyDetect(uint8_t *current_key_id)
             if (key_state_debounce_temp > MAX_TOUCH_DEBOUNCE)
             {
                 key_state_debounce_temp = 0U;
-                key_event = kKey_Event_Release;
-                key_state_temp = kKey_State_Released;
+                key_event               = kKey_Event_Release;
+                key_state_temp          = kKey_State_Released;
             }
         }
     }
@@ -288,22 +288,22 @@ uint8_t TSI_KeyDetect(uint8_t *current_key_id)
         {
             /* Delay to assure this key is sent */
             key_state_debounce_temp = 0U;
-            key_event = kKey_Event_Idle;
-            key_state_temp = kKey_State_Idle;
+            key_event               = kKey_Event_Idle;
+            key_state_temp          = kKey_State_Idle;
         }
     }
     else
     {
         /* Key state can NOT go here */
-        key_event = kKey_Event_Idle;
+        key_event      = kKey_Event_Idle;
         key_state_temp = kKey_State_Idle;
     }
 
-    key->key_state = key_state_temp;
-    key->key_value_current = TSI_sampleResult;
-    key->key_baseline = key_baseline_temp;
+    key->key_state          = key_state_temp;
+    key->key_value_current  = TSI_sampleResult;
+    key->key_baseline       = key_baseline_temp;
     key->key_state_debounce = key_state_debounce_temp;
-    key->key_value_sum = key_value_sum_temp;
+    key->key_value_sum      = key_value_sum_temp;
 
     /* Sample the next key */
     *current_key_id = g_keyId;
@@ -328,13 +328,13 @@ void TSI_KeyInit(void)
     while (key_TSI[key_id].TSI_CH.TSI_channel_tx != 0xFFU)
     {
         /* Initiate key_TSI structure */
-        key_TSI[key_id].key_state = 0U;
+        key_TSI[key_id].key_state          = 0U;
         key_TSI[key_id].key_state_debounce = 0U;
-        key_TSI[key_id].key_baseline = 0U;
-        key_TSI[key_id].key_value_current = 0U;
-        key_TSI[key_id].key_value_sum = 0U;
+        key_TSI[key_id].key_baseline       = 0U;
+        key_TSI[key_id].key_value_current  = 0U;
+        key_TSI[key_id].key_value_sum      = 0U;
 
-        tsi_sample_result = 0;
+        tsi_sample_result     = 0;
         tsi_sample_result_sum = 0;
 
         for (tsi_sample_cnt = 0; tsi_sample_cnt < max_tsi_sample_cnt; tsi_sample_cnt++)

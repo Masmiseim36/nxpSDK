@@ -9,6 +9,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_common.h"
 #include "fsl_slcd.h"
@@ -16,9 +18,7 @@
 #include "fsl_debug_console.h"
 
 #include "fsl_device_registers.h"
-#include "pin_mux.h"
 #include <stdbool.h>
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -62,7 +62,7 @@ const uint8_t slcd_lcd_gpio_seg_pin[] = {38, 36, 34, 32, 31, 29, 25, 23, 43, 37,
                                          35, 33, 50, 30, 45, 24, 26, 28, 44, 59};
 extern slcd_clock_config_t slcdClkConfig;
 extern const uint8_t slcd_lcd_gpio_seg_pin[];
-tSLCD_Engine slcd_engine;
+tSLCD_Engine slcdEngine;
 
 /*******************************************************************************
  * Code
@@ -118,14 +118,14 @@ static void SLCD_Show_Digital(void)
     {
         for (position = 0; position < NUM_POSEND; position++)
         {
-            SLCD_Engine_Show_Num(&slcd_engine, digital, position, 1);
+            SLCD_Engine_Show_Num(&slcdEngine, digital, position, 1);
         }
 
         SLCD_TimeDelay(500);
 
         for (position = 0; position < NUM_POSEND; position++)
         {
-            SLCD_Engine_Show_Num(&slcd_engine, digital, position, 0);
+            SLCD_Engine_Show_Num(&slcdEngine, digital, position, 0);
         }
     }
 
@@ -140,11 +140,11 @@ static void SLCD_Show_Icon(void)
 
     for (icon = 0; icon < ICON_END; icon++)
     {
-        SLCD_Engine_Show_Icon(&slcd_engine, icon, 1);
+        SLCD_Engine_Show_Icon(&slcdEngine, icon, 1);
 
         SLCD_TimeDelay(500);
 
-        SLCD_Engine_Show_Icon(&slcd_engine, icon, 0);
+        SLCD_Engine_Show_Icon(&slcdEngine, icon, 0);
     }
 
     PRINTF("\r\nShow icons finished\r\n");
@@ -156,7 +156,7 @@ static void SLCD_Blink(void)
 
     for (icon = 0; icon < ICON_END; icon++)
     {
-        SLCD_Engine_Show_Icon(&slcd_engine, icon, 1);
+        SLCD_Engine_Show_Icon(&slcdEngine, icon, 1);
     }
 
     PRINTF("\r\nSLCD Displays All Segments.\r\n");
@@ -216,9 +216,9 @@ int main(void)
 
     BOARD_SetSlcdBackPlanePhase();
 
-    memset(&slcd_engine, 0, sizeof(tSLCD_Engine));
+    memset(&slcdEngine, 0, sizeof(tSLCD_Engine));
 
-    SLCD_Engine_Init(&slcd_engine, SLCD_SetLCDPin);
+    SLCD_Engine_Init(&slcdEngine, SLCD_SetLCDPin);
 
     /* Starts SLCD display. */
     SLCD_StartDisplay(LCD);

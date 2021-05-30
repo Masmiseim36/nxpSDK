@@ -278,8 +278,8 @@ extern unsigned int __bss_section_table_end;
 //*****************************************************************************
 // The following symbols, variable and function are added to support warm boot features.
 //*****************************************************************************
-extern unsigned int __base_WARMBOOT_CONFIG;
-extern unsigned int __top_WARMBOOT_STACK;
+extern unsigned int __base_WARMBOOT_CONFIG[];
+extern unsigned int __top_WARMBOOT_STACK[];
 extern const unsigned int WARMBOOT_SEQUENCE;
 WEAK_AV void warmmain(void)
 { while(1) {}
@@ -298,7 +298,7 @@ void ResetISR(void) {
     __asm volatile ("cpsid i");
 
 #ifdef SUPPORT_WARMBOOT
-    unsigned int *WarmbootConfigAddr = &__base_WARMBOOT_CONFIG;
+    unsigned int *WarmbootConfigAddr = __base_WARMBOOT_CONFIG;
     //vlls is the only wakeup source, SMC_PMCTRL_STOPM == 4(VLLSx), SMC_STOPCTRL_LLSM == 2(VLLS2) or 3(VLLS3) and warm boot flag set
     if ((*((unsigned int *)0x4007F000) == 1) && (((*(unsigned char *)0x4007E001) & 0x7) == 4) &&
         (((*(unsigned char *)0x4007E002) & 0x6) == 2) && (*WarmbootConfigAddr == WARMBOOT_SEQUENCE))

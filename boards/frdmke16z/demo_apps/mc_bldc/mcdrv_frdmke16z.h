@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,15 +17,25 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
+/* Version info */
+#define MCRSP_VER "1.2.0" /* motor control package version */
+
+/* Application info */
+typedef struct _app_ver
+{
+    char cBoardID[15];
+    char cMotorType[4];
+    char cAppVer[5];
+} app_ver_t;
 
 /* Structure used during clocks and modulo calculations */
 typedef struct _clock_setup
 {
-    uint32_t ui32CoreSystemClock;
-    uint32_t ui32BusClock;
-    uint32_t ui32AsynClock;
+    uint32_t ui32SystemClock;
+    uint32_t ui32SysOscAsyncDiv2;
     uint16_t ui16PwmFreq;
     uint16_t ui16PwmModulo;
+    uint16_t ui16PwmDeadTime;
     uint32_t ui32CmtTimerFreq;
     uint16_t ui16CtrlLoopFreq;
 } clock_setup_t;
@@ -45,23 +55,13 @@ typedef struct _clock_setup
 /* define motor 1 ADC trigger PDB */
 #define M1_MCDRV_PDB (MCDRV_PDB0)
 
-/*******************************************************************************
- * FreeMASTER communication constants
- ******************************************************************************/
-/*! @brief The UART to use for FreeMASTER communication */
-#define BOARD_FMSTR_UART   (1) 
-#define BOARD_FMSTR_LPUART (2) 
-#define BOARD_FMSTR_UART_PORT (LPUART0)
-#define BOARD_FMSTR_UART_BAUDRATE 115200
-#define BOARD_FMSTR_UART_TYPE BOARD_FMSTR_LPUART  
-#define BOARD_FMSTR_USE_TSA (0)
-
 /******************************************************************************
  * Clock & PWM definition
  ******************************************************************************/
 #define CPU_CLOCK (DEFAULT_SYSTEM_CLOCK) /* 72 MHz, CLOCK_SETUP = 1 */
 #define CTRL_LOOP_FREQ (1000)            /* Frequency of control loop in Hz */
 #define PWM_FREQ (20000)                 /* PWM frequency - 20kHz */
+#define PWM_DEADTIME (500)               /* Output PWM deadtime value in nanoseconds */
 
 /* assignment of FTM channels to motor phases
  * 0 - FTM channels 0&1
@@ -117,6 +117,8 @@ extern const char bldcCommutationTableComp[16];
 /* auxiliary channel only */
 #define M1_ADC0_AUX (ADC_NO_CHAN)
 #define M1_ADC1_AUX ADC_NO_CHAN
+/* offset measurement filter window */
+#define ADC_OFFSET_WINDOW (3)
 
 /******************************************************************************
  * MC driver macro definition and check - do not change this part
@@ -127,10 +129,10 @@ extern const char bldcCommutationTableComp[16];
 #ifdef M1_MCDRV_ADC
 #if (M1_MCDRV_ADC == MCDRV_ADC16)
 #define M1_MCDRV_ADC_PERIPH_INIT() InitADC16()
-#define M1_MCDRV_ADC_GET(par)  \
+#define M1_MCDRV_ADC_GET(par)            \
     MCDRV_BemfVoltageGet_frdm_ke16(par); \
     MCDRV_VoltDcBusGet_frdm_ke16(par);   \
-    MCDRV_CurrDcBusGet_frdm_ke16(par);   
+    MCDRV_CurrDcBusGet_frdm_ke16(par);
 #define M1_MCDRV_ADC_ASSIGN_BEMF(par) MCDRV_AssignBemfChannel_frdm_ke16(par)
 #define M1_MCDRV_CURR_CALIB_INIT(par) MCDRV_CurrOffsetCalibInit_frdm_ke16(par)
 #define M1_MCDRV_CURR_CALIB(par) MCDRV_CurrOffsetCalib_frdm_ke16(par)

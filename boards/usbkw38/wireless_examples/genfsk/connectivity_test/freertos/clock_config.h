@@ -62,6 +62,11 @@ extern "C" {
  *
  */
 void BOARD_BootClockRUN(void);
+/*!
+ * @brief This function moves clock from FEI to FEE mode.
+ *
+ */
+void BOARD_MoveClocktoFEE(void);
 
 #if defined(__cplusplus)
 }

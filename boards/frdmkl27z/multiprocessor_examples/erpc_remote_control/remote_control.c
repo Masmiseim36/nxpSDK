@@ -14,6 +14,8 @@
 #include "semphr.h"
 
 /* Board specific includes */
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_adc16.h"
 #include "fsl_gpio.h"
@@ -44,8 +46,6 @@
 /* App 1 service code, client part */
 #include "erpc_remote_control_app_1.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 #include "fsl_common.h"
 #include "fsl_lpuart_cmsis.h"
 /*******************************************************************************
@@ -71,7 +71,9 @@
 #define I2C_RELEASE_SCL_PIN   7U
 #define I2C_RELEASE_BUS_COUNT 100U
 
-#define ERPC_DEMO_UART Driver_USART0
+#define ERPC_DEMO_UART                Driver_USART0
+#define ERPC_DEMO_UART_RX_TX_IRQn     BOARD_UART_IRQ
+#define ERPC_DEMO_UART_RX_TX_IRQ_PRIO (2U)
 /* ADC configuration */
 #define VREF_BRD 3.300
 #define SE_12BIT 4096.0
@@ -622,6 +624,9 @@ static void client_task(void *pvParameters)
 {
     /* Initialize CMSIS UART transport */
     erpc_transport_t transport = erpc_transport_cmsis_uart_init((void *)&ERPC_DEMO_UART);
+
+    /* FreeRTOS kernel API is used in UART ISR, so need to set proper IRQ priority. */
+    NVIC_SetPriority(ERPC_DEMO_UART_RX_TX_IRQn, ERPC_DEMO_UART_RX_TX_IRQ_PRIO);
 
     /* MessageBufferFactory initialization */
     message_buffer_factory = erpc_mbf_dynamic_init();

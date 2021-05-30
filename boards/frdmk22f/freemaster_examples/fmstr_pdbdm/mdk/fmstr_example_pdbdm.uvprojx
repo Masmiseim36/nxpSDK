@@ -363,9 +363,9 @@
             <v6LangP>3</v6LangP>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>DEBUG, CPU_MK22FN512VLH12, FRDM_K22F, FREEDOM, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>DEBUG, CPU_MK22FN512VLH12, SDK_DEBUGCONSOLE=1, FRDM_K22F, FREEDOM</Define>
               <Undefine/>
-              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/frdmk22f;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212;../../../../../devices/MK22F51212/utilities/str;../../../../../devices/MK22F51212/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/drivers;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../devices/MK22F51212/utilities</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/utilities/debug_console_lite;../../../../../middleware/freemaster/src/common;../../../../../devices/MK22F51212;../../../../../components/uart;../../../../../components/lists;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
@@ -439,6 +439,16 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../pin_mux.c</FilePath>
@@ -457,16 +467,6 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -519,14 +519,14 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_sim.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_sim.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_sim.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_sim.c</FilePath>
             </File>
             <File>
               <FileName>fsl_port.h</FileName>
@@ -534,19 +534,14 @@
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -554,9 +549,9 @@
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
@@ -564,9 +559,9 @@
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -574,9 +569,9 @@
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
@@ -584,14 +579,39 @@
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_smc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -609,24 +629,9 @@
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_appcmd.c</FilePath>
             </File>
             <File>
-              <FileName>freemaster_can.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_can.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.h</FilePath>
-            </File>
-            <File>
               <FileName>freemaster_defcfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_defcfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_pdbdm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_pdbdm.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_pipes.c</FileName>
@@ -664,21 +669,6 @@
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_scope.c</FilePath>
             </File>
             <File>
-              <FileName>freemaster_serial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_serial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_sha.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
-            </File>
-            <File>
               <FileName>freemaster_tsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.c</FilePath>
@@ -708,10 +698,120 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_utils.h</FilePath>
             </File>
+            <File>
+              <FileName>freemaster_can.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_can.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_sha.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_pdbdm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_pdbdm.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freemaster/drivers/mcuxsdk/can</GroupName>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK22F51212.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK22F51212/MK22F51212.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK22F51212_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK22F51212/MK22F51212_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK22F51212.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK22F51212.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MK22F51212.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../devices/MK22F51212/arm/startup_MK22F51212.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freemaster/platforms</GroupName>
+          <Files>
+            <File>
+              <FileName>freemaster_gen32le.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freemaster/drivers</GroupName>
           <Files>
             <File>
               <FileName>freemaster_flexcan.c</FileName>
@@ -724,6 +824,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
             </File>
             <File>
+              <FileName>freemaster_mscan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_mscan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.h</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_mcan.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.c</FilePath>
@@ -734,20 +844,15 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.h</FilePath>
             </File>
             <File>
-              <FileName>freemaster_mscan.c</FileName>
+              <FileName>freemaster_serial_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.c</FilePath>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.c</FilePath>
             </File>
             <File>
-              <FileName>freemaster_mscan.h</FileName>
+              <FileName>freemaster_serial_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.h</FilePath>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freemaster/drivers/mcuxsdk/serial</GroupName>
-          <Files>
             <File>
               <FileName>freemaster_serial_lpsci.c</FileName>
               <FileType>1</FileType>
@@ -769,26 +874,6 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>freemaster_serial_miniusart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_serial_miniusart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_serial_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_serial_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.h</FilePath>
-            </File>
-            <File>
               <FileName>freemaster_serial_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.c</FilePath>
@@ -797,6 +882,16 @@
               <FileName>freemaster_serial_usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_miniusart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_miniusart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_serial_usb.c</FileName>
@@ -811,157 +906,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>MK22F51212.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/MK22F51212.h</FilePath>
-            </File>
-            <File>
-              <FileName>MK22F51212_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/MK22F51212_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK22F51212.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK22F51212.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-uart</GroupName>
-          <Files>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>uart_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/uart_adapter.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MK22F51212.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freemaster/platforms</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster_gen32le.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -979,19 +934,14 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -999,29 +949,9 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
+              <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -1402,9 +1332,9 @@
             <v6LangP>3</v6LangP>
             <VariousControls>
               <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
-              <Define>NDEBUG, CPU_MK22FN512VLH12, FRDM_K22F, FREEDOM, SERIAL_PORT_TYPE_UART=1</Define>
+              <Define>NDEBUG, CPU_MK22FN512VLH12, SDK_DEBUGCONSOLE=1, FRDM_K22F, FREEDOM</Define>
               <Undefine/>
-              <IncludePath>../../common/fmstr_example;..;../../../../../middleware/freemaster/boards/frdmk22f;../../../../../CMSIS/Include;../../../../../devices;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/drivers;../../../../../middleware/freemaster/src/common;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212;../../../../../devices/MK22F51212/utilities/str;../../../../../devices/MK22F51212/utilities/debug_console;../../../../../components/uart;../../../../../components/serial_manager;../../../../../components/lists;../../../../../components/serial_manager;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/drivers;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../devices/MK22F51212/utilities</IncludePath>
+              <IncludePath>..;../../common/fmstr_example;../../../../../devices/MK22F51212/drivers;../../../../../devices/MK22F51212/utilities/debug_console_lite;../../../../../middleware/freemaster/src/common;../../../../../devices/MK22F51212;../../../../../components/uart;../../../../../components/lists;../../../../../middleware/freemaster/src/platforms/gen32le;../../../../../middleware/freemaster/src/drivers/mcuxsdk/can;../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial;../../../../../CMSIS/Include</IncludePath>
             </VariousControls>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
@@ -1478,6 +1408,16 @@
           <GroupName>board</GroupName>
           <Files>
             <File>
+              <FileName>clock_config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../clock_config.c</FilePath>
+            </File>
+            <File>
+              <FileName>clock_config.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../clock_config.h</FilePath>
+            </File>
+            <File>
               <FileName>pin_mux.c</FileName>
               <FileType>1</FileType>
               <FilePath>../pin_mux.c</FilePath>
@@ -1496,16 +1436,6 @@
               <FileName>board.h</FileName>
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../clock_config.c</FilePath>
-            </File>
-            <File>
-              <FileName>clock_config.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../clock_config.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1558,14 +1488,14 @@
           <GroupName>drivers</GroupName>
           <Files>
             <File>
-              <FileName>fsl_sim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_sim.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_sim.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_sim.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_sim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_sim.c</FilePath>
             </File>
             <File>
               <FileName>fsl_port.h</FileName>
@@ -1573,19 +1503,14 @@
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_clock.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
@@ -1593,9 +1518,9 @@
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_common.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
+              <FileName>fsl_common.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_common.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart.h</FileName>
@@ -1603,9 +1528,9 @@
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_lpuart.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_lpuart.h</FileName>
@@ -1613,9 +1538,9 @@
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
+              <FileName>fsl_lpuart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_lpuart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
@@ -1623,14 +1548,39 @@
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_smc.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_smc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../devices/MK22F51212/drivers/fsl_gpio.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK22F51212/drivers/fsl_gpio.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_debug_console.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console_lite/fsl_debug_console.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_debug_console.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console_lite/fsl_debug_console.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console_lite/fsl_assert.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1648,24 +1598,9 @@
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_appcmd.c</FilePath>
             </File>
             <File>
-              <FileName>freemaster_can.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_can.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.h</FilePath>
-            </File>
-            <File>
               <FileName>freemaster_defcfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_defcfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_pdbdm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_pdbdm.c</FilePath>
             </File>
             <File>
               <FileName>freemaster_pipes.c</FileName>
@@ -1703,21 +1638,6 @@
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_scope.c</FilePath>
             </File>
             <File>
-              <FileName>freemaster_serial.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_serial.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_sha.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
-            </File>
-            <File>
               <FileName>freemaster_tsa.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_tsa.c</FilePath>
@@ -1747,10 +1667,120 @@
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/common/freemaster_utils.h</FilePath>
             </File>
+            <File>
+              <FileName>freemaster_can.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_can.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_can.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_sha.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_sha.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_pdbdm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_pdbdm.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/common/freemaster_serial.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>freemaster/drivers/mcuxsdk/can</GroupName>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK22F51212.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK22F51212/MK22F51212.h</FilePath>
+            </File>
+            <File>
+              <FileName>MK22F51212_features.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK22F51212/MK22F51212_features.h</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK22F51212.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_MK22F51212.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/uart</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/uart/fsl_adapter_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../components/lists/fsl_component_generic_list.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_MK22F51212.S</FileName>
+              <FileType>2</FileType>
+              <FilePath>../../../../../devices/MK22F51212/arm/startup_MK22F51212.S</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freemaster/platforms</GroupName>
+          <Files>
+            <File>
+              <FileName>freemaster_gen32le.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>freemaster/drivers</GroupName>
           <Files>
             <File>
               <FileName>freemaster_flexcan.c</FileName>
@@ -1763,6 +1793,16 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_flexcan.h</FilePath>
             </File>
             <File>
+              <FileName>freemaster_mscan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_mscan.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.h</FilePath>
+            </File>
+            <File>
               <FileName>freemaster_mcan.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.c</FilePath>
@@ -1773,20 +1813,15 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mcan.h</FilePath>
             </File>
             <File>
-              <FileName>freemaster_mscan.c</FileName>
+              <FileName>freemaster_serial_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.c</FilePath>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.c</FilePath>
             </File>
             <File>
-              <FileName>freemaster_mscan.h</FileName>
+              <FileName>freemaster_serial_uart.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/can/freemaster_mscan.h</FilePath>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freemaster/drivers/mcuxsdk/serial</GroupName>
-          <Files>
             <File>
               <FileName>freemaster_serial_lpsci.c</FileName>
               <FileType>1</FileType>
@@ -1808,26 +1843,6 @@
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_lpuart.h</FilePath>
             </File>
             <File>
-              <FileName>freemaster_serial_miniusart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_serial_miniusart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.h</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_serial_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>freemaster_serial_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_uart.h</FilePath>
-            </File>
-            <File>
               <FileName>freemaster_serial_usart.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.c</FilePath>
@@ -1836,6 +1851,16 @@
               <FileName>freemaster_serial_usart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_usart.h</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_miniusart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.c</FilePath>
+            </File>
+            <File>
+              <FileName>freemaster_serial_miniusart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../middleware/freemaster/src/drivers/mcuxsdk/serial/freemaster_serial_miniusart.h</FilePath>
             </File>
             <File>
               <FileName>freemaster_serial_usb.c</FileName>
@@ -1850,157 +1875,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>device</GroupName>
-          <Files>
-            <File>
-              <FileName>MK22F51212.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/MK22F51212.h</FilePath>
-            </File>
-            <File>
-              <FileName>MK22F51212_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/MK22F51212_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/fsl_device_registers.h</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK22F51212.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/system_MK22F51212.c</FilePath>
-            </File>
-            <File>
-              <FileName>system_MK22F51212.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/system_MK22F51212.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utilities</GroupName>
-          <Files>
-            <File>
-              <FileName>fsl_debug_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_debug_console_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_assert.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../devices/MK22F51212/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-uart</GroupName>
-          <Files>
-            <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/uart/uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>uart_adapter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/uart/uart_adapter.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-serial_manager</GroupName>
-          <Files>
-            <File>
-              <FileName>serial_manager.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/serial_manager/serial_port_uart.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-lists</GroupName>
-          <Files>
-            <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../components/lists/generic_list.c</FilePath>
-            </File>
-            <File>
-              <FileName>generic_list.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../components/lists/generic_list.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_MK22F51212.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>../../../../../devices/MK22F51212/arm/startup_MK22F51212.s</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>freemaster/platforms</GroupName>
-          <Files>
-            <File>
-              <FileName>freemaster_gen32le.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../middleware/freemaster/src/platforms/gen32le/freemaster_gen32le.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>CMSIS</GroupName>
           <Files>
             <File>
               <FileName>core_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_armcc.h</FileName>
@@ -2018,19 +1903,14 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
               <FileName>cmsis_gcc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
             </File>
             <File>
-              <FileName>cmsis_iccarm.h</FileName>
+              <FileName>cmsis_compiler.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
             </File>
             <File>
               <FileName>cmsis_version.h</FileName>
@@ -2038,29 +1918,9 @@
               <FilePath>../../../../../CMSIS/Include/cmsis_version.h</FilePath>
             </File>
             <File>
-              <FileName>core_armv81mml.h</FileName>
+              <FileName>cmsis_iccarm.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv81mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
+              <FilePath>../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>

@@ -288,7 +288,7 @@ sss_status_t sss_sscp_key_object_allocate_handle(sss_sscp_object_t *keyObject,
     }
     else if (options == kKeyObject_Mode_Transient) {
         ret                        = kStatus_SSS_Fail;
-        keyObject->transientObject = malloc(keyByteLenMax);
+        keyObject->transientObject = SSS_MALLOC(keyByteLenMax);
         ENSURE_OR_GO_CLEANUP(keyObject->transientObject);
         keyObject->transientObjectLen = (uint32_t)keyByteLenMax;
         memset(keyObject->transientObject, 0, keyByteLenMax);
@@ -462,7 +462,7 @@ sss_status_t sss_sscp_key_object_get_access(sss_sscp_object_t *keyObject, uint32
 void sss_sscp_key_object_free(sss_sscp_object_t *keyObject)
 {
     if (keyObject->transientObject != NULL)
-        free(keyObject->transientObject);
+        SSS_FREE(keyObject->transientObject);
     memset(keyObject, 0, sizeof(*keyObject));
 }
 

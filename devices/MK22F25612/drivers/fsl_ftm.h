@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief FTM driver version 2.2.3. */
-#define FSL_FTM_DRIVER_VERSION (MAKE_VERSION(2, 2, 3))
+/*! @brief FTM driver version 2.3.0. */
+#define FSL_FTM_DRIVER_VERSION (MAKE_VERSION(2, 3, 0))
 /*@}*/
 
 /*!
@@ -53,10 +53,11 @@ typedef enum _ftm_fault_input
 /*! @brief FTM PWM operation modes */
 typedef enum _ftm_pwm_mode
 {
-    kFTM_EdgeAlignedPwm = 0U, /*!< Edge-aligned PWM */
-    kFTM_CenterAlignedPwm,    /*!< Center-aligned PWM */
-    kFTM_CombinedPwm,         /*!< Combined PWM */
-    kFTM_ComplementaryPwm     /*!< Complementary PWM */
+    kFTM_EdgeAlignedPwm = 0U,      /*!< Edge-aligned PWM */
+    kFTM_CenterAlignedPwm,         /*!< Center-aligned PWM */
+    kFTM_EdgeAlignedCombinedPwm,   /*!< Edge-aligned combined PWM */
+    kFTM_CenterAlignedCombinedPwm, /*!< Center-aligned combined PWM */
+    kFTM_AsymmetricalCombinedPwm   /*!< Asymmetrical combined PWM */
 } ftm_pwm_mode_t;
 
 /*! @brief FTM PWM output pulse mode: high-true, low-true or no output */
@@ -76,11 +77,15 @@ typedef struct _ftm_chnl_pwm_signal_param
     uint8_t dutyCyclePercent;      /*!< PWM pulse width, value should be between 0 to 100
                                         0 = inactive signal(0% duty cycle)...
                                         100 = always active signal (100% duty cycle).*/
-    uint8_t firstEdgeDelayPercent; /*!< Used only in combined PWM mode to generate an asymmetrical PWM.
+    uint8_t firstEdgeDelayPercent; /*!< Used only in kFTM_AsymmetricalCombinedPwm mode to generate an asymmetrical PWM.
                                         Specifies the delay to the first edge in a PWM period.
                                         If unsure leave as 0; Should be specified as a
                                         percentage of the PWM period */
-    bool enableDeadtime;           /*!< true: The deadtime insertion in this pair of channels is enabled;
+    bool enableComplementary;      /*!< Used only in combined PWM mode.
+                                        true: The combined channels output complementary signals;
+                                        false: The combined channels output same signals; */
+    bool enableDeadtime;           /*!< Used only in combined PWM mode with enable complementary.
+                                        true: The deadtime insertion in this pair of channels is enabled;
                                         false: The deadtime insertion in this pair of channels is disabled. */
 } ftm_chnl_pwm_signal_param_t;
 
@@ -91,9 +96,15 @@ typedef struct _ftm_chnl_pwm_config_param
                                        In combined mode, this represents the channel pair number. */
     ftm_pwm_level_select_t level; /*!< PWM output active level select. */
     uint16_t dutyValue;           /*!< PWM pulse width, the uint of this value is timer ticks. */
-    uint16_t firstEdgeValue;      /*!< Used only in combined PWM mode to generate an asymmetrical PWM.
-                                             Specifies the delay to the first edge in a PWM period.
-                                             If unsure leave as 0, uint of this value is timer ticks. */
+    uint16_t firstEdgeValue;      /*!< Used only in kFTM_AsymmetricalCombinedPwm mode to generate an asymmetrical PWM.
+                                       Specifies the delay to the first edge in a PWM period.
+                                       If unsure leave as 0, uint of this value is timer ticks. */
+    bool enableComplementary;     /*!< Used only in combined PWM mode.
+                                       true: The combined channels output complementary signals;
+                                       false: The combined channels output same signals; */
+    bool enableDeadtime;          /*!< Used only in combined PWM mode with enable complementary.
+                                       true: The deadtime insertion in this pair of channels is enabled;
+                                       false: The deadtime insertion in this pair of channels is disabled. */
 } ftm_chnl_pwm_config_param_t;
 
 /*! @brief FlexTimer output compare mode */
@@ -544,15 +555,15 @@ void FTM_SetupDualEdgeCapture(FTM_Type *base,
 /*! @}*/
 
 /*!
- * @brief Sets up the working of the FTM fault protection.
+ * @brief Sets up the working of the FTM fault inputs protection.
  *
- * FTM can have up to 4 fault inputs. This function sets up fault parameters, fault level, and a filter.
+ * FTM can have up to 4 fault inputs. This function sets up fault parameters, fault level, and input filter.
  *
  * @param base        FTM peripheral base address
  * @param faultNumber FTM fault to configure.
  * @param faultParams Parameters passed in to set up the fault
  */
-void FTM_SetupFault(FTM_Type *base, ftm_fault_input_t faultNumber, const ftm_fault_param_t *faultParams);
+void FTM_SetupFaultInput(FTM_Type *base, ftm_fault_input_t faultNumber, const ftm_fault_param_t *faultParams);
 
 /*!
  * @name Interrupt Interface

@@ -9,6 +9,14 @@ Also, the conversion result value is stored, and the ISR counter is increased. T
 
 The point is that the ADC12 interrupt configuration is set when configuring the ADC12's conversion channel. When in software trigger mode, the conversion would be launched by the operation of configuring channel, just like writing a conversion command. So if user wants to generate the interrupt every time the conversion is completed, the channel's configuration with enabling interrupt setting would be used for each conversion.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -38,11 +46,3 @@ When the example runs successfully, following information can be seen on the Ope
 ADC12 interrupt Example.
 ADC Full Range: 256
 Press any key to get user channel's ADC value ...
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

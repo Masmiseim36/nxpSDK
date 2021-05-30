@@ -32,7 +32,7 @@
 /*! @name Driver version */
 /*@{*/
 /*! @brief WDOG32 driver version. */
-#define FSL_WDOG32_DRIVER_VERSION (MAKE_VERSION(2, 0, 3))
+#define FSL_WDOG32_DRIVER_VERSION (MAKE_VERSION(2, 0, 4))
 /*@}*/
 
 /*! @brief Describes WDOG32 clock source. */
@@ -185,38 +185,63 @@ void WDOG32_Deinit(WDOG_Type *base);
  */
 
 /*!
+ * @brief Unlocks the WDOG32 register written.
+ *
+ * This function unlocks the WDOG32 register written.
+ *
+ * Before starting the unlock sequence and following the configuration, disable the global interrupts.
+ * Otherwise, an interrupt could effectively invalidate the unlock sequence and the WCT may expire.
+ * After the configuration finishes, re-enable the global interrupts.
+ *
+ * @param base WDOG32 peripheral base address
+ */
+#if defined(DOXYGEN_OUTPUT) && DOXYGEN_OUTPUT
+void WDOG32_Unlock(WDOG_Type *base);
+#else
+AT_QUICKACCESS_SECTION_CODE(void WDOG32_Unlock(WDOG_Type *base));
+#endif
+
+/*!
  * @brief Enables the WDOG32 module.
  *
  * This function writes a value into the WDOG_CS register to enable the WDOG32.
- * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
+ * The WDOG_CS register is a write-once register. Please check the enableUpdate is set to true for calling
+ * @ref WDOG32_Init to do wdog initialize.
+ * Before call the re-configuration APIs, ensure that the WCT window is still open and
  * this register has not been written in this WCT while the function is called.
  *
  * @param base WDOG32 peripheral base address.
  */
-static inline void WDOG32_Enable(WDOG_Type *base)
-{
-    base->CS |= WDOG_CS_EN_MASK;
-}
+#if defined(DOXYGEN_OUTPUT) && DOXYGEN_OUTPUT
+void WDOG32_Enable(WDOG_Type *base);
+#else
+AT_QUICKACCESS_SECTION_CODE(void WDOG32_Enable(WDOG_Type *base));
+#endif
 
 /*!
  * @brief Disables the WDOG32 module.
  *
  * This function writes a value into the WDOG_CS register to disable the WDOG32.
- * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
+ * The WDOG_CS register is a write-once register. Please check the enableUpdate is set to true for calling
+ * @ref WDOG32_Init to do wdog initialize.
+ * Before call the re-configuration APIs, ensure that the WCT window is still open and
  * this register has not been written in this WCT while the function is called.
  *
  * @param base WDOG32 peripheral base address
  */
-static inline void WDOG32_Disable(WDOG_Type *base)
-{
-    base->CS &= ~WDOG_CS_EN_MASK;
-}
+#if defined(DOXYGEN_OUTPUT) && DOXYGEN_OUTPUT
+void WDOG32_Disable(WDOG_Type *base);
+#else
+AT_QUICKACCESS_SECTION_CODE(void WDOG32_Disable(WDOG_Type *base));
+#endif
 
 /*!
  * @brief Enables the WDOG32 interrupt.
  *
  * This function writes a value into the WDOG_CS register to enable the WDOG32 interrupt.
- * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
+ * The WDOG_CS register is a write-once register. Please check the enableUpdate is set to true for calling
+ * @ref WDOG32_Init to do wdog initialize.
+ * Before call the re-configuration APIs, ensure that the WCT window is still open and
  * this register has not been written in this WCT while the function is called.
  *
  * @param base WDOG32 peripheral base address.
@@ -224,16 +249,19 @@ static inline void WDOG32_Disable(WDOG_Type *base)
  *        The parameter can be a combination of the following source if defined:
  *        @arg kWDOG32_InterruptEnable
  */
-static inline void WDOG32_EnableInterrupts(WDOG_Type *base, uint32_t mask)
-{
-    base->CS |= mask;
-}
+#if defined(DOXYGEN_OUTPUT) && DOXYGEN_OUTPUT
+void WDOG32_EnableInterrupts(WDOG_Type *base, uint32_t mask);
+#else
+AT_QUICKACCESS_SECTION_CODE(void WDOG32_EnableInterrupts(WDOG_Type *base, uint32_t mask));
+#endif
 
 /*!
  * @brief Disables the WDOG32 interrupt.
  *
  * This function writes a value into the WDOG_CS register to disable the WDOG32 interrupt.
- * The WDOG_CS register is a write-once register. Ensure that the WCT window is still open and
+ * The WDOG_CS register is a write-once register. Please check the enableUpdate is set to true for calling
+ * @ref WDOG32_Init to do wdog initialize.
+ * Before call the re-configuration APIs, ensure that the WCT window is still open and
  * this register has not been written in this WCT while the function is called.
  *
  * @param base WDOG32 peripheral base address.
@@ -241,10 +269,11 @@ static inline void WDOG32_EnableInterrupts(WDOG_Type *base, uint32_t mask)
  *        The parameter can be a combination of the following source if defined:
  *        @arg kWDOG32_InterruptEnable
  */
-static inline void WDOG32_DisableInterrupts(WDOG_Type *base, uint32_t mask)
-{
-    base->CS &= ~mask;
-}
+#if defined(DOXYGEN_OUTPUT) && DOXYGEN_OUTPUT
+void WDOG32_DisableInterrupts(WDOG_Type *base, uint32_t mask);
+#else
+AT_QUICKACCESS_SECTION_CODE(void WDOG32_DisableInterrupts(WDOG_Type *base, uint32_t mask));
+#endif
 
 /*!
  * @brief Gets the WDOG32 all status flags.
@@ -291,62 +320,35 @@ AT_QUICKACCESS_SECTION_CODE(void WDOG32_ClearStatusFlags(WDOG_Type *base, uint32
  * @brief Sets the WDOG32 timeout value.
  *
  * This function writes a timeout value into the WDOG_TOVAL register.
- * The WDOG_TOVAL register is a write-once register. Ensure that the WCT window is still open and
- * this register has not been written in this WCT while the function is called.
+ * The WDOG_TOVAL register is a write-once register. To ensure the reconfiguration fits the timing of WCT, unlock
+ * function will be called inline.
  *
  * @param base WDOG32 peripheral base address
  * @param timeoutCount WDOG32 timeout value, count of WDOG32 clock ticks.
  */
-static inline void WDOG32_SetTimeoutValue(WDOG_Type *base, uint16_t timeoutCount)
-{
-    base->TOVAL = timeoutCount;
-}
+#if defined(DOXYGEN_OUTPUT) && DOXYGEN_OUTPUT
+void WDOG32_SetTimeoutValue(WDOG_Type *base, uint16_t timeoutCount);
+#else
+AT_QUICKACCESS_SECTION_CODE(void WDOG32_SetTimeoutValue(WDOG_Type *base, uint16_t timeoutCount));
+#endif
 
 /*!
  * @brief Sets the WDOG32 window value.
  *
  * This function writes a window value into the WDOG_WIN register.
- * The WDOG_WIN register is a write-once register. Ensure that the WCT window is still open and
+ * The WDOG_WIN register is a write-once register. Please check the enableUpdate is set to true for calling
+ * @ref WDOG32_Init to do wdog initialize.
+ * Before call the re-configuration APIs, ensure that the WCT window is still open and
  * this register has not been written in this WCT while the function is called.
  *
  * @param base WDOG32 peripheral base address.
  * @param windowValue WDOG32 window value.
  */
-static inline void WDOG32_SetWindowValue(WDOG_Type *base, uint16_t windowValue)
-{
-    base->WIN = windowValue;
-}
-
-/*!
- * @brief Unlocks the WDOG32 register written.
- *
- * This function unlocks the WDOG32 register written.
- *
- * Before starting the unlock sequence and following the configuration, disable the global interrupts.
- * Otherwise, an interrupt could effectively invalidate the unlock sequence and the WCT may expire.
- * After the configuration finishes, re-enable the global interrupts.
- *
- * @param base WDOG32 peripheral base address
- */
-static inline void WDOG32_Unlock(WDOG_Type *base)
-{
-    if (0U != ((base->CS) & WDOG_CS_CMD32EN_MASK))
-    {
-        base->CNT = WDOG_UPDATE_KEY;
-    }
-    else
-    {
-        base->CNT = WDOG_FIRST_WORD_OF_UNLOCK;
-        base->CNT = WDOG_SECOND_WORD_OF_UNLOCK;
-    }
-#ifdef WDOG_CS_ULK_MASK
-    /* Waited until for registers to be unlocked. */
-    while (0U == ((base->CS) & WDOG_CS_ULK_MASK))
-    {
-        ;
-    }
-#endif /* WDOG_CS_ULK_MASK */
-}
+#if defined(DOXYGEN_OUTPUT) && DOXYGEN_OUTPUT
+void WDOG32_SetWindowValue(WDOG_Type *base, uint16_t windowValue);
+#else
+AT_QUICKACCESS_SECTION_CODE(void WDOG32_SetWindowValue(WDOG_Type *base, uint16_t windowValue));
+#endif
 
 /*!
  * @brief Refreshes the WDOG32 timer.

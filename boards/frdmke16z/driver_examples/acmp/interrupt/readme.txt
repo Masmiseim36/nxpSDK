@@ -8,6 +8,14 @@ configuration returned by the API ACMP_GetDefaultConfig(). The default configura
 speed is not enabled, invert output is not enabled, unfiltered output is not enabled, pin out
 is not enabled, offset level is level 0, hysteresis level is level 0.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -54,11 +62,3 @@ The analog input is LOWER than DAC output
 
 The analog input is HIGHER than DAC output
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

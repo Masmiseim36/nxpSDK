@@ -8,10 +8,10 @@ The ADC0 uses channel 1 and channel 5, and ADC1 uses channel 1 and channel 7.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -46,6 +46,3 @@ Input any character to start demo.
 ~~~~~~~~~~~~~~~~~~
 Input a character to the serial console to start the ADC PDB demo.
 The demo will then display 256 lines of information for the ADC conversion result.
-Customization options
-=====================
-

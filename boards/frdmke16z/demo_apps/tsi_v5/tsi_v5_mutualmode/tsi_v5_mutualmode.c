@@ -8,18 +8,18 @@
 
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_tsi_v5.h"
 #include "TSI_key.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 #define LED1_INIT() LED_BLUE_INIT(LOGIC_LED_OFF)
-#define LED1_ON() LED_BLUE_ON()
-#define LED1_OFF() LED_BLUE_OFF()
+#define LED1_ON()   LED_BLUE_ON()
+#define LED1_OFF()  LED_BLUE_OFF()
 
 /*******************************************************************************
  * Variables

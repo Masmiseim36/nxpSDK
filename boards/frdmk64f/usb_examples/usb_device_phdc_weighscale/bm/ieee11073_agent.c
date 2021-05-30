@@ -6,13 +6,13 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
 #include "usb_device_config.h"
 #include "usb.h"
 #include "ieee11073_timer.h"
 #include "ieee11073_types.h"
-#include <stdio.h>
-#include <math.h>
-#include <string.h>
 #include "fsl_debug_console.h"
 #include "ieee11073_timer.h"
 #include "ieee11073_agent.h"

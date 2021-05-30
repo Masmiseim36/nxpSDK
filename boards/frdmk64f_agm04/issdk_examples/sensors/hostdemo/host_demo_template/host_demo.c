@@ -12,10 +12,10 @@
  */
 
 /*  SDK Includes */
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 
+#include "board.h"
 /* CMSIS Includes */
 #include "Driver_USART.h"
 

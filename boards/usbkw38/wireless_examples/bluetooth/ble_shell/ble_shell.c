@@ -66,6 +66,7 @@
 #endif
 #endif /* (defined(CPU_MKW37A512VFT4) || defined(CPU_MKW38A512VFT4)) */
 
+
 /************************************************************************************
 *************************************************************************************
 * Extern functions
@@ -87,7 +88,12 @@ static uint8_t mSupressEvents = 0;
 #if (defined(gRFCalibration_d) && (gRFCalibration_d > 0))
 /*! Default trimming value for 32MHz crystal8 */
 #define DEFAULT_TRIM_VALUE      0x4B
-#endif
+
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d == 1)
+#include "board_extPA.h"
+#endif /* gBoard_ExtPaSupport_d*/
+
+#endif /* gRFCalibration_d */
 #endif /* (defined(CPU_MKW37A512VFT4) || defined(CPU_MKW38A512VFT4)) */
 /************************************************************************************
 *************************************************************************************
@@ -703,6 +709,10 @@ static int8_t ShellCalibration_EnableRFCalibration(uint8_t argc, char * argv[])
             (void)XCVR_SetXtalTrim(gXtalTrimValue);
             /* Set RSSI Adjustment Value */
             (void)XCVR_SetRssiAdjustment(gRssiValue);
+            
+#if defined(gBoard_ExtPaSupport_d) && (gBoard_ExtPaSupport_d == 1)
+            (void) BOARD_ExtPaXcvrInit(TRUE);
+#endif
             mCalibrationEnabled = FALSE;
             shell_write("Calibration disabled!\r\n");
         }

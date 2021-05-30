@@ -42,8 +42,8 @@ processor_version: 0.0.17
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define SCG_LPFLL_DISABLE                                 0U  /*!< LPFLL clock disabled */
-#define SCG_SOSC_DISABLE                                  0U  /*!< System OSC disabled */
+#define SCG_LPFLL_DISABLE 0U /*!< LPFLL clock disabled */
+#define SCG_SOSC_DISABLE  0U /*!< System OSC disabled */
 
 /*******************************************************************************
  * Variables
@@ -68,14 +68,12 @@ extern uint32_t SystemCoreClock;
 static void CLOCK_CONFIG_FircSafeConfig(const scg_firc_config_t *fircConfig)
 {
     scg_sys_clk_config_t curConfig;
-    const scg_sirc_config_t scgSircConfig = {.enableMode = kSCG_SircEnable,
-                                             .div1 = kSCG_AsyncClkDisable,
-                                             .div2 = kSCG_AsyncClkDivBy2,
-                                             .range = kSCG_SircRangeHigh};
+    const scg_sirc_config_t scgSircConfig = {
+        .enableMode = kSCG_SircEnable, .div2 = kSCG_AsyncClkDivBy2, .range = kSCG_SircRangeHigh};
     scg_sys_clk_config_t sysClkSafeConfigSource = {
-         .divSlow = kSCG_SysClkDivBy4, /* Slow clock divider */
-         .divCore = kSCG_SysClkDivBy1, /* Core clock divider */
-         .src = kSCG_SysClkSrcSirc     /* System clock source */
+        .divSlow = kSCG_SysClkDivBy4, /* Slow clock divider */
+        .divCore = kSCG_SysClkDivBy1, /* Core clock divider */
+        .src     = kSCG_SysClkSrcSirc /* System clock source */
     };
     /* Init Sirc. */
     CLOCK_InitSirc(&scgSircConfig);
@@ -84,7 +82,7 @@ static void CLOCK_CONFIG_FircSafeConfig(const scg_firc_config_t *fircConfig)
     /* Wait for clock source switch finished. */
     do
     {
-         CLOCK_GetCurSysClkConfig(&curConfig);
+        CLOCK_GetCurSysClkConfig(&curConfig);
     } while (curConfig.src != sysClkSafeConfigSource.src);
 
     /* Init Firc. */
@@ -95,7 +93,7 @@ static void CLOCK_CONFIG_FircSafeConfig(const scg_firc_config_t *fircConfig)
     /* Wait for clock source switch finished. */
     do
     {
-         CLOCK_GetCurSysClkConfig(&curConfig);
+        CLOCK_GetCurSysClkConfig(&curConfig);
     } while (curConfig.src != sysClkSafeConfigSource.src);
 }
 
@@ -179,9 +177,8 @@ void BOARD_BootClockRUN(void)
     /* Wait for clock source switch finished. */
     do
     {
-         CLOCK_GetCurSysClkConfig(&curConfig);
+        CLOCK_GetCurSysClkConfig(&curConfig);
     } while (curConfig.src != g_sysClkConfig_BOARD_BootClockRUN.src);
     /* Set SystemCoreClock variable. */
     SystemCoreClock = BOARD_BOOTCLOCKRUN_CORE_CLOCK;
 }
-

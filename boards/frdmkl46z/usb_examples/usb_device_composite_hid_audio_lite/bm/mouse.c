@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -59,7 +63,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-USB_DATA_ALIGNMENT static uint8_t s_MouseBuffer[USB_HID_MOUSE_REPORT_LENGTH];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint8_t s_MouseBuffer[USB_HID_MOUSE_REPORT_LENGTH];
 static usb_device_composite_struct_t *g_deviceComposite;
 
 /*******************************************************************************
@@ -208,6 +212,8 @@ usb_status_t USB_DeviceHidClassRequest(usb_device_handle handle,
         case USB_DEVICE_HID_REQUEST_SET_REPORT:
             break;
         case USB_DEVICE_HID_REQUEST_SET_IDLE:
+            error = kStatus_USB_Success;
+            g_deviceComposite->hidMouse.idleRate = 125U;
             break;
         case USB_DEVICE_HID_REQUEST_SET_PROTOCOL:
             break;
@@ -231,12 +237,12 @@ usb_status_t USB_DeviceHidClassRequest(usb_device_handle handle,
 usb_status_t USB_DeviceHidMouseSetConfigure(usb_device_handle handle, uint8_t configure)
 {
     usb_device_endpoint_init_struct_t epInitStruct;
-    usb_device_endpoint_callback_struct_t endpointCallback = {0};
+    usb_device_endpoint_callback_struct_t epCallback = {0};
 
     g_deviceComposite->hidMouse.attach = 1U;
 
-    endpointCallback.callbackFn = USB_DeviceHidInterruptIn;
-    endpointCallback.callbackParam = handle;
+    epCallback.callbackFn = USB_DeviceHidInterruptIn;
+    epCallback.callbackParam = handle;
     epInitStruct.zlt = 0U;
     epInitStruct.transferType = USB_ENDPOINT_INTERRUPT;
     epInitStruct.endpointAddress = USB_HID_MOUSE_ENDPOINT | (USB_IN << USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT);
@@ -249,7 +255,7 @@ usb_status_t USB_DeviceHidMouseSetConfigure(usb_device_handle handle, uint8_t co
         epInitStruct.maxPacketSize = FS_INTERRUPT_IN_PACKET_SIZE;
     }
 
-    USB_DeviceInitEndpoint(handle, &epInitStruct, &endpointCallback);
+    USB_DeviceInitEndpoint(handle, &epInitStruct, &epCallback);
 
     return USB_DeviceMouseAction();
 }

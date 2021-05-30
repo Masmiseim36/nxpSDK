@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
- *
+ * All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ *  that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -43,10 +47,6 @@
 #include "fsl_debug_console.h"
 #include "fsl_i2c.h"
 #include "fsl_i2c_freertos.h"
-
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-#include "fsl_intmux.h"
-#endif
 
 #include "pin_mux.h"
 #include "clock_config.h"
@@ -80,14 +80,6 @@
 #define I2C_BAUDRATE (100000) /* 100K */
 #define I2C_DATA_LENGTH (32)  /* MAX is 256 */
 
-#if (__CORTEX_M >= 0x03)
-#define I2C_NVIC_PRIO 5
-#else
-#define I2C_NVIC_PRIO 2
-#endif
-#ifdef __GIC_PRIO_BITS
-#define I2C_GIC_PRIO 25
-#endif
 /*******************************************************************************
  * Prototypes
  ******************************************************************************/
@@ -129,11 +121,9 @@ int main(void)
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
-/* In case the I2C IRQ is handled by INTMUX, setup INTMUX. */
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-    INTMUX_Init(INTMUX0);
-    INTMUX_SetChannelMode(INTMUX0, EXAMPLE_I2C_INTMUX_CHANNEL, kINTMUX_ChannelLogicOR);
-#endif
+    /* Set interrupt priorities */
+    NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, 2);
+    NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, 3);
 
     PRINTF("\r\n==FreeRTOS I2C example start.==\r\n");
 #if (EXAMPLE_CONNECT_I2C == SINGLE_BOARD)
@@ -145,6 +135,8 @@ int main(void)
     if (xTaskCreate(slave_task, "Slave_task", configMINIMAL_STACK_SIZE + 60, NULL, slave_task_PRIORITY, NULL) != pdPASS)
     {
         PRINTF("Failed to create slave task");
+        while (1)
+            ;
     }
 
     vTaskStartScheduler();
@@ -218,27 +210,6 @@ static void slave_task(void *pvParameters)
     i2c_sem = cb_msg.sem;
 
 #if ((I2C_MASTER_SLAVE == isSLAVE) || (EXAMPLE_CONNECT_I2C == SINGLE_BOARD))
-/*  Set i2c slave interrupt priority higher. */
-#if defined(FSL_FEATURE_SOC_II2C_COUNT) && FSL_FEATURE_SOC_II2C_COUNT
-    GIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, I2C_GIC_PRIO);
-#endif
-#if defined(FSL_FEATURE_SOC_I2C_COUNT) && FSL_FEATURE_SOC_I2C_COUNT
-/* In case the I2C IRQ is handled by INTMUX, setup both NVIC and INTMUX. */
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-    if (EXAMPLE_I2C_SLAVE_IRQN > FSL_FEATURE_INTERRUPT_IRQ_MAX)
-    {
-        INTMUX_EnableInterrupt(INTMUX0, EXAMPLE_I2C_INTMUX_CHANNEL, EXAMPLE_I2C_SLAVE_IRQN);
-        NVIC_SetPriority(INTMUX0_0_IRQn, I2C_NVIC_PRIO);
-    }
-    else
-    {
-        NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, I2C_NVIC_PRIO);
-    }
-#else
-    NVIC_SetPriority(EXAMPLE_I2C_SLAVE_IRQN, I2C_NVIC_PRIO);
-#endif
-#endif
-
     /* Set up I2C slave */
     /*
      * slaveConfig.addressingMode = kI2C_Address7bit;
@@ -256,7 +227,7 @@ static void slave_task(void *pvParameters)
 #endif
 #if defined(FSL_FEATURE_SOC_II2C_COUNT) && FSL_FEATURE_SOC_II2C_COUNT
     I2C_SlaveInit(EXAMPLE_I2C_SLAVE, &slaveConfig);
-#endif 
+#endif
     for (uint32_t i = 0; i < I2C_DATA_LENGTH; i++)
     {
         g_slave_buff[i] = 0;
@@ -349,26 +320,6 @@ static void master_task(void *pvParameters)
     i2c_master_transfer_t masterXfer;
     uint32_t sourceClock;
     status_t status;
-
-#if defined(FSL_FEATURE_SOC_II2C_COUNT) && FSL_FEATURE_SOC_II2C_COUNT
-    GIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, I2C_GIC_PRIO+1);
-#endif
-#if defined(FSL_FEATURE_SOC_I2C_COUNT) && FSL_FEATURE_SOC_I2C_COUNT
-/* In case the I2C IRQ is handled by INTMUX, setup both NVIC and INTMUX. */
-#if ((defined FSL_FEATURE_SOC_INTMUX_COUNT) && (FSL_FEATURE_SOC_INTMUX_COUNT))
-    if (EXAMPLE_I2C_MASTER_IRQN > FSL_FEATURE_INTERRUPT_IRQ_MAX)
-    {
-        INTMUX_EnableInterrupt(INTMUX0, EXAMPLE_I2C_INTMUX_CHANNEL, EXAMPLE_I2C_MASTER_IRQN);
-        NVIC_SetPriority(INTMUX0_0_IRQn, I2C_NVIC_PRIO + 1);
-    }
-    else
-    {
-        NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, I2C_NVIC_PRIO + 1);
-    }
-#else
-    NVIC_SetPriority(EXAMPLE_I2C_MASTER_IRQN, I2C_NVIC_PRIO + 1);
-#endif
-#endif
 
     /* Set up i2c master to send data to slave */
     for (uint32_t i = 0; i < I2C_DATA_LENGTH; i++)

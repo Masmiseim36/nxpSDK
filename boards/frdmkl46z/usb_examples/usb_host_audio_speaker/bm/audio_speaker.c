@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 -2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016, 2018 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -33,6 +37,7 @@
 #include "audio_speaker.h"
 #include "usb_host_audio.h"
 #include "fsl_debug_console.h"
+#include "app.h"
 
 /*******************************************************************************
  * Definitions
@@ -57,7 +62,7 @@ usb_device_handle g_audioDeviceHandle;
 usb_host_interface_handle g_audioOutControlifHandle;
 usb_host_interface_handle g_audioOutStreamifHandle;
 audio_speraker_instance_t g_audio;
-uint8_t g_wavBuff[MAX_ISO_PACKET_SIZE];
+USB_RAM_ADDRESS_ALIGNMENT(USB_CACHE_LINESIZE) uint8_t g_wavBuff[MAX_ISO_PACKET_SIZE];
 uint32_t g_packetSize;
 extern const unsigned char wav_data[];
 extern const uint16_t wav_size;
@@ -70,8 +75,12 @@ usb_audio_stream_specific_iso_endp_desc_t *g_pIsoEndpSpecDesc = NULL;
 static uint16_t g_curVolume;
 static uint16_t g_minVolume;
 static uint16_t g_maxVolume;
-uint8_t g_curVol[2];
-uint8_t g_curMute[2];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t g_curVol[2];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint8_t g_curMute[2];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint16_t minVol[2];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint16_t maxVol[2];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) static uint16_t resVol[2];
+USB_DMA_NONINIT_DATA_ALIGN(USB_DATA_ALIGN_SIZE) uint32_t freq;
 
 /*******************************************************************************
  * Code
@@ -93,26 +102,26 @@ void Audio_ControlCallback(void *param, uint8_t *data, uint32_t dataLen, usb_sta
 
     if (status != kStatus_USB_Success)
     {
-        if (kRunWaitAudioSetCurSamplingFreq == audio_ptr->runWaitState)
+        if (kUSB_HostAudioRunWaitAudioSetCurSamplingFreq == audio_ptr->runWaitState)
         {
             usb_echo("audio speaker doest not support SamplingFreq request!\r\n");
         }
         retryCount++;
-        if (audio_ptr->runWaitState == kRunWaitSetStreamInterface)
+        if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitSetStreamInterface)
         {
-            audio_ptr->runState = kRunSetControlInterfaceDone;
+            audio_ptr->runState = kUSB_HostAudioRunSetControlInterfaceDone;
         }
-        else if (audio_ptr->runWaitState == kRunWaitAudioGetMinVolume)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitAudioGetMinVolume)
         {
-            audio_ptr->runState = kRunSetInterfaceDone;
+            audio_ptr->runState = kUSB_HostAudioRunSetInterfaceDone;
         }
-        else if (audio_ptr->runWaitState == kRunWaitAudioGetMaxVolume)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitAudioGetMaxVolume)
         {
-            audio_ptr->runState = kRunAudioGetMaxVolume;
+            audio_ptr->runState = kUSB_HostAudioRunAudioGetMaxVolume;
         }
-        else if (audio_ptr->runWaitState == kRunWaitAudioGetResVolume)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitAudioGetResVolume)
         {
-            audio_ptr->runState = kRunAudioGetResVolume;
+            audio_ptr->runState = kUSB_HostAudioRunAudioGetResVolume;
         }
         else
         {
@@ -123,58 +132,58 @@ void Audio_ControlCallback(void *param, uint8_t *data, uint32_t dataLen, usb_sta
             return;
         }
     }
-    if (audio_ptr->runState == kRunIdle)
+    if (audio_ptr->runState == kUSB_HostAudioRunIdle)
     {
         retryCount = 0;
-        if (audio_ptr->runWaitState == kRunSetControlInterface)
+        if (audio_ptr->runWaitState == kUSB_HostAudioRunSetControlInterface)
         {
-            audio_ptr->runState = kRunSetControlInterfaceDone;
+            audio_ptr->runState = kUSB_HostAudioRunSetControlInterfaceDone;
         }
-        else if (audio_ptr->runWaitState == kRunWaitSetStreamInterface)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitSetStreamInterface)
         {
-            audio_ptr->runState = kRunSetInterfaceDone;
+            audio_ptr->runState = kUSB_HostAudioRunSetInterfaceDone;
         }
-        else if (audio_ptr->runWaitState == kRunWaitAudioGetMinVolume)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitAudioGetMinVolume)
         {
-            audio_ptr->runState = kRunAudioGetMaxVolume;
+            audio_ptr->runState = kUSB_HostAudioRunAudioGetMaxVolume;
         }
-        else if (audio_ptr->runWaitState == kRunWaitAudioGetMaxVolume)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitAudioGetMaxVolume)
         {
-            audio_ptr->runState = kRunAudioGetResVolume;
+            audio_ptr->runState = kUSB_HostAudioRunAudioGetResVolume;
         }
-        else if (audio_ptr->runWaitState == kRunWaitAudioGetResVolume)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitAudioGetResVolume)
         {
-            audio_ptr->runState = kRunAudioConfigChannel;
+            audio_ptr->runState = kUSB_HostAudioRunAudioConfigChannel;
         }
-        else if (audio_ptr->runWaitState == kRunWaitAudioConfigChannel)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitAudioConfigChannel)
         {
-            audio_ptr->runState = kRunAudioConfigChannel1Vol;
+            audio_ptr->runState = kUSB_HostAudioRunAudioConfigChannel1Vol;
         }
-        else if (audio_ptr->runWaitState == kRunWaitAudioConfigChannel1Vol)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitAudioConfigChannel1Vol)
         {
-            audio_ptr->runState = kRunAudioConfigChannel2Vol;
+            audio_ptr->runState = kUSB_HostAudioRunAudioConfigChannel2Vol;
         }
-        else if (audio_ptr->runWaitState == kRunWaitAudioSetCurSamplingFreq)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitAudioSetCurSamplingFreq)
         {
-            audio_ptr->runState = kRunAudioDone;
+            audio_ptr->runState = kUSB_HostAudioRunAudioDone;
         }
-        else if (audio_ptr->runWaitState == kRunWaitAudioConfigChannel2Vol)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitAudioConfigChannel2Vol)
         {
             if (g_audio.deviceIsUsed == 0)
             {
-                audio_ptr->runState = kRunAudioSetCurSamplingFreq;
+                audio_ptr->runState = kUSB_HostAudioRunAudioSetCurSamplingFreq;
             }
             else if (g_audio.deviceIsUsed == 1)
             {
-                audio_ptr->runState = kRunIdle;
+                audio_ptr->runState = kUSB_HostAudioRunIdle;
             }
             else
             {
             }
         }
-        else if (audio_ptr->runWaitState == kRunWaitAudioConfigMute)
+        else if (audio_ptr->runWaitState == kUSB_HostAudioRunWaitAudioConfigMute)
         {
-            audio_ptr->runState = kRunIdle;
+            audio_ptr->runState = kUSB_HostAudioRunIdle;
         }
         else
         {
@@ -209,7 +218,7 @@ void Audio_OutCallback(void *param, uint8_t *data, uint32_t dataLen, usb_status_
         }
         else
         {
-            audio_ptr->runState = kRunIdle;
+            audio_ptr->runState = kUSB_HostAudioRunIdle;
         }
     }
     else
@@ -288,10 +297,6 @@ void USB_AudioTask(void *arg)
 {
     usb_status_t status = kStatus_USB_Success;
     uint32_t bsamfreqtype_g_index;
-    uint32_t freq;
-    static uint16_t minVol[2];
-    static uint16_t maxVol[2];
-    static uint16_t resVol[2];
 
     /* device state changes */
     if (g_audio.devState != g_audio.prevState)
@@ -303,7 +308,7 @@ void USB_AudioTask(void *arg)
                 break;
 
             case kStatus_DEV_Attached:
-                g_audio.runState = kRunSetControlInterface;
+                g_audio.runState = kUSB_HostAudioRunSetControlInterface;
                 g_audio.deviceIsUsed = 0;
                 g_audio.bufCount = 0;
                 g_hostCurVolume = 4;
@@ -313,7 +318,7 @@ void USB_AudioTask(void *arg)
 
             case kStatus_DEV_Detached:
                 g_audio.devState = kStatus_DEV_Idle;
-                g_audio.runState = kRunIdle;
+                g_audio.runState = kUSB_HostAudioRunIdle;
                 USB_HostAudioDeinit(g_audio.deviceHandle, g_audio.classHandle);
                 g_audio.classHandle = NULL;
                 g_audio.bufCount = 0;
@@ -328,21 +333,21 @@ void USB_AudioTask(void *arg)
     /* run state */
     switch (g_audio.runState)
     {
-        case kRunIdle:
+        case kUSB_HostAudioRunIdle:
             break;
 
-        case kRunSetControlInterface:
-            g_audio.runWaitState = kRunSetControlInterface;
-            g_audio.runState = kRunIdle;
+        case kUSB_HostAudioRunSetControlInterface:
+            g_audio.runWaitState = kUSB_HostAudioRunSetControlInterface;
+            g_audio.runState = kUSB_HostAudioRunIdle;
             if (USB_HostAudioControlSetInterface(g_audio.classHandle, g_audio.controlIntfHandle, 0,
                                                  Audio_ControlCallback, &g_audio) != kStatus_USB_Success)
             {
                 usb_echo("set interface error\r\n");
             }
             break;
-        case kRunSetControlInterfaceDone:
-            g_audio.runWaitState = kRunWaitSetStreamInterface;
-            g_audio.runState = kRunIdle;
+        case kUSB_HostAudioRunSetControlInterfaceDone:
+            g_audio.runWaitState = kUSB_HostAudioRunWaitSetStreamInterface;
+            g_audio.runState = kUSB_HostAudioRunIdle;
             if (USB_HostAudioStreamSetInterface(g_audio.classHandle, g_audio.streamIntfHandle, 1, Audio_ControlCallback,
                                                 &g_audio) != kStatus_USB_Success)
             {
@@ -350,7 +355,7 @@ void USB_AudioTask(void *arg)
             }
             break;
 
-        case kRunSetInterfaceDone:
+        case kUSB_HostAudioRunSetInterfaceDone:
             if (USB_HostAudioStreamGetCurrentAltsettingDescriptors(
                     g_audio.classHandle, (usb_audio_stream_spepific_as_intf_desc_t **)&g_pAsItfDesc,
                     (usb_audio_stream_format_type_desc_t **)&g_pFormatTypeDesc,
@@ -360,53 +365,53 @@ void USB_AudioTask(void *arg)
             }
             g_audio.maxPacketSize = g_packetSize =
                 USB_HostAudioPacketSize(g_audio.classHandle, USB_ENDPOINT_ISOCHRONOUS, USB_OUT);
-            g_audio.runWaitState = kRunWaitAudioGetMinVolume;
-            g_audio.runState = kRunIdle;
+            g_audio.runWaitState = kUSB_HostAudioRunWaitAudioGetMinVolume;
+            g_audio.runState = kUSB_HostAudioRunIdle;
             if (kStatus_USB_Success == USB_HostAudioFeatureUnitRequest(g_audio.classHandle, 1, (void *)minVol,
                                                                        USB_AUDIO_GET_MIN_VOLUME, Audio_ControlCallback,
                                                                        &g_audio))
             {
-                g_audio.runWaitState = kRunWaitAudioGetMinVolume;
+                g_audio.runWaitState = kUSB_HostAudioRunWaitAudioGetMinVolume;
             }
             else
             {
-                g_audio.runState = kRunAudioDone;
+                g_audio.runState = kUSB_HostAudioRunAudioDone;
             }
             usb_echo("AUDIO_GET_MIN_VOLUME\n\r");
             break;
 
-        case kRunAudioGetMaxVolume:
-            g_audio.runWaitState = kRunWaitAudioGetMaxVolume;
-            g_audio.runState = kRunIdle;
+        case kUSB_HostAudioRunAudioGetMaxVolume:
+            g_audio.runWaitState = kUSB_HostAudioRunWaitAudioGetMaxVolume;
+            g_audio.runState = kUSB_HostAudioRunIdle;
             if (kStatus_USB_Success == USB_HostAudioFeatureUnitRequest(g_audio.classHandle, 1, (void *)maxVol,
                                                                        USB_AUDIO_GET_MAX_VOLUME, Audio_ControlCallback,
                                                                        &g_audio))
             {
-                g_audio.runWaitState = kRunWaitAudioGetMaxVolume;
+                g_audio.runWaitState = kUSB_HostAudioRunWaitAudioGetMaxVolume;
             }
             else
             {
-                g_audio.runState = kRunAudioDone;
+                g_audio.runState = kUSB_HostAudioRunAudioDone;
             }
             break;
 
-        case kRunAudioGetResVolume:
-            g_audio.runState = kRunIdle;
-            g_audio.runWaitState = kRunWaitAudioGetResVolume;
+        case kUSB_HostAudioRunAudioGetResVolume:
+            g_audio.runState = kUSB_HostAudioRunIdle;
+            g_audio.runWaitState = kUSB_HostAudioRunWaitAudioGetResVolume;
             if (kStatus_USB_Success == USB_HostAudioFeatureUnitRequest(g_audio.classHandle, 1, (void *)resVol,
                                                                        USB_AUDIO_GET_RES_VOLUME, Audio_ControlCallback,
                                                                        &g_audio))
             {
-                g_audio.runWaitState = kRunWaitAudioGetResVolume;
+                g_audio.runWaitState = kUSB_HostAudioRunWaitAudioGetResVolume;
             }
             else
             {
-                g_audio.runState = kRunAudioDone;
+                g_audio.runState = kUSB_HostAudioRunAudioDone;
             }
             break;
 
-        case kRunAudioConfigChannel:
-            g_audio.runState = kRunIdle;
+        case kUSB_HostAudioRunAudioConfigChannel:
+            g_audio.runState = kUSB_HostAudioRunIdle;
             g_minVolume = (uint16_t)(minVol[1] << 8U) | (minVol[0]);
             g_maxVolume = (uint16_t)(maxVol[1] << 8U) | (maxVol[0]);
             g_deviceVolumeStep =
@@ -415,43 +420,43 @@ void USB_AudioTask(void *arg)
             g_curVol[0] = (int8_t)((uint16_t)(g_curVolume)&0x00FF);
             g_curVol[1] = (int8_t)((uint16_t)(g_curVolume) >> 8U);
             g_curMute[0] = 0U;
-            g_audio.runWaitState = kRunWaitAudioConfigChannel;
+            g_audio.runWaitState = kUSB_HostAudioRunWaitAudioConfigChannel;
             if (kStatus_USB_Success == USB_HostAudioFeatureUnitRequest(g_audio.classHandle, 0, (void *)g_curMute,
                                                                        USB_AUDIO_SET_CUR_MUTE, Audio_ControlCallback,
                                                                        &g_audio))
             {
-                g_audio.runWaitState = kRunWaitAudioConfigChannel;
+                g_audio.runWaitState = kUSB_HostAudioRunWaitAudioConfigChannel;
             }
             else
             {
-                g_audio.runState = kRunAudioConfigChannel1Vol;
+                g_audio.runState = kUSB_HostAudioRunAudioConfigChannel1Vol;
             }
             break;
 
-        case kRunAudioConfigMute:
-            g_audio.runState = kRunIdle;
+        case kUSB_HostAudioRunAudioConfigMute:
+            g_audio.runState = kUSB_HostAudioRunIdle;
             g_curMute[0] = !g_curMute[0];
-            g_audio.runWaitState = kRunWaitAudioConfigMute;
+            g_audio.runWaitState = kUSB_HostAudioRunWaitAudioConfigMute;
             USB_HostAudioFeatureUnitRequest(g_audio.classHandle, 0, (void *)g_curMute, USB_AUDIO_SET_CUR_MUTE,
                                             Audio_ControlCallback, &g_audio);
-            g_audio.runWaitState = kRunWaitAudioConfigMute;
+            g_audio.runWaitState = kUSB_HostAudioRunWaitAudioConfigMute;
             break;
 
-        case kRunAudioConfigChannel1Vol:
-            g_audio.runState = kRunIdle;
-            g_audio.runWaitState = kRunWaitAudioConfigChannel1Vol;
+        case kUSB_HostAudioRunAudioConfigChannel1Vol:
+            g_audio.runState = kUSB_HostAudioRunIdle;
+            g_audio.runWaitState = kUSB_HostAudioRunWaitAudioConfigChannel1Vol;
             USB_HostAudioFeatureUnitRequest(g_audio.classHandle, 1, (void *)g_curVol, USB_AUDIO_SET_CUR_VOLUME,
                                             Audio_ControlCallback, &g_audio);
             break;
 
-        case kRunAudioConfigChannel2Vol:
-            g_audio.runState = kRunIdle;
-            g_audio.runWaitState = kRunWaitAudioConfigChannel2Vol;
+        case kUSB_HostAudioRunAudioConfigChannel2Vol:
+            g_audio.runState = kUSB_HostAudioRunIdle;
+            g_audio.runWaitState = kUSB_HostAudioRunWaitAudioConfigChannel2Vol;
             USB_HostAudioFeatureUnitRequest(g_audio.classHandle, 2, (void *)g_curVol, USB_AUDIO_SET_CUR_VOLUME,
                                             Audio_ControlCallback, &g_audio);
             break;
 
-        case kRunAudioSetCurSamplingFreq:
+        case kUSB_HostAudioRunAudioSetCurSamplingFreq:
             usb_echo("Audio Speaker device information:\r\n");
             for (bsamfreqtype_g_index = 0U; bsamfreqtype_g_index < g_pFormatTypeDesc->bsamfreqtype;
                  bsamfreqtype_g_index++)
@@ -491,18 +496,18 @@ void USB_AudioTask(void *arg)
             freq = (((uint32_t)g_pFormatTypeDesc->tsamfreq[0][2]) << 16U) |
                    (((uint32_t)g_pFormatTypeDesc->tsamfreq[0][1]) << 8U) |
                    (((uint32_t)g_pFormatTypeDesc->tsamfreq[0][0]) << 0U);
-            g_audio.runState = kRunIdle;
-            g_audio.runWaitState = kRunWaitAudioSetCurSamplingFreq;
+            g_audio.runState = kUSB_HostAudioRunIdle;
+            g_audio.runWaitState = kUSB_HostAudioRunWaitAudioSetCurSamplingFreq;
             USB_HostAudioEndpointRequest(g_audio.classHandle, &freq, USB_AUDIO_SET_CUR_SAMPLING_FREQ,
                                          Audio_ControlCallback, &g_audio);
             break;
 
-        case kRunAudioDone:
+        case kUSB_HostAudioRunAudioDone:
             g_index = 0U;
             while (g_audio.bufCount < 3U)
             {
                 USB_PrepareData();
-                g_audio.runState = kRunIdle;
+                g_audio.runState = kUSB_HostAudioRunIdle;
                 if (USB_HostAudioStreamSend(g_audio.classHandle, (unsigned char *)&g_wavBuff[g_packetSize * g_index],
                                             g_audio.maxPacketSize, Audio_OutCallback, &g_audio) != kStatus_USB_Success)
                 {
@@ -543,7 +548,7 @@ void Audio_MuteRequest(void)
         return;
     }
 
-    g_audio.runState = kRunAudioConfigMute;
+    g_audio.runState = kUSB_HostAudioRunAudioConfigMute;
 }
 
 /*!
@@ -593,7 +598,7 @@ void Audio_IncreaseVolumeRequest(uint8_t channel)
         g_curVol[1] = (int8_t)((uint16_t)(g_curVolume) >> 8U);
     }
 
-    g_audio.runState = kRunAudioConfigChannel1Vol;
+    g_audio.runState = kUSB_HostAudioRunAudioConfigChannel1Vol;
 }
 
 /*!
@@ -642,7 +647,7 @@ void Audio_DecreaseVolumeRequest(uint8_t channel)
         g_curVol[1] = (int8_t)((uint16_t)(g_curVolume) >> 8U);
     }
 
-    g_audio.runState = kRunAudioConfigChannel1Vol;
+    g_audio.runState = kUSB_HostAudioRunAudioConfigChannel1Vol;
 }
 
 /*!

@@ -21,7 +21,6 @@ SPDX-License-Identifier: BSD-3-Clause
 #include "RNG_Interface.h"
 #include "Messaging.h"
 #include "SecLib.h"
-#include "Panic.h"
 #include "fsl_os_abstraction.h"
 
 /* KSDK */
@@ -48,7 +47,7 @@ SPDX-License-Identifier: BSD-3-Clause
 * Private macros
 *************************************************************************************
 ************************************************************************************/
-#define gAppNumberOfTests_d (3)
+#define gAppNumberOfTests_d (4)
 #define App_NotifySelf() OSA_EventSet(mAppThreadEvt, gCtEvtSelfEvent_c)
 
 #ifdef FSL_RTOS_FREE_RTOS
@@ -492,6 +491,7 @@ static app_status_t App_InitApp()
    ppfCtAvailableTests[0] = CT_ContinuousTests;
    ppfCtAvailableTests[1] = CT_PacketErrorRate;
    ppfCtAvailableTests[2] = CT_RangeTest;
+   ppfCtAvailableTests[3] = CT_TrimAdjust;
 
    /*register callbacks for the generic fsk LL */
    GENFSK_RegisterCallbacks(mAppGenfskId,
@@ -648,7 +648,7 @@ static osaStatus_t AppIdle_TaskInit(void)
     
     if( NULL == gAppIdleTaskId )
     {
-        panic(0,0,0,0);
+        assert(0);
         return osaStatus_Error;
     }
 

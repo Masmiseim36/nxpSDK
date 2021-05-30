@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2007-2015 Freescale Semiconductor, Inc.
- * Copyright 2018-2019 NXP
+ * Copyright 2018-2020 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -25,6 +25,15 @@
  * @name Hardware instance define
  * @{
  */
+
+/* Board specific exceptions */
+
+#ifdef FRDM_K66F
+/* K66F has both KHCI and EHCI, the FRDM-K66F has the EHCI connected */
+#undef FSL_FEATURE_USB_KHCI_COUNT
+#endif
+
+/* Determine USB configuration automatically from the processor-specifc feature options */
 
 #if defined(FSL_FEATURE_USB_KHCI_COUNT) && FSL_FEATURE_USB_KHCI_COUNT>0
 
@@ -55,7 +64,7 @@
 #elif defined(FSL_FEATURE_USBHS_EHCI_COUNT) && FSL_FEATURE_USBHS_EHCI_COUNT>0
 
     /*! brief i.MXRT USB interrupt vector name */
-    #define USB_MCU_INT_HANDLER USB_OTG1_IRQHandler
+    #define USB_MCU_INT_HANDLER USBHS_IRQHandler /* this is redefined to USB_OTG1_IRQHandler on some platforms */
 
     /*! brief USB interrupt vectors indexes */
     #define USB_IRQS_LIST USBHS_IRQS
@@ -129,6 +138,29 @@
 
     /*! @brief LPC USB IP3511 FS instance count */
     #define USB_DEVICE_CONFIG_LPCIP3511FS (1U)
+
+    /*! @brief LPC USB IP3511 HS instance count */
+    #define USB_DEVICE_CONFIG_LPCIP3511HS (0U)
+
+#elif defined(MC56F83789_SERIES) || defined(MC56F83689_SERIES)
+
+    /*! brief USB interrupt vector name */
+    #define USB_MCU_INT_HANDLER USB_IRQHandler
+
+    /*! brief Controller Identificator */
+    #define CONTROLLER_ID kUSB_ControllerKhci0
+
+    /*! brief Controller Peripheral Index */
+    #define USB_CONTROLLER_IX 0
+
+    /*! @brief KHCI instance count */
+    #define USB_DEVICE_CONFIG_KHCI (1U)
+
+    /*! @brief EHCI instance count */
+    #define USB_DEVICE_CONFIG_EHCI (0U)
+
+    /*! @brief LPC USB IP3511 FS instance count */
+    #define USB_DEVICE_CONFIG_LPCIP3511FS (0U)
 
     /*! @brief LPC USB IP3511 HS instance count */
     #define USB_DEVICE_CONFIG_LPCIP3511HS (0U)

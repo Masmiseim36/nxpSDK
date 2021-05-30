@@ -14,14 +14,14 @@
 #include "timers.h"
 /* Application includes */
 #include <stdio.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
 #include "iperf_api.h"
 
 #include "fsl_device_registers.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 #include "fsl_phyksz8081.h"
 #include "fsl_enet_mdio.h"
 /*******************************************************************************
@@ -51,26 +51,13 @@
 #define TASK_MAIN_STACK_SIZE 800
 
 #ifdef IPERF3_WIFI
-
-#include "iot_wifi.h"
-
 /*
  * Bandwidth limit of the iperf3 server for the UDP receive test.
  * "0" means there is no limit and server will transmit testing UDP packets at its maximum speed.
  * Other number means server will transmit at given bits per second speed.
  */
-#define UDP_RX_BANDWIDTH "30000000"
-
-#define TASK_MAIN_PRIO (configMAX_PRIORITIES - 4)
-
-#if TASK_MAIN_PRIO_AFTER_WIFI_INIT > configTIMER_TASK_PRIORITY
-#error "TASK_MAIN_PRIO_AFTER_WIFI_INIT > configTIMER_TASK_PRIORITY"
-#endif
-
-// Hardwired SSID, passphrase, auth and cipher algo of AP to connect to
-// Change this to fit your AP
-#define AP_SSID       "nxp"
-#define AP_PASSPHRASE "NXP0123456789"
+#define UDP_RX_BANDWIDTH "81920"
+#define TASK_MAIN_PRIO   (configMAX_PRIORITIES - 2)
 
 #endif /* IPERF3_WIFI */
 
@@ -164,16 +151,12 @@ static char *json_req[] = {
     "\"time\": 10, \"fqrate\": 512, \"bandwidth\": " UDP_RX_BANDWIDTH "}",
 };
 
-#ifdef IPERF3_WIFI
-
-WIFIReturnCode_t xWifiStatus;
-
-#elif defined(IPERF3_ENET)
+#ifdef IPERF3_ENET
 
 static mdio_handle_t mdioHandle = {.ops = &EXAMPLE_MDIO_OPS};
 static phy_handle_t phyHandle   = {.phyAddr = EXAMPLE_PHY_ADDRESS, .mdioHandle = &mdioHandle, .ops = &EXAMPLE_PHY_OPS};
 
-#endif /* IPERF3_WIFI */
+#endif /* IPERF3_ENET */
 
 /*******************************************************************************
  * Prototypes
@@ -198,37 +181,38 @@ static void menu(struct iperf_ctx *ctx)
     char mode_switch;
     int choosing_mode = 1;
     PRINTF(
-        "Menu:\r\nPress \'s\' to start client Tx mode\r\n"
+        "Menu:\r\n"
+        "Press \'s\' to start client Tx mode\r\n"
         "Press \'r\' to start client Rx mode\r\n"
         "Press \'S\' to start client Tx UDP mode\r\n"
         "Press \'R\' to start client Rx UDP mode\r\n");
     while (choosing_mode)
     {
-        mode_switch = getchar();
+        mode_switch = GETCHAR();
         switch (mode_switch)
         {
             case 's':
                 choosing_mode = 0;
                 ctx->mode     = IPERF_CLIENT_TX;
-                PRINTF("\n\rTx mode!\r\n");
+                PRINTF("\r\nTx mode!\r\n");
                 break;
 
             case 'r':
                 choosing_mode = 0;
                 ctx->mode     = IPERF_CLIENT_RX;
-                PRINTF("\n\rRx mode!\r\n");
+                PRINTF("\r\nRx mode!\r\n");
                 break;
 
             case 'S':
                 choosing_mode = 0;
                 ctx->mode     = IPERF_CLIENT_TX_UDP;
-                PRINTF("\n\rTx UDP mode!\r\n");
+                PRINTF("\r\nTx UDP mode!\r\n");
                 break;
 
             case 'R':
                 choosing_mode = 0;
                 ctx->mode     = IPERF_CLIENT_RX_UDP;
-                PRINTF("\n\rRx UDP mode!\r\n");
+                PRINTF("\r\nRx UDP mode!\r\n");
                 break;
 
             default:
@@ -339,7 +323,7 @@ static void iperfc_timer_start(struct iperf_ctx *ctx)
     result            = xTimerStart(iperf_timer, 0);
     if (result != pdPASS)
     {
-        PRINTF("Failed to start timer! \r\n");
+        PRINTF("Failed to start timer!\r\n");
         __BKPT(0);
     }
 }
@@ -671,7 +655,7 @@ static void iperf_switch_state(struct iperf_ctx *ctx)
             xStatus          = iperf_send(ctx->ctrl_sock, ctx->ctrl_buf, CTRL_IPERF_MSG_LEN, 0);
             if (xStatus == -1)
             {
-                PRINTF("Failed to send status! \r\n");
+                PRINTF("Failed to send status!\r\n");
                 __BKPT(0);
             }
             ctx->iperf_done = 2;
@@ -685,11 +669,11 @@ static void get_server_ip(struct iperf_ctx *ctx)
     int result                = 0;
     do
     {
-        PRINTF("Enter IP addr of a server in format '192.168.1.2' \n\r");
+        PRINTF("Enter IP address of a server in format '192.168.1.2'\r\n");
         result = SCANF("%d..%d..%d..%d", &safe_scanf_ip[0], &safe_scanf_ip[1], &safe_scanf_ip[2], &safe_scanf_ip[3]);
         if (4 != result)
         {
-            PRINTF("\n\rYour IP is not valid, please try again \n\r");
+            PRINTF("\r\nYour IP is not valid, please try again\r\n");
         }
     } while (result != 4);
     /* To avoid stack overflow from user input */
@@ -698,7 +682,7 @@ static void get_server_ip(struct iperf_ctx *ctx)
     ctx->server_ip.ip[2] = safe_scanf_ip[2];
     ctx->server_ip.ip[3] = safe_scanf_ip[3];
 
-    PRINTF("\n\rUsing IP %d.%d.%d.%d \r\n", ctx->server_ip.ip[0], ctx->server_ip.ip[1], ctx->server_ip.ip[2],
+    PRINTF("\r\nUsing IP %d.%d.%d.%d\r\n", ctx->server_ip.ip[0], ctx->server_ip.ip[1], ctx->server_ip.ip[2],
            ctx->server_ip.ip[3]);
 }
 
@@ -753,70 +737,20 @@ static void iperf_run(struct iperf_ctx *ctx)
 
     do
     {
-        PRINTF("\n\rPRESS \"F\" to restart...\r\n");
-        c = getchar();
+        PRINTF("\r\nPRESS \"F\" to restart...\r\n");
+        c = GETCHAR();
     } while (c != 'F');
+    PRINTF("\r\n");
 }
 
 #ifdef IPERF3_WIFI
 
-void con_to_ap(struct iperf_ctx *ctx)
-{
-    PRINTF("Trying to connect to AP: %s\r\n", AP_SSID);
-    WIFINetworkParams_t xNetworkParams = {0};
-
-    xNetworkParams.pcSSID = AP_SSID;
-    assert(NULL != xNetworkParams.pcSSID);
-
-    xNetworkParams.ucSSIDLength = strlen(xNetworkParams.pcSSID);
-    xNetworkParams.pcPassword   = AP_PASSPHRASE;
-
-    assert(NULL != xNetworkParams.pcPassword);
-    xNetworkParams.ucPasswordLength = strlen(xNetworkParams.pcPassword);
-
-    xNetworkParams.xSecurity = eWiFiSecurityWPA2;
-    xWifiStatus              = WIFI_ConnectAP(&(xNetworkParams));
-
-    if (xWifiStatus == eWiFiSuccess)
-    {
-        uint8_t ucIPAddr[4];
-        xWifiStatus = WIFI_GetIP(&ucIPAddr[0]);
-        if (xWifiStatus == eWiFiSuccess)
-        {
-            PRINTF("Connected, device IP: %d.%d.%d.%d \r\n", ucIPAddr[0], ucIPAddr[1], ucIPAddr[2], ucIPAddr[3]);
-            while (1)
-            {
-                iperf_run(ctx);
-            }
-        }
-    }
-    else
-    {
-        PRINTF("Failed to connect to AP.\r\n");
-        while (1)
-            ;
-    }
-}
-
 void iperf_startup(struct iperf_ctx *ctx)
 {
-    xWifiStatus = WIFI_On();
-    if (xWifiStatus == eWiFiSuccess)
+    /* Run the iperf */
+    while (1)
     {
-        WIFIDeviceMode_t xDeviceMode = eWiFiModeStation;
-        xWifiStatus                  = WIFI_GetMode(&xDeviceMode);
-        if (xWifiStatus == eWiFiSuccess || xWifiStatus == eWiFiNotSupported)
-        {
-            uint8_t ucMacAddressVal[wificonfigMAX_BSSID_LEN];
-            WIFI_GetMAC(&ucMacAddressVal[0]);
-            PRINTF("Wifi turned on.\r\nMAC: %x:%x:%x:%x:%x:%x \r\n", ucMacAddressVal[0], ucMacAddressVal[1],
-                   ucMacAddressVal[2], ucMacAddressVal[3], ucMacAddressVal[4], ucMacAddressVal[5]);
-            con_to_ap(ctx);
-        }
-    }
-    else
-    {
-        PRINTF("Problem with turning wifi on!\r\n");
+        iperf_run(ctx);
     }
 }
 

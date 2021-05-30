@@ -15,13 +15,13 @@
 /* Freescale includes. */
 #include "fsl_device_registers.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
 #include "fsl_uart_freertos.h"
 #include "fsl_uart.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -39,9 +39,9 @@ static void uart_task(void *pvParameters);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-const char *to_send               = "FreeRTOS UART driver example!\r\n";
-const char *send_ring_overrun     = "\r\nRing buffer overrun!\r\n";
-const char *send_hardware_overrun = "\r\nHardware buffer overrun!\r\n";
+char *to_send               = "FreeRTOS UART driver example!\r\n";
+char *send_ring_overrun     = "\r\nRing buffer overrun!\r\n";
+char *send_hardware_overrun = "\r\nHardware buffer overrun!\r\n";
 uint8_t background_buffer[32];
 uint8_t recv_buffer[4];
 
@@ -125,7 +125,7 @@ static void uart_task(void *pvParameters)
         if (n > 0)
         {
             /* send back the received data */
-            UART_RTOS_Send(&handle, (uint8_t *)recv_buffer, n);
+            UART_RTOS_Send(&handle, recv_buffer, n);
         }
     } while (kStatus_Success == error);
 

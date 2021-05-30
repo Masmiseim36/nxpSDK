@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2019 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -16,23 +16,22 @@
  * @{
  */
 
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 
 /*! @name Driver version */
 /*@{*/
-#define FSL_MMSVSQ_DRIVER_VERSION (MAKE_VERSION(2, 0, 2)) /*!< Version 2.0.2. */
+#define FSL_MMSVSQ_DRIVER_VERSION (MAKE_VERSION(2, 0, 3)) /*!< Version 2.0.3. */
 /*@}*/
 
 /*! @brief MMDVSQ execution status */
 typedef enum _mmdvsq_execution_status
 {
     kMMDVSQ_IdleSquareRoot = 0x01U, /*!< MMDVSQ is idle; the last calculation was a square root */
-    kMMDVSQ_IdleDivide = 0x02U,     /*!< MMDVSQ is idle; the last calculation was division */
+    kMMDVSQ_IdleDivide     = 0x02U, /*!< MMDVSQ is idle; the last calculation was division */
     kMMDVSQ_BusySquareRoot = 0x05U, /*!< MMDVSQ is busy processing a square root calculation */
-    kMMDVSQ_BusyDivide = 0x06U      /*!< MMDVSQ is busy processing a division calculation */
+    kMMDVSQ_BusyDivide     = 0x06U  /*!< MMDVSQ is busy processing a division calculation */
 } mmdvsq_execution_status_t;
 
 /*! @brief MMDVSQ divide fast start select */
@@ -113,7 +112,9 @@ uint16_t MMDVSQ_Sqrt(MMDVSQ_Type *base, uint32_t radicand);
  */
 static inline mmdvsq_execution_status_t MMDVSQ_GetExecutionStatus(MMDVSQ_Type *base)
 {
-    return (mmdvsq_execution_status_t)(base->CSR >> MMDVSQ_CSR_SQRT_SHIFT);
+    uint32_t tmp = base->CSR >> MMDVSQ_CSR_SQRT_SHIFT;
+
+    return (mmdvsq_execution_status_t)tmp;
 }
 
 /*!
@@ -132,7 +133,7 @@ static inline mmdvsq_execution_status_t MMDVSQ_GetExecutionStatus(MMDVSQ_Type *b
  */
 static inline void MMDVSQ_SetFastStartConfig(MMDVSQ_Type *base, mmdvsq_fast_start_select_t mode)
 {
-    if (mode)
+    if (mode == kMMDVSQ_DisableFastStart)
     {
         base->CSR |= MMDVSQ_CSR_DFS_MASK;
     }
@@ -171,7 +172,6 @@ static inline void MMDVSQ_SetDivideByZeroConfig(MMDVSQ_Type *base, bool isDivByZ
 
 #if defined(__cplusplus)
 }
-
 #endif /* __cplusplus */
 
 /*! @}*/

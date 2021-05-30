@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
- * Copyright 2016 NXP
+ * Copyright 2016 - 2017 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -34,15 +38,14 @@
 #include "usb_host_cdc.h"
 #include "board.h"
 #include "fsl_debug_console.h"
-#include "usb_uart_drv.h"
+#include "usb_serial_port.h"
 #include "host_cdc.h"
 #include "fsl_common.h"
 #if (defined(FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT > 0U))
 #include "fsl_sysmpu.h"
 #endif /* FSL_FEATURE_SOC_SYSMPU_COUNT */
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-#include "usb_phy.h"
-#endif /* USB_HOST_CONFIG_EHCI */
+#include "app.h"
+#include "board.h"
 
 #if ((!USB_HOST_CONFIG_KHCI) && (!USB_HOST_CONFIG_EHCI) && (!USB_HOST_CONFIG_OHCI) && (!USB_HOST_CONFIG_IP3516HS))
 #error Please enable USB_HOST_CONFIG_KHCI, USB_HOST_CONFIG_EHCI, USB_HOST_CONFIG_OHCI, or USB_HOST_CONFIG_IP3516HS in file usb_host_config.
@@ -52,29 +55,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* USB clock source and frequency*/
-#define USB_FS_CLK_SRC kCLOCK_UsbSrcPll0
-#define USB_FS_CLK_FREQ CLOCK_GetFreq(kCLOCK_PllFllSelClk)
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-#define CONTROLLER_ID kUSB_ControllerKhci0
-#endif /* USB_HOST_CONFIG_KHCI */
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-#define CONTROLLER_ID kUSB_ControllerEhci0
-#endif /* USB_HOST_CONFIG_EHCI */
-#if ((defined USB_HOST_CONFIG_OHCI) && (USB_HOST_CONFIG_OHCI))
-#define CONTROLLER_ID kUSB_ControllerOhci0
-#endif /* USB_HOST_CONFIG_OHCI */
-#if ((defined USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS))
-#define CONTROLLER_ID kUSB_ControllerIp3516Hs0
-#endif /* USB_HOST_CONFIG_IP3516HS */
-#define USB_HOST_INTERRUPT_PRIORITY (3U)
-
 /*******************************************************************************
   * Prototypes
   ******************************************************************************/
+extern void USB_HostClockInit(void);
+extern void USB_HostIsrEnable(void);
+extern void USB_HostTaskFn(void *param);
 void BOARD_InitHardware(void);
-extern void UART_UserCallback(USB_UartType *base, usb_uart_handle_t *handle, status_t status, void *param);
-extern void USB_UartIRQHandler(USB_UartType *base, usb_uart_handle_t *handle);
+extern void UART_UserCallback(void *handle, status_t status, void *param);
+extern void USB_UartIRQHandler(usb_serial_port_handle_t *handle);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
@@ -82,48 +71,54 @@ extern void USB_UartIRQHandler(USB_UartType *base, usb_uart_handle_t *handle);
 usb_host_handle g_hostHandle;
 volatile uint8_t g_AttachFlag;
 
-usb_uart_handle_t g_UartHandle;
+usb_serial_port_handle_t g_UartHandle;
 
 extern char usbRecvUart[USB_HOST_CDC_UART_RX_MAX_LEN];
-usb_xfer_t g_xfer;
+usb_serial_port_xfer_t g_xfer;
 /*******************************************************************************
  * Code
  ******************************************************************************/
-/*!
- * @brief USB isr function.
- */
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
 void USB0_IRQHandler(void)
 {
     USB_HostKhciIsrFunction(g_hostHandle);
 }
 #endif /* USB_HOST_CONFIG_KHCI */
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-void USBHS_IRQHandler(void)
+
+void USB_HostClockInit(void)
 {
-    USB_HostEhciIsrFunction(g_hostHandle);
-}
-#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 1U)
-#if defined(FSL_FEATURE_SOC_USBNC_COUNT) && (FSL_FEATURE_SOC_USBNC_COUNT > 1U)
-void USB1_IRQHandler(void)
-{
-    USB_HostEhciIsrFunction(g_hostHandle);
-}
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+    SystemCoreClockUpdate();
+    CLOCK_EnableUsbfs0Clock(kCLOCK_UsbSrcPll0, CLOCK_GetFreq(kCLOCK_PllFllSelClk));
 #endif
+}
+
+void USB_HostIsrEnable(void)
+{
+    uint8_t irqNumber;
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+    uint8_t usbHOSTKhciIrq[] = USB_IRQS;
+    irqNumber = usbHOSTKhciIrq[CONTROLLER_ID - kUSB_ControllerKhci0];
+#endif /* USB_HOST_CONFIG_KHCI */
+
+/* Install isr, set priority, and enable IRQ. */
+#if defined(__GIC_PRIO_BITS)
+    GIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
+#else
+    NVIC_SetPriority((IRQn_Type)irqNumber, USB_HOST_INTERRUPT_PRIORITY);
 #endif
-#endif /* USB_HOST_CONFIG_EHCI */
-#if (defined(USB_HOST_CONFIG_OHCI) && (USB_HOST_CONFIG_OHCI > 0U))
-void USB0_IRQHandler(void)
-{
-    USB_HostOhciIsrFunction(g_hostHandle);
+    EnableIRQ((IRQn_Type)irqNumber);
 }
-#endif /* USB_HOST_CONFIG_OHCI */
-#if (defined(USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS > 0U))
-void USB1_IRQHandler(void)
+
+void USB_HostTaskFn(void *param)
 {
-    USB_HostIp3516HsIsrFunction(g_hostHandle);
+#if defined(USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI > 0U)
+    USB_HostKhciTaskFunction(param);
+#endif
 }
-#endif /* USB_HOST_CONFIG_IP3516HS */
+/*!
+ * @brief USB isr function.
+ */
 
 /*!
  * @brief host callback function.
@@ -172,74 +167,28 @@ usb_status_t USB_HostEvent(usb_device_handle deviceHandle,
  */
 void APP_init(void)
 {
+    usb_serial_port_config_t uartConfiguration;
+    usb_serial_port_callback_struct_t callback;
     usb_status_t status = kStatus_USB_Success;
-    IRQn_Type usb_irq;
-    usb_uartConfiguration uartConfiguration;
 
     g_xfer.buffer = (uint8_t *)&usbRecvUart[0];
     g_xfer.size = USB_HOST_CDC_UART_RX_MAX_LEN;
-    USB_UartGetDefaultConfiguratoion(&uartConfiguration);
     uartConfiguration.baudRate_Bps = BOARD_DEBUG_UART_BAUDRATE;
+    uartConfiguration.isMsb = 0U;
     uartConfiguration.enableTx = true;
     uartConfiguration.enableRx = true;
-    USB_UartInit((USB_UartType *)BOARD_DEBUG_UART_BASEADDR, &uartConfiguration, CLOCK_GetFreq(BOARD_DEBUG_UART_CLKSRC));
-    USB_UartCreateHandle((USB_UartType *)BOARD_DEBUG_UART_BASEADDR, &g_UartHandle, UART_UserCallback, NULL);
+    callback.callbackFunction = UART_UserCallback;
+    callback.callbackParam = NULL;
+    USB_SerialPortInit(BOARD_DEBUG_UART_INSTANCE, &uartConfiguration, &callback, BOARD_DEBUG_UART_CLK_FREQ,
+                       &g_UartHandle);
 
-    USB_UartReceiveDataIRQ((USB_UartType *)BOARD_DEBUG_UART_BASEADDR, &g_UartHandle, &g_xfer, NULL);
+    USB_SerialPortRecv(&g_UartHandle, &g_xfer, NULL);
 
     g_AttachFlag = 0;
 
     USB_HostCdcInitBuffer();
 
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-    IRQn_Type usb_fs_irqs[] = USB_IRQS;
-    usb_irq = usb_fs_irqs[CONTROLLER_ID - kUSB_ControllerKhci0];
-    CLOCK_EnableUsbfs0Clock(USB_FS_CLK_SRC, USB_FS_CLK_FREQ);
-#endif
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-    IRQn_Type usb_hs_irqs[] = USBHS_IRQS;
-    usb_irq = usb_hs_irqs[CONTROLLER_ID - kUSB_ControllerEhci0];
-#if defined(USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI > 1U)
-    if (CONTROLLER_ID == kUSB_ControllerEhci0)
-    {
-        CLOCK_EnableUsbhs0PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-        CLOCK_EnableUsbhs0Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-    }
-    else
-    {
-        CLOCK_EnableUsbhs1PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-        CLOCK_EnableUsbhs1Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-    }
-#else
-    CLOCK_EnableUsbhs0PhyPllClock(USB_HS_PHY_CLK_SRC, USB_HS_PHY_CLK_FREQ);
-    CLOCK_EnableUsbhs0Clock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-#endif
-
-    USB_EhciPhyInit(CONTROLLER_ID, BOARD_XTAL0_CLK_HZ);
-#endif /* USB_HOST_CONFIG_EHCI */
-#if ((defined USB_HOST_CONFIG_OHCI) && (USB_HOST_CONFIG_OHCI > 0U))
-    IRQn_Type usb_hs_irqs[] = {(IRQn_Type)USB0_IRQn};
-    usb_irq = usb_hs_irqs[CONTROLLER_ID - kUSB_ControllerOhci0];
-    CLOCK_EnableUsbfs0HostClock(USB_FS_CLK_SRC, USB_FS_CLK_FREQ);
-#if ((defined FSL_FEATURE_USBFSH_USB_RAM) && (FSL_FEATURE_USBFSH_USB_RAM > 0U))
-    for (int i = 0; i < (FSL_FEATURE_USBFSH_USB_RAM >> 2); i++)
-    {
-        ((uint32_t *)FSL_FEATURE_USBFSH_USB_RAM_BASE_ADDRESS)[i] = 0U;
-    }
-#endif
-#endif /* USB_HOST_CONFIG_OHCI */
-
-#if ((defined USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS > 0U))
-    IRQn_Type usb_hs_irqs[] = {(IRQn_Type)USB1_IRQn};
-    usb_irq = usb_hs_irqs[CONTROLLER_ID - kUSB_ControllerIp3516Hs0];
-    CLOCK_EnableUsbhs0HostClock(USB_HS_CLK_SRC, USB_HS_CLK_FREQ);
-#if ((defined FSL_FEATURE_USBHSH_USB_RAM) && (FSL_FEATURE_USBHSH_USB_RAM > 0U))
-    for (int i = 0; i < (FSL_FEATURE_USBHSH_USB_RAM >> 2); i++)
-    {
-        ((uint32_t *)FSL_FEATURE_USBHSH_USB_RAM_BASE_ADDRESS)[i] = 0U;
-    }
-#endif
-#endif /* USB_HOST_CONFIG_IP3511HS */
+    USB_HostClockInit();
 
 #if ((defined FSL_FEATURE_SOC_SYSMPU_COUNT) && (FSL_FEATURE_SOC_SYSMPU_COUNT))
     SYSMPU_Enable(SYSMPU, 0);
@@ -251,12 +200,7 @@ void APP_init(void)
         usb_echo("host init error\r\n");
         return;
     }
-#if defined(__GIC_PRIO_BITS)
-    GIC_SetPriority(usb_irq, USB_HOST_INTERRUPT_PRIORITY);
-#else
-    NVIC_SetPriority(usb_irq, USB_HOST_INTERRUPT_PRIORITY);
-#endif
-    EnableIRQ(usb_irq);
+    USB_HostIsrEnable();
 
     usb_echo("host init done\r\n");
     usb_echo("This example requires that the CDC device uses Hardware flow\r\n");
@@ -277,18 +221,7 @@ int main(void)
 
     while (1)
     {
-#if ((defined USB_HOST_CONFIG_KHCI) && (USB_HOST_CONFIG_KHCI))
-        USB_HostKhciTaskFunction(g_hostHandle);
-#endif
-#if ((defined USB_HOST_CONFIG_EHCI) && (USB_HOST_CONFIG_EHCI))
-        USB_HostEhciTaskFunction(g_hostHandle);
-#endif
-#if ((defined USB_HOST_CONFIG_OHCI) && (USB_HOST_CONFIG_OHCI > 0U))
-        USB_HostOhciTaskFunction(g_hostHandle);
-#endif /* USB_HOST_CONFIG_OHCI */
-#if ((defined USB_HOST_CONFIG_IP3516HS) && (USB_HOST_CONFIG_IP3516HS > 0U))
-        USB_HostIp3516HsTaskFunction(g_hostHandle);
-#endif /* USB_HOST_CONFIG_IP3516HS */
+        USB_HostTaskFn(g_hostHandle);
         USB_HosCdcTask(&g_cdc);
     }
 }

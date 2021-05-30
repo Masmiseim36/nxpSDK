@@ -47,6 +47,15 @@
   #define gSwitchPressThreshold_c    (2)
   #endif
 #endif
+
+#ifndef gWuart_CentralRole_c
+#define gWuart_CentralRole_c 1
+#endif
+
+#ifndef gWuart_PeripheralRole_c
+#define gWuart_PeripheralRole_c 1
+#endif
+
 /************************************************************************************
 *************************************************************************************
 * Public memory declarations

@@ -93,7 +93,7 @@ gapScanResponseData_t gAppScanRspData =
 
 gapScanningParameters_t gScanParams =
 {
-    /* type */              gScanTypePassive_c,
+    /* type */              gScanTypeActive_c,
     /* interval */          gGapScanIntervalDefault_d,
     /* window */            gGapScanWindowDefault_d,
     /* ownAddressType */    gBleAddrTypePublic_c,

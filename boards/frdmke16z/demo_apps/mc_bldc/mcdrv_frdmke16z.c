@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2018 NXP
+ * Copyright 2016, Freescale Semiconductor, Inc.
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -31,15 +31,9 @@ const char bldcCommutationTableComp[16] = {
  * Variables
  ******************************************************************************/
 
-/* configuration structure for 3-phase PWM driver */
-mcdrv_pwm3ph_ftm_init_t g_sM1Pwm3phInit;
-
 /* configuration structure for ADC driver - phase currents,
    DC-bus voltage, aux */
 mcdrv_adc16_init_t g_sM1Adc16Init;
-
-/* configuration structure for time event driver */
-mcdrv_ftm_cmt_init_t g_sM1CmtTmrInit;
 
 /* configuration structure for 3-phase PWM mc driver */
 mcdrv_pwm3ph_ftm_t g_sM1Pwm3ph;
@@ -61,17 +55,20 @@ lpit_config_t lpitConfig;
  ******************************************************************************/
 
 /*!
-* @brief   void MCDRV_Init_M1(void)
-*           - Motor control driver main initialization
-*           - Calls initialization functions of peripherals required for motor
-*             control functionality
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void MCDRV_Init_M1(void)
+ *           - Motor control driver main initialization
+ *           - Calls initialization functions of peripherals required for motor
+ *             control functionality
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void MCDRV_Init_M1(void)
 {
+    /* Init application clock dependent variables */
+    InitClock();
+
     /* init ADC */
     M1_MCDRV_ADC_PERIPH_INIT();
 
@@ -89,33 +86,34 @@ void MCDRV_Init_M1(void)
 }
 
 /*!
-* @brief      Core, bus, flash clock setup
-*
-* @param      void
-*
-* @return     none
-*/
+ * @brief      Core, bus, flash clock setup
+ *
+ * @param      void
+ *
+ * @return     none
+ */
 void InitClock(void)
 {
-    g_sClockSetup.ui32CoreSystemClock = SystemCoreClock;
-    g_sClockSetup.ui32BusClock = SystemCoreClock / ((SCG->CSR & SCG_CSR_DIVSLOW_MASK) + 1);
+    g_sClockSetup.ui32SystemClock     = CLOCK_GetFreq(kCLOCK_CoreSysClk);
+    g_sClockSetup.ui32SysOscAsyncDiv2 = CLOCK_GetFreq(kCLOCK_ScgSysOscAsyncDiv2Clk);
+
     g_sClockSetup.ui16PwmFreq = PWM_FREQ; /* 20 kHz */
                                           /* PWM module calculated as follows:
-                                          * PWM_MOD = CORE_CLOCK / PWM_FREQUNCY = 48 MHz / 20 kHz = 2400   */
-    g_sClockSetup.ui16PwmModulo = g_sClockSetup.ui32CoreSystemClock / g_sClockSetup.ui16PwmFreq;
-    g_sClockSetup.ui32CmtTimerFreq = g_sClockSetup.ui32CoreSystemClock / 128;
+                                           * PWM_MOD = CORE_CLOCK / PWM_FREQUNCY = 48 MHz / 20 kHz = 2400   */
+    g_sClockSetup.ui16PwmModulo    = g_sClockSetup.ui32SystemClock / g_sClockSetup.ui16PwmFreq;
+    g_sClockSetup.ui16PwmDeadTime  = (g_sClockSetup.ui32SystemClock / (1000000000U / PWM_DEADTIME)) / 4;
     g_sClockSetup.ui16CtrlLoopFreq = CTRL_LOOP_FREQ; /* 1 kHz */
 }
 
 /*!
-* @brief   void InitFTM0(void)
-*           - Initialization of the FTM0 peripheral for motor M1
-*           - 3-phase center-aligned PWM
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitFTM0(void)
+ *           - Initialization of the FTM0 peripheral for motor M1
+ *           - 3-phase center-aligned PWM
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitFTM0(void)
 {
     /* enable the clock for FTM0 */
@@ -151,7 +149,7 @@ void InitFTM0(void)
      * COMP = 1 - complementary PWM set
      * DTEN = 1 - dead-time enabled
      * SYNCEN = 1 - PWM update synchronization enabled
-    */
+     */
     /* complementary mode */
     FTM0->COMBINE = FTM_COMBINE_COMBINE0_MASK | FTM_COMBINE_COMP0_MASK | FTM_COMBINE_DTEN0_MASK |
                     FTM_COMBINE_SYNCEN0_MASK | FTM_COMBINE_COMBINE1_MASK | FTM_COMBINE_COMP1_MASK |
@@ -159,8 +157,7 @@ void InitFTM0(void)
                     FTM_COMBINE_COMP2_MASK | FTM_COMBINE_DTEN2_MASK | FTM_COMBINE_SYNCEN2_MASK;
 
     /* Dead time 0.5us */
-    /* 48MHz, 1/48MHz * 24 = 0.5us */
-    FTM0->DEADTIME = FTM_DEADTIME_DTVAL(24);
+    FTM0->DEADTIME = FTM_DEADTIME_DTPS(2) | FTM_DEADTIME_DTVAL(g_sClockSetup.ui16PwmDeadTime);
 
     /* Enable generation of trigger when FTM counter is equal to CNTIN register */
     FTM0->EXTTRIG = FTM_EXTTRIG_INITTRIGEN_MASK;
@@ -200,28 +197,25 @@ void InitFTM0(void)
                  FTM_SC_PWMEN4(TRUE) | FTM_SC_PWMEN5(TRUE));
 
     /* Initialization FTM 3-phase PWM mc driver */
-    g_sM1Pwm3phInit.pui32PwmBase = (FTM_Type *)(FTM0);    /* FTM0 base address */
-    g_sM1Pwm3phInit.ui16ChanPairNumPhA = M1_PWM_PAIR_PHA; /* PWM phase A top&bottom channel pair number */
-    g_sM1Pwm3phInit.ui16ChanPairNumPhB = M1_PWM_PAIR_PHB; /* PWM phase B top&bottom channel pair number */
-    g_sM1Pwm3phInit.ui16ChanPairNumPhC = M1_PWM_PAIR_PHC; /* PWM phase C top&bottom channel pair number */
+    g_sM1Pwm3ph.pui32PwmBase = (FTM_Type *)(FTM0); /* FTM0 base address */
+    g_sM1Pwm3ph.ui16ChanPhA  = M1_PWM_PAIR_PHA;    /* PWM phase A top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhB  = M1_PWM_PAIR_PHB;    /* PWM phase B top&bottom channel pair number */
+    g_sM1Pwm3ph.ui16ChanPhC  = M1_PWM_PAIR_PHC;    /* PWM phase C top&bottom channel pair number */
 
     /* initialization of PWM modulo */
-    g_sM1Pwm3phInit.ui16PwmModulo = g_sClockSetup.ui16PwmModulo;
+    g_sM1Pwm3ph.ui16PwmModulo = g_sClockSetup.ui16PwmModulo;
 
     /* initialization of BLDC commucation table */
-    g_sM1Pwm3phInit.pcBldcTable = &bldcCommutationTableComp[0];
-
-    /* Pass initialization structure to the mc driver */
-    MCDRV_FtmPwm3PhInit(&g_sM1Pwm3ph, &g_sM1Pwm3phInit); /* MC driver initialization */
+    g_sM1Pwm3ph.pcBldcTable = &bldcCommutationTableComp[0];
 }
 
 /*!
-* @brief      Initialization of the FTM1 for forced commutation control
-*
-* @param      void
-*
-* @return     none
-*/
+ * @brief      Initialization of the FTM1 for forced commutation control
+ *
+ * @param      void
+ *
+ * @return     none
+ */
 void InitFTM1(void)
 {
     /* enable clock to FTM1 module */
@@ -241,6 +235,10 @@ void InitFTM1(void)
     /* Prescale factor 128 */
     FTM1->SC = FTM_SC_PS(7) | FTM_SC_CLKS(1);
 
+    /* calculate frequency of timer used for forced commutation
+     * System clock divided by 2^FTM_prescaler */
+    g_sClockSetup.ui32CmtTimerFreq = g_sClockSetup.ui32SystemClock >> (FTM1->SC & FTM_SC_PS_MASK);
+
     /* enable Output Compare interrupt, output Compare, Software Output
      * Compare only (ELSnB:ELSnA = 0:0, output pin is not controlled by FTM) */
     FTM1->CONTROLS[0].CnSC = FTM_CnSC_MSA_MASK | FTM_CnSC_CHIE_MASK;
@@ -252,38 +250,35 @@ void InitFTM1(void)
     NVIC_SetPriority(FTM1_IRQn, 1);
 
     /* initialization FTM time event driver */
-    g_sM1CmtTmrInit.pui32FtmBase = (FTM_Type *)(FTM1); /* FTM1 base address */
-    g_sM1CmtTmrInit.ui16ChannelNum = M1_FTM_CMT_CHAN;  /* FTM1 compare channel selection */
-
-    /* pass initialization structure to the MC driver */
-    MCDRV_FtmCmtInit(&g_sM1CmtTmr, &g_sM1CmtTmrInit); /* MC driver initialization */
+    g_sM1CmtTmr.pui32FtmBase   = (FTM_Type *)(FTM1); /* FTM1 base address */
+    g_sM1CmtTmr.ui16ChannelNum = M1_FTM_CMT_CHAN;    /* FTM1 compare channel selection */
 }
 
 /*!
-* @brief   void InitFTM2(void)
-*           - Initialization of the FTM2 peripheral
-*           - performs slow control loop counter
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitFTM2(void)
+ *           - Initialization of the FTM2 peripheral
+ *           - performs slow control loop counter
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitLPIT0(void)
 {
     /* Set the source for the LPIT module */
     CLOCK_SetIpSrc(kCLOCK_Lpit0, kCLOCK_IpSrcSircAsync);
-    
+
     /*
      * lpitConfig.enableRunInDebug = false;
      * lpitConfig.enableRunInDoze = false;
      */
     LPIT_GetDefaultConfig(&lpitConfig);
-    
+
     /* Init PIT */
     LPIT_Init(LPIT0, &lpitConfig);
 
     /* Set PIT0 period 5ms */
-    LPIT_SetTimerPeriod(LPIT0, kLPIT_Chnl_0, CLOCK_GetFreq(kCLOCK_ScgSircAsyncDiv2Clk)/CTRL_LOOP_FREQ);
+    LPIT_SetTimerPeriod(LPIT0, kLPIT_Chnl_0, CLOCK_GetFreq(kCLOCK_ScgSircAsyncDiv2Clk) / CTRL_LOOP_FREQ);
 
     /* Enable the PIT interrupt */
     LPIT_EnableInterrupts(LPIT0, LPIT_MIER_TIE0_MASK);
@@ -295,14 +290,14 @@ void InitLPIT0(void)
 }
 
 /*!
-* @brief   void InitADC16(void)
-*           - Initialization of the ADC16 peripheral
-*           - Initialization of the A/D converter for current and voltage sensing
-*
-* @param   void
-*
-* @return  none
-*/
+ * @brief   void InitADC16(void)
+ *           - Initialization of the ADC16 peripheral
+ *           - Initialization of the A/D converter for current and voltage sensing
+ *
+ * @param   void
+ *
+ * @return  none
+ */
 void InitADC16(void)
 {
     uint16_t ui16Calib;
@@ -364,7 +359,7 @@ void InitADC16(void)
 
     /* prepare first measurement */
     /* pass initialization structure to ADC MC driver */
-    g_sM1Adc16Init.ui16AdcArray = (&ui16AdcArray[0]);
+    g_sM1Adc16Init.ui16AdcArray  = (&ui16AdcArray[0]);
     g_sM1Adc16Init.pui32Adc0Base = (ADC_Type *)ADC0;
     MCDRV_Adc16Init_frdm_ke16(&g_sM1AdcSensor, &g_sM1Adc16Init);
 
@@ -375,12 +370,12 @@ void InitADC16(void)
 }
 
 /*!
-* @brief      Initialization of the PDB for current and voltage sensing
-*
-* @param      void
-*
-* @return     none
-*/
+ * @brief      Initialization of the PDB for current and voltage sensing
+ *
+ * @param      void
+ *
+ * @return     none
+ */
 void InitPDB(void)
 {
     /* enable clock for PDB module */

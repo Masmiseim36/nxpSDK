@@ -13,10 +13,10 @@ program command uses quad mode, the write frequency is 48MHz * 4 = 192MHz.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -54,6 +54,3 @@ Program data finished!
 
 Program through QSPI polling succeed!
 ~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

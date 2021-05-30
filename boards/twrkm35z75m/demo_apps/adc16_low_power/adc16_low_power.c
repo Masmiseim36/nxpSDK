@@ -10,11 +10,11 @@
 #include "fsl_smc.h"
 #include "fsl_pmc.h"
 #include "fsl_adc16.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_lptmr.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 #include "fsl_xbar.h"
 /*******************************************************************************
  * Definitions

@@ -542,7 +542,14 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
 #if gAppUsePairing_d
         case gConnEvtPairingComplete_c:
         {
-
+            if (pConnectionEvent->eventData.pairingCompleteEvent.pairingSuccessful)
+            {
+                shell_write("\r\n-->  GAP Event: Device Paired.\r\n");
+            }
+            else
+            {
+                shell_write("\r\n-->  GAP Event: Pairing Unsuccessful.\r\n");
+            }
         }
         break;
         case gConnEvtEncryptionChanged_c:

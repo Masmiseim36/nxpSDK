@@ -5,10 +5,10 @@ Azure_amqp demo shows basic communication with iot-hub via amqp protocol.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- MCUXpresso  11.2.0
-- GCC ARM Embedded  9.2.1
-- Keil MDK  5.30
+- IAR embedded Workbench  8.50.9
+- MCUXpresso  11.3.0
+- GCC ARM Embedded  9.3.1
+- Keil MDK  5.33
 
 Hardware requirements
 =====================
@@ -81,7 +81,4 @@ IoTHubClient_LL_SendEventAsync accepted message [3] for transmission to IoT Hub.
 Confirmation[3] received for message tracking id = 3 with result = IOTHUB_CLIENT_CONFIRMATION_OK
 IoTHubClient_LL_SendEventAsync accepted message [4] for transmission to IoT Hub.
 Confirmation[4] received for message tracking id = 4 with result = IOTHUB_CLIENT_CONFIRMATION_OK
-
-Customization options
-=====================
 

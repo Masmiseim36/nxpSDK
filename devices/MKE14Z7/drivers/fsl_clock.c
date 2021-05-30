@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016 - 2019, NXP
+ * Copyright 2016 - 2020, NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -17,7 +17,7 @@
 #define FSL_COMPONENT_ID "platform.drivers.clock"
 #endif
 
-#define SCG_SIRC_LOW_RANGE_FREQ 2000000U  /* Slow IRC low range clock frequency. */
+#define SCG_SIRC_LOW_RANGE_FREQ  2000000U /* Slow IRC low range clock frequency. */
 #define SCG_SIRC_HIGH_RANGE_FREQ 8000000U /* Slow IRC high range clock frequency.   */
 
 #define SCG_FIRC_FREQ0 48000000U /* Fast IRC trimed clock frequency(48MHz). */
@@ -30,15 +30,11 @@
 #define SCG_LPFLL_FREQ2 96000000U  /* LPFLL trimed clock frequency(96MHz). */
 #define SCG_LPFLL_FREQ3 120000000U /* LPFLL trimed clock frequency(120MHz). */
 
-#define SCG_CSR_SCS_VAL ((SCG->CSR & SCG_CSR_SCS_MASK) >> SCG_CSR_SCS_SHIFT)
-#define SCG_SOSCDIV_SOSCDIV1_VAL ((SCG->SOSCDIV & SCG_SOSCDIV_SOSCDIV1_MASK) >> SCG_SOSCDIV_SOSCDIV1_SHIFT)
+#define SCG_CSR_SCS_VAL          ((SCG->CSR & SCG_CSR_SCS_MASK) >> SCG_CSR_SCS_SHIFT)
 #define SCG_SOSCDIV_SOSCDIV2_VAL ((SCG->SOSCDIV & SCG_SOSCDIV_SOSCDIV2_MASK) >> SCG_SOSCDIV_SOSCDIV2_SHIFT)
-#define SCG_SIRCDIV_SIRCDIV1_VAL ((SCG->SIRCDIV & SCG_SIRCDIV_SIRCDIV1_MASK) >> SCG_SIRCDIV_SIRCDIV1_SHIFT)
 #define SCG_SIRCDIV_SIRCDIV2_VAL ((SCG->SIRCDIV & SCG_SIRCDIV_SIRCDIV2_MASK) >> SCG_SIRCDIV_SIRCDIV2_SHIFT)
-#define SCG_FIRCDIV_FIRCDIV1_VAL ((SCG->FIRCDIV & SCG_FIRCDIV_FIRCDIV1_MASK) >> SCG_FIRCDIV_FIRCDIV1_SHIFT)
 #define SCG_FIRCDIV_FIRCDIV2_VAL ((SCG->FIRCDIV & SCG_FIRCDIV_FIRCDIV2_MASK) >> SCG_FIRCDIV_FIRCDIV2_SHIFT)
 
-#define SCG_LPFLLDIV_LPFLLDIV1_VAL ((SCG->LPFLLDIV & SCG_LPFLLDIV_LPFLLDIV1_MASK) >> SCG_LPFLLDIV_LPFLLDIV1_SHIFT)
 #define SCG_LPFLLDIV_LPFLLDIV2_VAL ((SCG->LPFLLDIV & SCG_LPFLLDIV_LPFLLDIV2_MASK) >> SCG_LPFLLDIV_LPFLLDIV2_SHIFT)
 
 #define SCG_SIRCCFG_RANGE_VAL ((SCG->SIRCCFG & SCG_SIRCCFG_RANGE_MASK) >> SCG_SIRCCFG_RANGE_SHIFT)
@@ -314,11 +310,11 @@ uint32_t CLOCK_GetSysClkFreq(scg_sys_clk_t type)
             break;
     }
 
-    freq /= (sysClkConfig.divCore + 1U); /* divided by the DIVCORE firstly. */
+    freq /= ((uint32_t)sysClkConfig.divCore + 1UL); /* divided by the DIVCORE firstly. */
 
     if (kSCG_SysClkSlow == type)
     {
-        freq /= (sysClkConfig.divSlow + 1U);
+        freq /= ((uint32_t)sysClkConfig.divSlow + 1UL);
     }
     else
     {
@@ -380,7 +376,7 @@ status_t CLOCK_InitSysOsc(const scg_sosc_config_t *config)
 
     /* Now start to set up OSC clock. */
     /* Step 1. Setup dividers. */
-    SCG->SOSCDIV = SCG_SOSCDIV_SOSCDIV1(config->div1) | SCG_SOSCDIV_SOSCDIV2(config->div2);
+    SCG->SOSCDIV = SCG_SOSCDIV_SOSCDIV2(config->div2);
 
     /* Step 2. Set OSC configuration. */
     SCG->SOSCCFG = (uint32_t)(config->workMode) | SCG_SOSCCFG_RANGE(range);
@@ -481,9 +477,6 @@ uint32_t CLOCK_GetSysOscAsyncFreq(scg_async_clk_t type)
             case kSCG_AsyncDiv2Clk: /* SOSCDIV2_CLK. */
                 divider = SCG_SOSCDIV_SOSCDIV2_VAL;
                 break;
-            case kSCG_AsyncDiv1Clk: /* SOSCDIV1_CLK. */
-                divider = SCG_SOSCDIV_SOSCDIV1_VAL;
-                break;
             default:
                 divider = 0U;
                 break;
@@ -528,7 +521,7 @@ status_t CLOCK_InitSirc(const scg_sirc_config_t *config)
     {
         /* Now start to set up SIRC clock. */
         /* Step 1. Setup dividers. */
-        SCG->SIRCDIV = SCG_SIRCDIV_SIRCDIV1(config->div1) | SCG_SIRCDIV_SIRCDIV2(config->div2);
+        SCG->SIRCDIV = SCG_SIRCDIV_SIRCDIV2(config->div2);
 
         /* Step 2. Set SIRC configuration. */
         SCG->SIRCCFG = SCG_SIRCCFG_RANGE(config->range);
@@ -622,9 +615,6 @@ uint32_t CLOCK_GetSircAsyncFreq(scg_async_clk_t type)
             case kSCG_AsyncDiv2Clk: /* SIRCDIV2_CLK. */
                 divider = SCG_SIRCDIV_SIRCDIV2_VAL;
                 break;
-            case kSCG_AsyncDiv1Clk: /* SIRCDIV2_CLK. */
-                divider = SCG_SIRCDIV_SIRCDIV1_VAL;
-                break;
             default:
                 divider = 0U;
                 break;
@@ -671,7 +661,7 @@ status_t CLOCK_InitFirc(const scg_firc_config_t *config)
 
     /* Now start to set up FIRC clock. */
     /* Step 1. Setup dividers. */
-    SCG->FIRCDIV = SCG_FIRCDIV_FIRCDIV1(config->div1) | SCG_FIRCDIV_FIRCDIV2(config->div2);
+    SCG->FIRCDIV = SCG_FIRCDIV_FIRCDIV2(config->div2);
 
     /* Step 2. Set FIRC configuration. */
     SCG->FIRCCFG = SCG_FIRCCFG_RANGE(config->range);
@@ -791,9 +781,6 @@ uint32_t CLOCK_GetFircAsyncFreq(scg_async_clk_t type)
             case kSCG_AsyncDiv2Clk: /* FIRCDIV2_CLK. */
                 divider = SCG_FIRCDIV_FIRCDIV2_VAL;
                 break;
-            case kSCG_AsyncDiv1Clk: /* FIRCDIV1_CLK. */
-                divider = SCG_FIRCDIV_FIRCDIV1_VAL;
-                break;
             default:
                 divider = 0U;
                 break;
@@ -840,7 +827,7 @@ status_t CLOCK_InitLpFll(const scg_lpfll_config_t *config)
 
     /* Now start to set up LPFLL clock. */
     /* Step 1. Setup dividers. */
-    SCG->LPFLLDIV = SCG_LPFLLDIV_LPFLLDIV1(config->div1) | SCG_LPFLLDIV_LPFLLDIV2(config->div2);
+    SCG->LPFLLDIV = SCG_LPFLLDIV_LPFLLDIV2(config->div2);
 
     /* Step 2. Set LPFLL configuration. */
     SCG->LPFLLCFG = SCG_LPFLLCFG_FSEL(config->range);
@@ -967,9 +954,6 @@ uint32_t CLOCK_GetLpFllAsyncFreq(scg_async_clk_t type)
         {
             case kSCG_AsyncDiv2Clk: /* LPFLLDIV2_CLK. */
                 divider = SCG_LPFLLDIV_LPFLLDIV2_VAL;
-                break;
-            case kSCG_AsyncDiv1Clk: /* LPFLLDIV1_CLK. */
-                divider = SCG_LPFLLDIV_LPFLLDIV1_VAL;
                 break;
             default:
                 divider = 0U;

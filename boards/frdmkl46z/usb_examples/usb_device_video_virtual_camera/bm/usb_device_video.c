@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2015 - 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -88,7 +92,8 @@ static usb_status_t USB_DeviceVideoVsRequest(usb_device_video_struct_t *videoHan
  * Variables
  ******************************************************************************/
 
-USB_GLOBAL static usb_device_video_struct_t s_UsbDeviceVideoHandle[USB_DEVICE_CONFIG_VIDEO];
+USB_GLOBAL USB_RAM_ADDRESS_ALIGNMENT(USB_DATA_ALIGN_SIZE) static usb_device_video_struct_t
+    s_UsbDeviceVideoHandle[USB_DEVICE_CONFIG_VIDEO];
 
 /*******************************************************************************
  * Code
@@ -176,7 +181,9 @@ static usb_status_t USB_DeviceVideoControlIn(usb_device_handle handle,
 
     if ((NULL != videoHandle->configStruct) && (videoHandle->configStruct->classCallback))
     {
-        /* Notify the application control data sent by calling the video class callback. */
+        /* Notify the application control data sent by calling the video class callback.
+        ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         error = videoHandle->configStruct->classCallback((class_handle_t)videoHandle,
                                                          kUSB_DeviceVideoEventControlSendResponse, message);
     }
@@ -214,7 +221,9 @@ static usb_status_t USB_DeviceVideoStreamIn(usb_device_handle handle,
     videoHandle->streamInPipeBusy = 0U;
     if ((NULL != videoHandle->configStruct) && (videoHandle->configStruct->classCallback))
     {
-        /* Notify the application stream data sent by calling the video class callback. */
+        /* Notify the application stream data sent by calling the video class callback.
+        ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         error = videoHandle->configStruct->classCallback((class_handle_t)videoHandle,
                                                          kUSB_DeviceVideoEventStreamSendResponse, message);
     }
@@ -252,7 +261,9 @@ static usb_status_t USB_DeviceVideoStreamOut(usb_device_handle handle,
     videoHandle->streamOutPipeBusy = 0U;
     if ((NULL != videoHandle->configStruct) && (videoHandle->configStruct->classCallback))
     {
-        /* Notify the application stream data sent by calling the video class callback. */
+        /* Notify the application stream data sent by calling the video class callback.
+        ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         error = videoHandle->configStruct->classCallback((class_handle_t)videoHandle,
                                                          kUSB_DeviceVideoEventStreamRecvResponse, message);
     }
@@ -325,7 +336,7 @@ static usb_status_t USB_DeviceVideoStreamEndpointsInit(usb_device_video_struct_t
     for (int count = 0U; count < interface->endpointList.count; count++)
     {
         usb_device_endpoint_init_struct_t epInitStruct;
-        usb_device_endpoint_callback_struct_t ep_callback;
+        usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0U;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
@@ -335,22 +346,22 @@ static usb_status_t USB_DeviceVideoStreamEndpointsInit(usb_device_video_struct_t
             (USB_IN == ((epInitStruct.endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >>
                         USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT)))
         {
-            ep_callback.callbackFn = USB_DeviceVideoStreamIn;
+            epCallback.callbackFn = USB_DeviceVideoStreamIn;
         }
         else if ((USB_ENDPOINT_ISOCHRONOUS ==
                   (epInitStruct.transferType & USB_DESCRIPTOR_ENDPOINT_ATTRIBUTE_TYPE_MASK)) &&
                  (USB_OUT == ((epInitStruct.endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >>
                               USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT)))
         {
-            ep_callback.callbackFn = USB_DeviceVideoStreamOut;
+            epCallback.callbackFn = USB_DeviceVideoStreamOut;
         }
         else
         {
             continue;
         }
-        ep_callback.callbackParam = videoHandle;
+        epCallback.callbackParam = videoHandle;
 
-        error = USB_DeviceInitEndpoint(videoHandle->handle, &epInitStruct, &ep_callback);
+        error = USB_DeviceInitEndpoint(videoHandle->handle, &epInitStruct, &epCallback);
     }
     return error;
 }
@@ -447,7 +458,7 @@ static usb_status_t USB_DeviceVideoControlEndpointsInit(usb_device_video_struct_
     for (int count = 0U; count < interface->endpointList.count; count++)
     {
         usb_device_endpoint_init_struct_t epInitStruct;
-        usb_device_endpoint_callback_struct_t ep_callback;
+        usb_device_endpoint_callback_struct_t epCallback;
         epInitStruct.zlt = 0U;
         epInitStruct.endpointAddress = interface->endpointList.endpoint[count].endpointAddress;
         epInitStruct.maxPacketSize = interface->endpointList.endpoint[count].maxPacketSize;
@@ -457,15 +468,15 @@ static usb_status_t USB_DeviceVideoControlEndpointsInit(usb_device_video_struct_
             (USB_IN == ((epInitStruct.endpointAddress & USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_MASK) >>
                         USB_DESCRIPTOR_ENDPOINT_ADDRESS_DIRECTION_SHIFT)))
         {
-            ep_callback.callbackFn = USB_DeviceVideoControlIn;
+            epCallback.callbackFn = USB_DeviceVideoControlIn;
         }
         else
         {
             continue;
         }
-        ep_callback.callbackParam = videoHandle;
+        epCallback.callbackParam = videoHandle;
 
-        error = USB_DeviceInitEndpoint(videoHandle->handle, &epInitStruct, &ep_callback);
+        error = USB_DeviceInitEndpoint(videoHandle->handle, &epInitStruct, &epCallback);
     }
     return error;
 }
@@ -531,6 +542,8 @@ static usb_status_t USB_DeviceVideoVcPowerModeControl(usb_device_video_struct_t 
     }
     if ((command) && (NULL != videoHandle->configStruct) && (videoHandle->configStruct->classCallback))
     {
+        /* ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         error = videoHandle->configStruct->classCallback((class_handle_t)videoHandle, command, controlRequest);
     }
     return error;
@@ -812,6 +825,8 @@ static usb_status_t USB_DeviceVideoVsProbeRequest(usb_device_video_struct_t *vid
     }
     if ((command) && (NULL != videoHandle->configStruct) && (videoHandle->configStruct->classCallback))
     {
+        /*ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+  it is from the second parameter of classInit*/
         error = videoHandle->configStruct->classCallback((class_handle_t)videoHandle, command, controlRequest);
     }
     return error;
@@ -853,6 +868,8 @@ static usb_status_t USB_DeviceVideoVsCommitRequest(usb_device_video_struct_t *vi
     }
     if ((command) && (NULL != videoHandle->configStruct) && (videoHandle->configStruct->classCallback))
     {
+        /* ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         error = videoHandle->configStruct->classCallback((class_handle_t)videoHandle, command, controlRequest);
     }
     return error;
@@ -906,6 +923,8 @@ static usb_status_t USB_DeviceVideoVsStillProbeRequest(usb_device_video_struct_t
     }
     if ((command) && (NULL != videoHandle->configStruct) && (videoHandle->configStruct->classCallback))
     {
+        /*ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+  it is from the second parameter of classInit*/
         error = videoHandle->configStruct->classCallback((class_handle_t)videoHandle, command, controlRequest);
     }
     return error;
@@ -947,6 +966,8 @@ static usb_status_t USB_DeviceVideoVsStillCommitRequest(usb_device_video_struct_
     }
     if ((command) && (NULL != videoHandle->configStruct) && (videoHandle->configStruct->classCallback))
     {
+        /* ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         error = videoHandle->configStruct->classCallback((class_handle_t)videoHandle, command, controlRequest);
     }
     return error;
@@ -985,6 +1006,8 @@ static usb_status_t USB_DeviceVideoVsStillImageTriggerRequest(usb_device_video_s
     }
     if ((command) && (NULL != videoHandle->configStruct) && (videoHandle->configStruct->classCallback))
     {
+        /* ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+        it is from the second parameter of classInit */
         error = videoHandle->configStruct->classCallback((class_handle_t)videoHandle, command, controlRequest);
     }
     return error;
@@ -1236,6 +1259,8 @@ usb_status_t USB_DeviceVideoEvent(void *handle, uint32_t event, void *param)
                             /* Get the buffer to receive the data sent from the host. */
                             if ((NULL != videoHandle->configStruct) && (videoHandle->configStruct->classCallback))
                             {
+                                /*ClassCallback is initialized in classInit of s_UsbDeviceClassInterfaceMap,
+                                                  it is from the second parameter of classInit*/
                                 error = videoHandle->configStruct->classCallback(
                                     (class_handle_t)videoHandle, kUSB_DeviceVideoEventClassRequestBuffer,
                                     controlRequest);

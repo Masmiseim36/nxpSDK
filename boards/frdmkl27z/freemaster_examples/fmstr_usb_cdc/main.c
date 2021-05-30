@@ -11,16 +11,16 @@
 // Includes
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "board.h"
 #include "pin_mux.h"
 #include "fsl_common.h"
+#include "board.h"
 
 #include "usb_device_config.h"
 
 #include "freemaster.h"
+#include "freemaster_usb.h"
 
 #include "freemaster_example.h"
-#include "freemaster_usb.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Variables

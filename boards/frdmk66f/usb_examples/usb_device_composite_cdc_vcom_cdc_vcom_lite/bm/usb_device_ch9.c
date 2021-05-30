@@ -796,7 +796,8 @@ usb_status_t USB_DeviceControlCallback(usb_device_handle handle,
     usb_status_t error = kStatus_USB_InvalidRequest;
     uint8_t state;
 
-    if (USB_UNINITIALIZED_VAL_32 == message->length)
+    /* endpoint callback length is USB_CANCELLED_TRANSFER_LENGTH (0xFFFFFFFFU) when transfer is canceled */
+    if (USB_CANCELLED_TRANSFER_LENGTH == message->length)
     {
         return error;
     }

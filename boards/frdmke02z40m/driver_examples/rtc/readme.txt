@@ -7,10 +7,10 @@ and time.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -44,12 +44,9 @@ Please input the number of second to wait for alarm
 The second must be positive value
 Alarm will occur at: 2014-12-25 19:01:11
 
-Alarm occurs !!!! Current datetime: 2014-12-25 19:01:12
+Alarm occurs !!!! Current datetime: 2014-12-25 19:01:11
 Please input the number of second to wait for alarm
 The second must be positive value
 ...............................................
 ...............................................
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

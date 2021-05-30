@@ -186,6 +186,9 @@
           <state>USB_STACK_BM</state>
           <state>FRDM_K64F</state>
           <state>FREEDOM</state>
+          <state>FSL_OSA_BM_TASK_ENABLE=0</state>
+          <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -262,7 +265,7 @@
         </option>
         <option>
           <name>IExtraOptionsCheck</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>IExtraOptions</name>
@@ -315,30 +318,16 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK64F12</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1176,6 +1165,9 @@
           <state>USB_STACK_BM</state>
           <state>FRDM_K64F</state>
           <state>FREEDOM</state>
+          <state>FSL_OSA_BM_TASK_ENABLE=0</state>
+          <state>FSL_OSA_BM_TIMER_CONFIG=0</state>
+          <state>SDK_DEBUGCONSOLE=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -1305,30 +1297,16 @@
         <option>
           <name>CCIncludePath2</name>
           <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../../..</state>
-          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/device</state>
           <state>$PROJ_DIR$/../../../../../../middleware/usb/include</state>
-          <state>$PROJ_DIR$/../../../../../../middleware/usb/osa</state>
+          <state>$PROJ_DIR$/../../../../../../components/timer</state>
+          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/debug_console_lite</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/debug_console</state>
           <state>$PROJ_DIR$/../../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
           <state>$PROJ_DIR$/../../../../../../devices/MK64F12</state>
-          <state>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../../components/osa</state>
+          <state>$PROJ_DIR$/../../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1982,21 +1960,6 @@
     </settings>
   </configuration>
   <group>
-    <name>utility</name>
-    <file>
-      <name>$PROJ_DIR$/../usb_timer.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../usb_pit_drv.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../usb_io.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../usb_kinetis_io_drv.c</name>
-    </file>
-  </group>
-  <group>
     <name>doc</name>
     <file>
       <name>$PROJ_DIR$/../readme.txt</name>
@@ -2074,9 +2037,15 @@
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
         </file>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device_dci.h</name>
+        </file>
       </group>
       <group>
         <name>include</name>
+        <file>
+          <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
+        </file>
         <file>
           <name>$PROJ_DIR$/../../../../../../middleware/usb/device/usb_device.h</name>
         </file>
@@ -2084,6 +2053,9 @@
     </group>
     <group>
       <name>include</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb.h</name>
+      </file>
       <file>
         <name>$PROJ_DIR$/../../../../../../middleware/usb/include/usb.h</name>
       </file>
@@ -2096,15 +2068,60 @@
     </group>
   </group>
   <group>
-    <name>osa</name>
+    <name>component</name>
+    <group>
+      <name>timer</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/timer/fsl_adapter_timer.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/timer/fsl_adapter_pit.c</name>
+      </file>
+    </group>
+    <group>
+      <name>uart</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/uart/fsl_adapter_uart.c</name>
+      </file>
+    </group>
+    <group>
+      <name>lists</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/lists/fsl_component_generic_list.c</name>
+      </file>
+    </group>
+    <group>
+      <name>osa</name>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_config.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../../components/osa/fsl_os_abstraction_bm.c</name>
+      </file>
+    </group>
+  </group>
+  <group>
+    <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/usb/osa/usb_osa.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/usb/osa/usb_osa_bm.h</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/debug_console_lite/fsl_debug_console.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../middleware/usb/osa/usb_osa_bm.c</name>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/debug_console_lite/fsl_assert.c</name>
     </file>
   </group>
   <group>
@@ -2134,6 +2151,12 @@
       <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_clock.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_common.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_common.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_uart.h</name>
     </file>
     <file>
@@ -2148,69 +2171,6 @@
     <file>
       <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_smc.c</name>
     </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_common.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/drivers/fsl_common.c</name>
-    </file>
-  </group>
-  <group>
-    <name>utilities</name>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/str/fsl_str.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/str/fsl_str.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../devices/MK64F12/utilities/fsl_assert.c</name>
-    </file>
-  </group>
-  <group>
-    <name>component</name>
-    <group>
-      <name>uart</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/uart/uart_adapter.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/serial_manager/serial_port_uart.c</name>
-      </file>
-    </group>
-    <group>
-      <name>lists</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../../components/lists/generic_list.c</name>
-      </file>
-    </group>
   </group>
   <group>
     <name>device</name>
@@ -2242,10 +2202,16 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_gcc.h</name>
@@ -2257,13 +2223,7 @@
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/core_armv8mml.h</name>
+      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_common_tables.h</name>
@@ -2273,12 +2233,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

@@ -4,6 +4,14 @@ The FTM project is a demonstration program of the SDK FTM driver's dual-edge cap
 This feature is available only on certain SoC's.
 The example sets up a FTM channel-pair for dual-edge capture. Once the input signal is received,
 this example will print the capture values and period of the input signal on the terminal window.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -41,11 +49,3 @@ Capture value C(n+1)V=5a8
 
 Input signals pulse width=24 us
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

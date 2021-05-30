@@ -12,11 +12,11 @@
 #include "fsl_lptmr.h"
 #include "fsl_port.h"
 #include "power_mode_switch.h"
-#include "board.h"
 #include "fsl_debug_console.h"
-#include "peripherals.h"
 
 #include "pin_mux.h"
+#include "peripherals.h"
+#include "board.h"
 #include "fsl_pmc.h"
 #include "fsl_lpuart.h"
 /*******************************************************************************

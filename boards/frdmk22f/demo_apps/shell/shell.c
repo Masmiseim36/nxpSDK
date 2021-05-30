@@ -10,14 +10,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_debug_console.h"
-#include "serial_manager.h"
+#include "fsl_component_serial_manager.h"
 #include "fsl_shell.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -154,16 +154,15 @@ int main(void)
 
     /* Init SHELL */
     s_shellHandle = &s_shellHandleBuffer[0];
-    SHELL_Init(s_shellHandle, g_serialHandle, "SHELL>> ");
 
+    SHELL_Init(s_shellHandle, g_serialHandle, "SHELL>> ");
     /* Add new command to commands list */
     SHELL_RegisterCommand(s_shellHandle, SHELL_COMMAND(led));
 
-#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
-    SHELL_Task(s_shellHandle);
-#endif
-
     while (1)
     {
+#if !(defined(SHELL_NON_BLOCKING_MODE) && (SHELL_NON_BLOCKING_MODE > 0U))
+        SHELL_Task(s_shellHandle);
+#endif
     }
 }

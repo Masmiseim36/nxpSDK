@@ -66,10 +66,6 @@ extern uint8_t USB_EnterLowpowerMode(void);
 #include "vcom2i2c.h" //+A71CH
 #include "nxLog_VCOM.h"
 
-#if defined(IMX_RT)
-#include "fsl_common.h"
-#include "fsl_iomuxc.h"
-#endif
 /*******************************************************************************
 * Definitions
 ******************************************************************************/
@@ -689,7 +685,8 @@ void APPInit(void)
     }
 
     USB_DeviceIsrEnable();
-
+    /*Add one delay here to make the DP pull down long enough to allow host to detect the previous disconnection.*/
+    sm_sleep(1);
     USB_DeviceRun(s_cdcVcom.deviceHandle);
 }
 
@@ -759,11 +756,13 @@ void main(void)
 #endif
 
 #if defined(IMX_RT)
-
     BOARD_ConfigMPU();
     BOARD_InitBootPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
+    BOARD_ConfigUSBMPU();
+    /* Data cache must be temporarily disabled to be able to use sdram */
+    SCB_DisableDCache();
 #endif
 #ifdef CPU_LPC54018
     /* Init board hardware. */
@@ -861,8 +860,6 @@ void main(void)
     axReset_PowerUp();
 #endif
     sm_initSleep();
-
-    LOG_D("W1");
     APPInit();
 
     while (1) {

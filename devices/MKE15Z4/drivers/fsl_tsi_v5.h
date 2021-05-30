@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
- * Copyright 2016-2017 NXP
+ * Copyright 2016-2020 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -20,7 +20,7 @@
  ******************************************************************************/
 
 /*! @brief TSI driver version */
-#define FSL_TSI_DRIVER_VERSION (MAKE_VERSION(2, 1, 0)) /*!< Version 2.1.0 */
+#define FSL_TSI_DRIVER_VERSION (MAKE_VERSION(2, 1, 2))
 
 /*! @brief TSI status flags macro collection */
 #define ALL_FLAGS_MASK (TSI_GENCS_EOSF_MASK | TSI_GENCS_OUTRGF_MASK)
@@ -45,7 +45,7 @@ typedef enum _tsi_main_clock_selection
  */
 typedef enum _tsi_sensing_mode_selection
 {
-    kTSI_SensingModeSlection_Self = 0U,   /*!< Set TSI sensing mode to self-cap mode */
+    kTSI_SensingModeSlection_Self   = 0U, /*!< Set TSI sensing mode to self-cap mode */
     kTSI_SensingModeSlection_Mutual = 1U, /*!< Set TSI sensing mode to mutual-cap mode */
 } tsi_sensing_mode_selection_t;
 
@@ -165,22 +165,22 @@ typedef enum _tsi_mutual_pre_resistor
  */
 typedef enum _tsi_mutual_sense_resistor
 {
-    kTSI_MutualSenseResistor_2k5 = 0U,   /*!< I-sense resistor is 2.5k , used in mutual-cap mode */
-    kTSI_MutualSenseResistor_5k = 1U,    /*!< I-sense resistor is 5.0k , used in mutual-cap mode */
-    kTSI_MutualSenseResistor_7k5 = 2U,   /*!< I-sense resistor is 7.5k , used in mutual-cap mode */
-    kTSI_MutualSenseResistor_10k = 3U,   /*!< I-sense resistor is 10.0k, used in mutual-cap mode */
+    kTSI_MutualSenseResistor_2k5  = 0U,  /*!< I-sense resistor is 2.5k , used in mutual-cap mode */
+    kTSI_MutualSenseResistor_5k   = 1U,  /*!< I-sense resistor is 5.0k , used in mutual-cap mode */
+    kTSI_MutualSenseResistor_7k5  = 2U,  /*!< I-sense resistor is 7.5k , used in mutual-cap mode */
+    kTSI_MutualSenseResistor_10k  = 3U,  /*!< I-sense resistor is 10.0k, used in mutual-cap mode */
     kTSI_MutualSenseResistor_12k5 = 4U,  /*!< I-sense resistor is 12.5k, used in mutual-cap mode */
-    kTSI_MutualSenseResistor_15k = 5U,   /*!< I-sense resistor is 15.0k, used in mutual-cap mode */
+    kTSI_MutualSenseResistor_15k  = 5U,  /*!< I-sense resistor is 15.0k, used in mutual-cap mode */
     kTSI_MutualSenseResistor_17k5 = 6U,  /*!< I-sense resistor is 17.5k, used in mutual-cap mode */
-    kTSI_MutualSenseResistor_20k = 7U,   /*!< I-sense resistor is 20.0k, used in mutual-cap mode */
+    kTSI_MutualSenseResistor_20k  = 7U,  /*!< I-sense resistor is 20.0k, used in mutual-cap mode */
     kTSI_MutualSenseResistor_22k5 = 8U,  /*!< I-sense resistor is 22.5k, used in mutual-cap mode */
-    kTSI_MutualSenseResistor_25k = 9U,   /*!< I-sense resistor is 25.0k, used in mutual-cap mode */
+    kTSI_MutualSenseResistor_25k  = 9U,  /*!< I-sense resistor is 25.0k, used in mutual-cap mode */
     kTSI_MutualSenseResistor_27k5 = 10U, /*!< I-sense resistor is 27.5k, used in mutual-cap mode */
-    kTSI_MutualSenseResistor_30k = 11U,  /*!< I-sense resistor is 30.0k, used in mutual-cap mode */
+    kTSI_MutualSenseResistor_30k  = 11U, /*!< I-sense resistor is 30.0k, used in mutual-cap mode */
     kTSI_MutualSenseResistor_32k5 = 12U, /*!< I-sense resistor is 32.5k, used in mutual-cap mode */
-    kTSI_MutualSenseResistor_35k = 13U,  /*!< I-sense resistor is 35.0k, used in mutual-cap mode */
+    kTSI_MutualSenseResistor_35k  = 13U, /*!< I-sense resistor is 35.0k, used in mutual-cap mode */
     kTSI_MutualSenseResistor_37k5 = 14U, /*!< I-sense resistor is 37.5k, used in mutual-cap mode */
-    kTSI_MutualSenseResistor_40k = 15U   /*!< I-sense resistor is 40.0k, used in mutual-cap mode */
+    kTSI_MutualSenseResistor_40k  = 15U  /*!< I-sense resistor is 40.0k, used in mutual-cap mode */
 } tsi_mutual_sense_resistor_t;
 
 /*!
@@ -205,10 +205,10 @@ typedef enum _tsi_mutual_tx_channel
  */
 typedef enum _tsi_mutual_rx_channel
 {
-    kTSI_MutualRxChannel_6 = 0U,  /*!< Select channel 6  as rx6, used in mutual-cap mode */
-    kTSI_MutualRxChannel_7 = 1U,  /*!< Select channel 7  as rx7, used in mutual-cap mode */
-    kTSI_MutualRxChannel_8 = 2U,  /*!< Select channel 8  as rx8, used in mutual-cap mode */
-    kTSI_MutualRxChannel_9 = 3U,  /*!< Select channel 9  as rx9, used in mutual-cap mode */
+    kTSI_MutualRxChannel_6  = 0U, /*!< Select channel 6  as rx6, used in mutual-cap mode */
+    kTSI_MutualRxChannel_7  = 1U, /*!< Select channel 7  as rx7, used in mutual-cap mode */
+    kTSI_MutualRxChannel_8  = 2U, /*!< Select channel 8  as rx8, used in mutual-cap mode */
+    kTSI_MutualRxChannel_9  = 3U, /*!< Select channel 9  as rx9, used in mutual-cap mode */
     kTSI_MutualRxChannel_10 = 4U, /*!< Select channel 10 as rx10, used in mutual-cap mode */
     kTSI_MutualRxChannel_11 = 5U, /*!< Select channel 11 as rx11, used in mutual-cap mode */
 } tsi_mutual_rx_channel_t;
@@ -220,11 +220,11 @@ typedef enum _tsi_mutual_rx_channel
  */
 typedef enum _tsi_mutual_sense_boost_current
 {
-    kTSI_MutualSenseBoostCurrent_0uA = 0U,   /*!< Sensitivity boost current is 0uA , used in mutual-cap mode */
-    kTSI_MutualSenseBoostCurrent_2uA = 1U,   /*!< Sensitivity boost current is 2uA , used in mutual-cap mode */
-    kTSI_MutualSenseBoostCurrent_4uA = 2U,   /*!< Sensitivity boost current is 4uA , used in mutual-cap mode */
-    kTSI_MutualSenseBoostCurrent_6uA = 3U,   /*!< Sensitivity boost current is 6uA , used in mutual-cap mode */
-    kTSI_MutualSenseBoostCurrent_8uA = 4U,   /*!< Sensitivity boost current is 8uA , used in mutual-cap mode */
+    kTSI_MutualSenseBoostCurrent_0uA  = 0U,  /*!< Sensitivity boost current is 0uA , used in mutual-cap mode */
+    kTSI_MutualSenseBoostCurrent_2uA  = 1U,  /*!< Sensitivity boost current is 2uA , used in mutual-cap mode */
+    kTSI_MutualSenseBoostCurrent_4uA  = 2U,  /*!< Sensitivity boost current is 4uA , used in mutual-cap mode */
+    kTSI_MutualSenseBoostCurrent_6uA  = 3U,  /*!< Sensitivity boost current is 6uA , used in mutual-cap mode */
+    kTSI_MutualSenseBoostCurrent_8uA  = 4U,  /*!< Sensitivity boost current is 8uA , used in mutual-cap mode */
     kTSI_MutualSenseBoostCurrent_10uA = 5U,  /*!< Sensitivity boost current is 10uA, used in mutual-cap mode */
     kTSI_MutualSenseBoostCurrent_12uA = 6U,  /*!< Sensitivity boost current is 12uA, used in mutual-cap mode */
     kTSI_MutualSenseBoostCurrent_14uA = 7U,  /*!< Sensitivity boost current is 14uA, used in mutual-cap mode */
@@ -272,8 +272,8 @@ typedef enum _tsi_mutual_tx_drive_mode
  */
 typedef enum _tsi_mutual_pmos_current_left
 {
-    kTSI_MutualPmosCurrentMirrorLeft_4 = 0U,  /*!< Set Pmos current mirror left value as 4,  used in mutual-cap mode */
-    kTSI_MutualPmosCurrentMirrorLeft_8 = 1U,  /*!< Set Pmos current mirror left value as 8,  used in mutual-cap mode */
+    kTSI_MutualPmosCurrentMirrorLeft_4  = 0U, /*!< Set Pmos current mirror left value as 4,  used in mutual-cap mode */
+    kTSI_MutualPmosCurrentMirrorLeft_8  = 1U, /*!< Set Pmos current mirror left value as 8,  used in mutual-cap mode */
     kTSI_MutualPmosCurrentMirrorLeft_12 = 2U, /*!< Set Pmos current mirror left value as 12, used in mutual-cap mode */
     kTSI_MutualPmosCurrentMirrorLeft_16 = 3U, /*!< Set Pmos current mirror left value as 16, used in mutual-cap mode */
     kTSI_MutualPmosCurrentMirrorLeft_20 = 4U, /*!< Set Pmos current mirror left value as 20, used in mutual-cap mode */
@@ -315,14 +315,14 @@ typedef enum _tsi_mutual_nmos_current
  */
 typedef enum _tsi_sinc_cutoff_div
 {
-    kTSI_SincCutoffDiv_0 = 0U,  /*!< Set SINC cutoff divider as 0   */
-    kTSI_SincCutoffDiv_2 = 1U,  /*!< Set SINC cutoff divider as 2   */
-    kTSI_SincCutoffDiv_4 = 2U,  /*!< Set SINC cutoff divider as 4   */
-    kTSI_SincCutoffDiv_8 = 3U,  /*!< Set SINC cutoff divider as 8   */
-    kTSI_SincCutoffDiv_16 = 4U, /*!< Set SINC cutoff divider as 16  */
-    kTSI_SincCutoffDiv_32 = 5U, /*!< Set SINC cutoff divider as 32  */
-    kTSI_SincCutoffDiv_64 = 6U, /*!< Set SINC cutoff divider as 64  */
-    kTSI_SincCutoffDiv_128 = 7U /*!< Set SINC cutoff divider as 128 */
+    kTSI_SincCutoffDiv_0   = 0U, /*!< Set SINC cutoff divider as 0   */
+    kTSI_SincCutoffDiv_2   = 1U, /*!< Set SINC cutoff divider as 2   */
+    kTSI_SincCutoffDiv_4   = 2U, /*!< Set SINC cutoff divider as 4   */
+    kTSI_SincCutoffDiv_8   = 3U, /*!< Set SINC cutoff divider as 8   */
+    kTSI_SincCutoffDiv_16  = 4U, /*!< Set SINC cutoff divider as 16  */
+    kTSI_SincCutoffDiv_32  = 5U, /*!< Set SINC cutoff divider as 32  */
+    kTSI_SincCutoffDiv_64  = 6U, /*!< Set SINC cutoff divider as 64  */
+    kTSI_SincCutoffDiv_128 = 7U  /*!< Set SINC cutoff divider as 128 */
 } tsi_sinc_cutoff_div_t;
 
 /*!
@@ -343,15 +343,15 @@ typedef enum _tsi_sinc_filter_order
  */
 typedef enum _tsi_sinc_decimation_value
 {
-    kTSI_SincDecimationValue_1 = 0U,   /*!< The TSI_DATA[TSICH] bits is the counter value of 1  triger period. */
-    kTSI_SincDecimationValue_2 = 1U,   /*!< The TSI_DATA[TSICH] bits is the counter value of 2  triger period. */
-    kTSI_SincDecimationValue_3 = 2U,   /*!< The TSI_DATA[TSICH] bits is the counter value of 3  triger period. */
-    kTSI_SincDecimationValue_4 = 3U,   /*!< The TSI_DATA[TSICH] bits is the counter value of 4  triger period. */
-    kTSI_SincDecimationValue_5 = 4U,   /*!< The TSI_DATA[TSICH] bits is the counter value of 5  triger period. */
-    kTSI_SincDecimationValue_6 = 5U,   /*!< The TSI_DATA[TSICH] bits is the counter value of 6  triger period. */
-    kTSI_SincDecimationValue_7 = 6U,   /*!< The TSI_DATA[TSICH] bits is the counter value of 7  triger period. */
-    kTSI_SincDecimationValue_8 = 7U,   /*!< The TSI_DATA[TSICH] bits is the counter value of 8  triger period. */
-    kTSI_SincDecimationValue_9 = 8U,   /*!< The TSI_DATA[TSICH] bits is the counter value of 9  triger period. */
+    kTSI_SincDecimationValue_1  = 0U,  /*!< The TSI_DATA[TSICH] bits is the counter value of 1  triger period. */
+    kTSI_SincDecimationValue_2  = 1U,  /*!< The TSI_DATA[TSICH] bits is the counter value of 2  triger period. */
+    kTSI_SincDecimationValue_3  = 2U,  /*!< The TSI_DATA[TSICH] bits is the counter value of 3  triger period. */
+    kTSI_SincDecimationValue_4  = 3U,  /*!< The TSI_DATA[TSICH] bits is the counter value of 4  triger period. */
+    kTSI_SincDecimationValue_5  = 4U,  /*!< The TSI_DATA[TSICH] bits is the counter value of 5  triger period. */
+    kTSI_SincDecimationValue_6  = 5U,  /*!< The TSI_DATA[TSICH] bits is the counter value of 6  triger period. */
+    kTSI_SincDecimationValue_7  = 6U,  /*!< The TSI_DATA[TSICH] bits is the counter value of 7  triger period. */
+    kTSI_SincDecimationValue_8  = 7U,  /*!< The TSI_DATA[TSICH] bits is the counter value of 8  triger period. */
+    kTSI_SincDecimationValue_9  = 8U,  /*!< The TSI_DATA[TSICH] bits is the counter value of 9  triger period. */
     kTSI_SincDecimationValue_10 = 9U,  /*!< The TSI_DATA[TSICH] bits is the counter value of 10 triger period. */
     kTSI_SincDecimationValue_11 = 10U, /*!< The TSI_DATA[TSICH] bits is the counter value of 11 triger period. */
     kTSI_SincDecimationValue_12 = 11U, /*!< The TSI_DATA[TSICH] bits is the counter value of 12 triger period. */
@@ -384,15 +384,15 @@ typedef enum _tsi_sinc_decimation_value
  */
 typedef enum _tsi_ssc_charge_num
 {
-    kTSI_SscChargeNumValue_1 = 0U,   /*!< The SSC output bit 0's period will be 1  clock cycle of system clock. */
-    kTSI_SscChargeNumValue_2 = 1U,   /*!< The SSC output bit 0's period will be 2  clock cycle of system clock. */
-    kTSI_SscChargeNumValue_3 = 2U,   /*!< The SSC output bit 0's period will be 3  clock cycle of system clock. */
-    kTSI_SscChargeNumValue_4 = 3U,   /*!< The SSC output bit 0's period will be 4  clock cycle of system clock. */
-    kTSI_SscChargeNumValue_5 = 4U,   /*!< The SSC output bit 0's period will be 5  clock cycle of system clock. */
-    kTSI_SscChargeNumValue_6 = 5U,   /*!< The SSC output bit 0's period will be 6  clock cycle of system clock. */
-    kTSI_SscChargeNumValue_7 = 6U,   /*!< The SSC output bit 0's period will be 7  clock cycle of system clock. */
-    kTSI_SscChargeNumValue_8 = 7U,   /*!< The SSC output bit 0's period will be 8  clock cycle of system clock. */
-    kTSI_SscChargeNumValue_9 = 8U,   /*!< The SSC output bit 0's period will be 9  clock cycle of system clock. */
+    kTSI_SscChargeNumValue_1  = 0U,  /*!< The SSC output bit 0's period will be 1  clock cycle of system clock. */
+    kTSI_SscChargeNumValue_2  = 1U,  /*!< The SSC output bit 0's period will be 2  clock cycle of system clock. */
+    kTSI_SscChargeNumValue_3  = 2U,  /*!< The SSC output bit 0's period will be 3  clock cycle of system clock. */
+    kTSI_SscChargeNumValue_4  = 3U,  /*!< The SSC output bit 0's period will be 4  clock cycle of system clock. */
+    kTSI_SscChargeNumValue_5  = 4U,  /*!< The SSC output bit 0's period will be 5  clock cycle of system clock. */
+    kTSI_SscChargeNumValue_6  = 5U,  /*!< The SSC output bit 0's period will be 6  clock cycle of system clock. */
+    kTSI_SscChargeNumValue_7  = 6U,  /*!< The SSC output bit 0's period will be 7  clock cycle of system clock. */
+    kTSI_SscChargeNumValue_8  = 7U,  /*!< The SSC output bit 0's period will be 8  clock cycle of system clock. */
+    kTSI_SscChargeNumValue_9  = 8U,  /*!< The SSC output bit 0's period will be 9  clock cycle of system clock. */
     kTSI_SscChargeNumValue_10 = 9U,  /*!< The SSC output bit 0's period will be 10 clock cycle of system clock. */
     kTSI_SscChargeNumValue_11 = 10U, /*!< The SSC output bit 0's period will be 11 clock cycle of system clock. */
     kTSI_SscChargeNumValue_12 = 11U, /*!< The SSC output bit 0's period will be 12 clock cycle of system clock. */
@@ -442,14 +442,14 @@ typedef enum _tsi_ssc_nocharge_num
  */
 typedef enum _tsi_ssc_prbs_outsel
 {
-    kTSI_SscPrbsOutsel_2 = 2U,   /*!< The length of the PRBS is 2. */
-    kTSI_SscPrbsOutsel_3 = 3U,   /*!< The length of the PRBS is 3. */
-    kTSI_SscPrbsOutsel_4 = 4U,   /*!< The length of the PRBS is 4. */
-    kTSI_SscPrbsOutsel_5 = 5U,   /*!< The length of the PRBS is 5. */
-    kTSI_SscPrbsOutsel_6 = 6U,   /*!< The length of the PRBS is 6. */
-    kTSI_SscPrbsOutsel_7 = 7U,   /*!< The length of the PRBS is 7. */
-    kTSI_SscPrbsOutsel_8 = 8U,   /*!< The length of the PRBS is 8. */
-    kTSI_SscPrbsOutsel_9 = 9U,   /*!< The length of the PRBS is 9. */
+    kTSI_SscPrbsOutsel_2  = 2U,  /*!< The length of the PRBS is 2. */
+    kTSI_SscPrbsOutsel_3  = 3U,  /*!< The length of the PRBS is 3. */
+    kTSI_SscPrbsOutsel_4  = 4U,  /*!< The length of the PRBS is 4. */
+    kTSI_SscPrbsOutsel_5  = 5U,  /*!< The length of the PRBS is 5. */
+    kTSI_SscPrbsOutsel_6  = 6U,  /*!< The length of the PRBS is 6. */
+    kTSI_SscPrbsOutsel_7  = 7U,  /*!< The length of the PRBS is 7. */
+    kTSI_SscPrbsOutsel_8  = 8U,  /*!< The length of the PRBS is 8. */
+    kTSI_SscPrbsOutsel_9  = 9U,  /*!< The length of the PRBS is 9. */
     kTSI_SscPrbsOutsel_10 = 10U, /*!< The length of the PRBS is 10. */
     kTSI_SscPrbsOutsel_11 = 11U, /*!< The length of the PRBS is 11. */
     kTSI_SscPrbsOutsel_12 = 12U, /*!< The length of the PRBS is 12. */
@@ -461,16 +461,16 @@ typedef enum _tsi_ssc_prbs_outsel
 /*! @brief TSI status flags. */
 typedef enum _tsi_status_flags
 {
-    kTSI_EndOfScanFlag = TSI_GENCS_EOSF_MASK,        /*!< End-Of-Scan flag */
+    kTSI_EndOfScanFlag  = TSI_GENCS_EOSF_MASK,       /*!< End-Of-Scan flag */
     kTSI_OutOfRangeFlag = (int)TSI_GENCS_OUTRGF_MASK /*!< Out-Of-Range flag */
 } tsi_status_flags_t;
 
 /*! @brief TSI feature interrupt source.*/
 typedef enum _tsi_interrupt_enable
 {
-    kTSI_GlobalInterruptEnable = 1U,     /*!< TSI module global interruptt */
+    kTSI_GlobalInterruptEnable     = 1U, /*!< TSI module global interruptt */
     kTSI_OutOfRangeInterruptEnable = 2U, /*!< Out-Of-Range interrupt */
-    kTSI_EndOfScanInterruptEnable = 4U   /*!< End-Of-Scan interrupt */
+    kTSI_EndOfScanInterruptEnable  = 4U  /*!< End-Of-Scan interrupt */
 } tsi_interrupt_enable_t;
 
 /*!
@@ -480,9 +480,9 @@ typedef enum _tsi_interrupt_enable
  */
 typedef enum _tsi_ssc_mode
 {
-    kTSI_ssc_prbs_method = 0U,     /*!< Using PRBS method generating SSC output bit. */
+    kTSI_ssc_prbs_method     = 0U, /*!< Using PRBS method generating SSC output bit. */
     kTSI_ssc_up_down_counter = 1U, /*!< Using up-down counter generating SSC output bit. */
-    kTSI_ssc_dissable = 2U,        /*!< SSC function is disabled. */
+    kTSI_ssc_dissable        = 2U, /*!< SSC function is disabled. */
 } tsi_ssc_mode_t;
 
 /*!
@@ -492,13 +492,13 @@ typedef enum _tsi_ssc_mode
  */
 typedef enum _tsi_ssc_prescaler
 {
-    kTSI_ssc_div_by_1 = 0x0U,    /*!< Set SSC divider to 00000000 div1(2^0) */
-    kTSI_ssc_div_by_2 = 0x1U,    /*!< Set SSC divider to 00000001 div2(2^1) */
-    kTSI_ssc_div_by_4 = 0x3U,    /*!< Set SSC divider to 00000011 div4(2^2) */
-    kTSI_ssc_div_by_8 = 0x7U,    /*!< Set SSC divider to 00000111 div8(2^3) */
-    kTSI_ssc_div_by_16 = 0xfU,   /*!< Set SSC divider to 00001111 div16(2^4) */
-    kTSI_ssc_div_by_32 = 0x1fU,  /*!< Set SSC divider to 00011111 div32(2^5) */
-    kTSI_ssc_div_by_64 = 0x3fU,  /*!< Set SSC divider to 00111111 div64(2^6) */
+    kTSI_ssc_div_by_1   = 0x0U,  /*!< Set SSC divider to 00000000 div1(2^0) */
+    kTSI_ssc_div_by_2   = 0x1U,  /*!< Set SSC divider to 00000001 div2(2^1) */
+    kTSI_ssc_div_by_4   = 0x3U,  /*!< Set SSC divider to 00000011 div4(2^2) */
+    kTSI_ssc_div_by_8   = 0x7U,  /*!< Set SSC divider to 00000111 div8(2^3) */
+    kTSI_ssc_div_by_16  = 0xfU,  /*!< Set SSC divider to 00001111 div16(2^4) */
+    kTSI_ssc_div_by_32  = 0x1fU, /*!< Set SSC divider to 00011111 div32(2^5) */
+    kTSI_ssc_div_by_64  = 0x3fU, /*!< Set SSC divider to 00111111 div64(2^6) */
     kTSI_ssc_div_by_128 = 0x7fU, /*!< Set SSC divider to 01111111 div128(2^7) */
     kTSI_ssc_div_by_256 = 0xffU, /*!< Set SSC divider to 11111111 div256(2^8) */
 } tsi_ssc_prescaler_t;
@@ -676,7 +676,7 @@ void TSI_GetMutualCapModeDefaultConfig(tsi_mutualCap_config_t *userConfig);
  * @details Calibrate the peripheral to fetch the initial counter value of
  *          the enabled channels.
  *          This API is mostly used at initial application setup, it shall be called
- *          after the \ref TSI_Init API, then user can use the calibrated
+ *          after the TSI_Init API, then user can use the calibrated
  *          counter values to setup applications(such as to determine
  *          under which counter value we can confirm a touch event occurrs).
  *
@@ -712,15 +712,15 @@ void TSI_EnableInterrupts(TSI_Type *base, uint32_t mask);
 void TSI_DisableInterrupts(TSI_Type *base, uint32_t mask);
 
 /*!
-* @brief Get interrupt flag.
-* This function get tsi interrupt flags.
-*
-* @param    base  TSI peripheral base address.
-* @return         The mask of these status flags combination.
-*/
+ * @brief Get interrupt flag.
+ * This function get tsi interrupt flags.
+ *
+ * @param    base  TSI peripheral base address.
+ * @return         The mask of these status flags combination.
+ */
 static inline uint32_t TSI_GetStatusFlags(TSI_Type *base)
 {
-    return (base->GENCS & (kTSI_EndOfScanFlag | kTSI_OutOfRangeFlag));
+    return (base->GENCS & (uint32_t)((uint32_t)kTSI_EndOfScanFlag | (uint32_t)kTSI_OutOfRangeFlag));
 }
 
 /*!
@@ -735,37 +735,37 @@ static inline uint32_t TSI_GetStatusFlags(TSI_Type *base)
 void TSI_ClearStatusFlags(TSI_Type *base, uint32_t mask);
 
 /*!
-* @brief Get TSI scan trigger mode.
-*
-* @param  base  TSI peripheral base address.
-* @return       Scan trigger mode.
-*/
+ * @brief Get TSI scan trigger mode.
+ *
+ * @param  base  TSI peripheral base address.
+ * @return       Scan trigger mode.
+ */
 static inline uint32_t TSI_GetScanTriggerMode(TSI_Type *base)
 {
     return (base->GENCS & TSI_GENCS_STM_MASK);
 }
 
 /*!
-* @brief Get scan in progress flag.
-*
-* @param    base TSI peripheral base address.
-* @return   True  - scan is in progress.
-*           False - scan is not in progress.
-*/
+ * @brief Get scan in progress flag.
+ *
+ * @param    base TSI peripheral base address.
+ * @return   True  - scan is in progress.
+ *           False - scan is not in progress.
+ */
 static inline bool TSI_IsScanInProgress(TSI_Type *base)
 {
-    return (base->GENCS & TSI_GENCS_SCNIP_MASK);
+    return (bool)(base->GENCS & TSI_GENCS_SCNIP_MASK);
 }
 
 /*!
-* @brief Enables the TSI Module or not.
-*
-* @param   base   TSI peripheral base address.
-* @param   enable Choose whether to enable or disable module;
-*                 - true   Enable TSI module;
-*                 - false  Disable TSI module;
-* @return  none.
-*/
+ * @brief Enables the TSI Module or not.
+ *
+ * @param   base   TSI peripheral base address.
+ * @param   enable Choose whether to enable or disable module;
+ *                 - true   Enable TSI module;
+ *                 - false  Disable TSI module;
+ * @return  none.
+ */
 static inline void TSI_EnableModule(TSI_Type *base, bool enable)
 {
     if (enable)
@@ -779,15 +779,15 @@ static inline void TSI_EnableModule(TSI_Type *base, bool enable)
 }
 
 /*!
-* @brief Sets the TSI low power STOP mode enable or not.
-*        This enables TSI module function in low power modes.
-*
-* @param    base    TSI peripheral base address.
-* @param    enable  Choose to enable or disable STOP mode.
-*                   - true   Enable module in STOP mode;
-*                   - false  Disable module in STOP mode;
-* @return   none.
-*/
+ * @brief Sets the TSI low power STOP mode enable or not.
+ *        This enables TSI module function in low power modes.
+ *
+ * @param    base    TSI peripheral base address.
+ * @param    enable  Choose to enable or disable STOP mode.
+ *                   - true   Enable module in STOP mode;
+ *                   - false  Disable module in STOP mode;
+ * @return   none.
+ */
 static inline void TSI_EnableLowPower(TSI_Type *base, bool enable)
 {
     if (enable)
@@ -803,14 +803,14 @@ static inline void TSI_EnableLowPower(TSI_Type *base, bool enable)
 }
 
 /*!
-* @brief Enable the hardware trigger scan or not.
-*
-* @param    base TSI peripheral base address.
-* @param    enable Choose to enable hardware trigger or software trigger scan.
-*                  - true    Enable hardware trigger scan;
-*                  - false   Enable software trigger scan;
-* @return   none.
-*/
+ * @brief Enable the hardware trigger scan or not.
+ *
+ * @param    base TSI peripheral base address.
+ * @param    enable Choose to enable hardware trigger or software trigger scan.
+ *                  - true    Enable hardware trigger scan;
+ *                  - false   Enable software trigger scan;
+ * @return   none.
+ */
 static inline void TSI_EnableHardwareTriggerScan(TSI_Type *base, bool enable)
 {
     if (enable)
@@ -824,52 +824,52 @@ static inline void TSI_EnableHardwareTriggerScan(TSI_Type *base, bool enable)
 }
 
 /*!
-* @brief Start one sotware trigger measurement (trigger a new measurement).
-*
-* @param    base TSI peripheral base address.
-* @return   none.
-*/
+ * @brief Start one sotware trigger measurement (trigger a new measurement).
+ *
+ * @param    base TSI peripheral base address.
+ * @return   none.
+ */
 static inline void TSI_StartSoftwareTrigger(TSI_Type *base)
 {
     base->DATA |= TSI_DATA_SWTS_MASK;
 }
 
 /*!
-* @brief Set the measured channel number for self-cap mode.
-*
-* @param    base    TSI peripheral base address.
-* @param    channel Channel number 0 ... 24.
-* @return   none.
-* @note     This API can only be used in self-cap mode!
-*/
+ * @brief Set the measured channel number for self-cap mode.
+ *
+ * @param    base    TSI peripheral base address.
+ * @param    channel Channel number 0 ... 24.
+ * @return   none.
+ * @note     This API can only be used in self-cap mode!
+ */
 static inline void TSI_SetSelfCapMeasuredChannel(TSI_Type *base, uint8_t channel)
 {
-    assert(channel < FSL_FEATURE_TSI_CHANNEL_COUNT);
+    assert(channel < (uint8_t)FSL_FEATURE_TSI_CHANNEL_COUNT);
 
     base->DATA = ((base->DATA) & ~TSI_DATA_TSICH_MASK) | (TSI_DATA_TSICH(channel));
 }
 
 /*!
-* @brief Get the current measured channel number, in self-cap mode.
-*
-* @param    base    TSI peripheral base address.
-* @return   uint8_t    Channel number 0 ... 24.
-* @note     This API can only be used in self-cap mode!
-*/
+ * @brief Get the current measured channel number, in self-cap mode.
+ *
+ * @param    base    TSI peripheral base address.
+ * @return   uint8_t    Channel number 0 ... 24.
+ * @note     This API can only be used in self-cap mode!
+ */
 static inline uint8_t TSI_GetSelfCapMeasuredChannel(TSI_Type *base)
 {
     return (uint8_t)((base->DATA & TSI_DATA_TSICH_MASK) >> TSI_DATA_TSICH_SHIFT);
 }
 
 /*!
-* @brief Enable DMA transfer or not.
-*
-* @param   base   TSI peripheral base address.
-* @param   enable Choose to enable DMA transfer or not.
-*                 - true    Enable DMA transfer;
-*                 - false   Disable DMA transfer;
-* @return  none.
-*/
+ * @brief Enable DMA transfer or not.
+ *
+ * @param   base   TSI peripheral base address.
+ * @param   enable Choose to enable DMA transfer or not.
+ *                 - true    Enable DMA transfer;
+ *                 - false   Disable DMA transfer;
+ * @return  none.
+ */
 static inline void TSI_EnableDmaTransfer(TSI_Type *base, bool enable)
 {
     if (enable)
@@ -884,14 +884,14 @@ static inline void TSI_EnableDmaTransfer(TSI_Type *base, bool enable)
 
 #if defined(FSL_FEATURE_TSI_HAS_END_OF_SCAN_DMA_ENABLE) && (FSL_FEATURE_TSI_HAS_END_OF_SCAN_DMA_ENABLE == 1)
 /*!
-* @brief Decide whether to enable End of Scan DMA transfer request only.
-*
-* @param    base TSI peripheral base address.
-* @param    enable  Choose whether to enable End of Scan DMA transfer request only.
-*                   - true  Enable End of Scan DMA transfer request only;
-*                   - false Both End-of-Scan and Out-of-Range can generate DMA transfer request.
-* @return   none.
-*/
+ * @brief Decide whether to enable End of Scan DMA transfer request only.
+ *
+ * @param    base TSI peripheral base address.
+ * @param    enable  Choose whether to enable End of Scan DMA transfer request only.
+ *                   - true  Enable End of Scan DMA transfer request only;
+ *                   - false Both End-of-Scan and Out-of-Range can generate DMA transfer request.
+ * @return   none.
+ */
 static inline void TSI_EnableEndOfScanDmaTransferOnly(TSI_Type *base, bool enable)
 {
     if (enable)
@@ -908,173 +908,168 @@ static inline void TSI_EnableEndOfScanDmaTransferOnly(TSI_Type *base, bool enabl
 #endif /* End of (FSL_FEATURE_TSI_HAS_END_OF_SCAN_DMA_ENABLE == 1)*/
 
 /*!
-* @brief Gets the conversion counter value.
-*
-* @param    base TSI peripheral base address.
-* @return   Accumulated scan counter value ticked by the reference clock.
-*/
+ * @brief Gets the conversion counter value.
+ *
+ * @param    base TSI peripheral base address.
+ * @return   Accumulated scan counter value ticked by the reference clock.
+ */
 static inline uint16_t TSI_GetCounter(TSI_Type *base)
 {
     return (uint16_t)(base->DATA & TSI_DATA_TSICNT_MASK);
 }
 
 /*!
-* @brief Set the TSI wake-up channel low threshold.
-*
-* @param    base           TSI peripheral base address.
-* @param    low_threshold  Low counter threshold.
-* @return   none.
-*/
+ * @brief Set the TSI wake-up channel low threshold.
+ *
+ * @param    base           TSI peripheral base address.
+ * @param    low_threshold  Low counter threshold.
+ * @return   none.
+ */
 static inline void TSI_SetLowThreshold(TSI_Type *base, uint16_t low_threshold)
 {
-    assert(low_threshold < 0xFFFFU);
-
     base->TSHD = ((base->TSHD) & ~TSI_TSHD_THRESL_MASK) | (TSI_TSHD_THRESL(low_threshold));
 }
 
 /*!
-* @brief Set the TSI wake-up channel high threshold.
-*
-* @param    base            TSI peripheral base address.
-* @param    high_threshold  High counter threshold.
-* @return   none.
-*/
+ * @brief Set the TSI wake-up channel high threshold.
+ *
+ * @param    base            TSI peripheral base address.
+ * @param    high_threshold  High counter threshold.
+ * @return   none.
+ */
 static inline void TSI_SetHighThreshold(TSI_Type *base, uint16_t high_threshold)
 {
-    assert(high_threshold < 0xFFFFU);
-
     base->TSHD = ((base->TSHD) & ~TSI_TSHD_THRESH_MASK) | (TSI_TSHD_THRESH(high_threshold));
 }
 
 /*!
-* @brief Set the main clock of the TSI module.
-*
-* @param    base   TSI peripheral base address.
-* @param    mainClock   clock option value.
-* @return   none.
-*/
+ * @brief Set the main clock of the TSI module.
+ *
+ * @param    base   TSI peripheral base address.
+ * @param    mainClock   clock option value.
+ * @return   none.
+ */
 static inline void TSI_SetMainClock(TSI_Type *base, tsi_main_clock_selection_t mainClock)
 {
     base->MODE = ((base->MODE) & ~TSI_MODE_SETCLK_MASK) | (TSI_MODE_SETCLK(mainClock));
 }
 
 /*!
-* @brief Set the sensing mode of the TSI module.
-*
-* @param    base   TSI peripheral base address.
-* @param    mode   Mode value.
-* @return   none.
-*/
+ * @brief Set the sensing mode of the TSI module.
+ *
+ * @param    base   TSI peripheral base address.
+ * @param    mode   Mode value.
+ * @return   none.
+ */
 static inline void TSI_SetSensingMode(TSI_Type *base, tsi_sensing_mode_selection_t mode)
 {
     base->MODE = ((base->MODE) & ~TSI_MODE_MODE_MASK) | (TSI_MODE_MODE(mode));
 }
 
 /*!
-* @brief Get the sensing mode of the TSI module.
-*
-* @param    base   TSI peripheral base address.
-* @param    mode   Mode value.
-* @return   Currently selected sensing mode.
-*/
+ * @brief Get the sensing mode of the TSI module.
+ *
+ * @param    base   TSI peripheral base address.
+ * @return   Currently selected sensing mode.
+ */
 static inline tsi_sensing_mode_selection_t TSI_GetSensingMode(TSI_Type *base)
 {
-    return (tsi_sensing_mode_selection_t)((base->MODE & TSI_MODE_MODE_MASK) >> TSI_MODE_MODE_SHIFT);
+    return (tsi_sensing_mode_selection_t)(uint32_t)((base->MODE & TSI_MODE_MODE_MASK) >> TSI_MODE_MODE_SHIFT);
 }
 
 /*!
-* @brief Set the DVOLT settings.
-*
-* @param    base    TSI peripheral base address.
-* @param    dvolt   The voltage rails.
-* @return   none.
-*/
+ * @brief Set the DVOLT settings.
+ *
+ * @param    base    TSI peripheral base address.
+ * @param    dvolt   The voltage rails.
+ * @return   none.
+ */
 static inline void TSI_SetDvolt(TSI_Type *base, tsi_dvolt_option_t dvolt)
 {
     base->GENCS = (base->GENCS & ~(TSI_GENCS_DVOLT_MASK | ALL_FLAGS_MASK)) | (TSI_GENCS_DVOLT(dvolt));
 }
 
 /*!
-* @brief Enable self-cap mode noise cancellation function or not.
-*
-* @param    base                TSI peripheral base address.
-* @param    enableCancellation  Choose whether to enable noise cancellation in self-cap mode
-*                               - true  Enable noise cancellation;
-*                               - false Disable noise cancellation;
-* @return   none.
-*/
+ * @brief Enable self-cap mode noise cancellation function or not.
+ *
+ * @param    base                TSI peripheral base address.
+ * @param    enableCancellation  Choose whether to enable noise cancellation in self-cap mode
+ *                               - true  Enable noise cancellation;
+ *                               - false Disable noise cancellation;
+ * @return   none.
+ */
 static inline void TSI_EnableNoiseCancellation(TSI_Type *base, bool enableCancellation)
 {
     base->MODE = ((base->MODE) & ~TSI_MODE_S_NOISE_MASK) | (TSI_MODE_S_NOISE(enableCancellation));
 }
 
 /*!
-* @brief Set the mutual-cap mode TX channel.
-*
-* @param    base       TSI peripheral base address.
-* @param    txChannel  Mutual-cap mode TX channel number
-* @return   none.
-*/
+ * @brief Set the mutual-cap mode TX channel.
+ *
+ * @param    base       TSI peripheral base address.
+ * @param    txChannel  Mutual-cap mode TX channel number
+ * @return   none.
+ */
 static inline void TSI_SetMutualCapTxChannel(TSI_Type *base, tsi_mutual_tx_channel_t txChannel)
 {
     base->MUL0 = ((base->MUL0) & ~TSI_MUL0_M_SEL_TX_MASK) | (TSI_MUL0_M_SEL_TX(txChannel));
 }
 
 /*!
-* @brief Get the current measured TX channel number, in mutual-cap mode.
-*
-* @param    base    TSI peripheral base address;
-* @return           Tx Channel number 0 ... 5;
-* @note     This API can only be used in mutual-cap mode!
-*/
+ * @brief Get the current measured TX channel number, in mutual-cap mode.
+ *
+ * @param    base    TSI peripheral base address;
+ * @return           Tx Channel number 0 ... 5;
+ * @note     This API can only be used in mutual-cap mode!
+ */
 static inline tsi_mutual_tx_channel_t TSI_GetTxMutualCapMeasuredChannel(TSI_Type *base)
 {
-    return (tsi_mutual_tx_channel_t)((base->MUL0 & TSI_MUL0_M_SEL_TX_MASK) >> TSI_MUL0_M_SEL_TX_SHIFT);
+    return (tsi_mutual_tx_channel_t)(uint32_t)((base->MUL0 & TSI_MUL0_M_SEL_TX_MASK) >> TSI_MUL0_M_SEL_TX_SHIFT);
 }
 
 /*!
-* @brief Set the mutual-cap mode RX channel.
-*
-* @param    base       TSI peripheral base address.
-* @param    rxChannel  Mutual-cap mode RX channel number
-* @return   none.
-*/
+ * @brief Set the mutual-cap mode RX channel.
+ *
+ * @param    base       TSI peripheral base address.
+ * @param    rxChannel  Mutual-cap mode RX channel number
+ * @return   none.
+ */
 static inline void TSI_SetMutualCapRxChannel(TSI_Type *base, tsi_mutual_rx_channel_t rxChannel)
 {
     base->MUL0 = ((base->MUL0) & ~TSI_MUL0_M_SEL_RX_MASK) | (TSI_MUL0_M_SEL_RX(rxChannel));
 }
 
 /*!
-* @brief Get the current measured RX channel number, in mutual-cap mode.
-*
-* @param    base    TSI peripheral base address;
-* @return           Rx Channel number 6 ... 11;
-* @note     This API can only be used in mutual-cap mode!
-*/
+ * @brief Get the current measured RX channel number, in mutual-cap mode.
+ *
+ * @param    base    TSI peripheral base address;
+ * @return           Rx Channel number 6 ... 11;
+ * @note     This API can only be used in mutual-cap mode!
+ */
 static inline tsi_mutual_rx_channel_t TSI_GetRxMutualCapMeasuredChannel(TSI_Type *base)
 {
-    return (tsi_mutual_rx_channel_t)((base->MUL0 & TSI_MUL0_M_SEL_RX_MASK) >> TSI_MUL0_M_SEL_RX_SHIFT);
+    return (tsi_mutual_rx_channel_t)(uint32_t)((base->MUL0 & TSI_MUL0_M_SEL_RX_MASK) >> TSI_MUL0_M_SEL_RX_SHIFT);
 }
 
 /*!
-* @brief Set the SSC clock mode of the TSI module.
-*
-* @param    base   TSI peripheral base address.
-* @param    mode   SSC mode option value.
-* @return   none.
-*/
+ * @brief Set the SSC clock mode of the TSI module.
+ *
+ * @param    base   TSI peripheral base address.
+ * @param    mode   SSC mode option value.
+ * @return   none.
+ */
 static inline void TSI_SetSscMode(TSI_Type *base, tsi_ssc_mode_t mode)
 {
     base->SSC0 = ((base->SSC0) & ~TSI_SSC0_SSC_MODE_MASK) | (TSI_SSC0_SSC_MODE(mode));
 }
 
 /*!
-* @brief Set the SSC prescaler of the TSI module.
-*
-* @param    base   TSI peripheral base address.
-* @param    prescaler  SSC prescaler option value.
-* @return   none.
-*/
+ * @brief Set the SSC prescaler of the TSI module.
+ *
+ * @param    base   TSI peripheral base address.
+ * @param    prescaler  SSC prescaler option value.
+ * @return   none.
+ */
 static inline void TSI_SetSscPrescaler(TSI_Type *base, tsi_ssc_prescaler_t prescaler)
 {
     base->SSC0 = ((base->SSC0) & ~TSI_SSC0_SSC_PRESCALE_NUM_MASK) | (TSI_SSC0_SSC_PRESCALE_NUM(prescaler));
@@ -1082,27 +1077,27 @@ static inline void TSI_SetSscPrescaler(TSI_Type *base, tsi_ssc_prescaler_t presc
 
 #if (defined(FSL_FEATURE_TSI_HAS_M_TX_USED) && FSL_FEATURE_TSI_HAS_M_TX_USED)
 /*!
-* @brief Set used mutual-cap TX channel.
-*
-* @param    base       TSI peripheral base address.
-* @param    txChannel  Mutual-cap mode TX channel number
-* @return   none.
-*/
+ * @brief Set used mutual-cap TX channel.
+ *
+ * @param    base       TSI peripheral base address.
+ * @param    txChannel  Mutual-cap mode TX channel number
+ * @return   none.
+ */
 static inline void TSI_SetUsedTxChannel(TSI_Type *base, tsi_mutual_tx_channel_t txChannel)
 {
-    base->MUL0 = (base->MUL0) | (TSI_MUL0_M_TX_USED(1U << txChannel));
+    base->MUL0 = (base->MUL0) | (TSI_MUL0_M_TX_USED(1UL << (uint8_t)txChannel));
 }
 
 /*!
-* @brief Clear used mutual-cap TX channel.
-*
-* @param    base       TSI peripheral base address.
-* @param    txChannel  Mutual-cap mode TX channel number
-* @return   none.
-*/
+ * @brief Clear used mutual-cap TX channel.
+ *
+ * @param    base       TSI peripheral base address.
+ * @param    txChannel  Mutual-cap mode TX channel number
+ * @return   none.
+ */
 static inline void TSI_ClearUsedTxChannel(TSI_Type *base, tsi_mutual_tx_channel_t txChannel)
 {
-    base->MUL0 &= ~TSI_MUL0_M_TX_USED(1U << txChannel);
+    base->MUL0 &= ~TSI_MUL0_M_TX_USED(1UL << (uint8_t)txChannel);
 }
 #endif
 

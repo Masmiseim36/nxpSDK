@@ -287,6 +287,9 @@ static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
                             sizeof(bleDeviceAddress_t));
 
                 (void)Gap_StopScanning();
+#if defined(gAppUsePrivacy_d) && (gAppUsePrivacy_d)
+                gConnReqParams.usePeerIdentityAddress = pScanningEvent->eventData.scannedDevice.advertisingAddressResolved;
+#endif
                 (void)App_Connect(&gConnReqParams, BleApp_ConnectionCallback);
             }
         }
@@ -331,10 +334,11 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             mPeerInformation.deviceId = peerDeviceId;
             mPeerInformation.isBonded = FALSE;
 
-#if gAppUseBonding_d
-            Gap_CheckIfBonded(peerDeviceId, &mPeerInformation.isBonded, NULL);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            bool_t isBonded = FALSE;
+            (void)Gap_CheckIfBonded(peerDeviceId, &isBonded, NULL);
 
-            if ((mPeerInformation.isBonded) &&
+            if ((isBonded) &&
                 (gBleSuccess_c == Gap_LoadCustomPeerInformation(peerDeviceId,
                     (void*) &mPeerInformation.customInfo, 0, sizeof (appCustomInfo_t))))
             {
@@ -374,16 +378,26 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         {
             if (pConnectionEvent->eventData.pairingCompleteEvent.pairingSuccessful)
             {
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+                mPeerInformation.isBonded = TRUE;
+#endif
                 BleApp_StateMachineHandler(mPeerInformation.deviceId, mAppEvt_PairingComplete_c);
             }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            else
+            {
+                mPeerInformation.isBonded = FALSE;
+            }
+#endif
         }
         break;
 
-#if gAppUseBonding_d
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
         case gConnEvtEncryptionChanged_c:
         {
             if (pConnectionEvent->eventData.encryptionChangedEvent.newEncryptionState)
             {
+                mPeerInformation.isBonded = TRUE;
                 if ((TRUE == mRestoringBondedLink) &&
                      (FALSE == mAuthRejected))
                 {
@@ -468,32 +482,38 @@ static void BleApp_GattClientCallback
     bleResult_t             error
 )
 {
-    if (procedureResult == gGattProcError_c)
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if ((mPeerInformation.isBonded) || (mPeerInformation.appState != mAppRunning_c))
     {
-        attErrorCode_t attError = (attErrorCode_t)((uint8_t)error);
-
-        if (attError == gAttErrCodeInsufficientEncryption_c     ||
-            attError == gAttErrCodeInsufficientAuthorization_c  ||
-            attError == gAttErrCodeInsufficientAuthentication_c)
+#endif
+        if (procedureResult == gGattProcError_c)
         {
-            /* Start Pairing Procedure */
-            (void)Gap_Pair(serverDeviceId, &gPairingParameters);
+            attErrorCode_t attError = (attErrorCode_t)((uint8_t)error);
+
+            if (attError == gAttErrCodeInsufficientEncryption_c     ||
+                attError == gAttErrCodeInsufficientAuthorization_c  ||
+                attError == gAttErrCodeInsufficientAuthentication_c)
+            {
+                /* Start Pairing Procedure */
+                (void)Gap_Pair(serverDeviceId, &gPairingParameters);
+            }
+
+            BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
+        }
+        else if (procedureResult == gGattProcSuccess_c)
+        {
+            BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
+        }
+        else
+        {
+            ; /* For MISRA compliance */
         }
 
-        BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
+        /* Signal Service Discovery Module */
+        BleServDisc_SignalGattClientEvent(serverDeviceId, procedureType,procedureResult, error);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     }
-    else if (procedureResult == gGattProcSuccess_c)
-    {
-        BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
-    }
-    else
-    {
-        ; /* For MISRA compliance */
-    }
-
-    /* Signal Service Discovery Module */
-    BleServDisc_SignalGattClientEvent(serverDeviceId, procedureType,procedureResult, error);
-
+#endif
 }
 
 /*! *********************************************************************************
@@ -552,102 +572,109 @@ static void BleApp_GattNotificationCallback
     uint16_t    valueLength
 )
 {
-    lnsLocAndSpeed_t lnsLocAndSpeed = {0};
-
-    /* Skip flags */
-    uint8_t *pInPos = aValue;
-
-    FLib_MemCpy(&lnsLocAndSpeed.lnsLocAndSpeedFlags, pInPos, sizeof(lnsLocAndSpeed.lnsLocAndSpeedFlags));
-    pInPos += sizeof(lnsLocAndSpeed.lnsLocAndSpeedFlags);
-
-    (void)Serial_Print (mSerialId, "\n\r\n\rReceived Report:\n\r================", gNoBlock_d);
-
-    if (characteristicValueHandle == mPeerInformation.customInfo.lncConfig.hLNReport)
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if (mPeerInformation.isBonded)
     {
-        /* If the notification contains the instantaneous speed, print it. */
-        if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_InstantaneousSpeedSupported_c) != 0U)
+#endif
+        lnsLocAndSpeed_t lnsLocAndSpeed = {0};
+
+        /* Skip flags */
+        uint8_t *pInPos = aValue;
+
+        FLib_MemCpy(&lnsLocAndSpeed.lnsLocAndSpeedFlags, pInPos, sizeof(lnsLocAndSpeed.lnsLocAndSpeedFlags));
+        pInPos += sizeof(lnsLocAndSpeed.lnsLocAndSpeedFlags);
+
+        (void)Serial_Print (mSerialId, "\n\r\n\rReceived Report:\n\r================", gNoBlock_d);
+
+        if (characteristicValueHandle == mPeerInformation.customInfo.lncConfig.hLNReport)
         {
-            FLib_MemCpy(&lnsLocAndSpeed.lnsInstantaneousSpeed, pInPos, sizeof(lnsLocAndSpeed.lnsInstantaneousSpeed));
-            pInPos += sizeof(lnsLocAndSpeed.lnsInstantaneousSpeed);
+            /* If the notification contains the instantaneous speed, print it. */
+            if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_InstantaneousSpeedSupported_c) != 0U)
+            {
+                FLib_MemCpy(&lnsLocAndSpeed.lnsInstantaneousSpeed, pInPos, sizeof(lnsLocAndSpeed.lnsInstantaneousSpeed));
+                pInPos += sizeof(lnsLocAndSpeed.lnsInstantaneousSpeed);
 
-            (void)Serial_Print (mSerialId, "\n\rInstantaneous Speed: ", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, lnsLocAndSpeed.lnsInstantaneousSpeed);
+                (void)Serial_Print (mSerialId, "\n\rInstantaneous Speed: ", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, lnsLocAndSpeed.lnsInstantaneousSpeed);
+            }
+
+            /* If the notification contains the total distance, print it. */
+            if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_TotalDistanceSupported_c) != 0U)
+            {
+                FLib_MemCpy(&lnsLocAndSpeed.lnsTotalDistance, pInPos, 3);
+                pInPos += 3;
+
+                (void)Serial_Print (mSerialId, "\n\rTotal Distance: ", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, lnsLocAndSpeed.lnsTotalDistance);
+            }
+
+            /* If the notification contains the location, print it. */
+            if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_LocationSupported_c) != 0U)
+            {
+                FLib_MemCpy(&lnsLocAndSpeed.lnsLatitude, pInPos, sizeof(int32_t));
+                pInPos += sizeof(int32_t);
+                FLib_MemCpy(&lnsLocAndSpeed.lnsLongitude, pInPos, sizeof(int32_t));
+                pInPos += sizeof(int32_t);
+
+                (void)Serial_Print (mSerialId, "\n\rLocation: ", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, (uint32_t)lnsLocAndSpeed.lnsLongitude);
+                (void)Serial_Print (mSerialId, ", ", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, (uint32_t)lnsLocAndSpeed.lnsLatitude);
+            }
+
+            /* If the notification contains the total distance, print it. */
+            if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_ElevationSupported_c) != 0U)
+            {
+                FLib_MemCpy(&lnsLocAndSpeed.lnsElevation, pInPos, 3);
+                pInPos += 3U;
+
+                (void)Serial_Print (mSerialId, "\n\rElevation: ", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, (uint32_t)lnsLocAndSpeed.lnsElevation);
+            }
+
+            /* If the notification contains the heading, print it. */
+            if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_HeadingPresent_c) != 0U)
+            {
+                FLib_MemCpy(&lnsLocAndSpeed.lnsHeading, pInPos, sizeof(lnsLocAndSpeed.lnsHeading));
+                pInPos += sizeof(lnsLocAndSpeed.lnsHeading);
+
+                (void)Serial_Print (mSerialId, "\n\rHeading: ", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, (uint32_t)lnsLocAndSpeed.lnsHeading);
+            }
+
+            /* If the notification contains the rolling time, print it. */
+            if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_RollingTimePresent_c) != 0U)
+            {
+                FLib_MemCpy(&lnsLocAndSpeed.lnsRollingTime, pInPos, sizeof(lnsLocAndSpeed.lnsRollingTime));
+                pInPos += sizeof(lnsLocAndSpeed.lnsRollingTime);
+
+                (void)Serial_Print (mSerialId, "\n\rRolling time: ", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, (uint32_t)lnsLocAndSpeed.lnsRollingTime);
+            }
+
+            /* If the notification contains the UTC time, print it. */
+            if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_UtcTimeSupported_c) != 0U)
+            {
+                ctsDateTime_t dateTime;
+                FLib_MemCpy(&dateTime, pInPos, sizeof(ctsDateTime_t));
+
+                (void)Serial_Print (mSerialId, "\n\rUTC Time: ", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, dateTime.year);
+                (void)Serial_Print (mSerialId, "-", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, dateTime.month);
+                (void)Serial_Print (mSerialId, "-", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, dateTime.day);
+                (void)Serial_Print (mSerialId, " ", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, dateTime.hours);
+                (void)Serial_Print (mSerialId, ":", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, dateTime.minutes);
+                (void)Serial_Print (mSerialId, ":", gNoBlock_d);
+                (void)Serial_PrintDec (mSerialId, dateTime.seconds);
+            }
         }
-
-        /* If the notification contains the total distance, print it. */
-        if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_TotalDistanceSupported_c) != 0U)
-        {
-            FLib_MemCpy(&lnsLocAndSpeed.lnsTotalDistance, pInPos, 3);
-            pInPos += 3;
-
-            (void)Serial_Print (mSerialId, "\n\rTotal Distance: ", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, lnsLocAndSpeed.lnsTotalDistance);
-        }
-
-        /* If the notification contains the location, print it. */
-        if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_LocationSupported_c) != 0U)
-        {
-            FLib_MemCpy(&lnsLocAndSpeed.lnsLatitude, pInPos, sizeof(int32_t));
-            pInPos += sizeof(int32_t);
-            FLib_MemCpy(&lnsLocAndSpeed.lnsLongitude, pInPos, sizeof(int32_t));
-            pInPos += sizeof(int32_t);
-
-            (void)Serial_Print (mSerialId, "\n\rLocation: ", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, (uint32_t)lnsLocAndSpeed.lnsLongitude);
-            (void)Serial_Print (mSerialId, ", ", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, (uint32_t)lnsLocAndSpeed.lnsLatitude);
-        }
-
-        /* If the notification contains the total distance, print it. */
-        if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_ElevationSupported_c) != 0U)
-        {
-            FLib_MemCpy(&lnsLocAndSpeed.lnsElevation, pInPos, 3);
-            pInPos += 3U;
-
-            (void)Serial_Print (mSerialId, "\n\rElevation: ", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, (uint32_t)lnsLocAndSpeed.lnsElevation);
-        }
-
-        /* If the notification contains the heading, print it. */
-        if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_HeadingPresent_c) != 0U)
-        {
-            FLib_MemCpy(&lnsLocAndSpeed.lnsHeading, pInPos, sizeof(lnsLocAndSpeed.lnsHeading));
-            pInPos += sizeof(lnsLocAndSpeed.lnsHeading);
-
-            (void)Serial_Print (mSerialId, "\n\rHeading: ", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, (uint32_t)lnsLocAndSpeed.lnsHeading);
-        }
-
-        /* If the notification contains the rolling time, print it. */
-        if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_RollingTimePresent_c) != 0U)
-        {
-            FLib_MemCpy(&lnsLocAndSpeed.lnsRollingTime, pInPos, sizeof(lnsLocAndSpeed.lnsRollingTime));
-            pInPos += sizeof(lnsLocAndSpeed.lnsRollingTime);
-
-            (void)Serial_Print (mSerialId, "\n\rRolling time: ", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, (uint32_t)lnsLocAndSpeed.lnsRollingTime);
-        }
-
-        /* If the notification contains the UTC time, print it. */
-        if ((lnsLocAndSpeed.lnsLocAndSpeedFlags & gLns_UtcTimeSupported_c) != 0U)
-        {
-            ctsDateTime_t dateTime;
-            FLib_MemCpy(&dateTime, pInPos, sizeof(ctsDateTime_t));
-
-            (void)Serial_Print (mSerialId, "\n\rUTC Time: ", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, dateTime.year);
-            (void)Serial_Print (mSerialId, "-", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, dateTime.month);
-            (void)Serial_Print (mSerialId, "-", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, dateTime.day);
-            (void)Serial_Print (mSerialId, " ", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, dateTime.hours);
-            (void)Serial_Print (mSerialId, ":", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, dateTime.minutes);
-            (void)Serial_Print (mSerialId, ":", gNoBlock_d);
-            (void)Serial_PrintDec (mSerialId, dateTime.seconds);
-        }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     }
+#endif
 }
 
 

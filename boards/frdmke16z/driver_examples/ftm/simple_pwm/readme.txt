@@ -3,6 +3,18 @@ Overview
 The FTM project is a simple demonstration program of the SDK FTM driver. It sets up the FTM
 hardware block to output a center-aligned PWM signal. The PWM dutycycle is periodically updated.
 On boards that have an LED connected to the FTM pins, the user will see a change in LED brightness.
+
+Note
+If the FTM instance has only TPM features, please use the TPM driver.
+Can be judged by FSL_FEATURE_FTM_IS_TPM_ONLY_INSTANCE(base) macro.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -38,11 +50,3 @@ You will see a change in LED brightness if an LED is connected to the FTM pin
 If no LED is connected to the FTM pin, then probe the signal using an oscilloscope
 ~~~~~~~~~~~~~~~~~~~~~~~
 - Red led will change brightness.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

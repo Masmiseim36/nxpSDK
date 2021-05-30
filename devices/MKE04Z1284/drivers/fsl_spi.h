@@ -21,8 +21,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief SPI driver version 2.1.0. */
-#define FSL_SPI_DRIVER_VERSION (MAKE_VERSION(2, 1, 0))
+/*! @brief SPI driver version. */
+#define FSL_SPI_DRIVER_VERSION (MAKE_VERSION(2, 1, 1))
 /*@}*/
 
 #ifndef SPI_DUMMYDATA
@@ -39,7 +39,7 @@
 extern volatile uint8_t g_spiDummyData[];
 
 /*! @brief Return status for the SPI driver.*/
-enum _spi_status
+enum
 {
     kStatus_SPI_Busy    = MAKE_STATUS(kStatusGroup_SPI, 0), /*!< SPI bus is busy */
     kStatus_SPI_Idle    = MAKE_STATUS(kStatusGroup_SPI, 1), /*!< SPI is idle */

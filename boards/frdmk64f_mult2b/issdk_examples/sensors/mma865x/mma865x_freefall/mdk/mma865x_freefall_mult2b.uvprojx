@@ -7,6 +7,7 @@
       <TargetName>mma865x_freefall_mult2b debug</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MK64FN1M0VLL12</Device>
@@ -14,7 +15,6 @@
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile>"STARTUP\Freescale\Kinetis\startup_MK64F12.s" ("Freescale MK64Xxxxxxx12 Startup Code")</StartupFile>
-          <FlashDriverDll>UL2CM3(-O2511 -S0 -C0 -FO15 -FD20000000 -FC4000 -FN1 -FF0MK_P1M0 -FS00 -FL0100000)</FlashDriverDll>
           <DeviceId>7425</DeviceId>
           <RegisterFile>MK64F12.H</RegisterFile>
           <MemoryEnv/>
@@ -341,7 +341,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>1</Optim>
+            <Optim>2</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -350,19 +350,22 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>DEBUG, CPU_MK64FN1M0VLL12, FRDM_K64F, FREEDOM, PRINTF_ADVANCED_ENABLE</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>DEBUG, CPU_MK64FN1M0VLL12, FRDM_K64F, FREEDOM, PRINTF_ADVANCED_ENABLE, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../platform/drivers;../../../../../../frdmk64f;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/cmsis_drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/cmsis_drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../middleware/issdk/drivers/gpio/kinetis;../../../../../../../middleware/issdk/sensors;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/utilities/str;../../../../../../../devices/MK64F12/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MK64F12;../../../../../../../devices/MK64F12/drivers;../../../../../../../CMSIS/Driver/Include;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MK64F12/template;../../../../../../../CMSIS/Driver/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/kinetis;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MK64F12/utilities/str;../../../../../../../devices/MK64F12/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MK64F12;../../../../../../../CMSIS/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -374,6 +377,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>DEBUG</Define>
@@ -394,7 +398,7 @@
             <ScatterFile>MK64FN1M0xxx12_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -459,11 +463,6 @@
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
             </File>
-            <File>
-              <FileName>RTE_Device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/template/RTE_Device.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -492,6 +491,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>gpio_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>gpio_driver_irq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_GPIO.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -500,19 +524,14 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -520,14 +539,19 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i2c.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_i2c.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_i2c_edma.c</FileName>
@@ -540,19 +564,14 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_i2c_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i2c_cmsis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_i2c_cmsis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -560,9 +579,9 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_edma.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -570,9 +589,9 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dspi.c</FileName>
+              <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dspi.h</FileName>
@@ -580,9 +599,9 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dspi_edma.c</FileName>
+              <FileName>fsl_dspi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi_edma.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dspi_edma.h</FileName>
@@ -590,9 +609,9 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dspi_cmsis.c</FileName>
+              <FileName>fsl_dspi_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_dspi_cmsis.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dspi_cmsis.h</FileName>
@@ -600,14 +619,19 @@
               <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_dspi_cmsis.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
+              <FileName>fsl_dspi_cmsis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_smc.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_dspi_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_smc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
               <FileName>fsl_pit.c</FileName>
@@ -620,19 +644,14 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_pit.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart_edma.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_uart_edma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart_cmsis.c</FileName>
+              <FileName>fsl_uart_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart_cmsis.h</FileName>
@@ -640,9 +659,9 @@
               <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_flash.h</FilePath>
+              <FileName>fsl_uart_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_adapter.h</FileName>
@@ -650,14 +669,14 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</FilePath>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileName>fsl_ftfx_features.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_controller.c</FileName>
@@ -670,11 +689,6 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_ftfx_flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c</FilePath>
@@ -683,6 +697,16 @@
               <FileName>fsl_ftfx_flash.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_flexnvm.c</FileName>
@@ -695,14 +719,9 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileName>fsl_flash.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_flash.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -710,14 +729,19 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -735,6 +759,16 @@
               <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -750,44 +784,9 @@
               <FilePath>../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK64F12/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>gpio_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_GPIO.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver_irq.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -800,34 +799,9 @@
               <FilePath>../../../../../../../middleware/issdk/sensors/register_io_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>register_io_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_i2c.h</FilePath>
-            </File>
-            <File>
               <FileName>register_io_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/issdk/sensors/register_io_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>register_io_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</FilePath>
             </File>
             <File>
               <FileName>sensor_io_spi.c</FileName>
@@ -835,9 +809,34 @@
               <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_spi.c</FilePath>
             </File>
             <File>
+              <FileName>sensor_io_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_spi.h</FilePath>
+            </File>
+            <File>
               <FileName>sensor_io_spi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_drv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -850,80 +849,85 @@
               <FilePath>../../../../../../../middleware/issdk/sensors/mma865x.h</FilePath>
             </File>
             <File>
-              <FileName>mma865x_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/mma865x_drv.c</FilePath>
-            </File>
-            <File>
               <FileName>mma865x_drv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/issdk/sensors/mma865x_drv.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-uart</GroupName>
-          <Files>
             <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/uart/uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>uart_adapter.c</FileName>
+              <FileName>mma865x_drv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../components/uart/uart_adapter.c</FilePath>
+              <FilePath>../../../../../../../middleware/issdk/sensors/mma865x_drv.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../../components/uart/fsl_adapter_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MK64F12.h</FileName>
               <FileType>5</FileType>
@@ -933,11 +937,6 @@
               <FileName>MK64F12_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/MK64F12_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MK64F12.c</FileName>
@@ -955,9 +954,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MK64F12.s</FileName>
+              <FileName>startup_MK64F12.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/arm/startup_MK64F12.s</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/arm/startup_MK64F12.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -968,6 +967,46 @@
               <FileName>core_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -983,56 +1022,6 @@
               <FileName>arm_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1067,6 +1056,7 @@
       <TargetName>mma865x_freefall_mult2b release</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>MK64FN1M0VLL12</Device>
@@ -1074,7 +1064,6 @@
           <Cpu>CPUTYPE("Cortex-M4") FPU2</Cpu>
           <FlashUtilSpec/>
           <StartupFile>"STARTUP\Freescale\Kinetis\startup_MK64F12.s" ("Freescale MK64Xxxxxxx12 Startup Code")</StartupFile>
-          <FlashDriverDll>UL2CM3(-O2511 -S0 -C0 -FO15 -FD20000000 -FC4000 -FN1 -FF0MK_P1M0 -FS00 -FL0100000)</FlashDriverDll>
           <DeviceId>7425</DeviceId>
           <RegisterFile>MK64F12.H</RegisterFile>
           <MemoryEnv/>
@@ -1401,7 +1390,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>0</interw>
-            <Optim>4</Optim>
+            <Optim>7</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1410,19 +1399,22 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
-            <uC99>1</uC99>
+            <uC99>0</uC99>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
             <VariousControls>
-              <MiscControls>--library_interface=armcc --diag_suppress=1296,186</MiscControls>
-              <Define>NDEBUG, CPU_MK64FN1M0VLL12, FRDM_K64F, FREEDOM, PRINTF_ADVANCED_ENABLE</Define>
+              <MiscControls>-fno-common  -fdata-sections  -ffreestanding  -fno-builtin  -mthumb</MiscControls>
+              <Define>NDEBUG, CPU_MK64FN1M0VLL12, FRDM_K64F, FREEDOM, PRINTF_ADVANCED_ENABLE, SERIAL_PORT_TYPE_UART=1</Define>
               <Undefine/>
-              <IncludePath>../../../../..;..;../../../../../../../CMSIS/Include;../../../../../../../devices;../../../../../../../platform/drivers;../../../../../../frdmk64f;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/cmsis_drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/cmsis_drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../middleware/issdk/drivers/gpio/kinetis;../../../../../../../middleware/issdk/sensors;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/utilities/str;../../../../../../../devices/MK64F12/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MK64F12;../../../../../../../devices/MK64F12/drivers;../../../../../../../CMSIS/Driver/Include;../../../../../../../CMSIS/Driver/Include;../../../../../../../devices/MK64F12/template;../../../../../../../CMSIS/Driver/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
+              <IncludePath>../../../../..;..;../../../../../../../middleware/issdk/drivers/gpio/kinetis;../../../../../../../middleware/issdk/drivers/gpio;../../../../../../../devices/MK64F12/drivers;../../../../../../../devices/MK64F12/cmsis_drivers;../../../../../../../middleware/issdk/drivers/systick;../../../../../../../middleware/issdk/sensors;../../../../../../../devices/MK64F12/utilities/str;../../../../../../../devices/MK64F12/utilities/debug_console;../../../../../../../components/uart;../../../../../../../components/serial_manager;../../../../../../../components/lists;../../../../../../../devices/MK64F12;../../../../../../../CMSIS/Include;../../../../../../../CMSIS/Driver/Include</IncludePath>
             </VariousControls>
+            <vShortEn>1</vShortEn>
+            <vShortWch>1</vShortWch>
+            <v6Rtti>0</v6Rtti>
           </Cads>
           <Aads>
             <interw>0</interw>
@@ -1434,6 +1426,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <uClangAs>1</uClangAs>
             <VariousControls>
               <MiscControls/>
               <Define>NDEBUG</Define>
@@ -1454,7 +1447,7 @@
             <ScatterFile>MK64FN1M0xxx12_flash.scf</ScatterFile>
             <IncludeLibs/>
             <IncludeLibsPath/>
-            <Misc>--remove</Misc>
+            <Misc>--remove --keep=*(.FlashConfig)</Misc>
             <LinkerInputFile/>
             <DisabledWarnings>6314</DisabledWarnings>
           </LDads>
@@ -1519,11 +1512,6 @@
               <FileType>5</FileType>
               <FilePath>../board.h</FilePath>
             </File>
-            <File>
-              <FileName>RTE_Device.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/template/RTE_Device.h</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -1552,6 +1540,31 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>gpio_driver</GroupName>
+          <Files>
+            <File>
+              <FileName>gpio_driver_irq.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio_driver.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</FilePath>
+            </File>
+            <File>
+              <FileName>Driver_GPIO.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>drivers</GroupName>
           <Files>
             <File>
@@ -1560,19 +1573,14 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_port.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_uart.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_gpio.c</FileName>
+              <FileName>fsl_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_gpio.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart.c</FilePath>
             </File>
             <File>
               <FileName>fsl_gpio.h</FileName>
@@ -1580,14 +1588,19 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_gpio.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i2c.c</FileName>
+              <FileName>fsl_gpio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_i2c.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_gpio.c</FilePath>
             </File>
             <File>
               <FileName>fsl_i2c.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_i2c.c</FilePath>
             </File>
             <File>
               <FileName>fsl_i2c_edma.c</FileName>
@@ -1600,19 +1613,14 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_i2c_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_i2c_cmsis.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_i2c_cmsis.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dmamux.c</FileName>
+              <FileName>fsl_i2c_cmsis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dmamux.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_i2c_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dmamux.h</FileName>
@@ -1620,9 +1628,9 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dmamux.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_edma.c</FileName>
+              <FileName>fsl_dmamux.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_edma.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dmamux.c</FilePath>
             </File>
             <File>
               <FileName>fsl_edma.h</FileName>
@@ -1630,9 +1638,9 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dspi.c</FileName>
+              <FileName>fsl_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dspi.h</FileName>
@@ -1640,9 +1648,9 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dspi_edma.c</FileName>
+              <FileName>fsl_dspi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi_edma.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dspi_edma.h</FileName>
@@ -1650,9 +1658,9 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_dspi_cmsis.c</FileName>
+              <FileName>fsl_dspi_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_dspi_cmsis.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_dspi_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_dspi_cmsis.h</FileName>
@@ -1660,14 +1668,19 @@
               <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_dspi_cmsis.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_smc.c</FileName>
+              <FileName>fsl_dspi_cmsis.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_smc.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_dspi_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_smc.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_smc.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_smc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_smc.c</FilePath>
             </File>
             <File>
               <FileName>fsl_pit.c</FileName>
@@ -1680,19 +1693,14 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_pit.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart_edma.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart_edma.c</FilePath>
-            </File>
-            <File>
               <FileName>fsl_uart_edma.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart_edma.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_uart_cmsis.c</FileName>
+              <FileName>fsl_uart_edma.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_uart_edma.c</FilePath>
             </File>
             <File>
               <FileName>fsl_uart_cmsis.h</FileName>
@@ -1700,9 +1708,9 @@
               <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_flash.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_flash.h</FilePath>
+              <FileName>fsl_uart_cmsis.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/cmsis_drivers/fsl_uart_cmsis.c</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_adapter.h</FileName>
@@ -1710,14 +1718,14 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_adapter.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_cache.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</FilePath>
+              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileName>fsl_ftfx_features.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_controller.c</FileName>
@@ -1730,11 +1738,6 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_controller.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_features.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_features.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_ftfx_flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.c</FilePath>
@@ -1743,6 +1746,16 @@
               <FileName>fsl_ftfx_flash.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_ftfx_cache.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_cache.h</FilePath>
             </File>
             <File>
               <FileName>fsl_ftfx_flexnvm.c</FileName>
@@ -1755,14 +1768,9 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_flexnvm.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_ftfx_utilities.h</FileName>
+              <FileName>fsl_flash.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_ftfx_utilities.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_clock.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_flash.h</FilePath>
             </File>
             <File>
               <FileName>fsl_clock.h</FileName>
@@ -1770,14 +1778,19 @@
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_clock.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_common.c</FileName>
+              <FileName>fsl_clock.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_clock.c</FilePath>
             </File>
             <File>
               <FileName>fsl_common.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_common.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/drivers/fsl_common.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1795,6 +1808,16 @@
               <FilePath>../../../../../../../middleware/issdk/drivers/systick/systick_utils.h</FilePath>
             </File>
             <File>
+              <FileName>fsl_str.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/utilities/str/fsl_str.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_str.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/utilities/str/fsl_str.h</FilePath>
+            </File>
+            <File>
               <FileName>fsl_debug_console.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c</FilePath>
@@ -1810,44 +1833,9 @@
               <FilePath>../../../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h</FilePath>
             </File>
             <File>
-              <FileName>fsl_str.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/utilities/str/fsl_str.c</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_str.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/utilities/str/fsl_str.h</FilePath>
-            </File>
-            <File>
               <FileName>fsl_assert.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../devices/MK64F12/utilities/fsl_assert.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>gpio_driver</GroupName>
-          <Files>
-            <File>
-              <FileName>Driver_GPIO.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/Driver_GPIO.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.c</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver.h</FilePath>
-            </File>
-            <File>
-              <FileName>gpio_driver_irq.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk/drivers/gpio/kinetis/gpio_driver_irq.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1860,34 +1848,9 @@
               <FilePath>../../../../../../../middleware/issdk/sensors/register_io_i2c.c</FilePath>
             </File>
             <File>
-              <FileName>register_io_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_i2c.h</FilePath>
-            </File>
-            <File>
               <FileName>register_io_spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../../../middleware/issdk/sensors/register_io_spi.c</FilePath>
-            </File>
-            <File>
-              <FileName>register_io_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_drv.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_drv.h</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>sensor_io_i2c.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</FilePath>
             </File>
             <File>
               <FileName>sensor_io_spi.c</FileName>
@@ -1895,9 +1858,34 @@
               <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_spi.c</FilePath>
             </File>
             <File>
+              <FileName>sensor_io_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>register_io_spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/register_io_spi.h</FilePath>
+            </File>
+            <File>
               <FileName>sensor_io_spi.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_io_i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_io_i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_drv.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../middleware/issdk/sensors/sensor_drv.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1910,80 +1898,85 @@
               <FilePath>../../../../../../../middleware/issdk/sensors/mma865x.h</FilePath>
             </File>
             <File>
-              <FileName>mma865x_drv.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../middleware/issdk/sensors/mma865x_drv.c</FilePath>
-            </File>
-            <File>
               <FileName>mma865x_drv.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../middleware/issdk/sensors/mma865x_drv.h</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>component-uart</GroupName>
-          <Files>
             <File>
-              <FileName>uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/uart/uart.h</FilePath>
-            </File>
-            <File>
-              <FileName>uart_adapter.c</FileName>
+              <FileName>mma865x_drv.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../components/uart/uart_adapter.c</FilePath>
+              <FilePath>../../../../../../../middleware/issdk/sensors/mma865x_drv.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-serial_manager</GroupName>
+          <GroupName>component/uart</GroupName>
           <Files>
             <File>
-              <FileName>serial_manager.c</FileName>
+              <FileName>fsl_adapter_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/uart/fsl_adapter_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_adapter_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/serial_manager.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_manager.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/serial_manager.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_internal.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/serial_port_internal.h</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/serial_manager/serial_port_uart.c</FilePath>
-            </File>
-            <File>
-              <FileName>serial_port_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../components/serial_manager/serial_port_uart.h</FilePath>
+              <FilePath>../../../../../../../components/uart/fsl_adapter_uart.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>component-lists</GroupName>
+          <GroupName>component/serial_manager</GroupName>
           <Files>
             <File>
-              <FileName>generic_list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../../../components/lists/generic_list.c</FilePath>
+              <FileName>fsl_component_serial_manager.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.h</FilePath>
             </File>
             <File>
-              <FileName>generic_list.h</FileName>
+              <FileName>fsl_component_serial_port_internal.h</FileName>
               <FileType>5</FileType>
-              <FilePath>../../../../../../../components/lists/generic_list.h</FilePath>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_internal.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_manager.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_manager.c</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_serial_port_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/serial_manager/fsl_component_serial_port_uart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>component/lists</GroupName>
+          <Files>
+            <File>
+              <FileName>fsl_component_generic_list.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../components/lists/fsl_component_generic_list.h</FilePath>
+            </File>
+            <File>
+              <FileName>fsl_component_generic_list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../../../components/lists/fsl_component_generic_list.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>device</GroupName>
           <Files>
+            <File>
+              <FileName>fsl_device_registers.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../devices/MK64F12/fsl_device_registers.h</FilePath>
+            </File>
             <File>
               <FileName>MK64F12.h</FileName>
               <FileType>5</FileType>
@@ -1993,11 +1986,6 @@
               <FileName>MK64F12_features.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../devices/MK64F12/MK64F12_features.h</FilePath>
-            </File>
-            <File>
-              <FileName>fsl_device_registers.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/fsl_device_registers.h</FilePath>
             </File>
             <File>
               <FileName>system_MK64F12.c</FileName>
@@ -2015,9 +2003,9 @@
           <GroupName>startup</GroupName>
           <Files>
             <File>
-              <FileName>startup_MK64F12.s</FileName>
+              <FileName>startup_MK64F12.S</FileName>
               <FileType>2</FileType>
-              <FilePath>../../../../../../../devices/MK64F12/arm/startup_MK64F12.s</FilePath>
+              <FilePath>../../../../../../../devices/MK64F12/arm/startup_MK64F12.S</FilePath>
             </File>
           </Files>
         </Group>
@@ -2028,6 +2016,46 @@
               <FileName>core_cm4.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/core_cm4.h</FilePath>
+            </File>
+            <File>
+              <FileName>mpu_armv7.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_armclang_ltm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang_ltm.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_gcc.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_compiler.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_version.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
+            </File>
+            <File>
+              <FileName>cmsis_iccarm.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
             </File>
             <File>
               <FileName>arm_common_tables.h</FileName>
@@ -2043,56 +2071,6 @@
               <FileName>arm_math.h</FileName>
               <FileType>5</FileType>
               <FilePath>../../../../../../../CMSIS/Include/arm_math.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_armclang.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_armclang.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_compiler.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_compiler.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_gcc.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_gcc.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_iccarm.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_iccarm.h</FilePath>
-            </File>
-            <File>
-              <FileName>cmsis_version.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/cmsis_version.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mbl.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mbl.h</FilePath>
-            </File>
-            <File>
-              <FileName>core_armv8mml.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/core_armv8mml.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv7.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv7.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu_armv8.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>../../../../../../../CMSIS/Include/mpu_armv8.h</FilePath>
             </File>
           </Files>
         </Group>

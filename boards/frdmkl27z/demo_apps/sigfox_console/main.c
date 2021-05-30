@@ -15,10 +15,10 @@
  * Sigfox SDK SW driver is used to access/communicate with OL2385 device.
  */
 #include <stdio.h>
-#include "board.h"
 #include "pin_mux.h"
 #include "clock_config.h"
 #include "fsl_debug_console.h"
+#include "board.h"
 
 /* Sigfox */
 #include "sf.h"

@@ -6,10 +6,10 @@ This example demonstrates how the aws iot device can be configured by mobile app
 
 Toolchain supported
 ===================
-- GCC ARM Embedded  9.2.1
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- MCUXpresso  11.2.0
+- GCC ARM Embedded  9.3.1
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -186,6 +186,3 @@ Initializing PHY...
 .
 .
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Customization options
-=====================
-

@@ -204,6 +204,17 @@ const mcg_config_t mcgConfig_BOARD_BootClockRUN =
         .dmx32 = kMCG_Dmx32Default,               /* DCO has a default range of 25% */
         .oscsel = kMCG_OscselOsc,                 /* Selects System Oscillator (OSCCLK) */
     };
+const mcg_config_t mcgConfig_BOARD_BootClocktoFEE =
+    {
+        .mcgMode = kMCG_ModeFEE,                  /* FEE - FLL Engaged External */
+        .irclkEnableMode = MCG_IRCLK_DISABLE,     /* MCGIRCLK disabled */
+        .ircs = kMCG_IrcSlow,                     /* Slow internal reference clock selected */
+        .fcrdiv = 0x1U,                           /* Fast IRC divider: divided by 2 */
+        .frdiv = 0x0U,                            /* FLL reference clock divider: divided by 1 */
+        .drs = kMCG_DrsMid,                       /* Mid frequency range */
+        .dmx32 = kMCG_Dmx32Fine,                  /* DCO is fine-tuned for maximum frequency with 32.768 kHz reference */
+        .oscsel = kMCG_OscselRtc,                 /* Selects 32 kHz RTC Oscillator */
+    };
 const sim_clock_config_t simConfig_BOARD_BootClockRUN =
     {
         .er32kSrc = SIM_OSC32KSEL_OSC32KCLK_CLK,  /* OSC32KSEL select: OSC32KCLK clock */
@@ -237,5 +248,15 @@ void BOARD_BootClockRUN(void)
     CLOCK_SetLpuart1Clock(SIM_LPUART_CLK_SEL_OSCERCLK_CLK);
     /* Set TPM clock source. */
     CLOCK_SetTpmClock(SIM_TPM_CLK_SEL_OSCERCLK_CLK);
+}
+
+void BOARD_MoveClocktoFEE(void)
+{
+    /* Set MCG to FEE mode. */
+    CLOCK_BootToFeeMode(mcgConfig_BOARD_BootClocktoFEE.oscsel,
+                        mcgConfig_BOARD_BootClocktoFEE.frdiv,
+                        mcgConfig_BOARD_BootClocktoFEE.dmx32,
+                        mcgConfig_BOARD_BootClocktoFEE.drs,
+                        CLOCK_CONFIG_FllStableDelay);
 }
 

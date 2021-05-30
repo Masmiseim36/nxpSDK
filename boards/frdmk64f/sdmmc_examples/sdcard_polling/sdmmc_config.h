@@ -29,14 +29,22 @@
 #define BOARD_SDMMC_SD_HOST_IRQ  SDHC_IRQn
 #define BOARD_SDMMC_MMC_HOST_IRQ SDHC_IRQn
 /* @brief card detect configuration */
-#define BOARD_SDMMC_SD_CD_GPIO_BASE                  GPIOE
-#define BOARD_SDMMC_SD_CD_GPIO_PIN                   6U
-#define BOARD_SDMMC_SD_CD_PORT_BASE                  PORTE
-#define BOARD_SDMMC_SD_CD_PORT_IRQ                   PORTE_IRQn
-#define BOARD_SDMMC_SD_CD_IRQ_PRIORITY               6U
-#define BOARD_SDMMC_SD_CD_INTTERUPT_TYPE             kPORT_InterruptEitherEdge
-#define BOARD_SDMMC_SD_CD_INSERT_LEVEL               (1U)
-#define BOARD_SDMMC_SD_CD_PORT_IRQ_HANDLER           PORTE_IRQHandler
+#define BOARD_SDMMC_SD_CD_GPIO_BASE        GPIOE
+#define BOARD_SDMMC_SD_CD_GPIO_PIN         6U
+#define BOARD_SDMMC_SD_CD_PORT_BASE        PORTE
+#define BOARD_SDMMC_SD_CD_PORT_IRQ         PORTE_IRQn
+#define BOARD_SDMMC_SD_CD_IRQ_PRIORITY     6U
+#define BOARD_SDMMC_SD_CD_INTTERUPT_TYPE   kPORT_InterruptEitherEdge
+#define BOARD_SDMMC_SD_CD_INSERT_LEVEL     (1U)
+#define BOARD_SDMMC_SD_CD_PORT_IRQ_HANDLER PORTE_IRQHandler
+/* @brief card detect type
+ *
+ * Note: if you want to use DAT3 as card detect pin, please make sure the DAT3 is pulled down with 100K resistor on
+ * board, it is not suggest to use the internal pull down function, from our test result, internal pull down is too
+ * strong to cover all the card. And please pay attention, DAT3 card detection cannot works during the card access,
+ * since the DAT3 will be used for data transfer, thus the functionality of card detect will be disabled. Using GPIO
+ * detect pin for card detection is recommended.
+ */
 #define BOARD_SDMMC_SD_CD_TYPE                       kSD_DetectCardByGpioCD
 #define BOARD_SDMMC_SD_CARD_DETECT_DEBOUNCE_DELAY_MS (100U)
 #define BOARD_SDMMC_DATA_BUFFER_ALIGN_SIZE           (4U)

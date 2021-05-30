@@ -2,30 +2,30 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_ftm.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* The Flextimer base address/channel used for board */
 #define BOARD_FTM_BASEADDR FTM0
-#define BOARD_FTM_CHANNEL kFTM_Chnl_3
+#define BOARD_FTM_CHANNEL  kFTM_Chnl_3
 
 /* Interrupt number and interrupt handler for the FTM base address used */
 #define FTM_INTERRUPT_NUMBER FTM0_IRQn
-#define FTM_LED_HANDLER FTM0_IRQHandler
+#define FTM_LED_HANDLER      FTM0_IRQHandler
 
 /* Interrupt to enable and flag to read */
 #define FTM_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl3InterruptEnable
-#define FTM_CHANNEL_FLAG kFTM_Chnl3Flag
+#define FTM_CHANNEL_FLAG             kFTM_Chnl3Flag
 
 /* Get source clock for FTM driver */
 #define FTM_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_CoreSysClk)
@@ -41,8 +41,8 @@ void delay(void);
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile bool ftmIsrFlag = false;
-volatile bool brightnessUp = true; /* Indicate LED is brighter or dimmer */
+volatile bool ftmIsrFlag          = false;
+volatile bool brightnessUp        = true; /* Indicate LED is brighter or dimmer */
 volatile uint8_t updatedDutycycle = 10U;
 
 /*******************************************************************************
@@ -69,7 +69,7 @@ void FTM_LED_HANDLER(void)
         if (++updatedDutycycle >= 99U)
         {
             updatedDutycycle = 99U;
-            brightnessUp = false;
+            brightnessUp     = false;
         }
     }
     else
@@ -81,11 +81,10 @@ void FTM_LED_HANDLER(void)
         }
     }
 
-    if ((FTM_GetStatusFlags(BOARD_FTM_BASEADDR) & FTM_CHANNEL_FLAG) == FTM_CHANNEL_FLAG)
-    {
-        /* Clear interrupt flag.*/
-        FTM_ClearStatusFlags(BOARD_FTM_BASEADDR, FTM_CHANNEL_FLAG);
-    }
+    /* Clear interrupt flag.*/
+    FTM_ClearStatusFlags(BOARD_FTM_BASEADDR, FTM_GetStatusFlags(BOARD_FTM_BASEADDR));
+
+    __DSB();
 }
 
 /*!
@@ -98,10 +97,12 @@ int main(void)
     ftm_pwm_level_select_t pwmLevel = kFTM_LowTrue;
 
     /* Configure ftm params with frequency 24kHZ */
-    ftmParam.chnlNumber = BOARD_FTM_CHANNEL;
-    ftmParam.level = pwmLevel;
-    ftmParam.dutyCyclePercent = updatedDutycycle;
+    ftmParam.chnlNumber            = BOARD_FTM_CHANNEL;
+    ftmParam.level                 = pwmLevel;
+    ftmParam.dutyCyclePercent      = updatedDutycycle;
     ftmParam.firstEdgeDelayPercent = 0U;
+    ftmParam.enableComplementary   = false;
+    ftmParam.enableDeadtime        = false;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();
@@ -110,8 +111,8 @@ int main(void)
 
     /* Print a note to terminal */
     PRINTF("\r\nFTM example to output center-aligned PWM signal\r\n");
-    PRINTF("\r\nYou will see a change in LED brightness if an LED is connected to the FTM pin");
-    PRINTF("\r\nIf no LED is connected to the FTM pin, then probe the signal using an oscilloscope");
+    PRINTF("You will see a change in LED brightness if an LED is connected to the FTM pin\r\n");
+    PRINTF("If no LED is connected to the FTM pin, then probe the signal using an oscilloscope\r\n");
 
     FTM_GetDefaultConfig(&ftmInfo);
     /* Initialize FTM module */

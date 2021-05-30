@@ -299,32 +299,20 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../erpc_common</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -619,6 +607,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
+          <state/>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -774,6 +763,9 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state> --redirect __iar_dlmalloc=malloc </state>
+          <state> --redirect __iar_dlcalloc=calloc </state>
+          <state> --redirect __iar_dlfree=free </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1202,7 +1194,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>11101110</state>
+          <state>11111110</state>
         </option>
         <option>
           <name>CCDebugInfo</name>
@@ -1270,32 +1262,20 @@
         </option>
         <option>
           <name>CCIncludePath2</name>
-          <state>$PROJ_DIR$/..</state>
-          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
           <state>$PROJ_DIR$/../../erpc_common</state>
-          <state>$PROJ_DIR$/../../..</state>
-          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
-          <state>$PROJ_DIR$/../../../../../devices</state>
+          <state>$PROJ_DIR$/../../erpc_common/erpc_matrix_multiply/service</state>
+          <state>$PROJ_DIR$/..</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
+          <state>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console_lite</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
+          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
           <state>$PROJ_DIR$/../../../../../devices/MK64F12</state>
           <state>$PROJ_DIR$/../../../../../components/uart</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
-          <state>$PROJ_DIR$/../../../../../components/serial_manager</state>
           <state>$PROJ_DIR$/../../../../../components/lists</state>
-          <state>$PROJ_DIR$/../../../../../devices/MK64F12/drivers</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/setup</state>
-          <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/transports</state>
           <state>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c</state>
+          <state>$PROJ_DIR$/../../../../../CMSIS/Include</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1590,6 +1570,7 @@
         </option>
         <option>
           <name>OOCOutputFile</name>
+          <state/>
         </option>
         <option>
           <name>OOCCommandLineProducer</name>
@@ -1745,6 +1726,9 @@
         </option>
         <option>
           <name>IlinkExtraOptions</name>
+          <state> --redirect __iar_dlmalloc=malloc </state>
+          <state> --redirect __iar_dlcalloc=calloc </state>
+          <state> --redirect __iar_dlfree=free </state>
         </option>
         <option>
           <name>IlinkLowLevelInterfaceSlave</name>
@@ -1942,6 +1926,12 @@
   <group>
     <name>source</name>
     <file>
+      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.cpp</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../main_server.c</name>
     </file>
     <file>
@@ -1950,12 +1940,6 @@
   </group>
   <group>
     <name>erpc</name>
-    <file>
-      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../erpc_common/erpc_error_handler.cpp</name>
-    </file>
     <group>
       <name>service</name>
       <file>
@@ -2039,6 +2023,15 @@
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_crc16.cpp</name>
       </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_client_server_common.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/infra/erpc_pre_post_action.cpp</name>
+      </file>
     </group>
     <group>
       <name>setup</name>
@@ -2071,6 +2064,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_config_internal.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$/../../../../../middleware/multicore/erpc/erpc_c/port/erpc_setup_extensions.h</name>
       </file>
     </group>
   </group>
@@ -2182,22 +2178,13 @@
   <group>
     <name>utilities</name>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str/fsl_str.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console_lite/fsl_debug_console.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/str/fsl_str.h</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console_lite/fsl_debug_console.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console/fsl_debug_console_conf.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/fsl_assert.c</name>
+      <name>$PROJ_DIR$/../../../../../devices/MK64F12/utilities/debug_console_lite/fsl_assert.c</name>
     </file>
   </group>
   <group>
@@ -2223,34 +2210,19 @@
     <group>
       <name>uart</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart.h</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/uart/uart_adapter.c</name>
-      </file>
-    </group>
-    <group>
-      <name>serial_manager</name>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_manager.c</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.h</name>
-      </file>
-      <file>
-        <name>$PROJ_DIR$/../../../../../components/serial_manager/serial_port_uart.c</name>
+        <name>$PROJ_DIR$/../../../../../components/uart/fsl_adapter_uart.c</name>
       </file>
     </group>
     <group>
       <name>lists</name>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.h</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.h</name>
       </file>
       <file>
-        <name>$PROJ_DIR$/../../../../../components/lists/generic_list.c</name>
+        <name>$PROJ_DIR$/../../../../../components/lists/fsl_component_generic_list.c</name>
       </file>
     </group>
   </group>
@@ -2266,10 +2238,16 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_cm4.h</name>
     </file>
     <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armcc.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_armclang_ltm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_gcc.h</name>
@@ -2281,13 +2259,7 @@
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_version.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv7.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mbl.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/core_armv8mml.h</name>
+      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_common_tables.h</name>
@@ -2297,12 +2269,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$/../../../../../CMSIS/Include/arm_math.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/cmsis_iccarm.h</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$/../../../../../CMSIS/Include/mpu_armv8.h</name>
     </file>
   </group>
 </project>

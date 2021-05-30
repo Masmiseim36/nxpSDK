@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2013-2016 ARM Limited. All rights reserved.
  * Copyright (c) 2016, Freescale Semiconductor, Inc. Not a Contribution.
- * Copyright 2016-2017 NXP. Not a Contribution.
+ * Copyright 2016-2020 NXP. Not a Contribution.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -25,9 +25,9 @@
 #define FSL_COMPONENT_ID "platform.drivers.spi_cmsis"
 #endif
 
-#if ((RTE_SPI0 && defined(SPI0)) || (RTE_SPI1 && defined(SPI1)))
+#if ((defined(RTE_SPI0) && RTE_SPI0) || (defined(RTE_SPI1) && RTE_SPI1))
 
-#define ARM_SPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 2) /* driver version */
+#define ARM_SPI_DRV_VERSION ARM_DRIVER_VERSION_MAJOR_MINOR(2, 3) /* driver version */
 
 /*
  * ARMCC does not support split the data section automatically, so the driver
@@ -37,7 +37,6 @@
 #define ARMCC_SECTION(section_name) __attribute__((section(section_name)))
 #endif
 
-extern uint32_t SPI_GetInstance(SPI_Type *base);
 static clock_ip_name_t const s_SPIClock[] = SPI_CLOCKS;
 
 typedef const struct _cmsis_spi_resource
@@ -114,7 +113,7 @@ static const ARM_SPI_CAPABILITIES s_SPIDriverCapabilities = {
  ******************************************************************************/
 static inline bool SPI_IsMaster(SPI_Type *base)
 {
-    return (bool)((base->C1) & SPI_C1_MSTR_MASK);
+    return ((base->C1 & (uint8_t)SPI_C1_MSTR_MASK) != 0U);
 }
 static int32_t SPI_CommonControl(uint32_t control, uint32_t arg, cmsis_spi_resource_t *resource, uint8_t *isConfigured)
 {
@@ -122,6 +121,7 @@ static int32_t SPI_CommonControl(uint32_t control, uint32_t arg, cmsis_spi_resou
     SPI_MasterGetDefaultConfig(&masterConfig);
     spi_slave_config_t slaveConfig;
     SPI_SlaveGetDefaultConfig(&slaveConfig);
+    int32_t result = ARM_DRIVER_OK;
 
     switch (control & ARM_SPI_CONTROL_Msk)
     {
@@ -132,6 +132,7 @@ static int32_t SPI_CommonControl(uint32_t control, uint32_t arg, cmsis_spi_resou
             slaveConfig.pinMode = kSPI_PinModeOutput;
             break;
         default:
+            /* Avoid MISRA 16.4 violations. */
             break;
     }
     switch (control & ARM_SPI_FRAME_FORMAT_Msk)
@@ -191,12 +192,13 @@ static int32_t SPI_CommonControl(uint32_t control, uint32_t arg, cmsis_spi_resou
             break;
 
         default:
+            /* Avoid MISRA 16.4 violations. */
             break;
     }
 #if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
-    if (control & ARM_SPI_DATA_BITS_Msk)
+    if ((control & ARM_SPI_DATA_BITS_Msk) != 0U)
     {
-        if (((control & ARM_SPI_DATA_BITS_Msk) >> ARM_SPI_DATA_BITS_Pos) == 8)
+        if (((control & ARM_SPI_DATA_BITS_Msk) >> ARM_SPI_DATA_BITS_Pos) == 8U)
         {
             if (SPI_IsMaster(resource->base))
             {
@@ -207,7 +209,7 @@ static int32_t SPI_CommonControl(uint32_t control, uint32_t arg, cmsis_spi_resou
                 slaveConfig.dataMode = kSPI_8BitMode;
             }
         }
-        else if (((control & ARM_SPI_DATA_BITS_Msk) >> ARM_SPI_DATA_BITS_Pos) == 16)
+        else if (((control & ARM_SPI_DATA_BITS_Msk) >> ARM_SPI_DATA_BITS_Pos) == 16U)
         {
             if (SPI_IsMaster(resource->base))
             {
@@ -220,8 +222,12 @@ static int32_t SPI_CommonControl(uint32_t control, uint32_t arg, cmsis_spi_resou
         }
         else
         {
-            return ARM_SPI_ERROR_DATA_BITS;
+            result = ARM_SPI_ERROR_DATA_BITS;
         }
+    }
+    if (result != ARM_DRIVER_OK)
+    {
+        return result;
     }
 #endif
     switch (control & ARM_SPI_BIT_ORDER_Msk)
@@ -249,6 +255,7 @@ static int32_t SPI_CommonControl(uint32_t control, uint32_t arg, cmsis_spi_resou
             break;
 
         default:
+            /* Avoid MISRA 16.4 violations. */
             break;
     }
     if (SPI_IsMaster(resource->base))
@@ -260,7 +267,8 @@ static int32_t SPI_CommonControl(uint32_t control, uint32_t arg, cmsis_spi_resou
                 break;
 
             case ARM_SPI_SS_MASTER_SW:
-                return ARM_DRIVER_ERROR_UNSUPPORTED;
+                result = ARM_DRIVER_ERROR_UNSUPPORTED;
+                break;
 
             case ARM_SPI_SS_MASTER_HW_OUTPUT:
                 masterConfig.outputMode =
@@ -273,27 +281,33 @@ static int32_t SPI_CommonControl(uint32_t control, uint32_t arg, cmsis_spi_resou
                 break;
 
             default:
+                /* Avoid MISRA 16.4 violations. */
                 break;
         }
     }
 
+    if (result != ARM_DRIVER_OK)
+    {
+        return result;
+    }
+
     if (SPI_IsMaster(resource->base))
     {
-        if ((*isConfigured) & SPI_FLAG_CONFIGURED)
+        if (((*isConfigured) & SPI_FLAG_CONFIGURED) != 0U)
         {
             SPI_Deinit(resource->base);
         }
         SPI_MasterInit(resource->base, &masterConfig, resource->GetFreq());
-        *isConfigured |= SPI_FLAG_CONFIGURED;
+        *isConfigured |= (uint8_t)SPI_FLAG_CONFIGURED;
     }
     else
     {
-        if ((*isConfigured) & SPI_FLAG_CONFIGURED)
+        if (((*isConfigured) & SPI_FLAG_CONFIGURED) != 0U)
         {
             SPI_Deinit(resource->base);
         }
         SPI_SlaveInit(resource->base, &slaveConfig);
-        *isConfigured |= SPI_FLAG_CONFIGURED;
+        *isConfigured |= (uint8_t)SPI_FLAG_CONFIGURED;
     }
 
     return ARM_DRIVER_OK;
@@ -311,11 +325,11 @@ static ARM_SPI_CAPABILITIES SPIx_GetCapabilities(void)
 
 #endif
 
-#if (RTE_SPI0_DMA_EN || RTE_SPI1_DMA_EN)
+#if ((defined(RTE_SPI0_DMA_EN) && RTE_SPI0_DMA_EN) || (defined(RTE_SPI1_DMA_EN) && RTE_SPI1_DMA_EN))
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
 
-void KSDK_SPI_MasterDMACallback(SPI_Type *base, spi_dma_handle_t *handle, status_t status, void *userData)
+static void KSDK_SPI_MasterDMACallback(SPI_Type *base, spi_dma_handle_t *handle, status_t status, void *userData)
 {
     uint32_t event = 0U;
 
@@ -324,17 +338,17 @@ void KSDK_SPI_MasterDMACallback(SPI_Type *base, spi_dma_handle_t *handle, status
         event = ARM_SPI_EVENT_TRANSFER_COMPLETE;
     }
 
-    if (kStatus_SPI_Error == status)
+    if ((uint8_t)kStatus_SPI_Error == status)
     {
         event = ARM_SPI_EVENT_DATA_LOST;
     }
 
-    if ((0U != event) && (userData))
+    if ((0U != event) && (userData != NULL))
     {
         ((ARM_SPI_SignalEvent_t)userData)(event);
     }
 }
-void KSDK_SPI_SlaveDMACallback(SPI_Type *base, spi_dma_handle_t *handle, status_t status, void *userData)
+static void KSDK_SPI_SlaveDMACallback(SPI_Type *base, spi_dma_handle_t *handle, status_t status, void *userData)
 {
     uint32_t event = 0U;
 
@@ -343,12 +357,12 @@ void KSDK_SPI_SlaveDMACallback(SPI_Type *base, spi_dma_handle_t *handle, status_
         event = ARM_SPI_EVENT_TRANSFER_COMPLETE;
     }
 
-    if (kStatus_SPI_Error == status)
+    if ((uint8_t)kStatus_SPI_Error == status)
     {
         event = ARM_SPI_EVENT_DATA_LOST;
     }
     /* User data is actually CMSIS driver callback. */
-    if ((0U != event) && (userData))
+    if ((0U != event) && (userData != NULL))
     {
         ((ARM_SPI_SignalEvent_t)userData)(event);
     }
@@ -356,10 +370,10 @@ void KSDK_SPI_SlaveDMACallback(SPI_Type *base, spi_dma_handle_t *handle, status_
 
 static int32_t SPI_DMAInitialize(ARM_SPI_SignalEvent_t cb_event, cmsis_SPI_dma_driver_state_t *SPI)
 {
-    if (!(SPI->flags & SPI_FLAG_INIT))
+    if (0U == (SPI->flags & (uint8_t)SPI_FLAG_INIT))
     {
         SPI->event = cb_event;
-        SPI->flags = SPI_FLAG_INIT;
+        SPI->flags = (uint8_t)SPI_FLAG_INIT;
     }
 
     return ARM_DRIVER_OK;
@@ -367,7 +381,7 @@ static int32_t SPI_DMAInitialize(ARM_SPI_SignalEvent_t cb_event, cmsis_SPI_dma_d
 
 static int32_t SPI_DMAUninitialize(cmsis_SPI_dma_driver_state_t *SPI)
 {
-    SPI->flags = SPI_FLAG_UNINIT;
+    SPI->flags = (uint8_t)SPI_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
@@ -376,30 +390,31 @@ static int32_t SPI_DMAPowerControl(ARM_POWER_STATE state, cmsis_SPI_dma_driver_s
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (SPI->flags & SPI_FLAG_POWER)
+            if ((SPI->flags & (uint8_t)SPI_FLAG_POWER) != 0U)
             {
                 SPI_Deinit(SPI->resource->base);
                 DMAMUX_DisableChannel(SPI->dmaResource->rxDmamuxBase, SPI->dmaResource->rxdmaChannel);
                 DMAMUX_DisableChannel(SPI->dmaResource->txDmamuxBase, SPI->dmaResource->txdmaChannel);
-                SPI->flags = SPI_FLAG_INIT;
+                SPI->flags = (uint8_t)SPI_FLAG_INIT;
             }
             break;
         case ARM_POWER_LOW:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
+
         case ARM_POWER_FULL:
-            if (SPI->flags == SPI_FLAG_UNINIT)
+            if (SPI->flags == (uint8_t)SPI_FLAG_UNINIT)
             {
                 return ARM_DRIVER_ERROR;
             }
 
-            if (SPI->flags & SPI_FLAG_POWER)
+            if ((SPI->flags & (uint8_t)SPI_FLAG_POWER) != 0U)
             {
                 /* Driver already powered */
                 break;
             }
             /* Enable Clock gate */
             CLOCK_EnableClock(s_SPIClock[SPI->resource->instance]);
-            SPI->flags |= SPI_FLAG_POWER;
+            SPI->flags |= (uint8_t)SPI_FLAG_POWER;
             break;
         default:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
@@ -417,14 +432,14 @@ static int32_t SPI_DMASend(const void *data, uint32_t num, cmsis_SPI_dma_driver_
     xfer.txData   = (uint8_t *)data;
     xfer.dataSize = num;
 #if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
-    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    if ((SPI->resource->base->C2 & (uint8_t)SPI_C2_SPIMODE_MASK) != 0U)
     {
         xfer.dataSize *= 2U;
     }
 #endif
 
     /* If transfer mode is single wire. */
-    if (SPI_C2_SPC0_MASK & SPI->resource->base->C2)
+    if (((uint8_t)SPI_C2_SPC0_MASK & SPI->resource->base->C2) != 0U)
     {
         SPI_SetPinMode(SPI->resource->base, kSPI_PinModeOutput);
     }
@@ -467,7 +482,7 @@ static int32_t SPI_DMAReceive(void *data, uint32_t num, cmsis_SPI_dma_driver_sta
     xfer.rxData   = (uint8_t *)data;
     xfer.dataSize = num;
 #if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
-    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    if ((SPI->resource->base->C2 & (uint8_t)SPI_C2_SPIMODE_MASK) != 0U)
     {
         xfer.dataSize *= 2U;
     }
@@ -479,12 +494,12 @@ static int32_t SPI_DMAReceive(void *data, uint32_t num, cmsis_SPI_dma_driver_sta
        size. */
     if (FSL_FEATURE_SPI_FIFO_SIZEn(SPI->resource->base) != 0)
     {
-        SPI->resource->base->C3 &= ~SPI_C3_FIFOMODE_MASK;
+        SPI->resource->base->C3 &= ~(uint8_t)SPI_C3_FIFOMODE_MASK;
     }
 #endif /* FSL_FEATURE_SPI_HAS_FIFO */
 
     /* If transfer mode is single wire. */
-    if (SPI_C2_SPC0_MASK & SPI->resource->base->C2)
+    if (((uint8_t)SPI_C2_SPC0_MASK & SPI->resource->base->C2))
     {
         SPI_SetPinMode(SPI->resource->base, kSPI_PinModeInput);
     }
@@ -532,7 +547,7 @@ static int32_t SPI_DMATransfer(const void *data_out, void *data_in, uint32_t num
     xfer.rxData   = (uint8_t *)data_in;
     xfer.dataSize = num;
 #if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
-    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    if ((SPI->resource->base->C2 & (uint8_t)SPI_C2_SPIMODE_MASK) != 0U)
     {
         xfer.dataSize *= 2U;
     }
@@ -544,12 +559,12 @@ static int32_t SPI_DMATransfer(const void *data_out, void *data_in, uint32_t num
        size. */
     if (FSL_FEATURE_SPI_FIFO_SIZEn(SPI->resource->base) != 0)
     {
-        SPI->resource->base->C3 &= ~SPI_C3_FIFOMODE_MASK;
+        SPI->resource->base->C3 &= ~(uint8_t)SPI_C3_FIFOMODE_MASK;
     }
 #endif /* FSL_FEATURE_SPI_HAS_FIFO */
 
     /* If transfer mode is single wire. */
-    if (SPI_C2_SPC0_MASK & SPI->resource->base->C2)
+    if (((uint8_t)SPI_C2_SPC0_MASK & SPI->resource->base->C2) != 0U)
     {
         if (NULL == data_out)
         {
@@ -604,7 +619,7 @@ static uint32_t SPI_DMAGetCount(cmsis_SPI_dma_driver_state_t *SPI)
         cnt = SPI->handle->slaveHandle.transferSize - bytes;
     }
 #if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
-    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    if ((SPI->resource->base->C2 & (uint8_t)SPI_C2_SPIMODE_MASK) != 0U)
     {
         cnt /= 2U;
     }
@@ -614,7 +629,7 @@ static uint32_t SPI_DMAGetCount(cmsis_SPI_dma_driver_state_t *SPI)
 
 static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driver_state_t *SPI)
 {
-    if (!(SPI->flags & SPI_FLAG_POWER))
+    if (0U == (SPI->flags & (uint8_t)SPI_FLAG_POWER))
     {
         return ARM_DRIVER_ERROR;
     }
@@ -626,11 +641,12 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
         case ARM_SPI_MODE_INACTIVE:
             SPI_Enable(SPI->resource->base, false);
             break;
-        case ARM_SPI_MODE_MASTER:
-            SPI->resource->base->C1 |= SPI_C1_MSTR_MASK;
 
-            memset(SPI->dmaRxDataHandle, 0, sizeof(dma_handle_t));
-            memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
+        case ARM_SPI_MODE_MASTER:
+            SPI->resource->base->C1 |= (uint8_t)SPI_C1_MSTR_MASK;
+
+            (void)memset(SPI->dmaRxDataHandle, 0, sizeof(dma_handle_t));
+            (void)memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
 
             DMA_CreateHandle(SPI->dmaRxDataHandle, dmaResource->rxdmaBase, dmaResource->rxdmaChannel);
             DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxdmaChannel, dmaResource->rxDmaRequest);
@@ -645,14 +661,14 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
                                               SPI->dmaRxDataHandle);
 
             SPI->baudRate_Bps = arg;
-            SPI->flags |= SPI_FLAG_CONFIGURED;
+            SPI->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
             break;
 
         case ARM_SPI_MODE_SLAVE:
-            SPI->resource->base->C1 &= ~SPI_C1_MSTR_MASK;
+            SPI->resource->base->C1 &= ~(uint8_t)SPI_C1_MSTR_MASK;
 
-            memset(SPI->dmaRxDataHandle, 0, sizeof(dma_handle_t));
-            memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
+            (void)memset(SPI->dmaRxDataHandle, 0, sizeof(dma_handle_t));
+            (void)memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
 
             DMA_CreateHandle(SPI->dmaTxDataHandle, dmaResource->txdmaBase, dmaResource->txdmaChannel);
             DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txdmaChannel, dmaResource->txDmaRequest);
@@ -665,7 +681,7 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
             SPI_SlaveTransferCreateHandleDMA(SPI->resource->base, &SPI->handle->slaveHandle, KSDK_SPI_SlaveDMACallback,
                                              (void *)SPI->event, SPI->dmaTxDataHandle, SPI->dmaRxDataHandle);
 
-            SPI->flags |= SPI_FLAG_CONFIGURED;
+            SPI->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
             break;
 
         case ARM_SPI_SET_BUS_SPEED:
@@ -685,7 +701,7 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
                 return ARM_DRIVER_ERROR_UNSUPPORTED;
             }
 
-            return SPI->baudRate_Bps;
+            return (int32_t)SPI->baudRate_Bps;
 
         case ARM_SPI_CONTROL_SS:
             return ARM_DRIVER_ERROR_UNSUPPORTED;
@@ -700,11 +716,12 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
                 SPI_SlaveTransferAbortDMA(SPI->resource->base, &SPI->handle->slaveHandle);
             }
             return ARM_DRIVER_OK;
-        case ARM_SPI_MODE_MASTER_SIMPLEX:
-            SPI->resource->base->C1 |= SPI_C1_MSTR_MASK;
 
-            memset(SPI->dmaRxDataHandle, 0, sizeof(dma_handle_t));
-            memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
+        case ARM_SPI_MODE_MASTER_SIMPLEX:
+            SPI->resource->base->C1 |= (uint8_t)SPI_C1_MSTR_MASK;
+
+            (void)memset(SPI->dmaRxDataHandle, 0, sizeof(dma_handle_t));
+            (void)memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
 
             DMA_CreateHandle(SPI->dmaRxDataHandle, dmaResource->rxdmaBase, dmaResource->rxdmaChannel);
             DMAMUX_SetSource(dmaResource->rxDmamuxBase, dmaResource->rxdmaChannel, dmaResource->rxDmaRequest);
@@ -719,13 +736,14 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
                                               SPI->dmaRxDataHandle);
 
             SPI->baudRate_Bps = arg;
-            SPI->flags |= SPI_FLAG_CONFIGURED;
+            SPI->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
             break;
-        case ARM_SPI_MODE_SLAVE_SIMPLEX:
-            SPI->resource->base->C1 &= ~SPI_C1_MSTR_MASK;
 
-            memset(SPI->dmaRxDataHandle, 0, sizeof(dma_handle_t));
-            memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
+        case ARM_SPI_MODE_SLAVE_SIMPLEX:
+            SPI->resource->base->C1 &= ~(uint8_t)SPI_C1_MSTR_MASK;
+
+            (void)memset(SPI->dmaRxDataHandle, 0, sizeof(dma_handle_t));
+            (void)memset(SPI->dmaTxDataHandle, 0, sizeof(dma_handle_t));
 
             DMA_CreateHandle(SPI->dmaTxDataHandle, dmaResource->txdmaBase, dmaResource->txdmaChannel);
             DMAMUX_SetSource(dmaResource->txDmamuxBase, dmaResource->txdmaChannel, dmaResource->txDmaRequest);
@@ -738,7 +756,7 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
             SPI_SlaveTransferCreateHandleDMA(SPI->resource->base, &SPI->handle->slaveHandle, KSDK_SPI_SlaveDMACallback,
                                              (void *)SPI->event, SPI->dmaTxDataHandle, SPI->dmaRxDataHandle);
 
-            SPI->flags |= SPI_FLAG_CONFIGURED;
+            SPI->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
             break;
 
         case ARM_SPI_SET_DEFAULT_TX_VALUE: /* Set default Transmit value; arg = value */
@@ -746,13 +764,14 @@ static int32_t SPI_DMAControl(uint32_t control, uint32_t arg, cmsis_SPI_dma_driv
             return ARM_DRIVER_OK;
 
         default:
+            /* Avoid MISRA 16.4 violation */
             break;
     }
 
     return SPI_CommonControl(control, arg, SPI->resource, &SPI->flags);
 }
 
-ARM_SPI_STATUS SPI_DMAGetStatus(cmsis_SPI_dma_driver_state_t *SPI)
+static ARM_SPI_STATUS SPI_DMAGetStatus(cmsis_SPI_dma_driver_state_t *SPI)
 {
     ARM_SPI_STATUS stat;
 
@@ -771,12 +790,12 @@ ARM_SPI_STATUS SPI_DMAGetStatus(cmsis_SPI_dma_driver_state_t *SPI)
                 (1U);
     }
 #if defined(FSL_FEATURE_SPI_HAS_FIFO) && FSL_FEATURE_SPI_HAS_FIFO
-    stat.data_lost = ((SPI_GetStatusFlags(SPI->resource->base) & kSPI_RxOverflow) ||
-                      (SPI_GetStatusFlags(SPI->resource->base) & kSPI_TxOverflow)) ?
+    stat.data_lost = (((SPI_GetStatusFlags(SPI->resource->base) & (uint32_t)kSPI_RxOverflow) != 0U) ||
+                      ((SPI_GetStatusFlags(SPI->resource->base) & (uint32_t)kSPI_TxOverflow) != 0U)) ?
                          (1U) :
                          (0U);
 #else
-    stat.data_lost = (kStatus_SPI_Error == SPI->handle->slaveHandle.state) ? (1U) : (0U);
+    stat.data_lost = ((uint8_t)kStatus_SPI_Error == SPI->handle->slaveHandle.state) ? (1U) : (0U);
 #endif
 
     stat.mode_fault = 0U;
@@ -788,9 +807,13 @@ ARM_SPI_STATUS SPI_DMAGetStatus(cmsis_SPI_dma_driver_state_t *SPI)
 
 #endif
 
-#if ((RTE_SPI0 && !RTE_SPI0_DMA_EN) || (RTE_SPI1 && !RTE_SPI1_DMA_EN))
+#if ((defined(RTE_SPI0) && RTE_SPI0 && !(defined(RTE_SPI0_DMA_EN) && RTE_SPI0_DMA_EN)) || \
+     (defined(RTE_SPI1) && RTE_SPI1 && !(defined(RTE_SPI1_DMA_EN) && RTE_SPI1_DMA_EN)))
 
-void KSDK_SPI_MasterInterruptCallback(SPI_Type *base, spi_master_handle_t *handle, status_t status, void *userData)
+static void KSDK_SPI_MasterInterruptCallback(SPI_Type *base,
+                                             spi_master_handle_t *handle,
+                                             status_t status,
+                                             void *userData)
 {
     uint32_t event = 0U;
 
@@ -805,13 +828,13 @@ void KSDK_SPI_MasterInterruptCallback(SPI_Type *base, spi_master_handle_t *handl
     }
 
     /* User data is actually CMSIS driver callback. */
-    if ((0U != event) && (userData))
+    if ((0U != event) && (userData != NULL))
     {
         ((ARM_SPI_SignalEvent_t)userData)(event);
     }
 }
 
-void KSDK_SPI_SlaveInterruptCallback(SPI_Type *base, spi_slave_handle_t *handle, status_t status, void *userData)
+static void KSDK_SPI_SlaveInterruptCallback(SPI_Type *base, spi_slave_handle_t *handle, status_t status, void *userData)
 {
     uint32_t event = 0U;
 
@@ -826,7 +849,7 @@ void KSDK_SPI_SlaveInterruptCallback(SPI_Type *base, spi_slave_handle_t *handle,
     }
 
     /* User data is actually CMSIS driver callback. */
-    if ((0U != event) && (userData))
+    if ((0U != event) && (userData != NULL))
     {
         ((ARM_SPI_SignalEvent_t)userData)(event);
     }
@@ -834,54 +857,57 @@ void KSDK_SPI_SlaveInterruptCallback(SPI_Type *base, spi_slave_handle_t *handle,
 
 static int32_t SPI_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event, cmsis_spi_interrupt_driver_state_t *SPI)
 {
-    if (!(SPI->flags & SPI_FLAG_INIT))
+    if (0U == (SPI->flags & (uint8_t)SPI_FLAG_INIT))
     {
         SPI->cb_event = cb_event;
-        SPI->flags    = SPI_FLAG_INIT;
+        SPI->flags    = (uint8_t)SPI_FLAG_INIT;
     }
     return ARM_DRIVER_OK;
 }
 
 static int32_t SPI_InterruptUninitialize(cmsis_spi_interrupt_driver_state_t *SPI)
 {
-    SPI->flags = SPI_FLAG_UNINIT;
+    SPI->flags = (uint8_t)SPI_FLAG_UNINIT;
     return ARM_DRIVER_OK;
 }
 
 static int32_t SPI_InterruptPowerControl(ARM_POWER_STATE state, cmsis_spi_interrupt_driver_state_t *SPI)
 {
+    int32_t result = ARM_DRIVER_OK;
     switch (state)
     {
         case ARM_POWER_OFF:
-            if (SPI->flags & SPI_FLAG_POWER)
+            if ((SPI->flags & (uint8_t)SPI_FLAG_POWER) != 0U)
             {
                 SPI_Deinit(SPI->resource->base);
-                SPI->flags = SPI_FLAG_INIT;
+                SPI->flags = (uint8_t)SPI_FLAG_INIT;
             }
             break;
 
         case ARM_POWER_LOW:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
 
         case ARM_POWER_FULL:
-            if (SPI->flags == SPI_FLAG_UNINIT)
+            if (SPI->flags == (uint8_t)SPI_FLAG_UNINIT)
             {
                 return ARM_DRIVER_ERROR;
             }
 
-            if (SPI->flags & SPI_FLAG_POWER)
+            if ((SPI->flags & (uint8_t)SPI_FLAG_POWER) != 0U)
             {
                 /* Driver already powered */
                 break;
             }
 
             CLOCK_EnableClock(s_SPIClock[SPI->resource->instance]);
-            SPI->flags |= SPI_FLAG_POWER;
+            SPI->flags |= (uint8_t)SPI_FLAG_POWER;
             break;
         default:
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
     }
-    return ARM_DRIVER_OK;
+    return result;
 }
 
 static int32_t SPI_InterruptSend(const void *data, uint32_t num, cmsis_spi_interrupt_driver_state_t *SPI)
@@ -894,7 +920,7 @@ static int32_t SPI_InterruptSend(const void *data, uint32_t num, cmsis_spi_inter
     xfer.txData   = (uint8_t *)data;
     xfer.dataSize = num;
 #if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
-    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    if ((SPI->resource->base->C2 & (uint8_t)SPI_C2_SPIMODE_MASK) != 0U)
     {
         xfer.dataSize *= 2U;
     }
@@ -906,12 +932,12 @@ static int32_t SPI_InterruptSend(const void *data, uint32_t num, cmsis_spi_inter
        size. */
     if (FSL_FEATURE_SPI_FIFO_SIZEn(SPI->resource->base) != 0)
     {
-        SPI->resource->base->C3 &= ~SPI_C3_FIFOMODE_MASK;
+        SPI->resource->base->C3 &= ~(uint8_t)SPI_C3_FIFOMODE_MASK;
     }
 #endif /* FSL_FEATURE_SPI_HAS_FIFO */
 
     /* If transfer mode is single wire. */
-    if (SPI_C2_SPC0_MASK & SPI->resource->base->C2)
+    if (((uint8_t)SPI_C2_SPC0_MASK & SPI->resource->base->C2) != 0U)
     {
         SPI_SetPinMode(SPI->resource->base, kSPI_PinModeOutput);
     }
@@ -954,14 +980,14 @@ static int32_t SPI_InterruptReceive(void *data, uint32_t num, cmsis_spi_interrup
     xfer.rxData   = (uint8_t *)data;
     xfer.dataSize = num;
 #if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
-    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    if ((SPI->resource->base->C2 & (uint8_t)SPI_C2_SPIMODE_MASK) != 0U)
     {
         xfer.dataSize *= 2U;
     }
 #endif
 
     /* If transfer mode is single wire. */
-    if (SPI_C2_SPC0_MASK & SPI->resource->base->C2)
+    if (((uint8_t)SPI_C2_SPC0_MASK & SPI->resource->base->C2) != 0U)
     {
         SPI_SetPinMode(SPI->resource->base, kSPI_PinModeInput);
     }
@@ -1012,14 +1038,14 @@ static int32_t SPI_InterruptTransfer(const void *data_out,
     xfer.rxData   = (uint8_t *)data_in;
     xfer.dataSize = num;
 #if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
-    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    if ((SPI->resource->base->C2 & (uint8_t)SPI_C2_SPIMODE_MASK) != 0U)
     {
         xfer.dataSize *= 2U;
     }
 #endif
 
     /* If transfer mode is single wire. */
-    if (SPI_C2_SPC0_MASK & SPI->resource->base->C2)
+    if (((uint8_t)SPI_C2_SPC0_MASK & SPI->resource->base->C2) != 0U)
     {
         if (NULL == data_out)
         {
@@ -1070,7 +1096,7 @@ static uint32_t SPI_InterruptGetCount(cmsis_spi_interrupt_driver_state_t *SPI)
         cnt = SPI->handle->slaveHandle.transferSize - SPI->handle->slaveHandle.rxRemainingBytes;
     }
 #if defined(FSL_FEATURE_SPI_16BIT_TRANSFERS) && FSL_FEATURE_SPI_16BIT_TRANSFERS
-    if ((SPI->resource->base->C2 & SPI_C2_SPIMODE_MASK) != 0U)
+    if ((SPI->resource->base->C2 & (uint8_t)SPI_C2_SPIMODE_MASK) != 0U)
     {
         cnt /= 2U;
     }
@@ -1080,7 +1106,9 @@ static uint32_t SPI_InterruptGetCount(cmsis_spi_interrupt_driver_state_t *SPI)
 
 static int32_t SPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_spi_interrupt_driver_state_t *SPI)
 {
-    if (!(SPI->flags & SPI_FLAG_POWER))
+    int32_t result  = ARM_DRIVER_OK;
+    bool isContinue = false;
+    if (0U == (SPI->flags & (uint8_t)SPI_FLAG_POWER))
     {
         return ARM_DRIVER_ERROR;
     }
@@ -1089,21 +1117,24 @@ static int32_t SPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_spi_in
     {
         case ARM_SPI_MODE_INACTIVE: /* SPI Inactive */
             SPI_Enable(SPI->resource->base, false);
+            isContinue = true;
             break;
 
         case ARM_SPI_MODE_MASTER: /* SPI Master (Output on MOSI, Input on MISO); arg = Bus Speed in bps */
-            SPI->resource->base->C1 |= SPI_C1_MSTR_MASK;
+            SPI->resource->base->C1 |= (uint8_t)SPI_C1_MSTR_MASK;
             SPI_MasterTransferCreateHandle(SPI->resource->base, &SPI->handle->masterHandle,
                                            KSDK_SPI_MasterInterruptCallback, (void *)SPI->cb_event);
             SPI->baudRate_Bps = arg;
-            SPI->flags |= SPI_FLAG_CONFIGURED;
+            SPI->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
+            isContinue = true;
             break;
 
         case ARM_SPI_MODE_SLAVE: /* SPI Slave  (Output on MISO, Input on MOSI) */
-            SPI->resource->base->C1 &= ~SPI_C1_MSTR_MASK;
+            SPI->resource->base->C1 &= ~(uint8_t)SPI_C1_MSTR_MASK;
             SPI_SlaveTransferCreateHandle(SPI->resource->base, &SPI->handle->slaveHandle,
                                           KSDK_SPI_SlaveInterruptCallback, (void *)SPI->cb_event);
-            SPI->flags |= SPI_FLAG_CONFIGURED;
+            SPI->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
+            isContinue = true;
             break;
 
         case ARM_SPI_GET_BUS_SPEED: /* Get Bus Speed in bps */
@@ -1111,8 +1142,8 @@ static int32_t SPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_spi_in
             {
                 return ARM_DRIVER_ERROR_UNSUPPORTED;
             }
-
-            return SPI->baudRate_Bps;
+            result = (int32_t)SPI->baudRate_Bps;
+            break;
 
         case ARM_SPI_SET_BUS_SPEED: /* Set Bus Speed in bps; */
             if (!SPI_IsMaster(SPI->resource->base))
@@ -1123,10 +1154,11 @@ static int32_t SPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_spi_in
             SPI_MasterSetBaudRate(SPI->resource->base, arg, SPI->resource->GetFreq());
 
             SPI->baudRate_Bps = arg;
-            return ARM_DRIVER_OK;
+            break;
 
         case ARM_SPI_CONTROL_SS: /* Control Slave Select; arg = 0:inactive, 1:active  */
-            return ARM_DRIVER_ERROR_UNSUPPORTED;
+            result = ARM_DRIVER_ERROR_UNSUPPORTED;
+            break;
 
         case ARM_SPI_ABORT_TRANSFER: /* Abort current data transfer */
             if (SPI_IsMaster(SPI->resource->base))
@@ -1137,58 +1169,71 @@ static int32_t SPI_InterruptControl(uint32_t control, uint32_t arg, cmsis_spi_in
             {
                 SPI_SlaveTransferAbort(SPI->resource->base, &SPI->handle->slaveHandle);
             }
-            return ARM_DRIVER_OK;
+            break;
 
         case ARM_SPI_MODE_MASTER_SIMPLEX: /* SPI Master (Output/Input on MOSI); arg = Bus Speed in bps */
-            SPI->resource->base->C1 |= SPI_C1_MSTR_MASK;
+            SPI->resource->base->C1 |= (uint8_t)SPI_C1_MSTR_MASK;
             SPI_MasterTransferCreateHandle(SPI->resource->base, &SPI->handle->masterHandle,
                                            KSDK_SPI_MasterInterruptCallback, (void *)SPI->cb_event);
             SPI->baudRate_Bps = arg;
-            SPI->flags |= SPI_FLAG_CONFIGURED;
+            SPI->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
+            isContinue = true;
             break;
 
         case ARM_SPI_MODE_SLAVE_SIMPLEX: /* SPI Slave  (Output/Input on MISO) */
-            SPI->resource->base->C1 &= ~SPI_C1_MSTR_MASK;
+            SPI->resource->base->C1 &= ~(uint8_t)SPI_C1_MSTR_MASK;
             SPI_SlaveTransferCreateHandle(SPI->resource->base, &SPI->handle->slaveHandle,
                                           KSDK_SPI_SlaveInterruptCallback, (void *)SPI->cb_event);
-            SPI->flags |= SPI_FLAG_CONFIGURED;
+            SPI->flags |= (uint8_t)SPI_FLAG_CONFIGURED;
+            isContinue = true;
             break;
 
         case ARM_SPI_SET_DEFAULT_TX_VALUE: /* Set default Transmit value; arg = value */
             SPI_SetDummyData(SPI->resource->base, (uint8_t)arg);
-            return ARM_DRIVER_OK;
+            result = ARM_DRIVER_OK;
+            break;
 
         default:
+            isContinue = true;
+            /* Avoid MISRA 16.4 violation */
             break;
     }
-    return SPI_CommonControl(control, arg, SPI->resource, &SPI->flags);
+
+    if (isContinue)
+    {
+        return SPI_CommonControl(control, arg, SPI->resource, &SPI->flags);
+    }
+    else
+    {
+        return result;
+    }
 }
 
-ARM_SPI_STATUS SPI_InterruptGetStatus(cmsis_spi_interrupt_driver_state_t *SPI)
+static ARM_SPI_STATUS SPI_InterruptGetStatus(cmsis_spi_interrupt_driver_state_t *SPI)
 {
     ARM_SPI_STATUS stat;
 
     if (SPI_IsMaster(SPI->resource->base))
     {
         stat.busy =
-            ((SPI->handle->masterHandle.txRemainingBytes > 0) || (SPI->handle->masterHandle.rxRemainingBytes > 0)) ?
+            ((SPI->handle->masterHandle.txRemainingBytes > 0U) || (SPI->handle->masterHandle.rxRemainingBytes > 0U)) ?
                 (0U) :
                 (1U);
     }
     else
     {
         stat.busy =
-            ((SPI->handle->slaveHandle.txRemainingBytes > 0) || (SPI->handle->slaveHandle.rxRemainingBytes > 0)) ?
+            ((SPI->handle->slaveHandle.txRemainingBytes > 0U) || (SPI->handle->slaveHandle.rxRemainingBytes > 0U)) ?
                 (0U) :
                 (1U);
     }
 #if defined(FSL_FEATURE_SPI_HAS_FIFO) && FSL_FEATURE_SPI_HAS_FIFO
-    stat.data_lost = ((SPI_GetStatusFlags(SPI->resource->base) & kSPI_RxOverflow) ||
-                      (SPI_GetStatusFlags(SPI->resource->base) & kSPI_TxOverflow)) ?
+    stat.data_lost = (((SPI_GetStatusFlags(SPI->resource->base) & (uint32_t)kSPI_RxOverflow) != 0U) ||
+                      ((SPI_GetStatusFlags(SPI->resource->base) & (uint32_t)kSPI_TxOverflow) != 0U)) ?
                          (1U) :
                          (0U);
 #else
-    stat.data_lost = (kStatus_SPI_Error == SPI->handle->slaveHandle.state) ? (1U) : (0U);
+    stat.data_lost = ((uint8_t)kStatus_SPI_Error == SPI->handle->slaveHandle.state) ? (1U) : (0U);
 #endif
     stat.mode_fault = 0U;
     stat.reserved   = 0U;
@@ -1198,35 +1243,33 @@ ARM_SPI_STATUS SPI_InterruptGetStatus(cmsis_spi_interrupt_driver_state_t *SPI)
 
 #endif
 
-#if defined(SPI0) && RTE_SPI0
+#if defined(SPI0) && defined(RTE_SPI0) && RTE_SPI0
 
-extern void SPI0_InitPins(void);
-extern void SPI0_DeinitPins(void);
 /* User needs to provide the implementation for SPI0_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t SPI0_GetFreq(void);
 
-cmsis_spi_resource_t SPI0_Resource = {SPI0, 0, SPI0_GetFreq};
+static cmsis_spi_resource_t SPI0_Resource = {SPI0, 0, SPI0_GetFreq};
 
-#if RTE_SPI0_DMA_EN
+#if defined(RTE_SPI0_DMA_EN) && RTE_SPI0_DMA_EN
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
-cmsis_spi_dma_resource_t SPI0_DMAResource = {
+static cmsis_spi_dma_resource_t SPI0_DMAResource = {
     RTE_SPI0_DMA_TX_DMA_BASE, RTE_SPI0_DMA_TX_CH, RTE_SPI0_DMA_TX_DMAMUX_BASE, RTE_SPI0_DMA_TX_PERI_SEL,
 
     RTE_SPI0_DMA_RX_DMA_BASE, RTE_SPI0_DMA_RX_CH, RTE_SPI0_DMA_RX_DMAMUX_BASE, RTE_SPI0_DMA_RX_PERI_SEL,
 
 };
 
-cmsis_spi_dma_handle_t SPI0_DmaHandle;
-dma_handle_t SPI0_DmaTxDataHandle;
-dma_handle_t SPI0_DmaRxDataHandle;
+static cmsis_spi_dma_handle_t SPI0_DmaHandle;
+static dma_handle_t SPI0_DmaTxDataHandle;
+static dma_handle_t SPI0_DmaRxDataHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("spi0_d_m_a_driver_state")
-cmsis_SPI_dma_driver_state_t SPI0_DMADriverState = {
+static cmsis_SPI_dma_driver_state_t SPI0_DMADriverState = {
 #else
-cmsis_SPI_dma_driver_state_t SPI0_DMADriverState = {
+static cmsis_SPI_dma_driver_state_t SPI0_DMADriverState = {
 #endif
     &SPI0_Resource, &SPI0_DMAResource, &SPI0_DmaHandle, &SPI0_DmaRxDataHandle, &SPI0_DmaTxDataHandle,
 
@@ -1234,13 +1277,17 @@ cmsis_SPI_dma_driver_state_t SPI0_DMADriverState = {
 
 static int32_t SPI0_DMAInitialize(ARM_SPI_SignalEvent_t cb_event)
 {
-    SPI0_InitPins();
+#ifdef RTE_SPI0_PIN_INIT
+    RTE_SPI0_PIN_INIT();
+#endif
     return SPI_DMAInitialize(cb_event, &SPI0_DMADriverState);
 }
 
 static int32_t SPI0_DMAUninitialize(void)
 {
-    SPI0_DeinitPins();
+#ifdef RTE_SPI0_PIN_DEINIT
+    RTE_SPI0_PIN_DEINIT();
+#endif
     return SPI_DMAUninitialize(&SPI0_DMADriverState);
 }
 
@@ -1283,13 +1330,13 @@ static ARM_SPI_STATUS SPI0_DMAGetStatus(void)
 
 #else
 
-cmsis_spi_handle_t SPI0_Handle;
+static cmsis_spi_handle_t SPI0_Handle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("spi0_interrupt_driver_state")
-cmsis_spi_interrupt_driver_state_t SPI0_InterruptDriverState = {
+static cmsis_spi_interrupt_driver_state_t SPI0_InterruptDriverState = {
 #else
-cmsis_spi_interrupt_driver_state_t SPI0_InterruptDriverState = {
+static cmsis_spi_interrupt_driver_state_t SPI0_InterruptDriverState = {
 #endif
     &SPI0_Resource,
     &SPI0_Handle,
@@ -1297,13 +1344,17 @@ cmsis_spi_interrupt_driver_state_t SPI0_InterruptDriverState = {
 
 static int32_t SPI0_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
 {
-    SPI0_InitPins();
+#ifdef RTE_SPI0_PIN_INIT
+    RTE_SPI0_PIN_INIT();
+#endif
     return SPI_InterruptInitialize(cb_event, &SPI0_InterruptDriverState);
 }
 
 static int32_t SPI0_InterruptUninitialize(void)
 {
-    SPI0_DeinitPins();
+#ifdef RTE_SPI0_PIN_DEINIT
+    RTE_SPI0_PIN_DEINIT();
+#endif
     return SPI_InterruptUninitialize(&SPI0_InterruptDriverState);
 }
 
@@ -1345,7 +1396,7 @@ static ARM_SPI_STATUS SPI0_InterruptGetStatus(void)
 #endif
 
 ARM_DRIVER_SPI Driver_SPI0 = {SPIx_GetVersion,    SPIx_GetCapabilities,
-#if RTE_SPI0_DMA_EN
+#if defined(RTE_SPI0_DMA_EN) && RTE_SPI0_DMA_EN
                               SPI0_DMAInitialize, SPI0_DMAUninitialize, SPI0_DMAPowerControl, SPI0_DMASend,
                               SPI0_DMAReceive,    SPI0_DMATransfer,     SPI0_DMAGetCount,     SPI0_DMAControl,
                               SPI0_DMAGetStatus
@@ -1365,48 +1416,50 @@ ARM_DRIVER_SPI Driver_SPI0 = {SPIx_GetVersion,    SPIx_GetCapabilities,
 
 #endif /*  SPI0  */
 
-#if defined(SPI1) && RTE_SPI1
+#if defined(SPI1) && defined(RTE_SPI1) && RTE_SPI1
 
-extern void SPI1_InitPins(void);
-extern void SPI1_DeinitPins(void);
 /* User needs to provide the implementation for SPI1_GetFreq/InitPins/DeinitPins
 in the application for enabling according instance. */
 extern uint32_t SPI1_GetFreq(void);
 
-cmsis_spi_resource_t SPI1_Resource = {SPI1, 1, SPI1_GetFreq};
+static cmsis_spi_resource_t SPI1_Resource = {SPI1, 1, SPI1_GetFreq};
 
-#if RTE_SPI1_DMA_EN
+#if defined(RTE_SPI1_DMA_EN) && RTE_SPI1_DMA_EN
 
 #if (defined(FSL_FEATURE_SOC_DMA_COUNT) && FSL_FEATURE_SOC_DMA_COUNT)
-cmsis_spi_dma_resource_t SPI1_DMAResource = {
+static cmsis_spi_dma_resource_t SPI1_DMAResource = {
     RTE_SPI1_DMA_TX_DMA_BASE, RTE_SPI1_DMA_TX_CH, RTE_SPI1_DMA_TX_DMAMUX_BASE, RTE_SPI1_DMA_TX_PERI_SEL,
 
     RTE_SPI1_DMA_RX_DMA_BASE, RTE_SPI1_DMA_RX_CH, RTE_SPI1_DMA_RX_DMAMUX_BASE, RTE_SPI1_DMA_RX_PERI_SEL,
 
 };
 
-cmsis_spi_dma_handle_t SPI1_DmaHandle;
-dma_handle_t SPI1_DmaTxDataHandle;
-dma_handle_t SPI1_DmaRxDataHandle;
+static cmsis_spi_dma_handle_t SPI1_DmaHandle;
+static dma_handle_t SPI1_DmaTxDataHandle;
+static dma_handle_t SPI1_DmaRxDataHandle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("spi1_d_m_a_driver_state")
-cmsis_SPI_dma_driver_state_t SPI1_DMADriverState = {
+static cmsis_SPI_dma_driver_state_t SPI1_DMADriverState = {
 #else
-cmsis_SPI_dma_driver_state_t SPI1_DMADriverState = {
+static cmsis_SPI_dma_driver_state_t SPI1_DMADriverState = {
 #endif
     &SPI1_Resource, &SPI1_DMAResource, &SPI1_DmaHandle, &SPI1_DmaRxDataHandle, &SPI1_DmaTxDataHandle,
 };
 
 static int32_t SPI1_DMAInitialize(ARM_SPI_SignalEvent_t cb_event)
 {
-    SPI1_InitPins();
+#ifdef RTE_SPI1_PIN_INIT
+    RTE_SPI1_PIN_INIT();
+#endif
     return SPI_DMAInitialize(cb_event, &SPI1_DMADriverState);
 }
 
 static int32_t SPI1_DMAUninitialize(void)
 {
-    SPI1_DeinitPins();
+#ifdef RTE_SPI1_PIN_DEINIT
+    RTE_SPI1_PIN_DEINIT();
+#endif
     return SPI_DMAUninitialize(&SPI1_DMADriverState);
 }
 
@@ -1449,13 +1502,13 @@ static ARM_SPI_STATUS SPI1_DMAGetStatus(void)
 
 #else
 
-cmsis_spi_handle_t SPI1_Handle;
+static cmsis_spi_handle_t SPI1_Handle;
 
 #if defined(__CC_ARM) || defined(__ARMCC_VERSION)
 ARMCC_SECTION("spi1_interrupt_driver_state")
-cmsis_spi_interrupt_driver_state_t SPI1_InterruptDriverState = {
+static cmsis_spi_interrupt_driver_state_t SPI1_InterruptDriverState = {
 #else
-cmsis_spi_interrupt_driver_state_t SPI1_InterruptDriverState = {
+static cmsis_spi_interrupt_driver_state_t SPI1_InterruptDriverState = {
 #endif
     &SPI1_Resource,
     &SPI1_Handle,
@@ -1463,13 +1516,17 @@ cmsis_spi_interrupt_driver_state_t SPI1_InterruptDriverState = {
 
 static int32_t SPI1_InterruptInitialize(ARM_SPI_SignalEvent_t cb_event)
 {
-    SPI1_InitPins();
+#ifdef RTE_SPI1_PIN_INIT
+    RTE_SPI1_PIN_INIT();
+#endif
     return SPI_InterruptInitialize(cb_event, &SPI1_InterruptDriverState);
 }
 
 static int32_t SPI1_InterruptUninitialize(void)
 {
-    SPI1_DeinitPins();
+#ifdef RTE_SPI1_PIN_DEINIT
+    RTE_SPI1_PIN_DEINIT();
+#endif
     return SPI_InterruptUninitialize(&SPI1_InterruptDriverState);
 }
 
@@ -1511,7 +1568,7 @@ static ARM_SPI_STATUS SPI1_InterruptGetStatus(void)
 #endif
 
 ARM_DRIVER_SPI Driver_SPI1 = {SPIx_GetVersion,    SPIx_GetCapabilities,
-#if RTE_SPI1_DMA_EN
+#if defined(RTE_SPI1_DMA_EN) && RTE_SPI1_DMA_EN
                               SPI1_DMAInitialize, SPI1_DMAUninitialize, SPI1_DMAPowerControl, SPI1_DMASend,
                               SPI1_DMAReceive,    SPI1_DMATransfer,     SPI1_DMAGetCount,     SPI1_DMAControl,
                               SPI1_DMAGetStatus

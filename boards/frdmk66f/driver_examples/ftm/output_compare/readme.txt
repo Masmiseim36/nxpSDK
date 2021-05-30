@@ -6,10 +6,10 @@ should probe the FTM output with a oscilloscope to see the signal toggling.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -46,6 +46,3 @@ You will see the output signal toggle
 Probe the signal using an oscilloscope
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 - Probe oscilloscope at PTE6 (TP17) to see output signal.
-Customization options
-=====================
-

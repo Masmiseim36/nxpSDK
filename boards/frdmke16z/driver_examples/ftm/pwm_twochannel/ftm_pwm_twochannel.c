@@ -2,22 +2,22 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "fsl_ftm.h"
 
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
 /* The Flextimer instance/channel used for board */
-#define BOARD_FTM_BASEADDR FTM0
-#define BOARD_FIRST_FTM_CHANNEL 3U
+#define BOARD_FTM_BASEADDR       FTM0
+#define BOARD_FIRST_FTM_CHANNEL  3U
 #define BOARD_SECOND_FTM_CHANNEL 4U
 
 /* Get source clock for FTM driver */
@@ -58,15 +58,19 @@ int main(void)
     ftm_chnl_pwm_signal_param_t ftmParam[2];
 
     /* Configure ftm params with frequency 24kHZ */
-    ftmParam[0].chnlNumber = (ftm_chnl_t)BOARD_FIRST_FTM_CHANNEL;
-    ftmParam[0].level = kFTM_LowTrue;
-    ftmParam[0].dutyCyclePercent = 0U;
+    ftmParam[0].chnlNumber            = (ftm_chnl_t)BOARD_FIRST_FTM_CHANNEL;
+    ftmParam[0].level                 = kFTM_LowTrue;
+    ftmParam[0].dutyCyclePercent      = 0U;
     ftmParam[0].firstEdgeDelayPercent = 0U;
+    ftmParam[0].enableComplementary   = false;
+    ftmParam[0].enableDeadtime        = false;
 
-    ftmParam[1].chnlNumber = (ftm_chnl_t)BOARD_SECOND_FTM_CHANNEL;
-    ftmParam[1].level = kFTM_LowTrue;
-    ftmParam[1].dutyCyclePercent = 0U;
+    ftmParam[1].chnlNumber            = (ftm_chnl_t)BOARD_SECOND_FTM_CHANNEL;
+    ftmParam[1].level                 = kFTM_LowTrue;
+    ftmParam[1].dutyCyclePercent      = 0U;
     ftmParam[1].firstEdgeDelayPercent = 0U;
+    ftmParam[1].enableComplementary   = false;
+    ftmParam[1].enableDeadtime        = false;
 
     /* Board pin, clock, debug console init */
     BOARD_InitPins();

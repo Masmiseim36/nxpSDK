@@ -2,6 +2,14 @@ Overview
 ========
 The TRGMUX project is a simple demonstration program of the SDK TRGMUX driver. It generates
 a 10KHz PWM by LPIT0 CH0, and clone by TRGMUX to output this PWM to eight TRGMUX_OUTx pins.
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -35,11 +43,3 @@ Prepare the Demo
 Running the demo
 ================
 When the example runs successfully, you can see the 10KHz PWM on each of the 8 pins.
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

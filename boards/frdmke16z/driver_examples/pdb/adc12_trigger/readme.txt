@@ -10,6 +10,14 @@ to the ADC12 module.
 In this example, the ADC12 is configured with hardware trigger and conversion complete interrupt enabled.
 Once it gets the trigger from the PDB, the conversion goes, then the ISR would be executed.
 
+
+Toolchain supported
+===================
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
+
 Hardware requirements
 =====================
 - Micro USB cable
@@ -53,11 +61,3 @@ ADC12 Conversion Interrupt Counter: 3
 PDB Interrupt Counter: 4
 ADC12 Conversion Interrupt Counter: 4
 ...
-
-Toolchain supported
-===================
-- IAR embedded Workbench  8.32.1
-- Keil MDK  5.26
-- GCC ARM Embedded  7.3.1
-- MCUXpresso 10.2.1
-

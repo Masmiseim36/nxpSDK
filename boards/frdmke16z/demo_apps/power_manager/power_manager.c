@@ -13,9 +13,9 @@
 #include "fsl_debug_console.h"
 #include "power_manager.h"
 #include "fsl_notifier.h"
+#include "pin_mux.h"
 #include "board.h"
 
-#include "pin_mux.h"
 #include "fsl_pmc.h"
 #include "fsl_lpuart.h"
 /*******************************************************************************
@@ -26,25 +26,25 @@
 /* Default debug console clock source. */
 #define APP_DEBUG_UART_DEFAULT_CLKSRC_NAME kCLOCK_ScgSircClk /* SCG SIRC clock. */
 
-#define APP_WAKEUP_BUTTON_GPIO BOARD_SW3_GPIO
-#define APP_WAKEUP_BUTTON_PORT BOARD_SW3_PORT
-#define APP_WAKEUP_BUTTON_GPIO_PIN BOARD_SW3_GPIO_PIN
-#define APP_WAKEUP_BUTTON_IRQ BOARD_SW3_IRQ
+#define APP_WAKEUP_BUTTON_GPIO        BOARD_SW3_GPIO
+#define APP_WAKEUP_BUTTON_PORT        BOARD_SW3_PORT
+#define APP_WAKEUP_BUTTON_GPIO_PIN    BOARD_SW3_GPIO_PIN
+#define APP_WAKEUP_BUTTON_IRQ         BOARD_SW3_IRQ
 #define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
-#define APP_WAKEUP_BUTTON_NAME BOARD_SW3_NAME
-#define APP_WAKEUP_BUTTON_IRQ_TYPE kPORT_InterruptFallingEdge
+#define APP_WAKEUP_BUTTON_NAME        BOARD_SW3_NAME
+#define APP_WAKEUP_BUTTON_IRQ_TYPE    kPORT_InterruptFallingEdge
 
 /* Debug console RX pin: PORTC MUX: 2 */
-#define DEBUG_CONSOLE_RX_PORT PORTB
-#define DEBUG_CONSOLE_RX_GPIO GPIOB
-#define DEBUG_CONSOLE_RX_PIN 0U
+#define DEBUG_CONSOLE_RX_PORT   PORTB
+#define DEBUG_CONSOLE_RX_GPIO   GPIOB
+#define DEBUG_CONSOLE_RX_PIN    0U
 #define DEBUG_CONSOLE_RX_PINMUX kPORT_MuxAlt2
 /* Debug console TX pin: PORTC MUX: 2 */
-#define DEBUG_CONSOLE_TX_PORT PORTB
-#define DEBUG_CONSOLE_TX_GPIO GPIOB
-#define DEBUG_CONSOLE_TX_PIN 1U
+#define DEBUG_CONSOLE_TX_PORT   PORTB
+#define DEBUG_CONSOLE_TX_GPIO   GPIOB
+#define DEBUG_CONSOLE_TX_PIN    1U
 #define DEBUG_CONSOLE_TX_PINMUX kPORT_MuxAlt2
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#define CORE_CLK_FREQ           CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /*******************************************************************************
  * Prototypes
@@ -86,8 +86,8 @@ static void APP_InitDebugConsole(void)
 status_t callback0(notifier_notification_block_t *notify, void *dataPtr)
 {
     user_callback_data_t *userData = (user_callback_data_t *)dataPtr;
-    status_t ret = kStatus_Fail;
-    app_power_mode_t targetMode = ((power_user_config_t *)notify->targetConfig)->mode;
+    status_t ret                   = kStatus_Fail;
+    app_power_mode_t targetMode    = ((power_user_config_t *)notify->targetConfig)->mode;
 
     switch (notify->notifyType)
     {
@@ -353,8 +353,8 @@ status_t APP_PowerModeSwitch(notifier_user_config_t *targetConfig, void *userDat
     power_user_config_t *targetPowerModeConfig; /* Local variable with target power mode configuration */
 
     targetPowerModeConfig = (power_user_config_t *)targetConfig;
-    currentPowerMode = SMC_GetPowerModeState(SMC);
-    targetPowerMode = targetPowerModeConfig->mode;
+    currentPowerMode      = SMC_GetPowerModeState(SMC);
+    targetPowerMode       = targetPowerModeConfig->mode;
 
     switch (targetPowerMode)
     {
@@ -437,7 +437,7 @@ int main(void)
     power_user_config_t vlpsConfig = vlprConfig;
     power_user_config_t waitConfig = vlprConfig;
     power_user_config_t stopConfig = vlprConfig;
-    power_user_config_t runConfig = vlprConfig;
+    power_user_config_t runConfig  = vlprConfig;
 
     /* Initializes array of pointers to power mode configurations */
     notifier_user_config_t *powerConfigs[] = {
@@ -461,7 +461,7 @@ int main(void)
     vlpsConfig.mode = kAPP_PowerModeVlps;
     waitConfig.mode = kAPP_PowerModeWait;
     stopConfig.mode = kAPP_PowerModeStop;
-    runConfig.mode = kAPP_PowerModeRun;
+    runConfig.mode  = kAPP_PowerModeRun;
 
     /* Create Notifier Handle */
     NOTIFIER_CreateHandle(&powerModeHandle, powerConfigs, ARRAY_SIZE(powerConfigs), callbacks, 1U, APP_PowerModeSwitch,
@@ -478,8 +478,8 @@ int main(void)
     LPTMR_GetDefaultConfig(&lptmrConfig);
     /* Use LPO as clock source. */
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1;
-    lptmrConfig.bypassPrescaler = false;
-    lptmrConfig.value = kLPTMR_Prescale_Glitch_6;
+    lptmrConfig.bypassPrescaler      = false;
+    lptmrConfig.value                = kLPTMR_Prescale_Glitch_6;
 
     LPTMR_Init(LPTMR0, &lptmrConfig);
 
@@ -543,7 +543,7 @@ int main(void)
             }
 
             callbackData0.originPowerState = currentPowerState;
-            targetConfigIndex = targetPowerMode - kAPP_PowerModeMin - 1;
+            targetConfigIndex              = targetPowerMode - kAPP_PowerModeMin - 1;
             NOTIFIER_SwitchConfig(&powerModeHandle, targetConfigIndex, kNOTIFIER_PolicyAgreement);
             PRINTF("\r\nNext loop\r\n");
         }

@@ -1,6 +1,6 @@
 /*
 
-Copyright 2016-2019 NXP
+Copyright 2016-2020 NXP
 All rights reserved.
 SPDX-License-Identifier: BSD-3-Clause
 
@@ -23,7 +23,6 @@ SPDX-License-Identifier: BSD-3-Clause
 #include "RNG_Interface.h"
 #include "Messaging.h"
 #include "SecLib.h"
-#include "Panic.h"
 #include "PWR_Interface.h"
 #include "fsl_os_abstraction.h"
 
@@ -791,7 +790,7 @@ static osaStatus_t AppIdle_TaskInit(void)
 
     if( NULL == gAppIdleTaskId )
     {
-        panic(0,0,0,0);
+        assert(0);
         return osaStatus_Error;
     }
 

@@ -6,10 +6,10 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 
-#include "clock_config.h"
-#include "pin_mux.h"
 #include "fsl_lpuart_cmsis.h"
 /*******************************************************************************
  * Definitions

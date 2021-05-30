@@ -2,16 +2,16 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_ftm.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -21,12 +21,12 @@
 #define BOARD_FTM_INPUT_CAPTURE_CHANNEL kFTM_Chnl_2
 
 /* Interrupt number and interrupt handler for the FTM instance used */
-#define FTM_INTERRUPT_NUMBER FTM0_IRQn
+#define FTM_INTERRUPT_NUMBER      FTM0_IRQn
 #define FTM_INPUT_CAPTURE_HANDLER FTM0_IRQHandler
 
 /* Interrupt to enable and flag to read; depends on the FTM channel pair used */
 #define FTM_CHANNEL_INTERRUPT_ENABLE kFTM_Chnl2InterruptEnable
-#define FTM_CHANNEL_FLAG kFTM_Chnl2Flag
+#define FTM_CHANNEL_FLAG             kFTM_Chnl2Flag
 
 /* Get source clock for FTM driver */
 #define FTM_SOURCE_CLOCK CLOCK_GetFreq(kCLOCK_CoreSysClk)
@@ -51,6 +51,7 @@ void FTM_INPUT_CAPTURE_HANDLER(void)
         FTM_ClearStatusFlags(BOARD_FTM_BASEADDR, FTM_CHANNEL_FLAG);
     }
     ftmIsrFlag = true;
+    __DSB();
 }
 
 /*!

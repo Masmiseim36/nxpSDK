@@ -101,7 +101,7 @@ typedef struct extAdvListElement_tag
     uint32_t dataCRC;
     uint32_t perDataCRC;
     uint16_t periodicAdvInterval;
-    uint16_t syncHandle;    
+    uint16_t syncHandle;
 }extAdvListElement_t;
 
 typedef struct perAdvListElement_tag
@@ -136,7 +136,7 @@ static const char* maAdvEvtDataTypeStrings[] = { "\n\rAdv Data", "\n\rScan Req D
 static const char* maAdvEvtAdvTypeStrings[] = { "\n\rExtended Advertising", "Legacy Advertising" };
 static const char** maAdvPropStrings[] = {maAdvEvtConnStrings, maAdvEvtScannStrings, maAdvEvtDirStrings, maAdvEvtDataTypeStrings, maAdvEvtAdvTypeStrings};
 static const char* maLePhyStrings[] = { "", "gLePhy1M_c", "gLePhy2M_c", "gLePhyCoded_c" };
-static const char* maScanStrings[] = {"Passive", "Active"};  
+static const char* maScanStrings[] = {"Passive", "Active"};
 #if mAE_CentralDebug_c
 static const char* maScanEventStrings[] = {\
     "gScanStateChanged_c",\
@@ -147,7 +147,7 @@ static const char* maScanEventStrings[] = {\
     "gPeriodicAdvSyncEstablished_c",\
     "gPeriodicAdvSyncLost_c",\
     "gPeriodicAdvSyncTerminated_c"\
-};  
+};
 #endif
 static extAdvListElement_t maAppExtAdvList[mAppExtAdvListSize_c];
 static uint8_t mAppExtAdvListIndex;
@@ -235,37 +235,37 @@ void BleApp_Start(void)
 * \param[in]    events    Key event structure.
 ********************************************************************************** */
 void BleApp_HandleKeys(key_event_t events)
-{  
+{
     switch (events)
     {
     case gKBD_EventPressPB1_c:  /* fall-through */
     case gKBD_EventLongPB1_c:   /* fall-through */
         break;
-        
+
         /* Start the application */
     case gKBD_EventPressPB2_c:
-        {    
+        {
             if (!mScanningOn)
             {
                 gScanParams.type = gScanTypeActive_c;
-                BleApp_Start();            
+                BleApp_Start();
             }
         }
         break;
-        /* Start the application */     
+        /* Start the application */
     case gKBD_EventLongPB2_c:
         {
             if (!mScanningOn)
             {
                 gScanParams.type = gScanTypePassive_c;
-                BleApp_Start();            
+                BleApp_Start();
             }
         }
         break;
-        
+
     default:
         {
-            ; /* No action required */            
+            ; /* No action required */
         }
         break;
     }
@@ -281,7 +281,7 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
 {
     /* Call BLE Conn Manager */
     BleConnManager_GenericEvent(pGenericEvent);
-    
+
     switch (pGenericEvent->eventType)
     {
     case gInitializationComplete_c:
@@ -289,7 +289,7 @@ void BleApp_GenericCallback (gapGenericEvent_t* pGenericEvent)
             BleApp_Config();
         }
         break;
-        
+
     case gLePhyEvent_c:
         if(pGenericEvent->eventData.phyEvent.phyEventType == gPhyUpdateComplete_c )
         {
@@ -319,25 +319,25 @@ static void BleApp_Config(void)
 {
     /* Configure as GAP Central */
     BleConnManager_GapCommonConfig();
-    
+
     /* Register for callbacks*/
     (void)App_RegisterGattClientProcedureCallback(BleApp_GattClientCallback);
     (void)App_RegisterGattClientNotificationCallback(BleApp_GattNotificationCallback);
     BleServDisc_RegisterCallback(BleApp_ServiceDiscoveryCallback);
-    
+
     /* Initialize private variables */
     mPeerInformation.appState = mAppIdle_c;
     mScanningOn = FALSE;
     mFoundDeviceToConnect = FALSE;
-    
+
     /* Allocate scan timeout timer */
     mAppTimerId = TMR_AllocateTimer();
-    
+
     /* Update UI */
     AppPrintString("\n\rExtended Advertising Application - Central");
     AppPrintString("\r\nPress WAKESW to Start Active Scanning!");
     AppPrintString("\r\nPress WAKESW Long to Start Passive Scanning!\r\n");
-    
+
 #if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
     /* Allow entering sleep mode until any user interaction */
     (void)PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
@@ -345,7 +345,7 @@ static void BleApp_Config(void)
 #else
     LED_StopFlash(LED_ALL);
     Led1On();
-    Led2On();   
+    Led2On();
 #endif
 }
 
@@ -359,8 +359,8 @@ static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
 {
 #if mAE_CentralDebug_c
     AppPrintString("\n\rScan Callback - ");
-    AppPrintString(maScanEventStrings[pScanningEvent->eventType]);    
-#endif    
+    AppPrintString(maScanEventStrings[pScanningEvent->eventType]);
+#endif
     switch (pScanningEvent->eventType)
     {
     case gScanStateChanged_c:
@@ -387,9 +387,9 @@ static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
             {
                 (void)TMR_StopTimer(mAppTimerId);
 #if !defined(cPWR_UsePowerDownMode) || (cPWR_UsePowerDownMode == 0)
-                StopLed1Flashing();        
-                Led1On();               
-#endif                 
+                StopLed1Flashing();
+                Led1On();
+#endif
                 /* Connect with the previously scanned peer device */
                 if (mFoundDeviceToConnect)
                 {
@@ -403,16 +403,16 @@ static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
                     (void)PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
 #endif
                 }
-                AppTerminatePeriodicAdvSync();    
+                AppTerminatePeriodicAdvSync();
             }
         }
         break;
-        
+
     case gScanCommandFailed_c:
         {
             ; /* No action required */
         }
-        break;        
+        break;
     case gDeviceScanned_c:
         {
             bool_t AE_peripheral = CheckForAEPeripheralDevice(pScanningEvent->eventData.scannedDevice.data, pScanningEvent->eventData.scannedDevice.dataLength);
@@ -422,7 +422,7 @@ static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
                 AppPrintHexLe(pScanningEvent->eventData.scannedDevice.aAddress, 6);
                 if( FALSE == mFoundDeviceToConnect )
                 {
-                    /* Check if the scanned device implements the Temperature Custom Profile */                    
+                    /* Check if the scanned device implements the Temperature Custom Profile */
                     mFoundDeviceToConnect = CheckScanEvent(pScanningEvent);
                     if (mFoundDeviceToConnect)
                     {
@@ -499,9 +499,9 @@ static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
                 {
                     maAppExtAdvList[i].syncHandle = mBlePeriodicAdvInvalidSyncHandle_c;
                     maAppExtAdvList[i].periodicAdvInterval = 0;
-                    break;    
+                    break;
                 }
-            }        
+            }
         }
         break;
     case gPeriodicAdvSyncTerminated_c:
@@ -509,12 +509,12 @@ static void BleApp_ScanningCallback (gapScanningEvent_t* pScanningEvent)
         if((mPerExtAdvIndexPending != mPeriodicExtAdvInvalidIndex_c) && (mPerExtAdvIndexPending < mAppExtAdvListIndex))
         {
             maAppExtAdvList[mPerExtAdvIndexPending].syncHandle = mBlePeriodicAdvInvalidSyncHandle_c;
-            
+
         }
         mPerExtAdvIndexPending = mPeriodicExtAdvInvalidIndex_c;
         if (!mScanningOn)
         {
-            AppTerminatePeriodicAdvSync();    
+            AppTerminatePeriodicAdvSync();
         }
         break;
     default:
@@ -535,7 +535,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
 {
     /* Connection Manager to handle Host Stack interactions */
     BleConnManager_GapCentralEvent(peerDeviceId, pConnectionEvent);
-    
+
     switch (pConnectionEvent->eventType)
     {
     case gConnEvtConnected_c:
@@ -546,15 +546,20 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             /* Set low power mode */
 #if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
             (void)PWR_ChangeDeepSleepMode(gAppDeepSleepMode_c);
+
+#if (!defined(CPU_MKW37A512VFT4) && !defined(CPU_MKW37Z512VFT4) && !defined(CPU_MKW38A512VFT4) && !defined(CPU_MKW38Z512VFT4) && !defined(CPU_MKW39A512VFT4) && !defined(CPU_MKW39Z512VFT4))
             PWR_AllowDeviceToSleep();
+#endif /* CPU_MKW37xxx, CPU_MKW38xxx and CPU_MKW39xxx*/
 #else
-            /* Update UI */            
-            Led2Flashing();           
+            /* Update UI */
+            Led2Flashing();
 #endif
-            
+
 #if defined(gAppUseBonding_d) && (gAppUseBonding_d)
-            (void)Gap_CheckIfBonded(peerDeviceId, &mPeerInformation.isBonded, NULL);
-            if ((mPeerInformation.isBonded) &&
+            bool_t isBonded = FALSE;
+            (void)Gap_CheckIfBonded(peerDeviceId, &isBonded, NULL);
+
+            if ((isBonded) &&
                 (gBleSuccess_c == Gap_LoadCustomPeerInformation(peerDeviceId, (void*) &mPeerInformation.customInfo, 0, sizeof (appCustomInfo_t))))
             {
                 mRestoringBondedLink = TRUE;
@@ -565,7 +570,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             BleApp_StateMachineHandler(mPeerInformation.deviceId, mAppEvt_PeerConnected_c);
         }
         break;
-        
+
     case gConnEvtDisconnected_c:
         {
             mPeerInformation.deviceId = gInvalidDeviceId_c;
@@ -574,34 +579,44 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             BleServDisc_Stop(peerDeviceId);
             /* Update UI */
             AppPrintString("\r\nDisconnected!\r\n");
-            
+
 #if defined(cPWR_UsePowerDownMode) && (cPWR_UsePowerDownMode)
             /* Go to sleep */
             (void)PWR_ChangeDeepSleepMode(cPWR_DeepSleepMode);
 #else
-            /* UI */                
-            StopLed2Flashing();        
-            Led2On(); 
+            /* UI */
+            StopLed2Flashing();
+            Led2On();
 #endif
         }
         break;
-        
+
 #if gAppUsePairing_d
     case gConnEvtPairingComplete_c:
         {
             /* Notify state machine handler on pairing complete */
             if (pConnectionEvent->eventData.pairingCompleteEvent.pairingSuccessful)
             {
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+                mPeerInformation.isBonded = TRUE;
+#endif
                 BleApp_StateMachineHandler(mPeerInformation.deviceId, mAppEvt_PairingComplete_c);
             }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+            else
+            {
+                mPeerInformation.isBonded = FALSE;
+            }
+#endif
         }
         break;
-        
+
 #if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     case gConnEvtEncryptionChanged_c:
         {
             if( pConnectionEvent->eventData.encryptionChangedEvent.newEncryptionState )
             {
+                mPeerInformation.isBonded = TRUE;
                 if( mRestoringBondedLink )
                 {
                     /* Try to enable temperature notifications, disconnect on failure */
@@ -617,7 +632,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
             }
         }
         break;
-        
+
     case gConnEvtAuthenticationRejected_c:
         {
             /* Start Pairing Procedure */
@@ -626,7 +641,7 @@ static void BleApp_ConnectionCallback (deviceId_t peerDeviceId, gapConnectionEve
         break;
 #endif /* gAppUseBonding_d */
 #endif /* gAppUsePairing_d */
-        
+
     default:
         ; /* No action required */
         break;
@@ -649,7 +664,7 @@ static void BleApp_ServiceDiscoveryCallback(deviceId_t peerDeviceId, servDiscEve
             BleApp_StoreServiceHandles(pEvent->eventData.pService);
         }
         break;
-        
+
         /* Service discovery has finished, run the state machine. */
     case gDiscoveryFinished_c:
         {
@@ -663,7 +678,7 @@ static void BleApp_ServiceDiscoveryCallback(deviceId_t peerDeviceId, servDiscEve
             }
         }
         break;
-        
+
     default:
         {
             ; /* No action required */
@@ -683,13 +698,13 @@ gattService_t   *pGattService
 )
 {
     uint8_t i,j;
-    
+
     if ((pGattService->uuidType == gBleUuidType128_c) &&
         FLib_MemCmp(pGattService->uuid.uuid128, uuid_service_temperature, 16))
     {
         /* Found Temperature Service */
         mPeerInformation.customInfo.tempClientConfig.hService = pGattService->startHandle;
-        
+
         for (i = 0; i < pGattService->cNumCharacteristics; i++)
         {
             if ((pGattService->aCharacteristics[i].value.uuidType == gBleUuidType16_c) &&
@@ -697,7 +712,7 @@ gattService_t   *pGattService
             {
                 /* Found Temperature Char */
                 mPeerInformation.customInfo.tempClientConfig.hTemperature = pGattService->aCharacteristics[i].value.handle;
-                
+
                 for (j = 0; j < pGattService->aCharacteristics[i].cNumDescriptors; j++)
                 {
                     if (pGattService->aCharacteristics[i].aDescriptors[j].uuidType == gBleUuidType16_c)
@@ -756,7 +771,7 @@ uint16_t temperature
 {
     AppPrintString("Temperature: ");
     AppPrintDec((uint32_t)temperature / 100UL);
-    
+
     /* Add 'C' for Celsius degrees - UUID 0x272F.
     www.bluetooth.com/specifications/assigned-numbers/units */
     if (mPeerInformation.customInfo.tempClientConfig.tempFormat.unitUuid16 == 0x272FU)
@@ -785,47 +800,54 @@ gattProcedureResult_t   procedureResult,
 bleResult_t             error
 )
 {
-    if (procedureResult == gGattProcError_c)
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if ((mPeerInformation.isBonded) || (mPeerInformation.appState != mAppRunning_c))
     {
-        attErrorCode_t attError = (attErrorCode_t)(uint8_t)(error);
-        
-        if (attError == gAttErrCodeInsufficientEncryption_c     ||
-            attError == gAttErrCodeInsufficientAuthorization_c  ||
-                attError == gAttErrCodeInsufficientAuthentication_c)
+#endif
+        if (procedureResult == gGattProcError_c)
         {
-            /* Start Pairing Procedure */
-            (void)Gap_Pair(serverDeviceId, &gPairingParameters);
-        }
-        
-        BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
-    }
-    else
-    {
-        if (procedureResult == gGattProcSuccess_c)
-        {
-            switch(procedureType)
+            attErrorCode_t attError = (attErrorCode_t)(uint8_t)(error);
+
+            if (attError == gAttErrCodeInsufficientEncryption_c     ||
+                attError == gAttErrCodeInsufficientAuthorization_c  ||
+                    attError == gAttErrCodeInsufficientAuthentication_c)
             {
-            case gGattProcReadCharacteristicDescriptor_c:
-                {
-                    if (mpCharProcBuffer != NULL)
-                    {
-                        /* Store the value of the descriptor */
-                        BleApp_StoreDescValues(mpCharProcBuffer);
-                    }
-                    break;
-                }
-                
-            default:
-                {
-                    ; /* No action required */
-                    break;
-                }
+                /* Start Pairing Procedure */
+                (void)Gap_Pair(serverDeviceId, &gPairingParameters);
             }
-            BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
+
+            BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcError_c);
         }
+        else
+        {
+            if (procedureResult == gGattProcSuccess_c)
+            {
+                switch(procedureType)
+                {
+                case gGattProcReadCharacteristicDescriptor_c:
+                    {
+                        if (mpCharProcBuffer != NULL)
+                        {
+                            /* Store the value of the descriptor */
+                            BleApp_StoreDescValues(mpCharProcBuffer);
+                        }
+                        break;
+                    }
+
+                default:
+                    {
+                        ; /* No action required */
+                        break;
+                    }
+                }
+                BleApp_StateMachineHandler(serverDeviceId, mAppEvt_GattProcComplete_c);
+            }
+        }
+        /* Signal Service Discovery Module */
+        BleServDisc_SignalGattClientEvent(serverDeviceId, procedureType, procedureResult, error);
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     }
-    /* Signal Service Discovery Module */
-    BleServDisc_SignalGattClientEvent(serverDeviceId, procedureType, procedureResult, error);
+#endif
 }
 
 /*! *********************************************************************************
@@ -844,15 +866,22 @@ uint8_t*    aValue,
 uint16_t    valueLength
 )
 {
-    if (characteristicValueHandle == mPeerInformation.customInfo.tempClientConfig.hTemperature)
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
+    if (mPeerInformation.isBonded)
     {
-        BleApp_PrintTemperature(Utils_ExtractTwoByteValue(aValue));
-        /* Restart Wait For Data timer */
-        (void)TMR_StartLowPowerTimer(mAppTimerId,
-                                     gTmrLowPowerSecondTimer_c,
-                                     TmrSeconds(gWaitForDataTime_c),
-                                     DisconnectTimerCallback, NULL);
+#endif
+        if (characteristicValueHandle == mPeerInformation.customInfo.tempClientConfig.hTemperature)
+        {
+            BleApp_PrintTemperature(Utils_ExtractTwoByteValue(aValue));
+            /* Restart Wait For Data timer */
+            (void)TMR_StartLowPowerTimer(mAppTimerId,
+                                         gTmrLowPowerSecondTimer_c,
+                                         TmrSeconds(gWaitForDataTime_c),
+                                         DisconnectTimerCallback, NULL);
+        }
+#if defined(gAppUseBonding_d) && (gAppUseBonding_d)
     }
+#endif
 }
 
 /*! *********************************************************************************
@@ -868,7 +897,7 @@ static bool_t MatchDataInAdvElementList(gapAdStructure_t *pElement, void *pData,
 {
     uint32_t i;
     bool_t status = FALSE;
-    
+
     for (i = 0; i < (uint32_t)pElement->length - 1UL; i += iDataLen)
     {
         /* Compare input data with advertising data. */
@@ -881,7 +910,7 @@ static bool_t MatchDataInAdvElementList(gapAdStructure_t *pElement, void *pData,
     return status;
 }
 
- 
+
 /*! *********************************************************************************
 * \brief        Process scanning events to search for the Temperature Custom Service.
 *               This function is called from the scanning callback.
@@ -913,22 +942,22 @@ static bool_t CheckScanEvent(gapScanningEvent_t* pScanningEvent)
         dataLength = pScanningEvent->eventData.extScannedDevice.dataLength;
         pAddress = pScanningEvent->eventData.extScannedDevice.aAddress;
     }
-    
+
     while (index < dataLength)
     {
         gapAdStructure_t adElement;
-        
+
         adElement.length = pData[index];
         adElement.adType = (gapAdType_t)pData[index + 1U];
         adElement.aData = &pData[index + 2U];
-        
+
         /* Search for Temperature Custom Service */
         if ((adElement.adType == gAdIncomplete128bitServiceList_c) ||
             (adElement.adType == gAdComplete128bitServiceList_c))
         {
             foundMatch = MatchDataInAdvElementList(&adElement, &uuid_service_temperature, 16);
         }
-        
+
         if ((adElement.adType == gAdShortenedLocalName_c) ||
             (adElement.adType == gAdCompleteLocalName_c))
         {
@@ -936,11 +965,11 @@ static bool_t CheckScanEvent(gapScanningEvent_t* pScanningEvent)
             FLib_MemCpy(name, adElement.aData, nameLength);
             FLib_MemCpy(name + nameLength, lineEnd, sizeof(lineEnd));
         }
-        
+
         /* Move on to the next AD element type */
         index += (uint32_t)adElement.length + sizeof(uint8_t);
     }
-    
+
     if (foundMatch && (nameLength > 0U))
     {
         /* Update UI */
@@ -986,8 +1015,8 @@ static bool_t CheckForAEPeripheralDevice(uint8_t* pData, uint16_t dataLength)
         index += (uint32_t)adElement.length + sizeof(uint8_t);
     }
     return foundMatch;
-}                                       
-                                       
+}
+
 /*! *********************************************************************************
 * \brief        State machine handler of the Temperature Collector application.
 *
@@ -1018,14 +1047,14 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, appEvent_t event)
             }
         }
         break;
-        
+
     case mAppExchangeMtu_c:
         {
             if (event == mAppEvt_GattProcComplete_c)
             {
                 /* Moving to Service Discovery State*/
                 mPeerInformation.appState = mAppServiceDisc_c;
-                
+
                 /* Start Service Discovery*/
                 (void)BleServDisc_Start(peerDeviceId);
             }
@@ -1038,14 +1067,14 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, appEvent_t event)
             }
         }
         break;
-        
+
     case mAppServiceDisc_c:
         {
             if (event == mAppEvt_ServiceDiscoveryComplete_c)
             {
                 /* Moving to Primary Service Discovery State*/
                 mPeerInformation.appState = mAppReadDescriptor_c;
-                
+
                 if (mPeerInformation.customInfo.tempClientConfig.hTempDesc != 0U)
                 {
                     mpCharProcBuffer = MEM_BufferAlloc(sizeof(gattAttribute_t) + gAttDefaultMtu_c);
@@ -1070,7 +1099,7 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, appEvent_t event)
             }
         }
         break;
-        
+
     case mAppReadDescriptor_c:
         {
             if (event == mAppEvt_GattProcComplete_c)
@@ -1099,7 +1128,7 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, appEvent_t event)
             }
         }
         break;
-        
+
     case mAppRunning_c:
         {
             if (event == mAppEvt_GattProcComplete_c)
@@ -1109,7 +1138,7 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, appEvent_t event)
                     (void)MEM_BufferFree(mpCharProcBuffer);
                     mpCharProcBuffer = NULL;
                 }
-                
+
 #if defined(gAppUseBonding_d) && (gAppUseBonding_d)
                 /* Write data in NVM */
                 (void)Gap_SaveCustomPeerInformation(mPeerInformation.deviceId,
@@ -1135,7 +1164,7 @@ void BleApp_StateMachineHandler(deviceId_t peerDeviceId, appEvent_t event)
             }
         }
         break;
-        
+
     default:
         {
             ; /* No action required */
@@ -1154,13 +1183,13 @@ static bleResult_t BleApp_ConfigureNotifications(void)
 {
     bleResult_t result = gBleSuccess_c;
     uint16_t value = (uint16_t)gCccdNotification_c;
-    
+
     /* Allocate buffer for the write operation */
     if( mpCharProcBuffer == NULL )
     {
         mpCharProcBuffer = MEM_BufferAlloc(sizeof(gattAttribute_t) + gAttDefaultMtu_c);
     }
-    
+
     if( mpCharProcBuffer != NULL )
     {
         /* Populate the write request */
@@ -1175,7 +1204,7 @@ static bleResult_t BleApp_ConfigureNotifications(void)
     {
         result = gBleOutOfMemory_c;
     }
-    
+
     return result;
 }
 
@@ -1295,7 +1324,7 @@ static uint32_t AppCalculateAdvDataCRC(const void* pData, uint16_t dataLength)
     return CRC;
 }
 /*! *********************************************************************************
-* \brief        Prints Extended Adv Event 
+* \brief        Prints Extended Adv Event
 *
 * \param[in]    pExtScannedDevice                pointer to gapExtScannedDevice_t structure provided by the scanning callback.
 ********************************************************************************** */
@@ -1324,9 +1353,9 @@ static void AppPrintExtAdvEvent( gapExtScannedDevice_t* pExtScannedDevice)
     AppPrintString("\n\rData Set Id = ");AppPrintDec((uint32_t)pExtScannedDevice->SID);
     AppPrintString("\n\rPrimaryPHY = ");AppPrintString(maLePhyStrings[pExtScannedDevice->primaryPHY]);
     AppPrintString("\n\rSecondaryPHY = ");AppPrintString(maLePhyStrings[pExtScannedDevice->secondaryPHY]);
-    
+
     AppPrintString("\n\rperiodicAdvInterval = ");AppPrintDec((uint32_t)pExtScannedDevice->periodicAdvInterval);
-    
+
     AppPrintString(maAdvEvtDataTypeStrings[((pExtScannedDevice->advEventProperties & ((1U)<<3))>>3)]);
     dataLength = 0;
     pData = pExtScannedDevice->pData;
@@ -1338,7 +1367,7 @@ static void AppPrintExtAdvEvent( gapExtScannedDevice_t* pExtScannedDevice)
             AppPrintString((char const*)pData+2);
         }
         pData =  pExtScannedDevice->pData + dataLength;
-    }   
+    }
 }
 /*! *********************************************************************************
 * \brief        Handles Extended Advertising Event Management
@@ -1347,7 +1376,7 @@ static void AppPrintExtAdvEvent( gapExtScannedDevice_t* pExtScannedDevice)
 ********************************************************************************** */
 static void AppHandleExtAdvEvent( gapExtScannedDevice_t* pExtScannedDevice)
 {
-    uint8_t advIndex;   
+    uint8_t advIndex;
     bool_t advPresent = FALSE;
     bool_t advDataChanged = FALSE;
     bool_t handlePriodicAdv = FALSE;
@@ -1355,42 +1384,42 @@ static void AppHandleExtAdvEvent( gapExtScannedDevice_t* pExtScannedDevice)
     if(mAppExtAdvListIndex != 0U)
     {
         uint8_t i;
-        
+
         for( i=0 ; i<mAppExtAdvListIndex ; i++)
         {
             if(FLib_MemCmp (pExtScannedDevice->aAddress, maAppExtAdvList[i].aAddress, sizeof(bleDeviceAddress_t)))
             {
                 if(pExtScannedDevice->SID == maAppExtAdvList[i].SID)
                 {
-                    advPresent = TRUE; 
+                    advPresent = TRUE;
                     advIndex = i;
                     if(advCRC != maAppExtAdvList[i].dataCRC )
                     {
-                        advDataChanged = TRUE;   
-                    }    
+                        advDataChanged = TRUE;
+                    }
                     if(maAppExtAdvList[i].periodicAdvInterval != pExtScannedDevice->periodicAdvInterval)
                     {
-                        handlePriodicAdv = TRUE; 
+                        handlePriodicAdv = TRUE;
                     }
                     break;
-                    
+
                 }
                 else
                 {
                     continue;
                 }
-                
+
             }
             else
             {
                 continue;
             }
-            
+
         }
     }
     if(advPresent == FALSE)
     {
-        
+
         if(mAppExtAdvListIndex < mAppExtAdvListSize_c)
         {
             FLib_MemCpy (maAppExtAdvList[mAppExtAdvListIndex].aAddress, pExtScannedDevice->aAddress, sizeof(bleDeviceAddress_t));
@@ -1401,7 +1430,7 @@ static void AppHandleExtAdvEvent( gapExtScannedDevice_t* pExtScannedDevice)
             advIndex = mAppExtAdvListIndex++ ;
             if(pExtScannedDevice->periodicAdvInterval != 0U)
             {
-                handlePriodicAdv = TRUE; 
+                handlePriodicAdv = TRUE;
             }
         }
         else
@@ -1411,15 +1440,15 @@ static void AppHandleExtAdvEvent( gapExtScannedDevice_t* pExtScannedDevice)
     }
     if( (advPresent == FALSE) || (advDataChanged == TRUE))
     {
-        
+
         if(advIndex < mAppExtAdvListSize_c)
         {
             maAppExtAdvList[advIndex].dataCRC = advCRC;
         }
         AppPrintExtAdvEvent(pExtScannedDevice);
-        
+
     }
-    
+
     if((handlePriodicAdv == TRUE) && (advIndex < mAppExtAdvListSize_c))
     {
         if(pExtScannedDevice->periodicAdvInterval != 0U)
@@ -1433,25 +1462,25 @@ static void AppHandleExtAdvEvent( gapExtScannedDevice_t* pExtScannedDevice)
                 FLib_MemCpy (gapPeriodicAdvSyncReq.peerAddress, pExtScannedDevice->aAddress, sizeof(bleDeviceAddress_t));
                 gapPeriodicAdvSyncReq.skipCount = 0;
                 uint32_t timeout = pExtScannedDevice->periodicAdvInterval;
-                timeout = (timeout * 5U)>>2U;/* timeout in ms N*1.25*/ 
+                timeout = (timeout * 5U)>>2U;/* timeout in ms N*1.25*/
                 timeout = timeout*5U;/* at 5 adv missed timeout should expire*/
                 timeout = timeout/10U;/* timeout unit is 10ms*/
                 gapPeriodicAdvSyncReq.timeout = (uint16_t)timeout;
                 AppPrintString("\n\rGap_PeriodicAdvCreateSync ");
-                if(gBleSuccess_c == Gap_PeriodicAdvCreateSync( &gapPeriodicAdvSyncReq)) 
+                if(gBleSuccess_c == Gap_PeriodicAdvCreateSync( &gapPeriodicAdvSyncReq))
                 {
                     maAppExtAdvList[advIndex].syncHandle = gBlePeriodicAdvOngoingSyncCancelHandle;
                     maAppExtAdvList[advIndex].periodicAdvInterval = pExtScannedDevice->periodicAdvInterval;
                     mPerExtAdvIndexPending = advIndex;
                     AppPrintString("Succeded");
-                    
+
                 }
                 else
                 {
                     AppPrintString("Failed");
                 }
             }
-            
+
         }
         else
         {
@@ -1465,7 +1494,7 @@ static void AppHandleExtAdvEvent( gapExtScannedDevice_t* pExtScannedDevice)
                         maAppExtAdvList[advIndex].periodicAdvInterval = pExtScannedDevice->periodicAdvInterval;
                         mPerExtAdvIndexPending = advIndex;
                         AppPrintString("Succeded");
-                        
+
                     }
                     else
                     {
@@ -1473,7 +1502,7 @@ static void AppHandleExtAdvEvent( gapExtScannedDevice_t* pExtScannedDevice)
                     }
                 }
             }
-        }    
+        }
     }
 }
 
@@ -1484,30 +1513,30 @@ static void AppHandleExtAdvEvent( gapExtScannedDevice_t* pExtScannedDevice)
 ********************************************************************************** */
 static void AppHandlePeriodicDeviceScanEvent( gapPeriodicScannedDevice_t* pGapPeriodicScannedDevice)
 {
-    
+
     uint16_t  dataLength;
     uint8_t* pData;
-    bool_t perAdvPresent = FALSE; 
-    bool_t perAdvDataChanged = FALSE; 
+    bool_t perAdvPresent = FALSE;
+    bool_t perAdvDataChanged = FALSE;
     uint8_t advIndex;
     uint32_t advCRC = AppCalculateAdvDataCRC(pGapPeriodicScannedDevice->pData, pGapPeriodicScannedDevice->dataLength);
     if(mAppExtAdvListIndex != 0U)
     {
-        for( advIndex=0 ; advIndex < mAppExtAdvListIndex ; advIndex++)  
+        for( advIndex=0 ; advIndex < mAppExtAdvListIndex ; advIndex++)
         {
             if(maAppExtAdvList[advIndex].syncHandle == pGapPeriodicScannedDevice->syncHandle)
             {
                 perAdvPresent = TRUE;
                 if(maAppExtAdvList[advIndex].perDataCRC != advCRC)
                 {
-                    perAdvDataChanged = TRUE; 
+                    perAdvDataChanged = TRUE;
                     maAppExtAdvList[advIndex].perDataCRC = advCRC;
                 }
-                break;   
+                break;
             }
-        } 
+        }
     }
-    
+
     if((perAdvPresent == TRUE) && (perAdvDataChanged == TRUE))
     {
         AppPrintString("\r\nPeriodic Adv Found");
@@ -1523,7 +1552,7 @@ static void AppHandlePeriodicDeviceScanEvent( gapPeriodicScannedDevice_t* pGapPe
                 AppPrintString((char const*)pData+2);
             }
             pData =  pGapPeriodicScannedDevice->pData + dataLength;
-        }        
+        }
     }
 }
 /*! *********************************************************************************

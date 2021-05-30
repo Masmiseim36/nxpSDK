@@ -2,7 +2,7 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -11,10 +11,10 @@
  ******************************************************************************/
 #include "fsl_common.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_smc.h"
 
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -28,7 +28,9 @@
  * SIRCDIV3_CLK output  : 4MHz
  */
 const scg_sirc_config_t s_scgSircConfig = {.enableMode = kSCG_SircEnable | kSCG_SircEnableInLowPower,
+#if (defined(FSL_FEATURE_SCG_HAS_SIRCDIV1) && FSL_FEATURE_SCG_HAS_SIRCDIV1)
                                            .div1 = kSCG_AsyncClkDivBy1,
+#endif
                                            .div2 = kSCG_AsyncClkDivBy2,
 #if (defined(FSL_FEATURE_SCG_HAS_SIRCDIV3) && FSL_FEATURE_SCG_HAS_SIRCDIV3)
                                            .div3 = kSCG_AsyncClkDivBy2,
@@ -47,8 +49,10 @@ const scg_firc_config_t s_scgFircConfig = {.enableMode = kSCG_FircEnable,
                                            .div3 = kSCG_AsyncClkDivBy1,
 #endif
                                            .div2 = kSCG_AsyncClkDivBy1,
+#if (defined(FSL_FEATURE_SCG_HAS_FIRCDIV1) && FSL_FEATURE_SCG_HAS_FIRCDIV1)
                                            .div1 = kSCG_AsyncClkDivBy1,
-                                           .range = kSCG_FircRange48M,
+#endif
+                                           .range      = kSCG_FircRange48M,
                                            .trimConfig = NULL};
 
 #if (defined(FSL_FEATURE_SCG_HAS_SPLL) && FSL_FEATURE_SCG_HAS_SPLL)
@@ -59,16 +63,18 @@ const scg_firc_config_t s_scgFircConfig = {.enableMode = kSCG_FircEnable,
  * SYSPLLDIV2 output  : 36MHz
  * SYSPLLDIV3 output  : 36MHz
  */
-const scg_spll_config_t s_scgSysPllConfig = {.enableMode = kSCG_SysPllEnable,
+const scg_spll_config_t s_scgSysPllConfig = {.enableMode  = kSCG_SysPllEnable,
                                              .monitorMode = kSCG_SysPllMonitorDisable,
+#if (defined(FSL_FEATURE_SCG_HAS_SPLLDIV1) && FSL_FEATURE_SCG_HAS_SPLLDIV1)
                                              .div1 = kSCG_AsyncClkDivBy1,
+#endif
                                              .div2 = kSCG_AsyncClkDivBy2,
 #if (defined(FSL_FEATURE_SCG_HAS_SPLLDIV3) && FSL_FEATURE_SCG_HAS_SPLLDIV3)
                                              .div3 = kSCG_AsyncClkDivBy2,
 #endif
-                                             .src = kSCG_SysPllSrcFirc,
+                                             .src    = kSCG_SysPllSrcFirc,
                                              .prediv = 5U,
-                                             .mult = 2U};
+                                             .mult   = 2U};
 #endif
 
 #if (defined(FSL_FEATURE_SCG_HAS_LPFLL) && FSL_FEATURE_SCG_HAS_LPFLL)
@@ -80,12 +86,14 @@ const scg_spll_config_t s_scgSysPllConfig = {.enableMode = kSCG_SysPllEnable,
  * LPFLLDIV3 output  : 24MHz
  */
 const scg_lpfll_config_t s_scgLpFllConfig = {.enableMode = kSCG_LpFllEnable,
+#if (defined(FSL_FEATURE_SCG_HAS_FLLDIV1) && FSL_FEATURE_SCG_HAS_FLLDIV1)
                                              .div1 = kSCG_AsyncClkDivBy1,
+#endif
                                              .div2 = kSCG_AsyncClkDivBy2,
 #if (defined(FSL_FEATURE_SCG_HAS_FLLDIV3) && FSL_FEATURE_SCG_HAS_FLLDIV3)
                                              .div3 = kSCG_AsyncClkDivBy2,
 #endif
-                                             .range = kSCG_LpFllRange48M,
+                                             .range      = kSCG_LpFllRange48M,
                                              .trimConfig = NULL};
 #endif
 
@@ -104,7 +112,7 @@ const scg_sys_clk_config_t s_sysClkConfigSircInRun = {.divSlow = kSCG_SysClkDivB
                                                       .divPlat = kSCG_SysClkDivBy1,
 #endif
                                                       .divCore = kSCG_SysClkDivBy1,
-                                                      .src = kSCG_SysClkSrcSirc};
+                                                      .src     = kSCG_SysClkSrcSirc};
 
 /*
  * System clock configuration while using SIRC in VLPR mode.
@@ -121,7 +129,7 @@ const scg_sys_clk_config_t s_sysClkConfigSircInVlpr = {.divSlow = kSCG_SysClkDiv
                                                        .divPlat = kSCG_SysClkDivBy1,
 #endif
                                                        .divCore = kSCG_SysClkDivBy2,
-                                                       .src = kSCG_SysClkSrcSirc};
+                                                       .src     = kSCG_SysClkSrcSirc};
 
 /*
  * System clock configuration while using FIRC in RUN mode.
@@ -138,7 +146,7 @@ const scg_sys_clk_config_t s_sysClkConfigFircInRun = {.divSlow = kSCG_SysClkDivB
                                                       .divPlat = kSCG_SysClkDivBy1,
 #endif
                                                       .divCore = kSCG_SysClkDivBy1,
-                                                      .src = kSCG_SysClkSrcFirc};
+                                                      .src     = kSCG_SysClkSrcFirc};
 
 #if (defined(FSL_FEATURE_SMC_HAS_HIGH_SPEED_RUN_MODE) && FSL_FEATURE_SMC_HAS_HIGH_SPEED_RUN_MODE)
 #if defined(FSL_FEATURE_SCG_HAS_SPLL) && FSL_FEATURE_SCG_HAS_SPLL
@@ -157,7 +165,7 @@ const scg_sys_clk_config_t s_sysClkConfigSysPllInHsrun = {.divSlow = kSCG_SysClk
                                                           .divPlat = kSCG_SysClkDivBy1,
 #endif
                                                           .divCore = kSCG_SysClkDivBy1,
-                                                          .src = kSCG_SysClkSrcSysPll};
+                                                          .src     = kSCG_SysClkSrcSysPll};
 #endif
 #endif
 

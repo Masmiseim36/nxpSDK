@@ -1,6 +1,6 @@
 /*
  * Copyright 2016, Freescale Semiconductor, Inc.
- * Copyright 2016-2019 NXP
+ * Copyright 2016-2021 NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -77,14 +77,8 @@ int main(void)
     /* initialize peripheral motor control driver for motor M1*/
     MCDRV_Init_M1();
 
-    /* Init UART for FreeMaster communication */
-    BOARD_InitUART(g_sClockSetup.ui32SysOscAsyncDiv2, BOARD_FMSTR_UART_BAUDRATE);
-
     /* SysTick initialization for CPU load measurement */
     BOARD_InitSysTick();
-
-    /* FreeMaster init */
-    FMSTR_Init();
 
     /* Enable interrupts */
     EnableGlobalIRQ(ui32PrimaskReg);
@@ -309,51 +303,16 @@ void DemoSpeedStimulator(void)
 void BOARD_Init(void)
 {
     /* Initialize pins configuration */
-    BOARD_InitPins();
+    BOARD_InitBootPins();
     /* Initialize clock configuration */
     BOARD_BootClockRUN();
+    /* Init peripherals set in peripherals file */
+    BOARD_InitBootPeripherals();
     /* Enable & setup interrupts */
     EnableIRQ(PORTBCD_IRQn);
     NVIC_SetPriority(PORTBCD_IRQn, 4);
 }
 
-/*!
- *@brief      Initialization of the UART module
- *
- *@param      u32UClockSpeedinHz  UART module input clock in Hz
- *            u32BaudRate         Baud rate
- *
- *@return     none
- */
-void BOARD_InitUART(uint32_t u32UClockSpeedinHz, uint32_t u32BaudRate)
-{
-    lpuart_config_t config;
-
-    /*
-     * config.baudRate_Bps = 115200U;
-     * config.parityMode = kUART_ParityDisabled;
-     * config.stopBitCount = kUART_OneStopBit;
-     * config.txFifoWatermark = 0;
-     * config.rxFifoWatermark = 1;
-     * config.enableTx = false;
-     * config.enableRx = false;
-     */
-    LPUART_GetDefaultConfig(&config);
-    config.baudRate_Bps = BOARD_FMSTR_UART_BAUDRATE;
-    config.enableTx     = true;
-    config.enableRx     = true;
-    CLOCK_SetIpSrc(kCLOCK_Lpuart1, kCLOCK_IpSrcSysOscAsync);
-    LPUART_Init(BOARD_FMSTR_UART_PORT, &config, u32UClockSpeedinHz);
-
-    /* Register communication module used by FreeMASTER driver. */
-    FMSTR_SerialSetBaseAddress(BOARD_FMSTR_UART_PORT);
-
-#if FMSTR_SHORT_INTR || FMSTR_LONG_INTR
-    /* Enable UART interrupts. */
-    EnableIRQ(BOARD_UART_IRQ);
-    EnableGlobalIRQ(0);
-#endif
-}
 
 /*!
  *@brief      SysTick initialization for CPU cycle measurement

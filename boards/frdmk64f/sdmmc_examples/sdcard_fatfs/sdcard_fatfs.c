@@ -13,11 +13,11 @@
 #include "ff.h"
 #include "diskio.h"
 #include "fsl_sd_disk.h"
+#include "pin_mux.h"
+#include "clock_config.h"
 #include "board.h"
 #include "sdmmc_config.h"
 #include "fsl_sysmpu.h"
-#include "pin_mux.h"
-#include "clock_config.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -257,13 +257,13 @@ static status_t sdcardWaitCardInsert(void)
         PRINTF("\r\nSD host init fail\r\n");
         return kStatus_Fail;
     }
-    /* power off card */
-    SD_SetCardPower(&g_sd, false);
 
     /* wait card insert */
     if (SD_PollingCardInsert(&g_sd, kSD_Inserted) == kStatus_Success)
     {
         PRINTF("\r\nCard inserted.\r\n");
+        /* power off card */
+        SD_SetCardPower(&g_sd, false);
         /* power on the card */
         SD_SetCardPower(&g_sd, true);
     }

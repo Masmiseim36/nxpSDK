@@ -8,10 +8,10 @@
 
 #include "fsl_adc12.h"
 #include "fsl_debug_console.h"
+#include "pin_mux.h"
 #include "board.h"
 
 #include "fsl_common.h"
-#include "pin_mux.h"
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -33,14 +33,14 @@
  *    iii) Fast IRC async clock;
  *    iiii) System FLL async clock;
  */
-#define DEMO_ADC12_BASE ADC0
-#define DEMO_ADC12_CLOCK_NAME kCLOCK_Adc0
-#define DEMO_ADC12_CLOCK_SOURCE kADC12_ClockSourceAlt0
-#define DEMO_ADC12_IRQn ADC0_IRQn
+#define DEMO_ADC12_BASE             ADC0
+#define DEMO_ADC12_CLOCK_NAME       kCLOCK_Adc0
+#define DEMO_ADC12_CLOCK_SOURCE     kADC12_ClockSourceAlt0
+#define DEMO_ADC12_IRQn             ADC0_IRQn
 #define DEMO_ADC12_IRQ_HANDLER_FUNC ADC0_IRQHandler
 
 /* Channel 0 is PTA0 on the board */
-#define DEMO_ADC12_USER_CHANNEL 0U
+#define DEMO_ADC12_USER_CHANNEL  0U
 #define DEMO_ADC12_CHANNEL_GROUP 0U
 
 /*******************************************************************************
@@ -65,11 +65,7 @@ void DEMO_ADC12_IRQ_HANDLER_FUNC(void)
     /* Read conversion result to clear the conversion completed flag. */
     g_Adc12ConversionValue = ADC12_GetChannelConversionValue(DEMO_ADC12_BASE, DEMO_ADC12_CHANNEL_GROUP);
     g_Adc12InterruptCounter++;
-/* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-  exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -106,9 +102,9 @@ int main(void)
     PRINTF("ADC Full Range: %d\r\n", g_Adc12_8bitFullRange);
     /* Trigger the conversion. */
     PRINTF("Press any key to get user channel's ADC value ...\r\n");
-    adc12ChannelConfigStruct.channelNumber = DEMO_ADC12_USER_CHANNEL;
+    adc12ChannelConfigStruct.channelNumber                        = DEMO_ADC12_USER_CHANNEL;
     adc12ChannelConfigStruct.enableInterruptOnConversionCompleted = true; /* Enable the interrupt. */
-    g_Adc12InterruptCounter = 0U;
+    g_Adc12InterruptCounter                                       = 0U;
     while (true)
     {
         GETCHAR();

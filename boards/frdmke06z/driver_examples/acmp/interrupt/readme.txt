@@ -8,10 +8,10 @@ configuration returned by the API ACMP_GetDefaultConfig().
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -45,6 +45,3 @@ Change the analog input voltage to see the LED status.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 User can change J2-2 pin to see the LED status.
-Customization options
-=====================
-

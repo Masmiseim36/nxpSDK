@@ -1,5 +1,6 @@
 /*
- * Copyright 2018 NXP
+ * Copyright 2020 NXP
+ * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
@@ -13,7 +14,7 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v4.1
+product: Pins v8.0
 processor: MKE16Z64xxx4
 package_id: MKE16Z64VLF4
 mcu_data: ksdk2_0
@@ -25,6 +26,7 @@ board: FRDM-KE16Z
 
 #include "fsl_common.h"
 #include "fsl_port.h"
+#include "fsl_gpio.h"
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
@@ -42,11 +44,10 @@ void BOARD_InitBootPins(void)
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 BOARD_InitPins:
-- options: {callFromInitBoot: 'true', prefix: BOARD_, coreID: core0, enableClock: 'true'}
+- options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
-  - {pin_num: '26', peripheral: LPUART0, signal: TX, pin_signal: ADC0_SE5/PTB1/LPUART0_TX/LPSPI0_SOUT/TCLK0}
-  - {pin_num: '27', peripheral: LPUART0, signal: RX, pin_signal: ADC0_SE4/PTB0/LPUART0_RX/LPSPI0_PCS0/LPTMR0_ALT3/PWT_IN3}
-  - {pin_num: '15', peripheral: GPIOB, signal: 'GPIO, 5', pin_signal: TSI0_CH9/PTB5/FTM0_CH5/LPSPI0_PCS1/TRGMUX_IN0}
+  - {pin_num: '15', peripheral: GPIOB, signal: 'GPIO, 5', pin_signal: TSI0_CH9/PTB5/FTM0_CH5/LPSPI0_PCS1/TRGMUX_IN0, direction: OUTPUT, gpio_init_state: 'false',
+    slew_rate: slow, open_drain: disable, drive_strength: low, pull_select: down, pull_enable: disable, passive_filter: disable, digital_filter: disable}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -59,17 +60,28 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void)
 {
-    /* Clock Gate Control: 0x01u */
+    /* Clock Gate Control: Clock enabled. The current clock selection and divider options are locked. */
     CLOCK_EnableClock(kCLOCK_PortB);
 
-    /* PORTB0 (pin 27) is configured as LPUART0_RX */
-    PORT_SetPinMux(BOARD_DEBUG_UART_RX_PORT, BOARD_DEBUG_UART_RX_PIN, kPORT_MuxAlt2);
+    gpio_pin_config_t LED_RED_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTB5 (pin 15)  */
+    GPIO_PinInit(BOARD_INITPINS_LED_RED_GPIO, BOARD_INITPINS_LED_RED_PIN, &LED_RED_config);
 
-    /* PORTB1 (pin 26) is configured as LPUART0_TX */
-    PORT_SetPinMux(BOARD_DEBUG_UART_TX_PORT, BOARD_DEBUG_UART_TX_PIN, kPORT_MuxAlt2);
-
+    const port_pin_config_t LED_RED = {/* Internal pull-up/down resistor is disabled */
+                                       kPORT_PullDisable,
+                                       /* Passive filter is disabled */
+                                       kPORT_PassiveFilterDisable,
+                                       /* Low drive strength is configured */
+                                       kPORT_LowDriveStrength,
+                                       /* Pin is configured as PTB5 */
+                                       kPORT_MuxAsGpio,
+                                       /* Pin Control Register fields [15:0] are not locked */
+                                       kPORT_UnlockRegister};
     /* PORTB5 (pin 15) is configured as PTB5 */
-    PORT_SetPinMux(BOARD_LED_RED_PORT, BOARD_LED_RED_PIN, kPORT_MuxAsGpio);
+    PORT_SetPinConfig(BOARD_INITPINS_LED_RED_PORT, BOARD_INITPINS_LED_RED_PIN, &LED_RED);
 }
 /***********************************************************************************************************************
  * EOF

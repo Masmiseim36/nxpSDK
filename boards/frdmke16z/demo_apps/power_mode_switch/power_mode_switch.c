@@ -12,10 +12,10 @@
 #include "fsl_lptmr.h"
 #include "fsl_port.h"
 #include "power_mode_switch.h"
+#include "pin_mux.h"
 #include "board.h"
 #include "fsl_debug_console.h"
 
-#include "pin_mux.h"
 #include "fsl_pmc.h"
 #include "fsl_lpuart.h"
 /*******************************************************************************
@@ -26,25 +26,25 @@
 /* Default debug console clock source. */
 #define APP_DEBUG_UART_DEFAULT_CLKSRC_NAME kCLOCK_ScgSircClk /* SCG SIRC clock. */
 
-#define APP_WAKEUP_BUTTON_GPIO BOARD_SW3_GPIO
-#define APP_WAKEUP_BUTTON_PORT BOARD_SW3_PORT
-#define APP_WAKEUP_BUTTON_GPIO_PIN BOARD_SW3_GPIO_PIN
-#define APP_WAKEUP_BUTTON_IRQ BOARD_SW3_IRQ
+#define APP_WAKEUP_BUTTON_GPIO        BOARD_SW3_GPIO
+#define APP_WAKEUP_BUTTON_PORT        BOARD_SW3_PORT
+#define APP_WAKEUP_BUTTON_GPIO_PIN    BOARD_SW3_GPIO_PIN
+#define APP_WAKEUP_BUTTON_IRQ         BOARD_SW3_IRQ
 #define APP_WAKEUP_BUTTON_IRQ_HANDLER BOARD_SW3_IRQ_HANDLER
-#define APP_WAKEUP_BUTTON_NAME BOARD_SW3_NAME
-#define APP_WAKEUP_BUTTON_IRQ_TYPE kPORT_InterruptFallingEdge
+#define APP_WAKEUP_BUTTON_NAME        BOARD_SW3_NAME
+#define APP_WAKEUP_BUTTON_IRQ_TYPE    kPORT_InterruptFallingEdge
 
 /* Debug console RX pin: PORTB MUX: 2 */
-#define DEBUG_CONSOLE_RX_PORT PORTB
-#define DEBUG_CONSOLE_RX_GPIO GPIOB
-#define DEBUG_CONSOLE_RX_PIN 0U
+#define DEBUG_CONSOLE_RX_PORT   PORTB
+#define DEBUG_CONSOLE_RX_GPIO   GPIOB
+#define DEBUG_CONSOLE_RX_PIN    0U
 #define DEBUG_CONSOLE_RX_PINMUX kPORT_MuxAlt2
 /* Debug console TX pin: PORTB MUX: 2 */
-#define DEBUG_CONSOLE_TX_PORT PORTB
-#define DEBUG_CONSOLE_TX_GPIO GPIOB
-#define DEBUG_CONSOLE_TX_PIN 1U
+#define DEBUG_CONSOLE_TX_PORT   PORTB
+#define DEBUG_CONSOLE_TX_GPIO   GPIOB
+#define DEBUG_CONSOLE_TX_PIN    1U
 #define DEBUG_CONSOLE_TX_PINMUX kPORT_MuxAlt2
-#define CORE_CLK_FREQ CLOCK_GetFreq(kCLOCK_CoreSysClk)
+#define CORE_CLK_FREQ           CLOCK_GetFreq(kCLOCK_CoreSysClk)
 
 /*******************************************************************************
  * Prototypes
@@ -405,8 +405,8 @@ int main(void)
     /* Setup LPTMR. */
     LPTMR_GetDefaultConfig(&lptmrConfig);
     lptmrConfig.prescalerClockSource = kLPTMR_PrescalerClock_1; /* Use LPO as clock source. */
-    lptmrConfig.bypassPrescaler = false;
-    lptmrConfig.value = kLPTMR_Prescale_Glitch_6;
+    lptmrConfig.bypassPrescaler      = false;
+    lptmrConfig.value                = kLPTMR_Prescale_Glitch_6;
 
     LPTMR_Init(LPTMR0, &lptmrConfig);
 

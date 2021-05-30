@@ -1,9 +1,12 @@
 /*
+ * The Clear BSD License
  * Copyright (c) 2016, Freescale Semiconductor, Inc.
  * Copyright 2016 NXP
+ * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * are permitted (subject to the limitations in the disclaimer below) provided
+ * that the following conditions are met:
  *
  * o Redistributions of source code must retain the above copyright notice, this list
  *   of conditions and the following disclaimer.
@@ -16,6 +19,7 @@
  *   contributors may be used to endorse or promote products derived from this
  *   software without specific prior written permission.
  *
+ * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS LICENSE.
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -85,11 +89,17 @@ typedef struct _usb_device_printer_struct
     usb_device_handle deviceHandle;                 /*!< The device handle */
     usb_device_class_config_struct_t *classConfig;  /*!< The configuration of the class. */
     usb_device_interface_struct_t *interfaceHandle; /*!< Current interface handle */
+    uint8_t *bulkInPipeDataBuffer;             /*!< IN pipe data buffer backup when stall */
+    uint32_t bulkInPipeDataLen;                /*!< IN pipe data length backup when stall  */
+    uint8_t *bulkOutPipeDataBuffer;             /*!< OUT pipe data buffer backup when stall */
+    uint32_t bulkOutPipeDataLen;                /*!< OUT pipe data length backup when stall  */
     uint8_t configuration;                          /*!< Current configuration */
     uint8_t interfaceNumber;                        /*!< Interface number in the device descriptor */
     uint8_t alternate;                              /*!< Interface alternate value */
     uint8_t bulkInBusy;                             /*!< BULK IN pipe busy flag */
     uint8_t bulkOutBusy;                            /*!< BULK OUT pipe busy flag */
+    uint8_t bulkInPipeStall;                    /*!< bulk IN pipe stall flag */
+    uint8_t bulkOutPipeStall;                   /*!< bulk OUT pipe stall flag */
 } usb_device_printer_struct_t;
 
 /*******************************************************************************

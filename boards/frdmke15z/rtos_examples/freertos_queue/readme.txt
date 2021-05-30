@@ -17,10 +17,10 @@ write_task_2 print 5 messages into log.
 
 Toolchain supported
 ===================
-- IAR embedded Workbench  8.50.1
-- Keil MDK  5.30
-- GCC ARM Embedded  9.2.1
-- MCUXpresso  11.2.0
+- IAR embedded Workbench  8.50.9
+- Keil MDK  5.33
+- GCC ARM Embedded  9.3.1
+- MCUXpresso  11.3.0
 
 Hardware requirements
 =====================
@@ -59,6 +59,3 @@ Log 6: Task1 Message 3
 Log 7: Task2 Message 3
 Log 8: Task1 Message 4
 Log 9: Task2 Message 4
-Customization options
-=====================
-

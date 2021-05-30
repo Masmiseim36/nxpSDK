@@ -1,5 +1,6 @@
 /*
- * Copyright 2018 NXP
+ * Copyright (c) 2015, Freescale Semiconductor, Inc.
+ * Copyright 2016 - 2020, NXP
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -13,6 +14,7 @@
 /*! @addtogroup clock */
 /*! @{ */
 
+/*! @file */
 
 /*******************************************************************************
  * Configurations
@@ -38,8 +40,8 @@
 
 /*! @name Driver version */
 /*@{*/
-/*! @brief CLOCK driver version 2.0.0. */
-#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 0, 0))
+/*! @brief CLOCK driver version 2.3.0. */
+#define FSL_CLOCK_DRIVER_VERSION (MAKE_VERSION(2, 3, 0))
 /*@}*/
 
 /*! @brief External XTAL0 (OSC0/SYSOSC) clock frequency.
@@ -48,8 +50,8 @@
  * function CLOCK_SetXtal0Freq to set the value in the clock driver. For example,
  * if XTAL0 is 8 MHz:
  * @code
- * CLOCK_InitSysOsc(...); // Set up the OSC0/SYSOSC
- * CLOCK_SetXtal0Freq(80000000); // Set the XTAL0 value in the clock driver.
+ * CLOCK_InitSysOsc(...);
+ * CLOCK_SetXtal0Freq(80000000);
  * @endcode
  *
  * This is important for the multicore platforms where only one core needs to set up the
@@ -57,6 +59,11 @@
  * to get a valid clock frequency.
  */
 extern volatile uint32_t g_xtal0Freq;
+
+/* Definition for delay API in clock driver, users can redefine it to the real application. */
+#ifndef SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY
+#define SDK_DEVICE_MAXIMUM_CPU_CLOCK_FREQUENCY (72000000UL)
+#endif
 
 /*! @brief Clock ip name array for RTC. */
 #define RTC_CLOCKS  \
@@ -187,7 +194,7 @@ typedef enum _clock_name
     kCLOCK_ErClk,  /*!< ERCLK. The external reference clock from SCG.       */
 } clock_name_t;
 
-#define kCLOCK_Osc0ErClk kCLOCK_ErClk
+#define kCLOCK_Osc0ErClk       kCLOCK_ErClk
 #define CLOCK_GetOsc0ErClkFreq CLOCK_GetErClkFreq /*!< For compatible with other MCG platforms. */
 
 /*!
@@ -195,11 +202,11 @@ typedef enum _clock_name
  */
 typedef enum _clock_ip_src
 {
-    kCLOCK_IpSrcNoneOrExt = 0U,   /*!< Clock is off or external clock is used. */
+    kCLOCK_IpSrcNoneOrExt   = 0U, /*!< Clock is off or external clock is used. */
     kCLOCK_IpSrcSysOscAsync = 1U, /*!< System Oscillator async clock.          */
-    kCLOCK_IpSrcSircAsync = 2U,   /*!< Slow IRC async clock.                   */
-    kCLOCK_IpSrcFircAsync = 3U,   /*!< Fast IRC async clock.                   */
-    kCLOCK_IpSrcLpFllAsync = 5U   /*!< LPFLL async clock.                      */
+    kCLOCK_IpSrcSircAsync   = 2U, /*!< Slow IRC async clock.                   */
+    kCLOCK_IpSrcFircAsync   = 3U, /*!< Fast IRC async clock.                   */
+    kCLOCK_IpSrcLpFllAsync  = 5U  /*!< LPFLL async clock.                      */
 } clock_ip_src_t;
 
 /*!
@@ -211,38 +218,38 @@ typedef enum _clock_ip_name
     kCLOCK_IpInvalid = 0U,
 
     /* PCC 0 */
-    kCLOCK_Flash0 = 0x40065080U,
-    kCLOCK_Lpspi0 = 0x400650B0U,
-    kCLOCK_Crc0 = 0x400650C8U,
-    kCLOCK_Pdb0 = 0x400650D8U,
-    kCLOCK_Lpit0 = 0x400650DCU,
-    kCLOCK_Ftm0 = 0x400650E0U,
-    kCLOCK_Ftm1 = 0x400650E4U,
-    kCLOCK_Adc0 = 0x400650ECU,
-    kCLOCK_Rtc0 = 0x400650F4U,
-    kCLOCK_Lptmr0 = 0x40065100U,
-    kCLOCK_Tsi0 = 0x40065114U,
-    kCLOCK_PortA = 0x40065124U,
-    kCLOCK_PortB = 0x40065128U,
-    kCLOCK_PortC = 0x4006512CU,
-    kCLOCK_PortD = 0x40065130U,
-    kCLOCK_PortE = 0x40065134U,
-    kCLOCK_Pwt0 = 0x40065158U,
-    kCLOCK_Ewm0 = 0x40065184U,
-    kCLOCK_Lpi2c0 = 0x40065198U,
+    kCLOCK_Flash0  = 0x40065080U,
+    kCLOCK_Lpspi0  = 0x400650B0U,
+    kCLOCK_Crc0    = 0x400650C8U,
+    kCLOCK_Pdb0    = 0x400650D8U,
+    kCLOCK_Lpit0   = 0x400650DCU,
+    kCLOCK_Ftm0    = 0x400650E0U,
+    kCLOCK_Ftm1    = 0x400650E4U,
+    kCLOCK_Adc0    = 0x400650ECU,
+    kCLOCK_Rtc0    = 0x400650F4U,
+    kCLOCK_Lptmr0  = 0x40065100U,
+    kCLOCK_Tsi0    = 0x40065114U,
+    kCLOCK_PortA   = 0x40065124U,
+    kCLOCK_PortB   = 0x40065128U,
+    kCLOCK_PortC   = 0x4006512CU,
+    kCLOCK_PortD   = 0x40065130U,
+    kCLOCK_PortE   = 0x40065134U,
+    kCLOCK_Pwt0    = 0x40065158U,
+    kCLOCK_Ewm0    = 0x40065184U,
+    kCLOCK_Lpi2c0  = 0x40065198U,
     kCLOCK_Lpuart0 = 0x400651A8U,
     kCLOCK_Lpuart1 = 0x400651ACU,
     kCLOCK_Lpuart2 = 0x400651B0U,
-    kCLOCK_Cmp0 = 0x400651CCU,
+    kCLOCK_Cmp0    = 0x400651CCU,
 } clock_ip_name_t;
 
 /*!
  * @brief SCG status return codes.
  */
-enum _scg_status
+enum
 {
-    kStatus_SCG_Busy = MAKE_STATUS(kStatusGroup_SCG, 1),      /*!< Clock is busy.  */
-    kStatus_SCG_InvalidSrc = MAKE_STATUS(kStatusGroup_SCG, 2) /*!< Invalid source. */
+    kStatus_SCG_Busy       = MAKE_STATUS(kStatusGroup_SCG, 1), /*!< Clock is busy.  */
+    kStatus_SCG_InvalidSrc = MAKE_STATUS(kStatusGroup_SCG, 2)  /*!< Invalid source. */
 };
 
 /*!
@@ -260,9 +267,9 @@ typedef enum _scg_sys_clk
 typedef enum _scg_sys_clk_src
 {
     kSCG_SysClkSrcSysOsc = 1U, /*!< System OSC. */
-    kSCG_SysClkSrcSirc = 2U,   /*!< Slow IRC.   */
-    kSCG_SysClkSrcFirc = 3U,   /*!< Fast IRC.   */
-    kSCG_SysClkSrcLpFll = 5U,  /*!< Low power FLL. */
+    kSCG_SysClkSrcSirc   = 2U, /*!< Slow IRC.   */
+    kSCG_SysClkSrcFirc   = 3U, /*!< Fast IRC.   */
+    kSCG_SysClkSrcLpFll  = 5U, /*!< Low power FLL. */
 } scg_sys_clk_src_t;
 
 /*!
@@ -270,15 +277,15 @@ typedef enum _scg_sys_clk_src
  */
 typedef enum _scg_sys_clk_div
 {
-    kSCG_SysClkDivBy1 = 0U,   /*!< Divided by 1.  */
-    kSCG_SysClkDivBy2 = 1U,   /*!< Divided by 2.  */
-    kSCG_SysClkDivBy3 = 2U,   /*!< Divided by 3.  */
-    kSCG_SysClkDivBy4 = 3U,   /*!< Divided by 4.  */
-    kSCG_SysClkDivBy5 = 4U,   /*!< Divided by 5.  */
-    kSCG_SysClkDivBy6 = 5U,   /*!< Divided by 6.  */
-    kSCG_SysClkDivBy7 = 6U,   /*!< Divided by 7.  */
-    kSCG_SysClkDivBy8 = 7U,   /*!< Divided by 8.  */
-    kSCG_SysClkDivBy9 = 8U,   /*!< Divided by 9.  */
+    kSCG_SysClkDivBy1  = 0U,  /*!< Divided by 1.  */
+    kSCG_SysClkDivBy2  = 1U,  /*!< Divided by 2.  */
+    kSCG_SysClkDivBy3  = 2U,  /*!< Divided by 3.  */
+    kSCG_SysClkDivBy4  = 3U,  /*!< Divided by 4.  */
+    kSCG_SysClkDivBy5  = 4U,  /*!< Divided by 5.  */
+    kSCG_SysClkDivBy6  = 5U,  /*!< Divided by 6.  */
+    kSCG_SysClkDivBy7  = 6U,  /*!< Divided by 7.  */
+    kSCG_SysClkDivBy8  = 7U,  /*!< Divided by 8.  */
+    kSCG_SysClkDivBy9  = 8U,  /*!< Divided by 9.  */
     kSCG_SysClkDivBy10 = 9U,  /*!< Divided by 10. */
     kSCG_SysClkDivBy11 = 10U, /*!< Divided by 11. */
     kSCG_SysClkDivBy12 = 11U, /*!< Divided by 12. */
@@ -309,10 +316,10 @@ typedef struct _scg_sys_clk_config
 typedef enum _clock_clkout_src
 {
     kClockClkoutSelScgSlow = 0U, /*!< SCG slow clock. */
-    kClockClkoutSelSysOsc = 1U,  /*!< System OSC.     */
-    kClockClkoutSelSirc = 2U,    /*!< Slow IRC.       */
-    kClockClkoutSelFirc = 3U,    /*!< Fast IRC.       */
-    kClockClkoutSelLpFll = 5U,   /*!< Low power FLL.  */
+    kClockClkoutSelSysOsc  = 1U, /*!< System OSC.     */
+    kClockClkoutSelSirc    = 2U, /*!< Slow IRC.       */
+    kClockClkoutSelFirc    = 3U, /*!< Fast IRC.       */
+    kClockClkoutSelLpFll   = 5U, /*!< Low power FLL.  */
 } clock_clkout_src_t;
 
 /*!
@@ -320,7 +327,6 @@ typedef enum _clock_clkout_src
  */
 typedef enum _scg_async_clk
 {
-    kSCG_AsyncDiv1Clk, /*!< The async clock by DIV1, e.g. SOSCDIV1_CLK, SIRCDIV1_CLK. */
     kSCG_AsyncDiv2Clk, /*!< The async clock by DIV2, e.g. SOSCDIV2_CLK, SIRCDIV2_CLK. */
 } scg_async_clk_t;
 
@@ -330,10 +336,10 @@ typedef enum _scg_async_clk
 typedef enum scg_async_clk_div
 {
     kSCG_AsyncClkDisable = 0U, /*!< Clock output is disabled.  */
-    kSCG_AsyncClkDivBy1 = 1U,  /*!< Divided by 1.              */
-    kSCG_AsyncClkDivBy2 = 2U,  /*!< Divided by 2.              */
-    kSCG_AsyncClkDivBy4 = 3U,  /*!< Divided by 4.              */
-    kSCG_AsyncClkDivBy8 = 4U,  /*!< Divided by 8.              */
+    kSCG_AsyncClkDivBy1  = 1U, /*!< Divided by 1.              */
+    kSCG_AsyncClkDivBy2  = 2U, /*!< Divided by 2.              */
+    kSCG_AsyncClkDivBy4  = 3U, /*!< Divided by 4.              */
+    kSCG_AsyncClkDivBy8  = 4U, /*!< Divided by 8.              */
     kSCG_AsyncClkDivBy16 = 5U, /*!< Divided by 16.             */
     kSCG_AsyncClkDivBy32 = 6U, /*!< Divided by 32.             */
     kSCG_AsyncClkDivBy64 = 7U  /*!< Divided by 64.             */
@@ -344,8 +350,8 @@ typedef enum scg_async_clk_div
  */
 typedef enum _scg_sosc_monitor_mode
 {
-    kSCG_SysOscMonitorDisable = 0U,                  /*!< Monitor disabled.                          */
-    kSCG_SysOscMonitorInt = SCG_SOSCCSR_SOSCCM_MASK, /*!< Interrupt when the system OSC error is detected. */
+    kSCG_SysOscMonitorDisable = 0U,                      /*!< Monitor disabled.                          */
+    kSCG_SysOscMonitorInt     = SCG_SOSCCSR_SOSCCM_MASK, /*!< Interrupt when the system OSC error is detected. */
     kSCG_SysOscMonitorReset =
         SCG_SOSCCSR_SOSCCM_MASK | SCG_SOSCCSR_SOSCCMRE_MASK /*!< Reset when the system OSC error is detected.     */
 } scg_sosc_monitor_mode_t;
@@ -353,18 +359,18 @@ typedef enum _scg_sosc_monitor_mode
 /*! @brief OSC work mode. */
 typedef enum _scg_sosc_mode
 {
-    kSCG_SysOscModeExt = 0U,                                                   /*!< Use external clock.   */
+    kSCG_SysOscModeExt         = 0U,                                           /*!< Use external clock.   */
     kSCG_SysOscModeOscLowPower = SCG_SOSCCFG_EREFS_MASK,                       /*!< Oscillator low power. */
     kSCG_SysOscModeOscHighGain = SCG_SOSCCFG_EREFS_MASK | SCG_SOSCCFG_HGO_MASK /*!< Oscillator high gain. */
 } scg_sosc_mode_t;
 
 /*! @brief OSC enable mode. */
-enum _scg_sosc_enable_mode
+enum
 {
-    kSCG_SysOscEnable = SCG_SOSCCSR_SOSCEN_MASK,             /*!< Enable OSC clock. */
-    kSCG_SysOscEnableInStop = SCG_SOSCCSR_SOSCSTEN_MASK,     /*!< Enable OSC in stop mode. */
-    kSCG_SysOscEnableInLowPower = SCG_SOSCCSR_SOSCLPEN_MASK, /*!< Enable OSC in low power mode. */
-    kSCG_SysOscEnableErClk = SCG_SOSCCSR_SOSCERCLKEN_MASK    /*!< Enable OSCERCLK. */
+    kSCG_SysOscEnable           = SCG_SOSCCSR_SOSCEN_MASK,     /*!< Enable OSC clock. */
+    kSCG_SysOscEnableInStop     = SCG_SOSCCSR_SOSCSTEN_MASK,   /*!< Enable OSC in stop mode. */
+    kSCG_SysOscEnableInLowPower = SCG_SOSCCSR_SOSCLPEN_MASK,   /*!< Enable OSC in low power mode. */
+    kSCG_SysOscEnableErClk      = SCG_SOSCCSR_SOSCERCLKEN_MASK /*!< Enable OSCERCLK. */
 };
 
 /*!
@@ -376,7 +382,6 @@ typedef struct _scg_sosc_config
     scg_sosc_monitor_mode_t monitorMode; /*!< Clock monitor mode selected.     */
     uint8_t enableMode;                  /*!< Enable mode, OR'ed value of _scg_sosc_enable_mode.  */
 
-    scg_async_clk_div_t div1; /*!< SOSCDIV1 value.                          */
     scg_async_clk_div_t div2; /*!< SOSCDIV2 value.                          */
 
     scg_sosc_mode_t workMode; /*!< OSC work mode.                           */
@@ -392,11 +397,11 @@ typedef enum _scg_sirc_range
 } scg_sirc_range_t;
 
 /*! @brief SIRC enable mode. */
-enum _scg_sirc_enable_mode
+enum
 {
-    kSCG_SircEnable = SCG_SIRCCSR_SIRCEN_MASK,            /*!< Enable SIRC clock.             */
-    kSCG_SircEnableInStop = SCG_SIRCCSR_SIRCSTEN_MASK,    /*!< Enable SIRC in stop mode.      */
-    kSCG_SircEnableInLowPower = SCG_SIRCCSR_SIRCLPEN_MASK /*!< Enable SIRC in low power mode. */
+    kSCG_SircEnable           = SCG_SIRCCSR_SIRCEN_MASK,   /*!< Enable SIRC clock.             */
+    kSCG_SircEnableInStop     = SCG_SIRCCSR_SIRCSTEN_MASK, /*!< Enable SIRC in stop mode.      */
+    kSCG_SircEnableInLowPower = SCG_SIRCCSR_SIRCLPEN_MASK  /*!< Enable SIRC in low power mode. */
 };
 
 /*!
@@ -405,7 +410,6 @@ enum _scg_sirc_enable_mode
 typedef struct _scg_sirc_config
 {
     uint32_t enableMode;      /*!< Enable mode, OR'ed value of _scg_sirc_enable_mode. */
-    scg_async_clk_div_t div1; /*!< SIRCDIV1 value.                          */
     scg_async_clk_div_t div2; /*!< SIRCDIV2 value.                          */
 
     scg_sirc_range_t range; /*!< Slow IRC frequency range.                */
@@ -467,16 +471,13 @@ typedef struct _scg_firc_trim_config
 typedef enum _scg_firc_range
 {
     kSCG_FircRange48M, /*!< Fast IRC is trimmed to 48 MHz.  */
-    kSCG_FircRange52M, /*!< Fast IRC is trimmed to 52 MHz.  */
-    kSCG_FircRange56M, /*!< Fast IRC is trimmed to 56 MHz.  */
-    kSCG_FircRange60M  /*!< Fast IRC is trimmed to 60 MHz.  */
 } scg_firc_range_t;
 
 /*! @brief FIRC enable mode. */
-enum _scg_firc_enable_mode
+enum
 {
-    kSCG_FircEnable = SCG_FIRCCSR_FIRCEN_MASK,              /*!< Enable FIRC clock.             */
-    kSCG_FircEnableInStop = SCG_FIRCCSR_FIRCSTEN_MASK,      /*!< Enable FIRC in stop mode.      */
+    kSCG_FircEnable           = SCG_FIRCCSR_FIRCEN_MASK,    /*!< Enable FIRC clock.             */
+    kSCG_FircEnableInStop     = SCG_FIRCCSR_FIRCSTEN_MASK,  /*!< Enable FIRC in stop mode.      */
     kSCG_FircEnableInLowPower = SCG_FIRCCSR_FIRCLPEN_MASK,  /*!< Enable FIRC in low power mode. */
     kSCG_FircDisableRegulator = SCG_FIRCCSR_FIRCREGOFF_MASK /*!< Disable regulator.             */
 };
@@ -488,7 +489,6 @@ typedef struct _scg_firc_config_t
 {
     uint32_t enableMode; /*!< Enable mode, OR'ed value of _scg_firc_enable_mode. */
 
-    scg_async_clk_div_t div1; /*!< FIRCDIV1 value.                          */
     scg_async_clk_div_t div2; /*!< FIRCDIV2 value.                          */
 
     scg_firc_range_t range; /*!< Fast IRC frequency range.                 */
@@ -497,7 +497,7 @@ typedef struct _scg_firc_config_t
 } scg_firc_config_t;
 
 /*! @brief LPFLL enable mode. */
-enum _scg_lpfll_enable_mode
+enum
 {
     kSCG_LpFllEnable = SCG_LPFLLCSR_LPFLLEN_MASK, /*!< Enable LPFLL clock.             */
 };
@@ -508,9 +508,6 @@ enum _scg_lpfll_enable_mode
 typedef enum _scg_lpfll_range
 {
     kSCG_LpFllRange48M, /*!< LPFLL is trimmed to 48MHz.  */
-    kSCG_LpFllRange72M, /*!< LPFLL is trimmed to 72MHz.  */
-    kSCG_LpFllRange96M, /*!< LPFLL is trimmed to 96MHz.  */
-    kSCG_LpFllRange120M /*!< LPFLL is trimmed to 120MHz. */
 } scg_lpfll_range_t;
 
 /*!
@@ -520,7 +517,7 @@ typedef enum _scg_lpfll_trim_mode
 {
     kSCG_LpFllTrimNonUpdate = SCG_LPFLLCSR_LPFLLTREN_MASK,
     /*!< LPFLL trim is enabled but the trim value update is not enabled. In this mode, the
-     trim value is fixed to the initialized value, which is defined by the @ref trimValue
+     trim value is fixed to the initialized value, which is defined by the Member variable trimValue
      in the structure @ref scg_lpfll_trim_config_t.*/
 
     kSCG_LpFllTrimUpdate = SCG_LPFLLCSR_LPFLLTREN_MASK | SCG_LPFLLCSR_LPFLLTRUP_MASK
@@ -533,8 +530,8 @@ typedef enum _scg_lpfll_trim_mode
  */
 typedef enum _scg_lpfll_trim_src
 {
-    kSCG_LpFllTrimSrcSirc = 0U,   /*!< SIRC.                 */
-    kSCG_LpFllTrimSrcFirc = 1U,   /*!< FIRC.                 */
+    kSCG_LpFllTrimSrcSirc   = 0U, /*!< SIRC.                 */
+    kSCG_LpFllTrimSrcFirc   = 1U, /*!< FIRC.                 */
     kSCG_LpFllTrimSrcSysOsc = 2U, /*!< System OSC.           */
     kSCG_LpFllTrimSrcRtcOsc = 3U, /*!< RTC OSC (32.768 kHz). */
 } scg_lpfll_trim_src_t;
@@ -570,7 +567,6 @@ typedef struct _scg_lpfll_config
 {
     uint8_t enableMode; /*!< Enable mode, OR'ed value of _scg_lpfll_enable_mode */
 
-    scg_async_clk_div_t div1; /*!< LPFLLDIV1 value.                          */
     scg_async_clk_div_t div2; /*!< LPFLLDIV2 value.                          */
 
     scg_lpfll_range_t range; /*!< LPFLL frequency range.                     */
@@ -593,9 +589,9 @@ extern "C" {
  */
 static inline void CLOCK_EnableClock(clock_ip_name_t name)
 {
-    assert((*(volatile uint32_t *)name) & PCC_CLKCFG_PR_MASK);
+    assert(((*(volatile uint32_t *)(uint32_t)name) & PCC_CLKCFG_PR_MASK) != 0UL);
 
-    (*(volatile uint32_t *)name) |= PCC_CLKCFG_CGC_MASK;
+    (*(volatile uint32_t *)(uint32_t)name) |= PCC_CLKCFG_CGC_MASK;
 }
 
 /*!
@@ -605,9 +601,9 @@ static inline void CLOCK_EnableClock(clock_ip_name_t name)
  */
 static inline void CLOCK_DisableClock(clock_ip_name_t name)
 {
-    assert((*(volatile uint32_t *)name) & PCC_CLKCFG_PR_MASK);
+    assert(((*(volatile uint32_t *)(uint32_t)name) & PCC_CLKCFG_PR_MASK) != 0UL);
 
-    (*(volatile uint32_t *)name) &= ~PCC_CLKCFG_CGC_MASK;
+    (*(volatile uint32_t *)(uint32_t)name) &= ~PCC_CLKCFG_CGC_MASK;
 }
 
 /*!
@@ -622,7 +618,7 @@ static inline void CLOCK_DisableClock(clock_ip_name_t name)
  */
 static inline void CLOCK_SetIpSrc(clock_ip_name_t name, clock_ip_src_t src)
 {
-    uint32_t reg = (*(volatile uint32_t *)name);
+    uint32_t reg = (*(volatile uint32_t *)(uint32_t)name);
 
     assert(reg & PCC_CLKCFG_PR_MASK);
 
@@ -632,8 +628,8 @@ static inline void CLOCK_SetIpSrc(clock_ip_name_t name, clock_ip_src_t src)
      * If clock is already enabled, first disable it, then set the clock
      * source and re-enable it.
      */
-    (*(volatile uint32_t *)name) = reg & ~PCC_CLKCFG_CGC_MASK;
-    (*(volatile uint32_t *)name) = reg;
+    (*(volatile uint32_t *)(uint32_t)name) = reg & ~PCC_CLKCFG_CGC_MASK;
+    (*(volatile uint32_t *)(uint32_t)name) = reg;
 }
 
 /*!
@@ -712,8 +708,14 @@ uint32_t CLOCK_GetSysClkFreq(scg_sys_clk_t type);
 static inline void CLOCK_SetVlprModeSysClkConfig(const scg_sys_clk_config_t *config)
 {
     assert(config);
+    union
+    {
+        const uint32_t *configInt;
+        const scg_sys_clk_config_t *configPtr;
+    } Config;
 
-    SCG->VCCR = *(const uint32_t *)config;
+    Config.configPtr = config;
+    SCG->VCCR        = *(Config.configInt);
 }
 
 /*!
@@ -726,8 +728,14 @@ static inline void CLOCK_SetVlprModeSysClkConfig(const scg_sys_clk_config_t *con
 static inline void CLOCK_SetRunModeSysClkConfig(const scg_sys_clk_config_t *config)
 {
     assert(config);
+    union
+    {
+        const uint32_t *configInt;
+        const scg_sys_clk_config_t *configPtr;
+    } Config;
 
-    SCG->RCCR = *(const uint32_t *)config;
+    Config.configPtr = config;
+    SCG->RCCR        = *(Config.configInt);
 }
 
 /*!
@@ -740,8 +748,14 @@ static inline void CLOCK_SetRunModeSysClkConfig(const scg_sys_clk_config_t *conf
 static inline void CLOCK_GetCurSysClkConfig(scg_sys_clk_config_t *config)
 {
     assert(config);
+    union
+    {
+        uint32_t *configInt;
+        scg_sys_clk_config_t *configPtr;
+    } Config;
 
-    *(uint32_t *)config = SCG->CSR;
+    Config.configPtr    = config;
+    *(Config.configInt) = SCG->CSR;
 }
 
 /*!
@@ -811,7 +825,8 @@ static inline void CLOCK_SetSysOscAsyncClkDiv(scg_async_clk_t asyncClk, scg_asyn
             reg = (reg & ~SCG_SOSCDIV_SOSCDIV2_MASK) | SCG_SOSCDIV_SOSCDIV2(divider);
             break;
         default:
-            reg = (reg & ~SCG_SOSCDIV_SOSCDIV1_MASK) | SCG_SOSCDIV_SOSCDIV1(divider);
+            /* All the cases have been listed above, the default clause should not be reached. */
+            assert(false);
             break;
     }
 
@@ -934,7 +949,8 @@ static inline void CLOCK_SetSircAsyncClkDiv(scg_async_clk_t asyncClk, scg_async_
             reg = (reg & ~SCG_SIRCDIV_SIRCDIV2_MASK) | SCG_SIRCDIV_SIRCDIV2(divider);
             break;
         default:
-            reg = (reg & ~SCG_SIRCDIV_SIRCDIV1_MASK) | SCG_SIRCDIV_SIRCDIV1(divider);
+            /* All the cases have been listed above, the default clause should not be reached. */
+            assert(false);
             break;
     }
 
@@ -1019,7 +1035,8 @@ static inline void CLOCK_SetFircAsyncClkDiv(scg_async_clk_t asyncClk, scg_async_
             reg = (reg & ~SCG_FIRCDIV_FIRCDIV2_MASK) | SCG_FIRCDIV_FIRCDIV2(divider);
             break;
         default:
-            reg = (reg & ~SCG_FIRCDIV_FIRCDIV1_MASK) | SCG_FIRCDIV_FIRCDIV1(divider);
+            /* All the cases have been listed above, the default clause should not be reached. */
+            assert(false);
             break;
     }
 
@@ -1121,7 +1138,8 @@ static inline void CLOCK_SetLpFllAsyncClkDiv(scg_async_clk_t asyncClk, scg_async
             reg = (reg & ~SCG_LPFLLDIV_LPFLLDIV2_MASK) | SCG_LPFLLDIV_LPFLLDIV2(divider);
             break;
         default:
-            reg = (reg & ~SCG_LPFLLDIV_LPFLLDIV1_MASK) | SCG_LPFLLDIV_LPFLLDIV1(divider);
+            /* All the cases have been listed above, the default clause should not be reached. */
+            assert(false);
             break;
     }
 

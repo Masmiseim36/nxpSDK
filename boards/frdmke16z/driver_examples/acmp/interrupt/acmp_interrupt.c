@@ -2,26 +2,26 @@
  * Copyright (c) 2015, Freescale Semiconductor, Inc.
  * Copyright 2016-2017 NXP
  * All rights reserved.
- * 
+ *
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
 #include "fsl_acmp.h"
 #include "fsl_debug_console.h"
-#include "board.h"
-
 #include "pin_mux.h"
 #include "clock_config.h"
+#include "board.h"
+
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-#define DEMO_ACMP_BASEADDR CMP0
-#define DEMO_ACMP_USER_CHANNEL 0U
-#define DEMO_ACMP_IRQ_ID CMP0_IRQn
+#define DEMO_ACMP_BASEADDR         CMP0
+#define DEMO_ACMP_USER_CHANNEL     0U
+#define DEMO_ACMP_IRQ_ID           CMP0_IRQn
 #define DEMO_ACMP_IRQ_HANDLER_FUNC CMP0_IRQHandler
-#define LED_INIT() LED_GREEN1_INIT(LOGIC_LED_OFF)
-#define LED_ON() LED_GREEN1_ON()
-#define LED_OFF() LED_GREEN1_OFF()
+#define LED_INIT()                 LED_GREEN1_INIT(LOGIC_LED_OFF)
+#define LED_ON()                   LED_GREEN1_ON()
+#define LED_OFF()                  LED_GREEN1_OFF()
 
 /*******************************************************************************
  * Prototypes
@@ -30,7 +30,7 @@
 /*******************************************************************************
  * Variables
  ******************************************************************************/
-volatile uint32_t g_acmpOutputRising = 0U;
+volatile uint32_t g_acmpOutputRising  = 0U;
 volatile uint32_t g_acmpOutputFalling = 0U;
 
 /*******************************************************************************
@@ -57,11 +57,7 @@ void DEMO_ACMP_IRQ_HANDLER_FUNC(void)
     {
         /* Unknown interrupt. */
     }
-    /* Add for ARM errata 838869, affects Cortex-M4, Cortex-M4F Store immediate overlapping
-      exception return operation might vector to incorrect interrupt */
-#if defined __CORTEX_M && (__CORTEX_M == 4U)
-    __DSB();
-#endif
+    SDK_ISR_EXIT_BARRIER;
 }
 
 /*!
@@ -94,15 +90,15 @@ int main(void)
     /* Configure channel. Select the positive port input from DAC and negative port input from minus mux input. */
     channelConfigStruct.positivePortInput = kACMP_PortInputFromDAC;
     channelConfigStruct.negativePortInput = kACMP_PortInputFromMux;
-    channelConfigStruct.minusMuxInput = DEMO_ACMP_USER_CHANNEL;
-    channelConfigStruct.plusMuxInput = 0U; /* Dummy channel. */
+    channelConfigStruct.minusMuxInput     = DEMO_ACMP_USER_CHANNEL;
+    channelConfigStruct.plusMuxInput      = 0U; /* Dummy channel. */
     ACMP_SetChannelConfig(DEMO_ACMP_BASEADDR, &channelConfigStruct);
 
     /* Configure DAC. */
     dacConfigStruct.referenceVoltageSource = kACMP_VrefSourceVin1;
-    dacConfigStruct.DACValue = 0x7FU; /* Half of referene voltage. */
+    dacConfigStruct.DACValue               = 0x7FU; /* Half of referene voltage. */
 #if defined(FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT) && (FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT == 1U)
-    dacConfigStruct.enableOutput = false;
+    dacConfigStruct.enableOutput = true;
 #endif /* FSL_FEATURE_ACMP_HAS_C1_DACOE_BIT */
 #if defined(FSL_FEATURE_ACMP_HAS_C1_DMODE_BIT) && (FSL_FEATURE_ACMP_HAS_C1_DMODE_BIT == 1U)
     dacConfigStruct.workMode = kACMP_DACWorkLowSpeedMode;

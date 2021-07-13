@@ -388,31 +388,34 @@ _Pragma("diag_suppress=Pm120")
 /*! @name Time sensitive region */
 /* @{ */
 #if defined(FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE) && FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE
-#if (defined(__ICCARM__))
-#define AT_QUICKACCESS_SECTION_CODE(func) func @"CodeQuickAccess"
-#define AT_QUICKACCESS_SECTION_DATA(func) func @"DataQuickAccess"
-#elif(defined(__CC_ARM) || defined(__ARMCC_VERSION))
-#define AT_QUICKACCESS_SECTION_CODE(func) __attribute__((section("CodeQuickAccess"), __noinline__)) func
-#define AT_QUICKACCESS_SECTION_DATA(func) __attribute__((section("DataQuickAccess"))) func
-#elif(defined(__GNUC__))
-#define AT_QUICKACCESS_SECTION_CODE(func) __attribute__((section("CodeQuickAccess"), __noinline__)) func
-#define AT_QUICKACCESS_SECTION_DATA(func) __attribute__((section("DataQuickAccess"))) func
+	#if (defined(__ICCARM__))
+		#define AT_QUICKACCESS_SECTION_CODE(func) func @"CodeQuickAccess"
+		#define AT_QUICKACCESS_SECTION_DATA(func) func @"DataQuickAccess"
+	#elif(defined(__CC_ARM) || defined(__ARMCC_VERSION))
+		#define AT_QUICKACCESS_SECTION_CODE(func) __attribute__((section("CodeQuickAccess"), __noinline__)) func
+		#define AT_QUICKACCESS_SECTION_DATA(func) __attribute__((section("DataQuickAccess"))) func
+	#elif defined(__CROSSWORKS_ARM)
+		#define AT_QUICKACCESS_SECTION_CODE(func) __attribute__((section(".fast"), __noinline__)) func
+		#define AT_QUICKACCESS_SECTION_DATA(func) __attribute__((section(".data"))) func
+	#elif(defined(__GNUC__))
+		#define AT_QUICKACCESS_SECTION_CODE(func) __attribute__((section("CodeQuickAccess"), __noinline__)) func
+		#define AT_QUICKACCESS_SECTION_DATA(func) __attribute__((section("DataQuickAccess"))) func
+	#else
+		#error Toolchain not supported.
+	#endif /* defined(__ICCARM__) */
 #else
-#error Toolchain not supported.
-#endif /* defined(__ICCARM__) */
-#else
-#if (defined(__ICCARM__))
-#define AT_QUICKACCESS_SECTION_CODE(func) func
-#define AT_QUICKACCESS_SECTION_DATA(func) func
-#elif(defined(__CC_ARM) || defined(__ARMCC_VERSION))
-#define AT_QUICKACCESS_SECTION_CODE(func) func
-#define AT_QUICKACCESS_SECTION_DATA(func) func
-#elif(defined(__GNUC__))
-#define AT_QUICKACCESS_SECTION_CODE(func) func
-#define AT_QUICKACCESS_SECTION_DATA(func) func
-#else
-#error Toolchain not supported.
-#endif
+	#if (defined(__ICCARM__))
+		#define AT_QUICKACCESS_SECTION_CODE(func) func
+		#define AT_QUICKACCESS_SECTION_DATA(func) func
+	#elif(defined(__CC_ARM) || defined(__ARMCC_VERSION))
+		#define AT_QUICKACCESS_SECTION_CODE(func) func
+		#define AT_QUICKACCESS_SECTION_DATA(func) func
+	#elif(defined(__GNUC__))
+		#define AT_QUICKACCESS_SECTION_CODE(func) func
+		#define AT_QUICKACCESS_SECTION_DATA(func) func
+	#else
+		#error Toolchain not supported.
+	#endif
 #endif /* __FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE */
 /* @} */
 

@@ -5,7 +5,7 @@
       CMSIS_CORE="Yes"
       Name="Common"
       Placement="SRAM"
-      Target="MIMXRT633SFxxxR"
+      Target="MIMXRT685SFVKB_cm33"
       arm_architecture="v8M_Mainline"
       arm_core_type="Cortex-M33"
       arm_fpu_type="FPv5-SP-D16"
@@ -17,6 +17,7 @@
       arm_target_loader_reset_after_download="No"
       arm_v8M_has_cmse="Yes"
       arm_v8M_has_dsp="Yes"
+      c_additional_options="-fno-signed-char;-Wno-narrowing;-Wall;-Wextra;-Wmisleading-indentation;-Wshadow;-Wdouble-promotion;-Wformat=2"
       c_preprocessor_definitions="FSL_SDK_DRIVER_QUICK_ACCESS_ENABLE=1;CPU_MIMXRT685SFVKB_cm33;BOOT_HEADER_ENABLE=1;NDEBUG;ARM_MATH_CM33;SERIAL_PORT_TYPE_UART=1"
       c_system_include_directories="$(StudioDir)/include;$(PackagesDir)/include;$(TargetsDir)/iMXRT"
       c_user_include_directories=";./..;./../../../../..;./../../../../../../../CMSIS/Include;./../../../../../../../devices;./../../../../../../../devices/MIMXRT685S/drivers;./../../../../../../../devices/MIMXRT685S;./../../../../../../../devices/MIMXRT685S/utilities/str;./../../../../../../../devices/MIMXRT685S/utilities/debug_console;./../../../../../../../components/uart;./../../../../../flash_config;./../../../../../../../components/serial_manager;./../../../../../../../components/lists;./../../../../../../../devices/MIMXRT685S/utilities"
@@ -24,7 +25,7 @@
       debug_startup_completion_point="main"
       linker_memory_map_file="$(TargetsDir)/iMXRT/MemoryMap_MIMXRT600.xml"
       linker_section_placement_file="$(StudioDir)/targets/Cortex_M/ram_placement.xml"
-      linker_section_placement_macros="RAM_NAME=SRAM"
+      linker_section_placement_macros="RAM_NAME=SRAM_data"
       macros="DeviceName=MIMXRT685S_cm33;Family=iMXRT600"
       project_directory=""
       project_type="Executable"
@@ -35,7 +36,8 @@
       target_script_file="$(TargetsDir)/iMXRT/iMXRT_Target.js" />
     <configuration
       Name="Flash"
-      arm_target_flash_loader_file_path="$(TargetsDir)/iMXRT/Loader2/Loader_$(Family)_M33.elf" />
+      arm_target_flash_loader_file_path="$(TargetsDir)/iMXRT/Loader2/Loader_$(Family).elf"
+      arm_target_loader_parameter="1" />
     <folder Name="System Files">
       <file file_name="$(StudioDir)/source/thumb_crt0.s" />
       <file file_name="$(TargetsDir)/iMXRT/startup_$(DeviceName).s" />
